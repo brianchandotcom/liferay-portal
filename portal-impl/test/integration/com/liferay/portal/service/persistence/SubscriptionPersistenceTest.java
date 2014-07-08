@@ -274,7 +274,7 @@ public class SubscriptionPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<Subscription> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Subscription",
 			"mvccVersion", true, "subscriptionId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

@@ -77,7 +77,7 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	*/
 	public java.util.List<com.liferay.portal.model.ListType> findByType(
 		java.lang.String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ListType> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first list type in the ordered set where type = &#63;.
@@ -89,7 +89,7 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	*/
 	public com.liferay.portal.model.ListType findByType_First(
 		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ListType> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchListTypeException;
 
 	/**
@@ -101,7 +101,7 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	*/
 	public com.liferay.portal.model.ListType fetchByType_First(
 		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ListType> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last list type in the ordered set where type = &#63;.
@@ -113,7 +113,7 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	*/
 	public com.liferay.portal.model.ListType findByType_Last(
 		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ListType> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchListTypeException;
 
 	/**
@@ -125,7 +125,7 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	*/
 	public com.liferay.portal.model.ListType fetchByType_Last(
 		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ListType> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the list types before and after the current list type in the ordered set where type = &#63;.
@@ -138,7 +138,7 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	*/
 	public com.liferay.portal.model.ListType[] findByType_PrevAndNext(
 		int listTypeId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ListType> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchListTypeException;
 
 	/**
@@ -249,7 +249,7 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	*/
 	public java.util.List<com.liferay.portal.model.ListType> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ListType> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the list types from the database.

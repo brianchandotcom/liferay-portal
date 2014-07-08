@@ -85,7 +85,7 @@ public class RegionUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<Region> findWithDynamicQuery(DynamicQuery dynamicQuery,
-		int start, int end, OrderByComparator<Region> orderByComparator) {
+		int start, int end, OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -148,7 +148,7 @@ public class RegionUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Region> findByCountryId(
 		long countryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByCountryId(countryId, start, end, orderByComparator);
 	}
@@ -163,7 +163,7 @@ public class RegionUtil {
 	*/
 	public static com.liferay.portal.model.Region findByCountryId_First(
 		long countryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence()
 				   .findByCountryId_First(countryId, orderByComparator);
@@ -178,7 +178,7 @@ public class RegionUtil {
 	*/
 	public static com.liferay.portal.model.Region fetchByCountryId_First(
 		long countryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCountryId_First(countryId, orderByComparator);
 	}
@@ -193,7 +193,7 @@ public class RegionUtil {
 	*/
 	public static com.liferay.portal.model.Region findByCountryId_Last(
 		long countryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence()
 				   .findByCountryId_Last(countryId, orderByComparator);
@@ -208,7 +208,7 @@ public class RegionUtil {
 	*/
 	public static com.liferay.portal.model.Region fetchByCountryId_Last(
 		long countryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCountryId_Last(countryId, orderByComparator);
 	}
@@ -224,7 +224,7 @@ public class RegionUtil {
 	*/
 	public static com.liferay.portal.model.Region[] findByCountryId_PrevAndNext(
 		long regionId, long countryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence()
 				   .findByCountryId_PrevAndNext(regionId, countryId,
@@ -293,7 +293,7 @@ public class RegionUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Region> findByActive(
 		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByActive(active, start, end, orderByComparator);
 	}
@@ -308,7 +308,7 @@ public class RegionUtil {
 	*/
 	public static com.liferay.portal.model.Region findByActive_First(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence().findByActive_First(active, orderByComparator);
 	}
@@ -322,7 +322,7 @@ public class RegionUtil {
 	*/
 	public static com.liferay.portal.model.Region fetchByActive_First(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByActive_First(active, orderByComparator);
 	}
 
@@ -336,7 +336,7 @@ public class RegionUtil {
 	*/
 	public static com.liferay.portal.model.Region findByActive_Last(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence().findByActive_Last(active, orderByComparator);
 	}
@@ -350,7 +350,7 @@ public class RegionUtil {
 	*/
 	public static com.liferay.portal.model.Region fetchByActive_Last(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByActive_Last(active, orderByComparator);
 	}
 
@@ -365,7 +365,7 @@ public class RegionUtil {
 	*/
 	public static com.liferay.portal.model.Region[] findByActive_PrevAndNext(
 		long regionId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence()
 				   .findByActive_PrevAndNext(regionId, active, orderByComparator);
@@ -500,7 +500,7 @@ public class RegionUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Region> findByC_A(
 		long countryId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_A(countryId, active, start, end, orderByComparator);
 	}
@@ -516,7 +516,7 @@ public class RegionUtil {
 	*/
 	public static com.liferay.portal.model.Region findByC_A_First(
 		long countryId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence()
 				   .findByC_A_First(countryId, active, orderByComparator);
@@ -532,7 +532,7 @@ public class RegionUtil {
 	*/
 	public static com.liferay.portal.model.Region fetchByC_A_First(
 		long countryId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_A_First(countryId, active, orderByComparator);
 	}
@@ -548,7 +548,7 @@ public class RegionUtil {
 	*/
 	public static com.liferay.portal.model.Region findByC_A_Last(
 		long countryId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence()
 				   .findByC_A_Last(countryId, active, orderByComparator);
@@ -564,7 +564,7 @@ public class RegionUtil {
 	*/
 	public static com.liferay.portal.model.Region fetchByC_A_Last(
 		long countryId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_A_Last(countryId, active, orderByComparator);
 	}
@@ -581,7 +581,7 @@ public class RegionUtil {
 	*/
 	public static com.liferay.portal.model.Region[] findByC_A_PrevAndNext(
 		long regionId, long countryId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRegionException {
 		return getPersistence()
 				   .findByC_A_PrevAndNext(regionId, countryId, active,
@@ -722,7 +722,7 @@ public class RegionUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Region> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Region> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

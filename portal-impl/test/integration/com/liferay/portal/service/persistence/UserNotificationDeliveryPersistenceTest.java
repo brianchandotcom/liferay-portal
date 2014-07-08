@@ -234,7 +234,7 @@ public class UserNotificationDeliveryPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<UserNotificationDelivery> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("UserNotificationDelivery",
 			"mvccVersion", true, "userNotificationDeliveryId", true,
 			"companyId", true, "userId", true, "portletId", true,

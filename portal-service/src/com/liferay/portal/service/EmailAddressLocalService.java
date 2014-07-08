@@ -18,11 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.model.SystemEventConstants;
 
 /**
  * Provides the local service interface for EmailAddress. Methods of this
@@ -53,25 +51,8 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	* @param emailAddress the email address
 	* @return the email address that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.EmailAddress addEmailAddress(
 		com.liferay.portal.model.EmailAddress emailAddress);
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addEmailAddress(long,
-	String, long, String, int, boolean, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public com.liferay.portal.model.EmailAddress addEmailAddress(long userId,
-		java.lang.String className, long classPK, java.lang.String address,
-		int typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public com.liferay.portal.model.EmailAddress addEmailAddress(long userId,
-		java.lang.String className, long classPK, java.lang.String address,
-		int typeId, boolean primary,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new email address with the primary key. Does not add the email address to the database.
@@ -83,38 +64,24 @@ public interface EmailAddressLocalService extends BaseLocalService,
 		long emailAddressId);
 
 	/**
-	* Deletes the email address from the database. Also notifies the appropriate model listeners.
-	*
-	* @param emailAddress the email address
-	* @return the email address that was removed
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public com.liferay.portal.model.EmailAddress deleteEmailAddress(
-		com.liferay.portal.model.EmailAddress emailAddress);
-
-	/**
 	* Deletes the email address with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param emailAddressId the primary key of the email address
 	* @return the email address that was removed
 	* @throws PortalException if a email address with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.EmailAddress deleteEmailAddress(
 		long emailAddressId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteEmailAddresses(long companyId,
-		java.lang.String className, long classPK);
-
 	/**
-	* @throws PortalException
+	* Deletes the email address from the database. Also notifies the appropriate model listeners.
+	*
+	* @param emailAddress the email address
+	* @return the email address that was removed
 	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public com.liferay.portal.model.EmailAddress deleteEmailAddress(
+		com.liferay.portal.model.EmailAddress emailAddress);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -124,7 +91,8 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
@@ -139,7 +107,8 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end);
 
@@ -156,10 +125,11 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -196,16 +166,6 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	public com.liferay.portal.model.EmailAddress fetchEmailAddressByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	/**
 	* Returns the email address with the primary key.
 	*
@@ -216,6 +176,27 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.EmailAddress getEmailAddress(
 		long emailAddressId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext);
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -230,13 +211,6 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	public com.liferay.portal.model.EmailAddress getEmailAddressByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses(
-		long companyId, java.lang.String className, long classPK);
 
 	/**
 	* Returns a range of all the email addresses.
@@ -261,15 +235,21 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEmailAddressesCount();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext);
+	/**
+	* Updates the email address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param emailAddress the email address
+	* @return the email address that was updated
+	*/
+	public com.liferay.portal.model.EmailAddress updateEmailAddress(
+		com.liferay.portal.model.EmailAddress emailAddress);
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -279,14 +259,30 @@ public interface EmailAddressLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
-	* Updates the email address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param emailAddress the email address
-	* @return the email address that was updated
+	* @deprecated As of 6.2.0, replaced by {@link #addEmailAddress(long,
+	String, long, String, int, boolean, ServiceContext)}
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.EmailAddress updateEmailAddress(
-		com.liferay.portal.model.EmailAddress emailAddress);
+	@Deprecated
+	public com.liferay.portal.model.EmailAddress addEmailAddress(long userId,
+		java.lang.String className, long classPK, java.lang.String address,
+		int typeId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portal.model.EmailAddress addEmailAddress(long userId,
+		java.lang.String className, long classPK, java.lang.String address,
+		int typeId, boolean primary,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteEmailAddresses(long companyId,
+		java.lang.String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses(
+		long companyId, java.lang.String className, long classPK);
 
 	public com.liferay.portal.model.EmailAddress updateEmailAddress(
 		long emailAddressId, java.lang.String address, int typeId,

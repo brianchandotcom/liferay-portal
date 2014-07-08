@@ -77,7 +77,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public java.util.List<com.liferay.portal.model.EmailAddress> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first email address in the ordered set where uuid = &#63;.
@@ -89,7 +89,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -101,7 +101,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last email address in the ordered set where uuid = &#63;.
@@ -113,7 +113,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -125,7 +125,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the email addresses before and after the current email address in the ordered set where uuid = &#63;.
@@ -138,7 +138,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress[] findByUuid_PrevAndNext(
 		long emailAddressId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -198,7 +198,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public java.util.List<com.liferay.portal.model.EmailAddress> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first email address in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -211,7 +211,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -224,7 +224,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last email address in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -237,7 +237,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -250,7 +250,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the email addresses before and after the current email address in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -264,7 +264,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress[] findByUuid_C_PrevAndNext(
 		long emailAddressId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -323,7 +323,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public java.util.List<com.liferay.portal.model.EmailAddress> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first email address in the ordered set where companyId = &#63;.
@@ -335,7 +335,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -347,7 +347,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last email address in the ordered set where companyId = &#63;.
@@ -359,7 +359,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -371,7 +371,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the email addresses before and after the current email address in the ordered set where companyId = &#63;.
@@ -384,7 +384,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress[] findByCompanyId_PrevAndNext(
 		long emailAddressId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -441,7 +441,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public java.util.List<com.liferay.portal.model.EmailAddress> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first email address in the ordered set where userId = &#63;.
@@ -453,7 +453,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -465,7 +465,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last email address in the ordered set where userId = &#63;.
@@ -477,7 +477,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -489,7 +489,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the email addresses before and after the current email address in the ordered set where userId = &#63;.
@@ -502,7 +502,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress[] findByUserId_PrevAndNext(
 		long emailAddressId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -562,7 +562,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public java.util.List<com.liferay.portal.model.EmailAddress> findByC_C(
 		long companyId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first email address in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -575,7 +575,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress findByC_C_First(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -588,7 +588,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress fetchByC_C_First(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -601,7 +601,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress findByC_C_Last(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -614,7 +614,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress fetchByC_C_Last(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the email addresses before and after the current email address in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -628,7 +628,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress[] findByC_C_PrevAndNext(
 		long emailAddressId, long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -693,7 +693,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public java.util.List<com.liferay.portal.model.EmailAddress> findByC_C_C(
 		long companyId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -707,7 +707,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress findByC_C_C_First(
 		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -721,7 +721,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress fetchByC_C_C_First(
 		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -735,7 +735,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress findByC_C_C_Last(
 		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -749,7 +749,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress fetchByC_C_C_Last(
 		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the email addresses before and after the current email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -764,7 +764,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress[] findByC_C_C_PrevAndNext(
 		long emailAddressId, long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -836,7 +836,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	public java.util.List<com.liferay.portal.model.EmailAddress> findByC_C_C_P(
 		long companyId, long classNameId, long classPK, boolean primary,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -851,7 +851,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress findByC_C_C_P_First(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -866,7 +866,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress fetchByC_C_C_P_First(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -881,7 +881,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress findByC_C_C_P_Last(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -896,7 +896,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public com.liferay.portal.model.EmailAddress fetchByC_C_C_P_Last(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the email addresses before and after the current email address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -913,7 +913,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	public com.liferay.portal.model.EmailAddress[] findByC_C_C_P_PrevAndNext(
 		long emailAddressId, long companyId, long classNameId, long classPK,
 		boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchEmailAddressException;
 
 	/**
@@ -1034,7 +1034,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*/
 	public java.util.List<com.liferay.portal.model.EmailAddress> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.EmailAddress> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the email addresses from the database.

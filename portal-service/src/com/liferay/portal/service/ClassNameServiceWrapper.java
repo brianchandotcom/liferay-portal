@@ -30,22 +30,6 @@ public class ClassNameServiceWrapper implements ClassNameService,
 		_classNameService = classNameService;
 	}
 
-	@Override
-	public com.liferay.portal.model.ClassName fetchClassName(
-		java.lang.String value) {
-		return _classNameService.fetchClassName(value);
-	}
-
-	@Override
-	public long fetchClassNameId(java.lang.Class<?> clazz) {
-		return _classNameService.fetchClassNameId(clazz);
-	}
-
-	@Override
-	public long fetchClassNameId(java.lang.String value) {
-		return _classNameService.fetchClassNameId(value);
-	}
-
 	/**
 	* Returns the Spring bean ID for this bean.
 	*
@@ -64,6 +48,22 @@ public class ClassNameServiceWrapper implements ClassNameService,
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_classNameService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public com.liferay.portal.model.ClassName fetchClassName(
+		java.lang.String value) {
+		return _classNameService.fetchClassName(value);
+	}
+
+	@Override
+	public long fetchClassNameId(java.lang.Class<?> clazz) {
+		return _classNameService.fetchClassNameId(clazz);
+	}
+
+	@Override
+	public long fetchClassNameId(java.lang.String value) {
+		return _classNameService.fetchClassNameId(value);
 	}
 
 	/**

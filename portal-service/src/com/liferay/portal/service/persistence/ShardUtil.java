@@ -85,7 +85,7 @@ public class ShardUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<Shard> findWithDynamicQuery(DynamicQuery dynamicQuery,
-		int start, int end, OrderByComparator<Shard> orderByComparator) {
+		int start, int end, OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -335,7 +335,7 @@ public class ShardUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Shard> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Shard> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

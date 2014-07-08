@@ -232,7 +232,7 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	*/
 	public java.util.List<com.liferay.portal.model.VirtualHost> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.VirtualHost> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the virtual hosts from the database.

@@ -77,7 +77,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	*/
 	public java.util.List<com.liferay.portal.model.ServiceComponent> findByBuildNamespace(
 		java.lang.String buildNamespace, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first service component in the ordered set where buildNamespace = &#63;.
@@ -89,7 +89,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	*/
 	public com.liferay.portal.model.ServiceComponent findByBuildNamespace_First(
 		java.lang.String buildNamespace,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchServiceComponentException;
 
 	/**
@@ -101,7 +101,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	*/
 	public com.liferay.portal.model.ServiceComponent fetchByBuildNamespace_First(
 		java.lang.String buildNamespace,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last service component in the ordered set where buildNamespace = &#63;.
@@ -113,7 +113,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	*/
 	public com.liferay.portal.model.ServiceComponent findByBuildNamespace_Last(
 		java.lang.String buildNamespace,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchServiceComponentException;
 
 	/**
@@ -125,7 +125,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	*/
 	public com.liferay.portal.model.ServiceComponent fetchByBuildNamespace_Last(
 		java.lang.String buildNamespace,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the service components before and after the current service component in the ordered set where buildNamespace = &#63;.
@@ -138,7 +138,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	*/
 	public com.liferay.portal.model.ServiceComponent[] findByBuildNamespace_PrevAndNext(
 		long serviceComponentId, java.lang.String buildNamespace,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchServiceComponentException;
 
 	/**
@@ -308,7 +308,7 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	*/
 	public java.util.List<com.liferay.portal.model.ServiceComponent> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the service components from the database.

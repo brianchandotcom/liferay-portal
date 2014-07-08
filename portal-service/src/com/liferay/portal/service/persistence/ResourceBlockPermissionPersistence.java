@@ -77,7 +77,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> findByResourceBlockId(
 		long resourceBlockId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlockPermission> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first resource block permission in the ordered set where resourceBlockId = &#63;.
@@ -89,7 +89,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public com.liferay.portal.model.ResourceBlockPermission findByResourceBlockId_First(
 		long resourceBlockId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlockPermission> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockPermissionException;
 
 	/**
@@ -101,7 +101,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public com.liferay.portal.model.ResourceBlockPermission fetchByResourceBlockId_First(
 		long resourceBlockId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlockPermission> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last resource block permission in the ordered set where resourceBlockId = &#63;.
@@ -113,7 +113,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public com.liferay.portal.model.ResourceBlockPermission findByResourceBlockId_Last(
 		long resourceBlockId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlockPermission> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockPermissionException;
 
 	/**
@@ -125,7 +125,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public com.liferay.portal.model.ResourceBlockPermission fetchByResourceBlockId_Last(
 		long resourceBlockId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlockPermission> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the resource block permissions before and after the current resource block permission in the ordered set where resourceBlockId = &#63;.
@@ -138,7 +138,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public com.liferay.portal.model.ResourceBlockPermission[] findByResourceBlockId_PrevAndNext(
 		long resourceBlockPermissionId, long resourceBlockId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlockPermission> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockPermissionException;
 
 	/**
@@ -195,7 +195,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> findByRoleId(
 		long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlockPermission> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first resource block permission in the ordered set where roleId = &#63;.
@@ -207,7 +207,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public com.liferay.portal.model.ResourceBlockPermission findByRoleId_First(
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlockPermission> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockPermissionException;
 
 	/**
@@ -219,7 +219,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public com.liferay.portal.model.ResourceBlockPermission fetchByRoleId_First(
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlockPermission> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last resource block permission in the ordered set where roleId = &#63;.
@@ -231,7 +231,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public com.liferay.portal.model.ResourceBlockPermission findByRoleId_Last(
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlockPermission> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockPermissionException;
 
 	/**
@@ -243,7 +243,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public com.liferay.portal.model.ResourceBlockPermission fetchByRoleId_Last(
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlockPermission> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the resource block permissions before and after the current resource block permission in the ordered set where roleId = &#63;.
@@ -256,7 +256,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public com.liferay.portal.model.ResourceBlockPermission[] findByRoleId_PrevAndNext(
 		long resourceBlockPermissionId, long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlockPermission> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockPermissionException;
 
 	/**
@@ -425,7 +425,7 @@ public interface ResourceBlockPermissionPersistence extends BasePersistence<Reso
 	*/
 	public java.util.List<com.liferay.portal.model.ResourceBlockPermission> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlockPermission> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the resource block permissions from the database.

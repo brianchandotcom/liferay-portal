@@ -77,7 +77,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	*/
 	public java.util.List<com.liferay.portal.model.PasswordPolicyRel> findByPasswordPolicyId(
 		long passwordPolicyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordPolicyRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first password policy rel in the ordered set where passwordPolicyId = &#63;.
@@ -89,7 +89,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	*/
 	public com.liferay.portal.model.PasswordPolicyRel findByPasswordPolicyId_First(
 		long passwordPolicyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordPolicyRel> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPasswordPolicyRelException;
 
 	/**
@@ -101,7 +101,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	*/
 	public com.liferay.portal.model.PasswordPolicyRel fetchByPasswordPolicyId_First(
 		long passwordPolicyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordPolicyRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last password policy rel in the ordered set where passwordPolicyId = &#63;.
@@ -113,7 +113,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	*/
 	public com.liferay.portal.model.PasswordPolicyRel findByPasswordPolicyId_Last(
 		long passwordPolicyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordPolicyRel> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPasswordPolicyRelException;
 
 	/**
@@ -125,7 +125,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	*/
 	public com.liferay.portal.model.PasswordPolicyRel fetchByPasswordPolicyId_Last(
 		long passwordPolicyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordPolicyRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the password policy rels before and after the current password policy rel in the ordered set where passwordPolicyId = &#63;.
@@ -138,7 +138,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	*/
 	public com.liferay.portal.model.PasswordPolicyRel[] findByPasswordPolicyId_PrevAndNext(
 		long passwordPolicyRelId, long passwordPolicyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordPolicyRel> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPasswordPolicyRelException;
 
 	/**
@@ -307,7 +307,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	*/
 	public java.util.List<com.liferay.portal.model.PasswordPolicyRel> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordPolicyRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the password policy rels from the database.

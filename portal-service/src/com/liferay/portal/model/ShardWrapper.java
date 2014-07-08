@@ -92,49 +92,24 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 		}
 	}
 
+	/**
+	* Returns the primary key of this shard.
+	*
+	* @return the primary key of this shard
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new ShardWrapper((Shard)_shard.clone());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.model.Shard shard) {
-		return _shard.compareTo(shard);
+	public long getPrimaryKey() {
+		return _shard.getPrimaryKey();
 	}
 
 	/**
-	* Returns the fully qualified class name of this shard.
+	* Sets the primary key of this shard.
 	*
-	* @return the fully qualified class name of this shard
+	* @param primaryKey the primary key of this shard
 	*/
 	@Override
-	public java.lang.String getClassName() {
-		return _shard.getClassName();
-	}
-
-	/**
-	* Returns the class name ID of this shard.
-	*
-	* @return the class name ID of this shard
-	*/
-	@Override
-	public long getClassNameId() {
-		return _shard.getClassNameId();
-	}
-
-	/**
-	* Returns the class p k of this shard.
-	*
-	* @return the class p k of this shard
-	*/
-	@Override
-	public long getClassPK() {
-		return _shard.getClassPK();
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _shard.getExpandoBridge();
+	public void setPrimaryKey(long primaryKey) {
+		_shard.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -148,28 +123,13 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 	}
 
 	/**
-	* Returns the name of this shard.
+	* Sets the mvcc version of this shard.
 	*
-	* @return the name of this shard
+	* @param mvccVersion the mvcc version of this shard
 	*/
 	@Override
-	public java.lang.String getName() {
-		return _shard.getName();
-	}
-
-	/**
-	* Returns the primary key of this shard.
-	*
-	* @return the primary key of this shard
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _shard.getPrimaryKey();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _shard.getPrimaryKeyObj();
+	public void setMvccVersion(long mvccVersion) {
+		_shard.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -182,39 +142,39 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 		return _shard.getShardId();
 	}
 
+	/**
+	* Sets the shard ID of this shard.
+	*
+	* @param shardId the shard ID of this shard
+	*/
 	@Override
-	public int hashCode() {
-		return _shard.hashCode();
+	public void setShardId(long shardId) {
+		_shard.setShardId(shardId);
 	}
 
+	/**
+	* Returns the fully qualified class name of this shard.
+	*
+	* @return the fully qualified class name of this shard
+	*/
 	@Override
-	public boolean isCachedModel() {
-		return _shard.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _shard.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _shard.isNew();
-	}
-
-	@Override
-	public void persist() {
-		_shard.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_shard.setCachedModel(cachedModel);
+	public java.lang.String getClassName() {
+		return _shard.getClassName();
 	}
 
 	@Override
 	public void setClassName(java.lang.String className) {
 		_shard.setClassName(className);
+	}
+
+	/**
+	* Returns the class name ID of this shard.
+	*
+	* @return the class name ID of this shard
+	*/
+	@Override
+	public long getClassNameId() {
+		return _shard.getClassNameId();
 	}
 
 	/**
@@ -228,6 +188,16 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 	}
 
 	/**
+	* Returns the class p k of this shard.
+	*
+	* @return the class p k of this shard
+	*/
+	@Override
+	public long getClassPK() {
+		return _shard.getClassPK();
+	}
+
+	/**
 	* Sets the class p k of this shard.
 	*
 	* @param classPK the class p k of this shard
@@ -235,6 +205,66 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 	@Override
 	public void setClassPK(long classPK) {
 		_shard.setClassPK(classPK);
+	}
+
+	/**
+	* Returns the name of this shard.
+	*
+	* @return the name of this shard
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _shard.getName();
+	}
+
+	/**
+	* Sets the name of this shard.
+	*
+	* @param name the name of this shard
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_shard.setName(name);
+	}
+
+	@Override
+	public boolean isNew() {
+		return _shard.isNew();
+	}
+
+	@Override
+	public void setNew(boolean n) {
+		_shard.setNew(n);
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _shard.isCachedModel();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_shard.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _shard.isEscapedModel();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _shard.getPrimaryKeyObj();
+	}
+
+	@Override
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_shard.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _shard.getExpandoBridge();
 	}
 
 	@Override
@@ -255,54 +285,19 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 		_shard.setExpandoBridgeAttributes(serviceContext);
 	}
 
-	/**
-	* Sets the mvcc version of this shard.
-	*
-	* @param mvccVersion the mvcc version of this shard
-	*/
 	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_shard.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	* Sets the name of this shard.
-	*
-	* @param name the name of this shard
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_shard.setName(name);
+	public java.lang.Object clone() {
+		return new ShardWrapper((Shard)_shard.clone());
 	}
 
 	@Override
-	public void setNew(boolean n) {
-		_shard.setNew(n);
-	}
-
-	/**
-	* Sets the primary key of this shard.
-	*
-	* @param primaryKey the primary key of this shard
-	*/
-	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_shard.setPrimaryKey(primaryKey);
+	public int compareTo(com.liferay.portal.model.Shard shard) {
+		return _shard.compareTo(shard);
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_shard.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets the shard ID of this shard.
-	*
-	* @param shardId the shard ID of this shard
-	*/
-	@Override
-	public void setShardId(long shardId) {
-		_shard.setShardId(shardId);
+	public int hashCode() {
+		return _shard.hashCode();
 	}
 
 	@Override
@@ -316,18 +311,23 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _shard.toString();
-	}
-
-	@Override
 	public com.liferay.portal.model.Shard toUnescapedModel() {
 		return new ShardWrapper(_shard.toUnescapedModel());
 	}
 
 	@Override
+	public java.lang.String toString() {
+		return _shard.toString();
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _shard.toXmlString();
+	}
+
+	@Override
+	public void persist() {
+		_shard.persist();
 	}
 
 	@Override

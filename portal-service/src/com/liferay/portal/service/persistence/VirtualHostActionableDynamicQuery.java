@@ -21,7 +21,7 @@ import com.liferay.portal.service.VirtualHostLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link VirtualHostLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link VirtualHostLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

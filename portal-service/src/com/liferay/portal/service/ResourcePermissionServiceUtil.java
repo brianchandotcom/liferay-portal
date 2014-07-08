@@ -42,6 +42,24 @@ public class ResourcePermissionServiceUtil {
 	 */
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
 	* Grants the role permission at the scope to perform the action on
 	* resources of the type. Existing actions are retained.
 	*
@@ -88,15 +106,6 @@ public class ResourcePermissionServiceUtil {
 		getService()
 			.addResourcePermission(groupId, companyId, name, scope, primKey,
 			roleId, actionId);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
 	}
 
 	/**
@@ -154,15 +163,6 @@ public class ResourcePermissionServiceUtil {
 		getService()
 			.removeResourcePermissions(groupId, companyId, name, scope, roleId,
 			actionId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

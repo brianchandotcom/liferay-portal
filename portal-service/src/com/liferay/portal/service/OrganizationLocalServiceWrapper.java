@@ -31,10 +31,261 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		_organizationLocalService = organizationLocalService;
 	}
 
+	/**
+	* Adds the organization to the database. Also notifies the appropriate model listeners.
+	*
+	* @param organization the organization
+	* @return the organization that was added
+	*/
 	@Override
-	public void addGroupOrganization(long groupId,
+	public com.liferay.portal.model.Organization addOrganization(
 		com.liferay.portal.model.Organization organization) {
-		_organizationLocalService.addGroupOrganization(groupId, organization);
+		return _organizationLocalService.addOrganization(organization);
+	}
+
+	/**
+	* Creates a new organization with the primary key. Does not add the organization to the database.
+	*
+	* @param organizationId the primary key for the new organization
+	* @return the new organization
+	*/
+	@Override
+	public com.liferay.portal.model.Organization createOrganization(
+		long organizationId) {
+		return _organizationLocalService.createOrganization(organizationId);
+	}
+
+	/**
+	* Deletes the organization with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param organizationId the primary key of the organization
+	* @return the organization that was removed
+	* @throws PortalException if a organization with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.Organization deleteOrganization(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organizationLocalService.deleteOrganization(organizationId);
+	}
+
+	/**
+	* Deletes the organization from the database. Also notifies the appropriate model listeners.
+	*
+	* @param organization the organization
+	* @return the organization that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.Organization deleteOrganization(
+		com.liferay.portal.model.Organization organization)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organizationLocalService.deleteOrganization(organization);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _organizationLocalService.dynamicQuery();
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _organizationLocalService.dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return _organizationLocalService.dynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _organizationLocalService.dynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _organizationLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _organizationLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.portal.model.Organization fetchOrganization(
+		long organizationId) {
+		return _organizationLocalService.fetchOrganization(organizationId);
+	}
+
+	/**
+	* Returns the organization with the matching UUID and company.
+	*
+	* @param uuid the organization's UUID
+	* @param companyId the primary key of the company
+	* @return the matching organization, or <code>null</code> if a matching organization could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.Organization fetchOrganizationByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _organizationLocalService.fetchOrganizationByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns the organization with the primary key.
+	*
+	* @param organizationId the primary key of the organization
+	* @return the organization
+	* @throws PortalException if a organization with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.Organization getOrganization(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organizationLocalService.getOrganization(organizationId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _organizationLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return _organizationLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organizationLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organizationLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the organization with the matching UUID and company.
+	*
+	* @param uuid the organization's UUID
+	* @param companyId the primary key of the company
+	* @return the matching organization
+	* @throws PortalException if a matching organization could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.Organization getOrganizationByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organizationLocalService.getOrganizationByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of all the organizations.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of organizations
+	* @param end the upper bound of the range of organizations (not inclusive)
+	* @return the range of organizations
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.model.Organization> getOrganizations(
+		int start, int end) {
+		return _organizationLocalService.getOrganizations(start, end);
+	}
+
+	/**
+	* Returns the number of organizations.
+	*
+	* @return the number of organizations
+	*/
+	@Override
+	public int getOrganizationsCount() {
+		return _organizationLocalService.getOrganizationsCount();
+	}
+
+	/**
+	* Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param organization the organization
+	* @return the organization that was updated
+	*/
+	@Override
+	public com.liferay.portal.model.Organization updateOrganization(
+		com.liferay.portal.model.Organization organization) {
+		return _organizationLocalService.updateOrganization(organization);
 	}
 
 	@Override
@@ -42,14 +293,10 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		_organizationLocalService.addGroupOrganization(groupId, organizationId);
 	}
 
-	/**
-	* @throws PortalException
-	*/
 	@Override
-	public void addGroupOrganizations(long groupId,
-		java.util.List<com.liferay.portal.model.Organization> Organizations)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_organizationLocalService.addGroupOrganizations(groupId, Organizations);
+	public void addGroupOrganization(long groupId,
+		com.liferay.portal.model.Organization organization) {
+		_organizationLocalService.addGroupOrganization(groupId, organization);
 	}
 
 	/**
@@ -62,15 +309,222 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
-	* Adds the organization to the database. Also notifies the appropriate model listeners.
-	*
-	* @param organization the organization
-	* @return the organization that was added
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.model.Organization addOrganization(
+	public void addGroupOrganizations(long groupId,
+		java.util.List<com.liferay.portal.model.Organization> Organizations)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_organizationLocalService.addGroupOrganizations(groupId, Organizations);
+	}
+
+	@Override
+	public void clearGroupOrganizations(long groupId) {
+		_organizationLocalService.clearGroupOrganizations(groupId);
+	}
+
+	@Override
+	public void deleteGroupOrganization(long groupId, long organizationId) {
+		_organizationLocalService.deleteGroupOrganization(groupId,
+			organizationId);
+	}
+
+	@Override
+	public void deleteGroupOrganization(long groupId,
 		com.liferay.portal.model.Organization organization) {
-		return _organizationLocalService.addOrganization(organization);
+		_organizationLocalService.deleteGroupOrganization(groupId, organization);
+	}
+
+	@Override
+	public void deleteGroupOrganizations(long groupId, long[] organizationIds) {
+		_organizationLocalService.deleteGroupOrganizations(groupId,
+			organizationIds);
+	}
+
+	@Override
+	public void deleteGroupOrganizations(long groupId,
+		java.util.List<com.liferay.portal.model.Organization> Organizations) {
+		_organizationLocalService.deleteGroupOrganizations(groupId,
+			Organizations);
+	}
+
+	/**
+	* Returns the groupIds of the groups associated with the organization.
+	*
+	* @param organizationId the organizationId of the organization
+	* @return long[] the groupIds of groups associated with the organization
+	*/
+	@Override
+	public long[] getGroupPrimaryKeys(long organizationId) {
+		return _organizationLocalService.getGroupPrimaryKeys(organizationId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Organization> getGroupOrganizations(
+		long groupId) {
+		return _organizationLocalService.getGroupOrganizations(groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Organization> getGroupOrganizations(
+		long groupId, int start, int end) {
+		return _organizationLocalService.getGroupOrganizations(groupId, start,
+			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Organization> getGroupOrganizations(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _organizationLocalService.getGroupOrganizations(groupId, start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public int getGroupOrganizationsCount(long groupId) {
+		return _organizationLocalService.getGroupOrganizationsCount(groupId);
+	}
+
+	@Override
+	public boolean hasGroupOrganization(long groupId, long organizationId) {
+		return _organizationLocalService.hasGroupOrganization(groupId,
+			organizationId);
+	}
+
+	@Override
+	public boolean hasGroupOrganizations(long groupId) {
+		return _organizationLocalService.hasGroupOrganizations(groupId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public void setGroupOrganizations(long groupId, long[] organizationIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_organizationLocalService.setGroupOrganizations(groupId, organizationIds);
+	}
+
+	@Override
+	public void addUserOrganization(long userId, long organizationId) {
+		_organizationLocalService.addUserOrganization(userId, organizationId);
+	}
+
+	@Override
+	public void addUserOrganization(long userId,
+		com.liferay.portal.model.Organization organization) {
+		_organizationLocalService.addUserOrganization(userId, organization);
+	}
+
+	@Override
+	public void addUserOrganizations(long userId, long[] organizationIds) {
+		_organizationLocalService.addUserOrganizations(userId, organizationIds);
+	}
+
+	@Override
+	public void addUserOrganizations(long userId,
+		java.util.List<com.liferay.portal.model.Organization> Organizations) {
+		_organizationLocalService.addUserOrganizations(userId, Organizations);
+	}
+
+	@Override
+	public void clearUserOrganizations(long userId) {
+		_organizationLocalService.clearUserOrganizations(userId);
+	}
+
+	@Override
+	public void deleteUserOrganization(long userId, long organizationId) {
+		_organizationLocalService.deleteUserOrganization(userId, organizationId);
+	}
+
+	@Override
+	public void deleteUserOrganization(long userId,
+		com.liferay.portal.model.Organization organization) {
+		_organizationLocalService.deleteUserOrganization(userId, organization);
+	}
+
+	@Override
+	public void deleteUserOrganizations(long userId, long[] organizationIds) {
+		_organizationLocalService.deleteUserOrganizations(userId,
+			organizationIds);
+	}
+
+	@Override
+	public void deleteUserOrganizations(long userId,
+		java.util.List<com.liferay.portal.model.Organization> Organizations) {
+		_organizationLocalService.deleteUserOrganizations(userId, Organizations);
+	}
+
+	/**
+	* Returns the userIds of the users associated with the organization.
+	*
+	* @param organizationId the organizationId of the organization
+	* @return long[] the userIds of users associated with the organization
+	*/
+	@Override
+	public long[] getUserPrimaryKeys(long organizationId) {
+		return _organizationLocalService.getUserPrimaryKeys(organizationId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
+		long userId) {
+		return _organizationLocalService.getUserOrganizations(userId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
+		long userId, int start, int end) {
+		return _organizationLocalService.getUserOrganizations(userId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _organizationLocalService.getUserOrganizations(userId, start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public int getUserOrganizationsCount(long userId) {
+		return _organizationLocalService.getUserOrganizationsCount(userId);
+	}
+
+	@Override
+	public boolean hasUserOrganization(long userId, long organizationId) {
+		return _organizationLocalService.hasUserOrganization(userId,
+			organizationId);
+	}
+
+	@Override
+	public boolean hasUserOrganizations(long userId) {
+		return _organizationLocalService.hasUserOrganizations(userId);
+	}
+
+	@Override
+	public void setUserOrganizations(long userId, long[] organizationIds) {
+		_organizationLocalService.setUserOrganizations(userId, organizationIds);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _organizationLocalService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_organizationLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**
@@ -220,75 +674,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 			organizationIds);
 	}
 
-	@Override
-	public void addUserOrganization(long userId,
-		com.liferay.portal.model.Organization organization) {
-		_organizationLocalService.addUserOrganization(userId, organization);
-	}
-
-	@Override
-	public void addUserOrganization(long userId, long organizationId) {
-		_organizationLocalService.addUserOrganization(userId, organizationId);
-	}
-
-	@Override
-	public void addUserOrganizations(long userId,
-		java.util.List<com.liferay.portal.model.Organization> Organizations) {
-		_organizationLocalService.addUserOrganizations(userId, Organizations);
-	}
-
-	@Override
-	public void addUserOrganizations(long userId, long[] organizationIds) {
-		_organizationLocalService.addUserOrganizations(userId, organizationIds);
-	}
-
-	@Override
-	public void clearGroupOrganizations(long groupId) {
-		_organizationLocalService.clearGroupOrganizations(groupId);
-	}
-
-	@Override
-	public void clearUserOrganizations(long userId) {
-		_organizationLocalService.clearUserOrganizations(userId);
-	}
-
-	/**
-	* Creates a new organization with the primary key. Does not add the organization to the database.
-	*
-	* @param organizationId the primary key for the new organization
-	* @return the new organization
-	*/
-	@Override
-	public com.liferay.portal.model.Organization createOrganization(
-		long organizationId) {
-		return _organizationLocalService.createOrganization(organizationId);
-	}
-
-	@Override
-	public void deleteGroupOrganization(long groupId,
-		com.liferay.portal.model.Organization organization) {
-		_organizationLocalService.deleteGroupOrganization(groupId, organization);
-	}
-
-	@Override
-	public void deleteGroupOrganization(long groupId, long organizationId) {
-		_organizationLocalService.deleteGroupOrganization(groupId,
-			organizationId);
-	}
-
-	@Override
-	public void deleteGroupOrganizations(long groupId,
-		java.util.List<com.liferay.portal.model.Organization> Organizations) {
-		_organizationLocalService.deleteGroupOrganizations(groupId,
-			Organizations);
-	}
-
-	@Override
-	public void deleteGroupOrganizations(long groupId, long[] organizationIds) {
-		_organizationLocalService.deleteGroupOrganizations(groupId,
-			organizationIds);
-	}
-
 	/**
 	* Deletes the organization's logo.
 	*
@@ -303,234 +688,10 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		_organizationLocalService.deleteLogo(organizationId);
 	}
 
-	/**
-	* Deletes the organization from the database. Also notifies the appropriate model listeners.
-	*
-	* @param organization the organization
-	* @return the organization that was removed
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.Organization deleteOrganization(
-		com.liferay.portal.model.Organization organization)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organizationLocalService.deleteOrganization(organization);
-	}
-
-	/**
-	* Deletes the organization with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param organizationId the primary key of the organization
-	* @return the organization that was removed
-	* @throws PortalException if a organization with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.Organization deleteOrganization(
-		long organizationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organizationLocalService.deleteOrganization(organizationId);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organizationLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public void deleteUserOrganization(long userId,
-		com.liferay.portal.model.Organization organization) {
-		_organizationLocalService.deleteUserOrganization(userId, organization);
-	}
-
-	@Override
-	public void deleteUserOrganization(long userId, long organizationId) {
-		_organizationLocalService.deleteUserOrganization(userId, organizationId);
-	}
-
-	@Override
-	public void deleteUserOrganizations(long userId,
-		java.util.List<com.liferay.portal.model.Organization> Organizations) {
-		_organizationLocalService.deleteUserOrganizations(userId, Organizations);
-	}
-
-	@Override
-	public void deleteUserOrganizations(long userId, long[] organizationIds) {
-		_organizationLocalService.deleteUserOrganizations(userId,
-			organizationIds);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _organizationLocalService.dynamicQuery();
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _organizationLocalService.dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
-		return _organizationLocalService.dynamicQuery(dynamicQuery, start, end);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-		return _organizationLocalService.dynamicQuery(dynamicQuery, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _organizationLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _organizationLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
 	@Override
 	public com.liferay.portal.model.Organization fetchOrganization(
 		long companyId, java.lang.String name) {
 		return _organizationLocalService.fetchOrganization(companyId, name);
-	}
-
-	@Override
-	public com.liferay.portal.model.Organization fetchOrganization(
-		long organizationId) {
-		return _organizationLocalService.fetchOrganization(organizationId);
-	}
-
-	/**
-	* Returns the organization with the matching UUID and company.
-	*
-	* @param uuid the organization's UUID
-	* @param companyId the primary key of the company
-	* @return the matching organization, or <code>null</code> if a matching organization could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.Organization fetchOrganizationByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _organizationLocalService.fetchOrganizationByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _organizationLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _organizationLocalService.getBeanIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return _organizationLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Organization> getGroupOrganizations(
-		long groupId) {
-		return _organizationLocalService.getGroupOrganizations(groupId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Organization> getGroupOrganizations(
-		long groupId, int start, int end) {
-		return _organizationLocalService.getGroupOrganizations(groupId, start,
-			end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Organization> getGroupOrganizations(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
-		return _organizationLocalService.getGroupOrganizations(groupId, start,
-			end, orderByComparator);
-	}
-
-	@Override
-	public int getGroupOrganizationsCount(long groupId) {
-		return _organizationLocalService.getGroupOrganizationsCount(groupId);
-	}
-
-	/**
-	* Returns the groupIds of the groups associated with the organization.
-	*
-	* @param organizationId the organizationId of the organization
-	* @return long[] the groupIds of groups associated with the organization
-	*/
-	@Override
-	public long[] getGroupPrimaryKeys(long organizationId) {
-		return _organizationLocalService.getGroupPrimaryKeys(organizationId);
 	}
 
 	@Override
@@ -563,36 +724,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
-	* Returns the organization with the primary key.
-	*
-	* @param organizationId the primary key of the organization
-	* @return the organization
-	* @throws PortalException if a organization with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.Organization getOrganization(
-		long organizationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organizationLocalService.getOrganization(organizationId);
-	}
-
-	/**
-	* Returns the organization with the matching UUID and company.
-	*
-	* @param uuid the organization's UUID
-	* @param companyId the primary key of the company
-	* @return the matching organization
-	* @throws PortalException if a matching organization could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.Organization getOrganizationByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organizationLocalService.getOrganizationByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
 	* Returns the primary key of the organization with the name.
 	*
 	* @param companyId the primary key of the organization's company
@@ -603,6 +734,15 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	@Override
 	public long getOrganizationId(long companyId, java.lang.String name) {
 		return _organizationLocalService.getOrganizationId(companyId, name);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Organization> getOrganizations(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organizationLocalService.getOrganizations(userId, start, end,
+			obc);
 	}
 
 	/**
@@ -667,42 +807,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
-	* Returns a range of all the organizations.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of organizations
-	* @param end the upper bound of the range of organizations (not inclusive)
-	* @return the range of organizations
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.model.Organization> getOrganizations(
-		int start, int end) {
-		return _organizationLocalService.getOrganizations(start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Organization> getOrganizations(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organizationLocalService.getOrganizations(userId, start, end,
-			obc);
-	}
-
-	/**
-	* Returns the number of organizations.
-	*
-	* @return the number of organizations
-	*/
-	@Override
-	public int getOrganizationsCount() {
-		return _organizationLocalService.getOrganizationsCount();
-	}
-
-	/**
 	* Returns the number of organizations belonging to the parent organization.
 	*
 	* @param companyId the primary key of the organization's company
@@ -732,11 +836,17 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		return _organizationLocalService.getParentOrganizations(organizationId);
 	}
 
+	/**
+	* Returns the suborganizations of the organizations.
+	*
+	* @param organizations the organizations from which to get
+	suborganizations
+	* @return the suborganizations of the organizations
+	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organizationLocalService.getPersistedModel(primaryKeyObj);
+	public java.util.List<com.liferay.portal.model.Organization> getSuborganizations(
+		java.util.List<com.liferay.portal.model.Organization> organizations) {
+		return _organizationLocalService.getSuborganizations(organizations);
 	}
 
 	/**
@@ -751,19 +861,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		long companyId, long organizationId) {
 		return _organizationLocalService.getSuborganizations(companyId,
 			organizationId);
-	}
-
-	/**
-	* Returns the suborganizations of the organizations.
-	*
-	* @param organizations the organizations from which to get
-	suborganizations
-	* @return the suborganizations of the organizations
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.model.Organization> getSuborganizations(
-		java.util.List<com.liferay.portal.model.Organization> organizations) {
-		return _organizationLocalService.getSuborganizations(organizations);
 	}
 
 	/**
@@ -804,12 +901,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 			includeAdministrative);
 	}
 
-	@Override
-	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
-		long userId) {
-		return _organizationLocalService.getUserOrganizations(userId);
-	}
-
 	/**
 	* Returns all the organizations associated with the user. If
 	* includeAdministrative is <code>true</code>, the result includes those
@@ -831,47 +922,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 			includeAdministrative);
 	}
 
-	@Override
-	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
-		long userId, int start, int end) {
-		return _organizationLocalService.getUserOrganizations(userId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
-		return _organizationLocalService.getUserOrganizations(userId, start,
-			end, orderByComparator);
-	}
-
-	@Override
-	public int getUserOrganizationsCount(long userId) {
-		return _organizationLocalService.getUserOrganizationsCount(userId);
-	}
-
-	/**
-	* Returns the userIds of the users associated with the organization.
-	*
-	* @param organizationId the organizationId of the organization
-	* @return long[] the userIds of users associated with the organization
-	*/
-	@Override
-	public long[] getUserPrimaryKeys(long organizationId) {
-		return _organizationLocalService.getUserPrimaryKeys(organizationId);
-	}
-
-	@Override
-	public boolean hasGroupOrganization(long groupId, long organizationId) {
-		return _organizationLocalService.hasGroupOrganization(groupId,
-			organizationId);
-	}
-
-	@Override
-	public boolean hasGroupOrganizations(long groupId) {
-		return _organizationLocalService.hasGroupOrganizations(groupId);
-	}
-
 	/**
 	* Returns <code>true</code> if the password policy has been assigned to the
 	* organization.
@@ -885,12 +935,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	public boolean hasPasswordPolicyOrganization(long passwordPolicyId,
 		long organizationId) {
 		return _organizationLocalService.hasPasswordPolicyOrganization(passwordPolicyId,
-			organizationId);
-	}
-
-	@Override
-	public boolean hasUserOrganization(long userId, long organizationId) {
-		return _organizationLocalService.hasUserOrganization(userId,
 			organizationId);
 	}
 
@@ -949,11 +993,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		return _organizationLocalService.hasUserOrganization(userId,
 			organizationId, inheritSuborganizations,
 			includeSpecifiedOrganization);
-	}
-
-	@Override
-	public boolean hasUserOrganizations(long userId) {
-		return _organizationLocalService.hasUserOrganizations(userId);
 	}
 
 	/**
@@ -1117,60 +1156,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
-	* Returns an ordered range of all the organizations whose name, type, or
-	* location fields match the keywords specified for them, using the indexer.
-	* It is preferable to use this method instead of the non-indexed version
-	* whenever possible for performance reasons.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the organization's company
-	* @param parentOrganizationId the primary key of the organization's parent
-	organization
-	* @param name the name keywords (space separated, optionally
-	<code>null</code>)
-	* @param type the type keywords (optionally <code>null</code>)
-	* @param street the street keywords (optionally <code>null</code>)
-	* @param city the city keywords (optionally <code>null</code>)
-	* @param zip the zipcode keywords (optionally <code>null</code>)
-	* @param region the region keywords (optionally <code>null</code>)
-	* @param country the country keywords (optionally <code>null</code>)
-	* @param params the finder parameters (optionally <code>null</code>). For
-	more information see {@link
-	com.liferay.portlet.usersadmin.util.OrganizationIndexer}.
-	* @param andSearch whether every field must match its keywords or just one
-	field
-	* @param start the lower bound of the range of organizations to return
-	* @param end the upper bound of the range of organizations to return (not
-	inclusive)
-	* @param sort the field and direction by which to sort (optionally
-	<code>null</code>)
-	* @return the matching organizations ordered by <code>sort</code>
-	* @see com.liferay.portlet.usersadmin.util.OrganizationIndexer
-	*/
-	@Override
-	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		long parentOrganizationId, java.lang.String name,
-		java.lang.String type, java.lang.String street, java.lang.String city,
-		java.lang.String zip, java.lang.String region,
-		java.lang.String country,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort) {
-		return _organizationLocalService.search(companyId,
-			parentOrganizationId, name, type, street, city, zip, region,
-			country, params, andSearch, start, end, sort);
-	}
-
-	/**
 	* Returns a name ordered range of all the organizations with the type,
 	* region, and country, and whose name, street, city, and zipcode match the
 	* keywords specified for them, without using the indexer. It is preferable
@@ -1287,6 +1272,60 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
+	* Returns an ordered range of all the organizations whose name, type, or
+	* location fields match the keywords specified for them, using the indexer.
+	* It is preferable to use this method instead of the non-indexed version
+	* whenever possible for performance reasons.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the organization's company
+	* @param parentOrganizationId the primary key of the organization's parent
+	organization
+	* @param name the name keywords (space separated, optionally
+	<code>null</code>)
+	* @param type the type keywords (optionally <code>null</code>)
+	* @param street the street keywords (optionally <code>null</code>)
+	* @param city the city keywords (optionally <code>null</code>)
+	* @param zip the zipcode keywords (optionally <code>null</code>)
+	* @param region the region keywords (optionally <code>null</code>)
+	* @param country the country keywords (optionally <code>null</code>)
+	* @param params the finder parameters (optionally <code>null</code>). For
+	more information see {@link
+	com.liferay.portlet.usersadmin.util.OrganizationIndexer}.
+	* @param andSearch whether every field must match its keywords or just one
+	field
+	* @param start the lower bound of the range of organizations to return
+	* @param end the upper bound of the range of organizations to return (not
+	inclusive)
+	* @param sort the field and direction by which to sort (optionally
+	<code>null</code>)
+	* @return the matching organizations ordered by <code>sort</code>
+	* @see com.liferay.portlet.usersadmin.util.OrganizationIndexer
+	*/
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(long companyId,
+		long parentOrganizationId, java.lang.String name,
+		java.lang.String type, java.lang.String street, java.lang.String city,
+		java.lang.String zip, java.lang.String region,
+		java.lang.String country,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort) {
+		return _organizationLocalService.search(companyId,
+			parentOrganizationId, name, type, street, city, zip, region,
+			country, params, andSearch, start, end, sort);
+	}
+
+	/**
 	* Returns the number of organizations that match the keywords, type,
 	* region, and country.
 	*
@@ -1379,30 +1418,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		return _organizationLocalService.searchOrganizations(companyId,
 			parentOrganizationId, name, type, street, city, zip, region,
 			country, params, andSearch, start, end, sort);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_organizationLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public void setGroupOrganizations(long groupId, long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_organizationLocalService.setGroupOrganizations(groupId, organizationIds);
-	}
-
-	@Override
-	public void setUserOrganizations(long userId, long[] organizationIds) {
-		_organizationLocalService.setUserOrganizations(userId, organizationIds);
 	}
 
 	/**
@@ -1570,18 +1585,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		return _organizationLocalService.updateOrganization(companyId,
 			organizationId, parentOrganizationId, name, type, regionId,
 			countryId, statusId, comments, site, serviceContext);
-	}
-
-	/**
-	* Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param organization the organization
-	* @return the organization that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.Organization updateOrganization(
-		com.liferay.portal.model.Organization organization) {
-		return _organizationLocalService.updateOrganization(organization);
 	}
 
 	/**

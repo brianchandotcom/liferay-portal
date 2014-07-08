@@ -50,11 +50,6 @@ public class CMISRepositoryLocalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static java.lang.Object getSession(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSession(repositoryId);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -62,6 +57,11 @@ public class CMISRepositoryLocalServiceUtil {
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	public static java.lang.Object getSession(long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSession(repositoryId);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry toFileEntry(

@@ -87,7 +87,7 @@ public class ClusterGroupUtil {
 	 */
 	public static List<ClusterGroup> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<ClusterGroup> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -225,7 +225,7 @@ public class ClusterGroupUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.ClusterGroup> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ClusterGroup> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

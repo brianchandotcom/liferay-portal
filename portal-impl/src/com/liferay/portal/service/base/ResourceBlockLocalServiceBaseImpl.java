@@ -138,7 +138,8 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return resourceBlockPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -155,8 +156,8 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return resourceBlockPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -175,8 +176,9 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return resourceBlockPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -252,7 +254,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return resourceBlockLocalService.deleteResourceBlock((ResourceBlock)persistedModel);
+		return deleteResourceBlock((ResourceBlock)persistedModel);
 	}
 
 	@Override

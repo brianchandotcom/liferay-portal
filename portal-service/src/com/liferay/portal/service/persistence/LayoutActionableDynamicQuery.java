@@ -21,7 +21,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link LayoutLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link LayoutLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

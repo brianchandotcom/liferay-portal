@@ -31,6 +31,26 @@ public class ResourceBlockServiceWrapper implements ResourceBlockService,
 		_resourceBlockService = resourceBlockService;
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _resourceBlockService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_resourceBlockService.setBeanIdentifier(beanIdentifier);
+	}
+
 	@Override
 	public void addCompanyScopePermission(long scopeGroupId, long companyId,
 		java.lang.String name, long roleId, java.lang.String actionId)
@@ -55,16 +75,6 @@ public class ResourceBlockServiceWrapper implements ResourceBlockService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourceBlockService.addIndividualScopePermission(companyId, groupId,
 			name, primKey, roleId, actionId);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _resourceBlockService.getBeanIdentifier();
 	}
 
 	@Override
@@ -100,16 +110,6 @@ public class ResourceBlockServiceWrapper implements ResourceBlockService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourceBlockService.removeIndividualScopePermission(companyId,
 			groupId, name, primKey, roleId, actionId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_resourceBlockService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

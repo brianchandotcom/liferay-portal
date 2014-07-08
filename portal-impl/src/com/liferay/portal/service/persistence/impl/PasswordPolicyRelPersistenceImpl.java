@@ -154,7 +154,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	@Override
 	public List<PasswordPolicyRel> findByPasswordPolicyId(
 		long passwordPolicyId, int start, int end,
-		OrderByComparator<PasswordPolicyRel> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -264,8 +264,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 */
 	@Override
 	public PasswordPolicyRel findByPasswordPolicyId_First(
-		long passwordPolicyId,
-		OrderByComparator<PasswordPolicyRel> orderByComparator)
+		long passwordPolicyId, OrderByComparator orderByComparator)
 		throws NoSuchPasswordPolicyRelException {
 		PasswordPolicyRel passwordPolicyRel = fetchByPasswordPolicyId_First(passwordPolicyId,
 				orderByComparator);
@@ -295,8 +294,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 */
 	@Override
 	public PasswordPolicyRel fetchByPasswordPolicyId_First(
-		long passwordPolicyId,
-		OrderByComparator<PasswordPolicyRel> orderByComparator) {
+		long passwordPolicyId, OrderByComparator orderByComparator) {
 		List<PasswordPolicyRel> list = findByPasswordPolicyId(passwordPolicyId,
 				0, 1, orderByComparator);
 
@@ -317,8 +315,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 */
 	@Override
 	public PasswordPolicyRel findByPasswordPolicyId_Last(
-		long passwordPolicyId,
-		OrderByComparator<PasswordPolicyRel> orderByComparator)
+		long passwordPolicyId, OrderByComparator orderByComparator)
 		throws NoSuchPasswordPolicyRelException {
 		PasswordPolicyRel passwordPolicyRel = fetchByPasswordPolicyId_Last(passwordPolicyId,
 				orderByComparator);
@@ -348,8 +345,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 */
 	@Override
 	public PasswordPolicyRel fetchByPasswordPolicyId_Last(
-		long passwordPolicyId,
-		OrderByComparator<PasswordPolicyRel> orderByComparator) {
+		long passwordPolicyId, OrderByComparator orderByComparator) {
 		int count = countByPasswordPolicyId(passwordPolicyId);
 
 		if (count == 0) {
@@ -378,7 +374,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	@Override
 	public PasswordPolicyRel[] findByPasswordPolicyId_PrevAndNext(
 		long passwordPolicyRelId, long passwordPolicyId,
-		OrderByComparator<PasswordPolicyRel> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchPasswordPolicyRelException {
 		PasswordPolicyRel passwordPolicyRel = findByPrimaryKey(passwordPolicyRelId);
 
@@ -410,8 +406,8 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 
 	protected PasswordPolicyRel getByPasswordPolicyId_PrevAndNext(
 		Session session, PasswordPolicyRel passwordPolicyRel,
-		long passwordPolicyId,
-		OrderByComparator<PasswordPolicyRel> orderByComparator, boolean previous) {
+		long passwordPolicyId, OrderByComparator orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1376,7 +1372,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 */
 	@Override
 	public List<PasswordPolicyRel> findAll(int start, int end,
-		OrderByComparator<PasswordPolicyRel> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

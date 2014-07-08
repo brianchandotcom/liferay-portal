@@ -173,10 +173,432 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 		}
 	}
 
+	/**
+	* Returns the primary key of this background task.
+	*
+	* @return the primary key of this background task
+	*/
 	@Override
-	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _backgroundTask.addAttachmentsFolder();
+	public long getPrimaryKey() {
+		return _backgroundTask.getPrimaryKey();
+	}
+
+	/**
+	* Sets the primary key of this background task.
+	*
+	* @param primaryKey the primary key of this background task
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_backgroundTask.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the mvcc version of this background task.
+	*
+	* @return the mvcc version of this background task
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _backgroundTask.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this background task.
+	*
+	* @param mvccVersion the mvcc version of this background task
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_backgroundTask.setMvccVersion(mvccVersion);
+	}
+
+	/**
+	* Returns the background task ID of this background task.
+	*
+	* @return the background task ID of this background task
+	*/
+	@Override
+	public long getBackgroundTaskId() {
+		return _backgroundTask.getBackgroundTaskId();
+	}
+
+	/**
+	* Sets the background task ID of this background task.
+	*
+	* @param backgroundTaskId the background task ID of this background task
+	*/
+	@Override
+	public void setBackgroundTaskId(long backgroundTaskId) {
+		_backgroundTask.setBackgroundTaskId(backgroundTaskId);
+	}
+
+	/**
+	* Returns the group ID of this background task.
+	*
+	* @return the group ID of this background task
+	*/
+	@Override
+	public long getGroupId() {
+		return _backgroundTask.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this background task.
+	*
+	* @param groupId the group ID of this background task
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_backgroundTask.setGroupId(groupId);
+	}
+
+	/**
+	* Returns the company ID of this background task.
+	*
+	* @return the company ID of this background task
+	*/
+	@Override
+	public long getCompanyId() {
+		return _backgroundTask.getCompanyId();
+	}
+
+	/**
+	* Sets the company ID of this background task.
+	*
+	* @param companyId the company ID of this background task
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_backgroundTask.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the user ID of this background task.
+	*
+	* @return the user ID of this background task
+	*/
+	@Override
+	public long getUserId() {
+		return _backgroundTask.getUserId();
+	}
+
+	/**
+	* Sets the user ID of this background task.
+	*
+	* @param userId the user ID of this background task
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_backgroundTask.setUserId(userId);
+	}
+
+	/**
+	* Returns the user uuid of this background task.
+	*
+	* @return the user uuid of this background task
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _backgroundTask.getUserUuid();
+	}
+
+	/**
+	* Sets the user uuid of this background task.
+	*
+	* @param userUuid the user uuid of this background task
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_backgroundTask.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this background task.
+	*
+	* @return the user name of this background task
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _backgroundTask.getUserName();
+	}
+
+	/**
+	* Sets the user name of this background task.
+	*
+	* @param userName the user name of this background task
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_backgroundTask.setUserName(userName);
+	}
+
+	/**
+	* Returns the create date of this background task.
+	*
+	* @return the create date of this background task
+	*/
+	@Override
+	public java.util.Date getCreateDate() {
+		return _backgroundTask.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this background task.
+	*
+	* @param createDate the create date of this background task
+	*/
+	@Override
+	public void setCreateDate(java.util.Date createDate) {
+		_backgroundTask.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the modified date of this background task.
+	*
+	* @return the modified date of this background task
+	*/
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _backgroundTask.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this background task.
+	*
+	* @param modifiedDate the modified date of this background task
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_backgroundTask.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Returns the name of this background task.
+	*
+	* @return the name of this background task
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _backgroundTask.getName();
+	}
+
+	/**
+	* Sets the name of this background task.
+	*
+	* @param name the name of this background task
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_backgroundTask.setName(name);
+	}
+
+	/**
+	* Returns the servlet context names of this background task.
+	*
+	* @return the servlet context names of this background task
+	*/
+	@Override
+	public java.lang.String getServletContextNames() {
+		return _backgroundTask.getServletContextNames();
+	}
+
+	/**
+	* Sets the servlet context names of this background task.
+	*
+	* @param servletContextNames the servlet context names of this background task
+	*/
+	@Override
+	public void setServletContextNames(java.lang.String servletContextNames) {
+		_backgroundTask.setServletContextNames(servletContextNames);
+	}
+
+	/**
+	* Returns the task executor class name of this background task.
+	*
+	* @return the task executor class name of this background task
+	*/
+	@Override
+	public java.lang.String getTaskExecutorClassName() {
+		return _backgroundTask.getTaskExecutorClassName();
+	}
+
+	/**
+	* Sets the task executor class name of this background task.
+	*
+	* @param taskExecutorClassName the task executor class name of this background task
+	*/
+	@Override
+	public void setTaskExecutorClassName(java.lang.String taskExecutorClassName) {
+		_backgroundTask.setTaskExecutorClassName(taskExecutorClassName);
+	}
+
+	/**
+	* Returns the task context of this background task.
+	*
+	* @return the task context of this background task
+	*/
+	@Override
+	public java.lang.String getTaskContext() {
+		return _backgroundTask.getTaskContext();
+	}
+
+	/**
+	* Sets the task context of this background task.
+	*
+	* @param taskContext the task context of this background task
+	*/
+	@Override
+	public void setTaskContext(java.lang.String taskContext) {
+		_backgroundTask.setTaskContext(taskContext);
+	}
+
+	/**
+	* Returns the completed of this background task.
+	*
+	* @return the completed of this background task
+	*/
+	@Override
+	public boolean getCompleted() {
+		return _backgroundTask.getCompleted();
+	}
+
+	/**
+	* Returns <code>true</code> if this background task is completed.
+	*
+	* @return <code>true</code> if this background task is completed; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isCompleted() {
+		return _backgroundTask.isCompleted();
+	}
+
+	/**
+	* Sets whether this background task is completed.
+	*
+	* @param completed the completed of this background task
+	*/
+	@Override
+	public void setCompleted(boolean completed) {
+		_backgroundTask.setCompleted(completed);
+	}
+
+	/**
+	* Returns the completion date of this background task.
+	*
+	* @return the completion date of this background task
+	*/
+	@Override
+	public java.util.Date getCompletionDate() {
+		return _backgroundTask.getCompletionDate();
+	}
+
+	/**
+	* Sets the completion date of this background task.
+	*
+	* @param completionDate the completion date of this background task
+	*/
+	@Override
+	public void setCompletionDate(java.util.Date completionDate) {
+		_backgroundTask.setCompletionDate(completionDate);
+	}
+
+	/**
+	* Returns the status of this background task.
+	*
+	* @return the status of this background task
+	*/
+	@Override
+	public int getStatus() {
+		return _backgroundTask.getStatus();
+	}
+
+	/**
+	* Sets the status of this background task.
+	*
+	* @param status the status of this background task
+	*/
+	@Override
+	public void setStatus(int status) {
+		_backgroundTask.setStatus(status);
+	}
+
+	/**
+	* Returns the status message of this background task.
+	*
+	* @return the status message of this background task
+	*/
+	@Override
+	public java.lang.String getStatusMessage() {
+		return _backgroundTask.getStatusMessage();
+	}
+
+	/**
+	* Sets the status message of this background task.
+	*
+	* @param statusMessage the status message of this background task
+	*/
+	@Override
+	public void setStatusMessage(java.lang.String statusMessage) {
+		_backgroundTask.setStatusMessage(statusMessage);
+	}
+
+	@Override
+	public boolean isNew() {
+		return _backgroundTask.isNew();
+	}
+
+	@Override
+	public void setNew(boolean n) {
+		_backgroundTask.setNew(n);
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _backgroundTask.isCachedModel();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_backgroundTask.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _backgroundTask.isEscapedModel();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _backgroundTask.getPrimaryKeyObj();
+	}
+
+	@Override
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_backgroundTask.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _backgroundTask.getExpandoBridge();
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
+		_backgroundTask.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		_backgroundTask.setExpandoBridgeAttributes(expandoBridge);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		_backgroundTask.setExpandoBridgeAttributes(serviceContext);
 	}
 
 	@Override
@@ -187,6 +609,47 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	@Override
 	public int compareTo(com.liferay.portal.model.BackgroundTask backgroundTask) {
 		return _backgroundTask.compareTo(backgroundTask);
+	}
+
+	@Override
+	public int hashCode() {
+		return _backgroundTask.hashCode();
+	}
+
+	@Override
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.BackgroundTask> toCacheModel() {
+		return _backgroundTask.toCacheModel();
+	}
+
+	@Override
+	public com.liferay.portal.model.BackgroundTask toEscapedModel() {
+		return new BackgroundTaskWrapper(_backgroundTask.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.model.BackgroundTask toUnescapedModel() {
+		return new BackgroundTaskWrapper(_backgroundTask.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _backgroundTask.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _backgroundTask.toXmlString();
+	}
+
+	@Override
+	public void persist() {
+		_backgroundTask.persist();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _backgroundTask.addAttachmentsFolder();
 	}
 
 	@Override
@@ -210,159 +673,9 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 		return _backgroundTask.getAttachmentsFolderId();
 	}
 
-	/**
-	* Returns the background task ID of this background task.
-	*
-	* @return the background task ID of this background task
-	*/
-	@Override
-	public long getBackgroundTaskId() {
-		return _backgroundTask.getBackgroundTaskId();
-	}
-
-	/**
-	* Returns the company ID of this background task.
-	*
-	* @return the company ID of this background task
-	*/
-	@Override
-	public long getCompanyId() {
-		return _backgroundTask.getCompanyId();
-	}
-
-	/**
-	* Returns the completed of this background task.
-	*
-	* @return the completed of this background task
-	*/
-	@Override
-	public boolean getCompleted() {
-		return _backgroundTask.getCompleted();
-	}
-
-	/**
-	* Returns the completion date of this background task.
-	*
-	* @return the completion date of this background task
-	*/
-	@Override
-	public java.util.Date getCompletionDate() {
-		return _backgroundTask.getCompletionDate();
-	}
-
-	/**
-	* Returns the create date of this background task.
-	*
-	* @return the create date of this background task
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _backgroundTask.getCreateDate();
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _backgroundTask.getExpandoBridge();
-	}
-
-	/**
-	* Returns the group ID of this background task.
-	*
-	* @return the group ID of this background task
-	*/
-	@Override
-	public long getGroupId() {
-		return _backgroundTask.getGroupId();
-	}
-
-	/**
-	* Returns the modified date of this background task.
-	*
-	* @return the modified date of this background task
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _backgroundTask.getModifiedDate();
-	}
-
-	/**
-	* Returns the mvcc version of this background task.
-	*
-	* @return the mvcc version of this background task
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _backgroundTask.getMvccVersion();
-	}
-
-	/**
-	* Returns the name of this background task.
-	*
-	* @return the name of this background task
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _backgroundTask.getName();
-	}
-
-	/**
-	* Returns the primary key of this background task.
-	*
-	* @return the primary key of this background task
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _backgroundTask.getPrimaryKey();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _backgroundTask.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the servlet context names of this background task.
-	*
-	* @return the servlet context names of this background task
-	*/
-	@Override
-	public java.lang.String getServletContextNames() {
-		return _backgroundTask.getServletContextNames();
-	}
-
-	/**
-	* Returns the status of this background task.
-	*
-	* @return the status of this background task
-	*/
-	@Override
-	public int getStatus() {
-		return _backgroundTask.getStatus();
-	}
-
 	@Override
 	public java.lang.String getStatusLabel() {
 		return _backgroundTask.getStatusLabel();
-	}
-
-	/**
-	* Returns the status message of this background task.
-	*
-	* @return the status message of this background task
-	*/
-	@Override
-	public java.lang.String getStatusMessage() {
-		return _backgroundTask.getStatusMessage();
-	}
-
-	/**
-	* Returns the task context of this background task.
-	*
-	* @return the task context of this background task
-	*/
-	@Override
-	public java.lang.String getTaskContext() {
-		return _backgroundTask.getTaskContext();
 	}
 
 	@Override
@@ -370,322 +683,9 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 		return _backgroundTask.getTaskContextMap();
 	}
 
-	/**
-	* Returns the task executor class name of this background task.
-	*
-	* @return the task executor class name of this background task
-	*/
-	@Override
-	public java.lang.String getTaskExecutorClassName() {
-		return _backgroundTask.getTaskExecutorClassName();
-	}
-
-	/**
-	* Returns the user ID of this background task.
-	*
-	* @return the user ID of this background task
-	*/
-	@Override
-	public long getUserId() {
-		return _backgroundTask.getUserId();
-	}
-
-	/**
-	* Returns the user name of this background task.
-	*
-	* @return the user name of this background task
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _backgroundTask.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this background task.
-	*
-	* @return the user uuid of this background task
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _backgroundTask.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _backgroundTask.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _backgroundTask.isCachedModel();
-	}
-
-	/**
-	* Returns <code>true</code> if this background task is completed.
-	*
-	* @return <code>true</code> if this background task is completed; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isCompleted() {
-		return _backgroundTask.isCompleted();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _backgroundTask.isEscapedModel();
-	}
-
 	@Override
 	public boolean isInProgress() {
 		return _backgroundTask.isInProgress();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _backgroundTask.isNew();
-	}
-
-	@Override
-	public void persist() {
-		_backgroundTask.persist();
-	}
-
-	/**
-	* Sets the background task ID of this background task.
-	*
-	* @param backgroundTaskId the background task ID of this background task
-	*/
-	@Override
-	public void setBackgroundTaskId(long backgroundTaskId) {
-		_backgroundTask.setBackgroundTaskId(backgroundTaskId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_backgroundTask.setCachedModel(cachedModel);
-	}
-
-	/**
-	* Sets the company ID of this background task.
-	*
-	* @param companyId the company ID of this background task
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_backgroundTask.setCompanyId(companyId);
-	}
-
-	/**
-	* Sets whether this background task is completed.
-	*
-	* @param completed the completed of this background task
-	*/
-	@Override
-	public void setCompleted(boolean completed) {
-		_backgroundTask.setCompleted(completed);
-	}
-
-	/**
-	* Sets the completion date of this background task.
-	*
-	* @param completionDate the completion date of this background task
-	*/
-	@Override
-	public void setCompletionDate(java.util.Date completionDate) {
-		_backgroundTask.setCompletionDate(completionDate);
-	}
-
-	/**
-	* Sets the create date of this background task.
-	*
-	* @param createDate the create date of this background task
-	*/
-	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_backgroundTask.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.model.BaseModel<?> baseModel) {
-		_backgroundTask.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
-		_backgroundTask.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		_backgroundTask.setExpandoBridgeAttributes(serviceContext);
-	}
-
-	/**
-	* Sets the group ID of this background task.
-	*
-	* @param groupId the group ID of this background task
-	*/
-	@Override
-	public void setGroupId(long groupId) {
-		_backgroundTask.setGroupId(groupId);
-	}
-
-	/**
-	* Sets the modified date of this background task.
-	*
-	* @param modifiedDate the modified date of this background task
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_backgroundTask.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Sets the mvcc version of this background task.
-	*
-	* @param mvccVersion the mvcc version of this background task
-	*/
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_backgroundTask.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	* Sets the name of this background task.
-	*
-	* @param name the name of this background task
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_backgroundTask.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_backgroundTask.setNew(n);
-	}
-
-	/**
-	* Sets the primary key of this background task.
-	*
-	* @param primaryKey the primary key of this background task
-	*/
-	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_backgroundTask.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_backgroundTask.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets the servlet context names of this background task.
-	*
-	* @param servletContextNames the servlet context names of this background task
-	*/
-	@Override
-	public void setServletContextNames(java.lang.String servletContextNames) {
-		_backgroundTask.setServletContextNames(servletContextNames);
-	}
-
-	/**
-	* Sets the status of this background task.
-	*
-	* @param status the status of this background task
-	*/
-	@Override
-	public void setStatus(int status) {
-		_backgroundTask.setStatus(status);
-	}
-
-	/**
-	* Sets the status message of this background task.
-	*
-	* @param statusMessage the status message of this background task
-	*/
-	@Override
-	public void setStatusMessage(java.lang.String statusMessage) {
-		_backgroundTask.setStatusMessage(statusMessage);
-	}
-
-	/**
-	* Sets the task context of this background task.
-	*
-	* @param taskContext the task context of this background task
-	*/
-	@Override
-	public void setTaskContext(java.lang.String taskContext) {
-		_backgroundTask.setTaskContext(taskContext);
-	}
-
-	/**
-	* Sets the task executor class name of this background task.
-	*
-	* @param taskExecutorClassName the task executor class name of this background task
-	*/
-	@Override
-	public void setTaskExecutorClassName(java.lang.String taskExecutorClassName) {
-		_backgroundTask.setTaskExecutorClassName(taskExecutorClassName);
-	}
-
-	/**
-	* Sets the user ID of this background task.
-	*
-	* @param userId the user ID of this background task
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_backgroundTask.setUserId(userId);
-	}
-
-	/**
-	* Sets the user name of this background task.
-	*
-	* @param userName the user name of this background task
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_backgroundTask.setUserName(userName);
-	}
-
-	/**
-	* Sets the user uuid of this background task.
-	*
-	* @param userUuid the user uuid of this background task
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_backgroundTask.setUserUuid(userUuid);
-	}
-
-	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.BackgroundTask> toCacheModel() {
-		return _backgroundTask.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.model.BackgroundTask toEscapedModel() {
-		return new BackgroundTaskWrapper(_backgroundTask.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _backgroundTask.toString();
-	}
-
-	@Override
-	public com.liferay.portal.model.BackgroundTask toUnescapedModel() {
-		return new BackgroundTaskWrapper(_backgroundTask.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _backgroundTask.toXmlString();
 	}
 
 	@Override

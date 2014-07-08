@@ -77,7 +77,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserTracker> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user tracker in the ordered set where companyId = &#63;.
@@ -89,7 +89,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public com.liferay.portal.model.UserTracker findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserTrackerException;
 
 	/**
@@ -101,7 +101,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public com.liferay.portal.model.UserTracker fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user tracker in the ordered set where companyId = &#63;.
@@ -113,7 +113,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public com.liferay.portal.model.UserTracker findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserTrackerException;
 
 	/**
@@ -125,7 +125,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public com.liferay.portal.model.UserTracker fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user trackers before and after the current user tracker in the ordered set where companyId = &#63;.
@@ -138,7 +138,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public com.liferay.portal.model.UserTracker[] findByCompanyId_PrevAndNext(
 		long userTrackerId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserTrackerException;
 
 	/**
@@ -195,7 +195,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserTracker> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user tracker in the ordered set where userId = &#63;.
@@ -207,7 +207,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public com.liferay.portal.model.UserTracker findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserTrackerException;
 
 	/**
@@ -219,7 +219,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public com.liferay.portal.model.UserTracker fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user tracker in the ordered set where userId = &#63;.
@@ -230,7 +230,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	* @throws com.liferay.portal.NoSuchUserTrackerException if a matching user tracker could not be found
 	*/
 	public com.liferay.portal.model.UserTracker findByUserId_Last(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserTrackerException;
 
 	/**
@@ -242,7 +242,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public com.liferay.portal.model.UserTracker fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user trackers before and after the current user tracker in the ordered set where userId = &#63;.
@@ -255,7 +255,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public com.liferay.portal.model.UserTracker[] findByUserId_PrevAndNext(
 		long userTrackerId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserTrackerException;
 
 	/**
@@ -312,7 +312,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserTracker> findBySessionId(
 		java.lang.String sessionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user tracker in the ordered set where sessionId = &#63;.
@@ -324,7 +324,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public com.liferay.portal.model.UserTracker findBySessionId_First(
 		java.lang.String sessionId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserTrackerException;
 
 	/**
@@ -336,7 +336,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public com.liferay.portal.model.UserTracker fetchBySessionId_First(
 		java.lang.String sessionId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user tracker in the ordered set where sessionId = &#63;.
@@ -348,7 +348,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public com.liferay.portal.model.UserTracker findBySessionId_Last(
 		java.lang.String sessionId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserTrackerException;
 
 	/**
@@ -360,7 +360,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public com.liferay.portal.model.UserTracker fetchBySessionId_Last(
 		java.lang.String sessionId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user trackers before and after the current user tracker in the ordered set where sessionId = &#63;.
@@ -373,7 +373,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public com.liferay.portal.model.UserTracker[] findBySessionId_PrevAndNext(
 		long userTrackerId, java.lang.String sessionId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserTrackerException;
 
 	/**
@@ -486,7 +486,7 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserTracker> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTracker> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the user trackers from the database.

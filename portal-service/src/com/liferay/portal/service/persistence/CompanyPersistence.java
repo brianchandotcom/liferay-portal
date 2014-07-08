@@ -213,7 +213,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	*/
 	public java.util.List<com.liferay.portal.model.Company> findBySystem(
 		boolean system, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first company in the ordered set where system = &#63;.
@@ -224,7 +224,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
 	*/
 	public com.liferay.portal.model.Company findBySystem_First(boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchCompanyException;
 
 	/**
@@ -236,7 +236,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	*/
 	public com.liferay.portal.model.Company fetchBySystem_First(
 		boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last company in the ordered set where system = &#63;.
@@ -247,7 +247,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
 	*/
 	public com.liferay.portal.model.Company findBySystem_Last(boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchCompanyException;
 
 	/**
@@ -258,7 +258,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	* @return the last matching company, or <code>null</code> if a matching company could not be found
 	*/
 	public com.liferay.portal.model.Company fetchBySystem_Last(boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the companies before and after the current company in the ordered set where system = &#63;.
@@ -271,7 +271,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	*/
 	public com.liferay.portal.model.Company[] findBySystem_PrevAndNext(
 		long companyId, boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchCompanyException;
 
 	/**
@@ -382,7 +382,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	*/
 	public java.util.List<com.liferay.portal.model.Company> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the companies from the database.

@@ -141,7 +141,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 */
 	@Override
 	public List<Image> findByLtSize(int size, int start, int end,
-		OrderByComparator<Image> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -239,7 +239,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 */
 	@Override
 	public Image findByLtSize_First(int size,
-		OrderByComparator<Image> orderByComparator) throws NoSuchImageException {
+		OrderByComparator orderByComparator) throws NoSuchImageException {
 		Image image = fetchByLtSize_First(size, orderByComparator);
 
 		if (image != null) {
@@ -267,7 +267,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 */
 	@Override
 	public Image fetchByLtSize_First(int size,
-		OrderByComparator<Image> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<Image> list = findByLtSize(size, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -286,8 +286,8 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 * @throws com.liferay.portal.NoSuchImageException if a matching image could not be found
 	 */
 	@Override
-	public Image findByLtSize_Last(int size,
-		OrderByComparator<Image> orderByComparator) throws NoSuchImageException {
+	public Image findByLtSize_Last(int size, OrderByComparator orderByComparator)
+		throws NoSuchImageException {
 		Image image = fetchByLtSize_Last(size, orderByComparator);
 
 		if (image != null) {
@@ -315,7 +315,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 */
 	@Override
 	public Image fetchByLtSize_Last(int size,
-		OrderByComparator<Image> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByLtSize(size);
 
 		if (count == 0) {
@@ -343,7 +343,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 */
 	@Override
 	public Image[] findByLtSize_PrevAndNext(long imageId, int size,
-		OrderByComparator<Image> orderByComparator) throws NoSuchImageException {
+		OrderByComparator orderByComparator) throws NoSuchImageException {
 		Image image = findByPrimaryKey(imageId);
 
 		Session session = null;
@@ -372,7 +372,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	}
 
 	protected Image getByLtSize_PrevAndNext(Session session, Image image,
-		int size, OrderByComparator<Image> orderByComparator, boolean previous) {
+		int size, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1008,7 +1008,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 */
 	@Override
 	public List<Image> findAll(int start, int end,
-		OrderByComparator<Image> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

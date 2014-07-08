@@ -148,7 +148,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 */
 	@Override
 	public List<LayoutSet> findByGroupId(long groupId, int start, int end,
-		OrderByComparator<LayoutSet> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -254,8 +254,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 */
 	@Override
 	public LayoutSet findByGroupId_First(long groupId,
-		OrderByComparator<LayoutSet> orderByComparator)
-		throws NoSuchLayoutSetException {
+		OrderByComparator orderByComparator) throws NoSuchLayoutSetException {
 		LayoutSet layoutSet = fetchByGroupId_First(groupId, orderByComparator);
 
 		if (layoutSet != null) {
@@ -283,7 +282,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 */
 	@Override
 	public LayoutSet fetchByGroupId_First(long groupId,
-		OrderByComparator<LayoutSet> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<LayoutSet> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -303,8 +302,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 */
 	@Override
 	public LayoutSet findByGroupId_Last(long groupId,
-		OrderByComparator<LayoutSet> orderByComparator)
-		throws NoSuchLayoutSetException {
+		OrderByComparator orderByComparator) throws NoSuchLayoutSetException {
 		LayoutSet layoutSet = fetchByGroupId_Last(groupId, orderByComparator);
 
 		if (layoutSet != null) {
@@ -332,7 +330,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 */
 	@Override
 	public LayoutSet fetchByGroupId_Last(long groupId,
-		OrderByComparator<LayoutSet> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -360,7 +358,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 */
 	@Override
 	public LayoutSet[] findByGroupId_PrevAndNext(long layoutSetId,
-		long groupId, OrderByComparator<LayoutSet> orderByComparator)
+		long groupId, OrderByComparator orderByComparator)
 		throws NoSuchLayoutSetException {
 		LayoutSet layoutSet = findByPrimaryKey(layoutSetId);
 
@@ -390,8 +388,8 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	}
 
 	protected LayoutSet getByGroupId_PrevAndNext(Session session,
-		LayoutSet layoutSet, long groupId,
-		OrderByComparator<LayoutSet> orderByComparator, boolean previous) {
+		LayoutSet layoutSet, long groupId, OrderByComparator orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -632,7 +630,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	@Override
 	public List<LayoutSet> findByLayoutSetPrototypeUuid(
 		String layoutSetPrototypeUuid, int start, int end,
-		OrderByComparator<LayoutSet> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -757,8 +755,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 */
 	@Override
 	public LayoutSet findByLayoutSetPrototypeUuid_First(
-		String layoutSetPrototypeUuid,
-		OrderByComparator<LayoutSet> orderByComparator)
+		String layoutSetPrototypeUuid, OrderByComparator orderByComparator)
 		throws NoSuchLayoutSetException {
 		LayoutSet layoutSet = fetchByLayoutSetPrototypeUuid_First(layoutSetPrototypeUuid,
 				orderByComparator);
@@ -788,8 +785,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 */
 	@Override
 	public LayoutSet fetchByLayoutSetPrototypeUuid_First(
-		String layoutSetPrototypeUuid,
-		OrderByComparator<LayoutSet> orderByComparator) {
+		String layoutSetPrototypeUuid, OrderByComparator orderByComparator) {
 		List<LayoutSet> list = findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid,
 				0, 1, orderByComparator);
 
@@ -810,8 +806,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 */
 	@Override
 	public LayoutSet findByLayoutSetPrototypeUuid_Last(
-		String layoutSetPrototypeUuid,
-		OrderByComparator<LayoutSet> orderByComparator)
+		String layoutSetPrototypeUuid, OrderByComparator orderByComparator)
 		throws NoSuchLayoutSetException {
 		LayoutSet layoutSet = fetchByLayoutSetPrototypeUuid_Last(layoutSetPrototypeUuid,
 				orderByComparator);
@@ -841,8 +836,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 */
 	@Override
 	public LayoutSet fetchByLayoutSetPrototypeUuid_Last(
-		String layoutSetPrototypeUuid,
-		OrderByComparator<LayoutSet> orderByComparator) {
+		String layoutSetPrototypeUuid, OrderByComparator orderByComparator) {
 		int count = countByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 
 		if (count == 0) {
@@ -871,8 +865,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	@Override
 	public LayoutSet[] findByLayoutSetPrototypeUuid_PrevAndNext(
 		long layoutSetId, String layoutSetPrototypeUuid,
-		OrderByComparator<LayoutSet> orderByComparator)
-		throws NoSuchLayoutSetException {
+		OrderByComparator orderByComparator) throws NoSuchLayoutSetException {
 		LayoutSet layoutSet = findByPrimaryKey(layoutSetId);
 
 		Session session = null;
@@ -902,7 +895,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 
 	protected LayoutSet getByLayoutSetPrototypeUuid_PrevAndNext(
 		Session session, LayoutSet layoutSet, String layoutSetPrototypeUuid,
-		OrderByComparator<LayoutSet> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1914,7 +1907,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	 */
 	@Override
 	public List<LayoutSet> findAll(int start, int end,
-		OrderByComparator<LayoutSet> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

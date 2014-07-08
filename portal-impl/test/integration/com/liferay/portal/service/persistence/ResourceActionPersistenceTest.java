@@ -217,7 +217,7 @@ public class ResourceActionPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<ResourceAction> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ResourceAction",
 			"mvccVersion", true, "resourceActionId", true, "name", true,
 			"actionId", true, "bitwiseValue", true);

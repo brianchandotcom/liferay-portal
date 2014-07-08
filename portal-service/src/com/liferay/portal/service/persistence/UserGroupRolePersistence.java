@@ -77,7 +77,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroupRole> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user group role in the ordered set where userId = &#63;.
@@ -89,7 +89,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupRoleException;
 
 	/**
@@ -101,7 +101,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user group role in the ordered set where userId = &#63;.
@@ -113,7 +113,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupRoleException;
 
 	/**
@@ -125,7 +125,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user group roles before and after the current user group role in the ordered set where userId = &#63;.
@@ -139,7 +139,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	public com.liferay.portal.model.UserGroupRole[] findByUserId_PrevAndNext(
 		com.liferay.portal.service.persistence.UserGroupRolePK userGroupRolePK,
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupRoleException;
 
 	/**
@@ -196,7 +196,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroupRole> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user group role in the ordered set where groupId = &#63;.
@@ -208,7 +208,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupRoleException;
 
 	/**
@@ -220,7 +220,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user group role in the ordered set where groupId = &#63;.
@@ -232,7 +232,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupRoleException;
 
 	/**
@@ -244,7 +244,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user group roles before and after the current user group role in the ordered set where groupId = &#63;.
@@ -258,7 +258,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	public com.liferay.portal.model.UserGroupRole[] findByGroupId_PrevAndNext(
 		com.liferay.portal.service.persistence.UserGroupRolePK userGroupRolePK,
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupRoleException;
 
 	/**
@@ -315,7 +315,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroupRole> findByRoleId(
 		long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user group role in the ordered set where roleId = &#63;.
@@ -327,7 +327,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole findByRoleId_First(
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupRoleException;
 
 	/**
@@ -339,7 +339,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole fetchByRoleId_First(
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user group role in the ordered set where roleId = &#63;.
@@ -351,7 +351,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole findByRoleId_Last(
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupRoleException;
 
 	/**
@@ -363,7 +363,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole fetchByRoleId_Last(
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user group roles before and after the current user group role in the ordered set where roleId = &#63;.
@@ -377,7 +377,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	public com.liferay.portal.model.UserGroupRole[] findByRoleId_PrevAndNext(
 		com.liferay.portal.service.persistence.UserGroupRolePK userGroupRolePK,
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupRoleException;
 
 	/**
@@ -437,7 +437,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroupRole> findByU_G(
 		long userId, long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user group role in the ordered set where userId = &#63; and groupId = &#63;.
@@ -450,7 +450,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole findByU_G_First(long userId,
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupRoleException;
 
 	/**
@@ -463,7 +463,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole fetchByU_G_First(
 		long userId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user group role in the ordered set where userId = &#63; and groupId = &#63;.
@@ -476,7 +476,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole findByU_G_Last(long userId,
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupRoleException;
 
 	/**
@@ -489,7 +489,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole fetchByU_G_Last(long userId,
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user group roles before and after the current user group role in the ordered set where userId = &#63; and groupId = &#63;.
@@ -504,7 +504,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	public com.liferay.portal.model.UserGroupRole[] findByU_G_PrevAndNext(
 		com.liferay.portal.service.persistence.UserGroupRolePK userGroupRolePK,
 		long userId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupRoleException;
 
 	/**
@@ -566,7 +566,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroupRole> findByG_R(
 		long groupId, long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user group role in the ordered set where groupId = &#63; and roleId = &#63;.
@@ -579,7 +579,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole findByG_R_First(
 		long groupId, long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupRoleException;
 
 	/**
@@ -592,7 +592,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole fetchByG_R_First(
 		long groupId, long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user group role in the ordered set where groupId = &#63; and roleId = &#63;.
@@ -605,7 +605,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole findByG_R_Last(long groupId,
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupRoleException;
 
 	/**
@@ -618,7 +618,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public com.liferay.portal.model.UserGroupRole fetchByG_R_Last(
 		long groupId, long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user group roles before and after the current user group role in the ordered set where groupId = &#63; and roleId = &#63;.
@@ -633,7 +633,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	public com.liferay.portal.model.UserGroupRole[] findByG_R_PrevAndNext(
 		com.liferay.portal.service.persistence.UserGroupRolePK userGroupRolePK,
 		long groupId, long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupRoleException;
 
 	/**
@@ -751,7 +751,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroupRole> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the user group roles from the database.

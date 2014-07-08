@@ -133,7 +133,8 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return portalPreferencesPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -150,8 +151,8 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return portalPreferencesPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -170,8 +171,9 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return portalPreferencesPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -247,7 +249,7 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return portalPreferencesLocalService.deletePortalPreferences((PortalPreferences)persistedModel);
+		return deletePortalPreferences((PortalPreferences)persistedModel);
 	}
 
 	@Override

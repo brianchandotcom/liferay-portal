@@ -21,7 +21,7 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link RoleLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link RoleLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

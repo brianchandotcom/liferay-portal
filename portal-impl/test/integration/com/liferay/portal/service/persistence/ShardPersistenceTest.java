@@ -212,7 +212,7 @@ public class ShardPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<Shard> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Shard", "mvccVersion",
 			true, "shardId", true, "classNameId", true, "classPK", true,
 			"name", true);

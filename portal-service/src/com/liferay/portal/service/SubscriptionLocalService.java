@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,9 +51,186 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	* @param subscription the subscription
 	* @return the subscription that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Subscription addSubscription(
 		com.liferay.portal.model.Subscription subscription);
+
+	/**
+	* Creates a new subscription with the primary key. Does not add the subscription to the database.
+	*
+	* @param subscriptionId the primary key for the new subscription
+	* @return the new subscription
+	*/
+	public com.liferay.portal.model.Subscription createSubscription(
+		long subscriptionId);
+
+	/**
+	* Deletes the subscription with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param subscriptionId the primary key of the subscription
+	* @return the subscription that was removed
+	* @throws PortalException if a subscription with the primary key could not be found
+	*/
+	public com.liferay.portal.model.Subscription deleteSubscription(
+		long subscriptionId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Deletes the subscription from the database. Also notifies the appropriate model listeners.
+	*
+	* @param subscription the subscription
+	* @return the subscription that was removed
+	* @throws PortalException
+	*/
+	public com.liferay.portal.model.Subscription deleteSubscription(
+		com.liferay.portal.model.Subscription subscription)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SubscriptionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end);
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SubscriptionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows that match the dynamic query
+	*/
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows that match the dynamic query
+	*/
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Subscription fetchSubscription(
+		long subscriptionId);
+
+	/**
+	* Returns the subscription with the primary key.
+	*
+	* @param subscriptionId the primary key of the subscription
+	* @return the subscription
+	* @throws PortalException if a subscription with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Subscription getSubscription(
+		long subscriptionId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Returns a range of all the subscriptions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SubscriptionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of subscriptions
+	* @param end the upper bound of the range of subscriptions (not inclusive)
+	* @return the range of subscriptions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Subscription> getSubscriptions(
+		int start, int end);
+
+	/**
+	* Returns the number of subscriptions.
+	*
+	* @return the number of subscriptions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSubscriptionsCount();
+
+	/**
+	* Updates the subscription in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param subscription the subscription
+	* @return the subscription that was updated
+	*/
+	public com.liferay.portal.model.Subscription updateSubscription(
+		com.liferay.portal.model.Subscription subscription);
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Subscribes the user to the entity, notifying him the instant the entity
@@ -110,47 +286,6 @@ public interface SubscriptionLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Creates a new subscription with the primary key. Does not add the subscription to the database.
-	*
-	* @param subscriptionId the primary key for the new subscription
-	* @return the new subscription
-	*/
-	public com.liferay.portal.model.Subscription createSubscription(
-		long subscriptionId);
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Deletes the subscription from the database. Also notifies the appropriate model listeners.
-	*
-	* @param subscription the subscription
-	* @return the subscription that was removed
-	* @throws PortalException
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Subscription deleteSubscription(
-		com.liferay.portal.model.Subscription subscription)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Deletes the subscription with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param subscriptionId the primary key of the subscription
-	* @return the subscription that was removed
-	* @throws PortalException if a subscription with the primary key could not be found
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Subscription deleteSubscription(
-		long subscriptionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
 	* Deletes the user's subscription to the entity. A social activity with the
 	* unsubscribe action is created.
 	*
@@ -165,6 +300,15 @@ public interface SubscriptionLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
+	* Deletes all the subscriptions of the user.
+	*
+	* @param userId the primary key of the user
+	* @throws PortalException if a portal exception occurred
+	*/
+	public void deleteSubscriptions(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
 	* Deletes all the subscriptions to the entity.
 	*
 	* @param companyId the primary key of the company
@@ -174,100 +318,6 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	*/
 	public void deleteSubscriptions(long companyId, java.lang.String className,
 		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Deletes all the subscriptions of the user.
-	*
-	* @param userId the primary key of the user
-	* @throws PortalException if a portal exception occurred
-	*/
-	public void deleteSubscriptions(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SubscriptionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end);
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SubscriptionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Subscription fetchSubscription(
-		long subscriptionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -286,16 +336,17 @@ public interface SubscriptionLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Returns the subscription with the primary key.
+	* Returns all the subscriptions of the user to the entities.
 	*
-	* @param subscriptionId the primary key of the subscription
-	* @return the subscription
-	* @throws PortalException if a subscription with the primary key could not be found
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPKs the primary key of the entities
+	* @return the subscriptions of the user to the entities
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Subscription getSubscription(
-		long subscriptionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public java.util.List<com.liferay.portal.model.Subscription> getSubscriptions(
+		long companyId, long userId, java.lang.String className, long[] classPKs);
 
 	/**
 	* Returns all the subscriptions to the entity.
@@ -310,54 +361,6 @@ public interface SubscriptionLocalService extends BaseLocalService,
 		long companyId, java.lang.String className, long classPK);
 
 	/**
-	* Returns all the subscriptions of the user to the entities.
-	*
-	* @param companyId the primary key of the company
-	* @param userId the primary key of the user
-	* @param className the entity's class name
-	* @param classPKs the primary key of the entities
-	* @return the subscriptions of the user to the entities
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Subscription> getSubscriptions(
-		long companyId, long userId, java.lang.String className, long[] classPKs);
-
-	/**
-	* Returns a range of all the subscriptions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SubscriptionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of subscriptions
-	* @param end the upper bound of the range of subscriptions (not inclusive)
-	* @return the range of subscriptions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Subscription> getSubscriptions(
-		int start, int end);
-
-	/**
-	* Returns the number of subscriptions.
-	*
-	* @return the number of subscriptions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSubscriptionsCount();
-
-	/**
-	* Returns all the subscriptions of the user to the entities with the class
-	* name.
-	*
-	* @param userId the primary key of the user
-	* @param className the entity's class name
-	* @return the subscriptions of the user to the entities with the class name
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Subscription> getUserSubscriptions(
-		long userId, java.lang.String className);
-
-	/**
 	* Returns an ordered range of all the subscriptions of the user.
 	*
 	* @param userId the primary key of the user
@@ -370,6 +373,18 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portal.model.Subscription> getUserSubscriptions(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Subscription> orderByComparator);
+
+	/**
+	* Returns all the subscriptions of the user to the entities with the class
+	* name.
+	*
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @return the subscriptions of the user to the entities with the class name
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Subscription> getUserSubscriptions(
+		long userId, java.lang.String className);
 
 	/**
 	* Returns the number of subscriptions of the user.
@@ -408,21 +423,4 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isSubscribed(long companyId, long userId,
 		java.lang.String className, long[] classPKs);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	/**
-	* Updates the subscription in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param subscription the subscription
-	* @return the subscription that was updated
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Subscription updateSubscription(
-		com.liferay.portal.model.Subscription subscription);
 }

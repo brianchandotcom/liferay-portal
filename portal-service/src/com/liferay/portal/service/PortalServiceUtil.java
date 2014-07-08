@@ -40,9 +40,6 @@ public class PortalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.PortalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static java.lang.String getAutoDeployDirectory() {
-		return getService().getAutoDeployDirectory();
-	}
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -53,10 +50,6 @@ public class PortalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static int getBuildNumber() {
-		return getService().getBuildNumber();
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -64,6 +57,23 @@ public class PortalServiceUtil {
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	public static java.lang.String getAutoDeployDirectory() {
+		return getService().getAutoDeployDirectory();
+	}
+
+	public static int getBuildNumber() {
+		return getService().getBuildNumber();
+	}
+
+	public static void testAddClassName_Rollback(
+		java.lang.String classNameValue) {
+		getService().testAddClassName_Rollback(classNameValue);
+	}
+
+	public static void testAddClassName_Success(java.lang.String classNameValue) {
+		getService().testAddClassName_Success(classNameValue);
 	}
 
 	public static void testAddClassNameAndTestTransactionPortletBar_PortalRollback(
@@ -82,15 +92,6 @@ public class PortalServiceUtil {
 		java.lang.String transactionPortletBarText) {
 		getService()
 			.testAddClassNameAndTestTransactionPortletBar_Success(transactionPortletBarText);
-	}
-
-	public static void testAddClassName_Rollback(
-		java.lang.String classNameValue) {
-		getService().testAddClassName_Rollback(classNameValue);
-	}
-
-	public static void testAddClassName_Success(java.lang.String classNameValue) {
-		getService().testAddClassName_Success(classNameValue);
 	}
 
 	public static void testAutoSyncHibernateSessionStateOnTxCreation() {

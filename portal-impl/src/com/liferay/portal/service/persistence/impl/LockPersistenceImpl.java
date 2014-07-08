@@ -151,7 +151,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public List<Lock> findByUuid(String uuid, int start, int end,
-		OrderByComparator<Lock> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -271,7 +271,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public Lock findByUuid_First(String uuid,
-		OrderByComparator<Lock> orderByComparator) throws NoSuchLockException {
+		OrderByComparator orderByComparator) throws NoSuchLockException {
 		Lock lock = fetchByUuid_First(uuid, orderByComparator);
 
 		if (lock != null) {
@@ -299,7 +299,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public Lock fetchByUuid_First(String uuid,
-		OrderByComparator<Lock> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<Lock> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -318,8 +318,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 * @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
 	 */
 	@Override
-	public Lock findByUuid_Last(String uuid,
-		OrderByComparator<Lock> orderByComparator) throws NoSuchLockException {
+	public Lock findByUuid_Last(String uuid, OrderByComparator orderByComparator)
+		throws NoSuchLockException {
 		Lock lock = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (lock != null) {
@@ -347,7 +347,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public Lock fetchByUuid_Last(String uuid,
-		OrderByComparator<Lock> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -374,7 +374,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public Lock[] findByUuid_PrevAndNext(long lockId, String uuid,
-		OrderByComparator<Lock> orderByComparator) throws NoSuchLockException {
+		OrderByComparator orderByComparator) throws NoSuchLockException {
 		Lock lock = findByPrimaryKey(lockId);
 
 		Session session = null;
@@ -403,7 +403,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	}
 
 	protected Lock getByUuid_PrevAndNext(Session session, Lock lock,
-		String uuid, OrderByComparator<Lock> orderByComparator, boolean previous) {
+		String uuid, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -671,7 +671,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public List<Lock> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator<Lock> orderByComparator) {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -801,7 +801,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public Lock findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator<Lock> orderByComparator) throws NoSuchLockException {
+		OrderByComparator orderByComparator) throws NoSuchLockException {
 		Lock lock = fetchByUuid_C_First(uuid, companyId, orderByComparator);
 
 		if (lock != null) {
@@ -833,7 +833,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public Lock fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator<Lock> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<Lock> list = findByUuid_C(uuid, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -854,7 +854,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public Lock findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator<Lock> orderByComparator) throws NoSuchLockException {
+		OrderByComparator orderByComparator) throws NoSuchLockException {
 		Lock lock = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 
 		if (lock != null) {
@@ -886,7 +886,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public Lock fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator<Lock> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -915,7 +915,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public Lock[] findByUuid_C_PrevAndNext(long lockId, String uuid,
-		long companyId, OrderByComparator<Lock> orderByComparator)
+		long companyId, OrderByComparator orderByComparator)
 		throws NoSuchLockException {
 		Lock lock = findByPrimaryKey(lockId);
 
@@ -945,7 +945,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	}
 
 	protected Lock getByUuid_C_PrevAndNext(Session session, Lock lock,
-		String uuid, long companyId, OrderByComparator<Lock> orderByComparator,
+		String uuid, long companyId, OrderByComparator orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -1217,7 +1217,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public List<Lock> findByLtExpirationDate(Date expirationDate, int start,
-		int end, OrderByComparator<Lock> orderByComparator) {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1327,7 +1327,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public Lock findByLtExpirationDate_First(Date expirationDate,
-		OrderByComparator<Lock> orderByComparator) throws NoSuchLockException {
+		OrderByComparator orderByComparator) throws NoSuchLockException {
 		Lock lock = fetchByLtExpirationDate_First(expirationDate,
 				orderByComparator);
 
@@ -1356,7 +1356,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public Lock fetchByLtExpirationDate_First(Date expirationDate,
-		OrderByComparator<Lock> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<Lock> list = findByLtExpirationDate(expirationDate, 0, 1,
 				orderByComparator);
 
@@ -1377,7 +1377,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public Lock findByLtExpirationDate_Last(Date expirationDate,
-		OrderByComparator<Lock> orderByComparator) throws NoSuchLockException {
+		OrderByComparator orderByComparator) throws NoSuchLockException {
 		Lock lock = fetchByLtExpirationDate_Last(expirationDate,
 				orderByComparator);
 
@@ -1406,7 +1406,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public Lock fetchByLtExpirationDate_Last(Date expirationDate,
-		OrderByComparator<Lock> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByLtExpirationDate(expirationDate);
 
 		if (count == 0) {
@@ -1434,7 +1434,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public Lock[] findByLtExpirationDate_PrevAndNext(long lockId,
-		Date expirationDate, OrderByComparator<Lock> orderByComparator)
+		Date expirationDate, OrderByComparator orderByComparator)
 		throws NoSuchLockException {
 		Lock lock = findByPrimaryKey(lockId);
 
@@ -1464,8 +1464,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	}
 
 	protected Lock getByLtExpirationDate_PrevAndNext(Session session,
-		Lock lock, Date expirationDate,
-		OrderByComparator<Lock> orderByComparator, boolean previous) {
+		Lock lock, Date expirationDate, OrderByComparator orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2518,7 +2518,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public List<Lock> findAll(int start, int end,
-		OrderByComparator<Lock> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

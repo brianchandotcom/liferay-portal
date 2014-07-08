@@ -86,7 +86,7 @@ public class ContactUtil {
 	 */
 	public static List<Contact> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<Contact> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -149,7 +149,7 @@ public class ContactUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Contact> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -164,7 +164,7 @@ public class ContactUtil {
 	*/
 	public static com.liferay.portal.model.Contact findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -179,7 +179,7 @@ public class ContactUtil {
 	*/
 	public static com.liferay.portal.model.Contact fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -194,7 +194,7 @@ public class ContactUtil {
 	*/
 	public static com.liferay.portal.model.Contact findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -209,7 +209,7 @@ public class ContactUtil {
 	*/
 	public static com.liferay.portal.model.Contact fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -225,7 +225,7 @@ public class ContactUtil {
 	*/
 	public static com.liferay.portal.model.Contact[] findByCompanyId_PrevAndNext(
 		long contactId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(contactId, companyId,
@@ -294,7 +294,7 @@ public class ContactUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Contact> findByAccountId(
 		long accountId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByAccountId(accountId, start, end, orderByComparator);
 	}
@@ -309,7 +309,7 @@ public class ContactUtil {
 	*/
 	public static com.liferay.portal.model.Contact findByAccountId_First(
 		long accountId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException {
 		return getPersistence()
 				   .findByAccountId_First(accountId, orderByComparator);
@@ -324,7 +324,7 @@ public class ContactUtil {
 	*/
 	public static com.liferay.portal.model.Contact fetchByAccountId_First(
 		long accountId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByAccountId_First(accountId, orderByComparator);
 	}
@@ -339,7 +339,7 @@ public class ContactUtil {
 	*/
 	public static com.liferay.portal.model.Contact findByAccountId_Last(
 		long accountId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException {
 		return getPersistence()
 				   .findByAccountId_Last(accountId, orderByComparator);
@@ -354,7 +354,7 @@ public class ContactUtil {
 	*/
 	public static com.liferay.portal.model.Contact fetchByAccountId_Last(
 		long accountId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByAccountId_Last(accountId, orderByComparator);
 	}
@@ -370,7 +370,7 @@ public class ContactUtil {
 	*/
 	public static com.liferay.portal.model.Contact[] findByAccountId_PrevAndNext(
 		long contactId, long accountId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException {
 		return getPersistence()
 				   .findByAccountId_PrevAndNext(contactId, accountId,
@@ -442,7 +442,7 @@ public class ContactUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Contact> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_C(classNameId, classPK, start, end,
 			orderByComparator);
@@ -459,7 +459,7 @@ public class ContactUtil {
 	*/
 	public static com.liferay.portal.model.Contact findByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
@@ -475,7 +475,7 @@ public class ContactUtil {
 	*/
 	public static com.liferay.portal.model.Contact fetchByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -491,7 +491,7 @@ public class ContactUtil {
 	*/
 	public static com.liferay.portal.model.Contact findByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
@@ -507,7 +507,7 @@ public class ContactUtil {
 	*/
 	public static com.liferay.portal.model.Contact fetchByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -524,7 +524,7 @@ public class ContactUtil {
 	*/
 	public static com.liferay.portal.model.Contact[] findByC_C_PrevAndNext(
 		long contactId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(contactId, classNameId, classPK,
@@ -665,7 +665,7 @@ public class ContactUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Contact> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

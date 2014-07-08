@@ -77,7 +77,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	*/
 	public java.util.List<com.liferay.portal.model.UserNotificationDelivery> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user notification delivery in the ordered set where userId = &#63;.
@@ -89,7 +89,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserNotificationDeliveryException;
 
 	/**
@@ -101,7 +101,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user notification delivery in the ordered set where userId = &#63;.
@@ -113,7 +113,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserNotificationDeliveryException;
 
 	/**
@@ -125,7 +125,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user notification deliveries before and after the current user notification delivery in the ordered set where userId = &#63;.
@@ -138,7 +138,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery[] findByUserId_PrevAndNext(
 		long userNotificationDeliveryId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserNotificationDeliveryException;
 
 	/**
@@ -327,7 +327,7 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	*/
 	public java.util.List<com.liferay.portal.model.UserNotificationDelivery> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the user notification deliveries from the database.

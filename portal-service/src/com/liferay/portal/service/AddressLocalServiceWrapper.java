@@ -43,37 +43,6 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addAddress(long, String,
-	long, String, String, String, String, String, long, long,
-	int, boolean, boolean, ServiceContext)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.model.Address addAddress(long userId,
-		java.lang.String className, long classPK, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long regionId,
-		long countryId, int typeId, boolean mailing, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _addressLocalService.addAddress(userId, className, classPK,
-			street1, street2, street3, city, zip, regionId, countryId, typeId,
-			mailing, primary);
-	}
-
-	@Override
-	public com.liferay.portal.model.Address addAddress(long userId,
-		java.lang.String className, long classPK, java.lang.String street1,
-		java.lang.String street2, java.lang.String street3,
-		java.lang.String city, java.lang.String zip, long regionId,
-		long countryId, int typeId, boolean mailing, boolean primary,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _addressLocalService.addAddress(userId, className, classPK,
-			street1, street2, street3, city, zip, regionId, countryId, typeId,
-			mailing, primary, serviceContext);
-	}
-
-	/**
 	* Creates a new address with the primary key. Does not add the address to the database.
 	*
 	* @param addressId the primary key for the new address
@@ -82,18 +51,6 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 	@Override
 	public com.liferay.portal.model.Address createAddress(long addressId) {
 		return _addressLocalService.createAddress(addressId);
-	}
-
-	/**
-	* Deletes the address from the database. Also notifies the appropriate model listeners.
-	*
-	* @param address the address
-	* @return the address that was removed
-	*/
-	@Override
-	public com.liferay.portal.model.Address deleteAddress(
-		com.liferay.portal.model.Address address) {
-		return _addressLocalService.deleteAddress(address);
 	}
 
 	/**
@@ -109,20 +66,16 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 		return _addressLocalService.deleteAddress(addressId);
 	}
 
-	@Override
-	public void deleteAddresses(long companyId, java.lang.String className,
-		long classPK) {
-		_addressLocalService.deleteAddresses(companyId, className, classPK);
-	}
-
 	/**
-	* @throws PortalException
+	* Deletes the address from the database. Also notifies the appropriate model listeners.
+	*
+	* @param address the address
+	* @return the address that was removed
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _addressLocalService.deletePersistedModel(persistedModel);
+	public com.liferay.portal.model.Address deleteAddress(
+		com.liferay.portal.model.Address address) {
+		return _addressLocalService.deleteAddress(address);
 	}
 
 	@Override
@@ -137,7 +90,8 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _addressLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -155,7 +109,8 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _addressLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -175,10 +130,11 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _addressLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -228,11 +184,6 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 			companyId);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _addressLocalService.getActionableDynamicQuery();
-	}
-
 	/**
 	* Returns the address with the primary key.
 	*
@@ -244,6 +195,34 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 	public com.liferay.portal.model.Address getAddress(long addressId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _addressLocalService.getAddress(addressId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _addressLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		return _addressLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _addressLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _addressLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -259,17 +238,6 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _addressLocalService.getAddressByUuidAndCompanyId(uuid, companyId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Address> getAddresses() {
-		return _addressLocalService.getAddresses();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Address> getAddresses(
-		long companyId, java.lang.String className, long classPK) {
-		return _addressLocalService.getAddresses(companyId, className, classPK);
 	}
 
 	/**
@@ -300,6 +268,18 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 	}
 
 	/**
+	* Updates the address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param address the address
+	* @return the address that was updated
+	*/
+	@Override
+	public com.liferay.portal.model.Address updateAddress(
+		com.liferay.portal.model.Address address) {
+		return _addressLocalService.updateAddress(address);
+	}
+
+	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean
@@ -307,19 +287,6 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 	@Override
 	public java.lang.String getBeanIdentifier() {
 		return _addressLocalService.getBeanIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
-		return _addressLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _addressLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -333,15 +300,51 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 	}
 
 	/**
-	* Updates the address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param address the address
-	* @return the address that was updated
+	* @deprecated As of 6.2.0, replaced by {@link #addAddress(long, String,
+	long, String, String, String, String, String, long, long,
+	int, boolean, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
-	public com.liferay.portal.model.Address updateAddress(
-		com.liferay.portal.model.Address address) {
-		return _addressLocalService.updateAddress(address);
+	public com.liferay.portal.model.Address addAddress(long userId,
+		java.lang.String className, long classPK, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long regionId,
+		long countryId, int typeId, boolean mailing, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _addressLocalService.addAddress(userId, className, classPK,
+			street1, street2, street3, city, zip, regionId, countryId, typeId,
+			mailing, primary);
+	}
+
+	@Override
+	public com.liferay.portal.model.Address addAddress(long userId,
+		java.lang.String className, long classPK, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long regionId,
+		long countryId, int typeId, boolean mailing, boolean primary,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _addressLocalService.addAddress(userId, className, classPK,
+			street1, street2, street3, city, zip, regionId, countryId, typeId,
+			mailing, primary, serviceContext);
+	}
+
+	@Override
+	public void deleteAddresses(long companyId, java.lang.String className,
+		long classPK) {
+		_addressLocalService.deleteAddresses(companyId, className, classPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Address> getAddresses() {
+		return _addressLocalService.getAddresses();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Address> getAddresses(
+		long companyId, java.lang.String className, long classPK) {
+		return _addressLocalService.getAddresses(companyId, className, classPK);
 	}
 
 	@Override

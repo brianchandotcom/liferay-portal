@@ -436,7 +436,7 @@ public class LayoutRevisionPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<LayoutRevision> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LayoutRevision",
 			"mvccVersion", true, "layoutRevisionId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",

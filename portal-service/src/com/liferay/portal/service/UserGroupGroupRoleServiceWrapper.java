@@ -32,6 +32,26 @@ public class UserGroupGroupRoleServiceWrapper
 		_userGroupGroupRoleService = userGroupGroupRoleService;
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _userGroupGroupRoleService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_userGroupGroupRoleService.setBeanIdentifier(beanIdentifier);
+	}
+
 	@Override
 	public void addUserGroupGroupRoles(long userGroupId, long groupId,
 		long[] roleIds)
@@ -60,26 +80,6 @@ public class UserGroupGroupRoleServiceWrapper
 		long roleId) throws com.liferay.portal.kernel.exception.PortalException {
 		_userGroupGroupRoleService.deleteUserGroupGroupRoles(userGroupIds,
 			groupId, roleId);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _userGroupGroupRoleService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_userGroupGroupRoleService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -351,7 +351,7 @@ public class OrganizationPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<Organization> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Organization_",
 			"mvccVersion", true, "uuid", true, "organizationId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",

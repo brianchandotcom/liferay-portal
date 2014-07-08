@@ -227,7 +227,7 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	*/
 	public java.util.List<com.liferay.portal.model.Shard> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Shard> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the shards from the database.

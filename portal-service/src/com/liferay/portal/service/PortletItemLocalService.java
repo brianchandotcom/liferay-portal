@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,14 +51,8 @@ public interface PortletItemLocalService extends BaseLocalService,
 	* @param portletItem the portlet item
 	* @return the portlet item that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.PortletItem addPortletItem(
 		com.liferay.portal.model.PortletItem portletItem);
-
-	public com.liferay.portal.model.PortletItem addPortletItem(long userId,
-		long groupId, java.lang.String name, java.lang.String portletId,
-		java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new portlet item with the primary key. Does not add the portlet item to the database.
@@ -71,11 +64,14 @@ public interface PortletItemLocalService extends BaseLocalService,
 		long portletItemId);
 
 	/**
-	* @throws PortalException
+	* Deletes the portlet item with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param portletItemId the primary key of the portlet item
+	* @return the portlet item that was removed
+	* @throws PortalException if a portlet item with the primary key could not be found
 	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.model.PortletItem deletePortletItem(
+		long portletItemId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -84,21 +80,8 @@ public interface PortletItemLocalService extends BaseLocalService,
 	* @param portletItem the portlet item
 	* @return the portlet item that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.PortletItem deletePortletItem(
 		com.liferay.portal.model.PortletItem portletItem);
-
-	/**
-	* Deletes the portlet item with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param portletItemId the primary key of the portlet item
-	* @return the portlet item that was removed
-	* @throws PortalException if a portlet item with the primary key could not be found
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.PortletItem deletePortletItem(
-		long portletItemId)
-		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -108,7 +91,8 @@ public interface PortletItemLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
@@ -123,7 +107,8 @@ public interface PortletItemLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end);
 
@@ -140,10 +125,11 @@ public interface PortletItemLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -169,28 +155,6 @@ public interface PortletItemLocalService extends BaseLocalService,
 	public com.liferay.portal.model.PortletItem fetchPortletItem(
 		long portletItemId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PortletItem getPortletItem(long groupId,
-		java.lang.String name, java.lang.String portletId,
-		java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	/**
 	* Returns the portlet item with the primary key.
 	*
@@ -204,12 +168,21 @@ public interface PortletItemLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.PortletItem> getPortletItems(
-		long groupId, java.lang.String className);
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.PortletItem> getPortletItems(
-		long groupId, java.lang.String portletId, java.lang.String className);
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the portlet items.
@@ -235,21 +208,46 @@ public interface PortletItemLocalService extends BaseLocalService,
 	public int getPortletItemsCount();
 
 	/**
+	* Updates the portlet item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param portletItem the portlet item
+	* @return the portlet item that was updated
+	*/
+	public com.liferay.portal.model.PortletItem updatePortletItem(
+		com.liferay.portal.model.PortletItem portletItem);
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	/**
-	* Updates the portlet item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param portletItem the portlet item
-	* @return the portlet item that was updated
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.PortletItem updatePortletItem(
-		com.liferay.portal.model.PortletItem portletItem);
+	public com.liferay.portal.model.PortletItem addPortletItem(long userId,
+		long groupId, java.lang.String name, java.lang.String portletId,
+		java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PortletItem getPortletItem(long groupId,
+		java.lang.String name, java.lang.String portletId,
+		java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.PortletItem> getPortletItems(
+		long groupId, java.lang.String className);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.PortletItem> getPortletItems(
+		long groupId, java.lang.String portletId, java.lang.String className);
 
 	public com.liferay.portal.model.PortletItem updatePortletItem(long userId,
 		long groupId, java.lang.String name, java.lang.String portletId,

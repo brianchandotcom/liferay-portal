@@ -31,6 +31,26 @@ public class MembershipRequestServiceWrapper implements MembershipRequestService
 		_membershipRequestService = membershipRequestService;
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _membershipRequestService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_membershipRequestService.setBeanIdentifier(beanIdentifier);
+	}
+
 	@Override
 	public com.liferay.portal.model.MembershipRequest addMembershipRequest(
 		long groupId, java.lang.String comments,
@@ -46,31 +66,11 @@ public class MembershipRequestServiceWrapper implements MembershipRequestService
 		_membershipRequestService.deleteMembershipRequests(groupId, statusId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _membershipRequestService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.model.MembershipRequest getMembershipRequest(
 		long membershipRequestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _membershipRequestService.getMembershipRequest(membershipRequestId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_membershipRequestService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

@@ -829,7 +829,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 */
 	@Override
 	public List<Company> findBySystem(boolean system, int start, int end,
-		OrderByComparator<Company> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -935,8 +935,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 */
 	@Override
 	public Company findBySystem_First(boolean system,
-		OrderByComparator<Company> orderByComparator)
-		throws NoSuchCompanyException {
+		OrderByComparator orderByComparator) throws NoSuchCompanyException {
 		Company company = fetchBySystem_First(system, orderByComparator);
 
 		if (company != null) {
@@ -964,7 +963,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 */
 	@Override
 	public Company fetchBySystem_First(boolean system,
-		OrderByComparator<Company> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<Company> list = findBySystem(system, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -984,8 +983,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 */
 	@Override
 	public Company findBySystem_Last(boolean system,
-		OrderByComparator<Company> orderByComparator)
-		throws NoSuchCompanyException {
+		OrderByComparator orderByComparator) throws NoSuchCompanyException {
 		Company company = fetchBySystem_Last(system, orderByComparator);
 
 		if (company != null) {
@@ -1013,7 +1011,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 */
 	@Override
 	public Company fetchBySystem_Last(boolean system,
-		OrderByComparator<Company> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countBySystem(system);
 
 		if (count == 0) {
@@ -1041,8 +1039,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 */
 	@Override
 	public Company[] findBySystem_PrevAndNext(long companyId, boolean system,
-		OrderByComparator<Company> orderByComparator)
-		throws NoSuchCompanyException {
+		OrderByComparator orderByComparator) throws NoSuchCompanyException {
 		Company company = findByPrimaryKey(companyId);
 
 		Session session = null;
@@ -1071,8 +1068,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	}
 
 	protected Company getBySystem_PrevAndNext(Session session, Company company,
-		boolean system, OrderByComparator<Company> orderByComparator,
-		boolean previous) {
+		boolean system, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1849,7 +1845,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 */
 	@Override
 	public List<Company> findAll(int start, int end,
-		OrderByComparator<Company> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

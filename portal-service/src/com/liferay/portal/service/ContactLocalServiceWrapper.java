@@ -42,26 +42,6 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 		return _contactLocalService.addContact(contact);
 	}
 
-	@Override
-	public com.liferay.portal.model.Contact addContact(long userId,
-		java.lang.String className, long classPK,
-		java.lang.String emailAddress, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, int prefixId,
-		int suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String msnSn,
-		java.lang.String mySpaceSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String ymSn,
-		java.lang.String jobTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _contactLocalService.addContact(userId, className, classPK,
-			emailAddress, firstName, middleName, lastName, prefixId, suffixId,
-			male, birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn,
-			facebookSn, icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn,
-			ymSn, jobTitle);
-	}
-
 	/**
 	* Creates a new contact with the primary key. Does not add the contact to the database.
 	*
@@ -71,18 +51,6 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 	@Override
 	public com.liferay.portal.model.Contact createContact(long contactId) {
 		return _contactLocalService.createContact(contactId);
-	}
-
-	/**
-	* Deletes the contact from the database. Also notifies the appropriate model listeners.
-	*
-	* @param contact the contact
-	* @return the contact that was removed
-	*/
-	@Override
-	public com.liferay.portal.model.Contact deleteContact(
-		com.liferay.portal.model.Contact contact) {
-		return _contactLocalService.deleteContact(contact);
 	}
 
 	/**
@@ -99,13 +67,15 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 	}
 
 	/**
-	* @throws PortalException
+	* Deletes the contact from the database. Also notifies the appropriate model listeners.
+	*
+	* @param contact the contact
+	* @return the contact that was removed
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _contactLocalService.deletePersistedModel(persistedModel);
+	public com.liferay.portal.model.Contact deleteContact(
+		com.liferay.portal.model.Contact contact) {
+		return _contactLocalService.deleteContact(contact);
 	}
 
 	@Override
@@ -120,7 +90,8 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _contactLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -138,7 +109,8 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _contactLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -158,10 +130,11 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _contactLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -197,21 +170,6 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 		return _contactLocalService.fetchContact(contactId);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _contactLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _contactLocalService.getBeanIdentifier();
-	}
-
 	/**
 	* Returns the contact with the primary key.
 	*
@@ -226,11 +184,25 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.model.Contact> getContacts(
-		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator) {
-		return _contactLocalService.getContacts(classNameId, classPK, start,
-			end, orderByComparator);
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _contactLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _contactLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _contactLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -260,16 +232,26 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 		return _contactLocalService.getContactsCount();
 	}
 
+	/**
+	* Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param contact the contact
+	* @return the contact that was updated
+	*/
 	@Override
-	public int getContactsCount(long classNameId, long classPK) {
-		return _contactLocalService.getContactsCount(classNameId, classPK);
+	public com.liferay.portal.model.Contact updateContact(
+		com.liferay.portal.model.Contact contact) {
+		return _contactLocalService.updateContact(contact);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _contactLocalService.getPersistedModel(primaryKeyObj);
+	public java.lang.String getBeanIdentifier() {
+		return _contactLocalService.getBeanIdentifier();
 	}
 
 	/**
@@ -282,16 +264,37 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 		_contactLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
-	/**
-	* Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param contact the contact
-	* @return the contact that was updated
-	*/
 	@Override
-	public com.liferay.portal.model.Contact updateContact(
-		com.liferay.portal.model.Contact contact) {
-		return _contactLocalService.updateContact(contact);
+	public com.liferay.portal.model.Contact addContact(long userId,
+		java.lang.String className, long classPK,
+		java.lang.String emailAddress, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName, int prefixId,
+		int suffixId, boolean male, int birthdayMonth, int birthdayDay,
+		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
+		java.lang.String facebookSn, java.lang.String icqSn,
+		java.lang.String jabberSn, java.lang.String msnSn,
+		java.lang.String mySpaceSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String ymSn,
+		java.lang.String jobTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _contactLocalService.addContact(userId, className, classPK,
+			emailAddress, firstName, middleName, lastName, prefixId, suffixId,
+			male, birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn,
+			facebookSn, icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn,
+			ymSn, jobTitle);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Contact> getContacts(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator) {
+		return _contactLocalService.getContacts(classNameId, classPK, start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public int getContactsCount(long classNameId, long classPK) {
+		return _contactLocalService.getContactsCount(classNameId, classPK);
 	}
 
 	@Override

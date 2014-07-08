@@ -215,7 +215,7 @@ public class PortletPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<Portlet> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Portlet", "mvccVersion",
 			true, "id", true, "companyId", true, "portletId", true, "roles",
 			true, "active", true);

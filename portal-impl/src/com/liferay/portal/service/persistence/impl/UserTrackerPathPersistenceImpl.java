@@ -154,7 +154,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	 */
 	@Override
 	public List<UserTrackerPath> findByUserTrackerId(long userTrackerId,
-		int start, int end, OrderByComparator<UserTrackerPath> orderByComparator) {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -264,7 +264,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	 */
 	@Override
 	public UserTrackerPath findByUserTrackerId_First(long userTrackerId,
-		OrderByComparator<UserTrackerPath> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchUserTrackerPathException {
 		UserTrackerPath userTrackerPath = fetchByUserTrackerId_First(userTrackerId,
 				orderByComparator);
@@ -294,7 +294,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	 */
 	@Override
 	public UserTrackerPath fetchByUserTrackerId_First(long userTrackerId,
-		OrderByComparator<UserTrackerPath> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<UserTrackerPath> list = findByUserTrackerId(userTrackerId, 0, 1,
 				orderByComparator);
 
@@ -315,7 +315,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	 */
 	@Override
 	public UserTrackerPath findByUserTrackerId_Last(long userTrackerId,
-		OrderByComparator<UserTrackerPath> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchUserTrackerPathException {
 		UserTrackerPath userTrackerPath = fetchByUserTrackerId_Last(userTrackerId,
 				orderByComparator);
@@ -345,7 +345,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	 */
 	@Override
 	public UserTrackerPath fetchByUserTrackerId_Last(long userTrackerId,
-		OrderByComparator<UserTrackerPath> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByUserTrackerId(userTrackerId);
 
 		if (count == 0) {
@@ -374,7 +374,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	@Override
 	public UserTrackerPath[] findByUserTrackerId_PrevAndNext(
 		long userTrackerPathId, long userTrackerId,
-		OrderByComparator<UserTrackerPath> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchUserTrackerPathException {
 		UserTrackerPath userTrackerPath = findByPrimaryKey(userTrackerPathId);
 
@@ -405,7 +405,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 
 	protected UserTrackerPath getByUserTrackerId_PrevAndNext(Session session,
 		UserTrackerPath userTrackerPath, long userTrackerId,
-		OrderByComparator<UserTrackerPath> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1073,7 +1073,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	 */
 	@Override
 	public List<UserTrackerPath> findAll(int start, int end,
-		OrderByComparator<UserTrackerPath> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

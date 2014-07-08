@@ -77,7 +77,7 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	*/
 	public java.util.List<com.liferay.portal.model.OrgLabor> findByOrganizationId(
 		long organizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first org labor in the ordered set where organizationId = &#63;.
@@ -89,7 +89,7 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	*/
 	public com.liferay.portal.model.OrgLabor findByOrganizationId_First(
 		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrgLaborException;
 
 	/**
@@ -101,7 +101,7 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	*/
 	public com.liferay.portal.model.OrgLabor fetchByOrganizationId_First(
 		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last org labor in the ordered set where organizationId = &#63;.
@@ -113,7 +113,7 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	*/
 	public com.liferay.portal.model.OrgLabor findByOrganizationId_Last(
 		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrgLaborException;
 
 	/**
@@ -125,7 +125,7 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	*/
 	public com.liferay.portal.model.OrgLabor fetchByOrganizationId_Last(
 		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the org labors before and after the current org labor in the ordered set where organizationId = &#63;.
@@ -138,7 +138,7 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	*/
 	public com.liferay.portal.model.OrgLabor[] findByOrganizationId_PrevAndNext(
 		long orgLaborId, long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrgLaborException;
 
 	/**
@@ -249,7 +249,7 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	*/
 	public java.util.List<com.liferay.portal.model.OrgLabor> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the org labors from the database.

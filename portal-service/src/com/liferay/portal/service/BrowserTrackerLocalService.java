@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,7 +51,6 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @param browserTracker the browser tracker
 	* @return the browser tracker that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.BrowserTracker addBrowserTracker(
 		com.liferay.portal.model.BrowserTracker browserTracker);
 
@@ -66,36 +64,24 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 		long browserTrackerId);
 
 	/**
-	* Deletes the browser tracker from the database. Also notifies the appropriate model listeners.
-	*
-	* @param browserTracker the browser tracker
-	* @return the browser tracker that was removed
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.BrowserTracker deleteBrowserTracker(
-		com.liferay.portal.model.BrowserTracker browserTracker);
-
-	/**
 	* Deletes the browser tracker with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param browserTrackerId the primary key of the browser tracker
 	* @return the browser tracker that was removed
 	* @throws PortalException if a browser tracker with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.BrowserTracker deleteBrowserTracker(
 		long browserTrackerId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* @throws PortalException
+	* Deletes the browser tracker from the database. Also notifies the appropriate model listeners.
+	*
+	* @param browserTracker the browser tracker
+	* @return the browser tracker that was removed
 	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void deleteUserBrowserTracker(long userId);
+	public com.liferay.portal.model.BrowserTracker deleteBrowserTracker(
+		com.liferay.portal.model.BrowserTracker browserTracker);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -105,7 +91,8 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
@@ -120,7 +107,8 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end);
 
@@ -137,10 +125,11 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -166,16 +155,6 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	public com.liferay.portal.model.BrowserTracker fetchBrowserTracker(
 		long browserTrackerId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	/**
 	* Returns the browser tracker with the primary key.
 	*
@@ -189,8 +168,21 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.BrowserTracker getBrowserTracker(
-		long userId, long browserKey);
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the browser trackers.
@@ -215,11 +207,21 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBrowserTrackersCount();
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	/**
+	* Updates the browser tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param browserTracker the browser tracker
+	* @return the browser tracker that was updated
+	*/
+	public com.liferay.portal.model.BrowserTracker updateBrowserTracker(
+		com.liferay.portal.model.BrowserTracker browserTracker);
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -228,15 +230,11 @@ public interface BrowserTrackerLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	/**
-	* Updates the browser tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param browserTracker the browser tracker
-	* @return the browser tracker that was updated
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.BrowserTracker updateBrowserTracker(
-		com.liferay.portal.model.BrowserTracker browserTracker);
+	public void deleteUserBrowserTracker(long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.BrowserTracker getBrowserTracker(
+		long userId, long browserKey);
 
 	public com.liferay.portal.model.BrowserTracker updateBrowserTracker(
 		long userId, long browserKey);

@@ -48,6 +48,20 @@ public interface UserService extends BaseService {
 	 */
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	/**
 	* Adds the users to the group.
 	*
 	* @param groupId the primary key of the group
@@ -112,6 +126,68 @@ public interface UserService extends BaseService {
 	members
 	*/
 	public void addTeamUsers(long teamId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Adds a user.
+	*
+	* <p>
+	* This method handles the creation and bookkeeping of the user including
+	* its resources, metadata, and internal data structures. It is not
+	* necessary to make subsequent calls to any methods to setup default
+	* groups, resources, etc.
+	* </p>
+	*
+	* @param companyId the primary key of the user's company
+	* @param autoPassword whether a password should be automatically generated
+	for the user
+	* @param password1 the user's password
+	* @param password2 the user's password confirmation
+	* @param autoScreenName whether a screen name should be automatically
+	generated for the user
+	* @param screenName the user's screen name
+	* @param emailAddress the user's email address
+	* @param facebookId the user's facebook ID
+	* @param openId the user's OpenID
+	* @param locale the user's locale
+	* @param firstName the user's first name
+	* @param middleName the user's middle name
+	* @param lastName the user's last name
+	* @param prefixId the user's name prefix ID
+	* @param suffixId the user's name suffix ID
+	* @param male whether the user is male
+	* @param birthdayMonth the user's birthday month (0-based, meaning 0 for
+	January)
+	* @param birthdayDay the user's birthday day
+	* @param birthdayYear the user's birthday year
+	* @param jobTitle the user's job title
+	* @param groupIds the primary keys of the user's groups
+	* @param organizationIds the primary keys of the user's organizations
+	* @param roleIds the primary keys of the roles this user possesses
+	* @param userGroupIds the primary keys of the user's user groups
+	* @param sendEmail whether to send the user an email notification about
+	their new account
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set the UUID (with the <code>uuid</code>
+	attribute), asset category IDs, asset tag names, and expando
+	bridge attributes for the user.
+	* @return the new user
+	* @throws PortalException if the user's information was invalid, if the
+	operation was not allowed by the membership policy, if the
+	creator did not have permission to add users, or if the email
+	address was reserved
+	*/
+	public com.liferay.portal.model.User addUser(long companyId,
+		boolean autoPassword, java.lang.String password1,
+		java.lang.String password2, boolean autoScreenName,
+		java.lang.String screenName, java.lang.String emailAddress,
+		long facebookId, java.lang.String openId, java.util.Locale locale,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, int prefixId, int suffixId, boolean male,
+		int birthdayMonth, int birthdayDay, int birthdayYear,
+		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
+		long[] roleIds, long[] userGroupIds, boolean sendEmail,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -188,7 +264,20 @@ public interface UserService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Adds a user.
+	* Adds the users to the user group.
+	*
+	* @param userGroupId the primary key of the user group
+	* @param userIds the primary keys of the users
+	* @throws PortalException if a user group or user with the primary could
+	could not be found, if the current user did not have permission
+	to assign group members, or if the operation was not allowed by
+	the membership policy
+	*/
+	public void addUserGroupUsers(long userGroupId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Adds a user with workflow.
 	*
 	* <p>
 	* This method handles the creation and bookkeeping of the user including
@@ -236,7 +325,7 @@ public interface UserService extends BaseService {
 	creator did not have permission to add users, or if the email
 	address was reserved
 	*/
-	public com.liferay.portal.model.User addUser(long companyId,
+	public com.liferay.portal.model.User addUserWithWorkflow(long companyId,
 		boolean autoPassword, java.lang.String password1,
 		java.lang.String password2, boolean autoScreenName,
 		java.lang.String screenName, java.lang.String emailAddress,
@@ -247,19 +336,6 @@ public interface UserService extends BaseService {
 		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
 		long[] roleIds, long[] userGroupIds, boolean sendEmail,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Adds the users to the user group.
-	*
-	* @param userGroupId the primary key of the user group
-	* @param userIds the primary keys of the users
-	* @throws PortalException if a user group or user with the primary could
-	could not be found, if the current user did not have permission
-	to assign group members, or if the operation was not allowed by
-	the membership policy
-	*/
-	public void addUserGroupUsers(long userGroupId, long[] userIds)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -336,68 +412,6 @@ public interface UserService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Adds a user with workflow.
-	*
-	* <p>
-	* This method handles the creation and bookkeeping of the user including
-	* its resources, metadata, and internal data structures. It is not
-	* necessary to make subsequent calls to any methods to setup default
-	* groups, resources, etc.
-	* </p>
-	*
-	* @param companyId the primary key of the user's company
-	* @param autoPassword whether a password should be automatically generated
-	for the user
-	* @param password1 the user's password
-	* @param password2 the user's password confirmation
-	* @param autoScreenName whether a screen name should be automatically
-	generated for the user
-	* @param screenName the user's screen name
-	* @param emailAddress the user's email address
-	* @param facebookId the user's facebook ID
-	* @param openId the user's OpenID
-	* @param locale the user's locale
-	* @param firstName the user's first name
-	* @param middleName the user's middle name
-	* @param lastName the user's last name
-	* @param prefixId the user's name prefix ID
-	* @param suffixId the user's name suffix ID
-	* @param male whether the user is male
-	* @param birthdayMonth the user's birthday month (0-based, meaning 0 for
-	January)
-	* @param birthdayDay the user's birthday day
-	* @param birthdayYear the user's birthday year
-	* @param jobTitle the user's job title
-	* @param groupIds the primary keys of the user's groups
-	* @param organizationIds the primary keys of the user's organizations
-	* @param roleIds the primary keys of the roles this user possesses
-	* @param userGroupIds the primary keys of the user's user groups
-	* @param sendEmail whether to send the user an email notification about
-	their new account
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set the UUID (with the <code>uuid</code>
-	attribute), asset category IDs, asset tag names, and expando
-	bridge attributes for the user.
-	* @return the new user
-	* @throws PortalException if the user's information was invalid, if the
-	operation was not allowed by the membership policy, if the
-	creator did not have permission to add users, or if the email
-	address was reserved
-	*/
-	public com.liferay.portal.model.User addUserWithWorkflow(long companyId,
-		boolean autoPassword, java.lang.String password1,
-		java.lang.String password2, boolean autoScreenName,
-		java.lang.String screenName, java.lang.String emailAddress,
-		long facebookId, java.lang.String openId, java.util.Locale locale,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, int prefixId, int suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
-		long[] roleIds, long[] userGroupIds, boolean sendEmail,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
 	* Deletes the user's portrait image.
 	*
 	* @param userId the primary key of the user
@@ -429,13 +443,6 @@ public interface UserService extends BaseService {
 	*/
 	public void deleteUser(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.User> getCompanyUsers(
@@ -596,6 +603,20 @@ public interface UserService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
+	* Returns <code>true</code> if the user is a member of the role.
+	*
+	* @param roleId the primary key of the role
+	* @param userId the primary key of the user
+	* @return <code>true</code> if the user is a member of the role;
+	<code>false</code> otherwise
+	* @throws PortalException if the current user did not have permission to
+	view the user or role members
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasRoleUser(long roleId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
 	* Returns <code>true</code> if the user has the role with the name,
 	* optionally through inheritance.
 	*
@@ -613,27 +634,6 @@ public interface UserService extends BaseService {
 	public boolean hasRoleUser(long companyId, java.lang.String name,
 		long userId, boolean inherited)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Returns <code>true</code> if the user is a member of the role.
-	*
-	* @param roleId the primary key of the role
-	* @param userId the primary key of the user
-	* @return <code>true</code> if the user is a member of the role;
-	<code>false</code> otherwise
-	* @throws PortalException if the current user did not have permission to
-	view the user or role members
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasRoleUser(long roleId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Sets the users in the role, removing and adding users to the role as
@@ -944,7 +944,7 @@ public interface UserService extends BaseService {
 	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, int,
 	ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public com.liferay.portal.model.User updateStatus(long userId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -965,6 +965,99 @@ public interface UserService extends BaseService {
 	user's workflow status.
 	*/
 	public com.liferay.portal.model.User updateStatus(long userId, int status,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Updates the user with additional parameters.
+	*
+	* @param userId the primary key of the user
+	* @param oldPassword the user's old password
+	* @param newPassword1 the user's new password (optionally
+	<code>null</code>)
+	* @param newPassword2 the user's new password confirmation (optionally
+	<code>null</code>)
+	* @param passwordReset whether the user should be asked to reset their
+	password the next time they login
+	* @param reminderQueryQuestion the user's new password reset question
+	* @param reminderQueryAnswer the user's new password reset answer
+	* @param screenName the user's new screen name
+	* @param emailAddress the user's new email address
+	* @param facebookId the user's new Facebook ID
+	* @param openId the user's new OpenID
+	* @param portrait whether to update the user's portrait image
+	* @param portraitBytes the new portrait image data
+	* @param languageId the user's new language ID
+	* @param timeZoneId the user's new time zone ID
+	* @param greeting the user's new greeting
+	* @param comments the user's new comments
+	* @param firstName the user's new first name
+	* @param middleName the user's new middle name
+	* @param lastName the user's new last name
+	* @param prefixId the user's new name prefix ID
+	* @param suffixId the user's new name suffix ID
+	* @param male whether user is male
+	* @param birthdayMonth the user's new birthday month (0-based, meaning 0
+	for January)
+	* @param birthdayDay the user's new birthday day
+	* @param birthdayYear the user's birthday year
+	* @param smsSn the user's new SMS screen name
+	* @param aimSn the user's new AIM screen name
+	* @param facebookSn the user's new Facebook screen name
+	* @param icqSn the user's new ICQ screen name
+	* @param jabberSn the user's new Jabber screen name
+	* @param msnSn the user's new MSN screen name
+	* @param mySpaceSn the user's new MySpace screen name
+	* @param skypeSn the user's new Skype screen name
+	* @param twitterSn the user's new Twitter screen name
+	* @param ymSn the user's new Yahoo! Messenger screen name
+	* @param jobTitle the user's new job title
+	* @param groupIds the primary keys of the user's groups
+	* @param organizationIds the primary keys of the user's organizations
+	* @param roleIds the primary keys of the user's roles
+	* @param userGroupRoles the user user's group roles
+	* @param userGroupIds the primary keys of the user's user groups
+	* @param addresses the user's addresses
+	* @param emailAddresses the user's email addresses
+	* @param phones the user's phone numbers
+	* @param websites the user's websites
+	* @param announcementsDelivers the announcements deliveries
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set the UUID (with the <code>uuid</code>
+	attribute), asset category IDs, asset tag names, and expando
+	bridge attributes for the user.
+	* @return the user
+	* @throws PortalException if a user with the primary key could not be
+	found, if the new information was invalid, if the current user
+	did not have permission to update the user, or if the operation
+	was not allowed by the membership policy
+	*/
+	public com.liferay.portal.model.User updateUser(long userId,
+		java.lang.String oldPassword, java.lang.String newPassword1,
+		java.lang.String newPassword2, boolean passwordReset,
+		java.lang.String reminderQueryQuestion,
+		java.lang.String reminderQueryAnswer, java.lang.String screenName,
+		java.lang.String emailAddress, long facebookId,
+		java.lang.String openId, boolean portrait, byte[] portraitBytes,
+		java.lang.String languageId, java.lang.String timeZoneId,
+		java.lang.String greeting, java.lang.String comments,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, int prefixId, int suffixId, boolean male,
+		int birthdayMonth, int birthdayDay, int birthdayYear,
+		java.lang.String smsSn, java.lang.String aimSn,
+		java.lang.String facebookSn, java.lang.String icqSn,
+		java.lang.String jabberSn, java.lang.String msnSn,
+		java.lang.String mySpaceSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String ymSn,
+		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
+		long[] roleIds,
+		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
+		long[] userGroupIds,
+		java.util.List<com.liferay.portal.model.Address> addresses,
+		java.util.List<com.liferay.portal.model.EmailAddress> emailAddresses,
+		java.util.List<com.liferay.portal.model.Phone> phones,
+		java.util.List<com.liferay.portal.model.Website> websites,
+		java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> announcementsDelivers,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -1039,7 +1132,7 @@ public interface UserService extends BaseService {
 	java.util.List, java.util.List, boolean, byte[],
 	com.liferay.portal.service.ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public com.liferay.portal.model.User updateUser(long userId,
 		java.lang.String oldPassword, java.lang.String newPassword1,
 		java.lang.String newPassword2, boolean passwordReset,
@@ -1145,99 +1238,6 @@ public interface UserService extends BaseService {
 		long[] roleIds,
 		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
 		long[] userGroupIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Updates the user with additional parameters.
-	*
-	* @param userId the primary key of the user
-	* @param oldPassword the user's old password
-	* @param newPassword1 the user's new password (optionally
-	<code>null</code>)
-	* @param newPassword2 the user's new password confirmation (optionally
-	<code>null</code>)
-	* @param passwordReset whether the user should be asked to reset their
-	password the next time they login
-	* @param reminderQueryQuestion the user's new password reset question
-	* @param reminderQueryAnswer the user's new password reset answer
-	* @param screenName the user's new screen name
-	* @param emailAddress the user's new email address
-	* @param facebookId the user's new Facebook ID
-	* @param openId the user's new OpenID
-	* @param portrait whether to update the user's portrait image
-	* @param portraitBytes the new portrait image data
-	* @param languageId the user's new language ID
-	* @param timeZoneId the user's new time zone ID
-	* @param greeting the user's new greeting
-	* @param comments the user's new comments
-	* @param firstName the user's new first name
-	* @param middleName the user's new middle name
-	* @param lastName the user's new last name
-	* @param prefixId the user's new name prefix ID
-	* @param suffixId the user's new name suffix ID
-	* @param male whether user is male
-	* @param birthdayMonth the user's new birthday month (0-based, meaning 0
-	for January)
-	* @param birthdayDay the user's new birthday day
-	* @param birthdayYear the user's birthday year
-	* @param smsSn the user's new SMS screen name
-	* @param aimSn the user's new AIM screen name
-	* @param facebookSn the user's new Facebook screen name
-	* @param icqSn the user's new ICQ screen name
-	* @param jabberSn the user's new Jabber screen name
-	* @param msnSn the user's new MSN screen name
-	* @param mySpaceSn the user's new MySpace screen name
-	* @param skypeSn the user's new Skype screen name
-	* @param twitterSn the user's new Twitter screen name
-	* @param ymSn the user's new Yahoo! Messenger screen name
-	* @param jobTitle the user's new job title
-	* @param groupIds the primary keys of the user's groups
-	* @param organizationIds the primary keys of the user's organizations
-	* @param roleIds the primary keys of the user's roles
-	* @param userGroupRoles the user user's group roles
-	* @param userGroupIds the primary keys of the user's user groups
-	* @param addresses the user's addresses
-	* @param emailAddresses the user's email addresses
-	* @param phones the user's phone numbers
-	* @param websites the user's websites
-	* @param announcementsDelivers the announcements deliveries
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set the UUID (with the <code>uuid</code>
-	attribute), asset category IDs, asset tag names, and expando
-	bridge attributes for the user.
-	* @return the user
-	* @throws PortalException if a user with the primary key could not be
-	found, if the new information was invalid, if the current user
-	did not have permission to update the user, or if the operation
-	was not allowed by the membership policy
-	*/
-	public com.liferay.portal.model.User updateUser(long userId,
-		java.lang.String oldPassword, java.lang.String newPassword1,
-		java.lang.String newPassword2, boolean passwordReset,
-		java.lang.String reminderQueryQuestion,
-		java.lang.String reminderQueryAnswer, java.lang.String screenName,
-		java.lang.String emailAddress, long facebookId,
-		java.lang.String openId, boolean portrait, byte[] portraitBytes,
-		java.lang.String languageId, java.lang.String timeZoneId,
-		java.lang.String greeting, java.lang.String comments,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, int prefixId, int suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String msnSn,
-		java.lang.String mySpaceSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String ymSn,
-		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
-		long[] roleIds,
-		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
-		long[] userGroupIds,
-		java.util.List<com.liferay.portal.model.Address> addresses,
-		java.util.List<com.liferay.portal.model.EmailAddress> emailAddresses,
-		java.util.List<com.liferay.portal.model.Phone> phones,
-		java.util.List<com.liferay.portal.model.Website> websites,
-		java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> announcementsDelivers,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

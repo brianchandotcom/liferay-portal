@@ -30,6 +30,26 @@ public class TeamServiceWrapper implements TeamService,
 		_teamService = teamService;
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _teamService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_teamService.setBeanIdentifier(beanIdentifier);
+	}
+
 	@Override
 	public com.liferay.portal.model.Team addTeam(long groupId,
 		java.lang.String name, java.lang.String description)
@@ -43,16 +63,6 @@ public class TeamServiceWrapper implements TeamService,
 		_teamService.deleteTeam(teamId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _teamService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portal.model.Team> getGroupTeams(
 		long groupId)
@@ -61,16 +71,16 @@ public class TeamServiceWrapper implements TeamService,
 	}
 
 	@Override
+	public com.liferay.portal.model.Team getTeam(long teamId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _teamService.getTeam(teamId);
+	}
+
+	@Override
 	public com.liferay.portal.model.Team getTeam(long groupId,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _teamService.getTeam(groupId, name);
-	}
-
-	@Override
-	public com.liferay.portal.model.Team getTeam(long teamId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _teamService.getTeam(teamId);
 	}
 
 	@Override
@@ -90,16 +100,6 @@ public class TeamServiceWrapper implements TeamService,
 	public boolean hasUserTeam(long userId, long teamId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _teamService.hasUserTeam(userId, teamId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_teamService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

@@ -265,7 +265,7 @@ public class LockPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<Lock> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Lock_", "mvccVersion",
 			true, "uuid", true, "lockId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "className", true,

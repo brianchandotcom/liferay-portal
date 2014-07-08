@@ -77,7 +77,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public java.util.List<com.liferay.portal.model.Website> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first website in the ordered set where uuid = &#63;.
@@ -89,7 +89,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -101,7 +101,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last website in the ordered set where uuid = &#63;.
@@ -113,7 +113,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -125,7 +125,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the websites before and after the current website in the ordered set where uuid = &#63;.
@@ -138,7 +138,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website[] findByUuid_PrevAndNext(
 		long websiteId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -198,7 +198,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public java.util.List<com.liferay.portal.model.Website> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first website in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -211,7 +211,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -224,7 +224,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last website in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -237,7 +237,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -250,7 +250,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the websites before and after the current website in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -264,7 +264,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website[] findByUuid_C_PrevAndNext(
 		long websiteId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -323,7 +323,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public java.util.List<com.liferay.portal.model.Website> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first website in the ordered set where companyId = &#63;.
@@ -335,7 +335,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -347,7 +347,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last website in the ordered set where companyId = &#63;.
@@ -359,7 +359,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -371,7 +371,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the websites before and after the current website in the ordered set where companyId = &#63;.
@@ -384,7 +384,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website[] findByCompanyId_PrevAndNext(
 		long websiteId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -441,7 +441,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public java.util.List<com.liferay.portal.model.Website> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first website in the ordered set where userId = &#63;.
@@ -452,7 +452,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	* @throws com.liferay.portal.NoSuchWebsiteException if a matching website could not be found
 	*/
 	public com.liferay.portal.model.Website findByUserId_First(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -463,7 +463,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	* @return the first matching website, or <code>null</code> if a matching website could not be found
 	*/
 	public com.liferay.portal.model.Website fetchByUserId_First(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last website in the ordered set where userId = &#63;.
@@ -474,7 +474,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	* @throws com.liferay.portal.NoSuchWebsiteException if a matching website could not be found
 	*/
 	public com.liferay.portal.model.Website findByUserId_Last(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -485,7 +485,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	* @return the last matching website, or <code>null</code> if a matching website could not be found
 	*/
 	public com.liferay.portal.model.Website fetchByUserId_Last(long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the websites before and after the current website in the ordered set where userId = &#63;.
@@ -498,7 +498,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website[] findByUserId_PrevAndNext(
 		long websiteId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -558,7 +558,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public java.util.List<com.liferay.portal.model.Website> findByC_C(
 		long companyId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first website in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -571,7 +571,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website findByC_C_First(long companyId,
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -584,7 +584,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website fetchByC_C_First(long companyId,
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last website in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -597,7 +597,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website findByC_C_Last(long companyId,
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -610,7 +610,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website fetchByC_C_Last(long companyId,
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the websites before and after the current website in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -624,7 +624,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website[] findByC_C_PrevAndNext(
 		long websiteId, long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -689,7 +689,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public java.util.List<com.liferay.portal.model.Website> findByC_C_C(
 		long companyId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first website in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -703,7 +703,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website findByC_C_C_First(long companyId,
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -717,7 +717,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website fetchByC_C_C_First(long companyId,
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last website in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -731,7 +731,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website findByC_C_C_Last(long companyId,
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -745,7 +745,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website fetchByC_C_C_Last(long companyId,
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the websites before and after the current website in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -760,7 +760,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website[] findByC_C_C_PrevAndNext(
 		long websiteId, long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -832,7 +832,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	public java.util.List<com.liferay.portal.model.Website> findByC_C_C_P(
 		long companyId, long classNameId, long classPK, boolean primary,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first website in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -847,7 +847,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website findByC_C_C_P_First(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -862,7 +862,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website fetchByC_C_C_P_First(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last website in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -877,7 +877,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website findByC_C_C_P_Last(long companyId,
 		long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -892,7 +892,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public com.liferay.portal.model.Website fetchByC_C_C_P_Last(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the websites before and after the current website in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -909,7 +909,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	public com.liferay.portal.model.Website[] findByC_C_C_P_PrevAndNext(
 		long websiteId, long companyId, long classNameId, long classPK,
 		boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException;
 
 	/**
@@ -1028,7 +1028,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*/
 	public java.util.List<com.liferay.portal.model.Website> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the websites from the database.

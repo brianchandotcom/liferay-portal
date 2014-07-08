@@ -212,7 +212,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	*/
 	public java.util.List<com.liferay.portal.model.Country> findByActive(
 		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Country> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first country in the ordered set where active = &#63;.
@@ -223,7 +223,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @throws com.liferay.portal.NoSuchCountryException if a matching country could not be found
 	*/
 	public com.liferay.portal.model.Country findByActive_First(boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Country> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchCountryException;
 
 	/**
@@ -235,7 +235,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	*/
 	public com.liferay.portal.model.Country fetchByActive_First(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Country> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last country in the ordered set where active = &#63;.
@@ -246,7 +246,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @throws com.liferay.portal.NoSuchCountryException if a matching country could not be found
 	*/
 	public com.liferay.portal.model.Country findByActive_Last(boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Country> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchCountryException;
 
 	/**
@@ -257,7 +257,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	* @return the last matching country, or <code>null</code> if a matching country could not be found
 	*/
 	public com.liferay.portal.model.Country fetchByActive_Last(boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Country> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the countries before and after the current country in the ordered set where active = &#63;.
@@ -270,7 +270,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	*/
 	public com.liferay.portal.model.Country[] findByActive_PrevAndNext(
 		long countryId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Country> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchCountryException;
 
 	/**
@@ -381,7 +381,7 @@ public interface CountryPersistence extends BasePersistence<Country> {
 	*/
 	public java.util.List<com.liferay.portal.model.Country> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Country> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the countries from the database.

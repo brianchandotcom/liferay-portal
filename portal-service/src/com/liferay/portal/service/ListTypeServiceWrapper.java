@@ -40,6 +40,16 @@ public class ListTypeServiceWrapper implements ListTypeService,
 		return _listTypeService.getBeanIdentifier();
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_listTypeService.setBeanIdentifier(beanIdentifier);
+	}
+
 	@Override
 	public com.liferay.portal.model.ListType getListType(int listTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -50,16 +60,6 @@ public class ListTypeServiceWrapper implements ListTypeService,
 	public java.util.List<com.liferay.portal.model.ListType> getListTypes(
 		java.lang.String type) {
 		return _listTypeService.getListTypes(type);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_listTypeService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

@@ -80,7 +80,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public java.util.List<com.liferay.portal.model.PortletItem> findByG_C(
 		long groupId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first portlet item in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -93,7 +93,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public com.liferay.portal.model.PortletItem findByG_C_First(long groupId,
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPortletItemException;
 
 	/**
@@ -106,7 +106,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public com.liferay.portal.model.PortletItem fetchByG_C_First(long groupId,
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last portlet item in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -119,7 +119,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public com.liferay.portal.model.PortletItem findByG_C_Last(long groupId,
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPortletItemException;
 
 	/**
@@ -132,7 +132,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public com.liferay.portal.model.PortletItem fetchByG_C_Last(long groupId,
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the portlet items before and after the current portlet item in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -146,7 +146,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public com.liferay.portal.model.PortletItem[] findByG_C_PrevAndNext(
 		long portletItemId, long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPortletItemException;
 
 	/**
@@ -213,7 +213,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	public java.util.List<com.liferay.portal.model.PortletItem> findByG_P_C(
 		long groupId, java.lang.String portletId, long classNameId, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first portlet item in the ordered set where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
@@ -227,7 +227,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public com.liferay.portal.model.PortletItem findByG_P_C_First(
 		long groupId, java.lang.String portletId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPortletItemException;
 
 	/**
@@ -241,7 +241,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public com.liferay.portal.model.PortletItem fetchByG_P_C_First(
 		long groupId, java.lang.String portletId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last portlet item in the ordered set where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
@@ -255,7 +255,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public com.liferay.portal.model.PortletItem findByG_P_C_Last(long groupId,
 		java.lang.String portletId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPortletItemException;
 
 	/**
@@ -269,7 +269,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public com.liferay.portal.model.PortletItem fetchByG_P_C_Last(
 		long groupId, java.lang.String portletId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the portlet items before and after the current portlet item in the ordered set where groupId = &#63; and portletId = &#63; and classNameId = &#63;.
@@ -285,7 +285,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	public com.liferay.portal.model.PortletItem[] findByG_P_C_PrevAndNext(
 		long portletItemId, long groupId, java.lang.String portletId,
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPortletItemException;
 
 	/**
@@ -469,7 +469,7 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	*/
 	public java.util.List<com.liferay.portal.model.PortletItem> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the portlet items from the database.

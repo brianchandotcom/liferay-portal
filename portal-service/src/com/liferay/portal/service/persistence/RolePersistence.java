@@ -77,7 +77,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first role in the ordered set where uuid = &#63;.
@@ -89,7 +89,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -101,7 +101,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last role in the ordered set where uuid = &#63;.
@@ -113,7 +113,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -125,7 +125,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the roles before and after the current role in the ordered set where uuid = &#63;.
@@ -138,7 +138,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role[] findByUuid_PrevAndNext(long roleId,
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -180,7 +180,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> filterFindByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where uuid = &#63;.
@@ -193,7 +193,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role[] filterFindByUuid_PrevAndNext(
 		long roleId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -261,7 +261,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first role in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -274,7 +274,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -287,7 +287,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last role in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -300,7 +300,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -313,7 +313,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the roles before and after the current role in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -327,7 +327,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role[] findByUuid_C_PrevAndNext(
 		long roleId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -372,7 +372,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> filterFindByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -386,7 +386,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role[] filterFindByUuid_C_PrevAndNext(
 		long roleId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -454,7 +454,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first role in the ordered set where companyId = &#63;.
@@ -465,7 +465,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	* @throws com.liferay.portal.NoSuchRoleException if a matching role could not be found
 	*/
 	public com.liferay.portal.model.Role findByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -477,7 +477,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last role in the ordered set where companyId = &#63;.
@@ -488,7 +488,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	* @throws com.liferay.portal.NoSuchRoleException if a matching role could not be found
 	*/
 	public com.liferay.portal.model.Role findByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -499,7 +499,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	* @return the last matching role, or <code>null</code> if a matching role could not be found
 	*/
 	public com.liferay.portal.model.Role fetchByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the roles before and after the current role in the ordered set where companyId = &#63;.
@@ -512,7 +512,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role[] findByCompanyId_PrevAndNext(
 		long roleId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -554,7 +554,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> filterFindByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where companyId = &#63;.
@@ -567,7 +567,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role[] filterFindByCompanyId_PrevAndNext(
 		long roleId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -632,7 +632,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> findByName(
 		java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first role in the ordered set where name = &#63;.
@@ -644,7 +644,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role findByName_First(
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -656,7 +656,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role fetchByName_First(
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last role in the ordered set where name = &#63;.
@@ -668,7 +668,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role findByName_Last(
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -680,7 +680,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role fetchByName_Last(
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the roles before and after the current role in the ordered set where name = &#63;.
@@ -693,7 +693,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role[] findByName_PrevAndNext(long roleId,
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -735,7 +735,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> filterFindByName(
 		java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where name = &#63;.
@@ -748,7 +748,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role[] filterFindByName_PrevAndNext(
 		long roleId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -812,7 +812,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> findByType(int type,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first role in the ordered set where type = &#63;.
@@ -823,7 +823,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	* @throws com.liferay.portal.NoSuchRoleException if a matching role could not be found
 	*/
 	public com.liferay.portal.model.Role findByType_First(int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -834,7 +834,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	* @return the first matching role, or <code>null</code> if a matching role could not be found
 	*/
 	public com.liferay.portal.model.Role fetchByType_First(int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last role in the ordered set where type = &#63;.
@@ -845,7 +845,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	* @throws com.liferay.portal.NoSuchRoleException if a matching role could not be found
 	*/
 	public com.liferay.portal.model.Role findByType_Last(int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -856,7 +856,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	* @return the last matching role, or <code>null</code> if a matching role could not be found
 	*/
 	public com.liferay.portal.model.Role fetchByType_Last(int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the roles before and after the current role in the ordered set where type = &#63;.
@@ -869,7 +869,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role[] findByType_PrevAndNext(long roleId,
 		int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -911,7 +911,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> filterFindByType(
 		int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where type = &#63;.
@@ -924,7 +924,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role[] filterFindByType_PrevAndNext(
 		long roleId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -989,7 +989,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> findBySubtype(
 		java.lang.String subtype, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first role in the ordered set where subtype = &#63;.
@@ -1001,7 +1001,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role findBySubtype_First(
 		java.lang.String subtype,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -1013,7 +1013,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role fetchBySubtype_First(
 		java.lang.String subtype,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last role in the ordered set where subtype = &#63;.
@@ -1025,7 +1025,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role findBySubtype_Last(
 		java.lang.String subtype,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -1037,7 +1037,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role fetchBySubtype_Last(
 		java.lang.String subtype,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the roles before and after the current role in the ordered set where subtype = &#63;.
@@ -1050,7 +1050,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role[] findBySubtype_PrevAndNext(
 		long roleId, java.lang.String subtype,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -1092,7 +1092,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> filterFindBySubtype(
 		java.lang.String subtype, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where subtype = &#63;.
@@ -1105,7 +1105,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role[] filterFindBySubtype_PrevAndNext(
 		long roleId, java.lang.String subtype,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -1224,7 +1224,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> findByC_T(
 		long companyId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first role in the ordered set where companyId = &#63; and type = &#63;.
@@ -1237,7 +1237,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role findByC_T_First(long companyId,
 		int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -1250,7 +1250,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role fetchByC_T_First(long companyId,
 		int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last role in the ordered set where companyId = &#63; and type = &#63;.
@@ -1263,7 +1263,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role findByC_T_Last(long companyId,
 		int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -1276,7 +1276,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role fetchByC_T_Last(long companyId,
 		int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the roles before and after the current role in the ordered set where companyId = &#63; and type = &#63;.
@@ -1290,7 +1290,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role[] findByC_T_PrevAndNext(long roleId,
 		long companyId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -1335,7 +1335,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> filterFindByC_T(
 		long companyId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where companyId = &#63; and type = &#63;.
@@ -1349,7 +1349,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role[] filterFindByC_T_PrevAndNext(
 		long roleId, long companyId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -1394,7 +1394,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> filterFindByC_T(
 		long companyId, int[] types, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns all the roles where companyId = &#63; and type = any &#63;.
@@ -1442,7 +1442,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> findByC_T(
 		long companyId, int[] types, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the roles where companyId = &#63; and type = &#63; from the database.
@@ -1530,7 +1530,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> findByT_S(int type,
 		java.lang.String subtype, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first role in the ordered set where type = &#63; and subtype = &#63;.
@@ -1543,7 +1543,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role findByT_S_First(int type,
 		java.lang.String subtype,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -1556,7 +1556,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role fetchByT_S_First(int type,
 		java.lang.String subtype,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last role in the ordered set where type = &#63; and subtype = &#63;.
@@ -1569,7 +1569,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role findByT_S_Last(int type,
 		java.lang.String subtype,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -1582,7 +1582,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role fetchByT_S_Last(int type,
 		java.lang.String subtype,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the roles before and after the current role in the ordered set where type = &#63; and subtype = &#63;.
@@ -1596,7 +1596,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role[] findByT_S_PrevAndNext(long roleId,
 		int type, java.lang.String subtype,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -1641,7 +1641,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> filterFindByT_S(
 		int type, java.lang.String subtype, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where type = &#63; and subtype = &#63;.
@@ -1655,7 +1655,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public com.liferay.portal.model.Role[] filterFindByT_S_PrevAndNext(
 		long roleId, int type, java.lang.String subtype,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRoleException;
 
 	/**
@@ -1834,7 +1834,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the roles from the database.
@@ -1894,7 +1894,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.Group> getGroups(long pk,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of groups associated with the role.
@@ -2057,7 +2057,7 @@ public interface RolePersistence extends BasePersistence<Role> {
 	*/
 	public java.util.List<com.liferay.portal.model.User> getUsers(long pk,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of users associated with the role.

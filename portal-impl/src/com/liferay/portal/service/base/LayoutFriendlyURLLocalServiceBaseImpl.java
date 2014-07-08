@@ -141,7 +141,8 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return layoutFriendlyURLPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -158,8 +159,8 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return layoutFriendlyURLPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -178,8 +179,9 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return layoutFriendlyURLPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -337,7 +339,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return layoutFriendlyURLLocalService.deleteLayoutFriendlyURL((LayoutFriendlyURL)persistedModel);
+		return deleteLayoutFriendlyURL((LayoutFriendlyURL)persistedModel);
 	}
 
 	@Override

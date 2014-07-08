@@ -42,6 +42,228 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 		return _portletLocalService.addPortlet(portlet);
 	}
 
+	/**
+	* Creates a new portlet with the primary key. Does not add the portlet to the database.
+	*
+	* @param id the primary key for the new portlet
+	* @return the new portlet
+	*/
+	@Override
+	public com.liferay.portal.model.Portlet createPortlet(long id) {
+		return _portletLocalService.createPortlet(id);
+	}
+
+	/**
+	* Deletes the portlet with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param id the primary key of the portlet
+	* @return the portlet that was removed
+	* @throws PortalException if a portlet with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.Portlet deletePortlet(long id)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _portletLocalService.deletePortlet(id);
+	}
+
+	/**
+	* Deletes the portlet from the database. Also notifies the appropriate model listeners.
+	*
+	* @param portlet the portlet
+	* @return the portlet that was removed
+	*/
+	@Override
+	public com.liferay.portal.model.Portlet deletePortlet(
+		com.liferay.portal.model.Portlet portlet) {
+		return _portletLocalService.deletePortlet(portlet);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _portletLocalService.dynamicQuery();
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _portletLocalService.dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PortletModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return _portletLocalService.dynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PortletModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _portletLocalService.dynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _portletLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _portletLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	@Override
+	public com.liferay.portal.model.Portlet fetchPortlet(long id) {
+		return _portletLocalService.fetchPortlet(id);
+	}
+
+	/**
+	* Returns the portlet with the primary key.
+	*
+	* @param id the primary key of the portlet
+	* @return the portlet
+	* @throws PortalException if a portlet with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.Portlet getPortlet(long id)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _portletLocalService.getPortlet(id);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _portletLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _portletLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _portletLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns a range of all the portlets.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PortletModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of portlets
+	* @param end the upper bound of the range of portlets (not inclusive)
+	* @return the range of portlets
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.model.Portlet> getPortlets(
+		int start, int end) {
+		return _portletLocalService.getPortlets(start, end);
+	}
+
+	/**
+	* Returns the number of portlets.
+	*
+	* @return the number of portlets
+	*/
+	@Override
+	public int getPortletsCount() {
+		return _portletLocalService.getPortletsCount();
+	}
+
+	/**
+	* Updates the portlet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param portlet the portlet
+	* @return the portlet that was updated
+	*/
+	@Override
+	public com.liferay.portal.model.Portlet updatePortlet(
+		com.liferay.portal.model.Portlet portlet) {
+		return _portletLocalService.updatePortlet(portlet);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _portletLocalService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_portletLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
 	@Override
 	public void addPortletCategory(long companyId, java.lang.String categoryName) {
 		_portletLocalService.addPortletCategory(companyId, categoryName);
@@ -85,56 +307,10 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 		return _portletLocalService.clonePortlet(portletId);
 	}
 
-	/**
-	* Creates a new portlet with the primary key. Does not add the portlet to the database.
-	*
-	* @param id the primary key for the new portlet
-	* @return the new portlet
-	*/
-	@Override
-	public com.liferay.portal.model.Portlet createPortlet(long id) {
-		return _portletLocalService.createPortlet(id);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletLocalService.deletePersistedModel(persistedModel);
-	}
-
 	@Override
 	public void deletePortlet(long companyId, java.lang.String portletId,
 		long plid) throws com.liferay.portal.kernel.exception.PortalException {
 		_portletLocalService.deletePortlet(companyId, portletId, plid);
-	}
-
-	/**
-	* Deletes the portlet with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param id the primary key of the portlet
-	* @return the portlet that was removed
-	* @throws PortalException if a portlet with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.Portlet deletePortlet(long id)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletLocalService.deletePortlet(id);
-	}
-
-	/**
-	* Deletes the portlet from the database. Also notifies the appropriate model listeners.
-	*
-	* @param portlet the portlet
-	* @return the portlet that was removed
-	*/
-	@Override
-	public com.liferay.portal.model.Portlet deletePortlet(
-		com.liferay.portal.model.Portlet portlet) {
-		return _portletLocalService.deletePortlet(portlet);
 	}
 
 	@Override
@@ -178,110 +354,6 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _portletLocalService.dynamicQuery();
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _portletLocalService.dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PortletModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
-		return _portletLocalService.dynamicQuery(dynamicQuery, start, end);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PortletModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-		return _portletLocalService.dynamicQuery(dynamicQuery, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _portletLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _portletLocalService.dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	@Override
-	public com.liferay.portal.model.Portlet fetchPortlet(long id) {
-		return _portletLocalService.fetchPortlet(id);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _portletLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _portletLocalService.getBeanIdentifier();
-	}
-
-	@Override
 	public java.util.List<com.liferay.portlet.expando.model.CustomAttributesDisplay> getCustomAttributesDisplays() {
 		return _portletLocalService.getCustomAttributesDisplays();
 	}
@@ -300,26 +372,6 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	@Override
 	public java.util.List<com.liferay.portal.kernel.portlet.FriendlyURLMapper> getFriendlyURLMappers() {
 		return _portletLocalService.getFriendlyURLMappers();
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the portlet with the primary key.
-	*
-	* @param id the primary key of the portlet
-	* @return the portlet
-	* @throws PortalException if a portlet with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.Portlet getPortlet(long id)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletLocalService.getPortlet(id);
 	}
 
 	@Override
@@ -362,33 +414,6 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 		long companyId, boolean showSystem, boolean showPortal) {
 		return _portletLocalService.getPortlets(companyId, showSystem,
 			showPortal);
-	}
-
-	/**
-	* Returns a range of all the portlets.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.PortletModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of portlets
-	* @param end the upper bound of the range of portlets (not inclusive)
-	* @return the range of portlets
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.model.Portlet> getPortlets(
-		int start, int end) {
-		return _portletLocalService.getPortlets(start, end);
-	}
-
-	/**
-	* Returns the number of portlets.
-	*
-	* @return the number of portlets
-	*/
-	@Override
-	public int getPortletsCount() {
-		return _portletLocalService.getPortletsCount();
 	}
 
 	@Override
@@ -434,33 +459,11 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 		_portletLocalService.removeCompanyPortletsPool(companyId);
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_portletLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public com.liferay.portal.model.Portlet updatePortlet(long companyId,
 		java.lang.String portletId, java.lang.String roles, boolean active) {
 		return _portletLocalService.updatePortlet(companyId, portletId, roles,
 			active);
-	}
-
-	/**
-	* Updates the portlet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param portlet the portlet
-	* @return the portlet that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.Portlet updatePortlet(
-		com.liferay.portal.model.Portlet portlet) {
-		return _portletLocalService.updatePortlet(portlet);
 	}
 
 	/**

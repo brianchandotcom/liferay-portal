@@ -88,7 +88,7 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	public java.util.List<com.liferay.portal.model.WorkflowInstanceLink> findByG_C_C_C(
 		long groupId, long companyId, long classNameId, long classPK,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowInstanceLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -103,7 +103,7 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	*/
 	public com.liferay.portal.model.WorkflowInstanceLink findByG_C_C_C_First(
 		long groupId, long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowInstanceLink> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException;
 
 	/**
@@ -118,7 +118,7 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	*/
 	public com.liferay.portal.model.WorkflowInstanceLink fetchByG_C_C_C_First(
 		long groupId, long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowInstanceLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -133,7 +133,7 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	*/
 	public com.liferay.portal.model.WorkflowInstanceLink findByG_C_C_C_Last(
 		long groupId, long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowInstanceLink> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException;
 
 	/**
@@ -148,7 +148,7 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	*/
 	public com.liferay.portal.model.WorkflowInstanceLink fetchByG_C_C_C_Last(
 		long groupId, long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowInstanceLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the workflow instance links before and after the current workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -165,7 +165,7 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	public com.liferay.portal.model.WorkflowInstanceLink[] findByG_C_C_C_PrevAndNext(
 		long workflowInstanceLinkId, long groupId, long companyId,
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowInstanceLink> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException;
 
 	/**
@@ -289,7 +289,7 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	*/
 	public java.util.List<com.liferay.portal.model.WorkflowInstanceLink> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowInstanceLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the workflow instance links from the database.

@@ -86,7 +86,7 @@ public class CompanyUtil {
 	 */
 	public static List<Company> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<Company> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -318,7 +318,7 @@ public class CompanyUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Company> findBySystem(
 		boolean system, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findBySystem(system, start, end, orderByComparator);
 	}
@@ -333,7 +333,7 @@ public class CompanyUtil {
 	*/
 	public static com.liferay.portal.model.Company findBySystem_First(
 		boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchCompanyException {
 		return getPersistence().findBySystem_First(system, orderByComparator);
 	}
@@ -347,7 +347,7 @@ public class CompanyUtil {
 	*/
 	public static com.liferay.portal.model.Company fetchBySystem_First(
 		boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchBySystem_First(system, orderByComparator);
 	}
 
@@ -361,7 +361,7 @@ public class CompanyUtil {
 	*/
 	public static com.liferay.portal.model.Company findBySystem_Last(
 		boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchCompanyException {
 		return getPersistence().findBySystem_Last(system, orderByComparator);
 	}
@@ -375,7 +375,7 @@ public class CompanyUtil {
 	*/
 	public static com.liferay.portal.model.Company fetchBySystem_Last(
 		boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchBySystem_Last(system, orderByComparator);
 	}
 
@@ -390,7 +390,7 @@ public class CompanyUtil {
 	*/
 	public static com.liferay.portal.model.Company[] findBySystem_PrevAndNext(
 		long companyId, boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchCompanyException {
 		return getPersistence()
 				   .findBySystem_PrevAndNext(companyId, system,
@@ -529,7 +529,7 @@ public class CompanyUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Company> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

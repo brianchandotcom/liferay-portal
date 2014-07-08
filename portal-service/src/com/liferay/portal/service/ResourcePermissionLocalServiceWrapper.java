@@ -33,6 +33,246 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
+	* Adds the resource permission to the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourcePermission the resource permission
+	* @return the resource permission that was added
+	*/
+	@Override
+	public com.liferay.portal.model.ResourcePermission addResourcePermission(
+		com.liferay.portal.model.ResourcePermission resourcePermission) {
+		return _resourcePermissionLocalService.addResourcePermission(resourcePermission);
+	}
+
+	/**
+	* Creates a new resource permission with the primary key. Does not add the resource permission to the database.
+	*
+	* @param resourcePermissionId the primary key for the new resource permission
+	* @return the new resource permission
+	*/
+	@Override
+	public com.liferay.portal.model.ResourcePermission createResourcePermission(
+		long resourcePermissionId) {
+		return _resourcePermissionLocalService.createResourcePermission(resourcePermissionId);
+	}
+
+	/**
+	* Deletes the resource permission with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourcePermissionId the primary key of the resource permission
+	* @return the resource permission that was removed
+	* @throws PortalException if a resource permission with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.ResourcePermission deleteResourcePermission(
+		long resourcePermissionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourcePermissionLocalService.deleteResourcePermission(resourcePermissionId);
+	}
+
+	/**
+	* Deletes the resource permission from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourcePermission the resource permission
+	* @return the resource permission that was removed
+	*/
+	@Override
+	public com.liferay.portal.model.ResourcePermission deleteResourcePermission(
+		com.liferay.portal.model.ResourcePermission resourcePermission) {
+		return _resourcePermissionLocalService.deleteResourcePermission(resourcePermission);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _resourcePermissionLocalService.dynamicQuery();
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _resourcePermissionLocalService.dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return _resourcePermissionLocalService.dynamicQuery(dynamicQuery,
+			start, end);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _resourcePermissionLocalService.dynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _resourcePermissionLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _resourcePermissionLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.portal.model.ResourcePermission fetchResourcePermission(
+		long resourcePermissionId) {
+		return _resourcePermissionLocalService.fetchResourcePermission(resourcePermissionId);
+	}
+
+	/**
+	* Returns the resource permission with the primary key.
+	*
+	* @param resourcePermissionId the primary key of the resource permission
+	* @return the resource permission
+	* @throws PortalException if a resource permission with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.ResourcePermission getResourcePermission(
+		long resourcePermissionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourcePermissionLocalService.getResourcePermission(resourcePermissionId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _resourcePermissionLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourcePermissionLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourcePermissionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns a range of all the resource permissions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of resource permissions
+	* @param end the upper bound of the range of resource permissions (not inclusive)
+	* @return the range of resource permissions
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.model.ResourcePermission> getResourcePermissions(
+		int start, int end) {
+		return _resourcePermissionLocalService.getResourcePermissions(start, end);
+	}
+
+	/**
+	* Returns the number of resource permissions.
+	*
+	* @return the number of resource permissions
+	*/
+	@Override
+	public int getResourcePermissionsCount() {
+		return _resourcePermissionLocalService.getResourcePermissionsCount();
+	}
+
+	/**
+	* Updates the resource permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param resourcePermission the resource permission
+	* @return the resource permission that was updated
+	*/
+	@Override
+	public com.liferay.portal.model.ResourcePermission updateResourcePermission(
+		com.liferay.portal.model.ResourcePermission resourcePermission) {
+		return _resourcePermissionLocalService.updateResourcePermission(resourcePermission);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _resourcePermissionLocalService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_resourcePermissionLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
 	* Grants the role permission at the scope to perform the action on
 	* resources of the type. Existing actions are retained.
 	*
@@ -80,18 +320,6 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* Adds the resource permission to the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourcePermission the resource permission
-	* @return the resource permission that was added
-	*/
-	@Override
-	public com.liferay.portal.model.ResourcePermission addResourcePermission(
-		com.liferay.portal.model.ResourcePermission resourcePermission) {
-		return _resourcePermissionLocalService.addResourcePermission(resourcePermission);
-	}
-
-	/**
 	* Grants the role permissions at the scope to perform the actions on all
 	* resources of the type. Existing actions are retained.
 	*
@@ -113,54 +341,6 @@ public class ResourcePermissionLocalServiceWrapper
 		java.lang.String roleName, int scope, long resourceActionBitwiseValue) {
 		_resourcePermissionLocalService.addResourcePermissions(resourceName,
 			roleName, scope, resourceActionBitwiseValue);
-	}
-
-	/**
-	* Creates a new resource permission with the primary key. Does not add the resource permission to the database.
-	*
-	* @param resourcePermissionId the primary key for the new resource permission
-	* @return the new resource permission
-	*/
-	@Override
-	public com.liferay.portal.model.ResourcePermission createResourcePermission(
-		long resourcePermissionId) {
-		return _resourcePermissionLocalService.createResourcePermission(resourcePermissionId);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourcePermissionLocalService.deletePersistedModel(persistedModel);
-	}
-
-	/**
-	* Deletes the resource permission from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourcePermission the resource permission
-	* @return the resource permission that was removed
-	*/
-	@Override
-	public com.liferay.portal.model.ResourcePermission deleteResourcePermission(
-		com.liferay.portal.model.ResourcePermission resourcePermission) {
-		return _resourcePermissionLocalService.deleteResourcePermission(resourcePermission);
-	}
-
-	/**
-	* Deletes the resource permission with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourcePermissionId the primary key of the resource permission
-	* @return the resource permission that was removed
-	* @throws PortalException if a resource permission with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.ResourcePermission deleteResourcePermission(
-		long resourcePermissionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourcePermissionLocalService.deleteResourcePermission(resourcePermissionId);
 	}
 
 	/**
@@ -223,103 +403,6 @@ public class ResourcePermissionLocalServiceWrapper
 			name, scope, primKey);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _resourcePermissionLocalService.dynamicQuery();
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _resourcePermissionLocalService.dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
-		return _resourcePermissionLocalService.dynamicQuery(dynamicQuery,
-			start, end);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-		return _resourcePermissionLocalService.dynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _resourcePermissionLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _resourcePermissionLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public com.liferay.portal.model.ResourcePermission fetchResourcePermission(
-		long resourcePermissionId) {
-		return _resourcePermissionLocalService.fetchResourcePermission(resourcePermissionId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _resourcePermissionLocalService.getActionableDynamicQuery();
-	}
-
 	/**
 	* Returns the intersection of action IDs the role has permission at the
 	* scope to perform on resources of the type.
@@ -357,23 +440,6 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _resourcePermissionLocalService.getBeanIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourcePermissionLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
 	* Returns the resource permission for the role at the scope to perform the
 	* actions on resources of the type.
 	*
@@ -397,20 +463,6 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* Returns the resource permission with the primary key.
-	*
-	* @param resourcePermissionId the primary key of the resource permission
-	* @return the resource permission
-	* @throws PortalException if a resource permission with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.ResourcePermission getResourcePermission(
-		long resourcePermissionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourcePermissionLocalService.getResourcePermission(resourcePermissionId);
-	}
-
-	/**
 	* Returns all the resource permissions at the scope of the type.
 	*
 	* @param companyId the primary key of the company
@@ -426,33 +478,6 @@ public class ResourcePermissionLocalServiceWrapper
 		java.lang.String primKey) {
 		return _resourcePermissionLocalService.getResourcePermissions(companyId,
 			name, scope, primKey);
-	}
-
-	/**
-	* Returns a range of all the resource permissions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of resource permissions
-	* @param end the upper bound of the range of resource permissions (not inclusive)
-	* @return the range of resource permissions
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.model.ResourcePermission> getResourcePermissions(
-		int start, int end) {
-		return _resourcePermissionLocalService.getResourcePermissions(start, end);
-	}
-
-	/**
-	* Returns the number of resource permissions.
-	*
-	* @return the number of resource permissions
-	*/
-	@Override
-	public int getResourcePermissionsCount() {
-		return _resourcePermissionLocalService.getResourcePermissionsCount();
 	}
 
 	/**
@@ -571,6 +596,35 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
+	* Returns <code>true</code> if the roles have permission at the scope to
+	* perform the action on the resources.
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
+	*
+	* @param resources the resources
+	* @param roleIds the primary keys of the roles
+	* @param actionId the action ID
+	* @return <code>true</code> if any one of the roles has permission to
+	perform the action on any one of the resources;
+	<code>false</code> otherwise
+	* @throws PortalException if any one of the roles with the primary keys
+	could not be found or if a resource action with the name and
+	action ID could not be found
+	*/
+	@Override
+	public boolean hasResourcePermission(
+		java.util.List<com.liferay.portal.model.Resource> resources,
+		long[] roleIds, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourcePermissionLocalService.hasResourcePermission(resources,
+			roleIds, actionId);
+	}
+
+	/**
 	* Returns <code>true</code> if the role has permission at the scope to
 	* perform the action on resources of the type.
 	*
@@ -631,35 +685,6 @@ public class ResourcePermissionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourcePermissionLocalService.hasResourcePermission(companyId,
 			name, scope, primKey, roleIds, actionId);
-	}
-
-	/**
-	* Returns <code>true</code> if the roles have permission at the scope to
-	* perform the action on the resources.
-	*
-	* <p>
-	* Depending on the scope, the value of <code>primKey</code> will have
-	* different meanings. For more information, see {@link
-	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
-	* </p>
-	*
-	* @param resources the resources
-	* @param roleIds the primary keys of the roles
-	* @param actionId the action ID
-	* @return <code>true</code> if any one of the roles has permission to
-	perform the action on any one of the resources;
-	<code>false</code> otherwise
-	* @throws PortalException if any one of the roles with the primary keys
-	could not be found or if a resource action with the name and
-	action ID could not be found
-	*/
-	@Override
-	public boolean hasResourcePermission(
-		java.util.List<com.liferay.portal.model.Resource> resources,
-		long[] roleIds, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourcePermissionLocalService.hasResourcePermission(resources,
-			roleIds, actionId);
 	}
 
 	@Override
@@ -786,16 +811,6 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_resourcePermissionLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
 	* Updates the role's permissions at the scope, setting the actions that can
 	* be performed on resources of the type, also setting the owner of any
 	* newly created resource permissions. Existing actions are replaced.
@@ -900,18 +915,6 @@ public class ResourcePermissionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourcePermissionLocalService.setResourcePermissions(companyId, name,
 			scope, primKey, roleIdsToActionIds);
-	}
-
-	/**
-	* Updates the resource permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param resourcePermission the resource permission
-	* @return the resource permission that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.ResourcePermission updateResourcePermission(
-		com.liferay.portal.model.ResourcePermission resourcePermission) {
-		return _resourcePermissionLocalService.updateResourcePermission(resourcePermission);
 	}
 
 	/**

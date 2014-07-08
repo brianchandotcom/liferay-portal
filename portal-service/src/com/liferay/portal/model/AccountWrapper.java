@@ -177,99 +177,24 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 		}
 	}
 
+	/**
+	* Returns the primary key of this account.
+	*
+	* @return the primary key of this account
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new AccountWrapper((Account)_account.clone());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.model.Account account) {
-		return _account.compareTo(account);
+	public long getPrimaryKey() {
+		return _account.getPrimaryKey();
 	}
 
 	/**
-	* Returns the account ID of this account.
+	* Sets the primary key of this account.
 	*
-	* @return the account ID of this account
+	* @param primaryKey the primary key of this account
 	*/
 	@Override
-	public long getAccountId() {
-		return _account.getAccountId();
-	}
-
-	/**
-	* Returns the company ID of this account.
-	*
-	* @return the company ID of this account
-	*/
-	@Override
-	public long getCompanyId() {
-		return _account.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this account.
-	*
-	* @return the create date of this account
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _account.getCreateDate();
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _account.getExpandoBridge();
-	}
-
-	/**
-	* Returns the industry of this account.
-	*
-	* @return the industry of this account
-	*/
-	@Override
-	public java.lang.String getIndustry() {
-		return _account.getIndustry();
-	}
-
-	/**
-	* Returns the legal ID of this account.
-	*
-	* @return the legal ID of this account
-	*/
-	@Override
-	public java.lang.String getLegalId() {
-		return _account.getLegalId();
-	}
-
-	/**
-	* Returns the legal name of this account.
-	*
-	* @return the legal name of this account
-	*/
-	@Override
-	public java.lang.String getLegalName() {
-		return _account.getLegalName();
-	}
-
-	/**
-	* Returns the legal type of this account.
-	*
-	* @return the legal type of this account
-	*/
-	@Override
-	public java.lang.String getLegalType() {
-		return _account.getLegalType();
-	}
-
-	/**
-	* Returns the modified date of this account.
-	*
-	* @return the modified date of this account
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _account.getModifiedDate();
+	public void setPrimaryKey(long primaryKey) {
+		_account.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -283,133 +208,23 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	/**
-	* Returns the name of this account.
+	* Sets the mvcc version of this account.
 	*
-	* @return the name of this account
+	* @param mvccVersion the mvcc version of this account
 	*/
 	@Override
-	public java.lang.String getName() {
-		return _account.getName();
+	public void setMvccVersion(long mvccVersion) {
+		_account.setMvccVersion(mvccVersion);
 	}
 
 	/**
-	* Returns the parent account ID of this account.
+	* Returns the account ID of this account.
 	*
-	* @return the parent account ID of this account
+	* @return the account ID of this account
 	*/
 	@Override
-	public long getParentAccountId() {
-		return _account.getParentAccountId();
-	}
-
-	/**
-	* Returns the primary key of this account.
-	*
-	* @return the primary key of this account
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _account.getPrimaryKey();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _account.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the sic code of this account.
-	*
-	* @return the sic code of this account
-	*/
-	@Override
-	public java.lang.String getSicCode() {
-		return _account.getSicCode();
-	}
-
-	/**
-	* Returns the size of this account.
-	*
-	* @return the size of this account
-	*/
-	@Override
-	public java.lang.String getSize() {
-		return _account.getSize();
-	}
-
-	/**
-	* Returns the ticker symbol of this account.
-	*
-	* @return the ticker symbol of this account
-	*/
-	@Override
-	public java.lang.String getTickerSymbol() {
-		return _account.getTickerSymbol();
-	}
-
-	/**
-	* Returns the type of this account.
-	*
-	* @return the type of this account
-	*/
-	@Override
-	public java.lang.String getType() {
-		return _account.getType();
-	}
-
-	/**
-	* Returns the user ID of this account.
-	*
-	* @return the user ID of this account
-	*/
-	@Override
-	public long getUserId() {
-		return _account.getUserId();
-	}
-
-	/**
-	* Returns the user name of this account.
-	*
-	* @return the user name of this account
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _account.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this account.
-	*
-	* @return the user uuid of this account
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _account.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _account.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _account.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _account.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _account.isNew();
-	}
-
-	@Override
-	public void persist() {
-		_account.persist();
+	public long getAccountId() {
+		return _account.getAccountId();
 	}
 
 	/**
@@ -422,9 +237,14 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 		_account.setAccountId(accountId);
 	}
 
+	/**
+	* Returns the company ID of this account.
+	*
+	* @return the company ID of this account
+	*/
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_account.setCachedModel(cachedModel);
+	public long getCompanyId() {
+		return _account.getCompanyId();
 	}
 
 	/**
@@ -438,6 +258,76 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	/**
+	* Returns the user ID of this account.
+	*
+	* @return the user ID of this account
+	*/
+	@Override
+	public long getUserId() {
+		return _account.getUserId();
+	}
+
+	/**
+	* Sets the user ID of this account.
+	*
+	* @param userId the user ID of this account
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_account.setUserId(userId);
+	}
+
+	/**
+	* Returns the user uuid of this account.
+	*
+	* @return the user uuid of this account
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _account.getUserUuid();
+	}
+
+	/**
+	* Sets the user uuid of this account.
+	*
+	* @param userUuid the user uuid of this account
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_account.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this account.
+	*
+	* @return the user name of this account
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _account.getUserName();
+	}
+
+	/**
+	* Sets the user name of this account.
+	*
+	* @param userName the user name of this account
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_account.setUserName(userName);
+	}
+
+	/**
+	* Returns the create date of this account.
+	*
+	* @return the create date of this account
+	*/
+	@Override
+	public java.util.Date getCreateDate() {
+		return _account.getCreateDate();
+	}
+
+	/**
 	* Sets the create date of this account.
 	*
 	* @param createDate the create date of this account
@@ -445,6 +335,266 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	@Override
 	public void setCreateDate(java.util.Date createDate) {
 		_account.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the modified date of this account.
+	*
+	* @return the modified date of this account
+	*/
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _account.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this account.
+	*
+	* @param modifiedDate the modified date of this account
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_account.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Returns the parent account ID of this account.
+	*
+	* @return the parent account ID of this account
+	*/
+	@Override
+	public long getParentAccountId() {
+		return _account.getParentAccountId();
+	}
+
+	/**
+	* Sets the parent account ID of this account.
+	*
+	* @param parentAccountId the parent account ID of this account
+	*/
+	@Override
+	public void setParentAccountId(long parentAccountId) {
+		_account.setParentAccountId(parentAccountId);
+	}
+
+	/**
+	* Returns the name of this account.
+	*
+	* @return the name of this account
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _account.getName();
+	}
+
+	/**
+	* Sets the name of this account.
+	*
+	* @param name the name of this account
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_account.setName(name);
+	}
+
+	/**
+	* Returns the legal name of this account.
+	*
+	* @return the legal name of this account
+	*/
+	@Override
+	public java.lang.String getLegalName() {
+		return _account.getLegalName();
+	}
+
+	/**
+	* Sets the legal name of this account.
+	*
+	* @param legalName the legal name of this account
+	*/
+	@Override
+	public void setLegalName(java.lang.String legalName) {
+		_account.setLegalName(legalName);
+	}
+
+	/**
+	* Returns the legal ID of this account.
+	*
+	* @return the legal ID of this account
+	*/
+	@Override
+	public java.lang.String getLegalId() {
+		return _account.getLegalId();
+	}
+
+	/**
+	* Sets the legal ID of this account.
+	*
+	* @param legalId the legal ID of this account
+	*/
+	@Override
+	public void setLegalId(java.lang.String legalId) {
+		_account.setLegalId(legalId);
+	}
+
+	/**
+	* Returns the legal type of this account.
+	*
+	* @return the legal type of this account
+	*/
+	@Override
+	public java.lang.String getLegalType() {
+		return _account.getLegalType();
+	}
+
+	/**
+	* Sets the legal type of this account.
+	*
+	* @param legalType the legal type of this account
+	*/
+	@Override
+	public void setLegalType(java.lang.String legalType) {
+		_account.setLegalType(legalType);
+	}
+
+	/**
+	* Returns the sic code of this account.
+	*
+	* @return the sic code of this account
+	*/
+	@Override
+	public java.lang.String getSicCode() {
+		return _account.getSicCode();
+	}
+
+	/**
+	* Sets the sic code of this account.
+	*
+	* @param sicCode the sic code of this account
+	*/
+	@Override
+	public void setSicCode(java.lang.String sicCode) {
+		_account.setSicCode(sicCode);
+	}
+
+	/**
+	* Returns the ticker symbol of this account.
+	*
+	* @return the ticker symbol of this account
+	*/
+	@Override
+	public java.lang.String getTickerSymbol() {
+		return _account.getTickerSymbol();
+	}
+
+	/**
+	* Sets the ticker symbol of this account.
+	*
+	* @param tickerSymbol the ticker symbol of this account
+	*/
+	@Override
+	public void setTickerSymbol(java.lang.String tickerSymbol) {
+		_account.setTickerSymbol(tickerSymbol);
+	}
+
+	/**
+	* Returns the industry of this account.
+	*
+	* @return the industry of this account
+	*/
+	@Override
+	public java.lang.String getIndustry() {
+		return _account.getIndustry();
+	}
+
+	/**
+	* Sets the industry of this account.
+	*
+	* @param industry the industry of this account
+	*/
+	@Override
+	public void setIndustry(java.lang.String industry) {
+		_account.setIndustry(industry);
+	}
+
+	/**
+	* Returns the type of this account.
+	*
+	* @return the type of this account
+	*/
+	@Override
+	public java.lang.String getType() {
+		return _account.getType();
+	}
+
+	/**
+	* Sets the type of this account.
+	*
+	* @param type the type of this account
+	*/
+	@Override
+	public void setType(java.lang.String type) {
+		_account.setType(type);
+	}
+
+	/**
+	* Returns the size of this account.
+	*
+	* @return the size of this account
+	*/
+	@Override
+	public java.lang.String getSize() {
+		return _account.getSize();
+	}
+
+	/**
+	* Sets the size of this account.
+	*
+	* @param size the size of this account
+	*/
+	@Override
+	public void setSize(java.lang.String size) {
+		_account.setSize(size);
+	}
+
+	@Override
+	public boolean isNew() {
+		return _account.isNew();
+	}
+
+	@Override
+	public void setNew(boolean n) {
+		_account.setNew(n);
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _account.isCachedModel();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_account.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _account.isEscapedModel();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _account.getPrimaryKeyObj();
+	}
+
+	@Override
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_account.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _account.getExpandoBridge();
 	}
 
 	@Override
@@ -465,174 +615,19 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 		_account.setExpandoBridgeAttributes(serviceContext);
 	}
 
-	/**
-	* Sets the industry of this account.
-	*
-	* @param industry the industry of this account
-	*/
 	@Override
-	public void setIndustry(java.lang.String industry) {
-		_account.setIndustry(industry);
-	}
-
-	/**
-	* Sets the legal ID of this account.
-	*
-	* @param legalId the legal ID of this account
-	*/
-	@Override
-	public void setLegalId(java.lang.String legalId) {
-		_account.setLegalId(legalId);
-	}
-
-	/**
-	* Sets the legal name of this account.
-	*
-	* @param legalName the legal name of this account
-	*/
-	@Override
-	public void setLegalName(java.lang.String legalName) {
-		_account.setLegalName(legalName);
-	}
-
-	/**
-	* Sets the legal type of this account.
-	*
-	* @param legalType the legal type of this account
-	*/
-	@Override
-	public void setLegalType(java.lang.String legalType) {
-		_account.setLegalType(legalType);
-	}
-
-	/**
-	* Sets the modified date of this account.
-	*
-	* @param modifiedDate the modified date of this account
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_account.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Sets the mvcc version of this account.
-	*
-	* @param mvccVersion the mvcc version of this account
-	*/
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_account.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	* Sets the name of this account.
-	*
-	* @param name the name of this account
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_account.setName(name);
+	public java.lang.Object clone() {
+		return new AccountWrapper((Account)_account.clone());
 	}
 
 	@Override
-	public void setNew(boolean n) {
-		_account.setNew(n);
-	}
-
-	/**
-	* Sets the parent account ID of this account.
-	*
-	* @param parentAccountId the parent account ID of this account
-	*/
-	@Override
-	public void setParentAccountId(long parentAccountId) {
-		_account.setParentAccountId(parentAccountId);
-	}
-
-	/**
-	* Sets the primary key of this account.
-	*
-	* @param primaryKey the primary key of this account
-	*/
-	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_account.setPrimaryKey(primaryKey);
+	public int compareTo(com.liferay.portal.model.Account account) {
+		return _account.compareTo(account);
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_account.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets the sic code of this account.
-	*
-	* @param sicCode the sic code of this account
-	*/
-	@Override
-	public void setSicCode(java.lang.String sicCode) {
-		_account.setSicCode(sicCode);
-	}
-
-	/**
-	* Sets the size of this account.
-	*
-	* @param size the size of this account
-	*/
-	@Override
-	public void setSize(java.lang.String size) {
-		_account.setSize(size);
-	}
-
-	/**
-	* Sets the ticker symbol of this account.
-	*
-	* @param tickerSymbol the ticker symbol of this account
-	*/
-	@Override
-	public void setTickerSymbol(java.lang.String tickerSymbol) {
-		_account.setTickerSymbol(tickerSymbol);
-	}
-
-	/**
-	* Sets the type of this account.
-	*
-	* @param type the type of this account
-	*/
-	@Override
-	public void setType(java.lang.String type) {
-		_account.setType(type);
-	}
-
-	/**
-	* Sets the user ID of this account.
-	*
-	* @param userId the user ID of this account
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_account.setUserId(userId);
-	}
-
-	/**
-	* Sets the user name of this account.
-	*
-	* @param userName the user name of this account
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_account.setUserName(userName);
-	}
-
-	/**
-	* Sets the user uuid of this account.
-	*
-	* @param userUuid the user uuid of this account
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_account.setUserUuid(userUuid);
+	public int hashCode() {
+		return _account.hashCode();
 	}
 
 	@Override
@@ -646,18 +641,23 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _account.toString();
-	}
-
-	@Override
 	public com.liferay.portal.model.Account toUnescapedModel() {
 		return new AccountWrapper(_account.toUnescapedModel());
 	}
 
 	@Override
+	public java.lang.String toString() {
+		return _account.toString();
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _account.toXmlString();
+	}
+
+	@Override
+	public void persist() {
+		_account.persist();
 	}
 
 	@Override

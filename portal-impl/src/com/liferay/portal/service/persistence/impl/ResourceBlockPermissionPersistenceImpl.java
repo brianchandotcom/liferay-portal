@@ -155,7 +155,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	public List<ResourceBlockPermission> findByResourceBlockId(
 		long resourceBlockId, int start, int end,
-		OrderByComparator<ResourceBlockPermission> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -265,8 +265,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public ResourceBlockPermission findByResourceBlockId_First(
-		long resourceBlockId,
-		OrderByComparator<ResourceBlockPermission> orderByComparator)
+		long resourceBlockId, OrderByComparator orderByComparator)
 		throws NoSuchResourceBlockPermissionException {
 		ResourceBlockPermission resourceBlockPermission = fetchByResourceBlockId_First(resourceBlockId,
 				orderByComparator);
@@ -296,8 +295,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public ResourceBlockPermission fetchByResourceBlockId_First(
-		long resourceBlockId,
-		OrderByComparator<ResourceBlockPermission> orderByComparator) {
+		long resourceBlockId, OrderByComparator orderByComparator) {
 		List<ResourceBlockPermission> list = findByResourceBlockId(resourceBlockId,
 				0, 1, orderByComparator);
 
@@ -318,8 +316,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public ResourceBlockPermission findByResourceBlockId_Last(
-		long resourceBlockId,
-		OrderByComparator<ResourceBlockPermission> orderByComparator)
+		long resourceBlockId, OrderByComparator orderByComparator)
 		throws NoSuchResourceBlockPermissionException {
 		ResourceBlockPermission resourceBlockPermission = fetchByResourceBlockId_Last(resourceBlockId,
 				orderByComparator);
@@ -349,8 +346,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public ResourceBlockPermission fetchByResourceBlockId_Last(
-		long resourceBlockId,
-		OrderByComparator<ResourceBlockPermission> orderByComparator) {
+		long resourceBlockId, OrderByComparator orderByComparator) {
 		int count = countByResourceBlockId(resourceBlockId);
 
 		if (count == 0) {
@@ -379,7 +375,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	public ResourceBlockPermission[] findByResourceBlockId_PrevAndNext(
 		long resourceBlockPermissionId, long resourceBlockId,
-		OrderByComparator<ResourceBlockPermission> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchResourceBlockPermissionException {
 		ResourceBlockPermission resourceBlockPermission = findByPrimaryKey(resourceBlockPermissionId);
 
@@ -412,8 +408,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 
 	protected ResourceBlockPermission getByResourceBlockId_PrevAndNext(
 		Session session, ResourceBlockPermission resourceBlockPermission,
-		long resourceBlockId,
-		OrderByComparator<ResourceBlockPermission> orderByComparator,
+		long resourceBlockId, OrderByComparator orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
@@ -650,7 +645,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public List<ResourceBlockPermission> findByRoleId(long roleId, int start,
-		int end, OrderByComparator<ResourceBlockPermission> orderByComparator) {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -756,7 +751,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public ResourceBlockPermission findByRoleId_First(long roleId,
-		OrderByComparator<ResourceBlockPermission> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchResourceBlockPermissionException {
 		ResourceBlockPermission resourceBlockPermission = fetchByRoleId_First(roleId,
 				orderByComparator);
@@ -786,7 +781,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public ResourceBlockPermission fetchByRoleId_First(long roleId,
-		OrderByComparator<ResourceBlockPermission> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<ResourceBlockPermission> list = findByRoleId(roleId, 0, 1,
 				orderByComparator);
 
@@ -807,7 +802,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public ResourceBlockPermission findByRoleId_Last(long roleId,
-		OrderByComparator<ResourceBlockPermission> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchResourceBlockPermissionException {
 		ResourceBlockPermission resourceBlockPermission = fetchByRoleId_Last(roleId,
 				orderByComparator);
@@ -837,7 +832,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public ResourceBlockPermission fetchByRoleId_Last(long roleId,
-		OrderByComparator<ResourceBlockPermission> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByRoleId(roleId);
 
 		if (count == 0) {
@@ -866,7 +861,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	public ResourceBlockPermission[] findByRoleId_PrevAndNext(
 		long resourceBlockPermissionId, long roleId,
-		OrderByComparator<ResourceBlockPermission> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchResourceBlockPermissionException {
 		ResourceBlockPermission resourceBlockPermission = findByPrimaryKey(resourceBlockPermissionId);
 
@@ -897,8 +892,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 
 	protected ResourceBlockPermission getByRoleId_PrevAndNext(Session session,
 		ResourceBlockPermission resourceBlockPermission, long roleId,
-		OrderByComparator<ResourceBlockPermission> orderByComparator,
-		boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1892,7 +1886,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public List<ResourceBlockPermission> findAll(int start, int end,
-		OrderByComparator<ResourceBlockPermission> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

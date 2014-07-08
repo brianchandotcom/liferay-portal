@@ -86,7 +86,7 @@ public class OrgLaborUtil {
 	 */
 	public static List<OrgLabor> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<OrgLabor> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -150,7 +150,7 @@ public class OrgLaborUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.OrgLabor> findByOrganizationId(
 		long organizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByOrganizationId(organizationId, start, end,
 			orderByComparator);
@@ -166,7 +166,7 @@ public class OrgLaborUtil {
 	*/
 	public static com.liferay.portal.model.OrgLabor findByOrganizationId_First(
 		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrgLaborException {
 		return getPersistence()
 				   .findByOrganizationId_First(organizationId, orderByComparator);
@@ -181,7 +181,7 @@ public class OrgLaborUtil {
 	*/
 	public static com.liferay.portal.model.OrgLabor fetchByOrganizationId_First(
 		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByOrganizationId_First(organizationId,
 			orderByComparator);
@@ -197,7 +197,7 @@ public class OrgLaborUtil {
 	*/
 	public static com.liferay.portal.model.OrgLabor findByOrganizationId_Last(
 		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrgLaborException {
 		return getPersistence()
 				   .findByOrganizationId_Last(organizationId, orderByComparator);
@@ -212,7 +212,7 @@ public class OrgLaborUtil {
 	*/
 	public static com.liferay.portal.model.OrgLabor fetchByOrganizationId_Last(
 		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByOrganizationId_Last(organizationId, orderByComparator);
 	}
@@ -228,7 +228,7 @@ public class OrgLaborUtil {
 	*/
 	public static com.liferay.portal.model.OrgLabor[] findByOrganizationId_PrevAndNext(
 		long orgLaborId, long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrgLaborException {
 		return getPersistence()
 				   .findByOrganizationId_PrevAndNext(orgLaborId,
@@ -367,7 +367,7 @@ public class OrgLaborUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.OrgLabor> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

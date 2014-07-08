@@ -77,7 +77,7 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 	*/
 	public java.util.List<com.liferay.portal.model.UserTrackerPath> findByUserTrackerId(
 		long userTrackerId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTrackerPath> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user tracker path in the ordered set where userTrackerId = &#63;.
@@ -89,7 +89,7 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 	*/
 	public com.liferay.portal.model.UserTrackerPath findByUserTrackerId_First(
 		long userTrackerId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTrackerPath> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserTrackerPathException;
 
 	/**
@@ -101,7 +101,7 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 	*/
 	public com.liferay.portal.model.UserTrackerPath fetchByUserTrackerId_First(
 		long userTrackerId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTrackerPath> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user tracker path in the ordered set where userTrackerId = &#63;.
@@ -113,7 +113,7 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 	*/
 	public com.liferay.portal.model.UserTrackerPath findByUserTrackerId_Last(
 		long userTrackerId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTrackerPath> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserTrackerPathException;
 
 	/**
@@ -125,7 +125,7 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 	*/
 	public com.liferay.portal.model.UserTrackerPath fetchByUserTrackerId_Last(
 		long userTrackerId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTrackerPath> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user tracker paths before and after the current user tracker path in the ordered set where userTrackerId = &#63;.
@@ -138,7 +138,7 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 	*/
 	public com.liferay.portal.model.UserTrackerPath[] findByUserTrackerId_PrevAndNext(
 		long userTrackerPathId, long userTrackerId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTrackerPath> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserTrackerPathException;
 
 	/**
@@ -254,7 +254,7 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 	*/
 	public java.util.List<com.liferay.portal.model.UserTrackerPath> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserTrackerPath> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the user tracker paths from the database.

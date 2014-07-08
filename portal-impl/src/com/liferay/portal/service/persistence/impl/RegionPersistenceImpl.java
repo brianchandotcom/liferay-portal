@@ -151,7 +151,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public List<Region> findByCountryId(long countryId, int start, int end,
-		OrderByComparator<Region> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -257,8 +257,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public Region findByCountryId_First(long countryId,
-		OrderByComparator<Region> orderByComparator)
-		throws NoSuchRegionException {
+		OrderByComparator orderByComparator) throws NoSuchRegionException {
 		Region region = fetchByCountryId_First(countryId, orderByComparator);
 
 		if (region != null) {
@@ -286,7 +285,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public Region fetchByCountryId_First(long countryId,
-		OrderByComparator<Region> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<Region> list = findByCountryId(countryId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -306,8 +305,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public Region findByCountryId_Last(long countryId,
-		OrderByComparator<Region> orderByComparator)
-		throws NoSuchRegionException {
+		OrderByComparator orderByComparator) throws NoSuchRegionException {
 		Region region = fetchByCountryId_Last(countryId, orderByComparator);
 
 		if (region != null) {
@@ -335,7 +333,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public Region fetchByCountryId_Last(long countryId,
-		OrderByComparator<Region> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByCountryId(countryId);
 
 		if (count == 0) {
@@ -363,8 +361,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public Region[] findByCountryId_PrevAndNext(long regionId, long countryId,
-		OrderByComparator<Region> orderByComparator)
-		throws NoSuchRegionException {
+		OrderByComparator orderByComparator) throws NoSuchRegionException {
 		Region region = findByPrimaryKey(regionId);
 
 		Session session = null;
@@ -393,8 +390,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	}
 
 	protected Region getByCountryId_PrevAndNext(Session session, Region region,
-		long countryId, OrderByComparator<Region> orderByComparator,
-		boolean previous) {
+		long countryId, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -627,7 +623,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public List<Region> findByActive(boolean active, int start, int end,
-		OrderByComparator<Region> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -733,8 +729,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public Region findByActive_First(boolean active,
-		OrderByComparator<Region> orderByComparator)
-		throws NoSuchRegionException {
+		OrderByComparator orderByComparator) throws NoSuchRegionException {
 		Region region = fetchByActive_First(active, orderByComparator);
 
 		if (region != null) {
@@ -762,7 +757,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public Region fetchByActive_First(boolean active,
-		OrderByComparator<Region> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<Region> list = findByActive(active, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -782,8 +777,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public Region findByActive_Last(boolean active,
-		OrderByComparator<Region> orderByComparator)
-		throws NoSuchRegionException {
+		OrderByComparator orderByComparator) throws NoSuchRegionException {
 		Region region = fetchByActive_Last(active, orderByComparator);
 
 		if (region != null) {
@@ -811,7 +805,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public Region fetchByActive_Last(boolean active,
-		OrderByComparator<Region> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByActive(active);
 
 		if (count == 0) {
@@ -839,8 +833,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public Region[] findByActive_PrevAndNext(long regionId, boolean active,
-		OrderByComparator<Region> orderByComparator)
-		throws NoSuchRegionException {
+		OrderByComparator orderByComparator) throws NoSuchRegionException {
 		Region region = findByPrimaryKey(regionId);
 
 		Session session = null;
@@ -869,8 +862,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	}
 
 	protected Region getByActive_PrevAndNext(Session session, Region region,
-		boolean active, OrderByComparator<Region> orderByComparator,
-		boolean previous) {
+		boolean active, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1364,7 +1356,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public List<Region> findByC_A(long countryId, boolean active, int start,
-		int end, OrderByComparator<Region> orderByComparator) {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1480,8 +1472,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public Region findByC_A_First(long countryId, boolean active,
-		OrderByComparator<Region> orderByComparator)
-		throws NoSuchRegionException {
+		OrderByComparator orderByComparator) throws NoSuchRegionException {
 		Region region = fetchByC_A_First(countryId, active, orderByComparator);
 
 		if (region != null) {
@@ -1513,7 +1504,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public Region fetchByC_A_First(long countryId, boolean active,
-		OrderByComparator<Region> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<Region> list = findByC_A(countryId, active, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1534,8 +1525,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public Region findByC_A_Last(long countryId, boolean active,
-		OrderByComparator<Region> orderByComparator)
-		throws NoSuchRegionException {
+		OrderByComparator orderByComparator) throws NoSuchRegionException {
 		Region region = fetchByC_A_Last(countryId, active, orderByComparator);
 
 		if (region != null) {
@@ -1567,7 +1557,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public Region fetchByC_A_Last(long countryId, boolean active,
-		OrderByComparator<Region> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByC_A(countryId, active);
 
 		if (count == 0) {
@@ -1596,7 +1586,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public Region[] findByC_A_PrevAndNext(long regionId, long countryId,
-		boolean active, OrderByComparator<Region> orderByComparator)
+		boolean active, OrderByComparator orderByComparator)
 		throws NoSuchRegionException {
 		Region region = findByPrimaryKey(regionId);
 
@@ -1626,8 +1616,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	}
 
 	protected Region getByC_A_PrevAndNext(Session session, Region region,
-		long countryId, boolean active,
-		OrderByComparator<Region> orderByComparator, boolean previous) {
+		long countryId, boolean active, OrderByComparator orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2392,7 +2382,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	 */
 	@Override
 	public List<Region> findAll(int start, int end,
-		OrderByComparator<Region> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

@@ -77,7 +77,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public java.util.List<com.liferay.portal.model.MembershipRequest> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first membership request in the ordered set where groupId = &#63;.
@@ -89,7 +89,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchMembershipRequestException;
 
 	/**
@@ -101,7 +101,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last membership request in the ordered set where groupId = &#63;.
@@ -113,7 +113,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchMembershipRequestException;
 
 	/**
@@ -125,7 +125,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the membership requests before and after the current membership request in the ordered set where groupId = &#63;.
@@ -138,7 +138,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest[] findByGroupId_PrevAndNext(
 		long membershipRequestId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchMembershipRequestException;
 
 	/**
@@ -195,7 +195,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public java.util.List<com.liferay.portal.model.MembershipRequest> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first membership request in the ordered set where userId = &#63;.
@@ -207,7 +207,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchMembershipRequestException;
 
 	/**
@@ -219,7 +219,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last membership request in the ordered set where userId = &#63;.
@@ -231,7 +231,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchMembershipRequestException;
 
 	/**
@@ -243,7 +243,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the membership requests before and after the current membership request in the ordered set where userId = &#63;.
@@ -256,7 +256,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest[] findByUserId_PrevAndNext(
 		long membershipRequestId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchMembershipRequestException;
 
 	/**
@@ -316,7 +316,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public java.util.List<com.liferay.portal.model.MembershipRequest> findByG_S(
 		long groupId, int statusId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first membership request in the ordered set where groupId = &#63; and statusId = &#63;.
@@ -329,7 +329,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest findByG_S_First(
 		long groupId, int statusId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchMembershipRequestException;
 
 	/**
@@ -342,7 +342,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest fetchByG_S_First(
 		long groupId, int statusId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last membership request in the ordered set where groupId = &#63; and statusId = &#63;.
@@ -355,7 +355,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest findByG_S_Last(
 		long groupId, int statusId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchMembershipRequestException;
 
 	/**
@@ -368,7 +368,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest fetchByG_S_Last(
 		long groupId, int statusId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the membership requests before and after the current membership request in the ordered set where groupId = &#63; and statusId = &#63;.
@@ -382,7 +382,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest[] findByG_S_PrevAndNext(
 		long membershipRequestId, long groupId, int statusId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchMembershipRequestException;
 
 	/**
@@ -447,7 +447,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public java.util.List<com.liferay.portal.model.MembershipRequest> findByG_U_S(
 		long groupId, long userId, int statusId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first membership request in the ordered set where groupId = &#63; and userId = &#63; and statusId = &#63;.
@@ -461,7 +461,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest findByG_U_S_First(
 		long groupId, long userId, int statusId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchMembershipRequestException;
 
 	/**
@@ -475,7 +475,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest fetchByG_U_S_First(
 		long groupId, long userId, int statusId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last membership request in the ordered set where groupId = &#63; and userId = &#63; and statusId = &#63;.
@@ -489,7 +489,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest findByG_U_S_Last(
 		long groupId, long userId, int statusId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchMembershipRequestException;
 
 	/**
@@ -503,7 +503,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest fetchByG_U_S_Last(
 		long groupId, long userId, int statusId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the membership requests before and after the current membership request in the ordered set where groupId = &#63; and userId = &#63; and statusId = &#63;.
@@ -518,7 +518,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public com.liferay.portal.model.MembershipRequest[] findByG_U_S_PrevAndNext(
 		long membershipRequestId, long groupId, long userId, int statusId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchMembershipRequestException;
 
 	/**
@@ -638,7 +638,7 @@ public interface MembershipRequestPersistence extends BasePersistence<Membership
 	*/
 	public java.util.List<com.liferay.portal.model.MembershipRequest> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.MembershipRequest> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the membership requests from the database.

@@ -40,6 +40,16 @@ public class ContactServiceWrapper implements ContactService,
 		return _contactService.getBeanIdentifier();
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_contactService.setBeanIdentifier(beanIdentifier);
+	}
+
 	@Override
 	public com.liferay.portal.model.Contact getContact(long contactId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -59,16 +69,6 @@ public class ContactServiceWrapper implements ContactService,
 	public int getContactsCount(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _contactService.getContactsCount(classNameId, classPK);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_contactService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

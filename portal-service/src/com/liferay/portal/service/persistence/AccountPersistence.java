@@ -131,7 +131,7 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	*/
 	public java.util.List<com.liferay.portal.model.Account> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Account> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the accounts from the database.

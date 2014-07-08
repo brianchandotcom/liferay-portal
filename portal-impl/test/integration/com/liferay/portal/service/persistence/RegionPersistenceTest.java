@@ -238,7 +238,7 @@ public class RegionPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<Region> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Region", "mvccVersion",
 			true, "regionId", true, "countryId", true, "regionCode", true,
 			"name", true, "active", true);

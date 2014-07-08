@@ -184,7 +184,7 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 	*/
 	public java.util.List<com.liferay.portal.model.WebDAVProps> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WebDAVProps> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the web d a v propses from the database.

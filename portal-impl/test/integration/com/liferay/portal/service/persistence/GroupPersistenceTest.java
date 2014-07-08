@@ -471,7 +471,7 @@ public class GroupPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<Group> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Group_", "mvccVersion",
 			true, "uuid", true, "groupId", true, "companyId", true,
 			"creatorUserId", true, "classNameId", true, "classPK", true,

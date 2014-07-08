@@ -150,7 +150,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 */
 	@Override
 	public List<Portlet> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator<Portlet> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -256,8 +256,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 */
 	@Override
 	public Portlet findByCompanyId_First(long companyId,
-		OrderByComparator<Portlet> orderByComparator)
-		throws NoSuchPortletException {
+		OrderByComparator orderByComparator) throws NoSuchPortletException {
 		Portlet portlet = fetchByCompanyId_First(companyId, orderByComparator);
 
 		if (portlet != null) {
@@ -285,7 +284,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 */
 	@Override
 	public Portlet fetchByCompanyId_First(long companyId,
-		OrderByComparator<Portlet> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<Portlet> list = findByCompanyId(companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -305,8 +304,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 */
 	@Override
 	public Portlet findByCompanyId_Last(long companyId,
-		OrderByComparator<Portlet> orderByComparator)
-		throws NoSuchPortletException {
+		OrderByComparator orderByComparator) throws NoSuchPortletException {
 		Portlet portlet = fetchByCompanyId_Last(companyId, orderByComparator);
 
 		if (portlet != null) {
@@ -334,7 +332,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 */
 	@Override
 	public Portlet fetchByCompanyId_Last(long companyId,
-		OrderByComparator<Portlet> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -362,8 +360,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 */
 	@Override
 	public Portlet[] findByCompanyId_PrevAndNext(long id, long companyId,
-		OrderByComparator<Portlet> orderByComparator)
-		throws NoSuchPortletException {
+		OrderByComparator orderByComparator) throws NoSuchPortletException {
 		Portlet portlet = findByPrimaryKey(id);
 
 		Session session = null;
@@ -392,8 +389,8 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	}
 
 	protected Portlet getByCompanyId_PrevAndNext(Session session,
-		Portlet portlet, long companyId,
-		OrderByComparator<Portlet> orderByComparator, boolean previous) {
+		Portlet portlet, long companyId, OrderByComparator orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1369,7 +1366,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	 */
 	@Override
 	public List<Portlet> findAll(int start, int end,
-		OrderByComparator<Portlet> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

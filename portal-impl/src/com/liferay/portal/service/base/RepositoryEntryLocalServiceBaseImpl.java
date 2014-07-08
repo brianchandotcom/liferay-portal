@@ -140,7 +140,8 @@ public abstract class RepositoryEntryLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return repositoryEntryPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -157,8 +158,8 @@ public abstract class RepositoryEntryLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return repositoryEntryPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -177,8 +178,9 @@ public abstract class RepositoryEntryLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return repositoryEntryPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -336,7 +338,7 @@ public abstract class RepositoryEntryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return repositoryEntryLocalService.deleteRepositoryEntry((RepositoryEntry)persistedModel);
+		return deleteRepositoryEntry((RepositoryEntry)persistedModel);
 	}
 
 	@Override

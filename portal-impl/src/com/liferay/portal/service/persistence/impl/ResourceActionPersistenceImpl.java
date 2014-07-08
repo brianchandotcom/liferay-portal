@@ -151,7 +151,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 */
 	@Override
 	public List<ResourceAction> findByName(String name, int start, int end,
-		OrderByComparator<ResourceAction> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -271,7 +271,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 */
 	@Override
 	public ResourceAction findByName_First(String name,
-		OrderByComparator<ResourceAction> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchResourceActionException {
 		ResourceAction resourceAction = fetchByName_First(name,
 				orderByComparator);
@@ -301,7 +301,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 */
 	@Override
 	public ResourceAction fetchByName_First(String name,
-		OrderByComparator<ResourceAction> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<ResourceAction> list = findByName(name, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -321,7 +321,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 */
 	@Override
 	public ResourceAction findByName_Last(String name,
-		OrderByComparator<ResourceAction> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchResourceActionException {
 		ResourceAction resourceAction = fetchByName_Last(name, orderByComparator);
 
@@ -350,7 +350,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 */
 	@Override
 	public ResourceAction fetchByName_Last(String name,
-		OrderByComparator<ResourceAction> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByName(name);
 
 		if (count == 0) {
@@ -378,7 +378,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 */
 	@Override
 	public ResourceAction[] findByName_PrevAndNext(long resourceActionId,
-		String name, OrderByComparator<ResourceAction> orderByComparator)
+		String name, OrderByComparator orderByComparator)
 		throws NoSuchResourceActionException {
 		ResourceAction resourceAction = findByPrimaryKey(resourceActionId);
 
@@ -409,7 +409,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 	protected ResourceAction getByName_PrevAndNext(Session session,
 		ResourceAction resourceAction, String name,
-		OrderByComparator<ResourceAction> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1452,7 +1452,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 */
 	@Override
 	public List<ResourceAction> findAll(int start, int end,
-		OrderByComparator<ResourceAction> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

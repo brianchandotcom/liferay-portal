@@ -31,6 +31,26 @@ public class LayoutSetBranchServiceWrapper implements LayoutSetBranchService,
 		_layoutSetBranchService = layoutSetBranchService;
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _layoutSetBranchService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_layoutSetBranchService.setBeanIdentifier(beanIdentifier);
+	}
+
 	@Override
 	public com.liferay.portal.model.LayoutSetBranch addLayoutSetBranch(
 		long groupId, boolean privateLayout, java.lang.String name,
@@ -49,16 +69,6 @@ public class LayoutSetBranchServiceWrapper implements LayoutSetBranchService,
 		_layoutSetBranchService.deleteLayoutSetBranch(layoutSetBranchId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _layoutSetBranchService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portal.model.LayoutSetBranch> getLayoutSetBranches(
 		long groupId, boolean privateLayout) {
@@ -73,16 +83,6 @@ public class LayoutSetBranchServiceWrapper implements LayoutSetBranchService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetBranchService.mergeLayoutSetBranch(layoutSetBranchId,
 			mergeLayoutSetBranchId, serviceContext);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_layoutSetBranchService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

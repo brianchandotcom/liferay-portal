@@ -334,7 +334,7 @@ public class ContactPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<Contact> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Contact_", "mvccVersion",
 			true, "contactId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,

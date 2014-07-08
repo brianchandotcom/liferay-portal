@@ -43,17 +43,6 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 		return _classNameLocalService.addClassName(className);
 	}
 
-	@Override
-	public com.liferay.portal.model.ClassName addClassName(
-		java.lang.String value) {
-		return _classNameLocalService.addClassName(value);
-	}
-
-	@Override
-	public void checkClassNames() {
-		_classNameLocalService.checkClassNames();
-	}
-
 	/**
 	* Creates a new class name with the primary key. Does not add the class name to the database.
 	*
@@ -63,18 +52,6 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	@Override
 	public com.liferay.portal.model.ClassName createClassName(long classNameId) {
 		return _classNameLocalService.createClassName(classNameId);
-	}
-
-	/**
-	* Deletes the class name from the database. Also notifies the appropriate model listeners.
-	*
-	* @param className the class name
-	* @return the class name that was removed
-	*/
-	@Override
-	public com.liferay.portal.model.ClassName deleteClassName(
-		com.liferay.portal.model.ClassName className) {
-		return _classNameLocalService.deleteClassName(className);
 	}
 
 	/**
@@ -91,13 +68,15 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	}
 
 	/**
-	* @throws PortalException
+	* Deletes the class name from the database. Also notifies the appropriate model listeners.
+	*
+	* @param className the class name
+	* @return the class name that was removed
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _classNameLocalService.deletePersistedModel(persistedModel);
+	public com.liferay.portal.model.ClassName deleteClassName(
+		com.liferay.portal.model.ClassName className) {
+		return _classNameLocalService.deleteClassName(className);
 	}
 
 	@Override
@@ -112,7 +91,8 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _classNameLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -130,7 +110,8 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _classNameLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -150,10 +131,11 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _classNameLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -189,37 +171,6 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 		return _classNameLocalService.fetchClassName(classNameId);
 	}
 
-	@Override
-	public com.liferay.portal.model.ClassName fetchClassName(
-		java.lang.String value) {
-		return _classNameLocalService.fetchClassName(value);
-	}
-
-	@Override
-	public long fetchClassNameId(java.lang.Class<?> clazz) {
-		return _classNameLocalService.fetchClassNameId(clazz);
-	}
-
-	@Override
-	public long fetchClassNameId(java.lang.String value) {
-		return _classNameLocalService.fetchClassNameId(value);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _classNameLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _classNameLocalService.getBeanIdentifier();
-	}
-
 	/**
 	* Returns the class name with the primary key.
 	*
@@ -234,19 +185,25 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.ClassName getClassName(
-		java.lang.String value) {
-		return _classNameLocalService.getClassName(value);
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _classNameLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _classNameLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
-	public long getClassNameId(java.lang.Class<?> clazz) {
-		return _classNameLocalService.getClassNameId(clazz);
-	}
-
-	@Override
-	public long getClassNameId(java.lang.String value) {
-		return _classNameLocalService.getClassNameId(value);
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _classNameLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -276,21 +233,26 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 		return _classNameLocalService.getClassNamesCount();
 	}
 
+	/**
+	* Updates the class name in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param className the class name
+	* @return the class name that was updated
+	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _classNameLocalService.getPersistedModel(primaryKeyObj);
+	public com.liferay.portal.model.ClassName updateClassName(
+		com.liferay.portal.model.ClassName className) {
+		return _classNameLocalService.updateClassName(className);
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
 	@Override
-	public java.lang.String getRegistryName() {
-		return _classNameLocalService.getRegistryName();
-	}
-
-	@Override
-	public void invalidate() {
-		_classNameLocalService.invalidate();
+	public java.lang.String getBeanIdentifier() {
+		return _classNameLocalService.getBeanIdentifier();
 	}
 
 	/**
@@ -303,16 +265,57 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 		_classNameLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
-	/**
-	* Updates the class name in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param className the class name
-	* @return the class name that was updated
-	*/
 	@Override
-	public com.liferay.portal.model.ClassName updateClassName(
-		com.liferay.portal.model.ClassName className) {
-		return _classNameLocalService.updateClassName(className);
+	public com.liferay.portal.model.ClassName addClassName(
+		java.lang.String value) {
+		return _classNameLocalService.addClassName(value);
+	}
+
+	@Override
+	public void checkClassNames() {
+		_classNameLocalService.checkClassNames();
+	}
+
+	@Override
+	public com.liferay.portal.model.ClassName fetchClassName(
+		java.lang.String value) {
+		return _classNameLocalService.fetchClassName(value);
+	}
+
+	@Override
+	public long fetchClassNameId(java.lang.Class<?> clazz) {
+		return _classNameLocalService.fetchClassNameId(clazz);
+	}
+
+	@Override
+	public long fetchClassNameId(java.lang.String value) {
+		return _classNameLocalService.fetchClassNameId(value);
+	}
+
+	@Override
+	public com.liferay.portal.model.ClassName getClassName(
+		java.lang.String value) {
+		return _classNameLocalService.getClassName(value);
+	}
+
+	@Override
+	public long getClassNameId(java.lang.Class<?> clazz) {
+		return _classNameLocalService.getClassNameId(clazz);
+	}
+
+	@Override
+	public long getClassNameId(java.lang.String value) {
+		return _classNameLocalService.getClassNameId(value);
+	}
+
+	@Override
+	public java.lang.String getRegistryName() {
+		return _classNameLocalService.getRegistryName();
+	}
+
+	@Override
+	public void invalidate() {
+		_classNameLocalService.invalidate();
 	}
 
 	/**

@@ -132,7 +132,8 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return userTrackerPathPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -149,8 +150,8 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return userTrackerPathPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -169,8 +170,9 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return userTrackerPathPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -246,7 +248,7 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return userTrackerPathLocalService.deleteUserTrackerPath((UserTrackerPath)persistedModel);
+		return deleteUserTrackerPath((UserTrackerPath)persistedModel);
 	}
 
 	@Override

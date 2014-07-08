@@ -134,7 +134,8 @@ public abstract class PortletItemLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return portletItemPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -151,8 +152,8 @@ public abstract class PortletItemLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return portletItemPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -171,8 +172,9 @@ public abstract class PortletItemLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return portletItemPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -248,7 +250,7 @@ public abstract class PortletItemLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return portletItemLocalService.deletePortletItem((PortletItem)persistedModel);
+		return deletePortletItem((PortletItem)persistedModel);
 	}
 
 	@Override

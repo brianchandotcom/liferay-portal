@@ -148,7 +148,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public List<SystemEvent> findByGroupId(long groupId, int start, int end,
-		OrderByComparator<SystemEvent> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -254,8 +254,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent findByGroupId_First(long groupId,
-		OrderByComparator<SystemEvent> orderByComparator)
-		throws NoSuchSystemEventException {
+		OrderByComparator orderByComparator) throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -284,7 +283,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent fetchByGroupId_First(long groupId,
-		OrderByComparator<SystemEvent> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<SystemEvent> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -304,8 +303,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent findByGroupId_Last(long groupId,
-		OrderByComparator<SystemEvent> orderByComparator)
-		throws NoSuchSystemEventException {
+		OrderByComparator orderByComparator) throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByGroupId_Last(groupId, orderByComparator);
 
 		if (systemEvent != null) {
@@ -333,7 +331,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent fetchByGroupId_Last(long groupId,
-		OrderByComparator<SystemEvent> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -361,7 +359,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent[] findByGroupId_PrevAndNext(long systemEventId,
-		long groupId, OrderByComparator<SystemEvent> orderByComparator)
+		long groupId, OrderByComparator orderByComparator)
 		throws NoSuchSystemEventException {
 		SystemEvent systemEvent = findByPrimaryKey(systemEventId);
 
@@ -392,7 +390,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 
 	protected SystemEvent getByGroupId_PrevAndNext(Session session,
 		SystemEvent systemEvent, long groupId,
-		OrderByComparator<SystemEvent> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -630,7 +628,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public List<SystemEvent> findByG_S(long groupId, long systemEventSetKey,
-		int start, int end, OrderByComparator<SystemEvent> orderByComparator) {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -746,8 +744,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent findByG_S_First(long groupId, long systemEventSetKey,
-		OrderByComparator<SystemEvent> orderByComparator)
-		throws NoSuchSystemEventException {
+		OrderByComparator orderByComparator) throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByG_S_First(groupId, systemEventSetKey,
 				orderByComparator);
 
@@ -780,7 +777,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent fetchByG_S_First(long groupId, long systemEventSetKey,
-		OrderByComparator<SystemEvent> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<SystemEvent> list = findByG_S(groupId, systemEventSetKey, 0, 1,
 				orderByComparator);
 
@@ -802,8 +799,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent findByG_S_Last(long groupId, long systemEventSetKey,
-		OrderByComparator<SystemEvent> orderByComparator)
-		throws NoSuchSystemEventException {
+		OrderByComparator orderByComparator) throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByG_S_Last(groupId, systemEventSetKey,
 				orderByComparator);
 
@@ -836,7 +832,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent fetchByG_S_Last(long groupId, long systemEventSetKey,
-		OrderByComparator<SystemEvent> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByG_S(groupId, systemEventSetKey);
 
 		if (count == 0) {
@@ -866,8 +862,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	@Override
 	public SystemEvent[] findByG_S_PrevAndNext(long systemEventId,
 		long groupId, long systemEventSetKey,
-		OrderByComparator<SystemEvent> orderByComparator)
-		throws NoSuchSystemEventException {
+		OrderByComparator orderByComparator) throws NoSuchSystemEventException {
 		SystemEvent systemEvent = findByPrimaryKey(systemEventId);
 
 		Session session = null;
@@ -897,7 +892,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 
 	protected SystemEvent getByG_S_PrevAndNext(Session session,
 		SystemEvent systemEvent, long groupId, long systemEventSetKey,
-		OrderByComparator<SystemEvent> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1155,8 +1150,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public List<SystemEvent> findByG_C_C(long groupId, long classNameId,
-		long classPK, int start, int end,
-		OrderByComparator<SystemEvent> orderByComparator) {
+		long classPK, int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1278,7 +1272,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent findByG_C_C_First(long groupId, long classNameId,
-		long classPK, OrderByComparator<SystemEvent> orderByComparator)
+		long classPK, OrderByComparator orderByComparator)
 		throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByG_C_C_First(groupId, classNameId,
 				classPK, orderByComparator);
@@ -1316,7 +1310,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent fetchByG_C_C_First(long groupId, long classNameId,
-		long classPK, OrderByComparator<SystemEvent> orderByComparator) {
+		long classPK, OrderByComparator orderByComparator) {
 		List<SystemEvent> list = findByG_C_C(groupId, classNameId, classPK, 0,
 				1, orderByComparator);
 
@@ -1339,7 +1333,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent findByG_C_C_Last(long groupId, long classNameId,
-		long classPK, OrderByComparator<SystemEvent> orderByComparator)
+		long classPK, OrderByComparator orderByComparator)
 		throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByG_C_C_Last(groupId, classNameId,
 				classPK, orderByComparator);
@@ -1377,7 +1371,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent fetchByG_C_C_Last(long groupId, long classNameId,
-		long classPK, OrderByComparator<SystemEvent> orderByComparator) {
+		long classPK, OrderByComparator orderByComparator) {
 		int count = countByG_C_C(groupId, classNameId, classPK);
 
 		if (count == 0) {
@@ -1408,8 +1402,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	@Override
 	public SystemEvent[] findByG_C_C_PrevAndNext(long systemEventId,
 		long groupId, long classNameId, long classPK,
-		OrderByComparator<SystemEvent> orderByComparator)
-		throws NoSuchSystemEventException {
+		OrderByComparator orderByComparator) throws NoSuchSystemEventException {
 		SystemEvent systemEvent = findByPrimaryKey(systemEventId);
 
 		Session session = null;
@@ -1439,7 +1432,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 
 	protected SystemEvent getByG_C_C_PrevAndNext(Session session,
 		SystemEvent systemEvent, long groupId, long classNameId, long classPK,
-		OrderByComparator<SystemEvent> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1718,7 +1711,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	@Override
 	public List<SystemEvent> findByG_C_C_T(long groupId, long classNameId,
 		long classPK, int type, int start, int end,
-		OrderByComparator<SystemEvent> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1846,7 +1839,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent findByG_C_C_T_First(long groupId, long classNameId,
-		long classPK, int type, OrderByComparator<SystemEvent> orderByComparator)
+		long classPK, int type, OrderByComparator orderByComparator)
 		throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByG_C_C_T_First(groupId, classNameId,
 				classPK, type, orderByComparator);
@@ -1888,7 +1881,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent fetchByG_C_C_T_First(long groupId, long classNameId,
-		long classPK, int type, OrderByComparator<SystemEvent> orderByComparator) {
+		long classPK, int type, OrderByComparator orderByComparator) {
 		List<SystemEvent> list = findByG_C_C_T(groupId, classNameId, classPK,
 				type, 0, 1, orderByComparator);
 
@@ -1912,7 +1905,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent findByG_C_C_T_Last(long groupId, long classNameId,
-		long classPK, int type, OrderByComparator<SystemEvent> orderByComparator)
+		long classPK, int type, OrderByComparator orderByComparator)
 		throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByG_C_C_T_Last(groupId, classNameId,
 				classPK, type, orderByComparator);
@@ -1954,7 +1947,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public SystemEvent fetchByG_C_C_T_Last(long groupId, long classNameId,
-		long classPK, int type, OrderByComparator<SystemEvent> orderByComparator) {
+		long classPK, int type, OrderByComparator orderByComparator) {
 		int count = countByG_C_C_T(groupId, classNameId, classPK, type);
 
 		if (count == 0) {
@@ -1986,8 +1979,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	@Override
 	public SystemEvent[] findByG_C_C_T_PrevAndNext(long systemEventId,
 		long groupId, long classNameId, long classPK, int type,
-		OrderByComparator<SystemEvent> orderByComparator)
-		throws NoSuchSystemEventException {
+		OrderByComparator orderByComparator) throws NoSuchSystemEventException {
 		SystemEvent systemEvent = findByPrimaryKey(systemEventId);
 
 		Session session = null;
@@ -2017,8 +2009,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 
 	protected SystemEvent getByG_C_C_T_PrevAndNext(Session session,
 		SystemEvent systemEvent, long groupId, long classNameId, long classPK,
-		int type, OrderByComparator<SystemEvent> orderByComparator,
-		boolean previous) {
+		int type, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2795,7 +2786,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 */
 	@Override
 	public List<SystemEvent> findAll(int start, int end,
-		OrderByComparator<SystemEvent> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

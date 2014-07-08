@@ -366,7 +366,7 @@ public class RolePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<Role> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Role_", "mvccVersion",
 			true, "uuid", true, "roleId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,

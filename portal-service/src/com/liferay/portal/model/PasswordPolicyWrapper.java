@@ -306,259 +306,24 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 		}
 	}
 
+	/**
+	* Returns the primary key of this password policy.
+	*
+	* @return the primary key of this password policy
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new PasswordPolicyWrapper((PasswordPolicy)_passwordPolicy.clone());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.model.PasswordPolicy passwordPolicy) {
-		return _passwordPolicy.compareTo(passwordPolicy);
+	public long getPrimaryKey() {
+		return _passwordPolicy.getPrimaryKey();
 	}
 
 	/**
-	* Returns the allow dictionary words of this password policy.
+	* Sets the primary key of this password policy.
 	*
-	* @return the allow dictionary words of this password policy
+	* @param primaryKey the primary key of this password policy
 	*/
 	@Override
-	public boolean getAllowDictionaryWords() {
-		return _passwordPolicy.getAllowDictionaryWords();
-	}
-
-	/**
-	* Returns the change required of this password policy.
-	*
-	* @return the change required of this password policy
-	*/
-	@Override
-	public boolean getChangeRequired() {
-		return _passwordPolicy.getChangeRequired();
-	}
-
-	/**
-	* Returns the changeable of this password policy.
-	*
-	* @return the changeable of this password policy
-	*/
-	@Override
-	public boolean getChangeable() {
-		return _passwordPolicy.getChangeable();
-	}
-
-	/**
-	* Returns the check syntax of this password policy.
-	*
-	* @return the check syntax of this password policy
-	*/
-	@Override
-	public boolean getCheckSyntax() {
-		return _passwordPolicy.getCheckSyntax();
-	}
-
-	/**
-	* Returns the company ID of this password policy.
-	*
-	* @return the company ID of this password policy
-	*/
-	@Override
-	public long getCompanyId() {
-		return _passwordPolicy.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this password policy.
-	*
-	* @return the create date of this password policy
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _passwordPolicy.getCreateDate();
-	}
-
-	/**
-	* Returns the default policy of this password policy.
-	*
-	* @return the default policy of this password policy
-	*/
-	@Override
-	public boolean getDefaultPolicy() {
-		return _passwordPolicy.getDefaultPolicy();
-	}
-
-	/**
-	* Returns the description of this password policy.
-	*
-	* @return the description of this password policy
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _passwordPolicy.getDescription();
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _passwordPolicy.getExpandoBridge();
-	}
-
-	/**
-	* Returns the expireable of this password policy.
-	*
-	* @return the expireable of this password policy
-	*/
-	@Override
-	public boolean getExpireable() {
-		return _passwordPolicy.getExpireable();
-	}
-
-	/**
-	* Returns the grace limit of this password policy.
-	*
-	* @return the grace limit of this password policy
-	*/
-	@Override
-	public int getGraceLimit() {
-		return _passwordPolicy.getGraceLimit();
-	}
-
-	/**
-	* Returns the history of this password policy.
-	*
-	* @return the history of this password policy
-	*/
-	@Override
-	public boolean getHistory() {
-		return _passwordPolicy.getHistory();
-	}
-
-	/**
-	* Returns the history count of this password policy.
-	*
-	* @return the history count of this password policy
-	*/
-	@Override
-	public int getHistoryCount() {
-		return _passwordPolicy.getHistoryCount();
-	}
-
-	/**
-	* Returns the lockout of this password policy.
-	*
-	* @return the lockout of this password policy
-	*/
-	@Override
-	public boolean getLockout() {
-		return _passwordPolicy.getLockout();
-	}
-
-	/**
-	* Returns the lockout duration of this password policy.
-	*
-	* @return the lockout duration of this password policy
-	*/
-	@Override
-	public long getLockoutDuration() {
-		return _passwordPolicy.getLockoutDuration();
-	}
-
-	/**
-	* Returns the max age of this password policy.
-	*
-	* @return the max age of this password policy
-	*/
-	@Override
-	public long getMaxAge() {
-		return _passwordPolicy.getMaxAge();
-	}
-
-	/**
-	* Returns the max failure of this password policy.
-	*
-	* @return the max failure of this password policy
-	*/
-	@Override
-	public int getMaxFailure() {
-		return _passwordPolicy.getMaxFailure();
-	}
-
-	/**
-	* Returns the min age of this password policy.
-	*
-	* @return the min age of this password policy
-	*/
-	@Override
-	public long getMinAge() {
-		return _passwordPolicy.getMinAge();
-	}
-
-	/**
-	* Returns the min alphanumeric of this password policy.
-	*
-	* @return the min alphanumeric of this password policy
-	*/
-	@Override
-	public int getMinAlphanumeric() {
-		return _passwordPolicy.getMinAlphanumeric();
-	}
-
-	/**
-	* Returns the min length of this password policy.
-	*
-	* @return the min length of this password policy
-	*/
-	@Override
-	public int getMinLength() {
-		return _passwordPolicy.getMinLength();
-	}
-
-	/**
-	* Returns the min lower case of this password policy.
-	*
-	* @return the min lower case of this password policy
-	*/
-	@Override
-	public int getMinLowerCase() {
-		return _passwordPolicy.getMinLowerCase();
-	}
-
-	/**
-	* Returns the min numbers of this password policy.
-	*
-	* @return the min numbers of this password policy
-	*/
-	@Override
-	public int getMinNumbers() {
-		return _passwordPolicy.getMinNumbers();
-	}
-
-	/**
-	* Returns the min symbols of this password policy.
-	*
-	* @return the min symbols of this password policy
-	*/
-	@Override
-	public int getMinSymbols() {
-		return _passwordPolicy.getMinSymbols();
-	}
-
-	/**
-	* Returns the min upper case of this password policy.
-	*
-	* @return the min upper case of this password policy
-	*/
-	@Override
-	public int getMinUpperCase() {
-		return _passwordPolicy.getMinUpperCase();
-	}
-
-	/**
-	* Returns the modified date of this password policy.
-	*
-	* @return the modified date of this password policy
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _passwordPolicy.getModifiedDate();
+	public void setPrimaryKey(long primaryKey) {
+		_passwordPolicy.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -572,108 +337,13 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	/**
-	* Returns the name of this password policy.
+	* Sets the mvcc version of this password policy.
 	*
-	* @return the name of this password policy
+	* @param mvccVersion the mvcc version of this password policy
 	*/
 	@Override
-	public java.lang.String getName() {
-		return _passwordPolicy.getName();
-	}
-
-	/**
-	* Returns the password policy ID of this password policy.
-	*
-	* @return the password policy ID of this password policy
-	*/
-	@Override
-	public long getPasswordPolicyId() {
-		return _passwordPolicy.getPasswordPolicyId();
-	}
-
-	/**
-	* Returns the primary key of this password policy.
-	*
-	* @return the primary key of this password policy
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _passwordPolicy.getPrimaryKey();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _passwordPolicy.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the regex of this password policy.
-	*
-	* @return the regex of this password policy
-	*/
-	@Override
-	public java.lang.String getRegex() {
-		return _passwordPolicy.getRegex();
-	}
-
-	/**
-	* Returns the require unlock of this password policy.
-	*
-	* @return the require unlock of this password policy
-	*/
-	@Override
-	public boolean getRequireUnlock() {
-		return _passwordPolicy.getRequireUnlock();
-	}
-
-	/**
-	* Returns the reset failure count of this password policy.
-	*
-	* @return the reset failure count of this password policy
-	*/
-	@Override
-	public long getResetFailureCount() {
-		return _passwordPolicy.getResetFailureCount();
-	}
-
-	/**
-	* Returns the reset ticket max age of this password policy.
-	*
-	* @return the reset ticket max age of this password policy
-	*/
-	@Override
-	public long getResetTicketMaxAge() {
-		return _passwordPolicy.getResetTicketMaxAge();
-	}
-
-	/**
-	* Returns the user ID of this password policy.
-	*
-	* @return the user ID of this password policy
-	*/
-	@Override
-	public long getUserId() {
-		return _passwordPolicy.getUserId();
-	}
-
-	/**
-	* Returns the user name of this password policy.
-	*
-	* @return the user name of this password policy
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _passwordPolicy.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this password policy.
-	*
-	* @return the user uuid of this password policy
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _passwordPolicy.getUserUuid();
+	public void setMvccVersion(long mvccVersion) {
+		_passwordPolicy.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -687,173 +357,43 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	/**
-	* Returns the warning time of this password policy.
+	* Sets the uuid of this password policy.
 	*
-	* @return the warning time of this password policy
+	* @param uuid the uuid of this password policy
 	*/
 	@Override
-	public long getWarningTime() {
-		return _passwordPolicy.getWarningTime();
-	}
-
-	@Override
-	public int hashCode() {
-		return _passwordPolicy.hashCode();
+	public void setUuid(java.lang.String uuid) {
+		_passwordPolicy.setUuid(uuid);
 	}
 
 	/**
-	* Returns <code>true</code> if this password policy is allow dictionary words.
+	* Returns the password policy ID of this password policy.
 	*
-	* @return <code>true</code> if this password policy is allow dictionary words; <code>false</code> otherwise
+	* @return the password policy ID of this password policy
 	*/
 	@Override
-	public boolean isAllowDictionaryWords() {
-		return _passwordPolicy.isAllowDictionaryWords();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _passwordPolicy.isCachedModel();
+	public long getPasswordPolicyId() {
+		return _passwordPolicy.getPasswordPolicyId();
 	}
 
 	/**
-	* Returns <code>true</code> if this password policy is change required.
+	* Sets the password policy ID of this password policy.
 	*
-	* @return <code>true</code> if this password policy is change required; <code>false</code> otherwise
+	* @param passwordPolicyId the password policy ID of this password policy
 	*/
 	@Override
-	public boolean isChangeRequired() {
-		return _passwordPolicy.isChangeRequired();
+	public void setPasswordPolicyId(long passwordPolicyId) {
+		_passwordPolicy.setPasswordPolicyId(passwordPolicyId);
 	}
 
 	/**
-	* Returns <code>true</code> if this password policy is changeable.
+	* Returns the company ID of this password policy.
 	*
-	* @return <code>true</code> if this password policy is changeable; <code>false</code> otherwise
+	* @return the company ID of this password policy
 	*/
 	@Override
-	public boolean isChangeable() {
-		return _passwordPolicy.isChangeable();
-	}
-
-	/**
-	* Returns <code>true</code> if this password policy is check syntax.
-	*
-	* @return <code>true</code> if this password policy is check syntax; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isCheckSyntax() {
-		return _passwordPolicy.isCheckSyntax();
-	}
-
-	/**
-	* Returns <code>true</code> if this password policy is default policy.
-	*
-	* @return <code>true</code> if this password policy is default policy; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isDefaultPolicy() {
-		return _passwordPolicy.isDefaultPolicy();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _passwordPolicy.isEscapedModel();
-	}
-
-	/**
-	* Returns <code>true</code> if this password policy is expireable.
-	*
-	* @return <code>true</code> if this password policy is expireable; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isExpireable() {
-		return _passwordPolicy.isExpireable();
-	}
-
-	/**
-	* Returns <code>true</code> if this password policy is history.
-	*
-	* @return <code>true</code> if this password policy is history; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isHistory() {
-		return _passwordPolicy.isHistory();
-	}
-
-	/**
-	* Returns <code>true</code> if this password policy is lockout.
-	*
-	* @return <code>true</code> if this password policy is lockout; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isLockout() {
-		return _passwordPolicy.isLockout();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _passwordPolicy.isNew();
-	}
-
-	/**
-	* Returns <code>true</code> if this password policy is require unlock.
-	*
-	* @return <code>true</code> if this password policy is require unlock; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isRequireUnlock() {
-		return _passwordPolicy.isRequireUnlock();
-	}
-
-	@Override
-	public void persist() {
-		_passwordPolicy.persist();
-	}
-
-	/**
-	* Sets whether this password policy is allow dictionary words.
-	*
-	* @param allowDictionaryWords the allow dictionary words of this password policy
-	*/
-	@Override
-	public void setAllowDictionaryWords(boolean allowDictionaryWords) {
-		_passwordPolicy.setAllowDictionaryWords(allowDictionaryWords);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_passwordPolicy.setCachedModel(cachedModel);
-	}
-
-	/**
-	* Sets whether this password policy is change required.
-	*
-	* @param changeRequired the change required of this password policy
-	*/
-	@Override
-	public void setChangeRequired(boolean changeRequired) {
-		_passwordPolicy.setChangeRequired(changeRequired);
-	}
-
-	/**
-	* Sets whether this password policy is changeable.
-	*
-	* @param changeable the changeable of this password policy
-	*/
-	@Override
-	public void setChangeable(boolean changeable) {
-		_passwordPolicy.setChangeable(changeable);
-	}
-
-	/**
-	* Sets whether this password policy is check syntax.
-	*
-	* @param checkSyntax the check syntax of this password policy
-	*/
-	@Override
-	public void setCheckSyntax(boolean checkSyntax) {
-		_passwordPolicy.setCheckSyntax(checkSyntax);
+	public long getCompanyId() {
+		return _passwordPolicy.getCompanyId();
 	}
 
 	/**
@@ -867,6 +407,76 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	/**
+	* Returns the user ID of this password policy.
+	*
+	* @return the user ID of this password policy
+	*/
+	@Override
+	public long getUserId() {
+		return _passwordPolicy.getUserId();
+	}
+
+	/**
+	* Sets the user ID of this password policy.
+	*
+	* @param userId the user ID of this password policy
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_passwordPolicy.setUserId(userId);
+	}
+
+	/**
+	* Returns the user uuid of this password policy.
+	*
+	* @return the user uuid of this password policy
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _passwordPolicy.getUserUuid();
+	}
+
+	/**
+	* Sets the user uuid of this password policy.
+	*
+	* @param userUuid the user uuid of this password policy
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_passwordPolicy.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this password policy.
+	*
+	* @return the user name of this password policy
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _passwordPolicy.getUserName();
+	}
+
+	/**
+	* Sets the user name of this password policy.
+	*
+	* @param userName the user name of this password policy
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_passwordPolicy.setUserName(userName);
+	}
+
+	/**
+	* Returns the create date of this password policy.
+	*
+	* @return the create date of this password policy
+	*/
+	@Override
+	public java.util.Date getCreateDate() {
+		return _passwordPolicy.getCreateDate();
+	}
+
+	/**
 	* Sets the create date of this password policy.
 	*
 	* @param createDate the create date of this password policy
@@ -874,6 +484,46 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	@Override
 	public void setCreateDate(java.util.Date createDate) {
 		_passwordPolicy.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the modified date of this password policy.
+	*
+	* @return the modified date of this password policy
+	*/
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _passwordPolicy.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this password policy.
+	*
+	* @param modifiedDate the modified date of this password policy
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_passwordPolicy.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Returns the default policy of this password policy.
+	*
+	* @return the default policy of this password policy
+	*/
+	@Override
+	public boolean getDefaultPolicy() {
+		return _passwordPolicy.getDefaultPolicy();
+	}
+
+	/**
+	* Returns <code>true</code> if this password policy is default policy.
+	*
+	* @return <code>true</code> if this password policy is default policy; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDefaultPolicy() {
+		return _passwordPolicy.isDefaultPolicy();
 	}
 
 	/**
@@ -887,6 +537,36 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	/**
+	* Returns the name of this password policy.
+	*
+	* @return the name of this password policy
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _passwordPolicy.getName();
+	}
+
+	/**
+	* Sets the name of this password policy.
+	*
+	* @param name the name of this password policy
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_passwordPolicy.setName(name);
+	}
+
+	/**
+	* Returns the description of this password policy.
+	*
+	* @return the description of this password policy
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _passwordPolicy.getDescription();
+	}
+
+	/**
 	* Sets the description of this password policy.
 	*
 	* @param description the description of this password policy
@@ -894,6 +574,606 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	@Override
 	public void setDescription(java.lang.String description) {
 		_passwordPolicy.setDescription(description);
+	}
+
+	/**
+	* Returns the changeable of this password policy.
+	*
+	* @return the changeable of this password policy
+	*/
+	@Override
+	public boolean getChangeable() {
+		return _passwordPolicy.getChangeable();
+	}
+
+	/**
+	* Returns <code>true</code> if this password policy is changeable.
+	*
+	* @return <code>true</code> if this password policy is changeable; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isChangeable() {
+		return _passwordPolicy.isChangeable();
+	}
+
+	/**
+	* Sets whether this password policy is changeable.
+	*
+	* @param changeable the changeable of this password policy
+	*/
+	@Override
+	public void setChangeable(boolean changeable) {
+		_passwordPolicy.setChangeable(changeable);
+	}
+
+	/**
+	* Returns the change required of this password policy.
+	*
+	* @return the change required of this password policy
+	*/
+	@Override
+	public boolean getChangeRequired() {
+		return _passwordPolicy.getChangeRequired();
+	}
+
+	/**
+	* Returns <code>true</code> if this password policy is change required.
+	*
+	* @return <code>true</code> if this password policy is change required; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isChangeRequired() {
+		return _passwordPolicy.isChangeRequired();
+	}
+
+	/**
+	* Sets whether this password policy is change required.
+	*
+	* @param changeRequired the change required of this password policy
+	*/
+	@Override
+	public void setChangeRequired(boolean changeRequired) {
+		_passwordPolicy.setChangeRequired(changeRequired);
+	}
+
+	/**
+	* Returns the min age of this password policy.
+	*
+	* @return the min age of this password policy
+	*/
+	@Override
+	public long getMinAge() {
+		return _passwordPolicy.getMinAge();
+	}
+
+	/**
+	* Sets the min age of this password policy.
+	*
+	* @param minAge the min age of this password policy
+	*/
+	@Override
+	public void setMinAge(long minAge) {
+		_passwordPolicy.setMinAge(minAge);
+	}
+
+	/**
+	* Returns the check syntax of this password policy.
+	*
+	* @return the check syntax of this password policy
+	*/
+	@Override
+	public boolean getCheckSyntax() {
+		return _passwordPolicy.getCheckSyntax();
+	}
+
+	/**
+	* Returns <code>true</code> if this password policy is check syntax.
+	*
+	* @return <code>true</code> if this password policy is check syntax; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isCheckSyntax() {
+		return _passwordPolicy.isCheckSyntax();
+	}
+
+	/**
+	* Sets whether this password policy is check syntax.
+	*
+	* @param checkSyntax the check syntax of this password policy
+	*/
+	@Override
+	public void setCheckSyntax(boolean checkSyntax) {
+		_passwordPolicy.setCheckSyntax(checkSyntax);
+	}
+
+	/**
+	* Returns the allow dictionary words of this password policy.
+	*
+	* @return the allow dictionary words of this password policy
+	*/
+	@Override
+	public boolean getAllowDictionaryWords() {
+		return _passwordPolicy.getAllowDictionaryWords();
+	}
+
+	/**
+	* Returns <code>true</code> if this password policy is allow dictionary words.
+	*
+	* @return <code>true</code> if this password policy is allow dictionary words; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isAllowDictionaryWords() {
+		return _passwordPolicy.isAllowDictionaryWords();
+	}
+
+	/**
+	* Sets whether this password policy is allow dictionary words.
+	*
+	* @param allowDictionaryWords the allow dictionary words of this password policy
+	*/
+	@Override
+	public void setAllowDictionaryWords(boolean allowDictionaryWords) {
+		_passwordPolicy.setAllowDictionaryWords(allowDictionaryWords);
+	}
+
+	/**
+	* Returns the min alphanumeric of this password policy.
+	*
+	* @return the min alphanumeric of this password policy
+	*/
+	@Override
+	public int getMinAlphanumeric() {
+		return _passwordPolicy.getMinAlphanumeric();
+	}
+
+	/**
+	* Sets the min alphanumeric of this password policy.
+	*
+	* @param minAlphanumeric the min alphanumeric of this password policy
+	*/
+	@Override
+	public void setMinAlphanumeric(int minAlphanumeric) {
+		_passwordPolicy.setMinAlphanumeric(minAlphanumeric);
+	}
+
+	/**
+	* Returns the min length of this password policy.
+	*
+	* @return the min length of this password policy
+	*/
+	@Override
+	public int getMinLength() {
+		return _passwordPolicy.getMinLength();
+	}
+
+	/**
+	* Sets the min length of this password policy.
+	*
+	* @param minLength the min length of this password policy
+	*/
+	@Override
+	public void setMinLength(int minLength) {
+		_passwordPolicy.setMinLength(minLength);
+	}
+
+	/**
+	* Returns the min lower case of this password policy.
+	*
+	* @return the min lower case of this password policy
+	*/
+	@Override
+	public int getMinLowerCase() {
+		return _passwordPolicy.getMinLowerCase();
+	}
+
+	/**
+	* Sets the min lower case of this password policy.
+	*
+	* @param minLowerCase the min lower case of this password policy
+	*/
+	@Override
+	public void setMinLowerCase(int minLowerCase) {
+		_passwordPolicy.setMinLowerCase(minLowerCase);
+	}
+
+	/**
+	* Returns the min numbers of this password policy.
+	*
+	* @return the min numbers of this password policy
+	*/
+	@Override
+	public int getMinNumbers() {
+		return _passwordPolicy.getMinNumbers();
+	}
+
+	/**
+	* Sets the min numbers of this password policy.
+	*
+	* @param minNumbers the min numbers of this password policy
+	*/
+	@Override
+	public void setMinNumbers(int minNumbers) {
+		_passwordPolicy.setMinNumbers(minNumbers);
+	}
+
+	/**
+	* Returns the min symbols of this password policy.
+	*
+	* @return the min symbols of this password policy
+	*/
+	@Override
+	public int getMinSymbols() {
+		return _passwordPolicy.getMinSymbols();
+	}
+
+	/**
+	* Sets the min symbols of this password policy.
+	*
+	* @param minSymbols the min symbols of this password policy
+	*/
+	@Override
+	public void setMinSymbols(int minSymbols) {
+		_passwordPolicy.setMinSymbols(minSymbols);
+	}
+
+	/**
+	* Returns the min upper case of this password policy.
+	*
+	* @return the min upper case of this password policy
+	*/
+	@Override
+	public int getMinUpperCase() {
+		return _passwordPolicy.getMinUpperCase();
+	}
+
+	/**
+	* Sets the min upper case of this password policy.
+	*
+	* @param minUpperCase the min upper case of this password policy
+	*/
+	@Override
+	public void setMinUpperCase(int minUpperCase) {
+		_passwordPolicy.setMinUpperCase(minUpperCase);
+	}
+
+	/**
+	* Returns the regex of this password policy.
+	*
+	* @return the regex of this password policy
+	*/
+	@Override
+	public java.lang.String getRegex() {
+		return _passwordPolicy.getRegex();
+	}
+
+	/**
+	* Sets the regex of this password policy.
+	*
+	* @param regex the regex of this password policy
+	*/
+	@Override
+	public void setRegex(java.lang.String regex) {
+		_passwordPolicy.setRegex(regex);
+	}
+
+	/**
+	* Returns the history of this password policy.
+	*
+	* @return the history of this password policy
+	*/
+	@Override
+	public boolean getHistory() {
+		return _passwordPolicy.getHistory();
+	}
+
+	/**
+	* Returns <code>true</code> if this password policy is history.
+	*
+	* @return <code>true</code> if this password policy is history; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isHistory() {
+		return _passwordPolicy.isHistory();
+	}
+
+	/**
+	* Sets whether this password policy is history.
+	*
+	* @param history the history of this password policy
+	*/
+	@Override
+	public void setHistory(boolean history) {
+		_passwordPolicy.setHistory(history);
+	}
+
+	/**
+	* Returns the history count of this password policy.
+	*
+	* @return the history count of this password policy
+	*/
+	@Override
+	public int getHistoryCount() {
+		return _passwordPolicy.getHistoryCount();
+	}
+
+	/**
+	* Sets the history count of this password policy.
+	*
+	* @param historyCount the history count of this password policy
+	*/
+	@Override
+	public void setHistoryCount(int historyCount) {
+		_passwordPolicy.setHistoryCount(historyCount);
+	}
+
+	/**
+	* Returns the expireable of this password policy.
+	*
+	* @return the expireable of this password policy
+	*/
+	@Override
+	public boolean getExpireable() {
+		return _passwordPolicy.getExpireable();
+	}
+
+	/**
+	* Returns <code>true</code> if this password policy is expireable.
+	*
+	* @return <code>true</code> if this password policy is expireable; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isExpireable() {
+		return _passwordPolicy.isExpireable();
+	}
+
+	/**
+	* Sets whether this password policy is expireable.
+	*
+	* @param expireable the expireable of this password policy
+	*/
+	@Override
+	public void setExpireable(boolean expireable) {
+		_passwordPolicy.setExpireable(expireable);
+	}
+
+	/**
+	* Returns the max age of this password policy.
+	*
+	* @return the max age of this password policy
+	*/
+	@Override
+	public long getMaxAge() {
+		return _passwordPolicy.getMaxAge();
+	}
+
+	/**
+	* Sets the max age of this password policy.
+	*
+	* @param maxAge the max age of this password policy
+	*/
+	@Override
+	public void setMaxAge(long maxAge) {
+		_passwordPolicy.setMaxAge(maxAge);
+	}
+
+	/**
+	* Returns the warning time of this password policy.
+	*
+	* @return the warning time of this password policy
+	*/
+	@Override
+	public long getWarningTime() {
+		return _passwordPolicy.getWarningTime();
+	}
+
+	/**
+	* Sets the warning time of this password policy.
+	*
+	* @param warningTime the warning time of this password policy
+	*/
+	@Override
+	public void setWarningTime(long warningTime) {
+		_passwordPolicy.setWarningTime(warningTime);
+	}
+
+	/**
+	* Returns the grace limit of this password policy.
+	*
+	* @return the grace limit of this password policy
+	*/
+	@Override
+	public int getGraceLimit() {
+		return _passwordPolicy.getGraceLimit();
+	}
+
+	/**
+	* Sets the grace limit of this password policy.
+	*
+	* @param graceLimit the grace limit of this password policy
+	*/
+	@Override
+	public void setGraceLimit(int graceLimit) {
+		_passwordPolicy.setGraceLimit(graceLimit);
+	}
+
+	/**
+	* Returns the lockout of this password policy.
+	*
+	* @return the lockout of this password policy
+	*/
+	@Override
+	public boolean getLockout() {
+		return _passwordPolicy.getLockout();
+	}
+
+	/**
+	* Returns <code>true</code> if this password policy is lockout.
+	*
+	* @return <code>true</code> if this password policy is lockout; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isLockout() {
+		return _passwordPolicy.isLockout();
+	}
+
+	/**
+	* Sets whether this password policy is lockout.
+	*
+	* @param lockout the lockout of this password policy
+	*/
+	@Override
+	public void setLockout(boolean lockout) {
+		_passwordPolicy.setLockout(lockout);
+	}
+
+	/**
+	* Returns the max failure of this password policy.
+	*
+	* @return the max failure of this password policy
+	*/
+	@Override
+	public int getMaxFailure() {
+		return _passwordPolicy.getMaxFailure();
+	}
+
+	/**
+	* Sets the max failure of this password policy.
+	*
+	* @param maxFailure the max failure of this password policy
+	*/
+	@Override
+	public void setMaxFailure(int maxFailure) {
+		_passwordPolicy.setMaxFailure(maxFailure);
+	}
+
+	/**
+	* Returns the lockout duration of this password policy.
+	*
+	* @return the lockout duration of this password policy
+	*/
+	@Override
+	public long getLockoutDuration() {
+		return _passwordPolicy.getLockoutDuration();
+	}
+
+	/**
+	* Sets the lockout duration of this password policy.
+	*
+	* @param lockoutDuration the lockout duration of this password policy
+	*/
+	@Override
+	public void setLockoutDuration(long lockoutDuration) {
+		_passwordPolicy.setLockoutDuration(lockoutDuration);
+	}
+
+	/**
+	* Returns the require unlock of this password policy.
+	*
+	* @return the require unlock of this password policy
+	*/
+	@Override
+	public boolean getRequireUnlock() {
+		return _passwordPolicy.getRequireUnlock();
+	}
+
+	/**
+	* Returns <code>true</code> if this password policy is require unlock.
+	*
+	* @return <code>true</code> if this password policy is require unlock; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isRequireUnlock() {
+		return _passwordPolicy.isRequireUnlock();
+	}
+
+	/**
+	* Sets whether this password policy is require unlock.
+	*
+	* @param requireUnlock the require unlock of this password policy
+	*/
+	@Override
+	public void setRequireUnlock(boolean requireUnlock) {
+		_passwordPolicy.setRequireUnlock(requireUnlock);
+	}
+
+	/**
+	* Returns the reset failure count of this password policy.
+	*
+	* @return the reset failure count of this password policy
+	*/
+	@Override
+	public long getResetFailureCount() {
+		return _passwordPolicy.getResetFailureCount();
+	}
+
+	/**
+	* Sets the reset failure count of this password policy.
+	*
+	* @param resetFailureCount the reset failure count of this password policy
+	*/
+	@Override
+	public void setResetFailureCount(long resetFailureCount) {
+		_passwordPolicy.setResetFailureCount(resetFailureCount);
+	}
+
+	/**
+	* Returns the reset ticket max age of this password policy.
+	*
+	* @return the reset ticket max age of this password policy
+	*/
+	@Override
+	public long getResetTicketMaxAge() {
+		return _passwordPolicy.getResetTicketMaxAge();
+	}
+
+	/**
+	* Sets the reset ticket max age of this password policy.
+	*
+	* @param resetTicketMaxAge the reset ticket max age of this password policy
+	*/
+	@Override
+	public void setResetTicketMaxAge(long resetTicketMaxAge) {
+		_passwordPolicy.setResetTicketMaxAge(resetTicketMaxAge);
+	}
+
+	@Override
+	public boolean isNew() {
+		return _passwordPolicy.isNew();
+	}
+
+	@Override
+	public void setNew(boolean n) {
+		_passwordPolicy.setNew(n);
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _passwordPolicy.isCachedModel();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_passwordPolicy.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _passwordPolicy.isEscapedModel();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _passwordPolicy.getPrimaryKeyObj();
+	}
+
+	@Override
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_passwordPolicy.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _passwordPolicy.getExpandoBridge();
 	}
 
 	@Override
@@ -914,304 +1194,19 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 		_passwordPolicy.setExpandoBridgeAttributes(serviceContext);
 	}
 
-	/**
-	* Sets whether this password policy is expireable.
-	*
-	* @param expireable the expireable of this password policy
-	*/
 	@Override
-	public void setExpireable(boolean expireable) {
-		_passwordPolicy.setExpireable(expireable);
-	}
-
-	/**
-	* Sets the grace limit of this password policy.
-	*
-	* @param graceLimit the grace limit of this password policy
-	*/
-	@Override
-	public void setGraceLimit(int graceLimit) {
-		_passwordPolicy.setGraceLimit(graceLimit);
-	}
-
-	/**
-	* Sets whether this password policy is history.
-	*
-	* @param history the history of this password policy
-	*/
-	@Override
-	public void setHistory(boolean history) {
-		_passwordPolicy.setHistory(history);
-	}
-
-	/**
-	* Sets the history count of this password policy.
-	*
-	* @param historyCount the history count of this password policy
-	*/
-	@Override
-	public void setHistoryCount(int historyCount) {
-		_passwordPolicy.setHistoryCount(historyCount);
-	}
-
-	/**
-	* Sets whether this password policy is lockout.
-	*
-	* @param lockout the lockout of this password policy
-	*/
-	@Override
-	public void setLockout(boolean lockout) {
-		_passwordPolicy.setLockout(lockout);
-	}
-
-	/**
-	* Sets the lockout duration of this password policy.
-	*
-	* @param lockoutDuration the lockout duration of this password policy
-	*/
-	@Override
-	public void setLockoutDuration(long lockoutDuration) {
-		_passwordPolicy.setLockoutDuration(lockoutDuration);
-	}
-
-	/**
-	* Sets the max age of this password policy.
-	*
-	* @param maxAge the max age of this password policy
-	*/
-	@Override
-	public void setMaxAge(long maxAge) {
-		_passwordPolicy.setMaxAge(maxAge);
-	}
-
-	/**
-	* Sets the max failure of this password policy.
-	*
-	* @param maxFailure the max failure of this password policy
-	*/
-	@Override
-	public void setMaxFailure(int maxFailure) {
-		_passwordPolicy.setMaxFailure(maxFailure);
-	}
-
-	/**
-	* Sets the min age of this password policy.
-	*
-	* @param minAge the min age of this password policy
-	*/
-	@Override
-	public void setMinAge(long minAge) {
-		_passwordPolicy.setMinAge(minAge);
-	}
-
-	/**
-	* Sets the min alphanumeric of this password policy.
-	*
-	* @param minAlphanumeric the min alphanumeric of this password policy
-	*/
-	@Override
-	public void setMinAlphanumeric(int minAlphanumeric) {
-		_passwordPolicy.setMinAlphanumeric(minAlphanumeric);
-	}
-
-	/**
-	* Sets the min length of this password policy.
-	*
-	* @param minLength the min length of this password policy
-	*/
-	@Override
-	public void setMinLength(int minLength) {
-		_passwordPolicy.setMinLength(minLength);
-	}
-
-	/**
-	* Sets the min lower case of this password policy.
-	*
-	* @param minLowerCase the min lower case of this password policy
-	*/
-	@Override
-	public void setMinLowerCase(int minLowerCase) {
-		_passwordPolicy.setMinLowerCase(minLowerCase);
-	}
-
-	/**
-	* Sets the min numbers of this password policy.
-	*
-	* @param minNumbers the min numbers of this password policy
-	*/
-	@Override
-	public void setMinNumbers(int minNumbers) {
-		_passwordPolicy.setMinNumbers(minNumbers);
-	}
-
-	/**
-	* Sets the min symbols of this password policy.
-	*
-	* @param minSymbols the min symbols of this password policy
-	*/
-	@Override
-	public void setMinSymbols(int minSymbols) {
-		_passwordPolicy.setMinSymbols(minSymbols);
-	}
-
-	/**
-	* Sets the min upper case of this password policy.
-	*
-	* @param minUpperCase the min upper case of this password policy
-	*/
-	@Override
-	public void setMinUpperCase(int minUpperCase) {
-		_passwordPolicy.setMinUpperCase(minUpperCase);
-	}
-
-	/**
-	* Sets the modified date of this password policy.
-	*
-	* @param modifiedDate the modified date of this password policy
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_passwordPolicy.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Sets the mvcc version of this password policy.
-	*
-	* @param mvccVersion the mvcc version of this password policy
-	*/
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_passwordPolicy.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	* Sets the name of this password policy.
-	*
-	* @param name the name of this password policy
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_passwordPolicy.setName(name);
+	public java.lang.Object clone() {
+		return new PasswordPolicyWrapper((PasswordPolicy)_passwordPolicy.clone());
 	}
 
 	@Override
-	public void setNew(boolean n) {
-		_passwordPolicy.setNew(n);
-	}
-
-	/**
-	* Sets the password policy ID of this password policy.
-	*
-	* @param passwordPolicyId the password policy ID of this password policy
-	*/
-	@Override
-	public void setPasswordPolicyId(long passwordPolicyId) {
-		_passwordPolicy.setPasswordPolicyId(passwordPolicyId);
-	}
-
-	/**
-	* Sets the primary key of this password policy.
-	*
-	* @param primaryKey the primary key of this password policy
-	*/
-	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_passwordPolicy.setPrimaryKey(primaryKey);
+	public int compareTo(com.liferay.portal.model.PasswordPolicy passwordPolicy) {
+		return _passwordPolicy.compareTo(passwordPolicy);
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_passwordPolicy.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets the regex of this password policy.
-	*
-	* @param regex the regex of this password policy
-	*/
-	@Override
-	public void setRegex(java.lang.String regex) {
-		_passwordPolicy.setRegex(regex);
-	}
-
-	/**
-	* Sets whether this password policy is require unlock.
-	*
-	* @param requireUnlock the require unlock of this password policy
-	*/
-	@Override
-	public void setRequireUnlock(boolean requireUnlock) {
-		_passwordPolicy.setRequireUnlock(requireUnlock);
-	}
-
-	/**
-	* Sets the reset failure count of this password policy.
-	*
-	* @param resetFailureCount the reset failure count of this password policy
-	*/
-	@Override
-	public void setResetFailureCount(long resetFailureCount) {
-		_passwordPolicy.setResetFailureCount(resetFailureCount);
-	}
-
-	/**
-	* Sets the reset ticket max age of this password policy.
-	*
-	* @param resetTicketMaxAge the reset ticket max age of this password policy
-	*/
-	@Override
-	public void setResetTicketMaxAge(long resetTicketMaxAge) {
-		_passwordPolicy.setResetTicketMaxAge(resetTicketMaxAge);
-	}
-
-	/**
-	* Sets the user ID of this password policy.
-	*
-	* @param userId the user ID of this password policy
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_passwordPolicy.setUserId(userId);
-	}
-
-	/**
-	* Sets the user name of this password policy.
-	*
-	* @param userName the user name of this password policy
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_passwordPolicy.setUserName(userName);
-	}
-
-	/**
-	* Sets the user uuid of this password policy.
-	*
-	* @param userUuid the user uuid of this password policy
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_passwordPolicy.setUserUuid(userUuid);
-	}
-
-	/**
-	* Sets the uuid of this password policy.
-	*
-	* @param uuid the uuid of this password policy
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_passwordPolicy.setUuid(uuid);
-	}
-
-	/**
-	* Sets the warning time of this password policy.
-	*
-	* @param warningTime the warning time of this password policy
-	*/
-	@Override
-	public void setWarningTime(long warningTime) {
-		_passwordPolicy.setWarningTime(warningTime);
+	public int hashCode() {
+		return _passwordPolicy.hashCode();
 	}
 
 	@Override
@@ -1225,18 +1220,23 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _passwordPolicy.toString();
-	}
-
-	@Override
 	public com.liferay.portal.model.PasswordPolicy toUnescapedModel() {
 		return new PasswordPolicyWrapper(_passwordPolicy.toUnescapedModel());
 	}
 
 	@Override
+	public java.lang.String toString() {
+		return _passwordPolicy.toString();
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _passwordPolicy.toXmlString();
+	}
+
+	@Override
+	public void persist() {
+		_passwordPolicy.persist();
 	}
 
 	@Override

@@ -148,7 +148,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 */
 	@Override
 	public List<UserIdMapper> findByUserId(long userId, int start, int end,
-		OrderByComparator<UserIdMapper> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -254,8 +254,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 */
 	@Override
 	public UserIdMapper findByUserId_First(long userId,
-		OrderByComparator<UserIdMapper> orderByComparator)
-		throws NoSuchUserIdMapperException {
+		OrderByComparator orderByComparator) throws NoSuchUserIdMapperException {
 		UserIdMapper userIdMapper = fetchByUserId_First(userId,
 				orderByComparator);
 
@@ -284,7 +283,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 */
 	@Override
 	public UserIdMapper fetchByUserId_First(long userId,
-		OrderByComparator<UserIdMapper> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<UserIdMapper> list = findByUserId(userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -304,8 +303,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 */
 	@Override
 	public UserIdMapper findByUserId_Last(long userId,
-		OrderByComparator<UserIdMapper> orderByComparator)
-		throws NoSuchUserIdMapperException {
+		OrderByComparator orderByComparator) throws NoSuchUserIdMapperException {
 		UserIdMapper userIdMapper = fetchByUserId_Last(userId, orderByComparator);
 
 		if (userIdMapper != null) {
@@ -333,7 +331,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 */
 	@Override
 	public UserIdMapper fetchByUserId_Last(long userId,
-		OrderByComparator<UserIdMapper> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -361,7 +359,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 */
 	@Override
 	public UserIdMapper[] findByUserId_PrevAndNext(long userIdMapperId,
-		long userId, OrderByComparator<UserIdMapper> orderByComparator)
+		long userId, OrderByComparator orderByComparator)
 		throws NoSuchUserIdMapperException {
 		UserIdMapper userIdMapper = findByPrimaryKey(userIdMapperId);
 
@@ -392,7 +390,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 
 	protected UserIdMapper getByUserId_PrevAndNext(Session session,
 		UserIdMapper userIdMapper, long userId,
-		OrderByComparator<UserIdMapper> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1706,7 +1704,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 */
 	@Override
 	public List<UserIdMapper> findAll(int start, int end,
-		OrderByComparator<UserIdMapper> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

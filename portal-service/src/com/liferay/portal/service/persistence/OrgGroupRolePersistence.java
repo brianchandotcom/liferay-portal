@@ -77,7 +77,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	*/
 	public java.util.List<com.liferay.portal.model.OrgGroupRole> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first org group role in the ordered set where groupId = &#63;.
@@ -89,7 +89,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	*/
 	public com.liferay.portal.model.OrgGroupRole findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrgGroupRoleException;
 
 	/**
@@ -101,7 +101,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	*/
 	public com.liferay.portal.model.OrgGroupRole fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last org group role in the ordered set where groupId = &#63;.
@@ -113,7 +113,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	*/
 	public com.liferay.portal.model.OrgGroupRole findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrgGroupRoleException;
 
 	/**
@@ -125,7 +125,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	*/
 	public com.liferay.portal.model.OrgGroupRole fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the org group roles before and after the current org group role in the ordered set where groupId = &#63;.
@@ -139,7 +139,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	public com.liferay.portal.model.OrgGroupRole[] findByGroupId_PrevAndNext(
 		com.liferay.portal.service.persistence.OrgGroupRolePK orgGroupRolePK,
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrgGroupRoleException;
 
 	/**
@@ -196,7 +196,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	*/
 	public java.util.List<com.liferay.portal.model.OrgGroupRole> findByRoleId(
 		long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first org group role in the ordered set where roleId = &#63;.
@@ -208,7 +208,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	*/
 	public com.liferay.portal.model.OrgGroupRole findByRoleId_First(
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrgGroupRoleException;
 
 	/**
@@ -220,7 +220,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	*/
 	public com.liferay.portal.model.OrgGroupRole fetchByRoleId_First(
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last org group role in the ordered set where roleId = &#63;.
@@ -232,7 +232,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	*/
 	public com.liferay.portal.model.OrgGroupRole findByRoleId_Last(
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrgGroupRoleException;
 
 	/**
@@ -244,7 +244,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	*/
 	public com.liferay.portal.model.OrgGroupRole fetchByRoleId_Last(
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the org group roles before and after the current org group role in the ordered set where roleId = &#63;.
@@ -258,7 +258,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	public com.liferay.portal.model.OrgGroupRole[] findByRoleId_PrevAndNext(
 		com.liferay.portal.service.persistence.OrgGroupRolePK orgGroupRolePK,
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgGroupRole> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrgGroupRoleException;
 
 	/**
@@ -373,7 +373,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	*/
 	public java.util.List<com.liferay.portal.model.OrgGroupRole> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgGroupRole> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the org group roles from the database.

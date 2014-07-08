@@ -21,7 +21,7 @@ import com.liferay.portal.service.PasswordTrackerLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link PasswordTrackerLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link PasswordTrackerLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

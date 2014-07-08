@@ -31,6 +31,26 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	}
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _organizationService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_organizationService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
 	* Adds the organizations to the group.
 	*
 	* @param groupId the primary key of the group
@@ -281,16 +301,6 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _organizationService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns all the organizations which the user has permission to manage.
 	*
 	* @param actionId the permitted action
@@ -409,16 +419,6 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
 		long userId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _organizationService.getUserOrganizations(userId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_organizationService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

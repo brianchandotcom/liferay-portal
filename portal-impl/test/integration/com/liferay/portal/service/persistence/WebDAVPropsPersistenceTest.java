@@ -215,7 +215,7 @@ public class WebDAVPropsPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<WebDAVProps> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("WebDAVProps",
 			"mvccVersion", true, "webDavPropsId", true, "companyId", true,
 			"createDate", true, "modifiedDate", true, "classNameId", true,

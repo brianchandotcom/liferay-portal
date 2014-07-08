@@ -52,10 +52,6 @@ public class LockLocalServiceUtil {
 		return getService().addLock(lock);
 	}
 
-	public static void clear() {
-		getService().clear();
-	}
-
 	/**
 	* Creates a new lock with the primary key. Does not add the lock to the database.
 	*
@@ -64,17 +60,6 @@ public class LockLocalServiceUtil {
 	*/
 	public static com.liferay.portal.model.Lock createLock(long lockId) {
 		return getService().createLock(lockId);
-	}
-
-	/**
-	* Deletes the lock from the database. Also notifies the appropriate model listeners.
-	*
-	* @param lock the lock
-	* @return the lock that was removed
-	*/
-	public static com.liferay.portal.model.Lock deleteLock(
-		com.liferay.portal.model.Lock lock) {
-		return getService().deleteLock(lock);
 	}
 
 	/**
@@ -90,12 +75,14 @@ public class LockLocalServiceUtil {
 	}
 
 	/**
-	* @throws PortalException
+	* Deletes the lock from the database. Also notifies the appropriate model listeners.
+	*
+	* @param lock the lock
+	* @return the lock that was removed
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
+	public static com.liferay.portal.model.Lock deleteLock(
+		com.liferay.portal.model.Lock lock) {
+		return getService().deleteLock(lock);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -108,7 +95,8 @@ public class LockLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public static <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
@@ -125,7 +113,8 @@ public class LockLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public static <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
@@ -144,10 +133,11 @@ public class LockLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public static <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -192,31 +182,6 @@ public class LockLocalServiceUtil {
 		return getService().fetchLockByUuidAndCompanyId(uuid, companyId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	public static com.liferay.portal.model.Lock getLock(
-		java.lang.String className, long key)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLock(className, key);
-	}
-
-	public static com.liferay.portal.model.Lock getLock(
-		java.lang.String className, java.lang.String key)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLock(className, key);
-	}
-
 	/**
 	* Returns the lock with the primary key.
 	*
@@ -227,6 +192,25 @@ public class LockLocalServiceUtil {
 	public static com.liferay.portal.model.Lock getLock(long lockId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLock(lockId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -268,15 +252,49 @@ public class LockLocalServiceUtil {
 		return getService().getLocksCount();
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
+	/**
+	* Updates the lock in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param lock the lock
+	* @return the lock that was updated
+	*/
+	public static com.liferay.portal.model.Lock updateLock(
+		com.liferay.portal.model.Lock lock) {
+		return getService().updateLock(lock);
 	}
 
-	public static boolean hasLock(long userId, java.lang.String className,
-		java.lang.String key) {
-		return getService().hasLock(userId, className, key);
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	public static void clear() {
+		getService().clear();
+	}
+
+	public static com.liferay.portal.model.Lock getLock(
+		java.lang.String className, long key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLock(className, key);
+	}
+
+	public static com.liferay.portal.model.Lock getLock(
+		java.lang.String className, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLock(className, key);
 	}
 
 	public static boolean hasLock(long userId, java.lang.String className,
@@ -284,13 +302,52 @@ public class LockLocalServiceUtil {
 		return getService().hasLock(userId, className, key);
 	}
 
+	public static boolean hasLock(long userId, java.lang.String className,
+		java.lang.String key) {
+		return getService().hasLock(userId, className, key);
+	}
+
+	public static boolean isLocked(java.lang.String className, long key) {
+		return getService().isLocked(className, key);
+	}
+
 	public static boolean isLocked(java.lang.String className,
 		java.lang.String key) {
 		return getService().isLocked(className, key);
 	}
 
-	public static boolean isLocked(java.lang.String className, long key) {
-		return getService().isLocked(className, key);
+	public static com.liferay.portal.model.Lock lock(long userId,
+		java.lang.String className, long key, java.lang.String owner,
+		boolean inheritable, long expirationTime)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .lock(userId, className, key, owner, inheritable,
+			expirationTime);
+	}
+
+	public static com.liferay.portal.model.Lock lock(long userId,
+		java.lang.String className, java.lang.String key,
+		java.lang.String owner, boolean inheritable, long expirationTime)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .lock(userId, className, key, owner, inheritable,
+			expirationTime);
+	}
+
+	public static com.liferay.portal.model.Lock lock(
+		java.lang.String className, java.lang.String key, java.lang.String owner) {
+		return getService().lock(className, key, owner);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #lock(String, String,
+	String)}
+	*/
+	@Deprecated
+	public static com.liferay.portal.model.Lock lock(
+		java.lang.String className, java.lang.String key,
+		java.lang.String owner, boolean retrieveFromCache) {
+		return getService().lock(className, key, owner, retrieveFromCache);
 	}
 
 	public static com.liferay.portal.model.Lock lock(
@@ -313,53 +370,10 @@ public class LockLocalServiceUtil {
 			retrieveFromCache);
 	}
 
-	public static com.liferay.portal.model.Lock lock(
-		java.lang.String className, java.lang.String key, java.lang.String owner) {
-		return getService().lock(className, key, owner);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #lock(String, String,
-	String)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.Lock lock(
-		java.lang.String className, java.lang.String key,
-		java.lang.String owner, boolean retrieveFromCache) {
-		return getService().lock(className, key, owner, retrieveFromCache);
-	}
-
-	public static com.liferay.portal.model.Lock lock(long userId,
-		java.lang.String className, java.lang.String key,
-		java.lang.String owner, boolean inheritable, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .lock(userId, className, key, owner, inheritable,
-			expirationTime);
-	}
-
-	public static com.liferay.portal.model.Lock lock(long userId,
-		java.lang.String className, long key, java.lang.String owner,
-		boolean inheritable, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .lock(userId, className, key, owner, inheritable,
-			expirationTime);
-	}
-
 	public static com.liferay.portal.model.Lock refresh(java.lang.String uuid,
 		long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().refresh(uuid, companyId, expirationTime);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void unlock(java.lang.String className, long key) {
@@ -383,17 +397,6 @@ public class LockLocalServiceUtil {
 	public static void unlock(java.lang.String className, java.lang.String key,
 		java.lang.String owner, boolean retrieveFromCache) {
 		getService().unlock(className, key, owner, retrieveFromCache);
-	}
-
-	/**
-	* Updates the lock in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param lock the lock
-	* @return the lock that was updated
-	*/
-	public static com.liferay.portal.model.Lock updateLock(
-		com.liferay.portal.model.Lock lock) {
-		return getService().updateLock(lock);
 	}
 
 	public static LockLocalService getService() {

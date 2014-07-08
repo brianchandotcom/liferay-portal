@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -47,16 +46,6 @@ public interface ClassNameService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ClassNameServiceUtil} to access the class name remote service. Add custom service methods to {@link com.liferay.portal.service.impl.ClassNameServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.ClassName fetchClassName(
-		java.lang.String value);
-
-	@com.liferay.portal.kernel.jsonwebservice.JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long fetchClassNameId(java.lang.Class<?> clazz);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long fetchClassNameId(java.lang.String value);
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -71,4 +60,14 @@ public interface ClassNameService extends BaseService {
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.ClassName fetchClassName(
+		java.lang.String value);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long fetchClassNameId(java.lang.Class<?> clazz);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long fetchClassNameId(java.lang.String value);
 }

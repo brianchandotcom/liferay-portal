@@ -149,7 +149,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public List<UserTracker> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<UserTracker> orderByComparator) {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -255,8 +255,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public UserTracker findByCompanyId_First(long companyId,
-		OrderByComparator<UserTracker> orderByComparator)
-		throws NoSuchUserTrackerException {
+		OrderByComparator orderByComparator) throws NoSuchUserTrackerException {
 		UserTracker userTracker = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -285,7 +284,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public UserTracker fetchByCompanyId_First(long companyId,
-		OrderByComparator<UserTracker> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<UserTracker> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -306,8 +305,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public UserTracker findByCompanyId_Last(long companyId,
-		OrderByComparator<UserTracker> orderByComparator)
-		throws NoSuchUserTrackerException {
+		OrderByComparator orderByComparator) throws NoSuchUserTrackerException {
 		UserTracker userTracker = fetchByCompanyId_Last(companyId,
 				orderByComparator);
 
@@ -336,7 +334,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public UserTracker fetchByCompanyId_Last(long companyId,
-		OrderByComparator<UserTracker> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -364,7 +362,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public UserTracker[] findByCompanyId_PrevAndNext(long userTrackerId,
-		long companyId, OrderByComparator<UserTracker> orderByComparator)
+		long companyId, OrderByComparator orderByComparator)
 		throws NoSuchUserTrackerException {
 		UserTracker userTracker = findByPrimaryKey(userTrackerId);
 
@@ -395,7 +393,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 	protected UserTracker getByCompanyId_PrevAndNext(Session session,
 		UserTracker userTracker, long companyId,
-		OrderByComparator<UserTracker> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -627,7 +625,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public List<UserTracker> findByUserId(long userId, int start, int end,
-		OrderByComparator<UserTracker> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -733,8 +731,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public UserTracker findByUserId_First(long userId,
-		OrderByComparator<UserTracker> orderByComparator)
-		throws NoSuchUserTrackerException {
+		OrderByComparator orderByComparator) throws NoSuchUserTrackerException {
 		UserTracker userTracker = fetchByUserId_First(userId, orderByComparator);
 
 		if (userTracker != null) {
@@ -762,7 +759,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public UserTracker fetchByUserId_First(long userId,
-		OrderByComparator<UserTracker> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<UserTracker> list = findByUserId(userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -782,8 +779,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public UserTracker findByUserId_Last(long userId,
-		OrderByComparator<UserTracker> orderByComparator)
-		throws NoSuchUserTrackerException {
+		OrderByComparator orderByComparator) throws NoSuchUserTrackerException {
 		UserTracker userTracker = fetchByUserId_Last(userId, orderByComparator);
 
 		if (userTracker != null) {
@@ -811,7 +807,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public UserTracker fetchByUserId_Last(long userId,
-		OrderByComparator<UserTracker> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -839,7 +835,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public UserTracker[] findByUserId_PrevAndNext(long userTrackerId,
-		long userId, OrderByComparator<UserTracker> orderByComparator)
+		long userId, OrderByComparator orderByComparator)
 		throws NoSuchUserTrackerException {
 		UserTracker userTracker = findByPrimaryKey(userTrackerId);
 
@@ -870,7 +866,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 	protected UserTracker getByUserId_PrevAndNext(Session session,
 		UserTracker userTracker, long userId,
-		OrderByComparator<UserTracker> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1105,7 +1101,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public List<UserTracker> findBySessionId(String sessionId, int start,
-		int end, OrderByComparator<UserTracker> orderByComparator) {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1225,8 +1221,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public UserTracker findBySessionId_First(String sessionId,
-		OrderByComparator<UserTracker> orderByComparator)
-		throws NoSuchUserTrackerException {
+		OrderByComparator orderByComparator) throws NoSuchUserTrackerException {
 		UserTracker userTracker = fetchBySessionId_First(sessionId,
 				orderByComparator);
 
@@ -1255,7 +1250,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public UserTracker fetchBySessionId_First(String sessionId,
-		OrderByComparator<UserTracker> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<UserTracker> list = findBySessionId(sessionId, 0, 1,
 				orderByComparator);
 
@@ -1276,8 +1271,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public UserTracker findBySessionId_Last(String sessionId,
-		OrderByComparator<UserTracker> orderByComparator)
-		throws NoSuchUserTrackerException {
+		OrderByComparator orderByComparator) throws NoSuchUserTrackerException {
 		UserTracker userTracker = fetchBySessionId_Last(sessionId,
 				orderByComparator);
 
@@ -1306,7 +1300,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public UserTracker fetchBySessionId_Last(String sessionId,
-		OrderByComparator<UserTracker> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countBySessionId(sessionId);
 
 		if (count == 0) {
@@ -1334,7 +1328,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public UserTracker[] findBySessionId_PrevAndNext(long userTrackerId,
-		String sessionId, OrderByComparator<UserTracker> orderByComparator)
+		String sessionId, OrderByComparator orderByComparator)
 		throws NoSuchUserTrackerException {
 		UserTracker userTracker = findByPrimaryKey(userTrackerId);
 
@@ -1365,7 +1359,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 	protected UserTracker getBySessionId_PrevAndNext(Session session,
 		UserTracker userTracker, String sessionId,
-		OrderByComparator<UserTracker> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2100,7 +2094,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public List<UserTracker> findAll(int start, int end,
-		OrderByComparator<UserTracker> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

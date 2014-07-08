@@ -249,7 +249,7 @@ public class CountryPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<Country> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Country", "mvccVersion",
 			true, "countryId", true, "name", true, "a2", true, "a3", true,
 			"number", true, "idd", true, "zipRequired", true, "active", true);

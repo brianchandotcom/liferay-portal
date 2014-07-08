@@ -45,6 +45,21 @@ public interface ResourceBlockService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourceBlockServiceUtil} to access the resource block remote service. Add custom service methods to {@link com.liferay.portal.service.impl.ResourceBlockServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
 	public void addCompanyScopePermission(long scopeGroupId, long companyId,
 		java.lang.String name, long roleId, java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -58,13 +73,6 @@ public interface ResourceBlockService extends BaseService {
 		java.lang.String name, long primKey, long roleId,
 		java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
 
 	public void removeAllGroupScopePermissions(long scopeGroupId,
 		long companyId, java.lang.String name, long roleId,
@@ -84,13 +92,6 @@ public interface ResourceBlockService extends BaseService {
 		java.lang.String name, long primKey, long roleId,
 		java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void setCompanyScopePermissions(long scopeGroupId, long companyId,
 		java.lang.String name, long roleId,

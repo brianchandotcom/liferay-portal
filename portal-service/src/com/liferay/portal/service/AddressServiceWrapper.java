@@ -31,6 +31,26 @@ public class AddressServiceWrapper implements AddressService,
 	}
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _addressService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_addressService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
 	* @deprecated As of 6.2.0, replaced by {@link #addAddress(String, long,
 	String, String, String, String, String, long, long, int,
 	boolean, boolean, ServiceContext)}
@@ -77,26 +97,6 @@ public class AddressServiceWrapper implements AddressService,
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _addressService.getAddresses(className, classPK);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _addressService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_addressService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

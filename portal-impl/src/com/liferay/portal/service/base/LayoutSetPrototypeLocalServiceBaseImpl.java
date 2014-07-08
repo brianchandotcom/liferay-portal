@@ -148,7 +148,8 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return layoutSetPrototypePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -165,8 +166,8 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return layoutSetPrototypePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -185,8 +186,9 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return layoutSetPrototypePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -329,7 +331,7 @@ public abstract class LayoutSetPrototypeLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return layoutSetPrototypeLocalService.deleteLayoutSetPrototype((LayoutSetPrototype)persistedModel);
+		return deleteLayoutSetPrototype((LayoutSetPrototype)persistedModel);
 	}
 
 	@Override

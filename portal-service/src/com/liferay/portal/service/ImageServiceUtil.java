@@ -50,11 +50,6 @@ public class ImageServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static com.liferay.portal.model.Image getImage(long imageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getImage(imageId);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -62,6 +57,11 @@ public class ImageServiceUtil {
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	public static com.liferay.portal.model.Image getImage(long imageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getImage(imageId);
 	}
 
 	public static ImageService getService() {

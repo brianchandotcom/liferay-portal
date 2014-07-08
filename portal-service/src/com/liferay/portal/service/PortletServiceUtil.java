@@ -50,10 +50,6 @@ public class PortletServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.json.JSONArray getWARPortlets() {
-		return getService().getWARPortlets();
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -61,6 +57,10 @@ public class PortletServiceUtil {
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONArray getWARPortlets() {
+		return getService().getWARPortlets();
 	}
 
 	public static com.liferay.portal.model.Portlet updatePortlet(

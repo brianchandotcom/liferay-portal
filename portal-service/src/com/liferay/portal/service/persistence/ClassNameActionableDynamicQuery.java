@@ -21,7 +21,7 @@ import com.liferay.portal.service.ClassNameLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link ClassNameLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link ClassNameLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

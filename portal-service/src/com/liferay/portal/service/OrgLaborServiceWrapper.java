@@ -30,6 +30,26 @@ public class OrgLaborServiceWrapper implements OrgLaborService,
 		_orgLaborService = orgLaborService;
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _orgLaborService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_orgLaborService.setBeanIdentifier(beanIdentifier);
+	}
+
 	@Override
 	public com.liferay.portal.model.OrgLabor addOrgLabor(long organizationId,
 		int typeId, int sunOpen, int sunClose, int monOpen, int monClose,
@@ -47,16 +67,6 @@ public class OrgLaborServiceWrapper implements OrgLaborService,
 		_orgLaborService.deleteOrgLabor(orgLaborId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _orgLaborService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.model.OrgLabor getOrgLabor(long orgLaborId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -68,16 +78,6 @@ public class OrgLaborServiceWrapper implements OrgLaborService,
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _orgLaborService.getOrgLabors(organizationId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_orgLaborService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

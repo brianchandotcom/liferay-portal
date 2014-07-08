@@ -52,15 +52,6 @@ public class ClassNameLocalServiceUtil {
 		return getService().addClassName(className);
 	}
 
-	public static com.liferay.portal.model.ClassName addClassName(
-		java.lang.String value) {
-		return getService().addClassName(value);
-	}
-
-	public static void checkClassNames() {
-		getService().checkClassNames();
-	}
-
 	/**
 	* Creates a new class name with the primary key. Does not add the class name to the database.
 	*
@@ -70,17 +61,6 @@ public class ClassNameLocalServiceUtil {
 	public static com.liferay.portal.model.ClassName createClassName(
 		long classNameId) {
 		return getService().createClassName(classNameId);
-	}
-
-	/**
-	* Deletes the class name from the database. Also notifies the appropriate model listeners.
-	*
-	* @param className the class name
-	* @return the class name that was removed
-	*/
-	public static com.liferay.portal.model.ClassName deleteClassName(
-		com.liferay.portal.model.ClassName className) {
-		return getService().deleteClassName(className);
 	}
 
 	/**
@@ -97,12 +77,14 @@ public class ClassNameLocalServiceUtil {
 	}
 
 	/**
-	* @throws PortalException
+	* Deletes the class name from the database. Also notifies the appropriate model listeners.
+	*
+	* @param className the class name
+	* @return the class name that was removed
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
+	public static com.liferay.portal.model.ClassName deleteClassName(
+		com.liferay.portal.model.ClassName className) {
+		return getService().deleteClassName(className);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -115,7 +97,8 @@ public class ClassNameLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public static <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
@@ -132,7 +115,8 @@ public class ClassNameLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public static <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
@@ -151,10 +135,11 @@ public class ClassNameLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public static <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -188,32 +173,6 @@ public class ClassNameLocalServiceUtil {
 		return getService().fetchClassName(classNameId);
 	}
 
-	public static com.liferay.portal.model.ClassName fetchClassName(
-		java.lang.String value) {
-		return getService().fetchClassName(value);
-	}
-
-	public static long fetchClassNameId(java.lang.Class<?> clazz) {
-		return getService().fetchClassNameId(clazz);
-	}
-
-	public static long fetchClassNameId(java.lang.String value) {
-		return getService().fetchClassNameId(value);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	/**
 	* Returns the class name with the primary key.
 	*
@@ -227,17 +186,23 @@ public class ClassNameLocalServiceUtil {
 		return getService().getClassName(classNameId);
 	}
 
-	public static com.liferay.portal.model.ClassName getClassName(
-		java.lang.String value) {
-		return getService().getClassName(value);
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
 	}
 
-	public static long getClassNameId(java.lang.Class<?> clazz) {
-		return getService().getClassNameId(clazz);
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static long getClassNameId(java.lang.String value) {
-		return getService().getClassNameId(value);
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -265,18 +230,24 @@ public class ClassNameLocalServiceUtil {
 		return getService().getClassNamesCount();
 	}
 
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
+	/**
+	* Updates the class name in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param className the class name
+	* @return the class name that was updated
+	*/
+	public static com.liferay.portal.model.ClassName updateClassName(
+		com.liferay.portal.model.ClassName className) {
+		return getService().updateClassName(className);
 	}
 
-	public static java.lang.String getRegistryName() {
-		return getService().getRegistryName();
-	}
-
-	public static void invalidate() {
-		getService().invalidate();
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
 	}
 
 	/**
@@ -288,15 +259,47 @@ public class ClassNameLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	/**
-	* Updates the class name in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param className the class name
-	* @return the class name that was updated
-	*/
-	public static com.liferay.portal.model.ClassName updateClassName(
-		com.liferay.portal.model.ClassName className) {
-		return getService().updateClassName(className);
+	public static com.liferay.portal.model.ClassName addClassName(
+		java.lang.String value) {
+		return getService().addClassName(value);
+	}
+
+	public static void checkClassNames() {
+		getService().checkClassNames();
+	}
+
+	public static com.liferay.portal.model.ClassName fetchClassName(
+		java.lang.String value) {
+		return getService().fetchClassName(value);
+	}
+
+	public static long fetchClassNameId(java.lang.Class<?> clazz) {
+		return getService().fetchClassNameId(clazz);
+	}
+
+	public static long fetchClassNameId(java.lang.String value) {
+		return getService().fetchClassNameId(value);
+	}
+
+	public static com.liferay.portal.model.ClassName getClassName(
+		java.lang.String value) {
+		return getService().getClassName(value);
+	}
+
+	public static long getClassNameId(java.lang.Class<?> clazz) {
+		return getService().getClassNameId(clazz);
+	}
+
+	public static long getClassNameId(java.lang.String value) {
+		return getService().getClassNameId(value);
+	}
+
+	public static java.lang.String getRegistryName() {
+		return getService().getRegistryName();
+	}
+
+	public static void invalidate() {
+		getService().invalidate();
 	}
 
 	public static ClassNameLocalService getService() {

@@ -131,7 +131,8 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return userIdMapperPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -148,8 +149,8 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return userIdMapperPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -168,8 +169,9 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return userIdMapperPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -245,7 +247,7 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return userIdMapperLocalService.deleteUserIdMapper((UserIdMapper)persistedModel);
+		return deleteUserIdMapper((UserIdMapper)persistedModel);
 	}
 
 	@Override

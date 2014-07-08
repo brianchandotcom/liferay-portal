@@ -21,7 +21,7 @@ import com.liferay.portal.service.UserTrackerPathLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link UserTrackerPathLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link UserTrackerPathLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

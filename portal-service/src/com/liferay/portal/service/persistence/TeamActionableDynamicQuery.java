@@ -21,7 +21,7 @@ import com.liferay.portal.service.TeamLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link TeamLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link TeamLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

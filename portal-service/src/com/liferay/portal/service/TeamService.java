@@ -46,12 +46,6 @@ public interface TeamService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TeamServiceUtil} to access the team remote service. Add custom service methods to {@link com.liferay.portal.service.impl.TeamServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.Team addTeam(long groupId,
-		java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void deleteTeam(long teamId)
-		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -60,18 +54,32 @@ public interface TeamService extends BaseService {
 	*/
 	public java.lang.String getBeanIdentifier();
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public com.liferay.portal.model.Team addTeam(long groupId,
+		java.lang.String name, java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteTeam(long teamId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Team> getGroupTeams(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Team getTeam(long groupId,
-		java.lang.String name)
+	public com.liferay.portal.model.Team getTeam(long teamId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Team getTeam(long teamId)
+	public com.liferay.portal.model.Team getTeam(long groupId,
+		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -86,13 +94,6 @@ public interface TeamService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserTeam(long userId, long teamId)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.model.Team updateTeam(long teamId,
 		java.lang.String name, java.lang.String description)

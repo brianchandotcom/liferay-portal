@@ -87,7 +87,7 @@ public class ResourceBlockUtil {
 	 */
 	public static List<ResourceBlock> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<ResourceBlock> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -154,7 +154,7 @@ public class ResourceBlockUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.ResourceBlock> findByC_N(
 		long companyId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_N(companyId, name, start, end, orderByComparator);
 	}
@@ -170,7 +170,7 @@ public class ResourceBlockUtil {
 	*/
 	public static com.liferay.portal.model.ResourceBlock findByC_N_First(
 		long companyId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_N_First(companyId, name, orderByComparator);
@@ -186,7 +186,7 @@ public class ResourceBlockUtil {
 	*/
 	public static com.liferay.portal.model.ResourceBlock fetchByC_N_First(
 		long companyId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_N_First(companyId, name, orderByComparator);
 	}
@@ -202,7 +202,7 @@ public class ResourceBlockUtil {
 	*/
 	public static com.liferay.portal.model.ResourceBlock findByC_N_Last(
 		long companyId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_N_Last(companyId, name, orderByComparator);
@@ -218,7 +218,7 @@ public class ResourceBlockUtil {
 	*/
 	public static com.liferay.portal.model.ResourceBlock fetchByC_N_Last(
 		long companyId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_N_Last(companyId, name, orderByComparator);
 	}
@@ -235,7 +235,7 @@ public class ResourceBlockUtil {
 	*/
 	public static com.liferay.portal.model.ResourceBlock[] findByC_N_PrevAndNext(
 		long resourceBlockId, long companyId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_N_PrevAndNext(resourceBlockId, companyId, name,
@@ -313,7 +313,7 @@ public class ResourceBlockUtil {
 	public static java.util.List<com.liferay.portal.model.ResourceBlock> findByC_G_N(
 		long companyId, long groupId, java.lang.String name, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_G_N(companyId, groupId, name, start, end,
 			orderByComparator);
@@ -331,7 +331,7 @@ public class ResourceBlockUtil {
 	*/
 	public static com.liferay.portal.model.ResourceBlock findByC_G_N_First(
 		long companyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_G_N_First(companyId, groupId, name,
@@ -349,7 +349,7 @@ public class ResourceBlockUtil {
 	*/
 	public static com.liferay.portal.model.ResourceBlock fetchByC_G_N_First(
 		long companyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_G_N_First(companyId, groupId, name,
 			orderByComparator);
@@ -367,7 +367,7 @@ public class ResourceBlockUtil {
 	*/
 	public static com.liferay.portal.model.ResourceBlock findByC_G_N_Last(
 		long companyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_G_N_Last(companyId, groupId, name, orderByComparator);
@@ -384,7 +384,7 @@ public class ResourceBlockUtil {
 	*/
 	public static com.liferay.portal.model.ResourceBlock fetchByC_G_N_Last(
 		long companyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_G_N_Last(companyId, groupId, name,
 			orderByComparator);
@@ -404,7 +404,7 @@ public class ResourceBlockUtil {
 	public static com.liferay.portal.model.ResourceBlock[] findByC_G_N_PrevAndNext(
 		long resourceBlockId, long companyId, long groupId,
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_G_N_PrevAndNext(resourceBlockId, companyId,
@@ -637,7 +637,7 @@ public class ResourceBlockUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.ResourceBlock> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

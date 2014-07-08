@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,9 +51,180 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param company the company
 	* @return the company that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Company addCompany(
 		com.liferay.portal.model.Company company);
+
+	/**
+	* Creates a new company with the primary key. Does not add the company to the database.
+	*
+	* @param companyId the primary key for the new company
+	* @return the new company
+	*/
+	public com.liferay.portal.model.Company createCompany(long companyId);
+
+	/**
+	* Deletes the company with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param companyId the primary key of the company
+	* @return the company that was removed
+	* @throws PortalException if a company with the primary key could not be found
+	*/
+	public com.liferay.portal.model.Company deleteCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Deletes the company from the database. Also notifies the appropriate model listeners.
+	*
+	* @param company the company
+	* @return the company that was removed
+	*/
+	public com.liferay.portal.model.Company deleteCompany(
+		com.liferay.portal.model.Company company);
+
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.CompanyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end);
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.CompanyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows that match the dynamic query
+	*/
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows that match the dynamic query
+	*/
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Company fetchCompany(long companyId);
+
+	/**
+	* Returns the company with the primary key.
+	*
+	* @param companyId the primary key of the company
+	* @return the company
+	* @throws PortalException if a company with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Company getCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Returns a range of all the companies.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.CompanyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of companies
+	* @param end the upper bound of the range of companies (not inclusive)
+	* @return the range of companies
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Company> getCompanies(
+		int start, int end);
+
+	/**
+	* Returns the number of companies.
+	*
+	* @return the number of companies
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompaniesCount();
+
+	/**
+	* Updates the company in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param company the company
+	* @return the company that was updated
+	*/
+	public com.liferay.portal.model.Company updateCompany(
+		com.liferay.portal.model.Company company);
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Adds a company.
@@ -119,35 +289,6 @@ public interface CompanyLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Creates a new company with the primary key. Does not add the company to the database.
-	*
-	* @param companyId the primary key for the new company
-	* @return the new company
-	*/
-	public com.liferay.portal.model.Company createCompany(long companyId);
-
-	/**
-	* Deletes the company from the database. Also notifies the appropriate model listeners.
-	*
-	* @param company the company
-	* @return the company that was removed
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Company deleteCompany(
-		com.liferay.portal.model.Company company);
-
-	/**
-	* Deletes the company with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param companyId the primary key of the company
-	* @return the company that was removed
-	* @throws PortalException if a company with the primary key could not be found
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Company deleteCompany(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
 	* Deletes the company's logo.
 	*
 	* @param companyId the primary key of the company
@@ -157,82 +298,6 @@ public interface CompanyLocalService extends BaseLocalService,
 	*/
 	public com.liferay.portal.model.Company deleteLogo(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.CompanyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end);
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.CompanyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Company fetchCompany(long companyId);
 
 	/**
 	* Returns the company with the primary key.
@@ -255,16 +320,6 @@ public interface CompanyLocalService extends BaseLocalService,
 	public com.liferay.portal.model.Company fetchCompanyByVirtualHost(
 		java.lang.String virtualHostname);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	/**
 	* Returns all the companies.
 	*
@@ -272,21 +327,6 @@ public interface CompanyLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Company> getCompanies();
-
-	/**
-	* Returns a range of all the companies.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.CompanyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of companies
-	* @param end the upper bound of the range of companies (not inclusive)
-	* @return the range of companies
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Company> getCompanies(
-		int start, int end);
 
 	/**
 	* Returns all the companies used by WSRP.
@@ -304,14 +344,6 @@ public interface CompanyLocalService extends BaseLocalService,
 		boolean system, int start, int end);
 
 	/**
-	* Returns the number of companies.
-	*
-	* @return the number of companies
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCompaniesCount();
-
-	/**
 	* Returns the number of companies used by WSRP.
 	*
 	* @param system whether the company is the very first company (i.e., the
@@ -320,17 +352,6 @@ public interface CompanyLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompaniesCount(boolean system);
-
-	/**
-	* Returns the company with the primary key.
-	*
-	* @param companyId the primary key of the company
-	* @return the company
-	* @throws PortalException if a company with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Company getCompany(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the company with the primary key.
@@ -406,12 +427,6 @@ public interface CompanyLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getCompanyIdByUserId(long userId) throws java.lang.Exception;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	/**
 	* Removes the values that match the keys of the company's preferences.
 	*
@@ -469,21 +484,22 @@ public interface CompanyLocalService extends BaseLocalService,
 		java.lang.String type, java.lang.String keywords, int start, int end);
 
 	/**
-	* Sets the Spring bean ID for this bean.
+	* Updates the company.
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @param companyId the primary key of the company
+	* @param virtualHostname the company's virtual host name
+	* @param mx the company's mail domain
+	* @param maxUsers the max number of company users (optionally
+	<code>0</code>)
+	* @param active whether the company is active
+	* @return the company with the primary key
+	* @throws PortalException if a company with primary key could not be found
+	or if the new information was invalid
 	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	/**
-	* Updates the company in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param company the company
-	* @return the company that was updated
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Company updateCompany(
-		com.liferay.portal.model.Company company);
+	public com.liferay.portal.model.Company updateCompany(long companyId,
+		java.lang.String virtualHostname, java.lang.String mx, int maxUsers,
+		boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Update the company with additional account information.
@@ -553,7 +569,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public com.liferay.portal.model.Company updateCompany(long companyId,
 		java.lang.String virtualHostname, java.lang.String mx,
 		java.lang.String homeURL, java.lang.String name,
@@ -561,24 +577,6 @@ public interface CompanyLocalService extends BaseLocalService,
 		java.lang.String legalType, java.lang.String sicCode,
 		java.lang.String tickerSymbol, java.lang.String industry,
 		java.lang.String type, java.lang.String size)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Updates the company.
-	*
-	* @param companyId the primary key of the company
-	* @param virtualHostname the company's virtual host name
-	* @param mx the company's mail domain
-	* @param maxUsers the max number of company users (optionally
-	<code>0</code>)
-	* @param active whether the company is active
-	* @return the company with the primary key
-	* @throws PortalException if a company with primary key could not be found
-	or if the new information was invalid
-	*/
-	public com.liferay.portal.model.Company updateCompany(long companyId,
-		java.lang.String virtualHostname, java.lang.String mx, int maxUsers,
-		boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**

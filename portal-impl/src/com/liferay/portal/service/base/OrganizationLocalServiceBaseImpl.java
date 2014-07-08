@@ -167,7 +167,8 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return organizationPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -184,8 +185,8 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return organizationPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -204,8 +205,9 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return organizationPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -347,7 +349,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return organizationLocalService.deleteOrganization((Organization)persistedModel);
+		return deleteOrganization((Organization)persistedModel);
 	}
 
 	@Override
@@ -506,7 +508,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 */
 	@Override
 	public List<Organization> getGroupOrganizations(long groupId, int start,
-		int end, OrderByComparator<Organization> orderByComparator) {
+		int end, OrderByComparator orderByComparator) {
 		return groupPersistence.getOrganizations(groupId, start, end,
 			orderByComparator);
 	}
@@ -636,7 +638,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 */
 	@Override
 	public List<Organization> getUserOrganizations(long userId, int start,
-		int end, OrderByComparator<Organization> orderByComparator) {
+		int end, OrderByComparator orderByComparator) {
 		return userPersistence.getOrganizations(userId, start, end,
 			orderByComparator);
 	}

@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -45,10 +44,6 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortletPreferencesLocalServiceUtil} to access the portlet preferences local service. Add custom service methods to {@link com.liferay.portal.service.impl.PortletPreferencesLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.PortletPreferences addPortletPreferences(
-		long companyId, long ownerId, int ownerType, long plid,
-		java.lang.String portletId, com.liferay.portal.model.Portlet portlet,
-		java.lang.String defaultPreferences);
 
 	/**
 	* Adds the portlet preferences to the database. Also notifies the appropriate model listeners.
@@ -56,7 +51,6 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	* @param portletPreferences the portlet preferences
 	* @return the portlet preferences that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.PortletPreferences addPortletPreferences(
 		com.liferay.portal.model.PortletPreferences portletPreferences);
 
@@ -70,17 +64,14 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 		long portletPreferencesId);
 
 	/**
-	* @throws PortalException
+	* Deletes the portlet preferences with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param portletPreferencesId the primary key of the portlet preferences
+	* @return the portlet preferences that was removed
+	* @throws PortalException if a portlet preferences with the primary key could not be found
 	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void deletePortletPreferences(long ownerId, int ownerType, long plid);
-
-	public void deletePortletPreferences(long ownerId, int ownerType,
-		long plid, java.lang.String portletId)
+	public com.liferay.portal.model.PortletPreferences deletePortletPreferences(
+		long portletPreferencesId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -89,23 +80,8 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	* @param portletPreferences the portlet preferences
 	* @return the portlet preferences that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.PortletPreferences deletePortletPreferences(
 		com.liferay.portal.model.PortletPreferences portletPreferences);
-
-	/**
-	* Deletes the portlet preferences with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param portletPreferencesId the primary key of the portlet preferences
-	* @return the portlet preferences that was removed
-	* @throws PortalException if a portlet preferences with the primary key could not be found
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.PortletPreferences deletePortletPreferences(
-		long portletPreferencesId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void deletePortletPreferencesByPlid(long plid);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -115,7 +91,8 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
@@ -130,7 +107,8 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end);
 
@@ -147,10 +125,11 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -176,60 +155,6 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	public com.liferay.portal.model.PortletPreferences fetchPortletPreferences(
 		long portletPreferencesId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public javax.portlet.PortletPreferences fetchPreferences(long companyId,
-		long ownerId, int ownerType, long plid, java.lang.String portletId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public javax.portlet.PortletPreferences fetchPreferences(
-		com.liferay.portal.model.PortletPreferencesIds portletPreferencesIds);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	@com.liferay.portal.kernel.spring.aop.Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public javax.portlet.PortletPreferences getDefaultPreferences(
-		long companyId, java.lang.String portletId);
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
-		long companyId, long groupId, long ownerId, int ownerType,
-		java.lang.String portletId, boolean privateLayout);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
-		long ownerId, int ownerType, long plid);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PortletPreferences getPortletPreferences(
-		long ownerId, int ownerType, long plid, java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
-		int ownerType, long plid, java.lang.String portletId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
-		long plid, java.lang.String portletId);
-
 	/**
 	* Returns the portlet preferences with the primary key.
 	*
@@ -243,25 +168,21 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferencesByPlid(
-		long plid);
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getPortletPreferencesCount(long ownerId, int ownerType,
-		long plid, com.liferay.portal.model.Portlet portlet,
-		boolean excludeDefaultPreferences);
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
+	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getPortletPreferencesCount(long ownerId, int ownerType,
-		java.lang.String portletId, boolean excludeDefaultPreferences);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getPortletPreferencesCount(int ownerType, long plid,
-		java.lang.String portletId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getPortletPreferencesCount(int ownerType,
-		java.lang.String portletId);
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the portlet preferenceses.
@@ -286,6 +207,100 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPortletPreferencesesCount();
 
+	/**
+	* Updates the portlet preferences in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param portletPreferences the portlet preferences
+	* @return the portlet preferences that was updated
+	*/
+	public com.liferay.portal.model.PortletPreferences updatePortletPreferences(
+		com.liferay.portal.model.PortletPreferences portletPreferences);
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public com.liferay.portal.model.PortletPreferences addPortletPreferences(
+		long companyId, long ownerId, int ownerType, long plid,
+		java.lang.String portletId, com.liferay.portal.model.Portlet portlet,
+		java.lang.String defaultPreferences);
+
+	public void deletePortletPreferences(long ownerId, int ownerType, long plid);
+
+	public void deletePortletPreferences(long ownerId, int ownerType,
+		long plid, java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deletePortletPreferencesByPlid(long plid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public javax.portlet.PortletPreferences fetchPreferences(long companyId,
+		long ownerId, int ownerType, long plid, java.lang.String portletId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public javax.portlet.PortletPreferences fetchPreferences(
+		com.liferay.portal.model.PortletPreferencesIds portletPreferencesIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public javax.portlet.PortletPreferences getDefaultPreferences(
+		long companyId, java.lang.String portletId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
+		int ownerType, long plid, java.lang.String portletId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
+		long ownerId, int ownerType, long plid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PortletPreferences getPortletPreferences(
+		long ownerId, int ownerType, long plid, java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
+		long companyId, long groupId, long ownerId, int ownerType,
+		java.lang.String portletId, boolean privateLayout);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
+		long plid, java.lang.String portletId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferencesByPlid(
+		long plid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getPortletPreferencesCount(int ownerType, long plid,
+		java.lang.String portletId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getPortletPreferencesCount(int ownerType,
+		java.lang.String portletId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getPortletPreferencesCount(long ownerId, int ownerType,
+		long plid, com.liferay.portal.model.Portlet portlet,
+		boolean excludeDefaultPreferences);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getPortletPreferencesCount(long ownerId, int ownerType,
+		java.lang.String portletId, boolean excludeDefaultPreferences);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getPreferences(long companyId,
 		long ownerId, int ownerType, long plid, java.lang.String portletId);
@@ -307,23 +322,6 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getStrictPreferences(
 		com.liferay.portal.model.PortletPreferencesIds portletPreferencesIds);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	/**
-	* Updates the portlet preferences in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param portletPreferences the portlet preferences
-	* @return the portlet preferences that was updated
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.PortletPreferences updatePortletPreferences(
-		com.liferay.portal.model.PortletPreferences portletPreferences);
 
 	public com.liferay.portal.model.PortletPreferences updatePreferences(
 		long ownerId, int ownerType, long plid, java.lang.String portletId,

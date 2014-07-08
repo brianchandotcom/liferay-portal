@@ -86,7 +86,7 @@ public class AddressUtil {
 	 */
 	public static List<Address> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<Address> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -149,7 +149,7 @@ public class AddressUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Address> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -163,7 +163,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -177,7 +177,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -191,7 +191,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -205,7 +205,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -220,7 +220,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address[] findByUuid_PrevAndNext(
 		long addressId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(addressId, uuid, orderByComparator);
@@ -291,7 +291,7 @@ public class AddressUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Address> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -307,7 +307,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -323,7 +323,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -339,7 +339,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -355,7 +355,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -372,7 +372,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address[] findByUuid_C_PrevAndNext(
 		long addressId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(addressId, uuid, companyId,
@@ -443,7 +443,7 @@ public class AddressUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Address> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -458,7 +458,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -473,7 +473,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -488,7 +488,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -503,7 +503,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -519,7 +519,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address[] findByCompanyId_PrevAndNext(
 		long addressId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(addressId, companyId,
@@ -588,7 +588,7 @@ public class AddressUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Address> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -603,7 +603,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
@@ -617,7 +617,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -631,7 +631,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
@@ -645,7 +645,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -660,7 +660,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address[] findByUserId_PrevAndNext(
 		long addressId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(addressId, userId,
@@ -732,7 +732,7 @@ public class AddressUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Address> findByC_C(
 		long companyId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_C(companyId, classNameId, start, end,
 			orderByComparator);
@@ -749,7 +749,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address findByC_C_First(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByC_C_First(companyId, classNameId, orderByComparator);
@@ -765,7 +765,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address fetchByC_C_First(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_First(companyId, classNameId, orderByComparator);
 	}
@@ -781,7 +781,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address findByC_C_Last(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByC_C_Last(companyId, classNameId, orderByComparator);
@@ -797,7 +797,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address fetchByC_C_Last(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_Last(companyId, classNameId, orderByComparator);
 	}
@@ -814,7 +814,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address[] findByC_C_PrevAndNext(
 		long addressId, long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(addressId, companyId, classNameId,
@@ -892,7 +892,7 @@ public class AddressUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C(
 		long companyId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_C_C(companyId, classNameId, classPK, start, end,
 			orderByComparator);
@@ -910,7 +910,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address findByC_C_C_First(
 		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByC_C_C_First(companyId, classNameId, classPK,
@@ -928,7 +928,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address fetchByC_C_C_First(
 		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_C_First(companyId, classNameId, classPK,
 			orderByComparator);
@@ -946,7 +946,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address findByC_C_C_Last(
 		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByC_C_C_Last(companyId, classNameId, classPK,
@@ -964,7 +964,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address fetchByC_C_C_Last(
 		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_C_Last(companyId, classNameId, classPK,
 			orderByComparator);
@@ -983,7 +983,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address[] findByC_C_C_PrevAndNext(
 		long addressId, long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByC_C_C_PrevAndNext(addressId, companyId, classNameId,
@@ -1072,7 +1072,7 @@ public class AddressUtil {
 	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C_M(
 		long companyId, long classNameId, long classPK, boolean mailing,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_C_C_M(companyId, classNameId, classPK, mailing,
 			start, end, orderByComparator);
@@ -1091,7 +1091,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address findByC_C_C_M_First(
 		long companyId, long classNameId, long classPK, boolean mailing,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByC_C_C_M_First(companyId, classNameId, classPK,
@@ -1110,7 +1110,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address fetchByC_C_C_M_First(
 		long companyId, long classNameId, long classPK, boolean mailing,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_C_M_First(companyId, classNameId, classPK,
 			mailing, orderByComparator);
@@ -1129,7 +1129,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address findByC_C_C_M_Last(
 		long companyId, long classNameId, long classPK, boolean mailing,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByC_C_C_M_Last(companyId, classNameId, classPK,
@@ -1148,7 +1148,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address fetchByC_C_C_M_Last(
 		long companyId, long classNameId, long classPK, boolean mailing,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_C_M_Last(companyId, classNameId, classPK,
 			mailing, orderByComparator);
@@ -1169,7 +1169,7 @@ public class AddressUtil {
 	public static com.liferay.portal.model.Address[] findByC_C_C_M_PrevAndNext(
 		long addressId, long companyId, long classNameId, long classPK,
 		boolean mailing,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByC_C_C_M_PrevAndNext(addressId, companyId,
@@ -1262,7 +1262,7 @@ public class AddressUtil {
 	public static java.util.List<com.liferay.portal.model.Address> findByC_C_C_P(
 		long companyId, long classNameId, long classPK, boolean primary,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_C_C_P(companyId, classNameId, classPK, primary,
 			start, end, orderByComparator);
@@ -1281,7 +1281,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address findByC_C_C_P_First(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByC_C_C_P_First(companyId, classNameId, classPK,
@@ -1300,7 +1300,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address fetchByC_C_C_P_First(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_C_P_First(companyId, classNameId, classPK,
 			primary, orderByComparator);
@@ -1319,7 +1319,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address findByC_C_C_P_Last(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByC_C_C_P_Last(companyId, classNameId, classPK,
@@ -1338,7 +1338,7 @@ public class AddressUtil {
 	*/
 	public static com.liferay.portal.model.Address fetchByC_C_C_P_Last(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_C_P_Last(companyId, classNameId, classPK,
 			primary, orderByComparator);
@@ -1359,7 +1359,7 @@ public class AddressUtil {
 	public static com.liferay.portal.model.Address[] findByC_C_C_P_PrevAndNext(
 		long addressId, long companyId, long classNameId, long classPK,
 		boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchAddressException {
 		return getPersistence()
 				   .findByC_C_C_P_PrevAndNext(addressId, companyId,
@@ -1508,7 +1508,7 @@ public class AddressUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Address> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Address> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

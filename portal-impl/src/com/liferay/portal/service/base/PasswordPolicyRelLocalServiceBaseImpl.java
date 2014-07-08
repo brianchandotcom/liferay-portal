@@ -134,7 +134,8 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return passwordPolicyRelPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -151,8 +152,8 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return passwordPolicyRelPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -171,8 +172,9 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return passwordPolicyRelPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -248,7 +250,7 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return passwordPolicyRelLocalService.deletePasswordPolicyRel((PasswordPolicyRel)persistedModel);
+		return deletePasswordPolicyRel((PasswordPolicyRel)persistedModel);
 	}
 
 	@Override

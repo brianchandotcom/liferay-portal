@@ -77,7 +77,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public java.util.List<com.liferay.portal.model.User> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user in the ordered set where uuid = &#63;.
@@ -89,7 +89,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -101,7 +101,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user in the ordered set where uuid = &#63;.
@@ -113,7 +113,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -125,7 +125,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the users before and after the current user in the ordered set where uuid = &#63;.
@@ -138,7 +138,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User[] findByUuid_PrevAndNext(long userId,
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -198,7 +198,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public java.util.List<com.liferay.portal.model.User> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -211,7 +211,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -224,7 +224,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -237,7 +237,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -250,7 +250,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the users before and after the current user in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -264,7 +264,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User[] findByUuid_C_PrevAndNext(
 		long userId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -323,7 +323,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public java.util.List<com.liferay.portal.model.User> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user in the ordered set where companyId = &#63;.
@@ -334,7 +334,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	* @throws com.liferay.portal.NoSuchUserException if a matching user could not be found
 	*/
 	public com.liferay.portal.model.User findByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -346,7 +346,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user in the ordered set where companyId = &#63;.
@@ -357,7 +357,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	* @throws com.liferay.portal.NoSuchUserException if a matching user could not be found
 	*/
 	public com.liferay.portal.model.User findByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -368,7 +368,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	* @return the last matching user, or <code>null</code> if a matching user could not be found
 	*/
 	public com.liferay.portal.model.User fetchByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the users before and after the current user in the ordered set where companyId = &#63;.
@@ -381,7 +381,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User[] findByCompanyId_PrevAndNext(
 		long userId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -483,7 +483,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public java.util.List<com.liferay.portal.model.User> findByEmailAddress(
 		java.lang.String emailAddress, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user in the ordered set where emailAddress = &#63;.
@@ -495,7 +495,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User findByEmailAddress_First(
 		java.lang.String emailAddress,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -507,7 +507,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByEmailAddress_First(
 		java.lang.String emailAddress,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user in the ordered set where emailAddress = &#63;.
@@ -519,7 +519,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User findByEmailAddress_Last(
 		java.lang.String emailAddress,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -531,7 +531,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByEmailAddress_Last(
 		java.lang.String emailAddress,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the users before and after the current user in the ordered set where emailAddress = &#63;.
@@ -544,7 +544,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User[] findByEmailAddress_PrevAndNext(
 		long userId, java.lang.String emailAddress,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -699,7 +699,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public java.util.List<com.liferay.portal.model.User> findByC_CD(
 		long companyId, java.util.Date createDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user in the ordered set where companyId = &#63; and createDate = &#63;.
@@ -712,7 +712,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User findByC_CD_First(long companyId,
 		java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -725,7 +725,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByC_CD_First(long companyId,
 		java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user in the ordered set where companyId = &#63; and createDate = &#63;.
@@ -738,7 +738,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User findByC_CD_Last(long companyId,
 		java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -751,7 +751,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByC_CD_Last(long companyId,
 		java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the users before and after the current user in the ordered set where companyId = &#63; and createDate = &#63;.
@@ -765,7 +765,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User[] findByC_CD_PrevAndNext(long userId,
 		long companyId, java.util.Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -827,7 +827,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public java.util.List<com.liferay.portal.model.User> findByC_MD(
 		long companyId, java.util.Date modifiedDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user in the ordered set where companyId = &#63; and modifiedDate = &#63;.
@@ -840,7 +840,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User findByC_MD_First(long companyId,
 		java.util.Date modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -853,7 +853,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByC_MD_First(long companyId,
 		java.util.Date modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user in the ordered set where companyId = &#63; and modifiedDate = &#63;.
@@ -866,7 +866,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User findByC_MD_Last(long companyId,
 		java.util.Date modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -879,7 +879,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByC_MD_Last(long companyId,
 		java.util.Date modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the users before and after the current user in the ordered set where companyId = &#63; and modifiedDate = &#63;.
@@ -893,7 +893,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User[] findByC_MD_PrevAndNext(long userId,
 		long companyId, java.util.Date modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -1214,7 +1214,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public java.util.List<com.liferay.portal.model.User> findByC_S(
 		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user in the ordered set where companyId = &#63; and status = &#63;.
@@ -1227,7 +1227,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User findByC_S_First(long companyId,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -1240,7 +1240,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByC_S_First(long companyId,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user in the ordered set where companyId = &#63; and status = &#63;.
@@ -1253,7 +1253,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User findByC_S_Last(long companyId,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -1266,7 +1266,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByC_S_Last(long companyId,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the users before and after the current user in the ordered set where companyId = &#63; and status = &#63;.
@@ -1280,7 +1280,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User[] findByC_S_PrevAndNext(long userId,
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -1347,7 +1347,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	public java.util.List<com.liferay.portal.model.User> findByC_CD_MD(
 		long companyId, java.util.Date createDate, java.util.Date modifiedDate,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user in the ordered set where companyId = &#63; and createDate = &#63; and modifiedDate = &#63;.
@@ -1361,7 +1361,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User findByC_CD_MD_First(long companyId,
 		java.util.Date createDate, java.util.Date modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -1375,7 +1375,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByC_CD_MD_First(long companyId,
 		java.util.Date createDate, java.util.Date modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user in the ordered set where companyId = &#63; and createDate = &#63; and modifiedDate = &#63;.
@@ -1389,7 +1389,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User findByC_CD_MD_Last(long companyId,
 		java.util.Date createDate, java.util.Date modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -1403,7 +1403,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByC_CD_MD_Last(long companyId,
 		java.util.Date createDate, java.util.Date modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the users before and after the current user in the ordered set where companyId = &#63; and createDate = &#63; and modifiedDate = &#63;.
@@ -1419,7 +1419,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	public com.liferay.portal.model.User[] findByC_CD_MD_PrevAndNext(
 		long userId, long companyId, java.util.Date createDate,
 		java.util.Date modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -1488,7 +1488,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public java.util.List<com.liferay.portal.model.User> findByC_DU_S(
 		long companyId, boolean defaultUser, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user in the ordered set where companyId = &#63; and defaultUser = &#63; and status = &#63;.
@@ -1502,7 +1502,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User findByC_DU_S_First(long companyId,
 		boolean defaultUser, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -1516,7 +1516,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByC_DU_S_First(long companyId,
 		boolean defaultUser, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user in the ordered set where companyId = &#63; and defaultUser = &#63; and status = &#63;.
@@ -1530,7 +1530,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User findByC_DU_S_Last(long companyId,
 		boolean defaultUser, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -1544,7 +1544,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User fetchByC_DU_S_Last(long companyId,
 		boolean defaultUser, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the users before and after the current user in the ordered set where companyId = &#63; and defaultUser = &#63; and status = &#63;.
@@ -1559,7 +1559,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public com.liferay.portal.model.User[] findByC_DU_S_PrevAndNext(
 		long userId, long companyId, boolean defaultUser, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserException;
 
 	/**
@@ -1673,7 +1673,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public java.util.List<com.liferay.portal.model.User> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the users from the database.
@@ -1733,7 +1733,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public java.util.List<com.liferay.portal.model.Group> getGroups(long pk,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of groups associated with the user.
@@ -1897,7 +1897,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public java.util.List<com.liferay.portal.model.Organization> getOrganizations(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of organizations associated with the user.
@@ -2062,7 +2062,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public java.util.List<com.liferay.portal.model.Role> getRoles(long pk,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Role> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of roles associated with the user.
@@ -2225,7 +2225,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public java.util.List<com.liferay.portal.model.Team> getTeams(long pk,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of teams associated with the user.
@@ -2389,7 +2389,7 @@ public interface UserPersistence extends BasePersistence<User> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroup> getUserGroups(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of user groups associated with the user.

@@ -298,7 +298,7 @@ public class ExportImportConfigurationPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<ExportImportConfiguration> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ExportImportConfiguration",
 			"mvccVersion", true, "exportImportConfigurationId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",

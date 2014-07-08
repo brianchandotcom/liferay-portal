@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,23 +51,8 @@ public interface ContactLocalService extends BaseLocalService,
 	* @param contact the contact
 	* @return the contact that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Contact addContact(
 		com.liferay.portal.model.Contact contact);
-
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Contact addContact(long userId,
-		java.lang.String className, long classPK,
-		java.lang.String emailAddress, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, int prefixId,
-		int suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String msnSn,
-		java.lang.String mySpaceSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String ymSn,
-		java.lang.String jobTitle)
-		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new contact with the primary key. Does not add the contact to the database.
@@ -79,33 +63,23 @@ public interface ContactLocalService extends BaseLocalService,
 	public com.liferay.portal.model.Contact createContact(long contactId);
 
 	/**
-	* Deletes the contact from the database. Also notifies the appropriate model listeners.
-	*
-	* @param contact the contact
-	* @return the contact that was removed
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Contact deleteContact(
-		com.liferay.portal.model.Contact contact);
-
-	/**
 	* Deletes the contact with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param contactId the primary key of the contact
 	* @return the contact that was removed
 	* @throws PortalException if a contact with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Contact deleteContact(long contactId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* @throws PortalException
+	* Deletes the contact from the database. Also notifies the appropriate model listeners.
+	*
+	* @param contact the contact
+	* @return the contact that was removed
 	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public com.liferay.portal.model.Contact deleteContact(
+		com.liferay.portal.model.Contact contact);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -115,7 +89,8 @@ public interface ContactLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
@@ -130,7 +105,8 @@ public interface ContactLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end);
 
@@ -147,10 +123,11 @@ public interface ContactLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -175,16 +152,6 @@ public interface ContactLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Contact fetchContact(long contactId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	/**
 	* Returns the contact with the primary key.
 	*
@@ -197,9 +164,21 @@ public interface ContactLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Contact> getContacts(
-		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator);
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the contacts.
@@ -224,14 +203,21 @@ public interface ContactLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getContactsCount();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getContactsCount(long classNameId, long classPK);
+	/**
+	* Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param contact the contact
+	* @return the contact that was updated
+	*/
+	public com.liferay.portal.model.Contact updateContact(
+		com.liferay.portal.model.Contact contact);
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -240,17 +226,27 @@ public interface ContactLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	/**
-	* Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param contact the contact
-	* @return the contact that was updated
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Contact updateContact(
-		com.liferay.portal.model.Contact contact);
+	public com.liferay.portal.model.Contact addContact(long userId,
+		java.lang.String className, long classPK,
+		java.lang.String emailAddress, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName, int prefixId,
+		int suffixId, boolean male, int birthdayMonth, int birthdayDay,
+		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
+		java.lang.String facebookSn, java.lang.String icqSn,
+		java.lang.String jabberSn, java.lang.String msnSn,
+		java.lang.String mySpaceSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String ymSn,
+		java.lang.String jobTitle)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Contact> getContacts(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getContactsCount(long classNameId, long classPK);
+
 	public com.liferay.portal.model.Contact updateContact(long contactId,
 		java.lang.String emailAddress, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName, int prefixId,

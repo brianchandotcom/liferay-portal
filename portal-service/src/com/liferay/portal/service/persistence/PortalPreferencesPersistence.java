@@ -188,7 +188,7 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	*/
 	public java.util.List<com.liferay.portal.model.PortalPreferences> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortalPreferences> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the portal preferenceses from the database.

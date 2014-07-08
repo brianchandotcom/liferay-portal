@@ -76,7 +76,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	*/
 	public java.util.List<com.liferay.portal.model.Image> findByLtSize(
 		int size, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Image> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first image in the ordered set where size &lt; &#63;.
@@ -87,7 +87,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @throws com.liferay.portal.NoSuchImageException if a matching image could not be found
 	*/
 	public com.liferay.portal.model.Image findByLtSize_First(int size,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Image> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchImageException;
 
 	/**
@@ -98,7 +98,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @return the first matching image, or <code>null</code> if a matching image could not be found
 	*/
 	public com.liferay.portal.model.Image fetchByLtSize_First(int size,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Image> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last image in the ordered set where size &lt; &#63;.
@@ -109,7 +109,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @throws com.liferay.portal.NoSuchImageException if a matching image could not be found
 	*/
 	public com.liferay.portal.model.Image findByLtSize_Last(int size,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Image> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchImageException;
 
 	/**
@@ -120,7 +120,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @return the last matching image, or <code>null</code> if a matching image could not be found
 	*/
 	public com.liferay.portal.model.Image fetchByLtSize_Last(int size,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Image> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the images before and after the current image in the ordered set where size &lt; &#63;.
@@ -133,7 +133,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	*/
 	public com.liferay.portal.model.Image[] findByLtSize_PrevAndNext(
 		long imageId, int size,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Image> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchImageException;
 
 	/**
@@ -244,7 +244,7 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	*/
 	public java.util.List<com.liferay.portal.model.Image> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Image> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the images from the database.

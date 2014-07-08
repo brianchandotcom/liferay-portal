@@ -85,7 +85,7 @@ public class TeamUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<Team> findWithDynamicQuery(DynamicQuery dynamicQuery,
-		int start, int end, OrderByComparator<Team> orderByComparator) {
+		int start, int end, OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -148,7 +148,7 @@ public class TeamUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Team> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -163,7 +163,7 @@ public class TeamUtil {
 	*/
 	public static com.liferay.portal.model.Team findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -177,7 +177,7 @@ public class TeamUtil {
 	*/
 	public static com.liferay.portal.model.Team fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -191,7 +191,7 @@ public class TeamUtil {
 	*/
 	public static com.liferay.portal.model.Team findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -205,7 +205,7 @@ public class TeamUtil {
 	*/
 	public static com.liferay.portal.model.Team fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -220,7 +220,7 @@ public class TeamUtil {
 	*/
 	public static com.liferay.portal.model.Team[] findByGroupId_PrevAndNext(
 		long teamId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(teamId, groupId, orderByComparator);
@@ -269,7 +269,7 @@ public class TeamUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Team> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -285,7 +285,7 @@ public class TeamUtil {
 	*/
 	public static com.liferay.portal.model.Team[] filterFindByGroupId_PrevAndNext(
 		long teamId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(teamId, groupId,
@@ -494,7 +494,7 @@ public class TeamUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Team> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
@@ -567,7 +567,7 @@ public class TeamUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.User> getUsers(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().getUsers(pk, start, end, orderByComparator);
 	}
 
@@ -767,7 +767,7 @@ public class TeamUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.UserGroup> getUserGroups(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().getUserGroups(pk, start, end, orderByComparator);
 	}
 

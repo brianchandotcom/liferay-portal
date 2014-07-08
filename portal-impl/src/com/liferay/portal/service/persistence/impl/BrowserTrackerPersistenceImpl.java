@@ -814,7 +814,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 */
 	@Override
 	public List<BrowserTracker> findAll(int start, int end,
-		OrderByComparator<BrowserTracker> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

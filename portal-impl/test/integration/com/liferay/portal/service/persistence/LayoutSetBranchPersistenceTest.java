@@ -323,7 +323,7 @@ public class LayoutSetBranchPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<LayoutSetBranch> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LayoutSetBranch",
 			"mvccVersion", true, "layoutSetBranchId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",

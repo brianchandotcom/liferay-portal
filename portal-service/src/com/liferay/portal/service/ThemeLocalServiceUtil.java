@@ -40,15 +40,6 @@ public class ThemeLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.ThemeLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.model.ColorScheme fetchColorScheme(
-		long companyId, java.lang.String themeId, java.lang.String colorSchemeId) {
-		return getService().fetchColorScheme(companyId, themeId, colorSchemeId);
-	}
-
-	public static com.liferay.portal.model.Theme fetchTheme(long companyId,
-		java.lang.String themeId) {
-		return getService().fetchTheme(companyId, themeId);
-	}
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -57,6 +48,25 @@ public class ThemeLocalServiceUtil {
 	*/
 	public static java.lang.String getBeanIdentifier() {
 		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	public static com.liferay.portal.model.ColorScheme fetchColorScheme(
+		long companyId, java.lang.String themeId, java.lang.String colorSchemeId) {
+		return getService().fetchColorScheme(companyId, themeId, colorSchemeId);
+	}
+
+	public static com.liferay.portal.model.Theme fetchTheme(long companyId,
+		java.lang.String themeId) {
+		return getService().fetchTheme(companyId, themeId);
 	}
 
 	public static com.liferay.portal.model.ColorScheme getColorScheme(
@@ -118,15 +128,6 @@ public class ThemeLocalServiceUtil {
 		return getService()
 				   .init(servletContextName, servletContext, themesPath,
 			loadFromServletContext, xmls, pluginPackage);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void uninstallThemes(

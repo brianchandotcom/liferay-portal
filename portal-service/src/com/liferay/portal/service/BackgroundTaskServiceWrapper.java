@@ -31,18 +31,6 @@ public class BackgroundTaskServiceWrapper implements BackgroundTaskService,
 		_backgroundTaskService = backgroundTaskService;
 	}
 
-	@Override
-	public java.lang.String getBackgroundTaskStatusJSON(long backgroundTaskId) {
-		return _backgroundTaskService.getBackgroundTaskStatusJSON(backgroundTaskId);
-	}
-
-	@Override
-	public int getBackgroundTasksCount(long groupId,
-		java.lang.String taskExecutorClassName, java.lang.String completed) {
-		return _backgroundTaskService.getBackgroundTasksCount(groupId,
-			taskExecutorClassName, completed);
-	}
-
 	/**
 	* Returns the Spring bean ID for this bean.
 	*
@@ -61,6 +49,18 @@ public class BackgroundTaskServiceWrapper implements BackgroundTaskService,
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_backgroundTaskService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public int getBackgroundTasksCount(long groupId,
+		java.lang.String taskExecutorClassName, java.lang.String completed) {
+		return _backgroundTaskService.getBackgroundTasksCount(groupId,
+			taskExecutorClassName, completed);
+	}
+
+	@Override
+	public java.lang.String getBackgroundTaskStatusJSON(long backgroundTaskId) {
+		return _backgroundTaskService.getBackgroundTaskStatusJSON(backgroundTaskId);
 	}
 
 	/**

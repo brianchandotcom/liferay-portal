@@ -77,7 +77,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public java.util.List<com.liferay.portal.model.WorkflowDefinitionLink> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first workflow definition link in the ordered set where companyId = &#63;.
@@ -89,7 +89,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public com.liferay.portal.model.WorkflowDefinitionLink findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -101,7 +101,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public com.liferay.portal.model.WorkflowDefinitionLink fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last workflow definition link in the ordered set where companyId = &#63;.
@@ -113,7 +113,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public com.liferay.portal.model.WorkflowDefinitionLink findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -125,7 +125,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public com.liferay.portal.model.WorkflowDefinitionLink fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the workflow definition links before and after the current workflow definition link in the ordered set where companyId = &#63;.
@@ -138,7 +138,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public com.liferay.portal.model.WorkflowDefinitionLink[] findByCompanyId_PrevAndNext(
 		long workflowDefinitionLinkId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -201,7 +201,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public java.util.List<com.liferay.portal.model.WorkflowDefinitionLink> findByG_C_C(
 		long groupId, long companyId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -215,7 +215,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public com.liferay.portal.model.WorkflowDefinitionLink findByG_C_C_First(
 		long groupId, long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -229,7 +229,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public com.liferay.portal.model.WorkflowDefinitionLink fetchByG_C_C_First(
 		long groupId, long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -243,7 +243,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public com.liferay.portal.model.WorkflowDefinitionLink findByG_C_C_Last(
 		long groupId, long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -257,7 +257,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public com.liferay.portal.model.WorkflowDefinitionLink fetchByG_C_C_Last(
 		long groupId, long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the workflow definition links before and after the current workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -273,7 +273,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	public com.liferay.portal.model.WorkflowDefinitionLink[] findByG_C_C_PrevAndNext(
 		long workflowDefinitionLinkId, long groupId, long companyId,
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -343,7 +343,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	public java.util.List<com.liferay.portal.model.WorkflowDefinitionLink> findByC_W_W(
 		long companyId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
@@ -358,7 +358,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	public com.liferay.portal.model.WorkflowDefinitionLink findByC_W_W_First(
 		long companyId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -373,7 +373,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	public com.liferay.portal.model.WorkflowDefinitionLink fetchByC_W_W_First(
 		long companyId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
@@ -388,7 +388,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	public com.liferay.portal.model.WorkflowDefinitionLink findByC_W_W_Last(
 		long companyId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -403,7 +403,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	public com.liferay.portal.model.WorkflowDefinitionLink fetchByC_W_W_Last(
 		long companyId, java.lang.String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the workflow definition links before and after the current workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
@@ -419,7 +419,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	public com.liferay.portal.model.WorkflowDefinitionLink[] findByC_W_W_PrevAndNext(
 		long workflowDefinitionLinkId, long companyId,
 		java.lang.String workflowDefinitionName, int workflowDefinitionVersion,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -614,7 +614,7 @@ public interface WorkflowDefinitionLinkPersistence extends BasePersistence<Workf
 	*/
 	public java.util.List<com.liferay.portal.model.WorkflowDefinitionLink> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the workflow definition links from the database.

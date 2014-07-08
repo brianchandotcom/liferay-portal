@@ -130,7 +130,8 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return orgLaborPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -147,8 +148,8 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return orgLaborPersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -166,8 +167,9 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return orgLaborPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -242,7 +244,7 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return orgLaborLocalService.deleteOrgLabor((OrgLabor)persistedModel);
+		return deleteOrgLabor((OrgLabor)persistedModel);
 	}
 
 	@Override

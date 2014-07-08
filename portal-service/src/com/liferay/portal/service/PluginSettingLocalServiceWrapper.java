@@ -44,13 +44,6 @@ public class PluginSettingLocalServiceWrapper
 		return _pluginSettingLocalService.addPluginSetting(pluginSetting);
 	}
 
-	@Override
-	public void checkPermission(long userId, java.lang.String pluginId,
-		java.lang.String pluginType)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_pluginSettingLocalService.checkPermission(userId, pluginId, pluginType);
-	}
-
 	/**
 	* Creates a new plugin setting with the primary key. Does not add the plugin setting to the database.
 	*
@@ -61,28 +54,6 @@ public class PluginSettingLocalServiceWrapper
 	public com.liferay.portal.model.PluginSetting createPluginSetting(
 		long pluginSettingId) {
 		return _pluginSettingLocalService.createPluginSetting(pluginSettingId);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pluginSettingLocalService.deletePersistedModel(persistedModel);
-	}
-
-	/**
-	* Deletes the plugin setting from the database. Also notifies the appropriate model listeners.
-	*
-	* @param pluginSetting the plugin setting
-	* @return the plugin setting that was removed
-	*/
-	@Override
-	public com.liferay.portal.model.PluginSetting deletePluginSetting(
-		com.liferay.portal.model.PluginSetting pluginSetting) {
-		return _pluginSettingLocalService.deletePluginSetting(pluginSetting);
 	}
 
 	/**
@@ -99,6 +70,18 @@ public class PluginSettingLocalServiceWrapper
 		return _pluginSettingLocalService.deletePluginSetting(pluginSettingId);
 	}
 
+	/**
+	* Deletes the plugin setting from the database. Also notifies the appropriate model listeners.
+	*
+	* @param pluginSetting the plugin setting
+	* @return the plugin setting that was removed
+	*/
+	@Override
+	public com.liferay.portal.model.PluginSetting deletePluginSetting(
+		com.liferay.portal.model.PluginSetting pluginSetting) {
+		return _pluginSettingLocalService.deletePluginSetting(pluginSetting);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _pluginSettingLocalService.dynamicQuery();
@@ -111,7 +94,8 @@ public class PluginSettingLocalServiceWrapper
 	* @return the matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _pluginSettingLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -129,7 +113,8 @@ public class PluginSettingLocalServiceWrapper
 	* @return the range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _pluginSettingLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -149,10 +134,11 @@ public class PluginSettingLocalServiceWrapper
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _pluginSettingLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -190,40 +176,6 @@ public class PluginSettingLocalServiceWrapper
 		return _pluginSettingLocalService.fetchPluginSetting(pluginSettingId);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _pluginSettingLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _pluginSettingLocalService.getBeanIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.model.PluginSetting getDefaultPluginSetting() {
-		return _pluginSettingLocalService.getDefaultPluginSetting();
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pluginSettingLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portal.model.PluginSetting getPluginSetting(
-		long companyId, java.lang.String pluginId, java.lang.String pluginType) {
-		return _pluginSettingLocalService.getPluginSetting(companyId, pluginId,
-			pluginType);
-	}
-
 	/**
 	* Returns the plugin setting with the primary key.
 	*
@@ -236,6 +188,28 @@ public class PluginSettingLocalServiceWrapper
 		long pluginSettingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pluginSettingLocalService.getPluginSetting(pluginSettingId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _pluginSettingLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pluginSettingLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pluginSettingLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -265,11 +239,26 @@ public class PluginSettingLocalServiceWrapper
 		return _pluginSettingLocalService.getPluginSettingsCount();
 	}
 
+	/**
+	* Updates the plugin setting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param pluginSetting the plugin setting
+	* @return the plugin setting that was updated
+	*/
 	@Override
-	public boolean hasPermission(long userId, java.lang.String pluginId,
-		java.lang.String pluginType) {
-		return _pluginSettingLocalService.hasPermission(userId, pluginId,
-			pluginType);
+	public com.liferay.portal.model.PluginSetting updatePluginSetting(
+		com.liferay.portal.model.PluginSetting pluginSetting) {
+		return _pluginSettingLocalService.updatePluginSetting(pluginSetting);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _pluginSettingLocalService.getBeanIdentifier();
 	}
 
 	/**
@@ -283,23 +272,37 @@ public class PluginSettingLocalServiceWrapper
 	}
 
 	@Override
+	public void checkPermission(long userId, java.lang.String pluginId,
+		java.lang.String pluginType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_pluginSettingLocalService.checkPermission(userId, pluginId, pluginType);
+	}
+
+	@Override
+	public com.liferay.portal.model.PluginSetting getDefaultPluginSetting() {
+		return _pluginSettingLocalService.getDefaultPluginSetting();
+	}
+
+	@Override
+	public com.liferay.portal.model.PluginSetting getPluginSetting(
+		long companyId, java.lang.String pluginId, java.lang.String pluginType) {
+		return _pluginSettingLocalService.getPluginSetting(companyId, pluginId,
+			pluginType);
+	}
+
+	@Override
+	public boolean hasPermission(long userId, java.lang.String pluginId,
+		java.lang.String pluginType) {
+		return _pluginSettingLocalService.hasPermission(userId, pluginId,
+			pluginType);
+	}
+
+	@Override
 	public com.liferay.portal.model.PluginSetting updatePluginSetting(
 		long companyId, java.lang.String pluginId, java.lang.String pluginType,
 		java.lang.String roles, boolean active) {
 		return _pluginSettingLocalService.updatePluginSetting(companyId,
 			pluginId, pluginType, roles, active);
-	}
-
-	/**
-	* Updates the plugin setting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param pluginSetting the plugin setting
-	* @return the plugin setting that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.PluginSetting updatePluginSetting(
-		com.liferay.portal.model.PluginSetting pluginSetting) {
-		return _pluginSettingLocalService.updatePluginSetting(pluginSetting);
 	}
 
 	/**

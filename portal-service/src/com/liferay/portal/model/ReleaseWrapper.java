@@ -128,59 +128,24 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 		}
 	}
 
+	/**
+	* Returns the primary key of this release.
+	*
+	* @return the primary key of this release
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new ReleaseWrapper((Release)_release.clone());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.model.Release release) {
-		return _release.compareTo(release);
+	public long getPrimaryKey() {
+		return _release.getPrimaryKey();
 	}
 
 	/**
-	* Returns the build date of this release.
+	* Sets the primary key of this release.
 	*
-	* @return the build date of this release
+	* @param primaryKey the primary key of this release
 	*/
 	@Override
-	public java.util.Date getBuildDate() {
-		return _release.getBuildDate();
-	}
-
-	/**
-	* Returns the build number of this release.
-	*
-	* @return the build number of this release
-	*/
-	@Override
-	public int getBuildNumber() {
-		return _release.getBuildNumber();
-	}
-
-	/**
-	* Returns the create date of this release.
-	*
-	* @return the create date of this release
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _release.getCreateDate();
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _release.getExpandoBridge();
-	}
-
-	/**
-	* Returns the modified date of this release.
-	*
-	* @return the modified date of this release
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _release.getModifiedDate();
+	public void setPrimaryKey(long primaryKey) {
+		_release.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -194,18 +159,13 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	}
 
 	/**
-	* Returns the primary key of this release.
+	* Sets the mvcc version of this release.
 	*
-	* @return the primary key of this release
+	* @param mvccVersion the mvcc version of this release
 	*/
 	@Override
-	public long getPrimaryKey() {
-		return _release.getPrimaryKey();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _release.getPrimaryKeyObj();
+	public void setMvccVersion(long mvccVersion) {
+		_release.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -219,6 +179,56 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	}
 
 	/**
+	* Sets the release ID of this release.
+	*
+	* @param releaseId the release ID of this release
+	*/
+	@Override
+	public void setReleaseId(long releaseId) {
+		_release.setReleaseId(releaseId);
+	}
+
+	/**
+	* Returns the create date of this release.
+	*
+	* @return the create date of this release
+	*/
+	@Override
+	public java.util.Date getCreateDate() {
+		return _release.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this release.
+	*
+	* @param createDate the create date of this release
+	*/
+	@Override
+	public void setCreateDate(java.util.Date createDate) {
+		_release.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the modified date of this release.
+	*
+	* @return the modified date of this release
+	*/
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _release.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this release.
+	*
+	* @param modifiedDate the modified date of this release
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_release.setModifiedDate(modifiedDate);
+	}
+
+	/**
 	* Returns the servlet context name of this release.
 	*
 	* @return the servlet context name of this release
@@ -229,68 +239,43 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	}
 
 	/**
-	* Returns the state of this release.
+	* Sets the servlet context name of this release.
 	*
-	* @return the state of this release
+	* @param servletContextName the servlet context name of this release
 	*/
 	@Override
-	public int getState() {
-		return _release.getState();
+	public void setServletContextName(java.lang.String servletContextName) {
+		_release.setServletContextName(servletContextName);
 	}
 
 	/**
-	* Returns the test string of this release.
+	* Returns the build number of this release.
 	*
-	* @return the test string of this release
+	* @return the build number of this release
 	*/
 	@Override
-	public java.lang.String getTestString() {
-		return _release.getTestString();
+	public int getBuildNumber() {
+		return _release.getBuildNumber();
 	}
 
 	/**
-	* Returns the verified of this release.
+	* Sets the build number of this release.
 	*
-	* @return the verified of this release
+	* @param buildNumber the build number of this release
 	*/
 	@Override
-	public boolean getVerified() {
-		return _release.getVerified();
-	}
-
-	@Override
-	public int hashCode() {
-		return _release.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _release.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _release.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _release.isNew();
+	public void setBuildNumber(int buildNumber) {
+		_release.setBuildNumber(buildNumber);
 	}
 
 	/**
-	* Returns <code>true</code> if this release is verified.
+	* Returns the build date of this release.
 	*
-	* @return <code>true</code> if this release is verified; <code>false</code> otherwise
+	* @return the build date of this release
 	*/
 	@Override
-	public boolean isVerified() {
-		return _release.isVerified();
-	}
-
-	@Override
-	public void persist() {
-		_release.persist();
+	public java.util.Date getBuildDate() {
+		return _release.getBuildDate();
 	}
 
 	/**
@@ -304,13 +289,88 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	}
 
 	/**
-	* Sets the build number of this release.
+	* Returns the verified of this release.
 	*
-	* @param buildNumber the build number of this release
+	* @return the verified of this release
 	*/
 	@Override
-	public void setBuildNumber(int buildNumber) {
-		_release.setBuildNumber(buildNumber);
+	public boolean getVerified() {
+		return _release.getVerified();
+	}
+
+	/**
+	* Returns <code>true</code> if this release is verified.
+	*
+	* @return <code>true</code> if this release is verified; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isVerified() {
+		return _release.isVerified();
+	}
+
+	/**
+	* Sets whether this release is verified.
+	*
+	* @param verified the verified of this release
+	*/
+	@Override
+	public void setVerified(boolean verified) {
+		_release.setVerified(verified);
+	}
+
+	/**
+	* Returns the state of this release.
+	*
+	* @return the state of this release
+	*/
+	@Override
+	public int getState() {
+		return _release.getState();
+	}
+
+	/**
+	* Sets the state of this release.
+	*
+	* @param state the state of this release
+	*/
+	@Override
+	public void setState(int state) {
+		_release.setState(state);
+	}
+
+	/**
+	* Returns the test string of this release.
+	*
+	* @return the test string of this release
+	*/
+	@Override
+	public java.lang.String getTestString() {
+		return _release.getTestString();
+	}
+
+	/**
+	* Sets the test string of this release.
+	*
+	* @param testString the test string of this release
+	*/
+	@Override
+	public void setTestString(java.lang.String testString) {
+		_release.setTestString(testString);
+	}
+
+	@Override
+	public boolean isNew() {
+		return _release.isNew();
+	}
+
+	@Override
+	public void setNew(boolean n) {
+		_release.setNew(n);
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _release.isCachedModel();
 	}
 
 	@Override
@@ -318,14 +378,24 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 		_release.setCachedModel(cachedModel);
 	}
 
-	/**
-	* Sets the create date of this release.
-	*
-	* @param createDate the create date of this release
-	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_release.setCreateDate(createDate);
+	public boolean isEscapedModel() {
+		return _release.isEscapedModel();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _release.getPrimaryKeyObj();
+	}
+
+	@Override
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_release.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _release.getExpandoBridge();
 	}
 
 	@Override
@@ -346,94 +416,19 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 		_release.setExpandoBridgeAttributes(serviceContext);
 	}
 
-	/**
-	* Sets the modified date of this release.
-	*
-	* @param modifiedDate the modified date of this release
-	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_release.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Sets the mvcc version of this release.
-	*
-	* @param mvccVersion the mvcc version of this release
-	*/
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_release.setMvccVersion(mvccVersion);
+	public java.lang.Object clone() {
+		return new ReleaseWrapper((Release)_release.clone());
 	}
 
 	@Override
-	public void setNew(boolean n) {
-		_release.setNew(n);
-	}
-
-	/**
-	* Sets the primary key of this release.
-	*
-	* @param primaryKey the primary key of this release
-	*/
-	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_release.setPrimaryKey(primaryKey);
+	public int compareTo(com.liferay.portal.model.Release release) {
+		return _release.compareTo(release);
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_release.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets the release ID of this release.
-	*
-	* @param releaseId the release ID of this release
-	*/
-	@Override
-	public void setReleaseId(long releaseId) {
-		_release.setReleaseId(releaseId);
-	}
-
-	/**
-	* Sets the servlet context name of this release.
-	*
-	* @param servletContextName the servlet context name of this release
-	*/
-	@Override
-	public void setServletContextName(java.lang.String servletContextName) {
-		_release.setServletContextName(servletContextName);
-	}
-
-	/**
-	* Sets the state of this release.
-	*
-	* @param state the state of this release
-	*/
-	@Override
-	public void setState(int state) {
-		_release.setState(state);
-	}
-
-	/**
-	* Sets the test string of this release.
-	*
-	* @param testString the test string of this release
-	*/
-	@Override
-	public void setTestString(java.lang.String testString) {
-		_release.setTestString(testString);
-	}
-
-	/**
-	* Sets whether this release is verified.
-	*
-	* @param verified the verified of this release
-	*/
-	@Override
-	public void setVerified(boolean verified) {
-		_release.setVerified(verified);
+	public int hashCode() {
+		return _release.hashCode();
 	}
 
 	@Override
@@ -447,18 +442,23 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _release.toString();
-	}
-
-	@Override
 	public com.liferay.portal.model.Release toUnescapedModel() {
 		return new ReleaseWrapper(_release.toUnescapedModel());
 	}
 
 	@Override
+	public java.lang.String toString() {
+		return _release.toString();
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _release.toXmlString();
+	}
+
+	@Override
+	public void persist() {
+		_release.persist();
 	}
 
 	@Override

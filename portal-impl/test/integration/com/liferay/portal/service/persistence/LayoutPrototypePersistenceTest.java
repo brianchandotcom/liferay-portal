@@ -271,7 +271,7 @@ public class LayoutPrototypePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<LayoutPrototype> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LayoutPrototype",
 			"mvccVersion", true, "uuid", true, "layoutPrototypeId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",

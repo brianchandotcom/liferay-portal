@@ -149,7 +149,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public List<Website> findByUuid(String uuid, int start, int end,
-		OrderByComparator<Website> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -269,8 +269,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website findByUuid_First(String uuid,
-		OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
+		OrderByComparator orderByComparator) throws NoSuchWebsiteException {
 		Website website = fetchByUuid_First(uuid, orderByComparator);
 
 		if (website != null) {
@@ -298,7 +297,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website fetchByUuid_First(String uuid,
-		OrderByComparator<Website> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<Website> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -318,8 +317,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website findByUuid_Last(String uuid,
-		OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
+		OrderByComparator orderByComparator) throws NoSuchWebsiteException {
 		Website website = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (website != null) {
@@ -347,7 +345,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website fetchByUuid_Last(String uuid,
-		OrderByComparator<Website> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -375,8 +373,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website[] findByUuid_PrevAndNext(long websiteId, String uuid,
-		OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
+		OrderByComparator orderByComparator) throws NoSuchWebsiteException {
 		Website website = findByPrimaryKey(websiteId);
 
 		Session session = null;
@@ -405,8 +402,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	}
 
 	protected Website getByUuid_PrevAndNext(Session session, Website website,
-		String uuid, OrderByComparator<Website> orderByComparator,
-		boolean previous) {
+		String uuid, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -675,7 +671,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public List<Website> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator<Website> orderByComparator) {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -805,8 +801,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
+		OrderByComparator orderByComparator) throws NoSuchWebsiteException {
 		Website website = fetchByUuid_C_First(uuid, companyId, orderByComparator);
 
 		if (website != null) {
@@ -838,7 +833,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator<Website> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<Website> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -860,8 +855,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
+		OrderByComparator orderByComparator) throws NoSuchWebsiteException {
 		Website website = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 
 		if (website != null) {
@@ -893,7 +887,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator<Website> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -922,7 +916,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website[] findByUuid_C_PrevAndNext(long websiteId, String uuid,
-		long companyId, OrderByComparator<Website> orderByComparator)
+		long companyId, OrderByComparator orderByComparator)
 		throws NoSuchWebsiteException {
 		Website website = findByPrimaryKey(websiteId);
 
@@ -952,8 +946,8 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	}
 
 	protected Website getByUuid_C_PrevAndNext(Session session, Website website,
-		String uuid, long companyId,
-		OrderByComparator<Website> orderByComparator, boolean previous) {
+		String uuid, long companyId, OrderByComparator orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1229,7 +1223,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public List<Website> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator<Website> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1335,8 +1329,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website findByCompanyId_First(long companyId,
-		OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
+		OrderByComparator orderByComparator) throws NoSuchWebsiteException {
 		Website website = fetchByCompanyId_First(companyId, orderByComparator);
 
 		if (website != null) {
@@ -1364,7 +1357,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website fetchByCompanyId_First(long companyId,
-		OrderByComparator<Website> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<Website> list = findByCompanyId(companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1384,8 +1377,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website findByCompanyId_Last(long companyId,
-		OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
+		OrderByComparator orderByComparator) throws NoSuchWebsiteException {
 		Website website = fetchByCompanyId_Last(companyId, orderByComparator);
 
 		if (website != null) {
@@ -1413,7 +1405,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website fetchByCompanyId_Last(long companyId,
-		OrderByComparator<Website> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -1441,7 +1433,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website[] findByCompanyId_PrevAndNext(long websiteId,
-		long companyId, OrderByComparator<Website> orderByComparator)
+		long companyId, OrderByComparator orderByComparator)
 		throws NoSuchWebsiteException {
 		Website website = findByPrimaryKey(websiteId);
 
@@ -1471,8 +1463,8 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	}
 
 	protected Website getByCompanyId_PrevAndNext(Session session,
-		Website website, long companyId,
-		OrderByComparator<Website> orderByComparator, boolean previous) {
+		Website website, long companyId, OrderByComparator orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1705,7 +1697,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public List<Website> findByUserId(long userId, int start, int end,
-		OrderByComparator<Website> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1811,8 +1803,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website findByUserId_First(long userId,
-		OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
+		OrderByComparator orderByComparator) throws NoSuchWebsiteException {
 		Website website = fetchByUserId_First(userId, orderByComparator);
 
 		if (website != null) {
@@ -1840,7 +1831,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website fetchByUserId_First(long userId,
-		OrderByComparator<Website> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<Website> list = findByUserId(userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1860,8 +1851,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website findByUserId_Last(long userId,
-		OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
+		OrderByComparator orderByComparator) throws NoSuchWebsiteException {
 		Website website = fetchByUserId_Last(userId, orderByComparator);
 
 		if (website != null) {
@@ -1889,7 +1879,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website fetchByUserId_Last(long userId,
-		OrderByComparator<Website> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -1917,8 +1907,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website[] findByUserId_PrevAndNext(long websiteId, long userId,
-		OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
+		OrderByComparator orderByComparator) throws NoSuchWebsiteException {
 		Website website = findByPrimaryKey(websiteId);
 
 		Session session = null;
@@ -1947,8 +1936,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	}
 
 	protected Website getByUserId_PrevAndNext(Session session, Website website,
-		long userId, OrderByComparator<Website> orderByComparator,
-		boolean previous) {
+		long userId, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2186,7 +2174,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public List<Website> findByC_C(long companyId, long classNameId, int start,
-		int end, OrderByComparator<Website> orderByComparator) {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2302,8 +2290,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website findByC_C_First(long companyId, long classNameId,
-		OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
+		OrderByComparator orderByComparator) throws NoSuchWebsiteException {
 		Website website = fetchByC_C_First(companyId, classNameId,
 				orderByComparator);
 
@@ -2336,7 +2323,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website fetchByC_C_First(long companyId, long classNameId,
-		OrderByComparator<Website> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<Website> list = findByC_C(companyId, classNameId, 0, 1,
 				orderByComparator);
 
@@ -2358,8 +2345,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website findByC_C_Last(long companyId, long classNameId,
-		OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
+		OrderByComparator orderByComparator) throws NoSuchWebsiteException {
 		Website website = fetchByC_C_Last(companyId, classNameId,
 				orderByComparator);
 
@@ -2392,7 +2378,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website fetchByC_C_Last(long companyId, long classNameId,
-		OrderByComparator<Website> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByC_C(companyId, classNameId);
 
 		if (count == 0) {
@@ -2421,7 +2407,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website[] findByC_C_PrevAndNext(long websiteId, long companyId,
-		long classNameId, OrderByComparator<Website> orderByComparator)
+		long classNameId, OrderByComparator orderByComparator)
 		throws NoSuchWebsiteException {
 		Website website = findByPrimaryKey(websiteId);
 
@@ -2451,8 +2437,8 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	}
 
 	protected Website getByC_C_PrevAndNext(Session session, Website website,
-		long companyId, long classNameId,
-		OrderByComparator<Website> orderByComparator, boolean previous) {
+		long companyId, long classNameId, OrderByComparator orderByComparator,
+		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2710,8 +2696,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public List<Website> findByC_C_C(long companyId, long classNameId,
-		long classPK, int start, int end,
-		OrderByComparator<Website> orderByComparator) {
+		long classPK, int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2833,7 +2818,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website findByC_C_C_First(long companyId, long classNameId,
-		long classPK, OrderByComparator<Website> orderByComparator)
+		long classPK, OrderByComparator orderByComparator)
 		throws NoSuchWebsiteException {
 		Website website = fetchByC_C_C_First(companyId, classNameId, classPK,
 				orderByComparator);
@@ -2871,7 +2856,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website fetchByC_C_C_First(long companyId, long classNameId,
-		long classPK, OrderByComparator<Website> orderByComparator) {
+		long classPK, OrderByComparator orderByComparator) {
 		List<Website> list = findByC_C_C(companyId, classNameId, classPK, 0, 1,
 				orderByComparator);
 
@@ -2894,7 +2879,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website findByC_C_C_Last(long companyId, long classNameId,
-		long classPK, OrderByComparator<Website> orderByComparator)
+		long classPK, OrderByComparator orderByComparator)
 		throws NoSuchWebsiteException {
 		Website website = fetchByC_C_C_Last(companyId, classNameId, classPK,
 				orderByComparator);
@@ -2932,7 +2917,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website fetchByC_C_C_Last(long companyId, long classNameId,
-		long classPK, OrderByComparator<Website> orderByComparator) {
+		long classPK, OrderByComparator orderByComparator) {
 		int count = countByC_C_C(companyId, classNameId, classPK);
 
 		if (count == 0) {
@@ -2962,8 +2947,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website[] findByC_C_C_PrevAndNext(long websiteId, long companyId,
-		long classNameId, long classPK,
-		OrderByComparator<Website> orderByComparator)
+		long classNameId, long classPK, OrderByComparator orderByComparator)
 		throws NoSuchWebsiteException {
 		Website website = findByPrimaryKey(websiteId);
 
@@ -2994,7 +2978,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 
 	protected Website getByC_C_C_PrevAndNext(Session session, Website website,
 		long companyId, long classNameId, long classPK,
-		OrderByComparator<Website> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3273,7 +3257,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	@Override
 	public List<Website> findByC_C_C_P(long companyId, long classNameId,
 		long classPK, boolean primary, int start, int end,
-		OrderByComparator<Website> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3401,8 +3385,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website findByC_C_C_P_First(long companyId, long classNameId,
-		long classPK, boolean primary,
-		OrderByComparator<Website> orderByComparator)
+		long classPK, boolean primary, OrderByComparator orderByComparator)
 		throws NoSuchWebsiteException {
 		Website website = fetchByC_C_C_P_First(companyId, classNameId, classPK,
 				primary, orderByComparator);
@@ -3444,8 +3427,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website fetchByC_C_C_P_First(long companyId, long classNameId,
-		long classPK, boolean primary,
-		OrderByComparator<Website> orderByComparator) {
+		long classPK, boolean primary, OrderByComparator orderByComparator) {
 		List<Website> list = findByC_C_C_P(companyId, classNameId, classPK,
 				primary, 0, 1, orderByComparator);
 
@@ -3469,8 +3451,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website findByC_C_C_P_Last(long companyId, long classNameId,
-		long classPK, boolean primary,
-		OrderByComparator<Website> orderByComparator)
+		long classPK, boolean primary, OrderByComparator orderByComparator)
 		throws NoSuchWebsiteException {
 		Website website = fetchByC_C_C_P_Last(companyId, classNameId, classPK,
 				primary, orderByComparator);
@@ -3512,8 +3493,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public Website fetchByC_C_C_P_Last(long companyId, long classNameId,
-		long classPK, boolean primary,
-		OrderByComparator<Website> orderByComparator) {
+		long classPK, boolean primary, OrderByComparator orderByComparator) {
 		int count = countByC_C_C_P(companyId, classNameId, classPK, primary);
 
 		if (count == 0) {
@@ -3545,8 +3525,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	@Override
 	public Website[] findByC_C_C_P_PrevAndNext(long websiteId, long companyId,
 		long classNameId, long classPK, boolean primary,
-		OrderByComparator<Website> orderByComparator)
-		throws NoSuchWebsiteException {
+		OrderByComparator orderByComparator) throws NoSuchWebsiteException {
 		Website website = findByPrimaryKey(websiteId);
 
 		Session session = null;
@@ -3576,8 +3555,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 
 	protected Website getByC_C_C_P_PrevAndNext(Session session,
 		Website website, long companyId, long classNameId, long classPK,
-		boolean primary, OrderByComparator<Website> orderByComparator,
-		boolean previous) {
+		boolean primary, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4414,7 +4392,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	 */
 	@Override
 	public List<Website> findAll(int start, int end,
-		OrderByComparator<Website> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

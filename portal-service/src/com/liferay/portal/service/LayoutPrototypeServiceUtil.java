@@ -42,6 +42,34 @@ public class LayoutPrototypeServiceUtil {
 	 */
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	public static com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLayoutPrototype(nameMap, descriptionMap, active,
+			serviceContext);
+	}
+
+	/**
 	* @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(Map,
 	String, boolean, ServiceContext)}
 	*/
@@ -68,28 +96,9 @@ public class LayoutPrototypeServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addLayoutPrototype(nameMap, descriptionMap, active,
-			serviceContext);
-	}
-
 	public static void deleteLayoutPrototype(long layoutPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteLayoutPrototype(layoutPrototypeId);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
 	}
 
 	public static com.liferay.portal.model.LayoutPrototype getLayoutPrototype(
@@ -105,13 +114,15 @@ public class LayoutPrototypeServiceUtil {
 		return getService().search(companyId, active, obc);
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
+	public static com.liferay.portal.model.LayoutPrototype updateLayoutPrototype(
+		long layoutPrototypeId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateLayoutPrototype(layoutPrototypeId, nameMap,
+			descriptionMap, active, serviceContext);
 	}
 
 	/**
@@ -143,17 +154,6 @@ public class LayoutPrototypeServiceUtil {
 		return getService()
 				   .updateLayoutPrototype(layoutPrototypeId, nameMap,
 			description, active, serviceContext);
-	}
-
-	public static com.liferay.portal.model.LayoutPrototype updateLayoutPrototype(
-		long layoutPrototypeId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateLayoutPrototype(layoutPrototypeId, nameMap,
-			descriptionMap, active, serviceContext);
 	}
 
 	public static LayoutPrototypeService getService() {

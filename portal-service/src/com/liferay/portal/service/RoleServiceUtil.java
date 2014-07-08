@@ -42,6 +42,24 @@ public class RoleServiceUtil {
 	 */
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
 	* Adds a role. The user is reindexed after role is added.
 	*
 	* @param className the name of the class for which the role is created
@@ -130,15 +148,6 @@ public class RoleServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns all the roles associated with the group.
 	*
 	* @param groupId the primary key of the group
@@ -149,6 +158,19 @@ public class RoleServiceUtil {
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getGroupRoles(groupId);
+	}
+
+	/**
+	* Returns the role with the primary key.
+	*
+	* @param roleId the primary key of the role
+	* @return the role with the primary key
+	* @throws PortalException if a role with the primary key could not be found
+	or if the user did not have permission to view the role
+	*/
+	public static com.liferay.portal.model.Role getRole(long roleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRole(roleId);
 	}
 
 	/**
@@ -169,19 +191,6 @@ public class RoleServiceUtil {
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRole(companyId, name);
-	}
-
-	/**
-	* Returns the role with the primary key.
-	*
-	* @param roleId the primary key of the role
-	* @return the role with the primary key
-	* @throws PortalException if a role with the primary key could not be found
-	or if the user did not have permission to view the role
-	*/
-	public static com.liferay.portal.model.Role getRole(long roleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRole(roleId);
 	}
 
 	/**
@@ -277,15 +286,6 @@ public class RoleServiceUtil {
 		java.lang.String[] names, boolean inherited)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().hasUserRoles(userId, companyId, names, inherited);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

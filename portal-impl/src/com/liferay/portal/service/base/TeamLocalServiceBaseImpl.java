@@ -137,7 +137,8 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return teamPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -154,8 +155,8 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return teamPersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -173,8 +174,9 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return teamPersistence.findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -248,7 +250,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return teamLocalService.deleteTeam((Team)persistedModel);
+		return deleteTeam((Team)persistedModel);
 	}
 
 	@Override
@@ -387,7 +389,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<Team> getUserTeams(long userId, int start, int end,
-		OrderByComparator<Team> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return userPersistence.getTeams(userId, start, end, orderByComparator);
 	}
 
@@ -511,7 +513,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<Team> getUserGroupTeams(long userGroupId, int start, int end,
-		OrderByComparator<Team> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return userGroupPersistence.getTeams(userGroupId, start, end,
 			orderByComparator);
 	}

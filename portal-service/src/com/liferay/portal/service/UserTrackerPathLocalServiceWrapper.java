@@ -57,13 +57,17 @@ public class UserTrackerPathLocalServiceWrapper
 	}
 
 	/**
-	* @throws PortalException
+	* Deletes the user tracker path with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userTrackerPathId the primary key of the user tracker path
+	* @return the user tracker path that was removed
+	* @throws PortalException if a user tracker path with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.model.UserTrackerPath deleteUserTrackerPath(
+		long userTrackerPathId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userTrackerPathLocalService.deletePersistedModel(persistedModel);
+		return _userTrackerPathLocalService.deleteUserTrackerPath(userTrackerPathId);
 	}
 
 	/**
@@ -78,20 +82,6 @@ public class UserTrackerPathLocalServiceWrapper
 		return _userTrackerPathLocalService.deleteUserTrackerPath(userTrackerPath);
 	}
 
-	/**
-	* Deletes the user tracker path with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userTrackerPathId the primary key of the user tracker path
-	* @return the user tracker path that was removed
-	* @throws PortalException if a user tracker path with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.UserTrackerPath deleteUserTrackerPath(
-		long userTrackerPathId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userTrackerPathLocalService.deleteUserTrackerPath(userTrackerPathId);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _userTrackerPathLocalService.dynamicQuery();
@@ -104,7 +94,8 @@ public class UserTrackerPathLocalServiceWrapper
 	* @return the matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _userTrackerPathLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -122,7 +113,8 @@ public class UserTrackerPathLocalServiceWrapper
 	* @return the range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _userTrackerPathLocalService.dynamicQuery(dynamicQuery, start,
@@ -143,10 +135,11 @@ public class UserTrackerPathLocalServiceWrapper
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _userTrackerPathLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -184,28 +177,6 @@ public class UserTrackerPathLocalServiceWrapper
 		return _userTrackerPathLocalService.fetchUserTrackerPath(userTrackerPathId);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _userTrackerPathLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _userTrackerPathLocalService.getBeanIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userTrackerPathLocalService.getPersistedModel(primaryKeyObj);
-	}
-
 	/**
 	* Returns the user tracker path with the primary key.
 	*
@@ -218,6 +189,28 @@ public class UserTrackerPathLocalServiceWrapper
 		long userTrackerPathId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userTrackerPathLocalService.getUserTrackerPath(userTrackerPathId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _userTrackerPathLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userTrackerPathLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userTrackerPathLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -237,13 +230,6 @@ public class UserTrackerPathLocalServiceWrapper
 		return _userTrackerPathLocalService.getUserTrackerPaths(start, end);
 	}
 
-	@Override
-	public java.util.List<com.liferay.portal.model.UserTrackerPath> getUserTrackerPaths(
-		long userTrackerId, int start, int end) {
-		return _userTrackerPathLocalService.getUserTrackerPaths(userTrackerId,
-			start, end);
-	}
-
 	/**
 	* Returns the number of user tracker paths.
 	*
@@ -252,16 +238,6 @@ public class UserTrackerPathLocalServiceWrapper
 	@Override
 	public int getUserTrackerPathsCount() {
 		return _userTrackerPathLocalService.getUserTrackerPathsCount();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_userTrackerPathLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**
@@ -274,6 +250,33 @@ public class UserTrackerPathLocalServiceWrapper
 	public com.liferay.portal.model.UserTrackerPath updateUserTrackerPath(
 		com.liferay.portal.model.UserTrackerPath userTrackerPath) {
 		return _userTrackerPathLocalService.updateUserTrackerPath(userTrackerPath);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _userTrackerPathLocalService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_userTrackerPathLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.UserTrackerPath> getUserTrackerPaths(
+		long userTrackerId, int start, int end) {
+		return _userTrackerPathLocalService.getUserTrackerPaths(userTrackerId,
+			start, end);
 	}
 
 	/**

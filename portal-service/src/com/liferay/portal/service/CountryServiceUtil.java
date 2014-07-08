@@ -40,6 +40,25 @@ public class CountryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.CountryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
 	public static com.liferay.portal.model.Country addCountry(
 		java.lang.String name, java.lang.String a2, java.lang.String a3,
 		java.lang.String number, java.lang.String idd, boolean active)
@@ -59,15 +78,6 @@ public class CountryServiceUtil {
 	public static com.liferay.portal.model.Country fetchCountryByA3(
 		java.lang.String a3) {
 		return getService().fetchCountryByA3(a3);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
 	}
 
 	public static java.util.List<com.liferay.portal.model.Country> getCountries() {
@@ -100,15 +110,6 @@ public class CountryServiceUtil {
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCountryByName(name);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static CountryService getService() {

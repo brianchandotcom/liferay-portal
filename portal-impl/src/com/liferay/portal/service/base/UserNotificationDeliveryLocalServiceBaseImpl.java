@@ -136,7 +136,8 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return userNotificationDeliveryPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -153,8 +154,8 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return userNotificationDeliveryPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -173,8 +174,9 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return userNotificationDeliveryPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -253,7 +255,7 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return userNotificationDeliveryLocalService.deleteUserNotificationDelivery((UserNotificationDelivery)persistedModel);
+		return deleteUserNotificationDelivery((UserNotificationDelivery)persistedModel);
 	}
 
 	@Override

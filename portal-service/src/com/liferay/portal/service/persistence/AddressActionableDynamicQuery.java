@@ -21,7 +21,7 @@ import com.liferay.portal.service.AddressLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link AddressLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link AddressLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

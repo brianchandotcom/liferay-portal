@@ -57,13 +57,17 @@ public class ResourceTypePermissionLocalServiceWrapper
 	}
 
 	/**
-	* @throws PortalException
+	* Deletes the resource type permission with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourceTypePermissionId the primary key of the resource type permission
+	* @return the resource type permission that was removed
+	* @throws PortalException if a resource type permission with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.model.ResourceTypePermission deleteResourceTypePermission(
+		long resourceTypePermissionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceTypePermissionLocalService.deletePersistedModel(persistedModel);
+		return _resourceTypePermissionLocalService.deleteResourceTypePermission(resourceTypePermissionId);
 	}
 
 	/**
@@ -78,20 +82,6 @@ public class ResourceTypePermissionLocalServiceWrapper
 		return _resourceTypePermissionLocalService.deleteResourceTypePermission(resourceTypePermission);
 	}
 
-	/**
-	* Deletes the resource type permission with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceTypePermissionId the primary key of the resource type permission
-	* @return the resource type permission that was removed
-	* @throws PortalException if a resource type permission with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.ResourceTypePermission deleteResourceTypePermission(
-		long resourceTypePermissionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceTypePermissionLocalService.deleteResourceTypePermission(resourceTypePermissionId);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _resourceTypePermissionLocalService.dynamicQuery();
@@ -104,7 +94,8 @@ public class ResourceTypePermissionLocalServiceWrapper
 	* @return the matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _resourceTypePermissionLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -122,7 +113,8 @@ public class ResourceTypePermissionLocalServiceWrapper
 	* @return the range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _resourceTypePermissionLocalService.dynamicQuery(dynamicQuery,
@@ -143,10 +135,11 @@ public class ResourceTypePermissionLocalServiceWrapper
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _resourceTypePermissionLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -184,56 +177,6 @@ public class ResourceTypePermissionLocalServiceWrapper
 		return _resourceTypePermissionLocalService.fetchResourceTypePermission(resourceTypePermissionId);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _resourceTypePermissionLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _resourceTypePermissionLocalService.getBeanIdentifier();
-	}
-
-	@Override
-	public long getCompanyScopeActionIds(long companyId, java.lang.String name,
-		long roleId) {
-		return _resourceTypePermissionLocalService.getCompanyScopeActionIds(companyId,
-			name, roleId);
-	}
-
-	@Override
-	public long getGroupScopeActionIds(long companyId, long groupId,
-		java.lang.String name, long roleId) {
-		return _resourceTypePermissionLocalService.getGroupScopeActionIds(companyId,
-			groupId, name, roleId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.ResourceTypePermission> getGroupScopeResourceTypePermissions(
-		long companyId, java.lang.String name, long roleId) {
-		return _resourceTypePermissionLocalService.getGroupScopeResourceTypePermissions(companyId,
-			name, roleId);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceTypePermissionLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
-		long companyId, long groupId, java.lang.String name) {
-		return _resourceTypePermissionLocalService.getResourceBlockPermissionsContainer(companyId,
-			groupId, name);
-	}
-
 	/**
 	* Returns the resource type permission with the primary key.
 	*
@@ -246,6 +189,28 @@ public class ResourceTypePermissionLocalServiceWrapper
 		long resourceTypePermissionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourceTypePermissionLocalService.getResourceTypePermission(resourceTypePermissionId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _resourceTypePermissionLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceTypePermissionLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceTypePermissionLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -274,6 +239,66 @@ public class ResourceTypePermissionLocalServiceWrapper
 	@Override
 	public int getResourceTypePermissionsCount() {
 		return _resourceTypePermissionLocalService.getResourceTypePermissionsCount();
+	}
+
+	/**
+	* Updates the resource type permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param resourceTypePermission the resource type permission
+	* @return the resource type permission that was updated
+	*/
+	@Override
+	public com.liferay.portal.model.ResourceTypePermission updateResourceTypePermission(
+		com.liferay.portal.model.ResourceTypePermission resourceTypePermission) {
+		return _resourceTypePermissionLocalService.updateResourceTypePermission(resourceTypePermission);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _resourceTypePermissionLocalService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_resourceTypePermissionLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public long getCompanyScopeActionIds(long companyId, java.lang.String name,
+		long roleId) {
+		return _resourceTypePermissionLocalService.getCompanyScopeActionIds(companyId,
+			name, roleId);
+	}
+
+	@Override
+	public long getGroupScopeActionIds(long companyId, long groupId,
+		java.lang.String name, long roleId) {
+		return _resourceTypePermissionLocalService.getGroupScopeActionIds(companyId,
+			groupId, name, roleId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.ResourceTypePermission> getGroupScopeResourceTypePermissions(
+		long companyId, java.lang.String name, long roleId) {
+		return _resourceTypePermissionLocalService.getGroupScopeResourceTypePermissions(companyId,
+			name, roleId);
+	}
+
+	@Override
+	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
+		long companyId, long groupId, java.lang.String name) {
+		return _resourceTypePermissionLocalService.getResourceBlockPermissionsContainer(companyId,
+			groupId, name);
 	}
 
 	@Override
@@ -306,16 +331,6 @@ public class ResourceTypePermissionLocalServiceWrapper
 			groupId, name, roleId, actionId);
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_resourceTypePermissionLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public void updateCompanyScopeResourceTypePermissions(long companyId,
 		java.lang.String name, long roleId, long actionIdsLong, long operator) {
@@ -329,18 +344,6 @@ public class ResourceTypePermissionLocalServiceWrapper
 		long operator) {
 		_resourceTypePermissionLocalService.updateGroupScopeResourceTypePermissions(companyId,
 			groupId, name, roleId, actionIdsLong, operator);
-	}
-
-	/**
-	* Updates the resource type permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param resourceTypePermission the resource type permission
-	* @return the resource type permission that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.ResourceTypePermission updateResourceTypePermission(
-		com.liferay.portal.model.ResourceTypePermission resourceTypePermission) {
-		return _resourceTypePermissionLocalService.updateResourceTypePermission(resourceTypePermission);
 	}
 
 	/**

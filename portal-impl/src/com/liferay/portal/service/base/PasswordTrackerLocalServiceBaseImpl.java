@@ -136,7 +136,8 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return passwordTrackerPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -153,8 +154,8 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return passwordTrackerPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -173,8 +174,9 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return passwordTrackerPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -250,7 +252,7 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return passwordTrackerLocalService.deletePasswordTracker((PasswordTracker)persistedModel);
+		return deletePasswordTracker((PasswordTracker)persistedModel);
 	}
 
 	@Override

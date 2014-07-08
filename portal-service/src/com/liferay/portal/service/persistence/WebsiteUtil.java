@@ -86,7 +86,7 @@ public class WebsiteUtil {
 	 */
 	public static List<Website> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<Website> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -149,7 +149,7 @@ public class WebsiteUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Website> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -163,7 +163,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -177,7 +177,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -191,7 +191,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -205,7 +205,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -220,7 +220,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website[] findByUuid_PrevAndNext(
 		long websiteId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(websiteId, uuid, orderByComparator);
@@ -291,7 +291,7 @@ public class WebsiteUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Website> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -307,7 +307,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -323,7 +323,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -339,7 +339,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -355,7 +355,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -372,7 +372,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website[] findByUuid_C_PrevAndNext(
 		long websiteId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(websiteId, uuid, companyId,
@@ -443,7 +443,7 @@ public class WebsiteUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Website> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -458,7 +458,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -473,7 +473,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -488,7 +488,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -503,7 +503,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -519,7 +519,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website[] findByCompanyId_PrevAndNext(
 		long websiteId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(websiteId, companyId,
@@ -588,7 +588,7 @@ public class WebsiteUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Website> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -603,7 +603,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
@@ -617,7 +617,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -631,7 +631,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
@@ -645,7 +645,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -660,7 +660,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website[] findByUserId_PrevAndNext(
 		long websiteId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(websiteId, userId,
@@ -732,7 +732,7 @@ public class WebsiteUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Website> findByC_C(
 		long companyId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_C(companyId, classNameId, start, end,
 			orderByComparator);
@@ -749,7 +749,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website findByC_C_First(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByC_C_First(companyId, classNameId, orderByComparator);
@@ -765,7 +765,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website fetchByC_C_First(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_First(companyId, classNameId, orderByComparator);
 	}
@@ -781,7 +781,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website findByC_C_Last(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByC_C_Last(companyId, classNameId, orderByComparator);
@@ -797,7 +797,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website fetchByC_C_Last(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_Last(companyId, classNameId, orderByComparator);
 	}
@@ -814,7 +814,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website[] findByC_C_PrevAndNext(
 		long websiteId, long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(websiteId, companyId, classNameId,
@@ -892,7 +892,7 @@ public class WebsiteUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Website> findByC_C_C(
 		long companyId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_C_C(companyId, classNameId, classPK, start, end,
 			orderByComparator);
@@ -910,7 +910,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website findByC_C_C_First(
 		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByC_C_C_First(companyId, classNameId, classPK,
@@ -928,7 +928,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website fetchByC_C_C_First(
 		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_C_First(companyId, classNameId, classPK,
 			orderByComparator);
@@ -946,7 +946,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website findByC_C_C_Last(
 		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByC_C_C_Last(companyId, classNameId, classPK,
@@ -964,7 +964,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website fetchByC_C_C_Last(
 		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_C_Last(companyId, classNameId, classPK,
 			orderByComparator);
@@ -983,7 +983,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website[] findByC_C_C_PrevAndNext(
 		long websiteId, long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByC_C_C_PrevAndNext(websiteId, companyId, classNameId,
@@ -1072,7 +1072,7 @@ public class WebsiteUtil {
 	public static java.util.List<com.liferay.portal.model.Website> findByC_C_C_P(
 		long companyId, long classNameId, long classPK, boolean primary,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_C_C_P(companyId, classNameId, classPK, primary,
 			start, end, orderByComparator);
@@ -1091,7 +1091,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website findByC_C_C_P_First(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByC_C_C_P_First(companyId, classNameId, classPK,
@@ -1110,7 +1110,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website fetchByC_C_C_P_First(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_C_P_First(companyId, classNameId, classPK,
 			primary, orderByComparator);
@@ -1129,7 +1129,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website findByC_C_C_P_Last(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByC_C_C_P_Last(companyId, classNameId, classPK,
@@ -1148,7 +1148,7 @@ public class WebsiteUtil {
 	*/
 	public static com.liferay.portal.model.Website fetchByC_C_C_P_Last(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_C_P_Last(companyId, classNameId, classPK,
 			primary, orderByComparator);
@@ -1169,7 +1169,7 @@ public class WebsiteUtil {
 	public static com.liferay.portal.model.Website[] findByC_C_C_P_PrevAndNext(
 		long websiteId, long companyId, long classNameId, long classPK,
 		boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchWebsiteException {
 		return getPersistence()
 				   .findByC_C_C_P_PrevAndNext(websiteId, companyId,
@@ -1318,7 +1318,7 @@ public class WebsiteUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Website> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Website> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

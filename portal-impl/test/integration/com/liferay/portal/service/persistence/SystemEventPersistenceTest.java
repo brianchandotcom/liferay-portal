@@ -279,7 +279,7 @@ public class SystemEventPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<SystemEvent> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SystemEvent",
 			"mvccVersion", true, "systemEventId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",

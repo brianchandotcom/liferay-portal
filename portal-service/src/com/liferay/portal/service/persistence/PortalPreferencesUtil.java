@@ -87,7 +87,7 @@ public class PortalPreferencesUtil {
 	 */
 	public static List<PortalPreferences> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<PortalPreferences> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -288,7 +288,7 @@ public class PortalPreferencesUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.PortalPreferences> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortalPreferences> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

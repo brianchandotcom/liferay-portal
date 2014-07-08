@@ -77,7 +77,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	*/
 	public java.util.List<com.liferay.portal.model.ResourceAction> findByName(
 		java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceAction> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first resource action in the ordered set where name = &#63;.
@@ -89,7 +89,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	*/
 	public com.liferay.portal.model.ResourceAction findByName_First(
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceAction> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceActionException;
 
 	/**
@@ -101,7 +101,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	*/
 	public com.liferay.portal.model.ResourceAction fetchByName_First(
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceAction> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last resource action in the ordered set where name = &#63;.
@@ -113,7 +113,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	*/
 	public com.liferay.portal.model.ResourceAction findByName_Last(
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceAction> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceActionException;
 
 	/**
@@ -125,7 +125,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	*/
 	public com.liferay.portal.model.ResourceAction fetchByName_Last(
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceAction> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the resource actions before and after the current resource action in the ordered set where name = &#63;.
@@ -138,7 +138,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	*/
 	public com.liferay.portal.model.ResourceAction[] findByName_PrevAndNext(
 		long resourceActionId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceAction> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceActionException;
 
 	/**
@@ -306,7 +306,7 @@ public interface ResourceActionPersistence extends BasePersistence<ResourceActio
 	*/
 	public java.util.List<com.liferay.portal.model.ResourceAction> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceAction> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the resource actions from the database.

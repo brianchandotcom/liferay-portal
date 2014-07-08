@@ -87,7 +87,7 @@ public class ResourceActionUtil {
 	 */
 	public static List<ResourceAction> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<ResourceAction> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -151,7 +151,7 @@ public class ResourceActionUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.ResourceAction> findByName(
 		java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceAction> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByName(name, start, end, orderByComparator);
 	}
 
@@ -165,7 +165,7 @@ public class ResourceActionUtil {
 	*/
 	public static com.liferay.portal.model.ResourceAction findByName_First(
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceAction> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceActionException {
 		return getPersistence().findByName_First(name, orderByComparator);
 	}
@@ -179,7 +179,7 @@ public class ResourceActionUtil {
 	*/
 	public static com.liferay.portal.model.ResourceAction fetchByName_First(
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceAction> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByName_First(name, orderByComparator);
 	}
 
@@ -193,7 +193,7 @@ public class ResourceActionUtil {
 	*/
 	public static com.liferay.portal.model.ResourceAction findByName_Last(
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceAction> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceActionException {
 		return getPersistence().findByName_Last(name, orderByComparator);
 	}
@@ -207,7 +207,7 @@ public class ResourceActionUtil {
 	*/
 	public static com.liferay.portal.model.ResourceAction fetchByName_Last(
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceAction> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByName_Last(name, orderByComparator);
 	}
 
@@ -222,7 +222,7 @@ public class ResourceActionUtil {
 	*/
 	public static com.liferay.portal.model.ResourceAction[] findByName_PrevAndNext(
 		long resourceActionId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceAction> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceActionException {
 		return getPersistence()
 				   .findByName_PrevAndNext(resourceActionId, name,
@@ -430,7 +430,7 @@ public class ResourceActionUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.ResourceAction> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceAction> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -42,6 +42,24 @@ public class EmailAddressServiceUtil {
 	 */
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
 	* @deprecated As of 6.2.0, replaced by {@link #addEmailAddress(String,
 	long, String, int, boolean, ServiceContext)}
 	*/
@@ -69,15 +87,6 @@ public class EmailAddressServiceUtil {
 		getService().deleteEmailAddress(emailAddressId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static com.liferay.portal.model.EmailAddress getEmailAddress(
 		long emailAddressId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -88,15 +97,6 @@ public class EmailAddressServiceUtil {
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getEmailAddresses(className, classPK);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.portal.model.EmailAddress updateEmailAddress(

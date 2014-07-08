@@ -30,24 +30,6 @@ public class RegionServiceWrapper implements RegionService,
 		_regionService = regionService;
 	}
 
-	@Override
-	public com.liferay.portal.model.Region addRegion(long countryId,
-		java.lang.String regionCode, java.lang.String name, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _regionService.addRegion(countryId, regionCode, name, active);
-	}
-
-	@Override
-	public com.liferay.portal.model.Region fetchRegion(long countryId,
-		java.lang.String regionCode) {
-		return _regionService.fetchRegion(countryId, regionCode);
-	}
-
-	@Override
-	public com.liferay.portal.model.Region fetchRegion(long regionId) {
-		return _regionService.fetchRegion(regionId);
-	}
-
 	/**
 	* Returns the Spring bean ID for this bean.
 	*
@@ -58,17 +40,45 @@ public class RegionServiceWrapper implements RegionService,
 		return _regionService.getBeanIdentifier();
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
 	@Override
-	public com.liferay.portal.model.Region getRegion(long countryId,
-		java.lang.String regionCode)
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_regionService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public com.liferay.portal.model.Region addRegion(long countryId,
+		java.lang.String regionCode, java.lang.String name, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _regionService.getRegion(countryId, regionCode);
+		return _regionService.addRegion(countryId, regionCode, name, active);
+	}
+
+	@Override
+	public com.liferay.portal.model.Region fetchRegion(long regionId) {
+		return _regionService.fetchRegion(regionId);
+	}
+
+	@Override
+	public com.liferay.portal.model.Region fetchRegion(long countryId,
+		java.lang.String regionCode) {
+		return _regionService.fetchRegion(countryId, regionCode);
 	}
 
 	@Override
 	public com.liferay.portal.model.Region getRegion(long regionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _regionService.getRegion(regionId);
+	}
+
+	@Override
+	public com.liferay.portal.model.Region getRegion(long countryId,
+		java.lang.String regionCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _regionService.getRegion(countryId, regionCode);
 	}
 
 	@Override
@@ -92,16 +102,6 @@ public class RegionServiceWrapper implements RegionService,
 	public java.util.List<com.liferay.portal.model.Region> getRegions(
 		long countryId, boolean active) {
 		return _regionService.getRegions(countryId, active);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_regionService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

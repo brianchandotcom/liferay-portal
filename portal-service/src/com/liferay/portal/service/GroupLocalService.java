@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,79 +51,428 @@ public interface GroupLocalService extends BaseLocalService,
 	* @param group the group
 	* @return the group that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Group addGroup(
 		com.liferay.portal.model.Group group);
 
 	/**
-	* Adds a group.
+	* Creates a new group with the primary key. Does not add the group to the database.
 	*
-	* @param userId the primary key of the group's creator/owner
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @param liveGroupId the primary key of the live group
-	* @param name the entity's name
-	* @param description the group's description (optionally
-	<code>null</code>)
-	* @param type the group's type. For more information see {@link
-	GroupConstants}.
-	* @param friendlyURL the group's friendlyURL (optionally
-	<code>null</code>)
-	* @param site whether the group is to be associated with a main site
-	* @param active whether the group is active
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set asset category IDs and asset tag
-	names for the group, and whether the group is for staging.
-	* @return the group
-	* @throws PortalException if a creator could not be found, if the
-	group's information was invalid, if a layout could not be
-	found, or if a valid friendly URL could not be created for
-	the group
-	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
-	long, long, String, String, int, boolean, int, String,
-	boolean, boolean, ServiceContext)}
+	* @param groupId the primary key for the new group
+	* @return the new group
 	*/
-	@java.lang.Deprecated
-	public com.liferay.portal.model.Group addGroup(long userId,
-		java.lang.String className, long classPK, long liveGroupId,
-		java.lang.String name, java.lang.String description, int type,
-		java.lang.String friendlyURL, boolean site, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public com.liferay.portal.model.Group createGroup(long groupId);
+
+	/**
+	* Deletes the group with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param groupId the primary key of the group
+	* @return the group that was removed
+	* @throws PortalException if a group with the primary key could not be found
+	*/
+	public com.liferay.portal.model.Group deleteGroup(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Adds the group using the default live group.
+	* Deletes the group from the database. Also notifies the appropriate model listeners.
 	*
-	* @param userId the primary key of the group's creator/owner
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @param name the entity's name
-	* @param description the group's description (optionally
-	<code>null</code>)
-	* @param type the group's type. For more information see {@link
-	GroupConstants}.
-	* @param friendlyURL the group's friendlyURL
-	* @param site whether the group is to be associated with a main site
-	* @param active whether the group is active
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set asset category IDs and asset tag
-	names for the group, and whether the group is for staging.
-	* @return the group
-	* @throws PortalException if a creator could not be found, if the
-	group's information was invalid, if a layout could not be
-	found, or if a valid friendly URL could not be created for
-	the group
-	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
-	long, long, String, String, int, boolean, int, String,
-	boolean, boolean, ServiceContext)}
+	* @param group the group
+	* @return the group that was removed
+	* @throws PortalException
 	*/
-	@java.lang.Deprecated
-	public com.liferay.portal.model.Group addGroup(long userId,
-		java.lang.String className, long classPK, java.lang.String name,
-		java.lang.String description, int type, java.lang.String friendlyURL,
-		boolean site, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public com.liferay.portal.model.Group deleteGroup(
+		com.liferay.portal.model.Group group)
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end);
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows that match the dynamic query
+	*/
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows that match the dynamic query
+	*/
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Group fetchGroup(long groupId);
+
+	/**
+	* Returns the group with the matching UUID and company.
+	*
+	* @param uuid the group's UUID
+	* @param companyId the primary key of the company
+	* @return the matching group, or <code>null</code> if a matching group could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Group fetchGroupByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns the group with the primary key.
+	*
+	* @param groupId the primary key of the group
+	* @return the group
+	* @throws PortalException if a group with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Group getGroup(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Returns the group with the matching UUID and company.
+	*
+	* @param uuid the group's UUID
+	* @param companyId the primary key of the company
+	* @return the matching group
+	* @throws PortalException if a matching group could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Group getGroupByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Returns a range of all the groups.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of groups
+	* @param end the upper bound of the range of groups (not inclusive)
+	* @return the range of groups
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getGroups(int start,
+		int end);
+
+	/**
+	* Returns the number of groups.
+	*
+	* @return the number of groups
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupsCount();
+
+	/**
+	* Updates the group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param group the group
+	* @return the group that was updated
+	*/
+	public com.liferay.portal.model.Group updateGroup(
+		com.liferay.portal.model.Group group);
+
+	public void addOrganizationGroup(long organizationId, long groupId);
+
+	public void addOrganizationGroup(long organizationId,
+		com.liferay.portal.model.Group group);
+
+	public void addOrganizationGroups(long organizationId, long[] groupIds);
+
+	public void addOrganizationGroups(long organizationId,
+		java.util.List<com.liferay.portal.model.Group> Groups);
+
+	public void clearOrganizationGroups(long organizationId);
+
+	public void deleteOrganizationGroup(long organizationId, long groupId);
+
+	public void deleteOrganizationGroup(long organizationId,
+		com.liferay.portal.model.Group group);
+
+	public void deleteOrganizationGroups(long organizationId, long[] groupIds);
+
+	public void deleteOrganizationGroups(long organizationId,
+		java.util.List<com.liferay.portal.model.Group> Groups);
+
+	/**
+	* Returns the organizationIds of the organizations associated with the group.
+	*
+	* @param groupId the groupId of the group
+	* @return long[] the organizationIds of organizations associated with the group
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getOrganizationPrimaryKeys(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getOrganizationGroups(
+		long organizationId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getOrganizationGroups(
+		long organizationId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getOrganizationGroups(
+		long organizationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getOrganizationGroupsCount(long organizationId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasOrganizationGroup(long organizationId, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasOrganizationGroups(long organizationId);
+
+	public void setOrganizationGroups(long organizationId, long[] groupIds);
+
+	public void addRoleGroup(long roleId, long groupId);
+
+	public void addRoleGroup(long roleId, com.liferay.portal.model.Group group);
+
+	public void addRoleGroups(long roleId, long[] groupIds);
+
+	public void addRoleGroups(long roleId,
+		java.util.List<com.liferay.portal.model.Group> Groups);
+
+	public void clearRoleGroups(long roleId);
+
+	public void deleteRoleGroup(long roleId, long groupId);
+
+	public void deleteRoleGroup(long roleId,
+		com.liferay.portal.model.Group group);
+
+	public void deleteRoleGroups(long roleId, long[] groupIds);
+
+	public void deleteRoleGroups(long roleId,
+		java.util.List<com.liferay.portal.model.Group> Groups);
+
+	/**
+	* Returns the roleIds of the roles associated with the group.
+	*
+	* @param groupId the groupId of the group
+	* @return long[] the roleIds of roles associated with the group
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getRolePrimaryKeys(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getRoleGroups(
+		long roleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getRoleGroups(
+		long roleId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getRoleGroups(
+		long roleId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRoleGroupsCount(long roleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasRoleGroup(long roleId, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasRoleGroups(long roleId);
+
+	public void setRoleGroups(long roleId, long[] groupIds);
+
+	public void addUserGroupGroup(long userGroupId, long groupId);
+
+	public void addUserGroupGroup(long userGroupId,
+		com.liferay.portal.model.Group group);
+
+	public void addUserGroupGroups(long userGroupId, long[] groupIds);
+
+	public void addUserGroupGroups(long userGroupId,
+		java.util.List<com.liferay.portal.model.Group> Groups);
+
+	public void clearUserGroupGroups(long userGroupId);
+
+	public void deleteUserGroupGroup(long userGroupId, long groupId);
+
+	public void deleteUserGroupGroup(long userGroupId,
+		com.liferay.portal.model.Group group);
+
+	public void deleteUserGroupGroups(long userGroupId, long[] groupIds);
+
+	public void deleteUserGroupGroups(long userGroupId,
+		java.util.List<com.liferay.portal.model.Group> Groups);
+
+	/**
+	* Returns the userGroupIds of the user groups associated with the group.
+	*
+	* @param groupId the groupId of the group
+	* @return long[] the userGroupIds of user groups associated with the group
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getUserGroupPrimaryKeys(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getUserGroupGroups(
+		long userGroupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getUserGroupGroups(
+		long userGroupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getUserGroupGroups(
+		long userGroupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserGroupGroupsCount(long userGroupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserGroupGroup(long userGroupId, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserGroupGroups(long userGroupId);
+
+	public void setUserGroupGroups(long userGroupId, long[] groupIds);
+
+	public void addUserGroup(long userId, long groupId);
+
+	public void addUserGroup(long userId, com.liferay.portal.model.Group group);
+
+	public void addUserGroups(long userId, long[] groupIds);
+
+	public void addUserGroups(long userId,
+		java.util.List<com.liferay.portal.model.Group> Groups);
+
+	public void clearUserGroups(long userId);
+
+	public void deleteUserGroup(long userId, long groupId);
+
+	public void deleteUserGroup(long userId,
+		com.liferay.portal.model.Group group);
+
+	public void deleteUserGroups(long userId, long[] groupIds);
+
+	public void deleteUserGroups(long userId,
+		java.util.List<com.liferay.portal.model.Group> Groups);
+
+	/**
+	* Returns the userIds of the users associated with the group.
+	*
+	* @param groupId the groupId of the group
+	* @return long[] the userIds of users associated with the group
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getUserPrimaryKeys(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
+		long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
+		long userId, int start, int end);
+
+	/**
+	* @throws PortalException
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserGroupsCount(long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserGroup(long userId, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserGroups(long userId);
+
+	public void setUserGroups(long userId, long[] groupIds);
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Adds a group.
@@ -190,7 +538,7 @@ public interface GroupLocalService extends BaseLocalService,
 	long, long, String, String, int, boolean, int, String,
 	boolean, boolean, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public com.liferay.portal.model.Group addGroup(long userId,
 		long parentGroupId, java.lang.String className, long classPK,
 		java.lang.String name, java.lang.String description, int type,
@@ -198,43 +546,75 @@ public interface GroupLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void addOrganizationGroup(long organizationId,
-		com.liferay.portal.model.Group group);
+	/**
+	* Adds a group.
+	*
+	* @param userId the primary key of the group's creator/owner
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @param liveGroupId the primary key of the live group
+	* @param name the entity's name
+	* @param description the group's description (optionally
+	<code>null</code>)
+	* @param type the group's type. For more information see {@link
+	GroupConstants}.
+	* @param friendlyURL the group's friendlyURL (optionally
+	<code>null</code>)
+	* @param site whether the group is to be associated with a main site
+	* @param active whether the group is active
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set asset category IDs and asset tag
+	names for the group, and whether the group is for staging.
+	* @return the group
+	* @throws PortalException if a creator could not be found, if the
+	group's information was invalid, if a layout could not be
+	found, or if a valid friendly URL could not be created for
+	the group
+	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
+	long, long, String, String, int, boolean, int, String,
+	boolean, boolean, ServiceContext)}
+	*/
+	@Deprecated
+	public com.liferay.portal.model.Group addGroup(long userId,
+		java.lang.String className, long classPK, long liveGroupId,
+		java.lang.String name, java.lang.String description, int type,
+		java.lang.String friendlyURL, boolean site, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void addOrganizationGroup(long organizationId, long groupId);
-
-	public void addOrganizationGroups(long organizationId,
-		java.util.List<com.liferay.portal.model.Group> Groups);
-
-	public void addOrganizationGroups(long organizationId, long[] groupIds);
-
-	public void addRoleGroup(long roleId, com.liferay.portal.model.Group group);
-
-	public void addRoleGroup(long roleId, long groupId);
-
-	public void addRoleGroups(long roleId,
-		java.util.List<com.liferay.portal.model.Group> Groups);
-
-	public void addRoleGroups(long roleId, long[] groupIds);
-
-	public void addUserGroup(long userId, com.liferay.portal.model.Group group);
-
-	public void addUserGroup(long userId, long groupId);
-
-	public void addUserGroupGroup(long userGroupId,
-		com.liferay.portal.model.Group group);
-
-	public void addUserGroupGroup(long userGroupId, long groupId);
-
-	public void addUserGroupGroups(long userGroupId,
-		java.util.List<com.liferay.portal.model.Group> Groups);
-
-	public void addUserGroupGroups(long userGroupId, long[] groupIds);
-
-	public void addUserGroups(long userId,
-		java.util.List<com.liferay.portal.model.Group> Groups);
-
-	public void addUserGroups(long userId, long[] groupIds);
+	/**
+	* Adds the group using the default live group.
+	*
+	* @param userId the primary key of the group's creator/owner
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @param name the entity's name
+	* @param description the group's description (optionally
+	<code>null</code>)
+	* @param type the group's type. For more information see {@link
+	GroupConstants}.
+	* @param friendlyURL the group's friendlyURL
+	* @param site whether the group is to be associated with a main site
+	* @param active whether the group is active
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set asset category IDs and asset tag
+	names for the group, and whether the group is for staging.
+	* @return the group
+	* @throws PortalException if a creator could not be found, if the
+	group's information was invalid, if a layout could not be
+	found, or if a valid friendly URL could not be created for
+	the group
+	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
+	long, long, String, String, int, boolean, int, String,
+	boolean, boolean, ServiceContext)}
+	*/
+	@Deprecated
+	public com.liferay.portal.model.Group addGroup(long userId,
+		java.lang.String className, long classPK, java.lang.String name,
+		java.lang.String description, int type, java.lang.String friendlyURL,
+		boolean site, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds a company group if it does not exist. This method is typically used
@@ -246,7 +626,6 @@ public interface GroupLocalService extends BaseLocalService,
 	not be found, or if a valid friendly URL could not be created for
 	the group
 	*/
-	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkCompanyGroup(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -258,164 +637,11 @@ public interface GroupLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @throws PortalException if a new system group could not be created
 	*/
-	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkSystemGroups(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void clearOrganizationGroups(long organizationId);
-
-	public void clearRoleGroups(long roleId);
-
-	public void clearUserGroupGroups(long userGroupId);
-
-	public void clearUserGroups(long userId);
-
-	/**
-	* Creates a new group with the primary key. Does not add the group to the database.
-	*
-	* @param groupId the primary key for the new group
-	* @return the new group
-	*/
-	public com.liferay.portal.model.Group createGroup(long groupId);
-
-	/**
-	* Deletes the group from the database. Also notifies the appropriate model listeners.
-	*
-	* @param group the group
-	* @return the group that was removed
-	* @throws PortalException
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Group deleteGroup(
-		com.liferay.portal.model.Group group)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Deletes the group with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param groupId the primary key of the group
-	* @return the group that was removed
-	* @throws PortalException if a group with the primary key could not be found
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Group deleteGroup(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void deleteOrganizationGroup(long organizationId,
-		com.liferay.portal.model.Group group);
-
-	public void deleteOrganizationGroup(long organizationId, long groupId);
-
-	public void deleteOrganizationGroups(long organizationId,
-		java.util.List<com.liferay.portal.model.Group> Groups);
-
-	public void deleteOrganizationGroups(long organizationId, long[] groupIds);
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void deleteRoleGroup(long roleId,
-		com.liferay.portal.model.Group group);
-
-	public void deleteRoleGroup(long roleId, long groupId);
-
-	public void deleteRoleGroups(long roleId,
-		java.util.List<com.liferay.portal.model.Group> Groups);
-
-	public void deleteRoleGroups(long roleId, long[] groupIds);
-
-	public void deleteUserGroup(long userId,
-		com.liferay.portal.model.Group group);
-
-	public void deleteUserGroup(long userId, long groupId);
-
-	public void deleteUserGroupGroup(long userGroupId,
-		com.liferay.portal.model.Group group);
-
-	public void deleteUserGroupGroup(long userGroupId, long groupId);
-
-	public void deleteUserGroupGroups(long userGroupId,
-		java.util.List<com.liferay.portal.model.Group> Groups);
-
-	public void deleteUserGroupGroups(long userGroupId, long[] groupIds);
-
-	public void deleteUserGroups(long userId,
-		java.util.List<com.liferay.portal.model.Group> Groups);
-
-	public void deleteUserGroups(long userId, long[] groupIds);
-
 	public void disableStaging(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end);
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	*/
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	public void enableStaging(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -451,24 +677,9 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the group with the name and associated company, or
 	<code>null</code> if a matching group could not be found
 	*/
-	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Group fetchGroup(long companyId,
 		java.lang.String name);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group fetchGroup(long groupId);
-
-	/**
-	* Returns the group with the matching UUID and company.
-	*
-	* @param uuid the group's UUID
-	* @param companyId the primary key of the company
-	* @return the matching group, or <code>null</code> if a matching group could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group fetchGroupByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the default user's personal site group.
@@ -483,16 +694,6 @@ public interface GroupLocalService extends BaseLocalService,
 	public com.liferay.portal.model.Group fetchUserPersonalSiteGroup(
 		long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
 
 	/**
 	* Returns the company group.
@@ -559,35 +760,9 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the group with the name
 	* @throws PortalException if a matching group could not be found
 	*/
-	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Group getGroup(long companyId,
 		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Returns the group with the primary key.
-	*
-	* @param groupId the primary key of the group
-	* @return the group
-	* @throws PortalException if a group with the primary key could not be found
-	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group getGroup(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Returns the group with the matching UUID and company.
-	*
-	* @param uuid the group's UUID
-	* @param companyId the primary key of the company
-	* @return the matching group
-	* @throws PortalException if a matching group could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Group getGroupByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -599,6 +774,19 @@ public interface GroupLocalService extends BaseLocalService,
 	public java.lang.String getGroupDescriptiveName(long groupId,
 		java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Returns all the groups that are direct children of the parent group.
+	*
+	* @param companyId the primary key of the company
+	* @param parentGroupId the primary key of the parent group
+	* @param site whether the group is to be associated with a main site
+	* @return the matching groups, or <code>null</code> if no matches were
+	found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getGroups(
+		long companyId, long parentGroupId, boolean site);
 
 	/**
 	* Returns all the groups that are direct children of the parent group with
@@ -631,19 +819,6 @@ public interface GroupLocalService extends BaseLocalService,
 		int start, int end);
 
 	/**
-	* Returns all the groups that are direct children of the parent group.
-	*
-	* @param companyId the primary key of the company
-	* @param parentGroupId the primary key of the parent group
-	* @param site whether the group is to be associated with a main site
-	* @return the matching groups, or <code>null</code> if no matches were
-	found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getGroups(
-		long companyId, long parentGroupId, boolean site);
-
-	/**
 	* Returns the groups with the matching primary keys.
 	*
 	* @param groupIds the primary keys of the groups
@@ -656,27 +831,16 @@ public interface GroupLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Returns a range of all the groups.
+	* Returns the number of groups that are direct children of the parent
+	* group.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of groups
-	* @param end the upper bound of the range of groups (not inclusive)
-	* @return the range of groups
+	* @param companyId the primary key of the company
+	* @param parentGroupId the primary key of the parent group
+	* @param site whether the group is to be associated with a main site
+	* @return the number of matching groups
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getGroups(int start,
-		int end);
-
-	/**
-	* Returns the number of groups.
-	*
-	* @return the number of groups
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupsCount();
+	public int getGroupsCount(long companyId, long parentGroupId, boolean site);
 
 	/**
 	* Returns the number of groups that are direct children of the parent group
@@ -690,18 +854,6 @@ public interface GroupLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupsCount(long companyId, java.lang.String className,
 		long parentGroupId);
-
-	/**
-	* Returns the number of groups that are direct children of the parent
-	* group.
-	*
-	* @param companyId the primary key of the company
-	* @param parentGroupId the primary key of the parent group
-	* @param site whether the group is to be associated with a main site
-	* @return the number of matching groups
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupsCount(long companyId, long parentGroupId, boolean site);
 
 	/**
 	* Returns the group associated with the layout.
@@ -765,7 +917,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getLayoutsGroups(long, long,
 	boolean, int, int, OrderByComparator)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Group> getLayoutsGroups(
 		long companyId, long parentGroupId, boolean site, int start, int end);
@@ -870,31 +1022,6 @@ public interface GroupLocalService extends BaseLocalService,
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getOrganizationGroups(
-		long organizationId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getOrganizationGroups(
-		long organizationId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getOrganizationGroups(
-		long organizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getOrganizationGroupsCount(long organizationId);
-
-	/**
-	* Returns the organizationIds of the organizations associated with the group.
-	*
-	* @param groupId the groupId of the group
-	* @return long[] the organizationIds of organizations associated with the group
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getOrganizationPrimaryKeys(long groupId);
-
 	/**
 	* Returns the specified organization groups.
 	*
@@ -929,37 +1056,6 @@ public interface GroupLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portal.model.Group> getParentGroups(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getRoleGroups(
-		long roleId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getRoleGroups(
-		long roleId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getRoleGroups(
-		long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRoleGroupsCount(long roleId);
-
-	/**
-	* Returns the roleIds of the roles associated with the group.
-	*
-	* @param groupId the groupId of the group
-	* @return long[] the roleIds of roles associated with the group
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getRolePrimaryKeys(long groupId);
 
 	/**
 	* Returns the staging group.
@@ -997,35 +1093,6 @@ public interface GroupLocalService extends BaseLocalService,
 	public com.liferay.portal.model.Group getUserGroupGroup(long companyId,
 		long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserGroupGroups(
-		long userGroupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserGroupGroups(
-		long userGroupId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserGroupGroups(
-		long userGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserGroupGroupsCount(long userGroupId);
-
-	/**
-	* Returns the userGroupIds of the user groups associated with the group.
-	*
-	* @param groupId the groupId of the group
-	* @return long[] the userGroupIds of user groups associated with the group
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getUserGroupPrimaryKeys(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
-		long userId);
 
 	/**
 	* Returns all the user's site groups and immediate organization groups,
@@ -1073,22 +1140,6 @@ public interface GroupLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
 		long userId, boolean inherit, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
-		long userId, int start, int end);
-
-	/**
-	* @throws PortalException
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserGroupsCount(long userId);
 
 	/**
 	* Returns the groups associated with the user groups.
@@ -1156,15 +1207,6 @@ public interface GroupLocalService extends BaseLocalService,
 		long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	/**
-	* Returns the userIds of the users associated with the group.
-	*
-	* @param groupId the groupId of the group
-	* @return long[] the userIds of users associated with the group
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getUserPrimaryKeys(long groupId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
 		long userId) throws com.liferay.portal.kernel.exception.PortalException;
@@ -1173,18 +1215,6 @@ public interface GroupLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
 		long userId, boolean includeAdministrative)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasOrganizationGroup(long organizationId, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasOrganizationGroups(long organizationId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasRoleGroup(long roleId, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasRoleGroups(long roleId);
 
 	/**
 	* Returns <code>true</code> if the live group has a staging group.
@@ -1195,9 +1225,6 @@ public interface GroupLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasStagingGroup(long liveGroupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserGroup(long userId, long groupId);
 
 	/**
 	* Returns <code>true</code> if the user is immediately associated with the
@@ -1213,15 +1240,6 @@ public interface GroupLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserGroup(long userId, long groupId, boolean inherit);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserGroupGroup(long userGroupId, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserGroupGroups(long userGroupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserGroups(long userId);
 
 	/**
 	* Returns the group with the matching group name by first searching the
@@ -1264,505 +1282,6 @@ public interface GroupLocalService extends BaseLocalService,
 	*/
 	public void rebuildTree(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Returns an ordered range of all the groups that match the class name IDs
-	* and keywords, optionally including the user's inherited organization
-	* groups and user groups. System and staged groups are not included.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param classNameIds the primary keys of the class names of the entities
-	the groups are related to (optionally <code>null</code>)
-	* @param keywords the keywords (space separated), which may occur in the
-	sites's name, or description (optionally <code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). To
-	include a user's organizations, inherited organizations, and user
-	groups in the search, add an entry with key
-	&quot;usersGroups&quot; mapped to the user's ID and an entry with
-	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
-	For more information see {@link
-	com.liferay.portal.service.persistence.GroupFinder}.
-	* @param start the lower bound of the range of groups to return
-	* @param end the upper bound of the range of groups to return (not
-	inclusive)
-	* @return the matching groups ordered by name
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long[] classNameIds, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end);
-
-	/**
-	* Returns an ordered range of all the groups that match the class name IDs
-	* and keywords, optionally including the user's inherited organization
-	* groups and user groups. System and staged groups are not included.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param classNameIds the primary keys of the class names of the entities
-	the groups are related to (optionally <code>null</code>)
-	* @param keywords the keywords (space separated), which may occur in the
-	sites's name, or description (optionally <code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). To
-	include a user's organizations, inherited organizations, and user
-	groups in the search, add an entry with key
-	&quot;usersGroups&quot; mapped to the user's ID and an entry with
-	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
-	For more information see {@link
-	com.liferay.portal.service.persistence.GroupFinder}.
-	* @param start the lower bound of the range of groups to return
-	* @param end the upper bound of the range of groups to return (not
-	inclusive)
-	* @param obc the comparator to order the groups (optionally
-	<code>null</code>)
-	* @return the matching groups ordered by comparator <code>obc</code>
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long[] classNameIds, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
-
-	/**
-	* Returns an ordered range of all the groups that match the class name IDs,
-	* name, and description, optionally including the user's inherited
-	* organization groups and user groups. System and staged groups are not
-	* included.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param classNameIds the primary keys of the class names of the entities
-	the groups are related to (optionally <code>null</code>)
-	* @param name the group's name (optionally <code>null</code>)
-	* @param description the group's description (optionally
-	<code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). To
-	include a user's organizations, inherited organizations, and user
-	groups in the search, add an entry with key
-	&quot;usersGroups&quot; mapped to the user's ID and an entry with
-	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
-	For more information see {@link
-	com.liferay.portal.service.persistence.GroupFinder}.
-	* @param andOperator whether every field must match its keywords, or just
-	one field.
-	* @param start the lower bound of the range of groups to return
-	* @param end the upper bound of the range of groups to return (not
-	inclusive)
-	* @return the matching groups ordered by name
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long[] classNameIds, java.lang.String name,
-		java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end);
-
-	/**
-	* Returns an ordered range of all the groups that match the class name IDs,
-	* name, and description, optionally including the user's inherited
-	* organization groups and user groups. System and staged groups are not
-	* included.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param classNameIds the primary keys of the class names of the entities
-	the groups are related to (optionally <code>null</code>)
-	* @param name the group's name (optionally <code>null</code>)
-	* @param description the group's description (optionally
-	<code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). To
-	include a user's organizations, inherited organizations, and user
-	groups in the search, add an entry with key
-	&quot;usersGroups&quot; mapped to the user's ID and an entry with
-	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
-	For more information see {@link
-	com.liferay.portal.service.persistence.GroupFinder}.
-	* @param andOperator whether every field must match its keywords, or just
-	one field.
-	* @param start the lower bound of the range of groups to return
-	* @param end the upper bound of the range of groups to return (not
-	inclusive)
-	* @param obc the comparator to order the groups (optionally
-	<code>null</code>)
-	* @return the matching groups ordered by comparator <code>obc</code>
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long[] classNameIds, java.lang.String name,
-		java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
-
-	/**
-	* Returns an ordered range of all the groups belonging to the parent group
-	* that match the class name IDs and keywords, optionally including the
-	* user's inherited organization groups and user groups. System and staged
-	* groups are not included.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param classNameIds the primary keys of the class names of the entities
-	the groups are related to (optionally <code>null</code>)
-	* @param parentGroupId the primary key of the parent group
-	* @param keywords the keywords (space separated), which may occur in the
-	sites's name, or description (optionally <code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). To
-	include a user's organizations, inherited organizations, and user
-	groups in the search, add an entry with key
-	&quot;usersGroups&quot; mapped to the user's ID and an entry with
-	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
-	For more information see {@link
-	com.liferay.portal.service.persistence.GroupFinder}.
-	* @param start the lower bound of the range of groups to return
-	* @param end the upper bound of the range of groups to return (not
-	inclusive)
-	* @return the matching groups ordered by name
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long[] classNameIds, long parentGroupId,
-		java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end);
-
-	/**
-	* Returns an ordered range of all the groups belonging to the parent group
-	* that match the class name IDs and keywords, optionally including the
-	* user's inherited organization groups and user groups. System and staged
-	* groups are not included.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param classNameIds the primary keys of the class names of the entities
-	the groups are related to (optionally <code>null</code>)
-	* @param parentGroupId the primary key of the parent group
-	* @param keywords the keywords (space separated), which may occur in the
-	sites's name, or description (optionally <code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). To
-	include a user's organizations, inherited organizations, and user
-	groups in the search, add an entry with key
-	&quot;usersGroups&quot; mapped to the user's ID and an entry with
-	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
-	For more information see {@link
-	com.liferay.portal.service.persistence.GroupFinder}.
-	* @param start the lower bound of the range of groups to return
-	* @param end the upper bound of the range of groups to return (not
-	inclusive)
-	* @param obc the comparator to order the groups (optionally
-	<code>null</code>)
-	* @return the matching groups ordered by comparator <code>obc</code>
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long[] classNameIds, long parentGroupId,
-		java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
-
-	/**
-	* Returns an ordered range of all the groups belonging to the parent group
-	* that match the class name IDs, name, and description, optionally
-	* including the user's inherited organization groups and user groups.
-	* System and staged groups are not included.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param classNameIds the primary keys of the class names of the entities
-	the groups are related to (optionally <code>null</code>)
-	* @param parentGroupId the primary key of the parent group
-	* @param name the group's name (optionally <code>null</code>)
-	* @param description the group's description (optionally
-	<code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). To
-	include a user's organizations, inherited organizations, and user
-	groups in the search, add an entry with key
-	&quot;usersGroups&quot; mapped to the user's ID and an entry with
-	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
-	For more information see {@link
-	com.liferay.portal.service.persistence.GroupFinder}.
-	* @param andOperator whether every field must match its keywords, or just
-	one field.
-	* @param start the lower bound of the range of groups to return
-	* @param end the upper bound of the range of groups to return (not
-	inclusive)
-	* @return the matching groups ordered by name
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long[] classNameIds, long parentGroupId,
-		java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end);
-
-	/**
-	* Returns an ordered range of all the groups belonging to the parent group
-	* that match the class name IDs, name, and description, optionally
-	* including the user's inherited organization groups and user groups.
-	* System and staged groups are not included.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param classNameIds the primary keys of the class names of the entities
-	the groups are related to (optionally <code>null</code>)
-	* @param parentGroupId the primary key of the parent group
-	* @param name the group's name (optionally <code>null</code>)
-	* @param description the group's description (optionally
-	<code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). To
-	include a user's organizations, inherited organizations, and user
-	groups in the search, add an entry with key
-	&quot;usersGroups&quot; mapped to the user's ID and an entry with
-	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
-	For more information see {@link
-	com.liferay.portal.service.persistence.GroupFinder}.
-	* @param andOperator whether every field must match its keywords, or just
-	one field.
-	* @param start the lower bound of the range of groups to return
-	* @param end the upper bound of the range of groups to return (not
-	inclusive)
-	* @param obc the comparator to order the groups (optionally
-	<code>null</code>)
-	* @return the matching groups ordered by comparator <code>obc</code>
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, long[] classNameIds, long parentGroupId,
-		java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
-
-	/**
-	* Returns an ordered range of all the groups that match the keywords,
-	* optionally including the user's inherited organization groups and user
-	* groups. System and staged groups are not included.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param keywords the keywords (space separated), which may occur in the
-	sites's name, or description (optionally <code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). To
-	include the user's inherited organizations and user groups in the
-	search, add entries having &quot;usersGroups&quot; and
-	&quot;inherit&quot; as keys mapped to the the user's ID. For more
-	information see {@link
-	com.liferay.portal.service.persistence.GroupFinder}.
-	* @param start the lower bound of the range of groups to return
-	* @param end the upper bound of the range of groups to return (not
-	inclusive)
-	* @return the matching groups ordered by name
-	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end);
-
-	/**
-	* Returns an ordered range of all the groups that match the keywords,
-	* optionally including the user's inherited organization groups and user
-	* groups. System and staged groups are not included.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param keywords the keywords (space separated), which may occur in the
-	sites's name, or description (optionally <code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). To
-	include the user's inherited organizations and user groups in the
-	search, add entries having &quot;usersGroups&quot; and
-	&quot;inherit&quot; as keys mapped to the the user's ID. For more
-	information see {@link
-	com.liferay.portal.service.persistence.GroupFinder}.
-	* @param start the lower bound of the range of groups to return
-	* @param end the upper bound of the range of groups to return (not
-	inclusive)
-	* @param obc the comparator to order the groups (optionally
-	<code>null</code>)
-	* @return the matching groups ordered by comparator <code>obc</code>
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
-
-	/**
-	* Returns an ordered range of all the site groups and organization groups
-	* that match the name and description, optionally including the user's
-	* inherited organization groups and user groups. System and staged groups
-	* are not included.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param name the group's name (optionally <code>null</code>)
-	* @param description the group's description (optionally
-	<code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). To
-	include the user's inherited organizations and user groups in the
-	search, add entries having &quot;usersGroups&quot; and
-	&quot;inherit&quot; as keys mapped to the the user's ID. For more
-	information see {@link
-	com.liferay.portal.service.persistence.GroupFinder}.
-	* @param andOperator whether every field must match its keywords, or just
-	one field.
-	* @param start the lower bound of the range of groups to return
-	* @param end the upper bound of the range of groups to return (not
-	inclusive)
-	* @return the matching groups ordered by name
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end);
-
-	/**
-	* Returns an ordered range of all the site groups and organization groups
-	* that match the name and description, optionally including the user's
-	* inherited organization groups and user groups. System and staged groups
-	* are not included.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param name the group's name (optionally <code>null</code>)
-	* @param description the group's description (optionally
-	<code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). To
-	include the user's inherited organizations and user groups in the
-	search, add entries having &quot;usersGroups&quot; and
-	&quot;inherit&quot; as keys mapped to the the user's ID. For more
-	information see {@link
-	com.liferay.portal.service.persistence.GroupFinder}.
-	* @param andOperator whether every field must match its keywords, or just
-	one field.
-	* @param start the lower bound of the range of groups to return
-	* @param end the upper bound of the range of groups to return (not
-	inclusive)
-	* @param obc the comparator to order the groups (optionally
-	<code>null</code>)
-	* @return the matching groups ordered by comparator <code>obc</code>
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> search(
-		long companyId, java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
 
 	/**
 	* Returns an ordered range of all the company's groups, optionally
@@ -1961,13 +1480,510 @@ public interface GroupLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
 
 	/**
-	* Returns the number of groups that match the class name IDs, and keywords,
-	* optionally including the user's inherited organization groups and user
-	* groups. System and staged groups are not included.
+	* Returns an ordered range of all the groups belonging to the parent group
+	* that match the class name IDs and keywords, optionally including the
+	* user's inherited organization groups and user groups. System and staged
+	* groups are not included.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
 	*
 	* @param companyId the primary key of the company
 	* @param classNameIds the primary keys of the class names of the entities
 	the groups are related to (optionally <code>null</code>)
+	* @param parentGroupId the primary key of the parent group
+	* @param keywords the keywords (space separated), which may occur in the
+	sites's name, or description (optionally <code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). To
+	include a user's organizations, inherited organizations, and user
+	groups in the search, add an entry with key
+	&quot;usersGroups&quot; mapped to the user's ID and an entry with
+	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
+	For more information see {@link
+	com.liferay.portal.service.persistence.GroupFinder}.
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @return the matching groups ordered by name
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> search(
+		long companyId, long[] classNameIds, long parentGroupId,
+		java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the groups belonging to the parent group
+	* that match the class name IDs and keywords, optionally including the
+	* user's inherited organization groups and user groups. System and staged
+	* groups are not included.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param classNameIds the primary keys of the class names of the entities
+	the groups are related to (optionally <code>null</code>)
+	* @param parentGroupId the primary key of the parent group
+	* @param keywords the keywords (space separated), which may occur in the
+	sites's name, or description (optionally <code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). To
+	include a user's organizations, inherited organizations, and user
+	groups in the search, add an entry with key
+	&quot;usersGroups&quot; mapped to the user's ID and an entry with
+	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
+	For more information see {@link
+	com.liferay.portal.service.persistence.GroupFinder}.
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @param obc the comparator to order the groups (optionally
+	<code>null</code>)
+	* @return the matching groups ordered by comparator <code>obc</code>
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> search(
+		long companyId, long[] classNameIds, long parentGroupId,
+		java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
+
+	/**
+	* Returns an ordered range of all the groups belonging to the parent group
+	* that match the class name IDs, name, and description, optionally
+	* including the user's inherited organization groups and user groups.
+	* System and staged groups are not included.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param classNameIds the primary keys of the class names of the entities
+	the groups are related to (optionally <code>null</code>)
+	* @param parentGroupId the primary key of the parent group
+	* @param name the group's name (optionally <code>null</code>)
+	* @param description the group's description (optionally
+	<code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). To
+	include a user's organizations, inherited organizations, and user
+	groups in the search, add an entry with key
+	&quot;usersGroups&quot; mapped to the user's ID and an entry with
+	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
+	For more information see {@link
+	com.liferay.portal.service.persistence.GroupFinder}.
+	* @param andOperator whether every field must match its keywords, or just
+	one field.
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @return the matching groups ordered by name
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> search(
+		long companyId, long[] classNameIds, long parentGroupId,
+		java.lang.String name, java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end);
+
+	/**
+	* Returns an ordered range of all the groups belonging to the parent group
+	* that match the class name IDs, name, and description, optionally
+	* including the user's inherited organization groups and user groups.
+	* System and staged groups are not included.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param classNameIds the primary keys of the class names of the entities
+	the groups are related to (optionally <code>null</code>)
+	* @param parentGroupId the primary key of the parent group
+	* @param name the group's name (optionally <code>null</code>)
+	* @param description the group's description (optionally
+	<code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). To
+	include a user's organizations, inherited organizations, and user
+	groups in the search, add an entry with key
+	&quot;usersGroups&quot; mapped to the user's ID and an entry with
+	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
+	For more information see {@link
+	com.liferay.portal.service.persistence.GroupFinder}.
+	* @param andOperator whether every field must match its keywords, or just
+	one field.
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @param obc the comparator to order the groups (optionally
+	<code>null</code>)
+	* @return the matching groups ordered by comparator <code>obc</code>
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> search(
+		long companyId, long[] classNameIds, long parentGroupId,
+		java.lang.String name, java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
+
+	/**
+	* Returns an ordered range of all the groups that match the class name IDs
+	* and keywords, optionally including the user's inherited organization
+	* groups and user groups. System and staged groups are not included.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param classNameIds the primary keys of the class names of the entities
+	the groups are related to (optionally <code>null</code>)
+	* @param keywords the keywords (space separated), which may occur in the
+	sites's name, or description (optionally <code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). To
+	include a user's organizations, inherited organizations, and user
+	groups in the search, add an entry with key
+	&quot;usersGroups&quot; mapped to the user's ID and an entry with
+	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
+	For more information see {@link
+	com.liferay.portal.service.persistence.GroupFinder}.
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @return the matching groups ordered by name
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> search(
+		long companyId, long[] classNameIds, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the groups that match the class name IDs
+	* and keywords, optionally including the user's inherited organization
+	* groups and user groups. System and staged groups are not included.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param classNameIds the primary keys of the class names of the entities
+	the groups are related to (optionally <code>null</code>)
+	* @param keywords the keywords (space separated), which may occur in the
+	sites's name, or description (optionally <code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). To
+	include a user's organizations, inherited organizations, and user
+	groups in the search, add an entry with key
+	&quot;usersGroups&quot; mapped to the user's ID and an entry with
+	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
+	For more information see {@link
+	com.liferay.portal.service.persistence.GroupFinder}.
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @param obc the comparator to order the groups (optionally
+	<code>null</code>)
+	* @return the matching groups ordered by comparator <code>obc</code>
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> search(
+		long companyId, long[] classNameIds, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
+
+	/**
+	* Returns an ordered range of all the groups that match the class name IDs,
+	* name, and description, optionally including the user's inherited
+	* organization groups and user groups. System and staged groups are not
+	* included.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param classNameIds the primary keys of the class names of the entities
+	the groups are related to (optionally <code>null</code>)
+	* @param name the group's name (optionally <code>null</code>)
+	* @param description the group's description (optionally
+	<code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). To
+	include a user's organizations, inherited organizations, and user
+	groups in the search, add an entry with key
+	&quot;usersGroups&quot; mapped to the user's ID and an entry with
+	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
+	For more information see {@link
+	com.liferay.portal.service.persistence.GroupFinder}.
+	* @param andOperator whether every field must match its keywords, or just
+	one field.
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @return the matching groups ordered by name
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> search(
+		long companyId, long[] classNameIds, java.lang.String name,
+		java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end);
+
+	/**
+	* Returns an ordered range of all the groups that match the class name IDs,
+	* name, and description, optionally including the user's inherited
+	* organization groups and user groups. System and staged groups are not
+	* included.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param classNameIds the primary keys of the class names of the entities
+	the groups are related to (optionally <code>null</code>)
+	* @param name the group's name (optionally <code>null</code>)
+	* @param description the group's description (optionally
+	<code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). To
+	include a user's organizations, inherited organizations, and user
+	groups in the search, add an entry with key
+	&quot;usersGroups&quot; mapped to the user's ID and an entry with
+	key &quot;inherit&quot; mapped to a non-<code>null</code> object.
+	For more information see {@link
+	com.liferay.portal.service.persistence.GroupFinder}.
+	* @param andOperator whether every field must match its keywords, or just
+	one field.
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @param obc the comparator to order the groups (optionally
+	<code>null</code>)
+	* @return the matching groups ordered by comparator <code>obc</code>
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> search(
+		long companyId, long[] classNameIds, java.lang.String name,
+		java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
+
+	/**
+	* Returns an ordered range of all the groups that match the keywords,
+	* optionally including the user's inherited organization groups and user
+	* groups. System and staged groups are not included.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param keywords the keywords (space separated), which may occur in the
+	sites's name, or description (optionally <code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). To
+	include the user's inherited organizations and user groups in the
+	search, add entries having &quot;usersGroups&quot; and
+	&quot;inherit&quot; as keys mapped to the the user's ID. For more
+	information see {@link
+	com.liferay.portal.service.persistence.GroupFinder}.
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @return the matching groups ordered by name
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> search(
+		long companyId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the groups that match the keywords,
+	* optionally including the user's inherited organization groups and user
+	* groups. System and staged groups are not included.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param keywords the keywords (space separated), which may occur in the
+	sites's name, or description (optionally <code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). To
+	include the user's inherited organizations and user groups in the
+	search, add entries having &quot;usersGroups&quot; and
+	&quot;inherit&quot; as keys mapped to the the user's ID. For more
+	information see {@link
+	com.liferay.portal.service.persistence.GroupFinder}.
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @param obc the comparator to order the groups (optionally
+	<code>null</code>)
+	* @return the matching groups ordered by comparator <code>obc</code>
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> search(
+		long companyId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
+
+	/**
+	* Returns an ordered range of all the site groups and organization groups
+	* that match the name and description, optionally including the user's
+	* inherited organization groups and user groups. System and staged groups
+	* are not included.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param name the group's name (optionally <code>null</code>)
+	* @param description the group's description (optionally
+	<code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). To
+	include the user's inherited organizations and user groups in the
+	search, add entries having &quot;usersGroups&quot; and
+	&quot;inherit&quot; as keys mapped to the the user's ID. For more
+	information see {@link
+	com.liferay.portal.service.persistence.GroupFinder}.
+	* @param andOperator whether every field must match its keywords, or just
+	one field.
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @return the matching groups ordered by name
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> search(
+		long companyId, java.lang.String name, java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end);
+
+	/**
+	* Returns an ordered range of all the site groups and organization groups
+	* that match the name and description, optionally including the user's
+	* inherited organization groups and user groups. System and staged groups
+	* are not included.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param name the group's name (optionally <code>null</code>)
+	* @param description the group's description (optionally
+	<code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). To
+	include the user's inherited organizations and user groups in the
+	search, add entries having &quot;usersGroups&quot; and
+	&quot;inherit&quot; as keys mapped to the the user's ID. For more
+	information see {@link
+	com.liferay.portal.service.persistence.GroupFinder}.
+	* @param andOperator whether every field must match its keywords, or just
+	one field.
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @param obc the comparator to order the groups (optionally
+	<code>null</code>)
+	* @return the matching groups ordered by comparator <code>obc</code>
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> search(
+		long companyId, java.lang.String name, java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> obc);
+
+	/**
+	* Returns the number of groups belonging to the parent group that match the
+	* keywords, optionally including the user's inherited organization groups
+	* and user groups. System and staged groups are not included.
+	*
+	* @param companyId the primary key of the company
+	* @param parentGroupId the primary key of the parent group
 	* @param keywords the keywords (space separated), which may occur in the
 	sites's name, or description (optionally <code>null</code>)
 	* @param params the finder params (optionally <code>null</code>). To
@@ -1978,20 +1994,19 @@ public interface GroupLocalService extends BaseLocalService,
 	com.liferay.portal.service.persistence.GroupFinder}.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] classNameIds,
+	public int searchCount(long companyId, long parentGroupId,
 		java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
 
 	/**
-	* Returns the number of groups that match the class name IDs, name, and
-	* description, optionally including the user's inherited organization
-	* groups and user groups. System and staged groups are not included.
+	* Returns the number of groups belonging to the parent group and immediate
+	* organization groups that match the name and description, optionally
+	* including the user's inherited organization groups and user groups.
+	* System and staged groups are not included.
 	*
 	* @param companyId the primary key of the company
-	* @param classNameIds the primary keys of the class names of the entities
-	the groups are related to (optionally <code>null</code>)
+	* @param parentGroupId the primary key of the parent group
 	* @param name the group's name (optionally <code>null</code>)
 	* @param description the group's description (optionally
 	<code>null</code>)
@@ -2005,9 +2020,8 @@ public interface GroupLocalService extends BaseLocalService,
 	one field.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] classNameIds,
+	public int searchCount(long companyId, long parentGroupId,
 		java.lang.String name, java.lang.String description,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator);
@@ -2032,7 +2046,6 @@ public interface GroupLocalService extends BaseLocalService,
 	com.liferay.portal.service.persistence.GroupFinder}.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] classNameIds,
 		long parentGroupId, java.lang.String keywords,
@@ -2061,11 +2074,60 @@ public interface GroupLocalService extends BaseLocalService,
 	one field.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] classNameIds,
 		long parentGroupId, java.lang.String name,
 		java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator);
+
+	/**
+	* Returns the number of groups that match the class name IDs, and keywords,
+	* optionally including the user's inherited organization groups and user
+	* groups. System and staged groups are not included.
+	*
+	* @param companyId the primary key of the company
+	* @param classNameIds the primary keys of the class names of the entities
+	the groups are related to (optionally <code>null</code>)
+	* @param keywords the keywords (space separated), which may occur in the
+	sites's name, or description (optionally <code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). To
+	include the user's inherited organization groups and user groups
+	in the search, add entries having &quot;usersGroups&quot; and
+	&quot;inherit&quot; as keys mapped to the the user's ID. For more
+	information see {@link
+	com.liferay.portal.service.persistence.GroupFinder}.
+	* @return the number of matching groups
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] classNameIds,
+		java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
+
+	/**
+	* Returns the number of groups that match the class name IDs, name, and
+	* description, optionally including the user's inherited organization
+	* groups and user groups. System and staged groups are not included.
+	*
+	* @param companyId the primary key of the company
+	* @param classNameIds the primary keys of the class names of the entities
+	the groups are related to (optionally <code>null</code>)
+	* @param name the group's name (optionally <code>null</code>)
+	* @param description the group's description (optionally
+	<code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). To
+	include the user's inherited organization groups and user groups
+	in the search, add entries having &quot;usersGroups&quot; and
+	&quot;inherit&quot; as keys mapped to the the user's ID. For more
+	information see {@link
+	com.liferay.portal.service.persistence.GroupFinder}.
+	* @param andOperator whether every field must match its keywords, or just
+	one field.
+	* @return the number of matching groups
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] classNameIds,
+		java.lang.String name, java.lang.String description,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator);
 
@@ -2085,7 +2147,6 @@ public interface GroupLocalService extends BaseLocalService,
 	com.liferay.portal.service.persistence.GroupFinder}.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
@@ -2110,78 +2171,11 @@ public interface GroupLocalService extends BaseLocalService,
 	one field.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String name,
 		java.lang.String description,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator);
-
-	/**
-	* Returns the number of groups belonging to the parent group that match the
-	* keywords, optionally including the user's inherited organization groups
-	* and user groups. System and staged groups are not included.
-	*
-	* @param companyId the primary key of the company
-	* @param parentGroupId the primary key of the parent group
-	* @param keywords the keywords (space separated), which may occur in the
-	sites's name, or description (optionally <code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). To
-	include the user's inherited organization groups and user groups
-	in the search, add entries having &quot;usersGroups&quot; and
-	&quot;inherit&quot; as keys mapped to the the user's ID. For more
-	information see {@link
-	com.liferay.portal.service.persistence.GroupFinder}.
-	* @return the number of matching groups
-	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long parentGroupId,
-		java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
-
-	/**
-	* Returns the number of groups belonging to the parent group and immediate
-	* organization groups that match the name and description, optionally
-	* including the user's inherited organization groups and user groups.
-	* System and staged groups are not included.
-	*
-	* @param companyId the primary key of the company
-	* @param parentGroupId the primary key of the parent group
-	* @param name the group's name (optionally <code>null</code>)
-	* @param description the group's description (optionally
-	<code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). To
-	include the user's inherited organization groups and user groups
-	in the search, add entries having &quot;usersGroups&quot; and
-	&quot;inherit&quot; as keys mapped to the the user's ID. For more
-	information see {@link
-	com.liferay.portal.service.persistence.GroupFinder}.
-	* @param andOperator whether every field must match its keywords, or just
-	one field.
-	* @return the number of matching groups
-	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long parentGroupId,
-		java.lang.String name, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	public void setOrganizationGroups(long organizationId, long[] groupIds);
-
-	public void setRoleGroups(long roleId, long[] groupIds);
-
-	public void setUserGroupGroups(long userGroupId, long[] groupIds);
-
-	public void setUserGroups(long userId, long[] groupIds);
 
 	/**
 	* Removes the groups from the role.
@@ -2227,16 +2221,6 @@ public interface GroupLocalService extends BaseLocalService,
 	public com.liferay.portal.model.Group updateFriendlyURL(long groupId,
 		java.lang.String friendlyURL)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Updates the group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param group the group
-	* @return the group that was updated
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Group updateGroup(
-		com.liferay.portal.model.Group group);
 
 	/**
 	* Updates the group.

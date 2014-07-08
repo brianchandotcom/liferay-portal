@@ -77,7 +77,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public java.util.List<com.liferay.portal.model.ResourceTypePermission> findByRoleId(
 		long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceTypePermission> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first resource type permission in the ordered set where roleId = &#63;.
@@ -89,7 +89,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public com.liferay.portal.model.ResourceTypePermission findByRoleId_First(
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceTypePermission> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceTypePermissionException;
 
 	/**
@@ -101,7 +101,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public com.liferay.portal.model.ResourceTypePermission fetchByRoleId_First(
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceTypePermission> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last resource type permission in the ordered set where roleId = &#63;.
@@ -113,7 +113,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public com.liferay.portal.model.ResourceTypePermission findByRoleId_Last(
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceTypePermission> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceTypePermissionException;
 
 	/**
@@ -125,7 +125,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public com.liferay.portal.model.ResourceTypePermission fetchByRoleId_Last(
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceTypePermission> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the resource type permissions before and after the current resource type permission in the ordered set where roleId = &#63;.
@@ -138,7 +138,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public com.liferay.portal.model.ResourceTypePermission[] findByRoleId_PrevAndNext(
 		long resourceTypePermissionId, long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceTypePermission> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceTypePermissionException;
 
 	/**
@@ -201,7 +201,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public java.util.List<com.liferay.portal.model.ResourceTypePermission> findByC_N_R(
 		long companyId, java.lang.String name, long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceTypePermission> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first resource type permission in the ordered set where companyId = &#63; and name = &#63; and roleId = &#63;.
@@ -215,7 +215,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public com.liferay.portal.model.ResourceTypePermission findByC_N_R_First(
 		long companyId, java.lang.String name, long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceTypePermission> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceTypePermissionException;
 
 	/**
@@ -229,7 +229,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public com.liferay.portal.model.ResourceTypePermission fetchByC_N_R_First(
 		long companyId, java.lang.String name, long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceTypePermission> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last resource type permission in the ordered set where companyId = &#63; and name = &#63; and roleId = &#63;.
@@ -243,7 +243,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public com.liferay.portal.model.ResourceTypePermission findByC_N_R_Last(
 		long companyId, java.lang.String name, long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceTypePermission> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceTypePermissionException;
 
 	/**
@@ -257,7 +257,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public com.liferay.portal.model.ResourceTypePermission fetchByC_N_R_Last(
 		long companyId, java.lang.String name, long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceTypePermission> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the resource type permissions before and after the current resource type permission in the ordered set where companyId = &#63; and name = &#63; and roleId = &#63;.
@@ -273,7 +273,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	public com.liferay.portal.model.ResourceTypePermission[] findByC_N_R_PrevAndNext(
 		long resourceTypePermissionId, long companyId, java.lang.String name,
 		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceTypePermission> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceTypePermissionException;
 
 	/**
@@ -458,7 +458,7 @@ public interface ResourceTypePermissionPersistence extends BasePersistence<Resou
 	*/
 	public java.util.List<com.liferay.portal.model.ResourceTypePermission> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceTypePermission> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the resource type permissions from the database.

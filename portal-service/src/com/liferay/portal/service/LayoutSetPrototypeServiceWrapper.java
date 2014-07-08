@@ -33,6 +33,37 @@ public class LayoutSetPrototypeServiceWrapper
 	}
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _layoutSetPrototypeService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_layoutSetPrototypeService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active, boolean layoutsUpdateable,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutSetPrototypeService.addLayoutSetPrototype(nameMap,
+			descriptionMap, active, layoutsUpdateable, serviceContext);
+	}
+
+	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addLayoutSetPrototype(Map,
 	Map, boolean, boolean, ServiceContext)}
 	*/
@@ -49,30 +80,9 @@ public class LayoutSetPrototypeServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, boolean layoutsUpdateable,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetPrototypeService.addLayoutSetPrototype(nameMap,
-			descriptionMap, active, layoutsUpdateable, serviceContext);
-	}
-
-	@Override
 	public void deleteLayoutSetPrototype(long layoutSetPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutSetPrototypeService.deleteLayoutSetPrototype(layoutSetPrototypeId);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _layoutSetPrototypeService.getBeanIdentifier();
 	}
 
 	@Override
@@ -90,14 +100,16 @@ public class LayoutSetPrototypeServiceWrapper
 		return _layoutSetPrototypeService.search(companyId, active, obc);
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
 	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_layoutSetPrototypeService.setBeanIdentifier(beanIdentifier);
+	public com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
+		long layoutSetPrototypeId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active, boolean layoutsUpdateable,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutSetPrototypeService.updateLayoutSetPrototype(layoutSetPrototypeId,
+			nameMap, descriptionMap, active, layoutsUpdateable, serviceContext);
 	}
 
 	/**
@@ -116,18 +128,6 @@ public class LayoutSetPrototypeServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetPrototypeService.updateLayoutSetPrototype(layoutSetPrototypeId,
 			nameMap, description, active, layoutsUpdateable, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
-		long layoutSetPrototypeId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, boolean layoutsUpdateable,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetPrototypeService.updateLayoutSetPrototype(layoutSetPrototypeId,
-			nameMap, descriptionMap, active, layoutsUpdateable, serviceContext);
 	}
 
 	@Override

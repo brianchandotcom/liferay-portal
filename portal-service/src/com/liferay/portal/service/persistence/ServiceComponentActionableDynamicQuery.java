@@ -21,7 +21,7 @@ import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link ServiceComponentLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link ServiceComponentLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

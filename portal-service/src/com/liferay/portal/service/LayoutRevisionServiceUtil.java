@@ -40,6 +40,25 @@ public class LayoutRevisionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutRevisionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
 	public static com.liferay.portal.model.LayoutRevision addLayoutRevision(
 		long userId, long layoutSetBranchId, long layoutBranchId,
 		long parentLayoutRevisionId, boolean head, long plid,
@@ -58,24 +77,6 @@ public class LayoutRevisionServiceUtil {
 			portletPreferencesPlid, privateLayout, name, title, description,
 			keywords, robots, typeSettings, iconImage, iconImageId, themeId,
 			colorSchemeId, wapThemeId, wapColorSchemeId, css, serviceContext);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static LayoutRevisionService getService() {

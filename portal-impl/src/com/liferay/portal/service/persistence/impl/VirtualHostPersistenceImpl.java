@@ -1113,7 +1113,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	 */
 	@Override
 	public List<VirtualHost> findAll(int start, int end,
-		OrderByComparator<VirtualHost> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

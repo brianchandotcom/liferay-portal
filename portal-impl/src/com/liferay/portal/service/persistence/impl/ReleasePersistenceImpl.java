@@ -854,7 +854,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	 */
 	@Override
 	public List<Release> findAll(int start, int end,
-		OrderByComparator<Release> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

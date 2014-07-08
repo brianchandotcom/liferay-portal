@@ -199,7 +199,7 @@ public class PasswordTrackerPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<PasswordTracker> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PasswordTracker",
 			"mvccVersion", true, "passwordTrackerId", true, "userId", true,
 			"createDate", true, "password", true);

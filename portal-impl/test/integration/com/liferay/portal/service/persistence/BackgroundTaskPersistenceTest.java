@@ -431,7 +431,7 @@ public class BackgroundTaskPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<BackgroundTask> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("BackgroundTask",
 			"mvccVersion", true, "backgroundTaskId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",

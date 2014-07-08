@@ -30,6 +30,26 @@ public class StagingServiceWrapper implements StagingService,
 		_stagingService = stagingService;
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _stagingService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_stagingService.setBeanIdentifier(beanIdentifier);
+	}
+
 	@Override
 	public void cleanUpStagingRequest(long stagingRequestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -42,16 +62,6 @@ public class StagingServiceWrapper implements StagingService,
 		return _stagingService.createStagingRequest(groupId, checksum);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _stagingService.getBeanIdentifier();
-	}
-
 	@Override
 	public void publishStagingRequest(long stagingRequestId,
 		boolean privateLayout,
@@ -59,16 +69,6 @@ public class StagingServiceWrapper implements StagingService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_stagingService.publishStagingRequest(stagingRequestId, privateLayout,
 			parameterMap);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_stagingService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

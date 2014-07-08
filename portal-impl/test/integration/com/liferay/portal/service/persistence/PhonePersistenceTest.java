@@ -310,7 +310,7 @@ public class PhonePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<Phone> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Phone", "mvccVersion",
 			true, "uuid", true, "phoneId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,

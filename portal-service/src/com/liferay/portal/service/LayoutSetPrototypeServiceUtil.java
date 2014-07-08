@@ -42,6 +42,35 @@ public class LayoutSetPrototypeServiceUtil {
 	 */
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	public static com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active, boolean layoutsUpdateable,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLayoutSetPrototype(nameMap, descriptionMap, active,
+			layoutsUpdateable, serviceContext);
+	}
+
+	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addLayoutSetPrototype(Map,
 	Map, boolean, boolean, ServiceContext)}
 	*/
@@ -57,29 +86,9 @@ public class LayoutSetPrototypeServiceUtil {
 			layoutsUpdateable, serviceContext);
 	}
 
-	public static com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, boolean layoutsUpdateable,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addLayoutSetPrototype(nameMap, descriptionMap, active,
-			layoutsUpdateable, serviceContext);
-	}
-
 	public static void deleteLayoutSetPrototype(long layoutSetPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteLayoutSetPrototype(layoutSetPrototypeId);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
 	}
 
 	public static com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototype(
@@ -95,13 +104,16 @@ public class LayoutSetPrototypeServiceUtil {
 		return getService().search(companyId, active, obc);
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
+	public static com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
+		long layoutSetPrototypeId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active, boolean layoutsUpdateable,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateLayoutSetPrototype(layoutSetPrototypeId, nameMap,
+			descriptionMap, active, layoutsUpdateable, serviceContext);
 	}
 
 	/**
@@ -120,18 +132,6 @@ public class LayoutSetPrototypeServiceUtil {
 		return getService()
 				   .updateLayoutSetPrototype(layoutSetPrototypeId, nameMap,
 			description, active, layoutsUpdateable, serviceContext);
-	}
-
-	public static com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
-		long layoutSetPrototypeId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, boolean layoutsUpdateable,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateLayoutSetPrototype(layoutSetPrototypeId, nameMap,
-			descriptionMap, active, layoutsUpdateable, serviceContext);
 	}
 
 	public static com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(

@@ -44,6 +44,235 @@ public class BackgroundTaskLocalServiceWrapper
 		return _backgroundTaskLocalService.addBackgroundTask(backgroundTask);
 	}
 
+	/**
+	* Creates a new background task with the primary key. Does not add the background task to the database.
+	*
+	* @param backgroundTaskId the primary key for the new background task
+	* @return the new background task
+	*/
+	@Override
+	public com.liferay.portal.model.BackgroundTask createBackgroundTask(
+		long backgroundTaskId) {
+		return _backgroundTaskLocalService.createBackgroundTask(backgroundTaskId);
+	}
+
+	/**
+	* Deletes the background task with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param backgroundTaskId the primary key of the background task
+	* @return the background task that was removed
+	* @throws PortalException if a background task with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.BackgroundTask deleteBackgroundTask(
+		long backgroundTaskId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _backgroundTaskLocalService.deleteBackgroundTask(backgroundTaskId);
+	}
+
+	/**
+	* Deletes the background task from the database. Also notifies the appropriate model listeners.
+	*
+	* @param backgroundTask the background task
+	* @return the background task that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.BackgroundTask deleteBackgroundTask(
+		com.liferay.portal.model.BackgroundTask backgroundTask)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _backgroundTaskLocalService.deleteBackgroundTask(backgroundTask);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _backgroundTaskLocalService.dynamicQuery();
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _backgroundTaskLocalService.dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return _backgroundTaskLocalService.dynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _backgroundTaskLocalService.dynamicQuery(dynamicQuery, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _backgroundTaskLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows that match the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _backgroundTaskLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.portal.model.BackgroundTask fetchBackgroundTask(
+		long backgroundTaskId) {
+		return _backgroundTaskLocalService.fetchBackgroundTask(backgroundTaskId);
+	}
+
+	/**
+	* Returns the background task with the primary key.
+	*
+	* @param backgroundTaskId the primary key of the background task
+	* @return the background task
+	* @throws PortalException if a background task with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.model.BackgroundTask getBackgroundTask(
+		long backgroundTaskId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _backgroundTaskLocalService.getBackgroundTask(backgroundTaskId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _backgroundTaskLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _backgroundTaskLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _backgroundTaskLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns a range of all the background tasks.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of background tasks
+	* @param end the upper bound of the range of background tasks (not inclusive)
+	* @return the range of background tasks
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
+		int start, int end) {
+		return _backgroundTaskLocalService.getBackgroundTasks(start, end);
+	}
+
+	/**
+	* Returns the number of background tasks.
+	*
+	* @return the number of background tasks
+	*/
+	@Override
+	public int getBackgroundTasksCount() {
+		return _backgroundTaskLocalService.getBackgroundTasksCount();
+	}
+
+	/**
+	* Updates the background task in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param backgroundTask the background task
+	* @return the background task that was updated
+	*/
+	@Override
+	public com.liferay.portal.model.BackgroundTask updateBackgroundTask(
+		com.liferay.portal.model.BackgroundTask backgroundTask) {
+		return _backgroundTaskLocalService.updateBackgroundTask(backgroundTask);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _backgroundTaskLocalService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_backgroundTaskLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
 	@Override
 	public com.liferay.portal.model.BackgroundTask addBackgroundTask(
 		long userId, long groupId, java.lang.String name,
@@ -103,46 +332,6 @@ public class BackgroundTaskLocalServiceWrapper
 		_backgroundTaskLocalService.cleanUpBackgroundTasks();
 	}
 
-	/**
-	* Creates a new background task with the primary key. Does not add the background task to the database.
-	*
-	* @param backgroundTaskId the primary key for the new background task
-	* @return the new background task
-	*/
-	@Override
-	public com.liferay.portal.model.BackgroundTask createBackgroundTask(
-		long backgroundTaskId) {
-		return _backgroundTaskLocalService.createBackgroundTask(backgroundTaskId);
-	}
-
-	/**
-	* Deletes the background task from the database. Also notifies the appropriate model listeners.
-	*
-	* @param backgroundTask the background task
-	* @return the background task that was removed
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.BackgroundTask deleteBackgroundTask(
-		com.liferay.portal.model.BackgroundTask backgroundTask)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _backgroundTaskLocalService.deleteBackgroundTask(backgroundTask);
-	}
-
-	/**
-	* Deletes the background task with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param backgroundTaskId the primary key of the background task
-	* @return the background task that was removed
-	* @throws PortalException if a background task with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.BackgroundTask deleteBackgroundTask(
-		long backgroundTaskId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _backgroundTaskLocalService.deleteBackgroundTask(backgroundTaskId);
-	}
-
 	@Override
 	public void deleteCompanyBackgroundTasks(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -153,107 +342,6 @@ public class BackgroundTaskLocalServiceWrapper
 	public void deleteGroupBackgroundTasks(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_backgroundTaskLocalService.deleteGroupBackgroundTasks(groupId);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _backgroundTaskLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _backgroundTaskLocalService.dynamicQuery();
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _backgroundTaskLocalService.dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
-		return _backgroundTaskLocalService.dynamicQuery(dynamicQuery, start, end);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-		return _backgroundTaskLocalService.dynamicQuery(dynamicQuery, start,
-			end, orderByComparator);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _backgroundTaskLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _backgroundTaskLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public com.liferay.portal.model.BackgroundTask fetchBackgroundTask(
-		long backgroundTaskId) {
-		return _backgroundTaskLocalService.fetchBackgroundTask(backgroundTaskId);
 	}
 
 	@Override
@@ -281,39 +369,6 @@ public class BackgroundTaskLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _backgroundTaskLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the background task with the primary key.
-	*
-	* @param backgroundTaskId the primary key of the background task
-	* @return the background task
-	* @throws PortalException if a background task with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.BackgroundTask getBackgroundTask(
-		long backgroundTaskId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _backgroundTaskLocalService.getBackgroundTask(backgroundTaskId);
-	}
-
-	@Override
-	public java.lang.String getBackgroundTaskStatusJSON(long backgroundTaskId) {
-		return _backgroundTaskLocalService.getBackgroundTaskStatusJSON(backgroundTaskId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String name,
-		java.lang.String taskExecutorClassName, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.BackgroundTask> orderByComparator) {
-		return _backgroundTaskLocalService.getBackgroundTasks(groupId, name,
-			taskExecutorClassName, start, end, orderByComparator);
-	}
-
-	@Override
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
 		long groupId, int status) {
 		return _backgroundTaskLocalService.getBackgroundTasks(groupId, status);
@@ -328,6 +383,13 @@ public class BackgroundTaskLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
+		long groupId, java.lang.String taskExecutorClassName, int status) {
+		return _backgroundTaskLocalService.getBackgroundTasks(groupId,
+			taskExecutorClassName, status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
 		long groupId, java.lang.String taskExecutorClassName, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.BackgroundTask> orderByComparator) {
@@ -337,9 +399,11 @@ public class BackgroundTaskLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String taskExecutorClassName, int status) {
-		return _backgroundTaskLocalService.getBackgroundTasks(groupId,
-			taskExecutorClassName, status);
+		long groupId, java.lang.String name,
+		java.lang.String taskExecutorClassName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.BackgroundTask> orderByComparator) {
+		return _backgroundTaskLocalService.getBackgroundTasks(groupId, name,
+			taskExecutorClassName, start, end, orderByComparator);
 	}
 
 	@Override
@@ -351,35 +415,18 @@ public class BackgroundTaskLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
-		long groupId, java.lang.String[] taskExecutorClassNames, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.BackgroundTask> orderByComparator) {
-		return _backgroundTaskLocalService.getBackgroundTasks(groupId,
-			taskExecutorClassNames, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
 		long groupId, java.lang.String[] taskExecutorClassNames, int status) {
 		return _backgroundTaskLocalService.getBackgroundTasks(groupId,
 			taskExecutorClassNames, status);
 	}
 
-	/**
-	* Returns a range of all the background tasks.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of background tasks
-	* @param end the upper bound of the range of background tasks (not inclusive)
-	* @return the range of background tasks
-	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
-		int start, int end) {
-		return _backgroundTaskLocalService.getBackgroundTasks(start, end);
+		long groupId, java.lang.String[] taskExecutorClassNames, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.BackgroundTask> orderByComparator) {
+		return _backgroundTaskLocalService.getBackgroundTasks(groupId,
+			taskExecutorClassNames, start, end, orderByComparator);
 	}
 
 	@Override
@@ -413,14 +460,18 @@ public class BackgroundTaskLocalServiceWrapper
 			status, start, end, orderByComparator);
 	}
 
-	/**
-	* Returns the number of background tasks.
-	*
-	* @return the number of background tasks
-	*/
 	@Override
-	public int getBackgroundTasksCount() {
-		return _backgroundTaskLocalService.getBackgroundTasksCount();
+	public int getBackgroundTasksCount(long groupId,
+		java.lang.String taskExecutorClassName) {
+		return _backgroundTaskLocalService.getBackgroundTasksCount(groupId,
+			taskExecutorClassName);
+	}
+
+	@Override
+	public int getBackgroundTasksCount(long groupId,
+		java.lang.String taskExecutorClassName, boolean completed) {
+		return _backgroundTaskLocalService.getBackgroundTasksCount(groupId,
+			taskExecutorClassName, completed);
 	}
 
 	@Override
@@ -439,20 +490,6 @@ public class BackgroundTaskLocalServiceWrapper
 
 	@Override
 	public int getBackgroundTasksCount(long groupId,
-		java.lang.String taskExecutorClassName) {
-		return _backgroundTaskLocalService.getBackgroundTasksCount(groupId,
-			taskExecutorClassName);
-	}
-
-	@Override
-	public int getBackgroundTasksCount(long groupId,
-		java.lang.String taskExecutorClassName, boolean completed) {
-		return _backgroundTaskLocalService.getBackgroundTasksCount(groupId,
-			taskExecutorClassName, completed);
-	}
-
-	@Override
-	public int getBackgroundTasksCount(long groupId,
 		java.lang.String[] taskExecutorClassNames) {
 		return _backgroundTaskLocalService.getBackgroundTasksCount(groupId,
 			taskExecutorClassNames);
@@ -465,21 +502,9 @@ public class BackgroundTaskLocalServiceWrapper
 			taskExecutorClassNames, completed);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _backgroundTaskLocalService.getBeanIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _backgroundTaskLocalService.getPersistedModel(primaryKeyObj);
+	public java.lang.String getBackgroundTaskStatusJSON(long backgroundTaskId) {
+		return _backgroundTaskLocalService.getBackgroundTaskStatusJSON(backgroundTaskId);
 	}
 
 	@Override
@@ -487,31 +512,9 @@ public class BackgroundTaskLocalServiceWrapper
 		_backgroundTaskLocalService.resumeBackgroundTask(backgroundTaskId);
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_backgroundTaskLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
 	@Override
 	public void triggerBackgroundTask(long backgroundTaskId) {
 		_backgroundTaskLocalService.triggerBackgroundTask(backgroundTaskId);
-	}
-
-	/**
-	* Updates the background task in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param backgroundTask the background task
-	* @return the background task that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.BackgroundTask updateBackgroundTask(
-		com.liferay.portal.model.BackgroundTask backgroundTask) {
-		return _backgroundTaskLocalService.updateBackgroundTask(backgroundTask);
 	}
 
 	/**

@@ -77,7 +77,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroup> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user group in the ordered set where uuid = &#63;.
@@ -89,7 +89,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupException;
 
 	/**
@@ -101,7 +101,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user group in the ordered set where uuid = &#63;.
@@ -113,7 +113,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupException;
 
 	/**
@@ -125,7 +125,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user groups before and after the current user group in the ordered set where uuid = &#63;.
@@ -138,7 +138,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup[] findByUuid_PrevAndNext(
 		long userGroupId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupException;
 
 	/**
@@ -180,7 +180,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroup> filterFindByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user groups before and after the current user group in the ordered set of user groups that the user has permission to view where uuid = &#63;.
@@ -193,7 +193,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup[] filterFindByUuid_PrevAndNext(
 		long userGroupId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupException;
 
 	/**
@@ -261,7 +261,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroup> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user group in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -274,7 +274,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupException;
 
 	/**
@@ -287,7 +287,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user group in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -300,7 +300,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupException;
 
 	/**
@@ -313,7 +313,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user groups before and after the current user group in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -327,7 +327,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup[] findByUuid_C_PrevAndNext(
 		long userGroupId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupException;
 
 	/**
@@ -372,7 +372,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroup> filterFindByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user groups before and after the current user group in the ordered set of user groups that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -386,7 +386,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup[] filterFindByUuid_C_PrevAndNext(
 		long userGroupId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupException;
 
 	/**
@@ -454,7 +454,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroup> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user group in the ordered set where companyId = &#63;.
@@ -466,7 +466,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupException;
 
 	/**
@@ -478,7 +478,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user group in the ordered set where companyId = &#63;.
@@ -490,7 +490,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupException;
 
 	/**
@@ -502,7 +502,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user groups before and after the current user group in the ordered set where companyId = &#63;.
@@ -515,7 +515,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup[] findByCompanyId_PrevAndNext(
 		long userGroupId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupException;
 
 	/**
@@ -557,7 +557,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroup> filterFindByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user groups before and after the current user group in the ordered set of user groups that the user has permission to view where companyId = &#63;.
@@ -570,7 +570,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup[] filterFindByCompanyId_PrevAndNext(
 		long userGroupId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupException;
 
 	/**
@@ -638,7 +638,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroup> findByC_P(
 		long companyId, long parentUserGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
@@ -651,7 +651,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup findByC_P_First(long companyId,
 		long parentUserGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupException;
 
 	/**
@@ -664,7 +664,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup fetchByC_P_First(long companyId,
 		long parentUserGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
@@ -677,7 +677,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup findByC_P_Last(long companyId,
 		long parentUserGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupException;
 
 	/**
@@ -690,7 +690,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup fetchByC_P_Last(long companyId,
 		long parentUserGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user groups before and after the current user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
@@ -704,7 +704,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup[] findByC_P_PrevAndNext(
 		long userGroupId, long companyId, long parentUserGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupException;
 
 	/**
@@ -749,7 +749,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroup> filterFindByC_P(
 		long companyId, long parentUserGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user groups before and after the current user group in the ordered set of user groups that the user has permission to view where companyId = &#63; and parentUserGroupId = &#63;.
@@ -763,7 +763,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public com.liferay.portal.model.UserGroup[] filterFindByC_P_PrevAndNext(
 		long userGroupId, long companyId, long parentUserGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserGroupException;
 
 	/**
@@ -939,7 +939,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroup> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the user groups from the database.
@@ -999,7 +999,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public java.util.List<com.liferay.portal.model.Group> getGroups(long pk,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of groups associated with the user group.
@@ -1162,7 +1162,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public java.util.List<com.liferay.portal.model.Team> getTeams(long pk,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of teams associated with the user group.
@@ -1325,7 +1325,7 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	*/
 	public java.util.List<com.liferay.portal.model.User> getUsers(long pk,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of users associated with the user group.

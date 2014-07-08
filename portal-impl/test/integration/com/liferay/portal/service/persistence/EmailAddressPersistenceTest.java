@@ -315,7 +315,7 @@ public class EmailAddressPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<EmailAddress> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("EmailAddress",
 			"mvccVersion", true, "uuid", true, "emailAddressId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",

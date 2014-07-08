@@ -87,7 +87,7 @@ public class PortletItemUtil {
 	 */
 	public static List<PortletItem> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<PortletItem> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -154,7 +154,7 @@ public class PortletItemUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.PortletItem> findByG_C(
 		long groupId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_C(groupId, classNameId, start, end,
 			orderByComparator);
@@ -171,7 +171,7 @@ public class PortletItemUtil {
 	*/
 	public static com.liferay.portal.model.PortletItem findByG_C_First(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPortletItemException {
 		return getPersistence()
 				   .findByG_C_First(groupId, classNameId, orderByComparator);
@@ -187,7 +187,7 @@ public class PortletItemUtil {
 	*/
 	public static com.liferay.portal.model.PortletItem fetchByG_C_First(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_First(groupId, classNameId, orderByComparator);
 	}
@@ -203,7 +203,7 @@ public class PortletItemUtil {
 	*/
 	public static com.liferay.portal.model.PortletItem findByG_C_Last(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPortletItemException {
 		return getPersistence()
 				   .findByG_C_Last(groupId, classNameId, orderByComparator);
@@ -219,7 +219,7 @@ public class PortletItemUtil {
 	*/
 	public static com.liferay.portal.model.PortletItem fetchByG_C_Last(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_Last(groupId, classNameId, orderByComparator);
 	}
@@ -236,7 +236,7 @@ public class PortletItemUtil {
 	*/
 	public static com.liferay.portal.model.PortletItem[] findByG_C_PrevAndNext(
 		long portletItemId, long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPortletItemException {
 		return getPersistence()
 				   .findByG_C_PrevAndNext(portletItemId, groupId, classNameId,
@@ -316,7 +316,7 @@ public class PortletItemUtil {
 	public static java.util.List<com.liferay.portal.model.PortletItem> findByG_P_C(
 		long groupId, java.lang.String portletId, long classNameId, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_P_C(groupId, portletId, classNameId, start, end,
 			orderByComparator);
@@ -334,7 +334,7 @@ public class PortletItemUtil {
 	*/
 	public static com.liferay.portal.model.PortletItem findByG_P_C_First(
 		long groupId, java.lang.String portletId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPortletItemException {
 		return getPersistence()
 				   .findByG_P_C_First(groupId, portletId, classNameId,
@@ -352,7 +352,7 @@ public class PortletItemUtil {
 	*/
 	public static com.liferay.portal.model.PortletItem fetchByG_P_C_First(
 		long groupId, java.lang.String portletId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_C_First(groupId, portletId, classNameId,
 			orderByComparator);
@@ -370,7 +370,7 @@ public class PortletItemUtil {
 	*/
 	public static com.liferay.portal.model.PortletItem findByG_P_C_Last(
 		long groupId, java.lang.String portletId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPortletItemException {
 		return getPersistence()
 				   .findByG_P_C_Last(groupId, portletId, classNameId,
@@ -388,7 +388,7 @@ public class PortletItemUtil {
 	*/
 	public static com.liferay.portal.model.PortletItem fetchByG_P_C_Last(
 		long groupId, java.lang.String portletId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_C_Last(groupId, portletId, classNameId,
 			orderByComparator);
@@ -408,7 +408,7 @@ public class PortletItemUtil {
 	public static com.liferay.portal.model.PortletItem[] findByG_P_C_PrevAndNext(
 		long portletItemId, long groupId, java.lang.String portletId,
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPortletItemException {
 		return getPersistence()
 				   .findByG_P_C_PrevAndNext(portletItemId, groupId, portletId,
@@ -639,7 +639,7 @@ public class PortletItemUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.PortletItem> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PortletItem> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -185,7 +185,7 @@ public class ClusterGroupPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<ClusterGroup> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ClusterGroup",
 			"mvccVersion", true, "clusterGroupId", true, "name", true,
 			"clusterNodeIds", true, "wholeCluster", true);

@@ -40,6 +40,25 @@ public class OrgLaborServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.OrgLaborServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
 	public static com.liferay.portal.model.OrgLabor addOrgLabor(
 		long organizationId, int typeId, int sunOpen, int sunClose,
 		int monOpen, int monClose, int tueOpen, int tueClose, int wedOpen,
@@ -57,15 +76,6 @@ public class OrgLaborServiceUtil {
 		getService().deleteOrgLabor(orgLaborId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static com.liferay.portal.model.OrgLabor getOrgLabor(long orgLaborId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getOrgLabor(orgLaborId);
@@ -75,15 +85,6 @@ public class OrgLaborServiceUtil {
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getOrgLabors(organizationId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.portal.model.OrgLabor updateOrgLabor(

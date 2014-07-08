@@ -21,7 +21,7 @@ import com.liferay.portal.service.ClusterGroupLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link ClusterGroupLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link ClusterGroupLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

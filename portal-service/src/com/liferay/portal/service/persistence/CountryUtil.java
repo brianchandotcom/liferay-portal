@@ -86,7 +86,7 @@ public class CountryUtil {
 	 */
 	public static List<Country> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<Country> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -317,7 +317,7 @@ public class CountryUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Country> findByActive(
 		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Country> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByActive(active, start, end, orderByComparator);
 	}
@@ -332,7 +332,7 @@ public class CountryUtil {
 	*/
 	public static com.liferay.portal.model.Country findByActive_First(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Country> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchCountryException {
 		return getPersistence().findByActive_First(active, orderByComparator);
 	}
@@ -346,7 +346,7 @@ public class CountryUtil {
 	*/
 	public static com.liferay.portal.model.Country fetchByActive_First(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Country> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByActive_First(active, orderByComparator);
 	}
 
@@ -360,7 +360,7 @@ public class CountryUtil {
 	*/
 	public static com.liferay.portal.model.Country findByActive_Last(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Country> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchCountryException {
 		return getPersistence().findByActive_Last(active, orderByComparator);
 	}
@@ -374,7 +374,7 @@ public class CountryUtil {
 	*/
 	public static com.liferay.portal.model.Country fetchByActive_Last(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Country> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByActive_Last(active, orderByComparator);
 	}
 
@@ -389,7 +389,7 @@ public class CountryUtil {
 	*/
 	public static com.liferay.portal.model.Country[] findByActive_PrevAndNext(
 		long countryId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Country> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchCountryException {
 		return getPersistence()
 				   .findByActive_PrevAndNext(countryId, active,
@@ -528,7 +528,7 @@ public class CountryUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Country> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Country> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

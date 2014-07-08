@@ -135,7 +135,8 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return pluginSettingPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -152,8 +153,8 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return pluginSettingPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -172,8 +173,9 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return pluginSettingPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -249,7 +251,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return pluginSettingLocalService.deletePluginSetting((PluginSetting)persistedModel);
+		return deletePluginSetting((PluginSetting)persistedModel);
 	}
 
 	@Override

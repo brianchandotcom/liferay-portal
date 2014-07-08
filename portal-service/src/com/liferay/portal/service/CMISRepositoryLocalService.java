@@ -51,16 +51,16 @@ public interface CMISRepositoryLocalService extends BaseLocalService {
 	*/
 	public java.lang.String getBeanIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.Object getSession(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.Object getSession(long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.repository.model.FileEntry toFileEntry(
 		long repositoryId, java.lang.Object object)

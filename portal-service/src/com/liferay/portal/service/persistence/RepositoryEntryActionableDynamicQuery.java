@@ -21,7 +21,7 @@ import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link RepositoryEntryLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link RepositoryEntryLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

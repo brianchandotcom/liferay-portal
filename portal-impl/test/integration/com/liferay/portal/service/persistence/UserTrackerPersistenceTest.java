@@ -242,7 +242,7 @@ public class UserTrackerPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<UserTracker> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("UserTracker",
 			"mvccVersion", true, "userTrackerId", true, "companyId", true,
 			"userId", true, "modifiedDate", true, "sessionId", true,

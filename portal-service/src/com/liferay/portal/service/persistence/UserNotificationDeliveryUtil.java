@@ -88,7 +88,7 @@ public class UserNotificationDeliveryUtil {
 	 */
 	public static List<UserNotificationDelivery> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<UserNotificationDelivery> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -154,7 +154,7 @@ public class UserNotificationDeliveryUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationDelivery> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -169,7 +169,7 @@ public class UserNotificationDeliveryUtil {
 	*/
 	public static com.liferay.portal.model.UserNotificationDelivery findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
@@ -183,7 +183,7 @@ public class UserNotificationDeliveryUtil {
 	*/
 	public static com.liferay.portal.model.UserNotificationDelivery fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -197,7 +197,7 @@ public class UserNotificationDeliveryUtil {
 	*/
 	public static com.liferay.portal.model.UserNotificationDelivery findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
@@ -211,7 +211,7 @@ public class UserNotificationDeliveryUtil {
 	*/
 	public static com.liferay.portal.model.UserNotificationDelivery fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -226,7 +226,7 @@ public class UserNotificationDeliveryUtil {
 	*/
 	public static com.liferay.portal.model.UserNotificationDelivery[] findByUserId_PrevAndNext(
 		long userNotificationDeliveryId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserNotificationDeliveryException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(userNotificationDeliveryId,
@@ -462,7 +462,7 @@ public class UserNotificationDeliveryUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationDelivery> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserNotificationDelivery> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

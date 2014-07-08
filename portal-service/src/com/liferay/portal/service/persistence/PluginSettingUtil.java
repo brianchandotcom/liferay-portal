@@ -87,7 +87,7 @@ public class PluginSettingUtil {
 	 */
 	public static List<PluginSetting> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<PluginSetting> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -151,7 +151,7 @@ public class PluginSettingUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.PluginSetting> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PluginSetting> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -166,7 +166,7 @@ public class PluginSettingUtil {
 	*/
 	public static com.liferay.portal.model.PluginSetting findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PluginSetting> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPluginSettingException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -181,7 +181,7 @@ public class PluginSettingUtil {
 	*/
 	public static com.liferay.portal.model.PluginSetting fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PluginSetting> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -196,7 +196,7 @@ public class PluginSettingUtil {
 	*/
 	public static com.liferay.portal.model.PluginSetting findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PluginSetting> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPluginSettingException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -211,7 +211,7 @@ public class PluginSettingUtil {
 	*/
 	public static com.liferay.portal.model.PluginSetting fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PluginSetting> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -227,7 +227,7 @@ public class PluginSettingUtil {
 	*/
 	public static com.liferay.portal.model.PluginSetting[] findByCompanyId_PrevAndNext(
 		long pluginSettingId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PluginSetting> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPluginSettingException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(pluginSettingId, companyId,
@@ -442,7 +442,7 @@ public class PluginSettingUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.PluginSetting> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PluginSetting> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

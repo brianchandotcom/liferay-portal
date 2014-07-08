@@ -145,7 +145,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 */
 	@Override
 	public List<OrgGroupRole> findByGroupId(long groupId, int start, int end,
-		OrderByComparator<OrgGroupRole> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -251,8 +251,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 */
 	@Override
 	public OrgGroupRole findByGroupId_First(long groupId,
-		OrderByComparator<OrgGroupRole> orderByComparator)
-		throws NoSuchOrgGroupRoleException {
+		OrderByComparator orderByComparator) throws NoSuchOrgGroupRoleException {
 		OrgGroupRole orgGroupRole = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -281,7 +280,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 */
 	@Override
 	public OrgGroupRole fetchByGroupId_First(long groupId,
-		OrderByComparator<OrgGroupRole> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<OrgGroupRole> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -301,8 +300,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 */
 	@Override
 	public OrgGroupRole findByGroupId_Last(long groupId,
-		OrderByComparator<OrgGroupRole> orderByComparator)
-		throws NoSuchOrgGroupRoleException {
+		OrderByComparator orderByComparator) throws NoSuchOrgGroupRoleException {
 		OrgGroupRole orgGroupRole = fetchByGroupId_Last(groupId,
 				orderByComparator);
 
@@ -331,7 +329,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 */
 	@Override
 	public OrgGroupRole fetchByGroupId_Last(long groupId,
-		OrderByComparator<OrgGroupRole> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -360,8 +358,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	@Override
 	public OrgGroupRole[] findByGroupId_PrevAndNext(
 		OrgGroupRolePK orgGroupRolePK, long groupId,
-		OrderByComparator<OrgGroupRole> orderByComparator)
-		throws NoSuchOrgGroupRoleException {
+		OrderByComparator orderByComparator) throws NoSuchOrgGroupRoleException {
 		OrgGroupRole orgGroupRole = findByPrimaryKey(orgGroupRolePK);
 
 		Session session = null;
@@ -391,7 +388,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 
 	protected OrgGroupRole getByGroupId_PrevAndNext(Session session,
 		OrgGroupRole orgGroupRole, long groupId,
-		OrderByComparator<OrgGroupRole> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -623,7 +620,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 */
 	@Override
 	public List<OrgGroupRole> findByRoleId(long roleId, int start, int end,
-		OrderByComparator<OrgGroupRole> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -729,8 +726,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 */
 	@Override
 	public OrgGroupRole findByRoleId_First(long roleId,
-		OrderByComparator<OrgGroupRole> orderByComparator)
-		throws NoSuchOrgGroupRoleException {
+		OrderByComparator orderByComparator) throws NoSuchOrgGroupRoleException {
 		OrgGroupRole orgGroupRole = fetchByRoleId_First(roleId,
 				orderByComparator);
 
@@ -759,7 +755,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 */
 	@Override
 	public OrgGroupRole fetchByRoleId_First(long roleId,
-		OrderByComparator<OrgGroupRole> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<OrgGroupRole> list = findByRoleId(roleId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -779,8 +775,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 */
 	@Override
 	public OrgGroupRole findByRoleId_Last(long roleId,
-		OrderByComparator<OrgGroupRole> orderByComparator)
-		throws NoSuchOrgGroupRoleException {
+		OrderByComparator orderByComparator) throws NoSuchOrgGroupRoleException {
 		OrgGroupRole orgGroupRole = fetchByRoleId_Last(roleId, orderByComparator);
 
 		if (orgGroupRole != null) {
@@ -808,7 +803,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 */
 	@Override
 	public OrgGroupRole fetchByRoleId_Last(long roleId,
-		OrderByComparator<OrgGroupRole> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByRoleId(roleId);
 
 		if (count == 0) {
@@ -837,8 +832,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	@Override
 	public OrgGroupRole[] findByRoleId_PrevAndNext(
 		OrgGroupRolePK orgGroupRolePK, long roleId,
-		OrderByComparator<OrgGroupRole> orderByComparator)
-		throws NoSuchOrgGroupRoleException {
+		OrderByComparator orderByComparator) throws NoSuchOrgGroupRoleException {
 		OrgGroupRole orgGroupRole = findByPrimaryKey(orgGroupRolePK);
 
 		Session session = null;
@@ -868,7 +862,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 
 	protected OrgGroupRole getByRoleId_PrevAndNext(Session session,
 		OrgGroupRole orgGroupRole, long roleId,
-		OrderByComparator<OrgGroupRole> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1475,7 +1469,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 */
 	@Override
 	public List<OrgGroupRole> findAll(int start, int end,
-		OrderByComparator<OrgGroupRole> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

@@ -150,7 +150,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public List<LayoutBranch> findByLayoutSetBranchId(long layoutSetBranchId,
-		int start, int end, OrderByComparator<LayoutBranch> orderByComparator) {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -260,8 +260,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public LayoutBranch findByLayoutSetBranchId_First(long layoutSetBranchId,
-		OrderByComparator<LayoutBranch> orderByComparator)
-		throws NoSuchLayoutBranchException {
+		OrderByComparator orderByComparator) throws NoSuchLayoutBranchException {
 		LayoutBranch layoutBranch = fetchByLayoutSetBranchId_First(layoutSetBranchId,
 				orderByComparator);
 
@@ -290,7 +289,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public LayoutBranch fetchByLayoutSetBranchId_First(long layoutSetBranchId,
-		OrderByComparator<LayoutBranch> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<LayoutBranch> list = findByLayoutSetBranchId(layoutSetBranchId, 0,
 				1, orderByComparator);
 
@@ -311,8 +310,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public LayoutBranch findByLayoutSetBranchId_Last(long layoutSetBranchId,
-		OrderByComparator<LayoutBranch> orderByComparator)
-		throws NoSuchLayoutBranchException {
+		OrderByComparator orderByComparator) throws NoSuchLayoutBranchException {
 		LayoutBranch layoutBranch = fetchByLayoutSetBranchId_Last(layoutSetBranchId,
 				orderByComparator);
 
@@ -341,7 +339,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public LayoutBranch fetchByLayoutSetBranchId_Last(long layoutSetBranchId,
-		OrderByComparator<LayoutBranch> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByLayoutSetBranchId(layoutSetBranchId);
 
 		if (count == 0) {
@@ -370,8 +368,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	@Override
 	public LayoutBranch[] findByLayoutSetBranchId_PrevAndNext(
 		long LayoutBranchId, long layoutSetBranchId,
-		OrderByComparator<LayoutBranch> orderByComparator)
-		throws NoSuchLayoutBranchException {
+		OrderByComparator orderByComparator) throws NoSuchLayoutBranchException {
 		LayoutBranch layoutBranch = findByPrimaryKey(LayoutBranchId);
 
 		Session session = null;
@@ -401,7 +398,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 	protected LayoutBranch getByLayoutSetBranchId_PrevAndNext(Session session,
 		LayoutBranch layoutBranch, long layoutSetBranchId,
-		OrderByComparator<LayoutBranch> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -639,7 +636,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public List<LayoutBranch> findByL_P(long layoutSetBranchId, long plid,
-		int start, int end, OrderByComparator<LayoutBranch> orderByComparator) {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -755,8 +752,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public LayoutBranch findByL_P_First(long layoutSetBranchId, long plid,
-		OrderByComparator<LayoutBranch> orderByComparator)
-		throws NoSuchLayoutBranchException {
+		OrderByComparator orderByComparator) throws NoSuchLayoutBranchException {
 		LayoutBranch layoutBranch = fetchByL_P_First(layoutSetBranchId, plid,
 				orderByComparator);
 
@@ -789,7 +785,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public LayoutBranch fetchByL_P_First(long layoutSetBranchId, long plid,
-		OrderByComparator<LayoutBranch> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<LayoutBranch> list = findByL_P(layoutSetBranchId, plid, 0, 1,
 				orderByComparator);
 
@@ -811,8 +807,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public LayoutBranch findByL_P_Last(long layoutSetBranchId, long plid,
-		OrderByComparator<LayoutBranch> orderByComparator)
-		throws NoSuchLayoutBranchException {
+		OrderByComparator orderByComparator) throws NoSuchLayoutBranchException {
 		LayoutBranch layoutBranch = fetchByL_P_Last(layoutSetBranchId, plid,
 				orderByComparator);
 
@@ -845,7 +840,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public LayoutBranch fetchByL_P_Last(long layoutSetBranchId, long plid,
-		OrderByComparator<LayoutBranch> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByL_P(layoutSetBranchId, plid);
 
 		if (count == 0) {
@@ -874,8 +869,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public LayoutBranch[] findByL_P_PrevAndNext(long LayoutBranchId,
-		long layoutSetBranchId, long plid,
-		OrderByComparator<LayoutBranch> orderByComparator)
+		long layoutSetBranchId, long plid, OrderByComparator orderByComparator)
 		throws NoSuchLayoutBranchException {
 		LayoutBranch layoutBranch = findByPrimaryKey(LayoutBranchId);
 
@@ -906,7 +900,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 	protected LayoutBranch getByL_P_PrevAndNext(Session session,
 		LayoutBranch layoutBranch, long layoutSetBranchId, long plid,
-		OrderByComparator<LayoutBranch> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1449,8 +1443,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public List<LayoutBranch> findByL_P_M(long layoutSetBranchId, long plid,
-		boolean master, int start, int end,
-		OrderByComparator<LayoutBranch> orderByComparator) {
+		boolean master, int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1572,7 +1565,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public LayoutBranch findByL_P_M_First(long layoutSetBranchId, long plid,
-		boolean master, OrderByComparator<LayoutBranch> orderByComparator)
+		boolean master, OrderByComparator orderByComparator)
 		throws NoSuchLayoutBranchException {
 		LayoutBranch layoutBranch = fetchByL_P_M_First(layoutSetBranchId, plid,
 				master, orderByComparator);
@@ -1610,7 +1603,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public LayoutBranch fetchByL_P_M_First(long layoutSetBranchId, long plid,
-		boolean master, OrderByComparator<LayoutBranch> orderByComparator) {
+		boolean master, OrderByComparator orderByComparator) {
 		List<LayoutBranch> list = findByL_P_M(layoutSetBranchId, plid, master,
 				0, 1, orderByComparator);
 
@@ -1633,7 +1626,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public LayoutBranch findByL_P_M_Last(long layoutSetBranchId, long plid,
-		boolean master, OrderByComparator<LayoutBranch> orderByComparator)
+		boolean master, OrderByComparator orderByComparator)
 		throws NoSuchLayoutBranchException {
 		LayoutBranch layoutBranch = fetchByL_P_M_Last(layoutSetBranchId, plid,
 				master, orderByComparator);
@@ -1671,7 +1664,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public LayoutBranch fetchByL_P_M_Last(long layoutSetBranchId, long plid,
-		boolean master, OrderByComparator<LayoutBranch> orderByComparator) {
+		boolean master, OrderByComparator orderByComparator) {
 		int count = countByL_P_M(layoutSetBranchId, plid, master);
 
 		if (count == 0) {
@@ -1702,8 +1695,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	@Override
 	public LayoutBranch[] findByL_P_M_PrevAndNext(long LayoutBranchId,
 		long layoutSetBranchId, long plid, boolean master,
-		OrderByComparator<LayoutBranch> orderByComparator)
-		throws NoSuchLayoutBranchException {
+		OrderByComparator orderByComparator) throws NoSuchLayoutBranchException {
 		LayoutBranch layoutBranch = findByPrimaryKey(LayoutBranchId);
 
 		Session session = null;
@@ -1733,8 +1725,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 	protected LayoutBranch getByL_P_M_PrevAndNext(Session session,
 		LayoutBranch layoutBranch, long layoutSetBranchId, long plid,
-		boolean master, OrderByComparator<LayoutBranch> orderByComparator,
-		boolean previous) {
+		boolean master, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2538,7 +2529,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public List<LayoutBranch> findAll(int start, int end,
-		OrderByComparator<LayoutBranch> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

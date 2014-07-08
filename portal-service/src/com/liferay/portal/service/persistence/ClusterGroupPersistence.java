@@ -133,7 +133,7 @@ public interface ClusterGroupPersistence extends BasePersistence<ClusterGroup> {
 	*/
 	public java.util.List<com.liferay.portal.model.ClusterGroup> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ClusterGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the cluster groups from the database.

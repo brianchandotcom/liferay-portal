@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,23 +51,8 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	* @param layoutFriendlyURL the layout friendly u r l
 	* @return the layout friendly u r l that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.LayoutFriendlyURL addLayoutFriendlyURL(
 		com.liferay.portal.model.LayoutFriendlyURL layoutFriendlyURL);
-
-	public com.liferay.portal.model.LayoutFriendlyURL addLayoutFriendlyURL(
-		long userId, long companyId, long groupId, long plid,
-		boolean privateLayout, java.lang.String friendlyURL,
-		java.lang.String languageId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> addLayoutFriendlyURLs(
-		long userId, long companyId, long groupId, long plid,
-		boolean privateLayout,
-		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new layout friendly u r l with the primary key. Does not add the layout friendly u r l to the database.
@@ -80,38 +64,24 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 		long layoutFriendlyURLId);
 
 	/**
-	* Deletes the layout friendly u r l from the database. Also notifies the appropriate model listeners.
-	*
-	* @param layoutFriendlyURL the layout friendly u r l
-	* @return the layout friendly u r l that was removed
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.LayoutFriendlyURL deleteLayoutFriendlyURL(
-		com.liferay.portal.model.LayoutFriendlyURL layoutFriendlyURL);
-
-	/**
 	* Deletes the layout friendly u r l with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param layoutFriendlyURLId the primary key of the layout friendly u r l
 	* @return the layout friendly u r l that was removed
 	* @throws PortalException if a layout friendly u r l with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.LayoutFriendlyURL deleteLayoutFriendlyURL(
 		long layoutFriendlyURLId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteLayoutFriendlyURL(long plid, java.lang.String languageId);
-
-	public void deleteLayoutFriendlyURLs(long plid);
-
 	/**
-	* @throws PortalException
+	* Deletes the layout friendly u r l from the database. Also notifies the appropriate model listeners.
+	*
+	* @param layoutFriendlyURL the layout friendly u r l
+	* @return the layout friendly u r l that was removed
 	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public com.liferay.portal.model.LayoutFriendlyURL deleteLayoutFriendlyURL(
+		com.liferay.portal.model.LayoutFriendlyURL layoutFriendlyURL);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -121,7 +91,8 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
@@ -136,7 +107,8 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end);
 
@@ -153,10 +125,11 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -179,25 +152,8 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutFriendlyURL fetchFirstLayoutFriendlyURL(
-		long groupId, boolean privateLayout, java.lang.String friendlyURL);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
-		long groupId, boolean privateLayout, java.lang.String friendlyURL,
-		java.lang.String languageId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
 		long layoutFriendlyURLId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
-		long plid, java.lang.String languageId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
-		long plid, java.lang.String languageId, boolean useDefault);
 
 	/**
 	* Returns the layout friendly u r l with the matching UUID and company.
@@ -221,20 +177,6 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	public com.liferay.portal.model.LayoutFriendlyURL fetchLayoutFriendlyURLByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext);
-
 	/**
 	* Returns the layout friendly u r l with the primary key.
 	*
@@ -248,13 +190,24 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutFriendlyURL getLayoutFriendlyURL(
-		long plid, java.lang.String languageId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutFriendlyURL getLayoutFriendlyURL(
-		long plid, java.lang.String languageId, boolean useDefault)
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext);
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -283,14 +236,6 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
-		long plid);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
-		long plid, java.lang.String friendlyURL, int start, int end);
-
 	/**
 	* Returns a range of all the layout friendly u r ls.
 	*
@@ -314,11 +259,21 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutFriendlyURLsCount();
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	/**
+	* Updates the layout friendly u r l in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param layoutFriendlyURL the layout friendly u r l
+	* @return the layout friendly u r l that was updated
+	*/
+	public com.liferay.portal.model.LayoutFriendlyURL updateLayoutFriendlyURL(
+		com.liferay.portal.model.LayoutFriendlyURL layoutFriendlyURL);
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -327,15 +282,58 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	/**
-	* Updates the layout friendly u r l in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param layoutFriendlyURL the layout friendly u r l
-	* @return the layout friendly u r l that was updated
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.LayoutFriendlyURL updateLayoutFriendlyURL(
-		com.liferay.portal.model.LayoutFriendlyURL layoutFriendlyURL);
+	public com.liferay.portal.model.LayoutFriendlyURL addLayoutFriendlyURL(
+		long userId, long companyId, long groupId, long plid,
+		boolean privateLayout, java.lang.String friendlyURL,
+		java.lang.String languageId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> addLayoutFriendlyURLs(
+		long userId, long companyId, long groupId, long plid,
+		boolean privateLayout,
+		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteLayoutFriendlyURL(long plid, java.lang.String languageId);
+
+	public void deleteLayoutFriendlyURLs(long plid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.LayoutFriendlyURL fetchFirstLayoutFriendlyURL(
+		long groupId, boolean privateLayout, java.lang.String friendlyURL);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
+		long groupId, boolean privateLayout, java.lang.String friendlyURL,
+		java.lang.String languageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
+		long plid, java.lang.String languageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
+		long plid, java.lang.String languageId, boolean useDefault);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.LayoutFriendlyURL getLayoutFriendlyURL(
+		long plid, java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.LayoutFriendlyURL getLayoutFriendlyURL(
+		long plid, java.lang.String languageId, boolean useDefault)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
+		long plid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
+		long plid, java.lang.String friendlyURL, int start, int end);
 
 	public com.liferay.portal.model.LayoutFriendlyURL updateLayoutFriendlyURL(
 		long userId, long companyId, long groupId, long plid,

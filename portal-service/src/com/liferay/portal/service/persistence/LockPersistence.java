@@ -77,7 +77,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public java.util.List<com.liferay.portal.model.Lock> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first lock in the ordered set where uuid = &#63;.
@@ -89,7 +89,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public com.liferay.portal.model.Lock findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException;
 
 	/**
@@ -101,7 +101,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public com.liferay.portal.model.Lock fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last lock in the ordered set where uuid = &#63;.
@@ -113,7 +113,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public com.liferay.portal.model.Lock findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException;
 
 	/**
@@ -125,7 +125,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public com.liferay.portal.model.Lock fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the locks before and after the current lock in the ordered set where uuid = &#63;.
@@ -138,7 +138,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public com.liferay.portal.model.Lock[] findByUuid_PrevAndNext(long lockId,
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException;
 
 	/**
@@ -198,7 +198,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public java.util.List<com.liferay.portal.model.Lock> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first lock in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -211,7 +211,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public com.liferay.portal.model.Lock findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException;
 
 	/**
@@ -224,7 +224,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public com.liferay.portal.model.Lock fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last lock in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -237,7 +237,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public com.liferay.portal.model.Lock findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException;
 
 	/**
@@ -250,7 +250,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public com.liferay.portal.model.Lock fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the locks before and after the current lock in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -264,7 +264,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public com.liferay.portal.model.Lock[] findByUuid_C_PrevAndNext(
 		long lockId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException;
 
 	/**
@@ -323,7 +323,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public java.util.List<com.liferay.portal.model.Lock> findByLtExpirationDate(
 		java.util.Date expirationDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first lock in the ordered set where expirationDate &lt; &#63;.
@@ -335,7 +335,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public com.liferay.portal.model.Lock findByLtExpirationDate_First(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException;
 
 	/**
@@ -347,7 +347,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public com.liferay.portal.model.Lock fetchByLtExpirationDate_First(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last lock in the ordered set where expirationDate &lt; &#63;.
@@ -359,7 +359,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public com.liferay.portal.model.Lock findByLtExpirationDate_Last(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException;
 
 	/**
@@ -371,7 +371,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public com.liferay.portal.model.Lock fetchByLtExpirationDate_Last(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the locks before and after the current lock in the ordered set where expirationDate &lt; &#63;.
@@ -384,7 +384,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public com.liferay.portal.model.Lock[] findByLtExpirationDate_PrevAndNext(
 		long lockId, java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException;
 
 	/**
@@ -547,7 +547,7 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	*/
 	public java.util.List<com.liferay.portal.model.Lock> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the locks from the database.

@@ -222,7 +222,7 @@ public class TicketPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<Ticket> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Ticket", "mvccVersion",
 			true, "ticketId", true, "companyId", true, "createDate", true,
 			"classNameId", true, "classPK", true, "key", true, "type", true,

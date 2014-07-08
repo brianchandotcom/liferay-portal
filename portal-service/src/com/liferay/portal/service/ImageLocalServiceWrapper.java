@@ -54,18 +54,6 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	}
 
 	/**
-	* Deletes the image from the database. Also notifies the appropriate model listeners.
-	*
-	* @param image the image
-	* @return the image that was removed
-	*/
-	@Override
-	public com.liferay.portal.model.Image deleteImage(
-		com.liferay.portal.model.Image image) {
-		return _imageLocalService.deleteImage(image);
-	}
-
-	/**
 	* Deletes the image with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param imageId the primary key of the image
@@ -79,13 +67,15 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	}
 
 	/**
-	* @throws PortalException
+	* Deletes the image from the database. Also notifies the appropriate model listeners.
+	*
+	* @param image the image
+	* @return the image that was removed
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _imageLocalService.deletePersistedModel(persistedModel);
+	public com.liferay.portal.model.Image deleteImage(
+		com.liferay.portal.model.Image image) {
+		return _imageLocalService.deleteImage(image);
 	}
 
 	@Override
@@ -100,7 +90,8 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _imageLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -118,7 +109,8 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _imageLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -138,10 +130,11 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _imageLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -177,26 +170,6 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 		return _imageLocalService.fetchImage(imageId);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _imageLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _imageLocalService.getBeanIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.model.Image getCompanyLogo(long imageId) {
-		return _imageLocalService.getCompanyLogo(imageId);
-	}
-
 	/**
 	* Returns the image with the primary key.
 	*
@@ -211,13 +184,25 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.Image getImageOrDefault(long imageId) {
-		return _imageLocalService.getImageOrDefault(imageId);
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _imageLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _imageLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.model.Image> getImages() {
-		return _imageLocalService.getImages();
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _imageLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -237,12 +222,6 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 		return _imageLocalService.getImages(start, end);
 	}
 
-	@Override
-	public java.util.List<com.liferay.portal.model.Image> getImagesBySize(
-		int size) {
-		return _imageLocalService.getImagesBySize(size);
-	}
-
 	/**
 	* Returns the number of images.
 	*
@@ -251,23 +230,6 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	@Override
 	public int getImagesCount() {
 		return _imageLocalService.getImagesCount();
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _imageLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_imageLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**
@@ -280,6 +242,47 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	public com.liferay.portal.model.Image updateImage(
 		com.liferay.portal.model.Image image) {
 		return _imageLocalService.updateImage(image);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _imageLocalService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_imageLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public com.liferay.portal.model.Image getCompanyLogo(long imageId) {
+		return _imageLocalService.getCompanyLogo(imageId);
+	}
+
+	@Override
+	public com.liferay.portal.model.Image getImageOrDefault(long imageId) {
+		return _imageLocalService.getImageOrDefault(imageId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Image> getImages() {
+		return _imageLocalService.getImages();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Image> getImagesBySize(
+		int size) {
+		return _imageLocalService.getImagesBySize(size);
 	}
 
 	@Override

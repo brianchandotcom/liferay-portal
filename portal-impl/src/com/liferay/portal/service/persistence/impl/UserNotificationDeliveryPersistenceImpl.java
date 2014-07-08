@@ -152,7 +152,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public List<UserNotificationDelivery> findByUserId(long userId, int start,
-		int end, OrderByComparator<UserNotificationDelivery> orderByComparator) {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -258,7 +258,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public UserNotificationDelivery findByUserId_First(long userId,
-		OrderByComparator<UserNotificationDelivery> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchUserNotificationDeliveryException {
 		UserNotificationDelivery userNotificationDelivery = fetchByUserId_First(userId,
 				orderByComparator);
@@ -288,7 +288,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public UserNotificationDelivery fetchByUserId_First(long userId,
-		OrderByComparator<UserNotificationDelivery> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<UserNotificationDelivery> list = findByUserId(userId, 0, 1,
 				orderByComparator);
 
@@ -309,7 +309,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public UserNotificationDelivery findByUserId_Last(long userId,
-		OrderByComparator<UserNotificationDelivery> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchUserNotificationDeliveryException {
 		UserNotificationDelivery userNotificationDelivery = fetchByUserId_Last(userId,
 				orderByComparator);
@@ -339,7 +339,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public UserNotificationDelivery fetchByUserId_Last(long userId,
-		OrderByComparator<UserNotificationDelivery> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -368,7 +368,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	@Override
 	public UserNotificationDelivery[] findByUserId_PrevAndNext(
 		long userNotificationDeliveryId, long userId,
-		OrderByComparator<UserNotificationDelivery> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchUserNotificationDeliveryException {
 		UserNotificationDelivery userNotificationDelivery = findByPrimaryKey(userNotificationDeliveryId);
 
@@ -399,9 +399,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 	protected UserNotificationDelivery getByUserId_PrevAndNext(
 		Session session, UserNotificationDelivery userNotificationDelivery,
-		long userId,
-		OrderByComparator<UserNotificationDelivery> orderByComparator,
-		boolean previous) {
+		long userId, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1507,7 +1505,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public List<UserNotificationDelivery> findAll(int start, int end,
-		OrderByComparator<UserNotificationDelivery> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

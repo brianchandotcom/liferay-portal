@@ -42,6 +42,24 @@ public class ResourceLocalServiceUtil {
 	 */
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
 	* Adds resources for the model, always creating a resource at the
 	* individual scope and only creating resources at the group, group
 	* template, and company scope if such resources don't already exist.
@@ -145,22 +163,32 @@ public class ResourceLocalServiceUtil {
 	}
 
 	/**
-	* Adds resources for the entity with the name. Use this method if the user
-	* is unknown or irrelevant and there is no current entity instance.
+	* Adds resources for the entity with the name and primary key, always
+	* creating a resource at the individual scope and only creating resources
+	* at the group, group template, and company scope if such resources don't
+	* already exist.
 	*
 	* @param companyId the primary key of the portal instance
 	* @param groupId the primary key of the group
+	* @param userId the primary key of the user adding the resources
 	* @param name a name for the resource, which should be a portlet ID if the
 	resource is a portlet or the resource's class name otherwise
+	* @param primKey the primary key of the resource instance, optionally
+	<code>0</code> if no instance exists
 	* @param portletActions whether to associate portlet actions with the
 	resource
+	* @param addGroupPermissions whether to add group permissions
+	* @param addGuestPermissions whether to add guest permissions
 	* @throws PortalException if no portal actions could be found associated
 	with the resource or if a portal exception occurred
 	*/
-	public static void addResources(long companyId, long groupId,
-		java.lang.String name, boolean portletActions)
+	public static void addResources(long companyId, long groupId, long userId,
+		java.lang.String name, long primKey, boolean portletActions,
+		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addResources(companyId, groupId, name, portletActions);
+		getService()
+			.addResources(companyId, groupId, userId, name, primKey,
+			portletActions, addGroupPermissions, addGuestPermissions);
 	}
 
 	/**
@@ -194,32 +222,22 @@ public class ResourceLocalServiceUtil {
 	}
 
 	/**
-	* Adds resources for the entity with the name and primary key, always
-	* creating a resource at the individual scope and only creating resources
-	* at the group, group template, and company scope if such resources don't
-	* already exist.
+	* Adds resources for the entity with the name. Use this method if the user
+	* is unknown or irrelevant and there is no current entity instance.
 	*
 	* @param companyId the primary key of the portal instance
 	* @param groupId the primary key of the group
-	* @param userId the primary key of the user adding the resources
 	* @param name a name for the resource, which should be a portlet ID if the
 	resource is a portlet or the resource's class name otherwise
-	* @param primKey the primary key of the resource instance, optionally
-	<code>0</code> if no instance exists
 	* @param portletActions whether to associate portlet actions with the
 	resource
-	* @param addGroupPermissions whether to add group permissions
-	* @param addGuestPermissions whether to add guest permissions
 	* @throws PortalException if no portal actions could be found associated
 	with the resource or if a portal exception occurred
 	*/
-	public static void addResources(long companyId, long groupId, long userId,
-		java.lang.String name, long primKey, boolean portletActions,
-		boolean addGroupPermissions, boolean addGuestPermissions)
+	public static void addResources(long companyId, long groupId,
+		java.lang.String name, boolean portletActions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addResources(companyId, groupId, userId, name, primKey,
-			portletActions, addGroupPermissions, addGuestPermissions);
+		getService().addResources(companyId, groupId, name, portletActions);
 	}
 
 	/**
@@ -271,15 +289,6 @@ public class ResourceLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns a new resource with the name and primary key at the scope.
 	*
 	* @param companyId the primary key of the portal instance
@@ -325,15 +334,6 @@ public class ResourceLocalServiceUtil {
 	}
 
 	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
 	* Updates the resources for the model, replacing their group and guest
 	* permissions with new ones from the service context.
 	*
@@ -347,28 +347,6 @@ public class ResourceLocalServiceUtil {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateModelResources(auditedModel, serviceContext);
-	}
-
-	/**
-	* Updates resources matching the group, name, and primary key string at the
-	* individual scope, setting new group and guest permissions.
-	*
-	* @param companyId the primary key of the portal instance
-	* @param groupId the primary key of the group
-	* @param name the resource's name, which should be a portlet ID if the
-	resource is a portlet or the resource's class name otherwise
-	* @param primKey the primary key string of the resource instance
-	* @param groupPermissions the group permissions to be applied
-	* @param guestPermissions the guest permissions to be applied
-	* @throws PortalException if a portal exception occurred
-	*/
-	public static void updateResources(long companyId, long groupId,
-		java.lang.String name, java.lang.String primKey,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.updateResources(companyId, groupId, name, primKey,
-			groupPermissions, guestPermissions);
 	}
 
 	/**
@@ -386,6 +364,28 @@ public class ResourceLocalServiceUtil {
 	*/
 	public static void updateResources(long companyId, long groupId,
 		java.lang.String name, long primKey,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.updateResources(companyId, groupId, name, primKey,
+			groupPermissions, guestPermissions);
+	}
+
+	/**
+	* Updates resources matching the group, name, and primary key string at the
+	* individual scope, setting new group and guest permissions.
+	*
+	* @param companyId the primary key of the portal instance
+	* @param groupId the primary key of the group
+	* @param name the resource's name, which should be a portlet ID if the
+	resource is a portlet or the resource's class name otherwise
+	* @param primKey the primary key string of the resource instance
+	* @param groupPermissions the group permissions to be applied
+	* @param guestPermissions the guest permissions to be applied
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static void updateResources(long companyId, long groupId,
+		java.lang.String name, java.lang.String primKey,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()

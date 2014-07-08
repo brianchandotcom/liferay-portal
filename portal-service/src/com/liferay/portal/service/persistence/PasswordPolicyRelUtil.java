@@ -87,7 +87,7 @@ public class PasswordPolicyRelUtil {
 	 */
 	public static List<PasswordPolicyRel> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<PasswordPolicyRel> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -152,7 +152,7 @@ public class PasswordPolicyRelUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.PasswordPolicyRel> findByPasswordPolicyId(
 		long passwordPolicyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordPolicyRel> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByPasswordPolicyId(passwordPolicyId, start, end,
 			orderByComparator);
@@ -168,7 +168,7 @@ public class PasswordPolicyRelUtil {
 	*/
 	public static com.liferay.portal.model.PasswordPolicyRel findByPasswordPolicyId_First(
 		long passwordPolicyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordPolicyRel> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPasswordPolicyRelException {
 		return getPersistence()
 				   .findByPasswordPolicyId_First(passwordPolicyId,
@@ -184,7 +184,7 @@ public class PasswordPolicyRelUtil {
 	*/
 	public static com.liferay.portal.model.PasswordPolicyRel fetchByPasswordPolicyId_First(
 		long passwordPolicyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordPolicyRel> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByPasswordPolicyId_First(passwordPolicyId,
 			orderByComparator);
@@ -200,7 +200,7 @@ public class PasswordPolicyRelUtil {
 	*/
 	public static com.liferay.portal.model.PasswordPolicyRel findByPasswordPolicyId_Last(
 		long passwordPolicyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordPolicyRel> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPasswordPolicyRelException {
 		return getPersistence()
 				   .findByPasswordPolicyId_Last(passwordPolicyId,
@@ -216,7 +216,7 @@ public class PasswordPolicyRelUtil {
 	*/
 	public static com.liferay.portal.model.PasswordPolicyRel fetchByPasswordPolicyId_Last(
 		long passwordPolicyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordPolicyRel> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByPasswordPolicyId_Last(passwordPolicyId,
 			orderByComparator);
@@ -233,7 +233,7 @@ public class PasswordPolicyRelUtil {
 	*/
 	public static com.liferay.portal.model.PasswordPolicyRel[] findByPasswordPolicyId_PrevAndNext(
 		long passwordPolicyRelId, long passwordPolicyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordPolicyRel> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPasswordPolicyRelException {
 		return getPersistence()
 				   .findByPasswordPolicyId_PrevAndNext(passwordPolicyRelId,
@@ -440,7 +440,7 @@ public class PasswordPolicyRelUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.PasswordPolicyRel> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordPolicyRel> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

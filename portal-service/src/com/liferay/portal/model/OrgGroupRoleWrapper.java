@@ -86,41 +86,25 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 		}
 	}
 
+	/**
+	* Returns the primary key of this org group role.
+	*
+	* @return the primary key of this org group role
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new OrgGroupRoleWrapper((OrgGroupRole)_orgGroupRole.clone());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.model.OrgGroupRole orgGroupRole) {
-		return _orgGroupRole.compareTo(orgGroupRole);
-	}
-
-	@Override
-	public boolean containsGroup(
-		java.util.List<com.liferay.portal.model.Group> groups) {
-		return _orgGroupRole.containsGroup(groups);
-	}
-
-	@Override
-	public boolean containsOrganization(
-		java.util.List<com.liferay.portal.model.Organization> organizations) {
-		return _orgGroupRole.containsOrganization(organizations);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _orgGroupRole.getExpandoBridge();
+	public com.liferay.portal.service.persistence.OrgGroupRolePK getPrimaryKey() {
+		return _orgGroupRole.getPrimaryKey();
 	}
 
 	/**
-	* Returns the group ID of this org group role.
+	* Sets the primary key of this org group role.
 	*
-	* @return the group ID of this org group role
+	* @param primaryKey the primary key of this org group role
 	*/
 	@Override
-	public long getGroupId() {
-		return _orgGroupRole.getGroupId();
+	public void setPrimaryKey(
+		com.liferay.portal.service.persistence.OrgGroupRolePK primaryKey) {
+		_orgGroupRole.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -134,6 +118,16 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	}
 
 	/**
+	* Sets the mvcc version of this org group role.
+	*
+	* @param mvccVersion the mvcc version of this org group role
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_orgGroupRole.setMvccVersion(mvccVersion);
+	}
+
+	/**
 	* Returns the organization ID of this org group role.
 	*
 	* @return the organization ID of this org group role
@@ -144,18 +138,33 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	}
 
 	/**
-	* Returns the primary key of this org group role.
+	* Sets the organization ID of this org group role.
 	*
-	* @return the primary key of this org group role
+	* @param organizationId the organization ID of this org group role
 	*/
 	@Override
-	public com.liferay.portal.service.persistence.OrgGroupRolePK getPrimaryKey() {
-		return _orgGroupRole.getPrimaryKey();
+	public void setOrganizationId(long organizationId) {
+		_orgGroupRole.setOrganizationId(organizationId);
 	}
 
+	/**
+	* Returns the group ID of this org group role.
+	*
+	* @return the group ID of this org group role
+	*/
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _orgGroupRole.getPrimaryKeyObj();
+	public long getGroupId() {
+		return _orgGroupRole.getGroupId();
+	}
+
+	/**
+	* Sets the group ID of this org group role.
+	*
+	* @param groupId the group ID of this org group role
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_orgGroupRole.setGroupId(groupId);
 	}
 
 	/**
@@ -168,19 +177,14 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 		return _orgGroupRole.getRoleId();
 	}
 
+	/**
+	* Sets the role ID of this org group role.
+	*
+	* @param roleId the role ID of this org group role
+	*/
 	@Override
-	public int hashCode() {
-		return _orgGroupRole.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _orgGroupRole.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _orgGroupRole.isEscapedModel();
+	public void setRoleId(long roleId) {
+		_orgGroupRole.setRoleId(roleId);
 	}
 
 	@Override
@@ -189,8 +193,38 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	}
 
 	@Override
+	public void setNew(boolean n) {
+		_orgGroupRole.setNew(n);
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _orgGroupRole.isCachedModel();
+	}
+
+	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_orgGroupRole.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _orgGroupRole.isEscapedModel();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _orgGroupRole.getPrimaryKeyObj();
+	}
+
+	@Override
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_orgGroupRole.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _orgGroupRole.getExpandoBridge();
 	}
 
 	@Override
@@ -211,65 +245,19 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 		_orgGroupRole.setExpandoBridgeAttributes(serviceContext);
 	}
 
-	/**
-	* Sets the group ID of this org group role.
-	*
-	* @param groupId the group ID of this org group role
-	*/
 	@Override
-	public void setGroupId(long groupId) {
-		_orgGroupRole.setGroupId(groupId);
-	}
-
-	/**
-	* Sets the mvcc version of this org group role.
-	*
-	* @param mvccVersion the mvcc version of this org group role
-	*/
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_orgGroupRole.setMvccVersion(mvccVersion);
+	public java.lang.Object clone() {
+		return new OrgGroupRoleWrapper((OrgGroupRole)_orgGroupRole.clone());
 	}
 
 	@Override
-	public void setNew(boolean n) {
-		_orgGroupRole.setNew(n);
-	}
-
-	/**
-	* Sets the organization ID of this org group role.
-	*
-	* @param organizationId the organization ID of this org group role
-	*/
-	@Override
-	public void setOrganizationId(long organizationId) {
-		_orgGroupRole.setOrganizationId(organizationId);
-	}
-
-	/**
-	* Sets the primary key of this org group role.
-	*
-	* @param primaryKey the primary key of this org group role
-	*/
-	@Override
-	public void setPrimaryKey(
-		com.liferay.portal.service.persistence.OrgGroupRolePK primaryKey) {
-		_orgGroupRole.setPrimaryKey(primaryKey);
+	public int compareTo(com.liferay.portal.model.OrgGroupRole orgGroupRole) {
+		return _orgGroupRole.compareTo(orgGroupRole);
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_orgGroupRole.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets the role ID of this org group role.
-	*
-	* @param roleId the role ID of this org group role
-	*/
-	@Override
-	public void setRoleId(long roleId) {
-		_orgGroupRole.setRoleId(roleId);
+	public int hashCode() {
+		return _orgGroupRole.hashCode();
 	}
 
 	@Override
@@ -283,18 +271,30 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _orgGroupRole.toString();
-	}
-
-	@Override
 	public com.liferay.portal.model.OrgGroupRole toUnescapedModel() {
 		return new OrgGroupRoleWrapper(_orgGroupRole.toUnescapedModel());
 	}
 
 	@Override
+	public java.lang.String toString() {
+		return _orgGroupRole.toString();
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _orgGroupRole.toXmlString();
+	}
+
+	@Override
+	public boolean containsGroup(
+		java.util.List<com.liferay.portal.model.Group> groups) {
+		return _orgGroupRole.containsGroup(groups);
+	}
+
+	@Override
+	public boolean containsOrganization(
+		java.util.List<com.liferay.portal.model.Organization> organizations) {
+		return _orgGroupRole.containsOrganization(organizations);
 	}
 
 	@Override

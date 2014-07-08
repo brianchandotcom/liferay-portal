@@ -201,7 +201,7 @@ public class ImagePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<Image> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Image", "mvccVersion",
 			true, "imageId", true, "modifiedDate", true, "type", true,
 			"height", true, "width", true, "size", true);

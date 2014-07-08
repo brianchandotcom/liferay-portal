@@ -137,7 +137,8 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return backgroundTaskPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -154,8 +155,8 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return backgroundTaskPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -174,8 +175,9 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return backgroundTaskPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -251,7 +253,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return backgroundTaskLocalService.deleteBackgroundTask((BackgroundTask)persistedModel);
+		return deleteBackgroundTask((BackgroundTask)persistedModel);
 	}
 
 	@Override

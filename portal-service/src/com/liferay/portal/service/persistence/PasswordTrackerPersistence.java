@@ -77,7 +77,7 @@ public interface PasswordTrackerPersistence extends BasePersistence<PasswordTrac
 	*/
 	public java.util.List<com.liferay.portal.model.PasswordTracker> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordTracker> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first password tracker in the ordered set where userId = &#63;.
@@ -89,7 +89,7 @@ public interface PasswordTrackerPersistence extends BasePersistence<PasswordTrac
 	*/
 	public com.liferay.portal.model.PasswordTracker findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordTracker> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPasswordTrackerException;
 
 	/**
@@ -101,7 +101,7 @@ public interface PasswordTrackerPersistence extends BasePersistence<PasswordTrac
 	*/
 	public com.liferay.portal.model.PasswordTracker fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordTracker> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last password tracker in the ordered set where userId = &#63;.
@@ -113,7 +113,7 @@ public interface PasswordTrackerPersistence extends BasePersistence<PasswordTrac
 	*/
 	public com.liferay.portal.model.PasswordTracker findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordTracker> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPasswordTrackerException;
 
 	/**
@@ -125,7 +125,7 @@ public interface PasswordTrackerPersistence extends BasePersistence<PasswordTrac
 	*/
 	public com.liferay.portal.model.PasswordTracker fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordTracker> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the password trackers before and after the current password tracker in the ordered set where userId = &#63;.
@@ -138,7 +138,7 @@ public interface PasswordTrackerPersistence extends BasePersistence<PasswordTrac
 	*/
 	public com.liferay.portal.model.PasswordTracker[] findByUserId_PrevAndNext(
 		long passwordTrackerId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordTracker> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPasswordTrackerException;
 
 	/**
@@ -254,7 +254,7 @@ public interface PasswordTrackerPersistence extends BasePersistence<PasswordTrac
 	*/
 	public java.util.List<com.liferay.portal.model.PasswordTracker> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordTracker> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the password trackers from the database.

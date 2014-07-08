@@ -80,7 +80,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public java.util.List<com.liferay.portal.model.ResourceBlock> findByC_N(
 		long companyId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first resource block in the ordered set where companyId = &#63; and name = &#63;.
@@ -93,7 +93,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public com.liferay.portal.model.ResourceBlock findByC_N_First(
 		long companyId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException;
 
 	/**
@@ -106,7 +106,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public com.liferay.portal.model.ResourceBlock fetchByC_N_First(
 		long companyId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last resource block in the ordered set where companyId = &#63; and name = &#63;.
@@ -119,7 +119,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public com.liferay.portal.model.ResourceBlock findByC_N_Last(
 		long companyId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException;
 
 	/**
@@ -132,7 +132,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public com.liferay.portal.model.ResourceBlock fetchByC_N_Last(
 		long companyId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the resource blocks before and after the current resource block in the ordered set where companyId = &#63; and name = &#63;.
@@ -146,7 +146,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public com.liferay.portal.model.ResourceBlock[] findByC_N_PrevAndNext(
 		long resourceBlockId, long companyId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException;
 
 	/**
@@ -212,7 +212,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	public java.util.List<com.liferay.portal.model.ResourceBlock> findByC_G_N(
 		long companyId, long groupId, java.lang.String name, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
@@ -226,7 +226,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public com.liferay.portal.model.ResourceBlock findByC_G_N_First(
 		long companyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException;
 
 	/**
@@ -240,7 +240,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public com.liferay.portal.model.ResourceBlock fetchByC_G_N_First(
 		long companyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
@@ -254,7 +254,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public com.liferay.portal.model.ResourceBlock findByC_G_N_Last(
 		long companyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException;
 
 	/**
@@ -268,7 +268,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public com.liferay.portal.model.ResourceBlock fetchByC_G_N_Last(
 		long companyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the resource blocks before and after the current resource block in the ordered set where companyId = &#63; and groupId = &#63; and name = &#63;.
@@ -284,7 +284,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	public com.liferay.portal.model.ResourceBlock[] findByC_G_N_PrevAndNext(
 		long resourceBlockId, long companyId, long groupId,
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException;
 
 	/**
@@ -471,7 +471,7 @@ public interface ResourceBlockPersistence extends BasePersistence<ResourceBlock>
 	*/
 	public java.util.List<com.liferay.portal.model.ResourceBlock> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the resource blocks from the database.

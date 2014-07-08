@@ -77,7 +77,7 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	*/
 	public java.util.List<com.liferay.portal.model.PluginSetting> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PluginSetting> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first plugin setting in the ordered set where companyId = &#63;.
@@ -89,7 +89,7 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	*/
 	public com.liferay.portal.model.PluginSetting findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PluginSetting> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPluginSettingException;
 
 	/**
@@ -101,7 +101,7 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	*/
 	public com.liferay.portal.model.PluginSetting fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PluginSetting> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last plugin setting in the ordered set where companyId = &#63;.
@@ -113,7 +113,7 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	*/
 	public com.liferay.portal.model.PluginSetting findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PluginSetting> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPluginSettingException;
 
 	/**
@@ -125,7 +125,7 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	*/
 	public com.liferay.portal.model.PluginSetting fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PluginSetting> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the plugin settings before and after the current plugin setting in the ordered set where companyId = &#63;.
@@ -138,7 +138,7 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	*/
 	public com.liferay.portal.model.PluginSetting[] findByCompanyId_PrevAndNext(
 		long pluginSettingId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PluginSetting> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPluginSettingException;
 
 	/**
@@ -312,7 +312,7 @@ public interface PluginSettingPersistence extends BasePersistence<PluginSetting>
 	*/
 	public java.util.List<com.liferay.portal.model.PluginSetting> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PluginSetting> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the plugin settings from the database.

@@ -179,7 +179,7 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	*/
 	public java.util.List<com.liferay.portal.model.Release> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Release> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the releases from the database.

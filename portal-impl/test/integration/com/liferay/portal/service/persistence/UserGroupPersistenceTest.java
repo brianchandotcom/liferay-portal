@@ -285,7 +285,7 @@ public class UserGroupPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<UserGroup> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("UserGroup", "mvccVersion",
 			true, "uuid", true, "userGroupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,

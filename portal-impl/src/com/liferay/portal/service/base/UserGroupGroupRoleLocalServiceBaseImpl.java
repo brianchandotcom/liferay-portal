@@ -140,7 +140,8 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return userGroupGroupRolePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -157,8 +158,8 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return userGroupGroupRolePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -177,8 +178,9 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return userGroupGroupRolePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -261,7 +263,7 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return userGroupGroupRoleLocalService.deleteUserGroupGroupRole((UserGroupGroupRole)persistedModel);
+		return deleteUserGroupGroupRole((UserGroupGroupRole)persistedModel);
 	}
 
 	@Override

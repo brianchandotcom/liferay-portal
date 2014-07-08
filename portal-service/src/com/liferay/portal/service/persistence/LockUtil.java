@@ -85,7 +85,7 @@ public class LockUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<Lock> findWithDynamicQuery(DynamicQuery dynamicQuery,
-		int start, int end, OrderByComparator<Lock> orderByComparator) {
+		int start, int end, OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -148,7 +148,7 @@ public class LockUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Lock> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -162,7 +162,7 @@ public class LockUtil {
 	*/
 	public static com.liferay.portal.model.Lock findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -176,7 +176,7 @@ public class LockUtil {
 	*/
 	public static com.liferay.portal.model.Lock fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -190,7 +190,7 @@ public class LockUtil {
 	*/
 	public static com.liferay.portal.model.Lock findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -204,7 +204,7 @@ public class LockUtil {
 	*/
 	public static com.liferay.portal.model.Lock fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -219,7 +219,7 @@ public class LockUtil {
 	*/
 	public static com.liferay.portal.model.Lock[] findByUuid_PrevAndNext(
 		long lockId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(lockId, uuid, orderByComparator);
@@ -290,7 +290,7 @@ public class LockUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Lock> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -306,7 +306,7 @@ public class LockUtil {
 	*/
 	public static com.liferay.portal.model.Lock findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -322,7 +322,7 @@ public class LockUtil {
 	*/
 	public static com.liferay.portal.model.Lock fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -338,7 +338,7 @@ public class LockUtil {
 	*/
 	public static com.liferay.portal.model.Lock findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -354,7 +354,7 @@ public class LockUtil {
 	*/
 	public static com.liferay.portal.model.Lock fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -371,7 +371,7 @@ public class LockUtil {
 	*/
 	public static com.liferay.portal.model.Lock[] findByUuid_C_PrevAndNext(
 		long lockId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(lockId, uuid, companyId,
@@ -443,7 +443,7 @@ public class LockUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Lock> findByLtExpirationDate(
 		java.util.Date expirationDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByLtExpirationDate(expirationDate, start, end,
 			orderByComparator);
@@ -459,7 +459,7 @@ public class LockUtil {
 	*/
 	public static com.liferay.portal.model.Lock findByLtExpirationDate_First(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence()
 				   .findByLtExpirationDate_First(expirationDate,
@@ -475,7 +475,7 @@ public class LockUtil {
 	*/
 	public static com.liferay.portal.model.Lock fetchByLtExpirationDate_First(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByLtExpirationDate_First(expirationDate,
 			orderByComparator);
@@ -491,7 +491,7 @@ public class LockUtil {
 	*/
 	public static com.liferay.portal.model.Lock findByLtExpirationDate_Last(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence()
 				   .findByLtExpirationDate_Last(expirationDate,
@@ -507,7 +507,7 @@ public class LockUtil {
 	*/
 	public static com.liferay.portal.model.Lock fetchByLtExpirationDate_Last(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByLtExpirationDate_Last(expirationDate,
 			orderByComparator);
@@ -524,7 +524,7 @@ public class LockUtil {
 	*/
 	public static com.liferay.portal.model.Lock[] findByLtExpirationDate_PrevAndNext(
 		long lockId, java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence()
 				   .findByLtExpirationDate_PrevAndNext(lockId, expirationDate,
@@ -727,7 +727,7 @@ public class LockUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Lock> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Lock> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

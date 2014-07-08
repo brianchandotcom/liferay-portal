@@ -40,14 +40,6 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.UserNotificationDeliveryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.model.UserNotificationDelivery addUserNotificationDelivery(
-		long userId, java.lang.String portletId, long classNameId,
-		int notificationType, int deliveryType, boolean deliver)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addUserNotificationDelivery(userId, portletId, classNameId,
-			notificationType, deliveryType, deliver);
-	}
 
 	/**
 	* Adds the user notification delivery to the database. Also notifies the appropriate model listeners.
@@ -73,24 +65,17 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	}
 
 	/**
-	* @throws PortalException
+	* Deletes the user notification delivery with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userNotificationDeliveryId the primary key of the user notification delivery
+	* @return the user notification delivery that was removed
+	* @throws PortalException if a user notification delivery with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.model.UserNotificationDelivery deleteUserNotificationDelivery(
+		long userNotificationDeliveryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static void deleteUserNotificationDeliveries(long userId) {
-		getService().deleteUserNotificationDeliveries(userId);
-	}
-
-	public static void deleteUserNotificationDelivery(long userId,
-		java.lang.String portletId, long classNameId, int notificationType,
-		int deliveryType) {
-		getService()
-			.deleteUserNotificationDelivery(userId, portletId, classNameId,
-			notificationType, deliveryType);
+		return getService()
+				   .deleteUserNotificationDelivery(userNotificationDeliveryId);
 	}
 
 	/**
@@ -105,20 +90,6 @@ public class UserNotificationDeliveryLocalServiceUtil {
 				   .deleteUserNotificationDelivery(userNotificationDelivery);
 	}
 
-	/**
-	* Deletes the user notification delivery with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userNotificationDeliveryId the primary key of the user notification delivery
-	* @return the user notification delivery that was removed
-	* @throws PortalException if a user notification delivery with the primary key could not be found
-	*/
-	public static com.liferay.portal.model.UserNotificationDelivery deleteUserNotificationDelivery(
-		long userNotificationDeliveryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .deleteUserNotificationDelivery(userNotificationDeliveryId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
@@ -129,7 +100,8 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public static <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
@@ -146,7 +118,8 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public static <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
@@ -165,10 +138,11 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public static <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -198,17 +172,23 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.UserNotificationDelivery fetchUserNotificationDelivery(
-		long userId, java.lang.String portletId, long classNameId,
-		int notificationType, int deliveryType) {
-		return getService()
-				   .fetchUserNotificationDelivery(userId, portletId,
-			classNameId, notificationType, deliveryType);
-	}
-
-	public static com.liferay.portal.model.UserNotificationDelivery fetchUserNotificationDelivery(
 		long userNotificationDeliveryId) {
 		return getService()
 				   .fetchUserNotificationDelivery(userNotificationDeliveryId);
+	}
+
+	/**
+	* Returns the user notification delivery with the primary key.
+	*
+	* @param userNotificationDeliveryId the primary key of the user notification delivery
+	* @return the user notification delivery
+	* @throws PortalException if a user notification delivery with the primary key could not be found
+	*/
+	public static com.liferay.portal.model.UserNotificationDelivery getUserNotificationDelivery(
+		long userNotificationDeliveryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getUserNotificationDelivery(userNotificationDeliveryId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -216,12 +196,12 @@ public class UserNotificationDeliveryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* @throws PortalException
 	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -255,27 +235,25 @@ public class UserNotificationDeliveryLocalServiceUtil {
 		return getService().getUserNotificationDeliveriesCount();
 	}
 
-	public static com.liferay.portal.model.UserNotificationDelivery getUserNotificationDelivery(
-		long userId, java.lang.String portletId, long classNameId,
-		int notificationType, int deliveryType, boolean deliver)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	/**
+	* Updates the user notification delivery in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param userNotificationDelivery the user notification delivery
+	* @return the user notification delivery that was updated
+	*/
+	public static com.liferay.portal.model.UserNotificationDelivery updateUserNotificationDelivery(
+		com.liferay.portal.model.UserNotificationDelivery userNotificationDelivery) {
 		return getService()
-				   .getUserNotificationDelivery(userId, portletId, classNameId,
-			notificationType, deliveryType, deliver);
+				   .updateUserNotificationDelivery(userNotificationDelivery);
 	}
 
 	/**
-	* Returns the user notification delivery with the primary key.
+	* Returns the Spring bean ID for this bean.
 	*
-	* @param userNotificationDeliveryId the primary key of the user notification delivery
-	* @return the user notification delivery
-	* @throws PortalException if a user notification delivery with the primary key could not be found
+	* @return the Spring bean ID for this bean
 	*/
-	public static com.liferay.portal.model.UserNotificationDelivery getUserNotificationDelivery(
-		long userNotificationDeliveryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getUserNotificationDelivery(userNotificationDeliveryId);
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
 	}
 
 	/**
@@ -287,16 +265,42 @@ public class UserNotificationDeliveryLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	/**
-	* Updates the user notification delivery in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param userNotificationDelivery the user notification delivery
-	* @return the user notification delivery that was updated
-	*/
-	public static com.liferay.portal.model.UserNotificationDelivery updateUserNotificationDelivery(
-		com.liferay.portal.model.UserNotificationDelivery userNotificationDelivery) {
+	public static com.liferay.portal.model.UserNotificationDelivery addUserNotificationDelivery(
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType, boolean deliver)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateUserNotificationDelivery(userNotificationDelivery);
+				   .addUserNotificationDelivery(userId, portletId, classNameId,
+			notificationType, deliveryType, deliver);
+	}
+
+	public static void deleteUserNotificationDeliveries(long userId) {
+		getService().deleteUserNotificationDeliveries(userId);
+	}
+
+	public static void deleteUserNotificationDelivery(long userId,
+		java.lang.String portletId, long classNameId, int notificationType,
+		int deliveryType) {
+		getService()
+			.deleteUserNotificationDelivery(userId, portletId, classNameId,
+			notificationType, deliveryType);
+	}
+
+	public static com.liferay.portal.model.UserNotificationDelivery fetchUserNotificationDelivery(
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType) {
+		return getService()
+				   .fetchUserNotificationDelivery(userId, portletId,
+			classNameId, notificationType, deliveryType);
+	}
+
+	public static com.liferay.portal.model.UserNotificationDelivery getUserNotificationDelivery(
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType, boolean deliver)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getUserNotificationDelivery(userId, portletId, classNameId,
+			notificationType, deliveryType, deliver);
 	}
 
 	public static com.liferay.portal.model.UserNotificationDelivery updateUserNotificationDelivery(

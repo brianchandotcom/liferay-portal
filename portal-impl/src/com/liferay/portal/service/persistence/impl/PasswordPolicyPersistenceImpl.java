@@ -154,7 +154,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public List<PasswordPolicy> findByUuid(String uuid, int start, int end,
-		OrderByComparator<PasswordPolicy> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -274,7 +274,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy findByUuid_First(String uuid,
-		OrderByComparator<PasswordPolicy> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchPasswordPolicyException {
 		PasswordPolicy passwordPolicy = fetchByUuid_First(uuid,
 				orderByComparator);
@@ -304,7 +304,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy fetchByUuid_First(String uuid,
-		OrderByComparator<PasswordPolicy> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<PasswordPolicy> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -324,7 +324,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy findByUuid_Last(String uuid,
-		OrderByComparator<PasswordPolicy> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchPasswordPolicyException {
 		PasswordPolicy passwordPolicy = fetchByUuid_Last(uuid, orderByComparator);
 
@@ -353,7 +353,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy fetchByUuid_Last(String uuid,
-		OrderByComparator<PasswordPolicy> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -381,7 +381,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy[] findByUuid_PrevAndNext(long passwordPolicyId,
-		String uuid, OrderByComparator<PasswordPolicy> orderByComparator)
+		String uuid, OrderByComparator orderByComparator)
 		throws NoSuchPasswordPolicyException {
 		PasswordPolicy passwordPolicy = findByPrimaryKey(passwordPolicyId);
 
@@ -412,7 +412,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 	protected PasswordPolicy getByUuid_PrevAndNext(Session session,
 		PasswordPolicy passwordPolicy, String uuid,
-		OrderByComparator<PasswordPolicy> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -572,7 +572,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public List<PasswordPolicy> filterFindByUuid(String uuid, int start,
-		int end, OrderByComparator<PasswordPolicy> orderByComparator) {
+		int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid(uuid, start, end, orderByComparator);
 		}
@@ -677,8 +677,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy[] filterFindByUuid_PrevAndNext(
-		long passwordPolicyId, String uuid,
-		OrderByComparator<PasswordPolicy> orderByComparator)
+		long passwordPolicyId, String uuid, OrderByComparator orderByComparator)
 		throws NoSuchPasswordPolicyException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_PrevAndNext(passwordPolicyId, uuid,
@@ -714,7 +713,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 	protected PasswordPolicy filterGetByUuid_PrevAndNext(Session session,
 		PasswordPolicy passwordPolicy, String uuid,
-		OrderByComparator<PasswordPolicy> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1084,7 +1083,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public List<PasswordPolicy> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator<PasswordPolicy> orderByComparator) {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1214,7 +1213,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator<PasswordPolicy> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchPasswordPolicyException {
 		PasswordPolicy passwordPolicy = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
@@ -1248,7 +1247,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator<PasswordPolicy> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<PasswordPolicy> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1270,7 +1269,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator<PasswordPolicy> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchPasswordPolicyException {
 		PasswordPolicy passwordPolicy = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
@@ -1304,7 +1303,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator<PasswordPolicy> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1333,8 +1332,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy[] findByUuid_C_PrevAndNext(long passwordPolicyId,
-		String uuid, long companyId,
-		OrderByComparator<PasswordPolicy> orderByComparator)
+		String uuid, long companyId, OrderByComparator orderByComparator)
 		throws NoSuchPasswordPolicyException {
 		PasswordPolicy passwordPolicy = findByPrimaryKey(passwordPolicyId);
 
@@ -1365,7 +1363,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 	protected PasswordPolicy getByUuid_C_PrevAndNext(Session session,
 		PasswordPolicy passwordPolicy, String uuid, long companyId,
-		OrderByComparator<PasswordPolicy> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1534,7 +1532,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public List<PasswordPolicy> filterFindByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator<PasswordPolicy> orderByComparator) {
+		int start, int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 		}
@@ -1645,7 +1643,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	@Override
 	public PasswordPolicy[] filterFindByUuid_C_PrevAndNext(
 		long passwordPolicyId, String uuid, long companyId,
-		OrderByComparator<PasswordPolicy> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchPasswordPolicyException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_C_PrevAndNext(passwordPolicyId, uuid, companyId,
@@ -1681,7 +1679,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 	protected PasswordPolicy filterGetByUuid_C_PrevAndNext(Session session,
 		PasswordPolicy passwordPolicy, String uuid, long companyId,
-		OrderByComparator<PasswordPolicy> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2064,7 +2062,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public List<PasswordPolicy> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<PasswordPolicy> orderByComparator) {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2170,7 +2168,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy findByCompanyId_First(long companyId,
-		OrderByComparator<PasswordPolicy> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchPasswordPolicyException {
 		PasswordPolicy passwordPolicy = fetchByCompanyId_First(companyId,
 				orderByComparator);
@@ -2200,7 +2198,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy fetchByCompanyId_First(long companyId,
-		OrderByComparator<PasswordPolicy> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<PasswordPolicy> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -2221,7 +2219,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy findByCompanyId_Last(long companyId,
-		OrderByComparator<PasswordPolicy> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchPasswordPolicyException {
 		PasswordPolicy passwordPolicy = fetchByCompanyId_Last(companyId,
 				orderByComparator);
@@ -2251,7 +2249,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy fetchByCompanyId_Last(long companyId,
-		OrderByComparator<PasswordPolicy> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -2279,7 +2277,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public PasswordPolicy[] findByCompanyId_PrevAndNext(long passwordPolicyId,
-		long companyId, OrderByComparator<PasswordPolicy> orderByComparator)
+		long companyId, OrderByComparator orderByComparator)
 		throws NoSuchPasswordPolicyException {
 		PasswordPolicy passwordPolicy = findByPrimaryKey(passwordPolicyId);
 
@@ -2310,7 +2308,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 	protected PasswordPolicy getByCompanyId_PrevAndNext(Session session,
 		PasswordPolicy passwordPolicy, long companyId,
-		OrderByComparator<PasswordPolicy> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2458,7 +2456,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public List<PasswordPolicy> filterFindByCompanyId(long companyId,
-		int start, int end, OrderByComparator<PasswordPolicy> orderByComparator) {
+		int start, int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByCompanyId(companyId, start, end, orderByComparator);
 		}
@@ -2550,7 +2548,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	@Override
 	public PasswordPolicy[] filterFindByCompanyId_PrevAndNext(
 		long passwordPolicyId, long companyId,
-		OrderByComparator<PasswordPolicy> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchPasswordPolicyException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByCompanyId_PrevAndNext(passwordPolicyId, companyId,
@@ -2586,7 +2584,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 	protected PasswordPolicy filterGetByCompanyId_PrevAndNext(Session session,
 		PasswordPolicy passwordPolicy, long companyId,
-		OrderByComparator<PasswordPolicy> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -4009,7 +4007,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	 */
 	@Override
 	public List<PasswordPolicy> findAll(int start, int end,
-		OrderByComparator<PasswordPolicy> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

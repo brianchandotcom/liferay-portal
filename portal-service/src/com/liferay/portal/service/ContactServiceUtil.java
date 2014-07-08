@@ -50,6 +50,15 @@ public class ContactServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
 	public static com.liferay.portal.model.Contact getContact(long contactId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getContact(contactId);
@@ -67,15 +76,6 @@ public class ContactServiceUtil {
 	public static int getContactsCount(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getContactsCount(classNameId, classPK);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static ContactService getService() {

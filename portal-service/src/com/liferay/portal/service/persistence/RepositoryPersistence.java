@@ -77,7 +77,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public java.util.List<com.liferay.portal.model.Repository> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first repository in the ordered set where uuid = &#63;.
@@ -89,7 +89,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public com.liferay.portal.model.Repository findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryException;
 
 	/**
@@ -101,7 +101,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public com.liferay.portal.model.Repository fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last repository in the ordered set where uuid = &#63;.
@@ -113,7 +113,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public com.liferay.portal.model.Repository findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryException;
 
 	/**
@@ -125,7 +125,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public com.liferay.portal.model.Repository fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the repositories before and after the current repository in the ordered set where uuid = &#63;.
@@ -138,7 +138,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public com.liferay.portal.model.Repository[] findByUuid_PrevAndNext(
 		long repositoryId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryException;
 
 	/**
@@ -251,7 +251,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public java.util.List<com.liferay.portal.model.Repository> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first repository in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -264,7 +264,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public com.liferay.portal.model.Repository findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryException;
 
 	/**
@@ -277,7 +277,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public com.liferay.portal.model.Repository fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last repository in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -290,7 +290,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public com.liferay.portal.model.Repository findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryException;
 
 	/**
@@ -303,7 +303,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public com.liferay.portal.model.Repository fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the repositories before and after the current repository in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -317,7 +317,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public com.liferay.portal.model.Repository[] findByUuid_C_PrevAndNext(
 		long repositoryId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryException;
 
 	/**
@@ -376,7 +376,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public java.util.List<com.liferay.portal.model.Repository> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first repository in the ordered set where groupId = &#63;.
@@ -388,7 +388,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public com.liferay.portal.model.Repository findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryException;
 
 	/**
@@ -400,7 +400,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public com.liferay.portal.model.Repository fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last repository in the ordered set where groupId = &#63;.
@@ -412,7 +412,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public com.liferay.portal.model.Repository findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryException;
 
 	/**
@@ -424,7 +424,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public com.liferay.portal.model.Repository fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the repositories before and after the current repository in the ordered set where groupId = &#63;.
@@ -437,7 +437,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public com.liferay.portal.model.Repository[] findByGroupId_PrevAndNext(
 		long repositoryId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryException;
 
 	/**
@@ -609,7 +609,7 @@ public interface RepositoryPersistence extends BasePersistence<Repository> {
 	*/
 	public java.util.List<com.liferay.portal.model.Repository> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Repository> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the repositories from the database.

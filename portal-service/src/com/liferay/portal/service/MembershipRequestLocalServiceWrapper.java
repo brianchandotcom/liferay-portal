@@ -44,15 +44,6 @@ public class MembershipRequestLocalServiceWrapper
 		return _membershipRequestLocalService.addMembershipRequest(membershipRequest);
 	}
 
-	@Override
-	public com.liferay.portal.model.MembershipRequest addMembershipRequest(
-		long userId, long groupId, java.lang.String comments,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _membershipRequestLocalService.addMembershipRequest(userId,
-			groupId, comments, serviceContext);
-	}
-
 	/**
 	* Creates a new membership request with the primary key. Does not add the membership request to the database.
 	*
@@ -63,18 +54,6 @@ public class MembershipRequestLocalServiceWrapper
 	public com.liferay.portal.model.MembershipRequest createMembershipRequest(
 		long membershipRequestId) {
 		return _membershipRequestLocalService.createMembershipRequest(membershipRequestId);
-	}
-
-	/**
-	* Deletes the membership request from the database. Also notifies the appropriate model listeners.
-	*
-	* @param membershipRequest the membership request
-	* @return the membership request that was removed
-	*/
-	@Override
-	public com.liferay.portal.model.MembershipRequest deleteMembershipRequest(
-		com.liferay.portal.model.MembershipRequest membershipRequest) {
-		return _membershipRequestLocalService.deleteMembershipRequest(membershipRequest);
 	}
 
 	/**
@@ -91,30 +70,16 @@ public class MembershipRequestLocalServiceWrapper
 		return _membershipRequestLocalService.deleteMembershipRequest(membershipRequestId);
 	}
 
-	@Override
-	public void deleteMembershipRequests(long groupId) {
-		_membershipRequestLocalService.deleteMembershipRequests(groupId);
-	}
-
-	@Override
-	public void deleteMembershipRequests(long groupId, int statusId) {
-		_membershipRequestLocalService.deleteMembershipRequests(groupId,
-			statusId);
-	}
-
-	@Override
-	public void deleteMembershipRequestsByUserId(long userId) {
-		_membershipRequestLocalService.deleteMembershipRequestsByUserId(userId);
-	}
-
 	/**
-	* @throws PortalException
+	* Deletes the membership request from the database. Also notifies the appropriate model listeners.
+	*
+	* @param membershipRequest the membership request
+	* @return the membership request that was removed
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _membershipRequestLocalService.deletePersistedModel(persistedModel);
+	public com.liferay.portal.model.MembershipRequest deleteMembershipRequest(
+		com.liferay.portal.model.MembershipRequest membershipRequest) {
+		return _membershipRequestLocalService.deleteMembershipRequest(membershipRequest);
 	}
 
 	@Override
@@ -129,7 +94,8 @@ public class MembershipRequestLocalServiceWrapper
 	* @return the matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _membershipRequestLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -147,7 +113,8 @@ public class MembershipRequestLocalServiceWrapper
 	* @return the range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _membershipRequestLocalService.dynamicQuery(dynamicQuery, start,
@@ -168,10 +135,11 @@ public class MembershipRequestLocalServiceWrapper
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _membershipRequestLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -209,21 +177,6 @@ public class MembershipRequestLocalServiceWrapper
 		return _membershipRequestLocalService.fetchMembershipRequest(membershipRequestId);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _membershipRequestLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _membershipRequestLocalService.getBeanIdentifier();
-	}
-
 	/**
 	* Returns the membership request with the primary key.
 	*
@@ -236,6 +189,28 @@ public class MembershipRequestLocalServiceWrapper
 		long membershipRequestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _membershipRequestLocalService.getMembershipRequest(membershipRequestId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _membershipRequestLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _membershipRequestLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _membershipRequestLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -255,13 +230,6 @@ public class MembershipRequestLocalServiceWrapper
 		return _membershipRequestLocalService.getMembershipRequests(start, end);
 	}
 
-	@Override
-	public java.util.List<com.liferay.portal.model.MembershipRequest> getMembershipRequests(
-		long userId, long groupId, int statusId) {
-		return _membershipRequestLocalService.getMembershipRequests(userId,
-			groupId, statusId);
-	}
-
 	/**
 	* Returns the number of membership requests.
 	*
@@ -272,11 +240,68 @@ public class MembershipRequestLocalServiceWrapper
 		return _membershipRequestLocalService.getMembershipRequestsCount();
 	}
 
+	/**
+	* Updates the membership request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param membershipRequest the membership request
+	* @return the membership request that was updated
+	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public com.liferay.portal.model.MembershipRequest updateMembershipRequest(
+		com.liferay.portal.model.MembershipRequest membershipRequest) {
+		return _membershipRequestLocalService.updateMembershipRequest(membershipRequest);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _membershipRequestLocalService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_membershipRequestLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public com.liferay.portal.model.MembershipRequest addMembershipRequest(
+		long userId, long groupId, java.lang.String comments,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _membershipRequestLocalService.getPersistedModel(primaryKeyObj);
+		return _membershipRequestLocalService.addMembershipRequest(userId,
+			groupId, comments, serviceContext);
+	}
+
+	@Override
+	public void deleteMembershipRequests(long groupId) {
+		_membershipRequestLocalService.deleteMembershipRequests(groupId);
+	}
+
+	@Override
+	public void deleteMembershipRequests(long groupId, int statusId) {
+		_membershipRequestLocalService.deleteMembershipRequests(groupId,
+			statusId);
+	}
+
+	@Override
+	public void deleteMembershipRequestsByUserId(long userId) {
+		_membershipRequestLocalService.deleteMembershipRequestsByUserId(userId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.MembershipRequest> getMembershipRequests(
+		long userId, long groupId, int statusId) {
+		return _membershipRequestLocalService.getMembershipRequests(userId,
+			groupId, statusId);
 	}
 
 	@Override
@@ -294,28 +319,6 @@ public class MembershipRequestLocalServiceWrapper
 	@Override
 	public int searchCount(long groupId, int status) {
 		return _membershipRequestLocalService.searchCount(groupId, status);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_membershipRequestLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
-	* Updates the membership request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param membershipRequest the membership request
-	* @return the membership request that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.MembershipRequest updateMembershipRequest(
-		com.liferay.portal.model.MembershipRequest membershipRequest) {
-		return _membershipRequestLocalService.updateMembershipRequest(membershipRequest);
 	}
 
 	@Override

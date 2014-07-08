@@ -310,7 +310,7 @@ public class WebsitePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<Website> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Website", "mvccVersion",
 			true, "uuid", true, "websiteId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,

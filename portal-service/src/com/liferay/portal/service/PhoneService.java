@@ -48,10 +48,24 @@ public interface PhoneService extends BaseService {
 	 */
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	/**
 	* @deprecated As of 6.2.0, replaced by {@link #addPhone(String, long,
 	String, String, int, boolean, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public com.liferay.portal.model.Phone addPhone(java.lang.String className,
 		long classPK, java.lang.String number, java.lang.String extension,
 		int typeId, boolean primary)
@@ -66,13 +80,6 @@ public interface PhoneService extends BaseService {
 	public void deletePhone(long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Phone getPhone(long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -81,13 +88,6 @@ public interface PhoneService extends BaseService {
 	public java.util.List<com.liferay.portal.model.Phone> getPhones(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.model.Phone updatePhone(long phoneId,
 		java.lang.String number, java.lang.String extension, int typeId,

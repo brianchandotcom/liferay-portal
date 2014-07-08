@@ -225,7 +225,7 @@ public class ReleasePersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<Release> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Release_", "mvccVersion",
 			true, "releaseId", true, "createDate", true, "modifiedDate", true,
 			"servletContextName", true, "buildNumber", true, "buildDate", true,

@@ -860,7 +860,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	 */
 	@Override
 	public List<PortalPreferences> findAll(int start, int end,
-		OrderByComparator<PortalPreferences> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

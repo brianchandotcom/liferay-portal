@@ -30,12 +30,6 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 		_shardLocalService = shardLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.model.Shard addShard(java.lang.String className,
-		long classPK, java.lang.String name) {
-		return _shardLocalService.addShard(className, classPK, name);
-	}
-
 	/**
 	* Adds the shard to the database. Also notifies the appropriate model listeners.
 	*
@@ -60,13 +54,16 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	}
 
 	/**
-	* @throws PortalException
+	* Deletes the shard with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shardId the primary key of the shard
+	* @return the shard that was removed
+	* @throws PortalException if a shard with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.model.Shard deleteShard(long shardId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shardLocalService.deletePersistedModel(persistedModel);
+		return _shardLocalService.deleteShard(shardId);
 	}
 
 	/**
@@ -81,19 +78,6 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 		return _shardLocalService.deleteShard(shard);
 	}
 
-	/**
-	* Deletes the shard with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shardId the primary key of the shard
-	* @return the shard that was removed
-	* @throws PortalException if a shard with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.Shard deleteShard(long shardId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shardLocalService.deleteShard(shardId);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _shardLocalService.dynamicQuery();
@@ -106,7 +90,8 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	* @return the matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _shardLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -124,7 +109,8 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	* @return the range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _shardLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -144,10 +130,11 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _shardLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -183,35 +170,6 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 		return _shardLocalService.fetchShard(shardId);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _shardLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _shardLocalService.getBeanIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shardLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portal.model.Shard getShard(java.lang.String className,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shardLocalService.getShard(className, classPK);
-	}
-
 	/**
 	* Returns the shard with the primary key.
 	*
@@ -223,6 +181,28 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	public com.liferay.portal.model.Shard getShard(long shardId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shardLocalService.getShard(shardId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _shardLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shardLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shardLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -253,16 +233,6 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	}
 
 	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_shardLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
 	* Updates the shard in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param shard the shard
@@ -272,6 +242,39 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	public com.liferay.portal.model.Shard updateShard(
 		com.liferay.portal.model.Shard shard) {
 		return _shardLocalService.updateShard(shard);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _shardLocalService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_shardLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public com.liferay.portal.model.Shard addShard(java.lang.String className,
+		long classPK, java.lang.String name) {
+		return _shardLocalService.addShard(className, classPK, name);
+	}
+
+	@Override
+	public com.liferay.portal.model.Shard getShard(java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shardLocalService.getShard(className, classPK);
 	}
 
 	/**

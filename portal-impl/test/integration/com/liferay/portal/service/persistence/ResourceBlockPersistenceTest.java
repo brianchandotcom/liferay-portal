@@ -241,7 +241,7 @@ public class ResourceBlockPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<ResourceBlock> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ResourceBlock",
 			"mvccVersion", true, "resourceBlockId", true, "companyId", true,
 			"groupId", true, "name", true, "permissionsHash", true,

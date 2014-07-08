@@ -241,7 +241,7 @@ public class ResourceTypePermissionPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<ResourceTypePermission> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ResourceTypePermission",
 			"mvccVersion", true, "resourceTypePermissionId", true, "companyId",
 			true, "groupId", true, "name", true, "roleId", true, "actionIds",

@@ -18,11 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.model.SystemEventConstants;
 
 /**
  * Provides the local service interface for LayoutSetPrototype. Methods of this
@@ -53,30 +51,8 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	* @param layoutSetPrototype the layout set prototype
 	* @return the layout set prototype that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
 		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype);
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addLayoutSetPrototype(long,
-	long, Map, Map, boolean, boolean, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
-		long userId, long companyId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String description, boolean active,
-		boolean layoutsUpdateable,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
-		long userId, long companyId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, boolean layoutsUpdateable,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new layout set prototype with the primary key. Does not add the layout set prototype to the database.
@@ -88,42 +64,25 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 		long layoutSetPrototypeId);
 
 	/**
-	* Deletes the layout set prototype from the database. Also notifies the appropriate model listeners.
-	*
-	* @param layoutSetPrototype the layout set prototype
-	* @return the layout set prototype that was removed
-	* @throws PortalException
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public com.liferay.portal.model.LayoutSetPrototype deleteLayoutSetPrototype(
-		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
 	* Deletes the layout set prototype with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param layoutSetPrototypeId the primary key of the layout set prototype
 	* @return the layout set prototype that was removed
 	* @throws PortalException if a layout set prototype with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.LayoutSetPrototype deleteLayoutSetPrototype(
 		long layoutSetPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void deleteLayoutSetPrototypes()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void deleteNondefaultLayoutSetPrototypes(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	/**
+	* Deletes the layout set prototype from the database. Also notifies the appropriate model listeners.
+	*
+	* @param layoutSetPrototype the layout set prototype
+	* @return the layout set prototype that was removed
 	* @throws PortalException
 	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.model.LayoutSetPrototype deleteLayoutSetPrototype(
+		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
@@ -134,7 +93,8 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
@@ -149,7 +109,8 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end);
 
@@ -166,10 +127,11 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -206,20 +168,6 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	public com.liferay.portal.model.LayoutSetPrototype fetchLayoutSetPrototypeByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext);
-
 	/**
 	* Returns the layout set prototype with the primary key.
 	*
@@ -232,14 +180,25 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 		long layoutSetPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link
-	#getLayoutSetPrototypeByUuidAndCompanyId(String, long)}
-	*/
-	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototypeByUuid(
-		java.lang.String uuid)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext);
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -254,10 +213,6 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	public com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototypeByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> getLayoutSetPrototypes(
-		long companyId);
 
 	/**
 	* Returns a range of all the layout set prototypes.
@@ -282,11 +237,69 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutSetPrototypesCount();
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	/**
+	* Updates the layout set prototype in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param layoutSetPrototype the layout set prototype
+	* @return the layout set prototype that was updated
+	*/
+	public com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
+		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype);
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
+		long userId, long companyId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active, boolean layoutsUpdateable,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #addLayoutSetPrototype(long,
+	long, Map, Map, boolean, boolean, ServiceContext)}
+	*/
+	@Deprecated
+	public com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
+		long userId, long companyId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.lang.String description, boolean active,
+		boolean layoutsUpdateable,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteLayoutSetPrototypes()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteNondefaultLayoutSetPrototypes(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link
+	#getLayoutSetPrototypeByUuidAndCompanyId(String, long)}
+	*/
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototypeByUuid(
+		java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> getLayoutSetPrototypes(
+		long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.LayoutSetPrototype> search(
@@ -296,42 +309,25 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.Boolean active);
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	/**
-	* Updates the layout set prototype in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param layoutSetPrototype the layout set prototype
-	* @return the layout set prototype that was updated
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
-		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype);
+		long layoutSetPrototypeId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active, boolean layoutsUpdateable,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
 	#updateLayoutSetPrototype(long, Map, Map, boolean, boolean,
 	ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
 		long layoutSetPrototypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
 		boolean layoutsUpdateable,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
-		long layoutSetPrototypeId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, boolean layoutsUpdateable,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

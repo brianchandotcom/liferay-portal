@@ -21,7 +21,7 @@ import com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link PasswordPolicyRelLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link PasswordPolicyRelLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

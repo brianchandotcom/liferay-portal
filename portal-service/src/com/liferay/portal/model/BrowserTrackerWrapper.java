@@ -86,39 +86,24 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 		}
 	}
 
+	/**
+	* Returns the primary key of this browser tracker.
+	*
+	* @return the primary key of this browser tracker
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new BrowserTrackerWrapper((BrowserTracker)_browserTracker.clone());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.model.BrowserTracker browserTracker) {
-		return _browserTracker.compareTo(browserTracker);
+	public long getPrimaryKey() {
+		return _browserTracker.getPrimaryKey();
 	}
 
 	/**
-	* Returns the browser key of this browser tracker.
+	* Sets the primary key of this browser tracker.
 	*
-	* @return the browser key of this browser tracker
+	* @param primaryKey the primary key of this browser tracker
 	*/
 	@Override
-	public long getBrowserKey() {
-		return _browserTracker.getBrowserKey();
-	}
-
-	/**
-	* Returns the browser tracker ID of this browser tracker.
-	*
-	* @return the browser tracker ID of this browser tracker
-	*/
-	@Override
-	public long getBrowserTrackerId() {
-		return _browserTracker.getBrowserTrackerId();
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _browserTracker.getExpandoBridge();
+	public void setPrimaryKey(long primaryKey) {
+		_browserTracker.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -132,18 +117,33 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	}
 
 	/**
-	* Returns the primary key of this browser tracker.
+	* Sets the mvcc version of this browser tracker.
 	*
-	* @return the primary key of this browser tracker
+	* @param mvccVersion the mvcc version of this browser tracker
 	*/
 	@Override
-	public long getPrimaryKey() {
-		return _browserTracker.getPrimaryKey();
+	public void setMvccVersion(long mvccVersion) {
+		_browserTracker.setMvccVersion(mvccVersion);
 	}
 
+	/**
+	* Returns the browser tracker ID of this browser tracker.
+	*
+	* @return the browser tracker ID of this browser tracker
+	*/
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _browserTracker.getPrimaryKeyObj();
+	public long getBrowserTrackerId() {
+		return _browserTracker.getBrowserTrackerId();
+	}
+
+	/**
+	* Sets the browser tracker ID of this browser tracker.
+	*
+	* @param browserTrackerId the browser tracker ID of this browser tracker
+	*/
+	@Override
+	public void setBrowserTrackerId(long browserTrackerId) {
+		_browserTracker.setBrowserTrackerId(browserTrackerId);
 	}
 
 	/**
@@ -157,6 +157,16 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	}
 
 	/**
+	* Sets the user ID of this browser tracker.
+	*
+	* @param userId the user ID of this browser tracker
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_browserTracker.setUserId(userId);
+	}
+
+	/**
 	* Returns the user uuid of this browser tracker.
 	*
 	* @return the user uuid of this browser tracker
@@ -166,29 +176,24 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 		return _browserTracker.getUserUuid();
 	}
 
+	/**
+	* Sets the user uuid of this browser tracker.
+	*
+	* @param userUuid the user uuid of this browser tracker
+	*/
 	@Override
-	public int hashCode() {
-		return _browserTracker.hashCode();
+	public void setUserUuid(java.lang.String userUuid) {
+		_browserTracker.setUserUuid(userUuid);
 	}
 
+	/**
+	* Returns the browser key of this browser tracker.
+	*
+	* @return the browser key of this browser tracker
+	*/
 	@Override
-	public boolean isCachedModel() {
-		return _browserTracker.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _browserTracker.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _browserTracker.isNew();
-	}
-
-	@Override
-	public void persist() {
-		_browserTracker.persist();
+	public long getBrowserKey() {
+		return _browserTracker.getBrowserKey();
 	}
 
 	/**
@@ -201,19 +206,44 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 		_browserTracker.setBrowserKey(browserKey);
 	}
 
-	/**
-	* Sets the browser tracker ID of this browser tracker.
-	*
-	* @param browserTrackerId the browser tracker ID of this browser tracker
-	*/
 	@Override
-	public void setBrowserTrackerId(long browserTrackerId) {
-		_browserTracker.setBrowserTrackerId(browserTrackerId);
+	public boolean isNew() {
+		return _browserTracker.isNew();
+	}
+
+	@Override
+	public void setNew(boolean n) {
+		_browserTracker.setNew(n);
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _browserTracker.isCachedModel();
 	}
 
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_browserTracker.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _browserTracker.isEscapedModel();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _browserTracker.getPrimaryKeyObj();
+	}
+
+	@Override
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_browserTracker.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _browserTracker.getExpandoBridge();
 	}
 
 	@Override
@@ -234,54 +264,19 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 		_browserTracker.setExpandoBridgeAttributes(serviceContext);
 	}
 
-	/**
-	* Sets the mvcc version of this browser tracker.
-	*
-	* @param mvccVersion the mvcc version of this browser tracker
-	*/
 	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_browserTracker.setMvccVersion(mvccVersion);
+	public java.lang.Object clone() {
+		return new BrowserTrackerWrapper((BrowserTracker)_browserTracker.clone());
 	}
 
 	@Override
-	public void setNew(boolean n) {
-		_browserTracker.setNew(n);
-	}
-
-	/**
-	* Sets the primary key of this browser tracker.
-	*
-	* @param primaryKey the primary key of this browser tracker
-	*/
-	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_browserTracker.setPrimaryKey(primaryKey);
+	public int compareTo(com.liferay.portal.model.BrowserTracker browserTracker) {
+		return _browserTracker.compareTo(browserTracker);
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_browserTracker.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets the user ID of this browser tracker.
-	*
-	* @param userId the user ID of this browser tracker
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_browserTracker.setUserId(userId);
-	}
-
-	/**
-	* Sets the user uuid of this browser tracker.
-	*
-	* @param userUuid the user uuid of this browser tracker
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_browserTracker.setUserUuid(userUuid);
+	public int hashCode() {
+		return _browserTracker.hashCode();
 	}
 
 	@Override
@@ -295,18 +290,23 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _browserTracker.toString();
-	}
-
-	@Override
 	public com.liferay.portal.model.BrowserTracker toUnescapedModel() {
 		return new BrowserTrackerWrapper(_browserTracker.toUnescapedModel());
 	}
 
 	@Override
+	public java.lang.String toString() {
+		return _browserTracker.toString();
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _browserTracker.toXmlString();
+	}
+
+	@Override
+	public void persist() {
+		_browserTracker.persist();
 	}
 
 	@Override

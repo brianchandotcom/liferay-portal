@@ -43,18 +43,6 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 		return _clusterGroupLocalService.addClusterGroup(clusterGroup);
 	}
 
-	@Override
-	public com.liferay.portal.model.ClusterGroup addClusterGroup(
-		java.lang.String name, java.util.List<java.lang.String> clusterNodeIds) {
-		return _clusterGroupLocalService.addClusterGroup(name, clusterNodeIds);
-	}
-
-	@Override
-	public com.liferay.portal.model.ClusterGroup addWholeClusterGroup(
-		java.lang.String name) {
-		return _clusterGroupLocalService.addWholeClusterGroup(name);
-	}
-
 	/**
 	* Creates a new cluster group with the primary key. Does not add the cluster group to the database.
 	*
@@ -65,18 +53,6 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 	public com.liferay.portal.model.ClusterGroup createClusterGroup(
 		long clusterGroupId) {
 		return _clusterGroupLocalService.createClusterGroup(clusterGroupId);
-	}
-
-	/**
-	* Deletes the cluster group from the database. Also notifies the appropriate model listeners.
-	*
-	* @param clusterGroup the cluster group
-	* @return the cluster group that was removed
-	*/
-	@Override
-	public com.liferay.portal.model.ClusterGroup deleteClusterGroup(
-		com.liferay.portal.model.ClusterGroup clusterGroup) {
-		return _clusterGroupLocalService.deleteClusterGroup(clusterGroup);
 	}
 
 	/**
@@ -94,13 +70,15 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 	}
 
 	/**
-	* @throws PortalException
+	* Deletes the cluster group from the database. Also notifies the appropriate model listeners.
+	*
+	* @param clusterGroup the cluster group
+	* @return the cluster group that was removed
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _clusterGroupLocalService.deletePersistedModel(persistedModel);
+	public com.liferay.portal.model.ClusterGroup deleteClusterGroup(
+		com.liferay.portal.model.ClusterGroup clusterGroup) {
+		return _clusterGroupLocalService.deleteClusterGroup(clusterGroup);
 	}
 
 	@Override
@@ -115,7 +93,8 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 	* @return the matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _clusterGroupLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -133,7 +112,8 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 	* @return the range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _clusterGroupLocalService.dynamicQuery(dynamicQuery, start, end);
@@ -153,10 +133,11 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _clusterGroupLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -194,21 +175,6 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 		return _clusterGroupLocalService.fetchClusterGroup(clusterGroupId);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _clusterGroupLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _clusterGroupLocalService.getBeanIdentifier();
-	}
-
 	/**
 	* Returns the cluster group with the primary key.
 	*
@@ -221,6 +187,28 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 		long clusterGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _clusterGroupLocalService.getClusterGroup(clusterGroupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _clusterGroupLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _clusterGroupLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _clusterGroupLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -250,11 +238,26 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 		return _clusterGroupLocalService.getClusterGroupsCount();
 	}
 
+	/**
+	* Updates the cluster group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param clusterGroup the cluster group
+	* @return the cluster group that was updated
+	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _clusterGroupLocalService.getPersistedModel(primaryKeyObj);
+	public com.liferay.portal.model.ClusterGroup updateClusterGroup(
+		com.liferay.portal.model.ClusterGroup clusterGroup) {
+		return _clusterGroupLocalService.updateClusterGroup(clusterGroup);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _clusterGroupLocalService.getBeanIdentifier();
 	}
 
 	/**
@@ -267,16 +270,16 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 		_clusterGroupLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
-	/**
-	* Updates the cluster group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param clusterGroup the cluster group
-	* @return the cluster group that was updated
-	*/
 	@Override
-	public com.liferay.portal.model.ClusterGroup updateClusterGroup(
-		com.liferay.portal.model.ClusterGroup clusterGroup) {
-		return _clusterGroupLocalService.updateClusterGroup(clusterGroup);
+	public com.liferay.portal.model.ClusterGroup addClusterGroup(
+		java.lang.String name, java.util.List<java.lang.String> clusterNodeIds) {
+		return _clusterGroupLocalService.addClusterGroup(name, clusterNodeIds);
+	}
+
+	@Override
+	public com.liferay.portal.model.ClusterGroup addWholeClusterGroup(
+		java.lang.String name) {
+		return _clusterGroupLocalService.addWholeClusterGroup(name);
 	}
 
 	/**

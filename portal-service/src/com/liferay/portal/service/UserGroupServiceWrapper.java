@@ -31,6 +31,26 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	}
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _userGroupService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_userGroupService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
 	* Adds the user groups to the group.
 	*
 	* @param groupId the primary key of the group
@@ -124,13 +144,18 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the user group with the primary key.
 	*
-	* @return the Spring bean ID for this bean
+	* @param userGroupId the primary key of the user group
+	* @return Returns the user group with the primary key
+	* @throws PortalException if a user group with the primary key could not be
+	found or if the user did not have permission to view the user
+	group
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _userGroupService.getBeanIdentifier();
+	public com.liferay.portal.model.UserGroup getUserGroup(long userGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userGroupService.getUserGroup(userGroupId);
 	}
 
 	/**
@@ -149,21 +174,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	}
 
 	/**
-	* Returns the user group with the primary key.
-	*
-	* @param userGroupId the primary key of the user group
-	* @return Returns the user group with the primary key
-	* @throws PortalException if a user group with the primary key could not be
-	found or if the user did not have permission to view the user
-	group
-	*/
-	@Override
-	public com.liferay.portal.model.UserGroup getUserGroup(long userGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userGroupService.getUserGroup(userGroupId);
-	}
-
-	/**
 	* Returns all the user groups to which the user belongs.
 	*
 	* @param userId the primary key of the user
@@ -175,16 +185,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	public java.util.List<com.liferay.portal.model.UserGroup> getUserUserGroups(
 		long userId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroupService.getUserUserGroups(userId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_userGroupService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

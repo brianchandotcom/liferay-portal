@@ -549,7 +549,7 @@ public class UserPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<User> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("User_", "mvccVersion",
 			true, "uuid", true, "userId", true, "companyId", true,
 			"createDate", true, "modifiedDate", true, "defaultUser", true,

@@ -40,11 +40,6 @@ public class PortletServiceWrapper implements PortletService,
 		return _portletService.getBeanIdentifier();
 	}
 
-	@Override
-	public com.liferay.portal.kernel.json.JSONArray getWARPortlets() {
-		return _portletService.getWARPortlets();
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -53,6 +48,11 @@ public class PortletServiceWrapper implements PortletService,
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_portletService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONArray getWARPortlets() {
+		return _portletService.getWARPortlets();
 	}
 
 	@Override

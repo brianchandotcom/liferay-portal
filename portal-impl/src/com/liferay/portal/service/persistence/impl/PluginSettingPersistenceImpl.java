@@ -154,7 +154,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 */
 	@Override
 	public List<PluginSetting> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<PluginSetting> orderByComparator) {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -260,7 +260,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 */
 	@Override
 	public PluginSetting findByCompanyId_First(long companyId,
-		OrderByComparator<PluginSetting> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchPluginSettingException {
 		PluginSetting pluginSetting = fetchByCompanyId_First(companyId,
 				orderByComparator);
@@ -290,7 +290,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 */
 	@Override
 	public PluginSetting fetchByCompanyId_First(long companyId,
-		OrderByComparator<PluginSetting> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<PluginSetting> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -311,7 +311,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 */
 	@Override
 	public PluginSetting findByCompanyId_Last(long companyId,
-		OrderByComparator<PluginSetting> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchPluginSettingException {
 		PluginSetting pluginSetting = fetchByCompanyId_Last(companyId,
 				orderByComparator);
@@ -341,7 +341,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 */
 	@Override
 	public PluginSetting fetchByCompanyId_Last(long companyId,
-		OrderByComparator<PluginSetting> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -369,7 +369,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 */
 	@Override
 	public PluginSetting[] findByCompanyId_PrevAndNext(long pluginSettingId,
-		long companyId, OrderByComparator<PluginSetting> orderByComparator)
+		long companyId, OrderByComparator orderByComparator)
 		throws NoSuchPluginSettingException {
 		PluginSetting pluginSetting = findByPrimaryKey(pluginSettingId);
 
@@ -400,7 +400,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 
 	protected PluginSetting getByCompanyId_PrevAndNext(Session session,
 		PluginSetting pluginSetting, long companyId,
-		OrderByComparator<PluginSetting> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1452,7 +1452,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	 */
 	@Override
 	public List<PluginSetting> findAll(int start, int end,
-		OrderByComparator<PluginSetting> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

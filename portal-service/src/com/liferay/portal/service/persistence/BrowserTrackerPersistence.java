@@ -179,7 +179,7 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 	*/
 	public java.util.List<com.liferay.portal.model.BrowserTracker> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.BrowserTracker> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the browser trackers from the database.

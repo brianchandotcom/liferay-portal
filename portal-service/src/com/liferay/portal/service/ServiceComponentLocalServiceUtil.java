@@ -64,12 +64,16 @@ public class ServiceComponentLocalServiceUtil {
 	}
 
 	/**
-	* @throws PortalException
+	* Deletes the service component with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param serviceComponentId the primary key of the service component
+	* @return the service component that was removed
+	* @throws PortalException if a service component with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public static com.liferay.portal.model.ServiceComponent deleteServiceComponent(
+		long serviceComponentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
+		return getService().deleteServiceComponent(serviceComponentId);
 	}
 
 	/**
@@ -83,25 +87,6 @@ public class ServiceComponentLocalServiceUtil {
 		return getService().deleteServiceComponent(serviceComponent);
 	}
 
-	/**
-	* Deletes the service component with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param serviceComponentId the primary key of the service component
-	* @return the service component that was removed
-	* @throws PortalException if a service component with the primary key could not be found
-	*/
-	public static com.liferay.portal.model.ServiceComponent deleteServiceComponent(
-		long serviceComponentId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteServiceComponent(serviceComponentId);
-	}
-
-	public static void destroyServiceComponent(
-		javax.servlet.ServletContext servletContext,
-		java.lang.ClassLoader classLoader) {
-		getService().destroyServiceComponent(servletContext, classLoader);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
@@ -112,7 +97,8 @@ public class ServiceComponentLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public static <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
@@ -129,7 +115,8 @@ public class ServiceComponentLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public static <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
@@ -148,10 +135,11 @@ public class ServiceComponentLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public static <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -185,25 +173,6 @@ public class ServiceComponentLocalServiceUtil {
 		return getService().fetchServiceComponent(serviceComponentId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
 	/**
 	* Returns the service component with the primary key.
 	*
@@ -215,6 +184,25 @@ public class ServiceComponentLocalServiceUtil {
 		long serviceComponentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getServiceComponent(serviceComponentId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -242,14 +230,24 @@ public class ServiceComponentLocalServiceUtil {
 		return getService().getServiceComponentsCount();
 	}
 
-	public static com.liferay.portal.model.ServiceComponent initServiceComponent(
-		javax.servlet.ServletContext servletContext,
-		java.lang.ClassLoader classLoader, java.lang.String buildNamespace,
-		long buildNumber, long buildDate, boolean buildAutoUpgrade)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .initServiceComponent(servletContext, classLoader,
-			buildNamespace, buildNumber, buildDate, buildAutoUpgrade);
+	/**
+	* Updates the service component in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param serviceComponent the service component
+	* @return the service component that was updated
+	*/
+	public static com.liferay.portal.model.ServiceComponent updateServiceComponent(
+		com.liferay.portal.model.ServiceComponent serviceComponent) {
+		return getService().updateServiceComponent(serviceComponent);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
 	}
 
 	/**
@@ -261,15 +259,20 @@ public class ServiceComponentLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	/**
-	* Updates the service component in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param serviceComponent the service component
-	* @return the service component that was updated
-	*/
-	public static com.liferay.portal.model.ServiceComponent updateServiceComponent(
-		com.liferay.portal.model.ServiceComponent serviceComponent) {
-		return getService().updateServiceComponent(serviceComponent);
+	public static void destroyServiceComponent(
+		javax.servlet.ServletContext servletContext,
+		java.lang.ClassLoader classLoader) {
+		getService().destroyServiceComponent(servletContext, classLoader);
+	}
+
+	public static com.liferay.portal.model.ServiceComponent initServiceComponent(
+		javax.servlet.ServletContext servletContext,
+		java.lang.ClassLoader classLoader, java.lang.String buildNamespace,
+		long buildNumber, long buildDate, boolean buildAutoUpgrade)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .initServiceComponent(servletContext, classLoader,
+			buildNamespace, buildNumber, buildDate, buildAutoUpgrade);
 	}
 
 	public static void upgradeDB(java.lang.ClassLoader classLoader,

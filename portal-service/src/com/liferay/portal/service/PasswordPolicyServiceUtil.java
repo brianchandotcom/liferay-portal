@@ -42,6 +42,24 @@ public class PasswordPolicyServiceUtil {
 	 */
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
+		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
 	* @deprecated As of 6.2.0, replaced by {@link #addPasswordPolicy(String,
 	String, boolean, boolean, long, boolean, boolean, int, int,
 	int, int, int, int, String, boolean, int, boolean, long,
@@ -90,24 +108,6 @@ public class PasswordPolicyServiceUtil {
 	public static void deletePasswordPolicy(long passwordPolicyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deletePasswordPolicy(passwordPolicyId);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -77,7 +77,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public java.util.List<com.liferay.portal.model.Team> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first team in the ordered set where groupId = &#63;.
@@ -88,7 +88,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @throws com.liferay.portal.NoSuchTeamException if a matching team could not be found
 	*/
 	public com.liferay.portal.model.Team findByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException;
 
 	/**
@@ -99,7 +99,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @return the first matching team, or <code>null</code> if a matching team could not be found
 	*/
 	public com.liferay.portal.model.Team fetchByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last team in the ordered set where groupId = &#63;.
@@ -110,7 +110,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @throws com.liferay.portal.NoSuchTeamException if a matching team could not be found
 	*/
 	public com.liferay.portal.model.Team findByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException;
 
 	/**
@@ -121,7 +121,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	* @return the last matching team, or <code>null</code> if a matching team could not be found
 	*/
 	public com.liferay.portal.model.Team fetchByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the teams before and after the current team in the ordered set where groupId = &#63;.
@@ -134,7 +134,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public com.liferay.portal.model.Team[] findByGroupId_PrevAndNext(
 		long teamId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException;
 
 	/**
@@ -176,7 +176,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public java.util.List<com.liferay.portal.model.Team> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the teams before and after the current team in the ordered set of teams that the user has permission to view where groupId = &#63;.
@@ -189,7 +189,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public com.liferay.portal.model.Team[] filterFindByGroupId_PrevAndNext(
 		long teamId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchTeamException;
 
 	/**
@@ -358,7 +358,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public java.util.List<com.liferay.portal.model.Team> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the teams from the database.
@@ -418,7 +418,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public java.util.List<com.liferay.portal.model.User> getUsers(long pk,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of users associated with the team.
@@ -582,7 +582,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserGroup> getUserGroups(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of user groups associated with the team.

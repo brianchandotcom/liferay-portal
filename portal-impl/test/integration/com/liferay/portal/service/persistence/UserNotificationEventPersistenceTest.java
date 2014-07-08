@@ -319,6 +319,36 @@ public class UserNotificationEventPersistenceTest {
 	}
 
 	@Test
+	public void testCountByU_DT_D_A() {
+		try {
+			_persistence.countByU_DT_D_A(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt(), RandomTestUtil.randomBoolean(),
+				RandomTestUtil.randomBoolean());
+
+			_persistence.countByU_DT_D_A(0L, 0, RandomTestUtil.randomBoolean(),
+				RandomTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByU_DT_A_A() {
+		try {
+			_persistence.countByU_DT_A_A(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt(), RandomTestUtil.randomBoolean(),
+				RandomTestUtil.randomBoolean());
+
+			_persistence.countByU_DT_A_A(0L, 0, RandomTestUtil.randomBoolean(),
+				RandomTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		UserNotificationEvent newUserNotificationEvent = addUserNotificationEvent();
 
@@ -353,7 +383,7 @@ public class UserNotificationEventPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<UserNotificationEvent> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("UserNotificationEvent",
 			"mvccVersion", true, "uuid", true, "userNotificationEventId", true,
 			"companyId", true, "userId", true, "type", true, "timestamp", true,

@@ -224,7 +224,7 @@ public class PluginSettingPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<PluginSetting> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PluginSetting",
 			"mvccVersion", true, "pluginSettingId", true, "companyId", true,
 			"pluginId", true, "pluginType", true, "roles", true, "active", true);

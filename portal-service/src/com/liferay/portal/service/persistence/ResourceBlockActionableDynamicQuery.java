@@ -21,7 +21,7 @@ import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link ResourceBlockLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link ResourceBlockLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

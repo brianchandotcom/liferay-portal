@@ -21,7 +21,7 @@ import com.liferay.portal.service.TicketLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link TicketLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link TicketLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

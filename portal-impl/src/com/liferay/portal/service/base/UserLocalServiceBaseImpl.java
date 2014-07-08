@@ -185,7 +185,8 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return userPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -202,8 +203,8 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return userPersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -221,8 +222,9 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return userPersistence.findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -361,7 +363,7 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return userLocalService.deleteUser((User)persistedModel);
+		return deleteUser((User)persistedModel);
 	}
 
 	@Override
@@ -518,7 +520,7 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<User> getGroupUsers(long groupId, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return groupPersistence.getUsers(groupId, start, end, orderByComparator);
 	}
 
@@ -647,7 +649,7 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<User> getOrganizationUsers(long organizationId, int start,
-		int end, OrderByComparator<User> orderByComparator) {
+		int end, OrderByComparator orderByComparator) {
 		return organizationPersistence.getUsers(organizationId, start, end,
 			orderByComparator);
 	}
@@ -780,7 +782,7 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<User> getRoleUsers(long roleId, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return rolePersistence.getUsers(roleId, start, end, orderByComparator);
 	}
 
@@ -910,7 +912,7 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<User> getTeamUsers(long teamId, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return teamPersistence.getUsers(teamId, start, end, orderByComparator);
 	}
 
@@ -1042,7 +1044,7 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<User> getUserGroupUsers(long userGroupId, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return userGroupPersistence.getUsers(userGroupId, start, end,
 			orderByComparator);
 	}

@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,7 +51,6 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	* @param serviceComponent the service component
 	* @return the service component that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.ServiceComponent addServiceComponent(
 		com.liferay.portal.model.ServiceComponent serviceComponent);
 
@@ -66,11 +64,14 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 		long serviceComponentId);
 
 	/**
-	* @throws PortalException
+	* Deletes the service component with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param serviceComponentId the primary key of the service component
+	* @return the service component that was removed
+	* @throws PortalException if a service component with the primary key could not be found
 	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.model.ServiceComponent deleteServiceComponent(
+		long serviceComponentId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -79,25 +80,8 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	* @param serviceComponent the service component
 	* @return the service component that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.ServiceComponent deleteServiceComponent(
 		com.liferay.portal.model.ServiceComponent serviceComponent);
-
-	/**
-	* Deletes the service component with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param serviceComponentId the primary key of the service component
-	* @return the service component that was removed
-	* @throws PortalException if a service component with the primary key could not be found
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.ServiceComponent deleteServiceComponent(
-		long serviceComponentId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void destroyServiceComponent(
-		javax.servlet.ServletContext servletContext,
-		java.lang.ClassLoader classLoader);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -107,7 +91,8 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
@@ -122,7 +107,8 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end);
 
@@ -139,10 +125,11 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -168,22 +155,6 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	public com.liferay.portal.model.ServiceComponent fetchServiceComponent(
 		long serviceComponentId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	/**
 	* Returns the service component with the primary key.
 	*
@@ -194,6 +165,23 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ServiceComponent getServiceComponent(
 		long serviceComponentId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -219,11 +207,21 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getServiceComponentsCount();
 
-	public com.liferay.portal.model.ServiceComponent initServiceComponent(
-		javax.servlet.ServletContext servletContext,
-		java.lang.ClassLoader classLoader, java.lang.String buildNamespace,
-		long buildNumber, long buildDate, boolean buildAutoUpgrade)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	/**
+	* Updates the service component in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param serviceComponent the service component
+	* @return the service component that was updated
+	*/
+	public com.liferay.portal.model.ServiceComponent updateServiceComponent(
+		com.liferay.portal.model.ServiceComponent serviceComponent);
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -232,15 +230,15 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	/**
-	* Updates the service component in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param serviceComponent the service component
-	* @return the service component that was updated
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.ServiceComponent updateServiceComponent(
-		com.liferay.portal.model.ServiceComponent serviceComponent);
+	public void destroyServiceComponent(
+		javax.servlet.ServletContext servletContext,
+		java.lang.ClassLoader classLoader);
+
+	public com.liferay.portal.model.ServiceComponent initServiceComponent(
+		javax.servlet.ServletContext servletContext,
+		java.lang.ClassLoader classLoader, java.lang.String buildNamespace,
+		long buildNumber, long buildDate, boolean buildAutoUpgrade)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void upgradeDB(java.lang.ClassLoader classLoader,
 		java.lang.String buildNamespace, long buildNumber,

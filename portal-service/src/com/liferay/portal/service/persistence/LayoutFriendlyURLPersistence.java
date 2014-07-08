@@ -77,7 +77,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first layout friendly u r l in the ordered set where uuid = &#63;.
@@ -89,7 +89,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -101,7 +101,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last layout friendly u r l in the ordered set where uuid = &#63;.
@@ -113,7 +113,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -125,7 +125,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where uuid = &#63;.
@@ -138,7 +138,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL[] findByUuid_PrevAndNext(
 		long layoutFriendlyURLId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -251,7 +251,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first layout friendly u r l in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -264,7 +264,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -277,7 +277,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last layout friendly u r l in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -290,7 +290,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -303,7 +303,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -317,7 +317,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL[] findByUuid_C_PrevAndNext(
 		long layoutFriendlyURLId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -376,7 +376,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first layout friendly u r l in the ordered set where groupId = &#63;.
@@ -388,7 +388,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -400,7 +400,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last layout friendly u r l in the ordered set where groupId = &#63;.
@@ -412,7 +412,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -424,7 +424,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where groupId = &#63;.
@@ -437,7 +437,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL[] findByGroupId_PrevAndNext(
 		long layoutFriendlyURLId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -494,7 +494,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first layout friendly u r l in the ordered set where companyId = &#63;.
@@ -506,7 +506,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -518,7 +518,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last layout friendly u r l in the ordered set where companyId = &#63;.
@@ -530,7 +530,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -542,7 +542,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where companyId = &#63;.
@@ -555,7 +555,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL[] findByCompanyId_PrevAndNext(
 		long layoutFriendlyURLId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -612,7 +612,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> findByPlid(
 		long plid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first layout friendly u r l in the ordered set where plid = &#63;.
@@ -624,7 +624,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL findByPlid_First(
 		long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -636,7 +636,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL fetchByPlid_First(
 		long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last layout friendly u r l in the ordered set where plid = &#63;.
@@ -648,7 +648,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL findByPlid_Last(
 		long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -660,7 +660,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL fetchByPlid_Last(
 		long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where plid = &#63;.
@@ -673,7 +673,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL[] findByPlid_PrevAndNext(
 		long layoutFriendlyURLId, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -733,7 +733,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> findByP_F(
 		long plid, java.lang.String friendlyURL, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first layout friendly u r l in the ordered set where plid = &#63; and friendlyURL = &#63;.
@@ -746,7 +746,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL findByP_F_First(
 		long plid, java.lang.String friendlyURL,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -759,7 +759,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL fetchByP_F_First(
 		long plid, java.lang.String friendlyURL,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last layout friendly u r l in the ordered set where plid = &#63; and friendlyURL = &#63;.
@@ -772,7 +772,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL findByP_F_Last(
 		long plid, java.lang.String friendlyURL,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -785,7 +785,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL fetchByP_F_Last(
 		long plid, java.lang.String friendlyURL,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where plid = &#63; and friendlyURL = &#63;.
@@ -799,7 +799,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL[] findByP_F_PrevAndNext(
 		long layoutFriendlyURLId, long plid, java.lang.String friendlyURL,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -919,7 +919,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> findByG_P_F(
 		long groupId, boolean privateLayout, java.lang.String friendlyURL,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first layout friendly u r l in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
@@ -933,7 +933,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL findByG_P_F_First(
 		long groupId, boolean privateLayout, java.lang.String friendlyURL,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -947,7 +947,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL fetchByG_P_F_First(
 		long groupId, boolean privateLayout, java.lang.String friendlyURL,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last layout friendly u r l in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
@@ -961,7 +961,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL findByG_P_F_Last(
 		long groupId, boolean privateLayout, java.lang.String friendlyURL,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -975,7 +975,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public com.liferay.portal.model.LayoutFriendlyURL fetchByG_P_F_Last(
 		long groupId, boolean privateLayout, java.lang.String friendlyURL,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
@@ -991,7 +991,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	public com.liferay.portal.model.LayoutFriendlyURL[] findByG_P_F_PrevAndNext(
 		long layoutFriendlyURLId, long groupId, boolean privateLayout,
 		java.lang.String friendlyURL,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
 
 	/**
@@ -1181,7 +1181,7 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutFriendlyURL> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutFriendlyURL> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the layout friendly u r ls from the database.

@@ -32,15 +32,6 @@ public class PortletPreferencesLocalServiceWrapper
 		_portletPreferencesLocalService = portletPreferencesLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.model.PortletPreferences addPortletPreferences(
-		long companyId, long ownerId, int ownerType, long plid,
-		java.lang.String portletId, com.liferay.portal.model.Portlet portlet,
-		java.lang.String defaultPreferences) {
-		return _portletPreferencesLocalService.addPortletPreferences(companyId,
-			ownerId, ownerType, plid, portletId, portlet, defaultPreferences);
-	}
-
 	/**
 	* Adds the portlet preferences to the database. Also notifies the appropriate model listeners.
 	*
@@ -66,27 +57,17 @@ public class PortletPreferencesLocalServiceWrapper
 	}
 
 	/**
-	* @throws PortalException
+	* Deletes the portlet preferences with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param portletPreferencesId the primary key of the portlet preferences
+	* @return the portlet preferences that was removed
+	* @throws PortalException if a portlet preferences with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.model.PortletPreferences deletePortletPreferences(
+		long portletPreferencesId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletPreferencesLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public void deletePortletPreferences(long ownerId, int ownerType, long plid) {
-		_portletPreferencesLocalService.deletePortletPreferences(ownerId,
-			ownerType, plid);
-	}
-
-	@Override
-	public void deletePortletPreferences(long ownerId, int ownerType,
-		long plid, java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_portletPreferencesLocalService.deletePortletPreferences(ownerId,
-			ownerType, plid, portletId);
+		return _portletPreferencesLocalService.deletePortletPreferences(portletPreferencesId);
 	}
 
 	/**
@@ -101,25 +82,6 @@ public class PortletPreferencesLocalServiceWrapper
 		return _portletPreferencesLocalService.deletePortletPreferences(portletPreferences);
 	}
 
-	/**
-	* Deletes the portlet preferences with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param portletPreferencesId the primary key of the portlet preferences
-	* @return the portlet preferences that was removed
-	* @throws PortalException if a portlet preferences with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.PortletPreferences deletePortletPreferences(
-		long portletPreferencesId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletPreferencesLocalService.deletePortletPreferences(portletPreferencesId);
-	}
-
-	@Override
-	public void deletePortletPreferencesByPlid(long plid) {
-		_portletPreferencesLocalService.deletePortletPreferencesByPlid(plid);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _portletPreferencesLocalService.dynamicQuery();
@@ -132,7 +94,8 @@ public class PortletPreferencesLocalServiceWrapper
 	* @return the matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _portletPreferencesLocalService.dynamicQuery(dynamicQuery);
 	}
@@ -150,7 +113,8 @@ public class PortletPreferencesLocalServiceWrapper
 	* @return the range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return _portletPreferencesLocalService.dynamicQuery(dynamicQuery,
@@ -171,10 +135,11 @@ public class PortletPreferencesLocalServiceWrapper
 	* @return the ordered range of matching rows
 	*/
 	@Override
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _portletPreferencesLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -212,90 +177,6 @@ public class PortletPreferencesLocalServiceWrapper
 		return _portletPreferencesLocalService.fetchPortletPreferences(portletPreferencesId);
 	}
 
-	@Override
-	public javax.portlet.PortletPreferences fetchPreferences(long companyId,
-		long ownerId, int ownerType, long plid, java.lang.String portletId) {
-		return _portletPreferencesLocalService.fetchPreferences(companyId,
-			ownerId, ownerType, plid, portletId);
-	}
-
-	@Override
-	public javax.portlet.PortletPreferences fetchPreferences(
-		com.liferay.portal.model.PortletPreferencesIds portletPreferencesIds) {
-		return _portletPreferencesLocalService.fetchPreferences(portletPreferencesIds);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _portletPreferencesLocalService.getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _portletPreferencesLocalService.getBeanIdentifier();
-	}
-
-	@Override
-	public javax.portlet.PortletPreferences getDefaultPreferences(
-		long companyId, java.lang.String portletId) {
-		return _portletPreferencesLocalService.getDefaultPreferences(companyId,
-			portletId);
-	}
-
-	@Override
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletPreferencesLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences() {
-		return _portletPreferencesLocalService.getPortletPreferences();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
-		long companyId, long groupId, long ownerId, int ownerType,
-		java.lang.String portletId, boolean privateLayout) {
-		return _portletPreferencesLocalService.getPortletPreferences(companyId,
-			groupId, ownerId, ownerType, portletId, privateLayout);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
-		long ownerId, int ownerType, long plid) {
-		return _portletPreferencesLocalService.getPortletPreferences(ownerId,
-			ownerType, plid);
-	}
-
-	@Override
-	public com.liferay.portal.model.PortletPreferences getPortletPreferences(
-		long ownerId, int ownerType, long plid, java.lang.String portletId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _portletPreferencesLocalService.getPortletPreferences(ownerId,
-			ownerType, plid, portletId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
-		int ownerType, long plid, java.lang.String portletId) {
-		return _portletPreferencesLocalService.getPortletPreferences(ownerType,
-			plid, portletId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
-		long plid, java.lang.String portletId) {
-		return _portletPreferencesLocalService.getPortletPreferences(plid,
-			portletId);
-	}
-
 	/**
 	* Returns the portlet preferences with the primary key.
 	*
@@ -311,38 +192,25 @@ public class PortletPreferencesLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferencesByPlid(
-		long plid) {
-		return _portletPreferencesLocalService.getPortletPreferencesByPlid(plid);
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _portletPreferencesLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _portletPreferencesLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
-	public long getPortletPreferencesCount(long ownerId, int ownerType,
-		long plid, com.liferay.portal.model.Portlet portlet,
-		boolean excludeDefaultPreferences) {
-		return _portletPreferencesLocalService.getPortletPreferencesCount(ownerId,
-			ownerType, plid, portlet, excludeDefaultPreferences);
-	}
-
-	@Override
-	public long getPortletPreferencesCount(long ownerId, int ownerType,
-		java.lang.String portletId, boolean excludeDefaultPreferences) {
-		return _portletPreferencesLocalService.getPortletPreferencesCount(ownerId,
-			ownerType, portletId, excludeDefaultPreferences);
-	}
-
-	@Override
-	public long getPortletPreferencesCount(int ownerType, long plid,
-		java.lang.String portletId) {
-		return _portletPreferencesLocalService.getPortletPreferencesCount(ownerType,
-			plid, portletId);
-	}
-
-	@Override
-	public long getPortletPreferencesCount(int ownerType,
-		java.lang.String portletId) {
-		return _portletPreferencesLocalService.getPortletPreferencesCount(ownerType,
-			portletId);
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _portletPreferencesLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -371,6 +239,163 @@ public class PortletPreferencesLocalServiceWrapper
 	@Override
 	public int getPortletPreferencesesCount() {
 		return _portletPreferencesLocalService.getPortletPreferencesesCount();
+	}
+
+	/**
+	* Updates the portlet preferences in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param portletPreferences the portlet preferences
+	* @return the portlet preferences that was updated
+	*/
+	@Override
+	public com.liferay.portal.model.PortletPreferences updatePortletPreferences(
+		com.liferay.portal.model.PortletPreferences portletPreferences) {
+		return _portletPreferencesLocalService.updatePortletPreferences(portletPreferences);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _portletPreferencesLocalService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_portletPreferencesLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public com.liferay.portal.model.PortletPreferences addPortletPreferences(
+		long companyId, long ownerId, int ownerType, long plid,
+		java.lang.String portletId, com.liferay.portal.model.Portlet portlet,
+		java.lang.String defaultPreferences) {
+		return _portletPreferencesLocalService.addPortletPreferences(companyId,
+			ownerId, ownerType, plid, portletId, portlet, defaultPreferences);
+	}
+
+	@Override
+	public void deletePortletPreferences(long ownerId, int ownerType, long plid) {
+		_portletPreferencesLocalService.deletePortletPreferences(ownerId,
+			ownerType, plid);
+	}
+
+	@Override
+	public void deletePortletPreferences(long ownerId, int ownerType,
+		long plid, java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_portletPreferencesLocalService.deletePortletPreferences(ownerId,
+			ownerType, plid, portletId);
+	}
+
+	@Override
+	public void deletePortletPreferencesByPlid(long plid) {
+		_portletPreferencesLocalService.deletePortletPreferencesByPlid(plid);
+	}
+
+	@Override
+	public javax.portlet.PortletPreferences fetchPreferences(long companyId,
+		long ownerId, int ownerType, long plid, java.lang.String portletId) {
+		return _portletPreferencesLocalService.fetchPreferences(companyId,
+			ownerId, ownerType, plid, portletId);
+	}
+
+	@Override
+	public javax.portlet.PortletPreferences fetchPreferences(
+		com.liferay.portal.model.PortletPreferencesIds portletPreferencesIds) {
+		return _portletPreferencesLocalService.fetchPreferences(portletPreferencesIds);
+	}
+
+	@Override
+	public javax.portlet.PortletPreferences getDefaultPreferences(
+		long companyId, java.lang.String portletId) {
+		return _portletPreferencesLocalService.getDefaultPreferences(companyId,
+			portletId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences() {
+		return _portletPreferencesLocalService.getPortletPreferences();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
+		int ownerType, long plid, java.lang.String portletId) {
+		return _portletPreferencesLocalService.getPortletPreferences(ownerType,
+			plid, portletId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
+		long ownerId, int ownerType, long plid) {
+		return _portletPreferencesLocalService.getPortletPreferences(ownerId,
+			ownerType, plid);
+	}
+
+	@Override
+	public com.liferay.portal.model.PortletPreferences getPortletPreferences(
+		long ownerId, int ownerType, long plid, java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _portletPreferencesLocalService.getPortletPreferences(ownerId,
+			ownerType, plid, portletId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
+		long companyId, long groupId, long ownerId, int ownerType,
+		java.lang.String portletId, boolean privateLayout) {
+		return _portletPreferencesLocalService.getPortletPreferences(companyId,
+			groupId, ownerId, ownerType, portletId, privateLayout);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferences(
+		long plid, java.lang.String portletId) {
+		return _portletPreferencesLocalService.getPortletPreferences(plid,
+			portletId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferencesByPlid(
+		long plid) {
+		return _portletPreferencesLocalService.getPortletPreferencesByPlid(plid);
+	}
+
+	@Override
+	public long getPortletPreferencesCount(int ownerType, long plid,
+		java.lang.String portletId) {
+		return _portletPreferencesLocalService.getPortletPreferencesCount(ownerType,
+			plid, portletId);
+	}
+
+	@Override
+	public long getPortletPreferencesCount(int ownerType,
+		java.lang.String portletId) {
+		return _portletPreferencesLocalService.getPortletPreferencesCount(ownerType,
+			portletId);
+	}
+
+	@Override
+	public long getPortletPreferencesCount(long ownerId, int ownerType,
+		long plid, com.liferay.portal.model.Portlet portlet,
+		boolean excludeDefaultPreferences) {
+		return _portletPreferencesLocalService.getPortletPreferencesCount(ownerId,
+			ownerType, plid, portlet, excludeDefaultPreferences);
+	}
+
+	@Override
+	public long getPortletPreferencesCount(long ownerId, int ownerType,
+		java.lang.String portletId, boolean excludeDefaultPreferences) {
+		return _portletPreferencesLocalService.getPortletPreferencesCount(ownerId,
+			ownerType, portletId, excludeDefaultPreferences);
 	}
 
 	@Override
@@ -406,28 +431,6 @@ public class PortletPreferencesLocalServiceWrapper
 	public javax.portlet.PortletPreferences getStrictPreferences(
 		com.liferay.portal.model.PortletPreferencesIds portletPreferencesIds) {
 		return _portletPreferencesLocalService.getStrictPreferences(portletPreferencesIds);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_portletPreferencesLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	/**
-	* Updates the portlet preferences in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param portletPreferences the portlet preferences
-	* @return the portlet preferences that was updated
-	*/
-	@Override
-	public com.liferay.portal.model.PortletPreferences updatePortletPreferences(
-		com.liferay.portal.model.PortletPreferences portletPreferences) {
-		return _portletPreferencesLocalService.updatePortletPreferences(portletPreferences);
 	}
 
 	@Override

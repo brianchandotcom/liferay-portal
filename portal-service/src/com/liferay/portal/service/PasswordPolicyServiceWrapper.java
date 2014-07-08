@@ -32,6 +32,26 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 	}
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _passwordPolicyService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_passwordPolicyService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
 	* @deprecated As of 6.2.0, replaced by {@link #addPasswordPolicy(String,
 	String, boolean, boolean, long, boolean, boolean, int, int,
 	int, int, int, int, String, boolean, int, boolean, long,
@@ -82,26 +102,6 @@ public class PasswordPolicyServiceWrapper implements PasswordPolicyService,
 	public void deletePasswordPolicy(long passwordPolicyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_passwordPolicyService.deletePasswordPolicy(passwordPolicyId);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _passwordPolicyService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_passwordPolicyService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

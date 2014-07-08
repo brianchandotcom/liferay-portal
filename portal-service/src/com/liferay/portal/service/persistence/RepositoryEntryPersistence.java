@@ -77,7 +77,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public java.util.List<com.liferay.portal.model.RepositoryEntry> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first repository entry in the ordered set where uuid = &#63;.
@@ -89,7 +89,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public com.liferay.portal.model.RepositoryEntry findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException;
 
 	/**
@@ -101,7 +101,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public com.liferay.portal.model.RepositoryEntry fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last repository entry in the ordered set where uuid = &#63;.
@@ -113,7 +113,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public com.liferay.portal.model.RepositoryEntry findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException;
 
 	/**
@@ -125,7 +125,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public com.liferay.portal.model.RepositoryEntry fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the repository entries before and after the current repository entry in the ordered set where uuid = &#63;.
@@ -138,7 +138,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public com.liferay.portal.model.RepositoryEntry[] findByUuid_PrevAndNext(
 		long repositoryEntryId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException;
 
 	/**
@@ -251,7 +251,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public java.util.List<com.liferay.portal.model.RepositoryEntry> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first repository entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -264,7 +264,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public com.liferay.portal.model.RepositoryEntry findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException;
 
 	/**
@@ -277,7 +277,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public com.liferay.portal.model.RepositoryEntry fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last repository entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -290,7 +290,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public com.liferay.portal.model.RepositoryEntry findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException;
 
 	/**
@@ -303,7 +303,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public com.liferay.portal.model.RepositoryEntry fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the repository entries before and after the current repository entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -317,7 +317,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public com.liferay.portal.model.RepositoryEntry[] findByUuid_C_PrevAndNext(
 		long repositoryEntryId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException;
 
 	/**
@@ -376,7 +376,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public java.util.List<com.liferay.portal.model.RepositoryEntry> findByRepositoryId(
 		long repositoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first repository entry in the ordered set where repositoryId = &#63;.
@@ -388,7 +388,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public com.liferay.portal.model.RepositoryEntry findByRepositoryId_First(
 		long repositoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException;
 
 	/**
@@ -400,7 +400,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public com.liferay.portal.model.RepositoryEntry fetchByRepositoryId_First(
 		long repositoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last repository entry in the ordered set where repositoryId = &#63;.
@@ -412,7 +412,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public com.liferay.portal.model.RepositoryEntry findByRepositoryId_Last(
 		long repositoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException;
 
 	/**
@@ -424,7 +424,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public com.liferay.portal.model.RepositoryEntry fetchByRepositoryId_Last(
 		long repositoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the repository entries before and after the current repository entry in the ordered set where repositoryId = &#63;.
@@ -437,7 +437,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public com.liferay.portal.model.RepositoryEntry[] findByRepositoryId_PrevAndNext(
 		long repositoryEntryId, long repositoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException;
 
 	/**
@@ -606,7 +606,7 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	*/
 	public java.util.List<com.liferay.portal.model.RepositoryEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the repository entries from the database.

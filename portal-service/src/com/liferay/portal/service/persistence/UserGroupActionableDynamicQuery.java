@@ -21,7 +21,7 @@ import com.liferay.portal.service.UserGroupLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link UserGroupLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link UserGroupLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

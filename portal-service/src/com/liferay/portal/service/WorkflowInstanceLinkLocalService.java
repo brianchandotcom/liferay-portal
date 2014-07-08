@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -45,10 +44,6 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WorkflowInstanceLinkLocalServiceUtil} to access the workflow instance link local service. Add custom service methods to {@link com.liferay.portal.service.impl.WorkflowInstanceLinkLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portal.model.WorkflowInstanceLink addWorkflowInstanceLink(
-		long userId, long companyId, long groupId, java.lang.String className,
-		long classPK, long workflowInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Adds the workflow instance link to the database. Also notifies the appropriate model listeners.
@@ -56,7 +51,6 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 	* @param workflowInstanceLink the workflow instance link
 	* @return the workflow instance link that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.WorkflowInstanceLink addWorkflowInstanceLink(
 		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink);
 
@@ -70,15 +64,14 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 		long workflowInstanceLinkId);
 
 	/**
-	* @throws PortalException
+	* Deletes the workflow instance link with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param workflowInstanceLinkId the primary key of the workflow instance link
+	* @return the workflow instance link that was removed
+	* @throws PortalException if a workflow instance link with the primary key could not be found
 	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	public com.liferay.portal.model.WorkflowInstanceLink deleteWorkflowInstanceLink(
-		long companyId, long groupId, java.lang.String className, long classPK)
+		long workflowInstanceLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -88,25 +81,8 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 	* @return the workflow instance link that was removed
 	* @throws PortalException
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.WorkflowInstanceLink deleteWorkflowInstanceLink(
 		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Deletes the workflow instance link with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param workflowInstanceLinkId the primary key of the workflow instance link
-	* @return the workflow instance link that was removed
-	* @throws PortalException if a workflow instance link with the primary key could not be found
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.WorkflowInstanceLink deleteWorkflowInstanceLink(
-		long workflowInstanceLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void deleteWorkflowInstanceLinks(long companyId, long groupId,
-		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
@@ -117,7 +93,8 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
@@ -132,7 +109,8 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end);
 
@@ -149,10 +127,11 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -176,37 +155,7 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.WorkflowInstanceLink fetchWorkflowInstanceLink(
-		long companyId, long groupId, java.lang.String className, long classPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.WorkflowInstanceLink fetchWorkflowInstanceLink(
 		long workflowInstanceLinkId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getState(long companyId, long groupId,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.WorkflowInstanceLink getWorkflowInstanceLink(
-		long companyId, long groupId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the workflow instance link with the primary key.
@@ -221,8 +170,21 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.WorkflowInstanceLink> getWorkflowInstanceLinks(
-		long companyId, long groupId, java.lang.String className, long classPK);
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the workflow instance links.
@@ -247,6 +209,60 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getWorkflowInstanceLinksCount();
 
+	/**
+	* Updates the workflow instance link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param workflowInstanceLink the workflow instance link
+	* @return the workflow instance link that was updated
+	*/
+	public com.liferay.portal.model.WorkflowInstanceLink updateWorkflowInstanceLink(
+		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink);
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public com.liferay.portal.model.WorkflowInstanceLink addWorkflowInstanceLink(
+		long userId, long companyId, long groupId, java.lang.String className,
+		long classPK, long workflowInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portal.model.WorkflowInstanceLink deleteWorkflowInstanceLink(
+		long companyId, long groupId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void deleteWorkflowInstanceLinks(long companyId, long groupId,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.WorkflowInstanceLink fetchWorkflowInstanceLink(
+		long companyId, long groupId, java.lang.String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getState(long companyId, long groupId,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.WorkflowInstanceLink getWorkflowInstanceLink(
+		long companyId, long groupId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.WorkflowInstanceLink> getWorkflowInstanceLinks(
+		long companyId, long groupId, java.lang.String className, long classPK);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasWorkflowInstanceLink(long companyId, long groupId,
 		java.lang.String className, long classPK);
@@ -256,13 +272,6 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
 	public void startWorkflowInstance(long companyId, long groupId,
 		long userId, java.lang.String className, long classPK,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
@@ -271,14 +280,4 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 	public void updateClassPK(long companyId, long groupId,
 		java.lang.String className, long oldClassPK, long newClassPK)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Updates the workflow instance link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param workflowInstanceLink the workflow instance link
-	* @return the workflow instance link that was updated
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.WorkflowInstanceLink updateWorkflowInstanceLink(
-		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink);
 }

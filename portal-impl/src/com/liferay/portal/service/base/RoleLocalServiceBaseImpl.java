@@ -164,7 +164,8 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return rolePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -181,8 +182,8 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return rolePersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -200,8 +201,9 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return rolePersistence.findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -350,7 +352,7 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return roleLocalService.deleteRole((Role)persistedModel);
+		return deleteRole((Role)persistedModel);
 	}
 
 	@Override
@@ -503,7 +505,7 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<Role> getGroupRoles(long groupId, int start, int end,
-		OrderByComparator<Role> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return groupPersistence.getRoles(groupId, start, end, orderByComparator);
 	}
 
@@ -631,7 +633,7 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public List<Role> getUserRoles(long userId, int start, int end,
-		OrderByComparator<Role> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return userPersistence.getRoles(userId, start, end, orderByComparator);
 	}
 

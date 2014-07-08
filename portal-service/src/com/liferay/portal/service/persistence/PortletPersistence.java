@@ -77,7 +77,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	*/
 	public java.util.List<com.liferay.portal.model.Portlet> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Portlet> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first portlet in the ordered set where companyId = &#63;.
@@ -89,7 +89,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	*/
 	public com.liferay.portal.model.Portlet findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Portlet> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPortletException;
 
 	/**
@@ -101,7 +101,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	*/
 	public com.liferay.portal.model.Portlet fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Portlet> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last portlet in the ordered set where companyId = &#63;.
@@ -113,7 +113,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	*/
 	public com.liferay.portal.model.Portlet findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Portlet> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPortletException;
 
 	/**
@@ -125,7 +125,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	*/
 	public com.liferay.portal.model.Portlet fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Portlet> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the portlets before and after the current portlet in the ordered set where companyId = &#63;.
@@ -138,7 +138,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	*/
 	public com.liferay.portal.model.Portlet[] findByCompanyId_PrevAndNext(
 		long id, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Portlet> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPortletException;
 
 	/**
@@ -302,7 +302,7 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	*/
 	public java.util.List<com.liferay.portal.model.Portlet> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Portlet> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the portlets from the database.

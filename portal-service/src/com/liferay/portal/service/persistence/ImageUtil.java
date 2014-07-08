@@ -85,7 +85,7 @@ public class ImageUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<Image> findWithDynamicQuery(DynamicQuery dynamicQuery,
-		int start, int end, OrderByComparator<Image> orderByComparator) {
+		int start, int end, OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -148,7 +148,7 @@ public class ImageUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Image> findByLtSize(
 		int size, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Image> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByLtSize(size, start, end, orderByComparator);
 	}
 
@@ -161,7 +161,7 @@ public class ImageUtil {
 	* @throws com.liferay.portal.NoSuchImageException if a matching image could not be found
 	*/
 	public static com.liferay.portal.model.Image findByLtSize_First(int size,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Image> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchImageException {
 		return getPersistence().findByLtSize_First(size, orderByComparator);
 	}
@@ -174,7 +174,7 @@ public class ImageUtil {
 	* @return the first matching image, or <code>null</code> if a matching image could not be found
 	*/
 	public static com.liferay.portal.model.Image fetchByLtSize_First(int size,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Image> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByLtSize_First(size, orderByComparator);
 	}
 
@@ -187,7 +187,7 @@ public class ImageUtil {
 	* @throws com.liferay.portal.NoSuchImageException if a matching image could not be found
 	*/
 	public static com.liferay.portal.model.Image findByLtSize_Last(int size,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Image> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchImageException {
 		return getPersistence().findByLtSize_Last(size, orderByComparator);
 	}
@@ -200,7 +200,7 @@ public class ImageUtil {
 	* @return the last matching image, or <code>null</code> if a matching image could not be found
 	*/
 	public static com.liferay.portal.model.Image fetchByLtSize_Last(int size,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Image> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByLtSize_Last(size, orderByComparator);
 	}
 
@@ -215,7 +215,7 @@ public class ImageUtil {
 	*/
 	public static com.liferay.portal.model.Image[] findByLtSize_PrevAndNext(
 		long imageId, int size,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Image> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchImageException {
 		return getPersistence()
 				   .findByLtSize_PrevAndNext(imageId, size, orderByComparator);
@@ -352,7 +352,7 @@ public class ImageUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Image> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Image> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -21,7 +21,7 @@ import com.liferay.portal.service.ImageLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link ImageLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link ImageLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

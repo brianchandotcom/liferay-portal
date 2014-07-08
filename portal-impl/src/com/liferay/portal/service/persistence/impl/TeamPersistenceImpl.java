@@ -154,7 +154,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 */
 	@Override
 	public List<Team> findByGroupId(long groupId, int start, int end,
-		OrderByComparator<Team> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -260,7 +260,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 */
 	@Override
 	public Team findByGroupId_First(long groupId,
-		OrderByComparator<Team> orderByComparator) throws NoSuchTeamException {
+		OrderByComparator orderByComparator) throws NoSuchTeamException {
 		Team team = fetchByGroupId_First(groupId, orderByComparator);
 
 		if (team != null) {
@@ -288,7 +288,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 */
 	@Override
 	public Team fetchByGroupId_First(long groupId,
-		OrderByComparator<Team> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<Team> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -308,7 +308,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 */
 	@Override
 	public Team findByGroupId_Last(long groupId,
-		OrderByComparator<Team> orderByComparator) throws NoSuchTeamException {
+		OrderByComparator orderByComparator) throws NoSuchTeamException {
 		Team team = fetchByGroupId_Last(groupId, orderByComparator);
 
 		if (team != null) {
@@ -336,7 +336,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 */
 	@Override
 	public Team fetchByGroupId_Last(long groupId,
-		OrderByComparator<Team> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -364,7 +364,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 */
 	@Override
 	public Team[] findByGroupId_PrevAndNext(long teamId, long groupId,
-		OrderByComparator<Team> orderByComparator) throws NoSuchTeamException {
+		OrderByComparator orderByComparator) throws NoSuchTeamException {
 		Team team = findByPrimaryKey(teamId);
 
 		Session session = null;
@@ -393,8 +393,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	protected Team getByGroupId_PrevAndNext(Session session, Team team,
-		long groupId, OrderByComparator<Team> orderByComparator,
-		boolean previous) {
+		long groupId, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -541,7 +540,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 */
 	@Override
 	public List<Team> filterFindByGroupId(long groupId, int start, int end,
-		OrderByComparator<Team> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -631,7 +630,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 */
 	@Override
 	public Team[] filterFindByGroupId_PrevAndNext(long teamId, long groupId,
-		OrderByComparator<Team> orderByComparator) throws NoSuchTeamException {
+		OrderByComparator orderByComparator) throws NoSuchTeamException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(teamId, groupId, orderByComparator);
 		}
@@ -664,8 +663,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	protected Team filterGetByGroupId_PrevAndNext(Session session, Team team,
-		long groupId, OrderByComparator<Team> orderByComparator,
-		boolean previous) {
+		long groupId, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1715,7 +1713,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 */
 	@Override
 	public List<Team> findAll(int start, int end,
-		OrderByComparator<Team> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1899,8 +1897,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 */
 	@Override
 	public List<com.liferay.portal.model.User> getUsers(long pk, int start,
-		int end,
-		OrderByComparator<com.liferay.portal.model.User> orderByComparator) {
+		int end, OrderByComparator orderByComparator) {
 		return teamToUserTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
@@ -2160,8 +2157,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 */
 	@Override
 	public List<com.liferay.portal.model.UserGroup> getUserGroups(long pk,
-		int start, int end,
-		OrderByComparator<com.liferay.portal.model.UserGroup> orderByComparator) {
+		int start, int end, OrderByComparator orderByComparator) {
 		return teamToUserGroupTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}

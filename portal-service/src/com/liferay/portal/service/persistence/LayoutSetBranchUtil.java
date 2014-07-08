@@ -87,7 +87,7 @@ public class LayoutSetBranchUtil {
 	 */
 	public static List<LayoutSetBranch> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<LayoutSetBranch> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -151,7 +151,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.LayoutSetBranch> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -166,7 +166,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetBranchException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -180,7 +180,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -194,7 +194,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetBranchException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -208,7 +208,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -223,7 +223,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch[] findByGroupId_PrevAndNext(
 		long layoutSetBranchId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetBranchException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(layoutSetBranchId, groupId,
@@ -273,7 +273,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.LayoutSetBranch> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -289,7 +289,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch[] filterFindByGroupId_PrevAndNext(
 		long layoutSetBranchId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetBranchException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(layoutSetBranchId, groupId,
@@ -371,7 +371,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.LayoutSetBranch> findByG_P(
 		long groupId, boolean privateLayout, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_P(groupId, privateLayout, start, end,
 			orderByComparator);
@@ -388,7 +388,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch findByG_P_First(
 		long groupId, boolean privateLayout,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetBranchException {
 		return getPersistence()
 				   .findByG_P_First(groupId, privateLayout, orderByComparator);
@@ -404,7 +404,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch fetchByG_P_First(
 		long groupId, boolean privateLayout,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_First(groupId, privateLayout, orderByComparator);
 	}
@@ -420,7 +420,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch findByG_P_Last(
 		long groupId, boolean privateLayout,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetBranchException {
 		return getPersistence()
 				   .findByG_P_Last(groupId, privateLayout, orderByComparator);
@@ -436,7 +436,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch fetchByG_P_Last(
 		long groupId, boolean privateLayout,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_Last(groupId, privateLayout, orderByComparator);
 	}
@@ -453,7 +453,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch[] findByG_P_PrevAndNext(
 		long layoutSetBranchId, long groupId, boolean privateLayout,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetBranchException {
 		return getPersistence()
 				   .findByG_P_PrevAndNext(layoutSetBranchId, groupId,
@@ -507,7 +507,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.LayoutSetBranch> filterFindByG_P(
 		long groupId, boolean privateLayout, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_P(groupId, privateLayout, start, end,
 			orderByComparator);
@@ -525,7 +525,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch[] filterFindByG_P_PrevAndNext(
 		long layoutSetBranchId, long groupId, boolean privateLayout,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetBranchException {
 		return getPersistence()
 				   .filterFindByG_P_PrevAndNext(layoutSetBranchId, groupId,
@@ -686,7 +686,7 @@ public class LayoutSetBranchUtil {
 	public static java.util.List<com.liferay.portal.model.LayoutSetBranch> findByG_P_M(
 		long groupId, boolean privateLayout, boolean master, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_P_M(groupId, privateLayout, master, start, end,
 			orderByComparator);
@@ -704,7 +704,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch findByG_P_M_First(
 		long groupId, boolean privateLayout, boolean master,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetBranchException {
 		return getPersistence()
 				   .findByG_P_M_First(groupId, privateLayout, master,
@@ -722,7 +722,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch fetchByG_P_M_First(
 		long groupId, boolean privateLayout, boolean master,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_M_First(groupId, privateLayout, master,
 			orderByComparator);
@@ -740,7 +740,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch findByG_P_M_Last(
 		long groupId, boolean privateLayout, boolean master,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetBranchException {
 		return getPersistence()
 				   .findByG_P_M_Last(groupId, privateLayout, master,
@@ -758,7 +758,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static com.liferay.portal.model.LayoutSetBranch fetchByG_P_M_Last(
 		long groupId, boolean privateLayout, boolean master,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_P_M_Last(groupId, privateLayout, master,
 			orderByComparator);
@@ -778,7 +778,7 @@ public class LayoutSetBranchUtil {
 	public static com.liferay.portal.model.LayoutSetBranch[] findByG_P_M_PrevAndNext(
 		long layoutSetBranchId, long groupId, boolean privateLayout,
 		boolean master,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetBranchException {
 		return getPersistence()
 				   .findByG_P_M_PrevAndNext(layoutSetBranchId, groupId,
@@ -836,7 +836,7 @@ public class LayoutSetBranchUtil {
 	public static java.util.List<com.liferay.portal.model.LayoutSetBranch> filterFindByG_P_M(
 		long groupId, boolean privateLayout, boolean master, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_P_M(groupId, privateLayout, master, start,
 			end, orderByComparator);
@@ -856,7 +856,7 @@ public class LayoutSetBranchUtil {
 	public static com.liferay.portal.model.LayoutSetBranch[] filterFindByG_P_M_PrevAndNext(
 		long layoutSetBranchId, long groupId, boolean privateLayout,
 		boolean master,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchLayoutSetBranchException {
 		return getPersistence()
 				   .filterFindByG_P_M_PrevAndNext(layoutSetBranchId, groupId,
@@ -1019,7 +1019,7 @@ public class LayoutSetBranchUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.LayoutSetBranch> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetBranch> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

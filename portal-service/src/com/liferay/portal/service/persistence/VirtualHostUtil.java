@@ -87,7 +87,7 @@ public class VirtualHostUtil {
 	 */
 	public static List<VirtualHost> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<VirtualHost> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -347,7 +347,7 @@ public class VirtualHostUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.VirtualHost> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.VirtualHost> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

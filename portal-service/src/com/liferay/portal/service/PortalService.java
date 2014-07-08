@@ -46,8 +46,6 @@ public interface PortalService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortalServiceUtil} to access the portal remote service. Add custom service methods to {@link com.liferay.portal.service.impl.PortalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getAutoDeployDirectory();
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -56,16 +54,22 @@ public interface PortalService extends BaseService {
 	*/
 	public java.lang.String getBeanIdentifier();
 
-	@com.liferay.portal.kernel.jsonwebservice.JSONWebService
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getBuildNumber();
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getAutoDeployDirectory();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getBuildNumber();
+
+	public void testAddClassName_Rollback(java.lang.String classNameValue);
+
+	public void testAddClassName_Success(java.lang.String classNameValue);
 
 	public void testAddClassNameAndTestTransactionPortletBar_PortalRollback(
 		java.lang.String transactionPortletBarText);
@@ -76,11 +80,6 @@ public interface PortalService extends BaseService {
 	public void testAddClassNameAndTestTransactionPortletBar_Success(
 		java.lang.String transactionPortletBarText);
 
-	public void testAddClassName_Rollback(java.lang.String classNameValue);
-
-	public void testAddClassName_Success(java.lang.String classNameValue);
-
-	@com.liferay.portal.kernel.transaction.Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void testAutoSyncHibernateSessionStateOnTxCreation();
 
 	public void testDeleteClassName()

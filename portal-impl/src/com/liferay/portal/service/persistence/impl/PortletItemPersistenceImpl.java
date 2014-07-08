@@ -152,7 +152,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 */
 	@Override
 	public List<PortletItem> findByG_C(long groupId, long classNameId,
-		int start, int end, OrderByComparator<PortletItem> orderByComparator) {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -268,8 +268,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 */
 	@Override
 	public PortletItem findByG_C_First(long groupId, long classNameId,
-		OrderByComparator<PortletItem> orderByComparator)
-		throws NoSuchPortletItemException {
+		OrderByComparator orderByComparator) throws NoSuchPortletItemException {
 		PortletItem portletItem = fetchByG_C_First(groupId, classNameId,
 				orderByComparator);
 
@@ -302,7 +301,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 */
 	@Override
 	public PortletItem fetchByG_C_First(long groupId, long classNameId,
-		OrderByComparator<PortletItem> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<PortletItem> list = findByG_C(groupId, classNameId, 0, 1,
 				orderByComparator);
 
@@ -324,8 +323,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 */
 	@Override
 	public PortletItem findByG_C_Last(long groupId, long classNameId,
-		OrderByComparator<PortletItem> orderByComparator)
-		throws NoSuchPortletItemException {
+		OrderByComparator orderByComparator) throws NoSuchPortletItemException {
 		PortletItem portletItem = fetchByG_C_Last(groupId, classNameId,
 				orderByComparator);
 
@@ -358,7 +356,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 */
 	@Override
 	public PortletItem fetchByG_C_Last(long groupId, long classNameId,
-		OrderByComparator<PortletItem> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByG_C(groupId, classNameId);
 
 		if (count == 0) {
@@ -387,8 +385,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 */
 	@Override
 	public PortletItem[] findByG_C_PrevAndNext(long portletItemId,
-		long groupId, long classNameId,
-		OrderByComparator<PortletItem> orderByComparator)
+		long groupId, long classNameId, OrderByComparator orderByComparator)
 		throws NoSuchPortletItemException {
 		PortletItem portletItem = findByPrimaryKey(portletItemId);
 
@@ -419,7 +416,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 
 	protected PortletItem getByG_C_PrevAndNext(Session session,
 		PortletItem portletItem, long groupId, long classNameId,
-		OrderByComparator<PortletItem> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -680,7 +677,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	@Override
 	public List<PortletItem> findByG_P_C(long groupId, String portletId,
 		long classNameId, int start, int end,
-		OrderByComparator<PortletItem> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -816,7 +813,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 */
 	@Override
 	public PortletItem findByG_P_C_First(long groupId, String portletId,
-		long classNameId, OrderByComparator<PortletItem> orderByComparator)
+		long classNameId, OrderByComparator orderByComparator)
 		throws NoSuchPortletItemException {
 		PortletItem portletItem = fetchByG_P_C_First(groupId, portletId,
 				classNameId, orderByComparator);
@@ -854,7 +851,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 */
 	@Override
 	public PortletItem fetchByG_P_C_First(long groupId, String portletId,
-		long classNameId, OrderByComparator<PortletItem> orderByComparator) {
+		long classNameId, OrderByComparator orderByComparator) {
 		List<PortletItem> list = findByG_P_C(groupId, portletId, classNameId,
 				0, 1, orderByComparator);
 
@@ -877,7 +874,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 */
 	@Override
 	public PortletItem findByG_P_C_Last(long groupId, String portletId,
-		long classNameId, OrderByComparator<PortletItem> orderByComparator)
+		long classNameId, OrderByComparator orderByComparator)
 		throws NoSuchPortletItemException {
 		PortletItem portletItem = fetchByG_P_C_Last(groupId, portletId,
 				classNameId, orderByComparator);
@@ -915,7 +912,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 */
 	@Override
 	public PortletItem fetchByG_P_C_Last(long groupId, String portletId,
-		long classNameId, OrderByComparator<PortletItem> orderByComparator) {
+		long classNameId, OrderByComparator orderByComparator) {
 		int count = countByG_P_C(groupId, portletId, classNameId);
 
 		if (count == 0) {
@@ -946,8 +943,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	@Override
 	public PortletItem[] findByG_P_C_PrevAndNext(long portletItemId,
 		long groupId, String portletId, long classNameId,
-		OrderByComparator<PortletItem> orderByComparator)
-		throws NoSuchPortletItemException {
+		OrderByComparator orderByComparator) throws NoSuchPortletItemException {
 		PortletItem portletItem = findByPrimaryKey(portletItemId);
 
 		Session session = null;
@@ -977,8 +973,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 
 	protected PortletItem getByG_P_C_PrevAndNext(Session session,
 		PortletItem portletItem, long groupId, String portletId,
-		long classNameId, OrderByComparator<PortletItem> orderByComparator,
-		boolean previous) {
+		long classNameId, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2138,7 +2133,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 */
 	@Override
 	public List<PortletItem> findAll(int start, int end,
-		OrderByComparator<PortletItem> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

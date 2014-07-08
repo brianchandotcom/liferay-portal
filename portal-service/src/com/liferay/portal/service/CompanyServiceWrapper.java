@@ -31,6 +31,26 @@ public class CompanyServiceWrapper implements CompanyService,
 	}
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _companyService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_companyService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
 	* Adds a company.
 	*
 	* @param webId the company's web domain
@@ -73,16 +93,6 @@ public class CompanyServiceWrapper implements CompanyService,
 	public void deleteLogo(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_companyService.deleteLogo(companyId);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _companyService.getBeanIdentifier();
 	}
 
 	/**
@@ -175,13 +185,26 @@ public class CompanyServiceWrapper implements CompanyService,
 	}
 
 	/**
-	* Sets the Spring bean ID for this bean.
+	* Updates the company
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @param companyId the primary key of the company
+	* @param virtualHost the company's virtual host name
+	* @param mx the company's mail domain
+	* @param maxUsers the max number of company users (optionally
+	<code>0</code>)
+	* @param active whether the company is active
+	* @return the company with the primary key
+	* @throws PortalException if a company with the primary key could not be
+	found or if the new information was invalid or if the user was
+	not a universal administrator
 	*/
 	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_companyService.setBeanIdentifier(beanIdentifier);
+	public com.liferay.portal.model.Company updateCompany(long companyId,
+		java.lang.String virtualHost, java.lang.String mx, int maxUsers,
+		boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _companyService.updateCompany(companyId, virtualHost, mx,
+			maxUsers, active);
 	}
 
 	/**
@@ -395,29 +418,6 @@ public class CompanyServiceWrapper implements CompanyService,
 			homeURL, name, legalName, legalId, legalType, sicCode,
 			tickerSymbol, industry, type, size, languageId, timeZoneId,
 			addresses, emailAddresses, phones, websites, properties);
-	}
-
-	/**
-	* Updates the company
-	*
-	* @param companyId the primary key of the company
-	* @param virtualHost the company's virtual host name
-	* @param mx the company's mail domain
-	* @param maxUsers the max number of company users (optionally
-	<code>0</code>)
-	* @param active whether the company is active
-	* @return the company with the primary key
-	* @throws PortalException if a company with the primary key could not be
-	found or if the new information was invalid or if the user was
-	not a universal administrator
-	*/
-	@Override
-	public com.liferay.portal.model.Company updateCompany(long companyId,
-		java.lang.String virtualHost, java.lang.String mx, int maxUsers,
-		boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _companyService.updateCompany(companyId, virtualHost, mx,
-			maxUsers, active);
 	}
 
 	/**

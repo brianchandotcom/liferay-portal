@@ -77,7 +77,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserIdMapper> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserIdMapper> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user ID mapper in the ordered set where userId = &#63;.
@@ -89,7 +89,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	*/
 	public com.liferay.portal.model.UserIdMapper findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserIdMapper> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserIdMapperException;
 
 	/**
@@ -101,7 +101,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	*/
 	public com.liferay.portal.model.UserIdMapper fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserIdMapper> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user ID mapper in the ordered set where userId = &#63;.
@@ -113,7 +113,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	*/
 	public com.liferay.portal.model.UserIdMapper findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserIdMapper> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserIdMapperException;
 
 	/**
@@ -125,7 +125,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	*/
 	public com.liferay.portal.model.UserIdMapper fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserIdMapper> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user ID mappers before and after the current user ID mapper in the ordered set where userId = &#63;.
@@ -138,7 +138,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	*/
 	public com.liferay.portal.model.UserIdMapper[] findByUserId_PrevAndNext(
 		long userIdMapperId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserIdMapper> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchUserIdMapperException;
 
 	/**
@@ -358,7 +358,7 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	*/
 	public java.util.List<com.liferay.portal.model.UserIdMapper> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.UserIdMapper> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the user ID mappers from the database.

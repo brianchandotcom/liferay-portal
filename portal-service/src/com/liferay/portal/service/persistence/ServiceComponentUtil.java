@@ -87,7 +87,7 @@ public class ServiceComponentUtil {
 	 */
 	public static List<ServiceComponent> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<ServiceComponent> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -151,7 +151,7 @@ public class ServiceComponentUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.ServiceComponent> findByBuildNamespace(
 		java.lang.String buildNamespace, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByBuildNamespace(buildNamespace, start, end,
 			orderByComparator);
@@ -167,7 +167,7 @@ public class ServiceComponentUtil {
 	*/
 	public static com.liferay.portal.model.ServiceComponent findByBuildNamespace_First(
 		java.lang.String buildNamespace,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchServiceComponentException {
 		return getPersistence()
 				   .findByBuildNamespace_First(buildNamespace, orderByComparator);
@@ -182,7 +182,7 @@ public class ServiceComponentUtil {
 	*/
 	public static com.liferay.portal.model.ServiceComponent fetchByBuildNamespace_First(
 		java.lang.String buildNamespace,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByBuildNamespace_First(buildNamespace,
 			orderByComparator);
@@ -198,7 +198,7 @@ public class ServiceComponentUtil {
 	*/
 	public static com.liferay.portal.model.ServiceComponent findByBuildNamespace_Last(
 		java.lang.String buildNamespace,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchServiceComponentException {
 		return getPersistence()
 				   .findByBuildNamespace_Last(buildNamespace, orderByComparator);
@@ -213,7 +213,7 @@ public class ServiceComponentUtil {
 	*/
 	public static com.liferay.portal.model.ServiceComponent fetchByBuildNamespace_Last(
 		java.lang.String buildNamespace,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByBuildNamespace_Last(buildNamespace, orderByComparator);
 	}
@@ -229,7 +229,7 @@ public class ServiceComponentUtil {
 	*/
 	public static com.liferay.portal.model.ServiceComponent[] findByBuildNamespace_PrevAndNext(
 		long serviceComponentId, java.lang.String buildNamespace,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchServiceComponentException {
 		return getPersistence()
 				   .findByBuildNamespace_PrevAndNext(serviceComponentId,
@@ -439,7 +439,7 @@ public class ServiceComponentUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.ServiceComponent> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

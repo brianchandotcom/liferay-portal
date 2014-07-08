@@ -77,7 +77,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public java.util.List<com.liferay.portal.model.Contact> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first contact in the ordered set where companyId = &#63;.
@@ -89,7 +89,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public com.liferay.portal.model.Contact findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException;
 
 	/**
@@ -101,7 +101,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public com.liferay.portal.model.Contact fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last contact in the ordered set where companyId = &#63;.
@@ -113,7 +113,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public com.liferay.portal.model.Contact findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException;
 
 	/**
@@ -125,7 +125,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public com.liferay.portal.model.Contact fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the contacts before and after the current contact in the ordered set where companyId = &#63;.
@@ -138,7 +138,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public com.liferay.portal.model.Contact[] findByCompanyId_PrevAndNext(
 		long contactId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException;
 
 	/**
@@ -195,7 +195,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public java.util.List<com.liferay.portal.model.Contact> findByAccountId(
 		long accountId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first contact in the ordered set where accountId = &#63;.
@@ -207,7 +207,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public com.liferay.portal.model.Contact findByAccountId_First(
 		long accountId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException;
 
 	/**
@@ -219,7 +219,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public com.liferay.portal.model.Contact fetchByAccountId_First(
 		long accountId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last contact in the ordered set where accountId = &#63;.
@@ -231,7 +231,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public com.liferay.portal.model.Contact findByAccountId_Last(
 		long accountId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException;
 
 	/**
@@ -243,7 +243,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public com.liferay.portal.model.Contact fetchByAccountId_Last(
 		long accountId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the contacts before and after the current contact in the ordered set where accountId = &#63;.
@@ -256,7 +256,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public com.liferay.portal.model.Contact[] findByAccountId_PrevAndNext(
 		long contactId, long accountId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException;
 
 	/**
@@ -316,7 +316,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public java.util.List<com.liferay.portal.model.Contact> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first contact in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -329,7 +329,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public com.liferay.portal.model.Contact findByC_C_First(long classNameId,
 		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException;
 
 	/**
@@ -342,7 +342,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public com.liferay.portal.model.Contact fetchByC_C_First(long classNameId,
 		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last contact in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -355,7 +355,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public com.liferay.portal.model.Contact findByC_C_Last(long classNameId,
 		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException;
 
 	/**
@@ -368,7 +368,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public com.liferay.portal.model.Contact fetchByC_C_Last(long classNameId,
 		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the contacts before and after the current contact in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -382,7 +382,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public com.liferay.portal.model.Contact[] findByC_C_PrevAndNext(
 		long contactId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchContactException;
 
 	/**
@@ -495,7 +495,7 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	*/
 	public java.util.List<com.liferay.portal.model.Contact> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Contact> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the contacts from the database.

@@ -87,7 +87,7 @@ public class RepositoryEntryUtil {
 	 */
 	public static List<RepositoryEntry> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<RepositoryEntry> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -151,7 +151,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.RepositoryEntry> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -165,7 +165,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static com.liferay.portal.model.RepositoryEntry findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -179,7 +179,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static com.liferay.portal.model.RepositoryEntry fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -193,7 +193,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static com.liferay.portal.model.RepositoryEntry findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -207,7 +207,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static com.liferay.portal.model.RepositoryEntry fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -222,7 +222,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static com.liferay.portal.model.RepositoryEntry[] findByUuid_PrevAndNext(
 		long repositoryEntryId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(repositoryEntryId, uuid,
@@ -357,7 +357,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.RepositoryEntry> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -373,7 +373,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static com.liferay.portal.model.RepositoryEntry findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -389,7 +389,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static com.liferay.portal.model.RepositoryEntry fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -405,7 +405,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static com.liferay.portal.model.RepositoryEntry findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -421,7 +421,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static com.liferay.portal.model.RepositoryEntry fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -438,7 +438,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static com.liferay.portal.model.RepositoryEntry[] findByUuid_C_PrevAndNext(
 		long repositoryEntryId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(repositoryEntryId, uuid,
@@ -509,7 +509,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.RepositoryEntry> findByRepositoryId(
 		long repositoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByRepositoryId(repositoryId, start, end,
 			orderByComparator);
@@ -525,7 +525,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static com.liferay.portal.model.RepositoryEntry findByRepositoryId_First(
 		long repositoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByRepositoryId_First(repositoryId, orderByComparator);
@@ -540,7 +540,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static com.liferay.portal.model.RepositoryEntry fetchByRepositoryId_First(
 		long repositoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByRepositoryId_First(repositoryId, orderByComparator);
 	}
@@ -555,7 +555,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static com.liferay.portal.model.RepositoryEntry findByRepositoryId_Last(
 		long repositoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByRepositoryId_Last(repositoryId, orderByComparator);
@@ -570,7 +570,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static com.liferay.portal.model.RepositoryEntry fetchByRepositoryId_Last(
 		long repositoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByRepositoryId_Last(repositoryId, orderByComparator);
 	}
@@ -586,7 +586,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static com.liferay.portal.model.RepositoryEntry[] findByRepositoryId_PrevAndNext(
 		long repositoryEntryId, long repositoryId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchRepositoryEntryException {
 		return getPersistence()
 				   .findByRepositoryId_PrevAndNext(repositoryEntryId,
@@ -793,7 +793,7 @@ public class RepositoryEntryUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.RepositoryEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.RepositoryEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

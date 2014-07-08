@@ -180,7 +180,7 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	*/
 	public java.util.List<com.liferay.portal.model.ClassName> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ClassName> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the class names from the database.

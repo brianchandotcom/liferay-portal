@@ -93,50 +93,24 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 		}
 	}
 
+	/**
+	* Returns the primary key of this password policy rel.
+	*
+	* @return the primary key of this password policy rel
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new PasswordPolicyRelWrapper((PasswordPolicyRel)_passwordPolicyRel.clone());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel) {
-		return _passwordPolicyRel.compareTo(passwordPolicyRel);
+	public long getPrimaryKey() {
+		return _passwordPolicyRel.getPrimaryKey();
 	}
 
 	/**
-	* Returns the fully qualified class name of this password policy rel.
+	* Sets the primary key of this password policy rel.
 	*
-	* @return the fully qualified class name of this password policy rel
+	* @param primaryKey the primary key of this password policy rel
 	*/
 	@Override
-	public java.lang.String getClassName() {
-		return _passwordPolicyRel.getClassName();
-	}
-
-	/**
-	* Returns the class name ID of this password policy rel.
-	*
-	* @return the class name ID of this password policy rel
-	*/
-	@Override
-	public long getClassNameId() {
-		return _passwordPolicyRel.getClassNameId();
-	}
-
-	/**
-	* Returns the class p k of this password policy rel.
-	*
-	* @return the class p k of this password policy rel
-	*/
-	@Override
-	public long getClassPK() {
-		return _passwordPolicyRel.getClassPK();
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _passwordPolicyRel.getExpandoBridge();
+	public void setPrimaryKey(long primaryKey) {
+		_passwordPolicyRel.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -150,13 +124,13 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	}
 
 	/**
-	* Returns the password policy ID of this password policy rel.
+	* Sets the mvcc version of this password policy rel.
 	*
-	* @return the password policy ID of this password policy rel
+	* @param mvccVersion the mvcc version of this password policy rel
 	*/
 	@Override
-	public long getPasswordPolicyId() {
-		return _passwordPolicyRel.getPasswordPolicyId();
+	public void setMvccVersion(long mvccVersion) {
+		_passwordPolicyRel.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -170,53 +144,58 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	}
 
 	/**
-	* Returns the primary key of this password policy rel.
+	* Sets the password policy rel ID of this password policy rel.
 	*
-	* @return the primary key of this password policy rel
+	* @param passwordPolicyRelId the password policy rel ID of this password policy rel
 	*/
 	@Override
-	public long getPrimaryKey() {
-		return _passwordPolicyRel.getPrimaryKey();
+	public void setPasswordPolicyRelId(long passwordPolicyRelId) {
+		_passwordPolicyRel.setPasswordPolicyRelId(passwordPolicyRelId);
 	}
 
+	/**
+	* Returns the password policy ID of this password policy rel.
+	*
+	* @return the password policy ID of this password policy rel
+	*/
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _passwordPolicyRel.getPrimaryKeyObj();
+	public long getPasswordPolicyId() {
+		return _passwordPolicyRel.getPasswordPolicyId();
 	}
 
+	/**
+	* Sets the password policy ID of this password policy rel.
+	*
+	* @param passwordPolicyId the password policy ID of this password policy rel
+	*/
 	@Override
-	public int hashCode() {
-		return _passwordPolicyRel.hashCode();
+	public void setPasswordPolicyId(long passwordPolicyId) {
+		_passwordPolicyRel.setPasswordPolicyId(passwordPolicyId);
 	}
 
+	/**
+	* Returns the fully qualified class name of this password policy rel.
+	*
+	* @return the fully qualified class name of this password policy rel
+	*/
 	@Override
-	public boolean isCachedModel() {
-		return _passwordPolicyRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _passwordPolicyRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _passwordPolicyRel.isNew();
-	}
-
-	@Override
-	public void persist() {
-		_passwordPolicyRel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_passwordPolicyRel.setCachedModel(cachedModel);
+	public java.lang.String getClassName() {
+		return _passwordPolicyRel.getClassName();
 	}
 
 	@Override
 	public void setClassName(java.lang.String className) {
 		_passwordPolicyRel.setClassName(className);
+	}
+
+	/**
+	* Returns the class name ID of this password policy rel.
+	*
+	* @return the class name ID of this password policy rel
+	*/
+	@Override
+	public long getClassNameId() {
+		return _passwordPolicyRel.getClassNameId();
 	}
 
 	/**
@@ -230,6 +209,16 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	}
 
 	/**
+	* Returns the class p k of this password policy rel.
+	*
+	* @return the class p k of this password policy rel
+	*/
+	@Override
+	public long getClassPK() {
+		return _passwordPolicyRel.getClassPK();
+	}
+
+	/**
 	* Sets the class p k of this password policy rel.
 	*
 	* @param classPK the class p k of this password policy rel
@@ -237,6 +226,46 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	@Override
 	public void setClassPK(long classPK) {
 		_passwordPolicyRel.setClassPK(classPK);
+	}
+
+	@Override
+	public boolean isNew() {
+		return _passwordPolicyRel.isNew();
+	}
+
+	@Override
+	public void setNew(boolean n) {
+		_passwordPolicyRel.setNew(n);
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _passwordPolicyRel.isCachedModel();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_passwordPolicyRel.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _passwordPolicyRel.isEscapedModel();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _passwordPolicyRel.getPrimaryKeyObj();
+	}
+
+	@Override
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_passwordPolicyRel.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _passwordPolicyRel.getExpandoBridge();
 	}
 
 	@Override
@@ -257,54 +286,20 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 		_passwordPolicyRel.setExpandoBridgeAttributes(serviceContext);
 	}
 
-	/**
-	* Sets the mvcc version of this password policy rel.
-	*
-	* @param mvccVersion the mvcc version of this password policy rel
-	*/
 	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_passwordPolicyRel.setMvccVersion(mvccVersion);
+	public java.lang.Object clone() {
+		return new PasswordPolicyRelWrapper((PasswordPolicyRel)_passwordPolicyRel.clone());
 	}
 
 	@Override
-	public void setNew(boolean n) {
-		_passwordPolicyRel.setNew(n);
-	}
-
-	/**
-	* Sets the password policy ID of this password policy rel.
-	*
-	* @param passwordPolicyId the password policy ID of this password policy rel
-	*/
-	@Override
-	public void setPasswordPolicyId(long passwordPolicyId) {
-		_passwordPolicyRel.setPasswordPolicyId(passwordPolicyId);
-	}
-
-	/**
-	* Sets the password policy rel ID of this password policy rel.
-	*
-	* @param passwordPolicyRelId the password policy rel ID of this password policy rel
-	*/
-	@Override
-	public void setPasswordPolicyRelId(long passwordPolicyRelId) {
-		_passwordPolicyRel.setPasswordPolicyRelId(passwordPolicyRelId);
-	}
-
-	/**
-	* Sets the primary key of this password policy rel.
-	*
-	* @param primaryKey the primary key of this password policy rel
-	*/
-	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_passwordPolicyRel.setPrimaryKey(primaryKey);
+	public int compareTo(
+		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel) {
+		return _passwordPolicyRel.compareTo(passwordPolicyRel);
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_passwordPolicyRel.setPrimaryKeyObj(primaryKeyObj);
+	public int hashCode() {
+		return _passwordPolicyRel.hashCode();
 	}
 
 	@Override
@@ -318,18 +313,23 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _passwordPolicyRel.toString();
-	}
-
-	@Override
 	public com.liferay.portal.model.PasswordPolicyRel toUnescapedModel() {
 		return new PasswordPolicyRelWrapper(_passwordPolicyRel.toUnescapedModel());
 	}
 
 	@Override
+	public java.lang.String toString() {
+		return _passwordPolicyRel.toString();
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _passwordPolicyRel.toXmlString();
+	}
+
+	@Override
+	public void persist() {
+		_passwordPolicyRel.persist();
 	}
 
 	@Override

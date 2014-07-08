@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,7 +51,6 @@ public interface AccountLocalService extends BaseLocalService,
 	* @param account the account
 	* @return the account that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.Account addAccount(
 		com.liferay.portal.model.Account account);
 
@@ -65,33 +63,23 @@ public interface AccountLocalService extends BaseLocalService,
 	public com.liferay.portal.model.Account createAccount(long accountId);
 
 	/**
-	* Deletes the account from the database. Also notifies the appropriate model listeners.
-	*
-	* @param account the account
-	* @return the account that was removed
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Account deleteAccount(
-		com.liferay.portal.model.Account account);
-
-	/**
 	* Deletes the account with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param accountId the primary key of the account
 	* @return the account that was removed
 	* @throws PortalException if a account with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Account deleteAccount(long accountId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* @throws PortalException
+	* Deletes the account from the database. Also notifies the appropriate model listeners.
+	*
+	* @param account the account
+	* @return the account that was removed
 	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public com.liferay.portal.model.Account deleteAccount(
+		com.liferay.portal.model.Account account);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -101,7 +89,8 @@ public interface AccountLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
@@ -116,7 +105,8 @@ public interface AccountLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end);
 
@@ -133,10 +123,11 @@ public interface AccountLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -173,8 +164,20 @@ public interface AccountLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Account getAccount(long companyId,
-		long accountId)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -200,8 +203,14 @@ public interface AccountLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAccountsCount();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+	/**
+	* Updates the account in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param account the account
+	* @return the account that was updated
+	*/
+	public com.liferay.portal.model.Account updateAccount(
+		com.liferay.portal.model.Account account);
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -210,12 +219,6 @@ public interface AccountLocalService extends BaseLocalService,
 	*/
 	public java.lang.String getBeanIdentifier();
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -223,13 +226,8 @@ public interface AccountLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	/**
-	* Updates the account in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param account the account
-	* @return the account that was updated
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Account updateAccount(
-		com.liferay.portal.model.Account account);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Account getAccount(long companyId,
+		long accountId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

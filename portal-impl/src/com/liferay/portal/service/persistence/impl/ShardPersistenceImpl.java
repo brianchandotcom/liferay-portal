@@ -1106,7 +1106,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 	 */
 	@Override
 	public List<Shard> findAll(int start, int end,
-		OrderByComparator<Shard> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

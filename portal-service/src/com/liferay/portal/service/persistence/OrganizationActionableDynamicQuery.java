@@ -21,7 +21,7 @@ import com.liferay.portal.service.OrganizationLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link OrganizationLocalServiceUtil#getActionableDynamicQuery()}
+ * @deprecated As of 7.0.0, replaced by {@link OrganizationLocalServiceUtil#getExportActionableDynamicQuery()}
  * @generated
  */
 @Deprecated

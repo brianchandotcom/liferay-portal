@@ -136,7 +136,8 @@ public abstract class ResourceTypePermissionLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return resourceTypePermissionPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -153,8 +154,8 @@ public abstract class ResourceTypePermissionLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return resourceTypePermissionPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -173,8 +174,9 @@ public abstract class ResourceTypePermissionLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return resourceTypePermissionPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -253,7 +255,7 @@ public abstract class ResourceTypePermissionLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return resourceTypePermissionLocalService.deleteResourceTypePermission((ResourceTypePermission)persistedModel);
+		return deleteResourceTypePermission((ResourceTypePermission)persistedModel);
 	}
 
 	@Override

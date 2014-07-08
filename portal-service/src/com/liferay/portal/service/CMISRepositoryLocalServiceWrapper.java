@@ -42,12 +42,6 @@ public class CMISRepositoryLocalServiceWrapper
 		return _cmisRepositoryLocalService.getBeanIdentifier();
 	}
 
-	@Override
-	public java.lang.Object getSession(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cmisRepositoryLocalService.getSession(repositoryId);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -56,6 +50,12 @@ public class CMISRepositoryLocalServiceWrapper
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_cmisRepositoryLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public java.lang.Object getSession(long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cmisRepositoryLocalService.getSession(repositoryId);
 	}
 
 	@Override

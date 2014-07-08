@@ -352,7 +352,7 @@ public class AddressPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<Address> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Address", "mvccVersion",
 			true, "uuid", true, "addressId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,

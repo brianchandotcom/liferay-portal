@@ -131,7 +131,8 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return browserTrackerPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -148,8 +149,8 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return browserTrackerPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -168,8 +169,9 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return browserTrackerPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -245,7 +247,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return browserTrackerLocalService.deleteBrowserTracker((BrowserTracker)persistedModel);
+		return deleteBrowserTracker((BrowserTracker)persistedModel);
 	}
 
 	@Override

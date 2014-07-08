@@ -52,20 +52,6 @@ public class ResourceActionLocalServiceUtil {
 		return getService().addResourceAction(resourceAction);
 	}
 
-	public static void checkResourceActions() {
-		getService().checkResourceActions();
-	}
-
-	public static void checkResourceActions(java.lang.String name,
-		java.util.List<java.lang.String> actionIds) {
-		getService().checkResourceActions(name, actionIds);
-	}
-
-	public static void checkResourceActions(java.lang.String name,
-		java.util.List<java.lang.String> actionIds, boolean addDefaultActions) {
-		getService().checkResourceActions(name, actionIds, addDefaultActions);
-	}
-
 	/**
 	* Creates a new resource action with the primary key. Does not add the resource action to the database.
 	*
@@ -75,26 +61,6 @@ public class ResourceActionLocalServiceUtil {
 	public static com.liferay.portal.model.ResourceAction createResourceAction(
 		long resourceActionId) {
 		return getService().createResourceAction(resourceActionId);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	/**
-	* Deletes the resource action from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceAction the resource action
-	* @return the resource action that was removed
-	*/
-	public static com.liferay.portal.model.ResourceAction deleteResourceAction(
-		com.liferay.portal.model.ResourceAction resourceAction) {
-		return getService().deleteResourceAction(resourceAction);
 	}
 
 	/**
@@ -110,6 +76,17 @@ public class ResourceActionLocalServiceUtil {
 		return getService().deleteResourceAction(resourceActionId);
 	}
 
+	/**
+	* Deletes the resource action from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourceAction the resource action
+	* @return the resource action that was removed
+	*/
+	public static com.liferay.portal.model.ResourceAction deleteResourceAction(
+		com.liferay.portal.model.ResourceAction resourceAction) {
+		return getService().deleteResourceAction(resourceAction);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
@@ -120,7 +97,8 @@ public class ResourceActionLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public static <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
@@ -137,7 +115,8 @@ public class ResourceActionLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public static <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
@@ -156,10 +135,11 @@ public class ResourceActionLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public static <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -189,38 +169,8 @@ public class ResourceActionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.ResourceAction fetchResourceAction(
-		java.lang.String name, java.lang.String actionId) {
-		return getService().fetchResourceAction(name, actionId);
-	}
-
-	public static com.liferay.portal.model.ResourceAction fetchResourceAction(
 		long resourceActionId) {
 		return getService().fetchResourceAction(resourceActionId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static com.liferay.portal.model.ResourceAction getResourceAction(
-		java.lang.String name, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getResourceAction(name, actionId);
 	}
 
 	/**
@@ -236,9 +186,23 @@ public class ResourceActionLocalServiceUtil {
 		return getService().getResourceAction(resourceActionId);
 	}
 
-	public static java.util.List<com.liferay.portal.model.ResourceAction> getResourceActions(
-		java.lang.String name) {
-		return getService().getResourceActions(name);
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -266,8 +230,24 @@ public class ResourceActionLocalServiceUtil {
 		return getService().getResourceActionsCount();
 	}
 
-	public static int getResourceActionsCount(java.lang.String name) {
-		return getService().getResourceActionsCount(name);
+	/**
+	* Updates the resource action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param resourceAction the resource action
+	* @return the resource action that was updated
+	*/
+	public static com.liferay.portal.model.ResourceAction updateResourceAction(
+		com.liferay.portal.model.ResourceAction resourceAction) {
+		return getService().updateResourceAction(resourceAction);
+	}
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public static java.lang.String getBeanIdentifier() {
+		return getService().getBeanIdentifier();
 	}
 
 	/**
@@ -279,15 +259,38 @@ public class ResourceActionLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	/**
-	* Updates the resource action in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param resourceAction the resource action
-	* @return the resource action that was updated
-	*/
-	public static com.liferay.portal.model.ResourceAction updateResourceAction(
-		com.liferay.portal.model.ResourceAction resourceAction) {
-		return getService().updateResourceAction(resourceAction);
+	public static void checkResourceActions() {
+		getService().checkResourceActions();
+	}
+
+	public static void checkResourceActions(java.lang.String name,
+		java.util.List<java.lang.String> actionIds) {
+		getService().checkResourceActions(name, actionIds);
+	}
+
+	public static void checkResourceActions(java.lang.String name,
+		java.util.List<java.lang.String> actionIds, boolean addDefaultActions) {
+		getService().checkResourceActions(name, actionIds, addDefaultActions);
+	}
+
+	public static com.liferay.portal.model.ResourceAction fetchResourceAction(
+		java.lang.String name, java.lang.String actionId) {
+		return getService().fetchResourceAction(name, actionId);
+	}
+
+	public static com.liferay.portal.model.ResourceAction getResourceAction(
+		java.lang.String name, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getResourceAction(name, actionId);
+	}
+
+	public static java.util.List<com.liferay.portal.model.ResourceAction> getResourceActions(
+		java.lang.String name) {
+		return getService().getResourceActions(name);
+	}
+
+	public static int getResourceActionsCount(java.lang.String name) {
+		return getService().getResourceActionsCount(name);
 	}
 
 	public static ResourceActionLocalService getService() {

@@ -30,11 +30,6 @@ public class PortalServiceWrapper implements PortalService,
 		_portalService = portalService;
 	}
 
-	@Override
-	public java.lang.String getAutoDeployDirectory() {
-		return _portalService.getAutoDeployDirectory();
-	}
-
 	/**
 	* Returns the Spring bean ID for this bean.
 	*
@@ -45,11 +40,6 @@ public class PortalServiceWrapper implements PortalService,
 		return _portalService.getBeanIdentifier();
 	}
 
-	@Override
-	public int getBuildNumber() {
-		return _portalService.getBuildNumber();
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -58,6 +48,26 @@ public class PortalServiceWrapper implements PortalService,
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_portalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public java.lang.String getAutoDeployDirectory() {
+		return _portalService.getAutoDeployDirectory();
+	}
+
+	@Override
+	public int getBuildNumber() {
+		return _portalService.getBuildNumber();
+	}
+
+	@Override
+	public void testAddClassName_Rollback(java.lang.String classNameValue) {
+		_portalService.testAddClassName_Rollback(classNameValue);
+	}
+
+	@Override
+	public void testAddClassName_Success(java.lang.String classNameValue) {
+		_portalService.testAddClassName_Success(classNameValue);
 	}
 
 	@Override
@@ -76,16 +86,6 @@ public class PortalServiceWrapper implements PortalService,
 	public void testAddClassNameAndTestTransactionPortletBar_Success(
 		java.lang.String transactionPortletBarText) {
 		_portalService.testAddClassNameAndTestTransactionPortletBar_Success(transactionPortletBarText);
-	}
-
-	@Override
-	public void testAddClassName_Rollback(java.lang.String classNameValue) {
-		_portalService.testAddClassName_Rollback(classNameValue);
-	}
-
-	@Override
-	public void testAddClassName_Success(java.lang.String classNameValue) {
-		_portalService.testAddClassName_Success(classNameValue);
 	}
 
 	@Override

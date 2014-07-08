@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,7 +51,6 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 	* @param resourceTypePermission the resource type permission
 	* @return the resource type permission that was added
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.ResourceTypePermission addResourceTypePermission(
 		com.liferay.portal.model.ResourceTypePermission resourceTypePermission);
 
@@ -66,11 +64,14 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 		long resourceTypePermissionId);
 
 	/**
-	* @throws PortalException
+	* Deletes the resource type permission with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourceTypePermissionId the primary key of the resource type permission
+	* @return the resource type permission that was removed
+	* @throws PortalException if a resource type permission with the primary key could not be found
 	*/
-	@Override
-	public com.liferay.portal.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.model.PersistedModel persistedModel)
+	public com.liferay.portal.model.ResourceTypePermission deleteResourceTypePermission(
+		long resourceTypePermissionId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -79,21 +80,8 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 	* @param resourceTypePermission the resource type permission
 	* @return the resource type permission that was removed
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.ResourceTypePermission deleteResourceTypePermission(
 		com.liferay.portal.model.ResourceTypePermission resourceTypePermission);
-
-	/**
-	* Deletes the resource type permission with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceTypePermissionId the primary key of the resource type permission
-	* @return the resource type permission that was removed
-	* @throws PortalException if a resource type permission with the primary key could not be found
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.ResourceTypePermission deleteResourceTypePermission(
-		long resourceTypePermissionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -103,7 +91,8 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
@@ -118,7 +107,8 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end);
 
@@ -135,10 +125,11 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> java.util.List<T> dynamicQuery(
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -164,38 +155,6 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 	public com.liferay.portal.model.ResourceTypePermission fetchResourceTypePermission(
 		long resourceTypePermissionId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getCompanyScopeActionIds(long companyId, java.lang.String name,
-		long roleId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getGroupScopeActionIds(long companyId, long groupId,
-		java.lang.String name, long roleId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.ResourceTypePermission> getGroupScopeResourceTypePermissions(
-		long companyId, java.lang.String name, long roleId);
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
-		long companyId, long groupId, java.lang.String name);
-
 	/**
 	* Returns the resource type permission with the primary key.
 	*
@@ -206,6 +165,23 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ResourceTypePermission getResourceTypePermission(
 		long resourceTypePermissionId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -231,6 +207,45 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getResourceTypePermissionsCount();
 
+	/**
+	* Updates the resource type permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param resourceTypePermission the resource type permission
+	* @return the resource type permission that was updated
+	*/
+	public com.liferay.portal.model.ResourceTypePermission updateResourceTypePermission(
+		com.liferay.portal.model.ResourceTypePermission resourceTypePermission);
+
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getCompanyScopeActionIds(long companyId, java.lang.String name,
+		long roleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getGroupScopeActionIds(long companyId, long groupId,
+		java.lang.String name, long roleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.ResourceTypePermission> getGroupScopeResourceTypePermissions(
+		long companyId, java.lang.String name, long roleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
+		long companyId, long groupId, java.lang.String name);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.ResourceTypePermission> getRoleResourceTypePermissions(
 		long roleId);
@@ -250,27 +265,10 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 		java.lang.String name, long roleId, java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
 	public void updateCompanyScopeResourceTypePermissions(long companyId,
 		java.lang.String name, long roleId, long actionIdsLong, long operator);
 
 	public void updateGroupScopeResourceTypePermissions(long companyId,
 		long groupId, java.lang.String name, long roleId, long actionIdsLong,
 		long operator);
-
-	/**
-	* Updates the resource type permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param resourceTypePermission the resource type permission
-	* @return the resource type permission that was updated
-	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.ResourceTypePermission updateResourceTypePermission(
-		com.liferay.portal.model.ResourceTypePermission resourceTypePermission);
 }

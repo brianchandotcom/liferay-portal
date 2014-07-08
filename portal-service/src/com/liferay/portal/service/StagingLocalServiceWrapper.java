@@ -30,6 +30,26 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 		_stagingLocalService = stagingLocalService;
 	}
 
+	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _stagingLocalService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_stagingLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
 	@Override
 	public void checkDefaultLayoutSetBranches(long userId,
 		com.liferay.portal.model.Group liveGroup, boolean branchingPublic,
@@ -93,16 +113,6 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 			remotePathContext, secureConnection, remoteGroupId, serviceContext);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _stagingLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public void publishStagingRequest(long userId, long stagingRequestId,
 		boolean privateLayout,
@@ -110,16 +120,6 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_stagingLocalService.publishStagingRequest(userId, stagingRequestId,
 			privateLayout, parameterMap);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_stagingLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

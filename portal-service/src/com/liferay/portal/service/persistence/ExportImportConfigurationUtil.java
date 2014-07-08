@@ -88,7 +88,7 @@ public class ExportImportConfigurationUtil {
 	 */
 	public static List<ExportImportConfiguration> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<ExportImportConfiguration> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -154,7 +154,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.ExportImportConfiguration> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -169,7 +169,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration findByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchExportImportConfigurationException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -183,7 +183,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -197,7 +197,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration findByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchExportImportConfigurationException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -211,7 +211,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -226,7 +226,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration[] findByGroupId_PrevAndNext(
 		long exportImportConfigurationId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchExportImportConfigurationException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(exportImportConfigurationId,
@@ -295,7 +295,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.ExportImportConfiguration> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -310,7 +310,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchExportImportConfigurationException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -325,7 +325,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -340,7 +340,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchExportImportConfigurationException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -355,7 +355,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -371,7 +371,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration[] findByCompanyId_PrevAndNext(
 		long exportImportConfigurationId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchExportImportConfigurationException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(exportImportConfigurationId,
@@ -443,7 +443,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.ExportImportConfiguration> findByG_T(
 		long groupId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_T(groupId, type, start, end, orderByComparator);
 	}
@@ -459,7 +459,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration findByG_T_First(
 		long groupId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchExportImportConfigurationException {
 		return getPersistence().findByG_T_First(groupId, type, orderByComparator);
 	}
@@ -474,7 +474,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration fetchByG_T_First(
 		long groupId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_T_First(groupId, type, orderByComparator);
 	}
@@ -490,7 +490,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration findByG_T_Last(
 		long groupId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchExportImportConfigurationException {
 		return getPersistence().findByG_T_Last(groupId, type, orderByComparator);
 	}
@@ -505,7 +505,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration fetchByG_T_Last(
 		long groupId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByG_T_Last(groupId, type, orderByComparator);
 	}
 
@@ -521,7 +521,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration[] findByG_T_PrevAndNext(
 		long exportImportConfigurationId, long groupId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchExportImportConfigurationException {
 		return getPersistence()
 				   .findByG_T_PrevAndNext(exportImportConfigurationId, groupId,
@@ -595,7 +595,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.ExportImportConfiguration> findByG_S(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_S(groupId, status, start, end, orderByComparator);
 	}
@@ -611,7 +611,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration findByG_S_First(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchExportImportConfigurationException {
 		return getPersistence()
 				   .findByG_S_First(groupId, status, orderByComparator);
@@ -627,7 +627,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration fetchByG_S_First(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_S_First(groupId, status, orderByComparator);
 	}
@@ -643,7 +643,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration findByG_S_Last(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchExportImportConfigurationException {
 		return getPersistence()
 				   .findByG_S_Last(groupId, status, orderByComparator);
@@ -659,7 +659,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration fetchByG_S_Last(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_S_Last(groupId, status, orderByComparator);
 	}
@@ -676,7 +676,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration[] findByG_S_PrevAndNext(
 		long exportImportConfigurationId, long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchExportImportConfigurationException {
 		return getPersistence()
 				   .findByG_S_PrevAndNext(exportImportConfigurationId, groupId,
@@ -753,7 +753,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.ExportImportConfiguration> findByG_T_S(
 		long groupId, int type, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_T_S(groupId, type, status, start, end,
 			orderByComparator);
@@ -771,7 +771,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration findByG_T_S_First(
 		long groupId, int type, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchExportImportConfigurationException {
 		return getPersistence()
 				   .findByG_T_S_First(groupId, type, status, orderByComparator);
@@ -788,7 +788,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration fetchByG_T_S_First(
 		long groupId, int type, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_T_S_First(groupId, type, status, orderByComparator);
 	}
@@ -805,7 +805,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration findByG_T_S_Last(
 		long groupId, int type, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchExportImportConfigurationException {
 		return getPersistence()
 				   .findByG_T_S_Last(groupId, type, status, orderByComparator);
@@ -822,7 +822,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration fetchByG_T_S_Last(
 		long groupId, int type, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_T_S_Last(groupId, type, status, orderByComparator);
 	}
@@ -840,7 +840,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static com.liferay.portal.model.ExportImportConfiguration[] findByG_T_S_PrevAndNext(
 		long exportImportConfigurationId, long groupId, int type, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchExportImportConfigurationException {
 		return getPersistence()
 				   .findByG_T_S_PrevAndNext(exportImportConfigurationId,
@@ -987,7 +987,7 @@ public class ExportImportConfigurationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.ExportImportConfiguration> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ExportImportConfiguration> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

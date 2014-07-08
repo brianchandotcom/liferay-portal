@@ -87,7 +87,7 @@ public class OrganizationUtil {
 	 */
 	public static List<Organization> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<Organization> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -151,7 +151,7 @@ public class OrganizationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Organization> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -165,7 +165,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization findByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -179,7 +179,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -193,7 +193,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization findByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -207,7 +207,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -222,7 +222,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization[] findByUuid_PrevAndNext(
 		long organizationId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(organizationId, uuid,
@@ -272,7 +272,7 @@ public class OrganizationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Organization> filterFindByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByUuid(uuid, start, end, orderByComparator);
 	}
@@ -288,7 +288,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization[] filterFindByUuid_PrevAndNext(
 		long organizationId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .filterFindByUuid_PrevAndNext(organizationId, uuid,
@@ -370,7 +370,7 @@ public class OrganizationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Organization> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -386,7 +386,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization findByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -402,7 +402,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -418,7 +418,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -434,7 +434,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -451,7 +451,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization[] findByUuid_C_PrevAndNext(
 		long organizationId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(organizationId, uuid, companyId,
@@ -504,7 +504,7 @@ public class OrganizationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Organization> filterFindByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByUuid_C(uuid, companyId, start, end,
 			orderByComparator);
@@ -522,7 +522,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization[] filterFindByUuid_C_PrevAndNext(
 		long organizationId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .filterFindByUuid_C_PrevAndNext(organizationId, uuid,
@@ -604,7 +604,7 @@ public class OrganizationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Organization> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -619,7 +619,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization findByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -634,7 +634,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -649,7 +649,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization findByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -664,7 +664,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -680,7 +680,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization[] findByCompanyId_PrevAndNext(
 		long organizationId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(organizationId, companyId,
@@ -730,7 +730,7 @@ public class OrganizationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Organization> filterFindByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByCompanyId(companyId, start, end,
 			orderByComparator);
@@ -747,7 +747,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization[] filterFindByCompanyId_PrevAndNext(
 		long organizationId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .filterFindByCompanyId_PrevAndNext(organizationId,
@@ -826,7 +826,7 @@ public class OrganizationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Organization> findByLocations(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByLocations(companyId, start, end, orderByComparator);
 	}
@@ -841,7 +841,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization findByLocations_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByLocations_First(companyId, orderByComparator);
@@ -856,7 +856,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization fetchByLocations_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByLocations_First(companyId, orderByComparator);
 	}
@@ -871,7 +871,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization findByLocations_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByLocations_Last(companyId, orderByComparator);
@@ -886,7 +886,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization fetchByLocations_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByLocations_Last(companyId, orderByComparator);
 	}
@@ -902,7 +902,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization[] findByLocations_PrevAndNext(
 		long organizationId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByLocations_PrevAndNext(organizationId, companyId,
@@ -952,7 +952,7 @@ public class OrganizationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Organization> filterFindByLocations(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByLocations(companyId, start, end,
 			orderByComparator);
@@ -969,7 +969,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization[] filterFindByLocations_PrevAndNext(
 		long organizationId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .filterFindByLocations_PrevAndNext(organizationId,
@@ -1052,7 +1052,7 @@ public class OrganizationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Organization> findByC_P(
 		long companyId, long parentOrganizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_P(companyId, parentOrganizationId, start, end,
 			orderByComparator);
@@ -1069,7 +1069,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization findByC_P_First(
 		long companyId, long parentOrganizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByC_P_First(companyId, parentOrganizationId,
@@ -1086,7 +1086,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization fetchByC_P_First(
 		long companyId, long parentOrganizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_P_First(companyId, parentOrganizationId,
 			orderByComparator);
@@ -1103,7 +1103,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization findByC_P_Last(
 		long companyId, long parentOrganizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByC_P_Last(companyId, parentOrganizationId,
@@ -1120,7 +1120,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization fetchByC_P_Last(
 		long companyId, long parentOrganizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_P_Last(companyId, parentOrganizationId,
 			orderByComparator);
@@ -1138,7 +1138,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization[] findByC_P_PrevAndNext(
 		long organizationId, long companyId, long parentOrganizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByC_P_PrevAndNext(organizationId, companyId,
@@ -1192,7 +1192,7 @@ public class OrganizationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Organization> filterFindByC_P(
 		long companyId, long parentOrganizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByC_P(companyId, parentOrganizationId, start,
 			end, orderByComparator);
@@ -1210,7 +1210,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization[] filterFindByC_P_PrevAndNext(
 		long organizationId, long companyId, long parentOrganizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .filterFindByC_P_PrevAndNext(organizationId, companyId,
@@ -1295,7 +1295,7 @@ public class OrganizationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Organization> findByC_T(
 		long companyId, java.lang.String treePath, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_T(companyId, treePath, start, end, orderByComparator);
 	}
@@ -1311,7 +1311,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization findByC_T_First(
 		long companyId, java.lang.String treePath,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByC_T_First(companyId, treePath, orderByComparator);
@@ -1327,7 +1327,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization fetchByC_T_First(
 		long companyId, java.lang.String treePath,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_T_First(companyId, treePath, orderByComparator);
 	}
@@ -1343,7 +1343,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization findByC_T_Last(
 		long companyId, java.lang.String treePath,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByC_T_Last(companyId, treePath, orderByComparator);
@@ -1359,7 +1359,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization fetchByC_T_Last(
 		long companyId, java.lang.String treePath,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_T_Last(companyId, treePath, orderByComparator);
 	}
@@ -1376,7 +1376,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization[] findByC_T_PrevAndNext(
 		long organizationId, long companyId, java.lang.String treePath,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByC_T_PrevAndNext(organizationId, companyId, treePath,
@@ -1429,7 +1429,7 @@ public class OrganizationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Organization> filterFindByC_T(
 		long companyId, java.lang.String treePath, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByC_T(companyId, treePath, start, end,
 			orderByComparator);
@@ -1447,7 +1447,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization[] filterFindByC_T_PrevAndNext(
 		long organizationId, long companyId, java.lang.String treePath,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .filterFindByC_T_PrevAndNext(organizationId, companyId,
@@ -1603,7 +1603,7 @@ public class OrganizationUtil {
 	public static java.util.List<com.liferay.portal.model.Organization> findByO_C_P(
 		long organizationId, long companyId, long parentOrganizationId,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByO_C_P(organizationId, companyId,
 			parentOrganizationId, start, end, orderByComparator);
@@ -1621,7 +1621,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization findByO_C_P_First(
 		long organizationId, long companyId, long parentOrganizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByO_C_P_First(organizationId, companyId,
@@ -1639,7 +1639,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization fetchByO_C_P_First(
 		long organizationId, long companyId, long parentOrganizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByO_C_P_First(organizationId, companyId,
 			parentOrganizationId, orderByComparator);
@@ -1657,7 +1657,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization findByO_C_P_Last(
 		long organizationId, long companyId, long parentOrganizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchOrganizationException {
 		return getPersistence()
 				   .findByO_C_P_Last(organizationId, companyId,
@@ -1675,7 +1675,7 @@ public class OrganizationUtil {
 	*/
 	public static com.liferay.portal.model.Organization fetchByO_C_P_Last(
 		long organizationId, long companyId, long parentOrganizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByO_C_P_Last(organizationId, companyId,
 			parentOrganizationId, orderByComparator);
@@ -1736,7 +1736,7 @@ public class OrganizationUtil {
 	public static java.util.List<com.liferay.portal.model.Organization> filterFindByO_C_P(
 		long organizationId, long companyId, long parentOrganizationId,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByO_C_P(organizationId, companyId,
 			parentOrganizationId, start, end, orderByComparator);
@@ -1901,7 +1901,7 @@ public class OrganizationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Organization> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Organization> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
@@ -1974,7 +1974,7 @@ public class OrganizationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Group> getGroups(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().getGroups(pk, start, end, orderByComparator);
 	}
 
@@ -2174,7 +2174,7 @@ public class OrganizationUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.User> getUsers(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().getUsers(pk, start, end, orderByComparator);
 	}
 

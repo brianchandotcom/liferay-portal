@@ -138,7 +138,8 @@ public abstract class WorkflowDefinitionLinkLocalServiceBaseImpl
 	 * @return the matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return workflowDefinitionLinkPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -155,8 +156,8 @@ public abstract class WorkflowDefinitionLinkLocalServiceBaseImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return workflowDefinitionLinkPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -175,8 +176,9 @@ public abstract class WorkflowDefinitionLinkLocalServiceBaseImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) {
 		return workflowDefinitionLinkPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -255,7 +257,7 @@ public abstract class WorkflowDefinitionLinkLocalServiceBaseImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
-		return workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink((WorkflowDefinitionLink)persistedModel);
+		return deleteWorkflowDefinitionLink((WorkflowDefinitionLink)persistedModel);
 	}
 
 	@Override

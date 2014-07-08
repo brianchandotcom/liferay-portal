@@ -48,6 +48,20 @@ public interface OrganizationService extends BaseService {
 	 */
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	/**
 	* Adds the organizations to the group.
 	*
 	* @param groupId the primary key of the group
@@ -97,7 +111,7 @@ public interface OrganizationService extends BaseService {
 	java.util.List, java.util.List, java.util.List,
 	java.util.List, java.util.List, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public com.liferay.portal.model.Organization addOrganization(
 		long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -142,7 +156,7 @@ public interface OrganizationService extends BaseService {
 	String, String, long, long, int, String, boolean,
 	ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public com.liferay.portal.model.Organization addOrganization(
 		long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -265,13 +279,6 @@ public interface OrganizationService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns all the organizations which the user has permission to manage.
 	*
 	* @param actionId the permitted action
@@ -281,7 +288,7 @@ public interface OrganizationService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #getOrganizations(long, long,
 	int, int)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getManageableOrganizations(
 		java.lang.String actionId, int max)
@@ -376,13 +383,6 @@ public interface OrganizationService extends BaseService {
 		long userId) throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	/**
 	* Sets the organizations in the group, removing and adding organizations to
 	* the group as necessary.
 	*
@@ -456,7 +456,7 @@ public interface OrganizationService extends BaseService {
 	java.util.List, java.util.List, boolean, byte[],
 	ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public com.liferay.portal.model.Organization updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -498,7 +498,7 @@ public interface OrganizationService extends BaseService {
 	long, String, String, long, long, int, String, boolean,
 	ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public com.liferay.portal.model.Organization updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -584,7 +584,7 @@ public interface OrganizationService extends BaseService {
 	java.util.List, java.util.List, boolean, byte[],
 	ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public com.liferay.portal.model.Organization updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, long regionId, long countryId, int statusId,

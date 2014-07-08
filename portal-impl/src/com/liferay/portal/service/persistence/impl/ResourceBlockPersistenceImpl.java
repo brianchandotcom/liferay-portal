@@ -156,7 +156,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	@Override
 	public List<ResourceBlock> findByC_N(long companyId, String name,
-		int start, int end, OrderByComparator<ResourceBlock> orderByComparator) {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -286,7 +286,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	@Override
 	public ResourceBlock findByC_N_First(long companyId, String name,
-		OrderByComparator<ResourceBlock> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchResourceBlockException {
 		ResourceBlock resourceBlock = fetchByC_N_First(companyId, name,
 				orderByComparator);
@@ -320,7 +320,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	@Override
 	public ResourceBlock fetchByC_N_First(long companyId, String name,
-		OrderByComparator<ResourceBlock> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		List<ResourceBlock> list = findByC_N(companyId, name, 0, 1,
 				orderByComparator);
 
@@ -342,7 +342,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	@Override
 	public ResourceBlock findByC_N_Last(long companyId, String name,
-		OrderByComparator<ResourceBlock> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchResourceBlockException {
 		ResourceBlock resourceBlock = fetchByC_N_Last(companyId, name,
 				orderByComparator);
@@ -376,7 +376,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	@Override
 	public ResourceBlock fetchByC_N_Last(long companyId, String name,
-		OrderByComparator<ResourceBlock> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		int count = countByC_N(companyId, name);
 
 		if (count == 0) {
@@ -405,8 +405,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	@Override
 	public ResourceBlock[] findByC_N_PrevAndNext(long resourceBlockId,
-		long companyId, String name,
-		OrderByComparator<ResourceBlock> orderByComparator)
+		long companyId, String name, OrderByComparator orderByComparator)
 		throws NoSuchResourceBlockException {
 		ResourceBlock resourceBlock = findByPrimaryKey(resourceBlockId);
 
@@ -437,7 +436,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 	protected ResourceBlock getByC_N_PrevAndNext(Session session,
 		ResourceBlock resourceBlock, long companyId, String name,
-		OrderByComparator<ResourceBlock> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -729,8 +728,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	@Override
 	public List<ResourceBlock> findByC_G_N(long companyId, long groupId,
-		String name, int start, int end,
-		OrderByComparator<ResourceBlock> orderByComparator) {
+		String name, int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -866,7 +864,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	@Override
 	public ResourceBlock findByC_G_N_First(long companyId, long groupId,
-		String name, OrderByComparator<ResourceBlock> orderByComparator)
+		String name, OrderByComparator orderByComparator)
 		throws NoSuchResourceBlockException {
 		ResourceBlock resourceBlock = fetchByC_G_N_First(companyId, groupId,
 				name, orderByComparator);
@@ -904,7 +902,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	@Override
 	public ResourceBlock fetchByC_G_N_First(long companyId, long groupId,
-		String name, OrderByComparator<ResourceBlock> orderByComparator) {
+		String name, OrderByComparator orderByComparator) {
 		List<ResourceBlock> list = findByC_G_N(companyId, groupId, name, 0, 1,
 				orderByComparator);
 
@@ -927,7 +925,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	@Override
 	public ResourceBlock findByC_G_N_Last(long companyId, long groupId,
-		String name, OrderByComparator<ResourceBlock> orderByComparator)
+		String name, OrderByComparator orderByComparator)
 		throws NoSuchResourceBlockException {
 		ResourceBlock resourceBlock = fetchByC_G_N_Last(companyId, groupId,
 				name, orderByComparator);
@@ -965,7 +963,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	@Override
 	public ResourceBlock fetchByC_G_N_Last(long companyId, long groupId,
-		String name, OrderByComparator<ResourceBlock> orderByComparator) {
+		String name, OrderByComparator orderByComparator) {
 		int count = countByC_G_N(companyId, groupId, name);
 
 		if (count == 0) {
@@ -996,7 +994,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	@Override
 	public ResourceBlock[] findByC_G_N_PrevAndNext(long resourceBlockId,
 		long companyId, long groupId, String name,
-		OrderByComparator<ResourceBlock> orderByComparator)
+		OrderByComparator orderByComparator)
 		throws NoSuchResourceBlockException {
 		ResourceBlock resourceBlock = findByPrimaryKey(resourceBlockId);
 
@@ -1027,7 +1025,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 	protected ResourceBlock getByC_G_N_PrevAndNext(Session session,
 		ResourceBlock resourceBlock, long companyId, long groupId, String name,
-		OrderByComparator<ResourceBlock> orderByComparator, boolean previous) {
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2187,7 +2185,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	@Override
 	public List<ResourceBlock> findAll(int start, int end,
-		OrderByComparator<ResourceBlock> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;

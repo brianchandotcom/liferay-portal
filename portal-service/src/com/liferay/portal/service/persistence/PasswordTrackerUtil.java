@@ -87,7 +87,7 @@ public class PasswordTrackerUtil {
 	 */
 	public static List<PasswordTracker> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<PasswordTracker> orderByComparator) {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -151,7 +151,7 @@ public class PasswordTrackerUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.PasswordTracker> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordTracker> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -166,7 +166,7 @@ public class PasswordTrackerUtil {
 	*/
 	public static com.liferay.portal.model.PasswordTracker findByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordTracker> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPasswordTrackerException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
@@ -180,7 +180,7 @@ public class PasswordTrackerUtil {
 	*/
 	public static com.liferay.portal.model.PasswordTracker fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordTracker> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -194,7 +194,7 @@ public class PasswordTrackerUtil {
 	*/
 	public static com.liferay.portal.model.PasswordTracker findByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordTracker> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPasswordTrackerException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
@@ -208,7 +208,7 @@ public class PasswordTrackerUtil {
 	*/
 	public static com.liferay.portal.model.PasswordTracker fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordTracker> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -223,7 +223,7 @@ public class PasswordTrackerUtil {
 	*/
 	public static com.liferay.portal.model.PasswordTracker[] findByUserId_PrevAndNext(
 		long passwordTrackerId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordTracker> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchPasswordTrackerException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(passwordTrackerId, userId,
@@ -366,7 +366,7 @@ public class PasswordTrackerUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.PasswordTracker> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.PasswordTracker> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

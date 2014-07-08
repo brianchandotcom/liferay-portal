@@ -266,7 +266,7 @@ public class LayoutBranchPersistenceTest {
 		}
 	}
 
-	protected OrderByComparator<LayoutBranch> getOrderByComparator() {
+	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LayoutBranch",
 			"mvccVersion", true, "LayoutBranchId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true,

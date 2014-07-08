@@ -48,10 +48,24 @@ public interface WebsiteService extends BaseService {
 	 */
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	public java.lang.String getBeanIdentifier();
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	/**
 	* @deprecated As of 6.2.0, replaced by {@link #addWebsite(String, long,
 	String, int, boolean, ServiceContext)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	public com.liferay.portal.model.Website addWebsite(
 		java.lang.String className, long classPK, java.lang.String url,
 		int typeId, boolean primary)
@@ -66,13 +80,6 @@ public interface WebsiteService extends BaseService {
 	public void deleteWebsite(long websiteId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Website getWebsite(long websiteId)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -81,13 +88,6 @@ public interface WebsiteService extends BaseService {
 	public java.util.List<com.liferay.portal.model.Website> getWebsites(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.model.Website updateWebsite(long websiteId,
 		java.lang.String url, int typeId, boolean primary)

@@ -31,6 +31,26 @@ public class EmailAddressServiceWrapper implements EmailAddressService,
 	}
 
 	/**
+	* Returns the Spring bean ID for this bean.
+	*
+	* @return the Spring bean ID for this bean
+	*/
+	@Override
+	public java.lang.String getBeanIdentifier() {
+		return _emailAddressService.getBeanIdentifier();
+	}
+
+	/**
+	* Sets the Spring bean ID for this bean.
+	*
+	* @param beanIdentifier the Spring bean ID for this bean
+	*/
+	@Override
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
+		_emailAddressService.setBeanIdentifier(beanIdentifier);
+	}
+
+	/**
 	* @deprecated As of 6.2.0, replaced by {@link #addEmailAddress(String,
 	long, String, int, boolean, ServiceContext)}
 	*/
@@ -60,16 +80,6 @@ public class EmailAddressServiceWrapper implements EmailAddressService,
 		_emailAddressService.deleteEmailAddress(emailAddressId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _emailAddressService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.model.EmailAddress getEmailAddress(
 		long emailAddressId)
@@ -82,16 +92,6 @@ public class EmailAddressServiceWrapper implements EmailAddressService,
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _emailAddressService.getEmailAddresses(className, classPK);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_emailAddressService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

@@ -94,7 +94,6 @@ AUI.add(
 							buttonType: Liferay.Language.get('button-type'),
 							deleteFieldsMessage: Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-entries'),
 							duplicateMessage: Liferay.Language.get('duplicate'),
-							duplicateNameMessage: Liferay.Language.get('please-enter-a-unique-field-name'),
 							editMessage: Liferay.Language.get('edit'),
 							label: Liferay.Language.get('field-label'),
 							large: Liferay.Language.get('large'),
@@ -497,48 +496,6 @@ AUI.add(
 						);
 
 						return AArray.dedupe(readOnlyAttributes);
-					},
-
-					_handleSaveEvent: function() {
-						var instance = this;
-
-						var editingField = instance.editingField;
-
-						if (editingField) {
-							var oldValue = editingField.get('name');
-
-							var modelList = instance.propertyList.get('data');
-
-							var newValue;
-
-							modelList.each(
-								function(model) {
-									var attributeName = model.get('attributeName');
-
-									var attributeValue = model.get('value');
-
-									if (attributeName === 'name' && attributeValue !== oldValue) {
-										newValue = attributeValue;
-									}
-								}
-							);
-
-							if (instance.NAMES.get(newValue)) {
-								alert(instance.get('strings').duplicateNameMessage);
-
-								editingField.focus();
-							}
-
-							else {
-								if (newValue !== undefined) {
-									instance.NAMES.remove(oldValue);
-
-									instance.NAMES.add(newValue);
-								}
-
-								LiferayFormBuilder.superclass._handleSaveEvent.apply(this, arguments);
-							}
-						}
 					},
 
 					_onPropertyModelChange: function(event) {

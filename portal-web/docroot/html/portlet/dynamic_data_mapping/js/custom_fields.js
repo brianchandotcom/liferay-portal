@@ -42,8 +42,38 @@ AUI.add(
 
 		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get('please-enter-only-alphanumeric-characters');
 
+		DEFAULTS_FORM_VALIDATOR.STRINGS.structureDuplicateFieldName = Liferay.Language.get('please-enter-a-unique-field-name');
+
 		DEFAULTS_FORM_VALIDATOR.RULES.structureFieldName = function(value) {
 			return (/^[\w\-]+$/).test(value);
+		};
+
+		DEFAULTS_FORM_VALIDATOR.RULES.structureDuplicateFieldName = function(value, editorNode) {
+			var instance = this;
+
+			var names = Liferay.FormBuilder.prototype.NAMES;
+
+			var oldValue = A.Widget.getByNode(editorNode).get('value');
+
+			var duplicate;
+
+			names.remove(oldValue);
+
+			if (names.get(value)) {
+				editorNode.selectText(0, value.length);
+				instance.resetField(editorNode);
+
+				names.add(oldValue);
+
+				duplicate = true;
+			}
+			else {
+				names.add(value);
+
+				duplicate = false;
+			}
+
+			return !duplicate;
 		};
 
 		var applyStyles = function(node, styleContent) {
@@ -440,6 +470,7 @@ AUI.add(
 									rules: {
 										value: {
 											required: true,
+											structureDuplicateFieldName: true,
 											structureFieldName: true
 										}
 									}

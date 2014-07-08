@@ -19,7 +19,7 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
-				instance._bindUI();
+				instance._bindUIACTextarea();
 			},
 
 			destructor: function() {
@@ -30,7 +30,7 @@ AUI.add(
 				}
 			},
 
-			_bindUI: function() {
+			_bindUIACTextarea: function() {
 				var instance = this;
 
 				var inputNode = instance.get(STR_INPUT_NODE);
@@ -188,12 +188,17 @@ AUI.add(
 			}
 		};
 
-		Liferay.AutoCompleteTextarea = A.Base.mix(
+		Liferay.AutoCompleteTextarea = A.Base.create(
+			'liferayautocompletetextarea',
 			A.AutoComplete,
 			[
 				Liferay.AutoCompleteInputBase,
 				AutoCompleteTextarea
-			]
+			],
+			{},
+			{
+				CSS_PREFIX: A.ClassNameManager.getClassName('aclist')
+			}
 		);
 	},
 	'',

@@ -29,7 +29,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BOOKMARK_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BOOKMARK_MENU-->
+<tr>
+	<td>BOOKMARK_MENU_EDIT</td>
+	<td>//ul[contains(@class,'list-group nav')]/li/a[contains(.,'Edit')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARK_MENU_PERMISSIONS</td>
+	<td>//ul[contains(@class,'list-group nav')]/li/a[contains(.,'Permissions')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARK_MENU_SUBSCRIBE</td>
+	<td>//ul[contains(@class,'list-group nav')]/li/a[contains(.,'Subscribe')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARK_MENU_MOVE_TO_THE_RECYCLE_BIN</td>
 	<td>//ul[contains(@class,'list-group nav')]/li/a[contains(.,'Move to the Recycle Bin')]/span</td>
 	<td></td>
 </tr>

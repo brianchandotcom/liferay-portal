@@ -587,7 +587,7 @@
 		<var name="key_mbAttachmentFile" value="${mbAttachmentFile}" />
 
 		<execute action="CPMessageboardsRemovedAttachments#assertTextEquals" locator-key1="ATTACHMENT_TABLE_NAME" value1="${mbAttachmentFile}" />
-		<execute action="CPMessageboardsRemovedAttachments#assertClick" locator-key1="ATTACHMENT_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPMessageboardsRemovedAttachments#click" locator-key1="ATTACHMENT_TABLE_ACTIONS" />
 		<execute action="CPMessageboardsRemovedAttachments#assertClick" locator-key1="ATTACHMENT_MENULIST_RESTORE" value1="Restore" />
 		<execute action="CPMessageboardsRemovedAttachments#assertTextEquals" locator-key1="INFO_MESSAGE" value1="This message does not have file attachments in the Recycle Bin." />
 	</command>

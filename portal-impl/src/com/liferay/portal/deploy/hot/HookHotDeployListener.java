@@ -1797,8 +1797,8 @@ public class HookHotDeployListener
 					roleMembershipPolicyClassName);
 
 			registerService(
-					servletContextName, roleMembershipPolicyClassName,
-					RoleMembershipPolicy.class, roleMembershipPolicy);
+				servletContextName, roleMembershipPolicyClassName,
+				RoleMembershipPolicy.class, roleMembershipPolicy);
 
 			if (PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY) {
 				roleMembershipPolicy.verifyPolicy();

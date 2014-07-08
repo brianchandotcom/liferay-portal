@@ -2956,10 +2956,6 @@ public class HookHotDeployListener
 
 	private class MergeStringArraysContainer implements StringArraysContainer {
 
-		private MergeStringArraysContainer(String key) {
-			_portalStringArray = PropsUtil.getArray(key);
-		}
-
 		@Override
 		public String[] getStringArray() {
 			List<String> mergedStringList = new UniqueList<String>();
@@ -2991,9 +2987,13 @@ public class HookHotDeployListener
 			}
 		}
 
-		private String[] _portalStringArray;
+		private MergeStringArraysContainer(String key) {
+			_portalStringArray = PropsUtil.getArray(key);
+		}
+
 		private Map<String, String[]> _pluginStringArrayMap =
 			new HashMap<String, String[]>();
+		private String[] _portalStringArray;
 
 	}
 
@@ -3043,10 +3043,6 @@ public class HookHotDeployListener
 	private class OverrideStringArraysContainer
 		implements StringArraysContainer {
 
-		private OverrideStringArraysContainer(String key) {
-			_portalStringArray = PropsUtil.getArray(key);
-		}
-
 		@Override
 		public String[] getStringArray() {
 			if (_pluginStringArray != null) {
@@ -3081,6 +3077,10 @@ public class HookHotDeployListener
 					_pluginStringArray = null;
 				}
 			}
+		}
+
+		private OverrideStringArraysContainer(String key) {
+			_portalStringArray = PropsUtil.getArray(key);
 		}
 
 		private String[] _pluginStringArray;

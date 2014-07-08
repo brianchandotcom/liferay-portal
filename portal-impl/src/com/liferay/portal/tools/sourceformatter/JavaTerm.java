@@ -54,10 +54,9 @@ public class JavaTerm {
 
 		_parameterTypes = new ArrayList<String>();
 
-		if (!JavaSourceProcessor.isInJavaTermTypeGroup(
-				_type, JavaSourceProcessor.TYPE_CONSTRUCTOR) &&
-			!JavaSourceProcessor.isInJavaTermTypeGroup(
-				_type, JavaSourceProcessor.TYPE_METHOD)) {
+		if (!JavaClass.isInJavaTermTypeGroup(
+				_type, JavaClass.TYPE_CONSTRUCTOR) &&
+			!JavaClass.isInJavaTermTypeGroup(_type, JavaClass.TYPE_METHOD)) {
 
 			return _parameterTypes;
 		}

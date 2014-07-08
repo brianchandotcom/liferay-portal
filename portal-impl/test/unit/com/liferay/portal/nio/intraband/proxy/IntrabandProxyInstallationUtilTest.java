@@ -269,15 +269,15 @@ public class IntrabandProxyInstallationUtilTest {
 
 	private abstract class TestClass {
 
-		@Id
-		public abstract String getId();
+		@SuppressWarnings("unused")
+		public void copyMethod() {
+		}
 
 		@Proxy
 		public abstract Object doStuff();
 
-		@SuppressWarnings("unused")
-		public void copyMethod() {
-		}
+		@Id
+		public abstract String getId();
 
 	}
 

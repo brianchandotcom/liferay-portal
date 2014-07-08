@@ -124,17 +124,17 @@ public class UserScreenNameException extends PortalException {
 			super("Screen name must not be null");
 		}
 
+		public MustNotBeNull(long userId) {
+			super(
+				String.format(
+					"Screen name must not be null for user %s", userId));
+		}
+
 		public MustNotBeNull(String fullName) {
 			super(
 				String.format(
 					"Screen name must not be null for the full name %s",
 					fullName));
-		}
-
-		public MustNotBeNull(long userId) {
-			super(
-				String.format(
-					"Screen name must not be null for user %s", userId));
 		}
 
 	}

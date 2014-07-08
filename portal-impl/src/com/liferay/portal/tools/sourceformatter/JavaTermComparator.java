@@ -37,7 +37,7 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 		String name1 = javaTerm1.getName();
 		String name2 = javaTerm2.getName();
 
-		if (type1 == JavaSourceProcessor.TYPE_VARIABLE_PRIVATE_STATIC) {
+		if (type1 == JavaClass.TYPE_VARIABLE_PRIVATE_STATIC) {
 			if (name2.equals("_log") || name2.equals("_logger")) {
 				return 1;
 			}
@@ -53,9 +53,7 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 			}
 		}
 
-		if (JavaSourceProcessor.isInJavaTermTypeGroup(
-				type1, JavaSourceProcessor.TYPE_VARIABLE)) {
-
+		if (JavaClass.isInJavaTermTypeGroup(type1, JavaClass.TYPE_VARIABLE)) {
 			if (StringUtil.isUpperCase(name1) &&
 				!StringUtil.isLowerCase(name1) &&
 				!StringUtil.isUpperCase(name2)) {

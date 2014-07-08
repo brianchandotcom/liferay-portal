@@ -269,6 +269,22 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 			return true;
 		}
 
+		private void doShutdown() {
+			try {
+				RemoteSPI.this.stop();
+			}
+			catch (RemoteException re) {
+				_log.error("Unable to stop SPI", re);
+			}
+
+			try {
+				RemoteSPI.this.destroy();
+			}
+			catch (RemoteException re) {
+				_log.error("Unable to destroy SPI", re);
+			}
+		}
+
 		private boolean waitForMPI() {
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -296,22 +312,6 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 			}
 
 			return false;
-		}
-
-		private void doShutdown() {
-			try {
-				RemoteSPI.this.stop();
-			}
-			catch (RemoteException re) {
-				_log.error("Unable to stop SPI", re);
-			}
-
-			try {
-				RemoteSPI.this.destroy();
-			}
-			catch (RemoteException re) {
-				_log.error("Unable to destroy SPI", re);
-			}
 		}
 
 	}

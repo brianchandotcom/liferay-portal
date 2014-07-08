@@ -432,11 +432,6 @@ public class NestedSetsTreeManagerTest {
 		}
 
 		@Override
-		public long getPrimaryKey() {
-			return _primaryKey;
-		}
-
-		@Override
 		public long getNestedSetsTreeNodeLeft() {
 			return _nestedSetsTreeNodeLeft;
 		}
@@ -449,6 +444,11 @@ public class NestedSetsTreeManagerTest {
 		@Override
 		public long getNestedSetsTreeNodeScopeId() {
 			return 0;
+		}
+
+		@Override
+		public long getPrimaryKey() {
+			return _primaryKey;
 		}
 
 		@Override

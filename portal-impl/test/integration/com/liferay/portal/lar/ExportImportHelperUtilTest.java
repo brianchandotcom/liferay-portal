@@ -795,12 +795,12 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		}
 
 		@Override
-		public List<String> getFolderEntries(String path) {
+		public File getFile() {
 			return null;
 		}
 
 		@Override
-		public File getFile() {
+		public List<String> getFolderEntries(String path) {
 			return null;
 		}
 

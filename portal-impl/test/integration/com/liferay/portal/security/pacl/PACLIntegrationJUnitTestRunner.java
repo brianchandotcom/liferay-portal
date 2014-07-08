@@ -110,36 +110,6 @@ public class PACLIntegrationJUnitTestRunner
 		}
 
 		@Override
-		public URL getResource(String name) {
-			if (name.equals(
-					"com/liferay/util/bean/PortletBeanLocatorUtil.class")) {
-
-				URL url = findResource("/");
-
-				String path = url.getPath();
-
-				path = path.substring(
-					0, path.length() - RESOURCE_PATH.length() - 1);
-
-				path = path.concat(name);
-
-				try {
-					return new URL("file", null, path);
-				}
-				catch (MalformedURLException murle) {
-				}
-			}
-
-			URL url = findResource(name);
-
-			if (url != null) {
-				return url;
-			}
-
-			return super.getResource(name);
-		}
-
-		@Override
 		public URL findResource(String name) {
 			if (_urls.containsKey(name)) {
 				return _urls.get(name);
@@ -181,6 +151,36 @@ public class PACLIntegrationJUnitTestRunner
 			}
 
 			return resource;
+		}
+
+		@Override
+		public URL getResource(String name) {
+			if (name.equals(
+					"com/liferay/util/bean/PortletBeanLocatorUtil.class")) {
+
+				URL url = findResource("/");
+
+				String path = url.getPath();
+
+				path = path.substring(
+					0, path.length() - RESOURCE_PATH.length() - 1);
+
+				path = path.concat(name);
+
+				try {
+					return new URL("file", null, path);
+				}
+				catch (MalformedURLException murle) {
+				}
+			}
+
+			URL url = findResource(name);
+
+			if (url != null) {
+				return url;
+			}
+
+			return super.getResource(name);
 		}
 
 		@Override

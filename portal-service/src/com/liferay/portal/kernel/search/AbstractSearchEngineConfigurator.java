@@ -339,10 +339,6 @@ public abstract class AbstractSearchEngineConfigurator
 
 	private class SearchEngineRegistration {
 
-		private SearchEngineRegistration(String searchEngineId) {
-			_searchEngineId = searchEngineId;
-		}
-
 		public void addOriginalSearchReaderMessageListener(
 			InvokerMessageListener messageListener) {
 
@@ -407,6 +403,10 @@ public abstract class AbstractSearchEngineConfigurator
 			String searchWriterDestinationName) {
 
 			_searchWriterDestinationName = searchWriterDestinationName;
+		}
+
+		private SearchEngineRegistration(String searchEngineId) {
+			_searchEngineId = searchEngineId;
 		}
 
 		private SearchEngineProxyWrapper _originalSearchEngineProxyWrapper;

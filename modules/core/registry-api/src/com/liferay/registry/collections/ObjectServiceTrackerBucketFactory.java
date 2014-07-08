@@ -42,6 +42,13 @@ public class ObjectServiceTrackerBucketFactory<S>
 
 	private class SingleBucket implements ServiceTrackerBucket<S, S> {
 
+		public SingleBucket() {
+			_serviceReferences = new PriorityQueue<ServiceReference<S>>(
+				1, _comparator);
+
+			_service = null;
+		}
+
 		@Override
 		public S getContent() {
 			return _service;
@@ -74,13 +81,6 @@ public class ObjectServiceTrackerBucketFactory<S>
 			else {
 				_service = null;
 			}
-		}
-
-		public SingleBucket() {
-			_serviceReferences = new PriorityQueue<ServiceReference<S>>(
-				1, _comparator);
-
-			_service = null;
 		}
 
 		@Override

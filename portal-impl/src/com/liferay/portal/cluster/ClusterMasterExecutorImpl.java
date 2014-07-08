@@ -274,16 +274,6 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 		}
 
 		@Override
-		public boolean isCancelled() {
-			return false;
-		}
-
-		@Override
-		public boolean isDone() {
-			return true;
-		}
-
-		@Override
 		public T get() {
 			return _result;
 		}
@@ -291,6 +281,16 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 		@Override
 		public T get(long timeout, TimeUnit unit) {
 			return _result;
+		}
+
+		@Override
+		public boolean isCancelled() {
+			return false;
+		}
+
+		@Override
+		public boolean isDone() {
+			return true;
 		}
 
 		private final T _result;
@@ -312,16 +312,6 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 		}
 
 		@Override
-		public boolean isCancelled() {
-			return _futureClusterResponses.isCancelled();
-		}
-
-		@Override
-		public boolean isDone() {
-			return _futureClusterResponses.isDone();
-		}
-
-		@Override
 		public T get() throws InterruptedException {
 			ClusterNodeResponses clusterNodeResponses =
 				_futureClusterResponses.get();
@@ -337,6 +327,16 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 				_futureClusterResponses.get(timeout, unit);
 
 			return (T)clusterNodeResponses.getClusterResponse(_address);
+		}
+
+		@Override
+		public boolean isCancelled() {
+			return _futureClusterResponses.isCancelled();
+		}
+
+		@Override
+		public boolean isDone() {
+			return _futureClusterResponses.isDone();
 		}
 
 		private final Address _address;

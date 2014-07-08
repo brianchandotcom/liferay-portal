@@ -63,16 +63,16 @@ public class TransactionAttribute {
 			return this;
 		}
 
-		public Builder noRollbackForClassNames(
-			String... noRollbackForClassNames) {
-
-			_noRollbackForClassNames = noRollbackForClassNames;
+		public Builder noRollbackForClasses(Class<?>... noRollbackForClasses) {
+			_noRollbackForClasses = noRollbackForClasses;
 
 			return this;
 		}
 
-		public Builder noRollbackForClasses(Class<?>... noRollbackForClasses) {
-			_noRollbackForClasses = noRollbackForClasses;
+		public Builder noRollbackForClassNames(
+			String... noRollbackForClassNames) {
+
+			_noRollbackForClassNames = noRollbackForClassNames;
 
 			return this;
 		}
@@ -89,25 +89,25 @@ public class TransactionAttribute {
 			return this;
 		}
 
-		public Builder rollbackForClassNames(String... rollbackForClassNames) {
-			_rollbackForClassNames = rollbackForClassNames;
-
-			return this;
-		}
-
 		public Builder rollbackForClasses(Class<?>... rollbackForClasses) {
 			_rollbackForClasses = rollbackForClasses;
 
 			return this;
 		}
 
+		public Builder rollbackForClassNames(String... rollbackForClassNames) {
+			_rollbackForClassNames = rollbackForClassNames;
+
+			return this;
+		}
+
 		private Isolation _isolation = Isolation.DEFAULT;
-		private String[] _noRollbackForClassNames = {};
 		private Class<?>[] _noRollbackForClasses = {};
+		private String[] _noRollbackForClassNames = {};
 		private Propagation _propagation = Propagation.REQUIRED;
 		private boolean _readOnly;
-		private String[] _rollbackForClassNames = {};
 		private Class<?>[] _rollbackForClasses = {};
+		private String[] _rollbackForClassNames = {};
 		private int _timeout = TransactionDefinition.TIMEOUT_DEFAULT;
 
 	}

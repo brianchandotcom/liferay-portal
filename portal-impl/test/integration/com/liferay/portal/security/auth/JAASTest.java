@@ -427,15 +427,15 @@ public class JAASTest extends MainServletExecutionTestListener {
 
 	private class JAASAction extends Action {
 
+		public boolean isRan() {
+			return _ran;
+		}
+
 		@Override
 		public void run(
 			HttpServletRequest request, HttpServletResponse response) {
 
 			_ran = true;
-		}
-
-		public boolean isRan() {
-			return _ran;
 		}
 
 		private boolean _ran;

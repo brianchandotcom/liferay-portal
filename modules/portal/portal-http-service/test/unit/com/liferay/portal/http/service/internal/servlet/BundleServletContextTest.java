@@ -618,7 +618,6 @@ public class BundleServletContextTest extends PowerMockito {
 
 		private Logger _logger = Logger.getLogger(
 			MockLoggingFilter.class.getName());
-
 		private String _message;
 
 	}

@@ -99,14 +99,6 @@ public class CallbackPreferringTransactionExecutor
 	private class CallbackPreferringTransactionCallback
 		implements TransactionCallback<Object> {
 
-		private CallbackPreferringTransactionCallback(
-			TransactionAttribute transactionAttribute,
-			MethodInvocation methodInvocation) {
-
-			_transactionAttribute = transactionAttribute;
-			_methodInvocation = methodInvocation;
-		}
-
 		@Override
 		public Object doInTransaction(TransactionStatus transactionStatus) {
 			boolean newTransaction = transactionStatus.isNewTransaction();
@@ -157,6 +149,14 @@ public class CallbackPreferringTransactionExecutor
 					invokeCallbacks();
 				}
 			}
+		}
+
+		private CallbackPreferringTransactionCallback(
+			TransactionAttribute transactionAttribute,
+			MethodInvocation methodInvocation) {
+
+			_transactionAttribute = transactionAttribute;
+			_methodInvocation = methodInvocation;
 		}
 
 		private MethodInvocation _methodInvocation;

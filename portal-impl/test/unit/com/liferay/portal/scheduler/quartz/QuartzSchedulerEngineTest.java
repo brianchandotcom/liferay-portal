@@ -757,6 +757,19 @@ public class QuartzSchedulerEngineTest {
 			}
 		}
 
+		@Override
+		public void addCalendar(
+			String name, Calendar calendar, boolean replace,
+			boolean updateTriggers) {
+		}
+
+		@Override
+		public void addJob(JobDetail jobDetail, boolean replace) {
+			_jobs.put(
+				jobDetail.getKey(),
+				new Tuple(jobDetail, null, TriggerState.UNSCHEDULED));
+		}
+
 		public final void addJob(
 			String jobName, String groupName, StorageType storageType,
 			org.quartz.Trigger trigger) {
@@ -789,19 +802,6 @@ public class QuartzSchedulerEngineTest {
 
 			_jobs.put(
 				jobKey, new Tuple(jobDetail, trigger, TriggerState.NORMAL));
-		}
-
-		@Override
-		public void addCalendar(
-			String name, Calendar calendar, boolean replace,
-			boolean updateTriggers) {
-		}
-
-		@Override
-		public void addJob(JobDetail jobDetail, boolean replace) {
-			_jobs.put(
-				jobDetail.getKey(),
-				new Tuple(jobDetail, null, TriggerState.UNSCHEDULED));
 		}
 
 		@Override
@@ -983,6 +983,44 @@ public class QuartzSchedulerEngineTest {
 		}
 
 		@Override
+		public void pauseAll() {
+		}
+
+		@Override
+		public void pauseJob(JobKey jobKey) {
+			Tuple tuple = _jobs.get(jobKey);
+
+			if (tuple == null) {
+				return;
+			}
+
+			_jobs.put(
+				jobKey,
+				new Tuple(
+					tuple.getObject(0), tuple.getObject(1),
+					TriggerState.PAUSED));
+		}
+
+		@Override
+		public void pauseJobs(GroupMatcher<JobKey> groupMatcher) {
+			String groupName = groupMatcher.getCompareToValue();
+
+			for (JobKey jobKey : _jobs.keySet()) {
+				if (jobKey.getGroup().equals(groupName)) {
+					pauseJob(jobKey);
+				}
+			}
+		}
+
+		@Override
+		public void pauseTrigger(TriggerKey triggerKey) {
+		}
+
+		@Override
+		public void pauseTriggers(GroupMatcher<TriggerKey> groupMatcher) {
+		}
+
+		@Override
 		public Date rescheduleJob(
 			TriggerKey triggerKey, org.quartz.Trigger trigger) {
 
@@ -1038,44 +1076,6 @@ public class QuartzSchedulerEngineTest {
 
 		@Override
 		public void resumeTriggers(GroupMatcher<TriggerKey> groupMatcher) {
-		}
-
-		@Override
-		public void pauseAll() {
-		}
-
-		@Override
-		public void pauseJob(JobKey jobKey) {
-			Tuple tuple = _jobs.get(jobKey);
-
-			if (tuple == null) {
-				return;
-			}
-
-			_jobs.put(
-				jobKey,
-				new Tuple(
-					tuple.getObject(0), tuple.getObject(1),
-					TriggerState.PAUSED));
-		}
-
-		@Override
-		public void pauseJobs(GroupMatcher<JobKey> groupMatcher) {
-			String groupName = groupMatcher.getCompareToValue();
-
-			for (JobKey jobKey : _jobs.keySet()) {
-				if (jobKey.getGroup().equals(groupName)) {
-					pauseJob(jobKey);
-				}
-			}
-		}
-
-		@Override
-		public void pauseTrigger(TriggerKey triggerKey) {
-		}
-
-		@Override
-		public void pauseTriggers(GroupMatcher<TriggerKey> groupMatcher) {
 		}
 
 		@Override

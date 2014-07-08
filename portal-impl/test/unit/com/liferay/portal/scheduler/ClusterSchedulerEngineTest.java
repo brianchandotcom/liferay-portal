@@ -1084,8 +1084,8 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		@Override
-		public int hashCode() {
-			return 11 * (int)_timestamp;
+		public int compareTo(org.jgroups.Address jGroupsAddress) {
+			return 0;
 		}
 
 		@Override
@@ -1099,13 +1099,13 @@ public class ClusterSchedulerEngineTest {
 			return false;
 		}
 
-		@Override
-		public int compareTo(org.jgroups.Address jGroupsAddress) {
-			return 0;
-		}
-
 		public long getTimestamp() {
 			return _timestamp;
+		}
+
+		@Override
+		public int hashCode() {
+			return 11 * (int)_timestamp;
 		}
 
 		@Override
@@ -1368,16 +1368,16 @@ public class ClusterSchedulerEngineTest {
 
 	private static class MockLockLocalService extends LockLocalServiceImpl {
 
+		public static Lock getLock() {
+			return _lock;
+		}
+
 		public static void setLock(String owner) {
 			Lock lock = new LockImpl();
 
 			lock.setOwner(owner);
 
 			_lock = lock;
-		}
-
-		public static Lock getLock() {
-			return _lock;
 		}
 
 		@Override
@@ -1509,26 +1509,6 @@ public class ClusterSchedulerEngineTest {
 			return new ArrayList<SchedulerResponse>(_defaultJobs.values());
 		}
 
-		@Override
-		public List<SchedulerResponse> getScheduledJobs(String groupName)
-			throws SchedulerException {
-
-			List<SchedulerResponse> schedulerResponses =
-				new ArrayList<SchedulerResponse>();
-
-			for (String key : _defaultJobs.keySet()) {
-				if (key.contains(groupName)) {
-					schedulerResponses.add(_defaultJobs.get(key));
-				}
-			}
-
-			if (schedulerResponses.isEmpty()) {
-				throw new SchedulerException("No jobs in group " + groupName);
-			}
-
-			return schedulerResponses;
-		}
-
 		public List<SchedulerResponse> getScheduledJobs(StorageType storageType)
 			throws SchedulerException {
 
@@ -1544,6 +1524,26 @@ public class ClusterSchedulerEngineTest {
 			if (schedulerResponses.isEmpty()) {
 				throw new SchedulerException(
 					"No jobs with type " + storageType);
+			}
+
+			return schedulerResponses;
+		}
+
+		@Override
+		public List<SchedulerResponse> getScheduledJobs(String groupName)
+			throws SchedulerException {
+
+			List<SchedulerResponse> schedulerResponses =
+				new ArrayList<SchedulerResponse>();
+
+			for (String key : _defaultJobs.keySet()) {
+				if (key.contains(groupName)) {
+					schedulerResponses.add(_defaultJobs.get(key));
+				}
+			}
+
+			if (schedulerResponses.isEmpty()) {
+				throw new SchedulerException("No jobs in group " + groupName);
 			}
 
 			return schedulerResponses;

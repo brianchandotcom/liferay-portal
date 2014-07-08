@@ -111,6 +111,10 @@ public abstract class BaseClusterExecutorImplTestCase
 
 		public static final String BAD_ADDRESS = "bad address";
 
+		public static void setPort(int port) {
+			_port = port;
+		}
+
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
 				"PORTAL_INSTANCE_HTTP_INET_SOCKET_ADDRESS)")
@@ -143,10 +147,6 @@ public abstract class BaseClusterExecutorImplTestCase
 			}
 
 			return proceedingJoinPoint.proceed(new Object[] {address});
-		}
-
-		public static void setPort(int port) {
-			_port = port;
 		}
 
 		private static Integer _port;
@@ -430,16 +430,6 @@ public abstract class BaseClusterExecutorImplTestCase
 			_clusterExecutorImpl = clusterExecutorImpl;
 		}
 
-		public ClusterRequest waitLocalRequestMessage() throws Exception {
-			try {
-				return _localRequestExchanger.exchange(
-					null, 1000, TimeUnit.MILLISECONDS);
-			}
-			catch (TimeoutException te) {
-				return null;
-			}
-		}
-
 		@Override
 		public void receive(Message message) {
 			super.receive(message);
@@ -462,6 +452,16 @@ public abstract class BaseClusterExecutorImplTestCase
 			}
 		}
 
+		public ClusterRequest waitLocalRequestMessage() throws Exception {
+			try {
+				return _localRequestExchanger.exchange(
+					null, 1000, TimeUnit.MILLISECONDS);
+			}
+			catch (TimeoutException te) {
+				return null;
+			}
+		}
+
 		private ClusterExecutorImpl _clusterExecutorImpl;
 		private Exchanger<ClusterRequest> _localRequestExchanger =
 			new Exchanger<ClusterRequest>();
@@ -477,38 +477,6 @@ public abstract class BaseClusterExecutorImplTestCase
 				_messageExchanger.exchange(clusterNodeResponses);
 			}
 			catch (Exception e) {
-			}
-		}
-
-		public ClusterNodeResponses waitMessage() throws Exception {
-			try {
-				return _messageExchanger.exchange(
-					null, 1000, TimeUnit.MILLISECONDS);
-			}
-			catch (TimeoutException te) {
-				return null;
-			}
-		}
-
-		public TimeoutException waitTimeoutException() throws Exception {
-			try {
-				return _timeoutExceptionExchanger.exchange(
-					null, 2000, TimeUnit.MILLISECONDS);
-			}
-			catch (TimeoutException te) {
-				return null;
-			}
-		}
-
-		public InterruptedException waitInterruptedException()
-			throws Exception {
-
-			try {
-				return _interruptedExceptionExchanger.exchange(
-					null, 1000, TimeUnit.MILLISECONDS);
-			}
-			catch (TimeoutException te) {
-				return null;
 			}
 		}
 
@@ -532,10 +500,42 @@ public abstract class BaseClusterExecutorImplTestCase
 			}
 		}
 
-		private Exchanger<ClusterNodeResponses> _messageExchanger =
-			new Exchanger<ClusterNodeResponses>();
+		public InterruptedException waitInterruptedException()
+			throws Exception {
+
+			try {
+				return _interruptedExceptionExchanger.exchange(
+					null, 1000, TimeUnit.MILLISECONDS);
+			}
+			catch (TimeoutException te) {
+				return null;
+			}
+		}
+
+		public ClusterNodeResponses waitMessage() throws Exception {
+			try {
+				return _messageExchanger.exchange(
+					null, 1000, TimeUnit.MILLISECONDS);
+			}
+			catch (TimeoutException te) {
+				return null;
+			}
+		}
+
+		public TimeoutException waitTimeoutException() throws Exception {
+			try {
+				return _timeoutExceptionExchanger.exchange(
+					null, 2000, TimeUnit.MILLISECONDS);
+			}
+			catch (TimeoutException te) {
+				return null;
+			}
+		}
+
 		private Exchanger<InterruptedException> _interruptedExceptionExchanger =
 			new Exchanger<InterruptedException>();
+		private Exchanger<ClusterNodeResponses> _messageExchanger =
+			new Exchanger<ClusterNodeResponses>();
 		private Exchanger<TimeoutException> _timeoutExceptionExchanger =
 			new Exchanger<TimeoutException>();
 

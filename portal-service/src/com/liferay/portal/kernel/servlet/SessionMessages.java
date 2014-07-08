@@ -482,17 +482,17 @@ public class SessionMessages {
 		extends LinkedHashMap<String, Object> {
 
 		@Override
-		public Object get(Object key) {
-			key = _transformKey(key);
-
-			return super.get(key);
-		}
-
-		@Override
 		public boolean containsKey(Object key) {
 			key = _transformKey(key);
 
 			return super.containsKey(key);
+		}
+
+		@Override
+		public Object get(Object key) {
+			key = _transformKey(key);
+
+			return super.get(key);
 		}
 
 		@Override

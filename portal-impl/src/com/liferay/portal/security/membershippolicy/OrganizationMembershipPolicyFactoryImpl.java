@@ -14,63 +14,35 @@
 
 package com.liferay.portal.security.membershippolicy;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Sergio González
  * @author Shuyang Zhou
+ * @author Peter Fellwock
  */
 public class OrganizationMembershipPolicyFactoryImpl
 	implements OrganizationMembershipPolicyFactory {
 
-	public void afterPropertiesSet() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Instantiate " + PropsValues.MEMBERSHIP_POLICY_ORGANIZATIONS);
-		}
-
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		_originalOrganizationMembershipPolicy =
-			(OrganizationMembershipPolicy)InstanceFactory.newInstance(
-				classLoader, PropsValues.MEMBERSHIP_POLICY_ORGANIZATIONS);
-
-		_organizationMembershipPolicy = _originalOrganizationMembershipPolicy;
-	}
-
 	@Override
 	public OrganizationMembershipPolicy getOrganizationMembershipPolicy() {
-		return _organizationMembershipPolicy;
+		return _instance._serviceTracker.getService();
 	}
 
-	public void setOrganizationMembershipPolicy(
-		OrganizationMembershipPolicy organizationMembershipPolicy) {
+	private OrganizationMembershipPolicyFactoryImpl() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Set " + ClassUtil.getClassName(organizationMembershipPolicy));
-		}
+		_serviceTracker = registry.trackServices(
+			OrganizationMembershipPolicy.class);
 
-		if (organizationMembershipPolicy == null) {
-			_organizationMembershipPolicy =
-				_originalOrganizationMembershipPolicy;
-		}
-		else {
-			_organizationMembershipPolicy = organizationMembershipPolicy;
-		}
+		_serviceTracker.open();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		OrganizationMembershipPolicyFactoryImpl.class);
+	private static OrganizationMembershipPolicyFactoryImpl _instance =
+		new OrganizationMembershipPolicyFactoryImpl();
 
-	private static volatile OrganizationMembershipPolicy
-		_organizationMembershipPolicy;
-	private static OrganizationMembershipPolicy
-		_originalOrganizationMembershipPolicy;
+	private ServiceTracker<?, OrganizationMembershipPolicy> _serviceTracker;
 
 }

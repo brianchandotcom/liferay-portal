@@ -26,7 +26,7 @@ import org.junit.Test;
 /**
  * @author André de Oliveira
  */
-public class ClassUtilGetClassesAnnotationsTest {
+public class ClassUtilTest {
 
 	@Test
 	public void testGetClassesfromAnnotationsWithArrayParameter()

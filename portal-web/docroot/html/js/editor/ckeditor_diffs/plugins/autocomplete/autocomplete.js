@@ -25,7 +25,7 @@
 		}
 	};
 
-	AutoCompleteCKEditor.prototype= {
+	AutoCompleteCKEditor.prototype = {
 		initializer: function() {
 			var instance = this;
 

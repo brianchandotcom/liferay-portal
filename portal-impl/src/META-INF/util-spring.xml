@@ -79,7 +79,6 @@
 			<bean class="com.liferay.portal.captcha.CaptchaImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.comment.CommentManager" class="com.liferay.portal.comment.CommentManagerImpl" />
 	<bean class="com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil">
 		<property name="currentConnection">
 			<bean class="com.liferay.portal.dao.jdbc.CurrentConnectionImpl" />
@@ -1001,7 +1000,6 @@
 			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.messageboards.comment.MBCommentManagerImpl" class="com.liferay.portlet.messageboards.comment.MBCommentManagerImpl" />
 	<bean id="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil" class="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil">
 		<property name="MDRPermission">
 			<bean class="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionImpl" />

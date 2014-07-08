@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.comment;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
@@ -23,7 +22,6 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -172,9 +170,7 @@ public class MBCommentManagerImplTest extends Mockito {
 			_mbMessageDisplay
 		);
 
-		ReflectionTestUtil.setFieldValue(
-			MBMessageLocalServiceUtil.class, "_service",
-			_mbMessageLocalService);
+		_mbCommentManagerImpl.setMBMessageLocalService(_mbMessageLocalService);
 	}
 
 	protected void setUpServiceContext() {

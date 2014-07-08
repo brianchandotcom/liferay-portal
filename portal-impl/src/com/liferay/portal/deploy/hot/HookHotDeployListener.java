@@ -1769,13 +1769,10 @@ public class HookHotDeployListener
 					portletClassLoader, OrganizationMembershipPolicy.class,
 					organizationMembershipPolicyClassName);
 
-			ServiceRegistration<OrganizationMembershipPolicy>
-			serviceRegistration = registry.registerService(
-					OrganizationMembershipPolicy.class,
-					organizationMembershipPolicy);
-
-			serviceRegistrations.put(
-				organizationMembershipPolicyClassName, serviceRegistration);
+			registerService(
+				servletContextName, organizationMembershipPolicyClassName,
+				OrganizationMembershipPolicy.class,
+				organizationMembershipPolicy);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.MEMBERSHIP_POLICY_ROLES)) {

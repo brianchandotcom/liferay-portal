@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.test;
 
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessConfig;
+import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.process.ProcessLauncher;
@@ -143,13 +145,17 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 		List<FrameworkMethod> afterFrameworkMethods =
 			testClass.getAnnotatedMethods(After.class);
 
-		List<String> arguments = createArguments(frameworkMethod);
-
 		Class<?> clazz = testClass.getJavaClass();
 
+		Builder builder = new Builder();
+
+		builder.arguments(createArguments(frameworkMethod));
+		builder.bootstrapClassPath(_classPath);
+		builder.runtimeClassPath(_classPath);
+
 		return new RunInNewJVMStatment(
-			_classPath, arguments, clazz, beforeFrameworkMethods,
-			frameworkMethod, afterFrameworkMethods);
+			builder.build(), clazz, beforeFrameworkMethods, frameworkMethod,
+			afterFrameworkMethods);
 	}
 
 	protected ProcessCallable<Serializable> processProcessCallable(
@@ -249,13 +255,12 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 	private class RunInNewJVMStatment extends Statement {
 
 		public RunInNewJVMStatment(
-			String classPath, List<String> arguments, Class<?> testClass,
+			ProcessConfig processConfig, Class<?> testClass,
 			List<FrameworkMethod> beforeFrameworkMethods,
 			FrameworkMethod testFrameworkMethod,
 			List<FrameworkMethod> afterFrameworkMethods) {
 
-			_classPath = classPath;
-			_arguments = arguments;
+			_processConfig = processConfig;
 			_testClassName = testClass.getName();
 
 			_beforeMethodKeys = new ArrayList<MethodKey>(
@@ -288,7 +293,7 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 				processCallable, _testMethodKey);
 
 			Future<String> future = ProcessExecutor.execute(
-				_classPath, _classPath, _arguments, processCallable);
+				_processConfig, processCallable);
 
 			try {
 				future.get();
@@ -307,9 +312,8 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 		}
 
 		private List<MethodKey> _afterMethodKeys;
-		private List<String> _arguments;
 		private List<MethodKey> _beforeMethodKeys;
-		private String _classPath;
+		private ProcessConfig _processConfig;
 		private String _testClassName;
 		private MethodKey _testMethodKey;
 

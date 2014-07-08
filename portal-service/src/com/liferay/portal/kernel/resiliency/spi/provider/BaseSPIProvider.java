@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.resiliency.spi.provider;
 
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.welder.Welder;
+import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.resiliency.PortalResiliencyException;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
@@ -65,9 +66,15 @@ public abstract class BaseSPIProvider implements SPIProvider {
 		weldServerThread.start();
 
 		try {
+			Builder builder = new Builder();
+
+			builder.arguments(spiConfiguration.getJVMArguments());
+			builder.bootstrapClassPath(classPath);
+			builder.javaExecutable(spiConfiguration.getJavaExecutable());
+			builder.runtimeClassPath(classPath);
+
 			Future<SPI> cancelHandlerFuture = ProcessExecutor.execute(
-				spiConfiguration.getJavaExecutable(), classPath, classPath,
-				spiConfiguration.getJVMArguments(), remoteSPI);
+				builder.build(), remoteSPI);
 
 			SPI spi = synchronousQueue.poll(
 				spiConfiguration.getRegisterTimeout(), TimeUnit.MILLISECONDS);

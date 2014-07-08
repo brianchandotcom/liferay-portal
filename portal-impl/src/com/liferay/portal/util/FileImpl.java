@@ -361,8 +361,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 			if (forkProcess) {
 				Future<String> future = ProcessExecutor.execute(
-					ClassPathUtil.getGlobalClassPath(),
-					ClassPathUtil.getPortalClassPath(),
+					ClassPathUtil.getPortalProcessConfig(),
 					new ExtractTextProcessCallable(getBytes(is)));
 
 				text = future.get();

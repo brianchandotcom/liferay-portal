@@ -121,8 +121,6 @@ public class RuntimeTag extends TagSupport {
 			Portlet portlet = getPortlet(
 				themeDisplay.getCompanyId(), portletId);
 
-			JSONObject jsonObject = null;
-
 			if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
 					portletId) < 1) ||
@@ -139,22 +137,18 @@ public class RuntimeTag extends TagSupport {
 					portletLayoutListener.onAddToLayout(
 						portletId, themeDisplay.getPlid());
 				}
-
-				jsonObject = JSONFactoryUtil.createJSONObject();
-
-				PortletJSONUtil.populatePortletJSONObject(
-					request, StringPool.BLANK, portlet, jsonObject);
 			}
 
-			if (jsonObject != null) {
-				PortletJSONUtil.writeHeaderPaths(response, jsonObject);
-			}
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			PortletJSONUtil.populatePortletJSONObject(
+				request, StringPool.BLANK, portlet, jsonObject);
+
+			PortletJSONUtil.writeHeaderPaths(response, jsonObject);
 
 			PortletContainerUtil.render(request, response, portlet);
 
-			if (jsonObject != null) {
-				PortletJSONUtil.writeFooterPaths(response, jsonObject);
-			}
+			PortletJSONUtil.writeFooterPaths(response, jsonObject);
 		}
 		finally {
 			restrictPortletServletRequest.mergeSharedAttributes();

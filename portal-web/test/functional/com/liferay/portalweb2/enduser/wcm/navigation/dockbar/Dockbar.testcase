@@ -9,6 +9,116 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="AddPortlet" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<take-screenshot />
+	</command>
+
+	<command name="AddPortlets" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<take-screenshot />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<take-screenshot />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<take-screenshot />
+	</command>
+
+	<command name="AddPortletsToEachColumn" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletDropzone" value="column1" />
+			<var name="portletName" value="Navigation" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<take-screenshot />
+	</command>
+
+	<command name="AddPortletToColumn1" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletDropzone" value="column1" />
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<take-screenshot />
+	</command>
+
+	<command name="AddPortletViaAdd" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPGViaAdd">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<take-screenshot />
+	</command>
+
 	<command name="GotoAdministration" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />

@@ -283,6 +283,12 @@ public class ClassUtil {
 			else {
 				StringBundler sb = new StringBundler();
 
+				int pos = s.indexOf('{');
+
+				if (pos != -1) {
+					sb.append(s.substring(pos + 1));
+				}
+
 				while (st.nextToken() != StreamTokenizer.TT_EOF) {
 					if (st.ttype == StreamTokenizer.TT_WORD) {
 						sb.append(st.sval);

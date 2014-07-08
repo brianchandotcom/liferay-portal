@@ -69,20 +69,16 @@
 			<var name="notificationCount" value="1" />
 		</execute>
 
+		<execute macro="Notifications#gotoDockbar" />
+
 		<execute macro="Notifications#viewNewContent">
 			<var name="assetType" value="Bookmarks Entry" />
 			<var name="contentBody" value="Bookmark Name" />
-			<var name="notificationCount" value="1" />
 			<var name="user" value="Test Test" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Notifications#gotoContent">
+		<execute macro="Notifications#navigateToContent">
 			<var name="contentBody" value="Bookmark Name" />
-			<var name="notificationCount" value="1" />
 		</execute>
 
 		<execute macro="Bookmark#gotoPG">
@@ -151,20 +147,16 @@
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Notifications#viewEditedContent">
+		<execute macro="Notifications#gotoDockbar" />
+
+		<execute macro="Notifications#viewUpdatedContent">
 			<var name="assetType" value="Bookmarks Entry" />
 			<var name="contentBody" value="Bookmark Name Edit" />
-			<var name="notificationCount" value="1" />
 			<var name="user" value="Test Test" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Notifications#gotoContent">
+		<execute macro="Notifications#navigateToContent">
 			<var name="contentBody" value="Bookmark Name Edit" />
-			<var name="notificationCount" value="1" />
 		</execute>
 
 		<execute macro="Bookmark#gotoPG">

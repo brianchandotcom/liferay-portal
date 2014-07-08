@@ -22,7 +22,9 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="BlogsEntry#tearDownCP" />
+		<execute macro="BlogsPortlet#tearDownSubscribePG" />
+
+		<execute macro="NotificationsPortlet#tearDownUserDeliveries" />
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
@@ -47,6 +49,8 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
+		<execute macro="Notifications#gotoDockbar" />
+
 		<execute macro="Notifications#markAllAsRead">
 			<var name="notificationCount" value="3" />
 		</execute>
@@ -60,12 +64,45 @@
 		</execute>
 	</command>
 
-	<command name="ViewWebsiteNotificationForNewBlogsEntry" priority="5">
+	<command name="ViewNoWebsiteNotificationForNewBlogsEntry" priority="5">
+		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
+
+		<execute macro="NotificationsPortlet#setUserDeliveries">
+			<var name="actionType" value="add" />
+			<var name="contentType" value="Blogs" />
+			<var name="enableDelivery" value="false" />
+			<var name="notificationType" value="Website" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsPortlet#subscribePG" />
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+	</command>
+
+	<command name="ViewNoWebsiteNotificationForUpdatedBlogsEntry" priority="5">
+		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
+
+		<execute macro="NotificationsPortlet#setUserDeliveries">
+			<var name="actionType" value="updates" />
+			<var name="contentType" value="Blogs" />
+			<var name="enableDelivery" value="false" />
+			<var name="notificationType" value="Website" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -80,34 +117,63 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
-			<var name="notificationCount" value="1" />
-		</execute>
+		<execute macro="BlogsPortlet#subscribePG" />
 
-		<execute macro="Notifications#viewNewContent">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="contentBody" value="Blogs Entry Title" />
-			<var name="notificationCount" value="1" />
-			<var name="user" value="Test Test" />
+		<execute macro="BlogsEntry#editPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContentEdit" value="Blogs Entry Content Edit" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Notifications#gotoContent">
-			<var name="contentBody" value="Blogs Entry Title" />
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+	</command>
+
+	<command name="ViewWebsiteNotificationForNewBlogsEntry" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#subscribePG" />
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Notifications#viewCountAlert">
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="BlogsEntry#gotoPG">
-			<var name="entryContent" value="Blogs Entry Content Edit" />
-			<var name="entryTitle" value="Blogs Entry Title Edit" />
+		<execute macro="Notifications#gotoDockbar" />
+
+		<execute macro="Notifications#viewNewContent">
+			<var name="assetType" value="Blogs Entry" />
+			<var name="contentBody" value="Blogs Entry Title" />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Notifications#navigateToContent">
+			<var name="contentBody" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
 		</execute>
 	</command>
 
@@ -127,10 +193,6 @@
 
 		<execute macro="BlogsPortlet#subscribePG" />
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute macro="BlogsEntry#editPG">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryContentEdit" value="Blogs Entry Content Edit" />
@@ -142,34 +204,29 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewCountAlert">
 			<var name="notificationCount" value="1" />
 		</execute>
 
-		<execute macro="Notifications#viewEditedContent">
+		<execute macro="Notifications#gotoDockbar" />
+
+		<execute macro="Notifications#viewUpdatedContent">
 			<var name="assetType" value="Blogs Entry" />
-			<var name="contentBody" value="Blogs Entry Title Edit" />
-			<var name="notificationCount" value="1" />
+			<var name="contentBody" value="Blogs Entry Title..." />
 			<var name="user" value="Test Test" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Notifications#gotoContent">
-			<var name="contentBody" value="Blogs Entry Title Edit" />
-			<var name="notificationCount" value="1" />
-		</execute>
-
-		<execute macro="BlogsEntry#gotoPG">
-			<var name="entryContent" value="Blogs Entry Content Edit" />
-			<var name="entryTitle" value="Blogs Entry Title Edit" />
+		<execute macro="Notifications#navigateToContent">
+			<var name="contentBody" value="Blogs Entry Title..." />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry Content Edit" />
 			<var name="entryTitle" value="Blogs Entry Title Edit" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
 		</execute>
 	</command>
 </definition>

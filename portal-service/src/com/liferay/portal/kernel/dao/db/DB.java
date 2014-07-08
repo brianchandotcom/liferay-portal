@@ -73,7 +73,7 @@ public interface DB {
 
 	public static final String TYPE_SYBASE = "sybase";
 
-	void addIndexes(
+	public void addIndexes(
 			Connection con, String indexesSQL, Set<String> validIndexNames)
 		throws IOException;
 

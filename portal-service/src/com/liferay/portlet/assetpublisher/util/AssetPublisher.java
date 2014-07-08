@@ -204,7 +204,7 @@ public interface AssetPublisher {
 	public String getScopeId(Group group, long scopeGroupId)
 		throws PortalException;
 
-	long getSubscriptionClassPK(long plid, String portletId)
+	public long getSubscriptionClassPK(long plid, String portletId)
 		throws PortalException;
 
 	public boolean isScopeIdSelectable(

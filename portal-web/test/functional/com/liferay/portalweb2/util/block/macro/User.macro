@@ -1004,7 +1004,7 @@
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute action="CPUsersandorganizationsViewusers#pause" locator1="5000" />
+		<execute action="CPUsersandorganizationsViewusers#pause" locator1="1000" />
 		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
 		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />

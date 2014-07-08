@@ -18,7 +18,7 @@ import java.io.StringReader;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -29,37 +29,40 @@ import org.junit.Test;
 public class ClassUtilGetClassesAnnotationsTest {
 
 	@Test
-	public void testArrayParameter1Element() throws Exception {
-		testArrayParameter("A");
+	public void testGetClassesfromAnnotationsWithArrayParameter()
+		throws Exception {
+
+		testGetClassesfromAnnotationWithArrayParameter("A");
+		testGetClassesfromAnnotationWithArrayParameter("A", "B");
+		testGetClassesfromAnnotationWithArrayParameter("A", "B", "C");
 	}
 
-	@Test
-	public void testArrayParameter2Elements() throws Exception {
-		testArrayParameter("A", "B");
-	}
+	protected void testGetClassesfromAnnotationWithArrayParameter(
+			String... classNames)
+		throws Exception {
 
-	@Test
-	public void testArrayParameter3Elements() throws Exception {
-		testArrayParameter("A", "B", "C");
-	}
+		StringBundler sb = new StringBundler(classNames.length * 3 + 1);
 
-	protected void testArrayParameter(String... classNames) throws Exception {
-		List<String> classNamesList = Arrays.asList(classNames);
+		sb.append("@AnnotationWithArrayParameter({");
 
-		String parameters = classNamesList.get(0) + ".class";
+		for (int i = 0; i < classNames.length; i++) {
+			sb.append(classNames[i]);
+			sb.append(".class");
 
-		for (int i = 1; i < classNamesList.size(); i++) {
-			parameters += ", " + classNamesList.get(i) + ".class";
+			if (i < (classNames.length - 1)) {
+				sb.append(StringPool.COMMA);
+			}
 		}
 
-		String source = "@AnnotationWithArrayParameter({" + parameters + "})";
+		sb.append("})");
 
-		HashSet<String> classes = new HashSet<String>(
-			ClassUtil.getClasses(new StringReader(source), null));
+		Set<String> classes = ClassUtil.getClasses(
+			new StringReader(sb.toString()), null);
 
-		HashSet<String> expectedClasses = new HashSet<String>();
+		Set<String> expectedClasses = new HashSet<String>();
+
 		expectedClasses.add("AnnotationWithArrayParameter");
-		expectedClasses.addAll(classNamesList);
+		expectedClasses.addAll(Arrays.asList(classNames));
 
 		Assert.assertEquals(expectedClasses, classes);
 	}

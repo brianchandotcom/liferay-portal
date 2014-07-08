@@ -283,10 +283,10 @@ public class ClassUtil {
 			else {
 				StringBundler sb = new StringBundler();
 
-				int openingBraceIndex = s.indexOf('{');
+				int pos = s.indexOf('{');
 
-				if (openingBraceIndex != -1) {
-					sb.append(s.substring(openingBraceIndex + 1));
+				if (pos != -1) {
+					sb.append(s.substring(pos + 1));
 				}
 
 				while (st.nextToken() != StreamTokenizer.TT_EOF) {

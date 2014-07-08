@@ -137,8 +137,16 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 	public class InvokerResult implements JSONSerializable {
 
+		public InvokerResult(Object result) {
+			_result = result;
+		}
+
 		public JSONWebServiceInvokerAction getJSONWebServiceInvokerAction() {
 			return JSONWebServiceInvokerAction.this;
+		}
+
+		public Object getResult() {
+			return _result;
 		}
 
 		@Override
@@ -170,14 +178,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			}
 
 			return jsonSerializer.serialize(_result);
-		}
-
-		public Object getResult() {
-			return _result;
-		}
-
-		public InvokerResult(Object result) {
-			_result = result;
 		}
 
 		protected JSONSerializer createJSONSerializer() {
@@ -716,33 +716,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			return false;
 		}
 
-		public Object push(Object result) {
-			if (_parentStatement == null) {
-				return null;
-			}
-
-			_pushTarget = result;
-
-			Statement statement = getParentStatement();
-
-			String variableName = getName();
-
-			int index = variableName.indexOf(".$");
-
-			String beanName = variableName.substring(0, index);
-
-			result = BeanUtil.getDeclaredProperty(result, beanName);
-
-			statement.setName(
-				statement.getName() + StringPool.PERIOD + beanName);
-
-			variableName = variableName.substring(index + 1);
-
-			setName(variableName);
-
-			return result;
-		}
-
 		public Object pop(Object result) {
 			if (_pushTarget == null) {
 				return null;
@@ -767,6 +740,33 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			result = _pushTarget;
 
 			_pushTarget = null;
+
+			return result;
+		}
+
+		public Object push(Object result) {
+			if (_parentStatement == null) {
+				return null;
+			}
+
+			_pushTarget = result;
+
+			Statement statement = getParentStatement();
+
+			String variableName = getName();
+
+			int index = variableName.indexOf(".$");
+
+			String beanName = variableName.substring(0, index);
+
+			result = BeanUtil.getDeclaredProperty(result, beanName);
+
+			statement.setName(
+				statement.getName() + StringPool.PERIOD + beanName);
+
+			variableName = variableName.substring(index + 1);
+
+			setName(variableName);
 
 			return result;
 		}

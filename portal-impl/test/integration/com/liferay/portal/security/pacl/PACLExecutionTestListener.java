@@ -161,17 +161,17 @@ public class PACLExecutionTestListener
 		}
 
 		@Override
+		public ClassLoader getClassLoader() {
+			return _classLoader;
+		}
+
+		@Override
 		public Resource getResource(String location) {
 			ClassLoader classLoader = getClassLoader();
 
 			return new ClassPathResource(
 				PACLIntegrationJUnitTestRunner.RESOURCE_PATH + location,
 				classLoader);
-		}
-
-		@Override
-		public ClassLoader getClassLoader() {
-			return _classLoader;
 		}
 
 		private ClassLoader _classLoader;

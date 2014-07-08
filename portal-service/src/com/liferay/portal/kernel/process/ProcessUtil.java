@@ -188,9 +188,9 @@ public class ProcessUtil {
 			return _stdOutFuture.isDone();
 		}
 
+		private final Process _process;
 		private final Future<E> _stdErrFuture;
 		private final Future<O> _stdOutFuture;
-		private final Process _process;
 
 	}
 

@@ -111,22 +111,16 @@ public class SocketWelder extends BaseWelder {
 
 		protected static final int bufferSize = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.INTRABAND_WELDER_SOCKET_BUFFER_SIZE));
-
 		protected static final boolean keepAlive = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.INTRABAND_WELDER_SOCKET_KEEP_ALIVE));
-
 		protected static final boolean reuseAddress = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.INTRABAND_WELDER_SOCKET_REUSE_ADDRESS));
-
 		protected static final int serverStartPort = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.INTRABAND_WELDER_SOCKET_SERVER_START_PORT));
-
 		protected static final int soLinger = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.INTRABAND_WELDER_SOCKET_SO_LINGER));
-
 		protected static final int soTimeout = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.INTRABAND_WELDER_SOCKET_SO_TIMEOUT));
-
 		protected static final boolean tcpNoDelay = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.INTRABAND_WELDER_SOCKET_TCP_NO_DELAY));
 

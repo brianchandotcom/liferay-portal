@@ -287,8 +287,8 @@ public class ASMUtil {
 			return typeName;
 		}
 
-		private final String _oldClassName;
 		private final String _newClassName;
+		private final String _oldClassName;
 
 	}
 

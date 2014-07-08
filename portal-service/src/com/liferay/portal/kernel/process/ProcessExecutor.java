@@ -220,16 +220,6 @@ public class ProcessExecutor {
 		}
 
 		@Override
-		public boolean isCancelled() {
-			return _future.isCancelled();
-		}
-
-		@Override
-		public boolean isDone() {
-			return _future.isDone();
-		}
-
-		@Override
 		public T get() throws ExecutionException, InterruptedException {
 			ProcessCallable<?> processCallable = _future.get();
 
@@ -243,6 +233,16 @@ public class ProcessExecutor {
 			ProcessCallable<?> processCallable = _future.get(timeout, timeUnit);
 
 			return get(processCallable);
+		}
+
+		@Override
+		public boolean isCancelled() {
+			return _future.isCancelled();
+		}
+
+		@Override
+		public boolean isDone() {
+			return _future.isDone();
 		}
 
 		private T get(ProcessCallable<?> processCallable)

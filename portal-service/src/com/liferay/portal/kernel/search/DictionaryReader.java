@@ -57,23 +57,6 @@ public class DictionaryReader {
 	private class DictionaryIterator implements Iterator<DictionaryEntry> {
 
 		@Override
-		public DictionaryEntry next() {
-			if (!_calledHasNext) {
-				hasNext();
-			}
-
-			_calledHasNext = false;
-
-			if (StringPool.UTF8.equals(_encoding) &&
-				(_line.charAt(0) == _UNICODE_BYTE_ORDER_MARK)) {
-
-				_line = _line.substring(1);
-			}
-
-			return new DictionaryEntry(_line);
-		}
-
-		@Override
 		public boolean hasNext() {
 			if (!_calledHasNext) {
 				try {
@@ -91,6 +74,23 @@ public class DictionaryReader {
 			}
 
 			return false;
+		}
+
+		@Override
+		public DictionaryEntry next() {
+			if (!_calledHasNext) {
+				hasNext();
+			}
+
+			_calledHasNext = false;
+
+			if (StringPool.UTF8.equals(_encoding) &&
+				(_line.charAt(0) == _UNICODE_BYTE_ORDER_MARK)) {
+
+				_line = _line.substring(1);
+			}
+
+			return new DictionaryEntry(_line);
 		}
 
 		@Override

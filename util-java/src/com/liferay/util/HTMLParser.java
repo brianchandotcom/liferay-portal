@@ -58,33 +58,15 @@ public class HTMLParser {
 	private class HTMLCallback extends HTMLEditorKit.ParserCallback {
 
 		@Override
-		public void handleText(char[] data, int pos) {
-		}
-
-		@Override
-		public void handleStartTag(
-			HTML.Tag tag, MutableAttributeSet attributes, int pos) {
-
-			if (tag.equals(HTML.Tag.A)) {
-				String href = (String)attributes.getAttribute(
-					HTML.Attribute.HREF);
-
-				if (href != null) {
-					_links.add(href);
-				}
-			}
-			else if (tag.equals(HTML.Tag.IMG)) {
-				String src = (String)attributes.getAttribute(
-					HTML.Attribute.SRC);
-
-				if (src != null) {
-					_images.add(src);
-				}
-			}
+		public void handleComment(char[] data, int pos) {
 		}
 
 		@Override
 		public void handleEndTag(HTML.Tag tag, int pos) {
+		}
+
+		@Override
+		public void handleError(String errorMsg, int pos) {
 		}
 
 		@Override
@@ -110,11 +92,29 @@ public class HTMLParser {
 		}
 
 		@Override
-		public void handleComment(char[] data, int pos) {
+		public void handleStartTag(
+			HTML.Tag tag, MutableAttributeSet attributes, int pos) {
+
+			if (tag.equals(HTML.Tag.A)) {
+				String href = (String)attributes.getAttribute(
+					HTML.Attribute.HREF);
+
+				if (href != null) {
+					_links.add(href);
+				}
+			}
+			else if (tag.equals(HTML.Tag.IMG)) {
+				String src = (String)attributes.getAttribute(
+					HTML.Attribute.SRC);
+
+				if (src != null) {
+					_images.add(src);
+				}
+			}
 		}
 
 		@Override
-		public void handleError(String errorMsg, int pos) {
+		public void handleText(char[] data, int pos) {
 		}
 
 	}

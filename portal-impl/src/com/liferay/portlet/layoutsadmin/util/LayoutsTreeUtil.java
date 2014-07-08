@@ -371,12 +371,12 @@ public class LayoutsTreeUtil {
 			_layout = layout;
 		}
 
-		public Layout getLayout() {
-			return _layout;
-		}
-
 		public LayoutTreeNodes getChildLayoutTreeNodes() {
 			return _childLayoutTreeNodes;
+		}
+
+		public Layout getLayout() {
+			return _layout;
 		}
 
 		public void setChildLayoutTreeNodes(
@@ -409,12 +409,12 @@ public class LayoutsTreeUtil {
 			_total += layoutTreeNodes.getTotal();
 		}
 
-		public int getTotal() {
-			return _total;
-		}
-
 		public List<LayoutTreeNode> getLayoutTreeNodesList() {
 			return _layoutTreeNodesList;
+		}
+
+		public int getTotal() {
+			return _total;
 		}
 
 		@Override

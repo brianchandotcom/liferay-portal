@@ -272,24 +272,24 @@ public class SPIRegistryImplTest {
 	public static class PortletLocalServiceUtilAdvice {
 
 		@Around(
-			"execution(public static com.liferay.portal.model.Portlet com." +
-				"liferay.portal.service.PortletLocalServiceUtil." +
-					"getPortletById(String)) && args(portletId)")
-		public Portlet getPortletById(String portletId) {
-			if (portletId.equals("portlet1")) {
-				return _createPortletProxy(portletId);
-			}
-
-			return null;
-		}
-
-		@Around(
 			"execution(public static com.liferay.portal.model.PortletApp " +
 				"com.liferay.portal.service.PortletLocalServiceUtil." +
 					"getPortletApp(String)) && args(servletContextName)")
 		public PortletApp getPortletApp(String servletContextName) {
 			if (servletContextName.equals("portletApp1")) {
 				return _createPortletAppProxy(_portletIds);
+			}
+
+			return null;
+		}
+
+		@Around(
+			"execution(public static com.liferay.portal.model.Portlet com." +
+				"liferay.portal.service.PortletLocalServiceUtil." +
+					"getPortletById(String)) && args(portletId)")
+		public Portlet getPortletById(String portletId) {
+			if (portletId.equals("portlet1")) {
+				return _createPortletProxy(portletId);
 			}
 
 			return null;

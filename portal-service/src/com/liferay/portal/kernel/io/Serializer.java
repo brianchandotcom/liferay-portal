@@ -434,6 +434,22 @@ public class Serializer {
 	 */
 	protected static class BufferQueue {
 
+		public byte[] dequeue() {
+			if (headBufferNode == null) {
+				return new byte[THREADLOCAL_BUFFER_SIZE_MIN];
+			}
+
+			BufferNode bufferNode = headBufferNode;
+
+			headBufferNode = headBufferNode.next;
+
+			// Help GC
+
+			bufferNode.next = null;
+
+			return bufferNode.buffer;
+		}
+
 		public void enqueue(byte[] buffer) {
 			BufferNode bufferNode = new BufferNode(buffer);
 
@@ -489,22 +505,6 @@ public class Serializer {
 				currentBufferNode.buffer = null;
 				currentBufferNode.next = null;
 			}
-		}
-
-		public byte[] dequeue() {
-			if (headBufferNode == null) {
-				return new byte[THREADLOCAL_BUFFER_SIZE_MIN];
-			}
-
-			BufferNode bufferNode = headBufferNode;
-
-			headBufferNode = headBufferNode.next;
-
-			// Help GC
-
-			bufferNode.next = null;
-
-			return bufferNode.buffer;
 		}
 
 		protected int count;

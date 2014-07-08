@@ -100,8 +100,8 @@ public class RandomUtilTest {
 			return value;
 		}
 
-		private int[] _values;
 		private int _index;
+		private int[] _values;
 
 	}
 

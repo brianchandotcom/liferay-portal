@@ -77,10 +77,6 @@ public class IntrabandRPCUtil {
 	protected static class FutureCompletionHandler<V extends Serializable>
 		implements CompletionHandler<Object> {
 
-		protected FutureCompletionHandler(FutureResult<V> futureResult) {
-			_futureResult = futureResult;
-		}
-
 		@Override
 		public void delivered(Object attachment) {
 		}
@@ -119,6 +115,10 @@ public class IntrabandRPCUtil {
 		@Override
 		public void timedOut(Object attachment) {
 			_futureResult.cancel(true);
+		}
+
+		protected FutureCompletionHandler(FutureResult<V> futureResult) {
+			_futureResult = futureResult;
 		}
 
 		private final FutureResult<V> _futureResult;

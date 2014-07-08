@@ -72,6 +72,19 @@ public class MergeLayoutPrototypesThreadLocal {
 		}
 
 		@Override
+		public boolean equals(Object obj) {
+			MethodKey methodKey = (MethodKey)obj;
+
+			if (Validator.equals(_method, methodKey._method) &&
+				Arrays.equals(_arguments, methodKey._arguments)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
 		public int hashCode() {
 			int hashCode = _method.hashCode();
 
@@ -87,19 +100,6 @@ public class MergeLayoutPrototypesThreadLocal {
 			}
 
 			return hashCode;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			MethodKey methodKey = (MethodKey)obj;
-
-			if (Validator.equals(_method, methodKey._method) &&
-				Arrays.equals(_arguments, methodKey._arguments)) {
-
-				return true;
-			}
-
-			return false;
 		}
 
 		private final Object[] _arguments;

@@ -1486,6 +1486,10 @@ public class TableMapperTest {
 			Assert.assertArrayEquals(new int[] {Types.BIGINT}, types);
 		}
 
+		public void setDatabaseError(boolean databaseError) {
+			_databaseError = databaseError;
+		}
+
 		@Override
 		public int update(Object... params) {
 			Assert.assertEquals(1, params.length);
@@ -1506,10 +1510,6 @@ public class TableMapperTest {
 			return rightPrimaryKeys.length;
 		}
 
-		public void setDatabaseError(boolean databaseError) {
-			_databaseError = databaseError;
-		}
-
 		private boolean _databaseError;
 
 	}
@@ -1527,6 +1527,10 @@ public class TableMapperTest {
 			Assert.assertArrayEquals(
 				new int[] {Types.BIGINT, Types.BIGINT},
 				types);
+		}
+
+		public void setDatabaseError(boolean databaseError) {
+			_databaseError = databaseError;
 		}
 
 		@Override
@@ -1560,10 +1564,6 @@ public class TableMapperTest {
 			return 0;
 		}
 
-		public void setDatabaseError(boolean databaseError) {
-			_databaseError = databaseError;
-		}
-
 		private boolean _databaseError;
 
 	}
@@ -1580,6 +1580,10 @@ public class TableMapperTest {
 					" = ?",
 				sql);
 			Assert.assertArrayEquals(new int[] {Types.BIGINT}, types);
+		}
+
+		public void setDatabaseError(boolean databaseError) {
+			_databaseError = databaseError;
 		}
 
 		@Override
@@ -1609,10 +1613,6 @@ public class TableMapperTest {
 			}
 
 			return count;
-		}
-
-		public void setDatabaseError(boolean databaseError) {
-			_databaseError = databaseError;
 		}
 
 		private boolean _databaseError;
@@ -1775,6 +1775,13 @@ public class TableMapperTest {
 			return getCache(name);
 		}
 
+		@Override
+		public PortalCacheManager
+			<? extends Serializable, ? extends Serializable> getCacheManager() {
+
+			return null;
+		}
+
 		public Map<String, PortalCache<?, ?>> getPortalCaches() {
 			return _portalCaches;
 		}
@@ -1782,13 +1789,6 @@ public class TableMapperTest {
 		@Override
 		public void removeCache(String name) {
 			_portalCaches.remove(name);
-		}
-
-		@Override
-		public PortalCacheManager
-			<? extends Serializable, ? extends Serializable> getCacheManager() {
-
-			return null;
 		}
 
 		private Map<String, PortalCache<?, ?>> _portalCaches =

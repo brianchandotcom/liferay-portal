@@ -325,37 +325,7 @@ public class HookHotDeployListener
 		String servletContextName, Object serviceRegistrationKey,
 		Class<T> clazz, T service, Map<String, Object> properties) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			ServiceRegistration<T> serviceRegistration =
-				registry.registerService(clazz, service, properties);
-
-			Map<Object, ServiceRegistration<?>> serviceRegistrations =
-				getServiceRegistrations(servletContextName);
-
-			serviceRegistrations.put(
-				serviceRegistrationKey, serviceRegistration);
-		}
-
-	public <T> void registerService(
-		String servletContextName, Object serviceRegistrationKey,
-		Class<T> clazz, T service, Object... propertyKVPs) {
-
 		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<String, Object>();
-
-		if ((propertyKVPs.length % 2) != 0) {
-			throw new IllegalArgumentException(
-				"Properties length is not an even number");
-		}
-
-		for (int i = 0; i < propertyKVPs.length; i += 2) {
-			String propertyName = String.valueOf(propertyKVPs[i]);
-			Object propertyValue = propertyKVPs[i + 1];
-
-			properties.put(propertyName, propertyValue);
-		}
 
 		ServiceRegistration<T> serviceRegistration = registry.registerService(
 			clazz, service, properties);
@@ -368,22 +338,46 @@ public class HookHotDeployListener
 
 	public <T> void registerService(
 		String servletContextName, Object serviceRegistrationKey,
+		Class<T> clazz, T service, Object... propertyKVPs) {
+
+		if ((propertyKVPs.length % 2) != 0) {
+			throw new IllegalArgumentException(
+				"Properties length is not an even number");
+		}
+
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		for (int i = 0; i < propertyKVPs.length; i += 2) {
+			String propertyName = String.valueOf(propertyKVPs[i]);
+			Object propertyValue = propertyKVPs[i + 1];
+
+			properties.put(propertyName, propertyValue);
+		}
+
+		registerService(
+			servletContextName, serviceRegistrationKey, clazz, service,
+			properties);
+	}
+
+	@SuppressWarnings("rawtypes")
+	public <T> void registerService(
+		String servletContextName, Object serviceRegistrationKey,
 		Class<T> clazz, T service, Properties properties) {
 
-			Map<String, Object> mapProperties = new HashMap<String, Object>();
+		Map<String, Object> propertiesMap = new HashMap<String, Object>();
 
-			Enumeration e = properties.propertyNames();
+		Enumeration enumeration = properties.propertyNames();
 
-			while (e.hasMoreElements()) {
-				String key = (String)e.nextElement();
-				Object value = properties.getProperty(key);
+		while (enumeration.hasMoreElements()) {
+			String key = (String)enumeration.nextElement();
+			Object value = properties.getProperty(key);
 
-				mapProperties.put(key, value);
-			}
+			propertiesMap.put(key, value);
+		}
 
-			registerService(
-				servletContextName, serviceRegistrationKey, clazz, service,
-				mapProperties);
+		registerService(
+			servletContextName, serviceRegistrationKey, clazz, service,
+			propertiesMap);
 	}
 
 	protected boolean checkPermission(

@@ -271,6 +271,10 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
 		<execute macro="DDLList#addCP">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -580,6 +584,10 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
 
 		<execute macro="DDLList#addCP">
 			<var name="ddlListName" value="${ddlListName}" />

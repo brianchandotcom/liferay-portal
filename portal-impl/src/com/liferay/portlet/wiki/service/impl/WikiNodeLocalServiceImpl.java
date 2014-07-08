@@ -234,18 +234,11 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 			// Indexer
 
-			Indexer wikiNodeIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				WikiNode.class);
 
-			wikiNodeIndexer.delete(node);
+			indexer.delete(node);
 		}
-
-		// Indexer
-
-		Indexer wikiPageIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			WikiPage.class);
-
-		wikiPageIndexer.delete(node);
 	}
 
 	@Override

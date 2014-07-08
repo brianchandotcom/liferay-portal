@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
@@ -173,11 +172,6 @@ public class WikiPageIndexer extends BaseIndexer {
 
 			SearchEngineUtil.deleteDocument(
 				getSearchEngineId(), companyId, document.get(Field.UID));
-		}
-		else if (obj instanceof WikiNode) {
-			WikiNode node = (WikiNode)obj;
-
-			deleteDocument(node.getCompanyId(), node.getNodeId());
 		}
 		else if (obj instanceof WikiPage) {
 			WikiPage page = (WikiPage)obj;

@@ -17,6 +17,7 @@
 <%@ include file="/html/portlet/trash/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectFolder");
@@ -36,7 +37,7 @@ if (containerModel != null) {
 PortletURL containerURL = renderResponse.createRenderURL();
 
 containerURL.setParameter("struts_action", "/trash/view_container_model");
-containerURL.setParameter("redirect", currentURL);
+containerURL.setParameter("redirect", redirect);
 containerURL.setParameter("className", className);
 containerURL.setParameter("classPK", String.valueOf(classPK));
 containerURL.setParameter("containerModelClassName", trashHandler.getContainerModelClassName());

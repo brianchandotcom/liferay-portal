@@ -92,6 +92,53 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _firstSourceMismatchException;
 	}
 
+	protected static boolean isExcluded(
+		List<String> exclusions, String fileName) {
+
+		return isExcluded(exclusions, fileName, -1);
+	}
+
+	protected static boolean isExcluded(
+		List<String> exclusions, String fileName, int lineCount) {
+
+		return isExcluded(exclusions, fileName, lineCount, null);
+	}
+
+	protected static boolean isExcluded(
+		List<String> exclusions, String fileName, int lineCount,
+		String javaTermName) {
+
+		if (ListUtil.isEmpty(exclusions)) {
+			return false;
+		}
+
+		if (exclusions.contains(fileName)) {
+			return true;
+		}
+
+		if ((lineCount > 0) &&
+			exclusions.contains(fileName + StringPool.AT + lineCount)) {
+
+			return true;
+		}
+
+		if (Validator.isNotNull(javaTermName) &&
+			exclusions.contains(fileName + StringPool.AT + javaTermName)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected static void processErrorMessage(String fileName, String message) {
+		_errorMessages.add(message);
+
+		if (_printErrors) {
+			sourceFormatterHelper.printError(fileName, message);
+		}
+	}
+
 	protected void checkEmptyCollection(
 		String line, String fileName, int lineCount) {
 
@@ -893,45 +940,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return matcher.matches();
 	}
 
-	protected static boolean isExcluded(
-		List<String> exclusions, String fileName) {
-
-		return isExcluded(exclusions, fileName, -1);
-	}
-
-	protected static boolean isExcluded(
-		List<String> exclusions, String fileName, int lineCount) {
-
-		return isExcluded(exclusions, fileName, lineCount, null);
-	}
-
-	protected static boolean isExcluded(
-		List<String> exclusions, String fileName, int lineCount,
-		String javaTermName) {
-
-		if (ListUtil.isEmpty(exclusions)) {
-			return false;
-		}
-
-		if (exclusions.contains(fileName)) {
-			return true;
-		}
-
-		if ((lineCount > 0) &&
-			exclusions.contains(fileName + StringPool.AT + lineCount)) {
-
-			return true;
-		}
-
-		if (Validator.isNotNull(javaTermName) &&
-			exclusions.contains(fileName + StringPool.AT + javaTermName)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	protected boolean isRunsOutsidePortal(String absolutePath) {
 		if (_runOutsidePortalExclusions == null) {
 			_runOutsidePortalExclusions = getExclusions(
@@ -945,14 +953,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return false;
-	}
-
-	protected static void processErrorMessage(String fileName, String message) {
-		_errorMessages.add(message);
-
-		if (_printErrors) {
-			sourceFormatterHelper.printError(fileName, message);
-		}
 	}
 
 	protected String replacePrimitiveWrapperInstantiation(

@@ -1180,8 +1180,6 @@ public class PropsValues {
 
 	public static final String MEMBERSHIP_POLICY_ORGANIZATIONS = PropsUtil.get(PropsKeys.MEMBERSHIP_POLICY_ORGANIZATIONS);
 
-	public static final String MEMBERSHIP_POLICY_ROLES = PropsUtil.get(PropsKeys.MEMBERSHIP_POLICY_ROLES);
-
 	public static final String MEMBERSHIP_POLICY_SITES = PropsUtil.get(PropsKeys.MEMBERSHIP_POLICY_SITES);
 
 	public static final String MEMBERSHIP_POLICY_USER_GROUPS = PropsUtil.get(PropsKeys.MEMBERSHIP_POLICY_USER_GROUPS);

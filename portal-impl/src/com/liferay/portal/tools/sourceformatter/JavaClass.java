@@ -571,6 +571,10 @@ public class JavaClass {
 					String javaTermContent = _content.substring(
 						javaTermStartPosition, javaTermEndPosition);
 
+					if (!isValidJavaTerm(javaTermContent)) {
+						return null;
+					}
+
 					if (Validator.isNotNull(javaTermName)) {
 						javaTerm = new JavaTerm(
 							javaTermName, javaTermType, javaTermContent,
@@ -603,6 +607,10 @@ public class JavaClass {
 
 			String javaTermContent = _content.substring(
 				javaTermStartPosition, javaTermEndPosition);
+
+			if (!isValidJavaTerm(javaTermContent)) {
+				return null;
+			}
 
 			javaTerm = new JavaTerm(
 				javaTermName, javaTermType, javaTermContent, javaTermLineCount);
@@ -839,6 +847,37 @@ public class JavaClass {
 		else {
 			return false;
 		}
+	}
+
+	protected boolean isValidJavaTerm(String content) {
+		while (!content.startsWith(_indent + "private") &&
+			   !content.startsWith(_indent + "protected") &&
+			   !content.startsWith(_indent + "public")) {
+
+			content = content.substring(content.indexOf("\n") + 1);
+		}
+
+		int indentLinesCount =
+			StringUtil.count(content, "\n" + _indent) -
+				StringUtil.count(content, "\n" + _indent + StringPool.TAB);
+
+		content = StringUtil.trim(content);
+
+		if (content.endsWith(StringPool.CLOSE_CURLY_BRACE) &&
+			((indentLinesCount == 1) ||
+			 (((indentLinesCount == 2) || (indentLinesCount == 3)) &&
+			  content.contains("\n" + _indent + "static {")))) {
+
+			return true;
+		}
+		else if ((content.endsWith("};") && (indentLinesCount == 1)) ||
+				 (content.endsWith(StringPool.SEMICOLON) &&
+				  (indentLinesCount == 0))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void sortJavaTerms(

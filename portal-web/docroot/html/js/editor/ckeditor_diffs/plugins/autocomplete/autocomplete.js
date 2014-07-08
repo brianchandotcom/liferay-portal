@@ -29,10 +29,10 @@
 		initializer: function() {
 			var instance = this;
 
-			instance._bindUI();
+			instance._bindUIACCKEditor();
 		},
 
-		_bindUI: function() {
+		_bindUIACCKEditor: function() {
 			var instance = this;
 
 			instance._processCaret = A.bind('_processCaretPosition', instance);
@@ -415,11 +415,16 @@
 		span: 1
 	};
 
-	Liferay.AutoCompleteCKEditor = A.Base.mix(
+	Liferay.AutoCompleteCKEditor = A.Base.create(
+		'liferayautocompleteckeditor',
 		A.AutoComplete,
 		[
 			Liferay.AutoCompleteInputBase,
 			AutoCompleteCKEditor
-		]
+		],
+		{},
+		{
+			CSS_PREFIX: A.ClassNameManager.getClassName('aclist')
+		}
 	);
 })();

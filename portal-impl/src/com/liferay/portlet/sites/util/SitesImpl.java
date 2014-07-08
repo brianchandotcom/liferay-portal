@@ -1867,6 +1867,9 @@ public class SitesImpl implements Sites {
 			layoutSetPrototypeUuid);
 
 		LayoutLocalServiceUtil.updatePriorities(groupId, privateLayout);
+
+		LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 	}
 
 	private static final String _TEMP_DIR =

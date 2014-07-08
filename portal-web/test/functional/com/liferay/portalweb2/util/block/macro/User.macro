@@ -844,6 +844,8 @@
 		<if>
 			<equals arg1="${userPassword}" arg2="Invalid" />
 			<then>
+				<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+
 				<execute action="Myaccount#assertClick" locator-key1="MENU_USER_INFORMATION_PASSWORD" value1="Password" />
 				<execute action="Myaccount#type" locator-key1="PASSWORD_CURRENT_PASSWORD_FIELD" value1="" />
 				<execute action="Myaccount#type" locator-key1="PASSWORD_NEW_PASSWORD_FIELD" value1="test1" />
@@ -869,6 +871,8 @@
 				</execute>
 			</then>
 			<else>
+				<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+
 				<execute action="Myaccount#assertClick" locator-key1="MENU_USER_INFORMATION_PASSWORD" value1="Password" />
 				<execute action="Myaccount#type" locator-key1="PASSWORD_CURRENT_PASSWORD_FIELD" value1="test" />
 				<execute action="Myaccount#type" locator-key1="PASSWORD_NEW_PASSWORD_FIELD" value1="test1" />

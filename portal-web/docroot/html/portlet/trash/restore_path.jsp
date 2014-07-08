@@ -83,11 +83,9 @@
 	A.getBody().delegate(
 		'click',
 		function(event) {
-			var link = event.currentTarget.one('a');
-
-			<portlet:namespace />restoreDialog(link.attr('data-uri'));
+			<portlet:namespace />restoreDialog(event.currentTarget.attr('data-uri'));
 		},
-		'.trash-restore-link'
+		'.trash-restore-link a, button.trash-restore-link'
 	);
 
 	Liferay.provide(

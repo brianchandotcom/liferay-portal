@@ -78,25 +78,45 @@
 				<div class="btn-group">
 					<c:choose>
 						<c:when test="<%= entry != null %>">
-							<c:if test="<%= trashHandler.isRestorable(entry.getClassPK()) && !trashHandler.isInTrashContainer(entry.getClassPK()) %>">
-								<aui:button icon="icon-undo" name="restoreEntryButton" value="restore" />
+							<c:choose>
+								<c:when test="<%= trashHandler.isRestorable(entry.getClassPK()) && !trashHandler.isInTrashContainer(entry.getClassPK()) %>">
+									<aui:button icon="icon-undo" name="restoreEntryButton" value="restore" />
 
-								<aui:script use="aui-base">
-									<portlet:actionURL var="restoreEntryURL">
-										<portlet:param name="struts_action" value="/trash/edit_entry" />
-										<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+									<aui:script use="aui-base">
+										<portlet:actionURL var="restoreEntryURL">
+											<portlet:param name="struts_action" value="/trash/edit_entry" />
+											<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+											<portlet:param name="redirect" value="<%= redirect %>" />
+											<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+										</portlet:actionURL>
+
+										A.one('#<portlet:namespace />restoreEntryButton').on(
+											'click',
+											function(event) {
+												Liferay.fire('<portlet:namespace />checkEntry', {trashEntryId: <%= entry.getEntryId() %>, uri: '<%= restoreEntryURL.toString() %>'});
+											}
+										);
+									</aui:script>
+								</c:when>
+								<c:when test="<%= !trashHandler.isRestorable(entry.getClassPK()) && trashHandler.isMovable() %>">
+									<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+										<portlet:param name="struts_action" value="/trash/view_container_model" />
 										<portlet:param name="redirect" value="<%= redirect %>" />
-										<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-									</portlet:actionURL>
+										<portlet:param name="className" value="<%= entry.getClassName() %>" />
+										<portlet:param name="classPK" value="<%= String.valueOf(entry.getClassPK()) %>" />
+										<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName() %>" />
+									</portlet:renderURL>
 
-									A.one('#<portlet:namespace />restoreEntryButton').on(
-										'click',
-										function(event) {
-											Liferay.fire('<portlet:namespace />checkEntry', {trashEntryId: <%= entry.getEntryId() %>, uri: '<%= restoreEntryURL.toString() %>'});
-										}
-									);
-								</aui:script>
-							</c:if>
+									<%
+									Map<String, Object> data = new HashMap<String, Object>();
+
+									data.put("uri", moveURL);
+									%>
+
+									<aui:button cssClass="trash-restore-link" data="<%= data %>" icon="icon-undo" name="restoreEntryButton" value="restore" />
+								</c:when>
+							</c:choose>
+
 							<c:if test="<%= trashHandler.isDeletable() %>">
 								<aui:button icon="icon-remove" name="removeEntryButton" value="delete" />
 

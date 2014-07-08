@@ -164,6 +164,7 @@ import java.lang.reflect.Field;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -323,6 +324,22 @@ public class HookHotDeployListener
 
 	public <T> void registerService(
 		String servletContextName, Object serviceRegistrationKey,
+		Class<T> clazz, T service, Map<String, Object> properties) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			ServiceRegistration<T> serviceRegistration =
+				registry.registerService(clazz, service, properties);
+
+			Map<Object, ServiceRegistration<?>> serviceRegistrations =
+				getServiceRegistrations(servletContextName);
+
+			serviceRegistrations.put(
+				serviceRegistrationKey, serviceRegistration);
+		}
+
+	public <T> void registerService(
+		String servletContextName, Object serviceRegistrationKey,
 		Class<T> clazz, T service, Object... propertyKVPs) {
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -348,6 +365,26 @@ public class HookHotDeployListener
 			getServiceRegistrations(servletContextName);
 
 		serviceRegistrations.put(serviceRegistrationKey, serviceRegistration);
+	}
+
+	public <T> void registerService(
+		String servletContextName, Object serviceRegistrationKey,
+		Class<T> clazz, T service, Properties properties) {
+
+			Map<String, Object> mapProperties = new HashMap<String, Object>();
+
+			Enumeration e = properties.propertyNames();
+
+			while (e.hasMoreElements()) {
+				String key = (String)e.nextElement();
+				Object value = properties.getProperty(key);
+
+				mapProperties.put(key, value);
+			}
+
+			registerService(
+				servletContextName, serviceRegistrationKey, clazz, service,
+				mapProperties);
 	}
 
 	protected boolean checkPermission(

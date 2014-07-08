@@ -17,6 +17,7 @@ package com.liferay.portal.security.auth;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -26,8 +27,14 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -42,6 +49,7 @@ import jodd.util.Wildcard;
 
 /**
  * @author Tomas Polesovsky
+ * @author Peter Fellwock
  */
 public class AuthVerifierPipeline {
 
@@ -55,18 +63,6 @@ public class AuthVerifierPipeline {
 			StringPool.PERIOD);
 	}
 
-	public static void register(
-		AuthVerifierConfiguration authVerifierConfiguration) {
-
-		_instance._register(authVerifierConfiguration);
-	}
-
-	public static void unregister(
-		AuthVerifierConfiguration authVerifierConfiguration) {
-
-		_instance._unregister(authVerifierConfiguration);
-	}
-
 	public static AuthVerifierResult verifyRequest(
 			AccessControlContext accessControlContext)
 		throws PortalException {
@@ -75,7 +71,14 @@ public class AuthVerifierPipeline {
 	}
 
 	private AuthVerifierPipeline() {
-		_initAuthVerifierConfigurations();
+		Registry registry = RegistryUtil.getRegistry();
+
+		_initAuthVerifierConfigurations(registry);
+
+		_serviceTracker = registry.trackServices(
+			AuthVerifier.class, new AuthVerifierTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 	private AuthVerifierResult _createGuestVerificationResult(
@@ -125,33 +128,34 @@ public class AuthVerifierPipeline {
 		return authVerifierConfigurations;
 	}
 
-	private void _initAuthVerifierConfigurations() {
-		_authVerifierConfigurations =
-			new CopyOnWriteArrayList<AuthVerifierConfiguration>();
-
+	@SuppressWarnings("rawtypes")
+	private void _initAuthVerifierConfigurations(Registry registry) {
 		for (String authVerifierClassName :
 				PropsValues.AUTH_VERIFIER_PIPELINE) {
 
 			try {
-				AuthVerifierConfiguration authVerifierConfiguration =
-					new AuthVerifierConfiguration();
-
 				AuthVerifier authVerifier =
 					(AuthVerifier)InstanceFactory.newInstance(
 						ClassLoaderUtil.getPortalClassLoader(),
 						authVerifierClassName);
 
-				authVerifierConfiguration.setAuthVerifier(authVerifier);
-
-				authVerifierConfiguration.setAuthVerifierClassName(
-					authVerifierClassName);
-
 				Properties properties = PropsUtil.getProperties(
 					getAuthVerifierPropertyName(authVerifierClassName), true);
 
-				authVerifierConfiguration.setProperties(properties);
+				Map<String, Object> propertiesMap =
+					new HashMap<String, Object>();
 
-				_authVerifierConfigurations.add(authVerifierConfiguration);
+				Enumeration enumeration = properties.propertyNames();
+
+				while (enumeration.hasMoreElements()) {
+					String key = (String)enumeration.nextElement();
+					Object value = properties.getProperty(key);
+
+					propertiesMap.put(key, value);
+				}
+
+				registry.registerService(
+					AuthVerifier.class, authVerifier, propertiesMap);
 			}
 			catch (Exception e) {
 				_log.error("Unable to initialize " + authVerifierClassName, e);
@@ -264,40 +268,6 @@ public class AuthVerifierPipeline {
 		return mergedSettings;
 	}
 
-	private void _register(
-		AuthVerifierConfiguration authVerifierConfiguration) {
-
-		if (authVerifierConfiguration == null) {
-			throw new IllegalArgumentException(
-				"Auth verifier configuration is null");
-		}
-
-		if (authVerifierConfiguration.getAuthVerifier() == null) {
-			throw new IllegalArgumentException("Auth verifier is null");
-		}
-
-		if (authVerifierConfiguration.getAuthVerifierClassName() == null) {
-			throw new IllegalArgumentException("Class name is null");
-		}
-
-		if (authVerifierConfiguration.getProperties() == null) {
-			throw new IllegalArgumentException("Properties is null");
-		}
-
-		_authVerifierConfigurations.add(0, authVerifierConfiguration);
-	}
-
-	private void _unregister(
-		AuthVerifierConfiguration authVerifierConfiguration) {
-
-		if (authVerifierConfiguration == null) {
-			throw new IllegalArgumentException(
-				"Auth verifier configuration is null");
-		}
-
-		_authVerifierConfigurations.remove(authVerifierConfiguration);
-	}
-
 	private AuthVerifierResult _verifyRequest(
 			AccessControlContext accessControlContext)
 		throws PortalException {
@@ -365,6 +335,87 @@ public class AuthVerifierPipeline {
 
 	private static AuthVerifierPipeline _instance = new AuthVerifierPipeline();
 
-	private List<AuthVerifierConfiguration> _authVerifierConfigurations;
+	private List<AuthVerifierConfiguration> _authVerifierConfigurations =
+		new CopyOnWriteArrayList<AuthVerifierConfiguration>();
+	private ServiceTracker<AuthVerifier, AuthVerifierConfiguration>
+		_serviceTracker;
+
+	private class AuthVerifierTrackerCustomizer
+		implements
+			ServiceTrackerCustomizer<AuthVerifier, AuthVerifierConfiguration> {
+
+		@Override
+		public AuthVerifierConfiguration addingService(
+			ServiceReference<AuthVerifier> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			AuthVerifier authVerifier = registry.getService(serviceReference);
+
+			String authVerifierClassName = authVerifier.getClass().getName();
+
+			Properties properties = new Properties();
+
+			for (String key : serviceReference.getPropertyKeys()) {
+				String value = GetterUtil.getString(
+					serviceReference.getProperty(key));
+
+				properties.put(key, value);
+			}
+
+			AuthVerifierConfiguration authVerifierConfiguration =
+				new AuthVerifierConfiguration();
+
+			authVerifierConfiguration.setAuthVerifier(authVerifier);
+			authVerifierConfiguration.setAuthVerifierClassName(
+				authVerifierClassName);
+			authVerifierConfiguration.setProperties(properties);
+
+			_authVerifierConfigurations.add(0, authVerifierConfiguration);
+
+			return authVerifierConfiguration;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<AuthVerifier> serviceReference,
+			AuthVerifierConfiguration authVerifierConfiguration) {
+
+			Properties properties = new Properties();
+
+			for (String key : serviceReference.getPropertyKeys()) {
+				String value = GetterUtil.getString(
+					serviceReference.getProperty(key));
+
+				properties.put(key, value);
+			}
+
+			AuthVerifierConfiguration newAuthVerifierConfiguration =
+				new AuthVerifierConfiguration();
+
+			newAuthVerifierConfiguration.setAuthVerifier(
+				authVerifierConfiguration.getAuthVerifier());
+			newAuthVerifierConfiguration.setAuthVerifierClassName(
+				authVerifierConfiguration.getAuthVerifierClassName());
+			newAuthVerifierConfiguration.setProperties(properties);
+
+			if (_authVerifierConfigurations.remove(authVerifierConfiguration)) {
+				_authVerifierConfigurations.add(
+					0, newAuthVerifierConfiguration);
+			}
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<AuthVerifier> serviceReference,
+			AuthVerifierConfiguration authVerifierConfiguration) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_authVerifierConfigurations.remove(authVerifierConfiguration);
+		}
+	}
 
 }

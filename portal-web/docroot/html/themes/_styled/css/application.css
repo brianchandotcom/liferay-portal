@@ -644,6 +644,11 @@
 		height: auto;
 	}
 
+	.cke_editable_inline a {
+		cursor: pointer;
+	}
+
+
 	.cke_panel.cke_combopanel {
 		width: 220px;
 	}

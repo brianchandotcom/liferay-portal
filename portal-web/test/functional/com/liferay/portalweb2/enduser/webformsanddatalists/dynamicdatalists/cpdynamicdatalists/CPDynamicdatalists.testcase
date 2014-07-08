@@ -3767,7 +3767,7 @@
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewCannotAddField">
-			<var name="field" value="${field}" />
+			<var name="field" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#deleteField">
@@ -3787,7 +3787,7 @@
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewCanAddField">
-			<var name="field" value="${field}" />
+			<var name="field" value="${fieldFieldLabel}" />
 		</execute>
 	</command>
 
@@ -3838,7 +3838,7 @@
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewCannotAddField">
-			<var name="field" value="${field}" />
+			<var name="field" value="${fieldFieldLabel}" />
 		</execute>
 	</command>
 

@@ -893,17 +893,19 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return matcher.matches();
 	}
 
-	protected boolean isExcluded(List<String> exclusions, String fileName) {
+	protected static boolean isExcluded(
+		List<String> exclusions, String fileName) {
+
 		return isExcluded(exclusions, fileName, -1);
 	}
 
-	protected boolean isExcluded(
+	protected static boolean isExcluded(
 		List<String> exclusions, String fileName, int lineCount) {
 
 		return isExcluded(exclusions, fileName, lineCount, null);
 	}
 
-	protected boolean isExcluded(
+	protected static boolean isExcluded(
 		List<String> exclusions, String fileName, int lineCount,
 		String javaTermName) {
 
@@ -945,7 +947,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
-	protected void processErrorMessage(String fileName, String message) {
+	protected static void processErrorMessage(String fileName, String message) {
 		_errorMessages.add(message);
 
 		if (_printErrors) {
@@ -1486,15 +1488,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
+	private static List<String> _errorMessages = new ArrayList<String>();
+	private static boolean _printErrors;
+
 	private boolean _autoFix;
 	private Map<String, String> _compatClassNamesMap;
 	private String _copyright;
-	private List<String> _errorMessages = new ArrayList<String>();
 	private String[] _excludes;
 	private SourceMismatchException _firstSourceMismatchException;
 	private String _oldCopyright;
 	private Properties _portalLanguageKeysProperties;
-	private boolean _printErrors;
 	private Properties _properties;
 	private List<String> _runOutsidePortalExclusions;
 

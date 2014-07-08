@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
-import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaSource;
 
 import java.io.File;
@@ -34,7 +33,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -45,81 +43,6 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class JavaSourceProcessor extends BaseSourceProcessor {
-
-	public static final int TYPE_CLASS_PRIVATE = 24;
-
-	public static final int TYPE_CLASS_PRIVATE_STATIC = 23;
-
-	public static final int TYPE_CLASS_PROTECTED = 16;
-
-	public static final int TYPE_CLASS_PROTECTED_STATIC = 15;
-
-	public static final int TYPE_CLASS_PUBLIC = 8;
-
-	public static final int TYPE_CLASS_PUBLIC_STATIC = 7;
-
-	public static final int[] TYPE_CONSTRUCTOR = {
-		JavaSourceProcessor.TYPE_CONSTRUCTOR_PRIVATE,
-		JavaSourceProcessor.TYPE_CONSTRUCTOR_PROTECTED,
-		JavaSourceProcessor.TYPE_CONSTRUCTOR_PUBLIC
-	};
-
-	public static final int TYPE_CONSTRUCTOR_PRIVATE = 18;
-
-	public static final int TYPE_CONSTRUCTOR_PROTECTED = 10;
-
-	public static final int TYPE_CONSTRUCTOR_PUBLIC = 4;
-
-	public static final int[] TYPE_METHOD = {
-		JavaSourceProcessor.TYPE_METHOD_PRIVATE,
-		JavaSourceProcessor.TYPE_METHOD_PRIVATE_STATIC,
-		JavaSourceProcessor.TYPE_METHOD_PROTECTED,
-		JavaSourceProcessor.TYPE_METHOD_PROTECTED_STATIC,
-		JavaSourceProcessor.TYPE_METHOD_PUBLIC,
-		JavaSourceProcessor.TYPE_METHOD_PUBLIC_STATIC
-	};
-
-	public static final int TYPE_METHOD_PRIVATE = 19;
-
-	public static final int TYPE_METHOD_PRIVATE_STATIC = 17;
-
-	public static final int TYPE_METHOD_PROTECTED = 11;
-
-	public static final int TYPE_METHOD_PROTECTED_STATIC = 9;
-
-	public static final int TYPE_METHOD_PUBLIC = 5;
-
-	public static final int TYPE_METHOD_PUBLIC_STATIC = 3;
-
-	public static final int[] TYPE_VARIABLE = {
-		JavaSourceProcessor.TYPE_VARIABLE_PRIVATE,
-		JavaSourceProcessor.TYPE_VARIABLE_PRIVATE_STATIC,
-		JavaSourceProcessor.TYPE_VARIABLE_PRIVATE_STATIC_FINAL,
-		JavaSourceProcessor.TYPE_VARIABLE_PROTECTED,
-		JavaSourceProcessor.TYPE_VARIABLE_PROTECTED_STATIC,
-		JavaSourceProcessor.TYPE_VARIABLE_PROTECTED_STATIC_FINAL,
-		JavaSourceProcessor.TYPE_VARIABLE_PUBLIC,
-		JavaSourceProcessor.TYPE_VARIABLE_PUBLIC_STATIC,
-		JavaSourceProcessor.TYPE_VARIABLE_PUBLIC_STATIC_FINAL
-	};
-
-	public static final int TYPE_VARIABLE_PRIVATE = 22;
-
-	public static final int TYPE_VARIABLE_PRIVATE_STATIC = 21;
-
-	public static final int TYPE_VARIABLE_PRIVATE_STATIC_FINAL = 20;
-
-	public static final int TYPE_VARIABLE_PROTECTED = 14;
-
-	public static final int TYPE_VARIABLE_PROTECTED_STATIC = 13;
-
-	public static final int TYPE_VARIABLE_PROTECTED_STATIC_FINAL = 12;
-
-	public static final int TYPE_VARIABLE_PUBLIC = 6;
-
-	public static final int TYPE_VARIABLE_PUBLIC_STATIC = 2;
-
-	public static final int TYPE_VARIABLE_PUBLIC_STATIC_FINAL = 1;
 
 	public static String stripJavaImports(
 			String content, String packageDir, String className)
@@ -190,18 +113,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected static boolean isInJavaTermTypeGroup(
-		int javaTermType, int[] javaTermTypeGroup) {
-
-		for (int type : javaTermTypeGroup) {
-			if (javaTermType == type) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	protected String applyDiamondOperator(String content) {
 		Matcher matcher = _diamondOperatorPattern.matcher(content);
 
@@ -225,46 +136,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
-	}
-
-	protected void checkAnnotationForMethod(
-		JavaTerm javaTerm, String annotation, String requiredMethodNameRegex,
-		int requiredMethodType, String fileName) {
-
-		String methodContent = javaTerm.getContent();
-		String methodName = javaTerm.getName();
-
-		Pattern pattern = Pattern.compile(requiredMethodNameRegex);
-
-		Matcher matcher = pattern.matcher(methodName);
-
-		if (methodContent.contains(
-				StringPool.TAB + StringPool.AT + annotation + "\n") ||
-			methodContent.contains(
-				StringPool.TAB + StringPool.AT + annotation +
-					StringPool.OPEN_PARENTHESIS)) {
-
-			if (!matcher.find()) {
-				processErrorMessage(
-					fileName,
-					"LPS-36303: Incorrect method name: " + methodName + " " +
-						fileName);
-			}
-			else if (javaTerm.getType() != requiredMethodType) {
-				processErrorMessage(
-					fileName,
-					"LPS-36303: Incorrect method type for " + methodName + " " +
-						fileName);
-			}
-		}
-		else if (matcher.find() &&
-				 !methodContent.contains(StringPool.TAB + "@Override")) {
-
-			processErrorMessage(
-				fileName,
-				"Annotation @" + annotation + " required for " + methodName +
-					" " + fileName);
-		}
 	}
 
 	protected String checkIfClause(
@@ -532,29 +403,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkTestAnnotations(JavaTerm javaTerm, String fileName) {
-		int methodType = javaTerm.getType();
-
-		if ((methodType != TYPE_METHOD_PUBLIC) &&
-			(methodType != TYPE_METHOD_PUBLIC_STATIC)) {
-
-			return;
-		}
-
-		checkAnnotationForMethod(
-			javaTerm, "After", "^.*tearDown\\z", TYPE_METHOD_PUBLIC, fileName);
-		checkAnnotationForMethod(
-			javaTerm, "AfterClass", "^.*tearDownClass\\z",
-			TYPE_METHOD_PUBLIC_STATIC, fileName);
-		checkAnnotationForMethod(
-			javaTerm, "Before", "^.*setUp\\z", TYPE_METHOD_PUBLIC, fileName);
-		checkAnnotationForMethod(
-			javaTerm, "BeforeClass", "^.*setUpClass\\z",
-			TYPE_METHOD_PUBLIC_STATIC, fileName);
-		checkAnnotationForMethod(
-			javaTerm, "Test", "^.*test", TYPE_METHOD_PUBLIC, fileName);
-	}
-
 	protected void checkUnprocessedExceptions(
 			String content, File file, String packagePath, String fileName)
 		throws IOException {
@@ -628,8 +476,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					packagePath + StringPool.PERIOD + exceptionClassName;
 			}
 
-			JavaClass exceptionClass = javaDocBuilder.getClassByName(
-				exceptionClassName);
+			com.thoughtworks.qdox.model.JavaClass exceptionClass =
+				javaDocBuilder.getClassByName(exceptionClassName);
 
 			while (true) {
 				String packageName = exceptionClass.getPackageName();
@@ -651,7 +499,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					break;
 				}
 
-				JavaClass exceptionSuperClass =
+				com.thoughtworks.qdox.model.JavaClass exceptionSuperClass =
 					exceptionClass.getSuperJavaClass();
 
 				if (exceptionSuperClass == null) {
@@ -781,133 +629,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String fixJavaTermsDividers(
-		String fileName, String content, Set<JavaTerm> javaTerms) {
-
-		JavaTerm previousJavaTerm = null;
-
-		Iterator<JavaTerm> itr = javaTerms.iterator();
-
-		while (itr.hasNext()) {
-			JavaTerm javaTerm = itr.next();
-
-			if (previousJavaTerm == null) {
-				previousJavaTerm = javaTerm;
-
-				continue;
-			}
-
-			String javaTermContent = javaTerm.getContent();
-
-			if (javaTermContent.startsWith(StringPool.TAB + "//") ||
-				javaTermContent.contains(StringPool.TAB + "static {")) {
-
-				previousJavaTerm = javaTerm;
-
-				continue;
-			}
-
-			String previousJavaTermContent = previousJavaTerm.getContent();
-
-			if (previousJavaTermContent.startsWith(StringPool.TAB + "//") ||
-				previousJavaTermContent.contains(StringPool.TAB + "static {")) {
-
-				previousJavaTerm = javaTerm;
-
-				continue;
-			}
-
-			String javaTermName = javaTerm.getName();
-
-			if (isExcluded(
-					_javaTermSortExclusions, fileName, javaTerm.getLineCount(),
-					javaTermName)) {
-
-				previousJavaTerm = javaTerm;
-
-				continue;
-			}
-
-			String previousJavaTermName = previousJavaTerm.getName();
-
-			boolean requiresEmptyLine = false;
-
-			if (previousJavaTerm.getType() != javaTerm.getType()) {
-				requiresEmptyLine = true;
-			}
-			else if (!isInJavaTermTypeGroup(
-						javaTerm.getType(), TYPE_VARIABLE)) {
-
-				requiresEmptyLine = true;
-			}
-			else if ((StringUtil.isUpperCase(javaTermName) &&
-					  !StringUtil.isLowerCase(javaTermName)) ||
-					 (StringUtil.isUpperCase(previousJavaTermName) &&
-					  !StringUtil.isLowerCase(previousJavaTermName))) {
-
-				requiresEmptyLine = true;
-			}
-			else if (hasAnnotationCommentOrJavadoc(javaTermContent) ||
-					 hasAnnotationCommentOrJavadoc(previousJavaTermContent)) {
-
-				requiresEmptyLine = true;
-			}
-			else if ((previousJavaTerm.getType() ==
-						TYPE_VARIABLE_PRIVATE_STATIC) &&
-					 (previousJavaTermName.equals("_instance") ||
-					  previousJavaTermName.equals("_log") ||
-					  previousJavaTermName.equals("_logger"))) {
-
-				requiresEmptyLine = true;
-			}
-			else if (previousJavaTermContent.contains("\n\n\t") ||
-					 javaTermContent.contains("\n\n\t")) {
-
-				requiresEmptyLine = true;
-			}
-
-			if (requiresEmptyLine) {
-				if (!content.contains("\n\n" + javaTermContent)) {
-					return StringUtil.replace(
-						content, "\n" + javaTermContent,
-						"\n\n" + javaTermContent);
-				}
-			}
-			else if (content.contains("\n\n" + javaTermContent)) {
-				return StringUtil.replace(
-					content, "\n\n" + javaTermContent, "\n" + javaTermContent);
-			}
-
-			previousJavaTerm = javaTerm;
-		}
-
-		return content;
-	}
-
-	protected String fixLeadingTabs(
-		String content, String line, int expectedTabCount) {
-
-		int leadingTabCount = getLeadingTabCount(line);
-
-		String newLine = line;
-
-		while (leadingTabCount != expectedTabCount) {
-			if (leadingTabCount > expectedTabCount) {
-				newLine = StringUtil.replaceFirst(
-					newLine, StringPool.TAB, StringPool.BLANK);
-
-				leadingTabCount--;
-			}
-			else {
-				newLine = StringPool.TAB + newLine;
-
-				leadingTabCount++;
-			}
-		}
-
-		return StringUtil.replace(content, line, newLine);
-	}
-
 	protected String fixSystemExceptions(String content) {
 		Matcher matcher = _throwsSystemExceptionPattern.matcher(content);
 
@@ -947,119 +668,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		return fixSystemExceptions(
 			StringUtil.replaceFirst(content, match, replacement));
-	}
-
-	protected String fixTabsAndIncorrectEmptyLines(
-		String content, Set<JavaTerm> javaTerms) {
-
-		Iterator<JavaTerm> itr = javaTerms.iterator();
-
-		while (itr.hasNext()) {
-			JavaTerm javaTerm = itr.next();
-
-			if (!isInJavaTermTypeGroup(javaTerm.getType(), TYPE_METHOD)) {
-				continue;
-			}
-
-			String javaTermContent = "\n" + javaTerm.getContent();
-
-			Matcher matcher = _methodNameAndParametersPattern.matcher(
-				javaTermContent);
-
-			if (!matcher.find()) {
-				continue;
-			}
-
-			String methodNameAndParameters = matcher.group();
-
-			String[] lines = StringUtil.splitLines(methodNameAndParameters);
-
-			if (lines.length == 1) {
-				if (methodNameAndParameters.endsWith("{\n") &&
-					javaTermContent.contains(methodNameAndParameters + "\n") &&
-					!javaTermContent.contains(
-						methodNameAndParameters + "\n" + StringPool.TAB +
-							StringPool.TAB + "/*") &&
-					!javaTermContent.contains(
-						methodNameAndParameters + "\n" + StringPool.TAB +
-							StringPool.TAB + "// ")) {
-
-					String trimmedJavaTermContent = StringUtil.trimTrailing(
-						javaTermContent);
-
-					if (!trimmedJavaTermContent.endsWith(
-							"\n\n" + StringPool.TAB +
-								StringPool.CLOSE_CURLY_BRACE)) {
-
-						content = StringUtil.replace(
-							content, methodNameAndParameters + "\n",
-							methodNameAndParameters);
-					}
-				}
-
-				continue;
-			}
-
-			if (methodNameAndParameters.endsWith("{\n") &&
-				!javaTermContent.contains(methodNameAndParameters + "\n") &&
-				!javaTermContent.contains(
-					methodNameAndParameters + StringPool.TAB +
-						StringPool.CLOSE_CURLY_BRACE)) {
-
-				content = StringUtil.replace(
-					content, methodNameAndParameters,
-					methodNameAndParameters + "\n");
-			}
-
-			boolean throwsException = methodNameAndParameters.contains(
-				StringPool.TAB + "throws ");
-
-			String newMethodNameAndParameters = methodNameAndParameters;
-
-			int expectedTabCount = -1;
-
-			for (int i = 0; i < lines.length; i++) {
-				String line = lines[i];
-
-				if (line.contains(StringPool.TAB + "throws ")) {
-					newMethodNameAndParameters = fixLeadingTabs(
-						newMethodNameAndParameters, line, 2);
-
-					break;
-				}
-
-				if (expectedTabCount == -1) {
-					if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
-						expectedTabCount =
-							Math.max(getLeadingTabCount(line), 1) + 1;
-
-						if (throwsException && (expectedTabCount == 2)) {
-							expectedTabCount += 1;
-						}
-					}
-				}
-				else {
-					String previousLine = lines[i - 1];
-
-					if (previousLine.endsWith(StringPool.COMMA) ||
-						previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) {
-
-						newMethodNameAndParameters = fixLeadingTabs(
-							newMethodNameAndParameters, line, expectedTabCount);
-					}
-					else {
-						newMethodNameAndParameters = fixLeadingTabs(
-							newMethodNameAndParameters, line,
-							getLeadingTabCount(previousLine) + 1);
-					}
-				}
-			}
-
-			content = StringUtil.replace(
-				content, methodNameAndParameters, newMethodNameAndParameters);
-		}
-
-		return content;
 	}
 
 	@Override
@@ -1215,6 +823,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				newContent, StringPool.NEW_LINE, StringPool.BLANK,
 				matcher.start());
 		}
+
+		newContent = sortAnnotations(newContent, StringPool.BLANK);
 
 		Matcher matcher = _logPattern.matcher(newContent);
 
@@ -1425,45 +1035,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return format(file, fileName, absolutePath, newContent);
 	}
 
-	protected String formatAnnotations(
-			String fileName, String content, Set<JavaTerm> javaTerms)
-		throws IOException {
-
-		Iterator<JavaTerm> itr = javaTerms.iterator();
-
-		while (itr.hasNext()) {
-			JavaTerm javaTerm = itr.next();
-
-			if (fileName.contains("/test/") &&
-				!isExcluded(_testAnnotationsExclusions, fileName) &&
-				!fileName.endsWith("TestCase.java")) {
-
-				checkTestAnnotations(javaTerm, fileName);
-			}
-
-			String javaTermContent = javaTerm.getContent();
-
-			String newJavaTermContent = sortAnnotations(
-				javaTermContent, StringPool.TAB);
-
-			if (!javaTermContent.equals(newJavaTermContent)) {
-				content = content.replace(javaTermContent, newJavaTermContent);
-			}
-		}
-
-		return sortAnnotations(content, StringPool.BLANK);
-	}
-
 	protected String formatJava(
 			String fileName, String absolutePath, String content)
-		throws IOException {
+		throws Exception {
 
 		StringBundler sb = new StringBundler();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(content));
 
-		int index = 0;
 		int lineCount = 0;
 
 		String line = null;
@@ -1471,18 +1051,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String previousLine = StringPool.BLANK;
 
 		int lineToSkipIfEmpty = 0;
-
-		Set<JavaTerm> javaTerms = new TreeSet<JavaTerm>(
-			new JavaTermComparator());
-
-		JavaTerm javaTerm = null;
-
-		String javaTermName = null;
-		int javaTermLineCount = -1;
-		int javaTermStartPosition = -1;
-		int javaTermType = -1;
-
-		int lastCommentOrAnnotationPos = -1;
 
 		String ifClause = StringPool.BLANK;
 
@@ -1676,54 +1244,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					checkRegexPattern(regexPattern, fileName, lineCount);
 
 					regexPattern = StringPool.BLANK;
-				}
-			}
-
-			if (line.startsWith(StringPool.TAB + "private ") ||
-				line.equals(StringPool.TAB + "private") ||
-				line.startsWith(StringPool.TAB + "protected ") ||
-				line.equals(StringPool.TAB + "protected") ||
-				line.startsWith(StringPool.TAB + "public ") ||
-				line.equals(StringPool.TAB + "public")) {
-
-				Tuple tuple = getJavaTermTuple(line, content, index, 1, 3);
-
-				if (tuple != null) {
-					int javaTermEndPosition = 0;
-
-					if (lastCommentOrAnnotationPos == -1) {
-						javaTermEndPosition = index;
-					}
-					else {
-						javaTermEndPosition = lastCommentOrAnnotationPos;
-					}
-
-					if ((javaTermStartPosition != -1) &&
-						(javaTermEndPosition < content.length())) {
-
-						String javaTermContent = content.substring(
-							javaTermStartPosition, javaTermEndPosition);
-
-						if (Validator.isNotNull(javaTermName)) {
-							javaTerm = new JavaTerm(
-								javaTermName, javaTermType, javaTermContent,
-								javaTermLineCount);
-
-							javaTerms.add(javaTerm);
-						}
-					}
-
-					javaTermLineCount = lineCount;
-					javaTermName = (String)tuple.getObject(0);
-					javaTermStartPosition = javaTermEndPosition;
-					javaTermType = (Integer)tuple.getObject(1);
-				}
-
-				lastCommentOrAnnotationPos = -1;
-			}
-			else if (hasAnnotationCommentOrJavadoc(line)) {
-				if (lastCommentOrAnnotationPos == -1) {
-					lastCommentOrAnnotationPos = index;
 				}
 			}
 
@@ -2203,8 +1723,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				previousLine = line;
 			}
-
-			index = index + line.length() + 1;
 		}
 
 		sb.append(previousLine);
@@ -2217,62 +1735,36 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent = newContent.substring(0, newContent.length() - 1);
 		}
 
-		if (content.equals(newContent)) {
-			if (javaTermStartPosition != -1) {
-				int javaTermEndPosition = content.length() - 2;
-
-				String javaTermContent = content.substring(
-					javaTermStartPosition, javaTermEndPosition);
-
-				javaTerm = new JavaTerm(
-					javaTermName, javaTermType, javaTermContent,
-					javaTermLineCount);
-
-				javaTerms.add(javaTerm);
-			}
-
-			newContent = sortJavaTerms(fileName, content, javaTerms);
-
-			newContent = fixTabsAndIncorrectEmptyLines(newContent, javaTerms);
+		if (!content.equals(newContent)) {
+			return newContent;
 		}
 
-		if (content.equals(newContent)) {
-			newContent = fixJavaTermsDividers(fileName, content, javaTerms);
-		}
-
-		if (content.equals(newContent)) {
-			newContent = formatAnnotations(fileName, content, javaTerms);
-		}
-
-		return newContent;
+		return formatJavaTerms(fileName, content);
 	}
 
-	protected String getClassName(String line) {
-		int pos = line.indexOf(" implements ");
+	protected String formatJavaTerms(String fileName, String content)
+		throws Exception {
+
+		int pos = content.indexOf("\npublic ");
 
 		if (pos == -1) {
-			pos = line.indexOf(" extends ");
+			return content;
 		}
 
-		if (pos == -1) {
-			pos = line.indexOf(StringPool.OPEN_CURLY_BRACE);
+		String javaClassContent = content.substring(pos);
+
+		JavaClass javaClass = new JavaClass(
+			fileName, javaClassContent, StringPool.TAB);
+
+		String newJavaClassContent = javaClass.formatJavaTerms(
+			_javaTermSortExclusions, _testAnnotationsExclusions);
+
+		if (!javaClassContent.equals(newJavaClassContent)) {
+			return StringUtil.replaceFirst(
+				content, javaClassContent, newJavaClassContent);
 		}
 
-		if (pos != -1) {
-			line = line.substring(0, pos);
-		}
-
-		pos = line.indexOf(StringPool.LESS_THAN);
-
-		if (pos != -1) {
-			line = line.substring(0, pos);
-		}
-
-		line = line.trim();
-
-		pos = line.lastIndexOf(StringPool.SPACE);
-
-		return line.substring(pos + 1);
+		return content;
 	}
 
 	protected Tuple getCombinedLines(
@@ -2527,14 +2019,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return null;
 	}
 
-	protected String getConstructorOrMethodName(String line, int pos) {
-		line = line.substring(0, pos);
-
-		int x = line.lastIndexOf(StringPool.SPACE);
-
-		return line.substring(x + 1);
-	}
-
 	protected List<String> getImportedExceptionClassNames(
 		JavaDocBuilder javaDocBuilder) {
 
@@ -2553,226 +2037,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return exceptionClassNames;
 	}
 
-	protected Tuple getJavaTermTuple(
-		String line, String content, int index, int numLines, int maxLines) {
-
-		line = StringUtil.replace(line, " synchronized " , StringPool.SPACE);
-
-		int pos = line.indexOf(StringPool.OPEN_PARENTHESIS);
-
-		if (line.startsWith(StringPool.TAB + "public static final ") &&
-			(line.contains(StringPool.EQUAL) ||
-			 (line.endsWith(StringPool.SEMICOLON) && (pos == -1)))) {
-
-			return new Tuple(
-				getVariableName(line), TYPE_VARIABLE_PUBLIC_STATIC_FINAL);
-		}
-		else if (line.startsWith(StringPool.TAB + "public static ")) {
-			if (line.startsWith(StringPool.TAB + "public static class ") ||
-				line.startsWith(StringPool.TAB + "public static enum") ||
-				line.startsWith(
-					StringPool.TAB + "public static final class ") ||
-				line.startsWith(StringPool.TAB + "public static interface")) {
-
-				return new Tuple(getClassName(line), TYPE_CLASS_PUBLIC_STATIC);
-			}
-
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
-
-				return new Tuple(
-					getVariableName(line), TYPE_VARIABLE_PUBLIC_STATIC);
-			}
-
-			if (pos != -1) {
-				return new Tuple(
-					getConstructorOrMethodName(line, pos),
-					TYPE_METHOD_PUBLIC_STATIC);
-			}
-		}
-		else if (line.startsWith(StringPool.TAB + "public ")) {
-			if (line.startsWith(StringPool.TAB + "public abstract class ") ||
-				line.startsWith(StringPool.TAB + "public class ") ||
-				line.startsWith(StringPool.TAB + "public enum ") ||
-				line.startsWith(StringPool.TAB + "public interface ")) {
-
-				return new Tuple(getClassName(line), TYPE_CLASS_PUBLIC);
-			}
-
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
-
-				return new Tuple(getVariableName(line), TYPE_VARIABLE_PUBLIC);
-			}
-
-			if (pos != -1) {
-				int spaceCount = StringUtil.count(
-					line.substring(0, pos), StringPool.SPACE);
-
-				if (spaceCount == 1) {
-					return new Tuple(
-						getConstructorOrMethodName(line, pos),
-						TYPE_CONSTRUCTOR_PUBLIC);
-				}
-
-				if (spaceCount > 1) {
-					return new Tuple(
-						getConstructorOrMethodName(line, pos),
-						TYPE_METHOD_PUBLIC);
-				}
-			}
-		}
-		else if (line.startsWith(StringPool.TAB + "protected static final ") &&
-				 (line.contains(StringPool.EQUAL) ||
-				  (line.endsWith(StringPool.SEMICOLON) && (pos == -1)))) {
-
-			return new Tuple(
-				getVariableName(line), TYPE_VARIABLE_PROTECTED_STATIC_FINAL);
-		}
-		else if (line.startsWith(StringPool.TAB + "protected static ")) {
-			if (line.startsWith(StringPool.TAB + "protected static class ") ||
-				line.startsWith(StringPool.TAB + "protected static enum ") ||
-				line.startsWith(
-					StringPool.TAB + "protected static final class ") ||
-				line.startsWith(
-					StringPool.TAB + "protected static interface ")) {
-
-				return new Tuple(
-					getClassName(line), TYPE_CLASS_PROTECTED_STATIC);
-			}
-
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
-
-				return new Tuple(
-					getVariableName(line), TYPE_VARIABLE_PROTECTED_STATIC);
-			}
-
-			if (pos != -1) {
-				return new Tuple(
-					getConstructorOrMethodName(line, pos),
-					TYPE_METHOD_PROTECTED_STATIC);
-			}
-		}
-		else if (line.startsWith(StringPool.TAB + "protected ")) {
-			if (line.startsWith(StringPool.TAB + "protected abstract class ") ||
-				line.startsWith(StringPool.TAB + "protected class ") ||
-				line.startsWith(StringPool.TAB + "protected enum ") ||
-				line.startsWith(StringPool.TAB + "protected interface ")) {
-
-				return new Tuple(getClassName(line), TYPE_CLASS_PROTECTED);
-			}
-
-			if (pos != -1) {
-				if (!line.contains(StringPool.EQUAL)) {
-					int spaceCount = StringUtil.count(
-						line.substring(0, pos), StringPool.SPACE);
-
-					if (spaceCount == 1) {
-						return new Tuple(
-							getConstructorOrMethodName(line, pos),
-							TYPE_CONSTRUCTOR_PROTECTED);
-					}
-
-					if (spaceCount > 1) {
-						return new Tuple(
-							getConstructorOrMethodName(line, pos),
-							TYPE_METHOD_PROTECTED);
-					}
-				}
-			}
-
-			return new Tuple(getVariableName(line), TYPE_VARIABLE_PROTECTED);
-		}
-		else if (line.startsWith(StringPool.TAB + "private static final ") &&
-				 (line.contains(StringPool.EQUAL) ||
-				  (line.endsWith(StringPool.SEMICOLON) && (pos == -1)))) {
-
-			return new Tuple(
-				getVariableName(line), TYPE_VARIABLE_PRIVATE_STATIC_FINAL);
-		}
-		else if (line.startsWith(StringPool.TAB + "private static ")) {
-			if (line.startsWith(StringPool.TAB + "private static class ") ||
-				line.startsWith(StringPool.TAB + "private static enum ") ||
-				line.startsWith(
-					StringPool.TAB + "private static final class ") ||
-				line.startsWith(StringPool.TAB + "private static interface ")) {
-
-				return new Tuple(getClassName(line), TYPE_CLASS_PRIVATE_STATIC);
-			}
-
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
-
-				return new Tuple(
-					getVariableName(line), TYPE_VARIABLE_PRIVATE_STATIC);
-			}
-
-			if (pos != -1) {
-				return new Tuple(
-					getConstructorOrMethodName(line, pos),
-					TYPE_METHOD_PRIVATE_STATIC);
-			}
-		}
-		else if (line.startsWith(StringPool.TAB + "private ")) {
-			if (line.startsWith(StringPool.TAB + "private abstract class ") ||
-				line.startsWith(StringPool.TAB + "private class ") ||
-				line.startsWith(StringPool.TAB + "private enum ") ||
-				line.startsWith(StringPool.TAB + "private interface ")) {
-
-				return new Tuple(getClassName(line), TYPE_CLASS_PRIVATE);
-			}
-
-			if (line.contains(StringPool.EQUAL) ||
-				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
-
-				return new Tuple(getVariableName(line), TYPE_VARIABLE_PRIVATE);
-			}
-
-			if (pos != -1) {
-				int spaceCount = StringUtil.count(
-					line.substring(0, pos), StringPool.SPACE);
-
-				if (spaceCount == 1) {
-					return new Tuple(
-						getConstructorOrMethodName(line, pos),
-						TYPE_CONSTRUCTOR_PRIVATE);
-				}
-
-				if (spaceCount > 1) {
-					return new Tuple(
-						getConstructorOrMethodName(line, pos),
-						TYPE_METHOD_PRIVATE);
-				}
-			}
-		}
-
-		if (numLines < maxLines) {
-			int posStartNextLine =
-				content.indexOf(StringPool.NEW_LINE, index) + 1;
-
-			int posEndNextline = content.indexOf(
-				StringPool.NEW_LINE, posStartNextLine);
-
-			String nextLine = content.substring(
-				posStartNextLine, posEndNextline);
-
-			if (Validator.isNull(nextLine)) {
-				return null;
-			}
-
-			nextLine = StringUtil.trimLeading(nextLine);
-
-			return getJavaTermTuple(
-				line + StringPool.SPACE + nextLine, content, posStartNextLine,
-				numLines + 1, maxLines);
-		}
-		else {
-			return null;
-		}
-	}
-
-	protected int getLeadingTabCount(String line) {
+	protected static int getLeadingTabCount(String line) {
 		int leadingTabCount = 0;
 
 		while (line.startsWith(StringPool.TAB)) {
@@ -2844,13 +2109,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Collection<String> fileNames = new TreeSet<String>();
 
 		String[] excludes = new String[] {
-			"**\\*_IW.java", "**\\*SourceProcessor*.java",
-			"**\\PropsValues.java", "**\\counter\\service\\**", "**\\jsp\\*",
-			"**\\model\\impl\\*BaseImpl.java", "**\\model\\impl\\*Model.java",
-			"**\\model\\impl\\*ModelImpl.java", "**\\portal\\service\\**",
-			"**\\portal-client\\**", "**\\portal-web\\test\\**\\*Test.java",
+			"**\\*_IW.java", "**\\PropsValues.java", "**\\counter\\service\\**",
+			"**\\jsp\\*", "**\\model\\impl\\*BaseImpl.java",
+			"**\\model\\impl\\*Model.java", "**\\model\\impl\\*ModelImpl.java",
+			"**\\portal\\service\\**", "**\\portal-client\\**",
+			"**\\portal-web\\test\\**\\*Test.java",
 			"**\\portlet\\**\\service\\**", "**\\test\\*-generated\\**",
-			"**\\tools\\sdk\\**"
+			"**\\tools\\sdk\\**", "**\\tools\\sourceformatter\\**"
 		};
 		String[] includes = new String[] {"**\\*.java"};
 
@@ -2859,7 +2124,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		excludes = new String[] {
 			"**\\JavaDocFormatter.java", "**\\portal-client\\**",
 			"**\\tools\\ext_tmpl\\**", "**\\*_IW.java",
-			"**\\*SourceProcessor*.java", "**\\test\\**\\*PersistenceTest.java"
+			"**\\test\\**\\*PersistenceTest.java",
+			"**\\tools\\sourceformatter\\**"
 		};
 		includes = new String[] {
 			"**\\com\\liferay\\portal\\service\\ServiceContext*.java",
@@ -2884,38 +2150,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		fileNames.addAll(getFileNames(excludes, includes));
 
 		return fileNames;
-	}
-
-	protected String getVariableName(String line) {
-		int x = line.indexOf(StringPool.EQUAL);
-		int y = line.lastIndexOf(StringPool.SPACE);
-
-		if (x != -1) {
-			line = line.substring(0, x);
-			line = StringUtil.trim(line);
-
-			y = line.lastIndexOf(StringPool.SPACE);
-
-			return line.substring(y + 1);
-		}
-
-		if (line.endsWith(StringPool.SEMICOLON)) {
-			return line.substring(y + 1, line.length() - 1);
-		}
-
-		return StringPool.BLANK;
-	}
-
-	protected boolean hasAnnotationCommentOrJavadoc(String s) {
-		if (s.startsWith(StringPool.TAB + StringPool.AT) ||
-			s.startsWith(StringPool.TAB + "/**") ||
-			s.startsWith(StringPool.TAB + "//")) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	protected boolean isGenerated(String content) {
@@ -2959,7 +2193,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return false;
 	}
 
-	protected String sortAnnotations(String content, String indent)
+	protected static String sortAnnotations(String content, String indent)
 		throws IOException {
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -3058,76 +2292,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return line;
 	}
 
-	protected String sortJavaTerms(
-		String fileName, String content, Set<JavaTerm> javaTerms) {
-
-		JavaTerm previousJavaTerm = null;
-
-		Iterator<JavaTerm> itr = javaTerms.iterator();
-
-		while (itr.hasNext()) {
-			JavaTerm javaTerm = itr.next();
-
-			if (previousJavaTerm == null) {
-				previousJavaTerm = javaTerm;
-
-				continue;
-			}
-
-			int javaTermLineCount = javaTerm.getLineCount();
-			String javaTermName = javaTerm.getName();
-
-			if (isExcluded(
-					_javaTermSortExclusions, fileName, javaTermLineCount,
-					javaTermName)) {
-
-				previousJavaTerm = javaTerm;
-
-				continue;
-			}
-
-			String javaTermContent = javaTerm.getContent();
-			String previousJavaTermContent = previousJavaTerm.getContent();
-
-			if (previousJavaTerm.getLineCount() > javaTermLineCount) {
-				String previousJavaTermName = previousJavaTerm.getName();
-
-				String javaTermNameLowerCase = javaTermName.toLowerCase();
-				String previousJavaTermNameLowerCase =
-					previousJavaTermName.toLowerCase();
-
-				if (fileName.contains("persistence") &&
-					((previousJavaTermName.startsWith("doCount") &&
-					  javaTermName.startsWith("doCount")) ||
-					 (previousJavaTermName.startsWith("doFind") &&
-					  javaTermName.startsWith("doFind")) ||
-					 (previousJavaTermNameLowerCase.startsWith("count") &&
-					  javaTermNameLowerCase.startsWith("count")) ||
-					 (previousJavaTermNameLowerCase.startsWith("filter") &&
-					  javaTermNameLowerCase.startsWith("filter")) ||
-					 (previousJavaTermNameLowerCase.startsWith("find") &&
-					  javaTermNameLowerCase.startsWith("find")) ||
-					 (previousJavaTermNameLowerCase.startsWith("join") &&
-					  javaTermNameLowerCase.startsWith("join")))) {
-				}
-				else {
-					content = StringUtil.replaceFirst(
-						content, "\n" + javaTermContent,
-						"\n" + previousJavaTermContent);
-					content = StringUtil.replaceLast(
-						content, "\n" + previousJavaTermContent,
-						"\n" + javaTermContent);
-
-					return content;
-				}
-			}
-
-			previousJavaTerm = javaTerm;
-		}
-
-		return content;
-	}
-
 	private static Pattern _importsPattern = Pattern.compile(
 		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
 
@@ -3148,8 +2312,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _logPattern = Pattern.compile(
 		"\n\tprivate static Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
-	private Pattern _methodNameAndParametersPattern = Pattern.compile(
-		"\n\t(private |protected |public )(.|\n)*?(\\{|;)\n");
 	private List<String> _proxyExclusions;
 	private List<String> _secureRandomExclusions;
 	private Pattern _stagedModelTypesPattern = Pattern.compile(

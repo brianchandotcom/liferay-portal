@@ -47,7 +47,7 @@ public class DLFolderLocalServiceTreeTest extends BaseLocalServiceTreeTestCase {
 		}
 
 		Folder folder = DLAppTestUtil.addFolder(
-			TestPropsValues.getGroupId(), parentFolderId);
+			group.getGroupId(), parentFolderId);
 
 		DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
 			folder.getFolderId());

@@ -48,8 +48,7 @@ public class BookmarksFolderLocalServiceTreeTest
 		}
 
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
-			TestPropsValues.getGroupId(), parentFolderId,
-			RandomTestUtil.randomString());
+			group.getGroupId(), parentFolderId, RandomTestUtil.randomString());
 
 		folder.setTreePath(null);
 

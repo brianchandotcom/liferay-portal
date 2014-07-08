@@ -15,7 +15,10 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.TreeModel;
+import com.liferay.portal.test.DeleteAfterTestRun;
+import com.liferay.portal.util.test.GroupTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,8 @@ public abstract class BaseLocalServiceTreeTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		group = GroupTestUtil.addGroup();
+
 		createTree();
 	}
 
@@ -205,6 +210,9 @@ public abstract class BaseLocalServiceTreeTestCase {
 	protected abstract TreeModel getTreeModel(long primaryKey) throws Exception;
 
 	protected abstract void rebuildTree() throws Exception;
+
+	@DeleteAfterTestRun
+	protected Group group;
 
 	private List<TreeModel> _treeModels = new ArrayList<TreeModel>();
 

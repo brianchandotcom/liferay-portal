@@ -19,8 +19,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATION_DOCKBAR</td>
+	<td>//li[contains(@class,'dockbar-user-notifications')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATION_COUNT</td>
-	<td>//span[contains(@id,'notificationsportlet_userNotificationsCount')]</td>
+	<td>//span[contains(@class,'user-notifications-count') and not(contains(@class,'alert'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_COUNT_ALERT</td>
+	<td>//span[contains(@class,'user-notifications-count') and contains(@class,'alert')]</td>
 	<td></td>
 </tr>
 <tr>

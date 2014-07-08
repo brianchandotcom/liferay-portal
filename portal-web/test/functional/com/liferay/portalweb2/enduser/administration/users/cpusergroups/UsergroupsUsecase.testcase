@@ -366,7 +366,7 @@
 
 		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_NAME" value1="userfn3 userln3" />
 		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="usersn3" />
-		<execute action="CPSitememberships#assertClick" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSitememberships#click" locator-key1="USER_TABLE_ACTIONS" />
 		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_MENULIST_ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
 
 		<execute macro="User#logoutUserPG" />

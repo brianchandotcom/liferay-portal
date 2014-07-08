@@ -98,7 +98,6 @@ import com.liferay.portal.security.auth.AuthFailure;
 import com.liferay.portal.security.auth.AuthToken;
 import com.liferay.portal.security.auth.AuthTokenWhitelistUtil;
 import com.liferay.portal.security.auth.AuthVerifier;
-import com.liferay.portal.security.auth.AuthVerifierConfiguration;
 import com.liferay.portal.security.auth.AuthVerifierPipeline;
 import com.liferay.portal.security.auth.Authenticator;
 import com.liferay.portal.security.auth.AutoLogin;
@@ -777,13 +776,6 @@ public class HookHotDeployListener
 			authPublicPathsContainer.unregisterPaths();
 		}
 
-		AuthVerifierConfigurationContainer authVerifierConfigurationContainer =
-			_authVerifierConfigurationContainerMap.remove(servletContextName);
-
-		if (authVerifierConfigurationContainer != null) {
-			authVerifierConfigurationContainer.unregisterConfigurations();
-		}
-
 		CustomJspBag customJspBag = _customJspBagsMap.remove(
 			servletContextName);
 
@@ -1033,26 +1025,12 @@ public class HookHotDeployListener
 			Properties portalProperties)
 		throws Exception {
 
-		AuthVerifierConfigurationContainer authVerifierConfigurationContainer =
-			new AuthVerifierConfigurationContainer();
-
-		_authVerifierConfigurationContainerMap.put(
-			servletContextName, authVerifierConfigurationContainer);
-
 		String[] authVerifierClassNames = StringUtil.split(
 			portalProperties.getProperty(AUTH_VERIFIER_PIPELINE));
 
 		for (String authVerifierClassName : authVerifierClassNames) {
-			AuthVerifierConfiguration authVerifierConfiguration =
-				new AuthVerifierConfiguration();
-
 			AuthVerifier authVerifier = (AuthVerifier)newInstance(
 				portletClassLoader, AuthVerifier.class, authVerifierClassName);
-
-			authVerifierConfiguration.setAuthVerifier(authVerifier);
-
-			authVerifierConfiguration.setAuthVerifierClassName(
-				authVerifierClassName);
 
 			Properties properties = PropertiesUtil.getProperties(
 				portalProperties,
@@ -1060,10 +1038,9 @@ public class HookHotDeployListener
 					authVerifierClassName),
 				true);
 
-			authVerifierConfiguration.setProperties(properties);
-
-			authVerifierConfigurationContainer.
-				registerAuthVerifierConfiguration(authVerifierConfiguration);
+			registerService(
+				servletContextName, authVerifierClassName, AuthVerifier.class,
+				authVerifier, properties);
 		}
 	}
 
@@ -2765,9 +2742,6 @@ public class HookHotDeployListener
 
 	private Map<String, AuthPublicPathsContainer> _authPublicPathsContainerMap =
 		new HashMap<String, AuthPublicPathsContainer>();
-	private Map<String, AuthVerifierConfigurationContainer>
-		_authVerifierConfigurationContainerMap =
-			new HashMap<String, AuthVerifierConfigurationContainer>();
 	private Map<String, CustomJspBag> _customJspBagsMap =
 		new HashMap<String, CustomJspBag>();
 	private Map<String, DLFileEntryProcessorContainer>
@@ -2822,29 +2796,6 @@ public class HookHotDeployListener
 		}
 
 		private Set<String> _paths = new HashSet<String>();
-
-	}
-
-	private class AuthVerifierConfigurationContainer {
-
-		public void registerAuthVerifierConfiguration(
-			AuthVerifierConfiguration authVerifierConfiguration) {
-
-			AuthVerifierPipeline.register(authVerifierConfiguration);
-
-			_authVerifierConfigurations.add(authVerifierConfiguration);
-		}
-
-		public void unregisterConfigurations() {
-			for (AuthVerifierConfiguration authVerifierConfiguration :
-					_authVerifierConfigurations) {
-
-				AuthVerifierPipeline.unregister(authVerifierConfiguration);
-			}
-		}
-
-		private List<AuthVerifierConfiguration> _authVerifierConfigurations =
-			new ArrayList<AuthVerifierConfiguration>();
 
 	}
 

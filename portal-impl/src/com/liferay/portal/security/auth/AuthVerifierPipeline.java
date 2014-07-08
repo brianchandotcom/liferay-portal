@@ -380,6 +380,29 @@ public class AuthVerifierPipeline {
 		public void modifiedService(
 			ServiceReference<AuthVerifier> serviceReference,
 			AuthVerifierConfiguration authVerifierConfiguration) {
+
+			Properties properties = new Properties();
+
+			for (String key : serviceReference.getPropertyKeys()) {
+				String value = GetterUtil.getString(
+					serviceReference.getProperty(key));
+
+				properties.put(key, value);
+			}
+
+			AuthVerifierConfiguration newAuthVerifierConfiguration =
+				new AuthVerifierConfiguration();
+
+			newAuthVerifierConfiguration.setAuthVerifier(
+				authVerifierConfiguration.getAuthVerifier());
+			newAuthVerifierConfiguration.setAuthVerifierClassName(
+				authVerifierConfiguration.getAuthVerifierClassName());
+			newAuthVerifierConfiguration.setProperties(properties);
+
+			if (_authVerifierConfigurations.remove(authVerifierConfiguration)) {
+				_authVerifierConfigurations.add(
+					0, newAuthVerifierConfiguration);
+			}
 		}
 
 		@Override

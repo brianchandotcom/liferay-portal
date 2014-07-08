@@ -34,6 +34,7 @@ import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -70,9 +71,9 @@ public class AuthVerifierPipeline {
 	}
 
 	private AuthVerifierPipeline() {
-		_initAuthVerifierConfigurations();
-
 		Registry registry = RegistryUtil.getRegistry();
+
+		_initAuthVerifierConfigurations(registry);
 
 		_serviceTracker = registry.trackServices(
 			AuthVerifier.class, new AuthVerifierTrackerCustomizer());
@@ -127,33 +128,34 @@ public class AuthVerifierPipeline {
 		return authVerifierConfigurations;
 	}
 
-	private void _initAuthVerifierConfigurations() {
-		_authVerifierConfigurations =
-			new CopyOnWriteArrayList<AuthVerifierConfiguration>();
-
+	@SuppressWarnings("rawtypes")
+	private void _initAuthVerifierConfigurations(Registry registry) {
 		for (String authVerifierClassName :
 				PropsValues.AUTH_VERIFIER_PIPELINE) {
 
 			try {
-				AuthVerifierConfiguration authVerifierConfiguration =
-					new AuthVerifierConfiguration();
-
 				AuthVerifier authVerifier =
 					(AuthVerifier)InstanceFactory.newInstance(
 						ClassLoaderUtil.getPortalClassLoader(),
 						authVerifierClassName);
 
-				authVerifierConfiguration.setAuthVerifier(authVerifier);
-
-				authVerifierConfiguration.setAuthVerifierClassName(
-					authVerifierClassName);
-
 				Properties properties = PropsUtil.getProperties(
 					getAuthVerifierPropertyName(authVerifierClassName), true);
 
-				authVerifierConfiguration.setProperties(properties);
+				Map<String, Object> propertiesMap =
+					new HashMap<String, Object>();
 
-				_authVerifierConfigurations.add(authVerifierConfiguration);
+				Enumeration enumeration = properties.propertyNames();
+
+				while (enumeration.hasMoreElements()) {
+					String key = (String)enumeration.nextElement();
+					Object value = properties.getProperty(key);
+
+					propertiesMap.put(key, value);
+				}
+
+				registry.registerService(
+					AuthVerifier.class, authVerifier, propertiesMap);
 			}
 			catch (Exception e) {
 				_log.error("Unable to initialize " + authVerifierClassName, e);
@@ -333,7 +335,8 @@ public class AuthVerifierPipeline {
 
 	private static AuthVerifierPipeline _instance = new AuthVerifierPipeline();
 
-	private List<AuthVerifierConfiguration> _authVerifierConfigurations;
+	private List<AuthVerifierConfiguration> _authVerifierConfigurations =
+		new CopyOnWriteArrayList<AuthVerifierConfiguration>();
 	private ServiceTracker<AuthVerifier, AuthVerifierConfiguration>
 		_serviceTracker;
 
@@ -347,13 +350,9 @@ public class AuthVerifierPipeline {
 
 			Registry registry = RegistryUtil.getRegistry();
 
-			AuthVerifierConfiguration authVerifierConfiguration =
-				new AuthVerifierConfiguration();
+			AuthVerifier authVerifier = registry.getService(serviceReference);
 
-			AuthVerifier service = (AuthVerifier)registry.getService(
-				serviceReference);
-
-			String authVerifierClassName = service.getClass().getName();
+			String authVerifierClassName = authVerifier.getClass().getName();
 
 			Properties properties = new Properties();
 
@@ -364,11 +363,12 @@ public class AuthVerifierPipeline {
 				properties.put(key, value);
 			}
 
-			authVerifierConfiguration.setAuthVerifier(service);
+			AuthVerifierConfiguration authVerifierConfiguration =
+				new AuthVerifierConfiguration();
 
+			authVerifierConfiguration.setAuthVerifier(authVerifier);
 			authVerifierConfiguration.setAuthVerifierClassName(
 				authVerifierClassName);
-
 			authVerifierConfiguration.setProperties(properties);
 
 			_authVerifierConfigurations.add(0, authVerifierConfiguration);
@@ -379,13 +379,19 @@ public class AuthVerifierPipeline {
 		@Override
 		public void modifiedService(
 			ServiceReference<AuthVerifier> serviceReference,
-			AuthVerifierConfiguration service) {
+			AuthVerifierConfiguration authVerifierConfiguration) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<AuthVerifier> serviceReference,
-			AuthVerifierConfiguration service) {
+			AuthVerifierConfiguration authVerifierConfiguration) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_authVerifierConfigurations.remove(authVerifierConfiguration);
 		}
 	}
 

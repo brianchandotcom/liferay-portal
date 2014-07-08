@@ -112,8 +112,7 @@ public class EhcachePortalCacheClusterReplicator implements CacheEventListener {
 		throws CacheException {
 
 		if (!_replicateUpdates ||
-			!ClusterReplicationThreadLocal.isReplicate() ||
-			!ClusterReplicationThreadLocal.isReplicateUpdate()) {
+			!ClusterReplicationThreadLocal.isReplicate()) {
 
 			return;
 		}

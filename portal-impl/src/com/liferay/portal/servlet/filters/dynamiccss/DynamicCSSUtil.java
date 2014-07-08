@@ -518,7 +518,7 @@ public class DynamicCSSUtil {
 	 * @see com.liferay.portal.servlet.filters.aggregate.AggregateFilter#aggregateCss(
 	 *      com.liferay.portal.servlet.filters.aggregate.ServletPaths, String)
 	 */
-	private static String propagateQueryString(
+	protected static String propagateQueryString(
 		String content, String queryString) {
 
 		StringBuilder sb = new StringBuilder(content.length());
@@ -536,9 +536,40 @@ public class DynamicCSSUtil {
 				break;
 			}
 
-			sb.append(content.substring(pos, importY));
-			sb.append(CharPool.QUESTION);
+			sb.append(_CSS_IMPORT_BEGIN);
+
+			String url = content.substring(
+				importX + _CSS_IMPORT_BEGIN.length(), importY);
+
+			char firstChar = url.charAt(0);
+
+			if (firstChar == CharPool.APOSTROPHE) {
+				sb.append(CharPool.APOSTROPHE);
+			}
+			else if (firstChar == CharPool.QUOTE) {
+				sb.append(CharPool.QUOTE);
+			}
+
+			url = StringUtil.unquote(url);
+
+			sb.append(url);
+
+			if (url.indexOf(CharPool.QUESTION) != -1) {
+				sb.append(CharPool.AMPERSAND);
+			}
+			else {
+				sb.append(CharPool.QUESTION);
+			}
+
 			sb.append(queryString);
+
+			if (firstChar == CharPool.APOSTROPHE) {
+				sb.append(CharPool.APOSTROPHE);
+			}
+			else if (firstChar == CharPool.QUOTE) {
+				sb.append(CharPool.QUOTE);
+			}
+
 			sb.append(_CSS_IMPORT_END);
 
 			pos = importY + _CSS_IMPORT_END.length();

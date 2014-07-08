@@ -48,8 +48,7 @@ public class JournalFolderLocalServiceTreeTest
 		}
 
 		JournalFolder folder = JournalTestUtil.addFolder(
-			TestPropsValues.getGroupId(), parentFolderId,
-			RandomTestUtil.randomString());
+			group.getGroupId(), parentFolderId, RandomTestUtil.randomString());
 
 		folder.setTreePath(null);
 

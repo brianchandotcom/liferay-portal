@@ -536,37 +536,38 @@ public class DynamicCSSUtil {
 				break;
 			}
 
-			Boolean hasQuotes = false;
+			sb.append(_CSS_IMPORT_BEGIN);
 
-			char quoteCharacter = CharPool.QUOTE;
+			String url = content.substring(
+				importX + _CSS_IMPORT_BEGIN.length(), importY);
 
-			String urlStart = content.substring(pos, importY);
+			char firstChar = url.charAt(0);
 
-			Matcher urlQuotesMatcher = _urlQuotesPattern.matcher(urlStart);
-
-			if (urlQuotesMatcher.find()) {
-				if (urlStart.indexOf(CharPool.APOSTROPHE) != -1) {
-					quoteCharacter = CharPool.APOSTROPHE;
-				}
-
-				urlStart = urlQuotesMatcher.replaceAll("$1");
-
-				hasQuotes = true;
+			if (firstChar == CharPool.APOSTROPHE) {
+				sb.append(CharPool.APOSTROPHE);
+			}
+			else if (firstChar == CharPool.QUOTE) {
+				sb.append(CharPool.QUOTE);
 			}
 
-			sb.append(urlStart);
+			url = StringUtil.unquote(url);
 
-			if (urlStart.indexOf(CharPool.QUESTION) == -1) {
-				sb.append(CharPool.QUESTION);
+			sb.append(url);
+
+			if (url.indexOf(CharPool.QUESTION) != -1) {
+				sb.append(CharPool.AMPERSAND);
 			}
 			else {
-				sb.append(CharPool.AMPERSAND);
+				sb.append(CharPool.QUESTION);
 			}
 
 			sb.append(queryString);
 
-			if (hasQuotes) {
-				sb.append(quoteCharacter);
+			if (firstChar == CharPool.APOSTROPHE) {
+				sb.append(CharPool.APOSTROPHE);
+			}
+			else if (firstChar == CharPool.QUOTE) {
+				sb.append(CharPool.QUOTE);
 			}
 
 			sb.append(_CSS_IMPORT_END);
@@ -596,6 +597,5 @@ public class DynamicCSSUtil {
 		"themes\\/([^\\/]+)\\/css", Pattern.CASE_INSENSITIVE);
 	private static ScriptingContainer _scriptingContainer;
 	private static Object _scriptObject;
-	private static Pattern _urlQuotesPattern = Pattern.compile(
-		"(url\\([\"\'][\\s\\S]+?)[\"\']");
+
 }

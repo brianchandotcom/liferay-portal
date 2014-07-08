@@ -78,7 +78,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		String fileName = "portal-impl/src/portal.properties";
 
-		File file = new File(BASEDIR + fileName);
+		File file = getFile(fileName, 4);
 
 		String content = fileUtil.read(file);
 

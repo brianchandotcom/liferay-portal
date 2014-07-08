@@ -711,14 +711,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String getContent(String fileName, int level) throws IOException {
-		for (int i = 0; i < level; i++) {
-			String content = fileUtil.read(fileName);
+		File file = getFile(fileName, level);
+
+		if (file != null) {
+			String content = fileUtil.read(file);
 
 			if (Validator.isNotNull(content)) {
 				return content;
 			}
-
-			fileName = "../" + fileName;
 		}
 
 		return StringPool.BLANK;
@@ -751,6 +751,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return ListUtil.fromString(
 			GetterUtil.getString(_properties.getProperty(key)),
 			StringPool.COMMA);
+	}
+
+	protected File getFile(String fileName, int level) {
+		for (int i = 0; i < level; i++) {
+			if (fileUtil.exists(fileName)) {
+				return new File(fileName);
+			}
+
+			fileName = "../" + fileName;
+		}
+
+		return null;
 	}
 
 	protected List<String> getFileNames(
@@ -1480,7 +1492,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private boolean _isPortalSource() {
-		if (fileUtil.exists(BASEDIR + "portal-impl")) {
+		if (getFile("portal-impl", 4) != null) {
 			return true;
 		}
 		else {

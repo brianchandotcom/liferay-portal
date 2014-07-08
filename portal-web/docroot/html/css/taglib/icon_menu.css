@@ -27,6 +27,7 @@
 			> li > a {
 				font-size: 22px;
 				line-height: 40px;
+				white-space: normal;
 
 				img {
 					margin-bottom: 3px;

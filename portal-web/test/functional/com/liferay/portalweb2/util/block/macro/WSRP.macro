@@ -19,7 +19,7 @@
 	<command name="addConsumerPortletCP">
 		<var name="key_consumerName" value="${consumerName}" />
 
-		<execute action="CPWSRP#assertClick" locator-key1="CONSUMER_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="CPWSRP#click" locator-key1="CONSUMER_TABLE_ACTIONS_BUTTON" />
 		<execute action="CPWSRP#assertClick" locator-key1="CONSUMER_MENULIST_MANAGE_PORTLETS" value1="Manage Portlets" />
 
 		<execute action="CPWSRPManageportlets#assertClick" locator-key1="ADD_PORTLET_BUTTON" value1="Add Portlet" />
@@ -60,7 +60,7 @@
 		<while>
 			<condition action="CPWSRPProducers#isElementPresent" locator-key1="PRODUCER_TABLE_ACTIONS_BUTTON_GENERIC" />
 			<then>
-				<execute action="CPWSRPProducers#assertClick" locator-key1="PRODUCER_TABLE_ACTIONS_BUTTON_GENERIC" value1="Actions" />
+				<execute action="CPWSRPProducers#click" locator-key1="PRODUCER_TABLE_ACTIONS_BUTTON_GENERIC" />
 				<execute action="CPWSRPProducers#assertClick" locator-key1="PRODUCER_MENULIST_DELETE" value1="Delete" />
 				<execute action="CPWSRPProducers#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
@@ -72,7 +72,7 @@
 		<while>
 			<condition action="CPWSRP#isElementPresent" locator-key1="CONSUMER_TABLE_ACTIONS_BUTTON_GENERIC" />
 			<then>
-				<execute action="CPWSRP#assertClick" locator-key1="CONSUMER_TABLE_ACTIONS_BUTTON_GENERIC" value1="Actions" />
+				<execute action="CPWSRP#click" locator-key1="CONSUMER_TABLE_ACTIONS_BUTTON_GENERIC" />
 				<execute action="CPWSRP#assertClick" locator-key1="CONSUMER_MENULIST_DELETE" value1="Delete" />
 				<execute action="CPWSRP#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>

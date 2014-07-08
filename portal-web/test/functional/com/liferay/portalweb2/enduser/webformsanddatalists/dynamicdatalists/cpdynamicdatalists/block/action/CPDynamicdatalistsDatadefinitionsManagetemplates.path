@@ -122,12 +122,12 @@
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_MODIFIED_DATE</td>
-	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr[contains(.,'${key_dataDefinitionTemplateName}')]/td[7]/a)[1]</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr[contains(.,'${key_dataDefinitionTemplateName}')]/td[8]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_ACTIONS</td>
-	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr[contains(.,'${key_dataDefinitionTemplateName}')]/td[8]/div/a)[1]</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr[contains(.,'${key_dataDefinitionTemplateName}')]/td[9]/div/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[8]/div/a)[1]</td>
+	<td>xpath=(//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[9]/div/a)[1]</td>
 	<td></td>
 </tr>
 <tr>

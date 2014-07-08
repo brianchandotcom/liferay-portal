@@ -33,6 +33,12 @@ import java.util.regex.Pattern;
  */
 public class JavaClass {
 
+	public static final int[] TYPE_CLASS = {
+		JavaClass.TYPE_CLASS_PRIVATE, JavaClass.TYPE_CLASS_PRIVATE_STATIC,
+		JavaClass.TYPE_CLASS_PROTECTED, JavaClass.TYPE_CLASS_PROTECTED_STATIC,
+		JavaClass.TYPE_CLASS_PUBLIC, JavaClass.TYPE_CLASS_PUBLIC_STATIC
+	};
+
 	public static final int TYPE_CLASS_PRIVATE = 24;
 
 	public static final int TYPE_CLASS_PRIVATE_STATIC = 23;
@@ -129,6 +135,29 @@ public class JavaClass {
 
 		while (itr.hasNext()) {
 			JavaTerm javaTerm = itr.next();
+
+			if (isInJavaTermTypeGroup(javaTerm.getType(), TYPE_CLASS)) {
+				String javaTermContent = javaTerm.getContent();
+
+				int pos = javaTermContent.indexOf("\n" + _indent + "static {");
+
+				if (pos != -1) {
+					javaTermContent = javaTermContent.substring(0, pos);
+				}
+
+				JavaClass innerClass = new JavaClass(
+					_fileName, javaTermContent, _indent + StringPool.TAB);
+
+				String newJavaTermContent = innerClass.formatJavaTerms(
+					javaTermSortExclusions, testAnnotationsExclusions);
+
+				if (!javaTermContent.equals(newJavaTermContent)) {
+					_content = StringUtil.replace(
+						_content, javaTermContent, newJavaTermContent);
+
+					return _content;
+				}
+			}
 
 			sortJavaTerms(previousJavaTerm, javaTerm, javaTermSortExclusions);
 			fixTabsAndIncorrectEmptyLines(javaTerm);
@@ -465,7 +494,7 @@ public class JavaClass {
 			JavaTerm javaTerm, List<String> testAnnotationsExclusions)
 		throws Exception {
 
-		if (_fileName.contains("/test/") &&
+		if ((_indent.length() == 1) && _fileName.contains("/test/") &&
 			!BaseSourceProcessor.isExcluded(
 				testAnnotationsExclusions, _fileName) &&
 			!_fileName.endsWith("TestCase.java")) {

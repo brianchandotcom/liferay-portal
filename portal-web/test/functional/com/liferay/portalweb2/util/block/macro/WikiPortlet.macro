@@ -37,6 +37,7 @@
 
 	<command name="viewNoPermissionCP">
 		<execute action="CPWiki#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Wiki" />
-		<execute action="CPWiki#assertElementPresent" locator-key1="WIKI_NODE_TABLE" />
+		<execute action="CPWiki#assertElementNotPresent" locator-key1="ADD_WIKI_BUTTON" />
+		<execute action="CPWiki#assertElementNotPresent" locator-key1="PERMISSIONS_BUTTON" />
 	</command>
 </definition>

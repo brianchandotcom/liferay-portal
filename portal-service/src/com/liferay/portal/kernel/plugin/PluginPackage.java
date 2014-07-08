@@ -67,7 +67,7 @@ public interface PluginPackage {
 
 	public String getRepositoryURL();
 
-	List<String> getRequiredDeploymentContexts();
+	public List<String> getRequiredDeploymentContexts();
 
 	public List<Screenshot> getScreenshots();
 

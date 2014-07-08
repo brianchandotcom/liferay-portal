@@ -480,17 +480,15 @@ public class AuthPipeline {
 		}
 
 		@Override
-		public void
-			modifiedService(
-				ServiceReference<AuthFailure> serviceReference,
-				AuthFailure authFailure) {
+		public void modifiedService(
+			ServiceReference<AuthFailure> serviceReference,
+			AuthFailure authFailure) {
 		}
 
 		@Override
-		public void
-			removedService(
-				ServiceReference<AuthFailure> serviceReference,
-				AuthFailure authFailure) {
+		public void removedService(
+			ServiceReference<AuthFailure> serviceReference,
+			AuthFailure authFailure) {
 
 			Registry registry = RegistryUtil.getRegistry();
 

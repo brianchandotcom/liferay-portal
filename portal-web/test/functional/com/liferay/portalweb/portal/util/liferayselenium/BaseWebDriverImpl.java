@@ -30,6 +30,7 @@ import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -819,6 +820,10 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void typeAceEditor(String locator, String value) {
+		WebElement webElement = getWebElement(locator);
+
+		webElement.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+
 		LiferaySeleniumHelper.typeAceEditor(this, locator, value);
 	}
 

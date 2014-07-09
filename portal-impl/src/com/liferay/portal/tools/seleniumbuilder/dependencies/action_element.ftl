@@ -9,7 +9,6 @@
 <#assign actionCommand = action?substring(x + 1)>
 
 <#if !action?contains("#is") && !action?ends_with("#confirm")>
-
 	<#if !action?contains("#pause")>
 		<#if testCaseName??>
 			selenium

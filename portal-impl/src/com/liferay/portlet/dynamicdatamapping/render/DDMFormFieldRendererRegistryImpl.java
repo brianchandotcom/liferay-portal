@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.util;
+package com.liferay.portlet.dynamicdatamapping.render;
 
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;

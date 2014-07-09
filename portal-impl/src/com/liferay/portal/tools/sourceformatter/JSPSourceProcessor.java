@@ -336,18 +336,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		String oldContent = content;
-		String newContent = StringPool.BLANK;
-
-		while (true) {
-			newContent = formatJSP(fileName, absolutePath, oldContent);
-
-			if (oldContent.equals(newContent)) {
-				break;
-			}
-
-			oldContent = newContent;
-		}
+		String newContent = formatJSP(fileName, absolutePath, content);
 
 		newContent = StringUtil.replace(
 			newContent,

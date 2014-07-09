@@ -130,8 +130,7 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 
 			try {
 				Future<Metadata> future = ProcessExecutor.execute(
-					ClassPathUtil.getGlobalClassPath(),
-					ClassPathUtil.getPortalClassPath(),
+					ClassPathUtil.getPortalProcessConfig(),
 					extractMetadataProcessCallable);
 
 				return future.get();
@@ -184,8 +183,7 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 					new ExtractMetadataProcessCallable(file, metadata, _parser);
 
 				Future<Metadata> future = ProcessExecutor.execute(
-					ClassPathUtil.getGlobalClassPath(),
-					ClassPathUtil.getPortalClassPath(),
+					ClassPathUtil.getPortalProcessConfig(),
 					extractMetadataProcessCallable);
 
 				return future.get();

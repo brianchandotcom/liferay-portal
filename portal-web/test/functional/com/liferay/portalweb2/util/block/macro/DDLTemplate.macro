@@ -140,6 +140,7 @@
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#click" locator-key1="TEMPLATE_TABLE_ACTIONS" />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_MENULIST_EDIT" value1="Edit" />
 
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#pause" locator1="1000" />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#type" locator-key1="NAME_FIELD" value1="${ddlDisplayTemplateNameEdit}" />
 
 		<execute macro="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#showDetails" />

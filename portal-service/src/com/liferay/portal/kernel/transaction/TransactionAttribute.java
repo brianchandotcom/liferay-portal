@@ -57,19 +57,21 @@ public class TransactionAttribute {
 			return new TransactionAttribute(this);
 		}
 
-		public Builder isolation(Isolation isolation) {
+		public Builder setIsolation(Isolation isolation) {
 			_isolation = isolation;
 
 			return this;
 		}
 
-		public Builder noRollbackForClasses(Class<?>... noRollbackForClasses) {
+		public Builder setNoRollbackForClasses(
+			Class<?>... noRollbackForClasses) {
+
 			_noRollbackForClasses = noRollbackForClasses;
 
 			return this;
 		}
 
-		public Builder noRollbackForClassNames(
+		public Builder setNoRollbackForClassNames(
 			String... noRollbackForClassNames) {
 
 			_noRollbackForClassNames = noRollbackForClassNames;
@@ -77,25 +79,27 @@ public class TransactionAttribute {
 			return this;
 		}
 
-		public Builder propagation(Propagation propagation) {
+		public Builder setPropagation(Propagation propagation) {
 			_propagation = propagation;
 
 			return this;
 		}
 
-		public Builder readOnly(boolean readOnly) {
+		public Builder setReadOnly(boolean readOnly) {
 			_readOnly = readOnly;
 
 			return this;
 		}
 
-		public Builder rollbackForClasses(Class<?>... rollbackForClasses) {
+		public Builder setRollbackForClasses(Class<?>... rollbackForClasses) {
 			_rollbackForClasses = rollbackForClasses;
 
 			return this;
 		}
 
-		public Builder rollbackForClassNames(String... rollbackForClassNames) {
+		public Builder setRollbackForClassNames(
+			String... rollbackForClassNames) {
+
 			_rollbackForClassNames = rollbackForClassNames;
 
 			return this;

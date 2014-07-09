@@ -34,7 +34,6 @@ import java.io.Serializable;
 import java.io.StreamCorruptedException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -53,36 +52,18 @@ import java.util.concurrent.TimeoutException;
 public class ProcessExecutor {
 
 	public static <T extends Serializable> Future<T> execute(
-			String bootstrapClassPath, String classPath, List<String> arguments,
-			ProcessCallable<? extends Serializable> processCallable)
-		throws ProcessException {
-
-		return execute(
-			"java", bootstrapClassPath, classPath, arguments, processCallable);
-	}
-
-	public static <T extends Serializable> Future<T> execute(
-			String bootstrapClassPath, String classPath,
-			ProcessCallable<? extends Serializable> processCallable)
-		throws ProcessException {
-
-		return execute(
-			"java", bootstrapClassPath, classPath,
-			Collections.<String>emptyList(), processCallable);
-	}
-
-	public static <T extends Serializable> Future<T> execute(
-			String java, String bootstrapClassPath, String classPath,
-			List<String> arguments,
+			ProcessConfig processConfig,
 			ProcessCallable<? extends Serializable> processCallable)
 		throws ProcessException {
 
 		try {
+			List<String> arguments = processConfig.getArguments();
+
 			List<String> commands = new ArrayList<String>(arguments.size() + 4);
 
-			commands.add(java);
+			commands.add(processConfig.getJavaExecutable());
 			commands.add("-cp");
-			commands.add(bootstrapClassPath);
+			commands.add(processConfig.getBootstrapClassPath());
 			commands.addAll(arguments);
 			commands.add(ProcessLauncher.class.getName());
 
@@ -94,7 +75,8 @@ public class ProcessExecutor {
 				new ObjectOutputStream(process.getOutputStream());
 
 			bootstrapObjectOutputStream.writeObject(processCallable.toString());
-			bootstrapObjectOutputStream.writeObject(classPath);
+			bootstrapObjectOutputStream.writeObject(
+				processConfig.getRuntimeClassPath());
 
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
 				bootstrapObjectOutputStream);

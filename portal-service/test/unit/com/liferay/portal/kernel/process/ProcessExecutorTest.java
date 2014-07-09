@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.process;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessLauncher.ProcessContext;
 import com.liferay.portal.kernel.process.ProcessLauncher.ShutdownHook;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
@@ -62,7 +63,6 @@ import java.nio.channels.ServerSocketChannel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
@@ -96,6 +96,9 @@ public class ProcessExecutorTest {
 
 			@Override
 			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(ProcessConfig.class);
+				assertClasses.addAll(
+					Arrays.asList(ProcessConfig.class.getDeclaredClasses()));
 				assertClasses.add(ProcessLauncher.class);
 				assertClasses.addAll(
 					Arrays.asList(ProcessLauncher.class.getDeclaredClasses()));
@@ -139,7 +142,7 @@ public class ProcessExecutorTest {
 			int port = serverSocket.getLocalPort();
 
 			ProcessExecutor.execute(
-				_classPath, _classPath, _createArguments(_JPDA_OPTIONS1),
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				new AttachParentProcessCallable(
 					AttachChildProcessCallable1.class.getName(), port));
 
@@ -188,7 +191,7 @@ public class ProcessExecutorTest {
 			int port = serverSocket.getLocalPort();
 
 			ProcessExecutor.execute(
-				_classPath, _classPath, _createArguments(_JPDA_OPTIONS1),
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				new AttachParentProcessCallable(
 					AttachChildProcessCallable2.class.getName(), port));
 
@@ -246,7 +249,7 @@ public class ProcessExecutorTest {
 			int port = serverSocket.getLocalPort();
 
 			ProcessExecutor.execute(
-				_classPath, _classPath, _createArguments(_JPDA_OPTIONS1),
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				new AttachParentProcessCallable(
 					AttachChildProcessCallable3.class.getName(), port));
 
@@ -304,7 +307,7 @@ public class ProcessExecutorTest {
 			int port = serverSocket.getLocalPort();
 
 			ProcessExecutor.execute(
-				_classPath, _classPath, _createArguments(_JPDA_OPTIONS1),
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				new AttachParentProcessCallable(
 					AttachChildProcessCallable4.class.getName(), port));
 
@@ -345,7 +348,7 @@ public class ProcessExecutorTest {
 			int port = serverSocket.getLocalPort();
 
 			ProcessExecutor.execute(
-				_classPath, _classPath, _createArguments(_JPDA_OPTIONS1),
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				new AttachParentProcessCallable(
 					AttachChildProcessCallable5.class.getName(), port));
 
@@ -386,7 +389,7 @@ public class ProcessExecutorTest {
 			int port = serverSocket.getLocalPort();
 
 			ProcessExecutor.execute(
-				_classPath, _classPath, _createArguments(_JPDA_OPTIONS1),
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				new AttachParentProcessCallable(
 					AttachChildProcessCallable6.class.getName(), port));
 
@@ -444,7 +447,8 @@ public class ProcessExecutorTest {
 				new BrokenPipingProcessCallable();
 
 			Future<String> future = ProcessExecutor.execute(
-				_classPath, _classPath, brokenPipingProcessCallable);
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
+				brokenPipingProcessCallable);
 
 			try {
 				future.get();
@@ -491,7 +495,8 @@ public class ProcessExecutorTest {
 			new ReturnWithoutExitProcessCallable("");
 
 		Future<String> future = ProcessExecutor.execute(
-			_classPath, _classPath, returnWithoutExitProcessCallable);
+			_createJPDAProcessConfig(_JPDA_OPTIONS1),
+			returnWithoutExitProcessCallable);
 
 		Assert.assertFalse(future.isCancelled());
 		Assert.assertFalse(future.isDone());
@@ -566,7 +571,8 @@ public class ProcessExecutorTest {
 				new KillJVMProcessCallable(1);
 
 			Future<Serializable> future = ProcessExecutor.execute(
-				_classPath, _classPath, killJVMProcessCallable);
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
+				killJVMProcessCallable);
 
 			try {
 				future.get();
@@ -597,7 +603,8 @@ public class ProcessExecutorTest {
 			killJVMProcessCallable = new KillJVMProcessCallable(0);
 
 			future = ProcessExecutor.execute(
-				_classPath, _classPath, killJVMProcessCallable);
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
+				killJVMProcessCallable);
 
 			try {
 				future.get();
@@ -726,7 +733,7 @@ public class ProcessExecutorTest {
 			new DummyExceptionProcessCallable();
 
 		Future<Serializable> future = ProcessExecutor.execute(
-			_classPath, _classPath, _createArguments(_JPDA_OPTIONS1),
+			_createJPDAProcessConfig(_JPDA_OPTIONS1),
 			dummyExceptionProcessCallable);
 
 		try {
@@ -761,7 +768,8 @@ public class ProcessExecutorTest {
 
 		try {
 			ProcessExecutor.execute(
-				_classPath, _classPath, dummyReturnProcessCallable);
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
+				dummyReturnProcessCallable);
 
 			Assert.fail();
 		}
@@ -782,7 +790,8 @@ public class ProcessExecutorTest {
 			new DummyReturnProcessCallable();
 
 		Future<String> future = ProcessExecutor.execute(
-			_classPath, _classPath, dummyReturnProcessCallable);
+			_createJPDAProcessConfig(_JPDA_OPTIONS1),
+			dummyReturnProcessCallable);
 
 		String returnValue = future.get(100, TimeUnit.SECONDS);
 
@@ -797,7 +806,8 @@ public class ProcessExecutorTest {
 			new ReturnWithoutExitProcessCallable("");
 
 		future = ProcessExecutor.execute(
-			_classPath, _classPath, returnWithoutExitProcessCallable);
+			_createJPDAProcessConfig(_JPDA_OPTIONS1),
+			returnWithoutExitProcessCallable);
 
 		try {
 			future.get(1, TimeUnit.SECONDS);
@@ -834,7 +844,7 @@ public class ProcessExecutorTest {
 			new EchoPayloadProcessCallable(largePayload);
 
 		Future<byte[]> future = ProcessExecutor.execute(
-			_classPath, _classPath, _createArguments(_JPDA_OPTIONS1),
+			_createJPDAProcessConfig(_JPDA_OPTIONS1),
 			echoPayloadProcessCallable);
 
 		Assert.assertArrayEquals(largePayload, future.get());
@@ -844,10 +854,6 @@ public class ProcessExecutorTest {
 
 	@Test
 	public void testLargeRuntimeClassPath() throws Exception {
-		EchoRuntimeClassPathProcessCallable
-			echoRuntimeClassPathProcessCallable =
-				new EchoRuntimeClassPathProcessCallable();
-
 		char[] largeFileNameChars = new char[10 * 1024 * 1024];
 
 		largeFileNameChars[0] = CharPool.SLASH;
@@ -858,9 +864,13 @@ public class ProcessExecutorTest {
 
 		String largeFileName = new String(largeFileNameChars);
 
+		Builder builder = new Builder();
+
+		builder.setArguments(_createArguments(_JPDA_OPTIONS1));
+		builder.setRuntimeClassPath(largeFileName);
+
 		Future<String> future = ProcessExecutor.execute(
-			_classPath, largeFileName, _createArguments(_JPDA_OPTIONS1),
-			echoRuntimeClassPathProcessCallable);
+			builder.build(), new EchoRuntimeClassPathProcessCallable());
 
 		Assert.assertEquals(largeFileName, future.get());
 		Assert.assertFalse(future.isCancelled());
@@ -886,10 +896,9 @@ public class ProcessExecutorTest {
 			LeadingLogProcessCallable leadingLogProcessCallable =
 				new LeadingLogProcessCallable(leadingLog, bodyLog);
 
-			List<String> arguments = _createArguments(_JPDA_OPTIONS1);
-
 			Future<String> future = ProcessExecutor.execute(
-				_classPath, _classPath, arguments, leadingLogProcessCallable);
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
+				leadingLogProcessCallable);
 
 			future.get();
 
@@ -911,10 +920,9 @@ public class ProcessExecutorTest {
 			leadingLogProcessCallable = new LeadingLogProcessCallable(
 				leadingLog, bodyLog);
 
-			arguments = _createArguments(_JPDA_OPTIONS1);
-
 			future = ProcessExecutor.execute(
-				_classPath, _classPath, arguments, leadingLogProcessCallable);
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
+				leadingLogProcessCallable);
 
 			future.get();
 
@@ -943,10 +951,9 @@ public class ProcessExecutorTest {
 			leadingLogProcessCallable = new LeadingLogProcessCallable(
 				leadingLog, bodyLog);
 
-			arguments = _createArguments(_JPDA_OPTIONS1);
-
 			future = ProcessExecutor.execute(
-				_classPath, _classPath, arguments, leadingLogProcessCallable);
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
+				leadingLogProcessCallable);
 
 			future.get();
 
@@ -1003,8 +1010,7 @@ public class ProcessExecutorTest {
 				public void run() {
 					try {
 						Future<Serializable> future = ProcessExecutor.execute(
-							_classPath, _classPath,
-							_createArguments(_JPDA_OPTIONS1),
+							_createJPDAProcessConfig(_JPDA_OPTIONS1),
 							loggingProcessCallable);
 
 						future.get();
@@ -1060,15 +1066,16 @@ public class ProcessExecutorTest {
 		String propertyKey = "test-key";
 		String propertyValue = "test-value";
 
-		ReadPropertyProcessCallable readPropertyProcessCallable =
-			new ReadPropertyProcessCallable(propertyKey);
-
 		List<String> arguments = _createArguments(_JPDA_OPTIONS1);
 
 		arguments.add("-D" + propertyKey + "=" + propertyValue);
 
+		Builder builder = new Builder();
+
+		builder.setArguments(arguments);
+
 		Future<String> future = ProcessExecutor.execute(
-			_classPath, _classPath, arguments, readPropertyProcessCallable);
+			builder.build(), new ReadPropertyProcessCallable(propertyKey));
 
 		Assert.assertEquals(propertyValue, future.get());
 		Assert.assertFalse(future.isCancelled());
@@ -1081,7 +1088,8 @@ public class ProcessExecutorTest {
 			new DummyReturnProcessCallable();
 
 		Future<String> future = ProcessExecutor.execute(
-			_classPath, _classPath, dummyReturnProcessCallable);
+			_createJPDAProcessConfig(_JPDA_OPTIONS1),
+			dummyReturnProcessCallable);
 
 		Assert.assertEquals(
 			DummyReturnProcessCallable.class.getName(), future.get());
@@ -1096,7 +1104,8 @@ public class ProcessExecutorTest {
 			new ReturnWithoutExitProcessCallable("Premature return value");
 
 		Future<String> future = ProcessExecutor.execute(
-			_classPath, _classPath, returnWithoutExitProcessCallable);
+			_createJPDAProcessConfig(_JPDA_OPTIONS1),
+			returnWithoutExitProcessCallable);
 
 		for (int i = 0; i < 10; i++) {
 			try {
@@ -1142,7 +1151,8 @@ public class ProcessExecutorTest {
 
 		try {
 			ProcessExecutor.execute(
-				_classPath, _classPath, unserializableProcessCallable);
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
+				unserializableProcessCallable);
 
 			Assert.fail();
 		}
@@ -1155,13 +1165,13 @@ public class ProcessExecutorTest {
 
 	@Test
 	public void testWrongJavaExecutable() {
-		DummyReturnProcessCallable dummyReturnProcessCallable =
-			new DummyReturnProcessCallable();
-
 		try {
+			Builder builder = new Builder();
+
+			builder.setJavaExecutable("javax");
+
 			ProcessExecutor.execute(
-				"javax", _classPath, _classPath,
-				Collections.<String>emptyList(), dummyReturnProcessCallable);
+				builder.build(), new DummyReturnProcessCallable());
 
 			Assert.fail();
 		}
@@ -1222,6 +1232,15 @@ public class ProcessExecutorTest {
 		return arguments;
 	}
 
+	private static ProcessConfig _createJPDAProcessConfig(String jpdaOption) {
+		Builder builder = new Builder();
+
+		builder.setArguments(_createArguments(jpdaOption));
+		builder.setBootstrapClassPath(System.getProperty("java.class.path"));
+
+		return builder.build();
+	}
+
 	private static ExecutorService _getExecutorService() throws Exception {
 		Field field = ProcessExecutor.class.getDeclaredField(
 			"_executorService");
@@ -1280,8 +1299,6 @@ public class ProcessExecutorTest {
 		"-agentlib:jdwp=transport=dt_socket,address=8002,server=y,suspend=y";
 
 	private static Log _log = LogFactoryUtil.getLog(ProcessExecutorTest.class);
-
-	private static String _classPath = System.getProperty("java.class.path");
 
 	private static ServerSocketConfigurator _serverSocketConfigurator =
 		new ServerSocketConfigurator() {
@@ -1588,7 +1605,7 @@ public class ProcessExecutorTest {
 					_processCallableClass.getConstructor(int.class);
 
 				ProcessExecutor.execute(
-					_classPath, _classPath, _createArguments(_JPDA_OPTIONS2),
+					_createJPDAProcessConfig(_JPDA_OPTIONS2),
 					constructor.newInstance(_serverPort));
 			}
 			catch (Exception e) {

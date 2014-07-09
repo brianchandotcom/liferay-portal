@@ -48,8 +48,8 @@ public abstract class BaseActionableDynamicQuery
 		TransactionAttribute.Builder builder =
 			new TransactionAttribute.Builder();
 
-		builder.propagation(Propagation.REQUIRES_NEW);
-		builder.rollbackForClasses(
+		builder.setPropagation(Propagation.REQUIRES_NEW);
+		builder.setRollbackForClasses(
 			PortalException.class, SystemException.class);
 
 		REQUIRES_NEW_TRANSACTION_ATTRIBUTE = builder.build();

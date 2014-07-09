@@ -12,6 +12,8 @@ AUI.add(
 		var camelize = Liferay.Util.camelize;
 		var trim = A.Lang.trim;
 
+		var NAMES = Liferay.FormBuilder.prototype.NAMES;
+
 		var STR_BLANK = '';
 
 		var STR_DASH = '-';
@@ -40,40 +42,35 @@ AUI.add(
 
 		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
-		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get('please-enter-only-alphanumeric-characters');
-
 		DEFAULTS_FORM_VALIDATOR.STRINGS.structureDuplicateFieldName = Liferay.Language.get('please-enter-a-unique-field-name');
-
-		DEFAULTS_FORM_VALIDATOR.RULES.structureFieldName = function(value) {
-			return (/^[\w\-]+$/).test(value);
-		};
 
 		DEFAULTS_FORM_VALIDATOR.RULES.structureDuplicateFieldName = function(value, editorNode) {
 			var instance = this;
 
-			var names = Liferay.FormBuilder.prototype.NAMES;
-
 			var oldValue = A.Widget.getByNode(editorNode).get('value');
 
-			var duplicate;
+			NAMES.remove(oldValue);
 
-			names.remove(oldValue);
+			var duplicate = !!NAMES.get(value);
 
-			if (names.get(value)) {
+			if (duplicate) {
 				editorNode.selectText(0, value.length);
+
 				instance.resetField(editorNode);
 
-				names.add(oldValue);
-
-				duplicate = true;
+				NAMES.add(oldValue);
 			}
 			else {
-				names.add(value);
-
-				duplicate = false;
+				NAMES.add(value);
 			}
 
 			return !duplicate;
+		};
+
+		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get('please-enter-only-alphanumeric-characters');
+
+		DEFAULTS_FORM_VALIDATOR.RULES.structureFieldName = function(value) {
+			return (/^[\w\-]+$/).test(value);
 		};
 
 		var applyStyles = function(node, styleContent) {

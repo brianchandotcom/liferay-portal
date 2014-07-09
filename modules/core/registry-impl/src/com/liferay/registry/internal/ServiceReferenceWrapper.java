@@ -16,6 +16,9 @@ package com.liferay.registry.internal;
 
 import com.liferay.registry.ServiceReference;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Raymond Augé
  */
@@ -59,6 +62,19 @@ public class ServiceReferenceWrapper<T> implements ServiceReference<T> {
 
 		return _serviceReference.equals(
 			serviceReferenceWrapper.getServiceReference());
+	}
+
+	@Override
+	public Map<String, Object> getProperties() {
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		for (String key : getPropertyKeys()) {
+			Object value = getProperty(key);
+
+			properties.put(key, value);
+		}
+
+		return properties;
 	}
 
 	@Override

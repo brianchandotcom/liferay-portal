@@ -29,6 +29,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputEditorTag extends IncludeTag {
 
+	public void setAllowBrowseDocuments(boolean allowBrowseDocuments) {
+		_allowBrowseDocuments = allowBrowseDocuments;
+	}
+
 	public void setConfigParams(Map<String, String> configParams) {
 		_configParams = configParams;
 	}
@@ -99,6 +103,7 @@ public class InputEditorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_allowBrowseDocuments = true;
 		_configParams = null;
 		_contentsLanguageId = null;
 		_cssClass = null;
@@ -146,6 +151,9 @@ public class InputEditorTag extends IncludeTag {
 		_page = "/html/js/editor/" + editorImpl + ".jsp";
 
 		request.setAttribute(
+			"liferay-ui:input-editor:allowBrowseDocuments",
+			String.valueOf(_allowBrowseDocuments));
+		request.setAttribute(
 			"liferay-ui:input-editor:configParams", _configParams);
 		request.setAttribute(
 			"liferay-ui:input-editor:contentsLanguageId", _contentsLanguageId);
@@ -176,6 +184,7 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-editor:width", _width);
 	}
 
+	private boolean _allowBrowseDocuments = true;
 	private Map<String, String> _configParams;
 	private String _contentsLanguageId;
 	private String _cssClass;

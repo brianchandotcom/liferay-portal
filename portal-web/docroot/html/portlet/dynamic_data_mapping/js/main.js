@@ -167,7 +167,8 @@ AUI.add(
 						},
 						remove: function(value) {
 							delete this.hash[value];
-						}
+						},
+						nameAppendCounter: 1
 					},
 
 					initializer: function() {
@@ -507,6 +508,8 @@ AUI.add(
 
 						var editingField = instance.editingField;
 
+						var i = instance.NAMES.nameAppendCounter;
+
 						var readOnlyAttributes = editingField.get('readOnlyAttributes');
 
 						if (changed.hasOwnProperty('value') && (AArray.indexOf(readOnlyAttributes, 'name') === -1)) {
@@ -519,7 +522,23 @@ AUI.add(
 								if (translationManager.get('editingLocale') === translationManager.get('defaultLocale')) {
 									var label = changed.value.newVal;
 
-									editingField.set('name', label);
+									var newValue = label;
+
+									var names = instance.NAMES;
+
+									i = 1;
+
+									names.remove(editingField.get('name'));
+
+									while (names.get(newValue)) {
+										newValue = label + i;
+
+										i++;
+									}
+
+									names.add(newValue);
+
+									editingField.set('name', newValue);
 
 									var modelList = instance.propertyList.get('data');
 

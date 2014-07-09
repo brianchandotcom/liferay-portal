@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.resiliency.spi.provider;
 
 import com.liferay.portal.kernel.nio.intraband.blocking.ExecutorIntraband;
 import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.resiliency.PortalResiliencyException;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
@@ -41,7 +42,6 @@ import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
 import java.io.File;
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
@@ -198,13 +198,11 @@ public class BaseSPIProviderTest {
 
 		@Around(
 			"execution(* com.liferay.portal.kernel.process.ProcessExecutor." +
-				"execute(String, String, String, java.util.List, com.liferay." +
-					"portal.kernel.process.ProcessCallable)) && args(java, " +
-						"bootstrapClassPath, classPath, arguments, " +
-							"processCallable)")
+				"execute(com.liferay.portal.kernel.process.ProcessConfig," +
+					"com.liferay.portal.kernel.process.ProcessCallable)) && " +
+						"args(processConfig, processCallable)")
 		public Object execute(
-				String java, String bootstrapClassPath, String classPath,
-				List<String> arguments,
+				ProcessConfig processConfig,
 				ProcessCallable<? extends Serializable> processCallable)
 			throws ProcessException {
 

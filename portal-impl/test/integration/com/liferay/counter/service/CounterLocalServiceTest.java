@@ -18,6 +18,8 @@ import com.liferay.counter.model.Counter;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessConfig;
+import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
@@ -68,8 +70,14 @@ public class CounterLocalServiceTest {
 	public void testConcurrentIncrement() throws Exception {
 		String classPath = ClassPathUtil.getJVMClassPath(true);
 
-		List<String> jvmArguments = Arrays.asList(
-			"-Xmx1024m", "-XX:MaxPermSize=200m");
+		Builder builder = new Builder();
+
+		builder.setArguments(
+			Arrays.asList("-Xmx1024m", "-XX:MaxPermSize=200m"));
+		builder.setBootstrapClassPath(classPath);
+		builder.setRuntimeClassPath(classPath);
+
+		ProcessConfig processConfig = builder.build();
 
 		List<Future<Long[]>> futuresList = new ArrayList<Future<Long[]>>();
 
@@ -79,7 +87,7 @@ public class CounterLocalServiceTest {
 					"Increment Process-" + i, _COUNTER_NAME, _INCREMENT_COUNT);
 
 			Future<Long[]> futures = ProcessExecutor.execute(
-				classPath, classPath, jvmArguments, processCallable);
+				processConfig, processCallable);
 
 			futuresList.add(futures);
 		}

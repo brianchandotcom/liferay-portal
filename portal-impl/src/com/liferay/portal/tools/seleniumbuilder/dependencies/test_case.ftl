@@ -49,17 +49,12 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 		currentTestCaseName = "${testCaseName?uncap_first}TestCase";
 		testCaseName = "${testCaseName?uncap_first}TestCase";
 
-		<#if rootElement.element("var")?? || rootElement.element("property")??>
-			<#assign propertyElements = rootElement.elements("property")>
+		<#if rootElement.element("var")??>
 			<#assign varElements = rootElement.elements("var")>
 
 			definitionScopeVariables = new HashMap<String, String>();
 
 			<#assign void = variableContextStack.push("definitionScopeVariables")>
-
-			<#list propertyElements as propertyElement>
-				<#include "property_element.ftl">
-			</#list>
 
 			<#list varElements as varElement>
 				<#include "var_element.ftl">

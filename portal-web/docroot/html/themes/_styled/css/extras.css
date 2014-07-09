@@ -539,3 +539,28 @@ body:first-of-type {
 		@include box-shadow(rgba(0, 0, 0, 0.1) 1px 1px 1px);
 	}
 }
+
+.cke_toolbar {
+	&.cke_toolbar__a11yhelpbtn {
+		.cke_toolgroup, .cke_toolgroup:hover {
+			@include box-shadow(initial);
+		}
+
+		.cke_button {
+			&:hover {
+				@include box-shadow(none);
+			}
+
+			.cke_button_label {
+				&:after {
+					@include background-image(linear-gradient(#FFF, #E4E4E4));
+					@include border-radius(2px);
+				}
+
+				&:hover:after {
+					@include background-image(linear-gradient(#F2F2F2, #CCC));
+				};
+			}
+		}
+	}
+}

@@ -400,4 +400,6 @@ public interface SiteMembershipPolicy {
 			Map<String, Serializable> oldExpandoAttributes)
 		throws PortalException;
 
+	public static String MEMBERSHIP_POLICY_AUTO_VERIFY = 
+		"MEMBERSHIP_POLICY_AUTO_VERIFY";
 }

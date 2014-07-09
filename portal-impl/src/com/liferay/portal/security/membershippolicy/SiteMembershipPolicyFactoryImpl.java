@@ -14,9 +14,14 @@
 
 package com.liferay.portal.security.membershippolicy;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 /**
  * @author Sergio González
@@ -35,7 +40,9 @@ public class SiteMembershipPolicyFactoryImpl
 	private SiteMembershipPolicyFactoryImpl() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		_serviceTracker = registry.trackServices(SiteMembershipPolicy.class);
+		_serviceTracker = registry.trackServices(
+			SiteMembershipPolicy.class, 
+			new SiteMembershipPolicyTrackerCustomizer());
 
 		_serviceTracker.open();
 	}
@@ -44,5 +51,55 @@ public class SiteMembershipPolicyFactoryImpl
 	_instance = new SiteMembershipPolicyFactoryImpl();
 
 	private ServiceTracker<?, SiteMembershipPolicy> _serviceTracker;
+
+	private static Log _log = LogFactoryUtil.getLog(
+		SiteMembershipPolicyFactoryImpl.class);
+	
+	private class SiteMembershipPolicyTrackerCustomizer
+	implements ServiceTrackerCustomizer<SiteMembershipPolicy, 
+		SiteMembershipPolicy> {
+
+		@Override
+		public SiteMembershipPolicy addingService(
+			ServiceReference<SiteMembershipPolicy> serviceReference) {
+			
+			Boolean autoVerify  = (Boolean) serviceReference.getProperty(
+				SiteMembershipPolicy.MEMBERSHIP_POLICY_AUTO_VERIFY);
+			
+			Registry registry = RegistryUtil.getRegistry();
+	
+			Object service = registry.getService(serviceReference);
+	
+			SiteMembershipPolicy siteMembershipPolicy =
+				(SiteMembershipPolicy) service;
+	
+			if((autoVerify != null) && (autoVerify.booleanValue())){
+				try {
+					siteMembershipPolicy.verifyPolicy();
+				}
+				catch (PortalException e) {
+					_log.error(
+						"Customizer catches failure trying to verifyPolicy:",
+						e);
+					return null;
+				}
+			}
+			
+			return siteMembershipPolicy;
+		}
+	
+		@Override
+		public void modifiedService(
+			ServiceReference<SiteMembershipPolicy> serviceReference, 
+			SiteMembershipPolicy service) {
+		}
+	
+		@Override
+		public void removedService(
+			ServiceReference<SiteMembershipPolicy> serviceReference, 
+			SiteMembershipPolicy service) {		
+		}
+
+	}
 
 }

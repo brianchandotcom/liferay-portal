@@ -559,7 +559,7 @@ body:first-of-type {
 
 				&:hover:after {
 					@include background-image(linear-gradient(#F2F2F2, #CCC));
-				};
+				}
 			}
 		}
 	}

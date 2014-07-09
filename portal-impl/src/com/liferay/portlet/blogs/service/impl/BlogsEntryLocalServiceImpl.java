@@ -134,6 +134,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			smallImageInputStream, serviceContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BlogsEntry addEntry(
 			long userId, String title, String deckTitle, String description,
@@ -240,9 +241,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		startWorkflowInstance(userId, entry, serviceContext);
-
-		return entry;
+		return startWorkflowInstance(userId, entry, serviceContext);
 	}
 
 	@Override
@@ -1031,6 +1030,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			smallImageInputStream, serviceContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BlogsEntry updateEntry(
 			long userId, long entryId, String title, String deckTitle,
@@ -1136,9 +1136,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		startWorkflowInstance(userId, entry, serviceContext);
-
-		return entry;
+		return startWorkflowInstance(userId, entry, serviceContext);
 	}
 
 	@Override
@@ -1735,7 +1733,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	protected void startWorkflowInstance(
+	protected BlogsEntry startWorkflowInstance(
 			long userId, BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1760,7 +1758,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			WorkflowConstants.CONTEXT_USER_PORTRAIT_URL, userPortraitURL);
 		workflowContext.put(WorkflowConstants.CONTEXT_USER_URL, userURL);
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			entry.getCompanyId(), entry.getGroupId(), userId,
 			BlogsEntry.class.getName(), entry.getEntryId(), entry,
 			serviceContext, workflowContext);

@@ -817,6 +817,26 @@ create database lportal2 character set utf8;</echo>
 		</delete>
 	</target>
 
+	<target name="clean-up-android-emulator">
+		<exec executable="/bin/bash" os="${os.unix}">
+			<arg value="-c" />
+			<arg value="android" />
+			<arg value="delete" />
+			<arg value="avd" />
+			<arg value="-n" />
+			<arg value="${emulator.name}" />
+		</exec>
+
+		<exec executable="cmd.exe" os="${os.windows}">
+			<arg value="/c" />
+			<arg value="android" />
+			<arg value="delete" />
+			<arg value="avd" />
+			<arg value="-n" />
+			<arg value="${emulator.name}" />
+		</exec>
+	</target>
+
 	<target name="clean-up-bundles">
 		<delete file="test.${user.name}.properties" />
 
@@ -1506,6 +1526,47 @@ create database lportal2 character set utf8;</echo>
 			<then>
 				<property name="test.basedir" value="${basedir.unix}/portal-web" />
 			</then>
+		</if>
+	</target>
+
+	<target name="prepare-android-emulator">
+		<exec executable="/bin/bash" os="${os.unix}">
+			<arg value="-c" />
+			<arg value="echo" />
+			<arg value="no" />
+			<arg value="|" />
+			<arg value="android" />
+			<arg value="create" />
+			<arg value="avd" />
+			<arg value="-n" />
+			<arg value="${emulator.name}" />
+			<arg value="-t" />
+			<arg value="${emulator.target.number}" />
+		</exec>
+
+		<exec executable="cmd.exe" os="${os.windows}">
+			<arg value="/c" />
+			<arg value="android" />
+			<arg value="create" />
+			<arg value="avd" />
+			<arg value="-n" />
+			<arg value="${emulator.name}" />
+			<arg value="-t" />
+			<arg value="${emulator.target.number}" />
+		</exec>
+
+		<if>
+			<os family="unix" />
+			<then>
+				<echo file="/root/.android/avd/${emulator.name}.avd/config.ini" append="true">
+hw.keyboard=yes
+				</echo>
+			</then>
+			<else>
+				<echo file="${user.home}/.android/avd/${emulator.name}.avd/config.ini" append="true">
+hw.keyboard=yes
+				</echo>
+			</else>
 		</if>
 	</target>
 
@@ -3098,6 +3159,17 @@ if (ppstate.equals("normal")) {
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${mobile.device.enabled}" arg2="true" />
+			<then>
+				<antcall target="prepare-android-emulator" />
+
+				<antcall target="start-android-emulator" />
+
+				<antcall target="start-appium" />
+			</then>
+		</if>
+
 		<antcall target="clean-up-java-processes" inheritAll="false" />
 
 		<if>
@@ -3345,6 +3417,17 @@ if (ppstate.equals("normal")) {
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${mobile.device.enabled}" arg2="true" />
+			<then>
+				<antcall target="stop-android-emulator" />
+
+				<antcall target="clean-up-android-emulator" />
+
+				<antcall target="stop-appium" />
+			</then>
+		</if>
+
 		<antcall target="clean-up-sikuli-temp-files" />
 
 		<antcall target="clean-up-web-xml" />
@@ -3362,6 +3445,42 @@ if (ppstate.equals("normal")) {
 				<antcall target="stop-ie-driver" />
 			</then>
 		</if>
+	</target>
+
+	<target name="start-android-emulator">
+		<exec executable="/bin/bash" os="${os.unix}" spawn="true">
+			<arg value="-c" />
+			<arg value="emulator" />
+			<arg value="-avd" />
+			<arg value="${emulator.name}" />
+			<arg value="-no-boot-anim" />
+		</exec>
+
+		<exec executable="cmd.exe" os="${os.windows}">
+			<arg value="/c" />
+			<arg value="emulator" />
+			<arg value="-avd" />
+			<arg value="${emulator.name}" />
+			<arg value="-no-boot-anim" />
+		</exec>
+
+		<sleep seconds="120" />
+	</target>
+
+	<target name="start-appium" >
+		<exec executable="gnome-terminal" os="${os.unix}" spawn="true">
+			<arg value="-e" />
+			<arg value="service" />
+			<arg value="appium" />
+			<arg value="start" />
+		</exec>
+
+		<exec dir="${appium.win32.dir}" executable="cmd.exe" os="${os.windows}">
+			<arg value="/c" />
+			<arg value="start" />
+			<arg value="node" />
+			<arg value="appium" />
+		</exec>
 	</target>
 
 	<target name="start-app-server">
@@ -3448,6 +3567,36 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		>
 			<arg line="-port 14444 -singleWindow" />
 		</java>
+	</target>
+
+	<target name="stop-android-emulator">
+		<exec executable="/bin/bash" os="${os.unix}">
+			<arg value="-c" />
+			<arg value="adb" />
+			<arg value="emu" />
+			<arg value="kill" />
+		</exec>
+
+		<exec executable="cmd.exe" os="${os.windows}">
+			<arg value="/c" />
+			<arg value="adb" />
+			<arg value="emu" />
+			<arg value="kill" />
+		</exec>
+	</target>
+
+	<target name="stop-appium">
+		<exec executable="/bin/bash" os="${os.unix}" spawn="true" >
+			<arg value="-c" />
+			<arg value="killall" />
+			<arg value="node" />
+		</exec>
+
+		<exec executable="cmd.exe" os="${os.windows}" >
+			<arg value="/c" />
+			<arg value="tskill" />
+			<arg value="node" />
+		</exec>
 	</target>
 
 	<target name="stop-app-server">

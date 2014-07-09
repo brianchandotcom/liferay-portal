@@ -439,6 +439,13 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		newContent = fixIncorrectParameterTypeForLanguageUtil(
 			newContent, true, fileName);
 
+		Matcher matcher = _javaClassPattern.matcher(newContent);
+
+		if (matcher.find()) {
+			newContent = formatJavaTerms(
+				fileName, newContent, matcher.group(), null, null);
+		}
+
 		compareAndAutoFixContent(file, fileName, content, newContent);
 
 		return newContent;
@@ -1190,6 +1197,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private List<String> _importClassNames = new ArrayList<String>();
 	private Map<String, Integer> _importCountMap =
 		new HashMap<String, Integer>();
+	private Pattern _javaClassPattern = Pattern.compile(
+		"\n(private|protected|public).* class ([\\s\\S]*?)\n\\}\n");
 	private Map<String, String> _jspContents = new HashMap<String, String>();
 	private Pattern _jspImportPattern = Pattern.compile(
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);

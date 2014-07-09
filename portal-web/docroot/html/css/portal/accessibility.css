@@ -54,6 +54,12 @@ td.stretch {
 	}
 }
 
+.mac {
+	.cke_toolbar.cke_toolbar__a11yhelpbtn .cke_button .cke_button_label:after {
+		content: 'Option+0';
+	}
+}
+
 /* Skin */
 
 .cke_toolbar {

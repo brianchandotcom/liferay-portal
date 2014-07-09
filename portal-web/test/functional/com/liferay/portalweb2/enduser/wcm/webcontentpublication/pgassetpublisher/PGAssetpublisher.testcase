@@ -475,7 +475,7 @@
 
 		<var name="key_templateName" value="${template1Name}" />
 
-		<execute action="CPWebcontentTemplates#assertClick" locator-key1="TEMPLATE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPWebcontentTemplates#click" locator-key1="TEMPLATE_TABLE_ACTIONS" />
 		<execute action="CPWebcontentTemplates#click" locator-key1="TEMPLATE_MENULIST_PERMISSIONS" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
@@ -503,7 +503,7 @@
 
 		<var name="key_templateName" value="${template2Name}" />
 
-		<execute action="CPWebcontentTemplates#assertClick" locator-key1="TEMPLATE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPWebcontentTemplates#click" locator-key1="TEMPLATE_TABLE_ACTIONS" />
 		<execute action="CPWebcontentTemplates#click" locator-key1="TEMPLATE_MENULIST_PERMISSIONS" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">

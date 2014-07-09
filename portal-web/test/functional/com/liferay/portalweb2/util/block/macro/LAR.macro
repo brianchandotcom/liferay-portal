@@ -324,7 +324,7 @@
 			<isset var="importValidationMissingItem" />
 			<then>
 				<execute action="CPSitepagesImport#assertTextEquals" locator-key1="VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
-				<execute action="CPSitepagesImport#assertTextEquals" locator-key1="VALIDATION_ERROR_MESSAGE" value1="There are missing references that could not be found in the current site. Please import another LAR file containing the following elements:" />
+				<execute action="CPSitepagesImport#assertTextEquals" locator-key1="VALIDATION_ERROR_MESSAGE" value1="There are missing references that could not be found in the current site. Please import the following elements first:" />
 				<execute action="CPSitepagesImport#assertTextEquals" locator-key1="VALIDATION_ERROR_LIST_ITEM" value1="${importValidationMissingItem}" />
 			</then>
 			<else>

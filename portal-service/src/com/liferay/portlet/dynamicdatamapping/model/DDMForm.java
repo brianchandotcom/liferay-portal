@@ -66,6 +66,10 @@ public class DDMForm implements Serializable {
 	}
 
 	public void setDDMFormFields(List<DDMFormField> ddmFormFields) {
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			ddmFormField.setDDMForm(this);
+		}
+
 		_ddmFormFields = ddmFormFields;
 	}
 

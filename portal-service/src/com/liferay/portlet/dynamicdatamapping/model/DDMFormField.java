@@ -35,6 +35,10 @@ public class DDMFormField implements Serializable {
 		return _dataType;
 	}
 
+	public DDMForm getDDMForm() {
+		return _ddmForm;
+	}
+
 	public DDMFormFieldOptions getDDMFormFieldOptions() {
 		return _ddmFormFieldOptions;
 	}
@@ -114,6 +118,10 @@ public class DDMFormField implements Serializable {
 		_dataType = dataType;
 	}
 
+	public void setDDMForm(DDMForm ddmForm) {
+		_ddmForm = ddmForm;
+	}
+
 	public void setDDMFormFieldOptions(
 		DDMFormFieldOptions ddmFormFieldOptions) {
 
@@ -177,6 +185,7 @@ public class DDMFormField implements Serializable {
 	}
 
 	private String _dataType;
+	private DDMForm _ddmForm;
 	private DDMFormFieldOptions _ddmFormFieldOptions =
 		new DDMFormFieldOptions();
 	private String _indexType;

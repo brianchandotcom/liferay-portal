@@ -156,21 +156,9 @@ AUI.add(
 
 				NAME: 'liferayformbuilder',
 
-				prototype: {
-					NAMES: {
-						hash: {},
-						add: function(value) {
-							this.hash[value] = true;
-						},
-						get: function(value) {
-							return this.hash[value];
-						},
-						remove: function(value) {
-							delete this.hash[value];
-						},
-						nameAppendCounter: 1
-					},
+				UNIQUE_FIELD_NAMES_MAP: new A.Map(),
 
+				prototype: {
 					initializer: function() {
 						var instance = this;
 
@@ -206,8 +194,6 @@ AUI.add(
 
 						field.set('readOnlyAttributes', instance._getReadOnlyFieldAttributes(field));
 						field.set('strings', instance.get('strings'));
-
-						instance.NAMES.add(field.get('name'));
 
 						return field;
 					},
@@ -508,8 +494,6 @@ AUI.add(
 
 						var editingField = instance.editingField;
 
-						var i = instance.NAMES.nameAppendCounter;
-
 						var readOnlyAttributes = editingField.get('readOnlyAttributes');
 
 						if (changed.hasOwnProperty('value') && (AArray.indexOf(readOnlyAttributes, 'name') === -1)) {
@@ -520,26 +504,6 @@ AUI.add(
 								var translationManager = instance.translationManager;
 
 								if (translationManager.get('editingLocale') === translationManager.get('defaultLocale')) {
-									var label = changed.value.newVal;
-
-									var newValue = label;
-
-									var names = instance.NAMES;
-
-									i = 1;
-
-									names.remove(editingField.get('name'));
-
-									while (names.get(newValue)) {
-										newValue = label + i;
-
-										i++;
-									}
-
-									names.add(newValue);
-
-									editingField.set('name', newValue);
-
 									var modelList = instance.propertyList.get('data');
 
 									var nameModel = modelList.filter(
@@ -955,6 +919,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['arraysort', 'aui-form-builder', 'aui-form-validator', 'aui-text-unicode', 'json', 'liferay-menu', 'liferay-translation-manager', 'liferay-util-window', 'text']
+		requires: ['arraysort', 'aui-form-builder', 'aui-form-validator', 'aui-map', 'aui-text-unicode', 'json', 'liferay-menu', 'liferay-translation-manager', 'liferay-util-window', 'text']
 	}
 );

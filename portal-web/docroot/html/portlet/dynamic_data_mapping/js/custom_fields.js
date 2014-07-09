@@ -12,8 +12,6 @@ AUI.add(
 		var camelize = Liferay.Util.camelize;
 		var trim = A.Lang.trim;
 
-		var NAMES = Liferay.FormBuilder.prototype.NAMES;
-
 		var STR_BLANK = '';
 
 		var STR_DASH = '-';
@@ -42,26 +40,19 @@ AUI.add(
 
 		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
+		var UNIQUE_FIELD_NAMES_MAP = Liferay.FormBuilder.UNIQUE_FIELD_NAMES_MAP;
+
 		DEFAULTS_FORM_VALIDATOR.STRINGS.structureDuplicateFieldName = Liferay.Language.get('please-enter-a-unique-field-name');
 
 		DEFAULTS_FORM_VALIDATOR.RULES.structureDuplicateFieldName = function(value, editorNode) {
 			var instance = this;
 
-			var oldValue = A.Widget.getByNode(editorNode).get('value');
-
-			NAMES.remove(oldValue);
-
-			var duplicate = !!NAMES.get(value);
+			var duplicate = UNIQUE_FIELD_NAMES_MAP.has(value);
 
 			if (duplicate) {
 				editorNode.selectText(0, value.length);
 
 				instance.resetField(editorNode);
-
-				NAMES.add(oldValue);
-			}
-			else {
-				NAMES.add(value);
 			}
 
 			return !duplicate;
@@ -416,7 +407,13 @@ AUI.add(
 				valueFn: function() {
 					var instance = this;
 
-					return A.FormBuilderField.buildFieldName(instance.get('label'));
+					var name = instance.get('label');
+
+					while (UNIQUE_FIELD_NAMES_MAP.has(name)) {
+						name = A.FormBuilderField.buildFieldName(name);
+					}
+
+					return name;
 				}
 			},
 
@@ -424,6 +421,35 @@ AUI.add(
 				setter: booleanParse,
 				value: false
 			}
+		};
+
+		LiferayFormBuilderField.prototype.initializer = function() {
+			var instance = this;
+
+			instance.after('destroy', instance._afterDestroy);
+			instance.after('nameChange', instance._afterNameChange);
+			instance.after('render', instance._afterRender);
+		};
+
+		LiferayFormBuilderField.prototype._afterDestroy = function(event) {
+			var instance = this;
+
+			UNIQUE_FIELD_NAMES_MAP.remove(instance.get('name'));
+		};
+
+		LiferayFormBuilderField.prototype._afterNameChange = function(event) {
+			var instance = this;
+
+			var uniqueNamesMap = UNIQUE_FIELD_NAMES_MAP;
+
+			uniqueNamesMap.remove(event.prevVal);
+			uniqueNamesMap.put(event.newVal, true);
+		};
+
+		LiferayFormBuilderField.prototype._afterRender = function(event) {
+			var instance = this;
+
+			UNIQUE_FIELD_NAMES_MAP.put(instance.get('name'), true);
 		};
 
 		A.Base.mix(A.FormBuilderField, [LiferayFormBuilderField]);
@@ -518,24 +544,6 @@ AUI.add(
 					}
 				]
 			);
-		};
-
-		FormBuilderProto._handleDeleteEvent = function() {
-			var instance = this;
-
-			var name = instance.get('name');
-
-			var names = Liferay.FormBuilder.prototype.NAMES;
-
-			var strings = instance.getStrings();
-
-			if (window.confirm(strings.deleteFieldsMessage)) {
-				instance.destroy();
-
-				names.remove(name);
-			}
-
-			event.stopPropagation();
 		};
 
 		var DDMDateField = A.Component.create(

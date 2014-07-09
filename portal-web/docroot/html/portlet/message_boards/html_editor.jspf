@@ -41,7 +41,7 @@ if (Validator.isNull(body)) {
 }
 %>
 
-<liferay-ui:input-editor editorImpl="<%= HTML_EDITOR_WYSIWYG_IMPL_KEY %>" />
+<liferay-ui:input-editor allowBrowseDocuments="<%= false %>" editorImpl="<%= HTML_EDITOR_WYSIWYG_IMPL_KEY %>" />
 
 <aui:script>
 	function <portlet:namespace />getHTML() {

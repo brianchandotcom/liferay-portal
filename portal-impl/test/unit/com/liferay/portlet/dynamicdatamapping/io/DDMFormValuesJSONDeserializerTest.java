@@ -182,23 +182,6 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTest {
 			new DDMFormValuesJSONDeserializerImpl());
 	}
 
-	@Override
-	protected void setUpLanguageUtil() {
-		mockStatic(LanguageUtil.class);
-
-		when(
-			LanguageUtil.isAvailableLanguageCode("en_US")
-		).thenReturn(
-			true
-		);
-
-		when(
-			LanguageUtil.isAvailableLanguageCode("pt_BR")
-		).thenReturn(
-			true
-		);
-	}
-
 	protected void testAvailableLocales(DDMFormValues ddmFormValues) {
 		List<Locale> availableLocales = ddmFormValues.getAvailableLocales();
 

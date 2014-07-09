@@ -523,6 +523,24 @@ AUI.add(
 			);
 		};
 
+		FormBuilderProto._handleDeleteEvent = function() {
+			var instance = this;
+
+			var name = instance.get('name');
+
+			var names = Liferay.FormBuilder.prototype.NAMES;
+
+			var strings = instance.getStrings();
+
+			if (window.confirm(strings.deleteFieldsMessage)) {
+				instance.destroy();
+
+				names.remove(name);
+			}
+
+			event.stopPropagation();
+		};
+
 		var DDMDateField = A.Component.create(
 			{
 				ATTRS: {

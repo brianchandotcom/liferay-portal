@@ -67,8 +67,8 @@ public class TransactionalTestRule implements TestRule {
 		TransactionAttribute.Builder builder =
 			new TransactionAttribute.Builder();
 
-		builder.propagation(Propagation.SUPPORTS);
-		builder.rollbackForClasses(
+		builder.setPropagation(Propagation.SUPPORTS);
+		builder.setRollbackForClasses(
 			PortalException.class, SystemException.class);
 
 		_transactionAttribute = builder.build();

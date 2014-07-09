@@ -182,8 +182,8 @@ public class SynchronousDestinationExecutionTestListener
 		TransactionAttribute.Builder builder =
 			new TransactionAttribute.Builder();
 
-		builder.propagation(Propagation.NOT_SUPPORTED);
-		builder.rollbackForClasses(
+		builder.setPropagation(Propagation.NOT_SUPPORTED);
+		builder.setRollbackForClasses(
 			PortalException.class, SystemException.class);
 
 		_transactionAttribute = builder.build();

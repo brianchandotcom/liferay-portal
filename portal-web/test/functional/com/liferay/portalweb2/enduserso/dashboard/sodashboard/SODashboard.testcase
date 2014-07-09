@@ -2542,6 +2542,56 @@
 		</execute>
 	</command>
 
+	<command name="ViewUpcomingTaskHighPriority" priority="3">
+		<var name="pageName" value="Tasks" />
+		<var name="taskDescription" value="Task Description" />
+		<var name="taskPriority" value="High" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOTasks#addTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="taskPriority" value="${taskPriority}" />
+			<var name="taskReporter" value="${adminName}" />" />
+		</execute>
+
+		<execute macro="SODashboard#viewUpcomingTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="taskPriority" value="${taskPriority}" />
+			<var name="taskReporter" value="${adminName}" />
+		</execute>
+	</command>
+
+	<command name="ViewUpcomingTaskLowPriority" priority="3">
+		<var name="pageName" value="Tasks" />
+		<var name="taskDescription" value="Task Description" />
+		<var name="taskPriority" value="Low" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOTasks#addTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="taskPriority" value="${taskPriority}" />
+			<var name="taskReporter" value="${adminName}" />" />
+		</execute>
+
+		<execute macro="SODashboard#viewUpcomingTask">
+			<var name="taskAssignee" value="${adminName}" />
+			<var name="taskDescription" value="${taskDescription}" />
+			<var name="taskPriority" value="${taskPriority}" />
+			<var name="taskReporter" value="${adminName}" />" />
+		</execute>
+	</command>
+
 	<command name="ViewUpcomingTaskReassignedToConnection" priority="5">
 		<var name="pageName" value="Tasks" />
 		<var name="taskDescription" value="Task Description" />

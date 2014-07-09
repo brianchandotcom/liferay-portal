@@ -45,12 +45,21 @@ if (ppid.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 
 String category = PortalUtil.getControlPanelCategory(ppid, themeDisplay);
 
-Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), ppid);
+Portlet portlet = null;
+
+if (Validator.isNotNull(ppid)) {
+	portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), ppid);
+}
 
 request.setAttribute("control_panel.jsp-ppid", ppid);
 %>
 
 <c:choose>
+	<c:when test="<%= portlet == null %>">
+			<div class="alert alert-info">
+				<liferay-ui:message key="you-do-not-have-permission-to-access-any-site-administration-application" />
+			</div>
+	</c:when>
 	<c:when test="<%= !themeDisplay.isStatePopUp() %>">
 
 		<%

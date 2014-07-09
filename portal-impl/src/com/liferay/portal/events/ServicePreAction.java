@@ -2100,14 +2100,18 @@ public class ServicePreAction extends Action {
 			if (controlPanelCategory.equals(
 					PortletCategoryKeys.SITE_ADMINISTRATION)) {
 
+				String redirect = currentURL;
+
 				Portlet firstPortlet =
 					PortalUtil.getFirstSiteAdministrationPortlet(themeDisplay);
 
-				String redirect = HttpUtil.setParameter(
-					currentURL, "p_p_id", firstPortlet.getPortletId());
+				if (firstPortlet != null) {
+					redirect = HttpUtil.setParameter(
+						redirect, "p_p_id", firstPortlet.getPortletId());
 
-				response.sendRedirect(
-					PortalUtil.getAbsoluteURL(request, redirect));
+					response.sendRedirect(
+						PortalUtil.getAbsoluteURL(request, redirect));
+				}
 			}
 			else {
 				List<Portlet> portlets = PortalUtil.getControlPanelPortlets(

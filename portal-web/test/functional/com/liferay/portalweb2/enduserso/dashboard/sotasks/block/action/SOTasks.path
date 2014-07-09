@@ -121,6 +121,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TASK_DUE_DATE</td>
+	<td>//tr[contains(.,'${key_taskDescription}')]//div[@class='due-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_DUE_DATE_PAST_DUE</td>
+	<td>//tr[contains(.,'${key_taskDescription}')]//div[@class='due-date past-due']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TASK_PROGRESS_BAR</td>
 	<td>//tr[contains(.,'${key_taskDescription}')]//div[contains(@class,'progress-picker')]</td>
 	<td></td>

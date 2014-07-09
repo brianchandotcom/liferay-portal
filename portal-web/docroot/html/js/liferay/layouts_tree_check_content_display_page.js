@@ -33,7 +33,7 @@ AUI.add(
 							cssClass += ' layout-page-invalid';
 
 							return new A.Do.AlterArgs(
-								'Added layout-page-invalid css class',
+								'Added layout-page-invalid CSS class',
 								[
 									node,
 									cssClass,
@@ -45,6 +45,8 @@ AUI.add(
 					},
 
 					_formatRootNode: function(rootConfig, children) {
+						var instance = this;
+
 						return new A.Do.AlterReturn(
 							'Modified label attribute',
 							A.merge(

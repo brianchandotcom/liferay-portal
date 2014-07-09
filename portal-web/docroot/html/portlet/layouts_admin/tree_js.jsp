@@ -52,18 +52,18 @@ if (saveState) {
 	var plugins = [];
 
 	<c:if test="<%= selectableTree %>">
-	plugins.push(
-		{
-			cfg: {
-				default: <%= defaultStateChecked %>
-			},
-			fn: A.Plugin.LayoutsTreeSelectable
-		}
-	);
+		plugins.push(
+			{
+				cfg: {
+					default: <%= defaultStateChecked %>
+				},
+				fn: A.Plugin.LayoutsTreeSelectable
+			}
+		);
 	</c:if>
 
 	<c:if test="<%= checkContentDisplayPage %>">
-	plugins.push(A.Plugin.LayoutsTreeCheckContentDisplayPage);
+		plugins.push(A.Plugin.LayoutsTreeCheckContentDisplayPage);
 	</c:if>
 
 	<c:if test="<%= saveState %>">
@@ -106,14 +106,15 @@ if (saveState) {
 	JSONObject layoutsJSON = JSONFactoryUtil.createJSONObject(LayoutsTreeUtil.getLayoutsJSON(request, groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true));
 	%>
 
+	var TreeViewType = Liferay.LayoutsTree;
+
 	<c:choose>
 		<c:when test="<%= draggableTree %>">
-		var layoutsTree = new Liferay.LayoutsTreeDD(
+			TreeViewType = Liferay.LayoutsTreeDD;
 		</c:when>
-		<c:otherwise>
-		var layoutsTree = new Liferay.LayoutsTree(
-		</c:otherwise>
 	</c:choose>
+
+	var layoutsTree = new TreeViewType(
 		{
 			boundingBox: '#<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output',
 			layouts: <%= layoutsJSON %>,

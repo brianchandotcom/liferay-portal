@@ -654,6 +654,26 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return null;
 	}
 
+	protected String formatJavaTerms(
+			String fileName, String content, String javaClassContent,
+			List<String> javaTermSortExclusions,
+			List<String> testAnnotationsExclusions)
+		throws Exception {
+
+		JavaClass javaClass = new JavaClass(
+			fileName, javaClassContent, StringPool.TAB);
+
+		String newJavaClassContent = javaClass.formatJavaTerms(
+			javaTermSortExclusions, testAnnotationsExclusions);
+
+		if (!javaClassContent.equals(newJavaClassContent)) {
+			return StringUtil.replaceFirst(
+				content, javaClassContent, newJavaClassContent);
+		}
+
+		return content;
+	}
+
 	protected Map<String, String> getCompatClassNamesMap() throws IOException {
 		if (_compatClassNamesMap != null) {
 			return _compatClassNamesMap;

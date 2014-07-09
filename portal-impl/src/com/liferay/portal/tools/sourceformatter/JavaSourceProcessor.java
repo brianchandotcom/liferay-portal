@@ -1088,6 +1088,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			newContent, fileName);
 
+		pos = newContent.indexOf("\npublic ");
+
+		if (pos != -1) {
+			String javaClassContent = newContent.substring(pos);
+
+			newContent = formatJavaTerms(
+				fileName, newContent, javaClassContent, _javaTermSortExclusions,
+				_testAnnotationsExclusions);
+		}
+
 		newContent = formatJava(fileName, absolutePath, newContent);
 
 		newContent = StringUtil.replace(newContent, "\n\n\n", "\n\n");
@@ -1799,36 +1809,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent = newContent.substring(0, newContent.length() - 1);
 		}
 
-		if (!content.equals(newContent)) {
-			return newContent;
-		}
-
-		return formatJavaTerms(fileName, content);
-	}
-
-	protected String formatJavaTerms(String fileName, String content)
-		throws Exception {
-
-		int pos = content.indexOf("\npublic ");
-
-		if (pos == -1) {
-			return content;
-		}
-
-		String javaClassContent = content.substring(pos);
-
-		JavaClass javaClass = new JavaClass(
-			fileName, javaClassContent, StringPool.TAB);
-
-		String newJavaClassContent = javaClass.formatJavaTerms(
-			_javaTermSortExclusions, _testAnnotationsExclusions);
-
-		if (!javaClassContent.equals(newJavaClassContent)) {
-			return StringUtil.replaceFirst(
-				content, javaClassContent, newJavaClassContent);
-		}
-
-		return content;
+		return newContent;
 	}
 
 	protected Tuple getCombinedLines(

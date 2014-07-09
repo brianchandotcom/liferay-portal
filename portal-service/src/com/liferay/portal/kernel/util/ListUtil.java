@@ -322,16 +322,6 @@ public class ListUtil {
 		return Collections.emptyList();
 	}
 
-	public static <T, V extends T> List<T> toList(List<V> vlist) {
-		List<T> tList = new ArrayList<T>(vlist);
-
-		for (V v : vlist) {
-			tList.add(v);
-		}
-
-		return tList;
-	}
-
 	public static List<Boolean> toList(boolean[] array) {
 		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<Boolean>();
@@ -418,6 +408,16 @@ public class ListUtil {
 		}
 
 		return aList;
+	}
+
+	public static <T, V extends T> List<T> toList(List<V> vlist) {
+		List<T> tList = new ArrayList<T>(vlist);
+
+		for (V v : vlist) {
+			tList.add(v);
+		}
+
+		return tList;
 	}
 
 	public static List<Long> toList(long[] array) {

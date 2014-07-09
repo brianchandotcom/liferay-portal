@@ -13,5 +13,9 @@
 		<case locator-key1="SOURCE_SCOPE_FIELD_FILTER_AND_VALUE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
+
+		<case locator-key1="SOURCE_SCOPE_NAME">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
 	</command>
 </definition>

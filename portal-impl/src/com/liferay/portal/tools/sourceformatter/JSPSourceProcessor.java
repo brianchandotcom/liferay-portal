@@ -325,6 +325,17 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		String content = fileUtil.read(file);
 
+		String newContent = format(fileName, absolutePath, content);
+
+		compareAndAutoFixContent(file, fileName, content, newContent);
+
+		return newContent;
+	}
+
+	protected String format(
+			String fileName, String absolutePath, String content)
+		throws Exception {
+
 		String oldContent = content;
 		String newContent = StringPool.BLANK;
 
@@ -446,9 +457,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				fileName, newContent, matcher.group(), null, null);
 		}
 
-		compareAndAutoFixContent(file, fileName, content, newContent);
+		if (content.equals(newContent)) {
+			return newContent;
+		}
 
-		return newContent;
+		return format(fileName, absolutePath, newContent);
 	}
 
 	protected String formatJSP(

@@ -29,28 +29,38 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_SITE_IFRAME</td>
+	<td>//iframe[contains(@name,'_20_selectGroup_iframe_')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FILE_IFRAME</td>
+	<td>//iframe[contains(@name,'_20_selectFileEntry')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BACK</td>
 	<td>//a[@id='_20_TabsBack']</td>
 	<td>Back</td>
 </tr>
 <tr>
-	<td>SITE_BUTTON</td>
-	<td>//input[@value='Select']</td>
+	<td>SITE_SELECT_BUTTON</td>
+	<td>//div[contains(.,'Site')]/div/button[contains(.,'Select')]</td>
 	<td>Site</td>
 </tr>
 <tr>
-	<td>DOCUMENT_BUTTON</td>
-	<td>//input[@id='_20_selectToFileEntryButton']</td>
+	<td>DOCUMENT_SELECT_BUTTON</td>
+	<td>//div[contains(.,'Document')]/div/button[contains(.,'Select')]</td>
 	<td>Document</td>
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//input[@value='Save']</td>
+	<td>//button[@type='submit' and contains(.,'Save')]</td>
 	<td>Save</td>
 </tr>
 <tr>
 	<td>CANCEL_BUTTON</td>
-	<td>//input[@value='Cancel']</td>
+	<td>//button[@type='button' and contains(.,'Cancel')]</td>
 	<td>Cancel</td>
 </tr>
 <tr>
@@ -60,79 +70,86 @@
 </tr>
 <!--PERMISSIONS-->
 <tr>
-	<td>PERMISSIONS_SELECT</td>
-	<td>//select[@id='_20_inputPermissionsViewRole']</td>
-	<td>Permissions Viewable by</td>
+	<td>PERMISSIONS_VIEWABLE_BY_SELECT</td>
+	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
+	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_MORE_OPTIONS</td>
-	<td>link=More Options »</td>
-	<td>More Options</td>
+	<td>PERMISSIONS_MORE_OPTIONS_LINK</td>
+	<td>//span[contains(@id,'inputPermissionsShowOptions')]/a[contains(.,'More Options')]</td>
+	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_HIDE_OPTIONS</td>
-	<td>link=« Hide Options</td>
-	<td>Hide Options</td>
+	<td>PERMISSIONS_HIDE_OPTIONS_LINK</td>
+	<td>//a[contains(@id,'inputPermissionsHideOptions') and contains (.,'Hide Options')]</td>
+	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_GUEST_ADD_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[2]/input</td>
-	<td>Add Discussion</td>
+	<td>PERMISSIONS_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_roleName}')]//input[@value='${key_permissionDefinitionKey}']</td>
+	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_GUEST_DELETE_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[3]/input</td>
-	<td>Delete</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SELECT_SITE-->
+<tr>
+	<td>SELECT_SITE_SEARCH_FIELD</td>
+	<td>//div[@class='form-search']//input[contains(@class,'search-query')]</td>
+	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_GUEST_DELETE_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[4]/input</td>
-	<td>Delete Discussion</td>
+	<td>SELECT_SITE_SEARCH_BUTTON</td>
+	<td>//div[@class='form-search']//button[contains(.,'Search')]</td>
+	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_GUEST_PERMISSIONS_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[5]/input</td>
-	<td>Permissions</td>
+	<td>SELECT_SITE_TABLE_NAME</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_siteName}')]/td[1]</td>
+	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_GUEST_UPDATE_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[6]/input</td>
-	<td>Update</td>
+	<td>SELECT_SITE_TABLE_TYPE</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_siteName}')]/td[2]</td>
+	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_GUEST_UPDATE_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[7]/input</td>
-	<td>Update Discussion</td>
+	<td>SELECT_SITE_TABLE_CHOOSE_BUTTON</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_siteName}')]/td[3]/button[contains(.,'Choose')]</td>
+	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_SITE_MEMBER_ADD_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[2]/input</td>
-	<td>Add Discussion</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SELECT_FILE-->
+<tr>
+	<td>SELECT_FILE_DOCUMENT</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_dmDocumentTitle}')]/td[1]</td>
+	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_SITE_MEMBER_DELETE_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[3]/input</td>
-	<td>Delete</td>
+	<td>SELECT_FILE_SIZE</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_dmDocumentTitle}')]/td[2]</td>
+	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_SITE_MEMBER_DELETE_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[4]/input</td>
-	<td>Delete Discussion</td>
+	<td>SELECT_FILE_DOWNLOADS</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_dmDocumentTitle}')]/td[3]</td>
+	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_SITE_MEMBER_PERMISSIONS_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[5]/input</td>
-	<td>Permissions</td>
+	<td>SELECT_FILE_LOCKED</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_dmDocumentTitle}')]/td[4]</td>
+	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_SITE_MEMBER_UPDATE_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[6]/input</td>
-	<td>Update</td>
-</tr>
-<tr>
-	<td>PERMISSIONS_SITE_MEMBER_UPDATE_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[7]/input</td>
-	<td>Update Discussion</td>
+	<td>SELECT_FILE_CHOOSE_BUTTON</td>
+	<td>//tbody[@class='table-data']/tr[contains(.,'${key_dmDocumentTitle}')]/td[5]/button[contains(.,'Choose')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

@@ -35,12 +35,6 @@ if (folderId > 0) {
 	folder = DLAppServiceUtil.getFolder(folderId);
 }
 
-long repositoryId = scopeGroupId;
-
-if (folder != null) {
-	repositoryId = folder.getRepositoryId();
-}
-
 String ckEditorFuncNum = DocumentSelectorUtil.getCKEditorFuncNum(request);
 String eventName = ParamUtil.getString(request, "eventName");
 boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
@@ -102,7 +96,7 @@ portletURL.setParameter("type", type);
 					<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_LIBRARY %>" var="addFolderURL">
 						<portlet:param name="struts_action" value="/document_library/edit_folder" />
 						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+						<portlet:param name="repositoryId" value="<%= String.valueOf(scopeGroupId) %>" />
 						<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
 					</liferay-portlet:renderURL>
 

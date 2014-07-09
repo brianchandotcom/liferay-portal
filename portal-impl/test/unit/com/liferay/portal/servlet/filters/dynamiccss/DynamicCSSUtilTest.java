@@ -27,14 +27,20 @@ public class DynamicCSSUtilTest {
 			"@import url('//main?p=2&test=1');",
 			"@import url(http://main?test=1);",
 			"@import url(\"http://main?test=1\");",
-			"@import url('http://main?p=2&test=1');"
+			"@import url('http://main?p=2&test=1');",
+			"import \"file\"; @import url(http://main?test=1);",
+			"import \"file\"; @import url(\"http://main?test=1\");",
+			"import \"file\"; @import url('http://main?p=2&test=1');"
 		};
 		String[] contents = {
 			"@import url(//main);", "@import url(\"//main\");",
 			"@import url('//main');", "@import url(//main?p=2);",
 			"@import url(\"//main?p=2\");", "@import url('//main?p=2');",
 			"@import url(http://main);", "@import url(\"http://main\");",
-			"@import url('http://main?p=2');"
+			"@import url('http://main?p=2');",
+			"import \"file\"; @import url(http://main);",
+			"import \"file\"; @import url(\"http://main\");",
+			"import \"file\"; @import url('http://main?p=2');"
 		};
 
 		for (int i = 0; i < propagatedQueryStrings.length; i++) {

@@ -970,6 +970,18 @@
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="editAnnouncementNotificationsViaMyAccount">
+		<execute action="Myaccount#assertClick" locator-key1="MENU_MISCELLANEOUS_ANNOUNCEMENTS" value1="Announcements" />
+
+		<var name="key_announcementType" value="${announcementType}" />
+		<var name="key_notificationType" value="${notificationType}" />
+
+		<execute action="Myaccount#check" locator-key1="ANNOUNCEMENTS_NOTIFICATION_CHECKBOX" />
+		<execute action="Myaccount#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="editDetailsViaMyAccount">
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
 		<execute action="Myaccount#assertClick" locator-key1="MENU_USER_INFORMATION_DETAILS" value1="Details" />

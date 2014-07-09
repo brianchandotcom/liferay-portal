@@ -75,6 +75,48 @@
 		</if>
 
 		<if>
+			<equals arg1="${dueTime}" arg2="true" />
+			<then>
+				<if>
+					<condition action="SOTasksAdd#isElementNotPresent" locator-key1="DUE_DATE_FIELD" />
+					<then>
+						<execute action="SOTasksAdd#assertClick" locator-key1="TASK_ADD_DUE_DATE_LINK" value1="Add Due Date" />
+					</then>
+				</if>
+
+				<var locator-key="DUE_DATE_HOUR" name="displayDateHour" path="SOTasksAdd" />
+				<var name="displayDateHourLength" value="${displayDateHour?length()}" />
+
+				<if>
+					<equals arg1="${displayDateHourLength}" arg2="1" />
+					<then>
+						<var name="displayDateHour" value="0${displayDateHour}" />
+					</then>
+				</if>
+
+				<var locator-key="DUE_DATE_MINUTE" name="displayDateMinute" path="SOTasksAdd" />
+				<var name="displayDateMinuteFuture" value="${displayDateMinute?increment()}" />
+				<var name="displayDateMinuteFuture" value="${displayDateMinuteFuture?increment()}" />
+				<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />
+
+				<if>
+					<equals arg1="${displayDateMinuteFutureLength}" arg2="1" />
+					<then>
+						<var name="displayDateMinuteFuture" value="0${displayDateMinuteFuture}" />
+					</then>
+				</if>
+
+				<var locator-key="DUE_DATE_MERIDIAN" name="displayDateMeridian" path="SOTasksAdd" />
+				<var name="displayDateMeridian" value="${displayDateMeridian?replace('0', 'AM')}" />
+				<var name="displayDateMeridian" value="${displayDateMeridian?replace('1', 'PM')}" />
+
+				<var name="displayDate" value="${displayDateHour}:${displayDateMinuteFuture} ${displayDateMeridian}" />
+
+				<execute action="SOTasksAdd#type" locator-key1="DUE_DATE_TIME_FIELD" value1="${displayDate}" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="numberOfTags" />
 			<then>
 				<var name="tagNumber" value="0" />
@@ -555,6 +597,21 @@
 				<execute action="SOTasks#assertTextEquals" locator-key1="TASK_REPORTER" value1="Reporter: ${taskReporter}" />
 
 				<if>
+					<equals arg1="${dueDateUpcoming}" arg2="true" />
+					<then>
+						<execute action="SOTasks#assertVisible" locator-key1="TASK_DUE_DATE" />
+						<execute action="SOTasks#assertElementNotPresent" locator-key1="TASK_DUE_DATE_PAST_DUE" />
+					</then>
+					<elseif>
+						<equals arg1="${dueDatePastDue}" arg2="true" />
+						<then>
+							<execute action="SOTasks#assertVisible" locator-key1="TASK_DUE_DATE_PAST_DUE" />
+							<execute action="SOTasks#assertElementNotPresent" locator-key1="TASK_DUE_DATE" />
+						</then>
+					</elseif>
+				</if>
+
+				<if>
 					<equals arg1="${taskPriority}" arg2="High" />
 					<then>
 						<execute action="SOTasks#assertClick" locator-key1="TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
@@ -683,6 +740,18 @@
 				<equals arg1="${dueDateEdit}" arg2="true" />
 				<then>
 					<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_DUE_DATE" value1="4/17/17" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${dueDateUpcoming}" arg2="true" />
+				<then>
+					<execute action="SOTasksTask#assertVisible" locator-key1="TASK_DUE_DATE" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${dueDatePastDue}" arg2="true" />
+				<then>
+					<execute action="SOTasksTask#assertVisible" locator-key1="TASK_DUE_DATE" />
 				</then>
 			</elseif>
 			<else>

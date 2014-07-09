@@ -91,6 +91,22 @@ public class AssetCategoryIndexer extends BaseIndexer {
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 
+		long[] parentCategoryIds = (long[])searchContext.getAttribute(
+			Field.ASSET_PARENT_CATEGORY_IDS);
+
+		if (!ArrayUtil.isEmpty(parentCategoryIds)) {
+			BooleanQuery parentCategoryQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
+
+			for (long parentCategoryId : parentCategoryIds) {
+				parentCategoryQuery.addTerm(
+					Field.ASSET_PARENT_CATEGORY_ID,
+					String.valueOf(parentCategoryId));
+			}
+
+			contextQuery.add(parentCategoryQuery, BooleanClauseOccur.MUST);
+		}
+
 		long[] vocabularyIds = (long[])searchContext.getAttribute(
 			Field.ASSET_VOCABULARY_IDS);
 
@@ -162,6 +178,8 @@ public class AssetCategoryIndexer extends BaseIndexer {
 		addSearchAssetCategoryTitles(
 			document, Field.ASSET_CATEGORY_TITLE, categories);
 
+		document.addKeyword(
+			Field.ASSET_PARENT_CATEGORY_ID, category.getParentCategoryId());
 		document.addKeyword(
 			Field.ASSET_VOCABULARY_ID, category.getVocabularyId());
 		document.addLocalizedText(

@@ -48,6 +48,12 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 	}
 
 	@Override
+	public int getCategoriesCount() {
+		return AssetCategoryLocalServiceUtil.getVocabularyCategoriesCount(
+			getVocabularyId());
+	}
+
+	@Override
 	public long[] getRequiredClassNameIds() {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
 			getVocabularySettingsHelper();

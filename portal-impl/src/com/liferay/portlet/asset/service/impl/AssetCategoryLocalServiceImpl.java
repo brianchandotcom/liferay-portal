@@ -545,7 +545,20 @@ public class AssetCategoryLocalServiceImpl
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
-			companyId, groupIds, title, vocabularyIds, start, end);
+			companyId, groupIds, title, new long[0], vocabularyIds, start, end);
+
+		return searchCategories(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<AssetCategory> searchCategories(
+			long companyId, long[] groupIds, String title,
+			long[] parentCategoryIds, long[] vocabularyIds, int start, int end)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupIds, title, parentCategoryIds, vocabularyIds, start,
+			end);
 
 		return searchCategories(searchContext);
 	}
@@ -684,14 +697,15 @@ public class AssetCategoryLocalServiceImpl
 	}
 
 	protected SearchContext buildSearchContext(
-		long companyId, long[] groupIds, String title, long[] vocabularyIds,
-		int start, int end) {
+		long companyId, long[] groupIds, String title, long[] parentCategoryIds,
+		long[] vocabularyIds, int start, int end) {
 
 		SearchContext searchContext = new SearchContext();
 
 		Map<String, Serializable> attributes =
 			new HashMap<String, Serializable>();
 
+		attributes.put(Field.ASSET_PARENT_CATEGORY_IDS, parentCategoryIds);
 		attributes.put(Field.ASSET_VOCABULARY_IDS, vocabularyIds);
 		attributes.put(Field.TITLE, title);
 

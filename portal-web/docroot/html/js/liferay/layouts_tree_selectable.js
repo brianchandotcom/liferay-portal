@@ -20,7 +20,7 @@ AUI.add(
 
 				EXTENDS: A.Plugin.Base,
 
-				NAME: 'layouts-tree-selectable',
+				NAME: 'layoutstreeselectable',
 
 				NS: 'selectable',
 
@@ -28,7 +28,7 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
-						var eventHandles = [
+						instance._eventHandles = [
 							instance.afterHostEvent('*:checkedChange', instance._onNodeCheckedChange, instance),
 							instance.afterHostEvent('*:childrenChange', instance._onNodeChildrenChange, instance),
 							instance.afterHostEvent('append', instance._onTreeAppend, instance),
@@ -37,8 +37,6 @@ AUI.add(
 							instance.doAfter('_formatNodeLabel', instance._formatNodeLabel, instance),
 							instance.doAfter('_formatRootNode', instance._formatRootNode, instance)
 						];
-
-						instance._eventHandles = eventHandles;
 					},
 
 					destructor: function() {
@@ -65,8 +63,6 @@ AUI.add(
 					},
 
 					_formatNodeLabel: function(node, cssClass, label, title) {
-						var instance = this;
-
 						return new A.Do.AlterReturn(
 							'Modified node label',
 							Lang.sub(

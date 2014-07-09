@@ -5,6 +5,8 @@ AUI.add(
 
 		var Lang = A.Lang;
 
+		var STR_BOUNDING_BOX = 'boundingBox';
+
 		var STR_CHECKED_NODES = 'checkedNodes';
 
 		var STR_HOST = 'host';
@@ -24,7 +26,7 @@ AUI.add(
 
 				EXTENDS: A.Plugin.Base,
 
-				NAME: 'layouts-tree-state',
+				NAME: 'layoutstreestate',
 
 				NS: 'state',
 
@@ -32,9 +34,7 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
-						var host = instance.get(STR_HOST);
-
-						var eventHandles = [
+						instance._eventHandles = [
 							instance.afterHostEvent('*:childrenChange', instance._onNodeChildrenChange, instance),
 							instance.afterHostEvent('*:expandedChange', instance._onNodeExpandedChange, instance),
 							instance.afterHostEvent('*:ioSuccess', instance._onNodeIOSuccess, instance),
@@ -44,8 +44,6 @@ AUI.add(
 							instance.afterHostEvent('selectableTreeAppend', instance._onSelectableTreeAppend, instance),
 							instance.afterHostEvent('selectableTreeRender', instance._onSelectableTreeRender, instance)
 						];
-
-						instance._eventHandles = eventHandles;
 					},
 
 					destructor: function() {
@@ -68,7 +66,9 @@ AUI.add(
 							{
 								after: {
 									success: function(event) {
-										var responseData = this.get('responseData');
+										var instance = this;
+
+										var responseData = instance.get('responseData');
 
 										if (callback && responseData) {
 											callback(responseData);
@@ -109,7 +109,7 @@ AUI.add(
 
 						var host = instance.get(STR_HOST);
 
-						var treeId = host.get('boundingBox').attr('data-treeid');
+						var treeId = host.get(STR_BOUNDING_BOX).attr('data-treeid');
 
 						var expanded = event.newVal;
 
@@ -140,9 +140,9 @@ AUI.add(
 
 								map[layoutId] = Math.ceil(children.length / paginationLimit) * paginationLimit;
 							}
-						}
+						};
 
-						var treeId = host.get('boundingBox').attr('data-treeid');
+						var treeId = host.get(STR_BOUNDING_BOX).attr('data-treeid');
 
 						var root = host.get('root');
 
@@ -160,7 +160,7 @@ AUI.add(
 								catch (e) {
 								}
 
-								updatePaginationMap(paginationMap, event.target)
+								updatePaginationMap(paginationMap, event.target);
 
 								event.target.eachParent(
 									function(parent) {
@@ -168,7 +168,7 @@ AUI.add(
 									}
 								);
 
-								var sessionClickData = {}
+								var sessionClickData = {};
 
 								sessionClickData[key] = A.JSON.stringify(paginationMap);
 
@@ -182,7 +182,7 @@ AUI.add(
 
 						var host = instance.get(STR_HOST);
 
-						var treeId = host.get('boundingBox').attr('data-treeid');
+						var treeId = host.get(STR_BOUNDING_BOX).attr('data-treeid');
 
 						var newVal = event.checked;
 						var target = event.node;
@@ -254,7 +254,7 @@ AUI.add(
 						var index = AArray.indexOf(checkedNodes, plid);
 
 						if (state) {
-							if (index == -1) {
+							if (index === -1) {
 								checkedNodes.push(plid);
 							}
 						}

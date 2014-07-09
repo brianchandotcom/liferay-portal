@@ -7,21 +7,19 @@ AUI.add(
 			{
 				EXTENDS: A.Plugin.Base,
 
-				NAME: 'layouts-tree-check-content-display-page',
+				NAME: 'layoutstreecheckcontentdisplaypage',
 
 				NS: 'checkContentDisplayPage',
 
 				prototype: {
-					initializer: function(config) {
+					initializer: function() {
 						var instance = this;
 
-						var eventHandles = [
+						instance._eventHandles = [
 							instance.afterHostEvent('append', instance._onTreeAppend, instance),
 							instance.doAfter('_formatRootNode', instance._formatRootNode, instance),
 							instance.doBefore('_formatNodeLabel', instance._beforeFormatNodeLabel, instance)
 						];
-
-						instance._eventHandles = eventHandles;
 					},
 
 					destructor: function() {
@@ -31,21 +29,22 @@ AUI.add(
 					},
 
 					_beforeFormatNodeLabel: function(node, cssClass, label, title) {
-						var instance = this;
-
 						if (!node.contentDisplayPage) {
 							cssClass += ' layout-page-invalid';
 
 							return new A.Do.AlterArgs(
 								'Added layout-page-invalid css class',
-								[node, cssClass, label, title]
+								[
+									node,
+									cssClass,
+									label,
+									title
+								]
 							);
 						}
 					},
 
 					_formatRootNode: function(rootConfig, children) {
-						var instance = this;
-
 						return new A.Do.AlterReturn(
 							'Modified label attribute',
 							A.merge(

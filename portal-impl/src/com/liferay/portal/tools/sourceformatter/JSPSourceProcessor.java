@@ -325,18 +325,18 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		String content = fileUtil.read(file);
 
-		String oldContent = content;
-		String newContent = StringPool.BLANK;
+		String newContent = format(fileName, absolutePath, content);
 
-		while (true) {
-			newContent = formatJSP(fileName, absolutePath, oldContent);
+		compareAndAutoFixContent(file, fileName, content, newContent);
 
-			if (oldContent.equals(newContent)) {
-				break;
-			}
+		return newContent;
+	}
 
-			oldContent = newContent;
-		}
+	protected String format(
+			String fileName, String absolutePath, String content)
+		throws Exception {
+
+		String newContent = formatJSP(fileName, absolutePath, content);
 
 		newContent = StringUtil.replace(
 			newContent,
@@ -439,9 +439,18 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		newContent = fixIncorrectParameterTypeForLanguageUtil(
 			newContent, true, fileName);
 
-		compareAndAutoFixContent(file, fileName, content, newContent);
+		Matcher matcher = _javaClassPattern.matcher(newContent);
 
-		return newContent;
+		if (matcher.find()) {
+			newContent = formatJavaTerms(
+				fileName, newContent, matcher.group(), null, null);
+		}
+
+		if (content.equals(newContent)) {
+			return newContent;
+		}
+
+		return format(fileName, absolutePath, newContent);
 	}
 
 	protected String formatJSP(
@@ -1190,6 +1199,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private List<String> _importClassNames = new ArrayList<String>();
 	private Map<String, Integer> _importCountMap =
 		new HashMap<String, Integer>();
+	private Pattern _javaClassPattern = Pattern.compile(
+		"\n(private|protected|public).* class ([\\s\\S]*?)\n\\}\n");
 	private Map<String, String> _jspContents = new HashMap<String, String>();
 	private Pattern _jspImportPattern = Pattern.compile(
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);

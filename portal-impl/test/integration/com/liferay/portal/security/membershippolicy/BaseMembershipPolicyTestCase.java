@@ -20,6 +20,10 @@ import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.UserTestUtil;
+import com.liferay.registry.ServiceRegistration;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
@@ -64,6 +68,14 @@ public abstract class BaseMembershipPolicyTestCase {
 
 	@After
 	public void tearDown() throws Exception {
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
+		_serviceRegistrations.clear();
+
 		_propagateMembership = false;
 		_propagateRoles = false;
 		_userIds = new long[2];
@@ -86,6 +98,9 @@ public abstract class BaseMembershipPolicyTestCase {
 
 	@DeleteAfterTestRun
 	protected Group group;
+
+	protected Set<ServiceRegistration<?>> _serviceRegistrations =
+		new HashSet<ServiceRegistration<?>>();
 
 	private static boolean _propagateMembership;
 	private static boolean _propagateRoles;

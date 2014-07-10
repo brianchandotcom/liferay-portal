@@ -101,7 +101,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 		if (container) {
 			container.swallowEvent('click', true);
 
-			var tree = container.getData('treeInstance');
+			var tree = container.getData('tree-view');
 
 			tree.after('lastSelectedChange', setSelectedPage);
 		}

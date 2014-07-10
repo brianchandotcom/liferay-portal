@@ -412,7 +412,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 							var processTreeTask = A.debounce(
 								function() {
-									treeViewInstance = treeContainer.getData('treeInstance');
+									treeViewInstance = treeContainer.getData('tree-view');
 
 									if (treeViewInstance) {
 										if (publicPages) {

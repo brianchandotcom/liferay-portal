@@ -1154,7 +1154,7 @@ AUI.add(
 						if (instance._layoutsExportTreeOutput) {
 							var layoutIdsInput = instance.byId('layoutIds');
 
-							var treeView = instance._layoutsExportTreeOutput.getData('treeInstance');
+							var treeView = instance._layoutsExportTreeOutput.getData('tree-view');
 
 							var rootNode = treeView.item(0);
 

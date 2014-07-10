@@ -20,6 +20,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -137,10 +138,6 @@ public class EhcacheConfigurationUtil {
 		boolean clearCachePeerProviderConfigurations, boolean usingDefault,
 		CacheConfiguration cacheConfiguration) {
 
-		if (cacheConfiguration == null) {
-			return;
-		}
-
 		if (!PropsValues.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED) {
 			cacheConfiguration.addBootstrapCacheLoaderFactory(null);
 		}
@@ -198,6 +195,31 @@ public class EhcacheConfigurationUtil {
 			cacheEventListenerFactoryConfiguration);
 	}
 
+	private static List<CacheConfiguration> _getAllCacheConfigurations(
+		Configuration configuration) {
+
+		List<CacheConfiguration> cacheConfigurations =
+			new ArrayList<CacheConfiguration>();
+
+		CacheConfiguration defaultCacheConfiguration =
+			configuration.getDefaultCacheConfiguration();
+
+		if (defaultCacheConfiguration != null) {
+			cacheConfigurations.add(defaultCacheConfiguration);
+		}
+
+		Map<String, CacheConfiguration> configurations =
+			configuration.getCacheConfigurations();
+
+		for (CacheConfiguration value : configurations.values()) {
+			if (value != null) {
+				cacheConfigurations.add(value);
+			}
+		}
+
+		return cacheConfigurations;
+	}
+
 	private static Configuration _processDefaultClusterLinkReplication(
 		Configuration configuration, boolean usingDefault,
 		boolean enableClusterLinkReplication) {
@@ -217,19 +239,10 @@ public class EhcacheConfigurationUtil {
 				clear();
 		}
 
-		CacheConfiguration defaultCacheConfiguration =
-			configuration.getDefaultCacheConfiguration();
+		List<CacheConfiguration> cacheConfigurations =
+			_getAllCacheConfigurations(configuration);
 
-		_configureCacheEventListeners(
-			enableClusterLinkReplication, clearCachePeerProviderConfigurations,
-			usingDefault, defaultCacheConfiguration);
-
-		Map<String, CacheConfiguration> cacheConfigurations =
-			configuration.getCacheConfigurations();
-
-		for (CacheConfiguration cacheConfiguration :
-				cacheConfigurations.values()) {
-
+		for (CacheConfiguration cacheConfiguration : cacheConfigurations) {
 			_configureCacheEventListeners(
 				enableClusterLinkReplication,
 				clearCachePeerProviderConfigurations, usingDefault,

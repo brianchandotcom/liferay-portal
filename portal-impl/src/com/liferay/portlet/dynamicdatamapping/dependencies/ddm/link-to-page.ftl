@@ -24,7 +24,7 @@
 		</#if>
 	</#if>
 
-	<@aui.select helpMessage=escape(fieldStructure.tip) name=namespacedFieldName label=escape(label) required=required>
+	<@aui.select helpMessage=escape(fieldStructure.tip) name=namespacedFieldName label=escape(label) required=required showEmptyOption=!required>
 		<#if (selectedLayout?? && !layoutPermission.contains(permissionChecker, selectedLayout, "VIEW"))>
 			<optgroup label="${languageUtil.get(requestedLocale, "current")}">
 				<@getLayoutOption

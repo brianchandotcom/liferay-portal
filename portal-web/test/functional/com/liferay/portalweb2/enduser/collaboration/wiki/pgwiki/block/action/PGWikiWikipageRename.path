@@ -31,12 +31,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_RENAME</td>
-	<td>//ul[@class='nav nav-tabs']//li/a[contains(.,'Rename')]</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]//li/a[contains(.,'Rename')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_CHANGE_PARENT</td>
-	<td>//ul[@class='nav nav-tabs']//li/a[contains(.,'Change Parent')]</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]//li/a[contains(.,'Change Parent')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,7 +66,7 @@
 </tr>
 <tr>
 	<td>RENAME_BUTTON</td>
-	<td>//button[@class='btn' and contains(.,'Rename')]</td>
+	<td>//button[contains(@class,'btn') and contains(.,'Rename')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>CHANGE_PARENT_CURRENT_PARENT_FIELD</td>
-	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(@class,'field-wrapper')]//input</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(@class,'resource-wrapper')]/input</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,12 +107,12 @@
 </tr>
 <tr>
 	<td>CHANGE_PARENT_CHANGE_PARENT_BUTTON</td>
-	<td>//button[@type='submit' and contains(.,'Change Parent')]</td>
+	<td>//button[contains(@type,'submit') and contains(.,'Change Parent')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CHANGE_PARENT_CHANGE_PARENT_CANCEL_BUTTON</td>
-	<td>xpath=(//button[@class='btn btn-cancel' and contains(.,'Cancel')])[2]</td>
+	<td>xpath=(//a[contains(@class,'btn btn-cancel') and contains(.,'Cancel')])[2]</td>
 	<td></td>
 </tr>
 </tbody>

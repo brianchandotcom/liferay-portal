@@ -17,7 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.util;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
-import com.liferay.portlet.dynamicdatamapping.BaseDDMTest;
+import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
@@ -48,7 +48,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 		DDMStructureLocalServiceUtil.class, DDMTemplateLocalServiceUtil.class,
 		LocaleUtil.class
 	})
-public class DDMFormTemplateSynchonizerTest extends BaseDDMTest {
+public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 	@Before
 	public void setUp() throws Exception {

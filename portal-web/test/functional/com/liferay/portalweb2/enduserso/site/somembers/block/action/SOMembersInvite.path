@@ -45,6 +45,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIND_MEMBERS_USER_PENDING</td>
+	<td>//div[contains(@class,'pending-member-request')]/span[contains(.,'${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -106,15 +106,7 @@
 		<execute action="Dockbar#assertClick" locator-key1="ADD_APPLICATION_LINK" value1="Applications" />
 		<execute action="Dockbar#type" locator-key1="ADD_APPLICATION_SEARCH_FIELD" value1="${portletName}" />
 
-		<if>
-			<equals arg1="${dragAndDropPortlet}" arg2="false" />
-			<then>
-				<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
-			</then>
-			<else>
-				<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'drag-content-item')]" />
-			</else>
-		</if>
+		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
 
 		<if>
 			<or>
@@ -129,25 +121,7 @@
 			</then>
 		</if>
 
-		<if>
-			<equals arg1="${dragAndDropPortlet}" arg2="false" />
-			<then>
-				<execute action="Dockbar#assertClick" locator1="${portletLocator}" value1="Add" />
-			</then>
-			<else>
-				<if>
-					<equals arg1="${portletDropzone}" arg2="column1" />
-					<then>
-						<var name="portletDropzoneKey" value="PAGE_COLUMN_1_PORTLET_DROPZONE" />
-					</then>
-					<else>
-						<var name="portletDropzoneKey" value="PAGE_COLUMN_2_PORTLET_DROPZONE" />
-					</else>
-				</if>
-
-				<execute action="Home#dragAndDrop" locator-key2="${portletDropzoneKey}" locator1="${portletLocator}" value1="${portletName}" />
-			</else>
-		</if>
+		<execute action="Dockbar#assertClick" locator1="${portletLocator}" value1="Add" />
 
 		<echo message="Adding ${portletName} portlet..." />
 
@@ -161,40 +135,6 @@
 				<execute action="Dockbar#pause" locator1="30000" />
 			</then>
 		</if>
-	</command>
-
-	<command name="addPGViaAdd">
-		<var name="portletTypeKey" value="PORTLET" />
-
-		<execute macro="Portlet#addPGCmd">
-			<var name="dragAndDropPortlet" value="false" />
-			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<var name="i" value="1" />
-		<var name="key_portletName" value="${portletName}" />
-
-		<while>
-			<not>
-				<or>
-					<condition action="Home#isElementPresent" locator-key1="${portletTypeKey}" />
-					<equals arg1="${i}" arg2="3" />
-				</or>
-			</not>
-			<then>
-				<var name="i" value="${i?increment()}" />
-
-				<echo message="The xpath ${portletTypeKey} could not be found. Refreshing the page. Attempt number ${i}..." />
-
-				<execute action="Home#refresh" />
-
-				<execute macro="Portlet#addPGCmd">
-					<var name="portletName" value="${portletName}" />
-				</execute>
-			</then>
-		</while>
-
-		<execute action="Home#assertElementPresent" locator-key1="${portletTypeKey}" />
 	</command>
 
 	<command name="configureCustomTitleViaLookandfeelPG">

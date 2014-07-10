@@ -35,16 +35,16 @@
 		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_BODY" value1="${contentBody}" />
 	</command>
 
+	<command name="viewNotification">
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
+		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_GENERIC" value1="${notificationContent}" />
+	</command>
+
 	<command name="viewUpdatedContent">
 		<var name="assetType" value="${assetType?lowercase()}" />
 		<var name="key_contentBody" value="${contentBody}" />
 
 		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_TITLE" value1="${user} updated a ${assetType}." />
 		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_BODY" value1="${contentBody}" />
-	</command>
-
-	<command name="viewNotification">
-		<execute action="PGNotificationsdockbar#assertClick" locator-key1="NOTIFICATION_COUNT" value1="${notificationCount}" />
-		<execute action="PGNotificationsdockbar#assertTextEquals" locator-key1="NOTIFICATION_CONTENT_GENERIC" value1="${notificationContent}" />
 	</command>
 </definition>

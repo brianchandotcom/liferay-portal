@@ -13,7 +13,7 @@
 		<execute macro="DDLDataDefinition#tearDownCP" />
 	</tear-down>
 
-	<command name="AddProcessWithDateDefinitionFieldsDefinition" priority="5">
+	<command name="AddProcessWithDataDefinitionFieldsDefinition" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />
 		<var name="ddlRecordFieldData" value="Test" />

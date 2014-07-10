@@ -17,7 +17,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="CompleteProcessAndViewNotifcations" priority="5">
+	<command name="CompleteProcessAndViewNotifications" priority="5">
 		<property name="portlet.plugins.includes" value="notifications-portlet" />
 
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
@@ -472,7 +472,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectAndResubmitProcessAndViewNotifcations" priority="5">
+	<command name="RejectAndResubmitProcessAndViewNotifications" priority="5">
 		<property name="portlet.plugins.includes" value="notifications-portlet" />
 
 		<var name="dataDefinitionDescription" value="Data Definition Description" />

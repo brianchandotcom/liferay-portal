@@ -216,6 +216,10 @@ public class PortletDisplay implements Serializable {
 		return _portletName;
 	}
 
+	public String getPortletResource() {
+		return _portletResource;
+	}
+
 	public PortletPreferences getPortletSetup() {
 		return _portletSetup;
 	}

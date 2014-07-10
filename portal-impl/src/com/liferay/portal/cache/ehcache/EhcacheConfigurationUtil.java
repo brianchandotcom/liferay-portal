@@ -133,29 +133,6 @@ public class EhcacheConfigurationUtil {
 		return cacheEventListenerProperties;
 	}
 
-	private static void _configureCacheEventListeners(
-		boolean enableClusterLinkReplication,
-		boolean clearCachePeerProviderConfigurations, boolean usingDefault,
-		CacheConfiguration cacheConfiguration) {
-
-		if (!PropsValues.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED) {
-			cacheConfiguration.addBootstrapCacheLoaderFactory(null);
-		}
-
-		if (clearCachePeerProviderConfigurations ||
-			(!usingDefault &&
-			 _isUsingLiferayCacheEventListenerFactory(cacheConfiguration))) {
-
-			String cacheEventListenerProperties =
-				_clearCacheEventListenerConfigurations(cacheConfiguration);
-
-			if (enableClusterLinkReplication) {
-				_enableClusterLinkReplication(
-					cacheConfiguration, cacheEventListenerProperties);
-			}
-		}
-	}
-
 	private static void _enableClusterLinkReplication(
 		CacheConfiguration cacheConfiguration,
 		String cacheEventListenerProperties) {
@@ -246,10 +223,23 @@ public class EhcacheConfigurationUtil {
 			_getAllCacheConfigurations(configuration);
 
 		for (CacheConfiguration cacheConfiguration : cacheConfigurations) {
-			_configureCacheEventListeners(
-				enableClusterLinkReplication,
-				clearCachePeerProviderConfigurations, usingDefault,
-				cacheConfiguration);
+			if (!PropsValues.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED) {
+				cacheConfiguration.addBootstrapCacheLoaderFactory(null);
+			}
+
+			if (clearCachePeerProviderConfigurations ||
+				(!usingDefault &&
+				 _isUsingLiferayCacheEventListenerFactory(
+					 cacheConfiguration))) {
+
+				String cacheEventListenerProperties =
+					_clearCacheEventListenerConfigurations(cacheConfiguration);
+
+				if (enableClusterLinkReplication) {
+					_enableClusterLinkReplication(
+						cacheConfiguration, cacheEventListenerProperties);
+				}
+			}
 		}
 
 		return configuration;

@@ -142,31 +142,9 @@ public class EhcacheConfigurationUtil {
 			cacheConfiguration.addBootstrapCacheLoaderFactory(null);
 		}
 
-		List<CacheEventListenerFactoryConfiguration>
-			cacheEventListenerFactoryConfigurations =
-				cacheConfiguration.getCacheEventListenerConfigurations();
-
-		boolean usingLiferayCacheEventListenerFactory = false;
-
-		for (CacheEventListenerFactoryConfiguration
-				cacheEventListenerFactoryConfiguration :
-					cacheEventListenerFactoryConfigurations) {
-
-			String className =
-				cacheEventListenerFactoryConfiguration.
-					getFullyQualifiedClassPath();
-
-			if (className.equals(
-					LiferayCacheEventListenerFactory.class.getName())) {
-
-				usingLiferayCacheEventListenerFactory = true;
-
-				break;
-			}
-		}
-
 		if (clearCachePeerProviderConfigurations ||
-			(!usingDefault && usingLiferayCacheEventListenerFactory)) {
+			(!usingDefault &&
+			 _isUsingLiferayCacheEventListenerFactory(cacheConfiguration))) {
 
 			String cacheEventListenerProperties =
 				_clearCacheEventListenerConfigurations(cacheConfiguration);
@@ -218,6 +196,31 @@ public class EhcacheConfigurationUtil {
 		}
 
 		return cacheConfigurations;
+	}
+
+	private static boolean _isUsingLiferayCacheEventListenerFactory(
+		CacheConfiguration cacheConfiguration) {
+
+		List<CacheEventListenerFactoryConfiguration>
+			cacheEventListenerFactoryConfigurations =
+				cacheConfiguration.getCacheEventListenerConfigurations();
+
+		for (CacheEventListenerFactoryConfiguration
+				cacheEventListenerFactoryConfiguration :
+					cacheEventListenerFactoryConfigurations) {
+
+			String className =
+				cacheEventListenerFactoryConfiguration.
+					getFullyQualifiedClassPath();
+
+			if (className.equals(
+					LiferayCacheEventListenerFactory.class.getName())) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static Configuration _processDefaultClusterLinkReplication(

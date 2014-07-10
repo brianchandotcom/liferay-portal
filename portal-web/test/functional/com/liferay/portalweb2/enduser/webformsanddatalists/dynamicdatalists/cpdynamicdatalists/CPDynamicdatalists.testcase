@@ -1059,6 +1059,89 @@
 		</execute>
 	</command>
 
+	<command name="AddListRecordWithGeolocationField" priority="5">
+		<var name="ddlDataDefinitionName" value="Data Definition" />
+		<var name="ddlListName" value="List Name" />
+		<var name="ddlRecordFieldData" value="34.028623, -117.810337" />
+		<var name="ddlRecordFieldDataFormatted" value="Latitude: 34.029, Longitude: -117.81" />
+		<var name="field" value="Geolocation" />
+		<var name="fieldFieldLabel" value="Geolocation" />
+		<var name="fieldName" value="Geolocation" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#viewCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP">
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldGeolocation">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#viewCP">
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
+
+		<execute macro="DDLRecord#viewFirstFieldCP">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldDataFormatted}" />
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
+	</command>
+
 	<command name="AddListRecordWithHTMLField" priority="5">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />

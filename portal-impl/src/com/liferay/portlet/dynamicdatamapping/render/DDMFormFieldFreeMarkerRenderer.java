@@ -179,10 +179,11 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		return total;
 	}
 
-	protected String getDDMFormFieldOptionsHTML(
-		HttpServletRequest request, HttpServletResponse response,
-		DDMFormField ddmFormField, Map<String, Object> parentFieldStructure,
-		String mode, boolean readOnly, Locale locale) throws Exception {
+	protected String getDDMFormFieldOptionHTML(
+			HttpServletRequest request, HttpServletResponse response,
+			DDMFormField ddmFormField, String mode, boolean readOnly,
+			Locale locale, Map<String, Object> freeMarkerContext)
+		throws Exception {
 
 		StringBundler sb = new StringBundler();
 
@@ -190,13 +191,9 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			ddmFormField.getDDMFormFieldOptions();
 
 		for (String value : ddmFormFieldOptions.getOptionsValues()) {
-			Map<String, Object> freeMarkerContext =
-				new HashMap<String, Object>();
-
-			freeMarkerContext.put("parentFieldStructure", parentFieldStructure);
-
 			Map<String, Object> fieldStructure = new HashMap<String, Object>();
 
+			fieldStructure.put("children", StringPool.BLANK);
 			fieldStructure.put("fieldNamespace", StringUtil.randomId());
 
 			LocalizedValue label = ddmFormFieldOptions.getOptionLabels(value);
@@ -335,7 +332,6 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			}
 
 			fieldStructure.put("fieldNamespace", fieldNamespace);
-
 			fieldStructure.put("valueIndex", ddmFieldsCounter.get(name));
 
 			if (fieldDisplayable) {
@@ -343,6 +339,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			}
 
 			StringBundler childrenHTML = new StringBundler(2);
+
 			childrenHTML.append(
 				getHTML(
 					request, response, ddmFormField.getNestedDDMFormFields(),
@@ -352,10 +349,16 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			if (Validator.equals(ddmFormField.getType(), "select") ||
 				Validator.equals(ddmFormField.getType(), "radio")) {
 
+				Map<String, Object> optionFreeMarkerContext =
+					new HashMap<String, Object>(freeMarkerContext);
+
+				optionFreeMarkerContext.put(
+					"parentFieldStructure", fieldStructure);
+
 				childrenHTML.append(
-					getDDMFormFieldOptionsHTML(
-						request, response, ddmFormField, fieldStructure, mode,
-						readOnly, locale));
+					getDDMFormFieldOptionHTML(
+						request, response, ddmFormField, mode, readOnly, locale,
+						optionFreeMarkerContext));
 			}
 
 			fieldStructure.put("children", childrenHTML.toString());

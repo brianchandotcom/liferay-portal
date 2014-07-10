@@ -241,6 +241,7 @@
 
 		<execute action="SOMembersInvite#type" locator-key1="FIND_MEMBERS_SEARCH_FIELD" value1="${userName}" />
 		<execute action="SOMembersInvite#assertTextEquals" locator-key1="FIND_MEMBERS_USER" value1="${userName}" />
+		<execute action="SOMembersInvite#assertElementNotPresent" locator-key1="FIND_MEMBERS_USER_PENDING" />
 		<execute action="SOMembersInvite#click" locator-key1="FIND_MEMBERS_USER" />
 		<execute action="SOMembersInvite#assertTextEquals" locator-key1="MEMBERS_INVITE_LIST" value1="${userName}${userEmailAddress}" />
 
@@ -273,6 +274,7 @@
 
 		<execute action="SOMembersInvite#assertClick" locator-key1="SEND_INVITATIONS_BUTTON" value1="Send Invitations"  />
 		<execute action="SOMembersInvite#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully."  />
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="FIND_MEMBERS_USER_PENDING" value1="${userName}" />
 	</command>
 
 	<command name="requestToConnect">

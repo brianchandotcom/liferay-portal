@@ -406,6 +406,9 @@ AUI.add(
 
 			name: {
 				setter: Liferay.FormBuilder.normalizeKey,
+				validator: function(val) {
+					return !UNIQUE_FIELD_NAMES_MAP.has(val);
+				},
 				valueFn: function() {
 					var instance = this;
 

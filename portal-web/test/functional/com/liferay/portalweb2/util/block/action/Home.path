@@ -339,18 +339,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_COLUMN_1_PORTLET_DROPZONE</td>
-	<td>//div[@id='layout-column_column-1']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_COLUMN_2</td>
 	<td>//div[@id='main-content']//div[@id='column-2']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_COLUMN_2_PORTLET_DROPZONE</td>
-	<td>//div[@id='layout-column_column-2']</td>
 	<td></td>
 </tr>
 <tr>

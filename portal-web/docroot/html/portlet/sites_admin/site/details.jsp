@@ -208,20 +208,24 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 								</aui:select>
 
 								<c:choose>
-									<c:when test="<%= ((group == null) || !group.isStaged()) && hasUnlinkLayoutSetPrototypePermission %>">
-										<div class="hide" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
-											<c:if test="<%= disableLayoutSetPrototypeInput %>">
-												<div class="alert alert-info">
-													<liferay-ui:message key="you-cannot-enable-the-propagation-of-changes-because-you-modified-the-display-settings-of-this-site" />
-												</div>
-											</c:if>
+									<c:when test="<%= ((group == null) || !group.isStaged()) %>">
+										<c:choose>
+											<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
+												<div class="hide" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
+													<c:if test="<%= disableLayoutSetPrototypeInput %>">
+														<div class="alert alert-info">
+															<liferay-ui:message key="you-cannot-enable-the-propagation-of-changes-because-you-modified-the-display-settings-of-this-site" />
+														</div>
+													</c:if>
 
-											<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
-										</div>
+													<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+												</div>
+											</c:when>
+											<c:otherwise>
+												<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+											</c:otherwise>
+										</c:choose>
 									</c:when>
-									<c:otherwise>
-										<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
-									</c:otherwise>
 								</c:choose>
 							</c:when>
 							<c:otherwise>
@@ -310,20 +314,24 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 								</aui:select>
 
 								<c:choose>
-									<c:when test="<%= ((group == null) || !group.isStaged()) && hasUnlinkLayoutSetPrototypePermission %>">
-										<div class="hide" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
-											<c:if test="<%= disableLayoutSetPrototypeInput %>">
-												<div class="alert alert-info">
-													<liferay-ui:message key="you-cannot-enable-the-propagation-of-changes-because-you-modified-the-display-settings-of-this-site" />
-												</div>
-											</c:if>
+									<c:when test="<%= ((group == null) || !group.isStaged()) %>">
+										<c:choose>
+											<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
+												<div class="hide" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
+													<c:if test="<%= disableLayoutSetPrototypeInput %>">
+														<div class="alert alert-info">
+															<liferay-ui:message key="you-cannot-enable-the-propagation-of-changes-because-you-modified-the-display-settings-of-this-site" />
+														</div>
+													</c:if>
 
-											<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
-										</div>
+													<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+												</div>
+											</c:when>
+											<c:otherwise>
+												<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+											</c:otherwise>
+										</c:choose>
 									</c:when>
-									<c:otherwise>
-										<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
-									</c:otherwise>
 								</c:choose>
 							</c:when>
 							<c:otherwise>

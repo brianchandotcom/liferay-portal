@@ -47,8 +47,8 @@
 		<execute macro="SODashboard#viewLinkPrivateMessaging" />
 	</command>
 
-	<command name="ViewLinkSOLogo" priority="4">
-		<execute action="SOUserBar#click" locator-key1="SO_LOGO" />
+	<command name="ViewLinkSocialOfficeLogo" priority="4">
+		<execute action="SOUserBar#click" locator-key1="SOCIAL_OFFICE_LOGO" />
 
 		<execute macro="SODashboard#viewLinkHome" />
 	</command>

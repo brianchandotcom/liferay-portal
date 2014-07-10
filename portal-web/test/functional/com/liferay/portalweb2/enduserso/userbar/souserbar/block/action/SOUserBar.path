@@ -29,7 +29,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SO_LOGO</td>
+	<td>SOCIAL_OFFICE_LOGO</td>
 	<td>//div[@class='so-portlet-user-bar']/a[@class='so-logo']</td>
 	<td></td>
 </tr>

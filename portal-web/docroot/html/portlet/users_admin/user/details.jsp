@@ -77,7 +77,7 @@ if (selContact != null) {
 			<liferay-ui:message arguments="<%= sb.toString() %>" key="your-portal-administrator-has-disabled-the-ability-to-modify-the-following-fields" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
-		<liferay-ui:error exception="<%= UserScreenNameException.class %>" focusField="screenName" message="please-enter-a-valid-screen-name" />
+		<liferay-ui:error exception="<%= UserScreenNameException.MustBeAlphaNumeric.class %>" focusField="screenName" message="please-enter-a-valid-screen-name" />
 		<liferay-ui:error exception="<%= UserScreenNameException.MustNotBeDuplicate.class %>" focusField="screenName" message="the-screen-name-you-requested-is-already-taken" />
 
 		<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) || (selUser != null) %>">
@@ -86,7 +86,9 @@ if (selContact != null) {
 					<aui:input disabled="<%= true %>" name="screenName" />
 				</c:when>
 				<c:otherwise>
-					<aui:input name="screenName" />
+					<aui:input name="screenName">
+						<aui:validator name="alphanum" />
+					</aui:input>
 				</c:otherwise>
 			</c:choose>
 		</c:if>

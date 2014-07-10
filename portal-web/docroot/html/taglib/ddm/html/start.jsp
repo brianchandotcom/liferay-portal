@@ -22,6 +22,8 @@
 		<%
 		pageContext.setAttribute("checkRequired", checkRequired);
 
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(xsd);
+
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext = new DDMFormFieldRenderingContext();
 
 		ddmFormFieldRenderingContext.setHttpServletRequest(request);
@@ -32,21 +34,9 @@
 		ddmFormFieldRenderingContext.setMode(mode);
 		ddmFormFieldRenderingContext.setReadOnly(readOnly);
 		ddmFormFieldRenderingContext.setLocale(requestedLocale);
-
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(xsd);
-
-		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
-
-		StringBundler sb = new StringBundler(ddmFormFields.size());
-
-		for (DDMFormField ddmFormField : ddmFormFields) {
-			DDMFormFieldRenderer ddmFormFieldRenderer = DDMFormFieldRendererRegistryUtil.getDDMFormFieldRenderer(ddmFormField.getType());
-
-			sb.append(ddmFormFieldRenderer.render(ddmFormField, ddmFormFieldRenderingContext));
-		}
 		%>
 
-		<%= sb.toString() %>
+		<%= DDMFormRendererUtil.render(ddmForm, ddmFormFieldRenderingContext) %>
 
 		<aui:input name="<%= fieldsDisplayInputName %>" type="hidden" />
 

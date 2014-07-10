@@ -77,17 +77,19 @@ public class EhcacheConfigurationUtil {
 		Configuration configuration = ConfigurationFactory.parseConfiguration(
 			configurationURL);
 
-		boolean enableClusterLinkReplication = false;
+		if (clusterAware) {
+			boolean enableClusterLinkReplication = false;
 
-		if (PropsValues.CLUSTER_LINK_ENABLED &&
-			PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
+			if (PropsValues.CLUSTER_LINK_ENABLED &&
+				PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
 
-			enableClusterLinkReplication = true;
-		}
+				enableClusterLinkReplication = true;
+			}
 
-		if (clusterAware && (usingDefault || enableClusterLinkReplication)) {
-			return _processDefaultClusterLinkReplication(
-				configuration, usingDefault, enableClusterLinkReplication);
+			if (usingDefault || enableClusterLinkReplication) {
+				return _processDefaultClusterLinkReplication(
+					configuration, usingDefault, enableClusterLinkReplication);
+			}
 		}
 
 		return configuration;

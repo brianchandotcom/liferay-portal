@@ -47,7 +47,9 @@ AUI.add(
 		DEFAULTS_FORM_VALIDATOR.RULES.structureDuplicateFieldName = function(value, editorNode) {
 			var instance = this;
 
-			var duplicate = UNIQUE_FIELD_NAMES_MAP.has(value);
+			var editingField = UNIQUE_FIELD_NAMES_MAP.getValue(value);
+
+			var duplicate = editingField && !editingField.get('selected');
 
 			if (duplicate) {
 				editorNode.selectText(0, value.length);
@@ -443,13 +445,13 @@ AUI.add(
 			var uniqueNamesMap = UNIQUE_FIELD_NAMES_MAP;
 
 			uniqueNamesMap.remove(event.prevVal);
-			uniqueNamesMap.put(event.newVal, true);
+			uniqueNamesMap.put(event.newVal, instance);
 		};
 
 		LiferayFormBuilderField.prototype._afterRender = function(event) {
 			var instance = this;
 
-			UNIQUE_FIELD_NAMES_MAP.put(instance.get('name'), true);
+			UNIQUE_FIELD_NAMES_MAP.put(instance.get('name'), instance);
 		};
 
 		A.Base.mix(A.FormBuilderField, [LiferayFormBuilderField]);

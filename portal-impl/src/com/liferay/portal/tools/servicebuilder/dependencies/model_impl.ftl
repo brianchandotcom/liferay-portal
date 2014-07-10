@@ -660,7 +660,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	<#list cacheFields as cacheField>
 		<#assign variableName = serviceBuilder.getVariableName(cacheField)>
-		<#assign methodName = textFormatter.format(variableName, 6)>
+		<#assign methodName = serviceBuilder.getCacheFieldMethodName(cacheField)>
 		<#assign typeName = cacheField.getType().getGenericValue()>
 
 		<#if methodName != "DefaultLanguageId">
@@ -1274,7 +1274,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 		<#list cacheFields as cacheField>
 			<#assign variableName = serviceBuilder.getVariableName(cacheField)>
-			<#assign methodName = textFormatter.format(variableName, 6)>
+			<#assign methodName = serviceBuilder.getCacheFieldMethodName(cacheField)>
 
 			set${methodName}(null);
 		</#list>
@@ -1314,7 +1314,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#list>
 
 		<#list cacheFields as cacheField>
-			<#assign methodName = textFormatter.format(serviceBuilder.getVariableName(cacheField), 6)>
+			<#assign methodName = serviceBuilder.getCacheFieldMethodName(cacheField)>
 
 			${entity.varName}CacheModel.${cacheField.name} = get${methodName}();
 		</#list>

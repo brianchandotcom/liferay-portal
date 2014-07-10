@@ -929,6 +929,37 @@ public class ServiceBuilder {
 		return sb.toString();
 	}
 
+	public String getCacheFieldMethodName(JavaField javaField) {
+		Annotation[] annotations = javaField.getAnnotations();
+
+		for (Annotation annotation : annotations) {
+			Type type = annotation.getType();
+
+			String className = type.getFullyQualifiedName();
+
+			if (className.equals(CacheField.class.getName())) {
+				String methodName = null;
+
+				Object namedParameter = annotation.getNamedParameter(
+					"methodName");
+
+				if (namedParameter != null) {
+					methodName = StringUtil.unquote(
+						StringUtil.trim(namedParameter.toString()));
+				}
+
+				if (Validator.isNull(methodName)) {
+					methodName = TextFormatter.format(
+						getVariableName(javaField), TextFormatter.G);
+				}
+
+				return methodName;
+			}
+		}
+
+		throw new IllegalArgumentException(javaField + " is not a cache field");
+	}
+
 	public String getClassName(Type type) {
 		int dimensions = type.getDimensions();
 		String name = type.getValue();

@@ -79,15 +79,9 @@ public class EhcacheConfigurationUtil {
 			configurationURL);
 
 		if (clusterAware) {
-			boolean enableClusterLinkReplication = false;
-
 			if (PropsValues.CLUSTER_LINK_ENABLED &&
 				PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
 
-				enableClusterLinkReplication = true;
-			}
-
-			if (enableClusterLinkReplication) {
 				configuration.
 					getCacheManagerPeerListenerFactoryConfigurations(). clear();
 				configuration.
@@ -221,31 +215,6 @@ public class EhcacheConfigurationUtil {
 		}
 
 		return cacheConfigurations;
-	}
-
-	private static boolean _isUsingLiferayCacheEventListenerFactory(
-		CacheConfiguration cacheConfiguration) {
-
-		List<CacheEventListenerFactoryConfiguration>
-			cacheEventListenerFactoryConfigurations =
-				cacheConfiguration.getCacheEventListenerConfigurations();
-
-		for (CacheEventListenerFactoryConfiguration
-				cacheEventListenerFactoryConfiguration :
-					cacheEventListenerFactoryConfigurations) {
-
-			String className =
-				cacheEventListenerFactoryConfiguration.
-					getFullyQualifiedClassPath();
-
-			if (className.equals(
-					LiferayCacheEventListenerFactory.class.getName())) {
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 }

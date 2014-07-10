@@ -16,7 +16,7 @@
 		<execute action="PGMessageboardsAddcategory#type" locator-key1="NAME_FIELD" value1="${categoryName}" />
 
 		<if>
-			<equals arg1="categoryDescriptionEnabled" arg2="true" />
+			<equals arg1="${categoryDescriptionEnabled}" arg2="true" />
 			<then>
 				<execute action="PGMessageboardsAddcategory#type" locator-key1="DESCRIPTION_FIELD" value1="${categoryDescription}" />
 			</then>
@@ -151,7 +151,7 @@
 		<if>
 			<equals arg1="${categoryDescriptionEnabled}" arg2="true" />
 			<then>
-				<var name="key_categoryDescription" value="${categoryDescription}" />
+				<var name="key_categoryName" value="${categoryName}" />
 
 				<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY_DESCRIPTION" value1="${categoryDescription}" />
 			</then>

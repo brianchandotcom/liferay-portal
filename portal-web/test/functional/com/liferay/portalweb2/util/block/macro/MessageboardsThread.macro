@@ -594,7 +594,9 @@
 
 	<command name="splitThreadPG">
 		<execute macro="MessageboardsThread#gotoPG">
+			<var name="postCount" value="${postCount}" />
 			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<var name="key_threadBody" value="${threadReplyBody}" />

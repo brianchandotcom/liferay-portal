@@ -750,7 +750,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	private static Log _log = LogFactoryUtil.getLog(DDMStructureImpl.class);
 
-	@CacheField
+	@CacheField(methodName = "DDMForm")
 	private DDMForm _ddmForm;
 
 	@CacheField

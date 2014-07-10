@@ -61,7 +61,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Miguel Angelo Caldas Gallindo
  */
 @RunWith(PowerMockRunner.class)
-public abstract class BaseDDMTest extends PowerMockito {
+public abstract class BaseDDMTestCase extends PowerMockito {
 
 	protected Element addTextElement(
 		Element element, String name, String label, boolean localizable) {

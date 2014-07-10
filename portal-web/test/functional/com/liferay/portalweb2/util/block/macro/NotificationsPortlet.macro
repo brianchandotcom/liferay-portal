@@ -1,0 +1,50 @@
+<definition>
+	<command name="gotoNotificationDelivery">
+		<execute macro="Notifications#gotoDockbar" />
+
+		<execute macro="Notifications#navigateToViewAllNotifications" />
+
+		<execute action="PGNotifications#assertClick" locator-key1="NAVIGATION_NOTIFICATION_DELIVERY" value1="Notification Delivery" />
+	</command>
+
+	<command name="setUserDeliveries">
+		<var name="key_actionType" value="${actionType}" />
+		<var name="key_contentType" value="${contentType}" />
+		<var name="key_notificationType" value="${notificationType}" />
+
+		<if>
+			<equals arg1="${enableDelivery}" arg2="true" />
+			<then>
+				<execute action="PGNotificationsdelivery#check" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX" />
+			</then>
+			<elseif>
+				<equals arg1="${enableDelivery}" arg2="false" />
+				<then>
+					<execute action="PGNotificationsdelivery#uncheck" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
+	<command name="tearDownUserDeliveries">
+		<var name="actionList" value="adds,updates" />
+		<var name="contentList" value="Wiki,Message Boards,Comments,Documents and Media,Bookmarks,Journal,Blogs" />
+		<var name="notificationList" value="Email,Website" />
+
+		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
+
+		<for list="${actionList}" param="actionType" >
+			<var name="key_actionType" value="${actionType}" />
+
+			<for list="${contentList}" param="contentType" >
+				<var name="key_contentType" value="${contentType}" />
+
+				<for list="${notificationList}" param="notificationType" >
+					<var name="key_notificationType" value="${notificationType}" />
+
+					<execute action="PGNotificationsdelivery#check" locator-key1="NOTIFICATION_DELIVERY_CHECKBOX" />
+				</for>
+			</for>
+		</for>
+	</command>
+</definition>

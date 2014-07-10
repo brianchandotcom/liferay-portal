@@ -276,7 +276,6 @@
 	<command name="subcribePG">
 		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
 		<execute action="PGDocumentsandmediaFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGDocumentsandmediaFolder#assertTextEquals" locator-key1="SUBSCRIBE_LINK" value1="Unsubscribe" />
 	</command>
 
 	<command name="tearDownCP">
@@ -384,5 +383,9 @@
 
 		<execute action="PGMediagallery#click" locator-key1="FOLDER_NAME" value1="${mgFolderName}" />
 		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="FOLDER_HEADER_TITLE" value1="${mgFolderName}" />
+	</command>
+
+	<command name="viewSubcribedPG">
+		<execute action="PGDocumentsandmediaFolder#assertTextEquals" locator-key1="SUBSCRIBE_LINK" value1="Unsubscribe" />
 	</command>
 </definition>

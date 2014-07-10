@@ -736,10 +736,19 @@
 	</command>
 
 	<command name="addWithWorkflowPGViaWCD">
-		<var name="key_selectStructureName" value="${selectStructureName}" />
+		<if>
+			<isset var="selectStructureName" />
+			<then>
+				<var name="key_selectStructureName" value="${selectStructureName}" />
 
-		<execute action="PGWebcontentdisplay#click" locator-key1="ADD_WEB_CONTENT" />
-		<execute action="PGWebcontentdisplay#assertClick" locator-key1="ADD_MENU_WEB_CONTENT_STRUCTURE" value1="${selectStructureName}" />
+				<execute action="PGWebcontentdisplay#click" locator-key1="ADD_WEB_CONTENT" />
+				<execute action="PGWebcontentdisplay#assertClick" locator-key1="ADD_MENU_WEB_CONTENT_STRUCTURE" value1="${selectStructureName}" />
+			</then>
+			<else>
+				<execute action="PGWebcontentdisplay#click" locator-key1="ADD_WEB_CONTENT" />
+				<execute action="PGWebcontentdisplay#click" locator-key1="ADD_BASIC_WEB_CONTENT" />
+			</else>
+		</if>
 
 		<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
 		<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />

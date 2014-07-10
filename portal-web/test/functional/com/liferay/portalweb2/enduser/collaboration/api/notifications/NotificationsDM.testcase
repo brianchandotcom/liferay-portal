@@ -24,10 +24,103 @@
 	<tear-down>
 		<execute macro="DMDocument#tearDownCP" />
 
-		<execute macro="DMFolder#tearDownCP" />
-
 		<execute macro="Page#tearDownPG" />
+
+		<execute macro="NotificationsPortlet#tearDownUserDeliveries" />
 	</tear-down>
+
+	<command name="ViewNoWebsiteNotificationForNewDocumentInFolder" priority="5">
+		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
+
+		<execute macro="NotificationsPortlet#setUserDeliveries">
+			<var name="actionType" value="adds" />
+			<var name="contentType" value="Documents and Media" />
+			<var name="enableDelivery" value="false" />
+			<var name="notificationType" value="Website" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMFolder#subcribePG" />
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.docx" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+	</command>
+
+	<command name="ViewNoWebsiteNotificationForUpdatedDocumentInFolder" priority="5">
+		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
+
+		<execute macro="NotificationsPortlet#setUserDeliveries">
+			<var name="actionType" value="updates" />
+			<var name="contentType" value="Documents and Media" />
+			<var name="enableDelivery" value="false" />
+			<var name="notificationType" value="Website" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMFolder#subcribePG" />
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.docx" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Notifications#viewCountAlert">
+			<var name="notificationCount" value="1" />
+		</execute>
+
+		<execute macro="DMDocument#editPG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="dmDocumentTitleEdit" value="DM Document Title Edit" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Notifications#viewCountAlert">
+			<var name="notificationCount" value="1" />
+		</execute>
+	</command>
 
 	<command name="ViewWebsiteNotificationForNewDocumentInFolder" priority="5">
 		<execute macro="Page#gotoPG">
@@ -55,28 +148,84 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewCountAlert">
 			<var name="notificationCount" value="1" />
 		</execute>
+
+		<execute macro="Notifications#gotoDockbar" />
 
 		<execute macro="Notifications#viewNewContent">
 			<var name="assetType" value="Document" />
 			<var name="contentBody" value="DM Document Title" />
-			<var name="notificationCount" value="1" />
 			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Notifications#navigateToContent">
+			<var name="contentBody" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentTitleCmdPG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+	</command>
+
+	<command name="ViewWebsiteNotificationForUpdatedDocumentInFolder" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.docx" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMFolder#subcribePG" />
+
+		<execute macro="DMDocument#editPG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="dmDocumentTitleEdit" value="DM Document Title Edit" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Notifications#gotoContent">
-			<var name="contentBody" value="DM Document Title" />
+		<execute macro="Notifications#viewCountAlert">
 			<var name="notificationCount" value="1" />
 		</execute>
 
+		<execute macro="Notifications#gotoDockbar" />
+
+		<execute macro="Notifications#viewUpdatedContent">
+			<var name="assetType" value="Document" />
+			<var name="contentBody" value="DM Document Title..." />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Notifications#navigateToContent">
+			<var name="contentBody" value="DM Document Title..." />
+		</execute>
+
 		<execute macro="DMDocument#viewDocumentTitleCmdPG">
-			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="dmDocumentTitle" value="DM Document Title Edit" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
 		</execute>
 	</command>
 </definition>

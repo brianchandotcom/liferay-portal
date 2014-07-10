@@ -27,7 +27,109 @@
 		<execute macro="MessageboardsThread#tearDownCP" />
 
 		<execute macro="Page#tearDownPG" />
+
+		<execute macro="NotificationsPortlet#tearDownUserDeliveries" />
 	</tear-down>
+
+	<command name="ViewNoWebsiteNotificationForNewThreadInCategory" priority="5">
+		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
+
+		<execute macro="NotificationsPortlet#setUserDeliveries">
+			<var name="actionType" value="adds" />
+			<var name="contentType" value="Message Boards" />
+			<var name="enableDelivery" value="false" />
+			<var name="notificationType" value="Website" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="MB Category Name" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#subscribePG">
+			<var name="categoryName" value="MB Category Name" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="MB Category Name" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+	</command>
+
+	<command name="ViewNoWebsiteNotificationForUpdatedThreadInCategory" priority="5">
+		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
+
+		<execute macro="NotificationsPortlet#setUserDeliveries">
+			<var name="actionType" value="updates" />
+			<var name="contentType" value="Message Boards" />
+			<var name="enableDelivery" value="false" />
+			<var name="notificationType" value="Website" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="MB Category Name" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="MB Category Name" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#subscribePG">
+			<var name="categoryName" value="MB Category Name" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="MB Category Name" />
+		</execute>
+
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="postCount" value="1" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="MessageboardsThread#editPG">
+			<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
+			<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+	</command>
 
 	<command name="ViewWebsiteNotificationForNewThreadInCategory" priority="5">
 		<execute macro="Page#gotoPG">
@@ -63,25 +165,29 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="Notifications#viewCountAlert">
+			<var name="notificationCount" value="1" />
+		</execute>
+
+		<execute macro="Notifications#gotoDockbar" />
+
 		<execute macro="Notifications#viewNewContent">
 			<var name="assetType" value="Message Boards Message" />
 			<var name="contentBody" value="MB Thread Message..." />
-			<var name="notificationCount" value="1" />
 			<var name="user" value="Test Test" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Notifications#gotoContent">
+		<execute macro="Notifications#navigateToContent">
 			<var name="contentBody" value="MB Thread Message..." />
-			<var name="notificationCount" value="1" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
 		</execute>
 	</command>
 
@@ -123,7 +229,7 @@
 			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
-		<execute macro="MessageboardsThread#editPG">
+		<execute macro="MessageboardsThread#gotoPG">
 			<var name="postCount" value="1" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
@@ -139,25 +245,29 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Notifications#viewEditedContent">
+		<execute macro="Notifications#viewCountAlert">
+			<var name="notificationCount" value="1" />
+		</execute>
+
+		<execute macro="Notifications#gotoDockbar" />
+
+		<execute macro="Notifications#viewUpdatedContent">
 			<var name="assetType" value="Message Boards Message" />
 			<var name="contentBody" value="MB Thread Message..." />
-			<var name="notificationCount" value="1" />
 			<var name="user" value="Test Test" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Notifications#gotoContent">
+		<execute macro="Notifications#navigateToContent">
 			<var name="contentBody" value="MB Thread Message..." />
-			<var name="notificationCount" value="1" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
 			<var name="threadBody" value="MB Thread Message Body Edit" />
 			<var name="threadSubject" value="MB Thread Message Subject Edit" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
 		</execute>
 	</command>
 </definition>

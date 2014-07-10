@@ -18,7 +18,29 @@
 
 <div class="lfr-ddm-container" id="<%= randomNamespace %>">
 	<c:if test="<%= Validator.isNotNull(xsd) %>">
-		<%= DDMXSDUtil.getSimpleFieldHTMLByName(request, response, classNameId, classPK, field, portletResponse.getNamespace(), fieldsNamespace, mode, readOnly, requestedLocale) %>
+
+		<%
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(xsd);
+
+		Map<String, DDMFormField> ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(true);
+
+		DDMFormField ddmFormField = ddmFormFieldsMap.get(field.getName());
+
+		DDMFormFieldRenderer ddmFormFieldRenderer = DDMFormFieldRendererRegistryUtil.getDDMFormFieldRenderer(ddmFormField.getType());
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext = new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setHttpServletRequest(request);
+		ddmFormFieldRenderingContext.setHttpServletResponse(response);
+		ddmFormFieldRenderingContext.setPortletNamespace(portletResponse.getNamespace());
+		ddmFormFieldRenderingContext.setNamespace(fieldsNamespace);
+		ddmFormFieldRenderingContext.setField(field);
+		ddmFormFieldRenderingContext.setMode(mode);
+		ddmFormFieldRenderingContext.setReadOnly(readOnly);
+		ddmFormFieldRenderingContext.setLocale(requestedLocale);
+		%>
+
+		<%= ddmFormFieldRenderer.render(ddmFormField, ddmFormFieldRenderingContext) %>
 
 		<aui:input name="<%= fieldsDisplayInputName %>" type="hidden" />
 

@@ -21,9 +21,32 @@
 
 		<%
 		pageContext.setAttribute("checkRequired", checkRequired);
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext = new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setHttpServletRequest(request);
+		ddmFormFieldRenderingContext.setHttpServletResponse(response);
+		ddmFormFieldRenderingContext.setPortletNamespace(portletResponse.getNamespace());
+		ddmFormFieldRenderingContext.setNamespace(fieldsNamespace);
+		ddmFormFieldRenderingContext.setFields(fields);
+		ddmFormFieldRenderingContext.setMode(mode);
+		ddmFormFieldRenderingContext.setReadOnly(readOnly);
+		ddmFormFieldRenderingContext.setLocale(requestedLocale);
+
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(xsd);
+
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		StringBundler sb = new StringBundler(ddmFormFields.size());
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			DDMFormFieldRenderer ddmFormFieldRenderer = DDMFormFieldRendererRegistryUtil.getDDMFormFieldRenderer(ddmFormField.getType());
+
+			sb.append(ddmFormFieldRenderer.render(ddmFormField, ddmFormFieldRenderingContext));
+		}
 		%>
 
-		<%= DDMXSDUtil.getHTML(request, response, xsd, fields, portletResponse.getNamespace(), fieldsNamespace, mode, readOnly, requestedLocale) %>
+		<%= sb.toString() %>
 
 		<aui:input name="<%= fieldsDisplayInputName %>" type="hidden" />
 

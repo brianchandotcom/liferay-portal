@@ -65,9 +65,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Pablo Carvalho
  */
-public class DDMFormFieldFTLRenderer implements DDMFormFieldRenderer {
+public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 
-	public DDMFormFieldFTLRenderer() {
+	public DDMFormFieldFreeMarkerRenderer() {
 		String defaultTemplateId = _TPL_PATH + "alloy/text.ftl";
 
 		URL defaultTemplateURL = getResource(defaultTemplateId);

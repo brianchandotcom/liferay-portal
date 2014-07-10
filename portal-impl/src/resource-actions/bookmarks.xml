@@ -6,8 +6,26 @@
 		<portlet-name>28</portlet-name>
 		<permissions>
 			<supports>
-				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
 				<action-key>ADD_TO_PAGE</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>CONFIGURATION</action-key>
+			</guest-unsupported>
+		</permissions>
+	</portlet-resource>
+	<portlet-resource>
+		<portlet-name>198</portlet-name>
+		<permissions>
+			<supports>
+				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
 				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
@@ -27,6 +45,7 @@
 		<model-name>com.liferay.portlet.bookmarks</model-name>
 		<portlet-ref>
 			<portlet-name>28</portlet-name>
+			<portlet-name>198</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -58,6 +77,7 @@
 		<model-name>com.liferay.portlet.bookmarks.model.BookmarksFolder</model-name>
 		<portlet-ref>
 			<portlet-name>28</portlet-name>
+			<portlet-name>198</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -90,6 +110,7 @@
 		<model-name>com.liferay.portlet.bookmarks.model.BookmarksEntry</model-name>
 		<portlet-ref>
 			<portlet-name>28</portlet-name>
+			<portlet-name>198</portlet-name>
 		</portlet-ref>
 		<weight>3</weight>
 		<permissions>

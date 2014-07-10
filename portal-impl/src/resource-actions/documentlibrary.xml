@@ -6,7 +6,6 @@
 		<portlet-name>20</portlet-name>
 		<permissions>
 			<supports>
-				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
 				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
 				<action-key>ADD_TO_PAGE</action-key>
 				<action-key>CONFIGURATION</action-key>
@@ -19,8 +18,27 @@
 				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported>
-				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
 				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
+				<action-key>CONFIGURATION</action-key>
+			</guest-unsupported>
+		</permissions>
+	</portlet-resource>
+	<portlet-resource>
+		<portlet-name>199</portlet-name>
+		<permissions>
+			<supports>
+				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
 				<action-key>CONFIGURATION</action-key>
 			</guest-unsupported>
 		</permissions>
@@ -31,6 +49,7 @@
 			<portlet-name>20</portlet-name>
 			<portlet-name>31</portlet-name>
 			<portlet-name>110</portlet-name>
+			<portlet-name>199</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -76,6 +95,7 @@
 			<portlet-name>20</portlet-name>
 			<portlet-name>31</portlet-name>
 			<portlet-name>110</portlet-name>
+			<portlet-name>199</portlet-name>
 		</portlet-ref>
 		<weight>3</weight>
 		<permissions>
@@ -113,6 +133,7 @@
 			<portlet-name>20</portlet-name>
 			<portlet-name>31</portlet-name>
 			<portlet-name>110</portlet-name>
+			<portlet-name>199</portlet-name>
 		</portlet-ref>
 		<weight>5</weight>
 		<permissions>
@@ -141,6 +162,7 @@
 			<portlet-name>20</portlet-name>
 			<portlet-name>31</portlet-name>
 			<portlet-name>110</portlet-name>
+			<portlet-name>199</portlet-name>
 		</portlet-ref>
 		<weight>4</weight>
 		<permissions>
@@ -169,6 +191,7 @@
 			<portlet-name>20</portlet-name>
 			<portlet-name>31</portlet-name>
 			<portlet-name>110</portlet-name>
+			<portlet-name>199</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

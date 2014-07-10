@@ -15,7 +15,12 @@
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='portlet-msg-info']</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -30,8 +35,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MICROBLOGS_ENTRY_CONTENT_FIELD</td>
+	<td>//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MICROBLOGS_ENTRY_CONTENT_INPUT_FIELD</td>
+	<td>//textarea[contains(@name,'contentInput')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MICROBLOGS_ENTRY_CONTENT</td>
 	<td>//div[@class='content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MICROBLOGS_ENTRY_CONTENT_MENTION</td>
+	<td>//div[@class='microblogs-entry' and contains(.,'${key_microblogsEntryContent}')]//div[@class='content']/span/a[contains(.,'${key_mentionUserName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MICROBLOGS_ENTRY_CONTENT_TAG</td>
+	<td>//div[@class='microblogs-entry' and contains(.,'${key_microblogsEntryContent}')]//div[@class='content']/span/a[contains(.,'${key_microblogsEntryTagValue}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,8 +70,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MICROBLOGS_ENTRY_EDIT</td>
+	<td>//span[@class='action edit']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MICROBLOGS_ENTRY_EDIT_LINK</td>
 	<td>//span[@class='action edit']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MICROBLOGS_ENTRY_DELETE</td>
+	<td>//span[@class='action delete']</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,22 +96,27 @@
 </tr>
 <tr>
 	<td>MICROBLOGS_ENTRY_CONTENT_EDIT_FIELD</td>
-	<td>xPath=(//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')])[2]</td>
+	<td>//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MICROBLOGS_ENTRY_CONTENT_EDIT_INPUT_FIELD</td>
+	<td>//textarea[contains(@name,'contentInput')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MICROBLOGS_ENTRY_CONTENT_EDIT_COUNTDOWN</td>
-	<td>xPath=(//span[@class='microblogs-countdown'])[2]</td>
+	<td>//span[@class='microblogs-countdown']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MICROBLOGS_ENTRY_CONTENT_EDIT_VIEW_FILTER</td>
-	<td>xPath=(//select[@id='_1_WAR_microblogsportlet_socialRelationType'])[2]</td>
+	<td>//select[@id='_1_WAR_microblogsportlet_socialRelationType']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MICROBLOGS_ENTRY_CONTENT_EDIT_POST_BUTTON</td>
-	<td>xPath=(//button[contains(.,'Post')])[2]</td>
+	<td>//button[contains(.,'Post')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,12 +127,17 @@
 <!--MICROBLOGS_ENTRY_COMMENT-->
 <tr>
 	<td>MICROBLOGS_ENTRY_COMMENT_CONTENT_FIELD</td>
-	<td>xPath=(//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')])[2]</td>
+	<td>//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MICROBLOGS_ENTRY_COMMENT_CONTENT_INPUT_FIELD</td>
+	<td>//textarea[contains(@name,'contentInput')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MICROBLOGS_ENTRY_COMMENT_CONTENT_COUNTDOWN</td>
-	<td>xPath=(//span[@class='microblogs-countdown'])[2]</td>
+	<td>//span[@class='microblogs-countdown']</td>
 	<td></td>
 </tr>
 <tr>
@@ -102,7 +147,7 @@
 </tr>
 <tr>
 	<td>MICROBLOGS_ENTRY_COMMENT_POST_BUTTON</td>
-	<td>xPath=(//button[contains(.,'Post')])[2]</td>
+	<td>//button[contains(.,'Post')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -121,8 +166,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MICROBLOGS_ENTRY_COMMENT_DELETE</td>
+	<td>//div[@class='microblogs-entry' and contains(.,'${key_microblogsEntryCommentContent}')]//span[@class='action delete']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MICROBLOGS_ENTRY_COMMENT_DELETE_LINK</td>
-	<td>xPath=(//span[@class='action delete']/a)[2]</td>
+	<td>//div[@class='microblogs-entry' and contains(.,'${key_microblogsEntryCommentContent}')]//span[@class='action delete']/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -132,8 +182,18 @@
 </tr>
 <!--TAB-->
 <tr>
-	<td>TAB_TITLE</td>
-	<td>//ul[contains(@class,'tabview-list')]/li[contains(.,'Microblogs')]</td>
+	<td>TAB_TIMELINE</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li[contains(.,'Timeline')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAB_MENTIONS</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li[contains(.,'Mentions')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAB_TAG_VALUE</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li[contains(.,'${key_microblogsEntryTagValue}')]/a</td>
 	<td></td>
 </tr>
 <tr>

@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VCARD_BUTTON</td>
+	<td>//span[contains(.,'vCard')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROFILE_CONTENT_INFO_MESSAGE</td>
 	<td>//p[@class='portlet-msg portlet-msg-info']</td>
 	<td></td>

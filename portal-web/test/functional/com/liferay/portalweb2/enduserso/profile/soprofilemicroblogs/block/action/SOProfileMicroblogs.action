@@ -1,6 +1,16 @@
 <definition>
+	<command name="assertTextEquals">
+		<case locator-key1="MICROBLOGS_ENTRY_AUTHOR">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
 	<command name="click">
 		<case locator-key1="MICROBLOGS_ENTRY_DELETE_LINK">
+			<execute function="Click#makeVisibleClickAt" />
+		</case>
+
+		<case locator-key1="MICROBLOGS_ENTRY_EDIT_LINK">
 			<execute function="Click#makeVisibleClickAt" />
 		</case>
 	</command>
@@ -8,6 +18,16 @@
 	<command name="isElementPresent">
 		<case locator-key1="MICROBLOGS_ENTRY_DELETE_LINK">
 			<execute function="IsElementPresent#pauseIsElementPresent" />
+		</case>
+	</command>
+
+	<command name="type">
+		<case locator-key1="MICROBLOGS_ENTRY_COMMENT_CONTENT_INPUT_FIELD">
+			<execute function="Type#sendKeys" />
+		</case>
+
+		<case locator-key1="MICROBLOGS_ENTRY_CONTENT_EDIT_INPUT_FIELD">
+			<execute function="Type#sendKeys" />
 		</case>
 	</command>
 </definition>

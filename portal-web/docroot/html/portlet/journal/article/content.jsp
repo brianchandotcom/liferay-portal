@@ -219,6 +219,10 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 									>
 
 										<%
+										Map<String, Object> data = new HashMap<String, Object>();
+
+										data.put("navigation", StringPool.BLANK);
+
 										Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
 										for (int i = 0; i < locales.length; i++) {
@@ -227,6 +231,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 
 											<liferay-ui:icon
 												cssClass='<%= ArrayUtil.contains(article.getAvailableLanguageIds(), LocaleUtil.toLanguageId(locales[i])) ? "hide" : StringPool.BLANK %>'
+												data="<%= data %>"
 												id='<%= "journal-article-translation-link-" + LocaleUtil.toLanguageId(locales[i]) %>'
 												image='<%= "../language/" + LocaleUtil.toLanguageId(locales[i]) %>'
 												linkCssClass="journal-article-translation"
@@ -273,6 +278,10 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 									<label><liferay-ui:message key="available-translations" /></label>
 
 										<%
+										Map<String, Object> data = new HashMap<String, Object>();
+
+										data.put("navigation", StringPool.BLANK);
+
 										for (int i = 0; i < translations.length; i++) {
 											if (translations[i].equals(defaultLanguageId)) {
 												continue;
@@ -281,7 +290,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 											String editTranslationURL = HttpUtil.addParameter(editArticleRenderPopUpURL.toString(), renderResponse.getNamespace() + "toLanguageId", translations[i]);
 										%>
 
-										<aui:a cssClass="journal-article-translation lfr-token" href="<%= editTranslationURL %>" id='<%= "journal-article-translation-link-" + translations[i] %>'>
+										<aui:a cssClass="journal-article-translation lfr-token" data="<%= data %>" href="<%= editTranslationURL %>" id='<%= "journal-article-translation-link-" + translations[i] %>'>
 											<img alt="" src='<%= themeDisplay.getPathThemeImages() + "/language/" + translations[i] + ".png" %>' />
 
 											<%= LocaleUtil.fromLanguageId(translations[i]).getDisplayName(locale) %>

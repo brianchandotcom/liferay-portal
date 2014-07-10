@@ -204,15 +204,9 @@ public class EhcacheConfigurationUtil {
 		Configuration configuration, boolean usingDefault,
 		boolean enableClusterLinkReplication) {
 
-		boolean clearCachePeerProviderConfigurations = false;
-
 		if ((enableClusterLinkReplication) ||
 			(usingDefault && !PropsValues.CLUSTER_LINK_ENABLED)) {
 
-			clearCachePeerProviderConfigurations = true;
-		}
-
-		if (clearCachePeerProviderConfigurations) {
 			configuration.getCacheManagerPeerListenerFactoryConfigurations().
 				clear();
 			configuration.getCacheManagerPeerProviderFactoryConfiguration().
@@ -227,7 +221,8 @@ public class EhcacheConfigurationUtil {
 				cacheConfiguration.addBootstrapCacheLoaderFactory(null);
 			}
 
-			if (clearCachePeerProviderConfigurations ||
+			if (enableClusterLinkReplication ||
+				(usingDefault && !PropsValues.CLUSTER_LINK_ENABLED) ||
 				(!usingDefault &&
 				 _isUsingLiferayCacheEventListenerFactory(
 					 cacheConfiguration))) {

@@ -1,4 +1,4 @@
-<definition component-name="portal-tools">
+<definition component-name="portal-smoke">
 	<property name="testray.main.component.name" value="Tools" />
 
 	<set-up>

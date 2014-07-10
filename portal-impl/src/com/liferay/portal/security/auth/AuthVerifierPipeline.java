@@ -17,16 +17,13 @@ package com.liferay.portal.security.auth;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -71,8 +68,6 @@ public class AuthVerifierPipeline {
 
 	private AuthVerifierPipeline() {
 		Registry registry = RegistryUtil.getRegistry();
-
-		_initAuthVerifierConfigurations(registry);
 
 		_serviceTracker = registry.trackServices(
 			AuthVerifier.class, new AuthVerifierTrackerCustomizer());
@@ -125,29 +120,6 @@ public class AuthVerifierPipeline {
 		}
 
 		return authVerifierConfigurations;
-	}
-
-	private void _initAuthVerifierConfigurations(Registry registry) {
-		for (String authVerifierClassName :
-				PropsValues.AUTH_VERIFIER_PIPELINE) {
-
-			try {
-				AuthVerifier authVerifier =
-					(AuthVerifier)InstanceFactory.newInstance(
-						ClassLoaderUtil.getPortalClassLoader(),
-						authVerifierClassName);
-
-				Properties properties = PropsUtil.getProperties(
-					getAuthVerifierPropertyName(authVerifierClassName), true);
-
-				registry.registerService(
-					AuthVerifier.class, authVerifier,
-					PropertiesUtil.toMap(properties));
-			}
-			catch (Exception e) {
-				_log.error("Unable to initialize " + authVerifierClassName, e);
-			}
-		}
 	}
 
 	private boolean _isMatchingRequestURI(
@@ -336,6 +308,12 @@ public class AuthVerifierPipeline {
 			ServiceReference<AuthVerifier> serviceReference) {
 
 			Registry registry = RegistryUtil.getRegistry();
+
+			if (Validator.isNull(
+					serviceReference.getProperty("urls.includes"))) {
+
+				return null;
+			}
 
 			AuthVerifier authVerifier = registry.getService(serviceReference);
 

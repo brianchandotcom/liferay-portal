@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -31,6 +32,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author Minhchau Dang
  * @author Tomas Polesovsky
  */
+@OSGiBeanProperties(
+	portalPropertyPrefix = "auth.verifier.ParameterAutoLogin."
+)
 public class ParameterAutoLogin extends BaseAutoLogin {
 
 	@Override

@@ -886,6 +886,15 @@
 		</execute>
 	</command>
 
+	<command name="DownloadVCardProfile" priority="4">
+		<execute macro="SOProfile#downloadVCard">
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+	</command>
+
 	<command name="FollowCCUserProfile" priority="5">
 		<var name="adminListName" value="${adminListName}" />
 		<var name="adminScreenName" value="${adminScreenName}" />
@@ -1100,7 +1109,7 @@
 
 		<execute action="SOProfile#click" locator-key1="NAVIGATION_CONTACTS" />
 
-		<execute action="SOProfileContacts#assertTextEquals" locator-key1="NO_CONTACTS_MESSAGE" value1="${adminName} has no contacts." />
+		<execute action="SOProfileContacts#assertTextEquals" locator-key1="NO_CONTACTS_MESSAGE" value1="${adminName} has no connections." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Contacts Center" />
@@ -1138,7 +1147,7 @@
 
 		<execute action="SOProfile#click" locator-key1="NAVIGATION_CONTACTS" />
 
-		<execute action="SOProfileContacts#assertTextEquals" locator-key1="NO_CONTACTS_MESSAGE" value1="${adminName} has no contacts." />
+		<execute action="SOProfileContacts#assertTextEquals" locator-key1="NO_CONTACTS_MESSAGE" value1="${adminName} has no connections." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Contacts Center" />

@@ -59,6 +59,128 @@
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 	</command>
 
+	<command name="confirmMemberInviteByEmail">
+		<execute action="BaseLiferay#pause" locator1="30000" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Gmail#login">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#viewMail">
+			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailAssetType" value="${siteName}" />
+			<var name="gmailMailTableMessageTitle" value="${adminName} has invited you to join ${siteName}" />
+			<var name="gmailMessageBody" value="Follow the link below to confirm or ignore this invitation:" />
+			<var name="gmailMessageBodyClosing" value="If you have any questions, contact the administrator at ${adminEmailAddress}." />
+			<var name="gmailMessageBodyGreeting" value="${adminName} has invited you to join ${siteName} on Social Office." />
+			<var name="gmailMessageTitle" value="${adminName} has invited you to join ${siteName}" />
+		</execute>
+
+		<execute action="Gmail#click" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_SITE_INVITE_CONFIRMATION_LINK" />
+
+		<execute action="SOMembers#selectWindow" locator-key1="MEMBERS_POP_UP_WINDOW" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY" value1="${adminName} invited you to join ${siteName}." />
+		<execute action="SONotifications#assertClick" locator-key1="CONFIRM_BUTTON" value1="Confirm" />
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_NONE_MESSAGE" value1="You do not have any unread notifications." />
+
+		<execute action="SOMembers#close" locator-key1="MEMBERS_POP_UP_WINDOW" />
+
+		<execute macro="Gmail#tearDown">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+
+		<execute action="Home#open" locator1="http://localhost:8080" />
+	</command>
+
+	<command name="confirmMemberNonUserInviteByEmail">
+		<execute action="BaseLiferay#pause" locator1="30000" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Gmail#login">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#viewMail">
+			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailAssetType" value="${siteName}" />
+			<var name="gmailMailTableMessageTitle" value="${adminName} has invited you to join ${siteName}" />
+			<var name="gmailMessageBody" value="Follow the link below to confirm or ignore this invitation:" />
+			<var name="gmailMessageBodyClosing" value="If you have any questions, contact the administrator at ${adminEmailAddress}." />
+			<var name="gmailMessageBodyGreeting" value="${adminName} has invited you to join ${siteName} on Social Office." />
+			<var name="gmailMessageTitle" value="${adminName} has invited you to join ${siteName}" />
+		</execute>
+
+		<execute action="Gmail#click" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_SITE_INVITE_CREATE_ACCOUNT_LINK" />
+
+		<execute action="PGLoginCreateAccount#selectWindow" locator-key1="CREATE_ACCOUNT_POP_UP_WINDOW" />
+		<execute action="PGLoginCreateAccount#type" locator-key1="FIRST_NAME_FIELD" value1="${userFirstName}" />
+		<execute action="PGLoginCreateAccount#type" locator-key1="MIDDLE_NAME_FIELD" value1="${userMiddleName}" />
+		<execute action="PGLoginCreateAccount#type" locator-key1="LAST_NAME_FIELD" value1="${userLastName}" />
+		<execute action="PGLoginCreateAccount#type" locator-key1="SCREEN_NAME_FIELD" value1="${userScreenName}" />
+		<execute action="PGLoginCreateAccount#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="PGLoginCreateAccount#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="PGLoginNewpassword#type" locator-key1="PASSWORD_FIELD" value1="test" />
+		<execute action="PGLoginNewpassword#type" locator-key1="ENTER_AGAIN_FIELD" value1="test" />
+		<execute action="PGLoginNewpassword#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="PGLoginPasswordreminder#type" locator-key1="ANSWER_FIELD" value1="test" />
+		<execute action="PGLoginPasswordreminder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="PGLoginCreateAccount#close" locator-key1="CREATE_ACCOUNT_POP_UP_WINDOW" />
+
+		<execute macro="Gmail#login">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#viewMail">
+			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailAssetType" value="${siteName}" />
+			<var name="gmailMailTableMessageTitle" value="${adminName} has invited you to join ${siteName}" />
+			<var name="gmailMessageBody" value="Follow the link below to confirm or ignore this invitation:" />
+			<var name="gmailMessageBodyClosing" value="If you have any questions, contact the administrator at ${adminEmailAddress}." />
+			<var name="gmailMessageBodyGreeting" value="${adminName} has invited you to join ${siteName} on Social Office." />
+			<var name="gmailMessageTitle" value="${adminName} has invited you to join ${siteName}" />
+		</execute>
+
+		<var name="key_gmailAssetType" value="${siteName}" />
+
+		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY" value1="Once your account is created, you can visit ${siteName} at:" />
+		<execute action="Gmail#click" locator-key1="GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_SITE_INVITE_CONFIRMATION_LINK" />
+
+		<execute action="SOMembers#selectWindow" locator-key1="MEMBERS_POP_UP_WINDOW" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY" value1="${adminName} invited you to join ${siteName}." />
+		<execute action="SONotifications#assertClick" locator-key1="CONFIRM_BUTTON" value1="Confirm" />
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_NONE_MESSAGE" value1="You do not have any unread notifications." />
+
+		<execute action="SOMembers#close" locator-key1="MEMBERS_POP_UP_WINDOW" />
+
+		<execute macro="Gmail#tearDown">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+
+		<execute action="Home#open" locator1="http://localhost:8080" />
+	</command>
+
 	<command name="confirmRequestToConnect">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -121,6 +243,26 @@
 		<execute action="SOMembersInvite#assertTextEquals" locator-key1="FIND_MEMBERS_USER" value1="${userName}" />
 		<execute action="SOMembersInvite#click" locator-key1="FIND_MEMBERS_USER" />
 		<execute action="SOMembersInvite#assertTextEquals" locator-key1="MEMBERS_INVITE_LIST" value1="${userName}${userEmailAddress}" />
+
+		<if>
+			<isset var="siteRoleInvite" />
+			<then>
+				<execute action="SOMembersInvite#select" locator-key1="INVITE_TO_ROLE_SELECT" value1="${siteRoleInvite}" />
+			</then>
+		</if>
+
+		<execute action="SOMembersInvite#assertClick" locator-key1="SEND_INVITATIONS_BUTTON" value1="Send Invitations"  />
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully."  />
+	</command>
+
+	<command name="inviteMemberByEmail">
+		<var name="key_userEmailAddress" value="${userEmailAddress}" />
+
+		<execute action="SOMembers#assertClick" locator-key1="INVITE_BUTTON" value1="Invite members to this site." />
+
+		<execute action="SOMembersInvite#type" locator-key1="INVITE_BY_EMAIL_FIELD" value1="${userEmailAddress}" />
+		<execute action="SOMembersInvite#assertClick" locator-key1="INVITE_BY_EMAIL_ADD_EMAIL_ADDRESS_BUTTON" value1="Add Email Address" />
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="INVITE_BY_EMAIL_EMAIL_ADDRESS" value1="${userEmailAddress}" />
 
 		<if>
 			<isset var="siteRoleInvite" />

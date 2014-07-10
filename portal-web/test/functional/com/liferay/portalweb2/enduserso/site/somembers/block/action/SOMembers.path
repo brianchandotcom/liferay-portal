@@ -83,6 +83,11 @@
 	<td>//a[@class='invite-members']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MEMBERS_POP_UP_WINDOW</td>
+	<td>title=Members - Liferay</td>
+	<td></td>
+</tr>
 <!--MEMBERS_LIST-->
 <tr>
 	<td>MEMBERS_LIST_FILTER</td>

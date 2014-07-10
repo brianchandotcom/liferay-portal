@@ -147,6 +147,11 @@
 </tr>
 <!--MENU_MISCELLANEOUS-->
 <tr>
+	<td>MENU_MISCELLANEOUS_ANNOUNCEMENTS</td>
+	<td>//a[@id='_2_announcementsLink']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MENU_MISCELLANEOUS_COMMENTS</td>
 	<td>//a[@id='_2_commentsLink']</td>
 	<td></td>
@@ -529,6 +534,16 @@
 	<td></td>
 </tr>
 <!--ANNOUNCEMENTS-->
+<tr>
+	<td>ANNOUNCEMENTS_NOTIFICATION_CHECKBOX</td>
+	<td>//input[contains(@title,'${key_announcementType}') and contains(@id,'${key_notificationType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--DISPLAY_SETTINGS-->
 <tr>
 	<td>LANGUAGE_SELECT</td>

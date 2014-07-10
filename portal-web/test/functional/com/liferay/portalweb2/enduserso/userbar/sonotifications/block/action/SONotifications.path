@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIRM_BUTTON</td>
+	<td>//a[contains(.,'Confirm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATIONS_NONE_MESSAGE</td>
+	<td>//li[@class='message']/a[contains(.,'You do not have any unread notifications.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATIONS_ENTRY</td>
 	<td>//li[@class='user-notification unread']//div[@class='title']</td>
 	<td></td>

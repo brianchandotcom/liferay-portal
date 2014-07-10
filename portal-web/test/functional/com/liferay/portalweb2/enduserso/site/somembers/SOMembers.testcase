@@ -14,13 +14,6 @@
 	<var name="siteName" value="Open Site Name" />
 	<var name="siteType" value="Open" />
 	<var name="soPage" value="true" />
-	<var name="userEmailAddress" value="socialoffice01@liferay.com" />
-	<var name="userFirstName" value="Social01" />
-	<var name="userLastName" value="User01" />
-	<var name="userListName" value="User01, Social01" />
-	<var name="userMiddleName" value="Office01" />
-	<var name="userName" value="Social01 Office01 User01" />
-	<var name="userScreenName" value="socialoffice01" />
 
 	<set-up>
 		<execute macro="SOUser#firstLoginPG" />
@@ -30,6 +23,16 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="siteType" value="${siteType}" />
 		</execute>
+	</set-up>
+
+	<command name="AddConnection" priority="5">
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
 
 		<execute macro="SOUser#addUserWithSORole">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
@@ -40,9 +43,7 @@
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
-	</set-up>
 
-	<command name="AddConnection" priority="5">
 		<execute macro="SOMembers#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
 			<var name="senderName" value="${adminName}" />
@@ -69,6 +70,24 @@
 	</command>
 
 	<command name="ConfirmMemberInviteSite" priority="5">
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -106,7 +125,247 @@
 		<execute macro="SOMembers#viewMember" />
 	</command>
 
+	<command name="ConfirmMemberInviteSiteByEmail" priority="5">
+		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
+
+		<var name="userEmailAddress" property-value="email.address.2" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureMailServerSettings">
+			<var name="userName" property-value="email.address.1" />
+			<var name="userPassword" property-value="email.password.1" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#inviteMemberByEmail">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmMemberInviteByEmail">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+			<var name="userPassword" property-value="email.password.2" />
+		</execute>
+
+		<execute macro="SOMembers#viewConfirmMemberInvite" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#viewMember" />
+	</command>
+
+	<command name="ConfirmMemberInviteSiteByEmailNonSOUser" priority="5">
+		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
+
+		<var name="userEmailAddress" property-value="email.address.2" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureMailServerSettings">
+			<var name="userName" property-value="email.address.1" />
+			<var name="userPassword" property-value="email.password.1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#inviteMemberByEmail">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmMemberInviteByEmail">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+			<var name="userPassword" property-value="email.password.2" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+		<execute action="SOSiteHome#assertElementNotPresent" locator-key1="JOIN_SITE_BUTTON" />
+		<execute action="SOSiteHome#assertElementNotPresent" locator-key1="REQUEST_MEMBERSHIP_BUTTON" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_HOME" value1="Home" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_CALENDAR" value1="Calendar" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_DOCUMENTS" value1="Documents" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_FORUMS" value1="Forums" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_BLOGS" value1="Blogs" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_WIKI" value1="Wiki" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#viewMember" />
+	</command>
+
+	<command name="ConfirmMemberInviteSiteByEmailNonUser" priority="5">
+		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain={line.separator}captcha.check.portal.create_account=false" />
+
+		<var name="userEmailAddress" property-value="email.address.2" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureMailServerSettings">
+			<var name="userName" property-value="email.address.1" />
+			<var name="userPassword" property-value="email.password.1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#inviteMemberByEmail">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmMemberNonUserInviteByEmail">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminName" value="${adminName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userPassword" property-value="email.password.2" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+		<execute action="SOSiteHome#assertElementNotPresent" locator-key1="JOIN_SITE_BUTTON" />
+		<execute action="SOSiteHome#assertElementNotPresent" locator-key1="REQUEST_MEMBERSHIP_BUTTON" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_HOME" value1="Home" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_CALENDAR" value1="Calendar" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_DOCUMENTS" value1="Documents" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_FORUMS" value1="Forums" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_BLOGS" value1="Blogs" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_WIKI" value1="Wiki" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#viewMember" />
+	</command>
+
 	<command name="IgnoreMemberInviteSite" priority="5">
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -145,6 +404,24 @@
 	</command>
 
 	<command name="InviteConnectionSite" priority="5">
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
 		<execute macro="SOContactsCenter#requestToConnect">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userListName" value="${userListName}" />
@@ -211,6 +488,24 @@
 	</command>
 
 	<command name="InviteFollowingSite" priority="4">
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
 		<execute macro="SOContactsCenter#followUser">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userListName" value="${userListName}" />
@@ -261,13 +556,30 @@
 	</command>
 
 	<command name="InviteMembersSiteRolesSite" priority="5">
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
+		<var name="userFirstName" value="Social01" />
 		<var name="userFirstName2" value="Social02" />
+		<var name="userLastName" value="User01" />
 		<var name="userLastName2" value="User02" />
+		<var name="userListName" value="User01, Social01" />
 		<var name="userListName2" value="User02, Social02" />
+		<var name="userMiddleName" value="Office01" />
 		<var name="userMiddleName2" value="Office02" />
+		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userName2" value="Social02 Office02 User02" />
+		<var name="userScreenName" value="socialoffice01" />
 		<var name="userScreenName2" value="socialoffice02" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<execute macro="SOUser#addUserWithSORole">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
@@ -347,27 +659,44 @@
 	</command>
 
 	<command name="ViewMembersSite" priority="4">
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
 		<var name="userEmailAddress3" value="socialoffice03@liferay.com" />
 		<var name="userEmailAddress4" value="socialoffice04@liferay.com" />
+		<var name="userFirstName" value="Social01" />
 		<var name="userFirstName2" value="Social02" />
 		<var name="userFirstName3" value="Social03" />
 		<var name="userFirstName4" value="Social04" />
+		<var name="userLastName" value="User01" />
 		<var name="userLastName2" value="User02" />
 		<var name="userLastName3" value="User03" />
 		<var name="userLastName4" value="User04" />
+		<var name="userListName" value="User01, Social01" />
 		<var name="userListName2" value="User02, Social02" />
 		<var name="userListName3" value="User03, Social03" />
 		<var name="userListName4" value="User04, Social04" />
+		<var name="userMiddleName" value="Office01" />
 		<var name="userMiddleName2" value="Office02" />
 		<var name="userMiddleName3" value="Office03" />
 		<var name="userMiddleName4" value="Office04" />
+		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userName2" value="Social02 Office02 User02" />
 		<var name="userName3" value="Social03 Office03 User03" />
 		<var name="userName4" value="Social04 Office04 User04" />
+		<var name="userScreenName" value="socialoffice01" />
 		<var name="userScreenName2" value="socialoffice02" />
 		<var name="userScreenName3" value="socialoffice03" />
 		<var name="userScreenName4" value="socialoffice04" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<execute macro="SOUser#addUserWithSORole">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
@@ -652,6 +981,23 @@
 		<var name="roleName2" value="Site Administrator" />
 		<var name="roleNameLocalized1" value="Site Owner German" />
 		<var name="roleNameLocalized2" value="Site Administrator German" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />

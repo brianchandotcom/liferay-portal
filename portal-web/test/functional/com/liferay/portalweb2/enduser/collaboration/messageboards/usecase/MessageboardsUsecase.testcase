@@ -148,12 +148,14 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#splitThreadPG">
+			<var name="postCount" value="2" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadReplyBody" value="${threadReplyBody}" />
 			<var name="threadReplySubject" value="${threadReplySubject}" />
 			<var name="threadSplitReplyBody" value="${threadSplitReplyBody}" />
 			<var name="threadSplitSubject" value="${threadSplitSubject}" />
 			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1267,11 +1269,13 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#splitThreadPG">
+			<var name="postCount" value="2" />
 			<var name="threadReplyBody" value="MB Thread Split Reply Body" />
 			<var name="threadSplitReplyBody" value="Split Reply Thread Body" />
 			<var name="threadSplitReplySubject" value="Split Reply Thread Subject" />
 			<var name="threadSplitSubject" value="MB Thread Split Subject" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

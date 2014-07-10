@@ -9,13 +9,15 @@
 <#assign actionCommand = action?substring(x + 1)>
 
 <#if !action?contains("#is") && !action?ends_with("#confirm")>
-	<#if testCaseName??>
-		selenium
-	<#else>
-		liferaySelenium
-	</#if>
+	<#if !action?contains("#pause")>
+		<#if testCaseName??>
+			selenium
+		<#else>
+			liferaySelenium
+		</#if>
 
-	.assertLiferayErrors();
+		.assertLiferayErrors();
+	</#if>
 
 	${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action.${actionCommand}Description(
 

@@ -164,7 +164,6 @@
 			float: left;
 			height: 85%;
 			overflow: auto;
-			white-space: nowrap;
 			width: 99%;
 		}
 

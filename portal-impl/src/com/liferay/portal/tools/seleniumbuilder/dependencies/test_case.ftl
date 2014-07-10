@@ -72,6 +72,18 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 
 		selenium.startLogger();
 
+		<#if rootElement.element("property")??>
+			<#assign propertyElements = rootElement.elements("property")>
+
+			<#list propertyElements as propertyElement>
+				<#assign lineNumber = propertyElement.attributeValue("line-number")>
+
+				selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pending");
+
+				selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pass");
+			</#list>
+		</#if>
+
 		<#if rootElement.element("var")??>
 			<#assign varElements = rootElement.elements("var")>
 

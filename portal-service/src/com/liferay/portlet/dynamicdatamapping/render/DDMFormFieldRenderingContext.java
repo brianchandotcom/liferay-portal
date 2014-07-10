@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.dynamicdatamapping.render;
 
+import com.liferay.portlet.dynamicdatamapping.storage.Field;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,21 +27,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DDMFormFieldRenderingContext {
 
-	public DDMFormFieldRenderingContext() {
-	}
-
-	public DDMFormFieldRenderingContext(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String portletNamespace,
-		String namespace, String mode, boolean readOnly, Locale locale) {
-
-		setHttpServletRequest(httpServletRequest);
-		setHttpServletResponse(httpServletResponse);
-		setPortletNamespace(portletNamespace);
-		setNamespace(namespace);
-		setMode(mode);
-		setReadOnly(readOnly);
-		setLocale(locale);
+	public Fields getFields() {
+		return _fields;
 	}
 
 	public HttpServletRequest getHttpServletRequest() {
@@ -67,6 +57,18 @@ public class DDMFormFieldRenderingContext {
 
 	public boolean isReadOnly() {
 		return _readOnly;
+	}
+
+	public void setField(Field field) {
+		Fields fields = new Fields();
+
+		fields.put(field);
+
+		_fields = fields;
+	}
+
+	public void setFields(Fields fields) {
+		_fields = fields;
 	}
 
 	public void setHttpServletRequest(HttpServletRequest httpServletRequest) {
@@ -99,6 +101,7 @@ public class DDMFormFieldRenderingContext {
 		_readOnly = readOnly;
 	}
 
+	private Fields _fields;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
 	private Locale _locale;

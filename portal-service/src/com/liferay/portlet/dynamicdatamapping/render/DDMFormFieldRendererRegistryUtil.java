@@ -28,8 +28,8 @@ public class DDMFormFieldRendererRegistryUtil {
 			ddmFormFieldType);
 	}
 
-	public static DDMFormFieldRendererRegistry getDDMFormFieldRendererRegistry()
-	{
+	public static DDMFormFieldRendererRegistry
+		getDDMFormFieldRendererRegistry() {
 
 		PortalRuntimePermission.checkGetBeanProperty(
 			DDMFormFieldRendererRegistryUtil.class);

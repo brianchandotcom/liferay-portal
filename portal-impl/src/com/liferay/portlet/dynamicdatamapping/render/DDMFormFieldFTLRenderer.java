@@ -81,35 +81,16 @@ public class DDMFormFieldFTLRenderer implements DDMFormFieldRenderer {
 
 		_defaultReadOnlyTemplateResource = new URLTemplateResource(
 			defaultReadOnlyTemplateId, defaultReadOnlyTemplateURL);
-
-		DDMFormFieldRendererRegistryUtil.register(this);
 	}
 
 	@Override
 	public String[] getSupportedDDMFormFieldTypes() {
-		String[] supportedDDMFormFieldTypes = {
-			"checkbox", "ddm-date", "ddm-decimal", "ddm-documentlibrary",
-			"ddm-geolocation", "ddm-image", "ddm-integer", "ddm-link-to-page",
-			"ddm-number", "ddm-separator", "ddm-text-html", "option", "radio",
-			"select", "text", "textarea"
-		};
-
-		return supportedDDMFormFieldTypes;
+		return _SUPPORTED_DDM_FORM_FIELD_TYPES;
 	}
 
 	@Override
-	public String renderEmptyDDMFormField(
+	public String render(
 			DDMFormField ddmFormField,
-			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
-		throws PortalException {
-
-		return this.renderFilledDDMFormField(
-			ddmFormField, null, ddmFormFieldRenderingContext);
-	}
-
-	@Override
-	public String renderFilledDDMFormField(
-			DDMFormField ddmFormField, Fields fields,
 			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
 		throws PortalException {
 
@@ -118,6 +99,7 @@ public class DDMFormFieldFTLRenderer implements DDMFormFieldRenderer {
 				ddmFormFieldRenderingContext.getHttpServletRequest();
 			HttpServletResponse response =
 				ddmFormFieldRenderingContext.getHttpServletResponse();
+			Fields fields = ddmFormFieldRenderingContext.getFields();
 			String portletNamespace =
 				ddmFormFieldRenderingContext.getPortletNamespace();
 			String namespace = ddmFormFieldRenderingContext.getNamespace();
@@ -125,7 +107,7 @@ public class DDMFormFieldFTLRenderer implements DDMFormFieldRenderer {
 			boolean readOnly = ddmFormFieldRenderingContext.isReadOnly();
 			Locale locale = ddmFormFieldRenderingContext.getLocale();
 
-			return this.getFieldHTML(
+			return getFieldHTML(
 				request, response, ddmFormField, fields, null, portletNamespace,
 				namespace, mode, readOnly, locale);
 		}
@@ -153,8 +135,6 @@ public class DDMFormFieldFTLRenderer implements DDMFormFieldRenderer {
 		LocalizedValue tip = ddmFormField.getTip();
 
 		fieldContext.put("tip", tip.getValue(locale));
-
-		fieldContext.put("type", ddmFormField.getType());
 	}
 
 	protected void addStructureProperties(
@@ -174,6 +154,7 @@ public class DDMFormFieldFTLRenderer implements DDMFormFieldRenderer {
 			"repeatable", Boolean.toString(ddmFormField.isRepeatable()));
 		fieldContext.put(
 			"required", Boolean.toString(ddmFormField.isRequired()));
+		fieldContext.put("type", ddmFormField.getType());
 	}
 
 	protected int countFieldRepetition(
@@ -666,6 +647,13 @@ public class DDMFormFieldFTLRenderer implements DDMFormFieldRenderer {
 	private static final String _DEFAULT_NAMESPACE = "alloy";
 
 	private static final String _DEFAULT_READ_ONLY_NAMESPACE = "readonly";
+
+	private static final String[] _SUPPORTED_DDM_FORM_FIELD_TYPES = {
+		"checkbox", "ddm-date", "ddm-decimal", "ddm-documentlibrary",
+		"ddm-geolocation", "ddm-image", "ddm-integer", "ddm-link-to-page",
+		"ddm-number", "ddm-separator", "ddm-text-html", "option", "radio",
+		"select", "text", "textarea"
+	};
 
 	private static final String _TPL_EXT = ".ftl";
 

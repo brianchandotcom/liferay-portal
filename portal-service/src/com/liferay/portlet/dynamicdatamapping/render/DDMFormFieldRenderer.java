@@ -16,7 +16,6 @@ package com.liferay.portlet.dynamicdatamapping.render;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 /**
  * @author Pablo Carvalho
@@ -25,13 +24,8 @@ public interface DDMFormFieldRenderer {
 
 	public String[] getSupportedDDMFormFieldTypes();
 
-	public String renderEmptyDDMFormField(
+	public String render(
 			DDMFormField ddmFormField,
-			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
-		throws PortalException;
-
-	public String renderFilledDDMFormField(
-			DDMFormField ddmFormField, Fields fields,
 			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
 		throws PortalException;
 

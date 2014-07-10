@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SO_LOGO</td>
+	<td>//div[@class='so-portlet-user-bar']/a[@class='so-logo']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DASHBOARD</td>
 	<td>//a[contains(text(),'Dashboard')]</td>
 	<td></td>

@@ -445,10 +445,8 @@ AUI.add(
 		LiferayFormBuilderField.prototype._afterNameChange = function(event) {
 			var instance = this;
 
-			var uniqueNamesMap = UNIQUE_FIELD_NAMES_MAP;
-
-			uniqueNamesMap.remove(event.prevVal);
-			uniqueNamesMap.put(event.newVal, instance);
+			UNIQUE_FIELD_NAMES_MAP.remove(event.prevVal);
+			UNIQUE_FIELD_NAMES_MAP.put(event.newVal, instance);
 		};
 
 		LiferayFormBuilderField.prototype._afterRender = function(event) {

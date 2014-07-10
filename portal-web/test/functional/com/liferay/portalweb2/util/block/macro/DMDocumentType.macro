@@ -217,6 +217,8 @@
 	</command>
 
 	<command name="viewPGAddMenulist">
+		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
+
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
 	</command>

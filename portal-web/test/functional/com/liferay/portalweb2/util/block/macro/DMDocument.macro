@@ -159,11 +159,11 @@
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 
 		<if>
-			<isset var="dmDocumentType" />
+			<isset var="dmDocumentTypeName" />
 			<then>
-				<var name="key_dmDocumentType" value="${dmDocumentType}" />
+				<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-				<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_DOCUMENT_TYPE" value1="${dmDocumentType}" />
+				<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
 			</then>
 			<else>
 				<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
@@ -341,7 +341,7 @@
 
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
-	
+
 	<command name="addWithWorkflowCP">
 		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />

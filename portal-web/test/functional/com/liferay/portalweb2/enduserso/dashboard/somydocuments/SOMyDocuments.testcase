@@ -28,10 +28,10 @@
 		<var name="dmDocumentTitle2" value="DM Document Type Marketing Banner Title" />
 		<var name="dmDocumentTitle3" value="DM Document Type Online Training Title" />
 		<var name="dmDocumentTitle4" value="DM Document Type Sales Presentation Title" />
-		<var name="dmDocumentType1" value="Contract" />
-		<var name="dmDocumentType2" value="Marketing Banner" />
-		<var name="dmDocumentType3" value="Online Training" />
-		<var name="dmDocumentType4" value="Sales Presentation" />
+		<var name="dmDocumentTypeName1" value="Contract" />
+		<var name="dmDocumentTypeName2" value="Marketing Banner" />
+		<var name="dmDocumentTypeName3" value="Online Training" />
+		<var name="dmDocumentTypeName4" value="Sales Presentation" />
 		<var name="dmDocumentUploader" value="Test Test" />
 		<var name="dmDocumentVersionNumber" value="1.0" />
 
@@ -45,7 +45,7 @@
 			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile1}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
-			<var name="dmDocumentType" value="${dmDocumentType1}" />
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName1}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -58,7 +58,7 @@
 			<var name="dmDocumentDescription" value="${dmDocumentDescription2}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile2}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
-			<var name="dmDocumentType" value="${dmDocumentType2}" />
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName2}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -71,7 +71,7 @@
 			<var name="dmDocumentDescription" value="${dmDocumentDescription3}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile3}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle3}" />
-			<var name="dmDocumentType" value="${dmDocumentType3}" />
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName3}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -84,7 +84,7 @@
 			<var name="dmDocumentDescription" value="${dmDocumentDescription4}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile4}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle4}" />
-			<var name="dmDocumentType" value="${dmDocumentType4}" />
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName4}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

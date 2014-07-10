@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v6_1_0;
+package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.util.PortletKeys;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,8 +25,9 @@ import java.sql.ResultSet;
 
 /**
  * @author Juan Fernández
+ * @author Sergio González
  */
-public class UpgradeAdminPortlets extends UpgradeProcess {
+public class BaseUpgradeAdminPortlets extends UpgradeProcess {
 
 	protected void addResourcePermission(
 			long resourcePermissionId, long companyId, String name, int scope,
@@ -59,15 +58,6 @@ public class UpgradeAdminPortlets extends UpgradeProcess {
 		finally {
 			DataAccess.cleanUp(con, ps);
 		}
-	}
-
-	@Override
-	protected void doUpgrade() throws Exception {
-		updateAccessInControlPanelPermission(
-			PortletKeys.BLOGS, PortletKeys.BLOGS_ADMIN);
-
-		updateAccessInControlPanelPermission(
-			PortletKeys.MESSAGE_BOARDS, PortletKeys.MESSAGE_BOARDS_ADMIN);
 	}
 
 	protected long getBitwiseValue(String name, String actionId)

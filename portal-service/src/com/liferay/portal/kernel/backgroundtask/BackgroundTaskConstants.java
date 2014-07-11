@@ -51,7 +51,7 @@ public class BackgroundTaskConstants {
 			return "label-info";
 		}
 		else if (status == STATUS_FAILED) {
-			return "label-important";
+			return "label-danger";
 		}
 		else if (status == STATUS_IN_PROGRESS) {
 			return "label-warning";

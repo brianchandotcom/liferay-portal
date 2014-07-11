@@ -28,9 +28,5 @@
 .taglib-workflow-status {
 	.workflow-id, .workflow-version, .workflow-status {
 		color: #999;
-
-		.workflow-status-expired {
-			color: #999;
-		}
 	}
 }

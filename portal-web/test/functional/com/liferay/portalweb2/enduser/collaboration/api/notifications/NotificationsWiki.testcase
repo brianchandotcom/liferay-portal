@@ -1,0 +1,131 @@
+<definition component-name="portal-collaboration">
+	<property name="portlet.plugins.includes" value="notifications-portlet" />
+	<property name="testray.main.component.name" value="Collaboration" />
+
+	<var name="pageName" value="Wiki Test Page" />
+	<var name="portletName" value="Wiki" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="WikiPortlet#tearDownCP" />
+
+		<execute macro="WikiPage#tearDownCP" />
+
+		<execute macro="WikiNode#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="ViewWebSiteNotificationForNewThreadInCategory" priority="5">
+		<execute macro="WikiPortlet#subscribeToNodeCP">
+			<var name="wikiNodeName" value="Main" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#addPG">
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Notifications#viewCountAlert">
+			<var name="notificationCount" value="1" />
+		</execute>
+
+		<execute macro="Notifications#gotoDockbar" />
+
+		<execute macro="Notifications#viewNewContent">
+			<var name="assetType" value="Wiki Page" />
+			<var name="contentBody" value="Wiki Page Title" />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Notifications#navigateToContent">
+			<var name="contentBody" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiPage#viewPagePG">
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+	</command>
+
+	<command name="ViewWebSiteNotificationForUpdatedThreadInCategory" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#addPG">
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiPortlet#subscribeToNodeCP">
+			<var name="wikiNodeName" value="Main" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#editPagePG">
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageContentEdit" value="Wiki Page Content Edit" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Notifications#viewCountAlert">
+			<var name="notificationCount" value="1" />
+		</execute>
+
+		<execute macro="Notifications#gotoDockbar" />
+
+		<execute macro="Notifications#viewUpdatedContent">
+			<var name="assetType" value="Wiki Page" />
+			<var name="contentBody" value="Wiki Page Title" />
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="Notifications#navigateToContent">
+			<var name="contentBody" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiPage#viewPagePG">
+			<var name="wikiPageContent" value="Wiki Page Content Edit" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+	</command>
+</definition>

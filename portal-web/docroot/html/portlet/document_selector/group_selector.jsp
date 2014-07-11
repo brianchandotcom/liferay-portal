@@ -21,10 +21,12 @@ long groupId = ParamUtil.getLong(request, "groupId");
 
 Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
+String[] tabs1Names = StringUtil.split(ParamUtil.getString(renderRequest, "tabs1Names", "documents,pages"));
 String tabs1 = ParamUtil.getString(request, "tabs1");
 String ckEditorFuncNum = DocumentSelectorUtil.getCKEditorFuncNum(request);
 String eventName = ParamUtil.getString(request, "eventName");
 boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
+String type = DocumentSelectorUtil.getType(request);
 %>
 
 <liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" localizeMessage="<%= false %>" message="<%= HtmlUtil.escape(group.getDescriptiveName()) %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn btn-default">
@@ -36,9 +38,11 @@ boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector")
 
 	selectGroupURL.setParameter("struts_action", "/document_selector/view");
 	selectGroupURL.setParameter("tabs1", tabs1);
+	selectGroupURL.setParameter("tabs1Names", StringUtil.merge(tabs1Names));
 	selectGroupURL.setParameter("ckEditorFuncNum", ckEditorFuncNum);
 	selectGroupURL.setParameter("eventName", eventName);
 	selectGroupURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector));
+	selectGroupURL.setParameter("type", type);
 
 	for (Group browsableScopeGroup : PortalUtil.getBrowsableScopeGroups(themeDisplay.getUserId(), themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), refererPortletName)) {
 		selectGroupURL.setParameter("groupId", String.valueOf(browsableScopeGroup.getGroupId()));

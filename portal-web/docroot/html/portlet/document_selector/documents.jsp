@@ -323,15 +323,9 @@ portletURL.setParameter("type", type);
 			searchContainer.setResults(DLUtil.getFileEntries(hits));
 		}
 		else {
-			int status = WorkflowConstants.STATUS_APPROVED;
+			searchContainer.setTotal(DLAppServiceUtil.getFileEntriesCount(scopeGroupId, folderId));
 
-			if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-				status = WorkflowConstants.STATUS_ANY;
-			}
-
-			searchContainer.setTotal(DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(scopeGroupId, folderId, status, false));
-
-			searchContainer.setResults(DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(scopeGroupId, folderId, status, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
+			searchContainer.setResults(DLAppServiceUtil.getFileEntries(scopeGroupId, folderId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
 		}
 		%>
 

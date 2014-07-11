@@ -17,9 +17,9 @@
 <%@ include file="/html/portlet/document_selector/init.jsp" %>
 
 <%
-String[] tabs1Names = StringUtil.split(ParamUtil.getString(renderRequest, "tabs1Names", "documents,pages"));
+String[] tabs1Names = DocumentSelectorUtil.getTabs1Names(request);
 
-long groupId = ParamUtil.getLong(request, "groupId");
+long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
@@ -72,7 +72,9 @@ portletURL.setParameter("type", type);
 %>
 
 <c:if test="<%= showGroupsSelector %>">
-	<liferay-util:include page="/html/portlet/document_selector/group_selector.jsp" />
+	<liferay-util:include page="/html/portlet/document_selector/group_selector.jsp">
+		<liferay-util:param name="tabs1" value="documents" />
+	</liferay-util:include>
 </c:if>
 
 <aui:form method="post" name="selectDocumentFm">
@@ -92,11 +94,11 @@ portletURL.setParameter("type", type);
 				iconCssClass="icon-plus"
 				label="add"
 			>
-				<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
+				<c:if test="<%= DLFolderPermission.contains(permissionChecker, groupId, folderId, ActionKeys.ADD_FOLDER) %>">
 					<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_LIBRARY %>" var="addFolderURL">
 						<portlet:param name="struts_action" value="/document_library/edit_folder" />
 						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-						<portlet:param name="repositoryId" value="<%= String.valueOf(scopeGroupId) %>" />
+						<portlet:param name="repositoryId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
 					</liferay-portlet:renderURL>
 
@@ -111,13 +113,13 @@ portletURL.setParameter("type", type);
 					/>
 				</c:if>
 
-				<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
+				<c:if test="<%= DLFolderPermission.contains(permissionChecker, groupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
 
 					<%
 					List<DLFileEntryType> fileEntryTypes = Collections.emptyList();
 
 					if ((folder == null) || folder.isSupportsMetadata()) {
-						fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, true);
+						fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), folderId, true);
 					}
 					%>
 
@@ -190,7 +192,7 @@ portletURL.setParameter("type", type);
 			iteratorURL="<%= portletURL %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= DLAppServiceUtil.getFolders(scopeGroupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+				results="<%= DLAppServiceUtil.getFolders(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
 				total="<%= DLAppServiceUtil.getFoldersCount(groupId, folderId) %>"
 			/>
 
@@ -291,36 +293,43 @@ portletURL.setParameter("type", type);
 	>
 
 		<%
-		SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-		searchContext.setAttribute("groupId", groupId);
-		searchContext.setAttribute("mimeTypes", DocumentSelectorUtil.getMimeTypes(request));
-		searchContext.setAttribute("paginationType", "regular");
-
-		int entryEnd = ParamUtil.getInteger(request, "entryEnd", PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-
-		searchContext.setEnd(entryEnd);
-
-		searchContext.setFolderIds(new long[]{folderId});
-		searchContext.setGroupIds(new long[] {groupId});
-		searchContext.setIncludeFolders(false);
-
 		String keywords = ParamUtil.getString(request, "keywords");
 
-		searchContext.setKeywords(keywords);
+		if (Validator.isNotNull(keywords)) {
+			SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-		searchContext.setScopeStrict(false);
+			searchContext.setAttribute("groupId", groupId);
+			searchContext.setAttribute("mimeTypes", DocumentSelectorUtil.getMimeTypes(request));
+			searchContext.setAttribute("paginationType", "regular");
 
-		int entryStart = ParamUtil.getInteger(request, "entryStart");
+			int entryEnd = ParamUtil.getInteger(request, "entryEnd", PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 
-		searchContext.setStart(entryStart);
+			searchContext.setEnd(entryEnd);
 
-		Hits hits = DLAppServiceUtil.search(scopeGroupId, searchContext);
+			searchContext.setFolderIds(new long[]{folderId});
+			searchContext.setGroupIds(new long[]{groupId});
+			searchContext.setIncludeFolders(false);
+
+			searchContext.setKeywords(keywords);
+
+			searchContext.setScopeStrict(false);
+
+			int entryStart = ParamUtil.getInteger(request, "entryStart");
+
+			searchContext.setStart(entryStart);
+
+			Hits hits = DLAppServiceUtil.search(groupId, searchContext);
+
+			searchContainer.setTotal(hits.getLength());
+
+			searchContainer.setResults(DLUtil.getFileEntries(hits));
+		}
+		else {
+			searchContainer.setTotal(DLAppServiceUtil.getFileEntriesCount(groupId, folderId));
+
+			searchContainer.setResults(DLAppServiceUtil.getFileEntries(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
+		}
 		%>
-
-		<liferay-ui:search-container-results
-			results="<%= DLUtil.getFileEntries(hits) %>"
-		/>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.repository.model.FileEntry"

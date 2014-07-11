@@ -17,6 +17,7 @@ package com.liferay.portlet.documentselector.util;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
@@ -49,6 +50,20 @@ public class DocumentSelectorUtil {
 		return ArrayUtil.toStringArray(mimeTypes.toArray());
 	}
 
+	public static String[] getTabs1Names(HttpServletRequest request) {
+		String tabs1Names = ParamUtil.getString(request, "tabs1Names");
+
+		if (Validator.isNotNull(tabs1Names)) {
+			return StringUtil.split(tabs1Names);
+		}
+
+		if (Validator.isNotNull(getType(request))) {
+			return new String[] {_TYPE_DOCUMENTS};
+		}
+
+		return new String[] {_TYPE_DOCUMENTS, _TYPE_PAGES};
+	}
+
 	public static String getType(HttpServletRequest request) {
 		String type = ParamUtil.getString(request, "type");
 
@@ -72,5 +87,9 @@ public class DocumentSelectorUtil {
 			return Collections.emptySet();
 		}
 	}
+
+	private static final String _TYPE_DOCUMENTS = "documents";
+
+	private static final String _TYPE_PAGES = "pages";
 
 }

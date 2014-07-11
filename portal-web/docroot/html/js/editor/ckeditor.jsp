@@ -355,7 +355,7 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 
 						filebrowserBrowseUrl: '<%= documentSelectorURL %>',
 						filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image',
-						filebrowserImageBrowseLinkUrl: '<%= documentSelectorURL %>',
+						filebrowserImageBrowseLinkUrl: '<%= documentSelectorURL %>&Type=image',
 						filebrowserFlashBrowseUrl: '<%= documentSelectorURL %>&Type=flash',
 					</c:when>
 					<c:otherwise>

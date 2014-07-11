@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_selector/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId");
+long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 
 Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
@@ -29,7 +29,9 @@ boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector")
 %>
 
 <c:if test="<%= showGroupsSelector %>">
-	<liferay-util:include page="/html/portlet/document_selector/group_selector.jsp" />
+	<liferay-util:include page="/html/portlet/document_selector/group_selector.jsp">
+		<liferay-util:param name="tabs1" value="pages" />
+	</liferay-util:include>
 </c:if>
 
 <%

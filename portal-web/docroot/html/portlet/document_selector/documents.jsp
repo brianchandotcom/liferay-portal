@@ -293,36 +293,49 @@ portletURL.setParameter("type", type);
 	>
 
 		<%
-		SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-		searchContext.setAttribute("groupId", groupId);
-		searchContext.setAttribute("mimeTypes", DocumentSelectorUtil.getMimeTypes(request));
-		searchContext.setAttribute("paginationType", "regular");
-
-		int entryEnd = ParamUtil.getInteger(request, "entryEnd", PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
-
-		searchContext.setEnd(entryEnd);
-
-		searchContext.setFolderIds(new long[]{folderId});
-		searchContext.setGroupIds(new long[] {groupId});
-		searchContext.setIncludeFolders(false);
-
 		String keywords = ParamUtil.getString(request, "keywords");
 
-		searchContext.setKeywords(keywords);
+		if (Validator.isNotNull(keywords)) {
+			SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-		searchContext.setScopeStrict(false);
+			searchContext.setAttribute("groupId", groupId);
+			searchContext.setAttribute("mimeTypes", DocumentSelectorUtil.getMimeTypes(request));
+			searchContext.setAttribute("paginationType", "regular");
 
-		int entryStart = ParamUtil.getInteger(request, "entryStart");
+			int entryEnd = ParamUtil.getInteger(request, "entryEnd", PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 
-		searchContext.setStart(entryStart);
+			searchContext.setEnd(entryEnd);
 
-		Hits hits = DLAppServiceUtil.search(groupId, searchContext);
+			searchContext.setFolderIds(new long[]{folderId});
+			searchContext.setGroupIds(new long[]{groupId});
+			searchContext.setIncludeFolders(false);
+
+			searchContext.setKeywords(keywords);
+
+			searchContext.setScopeStrict(false);
+
+			int entryStart = ParamUtil.getInteger(request, "entryStart");
+
+			searchContext.setStart(entryStart);
+
+			Hits hits = DLAppServiceUtil.search(groupId, searchContext);
+
+			searchContainer.setTotal(hits.getLength());
+
+			searchContainer.setResults(DLUtil.getFileEntries(hits));
+		}
+		else {
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
+				status = WorkflowConstants.STATUS_ANY;
+			}
+
+			searchContainer.setTotal(DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(scopeGroupId, folderId, status, false));
+
+			searchContainer.setResults(DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(scopeGroupId, folderId, status, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
+		}
 		%>
-
-		<liferay-ui:search-container-results
-			results="<%= DLUtil.getFileEntries(hits) %>"
-		/>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.repository.model.FileEntry"

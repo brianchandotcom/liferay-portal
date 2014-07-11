@@ -156,7 +156,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 
 		ddmStructureImpl.resetOriginalValues();
 
-		ddmStructureImpl.setDdmForm(_ddmForm);
+		ddmStructureImpl.setDDMForm(_ddmForm);
 
 		ddmStructureImpl.setLocalizedFieldsMap(_localizedFieldsMap);
 

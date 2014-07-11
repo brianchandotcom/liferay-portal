@@ -27,4 +27,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.FIELD)
 public @interface CacheField {
+
+	String methodName() default "";
+
 }

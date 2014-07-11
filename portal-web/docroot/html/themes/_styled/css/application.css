@@ -665,7 +665,7 @@
 
 /* ---------- HTML editor ---------- */
 
-body.html-editor {
+.aui .html-editor.portlet {
 	background: #FFF;
 	color: #000;
 	line-height: 1;

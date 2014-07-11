@@ -109,7 +109,7 @@ else {
 	<div id="<portlet:namespace />folderContainer">
 		<aui:nav cssClass="list-group">
 			<c:if test="<%= Validator.isNotNull(parentTitle) %>">
-				<li class="dropdown-header list-group-item">
+				<li class="list-group-item nav-header">
 					<%= HtmlUtil.escape(parentTitle) %>
 				</li>
 			</c:if>

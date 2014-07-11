@@ -4,7 +4,7 @@ AUI.add(
 		var AArray = A.Array;
 
 		var FormBuilderTextField = A.FormBuilderTextField;
-		var FormBuilderTypes = A.FormBuilder.types;
+		var FormBuilderTypes = A.FormBuilderField.types;
 
 		var Lang = A.Lang;
 

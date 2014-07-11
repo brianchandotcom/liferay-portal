@@ -542,7 +542,7 @@ AUI.add(
 						var fields = AArray.map(
 							val,
 							function(item, index) {
-								return A.instanceOf(item, A.AvailableField) ? item : new A.LiferayAvailableField(item);
+								return A.instanceOf(item, A.PropertyBuilderAvailableField) ? item : new A.LiferayAvailableField(item);
 							}
 						);
 

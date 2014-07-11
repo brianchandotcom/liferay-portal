@@ -15,14 +15,23 @@
 package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.model.Group;
+import com.liferay.portal.security.membershippolicy.samples.TestSiteMembershipPolicy;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.RoleTestUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.After;
+import org.junit.Before;
 
 /**
  * @author Roberto Díaz
+ * @author Raymond Augé
  */
 public abstract class BaseSiteMembershipPolicyTestCase
 	extends BaseMembershipPolicyTestCase {
@@ -49,6 +58,24 @@ public abstract class BaseSiteMembershipPolicyTestCase
 
 	public static long[] getStandardRoleIds() {
 		return _standardRoleIds;
+	}
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		Map<String, Object> properties = new HashMap<String, Object>();
+
+		properties.put("service.ranking", 1);
+
+		ServiceRegistration<?> serviceRegistration = registry.registerService(
+			SiteMembershipPolicy.class,
+			new TestSiteMembershipPolicy(), properties);
+
+		serviceRegistrations.add(serviceRegistration);
 	}
 
 	@After

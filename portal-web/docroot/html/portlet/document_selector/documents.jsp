@@ -19,7 +19,7 @@
 <%
 String[] tabs1Names = StringUtil.split(ParamUtil.getString(renderRequest, "tabs1Names", "documents,pages"));
 
-long groupId = ParamUtil.getLong(request, "groupId");
+long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
@@ -92,11 +92,11 @@ portletURL.setParameter("type", type);
 				iconCssClass="icon-plus"
 				label="add"
 			>
-				<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
+				<c:if test="<%= DLFolderPermission.contains(permissionChecker, groupId, folderId, ActionKeys.ADD_FOLDER) %>">
 					<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_LIBRARY %>" var="addFolderURL">
 						<portlet:param name="struts_action" value="/document_library/edit_folder" />
 						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-						<portlet:param name="repositoryId" value="<%= String.valueOf(scopeGroupId) %>" />
+						<portlet:param name="repositoryId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
 					</liferay-portlet:renderURL>
 
@@ -111,13 +111,13 @@ portletURL.setParameter("type", type);
 					/>
 				</c:if>
 
-				<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
+				<c:if test="<%= DLFolderPermission.contains(permissionChecker, groupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
 
 					<%
 					List<DLFileEntryType> fileEntryTypes = Collections.emptyList();
 
 					if ((folder == null) || folder.isSupportsMetadata()) {
-						fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, true);
+						fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), folderId, true);
 					}
 					%>
 
@@ -190,7 +190,7 @@ portletURL.setParameter("type", type);
 			iteratorURL="<%= portletURL %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= DLAppServiceUtil.getFolders(scopeGroupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+				results="<%= DLAppServiceUtil.getFolders(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
 				total="<%= DLAppServiceUtil.getFoldersCount(groupId, folderId) %>"
 			/>
 
@@ -315,7 +315,7 @@ portletURL.setParameter("type", type);
 
 		searchContext.setStart(entryStart);
 
-		Hits hits = DLAppServiceUtil.search(scopeGroupId, searchContext);
+		Hits hits = DLAppServiceUtil.search(groupId, searchContext);
 		%>
 
 		<liferay-ui:search-container-results

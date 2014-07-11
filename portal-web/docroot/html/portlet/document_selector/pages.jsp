@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_selector/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId");
+long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 
 Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 

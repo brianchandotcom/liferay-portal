@@ -64,7 +64,7 @@ else {
 %>
 
 <liferay-ui:header
-	title='<%= (tag != null) ? tag.getName() : "edit-tag" %>'
+	title='<%= (tag != null) ? tag.getName() : "add-tag" %>'
 />
 
 <portlet:actionURL var="editTagURL">

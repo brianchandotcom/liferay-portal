@@ -119,7 +119,7 @@ public @interface OSGiBeanProperties {
 
 		private static Type _getType(String name) {
 			for (Type type : values()) {
-				if (name.equals(type.name())) {
+				if (StringUtil.toUpperCase(name).equals(type.name())) {
 					return type;
 				}
 			}

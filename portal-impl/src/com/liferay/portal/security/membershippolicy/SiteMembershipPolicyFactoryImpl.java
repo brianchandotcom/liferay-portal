@@ -17,6 +17,7 @@ package com.liferay.portal.security.membershippolicy;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -63,23 +64,17 @@ public class SiteMembershipPolicyFactoryImpl
 		public SiteMembershipPolicy addingService(
 			ServiceReference<SiteMembershipPolicy> serviceReference) {
 
-			Boolean autoVerify  = (Boolean) serviceReference.getProperty(
-				SiteMembershipPolicy.MEMBERSHIP_POLICY_AUTO_VERIFY);
-
 			Registry registry = RegistryUtil.getRegistry();
 
-			SiteMembershipPolicy siteMembershipPolicy = registry.getService(
-				serviceReference);
+			SiteMembershipPolicy siteMembershipPolicy =
+				registry.getService(serviceReference);
 
-			if((autoVerify != null) && (autoVerify.booleanValue())){
+			if (PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY) {
 				try {
 					siteMembershipPolicy.verifyPolicy();
 				}
-				catch (PortalException e) {
-					_log.error(
-						"Customizer catches failure trying to verifyPolicy:",
-						e);
-					return null;
+				catch (PortalException pe) {
+					_log.error(pe, pe);
 				}
 			}
 

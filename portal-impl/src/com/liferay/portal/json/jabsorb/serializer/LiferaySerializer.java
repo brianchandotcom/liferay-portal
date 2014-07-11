@@ -192,9 +192,7 @@ public class LiferaySerializer extends AbstractSerializer {
 		}
 
 		try {
-			Class<?> javaClass = Class.forName(javaClassName);
-
-			Serializable.class.isAssignableFrom(javaClass);
+			Class.forName(javaClassName);
 		}
 		catch (Exception e) {
 			throw new UnmarshallException(

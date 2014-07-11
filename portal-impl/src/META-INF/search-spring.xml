@@ -101,6 +101,12 @@
 	<bean id="com.liferay.portal.kernel.search.TokenizerUtil" class="com.liferay.portal.kernel.search.TokenizerUtil">
 		<property name="tokenizer" ref="com.liferay.portal.search.lucene.PerFieldAnalyzer" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory" class="com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory" />
+	<bean id="com.liferay.portal.kernel.search.facet.ModifiedFacetFactory" class="com.liferay.portal.kernel.search.facet.ModifiedFacetFactory" />
+	<bean id="com.liferay.portal.kernel.search.facet.MultiValueFacetFactory" class="com.liferay.portal.kernel.search.facet.MultiValueFacetFactory" />
+	<bean id="com.liferay.portal.kernel.search.facet.RangeFacetFactory" class="com.liferay.portal.kernel.search.facet.RangeFacetFactory" />
+	<bean id="com.liferay.portal.kernel.search.facet.ScopeFacetFactory" class="com.liferay.portal.kernel.search.facet.ScopeFacetFactory" />
+	<bean id="com.liferay.portal.kernel.search.facet.SimpleFacetFactory" class="com.liferay.portal.kernel.search.facet.SimpleFacetFactory" />
 	<bean id="org.apache.lucene.search.spell.StringDistance" class="org.apache.lucene.search.spell.LevensteinDistance" />
 
 	<!-- Generic search engine -->

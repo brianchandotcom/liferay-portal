@@ -320,6 +320,5 @@
 	<classpathentry kind="lib" path="lib/portal/xstream.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xuggle-xuggler-noarch.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xz.jar"/>
-	<classpathentry kind="lib" path="modules/core/registry-impl/lib/org.eclipse.osgi.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

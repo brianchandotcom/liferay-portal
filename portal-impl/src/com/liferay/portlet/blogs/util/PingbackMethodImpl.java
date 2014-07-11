@@ -14,8 +14,9 @@
 
 package com.liferay.portlet.blogs.util;
 
+import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.kernel.xmlrpc.Response;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcConstants;
@@ -43,15 +43,10 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.pingback.DuplicateCommentException;
 import com.liferay.portlet.blogs.pingback.InvalidSourceURIException;
 import com.liferay.portlet.blogs.pingback.PingbackDisabledException;
 import com.liferay.portlet.blogs.pingback.UnavailableSourceURIException;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.io.IOException;
 
@@ -147,34 +142,8 @@ public class PingbackMethodImpl implements Method {
 		}
 	}
 
-	protected void addComment(
-			long userId, long groupId, String className, long classPK,
-			String body, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		MBMessageDisplay messageDisplay =
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				userId, groupId, className, classPK,
-				WorkflowConstants.STATUS_APPROVED);
-
-		MBThread thread = messageDisplay.getThread();
-
-		long threadId = thread.getThreadId();
-		long parentMessageId = thread.getRootMessageId();
-
-		List<MBMessage> messages =
-			MBMessageLocalServiceUtil.getThreadMessages(
-				threadId, WorkflowConstants.STATUS_APPROVED);
-
-		for (MBMessage message : messages) {
-			if (message.getBody().equals(body)) {
-				throw new DuplicateCommentException();
-			}
-		}
-
-		MBMessageLocalServiceUtil.addDiscussionMessage(
-			userId, StringPool.BLANK, groupId, className, classPK, threadId,
-			parentMessageId, StringPool.BLANK, body, serviceContext);
+	public void setCommentManager(CommentManager commentManager) {
+		_commentManager = commentManager;
 	}
 
 	protected void addPingback(long companyId) throws Exception {
@@ -205,12 +174,13 @@ public class PingbackMethodImpl implements Method {
 		ServiceContext serviceContext = buildServiceContext(
 			companyId, groupId, urlTitle);
 
-		addComment(userId, groupId, className, classPK, body, serviceContext);
+		_commentManager.addComment(
+			userId, groupId, className, classPK, body, serviceContext);
 	}
 
 	protected ServiceContext buildServiceContext(
 			long companyId, long groupId, String urlTitle)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -389,6 +359,7 @@ public class PingbackMethodImpl implements Method {
 
 	private static Log _log = LogFactoryUtil.getLog(PingbackMethodImpl.class);
 
+	private CommentManager _commentManager = BlogsUtil.getCommentManager();
 	private String _sourceUri;
 	private String _targetUri;
 

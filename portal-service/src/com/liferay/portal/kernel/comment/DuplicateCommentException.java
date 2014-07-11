@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.pingback;
+package com.liferay.portal.kernel.comment;
 
 import com.liferay.portal.kernel.exception.PortalException;
 

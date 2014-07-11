@@ -40,6 +40,7 @@ import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.messageboards.comment.MBCommentManagerImpl;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -76,9 +77,9 @@ import org.powermock.reflect.Whitebox;
  * @author André de Oliveira
  */
 @PrepareForTest( {
-	BlogsEntryLocalServiceUtil.class, MBMessageLocalServiceUtil.class,
-	PortalSocketPermission.class, PortletLocalServiceUtil.class,
-	PropsValues.class, UserLocalServiceUtil.class
+	BlogsEntryLocalServiceUtil.class, BlogsUtil.class,
+	MBMessageLocalServiceUtil.class, PortalSocketPermission.class,
+	PortletLocalServiceUtil.class, PropsValues.class, UserLocalServiceUtil.class
 })
 @RunWith(PowerMockRunner.class)
 public class PingbackMethodImplTest extends PowerMockito {
@@ -88,6 +89,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 		MockitoAnnotations.initMocks(this);
 
 		setUpBlogsEntry();
+		setUpBlogsUtil();
 		setUpHttp();
 		setUpLanguage();
 		setUpMessageBoards();
@@ -364,7 +366,11 @@ public class PingbackMethodImplTest extends PowerMockito {
 	}
 
 	protected void execute(String targetURI) {
+		MBCommentManagerImpl mbCommentManagerImpl = new MBCommentManagerImpl();
+		mbCommentManagerImpl.setMBMessageLocalService(_mbMessageLocalService);
+
 		PingbackMethodImpl pingbackMethodImpl = new PingbackMethodImpl();
+		pingbackMethodImpl.setCommentManager(mbCommentManagerImpl);
 
 		pingbackMethodImpl.setArguments(
 			new Object[] {"__sourceUri__", targetURI});
@@ -412,6 +418,10 @@ public class PingbackMethodImplTest extends PowerMockito {
 		).toReturn(
 			_blogsEntryLocalService
 		);
+	}
+
+	protected void setUpBlogsUtil() {
+		mockStatic(BlogsUtil.class, Mockito.RETURNS_SMART_NULLS);
 	}
 
 	protected void setUpHttp() throws Exception {

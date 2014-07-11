@@ -24,6 +24,12 @@ import com.liferay.portal.service.ServiceContext;
 public class DummyCommentManagerImpl implements CommentManager {
 
 	@Override
+	public void addComment(
+		long userId, long groupId, String className, long classPK, String body,
+		ServiceContext serviceContext) {
+	}
+
+	@Override
 	public long addComment(
 		long userId, long groupId, String className, long classPK,
 		String userName, String subject, String body,

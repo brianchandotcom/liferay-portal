@@ -265,7 +265,12 @@
 </tr>
 <tr>
 	<td>PREVIEW_ACTIVITY_ENTRY</td>
-	<td>//div[@class='panel-inner']/div/div[contains(.,'${key_workflowActivityComment}')]</td>
+	<td>//div[@class='panel-body']/div/div[contains(.,'${key_workflowActivityComment}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--COMPLETED_TABLE-->

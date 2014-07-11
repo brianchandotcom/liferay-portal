@@ -1184,7 +1184,7 @@
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Boolean" />
 			<var name="fieldFieldLabel" value="This is a unique field" />
-			<var name="fieldName" value="This is a unique field" />
+			<var name="fieldName" value="This_is_a_unique_field" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
@@ -1212,7 +1212,7 @@
 
 		<execute macro="DynamicDataMapping#deleteField">
 			<var name="fieldFieldLabel" value="This is a unique field" />
-			<var name="fieldName" value="This is a unique field" />
+			<var name="fieldName" value="This_is_a_unique_field" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addFieldFormTemplateSpecific">

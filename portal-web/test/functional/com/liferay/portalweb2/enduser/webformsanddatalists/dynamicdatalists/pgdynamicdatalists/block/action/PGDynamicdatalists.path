@@ -144,17 +144,17 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_ADD_FORM_TEMPLATE</td>
-	<td>//span[contains(@class,'lfr-icon-action-add')]/a[contains(.,'Add Form Template')]</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add Form Template')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD_DISPLAY_TEMPLATE</td>
-	<td>//span[contains(@class,'lfr-icon-action-add')]/a[contains(.,'Add Display Template')]</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Add Display Template')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_EDIT_FORM_TEMPLATE</td>
-	<td>//span[contains(@class,'lfr-icon-action-edit-template')]/a[contains(.,'Edit Form Template')]</td>
+	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Edit Form Template')]</td>
 	<td></td>
 </tr>
 <tr>

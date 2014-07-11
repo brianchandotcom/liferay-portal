@@ -49,7 +49,7 @@ public class MBCommentManagerImplTest extends Mockito {
 	}
 
 	@Test
-	public void testAddComment() throws Exception {
+	public void testAddCommentWithUsernameAndSubject() throws Exception {
 		long mbMessageId = RandomTestUtil.randomLong();
 
 		when(

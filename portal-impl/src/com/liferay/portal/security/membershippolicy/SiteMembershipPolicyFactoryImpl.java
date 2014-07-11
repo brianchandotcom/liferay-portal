@@ -41,38 +41,36 @@ public class SiteMembershipPolicyFactoryImpl
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
-			SiteMembershipPolicy.class, 
+			SiteMembershipPolicy.class,
 			new SiteMembershipPolicyTrackerCustomizer());
 
 		_serviceTracker.open();
 	}
 
-	private static SiteMembershipPolicyFactoryImpl
-	_instance = new SiteMembershipPolicyFactoryImpl();
+	private static Log _log = LogFactoryUtil.getLog(
+		SiteMembershipPolicyFactoryImpl.class);
+
+	private static SiteMembershipPolicyFactoryImpl _instance =
+		new SiteMembershipPolicyFactoryImpl();
 
 	private ServiceTracker<?, SiteMembershipPolicy> _serviceTracker;
 
-	private static Log _log = LogFactoryUtil.getLog(
-		SiteMembershipPolicyFactoryImpl.class);
-	
 	private class SiteMembershipPolicyTrackerCustomizer
-	implements ServiceTrackerCustomizer<SiteMembershipPolicy, 
-		SiteMembershipPolicy> {
+		implements ServiceTrackerCustomizer<SiteMembershipPolicy,
+			SiteMembershipPolicy> {
 
 		@Override
 		public SiteMembershipPolicy addingService(
 			ServiceReference<SiteMembershipPolicy> serviceReference) {
-			
+
 			Boolean autoVerify  = (Boolean) serviceReference.getProperty(
 				SiteMembershipPolicy.MEMBERSHIP_POLICY_AUTO_VERIFY);
-			
+
 			Registry registry = RegistryUtil.getRegistry();
-	
-			Object service = registry.getService(serviceReference);
-	
-			SiteMembershipPolicy siteMembershipPolicy =
-				(SiteMembershipPolicy) service;
-	
+
+			SiteMembershipPolicy siteMembershipPolicy = registry.getService(
+				serviceReference);
+
 			if((autoVerify != null) && (autoVerify.booleanValue())){
 				try {
 					siteMembershipPolicy.verifyPolicy();
@@ -84,20 +82,20 @@ public class SiteMembershipPolicyFactoryImpl
 					return null;
 				}
 			}
-			
+
 			return siteMembershipPolicy;
 		}
-	
+
 		@Override
 		public void modifiedService(
-			ServiceReference<SiteMembershipPolicy> serviceReference, 
-			SiteMembershipPolicy service) {
+			ServiceReference<SiteMembershipPolicy> serviceReference,
+			SiteMembershipPolicy siteMembershipPolicy) {
 		}
-	
+
 		@Override
 		public void removedService(
-			ServiceReference<SiteMembershipPolicy> serviceReference, 
-			SiteMembershipPolicy service) {		
+			ServiceReference<SiteMembershipPolicy> serviceReference,
+			SiteMembershipPolicy siteMembershipPolicy) {
 		}
 
 	}

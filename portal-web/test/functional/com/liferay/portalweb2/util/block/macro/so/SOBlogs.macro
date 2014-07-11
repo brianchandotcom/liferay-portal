@@ -26,6 +26,37 @@
 		<execute action="SOBlogsRecentBlogsConfiguration#selectFrameTop" />
 	</command>
 
+	<command name="removeSocialBookmarksPG">
+		<if>
+			<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+			<then>
+				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />
+			</then>
+		</if>
+
+		<if>
+			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+			<then>
+				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
+				<execute action="Dockbar#click" locator-key1="EDIT_CONTROLS" />
+			</then>
+		</if>
+
+		<execute action="SOBlogs#makeVisible" locator-key1="BLOGS_PORTLET_OPTIONS" />
+		<execute action="SOBlogs#click" locator-key1="BLOGS_PORTLET_OPTIONS_LINK" />
+
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
+
+		<execute action="PGBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGBlogsConfiguration#uncheck" locator-key1="SOCIAL_BOOKMARKS_TWITTER_CHECKBOX" />
+		<execute action="PGBlogsConfiguration#uncheck" locator-key1="SOCIAL_BOOKMARKS_FACEBOOK_CHECKBOX" />
+		<execute action="PGBlogsConfiguration#uncheck" locator-key1="SOCIAL_BOOKMARKS_GOOGLE_PLUS_ONE_CHECKBOX" />
+		<execute action="PGBlogsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="PGBlogsConfiguration#assertElementPresent" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGBlogsConfiguration#selectFrameTop" />
+	</command>
+
 	<command name="viewBlogsEntryRecentBlogs">
 		<var name="key_entryTitle" value="${entryTitle}" />
 

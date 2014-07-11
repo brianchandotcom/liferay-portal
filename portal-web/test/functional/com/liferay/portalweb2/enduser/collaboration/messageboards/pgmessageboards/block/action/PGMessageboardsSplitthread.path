@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>OK_BUTTON</td>
-	<td>//button[contains(@class,'btn btn-primary') and contains(@type,'submit')]</td>
+	<td>//button[contains(@class,'btn btn-primary') and @type='submit']</td>
 	<td></td>
 </tr>
 <tr>

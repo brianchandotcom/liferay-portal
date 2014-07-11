@@ -107,7 +107,7 @@
 </tr>
 <tr>
 	<td>CHANGE_PARENT_CHANGE_PARENT_BUTTON</td>
-	<td>//button[contains(@type,'submit') and contains(.,'Change Parent')]</td>
+	<td>//button[@type='submit' and contains(.,'Change Parent')]</td>
 	<td></td>
 </tr>
 <tr>

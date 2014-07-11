@@ -447,7 +447,8 @@ AUI.add(
 							var itemsError = instance.get(STR_ITEMS_ERROR);
 
 							return Lang.sub(
-								instance.ITEM_TEMPLATE, {
+								instance.ITEM_TEMPLATE,
+								{
 									column: column,
 									index: index,
 									row: row,

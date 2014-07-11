@@ -68,10 +68,6 @@ public class GetterUtil {
 	public static final String[] DEFAULT_STRING_VALUES = new String[0];
 
 	public static boolean get(Object value, boolean defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			return get((String)value, defaultValue);
 		}
@@ -86,10 +82,6 @@ public class GetterUtil {
 	public static Date get(
 		Object value, DateFormat dateFormat, Date defaultValue) {
 
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			return get((String)value, dateFormat, defaultValue);
 		}
@@ -102,10 +94,6 @@ public class GetterUtil {
 	}
 
 	public static double get(Object value, double defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			return get((String)value, defaultValue);
 		}
@@ -124,10 +112,6 @@ public class GetterUtil {
 	}
 
 	public static float get(Object value, float defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			return get((String)value, defaultValue);
 		}
@@ -146,10 +130,6 @@ public class GetterUtil {
 	}
 
 	public static int get(Object value, int defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			return get((String)value, defaultValue);
 		}
@@ -168,10 +148,6 @@ public class GetterUtil {
 	}
 
 	public static long get(Object value, long defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			return get((String)value, defaultValue);
 		}
@@ -190,10 +166,6 @@ public class GetterUtil {
 	}
 
 	public static Number get(Object value, Number defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			String valueString = (String)value;
 
@@ -212,22 +184,28 @@ public class GetterUtil {
 		if (value instanceof Byte) {
 			return (Byte)value;
 		}
-		else if (value instanceof Double) {
+
+		if (value instanceof Double) {
 			return (Double)value;
 		}
-		else if (value instanceof Float) {
+
+		if (value instanceof Float) {
 			return (Float)value;
 		}
-		else if (value instanceof Integer) {
+
+		if (value instanceof Integer) {
 			return (Integer)value;
 		}
-		else if (value instanceof Long) {
+
+		if (value instanceof Long) {
 			return (Long)value;
 		}
-		else if (value instanceof Short) {
+
+		if (value instanceof Short) {
 			return (Short)value;
 		}
-		else if (value instanceof Number) {
+
+		if (value instanceof Number) {
 			return (Number)value;
 		}
 
@@ -235,10 +213,6 @@ public class GetterUtil {
 	}
 
 	public static short get(Object value, short defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			return get((String)value, defaultValue);
 		}
@@ -257,10 +231,6 @@ public class GetterUtil {
 	}
 
 	public static String get(Object value, String defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			return get((String)value, defaultValue);
 		}
@@ -396,18 +366,15 @@ public class GetterUtil {
 	public static boolean[] getBooleanValues(
 		Object value, boolean[] defaultValue) {
 
-		if (value == null) {
-			return defaultValue;
-		}
-		else if (value instanceof String[]) {
+		if (value instanceof String[]) {
 			return getBooleanValues((String[])value, defaultValue);
 		}
-		else if (value instanceof boolean[]) {
+
+		if (value instanceof boolean[]) {
 			return (boolean[])value;
 		}
-		else {
-			return defaultValue;
-		}
+
+		return defaultValue;
 	}
 
 	public static boolean[] getBooleanValues(String[] values) {
@@ -457,18 +424,15 @@ public class GetterUtil {
 	public static Date[] getDateValues(
 		Object value, DateFormat dateFormat, Date[] defaultValue) {
 
-		if (value == null) {
-			return defaultValue;
-		}
-		else if (value instanceof String[]) {
+		if (value instanceof String[]) {
 			return getDateValues((String[])value, dateFormat, defaultValue);
 		}
-		else if (value instanceof Date[]) {
+
+		if (value instanceof Date[]) {
 			return (Date[])value;
 		}
-		else {
-			return defaultValue;
-		}
+
+		return defaultValue;
 	}
 
 	public static Date[] getDateValues(String[] values, DateFormat dateFormat) {
@@ -514,18 +478,15 @@ public class GetterUtil {
 	public static double[] getDoubleValues(
 		Object value, double[] defaultValue) {
 
-		if (value == null) {
-			return defaultValue;
-		}
-		else if (value instanceof String[]) {
+		if (value instanceof String[]) {
 			return getDoubleValues((String[])value, defaultValue);
 		}
-		else if (value instanceof double[]) {
+
+		if (value instanceof double[]) {
 			return (double[])value;
 		}
-		else {
-			return defaultValue;
-		}
+
+		return defaultValue;
 	}
 
 	public static double[] getDoubleValues(String[] values) {
@@ -569,18 +530,15 @@ public class GetterUtil {
 	}
 
 	public static float[] getFloatValues(Object value, float[] defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-		else if (value instanceof String[]) {
+		if (value instanceof String[]) {
 			return getFloatValues((String[])value, defaultValue);
 		}
-		else if (value instanceof float[]) {
+
+		if (value instanceof float[]) {
 			return (float[])value;
 		}
-		else {
-			return defaultValue;
-		}
+
+		return defaultValue;
 	}
 
 	public static float[] getFloatValues(String[] values) {
@@ -687,18 +645,15 @@ public class GetterUtil {
 	}
 
 	public static int[] getIntegerValues(Object value, int[] defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-		else if (value instanceof String[]) {
+		if (value instanceof String[]) {
 			return getIntegerValues((String[])value, defaultValue);
 		}
-		else if (value instanceof int[]) {
+
+		if (value instanceof int[]) {
 			return (int[])value;
 		}
-		else {
-			return defaultValue;
-		}
+
+		return defaultValue;
 	}
 
 	public static int[] getIntegerValues(String[] values) {
@@ -803,16 +758,15 @@ public class GetterUtil {
 	}
 
 	public static long[] getLongValues(Object value, long[] defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-		else if (value instanceof String[]) {
+		if (value instanceof String[]) {
 			return getLongValues((String[])value, defaultValue);
 		}
-		else if (value instanceof long[]) {
+
+		if (value instanceof long[]) {
 			return (long[])value;
 		}
-		else if (value instanceof Number[]) {
+
+		if (value instanceof Number[]) {
 			Number[] numbers = (Number[])value;
 
 			long[] values = new long[numbers.length];
@@ -823,9 +777,8 @@ public class GetterUtil {
 
 			return values;
 		}
-		else {
-			return defaultValue;
-		}
+
+		return defaultValue;
 	}
 
 	public static long[] getLongValues(String[] values) {
@@ -869,18 +822,15 @@ public class GetterUtil {
 	public static Number[] getNumberValues(
 		Object value, Number[] defaultValue) {
 
-		if (value == null) {
-			return defaultValue;
-		}
-		else if (value instanceof String[]) {
+		if (value instanceof String[]) {
 			return getNumberValues((String[])value, defaultValue);
 		}
-		else if (value instanceof Number[]) {
+
+		if (value instanceof Number[]) {
 			return (Number[])value;
 		}
-		else {
-			return defaultValue;
-		}
+
+		return defaultValue;
 	}
 
 	public static Number[] getNumberValues(String[] values) {
@@ -946,18 +896,15 @@ public class GetterUtil {
 	}
 
 	public static short[] getShortValues(Object value, short[] defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-		else if (value instanceof String[]) {
+		if (value instanceof String[]) {
 			return getShortValues((String[])value, defaultValue);
 		}
-		else if (value instanceof short[]) {
+
+		if (value instanceof short[]) {
 			return (short[])value;
 		}
-		else {
-			return defaultValue;
-		}
+
+		return defaultValue;
 	}
 
 	public static short[] getShortValues(String[] values) {
@@ -1003,15 +950,11 @@ public class GetterUtil {
 	public static String[] getStringValues(
 		Object value, String[] defaultValue) {
 
-		if (value == null) {
-			return defaultValue;
-		}
-		else if (value instanceof String[]) {
+		if (value instanceof String[]) {
 			return getStringValues((String[])value, defaultValue);
 		}
-		else {
-			return defaultValue;
-		}
+
+		return defaultValue;
 	}
 
 	public static String[] getStringValues(

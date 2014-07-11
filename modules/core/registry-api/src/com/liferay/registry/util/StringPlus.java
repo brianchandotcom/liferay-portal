@@ -40,7 +40,9 @@ public class StringPlus {
 			if (!collection.isEmpty()) {
 				Iterator<?> iterator = collection.iterator();
 
-				if (iterator.next() instanceof String) {
+				Object element = iterator.next();
+
+				if (element instanceof String) {
 					return new ArrayList<String>((Collection<String>)object);
 				}
 			}

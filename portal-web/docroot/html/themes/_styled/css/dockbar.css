@@ -38,6 +38,12 @@ $editLayoutPanelWidth: 460px;
 			.nav {
 				margin: 0;
 			}
+
+			.navbar-nav {
+				&, > li {
+					float: none;
+				}
+			}
 		}
 	}
 

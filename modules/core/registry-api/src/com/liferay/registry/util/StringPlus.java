@@ -27,20 +27,20 @@ import java.util.List;
 public class StringPlus {
 
 	public static List<String> asList(Object object) {
-		if (String.class.isInstance(object)) {
+		if (object instanceof String) {
 			return new ArrayList<String>(
 				Collections.singletonList((String)object));
 		}
-		else if (String[].class.isInstance(object)) {
+		else if (object instanceof String[]) {
 			return new ArrayList<String>(Arrays.asList((String[])object));
 		}
-		else if (Collection.class.isInstance(object)) {
+		else if (object instanceof Collection) {
 			Collection<?> collection = (Collection<?>)object;
 
 			if (!collection.isEmpty()) {
 				Iterator<?> iterator = collection.iterator();
 
-				if (String.class.isInstance(iterator.next())) {
+				if (iterator.next() instanceof String) {
 					return new ArrayList<String>((Collection<String>)object);
 				}
 			}

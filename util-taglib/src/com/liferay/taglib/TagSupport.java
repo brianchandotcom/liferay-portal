@@ -45,7 +45,7 @@ public class TagSupport implements Tag {
 			}
 
 			if ((isInterface && clazz.isInstance(parentTag)) ||
-				clazz.isAssignableFrom(parentTag.getClass())) {
+				clazz.isInstance(parentTag)) {
 
 				return parentTag;
 			}

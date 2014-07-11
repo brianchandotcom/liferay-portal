@@ -22,6 +22,7 @@
 
 	<%
 	String redirect = ParamUtil.getString(request, "redirect");
+	String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 	long trashEntryId = ParamUtil.getLong(request, "trashEntryId");
 
@@ -64,7 +65,7 @@
 	/>
 
 	<liferay-ui:header
-		backURL="<%= redirect %>"
+		backURL="<%= backURL %>"
 		localizeTitle="<%= false %>"
 		title="<%= trashRenderer.getTitle(locale) %>"
 	/>
@@ -232,7 +233,8 @@
 								PortletURL rowURL = renderResponse.createRenderURL();
 
 								rowURL.setParameter("struts_action", "/trash/view_content");
-								rowURL.setParameter("redirect", currentURL);
+								rowURL.setParameter("redirect", redirect);
+								rowURL.setParameter("backURL", currentURL);
 								rowURL.setParameter("className", (curTrashRenderer.getClassName()));
 								rowURL.setParameter("classPK", String.valueOf(curTrashRenderer.getClassPK()));
 								%>
@@ -292,7 +294,8 @@
 								PortletURL rowURL = renderResponse.createRenderURL();
 
 								rowURL.setParameter("struts_action", "/trash/view_content");
-								rowURL.setParameter("redirect", currentURL);
+								rowURL.setParameter("redirect", redirect);
+								rowURL.setParameter("backURL", currentURL);
 								rowURL.setParameter("className", curTrashRenderer.getClassName());
 								rowURL.setParameter("classPK", String.valueOf(curTrashRenderer.getClassPK()));
 								%>

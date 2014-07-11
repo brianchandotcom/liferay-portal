@@ -1803,7 +1803,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBookmarksEntrySOSiteOpenDeleted" priority="4">
+	<command known-issues="SOS-2355" name="SearchBookmarksEntrySOSiteOpenDeleted" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />

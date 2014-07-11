@@ -1551,11 +1551,6 @@
 
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ALL_CHECKBOX" />
-		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
-		<var name="permissionNavigationValue" value="Blogs" />
-		<var name="roleName" value="Blogs Site Role Name" />
-		<var name="roleType" value="Site" />
 		<var name="userEmailAddress" property-value="email.address.2" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -1579,41 +1574,15 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Roles" />
+		<execute macro="PermissionsInline#gotoBlogsPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURLTemp" value="true" />
 		</execute>
 
-		<execute macro="Role#addCP">
-			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey1}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
-			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
-			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
-			<var name="roleName" value="${roleName}" />
-		</execute>
-
-		<execute macro="Role#viewPermissionCP">
-			<var name="permissionDefinitionValue" value="Add Entry" />
-			<var name="permissionNavigationValue" value="Blog Entries" />
-		</execute>
-
-		<execute macro="Role#viewPermissionCP">
-			<var name="permissionDefinitionValue" value="Permissions" />
-			<var name="permissionNavigationValue" value="Blog Entries" />
-		</execute>
-
-		<execute macro="Role#viewPermissionCP">
-			<var name="permissionDefinitionValue" value="Subscribe" />
-			<var name="permissionNavigationValue" value="Blog Entries" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userName}" />
+		<execute macro="Role#definePermissionPG">
+			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX" />
+			<var name="roleName" value="Site Member" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1621,28 +1590,15 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="SOSite#joinSitePG">
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
-			<var name="userLoginFullName" value="${adminName}" />
-		</execute>
-
-		<execute macro="Page#gotoUsersCP">
-			<var name="portletName" value="Site Memberships" />
-			<var name="siteScopeName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Site#assignRoleCP">
-			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
+		<execute macro="SOBlogs#removeSocialBookmarksPG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOUserBar#joinSOSite">
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

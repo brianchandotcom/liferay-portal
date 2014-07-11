@@ -2247,7 +2247,7 @@
 	<command name="DeleteMicroblogsEntryTag" priority="4">
 		<var name="microblogsEntryContent1" value="Microblogs Post1" />
 		<var name="microblogsEntryContent2" value="Microblogs Post2" />
-		<var name="microblogsEntryContent2" value="Microblogs Post3" />
+		<var name="microblogsEntryContent3" value="Microblogs Post3" />
 		<var name="microblogsEntryTagValue" value="Microblogs" />
 
 		<execute macro="Page#gotoPG">

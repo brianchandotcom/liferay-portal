@@ -16,7 +16,7 @@ package com.liferay.portlet.dynamicdatamapping.model.impl;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portlet.dynamicdatamapping.BaseDDMTest;
+import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
@@ -35,7 +35,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 		DDMStructureLocalServiceUtil.class, DDMTemplateLocalServiceUtil.class,
 		LocaleUtil.class, PropsUtil.class
 	})
-public class DDMStructureImplTest extends BaseDDMTest {
+public class DDMStructureImplTest extends BaseDDMTestCase {
 
 	@Before
 	public void setUp() {

@@ -15,7 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.io;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portlet.dynamicdatamapping.BaseDDMTest;
+import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
@@ -28,7 +28,7 @@ import java.util.Locale;
 /**
  * @author Pablo Carvalho
  */
-public class BaseDDMFormSerializer extends BaseDDMTest {
+public class BaseDDMFormSerializer extends BaseDDMTestCase {
 
 	protected List<Locale> createAvailableLocales() {
 		List<Locale> availableLocales = new ArrayList<Locale>();

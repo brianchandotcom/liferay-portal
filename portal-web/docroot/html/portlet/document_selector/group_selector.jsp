@@ -21,7 +21,7 @@ long groupId = ParamUtil.getLong(request, "groupId");
 
 Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-String[] tabs1Names = StringUtil.split(ParamUtil.getString(renderRequest, "tabs1Names", "documents,pages"));
+String[] tabs1Names = DocumentSelectorUtil.getTabs1Names(request);
 String tabs1 = ParamUtil.getString(request, "tabs1");
 String ckEditorFuncNum = DocumentSelectorUtil.getCKEditorFuncNum(request);
 String eventName = ParamUtil.getString(request, "eventName");

@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_selector/init.jsp" %>
 
 <%
-String[] tabs1Names = StringUtil.split(ParamUtil.getString(renderRequest, "tabs1Names", "documents,pages"));
+String[] tabs1Names = DocumentSelectorUtil.getTabs1Names(request);
 
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 

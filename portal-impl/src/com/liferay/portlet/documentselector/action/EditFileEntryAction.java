@@ -202,10 +202,6 @@ public class EditFileEntryAction extends PortletAction {
 				contentType, title, description, changeLog, inputStream, size,
 				serviceContext);
 
-			AssetPublisherUtil.addAndStoreSelection(
-				actionRequest, DLFileEntry.class.getName(),
-				fileEntry.getFileEntryId(), -1);
-
 			AssetPublisherUtil.addRecentFolderId(
 				actionRequest, DLFileEntry.class.getName(), folderId);
 

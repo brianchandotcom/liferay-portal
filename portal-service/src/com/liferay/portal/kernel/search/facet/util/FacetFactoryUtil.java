@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.search.facet.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-
-import java.lang.reflect.Constructor;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,23 +34,30 @@ public class FacetFactoryUtil {
 
 		String className = facetConfiguration.getClassName();
 
-		Constructor<?> constructor = _constructorCache.get(className);
+		FacetFactory facetFactory = _instance._facetFactories.get(className);
 
-		if (constructor == null) {
-			constructor = Class.forName(className).getConstructor(
-				SearchContext.class);
+		if (facetFactory == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"FacetFactory not found for {className=" + className +
+						"}. Ignoring!");
+			}
 
-			_constructorCache.put(className, constructor);
+			return null;
 		}
 
-		Facet facet = (Facet)constructor.newInstance(searchContext);
+		Facet facet = facetFactory.newInstance(searchContext);
 
 		facet.setFacetConfiguration(facetConfiguration);
 
 		return facet;
 	}
 
-	private static Map<String, Constructor<?>> _constructorCache =
-		new ConcurrentHashMap<String, Constructor<?>>();
+	private static Log _log = LogFactoryUtil.getLog(FacetFactoryUtil.class);
+
+	private static FacetFactoryUtil _instance = new FacetFactoryUtil();
+
+	private Map<String, FacetFactory> _facetFactories =
+		new ConcurrentHashMap<String, FacetFactory>();
 
 }

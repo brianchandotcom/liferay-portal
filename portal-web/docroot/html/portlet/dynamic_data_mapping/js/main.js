@@ -8,10 +8,12 @@ AUI.add(
 
 		var instanceOf = A.instanceOf;
 		var isObject = Lang.isObject;
+		var isUndefined = Lang.isUndefined;
+		var isNull = Lang.isNull;
 
 		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
-		var LOCALIZABLE_FIELD_ATTRS = ['label', 'predefinedValue'] //, 'style' ,'tip'];
+		var LOCALIZABLE_FIELD_ATTRS = ['label', 'predefinedValue', 'style' ,'tip'];
 
 		var UNLOCALIZABLE_FIELD_ATTRS = ['dataType', 'fieldNamespace', 'indexType', 'localizable', 'multiple', 'name', 'readOnly', 'repeatable', 'required', 'type'];
 
@@ -22,6 +24,8 @@ AUI.add(
 
 			separator: ['readOnly', 'required', 'predefinedValue', 'indexType']
 		};
+
+		var SETTINGS_TAB_INDEX = 1;
 
 		var STR_BLANK = '';
 
@@ -168,6 +172,7 @@ AUI.add(
 						instance.translationManager.after('editingLocaleChange', instance._afterEditingLocaleChange, instance);
 
 						instance.on('model:change', instance._onPropertyModelChange);
+						instance.on('save', instance._onSave);
 					},
 
 					createField: function() {
@@ -212,8 +217,10 @@ AUI.add(
 								instance._addLocalizationMapField(field, availableLanguageIds);
 
 								if (field.options) {
-									instance._addLocalizationMapFieldForOptions(field, content.availableLanguageIds);
+									instance._addLocalizationMapFieldForOptions(field, availableLanguageIds);
 								}
+
+								instance._addLocalizationMapFieldForNestedFields(field.fields, availableLanguageIds);
 							}
 						);
 
@@ -245,6 +252,20 @@ AUI.add(
 						return value;
 					},
 
+					setEditingField: function() {
+						var instance = this;
+
+						var tabs = instance.tabView.getTabs();
+
+						var settingsTabIndex = tabs.indexOf(instance.tabView.getActiveTab());
+
+						var fields = instance.get('fields');
+
+						if (settingsTabIndex === SETTINGS_TAB_INDEX) {
+							instance.editingField = fields._items[0];
+						}
+					},
+
 					_addLocalizableFields: function(fields) {
 						var instance = this;
 
@@ -259,6 +280,10 @@ AUI.add(
 										}
 									}
 								);
+
+								if (field.fields) {
+									instance._addLocalizableFields(field.fields);
+								}
 							}
 						);
 					},
@@ -282,6 +307,21 @@ AUI.add(
 
 									}
 								);
+							}
+						);
+					},
+
+					_addLocalizationMapFieldForNestedFields: function(fields, availableLanguageIds) {
+						var instance = this;
+
+						A.each(
+							fields,
+							function(field) {
+								instance._addLocalizationMapField(field, availableLanguageIds);
+
+								if (field.options) {
+									instance._addLocalizationMapFieldForOptions(field, availableLanguageIds);
+								}
 							}
 						);
 					},
@@ -330,13 +370,9 @@ AUI.add(
 						var instance = this;
 
 						AArray.each(
-							LOCALIZABLE_FIELD_ATTRS,
+							instance.LOCALIZABLE_FIELD_ATTRS,
 							function(attr) {
-								var fieldAttr = field.get(attr);
-
-								if (fieldAttr) {
-									structureField[attr] = instance._getLocalizedValue(field, attr);
-								}
+								structureField[attr] = instance._getLocalizedValue(field, attr);
 							}
 						);
 					},
@@ -441,7 +477,7 @@ AUI.add(
 						AArray.each(
 							translationManager.get('availableLocales'),
 							function(locale) {
-								var value = A.Object.getValue(localizationMap, [locale, attribute]) || field.get(attribute);
+								var value = A.Object.getValue(localizationMap, [locale, attribute]) || '';
 
 								localizedValue[locale] = instance.normalizeValue(value);
 							}
@@ -526,6 +562,16 @@ AUI.add(
 						}
 					},
 
+					_onSave: function(arguments) {
+						var instance = this;
+
+						LiferayFormBuilder.superclass._onSave.apply(instance, arguments);
+
+						var editingLocale = instance.translationManager.get('editingLocale');
+
+						instance._updateFieldsLocalizationMap(editingLocale);
+					},
+
 					_renderSettings: function() {
 						var instance = this;
 
@@ -600,7 +646,11 @@ AUI.add(
 									AArray.each(
 										instance.LOCALIZABLE_FIELD_ATTRS,
 										function(item, index) {
-											field.set(item, localeMap[item]);
+											var localizedItem = localeMap[item];
+
+											if (!isUndefined(localizedItem) && !isNull(localizedItem)) {
+												field.set(item, localizedItem);
+											}
 										}
 									);
 

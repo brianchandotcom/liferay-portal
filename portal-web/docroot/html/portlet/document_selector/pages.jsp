@@ -109,6 +109,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 </div>
 
 <aui:script use="aui-base">
+	var LString = A.Lang.String;
 	var Util = Liferay.Util;
 
 	var bindTreeUI = function(containerId) {
@@ -127,7 +128,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 		var buffer = [];
 
 		if (A.instanceOf(node, A.TreeNode)) {
-			var labelText = Util.escapeHTML(node.get('labelEl').text());
+			var labelText = LString.escapeHTML(node.get('labelEl').text());
 
 			buffer.push(labelText);
 
@@ -136,7 +137,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 					var labelEl = treeNode.get('labelEl');
 
 					if (labelEl) {
-						labelText = Util.escapeHTML(labelEl.text());
+						labelText = LString.escapeHTML(labelEl.text());
 
 						buffer.unshift(labelText);
 					}

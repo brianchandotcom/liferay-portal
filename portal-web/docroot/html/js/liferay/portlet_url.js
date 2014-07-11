@@ -269,7 +269,7 @@ AUI.add(
 				var value = resultURL.toString();
 
 				if (options.escapeXML) {
-					value = Util.escapeHTML(value);
+					value = Lang.String.escapeHTML(value);
 				}
 
 				return value;

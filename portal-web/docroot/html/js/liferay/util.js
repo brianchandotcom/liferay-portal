@@ -247,38 +247,6 @@
 			);
 		},
 
-		escapeHTML: function(str, preventDoubleEscape, entities) {
-			var result;
-
-			var regex = REGEX_HTML_ESCAPE;
-
-			var entitiesList = [];
-
-			var entitiesValues;
-
-			if (Lang.isObject(entities)) {
-				entitiesValues = [];
-
-				AObject.each(
-					entities,
-					function(item, index) {
-						entitiesList.push(index);
-
-						entitiesValues.push(item);
-					}
-				);
-
-				regex = new RegExp(STR_LEFT_SQUARE_BRACKET + AString.escapeRegEx(entitiesList.join('')) + STR_RIGHT_SQUARE_BRACKET, 'g');
-			}
-			else {
-				entities = MAP_HTML_CHARS_ESCAPED;
-
-				entitiesValues = htmlEscapedValues;
-			}
-
-			return str.replace(regex, A.bind('_escapeHTML', Util, !!preventDoubleEscape, entities, entitiesValues));
-		},
-
 		getAttributes: function(el, attributeGetter) {
 			var instance = this;
 
@@ -792,35 +760,6 @@
 
 				form.attr('target', '');
 			}
-		},
-
-		_escapeHTML: function(preventDoubleEscape, entities, entitiesValues, match) {
-			var result;
-
-			if (preventDoubleEscape) {
-				var arrayArgs = AArray(arguments);
-
-				var length = arrayArgs.length;
-
-				var string = arrayArgs[length - 1];
-				var offset = arrayArgs[length - 2];
-
-				var nextSemicolonIndex = string.indexOf(';', offset);
-
-				if (nextSemicolonIndex >= 0) {
-					var entity = string.substring(offset, nextSemicolonIndex + 1);
-
-					if (AArray.indexOf(entitiesValues, entity) >= 0) {
-						result = match;
-					}
-				}
-			}
-
-			if (!result) {
-				result = entities[match];
-			}
-
-			return result;
 		},
 
 		_getEditableInstance: function(title) {

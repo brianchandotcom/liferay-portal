@@ -46,7 +46,7 @@ if (vocabulary != null) {
 }
 %>
 
-<aui:input cssClass="vocabulary-checkbox" helpMessage="multi-valued-help" label="allow-multiple-categories" name="multiValued" type="checkbox" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />
+<aui:input helpMessage="multi-valued-help" label="allow-multiple-categories" name="multiValued" type="checkbox" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />
 
 <liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="vocabularyExtraFieldsPanelContainer" persistState="<%= true %>" title="associated-asset-types">
 	<aui:fieldset id="extraFields">
@@ -109,7 +109,7 @@ if (vocabulary != null) {
 					}
 					%>
 
-					<aui:input cssClass="vocabulary-checkbox" label="required" name='<%= "required" + index %>' type="checkbox" value="<%= (vocabulary != null) ? vocabulary.isRequired(classNameId, classTypePK) : false %>" />
+					<aui:input label="required" name='<%= "required" + index %>' type="checkbox" value="<%= (vocabulary != null) ? vocabulary.isRequired(classNameId, classTypePK) : false %>" />
 				</div>
 			</div>
 
@@ -139,7 +139,7 @@ if (vocabulary != null) {
 
 	extraFields.setData('autoFieldsInstance', autoFields);
 
-	var form = A.one('#<portlet:namespace /><%= randomNamespace + "fm" %>');
+	var form = A.one('#<portlet:namespace />fm');
 
 	form.delegate(
 		'change',

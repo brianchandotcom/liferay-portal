@@ -346,6 +346,12 @@ public class AssetCategoryWrapper implements AssetCategory,
 		return _assetCategory.getName();
 	}
 
+	@Override
+	public com.liferay.portlet.asset.model.AssetCategory getParentCategory()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategory.getParentCategory();
+	}
+
 	/**
 	* Returns the parent category ID of this asset category.
 	*

@@ -17,8 +17,16 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.util.PredicateFilter" %><%@
+page import="com.liferay.portlet.asset.AssetCategoryNameException" %><%@
+page import="com.liferay.portlet.asset.DuplicateCategoryException" %><%@
+page import="com.liferay.portlet.asset.DuplicateVocabularyException" %><%@
+page import="com.liferay.portlet.asset.NoSuchCategoryException" %><%@
+page import="com.liferay.portlet.asset.NoSuchVocabularyException" %><%@
+page import="com.liferay.portlet.asset.VocabularyNameException" %><%@
 page import="com.liferay.portlet.asset.model.AssetCategoryConstants" %><%@
+page import="com.liferay.portlet.asset.model.AssetCategoryDisplay" %><%@
 page import="com.liferay.portlet.asset.model.AssetCategoryProperty" %><%@
+page import="com.liferay.portlet.asset.model.AssetVocabularyDisplay" %><%@
 page import="com.liferay.portlet.asset.model.ClassType" %><%@
 page import="com.liferay.portlet.asset.model.ClassTypeReader" %><%@
 page import="com.liferay.portlet.asset.model.impl.AssetCategoryPropertyImpl" %><%@
@@ -26,6 +34,7 @@ page import="com.liferay.portlet.asset.service.AssetCategoryPropertyServiceUtil"
 page import="com.liferay.portlet.asset.service.permission.AssetCategoryPermission" %><%@
 page import="com.liferay.portlet.asset.service.permission.AssetPermission" %><%@
 page import="com.liferay.portlet.asset.service.permission.AssetVocabularyPermission" %><%@
+page import="com.liferay.portlet.asset.util.AssetCategoryUtil" %><%@
 page import="com.liferay.portlet.asset.util.AssetVocabularySettingsHelper" %>
 
 <%@ include file="/html/portlet/asset_category_admin/init-ext.jsp" %>

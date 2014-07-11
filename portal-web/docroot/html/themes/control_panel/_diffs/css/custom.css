@@ -917,12 +917,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	/* ---------- Vocabularies select box in sites categories ---------- */
 
-	.portlet-asset-category-admin {
-		.form-group {
-			margin-bottom: 0;
-		}
-	}
-
 	.textboxlistentry-holder {
 		margin-left: 0;
 	}

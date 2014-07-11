@@ -79,7 +79,7 @@ AUI.add(
 
 							return value;
 						},
-						value: ''
+						value: []
 					},
 
 					curEntryIds: {
@@ -92,7 +92,12 @@ AUI.add(
 
 							return value;
 						},
-						value: ''
+						value: []
+					},
+
+					label: {
+						validator: '_isValidString',
+						value: Liferay.Language.get('select')
 					},
 
 					labelNode: {
@@ -562,7 +567,7 @@ AUI.add(
 								children: [
 									{
 										icon: 'icon-search',
-										label: Liferay.Language.get('select'),
+										label: instance.get('label'),
 										on: {
 											click: A.bind('_showSelectPopup', instance)
 										},

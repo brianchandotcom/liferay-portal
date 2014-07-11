@@ -17,29 +17,35 @@
 <%@ include file="/html/portlet/asset_category_admin/init.jsp" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_asset_category_admin_edit_vocabulary") + StringPool.UNDERLINE;
+String redirect = ParamUtil.getString(request, "redirect");
 
 AssetVocabulary vocabulary = (AssetVocabulary)request.getAttribute(WebKeys.ASSET_VOCABULARY);
 
 long vocabularyId = BeanParamUtil.getLong(vocabulary, request, "vocabularyId");
 %>
 
+<liferay-ui:header
+	title='<%= (vocabulary != null) ? vocabulary.getTitle(locale) : "add-new-vocabulary" %>'
+/>
+
 <portlet:actionURL var="editVocabularyURL">
 	<portlet:param name="struts_action" value="/asset_category_admin/edit_vocabulary" />
+	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editVocabularyURL %>" cssClass="update-vocabulary-form" method="get" name='<%= randomNamespace + "fm" %>'>
-	<div class="hide lfr-message-response" id="vocabularyMessagesEdit"></div>
-
+<aui:form action="<%= editVocabularyURL %>" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= vocabulary == null ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="vocabularyId" type="hidden" value="<%= vocabularyId %>" />
+
+	<liferay-ui:error exception="<%= DuplicateVocabularyException.class %>" message="please-enter-a-unique-name" />
+	<liferay-ui:error exception="<%= VocabularyNameException.class %>" message="please-enter-a-valid-name" />
 
 	<aui:model-context bean="<%= vocabulary %>" model="<%= AssetVocabulary.class %>" />
 
 	<aui:fieldset>
 		<div>
 			<div class="add-vocabulary-layer asset-category-layer">
-				<aui:input autoFocus="<%= true %>" cssClass="vocabulary-name" label="name" name="title" />
+				<aui:input autoFocus="<%= true %>" label="name" name="title" />
 
 				<aui:input name="description" />
 
@@ -58,25 +64,7 @@ long vocabularyId = BeanParamUtil.getLong(vocabulary, request, "vocabularyId");
 				<aui:button-row>
 					<aui:button type="submit" />
 
-					<c:if test="<%= vocabulary != null %>">
-						<c:if test="<%= AssetVocabularyPermission.contains(permissionChecker, vocabulary, ActionKeys.DELETE) %>">
-							<aui:button id="deleteVocabularyButton" value="delete" />
-						</c:if>
-
-						<c:if test="<%= AssetVocabularyPermission.contains(permissionChecker, vocabulary, ActionKeys.PERMISSIONS) %>">
-							<liferay-security:permissionsURL
-								modelResource="<%= AssetVocabulary.class.getName() %>"
-								modelResourceDescription="<%= vocabulary.getTitle(locale) %>"
-								resourcePrimKey="<%= String.valueOf(vocabulary.getVocabularyId()) %>"
-								var="permissionsURL"
-								windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-							/>
-
-							<aui:button data-url="<%= permissionsURL %>" id="vocabulary-change-permissions" value="permissions" />
-						</c:if>
-					</c:if>
-
-					<aui:button cssClass="close-panel" type="cancel" value="close" />
+					<aui:button href="<%= redirect %>" type="cancel" />
 				</aui:button-row>
 			</div>
 		</div>

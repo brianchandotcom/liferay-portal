@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/asset_tag_admin/init.jsp" %>
 
 <aui:form name="fm">
+	<aui:input name="deleteTagIds" type="hidden" />
+
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-tags"
 		rowChecker="<%= new RowChecker(renderResponse) %>"
@@ -153,10 +155,15 @@
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.DELETE %>';
+				<portlet:actionURL var="deleteURL">
+					<portlet:param name="struts_action" value="/asset_tag_admin/edit_tag" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+				</portlet:actionURL>
+
 				document.<portlet:namespace />fm.<portlet:namespace />deleteTagIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
-				submitForm(document.<portlet:namespace />fm);
+				submitForm(document.<portlet:namespace />fm, '<%= deleteURL %>');
 			}
 		}
 	);

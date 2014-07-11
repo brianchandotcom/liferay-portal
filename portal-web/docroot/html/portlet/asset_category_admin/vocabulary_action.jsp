@@ -1,0 +1,84 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%@ include file="/html/portlet/asset_category_admin/init.jsp" %>
+
+<%
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
+%>
+
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+	<c:if test="<%= AssetVocabularyPermission.contains(permissionChecker, vocabulary, ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="editVocabularyURL">
+			<portlet:param name="struts_action" value="/asset_category_admin/edit_vocabulary" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			iconCssClass="icon-edit"
+			message="edit"
+			url="<%= editVocabularyURL %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= AssetPermission.contains(permissionChecker, vocabulary.getGroupId(), ActionKeys.ADD_CATEGORY) %>">
+		<portlet:renderURL var="addCategoryURL">
+			<portlet:param name="struts_action" value="/asset_category_admin/edit_category" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			iconCssClass="icon-plus"
+			message="add-category"
+			url="<%= addCategoryURL %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= AssetVocabularyPermission.contains(permissionChecker, vocabulary, ActionKeys.PERMISSIONS) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= AssetVocabulary.class.getName() %>"
+			modelResourceDescription="<%= vocabulary.getTitle(locale) %>"
+			resourcePrimKey="<%= String.valueOf(vocabulary.getVocabularyId()) %>"
+			var="permissionsVocabularyURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
+
+		<liferay-ui:icon
+			iconCssClass="icon-lock"
+			message="permissions"
+			method="get"
+			url="<%= permissionsVocabularyURL %>"
+			useDialog="<%= true %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= AssetVocabularyPermission.contains(permissionChecker, vocabulary, ActionKeys.DELETE) %>">
+		<portlet:actionURL var="deleteVocabularyURL">
+			<portlet:param name="struts_action" value="/asset_category_admin/edit_vocabulary" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon-delete
+			url="<%= deleteVocabularyURL %>"
+		/>
+	</c:if>
+</liferay-ui:icon-menu>

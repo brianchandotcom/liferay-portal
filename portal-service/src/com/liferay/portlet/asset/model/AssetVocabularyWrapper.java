@@ -166,6 +166,11 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 		return _assetVocabulary.getCategories();
 	}
 
+	@Override
+	public int getCategoriesCount() {
+		return _assetVocabulary.getCategoriesCount();
+	}
+
 	/**
 	* Returns the company ID of this asset vocabulary.
 	*

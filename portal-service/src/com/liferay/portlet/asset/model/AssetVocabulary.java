@@ -36,6 +36,8 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 	 */
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getCategories();
 
+	public int getCategoriesCount();
+
 	public long[] getRequiredClassNameIds();
 
 	public long[] getSelectedClassNameIds();

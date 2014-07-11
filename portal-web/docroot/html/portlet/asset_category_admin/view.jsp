@@ -16,15 +16,24 @@
 
 <%@ include file="/html/portlet/asset_category_admin/init.jsp" %>
 
+<%
+String keywords = ParamUtil.getString(request, "keywords");
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabularies"), null);
+%>
+
 <aui:form name="fm">
+	<aui:input name="deleteVocabularyIds" type="hidden" />
+
 	<aui:nav-bar>
 		<aui:nav cssClass="navbar-nav">
 			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_VOCABULARY) %>">
-				<aui:nav-item id="addVocabularyButton" label="add-vocabulary" />
-			</c:if>
+				<portlet:renderURL var="addVocabularyURL">
+					<portlet:param name="struts_action" value="/asset_category_admin/edit_vocabulary" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:renderURL>
 
-			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_CATEGORY) %>">
-				<aui:nav-item disabled="<%= true %>" id="addCategoryButton" label="add-category" />
+				<aui:nav-item href="<%= addVocabularyURL %>" iconCssClass="icon-plus" label="add-vocabulary" />
 			</c:if>
 
 			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) %>">
@@ -36,70 +45,158 @@
 					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 				/>
 
-				<aui:nav-item data-url="<%= permissionsURL %>" id="categoryPermissionsButton" label="permissions" />
+				<aui:nav-item href="<%= permissionsURL %>" iconCssClass="icon-lock" label="permissions" useDialog="<%= true %>" />
 			</c:if>
 
-			<aui:nav-item dropdown="<%= true %>" label="actions">
-				<aui:nav-item cssClass="item-remove" iconCssClass="icon-remove" id="deleteSelectedItems" label="delete" />
+			<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="vocabulariesActionsButton" label="actions">
+				<aui:nav-item cssClass="item-remove" iconCssClass="icon-remove" id="deleteSelectedVocabularies" label="delete" />
 			</aui:nav-item>
 		</aui:nav>
 
 		<aui:nav-bar-search cssClass="pull-right">
-			<div class="col-xs-4">
-				<aui:select cssClass="categories-admin-select-search form-control" label="" name="categoriesAdminSelectSearch">
-					<aui:option label="categories" />
-					<aui:option label="vocabularies" selected="<%= true %>" />
-				</aui:select>
-			</div>
-
-			<div class="col-xs-8 form-search">
-				<liferay-ui:input-search id="categoriesAdminSearchInput" name="tagsAdminSearchInput" showButton="<%= false %>" />
+			<div class="col-xs-12 form-search">
+				<liferay-ui:input-search />
 			</div>
 		</aui:nav-bar-search>
 	</aui:nav-bar>
 
-	<aui:row cssClass="categories-admin-content">
-		<aui:col cssClass="vocabulary-list-container" width="<%= 25 %>">
-			<span class="select-vocabularies-container">
-				<aui:input cssClass="select-vocabularies" inline="<%= true %>" label="" name="checkAllVocabularies" title='<%= LanguageUtil.get(request, "check-all-vocabularies") %>' type="checkbox" />
-			</span>
+	<liferay-ui:breadcrumb
+		showCurrentGroup="<%= false %>"
+		showGuestGroup="<%= false %>"
+		showLayout="<%= false %>"
+		showParentGroups="<%= false %>"
+	/>
 
-			<h3 class="vocabularies-header"><%= LanguageUtil.get(request, "vocabularies") %></h3>
+	<liferay-ui:search-container
+		emptyResultsMessage="there-are-no-vocabularies"
+		rowChecker="<%= new RowChecker(renderResponse) %>"
+	>
 
-					<div class="list-unstyled vocabulary-message"></div>
+		<%
+		AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), true);
+		%>
 
-					<div class="list-unstyled vocabulary-list"></div>
+		<liferay-ui:search-container-results
+			results="<%= assetVocabularyDisplay.getVocabularies() %>"
+		/>
 
-			<div class="vocabularies-pagination"></div>
-		</aui:col>
+		<liferay-ui:search-container-row
+			className="com.liferay.portlet.asset.model.AssetVocabulary"
+			keyProperty="vocabularyId"
+			modelVar="vocabulary"
+		>
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="struts_action" value="/asset_category_admin/view_categories" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
+			</portlet:renderURL>
 
-		<aui:col cssClass="vocabulary-categories-container" width="<%= 40 %>">
-			<span class="select-vocabularies-container">
-				<aui:input cssClass="select-categories" inline="<%= true %>" label="" name="checkAllCategories" title='<%= LanguageUtil.get(request, "check-all-categories") %>' type="checkbox" />
-			</span>
+			<liferay-ui:search-container-column-text
+				href="<%= (AssetCategoryServiceUtil.getVocabularyCategoriesCount(scopeGroupId, vocabulary.getVocabularyId()) > 0) ? rowURL : null %>"
+				name="vocabulary"
+				value="<%= vocabulary.getTitle(locale) %>"
+			/>
 
-			<h3 class="categories-header"><%= LanguageUtil.get(request, "categories") %></h3>
+			<liferay-ui:search-container-column-text
+				name="description"
+				value="<%= vocabulary.getDescription(locale) %>"
+			/>
 
-			<div class="vocabulary-categories"></div>
-		</aui:col>
+			<liferay-ui:search-container-column-text
+				cssClass="text-left"
+				name="number-of-categories"
+			>
+				<span class="badge">
+					<%= String.valueOf(vocabulary.getCategoriesCount()) %>
+				</span>
+			</liferay-ui:search-container-column-text>
 
-		<aui:col cssClass="hide vocabulary-edit-category" width="<%= 35 %>">
-			<h3><%= LanguageUtil.get(request, "category-details") %></h3>
+			<liferay-ui:search-container-column-text
+				name="asset-type"
+			>
 
-			<aui:button cssClass="category-view-close close" icon="icon-remove" />
+				<%
+				long[] selectedClassNameIds = vocabulary.getSelectedClassNameIds();
+				long[] selectedClassTypePKs = vocabulary.getSelectedClassTypePKs();
 
-			<div class="category-view"></div>
-		</aui:col>
-	</aui:row>
+				for (int i = 0; i < selectedClassNameIds.length; i++) {
+					long classNameId = selectedClassNameIds[i];
+					long classTypePK = selectedClassTypePKs[i];
+
+					String name = LanguageUtil.get(request, "all-asset-types");
+
+					if (classNameId != AssetCategoryConstants.ALL_CLASS_NAME_ID) {
+						if (classTypePK != -1) {
+							AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(classNameId);
+
+							ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
+
+							ClassType classType = classTypeReader.getClassType(classTypePK, locale);
+
+							name = classType.getName();
+						}
+						else {
+							name = ResourceActionsUtil.getModelResource(locale, PortalUtil.getClassName(classNameId));
+						}
+					}
+
+					StringBundler sb = new StringBundler();
+
+					sb.append(name);
+
+					if (vocabulary.isRequired(classNameId, classTypePK)) {
+						sb.append(StringPool.SPACE);
+						sb.append(StringPool.STAR);
+					}
+
+					if ((i + 1) < selectedClassNameIds.length) {
+						sb.append(StringPool.COMMA);
+					}
+				%>
+
+					<%= sb.toString() %>
+
+				<%
+				}
+				%>
+
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action"
+				path="/html/portlet/asset_category_admin/vocabulary_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script use="liferay-category-admin">
-	new Liferay.Portlet.AssetCategoryAdmin(
-		{
-			baseActionURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.ACTION_PHASE) %>',
-			baseRenderURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
-			itemsPerPage: <%= SearchContainer.DEFAULT_DELTA %>,
-			portletId: '<%= portletDisplay.getId() %>'
+<aui:script use="aui-base,liferay-util-list-fields">
+	A.one('#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer').delegate(
+		'click',
+		function() {
+			var hide = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
+
+			A.one('#<portlet:namespace />vocabulariesActionsButton').toggle(!hide);
+		},
+		'input[type=checkbox]'
+	);
+
+	A.one('#<portlet:namespace />deleteSelectedVocabularies').on(
+		'click',
+		function() {
+			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+				<portlet:actionURL var="deleteURL">
+					<portlet:param name="struts_action" value="/asset_category_admin/edit_vocabulary" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+				</portlet:actionURL>
+
+				document.<portlet:namespace />fm.<portlet:namespace />deleteVocabularyIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
+				submitForm(document.<portlet:namespace />fm, '<%= deleteURL %>');
+			}
 		}
 	);
 </aui:script>

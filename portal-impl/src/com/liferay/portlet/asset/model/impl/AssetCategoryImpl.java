@@ -52,6 +52,12 @@ public class AssetCategoryImpl extends AssetCategoryBaseImpl {
 	}
 
 	@Override
+	public AssetCategory getParentCategory() throws PortalException {
+		return AssetCategoryLocalServiceUtil.fetchCategory(
+			getParentCategoryId());
+	}
+
+	@Override
 	public String getPath(Locale locale) throws PortalException {
 		List<AssetCategory> categories = getAncestors();
 

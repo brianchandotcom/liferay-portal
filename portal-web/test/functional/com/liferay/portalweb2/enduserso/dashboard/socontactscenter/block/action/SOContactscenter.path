@@ -104,6 +104,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FOLLOWERS_LINK</td>
+	<td>//div[contains(@class,'contacts-count followers')]/div/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -376,6 +381,11 @@
 <tr>
 	<td>CONTACTS_LINK_FOLLOWING</td>
 	<td>//div[contains(@class,'contacts-count followings')]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTACTS_LINK_FOLLOWERS</td>
+	<td>//div[contains(@class,'contacts-count followers')]/div/a</td>
 	<td></td>
 </tr>
 <tr>

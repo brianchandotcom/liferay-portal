@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLOGS_PORTLET_OPTIONS</td>
+	<td>//div[contains(@class,'portlet-blogs')]//span[contains(@class,'portlet-actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_PORTLET_OPTIONS_LINK</td>
+	<td>//div[contains(@class,'portlet-blogs')]//span[contains(@class,'portlet-actions')]//a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RECENT_BLOGS_OPTIONS</td>
 	<td>//header[contains(.,'Recent Blogs')]//menu//a</td>
 	<td></td>

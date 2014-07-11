@@ -14,7 +14,6 @@
 
 package com.liferay.portal.monitoring.statistics.service;
 
-import com.liferay.portal.kernel.monitoring.MonitoringProcessor;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleThreadLocal;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
@@ -90,18 +89,6 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 				methodInvocation, this);
 
 			return null;
-		}
-
-		Object thisObject = methodInvocation.getThis();
-
-		Class<?> clazz = thisObject.getClass();
-
-		Class<?>[] interfaces = clazz.getInterfaces();
-
-		for (int i = 0; i < interfaces.length; i++) {
-			if (interfaces[i].isAssignableFrom(MonitoringProcessor.class)) {
-				return null;
-			}
 		}
 
 		if (!_permissiveMode && !isMonitored(methodInvocation)) {

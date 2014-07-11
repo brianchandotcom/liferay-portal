@@ -216,19 +216,6 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the m d r action with the matching UUID and company.
-	 *
-	 * @param uuid the m d r action's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching m d r action, or <code>null</code> if a matching m d r action could not be found
-	 */
-	@Override
-	public MDRAction fetchMDRActionByUuidAndCompanyId(String uuid,
-		long companyId) {
-		return mdrActionPersistence.fetchByUuid_C_First(uuid, companyId, null);
-	}
-
-	/**
 	 * Returns the m d r action matching the UUID and group.
 	 *
 	 * @param uuid the m d r action's UUID
@@ -355,17 +342,33 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the m d r action with the matching UUID and company.
+	 * Returns all the m d r actions that match the UUID and company.
 	 *
-	 * @param uuid the m d r action's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching m d r action
-	 * @throws PortalException if a matching m d r action could not be found
+	 * @param uuid the UUID of the m d r actions
+	 * @param companyId the primary key of the company
+	 * @return all the matching m d r actions, or an empty list if no matches were found
 	 */
 	@Override
-	public MDRAction getMDRActionByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException {
-		return mdrActionPersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<MDRAction> getMDRActionsByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return mdrActionPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of m d r actions that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the m d r actions
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of m d r actions
+	 * @param end the upper bound of the range of m d r actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching m d r actions, or an empty list if no matches were found
+	 */
+	@Override
+	public List<MDRAction> getMDRActionsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end, OrderByComparator orderByComparator) {
+		return mdrActionPersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**

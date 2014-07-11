@@ -256,20 +256,6 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the journal article with the matching UUID and company.
-	 *
-	 * @param uuid the journal article's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching journal article, or <code>null</code> if a matching journal article could not be found
-	 */
-	@Override
-	public JournalArticle fetchJournalArticleByUuidAndCompanyId(String uuid,
-		long companyId) {
-		return journalArticlePersistence.fetchByUuid_C_First(uuid, companyId,
-			null);
-	}
-
-	/**
 	 * Returns the journal article matching the UUID and group.
 	 *
 	 * @param uuid the journal article's UUID
@@ -411,18 +397,34 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the journal article with the matching UUID and company.
+	 * Returns all the journal articles that match the UUID and company.
 	 *
-	 * @param uuid the journal article's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching journal article
-	 * @throws PortalException if a matching journal article could not be found
+	 * @param uuid the UUID of the journal articles
+	 * @param companyId the primary key of the company
+	 * @return all the matching journal articles, or an empty list if no matches were found
 	 */
 	@Override
-	public JournalArticle getJournalArticleByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException {
-		return journalArticlePersistence.findByUuid_C_First(uuid, companyId,
-			null);
+	public List<JournalArticle> getJournalArticlesByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return journalArticlePersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of journal articles that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the journal articles
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching journal articles, or an empty list if no matches were found
+	 */
+	@Override
+	public List<JournalArticle> getJournalArticlesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator orderByComparator) {
+		return journalArticlePersistence.findByUuid_C(uuid, companyId, start,
+			end, orderByComparator);
 	}
 
 	/**

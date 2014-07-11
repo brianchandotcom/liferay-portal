@@ -213,19 +213,6 @@ public class BookmarksEntryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the bookmarks entry with the matching UUID and company.
-	*
-	* @param uuid the bookmarks entry's UUID
-	* @param companyId the primary key of the company
-	* @return the matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
-	*/
-	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchBookmarksEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService()
-				   .fetchBookmarksEntryByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the bookmarks entry matching the UUID and group.
 	*
 	* @param uuid the bookmarks entry's UUID
@@ -267,6 +254,37 @@ public class BookmarksEntryLocalServiceUtil {
 	}
 
 	/**
+	* Returns all the bookmarks entries that match the UUID and company.
+	*
+	* @param uuid the UUID of the bookmarks entries
+	* @param companyId the primary key of the company
+	* @return all the matching bookmarks entries, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> getBookmarksEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .getBookmarksEntriesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of bookmarks entries that match the UUID and company.
+	*
+	* @param uuid the UUID of the bookmarks entries
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of bookmarks entries
+	* @param end the upper bound of the range of bookmarks entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching bookmarks entries, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> getBookmarksEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getBookmarksEntriesByUuidAndCompanyId(uuid, companyId,
+			start, end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of bookmarks entries.
 	*
 	* @return the number of bookmarks entries
@@ -286,20 +304,6 @@ public class BookmarksEntryLocalServiceUtil {
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getBookmarksEntry(entryId);
-	}
-
-	/**
-	* Returns the bookmarks entry with the matching UUID and company.
-	*
-	* @param uuid the bookmarks entry's UUID
-	* @param companyId the primary key of the company
-	* @return the matching bookmarks entry
-	* @throws PortalException if a matching bookmarks entry could not be found
-	*/
-	public static com.liferay.portlet.bookmarks.model.BookmarksEntry getBookmarksEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getBookmarksEntryByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**

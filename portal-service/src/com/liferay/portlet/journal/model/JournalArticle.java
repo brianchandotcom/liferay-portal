@@ -95,6 +95,8 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	public com.liferay.portlet.journal.model.JournalFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.portal.model.Layout getLayout();
+
 	public java.lang.String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

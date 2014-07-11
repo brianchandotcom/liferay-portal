@@ -274,18 +274,6 @@ public class BlogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the blogs entry with the matching UUID and company.
-	*
-	* @param uuid the blogs entry's UUID
-	* @param companyId the primary key of the company
-	* @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchBlogsEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().fetchBlogsEntryByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the blogs entry matching the UUID and group.
 	*
 	* @param uuid the blogs entry's UUID
@@ -327,6 +315,36 @@ public class BlogsEntryLocalServiceUtil {
 	}
 
 	/**
+	* Returns all the blogs entries that match the UUID and company.
+	*
+	* @param uuid the UUID of the blogs entries
+	* @param companyId the primary key of the company
+	* @return all the matching blogs entries, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().getBlogsEntriesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of blogs entries that match the UUID and company.
+	*
+	* @param uuid the UUID of the blogs entries
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching blogs entries, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getBlogsEntriesByUuidAndCompanyId(uuid, companyId, start,
+			end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of blogs entries.
 	*
 	* @return the number of blogs entries
@@ -346,20 +364,6 @@ public class BlogsEntryLocalServiceUtil {
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getBlogsEntry(entryId);
-	}
-
-	/**
-	* Returns the blogs entry with the matching UUID and company.
-	*
-	* @param uuid the blogs entry's UUID
-	* @param companyId the primary key of the company
-	* @return the matching blogs entry
-	* @throws PortalException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry getBlogsEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getBlogsEntryByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**

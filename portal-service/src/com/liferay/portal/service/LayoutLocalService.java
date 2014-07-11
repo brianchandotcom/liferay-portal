@@ -598,17 +598,6 @@ public interface LayoutLocalService extends BaseLocalService,
 		long groupId, boolean privateLayout, java.lang.String friendlyURL);
 
 	/**
-	* Returns the layout with the matching UUID and company.
-	*
-	* @param uuid the layout's UUID
-	* @param companyId the primary key of the company
-	* @return the matching layout, or <code>null</code> if a matching layout could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Layout fetchLayoutByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
-
-	/**
 	* Returns the layout matching the UUID, group, and privacy.
 	*
 	* @param uuid the layout's UUID
@@ -725,19 +714,6 @@ public interface LayoutLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Layout getLayoutByIconImageId(
 		long iconImageId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
-	* Returns the layout with the matching UUID and company.
-	*
-	* @param uuid the layout's UUID
-	* @param companyId the primary key of the company
-	* @return the matching layout
-	* @throws PortalException if a matching layout could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Layout getLayoutByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -875,6 +851,32 @@ public interface LayoutLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutsByLayoutPrototypeUuidCount(
 		java.lang.String layoutPrototypeUuid);
+
+	/**
+	* Returns all the layouts that match the UUID and company.
+	*
+	* @param uuid the UUID of the layouts
+	* @param companyId the primary key of the company
+	* @return all the matching layouts, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Layout> getLayoutsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of layouts that match the UUID and company.
+	*
+	* @param uuid the UUID of the layouts
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of layouts
+	* @param end the upper bound of the range of layouts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching layouts, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Layout> getLayoutsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of layouts.

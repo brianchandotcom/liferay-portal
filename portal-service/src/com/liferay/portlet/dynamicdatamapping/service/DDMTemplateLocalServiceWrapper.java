@@ -408,20 +408,6 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	}
 
 	/**
-	* Returns the d d m template with the matching UUID and company.
-	*
-	* @param uuid the d d m template's UUID
-	* @param companyId the primary key of the company
-	* @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	*/
-	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchDDMTemplateByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _ddmTemplateLocalService.fetchDDMTemplateByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
 	* Returns the d d m template matching the UUID and group.
 	*
 	* @param uuid the d d m template's UUID
@@ -511,22 +497,6 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	}
 
 	/**
-	* Returns the d d m template with the matching UUID and company.
-	*
-	* @param uuid the d d m template's UUID
-	* @param companyId the primary key of the company
-	* @return the matching d d m template
-	* @throws PortalException if a matching d d m template could not be found
-	*/
-	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getDDMTemplateByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmTemplateLocalService.getDDMTemplateByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
 	* Returns the d d m template matching the UUID and group.
 	*
 	* @param uuid the d d m template's UUID
@@ -557,6 +527,38 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getDDMTemplates(
 		int start, int end) {
 		return _ddmTemplateLocalService.getDDMTemplates(start, end);
+	}
+
+	/**
+	* Returns all the d d m templates that match the UUID and company.
+	*
+	* @param uuid the UUID of the d d m templates
+	* @param companyId the primary key of the company
+	* @return all the matching d d m templates, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getDDMTemplatesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _ddmTemplateLocalService.getDDMTemplatesByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of d d m templates that match the UUID and company.
+	*
+	* @param uuid the UUID of the d d m templates
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of d d m templates
+	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching d d m templates, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getDDMTemplatesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _ddmTemplateLocalService.getDDMTemplatesByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
 	}
 
 	/**

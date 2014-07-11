@@ -207,17 +207,6 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	public com.liferay.portlet.wiki.model.WikiNode fetchWikiNode(long nodeId);
 
 	/**
-	* Returns the wiki node with the matching UUID and company.
-	*
-	* @param uuid the wiki node's UUID
-	* @param companyId the primary key of the company
-	* @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.wiki.model.WikiNode fetchWikiNodeByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
-
-	/**
 	* Returns the wiki node matching the UUID and group.
 	*
 	* @param uuid the wiki node's UUID
@@ -309,19 +298,6 @@ public interface WikiNodeLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Returns the wiki node with the matching UUID and company.
-	*
-	* @param uuid the wiki node's UUID
-	* @param companyId the primary key of the company
-	* @return the matching wiki node
-	* @throws PortalException if a matching wiki node could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.wiki.model.WikiNode getWikiNodeByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
 	* Returns the wiki node matching the UUID and group.
 	*
 	* @param uuid the wiki node's UUID
@@ -348,6 +324,32 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.wiki.model.WikiNode> getWikiNodes(
 		int start, int end);
+
+	/**
+	* Returns all the wiki nodes that match the UUID and company.
+	*
+	* @param uuid the UUID of the wiki nodes
+	* @param companyId the primary key of the company
+	* @return all the matching wiki nodes, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.wiki.model.WikiNode> getWikiNodesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of wiki nodes that match the UUID and company.
+	*
+	* @param uuid the UUID of the wiki nodes
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of wiki nodes
+	* @param end the upper bound of the range of wiki nodes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching wiki nodes, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.wiki.model.WikiNode> getWikiNodesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of wiki nodes.

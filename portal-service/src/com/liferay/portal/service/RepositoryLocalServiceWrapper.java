@@ -238,20 +238,6 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 	}
 
 	/**
-	* Returns the repository with the matching UUID and company.
-	*
-	* @param uuid the repository's UUID
-	* @param companyId the primary key of the company
-	* @return the matching repository, or <code>null</code> if a matching repository could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.Repository fetchRepositoryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _repositoryLocalService.fetchRepositoryByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
 	* Returns the repository matching the UUID and group.
 	*
 	* @param uuid the repository's UUID
@@ -338,6 +324,38 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 	}
 
 	/**
+	* Returns all the repositories that match the UUID and company.
+	*
+	* @param uuid the UUID of the repositories
+	* @param companyId the primary key of the company
+	* @return all the matching repositories, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.model.Repository> getRepositoriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _repositoryLocalService.getRepositoriesByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of repositories that match the UUID and company.
+	*
+	* @param uuid the UUID of the repositories
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of repositories
+	* @param end the upper bound of the range of repositories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching repositories, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.model.Repository> getRepositoriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _repositoryLocalService.getRepositoriesByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of repositories.
 	*
 	* @return the number of repositories
@@ -372,22 +390,6 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 	public com.liferay.portal.model.Repository getRepository(long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryLocalService.getRepository(repositoryId);
-	}
-
-	/**
-	* Returns the repository with the matching UUID and company.
-	*
-	* @param uuid the repository's UUID
-	* @param companyId the primary key of the company
-	* @return the matching repository
-	* @throws PortalException if a matching repository could not be found
-	*/
-	@Override
-	public com.liferay.portal.model.Repository getRepositoryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _repositoryLocalService.getRepositoryByUuidAndCompanyId(uuid,
-			companyId);
 	}
 
 	/**

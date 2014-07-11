@@ -234,20 +234,6 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the bookmarks folder with the matching UUID and company.
-	 *
-	 * @param uuid the bookmarks folder's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder fetchBookmarksFolderByUuidAndCompanyId(String uuid,
-		long companyId) {
-		return bookmarksFolderPersistence.fetchByUuid_C_First(uuid, companyId,
-			null);
-	}
-
-	/**
 	 * Returns the bookmarks folder matching the UUID and group.
 	 *
 	 * @param uuid the bookmarks folder's UUID
@@ -374,18 +360,34 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the bookmarks folder with the matching UUID and company.
+	 * Returns all the bookmarks folders that match the UUID and company.
 	 *
-	 * @param uuid the bookmarks folder's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching bookmarks folder
-	 * @throws PortalException if a matching bookmarks folder could not be found
+	 * @param uuid the UUID of the bookmarks folders
+	 * @param companyId the primary key of the company
+	 * @return all the matching bookmarks folders, or an empty list if no matches were found
 	 */
 	@Override
-	public BookmarksFolder getBookmarksFolderByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException {
-		return bookmarksFolderPersistence.findByUuid_C_First(uuid, companyId,
-			null);
+	public List<BookmarksFolder> getBookmarksFoldersByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return bookmarksFolderPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of bookmarks folders that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the bookmarks folders
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of bookmarks folders
+	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching bookmarks folders, or an empty list if no matches were found
+	 */
+	@Override
+	public List<BookmarksFolder> getBookmarksFoldersByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator orderByComparator) {
+		return bookmarksFolderPersistence.findByUuid_C(uuid, companyId, start,
+			end, orderByComparator);
 	}
 
 	/**

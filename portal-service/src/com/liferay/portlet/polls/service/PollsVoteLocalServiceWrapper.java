@@ -191,20 +191,6 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 	}
 
 	/**
-	* Returns the polls vote with the matching UUID and company.
-	*
-	* @param uuid the polls vote's UUID
-	* @param companyId the primary key of the company
-	* @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	*/
-	@Override
-	public com.liferay.portlet.polls.model.PollsVote fetchPollsVoteByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _pollsVoteLocalService.fetchPollsVoteByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
 	* Returns the polls vote matching the UUID and group.
 	*
 	* @param uuid the polls vote's UUID
@@ -271,22 +257,6 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 	}
 
 	/**
-	* Returns the polls vote with the matching UUID and company.
-	*
-	* @param uuid the polls vote's UUID
-	* @param companyId the primary key of the company
-	* @return the matching polls vote
-	* @throws PortalException if a matching polls vote could not be found
-	*/
-	@Override
-	public com.liferay.portlet.polls.model.PollsVote getPollsVoteByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsVoteLocalService.getPollsVoteByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
 	* Returns the polls vote matching the UUID and group.
 	*
 	* @param uuid the polls vote's UUID
@@ -316,6 +286,38 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> getPollsVotes(
 		int start, int end) {
 		return _pollsVoteLocalService.getPollsVotes(start, end);
+	}
+
+	/**
+	* Returns all the polls votes that match the UUID and company.
+	*
+	* @param uuid the UUID of the polls votes
+	* @param companyId the primary key of the company
+	* @return all the matching polls votes, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.polls.model.PollsVote> getPollsVotesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _pollsVoteLocalService.getPollsVotesByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of polls votes that match the UUID and company.
+	*
+	* @param uuid the UUID of the polls votes
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of polls votes
+	* @param end the upper bound of the range of polls votes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching polls votes, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.polls.model.PollsVote> getPollsVotesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _pollsVoteLocalService.getPollsVotesByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
 	}
 
 	/**

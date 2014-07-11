@@ -201,17 +201,6 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 		long recordSetId);
 
 	/**
-	* Returns the d d l record set with the matching UUID and company.
-	*
-	* @param uuid the d d l record set's UUID
-	* @param companyId the primary key of the company
-	* @return the matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchDDLRecordSetByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
-
-	/**
 	* Returns the d d l record set matching the UUID and group.
 	*
 	* @param uuid the d d l record set's UUID
@@ -253,19 +242,6 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Returns the d d l record set with the matching UUID and company.
-	*
-	* @param uuid the d d l record set's UUID
-	* @param companyId the primary key of the company
-	* @return the matching d d l record set
-	* @throws PortalException if a matching d d l record set could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet getDDLRecordSetByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
 	* Returns the d d l record set matching the UUID and group.
 	*
 	* @param uuid the d d l record set's UUID
@@ -292,6 +268,32 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> getDDLRecordSets(
 		int start, int end);
+
+	/**
+	* Returns all the d d l record sets that match the UUID and company.
+	*
+	* @param uuid the UUID of the d d l record sets
+	* @param companyId the primary key of the company
+	* @return all the matching d d l record sets, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> getDDLRecordSetsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of d d l record sets that match the UUID and company.
+	*
+	* @param uuid the UUID of the d d l record sets
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of d d l record sets
+	* @param end the upper bound of the range of d d l record sets (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching d d l record sets, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> getDDLRecordSetsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of d d l record sets.

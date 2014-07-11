@@ -321,18 +321,6 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the document library file entry with the matching UUID and company.
-	*
-	* @param uuid the document library file entry's UUID
-	* @param companyId the primary key of the company
-	* @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchDLFileEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().fetchDLFileEntryByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the document library file entry matching the UUID and group.
 	*
 	* @param uuid the document library file entry's UUID
@@ -394,6 +382,36 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	/**
+	* Returns all the document library file entries that match the UUID and company.
+	*
+	* @param uuid the UUID of the document library file entries
+	* @param companyId the primary key of the company
+	* @return all the matching document library file entries, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDLFileEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().getDLFileEntriesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of document library file entries that match the UUID and company.
+	*
+	* @param uuid the UUID of the document library file entries
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of document library file entries
+	* @param end the upper bound of the range of document library file entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching document library file entries, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDLFileEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getDLFileEntriesByUuidAndCompanyId(uuid, companyId, start,
+			end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of document library file entries.
 	*
 	* @return the number of document library file entries
@@ -413,20 +431,6 @@ public class DLFileEntryLocalServiceUtil {
 		long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDLFileEntry(fileEntryId);
-	}
-
-	/**
-	* Returns the document library file entry with the matching UUID and company.
-	*
-	* @param uuid the document library file entry's UUID
-	* @param companyId the primary key of the company
-	* @return the matching document library file entry
-	* @throws PortalException if a matching document library file entry could not be found
-	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getDLFileEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDLFileEntryByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**

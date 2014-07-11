@@ -243,17 +243,6 @@ public interface CalEventLocalService extends BaseLocalService,
 		long eventId);
 
 	/**
-	* Returns the cal event with the matching UUID and company.
-	*
-	* @param uuid the cal event's UUID
-	* @param companyId the primary key of the company
-	* @return the matching cal event, or <code>null</code> if a matching cal event could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.calendar.model.CalEvent fetchCalEventByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
-
-	/**
 	* Returns the cal event matching the UUID and group.
 	*
 	* @param uuid the cal event's UUID
@@ -286,19 +275,6 @@ public interface CalEventLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Returns the cal event with the matching UUID and company.
-	*
-	* @param uuid the cal event's UUID
-	* @param companyId the primary key of the company
-	* @return the matching cal event
-	* @throws PortalException if a matching cal event could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.calendar.model.CalEvent getCalEventByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
 	* Returns the cal event matching the UUID and group.
 	*
 	* @param uuid the cal event's UUID
@@ -325,6 +301,32 @@ public interface CalEventLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getCalEvents(
 		int start, int end);
+
+	/**
+	* Returns all the cal events that match the UUID and company.
+	*
+	* @param uuid the UUID of the cal events
+	* @param companyId the primary key of the company
+	* @return all the matching cal events, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getCalEventsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of cal events that match the UUID and company.
+	*
+	* @param uuid the UUID of the cal events
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of cal events
+	* @param end the upper bound of the range of cal events (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching cal events, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getCalEventsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of cal events.

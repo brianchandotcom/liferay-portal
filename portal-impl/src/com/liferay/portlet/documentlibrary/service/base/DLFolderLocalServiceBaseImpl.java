@@ -232,18 +232,6 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the document library folder with the matching UUID and company.
-	 *
-	 * @param uuid the document library folder's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
-	 */
-	@Override
-	public DLFolder fetchDLFolderByUuidAndCompanyId(String uuid, long companyId) {
-		return dlFolderPersistence.fetchByUuid_C_First(uuid, companyId, null);
-	}
-
-	/**
 	 * Returns the document library folder matching the UUID and group.
 	 *
 	 * @param uuid the document library folder's UUID
@@ -368,17 +356,33 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the document library folder with the matching UUID and company.
+	 * Returns all the document library folders that match the UUID and company.
 	 *
-	 * @param uuid the document library folder's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching document library folder
-	 * @throws PortalException if a matching document library folder could not be found
+	 * @param uuid the UUID of the document library folders
+	 * @param companyId the primary key of the company
+	 * @return all the matching document library folders, or an empty list if no matches were found
 	 */
 	@Override
-	public DLFolder getDLFolderByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException {
-		return dlFolderPersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<DLFolder> getDLFoldersByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return dlFolderPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of document library folders that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the document library folders
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching document library folders, or an empty list if no matches were found
+	 */
+	@Override
+	public List<DLFolder> getDLFoldersByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end, OrderByComparator orderByComparator) {
+		return dlFolderPersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**

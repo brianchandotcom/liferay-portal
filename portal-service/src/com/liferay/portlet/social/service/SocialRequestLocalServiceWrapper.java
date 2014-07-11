@@ -267,20 +267,6 @@ public class SocialRequestLocalServiceWrapper
 	}
 
 	/**
-	* Returns the social request with the matching UUID and company.
-	*
-	* @param uuid the social request's UUID
-	* @param companyId the primary key of the company
-	* @return the matching social request, or <code>null</code> if a matching social request could not be found
-	*/
-	@Override
-	public com.liferay.portlet.social.model.SocialRequest fetchSocialRequestByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _socialRequestLocalService.fetchSocialRequestByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
 	* Returns the social request matching the UUID and group.
 	*
 	* @param uuid the social request's UUID
@@ -408,22 +394,6 @@ public class SocialRequestLocalServiceWrapper
 	}
 
 	/**
-	* Returns the social request with the matching UUID and company.
-	*
-	* @param uuid the social request's UUID
-	* @param companyId the primary key of the company
-	* @return the matching social request
-	* @throws PortalException if a matching social request could not be found
-	*/
-	@Override
-	public com.liferay.portlet.social.model.SocialRequest getSocialRequestByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialRequestLocalService.getSocialRequestByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
 	* Returns the social request matching the UUID and group.
 	*
 	* @param uuid the social request's UUID
@@ -454,6 +424,38 @@ public class SocialRequestLocalServiceWrapper
 	public java.util.List<com.liferay.portlet.social.model.SocialRequest> getSocialRequests(
 		int start, int end) {
 		return _socialRequestLocalService.getSocialRequests(start, end);
+	}
+
+	/**
+	* Returns all the social requests that match the UUID and company.
+	*
+	* @param uuid the UUID of the social requests
+	* @param companyId the primary key of the company
+	* @return all the matching social requests, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.social.model.SocialRequest> getSocialRequestsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _socialRequestLocalService.getSocialRequestsByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of social requests that match the UUID and company.
+	*
+	* @param uuid the UUID of the social requests
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of social requests
+	* @param end the upper bound of the range of social requests (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching social requests, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.social.model.SocialRequest> getSocialRequestsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _socialRequestLocalService.getSocialRequestsByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
 	}
 
 	/**

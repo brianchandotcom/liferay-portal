@@ -278,20 +278,6 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	}
 
 	/**
-	* Returns the message boards category with the matching UUID and company.
-	*
-	* @param uuid the message boards category's UUID
-	* @param companyId the primary key of the company
-	* @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	*/
-	@Override
-	public com.liferay.portlet.messageboards.model.MBCategory fetchMBCategoryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _mbCategoryLocalService.fetchMBCategoryByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
 	* Returns the message boards category matching the UUID and group.
 	*
 	* @param uuid the message boards category's UUID
@@ -476,6 +462,38 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	}
 
 	/**
+	* Returns all the message boards categories that match the UUID and company.
+	*
+	* @param uuid the UUID of the message boards categories
+	* @param companyId the primary key of the company
+	* @return all the matching message boards categories, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getMBCategoriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _mbCategoryLocalService.getMBCategoriesByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of message boards categories that match the UUID and company.
+	*
+	* @param uuid the UUID of the message boards categories
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of message boards categories
+	* @param end the upper bound of the range of message boards categories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching message boards categories, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getMBCategoriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _mbCategoryLocalService.getMBCategoriesByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of message boards categories.
 	*
 	* @return the number of message boards categories
@@ -497,22 +515,6 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryLocalService.getMBCategory(categoryId);
-	}
-
-	/**
-	* Returns the message boards category with the matching UUID and company.
-	*
-	* @param uuid the message boards category's UUID
-	* @param companyId the primary key of the company
-	* @return the matching message boards category
-	* @throws PortalException if a matching message boards category could not be found
-	*/
-	@Override
-	public com.liferay.portlet.messageboards.model.MBCategory getMBCategoryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbCategoryLocalService.getMBCategoryByUuidAndCompanyId(uuid,
-			companyId);
 	}
 
 	/**

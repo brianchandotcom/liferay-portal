@@ -244,18 +244,6 @@ public class PollsQuestionLocalServiceUtil {
 	}
 
 	/**
-	* Returns the polls question with the matching UUID and company.
-	*
-	* @param uuid the polls question's UUID
-	* @param companyId the primary key of the company
-	* @return the matching polls question, or <code>null</code> if a matching polls question could not be found
-	*/
-	public static com.liferay.portlet.polls.model.PollsQuestion fetchPollsQuestionByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().fetchPollsQuestionByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the polls question matching the UUID and group.
 	*
 	* @param uuid the polls question's UUID
@@ -305,20 +293,6 @@ public class PollsQuestionLocalServiceUtil {
 	}
 
 	/**
-	* Returns the polls question with the matching UUID and company.
-	*
-	* @param uuid the polls question's UUID
-	* @param companyId the primary key of the company
-	* @return the matching polls question
-	* @throws PortalException if a matching polls question could not be found
-	*/
-	public static com.liferay.portlet.polls.model.PollsQuestion getPollsQuestionByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPollsQuestionByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the polls question matching the UUID and group.
 	*
 	* @param uuid the polls question's UUID
@@ -346,6 +320,36 @@ public class PollsQuestionLocalServiceUtil {
 	public static java.util.List<com.liferay.portlet.polls.model.PollsQuestion> getPollsQuestions(
 		int start, int end) {
 		return getService().getPollsQuestions(start, end);
+	}
+
+	/**
+	* Returns all the polls questions that match the UUID and company.
+	*
+	* @param uuid the UUID of the polls questions
+	* @param companyId the primary key of the company
+	* @return all the matching polls questions, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.polls.model.PollsQuestion> getPollsQuestionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().getPollsQuestionsByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of polls questions that match the UUID and company.
+	*
+	* @param uuid the UUID of the polls questions
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of polls questions
+	* @param end the upper bound of the range of polls questions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching polls questions, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.polls.model.PollsQuestion> getPollsQuestionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getPollsQuestionsByUuidAndCompanyId(uuid, companyId, start,
+			end, orderByComparator);
 	}
 
 	/**

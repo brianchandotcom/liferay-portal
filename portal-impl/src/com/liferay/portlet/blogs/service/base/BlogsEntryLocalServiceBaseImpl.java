@@ -239,19 +239,6 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the blogs entry with the matching UUID and company.
-	 *
-	 * @param uuid the blogs entry's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	 */
-	@Override
-	public BlogsEntry fetchBlogsEntryByUuidAndCompanyId(String uuid,
-		long companyId) {
-		return blogsEntryPersistence.fetchByUuid_C_First(uuid, companyId, null);
-	}
-
-	/**
 	 * Returns the blogs entry matching the UUID and group.
 	 *
 	 * @param uuid the blogs entry's UUID
@@ -376,17 +363,33 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the blogs entry with the matching UUID and company.
+	 * Returns all the blogs entries that match the UUID and company.
 	 *
-	 * @param uuid the blogs entry's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching blogs entry
-	 * @throws PortalException if a matching blogs entry could not be found
+	 * @param uuid the UUID of the blogs entries
+	 * @param companyId the primary key of the company
+	 * @return all the matching blogs entries, or an empty list if no matches were found
 	 */
 	@Override
-	public BlogsEntry getBlogsEntryByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException {
-		return blogsEntryPersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<BlogsEntry> getBlogsEntriesByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return blogsEntryPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of blogs entries that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the blogs entries
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of blogs entries
+	 * @param end the upper bound of the range of blogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching blogs entries, or an empty list if no matches were found
+	 */
+	@Override
+	public List<BlogsEntry> getBlogsEntriesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end, OrderByComparator orderByComparator) {
+		return blogsEntryPersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**

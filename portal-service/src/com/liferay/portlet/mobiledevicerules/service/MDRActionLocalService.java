@@ -196,17 +196,6 @@ public interface MDRActionLocalService extends BaseLocalService,
 		long actionId);
 
 	/**
-	* Returns the m d r action with the matching UUID and company.
-	*
-	* @param uuid the m d r action's UUID
-	* @param companyId the primary key of the company
-	* @return the matching m d r action, or <code>null</code> if a matching m d r action could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.mobiledevicerules.model.MDRAction fetchMDRActionByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
-
-	/**
 	* Returns the m d r action matching the UUID and group.
 	*
 	* @param uuid the m d r action's UUID
@@ -260,19 +249,6 @@ public interface MDRActionLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Returns the m d r action with the matching UUID and company.
-	*
-	* @param uuid the m d r action's UUID
-	* @param companyId the primary key of the company
-	* @return the matching m d r action
-	* @throws PortalException if a matching m d r action could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.mobiledevicerules.model.MDRAction getMDRActionByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
 	* Returns the m d r action matching the UUID and group.
 	*
 	* @param uuid the m d r action's UUID
@@ -299,6 +275,32 @@ public interface MDRActionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getMDRActions(
 		int start, int end);
+
+	/**
+	* Returns all the m d r actions that match the UUID and company.
+	*
+	* @param uuid the UUID of the m d r actions
+	* @param companyId the primary key of the company
+	* @return all the matching m d r actions, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getMDRActionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of m d r actions that match the UUID and company.
+	*
+	* @param uuid the UUID of the m d r actions
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of m d r actions
+	* @param end the upper bound of the range of m d r actions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching m d r actions, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getMDRActionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of m d r actions.

@@ -384,20 +384,6 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	/**
-	* Returns the wiki page with the matching UUID and company.
-	*
-	* @param uuid the wiki page's UUID
-	* @param companyId the primary key of the company
-	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	*/
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage fetchWikiPageByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _wikiPageLocalService.fetchWikiPageByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
 	* Returns the wiki page matching the UUID and group.
 	*
 	* @param uuid the wiki page's UUID
@@ -743,22 +729,6 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	/**
-	* Returns the wiki page with the matching UUID and company.
-	*
-	* @param uuid the wiki page's UUID
-	* @param companyId the primary key of the company
-	* @return the matching wiki page
-	* @throws PortalException if a matching wiki page could not be found
-	*/
-	@Override
-	public com.liferay.portlet.wiki.model.WikiPage getWikiPageByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageLocalService.getWikiPageByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
 	* Returns the wiki page matching the UUID and group.
 	*
 	* @param uuid the wiki page's UUID
@@ -788,6 +758,38 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getWikiPages(
 		int start, int end) {
 		return _wikiPageLocalService.getWikiPages(start, end);
+	}
+
+	/**
+	* Returns all the wiki pages that match the UUID and company.
+	*
+	* @param uuid the UUID of the wiki pages
+	* @param companyId the primary key of the company
+	* @return all the matching wiki pages, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getWikiPagesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _wikiPageLocalService.getWikiPagesByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of wiki pages that match the UUID and company.
+	*
+	* @param uuid the UUID of the wiki pages
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of wiki pages
+	* @param end the upper bound of the range of wiki pages (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching wiki pages, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getWikiPagesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _wikiPageLocalService.getWikiPagesByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
 	}
 
 	/**

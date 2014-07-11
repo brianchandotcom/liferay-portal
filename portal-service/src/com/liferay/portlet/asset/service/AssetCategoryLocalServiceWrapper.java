@@ -311,20 +311,6 @@ public class AssetCategoryLocalServiceWrapper
 	}
 
 	/**
-	* Returns the asset category with the matching UUID and company.
-	*
-	* @param uuid the asset category's UUID
-	* @param companyId the primary key of the company
-	* @return the matching asset category, or <code>null</code> if a matching asset category could not be found
-	*/
-	@Override
-	public com.liferay.portlet.asset.model.AssetCategory fetchAssetCategoryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _assetCategoryLocalService.fetchAssetCategoryByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
 	* Returns the asset category matching the UUID and group.
 	*
 	* @param uuid the asset category's UUID
@@ -367,6 +353,38 @@ public class AssetCategoryLocalServiceWrapper
 	}
 
 	/**
+	* Returns all the asset categories that match the UUID and company.
+	*
+	* @param uuid the UUID of the asset categories
+	* @param companyId the primary key of the company
+	* @return all the matching asset categories, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getAssetCategoriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _assetCategoryLocalService.getAssetCategoriesByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of asset categories that match the UUID and company.
+	*
+	* @param uuid the UUID of the asset categories
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of asset categories
+	* @param end the upper bound of the range of asset categories (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching asset categories, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getAssetCategoriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _assetCategoryLocalService.getAssetCategoriesByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of asset categories.
 	*
 	* @return the number of asset categories
@@ -388,22 +406,6 @@ public class AssetCategoryLocalServiceWrapper
 		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryLocalService.getAssetCategory(categoryId);
-	}
-
-	/**
-	* Returns the asset category with the matching UUID and company.
-	*
-	* @param uuid the asset category's UUID
-	* @param companyId the primary key of the company
-	* @return the matching asset category
-	* @throws PortalException if a matching asset category could not be found
-	*/
-	@Override
-	public com.liferay.portlet.asset.model.AssetCategory getAssetCategoryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetCategoryLocalService.getAssetCategoryByUuidAndCompanyId(uuid,
-			companyId);
 	}
 
 	/**

@@ -215,18 +215,6 @@ public class MBMailingListLocalServiceUtil {
 	}
 
 	/**
-	* Returns the message boards mailing list with the matching UUID and company.
-	*
-	* @param uuid the message boards mailing list's UUID
-	* @param companyId the primary key of the company
-	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	*/
-	public static com.liferay.portlet.messageboards.model.MBMailingList fetchMBMailingListByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().fetchMBMailingListByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the message boards mailing list matching the UUID and group.
 	*
 	* @param uuid the message boards mailing list's UUID
@@ -276,20 +264,6 @@ public class MBMailingListLocalServiceUtil {
 	}
 
 	/**
-	* Returns the message boards mailing list with the matching UUID and company.
-	*
-	* @param uuid the message boards mailing list's UUID
-	* @param companyId the primary key of the company
-	* @return the matching message boards mailing list
-	* @throws PortalException if a matching message boards mailing list could not be found
-	*/
-	public static com.liferay.portlet.messageboards.model.MBMailingList getMBMailingListByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getMBMailingListByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the message boards mailing list matching the UUID and group.
 	*
 	* @param uuid the message boards mailing list's UUID
@@ -317,6 +291,36 @@ public class MBMailingListLocalServiceUtil {
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> getMBMailingLists(
 		int start, int end) {
 		return getService().getMBMailingLists(start, end);
+	}
+
+	/**
+	* Returns all the message boards mailing lists that match the UUID and company.
+	*
+	* @param uuid the UUID of the message boards mailing lists
+	* @param companyId the primary key of the company
+	* @return all the matching message boards mailing lists, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> getMBMailingListsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().getMBMailingListsByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of message boards mailing lists that match the UUID and company.
+	*
+	* @param uuid the UUID of the message boards mailing lists
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of message boards mailing lists
+	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching message boards mailing lists, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> getMBMailingListsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getMBMailingListsByUuidAndCompanyId(uuid, companyId, start,
+			end, orderByComparator);
 	}
 
 	/**

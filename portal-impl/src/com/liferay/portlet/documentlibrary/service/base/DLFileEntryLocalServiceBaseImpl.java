@@ -244,19 +244,6 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the document library file entry with the matching UUID and company.
-	 *
-	 * @param uuid the document library file entry's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	 */
-	@Override
-	public DLFileEntry fetchDLFileEntryByUuidAndCompanyId(String uuid,
-		long companyId) {
-		return dlFileEntryPersistence.fetchByUuid_C_First(uuid, companyId, null);
-	}
-
-	/**
 	 * Returns the document library file entry matching the UUID and group.
 	 *
 	 * @param uuid the document library file entry's UUID
@@ -385,17 +372,33 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the document library file entry with the matching UUID and company.
+	 * Returns all the document library file entries that match the UUID and company.
 	 *
-	 * @param uuid the document library file entry's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching document library file entry
-	 * @throws PortalException if a matching document library file entry could not be found
+	 * @param uuid the UUID of the document library file entries
+	 * @param companyId the primary key of the company
+	 * @return all the matching document library file entries, or an empty list if no matches were found
 	 */
 	@Override
-	public DLFileEntry getDLFileEntryByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException {
-		return dlFileEntryPersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<DLFileEntry> getDLFileEntriesByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return dlFileEntryPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of document library file entries that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the document library file entries
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of document library file entries
+	 * @param end the upper bound of the range of document library file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching document library file entries, or an empty list if no matches were found
+	 */
+	@Override
+	public List<DLFileEntry> getDLFileEntriesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end, OrderByComparator orderByComparator) {
+		return dlFileEntryPersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**

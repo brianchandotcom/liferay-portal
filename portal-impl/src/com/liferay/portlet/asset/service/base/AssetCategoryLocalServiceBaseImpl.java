@@ -224,20 +224,6 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the asset category with the matching UUID and company.
-	 *
-	 * @param uuid the asset category's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchAssetCategoryByUuidAndCompanyId(String uuid,
-		long companyId) {
-		return assetCategoryPersistence.fetchByUuid_C_First(uuid, companyId,
-			null);
-	}
-
-	/**
 	 * Returns the asset category matching the UUID and group.
 	 *
 	 * @param uuid the asset category's UUID
@@ -356,17 +342,34 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the asset category with the matching UUID and company.
+	 * Returns all the asset categories that match the UUID and company.
 	 *
-	 * @param uuid the asset category's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching asset category
-	 * @throws PortalException if a matching asset category could not be found
+	 * @param uuid the UUID of the asset categories
+	 * @param companyId the primary key of the company
+	 * @return all the matching asset categories, or an empty list if no matches were found
 	 */
 	@Override
-	public AssetCategory getAssetCategoryByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException {
-		return assetCategoryPersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<AssetCategory> getAssetCategoriesByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return assetCategoryPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of asset categories that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the asset categories
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of asset categories
+	 * @param end the upper bound of the range of asset categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching asset categories, or an empty list if no matches were found
+	 */
+	@Override
+	public List<AssetCategory> getAssetCategoriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator orderByComparator) {
+		return assetCategoryPersistence.findByUuid_C(uuid, companyId, start,
+			end, orderByComparator);
 	}
 
 	/**

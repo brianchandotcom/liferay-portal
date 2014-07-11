@@ -218,18 +218,6 @@ public class MDRRuleGroupLocalServiceUtil {
 	}
 
 	/**
-	* Returns the m d r rule group with the matching UUID and company.
-	*
-	* @param uuid the m d r rule group's UUID
-	* @param companyId the primary key of the company
-	* @return the matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
-	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchMDRRuleGroupByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().fetchMDRRuleGroupByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the m d r rule group matching the UUID and group.
 	*
 	* @param uuid the m d r rule group's UUID
@@ -278,20 +266,6 @@ public class MDRRuleGroupLocalServiceUtil {
 	}
 
 	/**
-	* Returns the m d r rule group with the matching UUID and company.
-	*
-	* @param uuid the m d r rule group's UUID
-	* @param companyId the primary key of the company
-	* @return the matching m d r rule group
-	* @throws PortalException if a matching m d r rule group could not be found
-	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup getMDRRuleGroupByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getMDRRuleGroupByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the m d r rule group matching the UUID and group.
 	*
 	* @param uuid the m d r rule group's UUID
@@ -319,6 +293,36 @@ public class MDRRuleGroupLocalServiceUtil {
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> getMDRRuleGroups(
 		int start, int end) {
 		return getService().getMDRRuleGroups(start, end);
+	}
+
+	/**
+	* Returns all the m d r rule groups that match the UUID and company.
+	*
+	* @param uuid the UUID of the m d r rule groups
+	* @param companyId the primary key of the company
+	* @return all the matching m d r rule groups, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> getMDRRuleGroupsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().getMDRRuleGroupsByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of m d r rule groups that match the UUID and company.
+	*
+	* @param uuid the UUID of the m d r rule groups
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of m d r rule groups
+	* @param end the upper bound of the range of m d r rule groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching m d r rule groups, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> getMDRRuleGroupsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getMDRRuleGroupsByUuidAndCompanyId(uuid, companyId, start,
+			end, orderByComparator);
 	}
 
 	/**

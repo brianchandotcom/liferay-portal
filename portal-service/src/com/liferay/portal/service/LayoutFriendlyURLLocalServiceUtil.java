@@ -236,19 +236,6 @@ public class LayoutFriendlyURLLocalServiceUtil {
 	}
 
 	/**
-	* Returns the layout friendly u r l with the matching UUID and company.
-	*
-	* @param uuid the layout friendly u r l's UUID
-	* @param companyId the primary key of the company
-	* @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
-	*/
-	public static com.liferay.portal.model.LayoutFriendlyURL fetchLayoutFriendlyURLByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService()
-				   .fetchLayoutFriendlyURLByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the layout friendly u r l matching the UUID and group.
 	*
 	* @param uuid the layout friendly u r l's UUID
@@ -304,21 +291,6 @@ public class LayoutFriendlyURLLocalServiceUtil {
 	}
 
 	/**
-	* Returns the layout friendly u r l with the matching UUID and company.
-	*
-	* @param uuid the layout friendly u r l's UUID
-	* @param companyId the primary key of the company
-	* @return the matching layout friendly u r l
-	* @throws PortalException if a matching layout friendly u r l could not be found
-	*/
-	public static com.liferay.portal.model.LayoutFriendlyURL getLayoutFriendlyURLByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getLayoutFriendlyURLByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the layout friendly u r l matching the UUID and group.
 	*
 	* @param uuid the layout friendly u r l's UUID
@@ -356,6 +328,37 @@ public class LayoutFriendlyURLLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
 		int start, int end) {
 		return getService().getLayoutFriendlyURLs(start, end);
+	}
+
+	/**
+	* Returns all the layout friendly u r ls that match the UUID and company.
+	*
+	* @param uuid the UUID of the layout friendly u r ls
+	* @param companyId the primary key of the company
+	* @return all the matching layout friendly u r ls, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portal.model.LayoutFriendlyURL> getLayoutFriendlyURLsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .getLayoutFriendlyURLsByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of layout friendly u r ls that match the UUID and company.
+	*
+	* @param uuid the UUID of the layout friendly u r ls
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of layout friendly u r ls
+	* @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching layout friendly u r ls, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portal.model.LayoutFriendlyURL> getLayoutFriendlyURLsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getLayoutFriendlyURLsByUuidAndCompanyId(uuid, companyId,
+			start, end, orderByComparator);
 	}
 
 	/**

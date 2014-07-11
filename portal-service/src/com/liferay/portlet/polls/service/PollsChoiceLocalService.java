@@ -171,17 +171,6 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 		long choiceId);
 
 	/**
-	* Returns the polls choice with the matching UUID and company.
-	*
-	* @param uuid the polls choice's UUID
-	* @param companyId the primary key of the company
-	* @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.polls.model.PollsChoice fetchPollsChoiceByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
-
-	/**
 	* Returns the polls choice matching the UUID and group.
 	*
 	* @param uuid the polls choice's UUID
@@ -236,19 +225,6 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Returns the polls choice with the matching UUID and company.
-	*
-	* @param uuid the polls choice's UUID
-	* @param companyId the primary key of the company
-	* @return the matching polls choice
-	* @throws PortalException if a matching polls choice could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.polls.model.PollsChoice getPollsChoiceByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
 	* Returns the polls choice matching the UUID and group.
 	*
 	* @param uuid the polls choice's UUID
@@ -275,6 +251,32 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.polls.model.PollsChoice> getPollsChoices(
 		int start, int end);
+
+	/**
+	* Returns all the polls choices that match the UUID and company.
+	*
+	* @param uuid the UUID of the polls choices
+	* @param companyId the primary key of the company
+	* @return all the matching polls choices, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.polls.model.PollsChoice> getPollsChoicesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of polls choices that match the UUID and company.
+	*
+	* @param uuid the UUID of the polls choices
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of polls choices
+	* @param end the upper bound of the range of polls choices (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching polls choices, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.polls.model.PollsChoice> getPollsChoicesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of polls choices.

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.CacheField;
 import com.liferay.portal.model.Image;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -236,6 +237,16 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		}
 
 		return JournalFolderLocalServiceUtil.getFolder(getFolderId());
+	}
+
+	public Layout getLayout() {
+		String layoutUuid = getLayoutUuid();
+
+		if (Validator.isNull(layoutUuid)) {
+			return null;
+		}
+
+		return JournalUtil.getArticleLayout(layoutUuid, getGroupId());
 	}
 
 	@Override

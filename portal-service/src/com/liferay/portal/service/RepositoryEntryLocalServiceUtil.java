@@ -190,19 +190,6 @@ public class RepositoryEntryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the repository entry with the matching UUID and company.
-	*
-	* @param uuid the repository entry's UUID
-	* @param companyId the primary key of the company
-	* @return the matching repository entry, or <code>null</code> if a matching repository entry could not be found
-	*/
-	public static com.liferay.portal.model.RepositoryEntry fetchRepositoryEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService()
-				   .fetchRepositoryEntryByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the repository entry matching the UUID and group.
 	*
 	* @param uuid the repository entry's UUID
@@ -260,6 +247,37 @@ public class RepositoryEntryLocalServiceUtil {
 	}
 
 	/**
+	* Returns all the repository entries that match the UUID and company.
+	*
+	* @param uuid the UUID of the repository entries
+	* @param companyId the primary key of the company
+	* @return all the matching repository entries, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portal.model.RepositoryEntry> getRepositoryEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .getRepositoryEntriesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of repository entries that match the UUID and company.
+	*
+	* @param uuid the UUID of the repository entries
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of repository entries
+	* @param end the upper bound of the range of repository entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching repository entries, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portal.model.RepositoryEntry> getRepositoryEntriesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getRepositoryEntriesByUuidAndCompanyId(uuid, companyId,
+			start, end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of repository entries.
 	*
 	* @return the number of repository entries
@@ -279,20 +297,6 @@ public class RepositoryEntryLocalServiceUtil {
 		long repositoryEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRepositoryEntry(repositoryEntryId);
-	}
-
-	/**
-	* Returns the repository entry with the matching UUID and company.
-	*
-	* @param uuid the repository entry's UUID
-	* @param companyId the primary key of the company
-	* @return the matching repository entry
-	* @throws PortalException if a matching repository entry could not be found
-	*/
-	public static com.liferay.portal.model.RepositoryEntry getRepositoryEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRepositoryEntryByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**

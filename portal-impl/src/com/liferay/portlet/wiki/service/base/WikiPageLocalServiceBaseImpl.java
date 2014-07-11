@@ -243,18 +243,6 @@ public abstract class WikiPageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the wiki page with the matching UUID and company.
-	 *
-	 * @param uuid the wiki page's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	 */
-	@Override
-	public WikiPage fetchWikiPageByUuidAndCompanyId(String uuid, long companyId) {
-		return wikiPagePersistence.fetchByUuid_C_First(uuid, companyId, null);
-	}
-
-	/**
 	 * Returns the wiki page matching the UUID and group.
 	 *
 	 * @param uuid the wiki page's UUID
@@ -385,17 +373,33 @@ public abstract class WikiPageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the wiki page with the matching UUID and company.
+	 * Returns all the wiki pages that match the UUID and company.
 	 *
-	 * @param uuid the wiki page's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching wiki page
-	 * @throws PortalException if a matching wiki page could not be found
+	 * @param uuid the UUID of the wiki pages
+	 * @param companyId the primary key of the company
+	 * @return all the matching wiki pages, or an empty list if no matches were found
 	 */
 	@Override
-	public WikiPage getWikiPageByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException {
-		return wikiPagePersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<WikiPage> getWikiPagesByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return wikiPagePersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of wiki pages that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the wiki pages
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of wiki pages
+	 * @param end the upper bound of the range of wiki pages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching wiki pages, or an empty list if no matches were found
+	 */
+	@Override
+	public List<WikiPage> getWikiPagesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end, OrderByComparator orderByComparator) {
+		return wikiPagePersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**

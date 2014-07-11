@@ -167,17 +167,6 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 		long fileVersionId);
 
 	/**
-	* Returns the document library file version with the matching UUID and company.
-	*
-	* @param uuid the document library file version's UUID
-	* @param companyId the primary key of the company
-	* @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion fetchDLFileVersionByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
-
-	/**
 	* Returns the document library file version matching the UUID and group.
 	*
 	* @param uuid the document library file version's UUID
@@ -211,19 +200,6 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Returns the document library file version with the matching UUID and company.
-	*
-	* @param uuid the document library file version's UUID
-	* @param companyId the primary key of the company
-	* @return the matching document library file version
-	* @throws PortalException if a matching document library file version could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.documentlibrary.model.DLFileVersion getDLFileVersionByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
 	* Returns the document library file version matching the UUID and group.
 	*
 	* @param uuid the document library file version's UUID
@@ -250,6 +226,32 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> getDLFileVersions(
 		int start, int end);
+
+	/**
+	* Returns all the document library file versions that match the UUID and company.
+	*
+	* @param uuid the UUID of the document library file versions
+	* @param companyId the primary key of the company
+	* @return all the matching document library file versions, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> getDLFileVersionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of document library file versions that match the UUID and company.
+	*
+	* @param uuid the UUID of the document library file versions
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of document library file versions
+	* @param end the upper bound of the range of document library file versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching document library file versions, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> getDLFileVersionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of document library file versions.

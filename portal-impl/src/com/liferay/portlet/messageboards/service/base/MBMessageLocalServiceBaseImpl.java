@@ -247,19 +247,6 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the message-boards message with the matching UUID and company.
-	 *
-	 * @param uuid the message-boards message's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	 */
-	@Override
-	public MBMessage fetchMBMessageByUuidAndCompanyId(String uuid,
-		long companyId) {
-		return mbMessagePersistence.fetchByUuid_C_First(uuid, companyId, null);
-	}
-
-	/**
 	 * Returns the message-boards message matching the UUID and group.
 	 *
 	 * @param uuid the message-boards message's UUID
@@ -394,17 +381,33 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the message-boards message with the matching UUID and company.
+	 * Returns all the message-boards messages that match the UUID and company.
 	 *
-	 * @param uuid the message-boards message's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching message-boards message
-	 * @throws PortalException if a matching message-boards message could not be found
+	 * @param uuid the UUID of the message-boards messages
+	 * @param companyId the primary key of the company
+	 * @return all the matching message-boards messages, or an empty list if no matches were found
 	 */
 	@Override
-	public MBMessage getMBMessageByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException {
-		return mbMessagePersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<MBMessage> getMBMessagesByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return mbMessagePersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of message-boards messages that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the message-boards messages
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of message-boards messages
+	 * @param end the upper bound of the range of message-boards messages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching message-boards messages, or an empty list if no matches were found
+	 */
+	@Override
+	public List<MBMessage> getMBMessagesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end, OrderByComparator orderByComparator) {
+		return mbMessagePersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**

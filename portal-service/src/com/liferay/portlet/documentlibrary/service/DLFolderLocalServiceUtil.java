@@ -287,18 +287,6 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* Returns the document library folder with the matching UUID and company.
-	*
-	* @param uuid the document library folder's UUID
-	* @param companyId the primary key of the company
-	* @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
-	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchDLFolderByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().fetchDLFolderByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the document library folder matching the UUID and group.
 	*
 	* @param uuid the document library folder's UUID
@@ -389,20 +377,6 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* Returns the document library folder with the matching UUID and company.
-	*
-	* @param uuid the document library folder's UUID
-	* @param companyId the primary key of the company
-	* @return the matching document library folder
-	* @throws PortalException if a matching document library folder could not be found
-	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFolder getDLFolderByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDLFolderByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the document library folder matching the UUID and group.
 	*
 	* @param uuid the document library folder's UUID
@@ -430,6 +404,36 @@ public class DLFolderLocalServiceUtil {
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFolders(
 		int start, int end) {
 		return getService().getDLFolders(start, end);
+	}
+
+	/**
+	* Returns all the document library folders that match the UUID and company.
+	*
+	* @param uuid the UUID of the document library folders
+	* @param companyId the primary key of the company
+	* @return all the matching document library folders, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFoldersByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().getDLFoldersByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of document library folders that match the UUID and company.
+	*
+	* @param uuid the UUID of the document library folders
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of document library folders
+	* @param end the upper bound of the range of document library folders (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching document library folders, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFoldersByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getDLFoldersByUuidAndCompanyId(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**

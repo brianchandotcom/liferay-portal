@@ -222,18 +222,6 @@ public class MDRActionLocalServiceUtil {
 	}
 
 	/**
-	* Returns the m d r action with the matching UUID and company.
-	*
-	* @param uuid the m d r action's UUID
-	* @param companyId the primary key of the company
-	* @return the matching m d r action, or <code>null</code> if a matching m d r action could not be found
-	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchMDRActionByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().fetchMDRActionByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the m d r action matching the UUID and group.
 	*
 	* @param uuid the m d r action's UUID
@@ -297,20 +285,6 @@ public class MDRActionLocalServiceUtil {
 	}
 
 	/**
-	* Returns the m d r action with the matching UUID and company.
-	*
-	* @param uuid the m d r action's UUID
-	* @param companyId the primary key of the company
-	* @return the matching m d r action
-	* @throws PortalException if a matching m d r action could not be found
-	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRAction getMDRActionByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getMDRActionByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the m d r action matching the UUID and group.
 	*
 	* @param uuid the m d r action's UUID
@@ -338,6 +312,36 @@ public class MDRActionLocalServiceUtil {
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getMDRActions(
 		int start, int end) {
 		return getService().getMDRActions(start, end);
+	}
+
+	/**
+	* Returns all the m d r actions that match the UUID and company.
+	*
+	* @param uuid the UUID of the m d r actions
+	* @param companyId the primary key of the company
+	* @return all the matching m d r actions, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getMDRActionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().getMDRActionsByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of m d r actions that match the UUID and company.
+	*
+	* @param uuid the UUID of the m d r actions
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of m d r actions
+	* @param end the upper bound of the range of m d r actions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching m d r actions, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getMDRActionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getMDRActionsByUuidAndCompanyId(uuid, companyId, start,
+			end, orderByComparator);
 	}
 
 	/**

@@ -198,18 +198,6 @@ public class DDMContentLocalServiceUtil {
 	}
 
 	/**
-	* Returns the d d m content with the matching UUID and company.
-	*
-	* @param uuid the d d m content's UUID
-	* @param companyId the primary key of the company
-	* @return the matching d d m content, or <code>null</code> if a matching d d m content could not be found
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchDDMContentByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().fetchDDMContentByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the d d m content matching the UUID and group.
 	*
 	* @param uuid the d d m content's UUID
@@ -272,20 +260,6 @@ public class DDMContentLocalServiceUtil {
 	}
 
 	/**
-	* Returns the d d m content with the matching UUID and company.
-	*
-	* @param uuid the d d m content's UUID
-	* @param companyId the primary key of the company
-	* @return the matching d d m content
-	* @throws PortalException if a matching d d m content could not be found
-	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMContent getDDMContentByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDDMContentByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the d d m content matching the UUID and group.
 	*
 	* @param uuid the d d m content's UUID
@@ -313,6 +287,36 @@ public class DDMContentLocalServiceUtil {
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> getDDMContents(
 		int start, int end) {
 		return getService().getDDMContents(start, end);
+	}
+
+	/**
+	* Returns all the d d m contents that match the UUID and company.
+	*
+	* @param uuid the UUID of the d d m contents
+	* @param companyId the primary key of the company
+	* @return all the matching d d m contents, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> getDDMContentsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().getDDMContentsByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of d d m contents that match the UUID and company.
+	*
+	* @param uuid the UUID of the d d m contents
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of d d m contents
+	* @param end the upper bound of the range of d d m contents (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching d d m contents, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> getDDMContentsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getDDMContentsByUuidAndCompanyId(uuid, companyId, start,
+			end, orderByComparator);
 	}
 
 	/**

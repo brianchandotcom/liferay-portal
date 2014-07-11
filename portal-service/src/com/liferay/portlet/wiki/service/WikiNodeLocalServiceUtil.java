@@ -244,18 +244,6 @@ public class WikiNodeLocalServiceUtil {
 	}
 
 	/**
-	* Returns the wiki node with the matching UUID and company.
-	*
-	* @param uuid the wiki node's UUID
-	* @param companyId the primary key of the company
-	* @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	*/
-	public static com.liferay.portlet.wiki.model.WikiNode fetchWikiNodeByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().fetchWikiNodeByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the wiki node matching the UUID and group.
 	*
 	* @param uuid the wiki node's UUID
@@ -365,20 +353,6 @@ public class WikiNodeLocalServiceUtil {
 	}
 
 	/**
-	* Returns the wiki node with the matching UUID and company.
-	*
-	* @param uuid the wiki node's UUID
-	* @param companyId the primary key of the company
-	* @return the matching wiki node
-	* @throws PortalException if a matching wiki node could not be found
-	*/
-	public static com.liferay.portlet.wiki.model.WikiNode getWikiNodeByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getWikiNodeByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the wiki node matching the UUID and group.
 	*
 	* @param uuid the wiki node's UUID
@@ -406,6 +380,36 @@ public class WikiNodeLocalServiceUtil {
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiNode> getWikiNodes(
 		int start, int end) {
 		return getService().getWikiNodes(start, end);
+	}
+
+	/**
+	* Returns all the wiki nodes that match the UUID and company.
+	*
+	* @param uuid the UUID of the wiki nodes
+	* @param companyId the primary key of the company
+	* @return all the matching wiki nodes, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.wiki.model.WikiNode> getWikiNodesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().getWikiNodesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of wiki nodes that match the UUID and company.
+	*
+	* @param uuid the UUID of the wiki nodes
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of wiki nodes
+	* @param end the upper bound of the range of wiki nodes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching wiki nodes, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.wiki.model.WikiNode> getWikiNodesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getWikiNodesByUuidAndCompanyId(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**

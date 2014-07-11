@@ -236,18 +236,6 @@ public abstract class MBThreadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the message boards thread with the matching UUID and company.
-	 *
-	 * @param uuid the message boards thread's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	@Override
-	public MBThread fetchMBThreadByUuidAndCompanyId(String uuid, long companyId) {
-		return mbThreadPersistence.fetchByUuid_C_First(uuid, companyId, null);
-	}
-
-	/**
 	 * Returns the message boards thread matching the UUID and group.
 	 *
 	 * @param uuid the message boards thread's UUID
@@ -372,17 +360,33 @@ public abstract class MBThreadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the message boards thread with the matching UUID and company.
+	 * Returns all the message boards threads that match the UUID and company.
 	 *
-	 * @param uuid the message boards thread's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching message boards thread
-	 * @throws PortalException if a matching message boards thread could not be found
+	 * @param uuid the UUID of the message boards threads
+	 * @param companyId the primary key of the company
+	 * @return all the matching message boards threads, or an empty list if no matches were found
 	 */
 	@Override
-	public MBThread getMBThreadByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException {
-		return mbThreadPersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<MBThread> getMBThreadsByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return mbThreadPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of message boards threads that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the message boards threads
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching message boards threads, or an empty list if no matches were found
+	 */
+	@Override
+	public List<MBThread> getMBThreadsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end, OrderByComparator orderByComparator) {
+		return mbThreadPersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**

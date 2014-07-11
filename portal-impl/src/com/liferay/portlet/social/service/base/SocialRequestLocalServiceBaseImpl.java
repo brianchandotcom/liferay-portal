@@ -209,20 +209,6 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the social request with the matching UUID and company.
-	 *
-	 * @param uuid the social request's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching social request, or <code>null</code> if a matching social request could not be found
-	 */
-	@Override
-	public SocialRequest fetchSocialRequestByUuidAndCompanyId(String uuid,
-		long companyId) {
-		return socialRequestPersistence.fetchByUuid_C_First(uuid, companyId,
-			null);
-	}
-
-	/**
 	 * Returns the social request matching the UUID and group.
 	 *
 	 * @param uuid the social request's UUID
@@ -286,17 +272,34 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the social request with the matching UUID and company.
+	 * Returns all the social requests that match the UUID and company.
 	 *
-	 * @param uuid the social request's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching social request
-	 * @throws PortalException if a matching social request could not be found
+	 * @param uuid the UUID of the social requests
+	 * @param companyId the primary key of the company
+	 * @return all the matching social requests, or an empty list if no matches were found
 	 */
 	@Override
-	public SocialRequest getSocialRequestByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException {
-		return socialRequestPersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<SocialRequest> getSocialRequestsByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return socialRequestPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of social requests that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the social requests
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of social requests
+	 * @param end the upper bound of the range of social requests (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching social requests, or an empty list if no matches were found
+	 */
+	@Override
+	public List<SocialRequest> getSocialRequestsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator orderByComparator) {
+		return socialRequestPersistence.findByUuid_C(uuid, companyId, start,
+			end, orderByComparator);
 	}
 
 	/**

@@ -259,17 +259,6 @@ public interface MBMessageLocalService extends BaseLocalService,
 		long messageId);
 
 	/**
-	* Returns the message-boards message with the matching UUID and company.
-	*
-	* @param uuid the message-boards message's UUID
-	* @param companyId the primary key of the company
-	* @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBMessage fetchMBMessageByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
-
-	/**
 	* Returns the message-boards message matching the UUID and group.
 	*
 	* @param uuid the message-boards message's UUID
@@ -379,19 +368,6 @@ public interface MBMessageLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Returns the message-boards message with the matching UUID and company.
-	*
-	* @param uuid the message-boards message's UUID
-	* @param companyId the primary key of the company
-	* @return the matching message-boards message
-	* @throws PortalException if a matching message-boards message could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBMessage getMBMessageByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
 	* Returns the message-boards message matching the UUID and group.
 	*
 	* @param uuid the message-boards message's UUID
@@ -418,6 +394,32 @@ public interface MBMessageLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getMBMessages(
 		int start, int end);
+
+	/**
+	* Returns all the message-boards messages that match the UUID and company.
+	*
+	* @param uuid the UUID of the message-boards messages
+	* @param companyId the primary key of the company
+	* @return all the matching message-boards messages, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getMBMessagesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of message-boards messages that match the UUID and company.
+	*
+	* @param uuid the UUID of the message-boards messages
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of message-boards messages
+	* @param end the upper bound of the range of message-boards messages (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching message-boards messages, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getMBMessagesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of message-boards messages.

@@ -213,18 +213,6 @@ public abstract class MDRRuleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the m d r rule with the matching UUID and company.
-	 *
-	 * @param uuid the m d r rule's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching m d r rule, or <code>null</code> if a matching m d r rule could not be found
-	 */
-	@Override
-	public MDRRule fetchMDRRuleByUuidAndCompanyId(String uuid, long companyId) {
-		return mdrRulePersistence.fetchByUuid_C_First(uuid, companyId, null);
-	}
-
-	/**
 	 * Returns the m d r rule matching the UUID and group.
 	 *
 	 * @param uuid the m d r rule's UUID
@@ -341,17 +329,33 @@ public abstract class MDRRuleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the m d r rule with the matching UUID and company.
+	 * Returns all the m d r rules that match the UUID and company.
 	 *
-	 * @param uuid the m d r rule's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching m d r rule
-	 * @throws PortalException if a matching m d r rule could not be found
+	 * @param uuid the UUID of the m d r rules
+	 * @param companyId the primary key of the company
+	 * @return all the matching m d r rules, or an empty list if no matches were found
 	 */
 	@Override
-	public MDRRule getMDRRuleByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException {
-		return mdrRulePersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<MDRRule> getMDRRulesByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return mdrRulePersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of m d r rules that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the m d r rules
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of m d r rules
+	 * @param end the upper bound of the range of m d r rules (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching m d r rules, or an empty list if no matches were found
+	 */
+	@Override
+	public List<MDRRule> getMDRRulesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end, OrderByComparator orderByComparator) {
+		return mdrRulePersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**

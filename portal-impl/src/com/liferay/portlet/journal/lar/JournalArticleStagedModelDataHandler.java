@@ -40,7 +40,6 @@ import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ImageLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -308,10 +307,9 @@ public class JournalArticleStagedModelDataHandler
 			portletDataContext, article, ddmTemplate,
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 
-		if (Validator.isNotNull(article.getLayoutUuid())) {
-			Layout layout = LayoutLocalServiceUtil.getLayoutByUuidAndCompanyId(
-				article.getLayoutUuid(), portletDataContext.getCompanyId());
+		Layout layout = article.getLayout();
 
+		if (layout != null) {
 			portletDataContext.addReferenceElement(
 				article, articleElement, layout,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);

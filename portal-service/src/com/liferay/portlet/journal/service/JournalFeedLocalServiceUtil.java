@@ -246,18 +246,6 @@ public class JournalFeedLocalServiceUtil {
 	}
 
 	/**
-	* Returns the journal feed with the matching UUID and company.
-	*
-	* @param uuid the journal feed's UUID
-	* @param companyId the primary key of the company
-	* @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalFeed fetchJournalFeedByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().fetchJournalFeedByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the journal feed matching the UUID and group.
 	*
 	* @param uuid the journal feed's UUID
@@ -329,20 +317,6 @@ public class JournalFeedLocalServiceUtil {
 	}
 
 	/**
-	* Returns the journal feed with the matching UUID and company.
-	*
-	* @param uuid the journal feed's UUID
-	* @param companyId the primary key of the company
-	* @return the matching journal feed
-	* @throws PortalException if a matching journal feed could not be found
-	*/
-	public static com.liferay.portlet.journal.model.JournalFeed getJournalFeedByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getJournalFeedByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
 	* Returns the journal feed matching the UUID and group.
 	*
 	* @param uuid the journal feed's UUID
@@ -370,6 +344,36 @@ public class JournalFeedLocalServiceUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> getJournalFeeds(
 		int start, int end) {
 		return getService().getJournalFeeds(start, end);
+	}
+
+	/**
+	* Returns all the journal feeds that match the UUID and company.
+	*
+	* @param uuid the UUID of the journal feeds
+	* @param companyId the primary key of the company
+	* @return all the matching journal feeds, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> getJournalFeedsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().getJournalFeedsByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of journal feeds that match the UUID and company.
+	*
+	* @param uuid the UUID of the journal feeds
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of journal feeds
+	* @param end the upper bound of the range of journal feeds (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching journal feeds, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalFeed> getJournalFeedsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService()
+				   .getJournalFeedsByUuidAndCompanyId(uuid, companyId, start,
+			end, orderByComparator);
 	}
 
 	/**

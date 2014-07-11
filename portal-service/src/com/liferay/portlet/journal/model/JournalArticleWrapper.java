@@ -619,6 +619,11 @@ public class JournalArticleWrapper implements JournalArticle,
 		return _journalArticle.getIndexable();
 	}
 
+	@Override
+	public com.liferay.portal.model.Layout getLayout() {
+		return _journalArticle.getLayout();
+	}
+
 	/**
 	* Returns the layout uuid of this journal article.
 	*

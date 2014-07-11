@@ -184,17 +184,6 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 		long threadFlagId);
 
 	/**
-	* Returns the message boards thread flag with the matching UUID and company.
-	*
-	* @param uuid the message boards thread flag's UUID
-	* @param companyId the primary key of the company
-	* @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBThreadFlag fetchMBThreadFlagByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
-
-	/**
 	* Returns the message boards thread flag matching the UUID and group.
 	*
 	* @param uuid the message boards thread flag's UUID
@@ -232,19 +221,6 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Returns the message boards thread flag with the matching UUID and company.
-	*
-	* @param uuid the message boards thread flag's UUID
-	* @param companyId the primary key of the company
-	* @return the matching message boards thread flag
-	* @throws PortalException if a matching message boards thread flag could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.messageboards.model.MBThreadFlag getMBThreadFlagByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	/**
 	* Returns the message boards thread flag matching the UUID and group.
 	*
 	* @param uuid the message boards thread flag's UUID
@@ -271,6 +247,32 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThreadFlag> getMBThreadFlags(
 		int start, int end);
+
+	/**
+	* Returns all the message boards thread flags that match the UUID and company.
+	*
+	* @param uuid the UUID of the message boards thread flags
+	* @param companyId the primary key of the company
+	* @return all the matching message boards thread flags, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.messageboards.model.MBThreadFlag> getMBThreadFlagsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of message boards thread flags that match the UUID and company.
+	*
+	* @param uuid the UUID of the message boards thread flags
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of message boards thread flags
+	* @param end the upper bound of the range of message boards thread flags (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return all the matching message boards thread flags, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.messageboards.model.MBThreadFlag> getMBThreadFlagsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of message boards thread flags.

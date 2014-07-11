@@ -219,19 +219,6 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the journal feed with the matching UUID and company.
-	 *
-	 * @param uuid the journal feed's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
-	 */
-	@Override
-	public JournalFeed fetchJournalFeedByUuidAndCompanyId(String uuid,
-		long companyId) {
-		return journalFeedPersistence.fetchByUuid_C_First(uuid, companyId, null);
-	}
-
-	/**
 	 * Returns the journal feed matching the UUID and group.
 	 *
 	 * @param uuid the journal feed's UUID
@@ -349,17 +336,33 @@ public abstract class JournalFeedLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the journal feed with the matching UUID and company.
+	 * Returns all the journal feeds that match the UUID and company.
 	 *
-	 * @param uuid the journal feed's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching journal feed
-	 * @throws PortalException if a matching journal feed could not be found
+	 * @param uuid the UUID of the journal feeds
+	 * @param companyId the primary key of the company
+	 * @return all the matching journal feeds, or an empty list if no matches were found
 	 */
 	@Override
-	public JournalFeed getJournalFeedByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException {
-		return journalFeedPersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<JournalFeed> getJournalFeedsByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return journalFeedPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of journal feeds that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the journal feeds
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of journal feeds
+	 * @param end the upper bound of the range of journal feeds (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching journal feeds, or an empty list if no matches were found
+	 */
+	@Override
+	public List<JournalFeed> getJournalFeedsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end, OrderByComparator orderByComparator) {
+		return journalFeedPersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**

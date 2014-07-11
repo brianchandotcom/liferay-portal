@@ -214,19 +214,6 @@ public abstract class PollsVoteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the polls vote with the matching UUID and company.
-	 *
-	 * @param uuid the polls vote's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	 */
-	@Override
-	public PollsVote fetchPollsVoteByUuidAndCompanyId(String uuid,
-		long companyId) {
-		return pollsVotePersistence.fetchByUuid_C_First(uuid, companyId, null);
-	}
-
-	/**
 	 * Returns the polls vote matching the UUID and group.
 	 *
 	 * @param uuid the polls vote's UUID
@@ -343,17 +330,33 @@ public abstract class PollsVoteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the polls vote with the matching UUID and company.
+	 * Returns all the polls votes that match the UUID and company.
 	 *
-	 * @param uuid the polls vote's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching polls vote
-	 * @throws PortalException if a matching polls vote could not be found
+	 * @param uuid the UUID of the polls votes
+	 * @param companyId the primary key of the company
+	 * @return all the matching polls votes, or an empty list if no matches were found
 	 */
 	@Override
-	public PollsVote getPollsVoteByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException {
-		return pollsVotePersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<PollsVote> getPollsVotesByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return pollsVotePersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of polls votes that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the polls votes
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of polls votes
+	 * @param end the upper bound of the range of polls votes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching polls votes, or an empty list if no matches were found
+	 */
+	@Override
+	public List<PollsVote> getPollsVotesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end, OrderByComparator orderByComparator) {
+		return pollsVotePersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**

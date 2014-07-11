@@ -245,18 +245,6 @@ public abstract class LayoutLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the layout with the matching UUID and company.
-	 *
-	 * @param uuid the layout's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
-	 */
-	@Override
-	public Layout fetchLayoutByUuidAndCompanyId(String uuid, long companyId) {
-		return layoutPersistence.fetchByUuid_C_First(uuid, companyId, null);
-	}
-
-	/**
 	 * Returns the layout matching the UUID, group, and privacy.
 	 *
 	 * @param uuid the layout's UUID
@@ -375,17 +363,32 @@ public abstract class LayoutLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the layout with the matching UUID and company.
+	 * Returns all the layouts that match the UUID and company.
 	 *
-	 * @param uuid the layout's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching layout
-	 * @throws PortalException if a matching layout could not be found
+	 * @param uuid the UUID of the layouts
+	 * @param companyId the primary key of the company
+	 * @return all the matching layouts, or an empty list if no matches were found
 	 */
 	@Override
-	public Layout getLayoutByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException {
-		return layoutPersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<Layout> getLayoutsByUuidAndCompanyId(String uuid, long companyId) {
+		return layoutPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of layouts that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the layouts
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching layouts, or an empty list if no matches were found
+	 */
+	@Override
+	public List<Layout> getLayoutsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end, OrderByComparator orderByComparator) {
+		return layoutPersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**

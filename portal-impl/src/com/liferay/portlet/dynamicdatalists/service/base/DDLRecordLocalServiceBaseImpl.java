@@ -221,19 +221,6 @@ public abstract class DDLRecordLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the d d l record with the matching UUID and company.
-	 *
-	 * @param uuid the d d l record's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching d d l record, or <code>null</code> if a matching d d l record could not be found
-	 */
-	@Override
-	public DDLRecord fetchDDLRecordByUuidAndCompanyId(String uuid,
-		long companyId) {
-		return ddlRecordPersistence.fetchByUuid_C_First(uuid, companyId, null);
-	}
-
-	/**
 	 * Returns the d d l record matching the UUID and group.
 	 *
 	 * @param uuid the d d l record's UUID
@@ -350,17 +337,33 @@ public abstract class DDLRecordLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the d d l record with the matching UUID and company.
+	 * Returns all the d d l records that match the UUID and company.
 	 *
-	 * @param uuid the d d l record's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching d d l record
-	 * @throws PortalException if a matching d d l record could not be found
+	 * @param uuid the UUID of the d d l records
+	 * @param companyId the primary key of the company
+	 * @return all the matching d d l records, or an empty list if no matches were found
 	 */
 	@Override
-	public DDLRecord getDDLRecordByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException {
-		return ddlRecordPersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<DDLRecord> getDDLRecordsByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return ddlRecordPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of d d l records that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the d d l records
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of d d l records
+	 * @param end the upper bound of the range of d d l records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching d d l records, or an empty list if no matches were found
+	 */
+	@Override
+	public List<DDLRecord> getDDLRecordsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end, OrderByComparator orderByComparator) {
+		return ddlRecordPersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**

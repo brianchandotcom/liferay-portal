@@ -559,6 +559,24 @@ public class JournalUtil {
 		return sb.toString();
 	}
 
+	public static Layout getArticleLayout(String layoutUuid, long groupId) {
+		if (Validator.isNull(layoutUuid)) {
+			return null;
+		}
+
+		// The target page and the article must belong to the same group
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			layoutUuid, groupId, false);
+
+		if (layout == null) {
+			layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layoutUuid, groupId, true);
+		}
+
+		return layout;
+	}
+
 	public static OrderByComparator<JournalArticle> getArticleOrderByComparator(
 		String orderByCol, String orderByType) {
 
@@ -1002,12 +1020,12 @@ public class JournalUtil {
 			JournalArticle article, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		if ((article != null) && Validator.isNotNull(article.getLayoutUuid())) {
-			Layout layout =
-				LayoutLocalServiceUtil.getLayoutByUuidAndCompanyId(
-					article.getLayoutUuid(), themeDisplay.getCompanyId());
+		if (article != null) {
+			Layout layout = article.getLayout();
 
-			return layout.getPlid();
+			if (layout != null) {
+				return layout.getPlid();
+			}
 		}
 
 		Layout layout = LayoutLocalServiceUtil.fetchFirstLayout(

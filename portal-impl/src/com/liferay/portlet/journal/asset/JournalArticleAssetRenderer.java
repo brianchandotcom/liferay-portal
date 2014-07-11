@@ -283,11 +283,10 @@ public class JournalArticleAssetRenderer
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
+		Layout layout = _article.getLayout();
 
-		if (Validator.isNotNull(_article.getLayoutUuid())) {
-			layout = LayoutLocalServiceUtil.getLayoutByUuidAndCompanyId(
-				_article.getLayoutUuid(), _article.getCompanyId());
+		if (layout == null) {
+			layout = themeDisplay.getLayout();
 		}
 
 		String portletId = (String)liferayPortletRequest.getAttribute(

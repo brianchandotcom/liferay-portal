@@ -235,19 +235,6 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the message boards category with the matching UUID and company.
-	 *
-	 * @param uuid the message boards category's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	 */
-	@Override
-	public MBCategory fetchMBCategoryByUuidAndCompanyId(String uuid,
-		long companyId) {
-		return mbCategoryPersistence.fetchByUuid_C_First(uuid, companyId, null);
-	}
-
-	/**
 	 * Returns the message boards category matching the UUID and group.
 	 *
 	 * @param uuid the message boards category's UUID
@@ -372,17 +359,33 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the message boards category with the matching UUID and company.
+	 * Returns all the message boards categories that match the UUID and company.
 	 *
-	 * @param uuid the message boards category's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching message boards category
-	 * @throws PortalException if a matching message boards category could not be found
+	 * @param uuid the UUID of the message boards categories
+	 * @param companyId the primary key of the company
+	 * @return all the matching message boards categories, or an empty list if no matches were found
 	 */
 	@Override
-	public MBCategory getMBCategoryByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException {
-		return mbCategoryPersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<MBCategory> getMBCategoriesByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return mbCategoryPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of message boards categories that match the UUID and company.
+	 *
+	 * @param uuid the UUID of the message boards categories
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of message boards categories
+	 * @param end the upper bound of the range of message boards categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return all the matching message boards categories, or an empty list if no matches were found
+	 */
+	@Override
+	public List<MBCategory> getMBCategoriesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end, OrderByComparator orderByComparator) {
+		return mbCategoryPersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**

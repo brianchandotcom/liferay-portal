@@ -34,7 +34,7 @@ import org.junit.Test;
 /**
  * @author Pablo Carvalho
  */
-public abstract class BaseDDMFormDeserializer extends BaseDDMTestCase {
+public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 
 	@Test
 	public void testDDMFormAndFieldsDefaultLocales() throws Exception {

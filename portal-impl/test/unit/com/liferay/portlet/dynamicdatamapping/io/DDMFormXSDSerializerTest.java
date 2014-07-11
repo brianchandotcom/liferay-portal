@@ -30,7 +30,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
  * @author Pablo Carvalho
  */
 @PrepareForTest({StringUtil.class})
-public class DDMFormXSDSerializerTest extends BaseDDMFormSerializer {
+public class DDMFormXSDSerializerTest extends BaseDDMFormSerializerTestCase {
 
 	@Before
 	public void setUp() {

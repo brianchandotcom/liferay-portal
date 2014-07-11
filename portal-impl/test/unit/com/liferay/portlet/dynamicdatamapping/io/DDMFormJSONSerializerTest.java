@@ -24,7 +24,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 /**
  * @author Marcellus Tavares
  */
-public class DDMFormJSONSerializerTest extends BaseDDMFormSerializer {
+public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 
 	@Before
 	public void setUp() {

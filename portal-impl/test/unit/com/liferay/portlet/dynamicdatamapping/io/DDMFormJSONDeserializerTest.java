@@ -26,7 +26,8 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
  * @author Marcellus Tavares
  */
 @PrepareForTest({LocaleUtil.class})
-public class DDMFormJSONDeserializerTest extends BaseDDMFormDeserializer {
+public class DDMFormJSONDeserializerTest
+	extends BaseDDMFormDeserializerTestCase {
 
 	@Before
 	public void setUp() {

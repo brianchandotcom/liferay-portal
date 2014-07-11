@@ -279,6 +279,8 @@ public class EditTemplateAction extends PortletAction {
 		long classNameId = ParamUtil.getLong(
 			uploadPortletRequest, "classNameId");
 		long classPK = ParamUtil.getLong(uploadPortletRequest, "classPK");
+		String templateKey = ParamUtil.getString(
+			uploadPortletRequest, "templateKey");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			uploadPortletRequest, "name");
 		Map<Locale, String> descriptionMap =
@@ -306,9 +308,9 @@ public class EditTemplateAction extends PortletAction {
 
 		if (templateId <= 0) {
 			template = DDMTemplateServiceUtil.addTemplate(
-				groupId, classNameId, classPK, null, nameMap, descriptionMap,
-				type, mode, language, script, cacheable, smallImage,
-				smallImageURL, smallImageFile, serviceContext);
+				groupId, classNameId, classPK, templateKey, nameMap,
+				descriptionMap, type, mode, language, script, cacheable,
+				smallImage, smallImageURL, smallImageFile, serviceContext);
 		}
 		else {
 			template = DDMTemplateServiceUtil.updateTemplate(

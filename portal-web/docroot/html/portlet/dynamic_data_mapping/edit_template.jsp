@@ -177,6 +177,10 @@ if (Validator.isNotNull(structureAvailableFields)) {
 					</aui:select>
 				</c:if>
 
+				<c:if test="<%= !PropsValues.DYNAMIC_DATA_MAPPING_TEMPLATE_FORCE_AUTOGENERATE_KEY %>">
+					<aui:input disabled="<%= (template != null) ? true : false %>" name="templateKey" />
+				</c:if>
+
 				<aui:input name="description" />
 
 				<c:if test="<%= template != null %>">

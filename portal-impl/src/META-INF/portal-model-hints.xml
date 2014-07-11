@@ -1835,7 +1835,10 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="templateKey" type="String" />
+		<field name="templateKey" type="String">
+			<hint name="upper-case">true</hint>
+			<hint name="auto-escape">false</hint>
+		</field>
 		<field name="name" type="String" localized="true">
 			<validator name="required" />
 		</field>

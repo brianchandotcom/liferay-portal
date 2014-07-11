@@ -182,6 +182,10 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 					</c:choose>
 				</aui:row>
 
+				<c:if test="<%= !PropsValues.DYNAMIC_DATA_MAPPING_STRUCTURE_FORCE_AUTOGENERATE_KEY %>">
+					<aui:input disabled="<%= (structure != null) ? true : false %>" label='<%= LanguageUtil.format(request, "x-key", ddmDisplay.getStructureName(locale), false) %>' name="structureKey" />
+				</c:if>
+
 				<aui:input name="description" />
 
 				<aui:field-wrapper label='<%= LanguageUtil.format(request, "parent-x", ddmDisplay.getStructureName(locale), false) %>'>

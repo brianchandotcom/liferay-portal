@@ -28,7 +28,7 @@ import java.util.Locale;
 /**
  * @author Pablo Carvalho
  */
-public class BaseDDMFormSerializer extends BaseDDMTestCase {
+public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 
 	protected List<Locale> createAvailableLocales() {
 		List<Locale> availableLocales = new ArrayList<Locale>();

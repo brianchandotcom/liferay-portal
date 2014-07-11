@@ -28,11 +28,8 @@ import javax.servlet.jsp.tagext.Tag;
 public class TagSupport implements Tag {
 
 	public static Tag findAncestorWithClass(Tag fromTag, Class<?> clazz) {
-		boolean isInterface = false;
-
 		if ((fromTag == null) || (clazz == null) ||
-			(!Tag.class.isAssignableFrom(clazz) &&
-			 !(isInterface = clazz.isInterface()))) {
+			(!Tag.class.isAssignableFrom(clazz) && !clazz.isInterface())) {
 
 			return null;
 		}
@@ -44,9 +41,7 @@ public class TagSupport implements Tag {
 				return null;
 			}
 
-			if ((isInterface && clazz.isInstance(parentTag)) ||
-				clazz.isInstance(parentTag)) {
-
+			if (clazz.isInstance(parentTag)) {
 				return parentTag;
 			}
 

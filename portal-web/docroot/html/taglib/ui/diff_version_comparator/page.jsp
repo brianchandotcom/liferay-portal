@@ -133,9 +133,9 @@ if (Validator.isNotNull(languageId)) {
 				<c:if test="<%= diffVersionsCount >= 5 %>">
 					<div class="search-panels">
 						<div class="search-panels-bar">
-							<i class="search-panel-icon"></i>
-
 							<aui:input cssClass="col-md-12 search-panels-input search-query" label="" name="searchPanel" type="text" />
+
+							<i class="search-panel-icon"></i>
 						</div>
 					</div>
 				</c:if>

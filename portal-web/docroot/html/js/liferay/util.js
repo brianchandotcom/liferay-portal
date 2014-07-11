@@ -287,10 +287,6 @@
 			inputs.setStyle('opacity', 1);
 		},
 
-		endsWith: function(str, x) {
-			return (str.lastIndexOf(x) === (str.length - x.length));
-		},
-
 		escapeCDATA: function(str) {
 			return str.replace(
 				/<!\[CDATA\[|\]\]>/gi,

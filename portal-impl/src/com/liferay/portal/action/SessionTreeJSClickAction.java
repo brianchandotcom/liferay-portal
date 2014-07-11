@@ -21,7 +21,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.SessionTreeJSClicks;
+import com.liferay.taglib.ui.util.SessionTreeJSClicks;
 
 import java.util.List;
 

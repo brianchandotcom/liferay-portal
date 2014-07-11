@@ -89,25 +89,19 @@ UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 
 Layout selLayout = null;
 
-try {
-	if (selPlid != LayoutConstants.DEFAULT_PLID) {
-		selLayout = LayoutLocalServiceUtil.getLayout(selPlid);
+if (selPlid != LayoutConstants.DEFAULT_PLID) {
+	selLayout = LayoutLocalServiceUtil.fetchLayout(selPlid);
 
+	if (selLayout != null) {
 		privateLayout = selLayout.isPrivateLayout();
 		layoutId = selLayout.getLayoutId();
 	}
 }
-catch (NoSuchLayoutException nsle) {
-}
 
 Layout refererLayout = null;
 
-try {
-	if (refererPlid != LayoutConstants.DEFAULT_PLID) {
-		refererLayout = LayoutLocalServiceUtil.getLayout(refererPlid);
-	}
-}
-catch (NoSuchLayoutException nsle) {
+if (refererPlid != LayoutConstants.DEFAULT_PLID) {
+	refererLayout = LayoutLocalServiceUtil.fetchLayout(refererPlid);
 }
 
 Organization organization = null;

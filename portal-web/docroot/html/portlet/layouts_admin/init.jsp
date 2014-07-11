@@ -68,7 +68,6 @@ page import="com.liferay.portal.theme.NavItem" %><%@
 page import="com.liferay.portlet.backgroundtask.util.comparator.BackgroundTaskComparatorFactoryUtil" %><%@
 page import="com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException" %><%@
-page import="com.liferay.portlet.layoutsadmin.util.LayoutsTreeUtil" %><%@
 page import="com.liferay.portlet.mobiledevicerules.model.MDRAction" %><%@
 page import="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup" %><%@
 page import="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance" %><%@

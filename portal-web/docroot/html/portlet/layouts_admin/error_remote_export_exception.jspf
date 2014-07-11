@@ -33,6 +33,6 @@
 	</c:if>
 
 	<c:if test="<%= ree.getType() == RemoteExportException.NO_PERMISSIONS %>">
-		<liferay-ui:message arguments="<%= ree.getGroupId() %>" key="you-do-not-have-permissions-to-edit-the-site-with-id-x-on-the-remote-server" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments="<%= ree.getGroupId() %>" key="you-do-not-have-permissions-to-edit-the-site-with-id-x-on-the-remote-server-please-verify-that-your-credentials-match-on-both-servers" translateArguments="<%= false %>" />
 	</c:if>
 </liferay-ui:error>

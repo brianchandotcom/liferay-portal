@@ -92,18 +92,6 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 			return null;
 		}
 
-		Object thisObject = methodInvocation.getThis();
-
-		Class<?> clazz = thisObject.getClass();
-
-		Class<?>[] interfaces = clazz.getInterfaces();
-
-		for (int i = 0; i < interfaces.length; i++) {
-			if (interfaces[i].isAssignableFrom(MonitoringProcessor.class)) {
-				return null;
-			}
-		}
-
 		if (!_permissiveMode && !isMonitored(methodInvocation)) {
 			return null;
 		}

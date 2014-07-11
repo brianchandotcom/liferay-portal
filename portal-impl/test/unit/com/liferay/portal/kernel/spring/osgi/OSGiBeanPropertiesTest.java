@@ -15,16 +15,23 @@
 package com.liferay.portal.kernel.spring.osgi;
 
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.util.PropsImpl;
 
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Raymond Augé
  */
 public class OSGiBeanPropertiesTest {
+
+	@Before
+	public void setup() {
+		PropsUtil.setProps(new PropsImpl());
+	}
 
 	@Test
 	public void testAnnotatedClass() {
@@ -327,10 +334,10 @@ public class OSGiBeanPropertiesTest {
 
 		Assert.assertNotNull(properties);
 		Assert.assertTrue(
-			properties.containsKey("default.resource.check.whitelist"));
+			properties.containsKey("add.default.resource.check.whitelist"));
 		Assert.assertEquals(
 			PropsUtil.get("portlet.add.default.resource.check.whitelist"),
-			properties.get("default.resource.check.whitelist"));
+			properties.get("add.default.resource.check.whitelist"));
 	}
 
 	@Test

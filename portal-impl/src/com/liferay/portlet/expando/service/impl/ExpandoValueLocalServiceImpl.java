@@ -2433,7 +2433,7 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	protected Object handleStrings(int type, Object object) {
-		if (!String.class.isAssignableFrom(object.getClass())) {
+		if (!(object instanceof String)) {
 			return object;
 		}
 

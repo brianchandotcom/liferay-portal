@@ -18,6 +18,34 @@
 		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="subscribeToNodeCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+
+		<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_ACTIONS" />
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_MENULIST_SUBSCRIBE" value1="Subscribe" />
+		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_ACTIONS" />
+		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_MENULIST_UNSUBSCRIBE" value1="Unsubscribe" />
+	</command>
+
+	<command name="tearDownCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<var name="key_wikiNodeName" value="Main" />
+
+		<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_ACTIONS" />
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_MENULIST_UNSUBSCRIBE" value1="Unsubscribe" />
+		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_ACTIONS" />
+		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_MENULIST_SUBSCRIBE" value1="Subscribe" />
+	</command>
+
 	<command name="viewConfigureSharingAllowUsersToAddWikiToAnyWebsite">
 		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="BasePortletConfiguration#assertClick" locator-key1="NAVIGATION_SHARING" value1="Sharing" />

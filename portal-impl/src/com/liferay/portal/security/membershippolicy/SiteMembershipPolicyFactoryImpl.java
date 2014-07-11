@@ -91,6 +91,10 @@ public class SiteMembershipPolicyFactoryImpl
 		public void removedService(
 			ServiceReference<SiteMembershipPolicy> serviceReference,
 			SiteMembershipPolicy siteMembershipPolicy) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
 		}
 
 	}

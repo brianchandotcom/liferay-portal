@@ -19,6 +19,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -53,11 +58,57 @@ public class FacetFactoryUtil {
 		return facet;
 	}
 
+	public FacetFactoryUtil() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			FacetFactory.class, new FacetFactoryServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(FacetFactoryUtil.class);
 
 	private static FacetFactoryUtil _instance = new FacetFactoryUtil();
 
 	private Map<String, FacetFactory> _facetFactories =
 		new ConcurrentHashMap<String, FacetFactory>();
+	private ServiceTracker<FacetFactory, FacetFactory> _serviceTracker;
+
+	private class FacetFactoryServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<FacetFactory, FacetFactory> {
+
+		@Override
+		public FacetFactory addingService(
+			ServiceReference<FacetFactory> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			FacetFactory facetFactory = registry.getService(serviceReference);
+
+			_facetFactories.put(facetFactory.getFacetClassName(), facetFactory);
+
+			return facetFactory;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<FacetFactory> serviceReference,
+			FacetFactory facetFactory) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<FacetFactory> serviceReference,
+			FacetFactory facetFactory) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_facetFactories.remove(facetFactory.getFacetClassName());
+		}
+
+	}
 
 }

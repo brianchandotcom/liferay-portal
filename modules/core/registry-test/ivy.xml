@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<ivy-module
+	version="2.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
+>
+	<info module="${plugin.name}" organisation="com.liferay">
+		<extends extendType="configurations,description,info" location="${sdk.dir}/ivy.xml" module="com.liferay.sdk" organisation="com.liferay" revision="latest.integration" />
+	</info>
+
+	<dependencies defaultconf="test->default">
+		<dependency name="arquillian-container-felix-embedded" org="org.jboss.arquillian.container" rev="2.1.0.CR15" />
+		<dependency name="arquillian-deployment-generator-bnd" org="com.liferay.arquillian" rev="latest.integration" />
+		<dependency name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.2.Final" />
+		<dependency name="org.eclipse.osgi" org="org.eclipse.tycho" rev="3.9.1.v20130814-1242" />
+	</dependencies>
+</ivy-module>

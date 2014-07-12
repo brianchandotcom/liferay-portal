@@ -155,7 +155,7 @@ public class WorkflowConstants {
 			return "label-info";
 		}
 		else if (status == STATUS_EXPIRED) {
-			return "label-important";
+			return "label-danger";
 		}
 		else if (status == STATUS_PENDING) {
 			return "label-warning";

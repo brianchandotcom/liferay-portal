@@ -160,7 +160,7 @@ public class SetUtil {
 	}
 
 	public static <E> Set<E> fromCollection(Collection<? extends E> c) {
-		if ((c != null) && Set.class.isAssignableFrom(c.getClass())) {
+		if ((c != null) && (c instanceof Set)) {
 			return (Set<E>)c;
 		}
 

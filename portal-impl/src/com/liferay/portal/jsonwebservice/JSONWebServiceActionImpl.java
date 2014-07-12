@@ -447,8 +447,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 						parameterName.equals("serviceContext")) {
 
 						if ((parameterValue != null) &&
-							ServiceContext.class.isAssignableFrom(
-								parameterValue.getClass())) {
+							(parameterValue instanceof ServiceContext)) {
 
 							serviceContext.merge(
 								(ServiceContext)parameterValue);

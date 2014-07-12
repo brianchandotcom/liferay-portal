@@ -194,9 +194,7 @@ public class LocaleSerializer extends AbstractSerializer {
 		}
 
 		try {
-			Class<?> javaClass = Class.forName(javaClassName);
-
-			Locale.class.isAssignableFrom(javaClass);
+			Class.forName(javaClassName);
 		}
 		catch (Exception e) {
 			throw new UnmarshallException(

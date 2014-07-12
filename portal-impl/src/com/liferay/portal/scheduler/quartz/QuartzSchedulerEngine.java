@@ -744,7 +744,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			message.put(PREVIOUS_FIRE_TIME, trigger.getPreviousFireTime());
 			message.put(START_TIME, trigger.getStartTime());
 
-			if (CronTrigger.class.isAssignableFrom(trigger.getClass())) {
+			if (trigger instanceof CronTrigger) {
 				CronTrigger cronTrigger = CronTrigger.class.cast(trigger);
 
 				schedulerResponse = new SchedulerResponse();
@@ -759,7 +759,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 						cronTrigger.getEndTime(),
 						cronTrigger.getCronExpression()));
 			}
-			else if (SimpleTrigger.class.isAssignableFrom(trigger.getClass())) {
+			else if (trigger instanceof SimpleTrigger) {
 				SimpleTrigger simpleTrigger = SimpleTrigger.class.cast(trigger);
 
 				schedulerResponse = new SchedulerResponse();

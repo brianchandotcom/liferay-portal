@@ -40,7 +40,7 @@ public class ProxyMessageListener implements MessageListener {
 			if (payload == null) {
 				throw new Exception("Payload is null");
 			}
-			else if (!ProxyRequest.class.isAssignableFrom(payload.getClass())) {
+			else if (!(payload instanceof ProxyRequest)) {
 				throw new Exception(
 					"Payload " + payload.getClass() + " is not of type " +
 						ProxyRequest.class.getName());

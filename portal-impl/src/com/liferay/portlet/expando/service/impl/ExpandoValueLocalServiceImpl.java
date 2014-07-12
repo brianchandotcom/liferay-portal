@@ -2423,9 +2423,7 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	protected Object handleCollections(int type, Object object) {
-		if (!Collection.class.isAssignableFrom(object.getClass()) ||
-			!isTypeArray(type)) {
-
+		if (!(object instanceof Collection) || !isTypeArray(type)) {
 			return object;
 		}
 
@@ -2435,7 +2433,7 @@ public class ExpandoValueLocalServiceImpl
 	}
 
 	protected Object handleStrings(int type, Object object) {
-		if (!String.class.isAssignableFrom(object.getClass())) {
+		if (!(object instanceof String)) {
 			return object;
 		}
 

@@ -573,7 +573,7 @@ public class BasicRegistryImpl implements Registry {
 				if (clazz.isArray()) {
 					array = (Object[])value;
 				}
-				else if (Collection.class.isInstance(value)) {
+				else if (value instanceof Collection) {
 					Collection<?> collection = (Collection<?>)value;
 
 					array = collection.toArray();

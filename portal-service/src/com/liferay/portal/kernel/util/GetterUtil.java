@@ -68,17 +68,11 @@ public class GetterUtil {
 	public static final String[] DEFAULT_STRING_VALUES = new String[0];
 
 	public static boolean get(Object value, boolean defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			return get((String)value, defaultValue);
 		}
 
-		Class<?> clazz = value.getClass();
-
-		if (Boolean.class.isAssignableFrom(clazz)) {
+		if (value instanceof Boolean) {
 			return (Boolean)value;
 		}
 
@@ -88,17 +82,11 @@ public class GetterUtil {
 	public static Date get(
 		Object value, DateFormat dateFormat, Date defaultValue) {
 
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			return get((String)value, dateFormat, defaultValue);
 		}
 
-		Class<?> clazz = value.getClass();
-
-		if (Date.class.isAssignableFrom(clazz)) {
+		if (value instanceof Date) {
 			return (Date)value;
 		}
 
@@ -106,17 +94,11 @@ public class GetterUtil {
 	}
 
 	public static double get(Object value, double defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			return get((String)value, defaultValue);
 		}
 
-		Class<?> clazz = value.getClass();
-
-		if (Double.class.isAssignableFrom(clazz)) {
+		if (value instanceof Double) {
 			return (Double)value;
 		}
 
@@ -130,17 +112,11 @@ public class GetterUtil {
 	}
 
 	public static float get(Object value, float defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			return get((String)value, defaultValue);
 		}
 
-		Class<?> clazz = value.getClass();
-
-		if (Float.class.isAssignableFrom(clazz)) {
+		if (value instanceof Float) {
 			return (Float)value;
 		}
 
@@ -154,17 +130,11 @@ public class GetterUtil {
 	}
 
 	public static int get(Object value, int defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			return get((String)value, defaultValue);
 		}
 
-		Class<?> clazz = value.getClass();
-
-		if (Integer.class.isAssignableFrom(clazz)) {
+		if (value instanceof Integer) {
 			return (Integer)value;
 		}
 
@@ -178,17 +148,11 @@ public class GetterUtil {
 	}
 
 	public static long get(Object value, long defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			return get((String)value, defaultValue);
 		}
 
-		Class<?> clazz = value.getClass();
-
-		if (Long.class.isAssignableFrom(clazz)) {
+		if (value instanceof Long) {
 			return (Long)value;
 		}
 
@@ -202,10 +166,6 @@ public class GetterUtil {
 	}
 
 	public static Number get(Object value, Number defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			String valueString = (String)value;
 
@@ -221,24 +181,27 @@ public class GetterUtil {
 			}
 		}
 
-		Class<?> clazz = value.getClass();
-
-		if (Byte.class.isAssignableFrom(clazz)) {
+		if (value instanceof Byte) {
 			return (Byte)value;
 		}
-		else if (Double.class.isAssignableFrom(clazz)) {
+
+		if (value instanceof Double) {
 			return (Double)value;
 		}
-		else if (Float.class.isAssignableFrom(clazz)) {
+
+		if (value instanceof Float) {
 			return (Float)value;
 		}
-		else if (Integer.class.isAssignableFrom(clazz)) {
+
+		if (value instanceof Integer) {
 			return (Integer)value;
 		}
-		else if (Long.class.isAssignableFrom(clazz)) {
+
+		if (value instanceof Long) {
 			return (Long)value;
 		}
-		else if (Short.class.isAssignableFrom(clazz)) {
+
+		if (value instanceof Short) {
 			return (Short)value;
 		}
 
@@ -250,17 +213,11 @@ public class GetterUtil {
 	}
 
 	public static short get(Object value, short defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			return get((String)value, defaultValue);
 		}
 
-		Class<?> clazz = value.getClass();
-
-		if (Short.class.isAssignableFrom(clazz)) {
+		if (value instanceof Short) {
 			return (Short)value;
 		}
 
@@ -274,10 +231,6 @@ public class GetterUtil {
 	}
 
 	public static String get(Object value, String defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
 		if (value instanceof String) {
 			return get((String)value, defaultValue);
 		}
@@ -413,21 +366,12 @@ public class GetterUtil {
 	public static boolean[] getBooleanValues(
 		Object value, boolean[] defaultValue) {
 
-		if (value == null) {
-			return defaultValue;
+		if (value instanceof String[]) {
+			return getBooleanValues((String[])value, defaultValue);
 		}
 
-		Class<?> clazz = value.getClass();
-
-		if (clazz.isArray()) {
-			Class<?> componentType = clazz.getComponentType();
-
-			if (String.class.isAssignableFrom(componentType)) {
-				return getBooleanValues((String[])value, defaultValue);
-			}
-			else if (Boolean.class.isAssignableFrom(componentType)) {
-				return (boolean[])value;
-			}
+		if (value instanceof boolean[]) {
+			return (boolean[])value;
 		}
 
 		return defaultValue;
@@ -480,21 +424,12 @@ public class GetterUtil {
 	public static Date[] getDateValues(
 		Object value, DateFormat dateFormat, Date[] defaultValue) {
 
-		if (value == null) {
-			return defaultValue;
+		if (value instanceof String[]) {
+			return getDateValues((String[])value, dateFormat, defaultValue);
 		}
 
-		Class<?> clazz = value.getClass();
-
-		if (clazz.isArray()) {
-			Class<?> componentType = clazz.getComponentType();
-
-			if (String.class.isAssignableFrom(componentType)) {
-				return getDateValues((String[])value, dateFormat, defaultValue);
-			}
-			else if (Date.class.isAssignableFrom(componentType)) {
-				return (Date[])value;
-			}
+		if (value instanceof Date[]) {
+			return (Date[])value;
 		}
 
 		return defaultValue;
@@ -543,21 +478,12 @@ public class GetterUtil {
 	public static double[] getDoubleValues(
 		Object value, double[] defaultValue) {
 
-		if (value == null) {
-			return defaultValue;
+		if (value instanceof String[]) {
+			return getDoubleValues((String[])value, defaultValue);
 		}
 
-		Class<?> clazz = value.getClass();
-
-		if (clazz.isArray()) {
-			Class<?> componentType = clazz.getComponentType();
-
-			if (String.class.isAssignableFrom(componentType)) {
-				return getDoubleValues((String[])value, defaultValue);
-			}
-			else if (Double.class.isAssignableFrom(componentType)) {
-				return (double[])value;
-			}
+		if (value instanceof double[]) {
+			return (double[])value;
 		}
 
 		return defaultValue;
@@ -604,21 +530,12 @@ public class GetterUtil {
 	}
 
 	public static float[] getFloatValues(Object value, float[] defaultValue) {
-		if (value == null) {
-			return defaultValue;
+		if (value instanceof String[]) {
+			return getFloatValues((String[])value, defaultValue);
 		}
 
-		Class<?> clazz = value.getClass();
-
-		if (clazz.isArray()) {
-			Class<?> componentType = clazz.getComponentType();
-
-			if (String.class.isAssignableFrom(componentType)) {
-				return getFloatValues((String[])value, defaultValue);
-			}
-			else if (Float.class.isAssignableFrom(componentType)) {
-				return (float[])value;
-			}
+		if (value instanceof float[]) {
+			return (float[])value;
 		}
 
 		return defaultValue;
@@ -728,21 +645,12 @@ public class GetterUtil {
 	}
 
 	public static int[] getIntegerValues(Object value, int[] defaultValue) {
-		if (value == null) {
-			return defaultValue;
+		if (value instanceof String[]) {
+			return getIntegerValues((String[])value, defaultValue);
 		}
 
-		Class<?> clazz = value.getClass();
-
-		if (clazz.isArray()) {
-			Class<?> componentType = clazz.getComponentType();
-
-			if (String.class.isAssignableFrom(componentType)) {
-				return getIntegerValues((String[])value, defaultValue);
-			}
-			else if (Integer.class.isAssignableFrom(componentType)) {
-				return (int[])value;
-			}
+		if (value instanceof int[]) {
+			return (int[])value;
 		}
 
 		return defaultValue;
@@ -850,25 +758,15 @@ public class GetterUtil {
 	}
 
 	public static long[] getLongValues(Object value, long[] defaultValue) {
-		if (value == null) {
-			return defaultValue;
-		}
-
-		Class<?> clazz = value.getClass();
-
-		if (!clazz.isArray()) {
-			return defaultValue;
-		}
-
-		Class<?> componentType = clazz.getComponentType();
-
-		if (String.class.isAssignableFrom(componentType)) {
+		if (value instanceof String[]) {
 			return getLongValues((String[])value, defaultValue);
 		}
-		else if (Long.class.isAssignableFrom(componentType)) {
+
+		if (value instanceof long[]) {
 			return (long[])value;
 		}
-		else if (Number.class.isAssignableFrom(componentType)) {
+
+		if (value instanceof Number[]) {
 			Number[] numbers = (Number[])value;
 
 			long[] values = new long[numbers.length];
@@ -924,21 +822,12 @@ public class GetterUtil {
 	public static Number[] getNumberValues(
 		Object value, Number[] defaultValue) {
 
-		if (value == null) {
-			return defaultValue;
+		if (value instanceof String[]) {
+			return getNumberValues((String[])value, defaultValue);
 		}
 
-		Class<?> clazz = value.getClass();
-
-		if (clazz.isArray()) {
-			Class<?> componentType = clazz.getComponentType();
-
-			if (String.class.isAssignableFrom(componentType)) {
-				return getNumberValues((String[])value, defaultValue);
-			}
-			else if (Number.class.isAssignableFrom(componentType)) {
-				return (Number[])value;
-			}
+		if (value instanceof Number[]) {
+			return (Number[])value;
 		}
 
 		return defaultValue;
@@ -1007,21 +896,12 @@ public class GetterUtil {
 	}
 
 	public static short[] getShortValues(Object value, short[] defaultValue) {
-		if (value == null) {
-			return defaultValue;
+		if (value instanceof String[]) {
+			return getShortValues((String[])value, defaultValue);
 		}
 
-		Class<?> clazz = value.getClass();
-
-		if (clazz.isArray()) {
-			Class<?> componentType = clazz.getComponentType();
-
-			if (String.class.isAssignableFrom(componentType)) {
-				return getShortValues((String[])value, defaultValue);
-			}
-			else if (Short.class.isAssignableFrom(componentType)) {
-				return (short[])value;
-			}
+		if (value instanceof short[]) {
+			return (short[])value;
 		}
 
 		return defaultValue;
@@ -1070,18 +950,8 @@ public class GetterUtil {
 	public static String[] getStringValues(
 		Object value, String[] defaultValue) {
 
-		if (value == null) {
-			return defaultValue;
-		}
-
-		Class<?> clazz = value.getClass();
-
-		if (clazz.isArray()) {
-			Class<?> componentType = clazz.getComponentType();
-
-			if (String.class.isAssignableFrom(componentType)) {
-				return getStringValues((String[])value, defaultValue);
-			}
+		if (value instanceof String[]) {
+			return getStringValues((String[])value, defaultValue);
 		}
 
 		return defaultValue;

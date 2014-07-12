@@ -55,6 +55,10 @@ List<FacetConfiguration> facetConfigurations = FacetConfigurationUtil.load(searc
 for (FacetConfiguration facetConfiguration : facetConfigurations) {
 	Facet facet = FacetFactoryUtil.create(searchContext, facetConfiguration);
 
+	if (facet == null) {
+		continue;
+	}
+
 	searchContext.addFacet(facet);
 }
 

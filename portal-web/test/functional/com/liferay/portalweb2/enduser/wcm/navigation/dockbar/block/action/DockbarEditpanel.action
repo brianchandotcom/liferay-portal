@@ -1,0 +1,7 @@
+<definition>
+	<command name="isElementNotPresent">
+		<case locator-key1="DETAILS_NAME_FIELD">
+			<execute function="IsElementNotPresent#isNotVisible" />
+		</case>
+	</command>
+</definition>

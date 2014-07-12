@@ -794,7 +794,9 @@
 			<var name="siteName" value="${childChildSiteName2}" />
 		</execute>
 
-		<execute action="PGSitesdirectory#assertTextEquals" locator-key1="BREADCRUMB" value1="Site Name/Child Site1Name/Site Page" />
+		<execute macro="Site#viewSiteHierarchyInBreadcrumbPG">
+			<var name="breadcrumbListVisible" value="Site Name,Child Site1Name,Site Page" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${sitePageName}" />
@@ -867,6 +869,9 @@
 		</execute>
 
 		<execute action="PGSitesdirectory#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No sites were found." />
-		<execute action="PGSitesdirectory#assertTextEquals" locator-key1="BREADCRUMB" value1="Site Name/Child Site1Name/Child ChildSite1Name/Site Page" />
+
+		<execute macro="Site#viewSiteHierarchyInBreadcrumbPG">
+			<var name="breadcrumbListVisible" value="Site Name,Child Site1Name,Child ChildSite1Name,Site Page" />
+		</execute>
 	</command>
 </definition>

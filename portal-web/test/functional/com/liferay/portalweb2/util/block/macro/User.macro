@@ -1270,9 +1270,9 @@
 
 		<execute action="Home#selectWindow" locator1="title=Welcome - Liferay" />
 
-		<execute action="Dockbar#assertElementPresent" locator-key1="ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_ICON" />
-		<execute action="Dockbar#assertClick" locator-key1="ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_ICON" />
-		<execute action="Dockbar#assertElementPresent" locator-key1="ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_MESSAGE" />
+		<execute action="Dockbar#assertElementPresent" locator-key1="IMPERSONATE_USER_ICON" />
+		<execute action="Dockbar#assertClick" locator-key1="IMPERSONATE_USER_ICON" />
+		<execute action="Dockbar#assertElementPresent" locator-key1="USER_IMPERSONATE_USER_MESSAGE" />
 	</command>
 
 	<command name="loginPG">

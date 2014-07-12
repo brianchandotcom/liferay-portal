@@ -247,7 +247,8 @@
 		</if>
 
 		<execute action="Dockbar#click" locator-key1="EDIT" />
-		<execute action="Dockbar#click" locator-key1="EDIT_PERMISSIONS" />
+
+		<execute action="DockbarEditpanel#click" locator-key1="TOOLBAR_PERMISSIONS" />
 
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 	</command>

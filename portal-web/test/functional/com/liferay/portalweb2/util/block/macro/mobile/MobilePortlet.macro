@@ -37,8 +37,10 @@
 
 		<execute action="Mobiledockbar#click" locator-key1="PENCIL_ICON" />
 		<execute action="Mobiledockbar#click" locator-key1="ADD" value1="Add" />
-		<execute action="Mobiledockbar#assertClick" locator-key1="ADD_APPLICATION_LINK" value1="Applications" />
-		<execute action="Mobiledockbar#type" locator-key1="ADD_APPLICATION_SEARCH_FIELD" value1="${portletName}" />
+
+		<execute action="MobiledockbarAddpanelcontent#assertClick" locator-key1="NAVIGATION_APPLICATIONS" value1="Applications" />
+
+		<execute action="MobiledockbarAddpanelapplications#type" locator-key1="SEARCH_FIELD" value1="${portletName}" />
 
 		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
 
@@ -55,7 +57,7 @@
 			</then>
 		</if>
 
-		<execute action="Mobiledockbar#assertClick" locator1="${portletLocator}" value1="Add" />
+		<execute action="MobiledockbarAddpanelapplications#assertClick" locator1="${portletLocator}" value1="Add" />
 
 		<echo message="Adding ${portletName} portlet..." />
 
@@ -66,7 +68,7 @@
 				<equals arg1="${portletName}" arg2="Media Gallery" />
 			</or>
 			<then>
-				<execute action="Mobiledockbar#pause" locator1="30000" />
+				<execute action="MobiledockbarAddpanelapplications#pause" locator1="30000" />
 			</then>
 		</if>
 	</command>

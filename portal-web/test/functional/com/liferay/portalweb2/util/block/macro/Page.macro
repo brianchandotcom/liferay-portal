@@ -2,8 +2,8 @@
 	<command name="addFriendlyURLLocalizedPG">
 		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
 
-		<execute action="DockbarEdit#click" locator-key1="DETAILS_FRIENDLY_URL_LOCALIZED" />
-		<execute action="DockbarEdit#type" locator-key1="DETAILS_FRIENDLYURL" value1="${localizedFriendlyURL}" />
+		<execute action="DockbarEditpanel#click" locator-key1="DETAILS_FRIENDLY_URL_LOCALIZED" />
+		<execute action="DockbarEditpanel#type" locator-key1="DETAILS_FRIENDLYURL" value1="${localizedFriendlyURL}" />
 	</command>
 
 	<command name="addLocalizedNamePG">
@@ -12,14 +12,14 @@
 		<if>
 			<equals arg1="${newPage}" arg2="true" />
 			<then>
-				<execute action="Dockbar#click" locator-key1="ADD_PAGE_NAME_LOCALIZED" />
-				<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${pageName}" />
+				<execute action="DockbarAddpanelpage#click" locator-key1="LOCALIZED_FLAG_ICON" />
+				<execute action="DockbarAddpanelpage#type" locator-key1="NAME_FIELD" value1="${pageName}" />
 			</then>
 			<elseif>
 				<equals arg1="${newPage}" arg2="false" />
 				<then>
-					<execute action="DockbarEdit#click" locator-key1="EDIT_NAME_FIELD_LOCALIZED" />
-					<execute action="DockbarEdit#type" locator-key1="EDIT_NAME_FIELD" value1="${pageName}" />
+					<execute action="DockbarEditpanel#click" locator-key1="DETAILS_LOCALIZED_FLAG_ICON" />
+					<execute action="DockbarEditpanel#type" locator-key1="DETAILS_NAME_FIELD" value1="${pageName}" />
 				</then>
 			</elseif>
 		</if>
@@ -28,13 +28,13 @@
 	<command name="addPageTypePanelPG">
 		<var name="key_componentName" value="${componentName}" />
 
-		<execute action="Dockbar#click" locator-key1="ADD_PAGE_PANEL_COMPONENT_TREE_ARROW" />
+		<execute action="DockbarAddpanelpage#click" locator-key1="TYPE_PANEL_COMPONENT_TREE_ARROW" />
 
 		<for list="${portletNameList}" param="portletName" >
 			<var name="key_componentOrPortletName" value="${portletName}" />
 
-			<execute action="Dockbar#click" locator-key1="ADD_PAGE_TYPE_PANEL_CHECKBOX" value1="${portletName}" />
-			<execute action="Dockbar#assertChecked" locator-key1="ADD_PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
+			<execute action="DockbarAddpanelpage#click" locator-key1="TYPE_PANEL_CHECKBOX" value1="${portletName}" />
+			<execute action="DockbarAddpanelpage#assertChecked" locator-key1="TYPE_PANEL_CHECKBOX_INPUT" />
 		</for>
 	</command>
 
@@ -57,8 +57,9 @@
 		</if>
 
 		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
-		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
-		<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${pageName}" />
+
+		<execute action="DockbarAddpanelpage#assertClick" locator-key1="NAVIGATION_PAGE" value1="Page" />
+		<execute action="DockbarAddpanelpage#type" locator-key1="NAME_FIELD" value1="${pageName}" />
 
 		<if>
 			<isset var="pageType" />
@@ -81,7 +82,7 @@
 			</then>
 		</if>
 
-		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute action="DockbarAddpanelpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 
 		<var name="key_pageName" value="${pageName}" />
 
@@ -100,9 +101,10 @@
 		<execute macro="Page#openURL" />
 
 		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
-		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
-		<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${pageName}" />
-		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+
+		<execute action="DockbarAddpanelpage#assertClick" locator-key1="NAVIGATION_PAGE" value1="Page" />
+		<execute action="DockbarAddpanelpage#type" locator-key1="NAME_FIELD" value1="${pageName}" />
+		<execute action="DockbarAddpanelpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 
 		<var name="key_pageName" value="${pageName}" />
 
@@ -143,9 +145,9 @@
 	<command name="deleteFriendlyURLPG">
 		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
 
-		<execute action="DockbarEdit#click" locator-key1="DETAILS_FRIENDLY_URL_LOCALIZED" />
-		<execute action="DockbarEdit#type" locator-key1="DETAILS_FRIENDLYURL" value1=" " />
-		<execute action="Dockbar#assertClick" locator-key1="EDIT_SAVE_BUTTON" value1="Save" />
+		<execute action="DockbarEditpanel#click" locator-key1="DETAILS_FRIENDLY_URL_LOCALIZED" />
+		<execute action="DockbarEditpanel#type" locator-key1="DETAILS_FRIENDLYURL" value1=" " />
+		<execute action="DockbarEditpanel#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="deletePG">
@@ -161,16 +163,16 @@
 		<execute action="Dockbar#click" locator-key1="EDIT" />
 
 		<if>
-			<condition action="Dockbar#isElementNotPresent" locator-key1="EDIT_NAME_FIELD" />
+			<condition action="DockbarEditpanel#isElementNotPresent" locator-key1="DETAILS_NAME_FIELD" />
 			<then>
-				<execute action="Dockbar#assertClick" locator-key1="EDIT_DETAILS" value1="Details" />
+				<execute action="DockbarEditpanel#assertClick" locator-key1="DETAILS_PANEL_TOGGLE" value1="Details" />
 			</then>
 		</if>
 
 		<var name="key_columnName" value="${columnName}" />
 
-		<execute action="Dockbar#click" locator-key1="EDIT_DETAILS_COLUMN_RADIO" />
-		<execute action="Dockbar#assertClick" locator-key1="EDIT_SAVE_BUTTON" value1="Save" />
+		<execute action="DockbarEditpanel#click" locator-key1="DETAILS_LAYOUT_RADIO" />
+		<execute action="DockbarEditpanel#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="gotoChildPagePG">
@@ -526,7 +528,7 @@
 	<command name="selectPageTypeRadioPG">
 		<var name="key_pageType" value="${pageType}" />
 
-		<execute action="Dockbar#click" locator-key1="ADD_PAGE_TYPE_RADIO" value1="${pageType}" />
+		<execute action="DockbarAddpanelpage#click" locator-key1="TYPE_RADIO" value1="${pageType}" />
 
 		<if>
 			<equals arg1="${pageType}" arg2="Panel" />
@@ -569,24 +571,24 @@
 	</command>
 
 	<command name="viewFriendlyURLLanguageOptionsPG">
-		<execute action="DockbarEdit#click" locator-key1="DOCKBAR_EDIT" />
+		<execute action="DockbarEditpanel#click" locator-key1="EDIT" />
 
 		<if>
-			<condition action="DockbarEdit#isElementPresent" locator-key1="DETAILS_FRIENDLY_URL_TITLE" />
+			<condition action="DockbarEditpanel#isElementPresent" locator-key1="DETAILS_FRIENDLY_URL_TITLE" />
 			<then>
-				<execute action="DockbarEdit#click" locator-key1="TOOLBAR_DETAILS" />
+				<execute action="DockbarEditpanel#click" locator-key1="DETAILS_PANEL_TOGGLE" />
 			</then>
 		</if>
 
 		<for list="${currentLanguageList}" param="languageKey">
-			<execute action="DockbarEdit#assertElementPresent" locator-key1="${languageKey}" />
+			<execute action="DockbarEditpanel#assertElementPresent" locator-key1="${languageKey}" />
 		</for>
 
 		<if>
 			<equals arg1="${assertUnavailableLanguages}" arg2="true" />
 			<then>
 				<for list="${unavailableLanguageList}" param="languageKey">
-					<execute action="DockbarEdit#assertElementNotPresent" locator-key1="${languageKey}" />
+					<execute action="DockbarEditpanel#assertElementNotPresent" locator-key1="${languageKey}" />
 				</for>
 			</then>
 		</if>
@@ -601,8 +603,8 @@
 	<command name="viewPageFriendURLPG">
 		<execute action="Dockbar#click" locator-key1="EDIT" />
 
-		<execute action="DockbarEdit#assertTextNotPresent" locator-key1="DETAILS_FRIENDLYURL" value1="${pageName}" />
-		<execute action="DockbarEdit#assertTextEquals" locator-key1="DETAILS_FRIENDLYURL" value1="/2" />
+		<execute action="DockbarEditpanel#assertTextNotPresent" locator-key1="DETAILS_FRIENDLYURL" value1="${pageName}" />
+		<execute action="DockbarEditpanel#assertTextEquals" locator-key1="DETAILS_FRIENDLYURL" value1="/2" />
 	</command>
 
 	<command name="viewPageLayoutColumn">
@@ -622,14 +624,14 @@
 		<var name="key_defaultSiteLanguageKey" value="${defaultSiteLanguageKey}" />
 
 		<if>
-			<condition action="Dockbar#isElementNotPresent" locator-key1="EDIT_SEO_HTML_TITLE" />
+			<condition action="DockbarEditpanel#isElementNotPresent" locator-key1="SEO_HTML_TITLE" />
 			<then>
-				<execute action="Dockbar#assertClick" locator-key1="EDIT_SEO" value1="SEO" />
+				<execute action="DockbarEditpanel#assertClick" locator-key1="SEO_PANEL_TOGGLE" value1="SEO" />
 			</then>
 		</if>
 
-		<execute action="Dockbar#assertElementPresent" locator-key1="EDIT_SEO_HTML_TITLE" />
-		<execute action="Dockbar#assertElementPresent" locator-key1="EDIT_SEO_META_TAGS_DESCRIPTION" />
+		<execute action="DockbarEditpanel#assertElementPresent" locator-key1="SEO_HTML_TITLE" />
+		<execute action="DockbarEditpanel#assertElementPresent" locator-key1="SEO_META_TAGS_DESCRIPTION" />
 	</command>
 
 	<command name="viewPageOrderStagingLivePG">

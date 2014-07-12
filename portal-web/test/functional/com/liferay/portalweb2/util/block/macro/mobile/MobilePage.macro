@@ -6,9 +6,11 @@
 
 		<execute action="Mobiledockbar#click" locator-key1="PENCIL_ICON" />
 		<execute action="Mobiledockbar#click" locator-key1="ADD" />
-		<execute action="Mobiledockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
-		<execute action="Mobiledockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${pageName}" />
-		<execute action="Mobiledockbar#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+
+		<execute action="MobiledockbarAddpanelcontent#assertClick" locator-key1="NAVIGATION_PAGE" value1="Page" />
+
+		<execute action="MobiledockbarAddpanelpage#type" locator-key1="NAME_FIELD" value1="${pageName}" />
+		<execute action="MobiledockbarAddpanelpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 	</command>
 
 	<command name="gotoCmdCP">

@@ -19,305 +19,20 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_INFO_MESSAGE</td>
-	<td>//div[@class='page-customization-bar']/div[contains(@class,'page-customization-bar-text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESET_CHANGES_BUTTON</td>
-	<td>//button[contains(.,'Reset Changes')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ADD-->
-<tr>
 	<td>ADD</td>
 	<td>//a[@id='_145_addPanel']</td>
 	<td>Add Button</td>
 </tr>
-<tr>
-	<td>ADD_STAGING</td>
-	<td>//a[@id='_145_addPanel']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ADD_CONTENT-->
-<tr>
-	<td>ADD_CONTENT_LINK</td>
-	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Content')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_CONTENT_SEARCH_FIELD</td>
-	<td>//input[@id='_145_searchContent']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_CONTENT_ADD_NEW</td>
-	<td>//a[contains(.,'Add New')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_CONTENT_POPOVER_ADD_BUTTON</td>
-	<td>//button[contains(.,'Add')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_CONTENT_POPOVER_CONTENT_TITLE</td>
-	<td>//div[contains(@class,'popover-content')]/div/div/div[contains(.,'${key_assetTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_CONTENT_CONTENT_TITLE</td>
-	<td>//div[contains(@class,'add-content-details')]/div[contains(.,'${key_assetTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ADD_CONTENT_ADD_NEW_MENULIST-->
-<tr>
-	<td>ADD_CONTENT_ADD_NEW_MENULIST</td>
-	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'${key_assetType}')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ADD_APPLICATION-->
-<tr>
-	<td>ADD_APPLICATION_LINK</td>
-	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Applications')]</td>
-	<td>Add Application Link</td>
-</tr>
-<tr>
-	<td>ADD_APPLICATION_SEARCH_FIELD</td>
-	<td>//input[@id='_145_searchApplication']</td>
-	<td>Application Search Field</td>
-</tr>
-<tr>
-	<td>ADD_APPLICATION_COLLAPSED_CATEGORY</td>
-	<td>//div[contains(@class,'toggler-header-collapsed')]/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ADD_PAGE-->
-<tr>
-	<td>ADD_PAGE_LINK</td>
-	<td>//div[@id='_145_addPanelContainer']/ul/li/a[contains(.,'Page')]</td>
-	<td>Add Page Link</td>
-</tr>
-<tr>
-	<td>ADD_PAGE_NAME_FIELD</td>
-	<td>//input[@id='_145_addLayoutName']</td>
-	<td>New Page Name Field</td>
-</tr>
-<tr>
-	<td>ADD_PAGE_NAME_LOCALIZED</td>
-	<td>//li[@role='menuitem' and @data-value='${key_localizationName}']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE_BUTTON</td>
-	<td>//button[contains(.,'Add Page')]</td>
-	<td>Add Page Button</td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ADD_PAGE_TYPE-->
-<tr>
-	<td>ADD_PAGE_TYPE_RADIO</td>
-	<td>//label[@class='radio' and contains(.,'${key_pageType}')]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ADD_PAGE_TYPE_PANEL-->
-<tr>
-	<td>ADD_PAGE_TYPE_PANEL_DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_145_descriptionPanel']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE_PANEL_COMPONENT_TREE_ARROW</td>
-	<td>//div[contains(.,'${key_componentName}')]/span[contains(@class,'tree-hitarea')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE_TYPE_PANEL_CHECKBOX</td>
-	<td>//span[contains(.,'${key_componentOrPortletName}')]/../i[contains(@class,'tree-node-checkbox')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE_TYPE_PANEL_CHECKBOX_INPUT</td>
-	<td>//span[contains(.,'${key_componentOrPortletName}')]/../i[contains(@class,'tree-node-checkbox')]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--PREVIEW-->
 <tr>
 	<td>PREVIEW</td>
 	<td>//a[@id='_145_previewPanel']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PREVIEW_AUTOSIZE</td>
-	<td>//li[@data-device='autosize']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_SMARTPHONE</td>
-	<td>//li[@data-device='smartphone']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_TABLET</td>
-	<td>//li[@data-device='tablet']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_DESKTOP</td>
-	<td>//li[@data-device='desktop']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_CUSTOM</td>
-	<td>//li[@data-device='custom']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_CUSTOM_WIDTH_FIELD</td>
-	<td>//input[@id='_145_width']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_CUSTOM_HEIGHT_FIELD</td>
-	<td>//input[@id='_145_height']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_MESSAGE</td>
-	<td>//div[@id='_145_devicePreviewContainer']/div[contains(@class,'alert-warning')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--EDIT-->
-<tr>
 	<td>EDIT</td>
 	<td>//a[@id='_145_editLayoutPanel']</td>
 	<td></td>
 </tr>
-<tr>
-	<td>EDIT_NAME_FIELD</td>
-	<td>//input[@id='_145_name']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_NAME_FIELD_LOCALIZED</td>
-	<td>//li[@role='menuitem' and @data-value='${key_localizationName}']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_PERMISSIONS</td>
-	<td>//li[@data-value='permissions']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_DELETE</td>
-	<td>//li[@data-value='delete']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_COPY_APPLICATIONS</td>
-	<td>//li[@data-value='copy-applications']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_DETAILS</td>
-	<td>//div[@id='_145_details']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_SEO</td>
-	<td>//div[@id='_145_seo']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_LOOK_AND_FEEL</td>
-	<td>//div[@id='_145_lookAndFeel']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_JAVASCRIPT</td>
-	<td>//div[@id='_145_javascript']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_CUSTOM_FIELDS</td>
-	<td>//div[@id='_145_customFields']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_ADVANCED</td>
-	<td>//div[@id='_145_advanced']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_MOBILE_DEVICE_RULES</td>
-	<td>//div[@id='_145_mobileDeviceRules']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_EMBEDDED_PORTLETS</td>
-	<td>//div[@id='_145_embeddedPortlets']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_CUSTOMIZATION_SETTINGS</td>
-	<td>//div[@id='_145_customizationSettings']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--EDIT_CONTROLS-->
 <tr>
 	<td>EDIT_CONTROLS</td>
 	<td>//li[@id='_145_toggleControls']/a</td>
@@ -328,111 +43,16 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--EDIT_DETAILS-->
 <tr>
-	<td>EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_LABEL</td>
-	<td>//label[contains(@for,'layoutPrototypeLinkEnabled')]</td>
+	<td>PAGE_INFO_MESSAGE</td>
+	<td>//div[@class='page-customization-bar']/div[contains(@class,'page-customization-bar-text')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_CHECKBOX</td>
-	<td>//label[contains(@for,'layoutPrototypeLinkEnabled')]/input[contains(@id,'layoutPrototypeLinkEnabled')]</td>
+	<td>RESET_CHANGES_BUTTON</td>
+	<td>//button[contains(.,'Reset Changes')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--EDIT_DETAILS_COLUMN-->
-<tr>
-	<td>EDIT_DETAILS_COLUMN_RADIO</td>
-	<td>//input[@value='${columnName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--EMBEDDED_PORTLETS-->
-<tr>
-	<td>EMBEDDED_PORTLETS_CHECKBOX_1</td>
-	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[1]/td[1]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMBEDDED_PORTLETS_CHECKBOX_2</td>
-	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[2]/td[1]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMBEDDED_PORTLETS_PORTLET_ID_1</td>
-	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[1]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMBEDDED_PORTLETS_PORTLET_ID_2</td>
-	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[2]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMBEDDED_PORTLETS_TITLE_1</td>
-	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[1]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMBEDDED_PORTLETS_TITLE_2</td>
-	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[2]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMBEDDED_PORTLETS_STATUS_1</td>
-	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[1]/td[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMBEDDED_PORTLETS_STATUS_2</td>
-	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[2]/td[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--EDIT_SEO-->
-<tr>
-	<td>EDIT_SEO_HTML_TITLE</td>
-	<td>//div[@id='_145_titleContentBox']//li[contains(@class,'lfr-input-localized-default') and contains(@data-value,'${key_defaultSiteLanguageKey}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_SEO_META_TAGS_DESCRIPTION</td>
-	<td>//div[@id='_145_descriptionSEOContentBox']//li[contains(@class,'lfr-input-localized-default') and contains(@data-value,'${key_defaultSiteLanguageKey}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MY_SITES_SITE_NAME_1</td>
-	<td>xpath=(//span[@class='site-name'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MY_SITES_SITE_NAME_2</td>
-	<td>xpath=(//span[@class='site-name'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MY_SITES_SITE_NAME_2</td>
-	<td>xpath=(//span[@class='site-name'])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ADMIN-->
 <tr>
 	<td>ADMIN</td>
 	<td>//li[@id='_145_adminLinks']/a</td>
@@ -444,9 +64,40 @@
 	<td>Admin Drop Down Button</td>
 </tr>
 <tr>
+	<td>MY_SITES</td>
+	<td>//li[@id='_145_mySites']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMPERSONATE_USER_ICON</td>
+	<td>//li[@id='_145_userAvatar']/a/span[@class='nav-item-label']/b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_AVATAR_IMAGE</td>
+	<td>//span[@class='user-avatar-image']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_NAME</td>
+	<td>//span[@class='user-full-name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADMIN-->
+<tr>
 	<td>ADMIN_SITE_ADMINISTRATION</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/a[contains(.,'Site Administration')]</td>
 	<td>Site Administration Navigation</td>
+</tr>
+<tr>
+	<td>ADMIN_SITE_ADMINISTRATION_CATEGORY</td>
+	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,' ${key_portletCategoryName}')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_PAGES</td>
@@ -457,16 +108,6 @@
 	<td>ADMIN_SITE_ADMINISTRATION_CONTENT</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Content')]</td>
 	<td>Content Navigation</td>
-</tr>
-<tr>
-	<td>ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_ICON</td>
-	<td>//li[@id='_145_userAvatar']/a/span[@class='nav-item-label']/b</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADMIN_SITE_ADMINISTRATION_IMPERSONATE_USER_MESSAGE</td>
-	<td>//div[@class='alert alert-info']</td>
-	<td></td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_USERS</td>
@@ -484,11 +125,6 @@
 	<td>Configuration Navigation</td>
 </tr>
 <tr>
-	<td>ADMIN_SITE_ADMINISTRATION_CATEGORY</td>
-	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,' ${key_portletCategoryName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADMIN_CONTROL_PANEL</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/a[contains(.,'Control Panel')]</td>
 	<td>Control Panel Navigation</td>
@@ -504,11 +140,6 @@
 	<td></td>
 </tr>
 <!--MY_SITES-->
-<tr>
-	<td>MY_SITES</td>
-	<td>//li[@id='_145_mySites']/a</td>
-	<td></td>
-</tr>
 <tr>
 	<td>MY_SITES_PUBLIC_SITE</td>
 	<td>//span[@class='site-name' and contains(.,'${key_siteName}')]</td>
@@ -534,46 +165,10 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--GO_TO-->
-<tr>
-	<td>GO_TO</td>
-	<td>//li[@id='_145_mySites']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GO_TO_STAGING</td>
-	<td>//li[@id='_145_mySites']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GO_TO_CONTROL_PANEL</td>
-	<td>//li[contains(@class,'control-panel')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GO_TO_MY_PUBLIC_PAGES</td>
-	<td>//span[@class='site-name' and contains(.,'My Public Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GO_TO_MY_PRIVATE_PAGES</td>
-	<td>//span[@class='site-name' and contains(.,'My Private Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER-->
 <tr>
-	<td>USER_AVATAR_IMAGE</td>
-	<td>//span[@class='user-avatar-image']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_NAME</td>
-	<td>//span[@class='user-full-name']</td>
+	<td>USER_IMPERSONATE_USER_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
 	<td></td>
 </tr>
 <tr>

@@ -158,7 +158,7 @@
 </tr>
 <tr>
 	<td>PAGE_TREE_ROOT_LINK</td>
-	<td>//li[contains(@id,'layoutsTree_layoutId_0_')]/div/span/a[@class='layout-tree']</td>
+	<td>//li[contains(@id,'layoutsTree_layoutId_0_')]/div/span/a[contains(@class,'layout-tree')]</td>
 	<td></td>
 </tr>
 <tr>

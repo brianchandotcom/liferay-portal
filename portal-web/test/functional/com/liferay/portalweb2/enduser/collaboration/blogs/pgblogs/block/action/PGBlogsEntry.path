@@ -365,7 +365,7 @@
 </tr>
 <tr>
 	<td>COMMENTS_TRACKBACK_URL</td>
-	<td>//div[@class='panel-inner' and contains(.,'Trackback URL')]//input[@type='text']</td>
+	<td>//input[contains(@id,'trackbackURL')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -739,9 +739,6 @@
 
 		<execute action="CKEditor#click" locator-key1="LINK_IMAGE_BROWSE_SERVER_SITE_MENULIST_BUTTON" />
 
-		<var name="key_navButton" value="${navButton}" />
-		<execute action="CKEditor#click" locator-key1="LINK_IMAGE_BROWSE_SERVER_NAVIGATION_BUTTON" />
-
 		<if>
 			<isset var="key_folderName" />
 			<then>

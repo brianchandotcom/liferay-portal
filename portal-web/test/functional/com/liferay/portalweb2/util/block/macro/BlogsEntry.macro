@@ -264,7 +264,7 @@
 		<if>
 			<equals arg1="${entryInvalidTitle}" arg2="true" />
 			<then>
-				<execute action="PGBlogsAdd#assertTextEquals" locator-key1="TITLE_REQUIRED" value1="(Required)" />
+				<execute action="PGBlogsAdd#assertTextEquals" locator-key1="TITLE_REQUIRED" value1="Required" />
 				<execute action="PGBlogsAdd#assertTextEquals" locator-key1="FIELD_REQUIRED" value1="This field is required." />
 			</then>
 			<elseif>

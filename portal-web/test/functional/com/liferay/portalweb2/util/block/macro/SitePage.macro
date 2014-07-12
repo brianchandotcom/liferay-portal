@@ -166,18 +166,18 @@
 	<command name="changePageTypeLayoutPG">
 		<var name="key_pageTypeLayout" value="${pageTypeLayout}" />
 
-		<execute action="DockbarEdit#click" locator-key1="DOCKBAR_EDIT" value1="Edit" />
-		<execute action="DockbarEdit#click" locator-key1="ADD_PAGE_TYPE_RADIO" value1="${pageTypeLayout}" />
-		<execute action="DockbarEdit#click" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="DockbarEditpanel#click" locator-key1="EDIT" value1="Edit" />
+		<execute action="DockbarEditpanel#click" locator-key1="DETAILS_LAYOUT_RADIO" value1="${pageTypeLayout}" />
+		<execute action="DockbarEditpanel#click" locator-key1="SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="copyApplicationsFromPageToPagePG">
-		<execute action="DockbarEdit#click" locator-key1="DOCKBAR_EDIT" />
-		<execute action="DockbarEdit#assertClick" locator-key1="TOOLBAR_COPY_APPLICATIONS" value1="Copy Applications" />
-		<execute action="DockbarEdit#assertTextEquals" locator-key1="COPY_APPLICATIONS_MESSAGE_INFO" value1="The applications in page ${pageName} will be replaced with the ones in the page you select below." />
-		<execute action="DockbarEdit#assertTextEquals" locator-key1="COPY_APPLICATIONS_COPY_FROM_PAGE_LABEL" value1="Copy from Page" />
-		<execute action="DockbarEdit#click" locator-key1="COPY_APPLICATIONS_COPY_FROM_PAGE_SELECT" value1="${sitePageName}" />
-		<execute action="DockbarEdit#assertClick" locator-key1="COPY_BUTTON" value1="Copy" />
+		<execute action="DockbarEditpanel#click" locator-key1="EDIT" />
+		<execute action="DockbarEditpanel#assertClick" locator-key1="TOOLBAR_COPY_APPLICATIONS" value1="Copy Applications" />
+		<execute action="DockbarEditpanel#assertTextEquals" locator-key1="COPY_APPLICATIONS_MESSAGE_INFO" value1="The applications in page ${pageName} will be replaced with the ones in the page you select below." />
+		<execute action="DockbarEditpanel#assertTextEquals" locator-key1="COPY_APPLICATIONS_COPY_FROM_PAGE_LABEL" value1="Copy from Page" />
+		<execute action="DockbarEditpanel#click" locator-key1="COPY_APPLICATIONS_COPY_FROM_PAGE_SELECT" value1="${sitePageName}" />
+		<execute action="DockbarEditpanel#assertClick" locator-key1="COPY_APPLICATIONS_COPY_BUTTON" value1="Copy" />
 
 		<execute action="CPBlogs#assertTextNotPresent" locator-key1="PORTLET_TITLE" value1="Blogs" />
 	</command>
@@ -273,13 +273,12 @@
 	</command>
 
 	<command name="embeddedPageTypePG">
+		<execute action="DockbarEditpanel#click" locator-key1="EDIT" value1="Edit" />
+		<execute action="DockbarEditpanel#assertClick" locator-key1="DETAILS_TYPE_PAGE_OPTIONS" value1="Embedded" />
+		<execute action="DockbarEditpanel#type" locator-key1="DETAILS_TYPE_PAGE_URL" value1="http://www.liferay.com" />
+		<execute action="DockbarEditpanel#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="DockbarEdit#click" locator-key1="DOCKBAR_EDIT" value1="Edit" />
-		<execute action="DockbarEdit#assertClick" locator-key1="DETAILS_TYPE_PAGE_OPTIONS" value1="Embedded" />
-		<execute action="DockbarEdit#type" locator-key1="DETAILS_TYPE_PAGE_URL" value1="http://www.liferay.com" />
-		<execute action="DockbarEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<execute action="DockbarEdit#assertTextPresent" locator-key1="DOCKBAR_LIFERAY_BANNER" value1="Liferay" />
+		<execute action="Home#assertTextPresent" locator-key1="EMBEDDED_SITE_LIFERAY_BANNER_LOGO" value1="Liferay" />
 	</command>
 
 	<command name="expandRootCP">
@@ -527,9 +526,10 @@
 
 	<command name="viewOnlyAddOptionViaSiteAdminCP">
 		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
-		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADD_CONTENT_LINK" />
-		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADD_APPLICATION_LINK" />
-		<execute action="Dockbar#assertElementPresent" locator-key1="ADD_PAGE_LINK" />
+
+		<execute action="DockbarAddpanelpage#assertElementNotPresent" locator-key1="NAVIGATION_CONTENT" />
+		<execute action="DockbarAddpanelpage#assertElementNotPresent" locator-key1="NAVIGATION_APPLICATIONS" />
+		<execute action="DockbarAddpanelpage#assertElementPresent" locator-key1="NAVIGATION_PAGE" />
 
 		<execute action="Home#refresh" />
 	</command>
@@ -569,8 +569,8 @@
 	<command name="viewPageTemplatePG">
 		<execute action="Dockbar#assertTextEquals" locator-key1="PAGE_INFO_MESSAGE" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
 		<execute action="Dockbar#click" locator-key1="EDIT" />
-		<execute action="Dockbar#assertTextEquals" locator-key1="EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_LABEL" value1="Automatically apply changes done to the page template ${pageTemplateName}." />
-		<execute action="Dockbar#assertChecked" locator-key1="EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_CHECKBOX" />
+		<execute action="DockbarEditpanel#assertTextEquals" locator-key1="DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_LABEL" value1="Automatically apply changes done to the page template ${pageTemplateName}." />
+		<execute action="DockbarEditpanel#assertChecked" locator-key1="DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_CHECKBOX" />
 	</command>
 
 	<command name="viewPageTypeLayoutCP">

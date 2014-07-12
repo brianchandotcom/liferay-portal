@@ -1039,6 +1039,19 @@
 		<execute action="Home#assertLocation" value1="${sitePageURL}" />
 	</command>
 
+	<command name="viewSiteHierarchyInBreadcrumbPG">
+		<if>
+			<isset var="breadcrumbListVisible" />
+			<then>
+				<for list="${breadcrumbListVisible}" param="breadcrumbName">
+					<var name="key_breadcrumbName" value="${breadcrumbName}" />
+
+					<execute action="PGSitesdirectory#assertTextEquals" locator-key1="BREADCRUMB" value1="${breadcrumbName}" />
+				</for>
+			</then>
+		</if>
+	</command>
+
 	<command name="viewSiteNotClonedFromSiteTemplateCP">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 

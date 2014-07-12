@@ -119,6 +119,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMBEDDED_SITE_LIFERAY_BANNER_LOGO</td>
+	<td>//div[@class='banner-content']//img[@alt='Liferay']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_MESSAGE</td>
 	<td>//div[contains(@class, 'alert-danger')]</td>
 	<td></td>

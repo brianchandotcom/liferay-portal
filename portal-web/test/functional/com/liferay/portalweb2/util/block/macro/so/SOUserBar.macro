@@ -8,8 +8,9 @@
 		</if>
 
 		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
-		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
-		<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${pageName}" />
+
+		<execute action="DockbarAddpanelpage#assertClick" locator-key1="NAVIGATION_PAGE" value1="Page" />
+		<execute action="DockbarAddpanelpage#type" locator-key1="NAME_FIELD" value1="${pageName}" />
 
 		<if>
 			<isset var="pageType" />
@@ -20,8 +21,8 @@
 			</then>
 		</if>
 
-		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
-		<execute action="Dockbar#pause" locator1="1000" />
+		<execute action="DockbarAddpanelpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute action="DockbarAddpanelpage#pause" locator1="1000" />
 
 		<var name="key_pageName" value="${pageName}" />
 

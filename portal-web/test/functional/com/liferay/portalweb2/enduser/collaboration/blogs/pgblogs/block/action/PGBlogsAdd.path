@@ -80,17 +80,17 @@
 </tr>
 <tr>
 	<td>ALLOW_PINGBACKS_CHECKBOX</td>
-	<td>//input[@id='_33_allowPingbacks']</td>
+	<td>//input[contains(@id,'allowPingbacks')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ALLOWS_TRACKBACKS_CHECKBOX</td>
-	<td>//input[@id='_33_allowTrackbacks']</td>
+	<td>//input[contains(@id,'allowTrackbacks')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TRACKBACKS_TO_SEND_FIELD</td>
-	<td>//input[@id='_33_trackbacks']</td>
+	<td>//input[contains(@id,'trackbacks')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -120,22 +120,22 @@
 </tr>
 <tr>
 	<td>SAVE_AS_DRAFT_BUTTON</td>
-	<td>//button[@id='_33_saveButton']</td>
+	<td>//button[contains(@id,'saveButton')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_BUTTON</td>
-	<td>//button[@id='_33_previewButton']</td>
+	<td>//button[contains(@id,'previewButton')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLISH_BUTTON</td>
-	<td>//button[@id='_33_publishButton' and contains(.,'Publish')]</td>
+	<td>//button[contains(@id,'publishButton')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
-	<td>//button[@id='_33_publishButton' and contains(.,'Submit for Publication')]</td>
+	<td>//button[contains(@id,'publishButton')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -172,12 +172,12 @@
 <!--ABSTRACT-->
 <tr>
 	<td>ABSTRACT_DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_33_description']</td>
+	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ABSTRACT_USE_SMALL_IMAGE_CHECKBOX</td>
-	<td>//input[@id='_33_smallImage']</td>
+	<td>//input[contains(@id,'smallImage')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -187,7 +187,7 @@
 </tr>
 <tr>
 	<td>ABSTRACT_SMALL_IMAGE_URL_FIELD</td>
-	<td>//input[@id='_33_smallImageURL']</td>
+	<td>//input[contains(@id,'smallImageURL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -197,7 +197,7 @@
 </tr>
 <tr>
 	<td>ABSTRACT_SMALL_IMAGE_FILE_BROWSE_BUTTON</td>
-	<td>//input[@id='_33_smallFile']</td>
+	<td>//input[contains(@id,'smallFile')]</td>
 	<td></td>
 </tr>
 <tr>

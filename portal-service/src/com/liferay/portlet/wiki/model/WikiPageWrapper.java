@@ -293,6 +293,26 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
+	* Returns the container model ID of this wiki page.
+	*
+	* @return the container model ID of this wiki page
+	*/
+	@Override
+	public long getContainerModelId() {
+		return _wikiPage.getContainerModelId();
+	}
+
+	/**
+	* Returns the container name of this wiki page.
+	*
+	* @return the container name of this wiki page
+	*/
+	@Override
+	public java.lang.String getContainerModelName() {
+		return _wikiPage.getContainerModelName();
+	}
+
+	/**
 	* Returns the content of this wiki page.
 	*
 	* @return the content of this wiki page
@@ -411,6 +431,16 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	@Override
 	public long getPageId() {
 		return _wikiPage.getPageId();
+	}
+
+	/**
+	* Returns the parent container model ID of this wiki page.
+	*
+	* @return the parent container model ID of this wiki page
+	*/
+	@Override
+	public long getParentContainerModelId() {
+		return _wikiPage.getParentContainerModelId();
 	}
 
 	@Override
@@ -822,6 +852,16 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
+	* Sets the container model ID of this wiki page.
+	*
+	* @param containerModelId the container model ID of this wiki page
+	*/
+	@Override
+	public void setContainerModelId(long containerModelId) {
+		_wikiPage.setContainerModelId(containerModelId);
+	}
+
+	/**
 	* Sets the content of this wiki page.
 	*
 	* @param content the content of this wiki page
@@ -932,6 +972,16 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	@Override
 	public void setPageId(long pageId) {
 		_wikiPage.setPageId(pageId);
+	}
+
+	/**
+	* Sets the parent container model ID of this wiki page.
+	*
+	* @param parentContainerModelId the parent container model ID of this wiki page
+	*/
+	@Override
+	public void setParentContainerModelId(long parentContainerModelId) {
+		_wikiPage.setParentContainerModelId(parentContainerModelId);
 	}
 
 	/**

@@ -892,6 +892,30 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	}
 
 	@Override
+	public long getContainerModelId() {
+		return getResourcePrimKey();
+	}
+
+	@Override
+	public void setContainerModelId(long containerModelId) {
+		_resourcePrimKey = containerModelId;
+	}
+
+	@Override
+	public String getContainerModelName() {
+		return String.valueOf(getTitle());
+	}
+
+	@Override
+	public long getParentContainerModelId() {
+		return 0;
+	}
+
+	@Override
+	public void setParentContainerModelId(long parentContainerModelId) {
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				WikiPage.class.getName()));
@@ -912,7 +936,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 		TrashHandler trashHandler = getTrashHandler();
 
-		if (!Validator.isNull(trashHandler.getContainerModelClassName())) {
+		if (!Validator.isNull(trashHandler.getContainerModelClassName(
+						getPrimaryKey()))) {
 			ContainerModel containerModel = null;
 
 			try {
@@ -929,7 +954,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 					return trashedModel.getTrashEntry();
 				}
 
-				trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName());
+				trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName(
+							containerModel.getContainerModelId()));
 
 				if (trashHandler == null) {
 					return null;
@@ -967,7 +993,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		TrashHandler trashHandler = getTrashHandler();
 
 		if ((trashHandler == null) ||
-				Validator.isNull(trashHandler.getContainerModelClassName())) {
+				Validator.isNull(trashHandler.getContainerModelClassName(
+						getPrimaryKey()))) {
 			return false;
 		}
 

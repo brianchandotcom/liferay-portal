@@ -55,7 +55,7 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getContainerModelClassName() {
+	public String getContainerModelClassName(long classPK) {
 		return MBThread.class.getName();
 	}
 

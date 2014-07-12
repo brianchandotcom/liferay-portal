@@ -307,6 +307,10 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			className);
 
+		destinationContainerModelId =
+			trashHandler.getDestinationContainerModelId(
+				classPK, destinationContainerModelId);
+
 		if (!trashHandler.hasTrashPermission(
 				permissionChecker, serviceContext.getScopeGroupId(),
 				destinationContainerModelId, TrashActionKeys.MOVE)) {

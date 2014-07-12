@@ -115,8 +115,17 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getContainerModel(long)}
+	 */
+	@Deprecated
 	@Override
 	public String getContainerModelClassName() {
+		return getContainerModelClassName(0);
+	}
+
+	@Override
+	public String getContainerModelClassName(long classPK) {
 		return StringPool.BLANK;
 	}
 
@@ -145,6 +154,12 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	@Override
 	public String getDeleteMessage() {
 		return "deleted-in-x";
+	}
+
+	public long getDestinationContainerModelId(
+		long classPK, long destinationContainerModelId) {
+
+		return destinationContainerModelId;
 	}
 
 	@Override

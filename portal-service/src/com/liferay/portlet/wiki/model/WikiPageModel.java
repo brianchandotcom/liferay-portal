@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.TrashedModel;
@@ -48,8 +49,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface WikiPageModel extends BaseModel<WikiPage>, ResourcedModel,
-	StagedGroupedModel, TrashedModel, WorkflowedModel {
+public interface WikiPageModel extends BaseModel<WikiPage>, ContainerModel,
+	ResourcedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -590,6 +591,46 @@ public interface WikiPageModel extends BaseModel<WikiPage>, ResourcedModel,
 	 */
 	@Override
 	public boolean isScheduled();
+
+	/**
+	 * Returns the container model ID of this wiki page.
+	 *
+	 * @return the container model ID of this wiki page
+	 */
+	@Override
+	public long getContainerModelId();
+
+	/**
+	 * Sets the container model ID of this wiki page.
+	 *
+	 * @param containerModelId the container model ID of this wiki page
+	 */
+	@Override
+	public void setContainerModelId(long containerModelId);
+
+	/**
+	 * Returns the container name of this wiki page.
+	 *
+	 * @return the container name of this wiki page
+	 */
+	@Override
+	public String getContainerModelName();
+
+	/**
+	 * Returns the parent container model ID of this wiki page.
+	 *
+	 * @return the parent container model ID of this wiki page
+	 */
+	@Override
+	public long getParentContainerModelId();
+
+	/**
+	 * Sets the parent container model ID of this wiki page.
+	 *
+	 * @param parentContainerModelId the parent container model ID of this wiki page
+	 */
+	@Override
+	public void setParentContainerModelId(long parentContainerModelId);
 
 	@Override
 	public boolean isNew();

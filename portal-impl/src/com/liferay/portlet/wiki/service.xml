@@ -79,7 +79,7 @@
 
 		<!-- Resource -->
 
-		<column name="resourcePrimKey" type="long" filter-primary="true" />
+		<column name="resourcePrimKey" type="long" filter-primary="true" container-model="true" />
 
 		<!-- Group instance -->
 

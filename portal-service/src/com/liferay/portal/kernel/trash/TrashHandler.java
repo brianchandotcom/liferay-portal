@@ -181,8 +181,14 @@ public interface TrashHandler {
 
 	/**
 	 * Returns the parent container model's class name.
+	 *
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getContainerModelClassName(long)}
 	 */
+	@Deprecated
 	public String getContainerModelClassName();
+
+	public String getContainerModelClassName(long classPK);
 
 	/**
 	 * Returns the name of the container model (e.g. folder name).
@@ -262,6 +268,9 @@ public interface TrashHandler {
 	 *         trash entry listed in a search result
 	 */
 	public String getDeleteMessage();
+
+	public long getDestinationContainerModelId(
+		long classPK, long destinationContainerModelId);
 
 	/**
 	 * Returns the parent container model of the model entity with the primary

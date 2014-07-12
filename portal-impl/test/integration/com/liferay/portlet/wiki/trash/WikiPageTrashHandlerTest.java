@@ -752,6 +752,34 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Test
+	public void testRestorePageWithParentPageInTrash() throws Exception {
+		WikiPage[] pages = WikiTestUtil.addTrashedPageWithChildPage(
+			group.getGroupId(), _node.getNodeId(), false);
+
+		WikiPage childPage = pages[1];
+
+		WikiPage newParentPage = WikiTestUtil.addPage(
+			group.getGroupId(), _node.getNodeId(), true);
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			getBaseModelClassName());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		trashHandler.moveEntry(
+			TestPropsValues.getUserId(), childPage.getResourcePrimKey(),
+			newParentPage.getResourcePrimKey(), serviceContext);
+
+		childPage = WikiPageLocalServiceUtil.getPage(
+			childPage.getResourcePrimKey());
+
+		Assert.assertTrue(childPage.isApproved());
+		Assert.assertEquals(
+			newParentPage.getTitle(), childPage.getParentTitle());
+	}
+
+	@Test
 	public void
 			testRestoreParentPageWithExplicitlyTrashedRrdirectPageFromTrash()
 		throws Exception {

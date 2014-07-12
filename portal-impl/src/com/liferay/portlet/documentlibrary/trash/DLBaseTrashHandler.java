@@ -53,7 +53,7 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getContainerModelClassName() {
+	public String getContainerModelClassName(long classPK) {
 		return DLFolder.class.getName();
 	}
 

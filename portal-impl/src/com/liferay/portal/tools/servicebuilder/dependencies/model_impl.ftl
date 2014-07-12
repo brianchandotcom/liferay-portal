@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -716,6 +717,10 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		public String getContainerModelName() {
 			<#if entity.hasColumn("name")>
 				return String.valueOf(getName());
+			<#elseif entity.hasColumn("title")>
+				<#assign titleColumn = entity.getColumn("title")>
+
+				return String.valueOf(getTitle(<#if titleColumn.isLocalized()>LocaleThreadLocal.getThemeDisplayLocale()</#if>));
 			<#else>
 				return String.valueOf(getContainerModelId());
 			</#if>
@@ -794,7 +799,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 			TrashHandler trashHandler = getTrashHandler();
 
-			if (!Validator.isNull(trashHandler.getContainerModelClassName())) {
+			if (!Validator.isNull(trashHandler.getContainerModelClassName(getPrimaryKey()))) {
 				ContainerModel containerModel = null;
 
 				try {
@@ -811,7 +816,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 						return trashedModel.getTrashEntry();
 					}
 
-					trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName());
+					trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName(containerModel.getContainerModelId()));
 
 					if (trashHandler == null) {
 						return null;
@@ -848,7 +853,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		public boolean isInTrashContainer() {
 			TrashHandler trashHandler = getTrashHandler();
 
-			if ((trashHandler == null) || Validator.isNull(trashHandler.getContainerModelClassName())) {
+			if ((trashHandler == null) || Validator.isNull(trashHandler.getContainerModelClassName(getPrimaryKey()))) {
 				return false;
 			}
 

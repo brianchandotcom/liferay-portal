@@ -42,7 +42,7 @@ public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getContainerModelClassName() {
+	public String getContainerModelClassName(long classPK) {
 		return JournalFolder.class.getName();
 	}
 

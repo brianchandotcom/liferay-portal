@@ -44,7 +44,7 @@ public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getContainerModelClassName() {
+	public String getContainerModelClassName(long classPK) {
 		return BookmarksFolder.class.getName();
 	}
 

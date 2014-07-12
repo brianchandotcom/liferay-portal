@@ -21,9 +21,22 @@
 
 		<%
 		pageContext.setAttribute("checkRequired", checkRequired);
+
+		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(xsd);
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext = new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setHttpServletRequest(request);
+		ddmFormFieldRenderingContext.setHttpServletResponse(response);
+		ddmFormFieldRenderingContext.setPortletNamespace(portletResponse.getNamespace());
+		ddmFormFieldRenderingContext.setNamespace(fieldsNamespace);
+		ddmFormFieldRenderingContext.setFields(fields);
+		ddmFormFieldRenderingContext.setMode(mode);
+		ddmFormFieldRenderingContext.setReadOnly(readOnly);
+		ddmFormFieldRenderingContext.setLocale(requestedLocale);
 		%>
 
-		<%= DDMXSDUtil.getHTML(request, response, xsd, fields, portletResponse.getNamespace(), fieldsNamespace, mode, readOnly, requestedLocale) %>
+		<%= DDMFormRendererUtil.render(ddmForm, ddmFormFieldRenderingContext) %>
 
 		<aui:input name="<%= fieldsDisplayInputName %>" type="hidden" />
 

@@ -131,13 +131,8 @@ public class DDMTemplateStagedModelDataHandler
 
 		DDMTemplate existingTemplate = null;
 
-		try {
-			existingTemplate = fetchExistingTemplate(
-				uuid, liveGroupId, classNameId, templateKey, preloaded);
-		}
-		catch (PortalException pe) {
-			throw new PortletDataException(pe);
-		}
+		existingTemplate = fetchExistingTemplate(
+			uuid, liveGroupId, classNameId, templateKey, preloaded);
 
 		Map<Long, Long> templateIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -178,19 +173,14 @@ public class DDMTemplateStagedModelDataHandler
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
-		try {
-			DDMTemplate existingTemplate = fetchExistingTemplate(
-				uuid, liveGroupId, classNameId, templateKey, preloaded);
+		DDMTemplate existingTemplate = fetchExistingTemplate(
+			uuid, liveGroupId, classNameId, templateKey, preloaded);
 
-			if (existingTemplate == null) {
-				return false;
-			}
-
-			return true;
-		}
-		catch (PortalException pe) {
+		if (existingTemplate == null) {
 			return false;
 		}
+
+		return true;
 	}
 
 	@Override
@@ -395,9 +385,8 @@ public class DDMTemplateStagedModelDataHandler
 	}
 
 	protected DDMTemplate fetchExistingTemplate(
-			String uuid, long groupId, long classNameId, String templateKey,
-			boolean preloaded)
-		throws PortalException {
+		String uuid, long groupId, long classNameId, String templateKey,
+		boolean preloaded) {
 
 		DDMTemplate existingTemplate = null;
 

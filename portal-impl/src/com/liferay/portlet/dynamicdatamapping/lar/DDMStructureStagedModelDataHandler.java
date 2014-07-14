@@ -122,13 +122,8 @@ public class DDMStructureStagedModelDataHandler
 
 		DDMStructure existingStructure = null;
 
-		try {
-			existingStructure = fetchExistingStructure(
-				uuid, liveGroupId, classNameId, structureKey, preloaded);
-		}
-		catch (PortalException se) {
-			throw new PortletDataException(se);
-		}
+		existingStructure = fetchExistingStructure(
+			uuid, liveGroupId, classNameId, structureKey, preloaded);
 
 		Map<Long, Long> structureIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -169,19 +164,14 @@ public class DDMStructureStagedModelDataHandler
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
-		try {
-			DDMStructure existingStructure = fetchExistingStructure(
-				uuid, liveGroupId, classNameId, structureKey, preloaded);
+		DDMStructure existingStructure = fetchExistingStructure(
+			uuid, liveGroupId, classNameId, structureKey, preloaded);
 
-			if (existingStructure == null) {
-				return false;
-			}
-
-			return true;
-		}
-		catch (PortalException pe) {
+		if (existingStructure == null) {
 			return false;
 		}
+
+		return true;
 	}
 
 	@Override
@@ -303,9 +293,8 @@ public class DDMStructureStagedModelDataHandler
 	}
 
 	protected DDMStructure fetchExistingStructure(
-			String uuid, long groupId, long classNameId, String structureKey,
-			boolean preloaded)
-		throws PortalException {
+		String uuid, long groupId, long classNameId, String structureKey,
+		boolean preloaded) {
 
 		DDMStructure existingStructure = null;
 

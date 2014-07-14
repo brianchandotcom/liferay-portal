@@ -124,13 +124,8 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 		DLFileEntryType existingFileEntryType = null;
 
-		try {
-			existingFileEntryType = fetchExistingFileEntryType(
-				uuid, liveGroupId, fileEntryTypeKey, preloaded);
-		}
-		catch (PortalException pe) {
-			throw new PortletDataException(pe);
-		}
+		existingFileEntryType = fetchExistingFileEntryType(
+			uuid, liveGroupId, fileEntryTypeKey, preloaded);
 
 		Map<Long, Long> fileEntryTypeIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -165,19 +160,14 @@ public class DLFileEntryTypeStagedModelDataHandler
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
-		try {
-			DLFileEntryType existingFileEntryType = fetchExistingFileEntryType(
-				uuid, liveGroupId, fileEntryTypeKey, preloaded);
+		DLFileEntryType existingFileEntryType = fetchExistingFileEntryType(
+			uuid, liveGroupId, fileEntryTypeKey, preloaded);
 
-			if (existingFileEntryType == null) {
-				return false;
-			}
-
-			return true;
-		}
-		catch (PortalException e) {
+		if (existingFileEntryType == null) {
 			return false;
 		}
+
+		return true;
 	}
 
 	@Override
@@ -341,9 +331,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 	}
 
 	protected DLFileEntryType fetchExistingFileEntryType(
-			String uuid, long groupId, String fileEntryTypeKey,
-			boolean preloaded)
-		throws PortalException {
+		String uuid, long groupId, String fileEntryTypeKey, boolean preloaded) {
 
 		DLFileEntryType existingDLFileEntryType = null;
 

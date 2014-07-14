@@ -108,8 +108,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	}
 
 	@Override
-	public T fetchExistingStagedModel(String uuid, long groupId)
-		throws PortalException {
+	public T fetchExistingStagedModel(String uuid, long groupId) {
 
 		// Try to fetch it from the actual group
 
@@ -119,20 +118,33 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			return existingStagedModel;
 		}
 
-		// Try to fetch it from the parent sites
+		try {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+			// Try to fetch it from the parent sites
 
-		while ((group = group.getParentGroup()) != null) {
-			existingStagedModel = doFetchExistingStagedModel(
-				uuid, group.getGroupId());
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-			if (existingStagedModel != null) {
-				break;
+			while ((group = group.getParentGroup()) != null) {
+				existingStagedModel = doFetchExistingStagedModel(
+					uuid, group.getGroupId());
+
+				if (existingStagedModel != null) {
+					break;
+				}
 			}
-		}
 
-		return existingStagedModel;
+			return existingStagedModel;
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn("Unable to fetch staged model from group " + groupId);
+			}
+
+			return null;
+		}
 	}
 
 	@Override

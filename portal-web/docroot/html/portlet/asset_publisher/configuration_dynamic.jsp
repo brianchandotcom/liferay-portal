@@ -113,7 +113,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
 						ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
 
-						List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), themeDisplay.getLocale());
+						List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getSharedContentSiteGroupIds(company.getCompanyId(), scopeGroupId, user.getUserId()), locale);
 
 						if (classTypes.isEmpty()) {
 							continue;
@@ -580,7 +580,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		<%
 		ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
 
-		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), themeDisplay.getLocale());
+		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getSharedContentSiteGroupIds(company.getCompanyId(), scopeGroupId, user.getUserId()), locale);
 
 		if (assetAvailableClassTypes.isEmpty()) {
 			continue;

@@ -816,23 +816,6 @@ public class JournalArticleStagedModelDataHandler
 		if ((existingArticle == null) && Validator.isNull(newArticleId)) {
 			existingArticle = JournalArticleLocalServiceUtil.fetchArticle(
 				groupId, articleId, version);
-
-			if (existingArticle != null) {
-				StringBundler sb = new StringBundler(10);
-
-				sb.append("The article in the LAR file with article resource ");
-				sb.append("UUID ");
-				sb.append(articleResourceUuid);
-				sb.append(", article ID ");
-				sb.append(articleId);
-				sb.append(", and version ");
-				sb.append(version);
-				sb.append("conflicts with an article in the database with ");
-				sb.append("article resource UUID ");
-				sb.append(existingArticle.getArticleResourceUuid());
-
-				throw new PortletDataException(sb.toString());
-			}
 		}
 
 		return existingArticle;

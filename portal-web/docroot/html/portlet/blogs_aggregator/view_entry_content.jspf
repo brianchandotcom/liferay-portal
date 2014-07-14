@@ -118,10 +118,10 @@
 				<c:when test='<%= !displayStyle.startsWith("quote") %>'>
 
 					<%
-					int commentCount = BlogsUtil.getCommentCount(entry);
+					int commentsCount = BlogsUtil.getCommentsCount(entry);
 					%>
 
-					<a href="<%= PropsValues.PORTLET_URL_ANCHOR_ENABLE ? viewEntryURL : viewEntryURL + "#blogsCommentsPanelContainer" %>"><%= commentCount %> <liferay-ui:message key='<%= (commentCount == 1) ? "comment" : "comments" %>' /></a>
+					<a href="<%= PropsValues.PORTLET_URL_ANCHOR_ENABLE ? viewEntryURL : viewEntryURL + "#blogsCommentsPanelContainer" %>"><%= commentsCount %> <liferay-ui:message key='<%= (commentsCount == 1) ? "comment" : "comments" %>' /></a>
 				</c:when>
 			</c:choose>
 		</div>

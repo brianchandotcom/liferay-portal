@@ -87,10 +87,10 @@ public class CommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public int getCommentCount(String className, long classPK) {
+	public int getCommentsCount(String className, long classPK) {
 		CommentManager commentManager = getCommentManager();
 
-		return commentManager.getCommentCount(className, classPK);
+		return commentManager.getCommentsCount(className, classPK);
 	}
 
 	protected CommentManager getCommentManager() {

@@ -52,7 +52,7 @@ public class DummyCommentManagerImplTest {
 		_commentManager.deleteDiscussion(className, classPK);
 
 		Assert.assertEquals(
-			0, _commentManager.getCommentCount(className, classPK));
+			0, _commentManager.getCommentsCount(className, classPK));
 	}
 
 	private CommentManager _commentManager = new DummyCommentManagerImpl();

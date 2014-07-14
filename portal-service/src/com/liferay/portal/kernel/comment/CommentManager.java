@@ -39,6 +39,6 @@ public interface CommentManager {
 	public void deleteDiscussion(String className, long classPK)
 		throws PortalException;
 
-	public int getCommentCount(String className, long classPK);
+	public int getCommentsCount(String className, long classPK);
 
 }

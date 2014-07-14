@@ -163,17 +163,17 @@ public class CommentManagerImplTest extends Mockito {
 			className, classPK
 		);
 
-		int commentCount = RandomTestUtil.randomInt();
+		int commentsCount = RandomTestUtil.randomInt();
 
 		when(
-			commentManager.getCommentCount(className, classPK)
+			commentManager.getCommentsCount(className, classPK)
 		).thenReturn(
-			commentCount
+			commentsCount
 		);
 
 		Assert.assertEquals(
-			commentCount,
-			_commentManagerImpl.getCommentCount(className, classPK));
+			commentsCount,
+			_commentManagerImpl.getCommentsCount(className, classPK));
 	}
 
 	private CommentManagerImpl _commentManagerImpl;

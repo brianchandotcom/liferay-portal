@@ -47,7 +47,7 @@ public class DummyCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public int getCommentCount(String className, long classPK) {
+	public int getCommentsCount(String className, long classPK) {
 		return 0;
 	}
 

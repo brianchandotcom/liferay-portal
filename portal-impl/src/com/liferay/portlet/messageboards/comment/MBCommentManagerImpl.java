@@ -81,7 +81,7 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public int getCommentCount(String className, long classPK) {
+	public int getCommentsCount(String className, long classPK) {
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		return _mbMessageLocalService.getDiscussionMessagesCount(

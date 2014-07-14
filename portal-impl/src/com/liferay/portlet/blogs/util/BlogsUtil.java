@@ -53,10 +53,10 @@ public class BlogsUtil {
 
 	public static final String DISPLAY_STYLE_TITLE = "title";
 
-	public static int getCommentCount(BlogsEntry entry) {
+	public static int getCommentsCount(BlogsEntry entry) {
 		CommentManager commentManager = getCommentManager();
 
-		return commentManager.getCommentCount(
+		return commentManager.getCommentsCount(
 			BlogsEntry.class.getName(), entry.getEntryId());
 	}
 

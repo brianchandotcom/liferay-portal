@@ -87,7 +87,7 @@
 										<portlet:actionURL var="restoreEntryURL">
 											<portlet:param name="struts_action" value="/trash/edit_entry" />
 											<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-											<portlet:param name="redirect" value="<%= redirect %>" />
+											<portlet:param name="redirect" value="<%= backURL %>" />
 											<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 										</portlet:actionURL>
 
@@ -102,7 +102,7 @@
 								<c:when test="<%= !trashHandler.isRestorable(entry.getClassPK()) && trashHandler.isMovable() %>">
 									<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 										<portlet:param name="struts_action" value="/trash/view_container_model" />
-										<portlet:param name="redirect" value="<%= redirect %>" />
+										<portlet:param name="redirect" value="<%= backURL %>" />
 										<portlet:param name="className" value="<%= entry.getClassName() %>" />
 										<portlet:param name="classPK" value="<%= String.valueOf(entry.getClassPK()) %>" />
 										<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName() %>" />
@@ -125,7 +125,7 @@
 									<portlet:actionURL var="deleteEntryURL">
 										<portlet:param name="struts_action" value="/trash/edit_entry" />
 										<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-										<portlet:param name="redirect" value="<%= redirect %>" />
+										<portlet:param name="redirect" value="<%= backURL %>" />
 										<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 									</portlet:actionURL>
 
@@ -147,7 +147,7 @@
 								<aui:script use="aui-base">
 									<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 										<portlet:param name="struts_action" value="/trash/view_container_model" />
-										<portlet:param name="redirect" value="<%= redirect %>" />
+										<portlet:param name="redirect" value="<%= backURL %>" />
 										<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
 										<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
 										<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName(classPK) %>" />
@@ -169,7 +169,7 @@
 									<portlet:actionURL var="deleteEntryURL">
 										<portlet:param name="struts_action" value="/trash/edit_entry" />
 										<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-										<portlet:param name="redirect" value="<%= redirect %>" />
+										<portlet:param name="redirect" value="<%= backURL %>" />
 										<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
 										<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
 									</portlet:actionURL>

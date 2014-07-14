@@ -281,7 +281,7 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		DLFolder dlFolder = getDLFolder(classPK);
 
 		if (containerModelId == TrashEntryConstants.DEFAULT_CONTAINER_ID) {
-			containerModelId = dlFolder.getParentFolderId();
+			containerModelId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		}
 
 		if (Validator.isNotNull(newName)) {

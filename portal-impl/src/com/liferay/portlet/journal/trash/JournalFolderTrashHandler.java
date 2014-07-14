@@ -25,10 +25,12 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.journal.InvalidDDMStructureException;
 import com.liferay.portlet.journal.asset.JournalFolderAssetRenderer;
 import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.trash.RestoreEntryException;
+import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import javax.portlet.PortletRequest;
@@ -227,6 +229,10 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 		throws PortalException {
 
 		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(classPK);
+
+		if (containerModelId == TrashEntryConstants.DEFAULT_CONTAINER_ID) {
+			containerModelId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
 
 		if (Validator.isNotNull(newName)) {
 			originalTitle = newName;

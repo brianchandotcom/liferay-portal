@@ -25,6 +25,7 @@ import com.liferay.portal.search.elasticsearch.util.LogUtil;
 
 import java.util.concurrent.Future;
 
+import com.opensymphony.oscache.util.StringUtil;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus;
 import org.elasticsearch.action.admin.cluster.snapshots.create.CreateSnapshotRequestBuilder;
@@ -43,7 +44,7 @@ import org.elasticsearch.client.ClusterAdminClient;
 public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 	@Override
-	public synchronized void backup(long companyId, String backupName)
+	public synchronized String backup(long companyId, String backupName)
 		throws SearchException {
 
 		ElasticsearchConnection elasticsearchConnection =
@@ -67,6 +68,8 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 			CreateSnapshotResponse createSnapshotResponse = future.get();
 
 			LogUtil.logActionResponse(_log, createSnapshotResponse);
+
+			return backupName;
 		}
 		catch (Exception e) {
 			throw new SearchException(e);

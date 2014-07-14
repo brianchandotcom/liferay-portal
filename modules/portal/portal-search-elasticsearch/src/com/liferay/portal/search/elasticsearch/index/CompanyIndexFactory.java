@@ -17,7 +17,7 @@ package com.liferay.portal.search.elasticsearch.index;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.elasticsearch.io.StringOutputStream;
+import com.liferay.portal.search.elasticsearch.util.LogUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +31,6 @@ import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsReques
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.IndicesAdminClient;
-import org.elasticsearch.common.io.stream.OutputStreamStreamOutput;
 
 /**
  * @author Michael C. Han
@@ -65,14 +64,7 @@ public class CompanyIndexFactory implements IndexFactory {
 
 		CreateIndexResponse createIndexResponse = future.get();
 
-		if (_log.isInfoEnabled()) {
-			StringOutputStream stringOutputStream = new StringOutputStream();
-
-			createIndexResponse.writeTo(
-				new OutputStreamStreamOutput(stringOutputStream));
-
-			_log.info(stringOutputStream);
-		}
+		LogUtil.logActionResponse(_log, createIndexResponse);
 	}
 
 	@Override
@@ -91,16 +83,9 @@ public class CompanyIndexFactory implements IndexFactory {
 		Future<DeleteIndexResponse> future =
 			deleteIndexRequestBuilder.execute();
 
-		if (_log.isInfoEnabled()) {
-			DeleteIndexResponse deleteIndexResponse = future.get();
+		DeleteIndexResponse deleteIndexResponse = future.get();
 
-			StringOutputStream stringOutputStream = new StringOutputStream();
-
-			deleteIndexResponse.writeTo(
-				new OutputStreamStreamOutput(stringOutputStream));
-
-			_log.info(stringOutputStream);
-		}
+		LogUtil.logActionResponse(_log, deleteIndexResponse);
 	}
 
 	public void setTypeMappings(Map<String, String> typeMappings) {

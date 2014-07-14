@@ -329,7 +329,7 @@ portletURL.setParameter("type", type);
 
 			searchContainer.setTotal(DLAppServiceUtil.getFileEntriesCount(groupId, folderId, mimeTypes));
 
-			searchContainer.setResults(DLAppServiceUtil.getFileEntries(groupId, folderId, mimeTypes, searchContainer.getStart(), searchContainer.getEnd()));
+			searchContainer.setResults(DLAppServiceUtil.getFileEntries(groupId, folderId, mimeTypes, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
 		}
 		%>
 

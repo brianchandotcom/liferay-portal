@@ -2005,17 +2005,6 @@ public class ServiceBuilder {
 					FileUtil.write(exceptionFile, content);
 				}
 			}
-
-			if (!_serviceOutputPath.equals(_outputPath)) {
-				exceptionFile = new File(
-					_outputPath + "/" + exception + "Exception.java");
-
-				if (exceptionFile.exists()) {
-					System.out.println("Relocating " + exceptionFile);
-
-					exceptionFile.delete();
-				}
-			}
 		}
 	}
 
@@ -2085,17 +2074,6 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/model/" + entity.getName() + ".java");
 
 		writeFile(modelFile, content, _author);
-
-		if (!_serviceOutputPath.equals(_outputPath)) {
-			modelFile = new File(
-				_outputPath + "/model/" + entity.getName() + ".java");
-
-			if (modelFile.exists()) {
-				System.out.println("Relocating " + modelFile);
-
-				modelFile.delete();
-			}
-		}
 	}
 
 	private void _createExtendedModelBaseImpl(Entity entity) throws Exception {
@@ -2171,18 +2149,6 @@ public class ServiceBuilder {
 				"Finder.java");
 
 		writeFile(ejbFile, content, _author);
-
-		if (!_serviceOutputPath.equals(_outputPath)) {
-			ejbFile = new File(
-				_outputPath + "/service/persistence/" + entity.getName() +
-					"Finder.java");
-
-			if (ejbFile.exists()) {
-				System.out.println("Relocating " + ejbFile);
-
-				ejbFile.delete();
-			}
-		}
 	}
 
 	private void _createFinderUtil(Entity entity) throws Exception {
@@ -2212,18 +2178,6 @@ public class ServiceBuilder {
 				"FinderUtil.java");
 
 		writeFile(ejbFile, content, _author);
-
-		if (!_serviceOutputPath.equals(_outputPath)) {
-			ejbFile = new File(
-				_outputPath + "/service/persistence/" + entity.getName() +
-					"FinderUtil.java");
-
-			if (ejbFile.exists()) {
-				System.out.println("Relocating " + ejbFile);
-
-				ejbFile.delete();
-			}
-		}
 	}
 
 	private void _createHbm(Entity entity) {
@@ -2353,17 +2307,6 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/model/" + entity.getName() + "Model.java");
 
 		writeFile(modelFile, content, _author);
-
-		if (!_serviceOutputPath.equals(_outputPath)) {
-			modelFile = new File(
-				_outputPath + "/model/" + entity.getName() + "Model.java");
-
-			if (modelFile.exists()) {
-				System.out.println("Relocating " + modelFile);
-
-				modelFile.delete();
-			}
-		}
 	}
 
 	private void _createModelCache(Entity entity) throws Exception {
@@ -2515,20 +2458,7 @@ public class ServiceBuilder {
 	}
 
 	private void _createModelSoap(Entity entity) throws Exception {
-		File modelFile = null;
-
-		if (!_serviceOutputPath.equals(_outputPath)) {
-			modelFile = new File(
-				_outputPath + "/model/" + entity.getName() + "Soap.java");
-
-			if (modelFile.exists()) {
-				System.out.println("Relocating " + modelFile);
-
-				modelFile.delete();
-			}
-		}
-
-		modelFile = new File(
+		File modelFile = new File(
 			_serviceOutputPath + "/model/" + entity.getName() + "Soap.java");
 
 		Map<String, Object> context = _getContext();
@@ -2600,18 +2530,6 @@ public class ServiceBuilder {
 				"Persistence.java");
 
 		writeFile(ejbFile, content, _author);
-
-		if (!_serviceOutputPath.equals(_outputPath)) {
-			ejbFile = new File(
-				_outputPath + "/service/persistence/" + entity.getName() +
-					"Persistence.java");
-
-			if (ejbFile.exists()) {
-				System.out.println("Relocating " + ejbFile);
-
-				ejbFile.delete();
-			}
-		}
 	}
 
 	private void _createPersistenceImpl(Entity entity) throws Exception {
@@ -2686,18 +2604,6 @@ public class ServiceBuilder {
 				"Util.java");
 
 		writeFile(ejbFile, content, _author);
-
-		if (!_serviceOutputPath.equals(_outputPath)) {
-			ejbFile = new File(
-				_outputPath + "/service/persistence/" + entity.getName() +
-					"Util.java");
-
-			if (ejbFile.exists()) {
-				System.out.println("Relocating " + ejbFile);
-
-				ejbFile.delete();
-			}
-		}
 	}
 
 	private void _createPool(Entity entity) {
@@ -2911,18 +2817,6 @@ public class ServiceBuilder {
 				_getSessionTypeName(sessionType) + "Service.java");
 
 		writeFile(ejbFile, content, _author);
-
-		if (!_serviceOutputPath.equals(_outputPath)) {
-			ejbFile = new File(
-				_outputPath + "/service/" + entity.getName() +
-					_getSessionTypeName(sessionType) + "Service.java");
-
-			if (ejbFile.exists()) {
-				System.out.println("Relocating " + ejbFile);
-
-				ejbFile.delete();
-			}
-		}
 	}
 
 	private void _createServiceBaseImpl(Entity entity, int sessionType)
@@ -3178,18 +3072,6 @@ public class ServiceBuilder {
 
 			ejbFile.delete();
 		}
-
-		if (!_serviceOutputPath.equals(_outputPath)) {
-			ejbFile = new File(
-				_outputPath + "/service/http/" + entity.getName() +
-					"JSONSerializer.java");
-
-			if (ejbFile.exists()) {
-				System.out.println("Removing deprecated " + ejbFile);
-
-				ejbFile.delete();
-			}
-		}
 	}
 
 	private void _createServiceSoap(Entity entity) throws Exception {
@@ -3243,18 +3125,6 @@ public class ServiceBuilder {
 				_getSessionTypeName(sessionType) + "ServiceUtil.java");
 
 		writeFile(ejbFile, content, _author);
-
-		if (!_serviceOutputPath.equals(_outputPath)) {
-			ejbFile = new File(
-				_outputPath + "/service/" + entity.getName() +
-					_getSessionTypeName(sessionType) + "ServiceUtil.java");
-
-			if (ejbFile.exists()) {
-				System.out.println("Relocating " + ejbFile);
-
-				ejbFile.delete();
-			}
-		}
 	}
 
 	private void _createServiceWrapper(Entity entity, int sessionType)
@@ -5165,14 +5035,6 @@ public class ServiceBuilder {
 				"Finder.java");
 
 		ejbFile.delete();
-
-		if (!_serviceOutputPath.equals(_outputPath)) {
-			ejbFile = new File(
-				_outputPath + "/service/persistence/" + entity.getName() +
-					"Finder.java");
-
-			ejbFile.delete();
-		}
 	}
 
 	private void _removeFinderUtil(Entity entity) {
@@ -5181,14 +5043,6 @@ public class ServiceBuilder {
 				"FinderUtil.java");
 
 		ejbFile.delete();
-
-		if (!_serviceOutputPath.equals(_outputPath)) {
-			ejbFile = new File(
-				_outputPath + "/service/persistence/" + entity.getName() +
-					"FinderUtil.java");
-
-			ejbFile.delete();
-		}
 	}
 
 	private void _removeService(Entity entity, int sessionType) {
@@ -5197,14 +5051,6 @@ public class ServiceBuilder {
 				_getSessionTypeName(sessionType) + "Service.java");
 
 		ejbFile.delete();
-
-		if (!_serviceOutputPath.equals(_outputPath)) {
-			ejbFile = new File(
-				_outputPath + "/service/" + entity.getName() +
-					_getSessionTypeName(sessionType) + "Service.java");
-
-			ejbFile.delete();
-		}
 	}
 
 	private void _removeServiceBaseImpl(Entity entity, int sessionType) {
@@ -5261,14 +5107,6 @@ public class ServiceBuilder {
 				_getSessionTypeName(sessionType) + "ServiceUtil.java");
 
 		ejbFile.delete();
-
-		if (!_serviceOutputPath.equals(_outputPath)) {
-			ejbFile = new File(
-				_outputPath + "/service/" + entity.getName() +
-					_getSessionTypeName(sessionType) + "ServiceUtil.java");
-
-			ejbFile.delete();
-		}
 	}
 
 	private void _removeServiceWrapper(Entity entity, int sessionType) {

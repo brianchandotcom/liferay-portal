@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.cluster.Priority;
  */
 public interface SearchEngine {
 
+	public String backup(long companyId, String backupName)
+		throws SearchException;
+
 	public BooleanClauseFactory getBooleanClauseFactory();
 
 	public BooleanQueryFactory getBooleanQueryFactory();
@@ -44,6 +47,12 @@ public interface SearchEngine {
 
 	public boolean isLuceneBased();
 
+	public void removeBackup(long companyId, String backupName)
+		throws SearchException;
+
 	public void removeCompany(long companyId);
+
+	public void restore(long companyId, String backupName)
+		throws SearchException;
 
 }

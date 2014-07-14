@@ -19,23 +19,23 @@ import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
 import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.log.Log4JLoggerTestUtil;
-import com.liferay.portal.search.lucene.LuceneHelperUtil;
 import com.liferay.portal.test.jdbc.ResetDatabaseUtil;
 import com.liferay.portal.upgrade.util.Table;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.test.TestPropsValues;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.util.Arrays;
@@ -55,7 +55,7 @@ public class ResetDatabaseExecutionTestListener
 	@Override
 	public void runAfterTest(TestContext testContext) {
 		restoreDLStores(false);
-		restoreLuceneStores(false);
+		restoreSearchIndices(false);
 
 		ResetDatabaseUtil.resetModifiedTables();
 
@@ -76,11 +76,11 @@ public class ResetDatabaseExecutionTestListener
 		try {
 			if (ResetDatabaseUtil.initialize()) {
 				backupDLStores(true);
-				backupLuceneStores(true);
+				backupSearchIndices(true);
 			}
 			else {
 				restoreDLStores(true);
-				restoreLuceneStores(true);
+				restoreSearchIndices(true);
 			}
 		}
 		finally {
@@ -96,7 +96,7 @@ public class ResetDatabaseExecutionTestListener
 		ResetDatabaseUtil.startRecording();
 
 		backupDLStores(false);
-		backupLuceneStores(false);
+		backupSearchIndices(false);
 	}
 
 	protected void backupDLStores(boolean initialize) {
@@ -164,41 +164,43 @@ public class ResetDatabaseExecutionTestListener
 		}
 	}
 
-	protected void backupLuceneStores(boolean initialize) {
+	protected void backupSearchIndices(boolean initialize) {
 		for (long companyId : PortalInstances.getCompanyIds()) {
-			String fileName = null;
+			String backupName = null;
 
 			if (initialize) {
-				fileName =
-					SystemProperties.get(SystemProperties.TMP_DIR) +
-						"/temp-init-lucene-" + companyId + "-" +
-							System.currentTimeMillis();
-
-				Runtime runtime = Runtime.getRuntime();
-
-				runtime.addShutdownHook(new DeleteFileShutdownHook(fileName));
+				backupName =
+					"temp-init-search-" + companyId + "-" +
+						System.currentTimeMillis();
 			}
 			else {
-				fileName =
-					SystemProperties.get(SystemProperties.TMP_DIR) +
-						"/temp-lucene-" + companyId + "-" +
-							System.currentTimeMillis();
+				backupName =
+					"temp-search-" + companyId + "-" +
+						System.currentTimeMillis();
 			}
 
+			String backupFileName = null;
+
 			try {
-				LuceneHelperUtil.dumpIndex(
-					TestPropsValues.getCompanyId(),
-					new FileOutputStream(fileName));
+				backupFileName = SearchEngineUtil.backup(
+					companyId, SearchEngineUtil.SYSTEM_ENGINE_ID, backupName);
+
+				if (initialize) {
+					Runtime runtime = Runtime.getRuntime();
+
+					runtime.addShutdownHook(
+						new DeleteFileShutdownHook(backupFileName));
+				}
 			}
 			catch (Exception e) {
 				throw new RuntimeException(e);
 			}
 			finally {
 				if (initialize) {
-					_initializedLuceneFileNames.put(companyId, fileName);
+					_initializedIndexNames.put(companyId, backupFileName);
 				}
 				else {
-					_luceneFileNames.put(companyId, fileName);
+					_indexNames.put(companyId, backupFileName);
 				}
 			}
 		}
@@ -235,44 +237,54 @@ public class ResetDatabaseExecutionTestListener
 			new File(PropsUtil.get(PropsKeys.JCR_JACKRABBIT_REPOSITORY_ROOT)));
 	}
 
-	protected void restoreLuceneStores(boolean initialize) {
-		Map<Long, String> luceneFileNames = _luceneFileNames;
+	protected void restoreSearchIndices(boolean initialize) {
+		Map<Long, String> backupFileNames = _indexNames;
 
 		if (initialize) {
-			luceneFileNames = _initializedLuceneFileNames;
+			backupFileNames = _initializedIndexNames;
 		}
 
-		for (Map.Entry<Long, String> entry : luceneFileNames.entrySet()) {
-			String fileName = entry.getValue();
+		for (Map.Entry<Long, String> entry : backupFileNames.entrySet()) {
+			String backupFileName = entry.getValue();
 
 			try {
-				LuceneHelperUtil.loadIndex(
-					entry.getKey(), new FileInputStream(fileName));
+				SearchEngineUtil.restore(entry.getKey(), backupFileName);
 			}
 			catch (Exception e) {
 				throw new RuntimeException(e);
 			}
 			finally {
 				if (!initialize) {
-					FileUtil.delete(fileName);
+					try {
+						SearchEngineUtil.removeBackup(
+							entry.getKey(), backupFileName);
+					}
+					catch (SearchException e) {
+						if (_log.isInfoEnabled()) {
+							_log.info("Unable to remove backup", e);
+						}
+					}
 				}
 			}
 		}
 
 		if (!initialize) {
-			luceneFileNames.clear();
+			backupFileNames.clear();
 		}
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(
+		ResetDatabaseExecutionTestListener.class);
+
 	private static String _initializedDLFileSystemStoreDirName;
 	private static String _initializedDLJCRStoreDirName;
-	private static Map<Long, String> _initializedLuceneFileNames =
+	private static Map<Long, String> _initializedIndexNames =
 		new HashMap<Long, String>();
 
 	private String _dlFileSystemStoreDirName;
 	private String _dlJCRStoreDirName;
+	private Map<Long, String> _indexNames = new HashMap<Long, String>();
 	private Level _level;
-	private Map<Long, String> _luceneFileNames = new HashMap<Long, String>();
 
 	private class DeleteFileShutdownHook extends Thread {
 

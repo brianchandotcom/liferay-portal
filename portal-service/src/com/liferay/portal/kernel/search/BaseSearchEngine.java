@@ -30,6 +30,13 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 public class BaseSearchEngine implements SearchEngine {
 
 	@Override
+	public String backup(long companyId, String backupName)
+		throws SearchException {
+
+		return null;
+	}
+
+	@Override
 	public BooleanClauseFactory getBooleanClauseFactory() {
 		if (_booleanClauseFactory == null) {
 			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
@@ -171,7 +178,17 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	@Override
+	public void removeBackup(long companyId, String backupName)
+		throws SearchException {
+	}
+
+	@Override
 	public void removeCompany(long companyId) {
+	}
+
+	@Override
+	public void restore(long companyId, String backupName)
+		throws SearchException {
 	}
 
 	public void setBooleanClauseFactory(

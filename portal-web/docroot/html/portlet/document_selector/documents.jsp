@@ -325,9 +325,11 @@ portletURL.setParameter("type", type);
 			searchContainer.setResults(DLUtil.getFileEntries(hits));
 		}
 		else {
-			searchContainer.setTotal(DLAppServiceUtil.getFileEntriesCount(groupId, folderId));
+			String[] mimeTypes = DocumentSelectorUtil.getMimeTypes(request);
 
-			searchContainer.setResults(DLAppServiceUtil.getFileEntries(groupId, folderId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
+			searchContainer.setTotal(DLAppServiceUtil.getFileEntriesCount(groupId, folderId, mimeTypes));
+
+			searchContainer.setResults(DLAppServiceUtil.getFileEntries(groupId, folderId, mimeTypes, searchContainer.getStart(), searchContainer.getEnd()));
 		}
 		%>
 

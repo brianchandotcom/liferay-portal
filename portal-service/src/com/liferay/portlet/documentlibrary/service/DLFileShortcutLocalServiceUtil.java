@@ -259,6 +259,19 @@ public class DLFileShortcutLocalServiceUtil {
 	}
 
 	/**
+	* Returns the document library file shortcut with the matching UUID and company.
+	*
+	* @param uuid the document library file shortcut's UUID
+	* @param companyId the primary key of the company
+	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchDLFileShortcutByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .fetchDLFileShortcutByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
 	* Returns the document library file shortcut matching the UUID and group.
 	*
 	* @param uuid the document library file shortcut's UUID
@@ -297,6 +310,20 @@ public class DLFileShortcutLocalServiceUtil {
 	}
 
 	/**
+	* Returns the document library file shortcut with the matching UUID and company.
+	*
+	* @param uuid the document library file shortcut's UUID
+	* @param companyId the primary key of the company
+	* @return the matching document library file shortcut
+	* @throws PortalException if a matching document library file shortcut could not be found
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut getDLFileShortcutByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDLFileShortcutByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
 	* Returns the document library file shortcut matching the UUID and group.
 	*
 	* @param uuid the document library file shortcut's UUID
@@ -324,19 +351,6 @@ public class DLFileShortcutLocalServiceUtil {
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getDLFileShortcuts(
 		int start, int end) {
 		return getService().getDLFileShortcuts(start, end);
-	}
-
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getDLFileShortcutsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().getDLFileShortcutsByUuidAndCompanyId(uuid, companyId);
-	}
-
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getDLFileShortcutsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileShortcut> orderByComparator) {
-		return getService()
-				   .getDLFileShortcutsByUuidAndCompanyId(uuid, companyId,
-			start, end, orderByComparator);
 	}
 
 	/**

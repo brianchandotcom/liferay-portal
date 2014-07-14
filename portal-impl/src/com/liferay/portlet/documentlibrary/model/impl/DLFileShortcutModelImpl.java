@@ -688,8 +688,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 		TrashHandler trashHandler = getTrashHandler();
 
-		if (!Validator.isNull(trashHandler.getContainerModelClassName(
-						getPrimaryKey()))) {
+		if (!Validator.isNull(trashHandler.getContainerModelClassName())) {
 			ContainerModel containerModel = null;
 
 			try {
@@ -706,8 +705,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 					return trashedModel.getTrashEntry();
 				}
 
-				trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName(
-							containerModel.getContainerModelId()));
+				trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName());
 
 				if (trashHandler == null) {
 					return null;
@@ -745,8 +743,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		TrashHandler trashHandler = getTrashHandler();
 
 		if ((trashHandler == null) ||
-				Validator.isNull(trashHandler.getContainerModelClassName(
-						getPrimaryKey()))) {
+				Validator.isNull(trashHandler.getContainerModelClassName())) {
 			return false;
 		}
 

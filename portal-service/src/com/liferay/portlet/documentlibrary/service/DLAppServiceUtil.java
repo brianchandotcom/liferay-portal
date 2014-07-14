@@ -652,6 +652,16 @@ public class DLAppServiceUtil {
 		return getService().getFileEntries(repositoryId, folderId, mimeTypes);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
+		long repositoryId, long folderId, java.lang.String[] mimeTypes,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFileEntries(repositoryId, folderId, mimeTypes, start,
+			end, obc);
+	}
+
 	/**
 	* Returns a range of all the file entries in the folder.
 	*
@@ -801,6 +811,13 @@ public class DLAppServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getFileEntriesCount(repositoryId, folderId, fileEntryTypeId);
+	}
+
+	public static int getFileEntriesCount(long repositoryId, long folderId,
+		java.lang.String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFileEntriesCount(repositoryId, folderId, mimeTypes);
 	}
 
 	/**

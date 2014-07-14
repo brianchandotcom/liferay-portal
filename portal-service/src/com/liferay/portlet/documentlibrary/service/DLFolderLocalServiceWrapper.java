@@ -318,6 +318,20 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
+	* Returns the document library folder with the matching UUID and company.
+	*
+	* @param uuid the document library folder's UUID
+	* @param companyId the primary key of the company
+	* @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
+	*/
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder fetchDLFolderByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _dlFolderLocalService.fetchDLFolderByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
 	* Returns the document library folder matching the UUID and group.
 	*
 	* @param uuid the document library folder's UUID
@@ -420,6 +434,22 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	/**
+	* Returns the document library folder with the matching UUID and company.
+	*
+	* @param uuid the document library folder's UUID
+	* @param companyId the primary key of the company
+	* @return the matching document library folder
+	* @throws PortalException if a matching document library folder could not be found
+	*/
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder getDLFolderByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderLocalService.getDLFolderByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
 	* Returns the document library folder matching the UUID and group.
 	*
 	* @param uuid the document library folder's UUID
@@ -449,21 +479,6 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFolders(
 		int start, int end) {
 		return _dlFolderLocalService.getDLFolders(start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFoldersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _dlFolderLocalService.getDLFoldersByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFoldersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFolder> orderByComparator) {
-		return _dlFolderLocalService.getDLFoldersByUuidAndCompanyId(uuid,
-			companyId, start, end, orderByComparator);
 	}
 
 	/**

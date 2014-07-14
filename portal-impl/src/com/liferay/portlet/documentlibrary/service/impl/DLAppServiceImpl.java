@@ -988,10 +988,20 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			long repositoryId, long folderId, String[] mimeTypes)
 		throws PortalException {
 
+		return getFileEntries(
+			repositoryId, folderId, mimeTypes, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	@Override
+	public List<FileEntry> getFileEntries(
+			long repositoryId, long folderId, String[] mimeTypes, int start,
+			int end, OrderByComparator<FileEntry> obc)
+		throws PortalException {
+
 		Repository repository = getRepository(repositoryId);
 
-		return repository.getFileEntries(
-			folderId, mimeTypes, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return repository.getFileEntries(folderId, mimeTypes, start, end, obc);
 	}
 
 	/**
@@ -1101,6 +1111,16 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(repositoryId);
 
 		return repository.getFileEntriesCount(folderId, fileEntryTypeId);
+	}
+
+	@Override
+	public int getFileEntriesCount(
+			long repositoryId, long folderId, String[] mimeTypes)
+		throws PortalException {
+
+		Repository repository = getRepository(repositoryId);
+
+		return repository.getFileEntriesCount(folderId, mimeTypes);
 	}
 
 	/**

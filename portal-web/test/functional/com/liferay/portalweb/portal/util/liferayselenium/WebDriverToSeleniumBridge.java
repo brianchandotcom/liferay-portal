@@ -1332,8 +1332,6 @@ public class WebDriverToSeleniumBridge
 
 		Select select = new Select(webElement);
 
-		List<WebElement> optionWebElements = select.getOptions();
-
 		String label = optionLocator;
 
 		if (optionLocator.startsWith("index=")) {
@@ -1352,6 +1350,8 @@ public class WebDriverToSeleniumBridge
 				selectByRegexpValue(selectLocator, regexp);
 			}
 			else {
+				List<WebElement> optionWebElements = select.getOptions();
+
 				for (WebElement optionWebElement : optionWebElements) {
 					String optionWebElementValue =
 						optionWebElement.getAttribute("value");
@@ -1363,7 +1363,7 @@ public class WebDriverToSeleniumBridge
 					}
 				}
 
-				selectByLabel(selectLocator, label);
+				select.selectByValue(label);
 			}
 		}
 		else {
@@ -1377,7 +1377,7 @@ public class WebDriverToSeleniumBridge
 				selectByRegexpText(selectLocator, regexp);
 			}
 			else {
-				selectByLabel(selectLocator, label);
+				select.selectByVisibleText(label);
 			}
 		}
 	}
@@ -1902,54 +1902,6 @@ public class WebDriverToSeleniumBridge
 
 		javascriptExecutor.executeScript(
 			"arguments[0].scrollIntoView();", webElement);
-	}
-
-	protected void selectByLabel(String selectLocator, String label) {
-		WebElement webElement = getWebElement(selectLocator);
-
-		keyPress(selectLocator, "\\36");
-
-		if (!label.equals(getSelectedLabel(selectLocator))) {
-			webElement.sendKeys(label);
-
-			keyPress(selectLocator, "\\13");
-		}
-
-		if (!label.equals(getSelectedLabel(selectLocator))) {
-			Select select = new Select(webElement);
-
-			select.selectByVisibleText(label);
-		}
-
-		if (!label.equals(getSelectedLabel(selectLocator))) {
-			webElement.click();
-
-			Select select = new Select(webElement);
-
-			List<WebElement> optionWebElements = select.getOptions();
-
-			for (WebElement optionWebElement : optionWebElements) {
-				String optionWebElementText = optionWebElement.getText();
-
-				if (optionWebElementText.equals(label)) {
-					WrapsDriver wrapsDriver = (WrapsDriver)optionWebElement;
-
-					WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-					Actions actions = new Actions(webDriver);
-
-					actions.moveToElement(optionWebElement);
-
-					actions.doubleClick(optionWebElement);
-
-					Action action = actions.build();
-
-					action.perform();
-
-					break;
-				}
-			}
-		}
 	}
 
 	protected void selectByRegexpText(String selectLocator, String regexp) {

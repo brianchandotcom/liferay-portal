@@ -148,6 +148,33 @@ public class SearchEngineUtil {
 		setSearchEngine(searchEngineId, searchEngine);
 	}
 
+	public synchronized static void backup(long companyId, String backupName)
+		throws SearchException {
+
+		for (SearchEngine searchEngine : _searchEngines.values()) {
+			searchEngine.backup(companyId, backupName);
+		}
+	}
+
+	public synchronized static String backup(
+			long companyId, String searchEngineId, String backupName)
+		throws SearchException {
+
+		SearchEngine searchEngine = getSearchEngine(searchEngineId);
+
+		return searchEngine.backup(companyId, backupName);
+	}
+
+	public synchronized static void backup(String backupName)
+		throws SearchException {
+
+		for (SearchEngine searchEngine : _searchEngines.values()) {
+			for (long companyId : _companyIds) {
+				searchEngine.backup(companyId, backupName);
+			}
+		}
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #deleteDocument(String, long,
 	 *             String)}
@@ -529,6 +556,25 @@ public class SearchEngineUtil {
 		return _indexReadOnly;
 	}
 
+	public synchronized static void removeBackup(
+			long companyId, String backupName)
+		throws SearchException {
+
+		for (SearchEngine searchEngine : _searchEngines.values()) {
+			searchEngine.removeBackup(companyId, backupName);
+		}
+	}
+
+	public synchronized static void removeBackup(String backupName)
+		throws SearchException {
+
+		for (SearchEngine searchEngine : _searchEngines.values()) {
+			for (long companyId : _companyIds) {
+				searchEngine.removeBackup(companyId, backupName);
+			}
+		}
+	}
+
 	public synchronized static void removeCompany(long companyId) {
 		if (!_companyIds.contains(companyId)) {
 			return;
@@ -545,6 +591,24 @@ public class SearchEngineUtil {
 		PortalRuntimePermission.checkSearchEngine(searchEngineId);
 
 		return _searchEngines.remove(searchEngineId);
+	}
+
+	public synchronized static void restore(long companyId, String backupName)
+		throws SearchException {
+
+		for (SearchEngine searchEngine : _searchEngines.values()) {
+			searchEngine.restore(companyId, backupName);
+		}
+	}
+
+	public synchronized static void restore(String backupName)
+		throws SearchException {
+
+		for (SearchEngine searchEngine : _searchEngines.values()) {
+			for (long companyId : _companyIds) {
+				searchEngine.restore(companyId, backupName);
+			}
+		}
 	}
 
 	/**

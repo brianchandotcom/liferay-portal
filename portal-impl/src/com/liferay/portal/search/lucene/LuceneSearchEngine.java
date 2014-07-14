@@ -15,11 +15,42 @@
 package com.liferay.portal.search.lucene;
 
 import com.liferay.portal.kernel.search.BaseSearchEngine;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 /**
  * @author Michael C. Han
  */
 public class LuceneSearchEngine extends BaseSearchEngine {
+
+	@Override
+	public synchronized String backup(long companyId, String backupName)
+		throws SearchException {
+
+		FileOutputStream fileOutputStream = null;
+
+		try {
+			String fileName = getFileName(backupName);
+
+			fileOutputStream = new FileOutputStream(fileName);
+
+			LuceneHelperUtil.dumpIndex(companyId, fileOutputStream);
+
+			return fileName;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		finally {
+			StreamUtil.cleanUp(fileOutputStream);
+		}
+	}
 
 	@Override
 	public void initialize(long companyId) {
@@ -29,12 +60,47 @@ public class LuceneSearchEngine extends BaseSearchEngine {
 	}
 
 	@Override
+	public synchronized void removeBackup(long companyId, String backupName)
+		throws SearchException {
+
+		String fileName = getFileName(backupName);
+
+		FileUtil.delete(fileName);
+	}
+
+	@Override
 	public void removeCompany(long companyId) {
 		super.removeCompany(companyId);
 
 		LuceneHelperUtil.delete(companyId);
 
 		LuceneHelperUtil.shutdown(companyId);
+	}
+
+	@Override
+	public synchronized void restore(long companyId, String backupName)
+		throws SearchException {
+
+		FileInputStream fileInputStream = null;
+
+		try {
+			String fileName = getFileName(backupName);
+
+			fileInputStream = new FileInputStream(fileName);
+
+			LuceneHelperUtil.loadIndex(companyId, fileInputStream);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		finally {
+			StreamUtil.cleanUp(fileInputStream);
+		}
+	}
+
+	protected String getFileName(String backupName) {
+		return SystemProperties.get(SystemProperties.TMP_DIR) +
+			File.pathSeparator + backupName;
 	}
 
 }

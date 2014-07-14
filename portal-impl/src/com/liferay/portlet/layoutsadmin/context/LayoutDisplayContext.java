@@ -92,30 +92,6 @@ public class LayoutDisplayContext {
 		return _liveGroup;
 	}
 
-	public Layout getRefererLayout() {
-		if (_refererLayout != null) {
-			return _refererLayout;
-		}
-
-		if (getRefererPlid() != LayoutConstants.DEFAULT_PLID) {
-			_refererLayout = LayoutLocalServiceUtil.fetchLayout(
-				getRefererPlid());
-		}
-
-		return _refererLayout;
-	}
-
-	public Long getRefererPlid() {
-		if (_refererPlid != null) {
-			return _refererPlid;
-		}
-
-		_refererPlid = ParamUtil.getLong(
-			_request, "refererPlid", LayoutConstants.DEFAULT_PLID);
-
-		return _refererPlid;
-	}
-
 	public Group getSelGroup() {
 		if (_selGroup != null) {
 			return _selGroup;
@@ -191,8 +167,6 @@ public class LayoutDisplayContext {
 	private Long _groupId;
 	private UnicodeProperties _groupTypeSettings;
 	private Group _liveGroup;
-	private Layout _refererLayout;
-	private Long _refererPlid;
 	private HttpServletRequest _request;
 	private Group _selGroup;
 	private Layout _selLayout;

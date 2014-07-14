@@ -38,7 +38,6 @@ long liveGroupId = liveGroup.getGroupId();
 long stagingGroupId = layoutDisplayContext.getStagingGroupId();
 
 long selPlid = layoutDisplayContext.getSelPlid();
-long refererPlid = layoutDisplayContext.getRefererPlid();
 
 boolean privateLayout = tabs1.equals("my-dashboard") || tabs1.equals("private-pages");
 long layoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
@@ -53,8 +52,6 @@ if (selLayout != null) {
 	privateLayout = selLayout.isPrivateLayout();
 	layoutId = selLayout.getLayoutId();
 }
-
-Layout refererLayout = layoutDisplayContext.getRefererLayout();
 
 Organization organization = null;
 User selUser = null;

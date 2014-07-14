@@ -31,7 +31,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ViewWebSiteNotificationForNewThreadInCategory" priority="5">
+	<command name="ViewWebsiteNotificationForNewWikiPage" priority="5">
 		<execute macro="WikiPortlet#subscribeToNodeCP">
 			<var name="wikiNodeName" value="Main" />
 		</execute>
@@ -65,7 +65,7 @@
 			<var name="contentBody" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="WikiPage#viewPagePG">
+		<execute macro="WikiPage#viewPG">
 			<var name="wikiPageContent" value="Wiki Page Content" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
@@ -75,7 +75,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWebSiteNotificationForUpdatedThreadInCategory" priority="5">
+	<command name="ViewWebsiteNotificationForUpdatedWikiPage" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -119,7 +119,7 @@
 			<var name="contentBody" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="WikiPage#viewPagePG">
+		<execute macro="WikiPage#viewPG">
 			<var name="wikiPageContent" value="Wiki Page Content Edit" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>

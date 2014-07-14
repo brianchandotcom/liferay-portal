@@ -838,13 +838,24 @@
 	</command>
 
 	<command name="gotoPG">
-		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<if>
+			<equals arg1="${isOrphanPage}" arg2="true" />
+			<then>
+				<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ORPHAN_PAGES" value1="Orphan Pages" />
+			</then>
+			<else>
+				<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+			</else>
+		</if>
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
+		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
+		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_STATUS" value1="Approved" />
+		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_REVISION" value1="${wikiPageRevision}" />
+		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_USER" value1="${wikiPageUsername}" />
+		<execute action="PGWikiAllpages#assertElementPresent" locator-key1="WIKI_PAGE_TABLE_DATE" />
 		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
-
-		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
 	</command>
 
 	<command name="linkOrphanPageHtmlPG">
@@ -1436,6 +1447,13 @@
 		<execute action="PGWikiAllpages#assertElementNotPresent" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
 	</command>
 
+	<command name="viewPagePG">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPageTitle}" />
+		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
+	</command>
+
 	<command name="viewPageWithChildPage">
 		<execute macro="WikiPage#viewPG" />
 
@@ -1483,25 +1501,6 @@
 	</command>
 
 	<command name="viewPG">
-		<if>
-			<equals arg1="${isOrphanPage}" arg2="true" />
-			<then>
-				<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ORPHAN_PAGES" value1="Orphan Pages" />
-			</then>
-			<else>
-				<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
-			</else>
-		</if>
-
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
-		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_STATUS" value1="Approved" />
-		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_REVISION" value1="${wikiPageRevision}" />
-		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_USER" value1="${wikiPageUsername}" />
-		<execute action="PGWikiAllpages#assertElementPresent" locator-key1="WIKI_PAGE_TABLE_DATE" />
-		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
-
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
 
 		<if>
@@ -1576,13 +1575,6 @@
 				<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContentOutgoingLink}" />
 			</then>
 		</if>
-	</command>
-
-	<command name="viewPagePG">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPageTitle}" />
-		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 	</command>
 
 	<command name="viewPGViaWD">

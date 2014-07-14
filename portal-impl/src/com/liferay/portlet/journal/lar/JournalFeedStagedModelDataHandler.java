@@ -56,9 +56,7 @@ public class JournalFeedStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		JournalFeed feed =
-			JournalFeedLocalServiceUtil.fetchJournalFeedByUuidAndGroupId(
-				uuid, groupId);
+		JournalFeed feed = fetchExistingStagedModel(uuid, groupId);
 
 		if (feed != null) {
 			JournalFeedLocalServiceUtil.deleteFeed(feed);
@@ -160,6 +158,14 @@ public class JournalFeedStagedModelDataHandler
 	}
 
 	@Override
+	protected JournalFeed doFetchExistingStagedModel(
+		String uuid, long groupId) {
+
+		return JournalFeedLocalServiceUtil.fetchJournalFeedByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, JournalFeed feed)
 		throws Exception {
@@ -247,11 +253,8 @@ public class JournalFeedStagedModelDataHandler
 
 		try {
 			if (portletDataContext.isDataStrategyMirror()) {
-				JournalFeed existingFeed =
-					JournalFeedLocalServiceUtil.
-						fetchJournalFeedByUuidAndGroupId(
-							feed.getUuid(),
-							portletDataContext.getScopeGroupId());
+				JournalFeed existingFeed = fetchExistingStagedModel(
+					feed.getUuid(), portletDataContext.getScopeGroupId());
 
 				if (existingFeed == null) {
 					serviceContext.setUuid(feed.getUuid());

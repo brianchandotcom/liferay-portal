@@ -18,7 +18,6 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
@@ -57,6 +56,7 @@ import com.liferay.portal.model.LayoutStagingHandler;
 import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -100,8 +100,7 @@ public class LayoutStagedModelDataHandler
 
 		boolean privateLayout = extraDataJSONObject.getBoolean("privateLayout");
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-			uuid, groupId, privateLayout);
+		Layout layout = fetchExistingLayout(uuid, groupId, privateLayout);
 
 		if (layout != null) {
 			LayoutLocalServiceUtil.deleteLayout(
@@ -149,20 +148,14 @@ public class LayoutStagedModelDataHandler
 		long liveGroupId = GetterUtil.getLong(
 			referenceElement.attributeValue("live-group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
+		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
 
 		boolean privateLayout = GetterUtil.getBoolean(
 			referenceElement.attributeValue("private-layout"));
 
 		Layout existingLayout = null;
 
-		try {
-			existingLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				uuid, liveGroupId, privateLayout);
-		}
-		catch (SystemException se) {
-			throw new PortletDataException(se);
-		}
+		existingLayout = fetchExistingLayout(uuid, liveGroupId, privateLayout);
 
 		Map<Long, Layout> layouts =
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
@@ -187,13 +180,9 @@ public class LayoutStagedModelDataHandler
 	public boolean validateReference(
 		PortletDataContext portletDataContext, Element referenceElement) {
 
-		if (!validateMissingGroupReference(
-				portletDataContext, referenceElement)) {
-
-			return false;
-		}
-
 		String uuid = referenceElement.attributeValue("uuid");
+
+		validateMissingGroupReference(portletDataContext, referenceElement);
 
 		Map<Long, Long> groupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -202,25 +191,19 @@ public class LayoutStagedModelDataHandler
 		long liveGroupId = GetterUtil.getLong(
 			referenceElement.attributeValue("live-group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
+		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
 
 		boolean privateLayout = GetterUtil.getBoolean(
 			referenceElement.attributeValue("private-layout"));
 
-		try {
-			Layout existingLayout =
-				LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-					uuid, liveGroupId, privateLayout);
+		Layout existingLayout = fetchExistingLayout(
+			uuid, liveGroupId, privateLayout);
 
-			if (existingLayout == null) {
-				return false;
-			}
-
-			return true;
-		}
-		catch (SystemException se) {
+		if (existingLayout == null) {
 			return false;
 		}
+
+		return true;
 	}
 
 	protected String[] appendPortletIds(
@@ -327,9 +310,8 @@ public class LayoutStagedModelDataHandler
 		String action = layoutElement.attributeValue(Constants.ACTION);
 
 		if (action.equals(Constants.DELETE)) {
-			Layout deletingLayout =
-				LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-					layoutUuid, groupId, privateLayout);
+			Layout deletingLayout = fetchExistingLayout(
+				layoutUuid, groupId, privateLayout);
 
 			LayoutLocalServiceUtil.deleteLayout(
 				deletingLayout, false,
@@ -389,7 +371,7 @@ public class LayoutStagedModelDataHandler
 					PortletDataHandlerKeys.
 						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
 
-			existingLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			existingLayout = fetchExistingLayout(
 				layout.getUuid(), groupId, privateLayout);
 
 			if (SitesUtil.isLayoutModifiedSinceLastMerge(existingLayout)) {
@@ -418,7 +400,7 @@ public class LayoutStagedModelDataHandler
 			// The default behaviour of import mode is
 			// PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID
 
-			existingLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			existingLayout = fetchExistingLayout(
 				layout.getUuid(), groupId, privateLayout);
 
 			if (existingLayout == null) {
@@ -786,6 +768,47 @@ public class LayoutStagedModelDataHandler
 		}
 
 		return new Object[] {url.substring(x, y), url, x, y};
+	}
+
+	protected Layout fetchExistingLayout(
+		String uuid, long groupId, boolean privateLayout) {
+
+		// Try to fetch it from the actual group
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			uuid, groupId, privateLayout);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		try {
+
+			// Try to fetch it from the parent sites
+
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			while ((group = group.getParentGroup()) != null) {
+				layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+					uuid, group.getGroupId(), privateLayout);
+
+				if (layout != null) {
+					break;
+				}
+			}
+
+			return layout;
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn("Unable to fetch layout from group " + groupId);
+			}
+
+			return null;
+		}
 	}
 
 	protected void fixExportTypeSettings(Layout layout) throws Exception {

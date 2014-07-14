@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.mobiledevicerules.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -38,10 +39,10 @@ public class MDRRuleStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData) {
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
 
-		MDRRule rule = MDRRuleLocalServiceUtil.fetchMDRRuleByUuidAndGroupId(
-			uuid, groupId);
+		MDRRule rule = fetchExistingStagedModel(uuid, groupId);
 
 		if (rule != null) {
 			MDRRuleLocalServiceUtil.deleteRule(rule);
@@ -77,6 +78,12 @@ public class MDRRuleStagedModelDataHandler
 	}
 
 	@Override
+	protected MDRRule doFetchExistingStagedModel(String uuid, long groupId) {
+		return MDRRuleLocalServiceUtil.fetchMDRRuleByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, MDRRule rule)
 		throws Exception {
@@ -101,9 +108,8 @@ public class MDRRuleStagedModelDataHandler
 		MDRRule importedRule = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			MDRRule existingRule =
-				MDRRuleLocalServiceUtil.fetchMDRRuleByUuidAndGroupId(
-					rule.getUuid(), portletDataContext.getScopeGroupId());
+			MDRRule existingRule = fetchExistingStagedModel(
+				rule.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingRule == null) {
 				serviceContext.setUuid(rule.getUuid());

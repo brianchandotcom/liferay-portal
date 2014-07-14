@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
@@ -58,9 +57,7 @@ public class DDMTemplateStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		DDMTemplate ddmTemplate =
-			DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
-				uuid, groupId);
+		DDMTemplate ddmTemplate = fetchExistingStagedModel(uuid, groupId);
 
 		if (ddmTemplate != null) {
 			DDMTemplateLocalServiceUtil.deleteTemplate(ddmTemplate);
@@ -124,7 +121,7 @@ public class DDMTemplateStagedModelDataHandler
 		long liveGroupId = GetterUtil.getLong(
 			referenceElement.attributeValue("live-group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
+		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
 
 		long classNameId = PortalUtil.getClassNameId(
 			referenceElement.attributeValue("referenced-class-name"));
@@ -134,13 +131,8 @@ public class DDMTemplateStagedModelDataHandler
 
 		DDMTemplate existingTemplate = null;
 
-		try {
-			existingTemplate = fetchExistingTemplate(
-				uuid, liveGroupId, classNameId, templateKey, preloaded);
-		}
-		catch (SystemException se) {
-			throw new PortletDataException(se);
-		}
+		existingTemplate = fetchExistingTemplate(
+			uuid, liveGroupId, classNameId, templateKey, preloaded);
 
 		Map<Long, Long> templateIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -162,13 +154,9 @@ public class DDMTemplateStagedModelDataHandler
 	public boolean validateReference(
 		PortletDataContext portletDataContext, Element referenceElement) {
 
-		if (!validateMissingGroupReference(
-				portletDataContext, referenceElement)) {
-
-			return false;
-		}
-
 		String uuid = referenceElement.attributeValue("uuid");
+
+		validateMissingGroupReference(portletDataContext, referenceElement);
 
 		Map<Long, Long> groupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -177,7 +165,7 @@ public class DDMTemplateStagedModelDataHandler
 		long liveGroupId = GetterUtil.getLong(
 			referenceElement.attributeValue("live-group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
+		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
 
 		long classNameId = PortalUtil.getClassNameId(
 			referenceElement.attributeValue("referenced-class-name"));
@@ -185,19 +173,14 @@ public class DDMTemplateStagedModelDataHandler
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
-		try {
-			DDMTemplate existingTemplate = fetchExistingTemplate(
-				uuid, liveGroupId, classNameId, templateKey, preloaded);
+		DDMTemplate existingTemplate = fetchExistingTemplate(
+			uuid, liveGroupId, classNameId, templateKey, preloaded);
 
-			if (existingTemplate == null) {
-				return false;
-			}
-
-			return true;
-		}
-		catch (SystemException se) {
+		if (existingTemplate == null) {
 			return false;
 		}
+
+		return true;
 	}
 
 	@Override
@@ -262,6 +245,14 @@ public class DDMTemplateStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			templateElement, ExportImportPathUtil.getModelPath(template),
 			template);
+	}
+
+	@Override
+	protected DDMTemplate doFetchExistingStagedModel(
+		String uuid, long groupId) {
+
+		return DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override
@@ -400,9 +391,7 @@ public class DDMTemplateStagedModelDataHandler
 		DDMTemplate existingTemplate = null;
 
 		if (!preloaded) {
-			existingTemplate =
-				DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
-					uuid, groupId);
+			existingTemplate = fetchExistingStagedModel(uuid, groupId);
 		}
 		else {
 			existingTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(

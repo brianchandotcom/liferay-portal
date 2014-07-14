@@ -49,9 +49,7 @@ public class DLFileShortcutStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		DLFileShortcut dlFileShortcut =
-			DLFileShortcutLocalServiceUtil.fetchDLFileShortcutByUuidAndGroupId(
-				uuid, groupId);
+		DLFileShortcut dlFileShortcut = fetchExistingStagedModel(uuid, groupId);
 
 		if (dlFileShortcut != null) {
 			DLFileShortcutLocalServiceUtil.deleteFileShortcut(dlFileShortcut);
@@ -97,6 +95,14 @@ public class DLFileShortcutStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			fileShortcutElement,
 			ExportImportPathUtil.getModelPath(fileShortcut), fileShortcut);
+	}
+
+	@Override
+	protected DLFileShortcut doFetchExistingStagedModel(
+		String uuid, long groupId) {
+
+		return DLFileShortcutLocalServiceUtil.
+			fetchDLFileShortcutByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
@@ -158,11 +164,8 @@ public class DLFileShortcutStagedModelDataHandler
 		DLFileShortcut importedFileShortcut = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			DLFileShortcut existingFileShortcut =
-				DLFileShortcutLocalServiceUtil.
-					fetchDLFileShortcutByUuidAndGroupId(
-						fileShortcut.getUuid(),
-						portletDataContext.getScopeGroupId());
+			DLFileShortcut existingFileShortcut = fetchExistingStagedModel(
+				fileShortcut.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingFileShortcut == null) {
 				serviceContext.setUuid(fileShortcut.getUuid());
@@ -194,9 +197,8 @@ public class DLFileShortcutStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(fileShortcut.getUserUuid());
 
-		DLFileShortcut existingFileShortcut =
-			DLFileShortcutLocalServiceUtil.fetchDLFileShortcutByUuidAndGroupId(
-				fileShortcut.getUuid(), portletDataContext.getScopeGroupId());
+		DLFileShortcut existingFileShortcut = fetchExistingStagedModel(
+			fileShortcut.getUuid(), portletDataContext.getScopeGroupId());
 
 		if ((existingFileShortcut == null) ||
 			!existingFileShortcut.isInTrash()) {

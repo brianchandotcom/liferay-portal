@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -45,11 +46,10 @@ public class MBThreadFlagStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData) {
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
 
-		MBThreadFlag threadFlag =
-			MBThreadFlagLocalServiceUtil.fetchMBThreadFlagByUuidAndGroupId(
-				uuid, groupId);
+		MBThreadFlag threadFlag = fetchExistingStagedModel(uuid, groupId);
 
 		if (threadFlag != null) {
 			MBThreadFlagLocalServiceUtil.deleteThreadFlag(threadFlag);
@@ -91,6 +91,14 @@ public class MBThreadFlagStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			threadFlagElement, ExportImportPathUtil.getModelPath(threadFlag),
 			threadFlag);
+	}
+
+	@Override
+	protected MBThreadFlag doFetchExistingStagedModel(
+		String uuid, long groupId) {
+
+		return MBThreadFlagLocalServiceUtil.fetchMBThreadFlagByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override

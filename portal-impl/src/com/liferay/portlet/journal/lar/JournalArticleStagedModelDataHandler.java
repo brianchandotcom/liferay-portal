@@ -79,11 +79,9 @@ public class JournalArticleStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		JournalArticleResource articleResource =
-			JournalArticleResourceLocalServiceUtil.fetchArticleResource(
-				uuid, groupId);
+		JournalArticle article = fetchExistingStagedModel(uuid, groupId);
 
-		if (articleResource == null) {
+		if (article == null) {
 			return;
 		}
 
@@ -92,18 +90,15 @@ public class JournalArticleStagedModelDataHandler
 
 		if (Validator.isNull(extraData) ||
 			extraDataJSONObject.getBoolean("inTrash")) {
-
-			JournalArticleLocalServiceUtil.deleteArticle(
-				groupId, articleResource.getArticleId(), null);
 		}
 		else {
 			double version = extraDataJSONObject.getDouble("version");
 
-			JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
-				groupId, articleResource.getArticleId(), version);
-
-			JournalArticleLocalServiceUtil.deleteArticle(article);
+			article = JournalArticleLocalServiceUtil.getArticle(
+				groupId, article.getArticleId(), version);
 		}
+
+		JournalArticleLocalServiceUtil.deleteArticle(article);
 	}
 
 	@Override
@@ -183,7 +178,7 @@ public class JournalArticleStagedModelDataHandler
 		long liveGroupId = GetterUtil.getLong(
 			referenceElement.attributeValue("live-group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
+		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
 
 		String articleArticleId = referenceElement.attributeValue("article-id");
 		boolean preloaded = GetterUtil.getBoolean(
@@ -191,14 +186,9 @@ public class JournalArticleStagedModelDataHandler
 
 		JournalArticle existingArticle = null;
 
-		try {
-			existingArticle = fetchExistingArticle(
-				articleResourceUuid, liveGroupId, articleArticleId, null, 0.0,
-				preloaded);
-		}
-		catch (Exception se) {
-			throw new PortletDataException(se);
-		}
+		existingArticle = fetchExistingArticle(
+			articleResourceUuid, liveGroupId, articleArticleId, null, 0.0,
+			preloaded);
 
 		Map<String, String> articleArticleIds =
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
@@ -220,14 +210,10 @@ public class JournalArticleStagedModelDataHandler
 	public boolean validateReference(
 		PortletDataContext portletDataContext, Element referenceElement) {
 
-		if (!validateMissingGroupReference(
-				portletDataContext, referenceElement)) {
-
-			return false;
-		}
-
 		String articleResourceUuid = referenceElement.attributeValue(
 			"article-resource-uuid");
+
+		validateMissingGroupReference(portletDataContext, referenceElement);
 
 		Map<Long, Long> groupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -236,30 +222,21 @@ public class JournalArticleStagedModelDataHandler
 		long liveGroupId = GetterUtil.getLong(
 			referenceElement.attributeValue("live-group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId, liveGroupId);
+		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
 
 		String articleArticleId = referenceElement.attributeValue("article-id");
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
-		try {
-			JournalArticle existingArticle = fetchExistingArticle(
-				articleResourceUuid, liveGroupId, articleArticleId, null, 0.0,
-				preloaded);
+		JournalArticle existingArticle = fetchExistingArticle(
+			articleResourceUuid, liveGroupId, articleArticleId, null, 0.0,
+			preloaded);
 
-			if (existingArticle == null) {
-				return false;
-			}
-
-			return true;
-		}
-		catch (Exception se) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Unable to validate reference", se);
-			}
-
+		if (existingArticle == null) {
 			return false;
 		}
+
+		return true;
 	}
 
 	@Override
@@ -371,6 +348,23 @@ public class JournalArticleStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			articleElement, ExportImportPathUtil.getModelPath(article),
 			article);
+	}
+
+	@Override
+	protected JournalArticle doFetchExistingStagedModel(
+		String uuid, long groupId) {
+
+		JournalArticleResource existingArticleResource =
+			JournalArticleResourceLocalServiceUtil.fetchArticleResource(
+				uuid, groupId);
+
+		if (existingArticleResource == null) {
+			return null;
+		}
+
+		return JournalArticleLocalServiceUtil.fetchLatestArticle(
+			existingArticleResource.getResourcePrimKey(),
+			WorkflowConstants.STATUS_ANY, false);
 	}
 
 	@Override
@@ -793,23 +787,16 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	protected JournalArticle fetchExistingArticle(
-			String articleResourceUuid, long groupId, String articleId,
-			String newArticleId, double version, boolean preloaded)
-		throws PortalException {
-
-		JournalArticleResource existingArticleResource = null;
+		String articleResourceUuid, long groupId, String articleId,
+		String newArticleId, double version, boolean preloaded) {
 
 		if (!preloaded) {
-			existingArticleResource =
-				JournalArticleResourceLocalServiceUtil.
-					fetchJournalArticleResourceByUuidAndGroupId(
-						articleResourceUuid, groupId);
+			return fetchExistingStagedModel(articleResourceUuid, groupId);
 		}
-		else {
-			existingArticleResource =
-				JournalArticleResourceLocalServiceUtil.fetchArticleResource(
-					groupId, articleId);
-		}
+
+		JournalArticleResource existingArticleResource =
+			JournalArticleResourceLocalServiceUtil.fetchArticleResource(
+				groupId, articleId);
 
 		JournalArticle existingArticle = null;
 
@@ -829,23 +816,6 @@ public class JournalArticleStagedModelDataHandler
 		if ((existingArticle == null) && Validator.isNull(newArticleId)) {
 			existingArticle = JournalArticleLocalServiceUtil.fetchArticle(
 				groupId, articleId, version);
-
-			if (existingArticle != null) {
-				StringBundler sb = new StringBundler(10);
-
-				sb.append("The article in the LAR file with article resource ");
-				sb.append("UUID ");
-				sb.append(articleResourceUuid);
-				sb.append(", article ID ");
-				sb.append(articleId);
-				sb.append(", and version ");
-				sb.append(version);
-				sb.append("conflicts with an article in the database with ");
-				sb.append("article resource UUID ");
-				sb.append(existingArticle.getArticleResourceUuid());
-
-				throw new PortletDataException(sb.toString());
-			}
 		}
 
 		return existingArticle;

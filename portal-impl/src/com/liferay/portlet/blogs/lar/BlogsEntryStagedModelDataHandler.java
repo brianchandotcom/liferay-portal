@@ -49,9 +49,7 @@ public class BlogsEntryStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		BlogsEntry entry =
-			BlogsEntryLocalServiceUtil.fetchBlogsEntryByUuidAndGroupId(
-				uuid, groupId);
+		BlogsEntry entry = fetchExistingStagedModel(uuid, groupId);
 
 		if (entry != null) {
 			BlogsEntryLocalServiceUtil.deleteEntry(entry);
@@ -111,6 +109,12 @@ public class BlogsEntryStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			entryElement, ExportImportPathUtil.getModelPath(entry), entry);
+	}
+
+	@Override
+	protected BlogsEntry doFetchExistingStagedModel(String uuid, long groupId) {
+		return BlogsEntryLocalServiceUtil.fetchBlogsEntryByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override
@@ -181,9 +185,8 @@ public class BlogsEntryStagedModelDataHandler
 			if (portletDataContext.isDataStrategyMirror()) {
 				serviceContext.setAttribute("urlTitle", entry.getUrlTitle());
 
-				BlogsEntry existingEntry =
-					BlogsEntryLocalServiceUtil.fetchBlogsEntryByUuidAndGroupId(
-						entry.getUuid(), portletDataContext.getScopeGroupId());
+				BlogsEntry existingEntry = fetchExistingStagedModel(
+					entry.getUuid(), portletDataContext.getScopeGroupId());
 
 				if (existingEntry == null) {
 					serviceContext.setUuid(entry.getUuid());
@@ -234,9 +237,8 @@ public class BlogsEntryStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(entry.getUserUuid());
 
-		BlogsEntry existingEntry =
-			BlogsEntryLocalServiceUtil.fetchBlogsEntryByUuidAndGroupId(
-				entry.getUuid(), portletDataContext.getScopeGroupId());
+		BlogsEntry existingEntry = fetchExistingStagedModel(
+			entry.getUuid(), portletDataContext.getScopeGroupId());
 
 		if ((existingEntry == null) || !existingEntry.isInTrash()) {
 			return;

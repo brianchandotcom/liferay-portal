@@ -1227,21 +1227,6 @@
 
 	Liferay.provide(
 		Util,
-		'disableTextareaTabs',
-		function(textarea) {
-			textarea = A.one(textarea);
-
-			if (textarea && textarea.attr('textareatabs') != 'enabled') {
-				textarea.attr('textareatabs', 'disabled');
-
-				textarea.detach('keydown', Util.textareaTabs);
-			}
-		},
-		['aui-base']
-	);
-
-	Liferay.provide(
-		Util,
 		'disableToggleBoxes',
 		function(checkBoxId, toggleBoxId, checkDisabled) {
 			var checkBox = A.one('#' + checkBoxId);

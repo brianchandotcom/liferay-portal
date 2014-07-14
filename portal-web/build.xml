@@ -87,7 +87,7 @@
 
 				<concat destfile="${alloy.temp.dir}/aui_deprecated.css">
 					<filelist
-						dir="${alloy.build.dir}/aui-skin-deprecated"
+						dir="${alloy.build.dir}/aui-skin-deprecated/css"
 						files="aui-skin-deprecated.css"
 					/>
 				</concat>

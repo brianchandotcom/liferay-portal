@@ -31,11 +31,7 @@ Group liveGroup = layoutDisplayContext.getLiveGroup();
 Group stagingGroup = layoutDisplayContext.getStagingGroup();
 Group group = layoutDisplayContext.getGroup();
 
-long groupId = liveGroup.getGroupId();
-
-if (group != null) {
-	groupId = group.getGroupId();
-}
+long groupId = layoutDisplayContext.getGroupId();
 
 long liveGroupId = liveGroup.getGroupId();
 

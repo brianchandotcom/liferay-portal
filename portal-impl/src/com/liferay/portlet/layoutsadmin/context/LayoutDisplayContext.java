@@ -43,6 +43,20 @@ public class LayoutDisplayContext {
 		return _group;
 	}
 
+	public Long getGroupId() {
+		if (_groupId != null) {
+			return _groupId;
+		}
+
+		_groupId = getLiveGroup().getGroupId();
+
+		if (getGroup() != null) {
+			_groupId = getGroup().getGroupId();
+		}
+
+		return _groupId;
+	}
+
 	public Group getLiveGroup() {
 		if (_liveGroup != null) {
 			return _liveGroup;
@@ -93,6 +107,7 @@ public class LayoutDisplayContext {
 	}
 
 	private Group _group;
+	private Long _groupId;
 	private Group _liveGroup;
 	private HttpServletRequest _request;
 	private Group _selGroup;

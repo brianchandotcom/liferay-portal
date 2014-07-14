@@ -16,10 +16,9 @@ package com.liferay.ant.arquillian;
 
 import java.io.File;
 
-import org.apache.tools.ant.listener.Log4jListener;
-
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
+import org.apache.tools.ant.listener.Log4jListener;
 
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;

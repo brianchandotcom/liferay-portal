@@ -27,16 +27,13 @@ if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) || portletName.equals(PortletK
 
 Group selGroup = layoutDisplayContext.getSelGroup();
 
-Group liveGroup = null;
+Group liveGroup = layoutDisplayContext.getLiveGroup();
 Group stagingGroup = null;
 
 if (selGroup.isStagingGroup()) {
-	liveGroup = selGroup.getLiveGroup();
 	stagingGroup = selGroup;
 }
 else {
-	liveGroup = selGroup;
-
 	if (selGroup.isStaged()) {
 		if (selGroup.isStagedRemotely()) {
 			stagingGroup = selGroup;

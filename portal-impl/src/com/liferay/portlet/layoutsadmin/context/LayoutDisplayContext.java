@@ -28,6 +28,21 @@ public class LayoutDisplayContext {
 		_request = request;
 	}
 
+	public Group getLiveGroup() {
+		if (_liveGroup != null) {
+			return _liveGroup;
+		}
+
+		if (getSelGroup().isStagingGroup()) {
+			_liveGroup = getSelGroup().getLiveGroup();
+		}
+		else {
+			_liveGroup = getSelGroup();
+		}
+
+		return _liveGroup;
+	}
+
 	public Group getSelGroup() {
 		if (_selGroup != null) {
 			return _selGroup;
@@ -38,6 +53,7 @@ public class LayoutDisplayContext {
 		return _selGroup;
 	}
 
+	private Group _liveGroup;
 	private HttpServletRequest _request;
 	private Group _selGroup;
 

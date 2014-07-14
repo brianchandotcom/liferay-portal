@@ -25,14 +25,8 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 long parentFolderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-boolean expandFolder = ParamUtil.getBoolean(request, "expandFolder");
-
 if (folder != null) {
 	parentFolderId = folder.getParentFolderId();
-
-	if (expandFolder) {
-		parentFolderId = folderId;
-	}
 
 	if (parentFolderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		JournalFolder parentFolder = JournalFolderServiceUtil.fetchFolder(folderId);
@@ -54,7 +48,7 @@ long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 if (browseBy.equals("structure")) {
 	total = DDMStructureLocalServiceUtil.getStructuresCount(groupIds, PortalUtil.getClassNameId(JournalArticle.class));
 }
-else if ((folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) || expandFolder) {
+else if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	total = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, parentFolderId);
 }
 
@@ -79,7 +73,7 @@ else {
 
 		parentTitle = grandparentFolder.getName();
 	}
-	else if (((folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (parentFolderId == 0)) || ((folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (parentFolderId == 0) && expandFolder)) {
+	else if (parentFolderId == 0) {
 		parentTitle = LanguageUtil.get(request, "home");
 	}
 }
@@ -95,7 +89,7 @@ else {
 			</c:if>
 
 			<c:choose>
-				<c:when test='<%= ((folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) && !expandFolder) && !browseBy.equals("structure") %>'>
+				<c:when test='<%= (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) && !browseBy.equals("structure") %>'>
 
 					<%
 					String navigation = ParamUtil.getString(request, "navigation", "home");

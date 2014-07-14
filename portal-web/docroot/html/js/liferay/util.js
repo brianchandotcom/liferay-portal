@@ -620,22 +620,6 @@
 			return Util.listCheckboxesExcept(form, except, name, false);
 		},
 
-		moveItem: function(fromBox, toBox, sort) {
-			fromBox = Util.getDOM(fromBox);
-			toBox = Util.getDOM(toBox);
-
-			fromBox = $(fromBox);
-			toBox = $(toBox);
-
-			var options = fromBox.find('option:selected');
-
-			toBox.append(options);
-
-			if (sort && (options.text() !== '')) {
-				Util.sortBox(toBox);
-			}
-		},
-
 		ns: function(namespace, obj) {
 			var instance = this;
 

@@ -14,7 +14,9 @@
 
 package com.liferay.portlet.messageboards.comment;
 
+import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.Portal;
@@ -24,6 +26,9 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
+
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -49,86 +54,99 @@ public class MBCommentManagerImplTest extends Mockito {
 	}
 
 	@Test
-	public void testAddCommentWithUsernameAndSubject() throws Exception {
-		long mbMessageId = RandomTestUtil.randomLong();
-
-		when(
-			_mbMessage.getMessageId()
-		).thenReturn(
-			mbMessageId
-		);
-
-		long rootMessageId = RandomTestUtil.randomLong();
-
-		when(
-			_mbThread.getRootMessageId()
-		).thenReturn(
-			rootMessageId
-		);
-
-		long threadId = RandomTestUtil.randomLong();
-
-		when(
-			_mbThread.getThreadId()
-		).thenReturn(
-			threadId
-		);
-
-		long userId = RandomTestUtil.randomLong();
-		long groupId = RandomTestUtil.randomLong();
-		long classPK = RandomTestUtil.randomLong();
-		String userName = RandomTestUtil.randomString();
-		String subject = RandomTestUtil.randomString();
-		String body = RandomTestUtil.randomString();
-
-		Assert.assertEquals(
-			mbMessageId,
-			_mbCommentManagerImpl.addComment(
-				userId, groupId, _CLASS_NAME, classPK, userName, subject, body,
-				_serviceContextFunction));
+	public void testAddComment() throws Exception {
+		_mbCommentManagerImpl.addComment(
+			_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID, _BODY,
+			_serviceContext);
 
 		Mockito.verify(
 			_mbMessageLocalService
 		).addDiscussionMessage(
-			userId, userName, groupId, _CLASS_NAME, classPK, threadId,
-			rootMessageId, subject, body, _serviceContext
+			_USER_ID, StringPool.BLANK, _GROUP_ID, _CLASS_NAME, _ENTRY_ID,
+			_THREAD_ID, _ROOT_MESSAGE_ID, StringPool.BLANK, _BODY,
+			_serviceContext
+		);
+
+		Mockito.verify(
+			_mbMessageLocalService
+		).getThreadMessages(
+			_THREAD_ID, WorkflowConstants.STATUS_APPROVED
+		);
+	}
+
+	@Test
+	public void testAddCommentWithUsernameAndSubject() throws Exception {
+		when(
+			_mbMessage.getMessageId()
+		).thenReturn(
+			_MBMESSAGE_ID
+		);
+
+		Assert.assertEquals(
+			_MBMESSAGE_ID,
+			_mbCommentManagerImpl.addComment(
+				_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID, _USER_NAME,
+				_SUBJECT, _BODY, _serviceContextFunction));
+
+		Mockito.verify(
+			_mbMessageLocalService
+		).addDiscussionMessage(
+			_USER_ID, _USER_NAME, _GROUP_ID, _CLASS_NAME, _ENTRY_ID, _THREAD_ID,
+			_ROOT_MESSAGE_ID, _SUBJECT, _BODY, _serviceContext
 		);
 
 		Mockito.verify(
 			_mbMessageLocalService
 		).getDiscussionMessageDisplay(
-			userId, groupId, _CLASS_NAME, classPK,
+			_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID,
 			WorkflowConstants.STATUS_APPROVED
 		);
 	}
 
 	@Test
 	public void testAddDiscussion() throws Exception {
-		long userId = RandomTestUtil.randomLong();
-		long groupId = RandomTestUtil.randomLong();
-		long classPK = RandomTestUtil.randomLong();
-		String userName = RandomTestUtil.randomString();
-
 		_mbCommentManagerImpl.addDiscussion(
-			userId, groupId, _CLASS_NAME, classPK, userName);
+			_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID, _USER_NAME);
 
 		Mockito.verify(
 			_mbMessageLocalService
 		).addDiscussionMessage(
-			userId, userName, groupId, _CLASS_NAME, classPK,
+			_USER_ID, _USER_NAME, _GROUP_ID, _CLASS_NAME, _ENTRY_ID,
 			WorkflowConstants.ACTION_PUBLISH);
+	}
+
+	@Test(expected = DuplicateCommentException.class)
+	public void testAddDuplicateComment() throws Exception {
+		when(
+			_mbMessage.getBody()
+		).thenReturn(
+			_BODY
+		);
+
+		List<MBMessage> messages = Collections.singletonList(_mbMessage);
+
+		when(
+			_mbMessageLocalService.getThreadMessages(
+				_THREAD_ID, WorkflowConstants.STATUS_APPROVED)
+		).thenReturn(
+			messages
+		);
+
+		_mbCommentManagerImpl.addComment(
+			_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID, _BODY,
+			_serviceContext);
+
+		Assert.fail();
 	}
 
 	@Test
 	public void testDeleteComment() throws Exception {
-		long mbMessageId = RandomTestUtil.randomLong();
-
-		_mbCommentManagerImpl.deleteComment(mbMessageId);
+		_mbCommentManagerImpl.deleteComment(_MBMESSAGE_ID);
 
 		Mockito.verify(
 			_mbMessageLocalService
 		).deleteDiscussionMessage(
-			mbMessageId
+			_MBMESSAGE_ID
 		);
 	}
 
@@ -170,6 +188,8 @@ public class MBCommentManagerImplTest extends Mockito {
 	}
 
 	protected void setUpMBCommentManagerImpl() throws Exception {
+		_mbCommentManagerImpl.setMBMessageLocalService(_mbMessageLocalService);
+
 		when(
 			_mbMessageDisplay.getThread()
 		).thenReturn(
@@ -189,15 +209,24 @@ public class MBCommentManagerImplTest extends Mockito {
 
 		when(
 			_mbMessageLocalService.getDiscussionMessageDisplay(
-				Matchers.anyLong(), Matchers.anyLong(),
-				Matchers.eq(_CLASS_NAME), Matchers.anyLong(),
-				Matchers.eq(WorkflowConstants.STATUS_APPROVED)
+				_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID,
+				WorkflowConstants.STATUS_APPROVED
 			)
 		).thenReturn(
 			_mbMessageDisplay
 		);
 
-		_mbCommentManagerImpl.setMBMessageLocalService(_mbMessageLocalService);
+		when(
+			_mbThread.getRootMessageId()
+		).thenReturn(
+			_ROOT_MESSAGE_ID
+		);
+
+		when(
+			_mbThread.getThreadId()
+		).thenReturn(
+			_THREAD_ID
+		);
 	}
 
 	protected void setUpPortalUtil() {
@@ -214,7 +243,25 @@ public class MBCommentManagerImplTest extends Mockito {
 		);
 	}
 
+	private static final String _BODY = RandomTestUtil.randomString();
+
 	private static final String _CLASS_NAME = RandomTestUtil.randomString();
+
+	private static final long _ENTRY_ID = RandomTestUtil.randomLong();
+
+	private static final long _GROUP_ID = RandomTestUtil.randomLong();
+
+	private static final long _MBMESSAGE_ID = RandomTestUtil.randomLong();
+
+	private static final long _ROOT_MESSAGE_ID = RandomTestUtil.randomLong();
+
+	private static final String _SUBJECT = RandomTestUtil.randomString();
+
+	private static final long _THREAD_ID = RandomTestUtil.randomLong();
+
+	private static final long _USER_ID = RandomTestUtil.randomLong();
+
+	private static final String _USER_NAME = RandomTestUtil.randomString();
 
 	private MBCommentManagerImpl _mbCommentManagerImpl =
 		new MBCommentManagerImpl();

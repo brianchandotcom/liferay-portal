@@ -342,7 +342,7 @@
 		</execute>
 
 		<execute macro="SitePage#changePageTypeLayoutPG">
-			<var name="pageTypeLayout" value="1 Column" />
+			<var name="columnName" value="1_column" />
 		</execute>
 
 		<execute macro="SitePage#viewPageLayoutPG">

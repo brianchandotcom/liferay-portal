@@ -45,6 +45,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -315,7 +316,13 @@ public class JournalArticleIndexer extends BaseIndexer {
 	protected void doDelete(Object obj) throws Exception {
 		JournalArticle article = (JournalArticle)obj;
 
-		deleteDocument(article.getCompanyId(), article.getId());
+		long classPK = article.getId();
+
+		if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+			classPK = article.getResourcePrimKey();
+		}
+
+		deleteDocument(article.getCompanyId(), classPK);
 
 		if (!article.isApproved()) {
 			return;
@@ -326,7 +333,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 				article.getResourcePrimKey());
 
 		if ((latestIndexableArticle == null) ||
-			(latestIndexableArticle.getVersion() > article.getVersion())) {
+			(PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS &&
+		 	(latestIndexableArticle.getVersion() > article.getVersion()))) {
 
 			return;
 		}
@@ -342,7 +350,13 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		Document document = getBaseModelDocument(PORTLET_ID, article);
 
-		document.addUID(PORTLET_ID, article.getId());
+		long classPK = article.getId();
+
+		if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+			classPK = article.getResourcePrimKey();
+		}
+
+		document.addUID(PORTLET_ID, classPK);
 
 		String articleDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(
 			article.getDocument());
@@ -400,25 +414,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		document.addKeyword("ddmStructureKey", article.getStructureId());
 		document.addKeyword("ddmTemplateKey", article.getTemplateId());
 		document.addDate("displayDate", article.getDisplayDate());
-
-		JournalArticle latestArticle =
-			JournalArticleLocalServiceUtil.fetchLatestArticle(
-				article.getResourcePrimKey(),
-				new int[] {
-					WorkflowConstants.STATUS_IN_TRASH,
-					WorkflowConstants.STATUS_APPROVED});
-
-		if ((latestArticle != null) && !latestArticle.isIndexable()) {
-			document.addKeyword("head", false);
-		}
-		else if ((latestArticle != null) &&
-				 (article.getId() == latestArticle.getId())) {
-
-			document.addKeyword("head", true);
-		}
-		else {
-			document.addKeyword("head", false);
-		}
+		document.addKeyword("head", getHead(article));
 
 		addDDMStructureAttributes(document, article);
 
@@ -578,10 +574,25 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		Collection<Document> documents = new ArrayList<Document>();
 
-		List<JournalArticle> articles =
-			JournalArticleLocalServiceUtil.
-				getIndexableArticlesByResourcePrimKey(
+		List<JournalArticle> articles = null;
+
+		if (PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+			articles =
+				JournalArticleLocalServiceUtil.
+					getIndexableArticlesByResourcePrimKey(
+						article.getResourcePrimKey());
+		}
+		else {
+			articles = new ArrayList<JournalArticle>();
+
+			JournalArticle latestIndexableArticle =
+				JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
 					article.getResourcePrimKey());
+
+			if (latestIndexableArticle != null) {
+				articles.add(latestIndexableArticle);
+			}
+		}
 
 		for (JournalArticle curArticle : articles) {
 			Document document = getDocument(curArticle);
@@ -632,6 +643,30 @@ public class JournalArticleIndexer extends BaseIndexer {
 		}
 
 		return content;
+	}
+
+	protected boolean getHead(JournalArticle article) {
+		if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+			return true;
+		}
+
+		JournalArticle latestArticle =
+			JournalArticleLocalServiceUtil.fetchLatestArticle(
+				article.getResourcePrimKey(),
+				new int[] {
+					WorkflowConstants.STATUS_IN_TRASH,
+					WorkflowConstants.STATUS_APPROVED});
+
+		if ((latestArticle != null) && !latestArticle.isIndexable()) {
+			return false;
+		}
+		else if ((latestArticle != null) &&
+				 (article.getId() == latestArticle.getId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected String[] getLanguageIds(

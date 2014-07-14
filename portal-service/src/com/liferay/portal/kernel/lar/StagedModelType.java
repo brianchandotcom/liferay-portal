@@ -28,6 +28,9 @@ import com.liferay.portal.util.PortalUtil;
 @ProviderType
 public class StagedModelType {
 
+	public static final String REFERRER_CLASS_NAME_ALL =
+		"referrer-class-name-all";
+
 	public static final int REFERRER_CLASS_NAME_ID_ALL = -1;
 
 	public StagedModelType(Class<?> clazz) {
@@ -69,9 +72,11 @@ public class StagedModelType {
 
 		StagedModelType stagedModelType = (StagedModelType)obj;
 
-		if ((stagedModelType._classNameId != _classNameId) ||
-			(stagedModelType._referrerClassNameId != _referrerClassNameId)) {
+		if (stagedModelType._classNameId != _classNameId) {
+			return false;
+		}
 
+		if (stagedModelType._referrerClassNameId != _referrerClassNameId) {
 			return false;
 		}
 
@@ -155,11 +160,14 @@ public class StagedModelType {
 	protected void setReferrerClassName(String referrerClassName) {
 		_referrerClassName = referrerClassName;
 
-		if (Validator.isNotNull(referrerClassName)) {
-			_referrerClassNameId = PortalUtil.getClassNameId(referrerClassName);
+		if (Validator.isNull(referrerClassName)) {
+			_referrerClassNameId = 0;
+		}
+		else if (referrerClassName.equals(REFERRER_CLASS_NAME_ALL)) {
+			_referrerClassNameId = REFERRER_CLASS_NAME_ID_ALL;
 		}
 		else {
-			_referrerClassNameId = 0;
+			_referrerClassNameId = PortalUtil.getClassNameId(referrerClassName);
 		}
 	}
 

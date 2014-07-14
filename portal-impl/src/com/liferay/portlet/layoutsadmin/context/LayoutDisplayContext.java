@@ -15,6 +15,7 @@
 package com.liferay.portlet.layoutsadmin.context;
 
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutConstants;
@@ -57,6 +58,21 @@ public class LayoutDisplayContext {
 		}
 
 		return _groupId;
+	}
+
+	public UnicodeProperties getGroupTypeSettings() {
+		if (_groupTypeSettings != null) {
+			return _groupTypeSettings;
+		}
+
+		if (getGroup() != null) {
+			_groupTypeSettings = getGroup().getTypeSettingsProperties();
+		}
+		else {
+			_groupTypeSettings = new UnicodeProperties();
+		}
+
+		return _groupTypeSettings;
 	}
 
 	public Group getLiveGroup() {
@@ -146,6 +162,7 @@ public class LayoutDisplayContext {
 
 	private Group _group;
 	private Long _groupId;
+	private UnicodeProperties _groupTypeSettings;
 	private Group _liveGroup;
 	private Long _refererPlid;
 	private HttpServletRequest _request;

@@ -43,14 +43,7 @@ long refererPlid = layoutDisplayContext.getRefererPlid();
 boolean privateLayout = tabs1.equals("my-dashboard") || tabs1.equals("private-pages");
 long layoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
-UnicodeProperties groupTypeSettings = null;
-
-if (group != null) {
-	groupTypeSettings = group.getTypeSettingsProperties();
-}
-else {
-	groupTypeSettings = new UnicodeProperties();
-}
+UnicodeProperties groupTypeSettings = layoutDisplayContext.getGroupTypeSettings();
 
 UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 

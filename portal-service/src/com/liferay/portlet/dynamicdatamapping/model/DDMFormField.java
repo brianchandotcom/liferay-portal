@@ -119,6 +119,10 @@ public class DDMFormField implements Serializable {
 	}
 
 	public void setDDMForm(DDMForm ddmForm) {
+		for (DDMFormField nestedDDMFormField : _nestedDDMFormFields) {
+			nestedDDMFormField.setDDMForm(ddmForm);
+		}
+
 		_ddmForm = ddmForm;
 	}
 

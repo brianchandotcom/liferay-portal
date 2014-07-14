@@ -868,28 +868,6 @@
 			$('#' + span).css('display', display);
 		},
 
-		sortBox: function(box) {
-			var newBox = _.map(
-				box.find('option'),
-				function(item) {
-					item = $(item);
-
-					return [item.val(), item.text()];
-				}
-			);
-
-			newBox.sort(Util.sortByAscending);
-
-			var optionsBuffer = _.map(
-				newBox,
-				function(item) {
-					return '<option value="' + item[0] + '">' + item[1] + '</option>';
-				}
-			);
-
-			box.html(optionsBuffer.join());
-		},
-
 		sortByAscending: function(a, b) {
 			a = a[1].toLowerCase();
 			b = b[1].toLowerCase();

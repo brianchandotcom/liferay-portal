@@ -94,6 +94,37 @@ AUI.add(
 						instance._rightBox.on('focus', A.rbind('_onSelectFocus', instance, instance._leftBox));
 					},
 
+					sortBox: function(box) {
+						var newBox = [];
+
+						var options = box.all('option');
+
+						for (var i = 0; i < options.size(); i++) {
+							newBox[i] = [options.item(i).val(), options.item(i).text()];
+						}
+
+						newBox.sort(Util.sortByAscending);
+
+						var boxObj = A.one(box);
+
+						boxObj.all('option').remove(true);
+
+						A.each(
+							newBox,
+							function(item, index) {
+								boxObj.append('<option value="' + item[0] + '">' + item[1] + '</option>');
+							}
+						);
+
+						if (Liferay.Browser.isIe()) {
+							var currentWidth = boxObj.getStyle('width');
+
+							if (currentWidth == 'auto') {
+								boxObj.setStyle('width', 'auto');
+							}
+						}
+					},
+
 					_afterMoveClick: function(event) {
 						var instance = this;
 
@@ -135,6 +166,8 @@ AUI.add(
 					},
 
 					_moveItem: function(from, to, sort) {
+						var instance = this;
+
 						from = A.one(from);
 						to = A.one(to);
 
@@ -157,7 +190,7 @@ AUI.add(
 						}
 
 						if (selectedOption && selectedOption.text() !== '' && sort === true) {
-							Util.sortBox(to);
+							instance.sortBox(to);
 						}
 
 						Liferay.fire(

@@ -20,7 +20,13 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -92,6 +98,19 @@ public class LayoutDisplayContext {
 		return _liveGroup;
 	}
 
+	public Organization getOrganization() {
+		if (_organization != null) {
+			return _organization;
+		}
+
+		if (getLiveGroup().isOrganization()) {
+			_organization = OrganizationLocalServiceUtil.fetchOrganization(
+				getLiveGroup().getOrganizationId());
+		}
+
+		return _organization;
+	}
+
 	public Group getSelGroup() {
 		if (_selGroup != null) {
 			return _selGroup;
@@ -123,6 +142,19 @@ public class LayoutDisplayContext {
 			_request, "selPlid", LayoutConstants.DEFAULT_PLID);
 
 		return _selPlid;
+	}
+
+	public User getSelUser() {
+		if (_selUser != null) {
+			return _selUser;
+		}
+
+		if (getLiveGroup().isUser()) {
+			_selUser = UserLocalServiceUtil.fetchUser(
+				getLiveGroup().getClassPK());
+		}
+
+		return _selUser;
 	}
 
 	public Group getStagingGroup() {
@@ -163,15 +195,31 @@ public class LayoutDisplayContext {
 		return _stagingGroupId;
 	}
 
+	public UserGroup getUserGroup() {
+		if (_userGroup != null) {
+			return _userGroup;
+		}
+
+		if (getLiveGroup().isUserGroup()) {
+			_userGroup = UserGroupLocalServiceUtil.fetchUserGroup(
+				getLiveGroup().getClassPK());
+		}
+
+		return _userGroup;
+	}
+
 	private Group _group;
 	private Long _groupId;
 	private UnicodeProperties _groupTypeSettings;
 	private Group _liveGroup;
+	private Organization _organization;
 	private HttpServletRequest _request;
 	private Group _selGroup;
 	private Layout _selLayout;
 	private Long _selPlid;
+	private User _selUser;
 	private Group _stagingGroup;
 	private Long _stagingGroupId;
+	private UserGroup _userGroup;
 
 }

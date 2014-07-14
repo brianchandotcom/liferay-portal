@@ -53,19 +53,9 @@ if (selLayout != null) {
 	layoutId = selLayout.getLayoutId();
 }
 
-Organization organization = null;
-User selUser = null;
-UserGroup userGroup = null;
-
-if (liveGroup.isOrganization()) {
-	organization = OrganizationLocalServiceUtil.getOrganization(liveGroup.getOrganizationId());
-}
-else if (liveGroup.isUser()) {
-	selUser = UserLocalServiceUtil.getUserById(liveGroup.getClassPK());
-}
-else if (liveGroup.isUserGroup()) {
-	userGroup = UserGroupLocalServiceUtil.getUserGroup(liveGroup.getClassPK());
-}
+Organization organization = layoutDisplayContext.getOrganization();
+User selUser = layoutDisplayContext.getSelUser();
+UserGroup userGroup = layoutDisplayContext.getUserGroup();
 
 String tabs1Names = "public-pages,private-pages";
 

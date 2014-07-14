@@ -525,10 +525,6 @@
 			return viewable;
 		},
 
-		isEditorPresent: function(editorImpl) {
-			return Liferay.EDITORS && Liferay.EDITORS[editorImpl];
-		},
-
 		isPhone: function() {
 			var instance = this;
 

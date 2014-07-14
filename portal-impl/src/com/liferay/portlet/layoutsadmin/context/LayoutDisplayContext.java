@@ -53,8 +53,33 @@ public class LayoutDisplayContext {
 		return _selGroup;
 	}
 
+	public Group getStagingGroup() {
+		if (_stagingGroup != null) {
+			return _stagingGroup;
+		}
+
+		Group selGroup = getSelGroup();
+
+		if (selGroup.isStagingGroup()) {
+			_stagingGroup = selGroup;
+		}
+		else {
+			if (selGroup.isStaged()) {
+				if (selGroup.isStagedRemotely()) {
+					_stagingGroup = selGroup;
+				}
+				else {
+					_stagingGroup = selGroup.getStagingGroup();
+				}
+			}
+		}
+
+		return _stagingGroup;
+	}
+
 	private Group _liveGroup;
 	private HttpServletRequest _request;
 	private Group _selGroup;
+	private Group _stagingGroup;
 
 }

@@ -35,11 +35,7 @@ long groupId = layoutDisplayContext.getGroupId();
 
 long liveGroupId = liveGroup.getGroupId();
 
-long stagingGroupId = 0;
-
-if (stagingGroup != null) {
-	stagingGroupId = stagingGroup.getGroupId();
-}
+long stagingGroupId = layoutDisplayContext.getStagingGroupId();
 
 long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
 long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);

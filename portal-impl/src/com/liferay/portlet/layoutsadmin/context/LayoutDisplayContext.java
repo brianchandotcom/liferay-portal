@@ -106,11 +106,26 @@ public class LayoutDisplayContext {
 		return _stagingGroup;
 	}
 
+	public Long getStagingGroupId() {
+		if (_stagingGroupId != null) {
+			return _stagingGroupId;
+		}
+
+		_stagingGroupId = 0L;
+
+		if (getStagingGroup() != null) {
+			_stagingGroupId = getStagingGroup().getGroupId();
+		}
+
+		return _stagingGroupId;
+	}
+
 	private Group _group;
 	private Long _groupId;
 	private Group _liveGroup;
 	private HttpServletRequest _request;
 	private Group _selGroup;
 	private Group _stagingGroup;
+	private Long _stagingGroupId;
 
 }

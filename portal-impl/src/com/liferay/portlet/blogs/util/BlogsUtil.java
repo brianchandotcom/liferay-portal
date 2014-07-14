@@ -53,16 +53,16 @@ public class BlogsUtil {
 
 	public static final String DISPLAY_STYLE_TITLE = "title";
 
+	public static CommentManager getCommentManager() {
+		return (CommentManager)PortalBeanLocatorUtil.locate(
+			CommentManager.class.getName());
+	}
+
 	public static int getCommentsCount(BlogsEntry entry) {
 		CommentManager commentManager = getCommentManager();
 
 		return commentManager.getCommentsCount(
 			BlogsEntry.class.getName(), entry.getEntryId());
-	}
-
-	public static CommentManager getCommentManager() {
-		return (CommentManager)PortalBeanLocatorUtil.locate(
-			CommentManager.class.getName());
 	}
 
 	public static Map<String, String> getEmailDefinitionTerms(

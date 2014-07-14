@@ -368,44 +368,55 @@ public class ResourcePermissionLocalServiceImpl
 		return availableActionIds;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getAvailableResourcePermissionActionIds(
+	 *             long, String, int, String, Collection)}
+	 */
+	@Deprecated
 	@Override
 	public Map<Long, Set<String>> getAvailableResourcePermissionActionIds(
 			long companyId, String name, int scope, String primKey,
 			long[] roleIds, Collection<String> actionIds)
 		throws PortalException {
 
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionPersistence.findByC_N_S_P_R(
-				companyId, name, scope, primKey, roleIds);
+		return getAvailableResourcePermissionActionIds(
+			companyId, name, scope, primKey, new ArrayList<String>(actionIds));
+	}
 
-		if (resourcePermissions.isEmpty()) {
+	@Override
+	public Map<Long, Set<String>> getAvailableResourcePermissionActionIds(
+			long companyId, String name, int scope, String primKey,
+			Collection<String> actionIds)
+		throws PortalException {
+
+		if (actionIds.isEmpty()) {
 			return Collections.emptyMap();
 		}
 
+		List<ResourcePermission> resourcePermissions = getResourcePermissions(
+			companyId, name, scope, primKey);
+
 		Map<Long, Set<String>> roleIdsToActionIds =
-			new HashMap<Long, Set<String>>();
+			new HashMap<Long, Set<String>>(resourcePermissions.size());
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
-			long roleId = resourcePermission.getRoleId();
-
-			Set<String> availableActionIds = roleIdsToActionIds.get(roleId);
-
-			if (availableActionIds != null) {
+			if (resourcePermission.getActionIds() == 0) {
 				continue;
 			}
 
-			availableActionIds = new HashSet<String>();
-
-			roleIdsToActionIds.put(roleId, availableActionIds);
+			Set<String> availableActionIds = new HashSet<String>(
+				actionIds.size());
 
 			for (String actionId : actionIds) {
-				ResourceAction resourceAction =
-					resourceActionLocalService.getResourceAction(
-						name, actionId);
-
-				if (hasActionId(resourcePermission, resourceAction)) {
+				if (resourcePermission.hasActionId(actionId)) {
 					availableActionIds.add(actionId);
 				}
+			}
+
+			if (availableActionIds.size() > 0) {
+				roleIdsToActionIds.put(
+					resourcePermission.getRoleId(), availableActionIds);
 			}
 		}
 

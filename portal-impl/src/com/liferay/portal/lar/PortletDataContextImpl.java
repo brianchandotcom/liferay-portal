@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PrimitiveLongList;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -65,7 +64,6 @@ import com.liferay.portal.model.PortletModel;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Team;
@@ -372,47 +370,30 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return;
 		}
 
-		List<KeyValuePair> permissions = new ArrayList<KeyValuePair>();
-
-		List<Role> roles = RoleLocalServiceUtil.getGroupRelatedRoles(_groupId);
-
-		PrimitiveLongList roleIds = new PrimitiveLongList(roles.size());
-		Map<Long, String> roleIdsToNames = new HashMap<Long, String>();
-
-		for (Role role : roles) {
-			String roleName = role.getName();
-
-			int roleType = role.getType();
-
-			if ((roleType == RoleConstants.TYPE_PROVIDER) && role.isTeam()) {
-				Team team = TeamLocalServiceUtil.getTeam(role.getClassPK());
-
-				roleName = PermissionExporter.ROLE_TEAM_PREFIX + team.getName();
-			}
-
-			roleIds.add(role.getRoleId());
-			roleIdsToNames.put(role.getRoleId(), roleName);
-		}
-
 		List<String> actionIds = ResourceActionsUtil.getModelResourceActions(
 			resourceName);
 
 		Map<Long, Set<String>> roleIdsToActionIds = getActionIds(
-			_companyId, roleIds.getArray(), resourceName, resourcePK,
-			actionIds);
+			resourceName, resourcePK, actionIds);
 
-		for (Map.Entry<Long, String> entry : roleIdsToNames.entrySet()) {
+		List<KeyValuePair> permissions = new ArrayList<KeyValuePair>();
+
+		for (Map.Entry<Long, Set<String>> entry :
+				roleIdsToActionIds.entrySet()) {
+
 			long roleId = entry.getKey();
-			String name = entry.getValue();
+			Set<String> availableActionIds = entry.getValue();
 
-			Set<String> availableActionIds = roleIdsToActionIds.get(roleId);
+			Role role = RoleLocalServiceUtil.getRole(roleId);
 
-			if (availableActionIds == null) {
-				availableActionIds = Collections.emptySet();
+			String roleName = role.getName();
+
+			if (role.isTeam()) {
+				roleName = PermissionExporter.ROLE_TEAM_PREFIX + roleName;
 			}
 
 			KeyValuePair permission = new KeyValuePair(
-				name, StringUtil.merge(availableActionIds));
+				roleName, StringUtil.merge(availableActionIds));
 
 			permissions.add(permission);
 		}
@@ -2163,20 +2144,19 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	protected Map<Long, Set<String>> getActionIds(
-			long companyId, long[] roleIds, String className, long primKey,
-			List<String> actionIds)
+			String className, long primKey, List<String> actionIds)
 		throws PortalException {
 
 		if (ResourceBlockLocalServiceUtil.isSupported(className)) {
 			return ResourceBlockPermissionLocalServiceUtil.
 				getAvailableResourceBlockPermissionActionIds(
-					roleIds, className, primKey, actionIds);
+					className, primKey, actionIds);
 		}
 		else {
 			return ResourcePermissionLocalServiceUtil.
 				getAvailableResourcePermissionActionIds(
-					companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(primKey), roleIds, actionIds);
+					_companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(primKey), actionIds);
 		}
 	}
 

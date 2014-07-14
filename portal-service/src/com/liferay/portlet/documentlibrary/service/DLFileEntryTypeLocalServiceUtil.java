@@ -317,6 +317,19 @@ public class DLFileEntryTypeLocalServiceUtil {
 	}
 
 	/**
+	* Returns the document library file entry type with the matching UUID and company.
+	*
+	* @param uuid the document library file entry type's UUID
+	* @param companyId the primary key of the company
+	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchDLFileEntryTypeByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .fetchDLFileEntryTypeByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
 	* Returns the document library file entry type matching the UUID and group.
 	*
 	* @param uuid the document library file entry type's UUID
@@ -398,6 +411,20 @@ public class DLFileEntryTypeLocalServiceUtil {
 	}
 
 	/**
+	* Returns the document library file entry type with the matching UUID and company.
+	*
+	* @param uuid the document library file entry type's UUID
+	* @param companyId the primary key of the company
+	* @return the matching document library file entry type
+	* @throws PortalException if a matching document library file entry type could not be found
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType getDLFileEntryTypeByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDLFileEntryTypeByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
 	* Returns the document library file entry type matching the UUID and group.
 	*
 	* @param uuid the document library file entry type's UUID
@@ -425,20 +452,6 @@ public class DLFileEntryTypeLocalServiceUtil {
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFileEntryTypes(
 		int start, int end) {
 		return getService().getDLFileEntryTypes(start, end);
-	}
-
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFileEntryTypesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService()
-				   .getDLFileEntryTypesByUuidAndCompanyId(uuid, companyId);
-	}
-
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFileEntryTypesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntryType> orderByComparator) {
-		return getService()
-				   .getDLFileEntryTypesByUuidAndCompanyId(uuid, companyId,
-			start, end, orderByComparator);
 	}
 
 	/**

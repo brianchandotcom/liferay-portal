@@ -220,6 +220,20 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the document library file version with the matching UUID and company.
+	 *
+	 * @param uuid the document library file version's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 */
+	@Override
+	public DLFileVersion fetchDLFileVersionByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return dlFileVersionPersistence.fetchByUuid_C_First(uuid, companyId,
+			null);
+	}
+
+	/**
 	 * Returns the document library file version matching the UUID and group.
 	 *
 	 * @param uuid the document library file version's UUID
@@ -345,18 +359,18 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 		return dlFileVersionPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
+	/**
+	 * Returns the document library file version with the matching UUID and company.
+	 *
+	 * @param uuid the document library file version's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching document library file version
+	 * @throws PortalException if a matching document library file version could not be found
+	 */
 	@Override
-	public List<DLFileVersion> getDLFileVersionsByUuidAndCompanyId(
-		String uuid, long companyId) {
-		return dlFileVersionPersistence.findByUuid_C(uuid, companyId);
-	}
-
-	@Override
-	public List<DLFileVersion> getDLFileVersionsByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
-		return dlFileVersionPersistence.findByUuid_C(uuid, companyId, start,
-			end, orderByComparator);
+	public DLFileVersion getDLFileVersionByUuidAndCompanyId(String uuid,
+		long companyId) throws PortalException {
+		return dlFileVersionPersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
 	/**

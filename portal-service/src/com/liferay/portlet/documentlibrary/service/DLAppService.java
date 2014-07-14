@@ -581,6 +581,13 @@ public interface DLAppService extends BaseService {
 		long repositoryId, long folderId, java.lang.String[] mimeTypes)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
+		long repositoryId, long folderId, java.lang.String[] mimeTypes,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	/**
 	* Returns a range of all the file entries in the folder.
 	*
@@ -715,6 +722,11 @@ public interface DLAppService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount(long repositoryId, long folderId,
 		long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFileEntriesCount(long repositoryId, long folderId,
+		java.lang.String[] mimeTypes)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**

@@ -882,8 +882,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		TrashHandler trashHandler = getTrashHandler();
 
-		if (!Validator.isNull(trashHandler.getContainerModelClassName(
-						getPrimaryKey()))) {
+		if (!Validator.isNull(trashHandler.getContainerModelClassName())) {
 			ContainerModel containerModel = null;
 
 			try {
@@ -900,8 +899,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 					return trashedModel.getTrashEntry();
 				}
 
-				trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName(
-							containerModel.getContainerModelId()));
+				trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName());
 
 				if (trashHandler == null) {
 					return null;
@@ -939,8 +937,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		TrashHandler trashHandler = getTrashHandler();
 
 		if ((trashHandler == null) ||
-				Validator.isNull(trashHandler.getContainerModelClassName(
-						getPrimaryKey()))) {
+				Validator.isNull(trashHandler.getContainerModelClassName())) {
 			return false;
 		}
 

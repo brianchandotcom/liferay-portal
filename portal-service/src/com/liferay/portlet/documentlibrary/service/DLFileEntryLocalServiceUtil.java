@@ -321,6 +321,18 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	/**
+	* Returns the document library file entry with the matching UUID and company.
+	*
+	* @param uuid the document library file entry's UUID
+	* @param companyId the primary key of the company
+	* @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchDLFileEntryByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().fetchDLFileEntryByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
 	* Returns the document library file entry matching the UUID and group.
 	*
 	* @param uuid the document library file entry's UUID
@@ -381,19 +393,6 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getDLFileEntries(start, end);
 	}
 
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDLFileEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().getDLFileEntriesByUuidAndCompanyId(uuid, companyId);
-	}
-
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDLFileEntriesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.documentlibrary.model.DLFileEntry> orderByComparator) {
-		return getService()
-				   .getDLFileEntriesByUuidAndCompanyId(uuid, companyId, start,
-			end, orderByComparator);
-	}
-
 	/**
 	* Returns the number of document library file entries.
 	*
@@ -414,6 +413,20 @@ public class DLFileEntryLocalServiceUtil {
 		long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDLFileEntry(fileEntryId);
+	}
+
+	/**
+	* Returns the document library file entry with the matching UUID and company.
+	*
+	* @param uuid the document library file entry's UUID
+	* @param companyId the primary key of the company
+	* @return the matching document library file entry
+	* @throws PortalException if a matching document library file entry could not be found
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getDLFileEntryByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDLFileEntryByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**

@@ -244,6 +244,19 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the document library file entry with the matching UUID and company.
+	 *
+	 * @param uuid the document library file entry's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
+	 */
+	@Override
+	public DLFileEntry fetchDLFileEntryByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return dlFileEntryPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
 	 * Returns the document library file entry matching the UUID and group.
 	 *
 	 * @param uuid the document library file entry's UUID
@@ -371,18 +384,18 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 		return dlFileEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
+	/**
+	 * Returns the document library file entry with the matching UUID and company.
+	 *
+	 * @param uuid the document library file entry's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching document library file entry
+	 * @throws PortalException if a matching document library file entry could not be found
+	 */
 	@Override
-	public List<DLFileEntry> getDLFileEntriesByUuidAndCompanyId(String uuid,
-		long companyId) {
-		return dlFileEntryPersistence.findByUuid_C(uuid, companyId);
-	}
-
-	@Override
-	public List<DLFileEntry> getDLFileEntriesByUuidAndCompanyId(String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<DLFileEntry> orderByComparator) {
-		return dlFileEntryPersistence.findByUuid_C(uuid, companyId, start, end,
-			orderByComparator);
+	public DLFileEntry getDLFileEntryByUuidAndCompanyId(String uuid,
+		long companyId) throws PortalException {
+		return dlFileEntryPersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
 	/**

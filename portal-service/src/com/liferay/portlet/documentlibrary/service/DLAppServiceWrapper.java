@@ -658,6 +658,16 @@ public class DLAppServiceWrapper implements DLAppService,
 		return _dlAppService.getFileEntries(repositoryId, folderId, mimeTypes);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
+		long repositoryId, long folderId, java.lang.String[] mimeTypes,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppService.getFileEntries(repositoryId, folderId, mimeTypes,
+			start, end, obc);
+	}
+
 	/**
 	* Returns a range of all the file entries in the folder.
 	*
@@ -811,6 +821,14 @@ public class DLAppServiceWrapper implements DLAppService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppService.getFileEntriesCount(repositoryId, folderId,
 			fileEntryTypeId);
+	}
+
+	@Override
+	public int getFileEntriesCount(long repositoryId, long folderId,
+		java.lang.String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppService.getFileEntriesCount(repositoryId, folderId,
+			mimeTypes);
 	}
 
 	/**

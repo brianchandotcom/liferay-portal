@@ -29,15 +29,7 @@ Group selGroup = layoutDisplayContext.getSelGroup();
 
 Group liveGroup = layoutDisplayContext.getLiveGroup();
 Group stagingGroup = layoutDisplayContext.getStagingGroup();
-
-Group group = null;
-
-if (stagingGroup != null) {
-	group = stagingGroup;
-}
-else {
-	group = liveGroup;
-}
+Group group = layoutDisplayContext.getGroup();
 
 long groupId = liveGroup.getGroupId();
 

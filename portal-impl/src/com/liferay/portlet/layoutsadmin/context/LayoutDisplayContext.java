@@ -28,6 +28,21 @@ public class LayoutDisplayContext {
 		_request = request;
 	}
 
+	public Group getGroup() {
+		if (_group != null) {
+			return _group;
+		}
+
+		if (getStagingGroup() != null) {
+			_group = getStagingGroup();
+		}
+		else {
+			_group = getLiveGroup();
+		}
+
+		return _group;
+	}
+
 	public Group getLiveGroup() {
 		if (_liveGroup != null) {
 			return _liveGroup;
@@ -77,6 +92,7 @@ public class LayoutDisplayContext {
 		return _stagingGroup;
 	}
 
+	private Group _group;
 	private Group _liveGroup;
 	private HttpServletRequest _request;
 	private Group _selGroup;

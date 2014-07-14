@@ -78,14 +78,14 @@ public class PingbackMethodImplTest extends PowerMockito {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		setUpBlogsEntry();
+		setUpBlogsEntryLocalServiceUtil();
 		setUpBlogsUtil();
-		setUpHttp();
-		setUpLanguage();
-		setUpPortal();
-		setUpPortlet();
-		setUpUser();
-		setUpXmlRpc();
+		setUpHttpUtil();
+		setUpLanguageUtil();
+		setUpPortalUtil();
+		setUpPortletLocalServiceUtil();
+		setUpUserLocalServiceUtil();
+		setUpXmlRpcUtil();
 	}
 
 	@Test
@@ -131,8 +131,10 @@ public class PingbackMethodImplTest extends PowerMockito {
 	public void testAddPingbackWithFriendlyURL() throws Exception {
 		long plid = RandomTestUtil.randomLong();
 
+		String friendlyURL = RandomTestUtil.randomString();
+
 		when(
-			_portal.getPlidFromFriendlyURL(_COMPANY_ID, "/__blogs__")
+			_portal.getPlidFromFriendlyURL(_COMPANY_ID, "/" + friendlyURL)
 		).thenReturn(
 			plid
 		);
@@ -145,23 +147,27 @@ public class PingbackMethodImplTest extends PowerMockito {
 			groupId
 		);
 
-		whenFriendlyURLMapperPopulateParams(
-			"/__remainder-of-the-friendly-url__", "urlTitle", "__urlTitle__");
+		String friendlyURLPath = RandomTestUtil.randomString();
 
-		String friendlyURL =
-			"http://liferay.com/__blogs__/-/__remainder-of-the-friendly-url__";
+		whenFriendlyURLMapperPopulateParams(
+			"/" + friendlyURLPath, "urlTitle", _URL_TITLE);
+
+		String targetURI =
+			"http://" + RandomTestUtil.randomString() +
+				"/" + friendlyURL + "/-/" + friendlyURLPath;
 
 		whenHttpURLToString(
-			"<body><a href='" + friendlyURL + "'>Liferay</a></body>");
+			"<body><a href='" + targetURI + "'>" +
+				RandomTestUtil.randomString() + "</a></body>");
 
-		execute(friendlyURL);
+		execute(targetURI);
 
 		verifySuccess();
 
 		Mockito.verify(
 			_blogsEntryLocalService
 		).getEntry(
-			groupId, "__urlTitle__"
+			groupId, _URL_TITLE
 		);
 	}
 
@@ -176,7 +182,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 	public void testAddPingbackWithFriendlyURLParameterEntryIdInNamespace()
 		throws Exception {
 
-		String namespace = "__namespace__.";
+		String namespace = RandomTestUtil.randomString() + ".";
 
 		when(
 			_portal.getPortletNamespace(PortletKeys.BLOGS)
@@ -192,16 +198,16 @@ public class PingbackMethodImplTest extends PowerMockito {
 		PingbackMethodImpl pingbackMethodImpl = new PingbackMethodImpl();
 
 		ServiceContext serviceContext = pingbackMethodImpl.buildServiceContext(
-			_COMPANY_ID, _GROUP_ID, "__UrlTitle__");
+			_COMPANY_ID, _GROUP_ID, _URL_TITLE);
 
 		Assert.assertEquals(
-			"__pingbackUserName__",
+			_PINGBACK_USER_NAME,
 			serviceContext.getAttribute("pingbackUserName"));
 		Assert.assertEquals(
-			"__LayoutFullURL__/-/__FriendlyURLMapping__/__UrlTitle__",
+			_LAYOUT_FULL_URL + "/-/" + _FRIENDLY_URL_MAPPING + "/" + _URL_TITLE,
 			serviceContext.getAttribute("redirect"));
 		Assert.assertEquals(
-			"__LayoutFullURL__", serviceContext.getLayoutFullURL());
+			_LAYOUT_FULL_URL, serviceContext.getLayoutFullURL());
 	}
 
 	@Test
@@ -237,7 +243,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 			Matchers.eq(_USER_ID), Matchers.eq(_GROUP_ID),
 			Matchers.eq(BlogsEntry.class.getName()), Matchers.eq(_ENTRY_ID),
 			Matchers.eq(
-				"[...] Liferay [...] [url=__sourceUri__]__read_more__[/url]"),
+				"[...] " + _EXCERPT_BODY + " [...] " +
+				"[url=" + _SOURCE_URI + "]" + _READ_MORE + "[/url]"),
 			(ServiceContext)Mockito.any()
 		);
 	}
@@ -251,7 +258,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 
 		try {
 			whenHttpURLToString(
-				"<body><a href='http://liferay.com'>12345</a></body>");
+				"<body><a href='http://" + _TARGET_URI + "'>12345</a></body>");
 
 			execute();
 
@@ -267,8 +274,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 	public void testGetExcerptWhenAnchorHasParent() throws Exception {
 		whenHttpURLToString(
 			"<body><p>" +
-			"Visit <a href='http://liferay.com'>Liferay</a> to learn more" +
-			"</p></body>");
+			"Visit <a href='http://" + _TARGET_URI + "'>Liferay</a>" +
+			" to learn more</p></body>");
 
 		execute();
 
@@ -285,7 +292,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 		try {
 			whenHttpURLToString(
 				"<body>_____<p>12345<span>67890" +
-				"<a href='http://liferay.com'>Liferay</a>" +
+				"<a href='http://" + _TARGET_URI + "'>Liferay</a>" +
 				"12345</span>67890</p>_____</body>");
 
 			execute();
@@ -322,7 +329,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 	@Test
 	public void testGetExcerptWhenReferrerIsUnavailable() throws Exception {
 		when(
-			_http.URLtoString("__sourceUri__")
+			_http.URLtoString(_SOURCE_URI)
 		).thenThrow(
 			IOException.class
 		);
@@ -335,20 +342,19 @@ public class PingbackMethodImplTest extends PowerMockito {
 	}
 
 	protected void execute() {
-		execute("http://liferay.com");
+		execute("http://" + _TARGET_URI);
 	}
 
 	protected void execute(String targetURI) {
 		PingbackMethodImpl pingbackMethodImpl = new PingbackMethodImpl();
 		pingbackMethodImpl.setCommentManager(_commentManager);
 
-		pingbackMethodImpl.setArguments(
-			new Object[] {"__sourceUri__", targetURI});
+		pingbackMethodImpl.setArguments(new Object[] {_SOURCE_URI, targetURI});
 
 		pingbackMethodImpl.execute(_COMPANY_ID);
 	}
 
-	protected void setUpBlogsEntry() throws Exception {
+	protected void setUpBlogsEntryLocalServiceUtil() throws Exception {
 		when(
 			_blogsEntry.getEntryId()
 		).thenReturn(
@@ -364,7 +370,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 		when(
 			_blogsEntry.getUrlTitle()
 		).thenReturn(
-			"__UrlTitle__"
+			_URL_TITLE
 		);
 
 		when(
@@ -394,9 +400,10 @@ public class PingbackMethodImplTest extends PowerMockito {
 		mockStatic(BlogsUtil.class, Mockito.RETURNS_SMART_NULLS);
 	}
 
-	protected void setUpHttp() throws Exception {
+	protected void setUpHttpUtil() throws Exception {
 		whenHttpURLToString(
-			"<body><a href='http://liferay.com'>Liferay</a></body>");
+			"<body><a href='http://" + _TARGET_URI + "'>" +
+				_EXCERPT_BODY + "</a></body>");
 
 		mockStatic(PortalSocketPermission.class, Mockito.RETURNS_DEFAULTS);
 
@@ -405,21 +412,21 @@ public class PingbackMethodImplTest extends PowerMockito {
 		httpUtil.setHttp(_http);
 	}
 
-	protected void setUpLanguage() {
-		whenLanguageGet("pingback", "__pingbackUserName__");
-		whenLanguageGet("read-more", "__read_more__");
+	protected void setUpLanguageUtil() {
+		whenLanguageGet("pingback", _PINGBACK_USER_NAME);
+		whenLanguageGet("read-more", _READ_MORE);
 
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(_language);
 	}
 
-	protected void setUpPortal() throws Exception {
+	protected void setUpPortalUtil() throws Exception {
 		when(
 			_portal.getLayoutFullURL(
 				Matchers.anyLong(), Matchers.eq(PortletKeys.BLOGS))
 		).thenReturn(
-			"__LayoutFullURL__"
+			_LAYOUT_FULL_URL
 		);
 
 		when(
@@ -440,7 +447,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 		portalUtil.setPortal(_portal);
 	}
 
-	protected void setUpPortlet() throws Exception {
+	protected void setUpPortletLocalServiceUtil() throws Exception {
 		Portlet portlet = Mockito.mock(Portlet.class);
 
 		when(
@@ -452,7 +459,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 		when(
 			portlet.getFriendlyURLMapping()
 		).thenReturn(
-			"__FriendlyURLMapping__"
+			_FRIENDLY_URL_MAPPING
 		);
 
 		PortletLocalService portletLocalService = Mockito.mock(
@@ -480,7 +487,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpUser() throws Exception {
+	protected void setUpUserLocalServiceUtil() throws Exception {
 		UserLocalService userLocalService = Mockito.mock(
 			UserLocalService.class);
 
@@ -499,7 +506,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpXmlRpc() {
+	protected void setUpXmlRpcUtil() {
 		Fault fault = Mockito.mock(Fault.class);
 
 		when(
@@ -557,7 +564,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 			Matchers.anyLong(),
 			Matchers.eq(
 				"[...] " + excerpt +
-				" [...] [url=__sourceUri__]__read_more__[/url]"),
+				" [...] [url=" + _SOURCE_URI + "]" + _READ_MORE + "[/url]"),
 			(ServiceContext)Matchers.any()
 		);
 	}
@@ -579,7 +586,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 	}
 
 	protected void whenFriendlyURLMapperPopulateParams(
-		String friendlyURL, final String name, final String value) {
+		String friendlyURLPath, final String name, final String value) {
 
 		Mockito.doAnswer(
 			new Answer<Void>() {
@@ -600,13 +607,13 @@ public class PingbackMethodImplTest extends PowerMockito {
 		).when(
 			_friendlyURLMapper
 		).populateParams(
-			Matchers.eq(friendlyURL), Matchers.anyMap(), Matchers.anyMap()
+			Matchers.eq(friendlyURLPath), Matchers.anyMap(), Matchers.anyMap()
 		);
 	}
 
 	protected void whenHttpURLToString(String returnValue) throws Exception {
 		when(
-			_http.URLtoString("__sourceUri__")
+			_http.URLtoString(_SOURCE_URI)
 		).thenReturn(
 			returnValue
 		);
@@ -624,7 +631,26 @@ public class PingbackMethodImplTest extends PowerMockito {
 
 	private static final long _ENTRY_ID = RandomTestUtil.randomLong();
 
+	private static final String _EXCERPT_BODY = RandomTestUtil.randomString();
+
+	private static final String _FRIENDLY_URL_MAPPING =
+		RandomTestUtil.randomString();
+
 	private static final long _GROUP_ID = RandomTestUtil.randomLong();
+
+	private static final String _LAYOUT_FULL_URL =
+		RandomTestUtil.randomString();
+
+	private static final String _PINGBACK_USER_NAME =
+		RandomTestUtil.randomString();
+
+	private static final String _READ_MORE = RandomTestUtil.randomString();
+
+	private static final String _SOURCE_URI = RandomTestUtil.randomString();
+
+	private static final String _TARGET_URI = RandomTestUtil.randomString();
+
+	private static final String _URL_TITLE = RandomTestUtil.randomString();
 
 	private static final long _USER_ID = RandomTestUtil.randomLong();
 

@@ -47,22 +47,14 @@ UnicodeProperties groupTypeSettings = layoutDisplayContext.getGroupTypeSettings(
 
 UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 
-Layout selLayout = null;
+Layout selLayout = layoutDisplayContext.getSelLayout();
 
-if (selPlid != LayoutConstants.DEFAULT_PLID) {
-	selLayout = LayoutLocalServiceUtil.fetchLayout(selPlid);
-
-	if (selLayout != null) {
-		privateLayout = selLayout.isPrivateLayout();
-		layoutId = selLayout.getLayoutId();
-	}
+if (selLayout != null) {
+	privateLayout = selLayout.isPrivateLayout();
+	layoutId = selLayout.getLayoutId();
 }
 
-Layout refererLayout = null;
-
-if (refererPlid != LayoutConstants.DEFAULT_PLID) {
-	refererLayout = LayoutLocalServiceUtil.fetchLayout(refererPlid);
-}
+Layout refererLayout = layoutDisplayContext.getRefererLayout();
 
 Organization organization = null;
 User selUser = null;

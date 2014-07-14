@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -90,6 +92,19 @@ public class LayoutDisplayContext {
 		return _liveGroup;
 	}
 
+	public Layout getRefererLayout() {
+		if (_refererLayout != null) {
+			return _refererLayout;
+		}
+
+		if (getRefererPlid() != LayoutConstants.DEFAULT_PLID) {
+			_refererLayout = LayoutLocalServiceUtil.fetchLayout(
+				getRefererPlid());
+		}
+
+		return _refererLayout;
+	}
+
 	public Long getRefererPlid() {
 		if (_refererPlid != null) {
 			return _refererPlid;
@@ -109,6 +124,18 @@ public class LayoutDisplayContext {
 		_selGroup = (Group)_request.getAttribute(WebKeys.GROUP);
 
 		return _selGroup;
+	}
+
+	public Layout getSelLayout() {
+		if (_selLayout != null) {
+			return _selLayout;
+		}
+
+		if (getSelPlid() != LayoutConstants.DEFAULT_PLID) {
+			_selLayout = LayoutLocalServiceUtil.fetchLayout(getSelPlid());
+		}
+
+		return _selLayout;
 	}
 
 	public Long getSelPlid() {
@@ -164,9 +191,11 @@ public class LayoutDisplayContext {
 	private Long _groupId;
 	private UnicodeProperties _groupTypeSettings;
 	private Group _liveGroup;
+	private Layout _refererLayout;
 	private Long _refererPlid;
 	private HttpServletRequest _request;
 	private Group _selGroup;
+	private Layout _selLayout;
 	private Long _selPlid;
 	private Group _stagingGroup;
 	private Long _stagingGroupId;

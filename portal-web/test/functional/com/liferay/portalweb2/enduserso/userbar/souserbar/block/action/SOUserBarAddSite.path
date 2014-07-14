@@ -54,6 +54,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPEN_SELECT_OPTION</td>
+	<td>//option[@value='1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLIC_RESTRICTED_SELECT_OPTION</td>
+	<td>//option[@value='101']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRIVATE_RESTRICTED_SELECT_OPTION</td>
+	<td>//option[@value='102']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRIVATE_SELECT_OPTION</td>
+	<td>//option[@value='3']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HOME_CHECKBOX</td>
 	<td>//div[2]/div/div/div/div/div/div[contains(.,'Home')]/input</td>
 	<td></td>

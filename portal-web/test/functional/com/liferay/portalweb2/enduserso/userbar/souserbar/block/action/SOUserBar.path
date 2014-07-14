@@ -225,6 +225,27 @@
 	<td>//button[contains(.,'Sites Directory')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCREENSHOTS-->
+<tr>
+	<td>SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_PRESENT_PNG</td>
+	<td>so/screenshots/userbar/userbar_go_to_menu_add_site_present.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_NOT_PRESENT_PNG</td>
+	<td>so/screenshots/userbar/userbar_go_to_menu_add_site_not_present.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.search.SearchEngineInitializer;
 import com.liferay.portal.search.lucene.cluster.LuceneClusterUtil;
 import com.liferay.portal.search.lucene.highlight.QueryTermExtractor;
 import com.liferay.portal.security.auth.TransientTokenUtil;
@@ -764,7 +765,8 @@ public class LuceneHelperImpl implements LuceneHelper {
 			_log.info("Indexing Lucene on startup");
 		}
 
-		LuceneIndexer luceneIndexer = new LuceneIndexer(companyId);
+		SearchEngineInitializer searchEngineInitializer =
+			new SearchEngineInitializer(companyId);
 
 		if (PropsValues.INDEX_WITH_THREAD) {
 			if (_luceneIndexThreadPoolExecutor == null) {
@@ -778,10 +780,10 @@ public class LuceneHelperImpl implements LuceneHelper {
 						LuceneHelperImpl.class.getName());
 			}
 
-			_luceneIndexThreadPoolExecutor.execute(luceneIndexer);
+			_luceneIndexThreadPoolExecutor.execute(searchEngineInitializer);
 		}
 		else {
-			luceneIndexer.reindex();
+			searchEngineInitializer.reindex();
 		}
 	}
 

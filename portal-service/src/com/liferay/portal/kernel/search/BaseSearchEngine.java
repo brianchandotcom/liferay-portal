@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 public class BaseSearchEngine implements SearchEngine {
 
 	/**
-	 * @throws SearchException  
+	 * @throws SearchException
 	 */
 	@Override
 	public String backup(long companyId, String backupName)
@@ -181,7 +181,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @throws SearchException  
+	 * @throws SearchException
 	 */
 	@Override
 	public void removeBackup(long companyId, String backupName)
@@ -193,7 +193,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	/**
-	 * @throws SearchException  
+	 * @throws SearchException
 	 */
 	@Override
 	public void restore(long companyId, String backupName)

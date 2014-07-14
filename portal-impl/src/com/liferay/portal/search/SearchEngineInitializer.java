@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.lucene;
+package com.liferay.portal.search;
 
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -35,9 +35,9 @@ import org.apache.commons.lang.time.StopWatch;
 /**
  * @author Brian Wing Shun Chan
  */
-public class LuceneIndexer implements Runnable {
+public class SearchEngineInitializer implements Runnable {
 
-	public LuceneIndexer(long companyId) {
+	public SearchEngineInitializer(long companyId) {
 		_companyId = companyId;
 		_usedSearchEngineIds = new HashSet<String>();
 	}
@@ -99,7 +99,7 @@ public class LuceneIndexer implements Runnable {
 		stopWatch.start();
 
 		try {
-			LuceneHelperUtil.delete(_companyId);
+			SearchEngineUtil.removeCompany(_companyId);
 
 			List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(
 				_companyId);
@@ -169,7 +169,8 @@ public class LuceneIndexer implements Runnable {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LuceneIndexer.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		SearchEngineInitializer.class);
 
 	private long _companyId;
 	private boolean _finished;

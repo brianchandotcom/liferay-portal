@@ -16,6 +16,7 @@ package com.liferay.portal.test;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
 import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -26,7 +27,6 @@ import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.search.lucene.LuceneHelperUtil;
 import com.liferay.portal.service.PersistedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -67,7 +67,7 @@ public class MainServletExecutionTestListener
 		ServiceTestUtil.destroyServices();
 
 		try {
-			LuceneHelperUtil.delete(TestPropsValues.getCompanyId());
+			SearchEngineUtil.removeCompany(TestPropsValues.getCompanyId());
 		}
 		catch (Exception e) {
 			_log.error(e, e);

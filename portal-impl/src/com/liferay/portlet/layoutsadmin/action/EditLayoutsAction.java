@@ -950,6 +950,10 @@ public class EditLayoutsAction extends PortletAction {
 					LayoutConstants.TYPE_PORTLET,
 					typeSettingsProperties.toString(), hidden, friendlyURLMap,
 					serviceContext);
+
+				// Force propagation from page template to page. See LPS-48430.
+
+				LayoutLocalServiceUtil.getLayout(layout.getPlid());
 			}
 			else {
 				long copyLayoutId = ParamUtil.getLong(

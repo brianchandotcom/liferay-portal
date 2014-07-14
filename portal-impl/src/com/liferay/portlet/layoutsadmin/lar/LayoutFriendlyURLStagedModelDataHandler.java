@@ -145,9 +145,8 @@ public class LayoutFriendlyURLStagedModelDataHandler
 	}
 
 	protected LayoutFriendlyURL fetchExistingLayoutFriendlyURL(
-			PortletDataContext portletDataContext,
-			LayoutFriendlyURL layoutFriendlyURL, long plid)
-		throws PortalException {
+		PortletDataContext portletDataContext,
+		LayoutFriendlyURL layoutFriendlyURL, long plid) {
 
 		LayoutFriendlyURL existingLayoutFriendlyURL = fetchExistingStagedModel(
 			layoutFriendlyURL.getUuid(), portletDataContext.getScopeGroupId());

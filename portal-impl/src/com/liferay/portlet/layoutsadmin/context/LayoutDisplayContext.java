@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.layoutsadmin.context;
 
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -25,6 +28,17 @@ public class LayoutDisplayContext {
 		_request = request;
 	}
 
+	public Group getSelGroup() {
+		if (_selGroup != null) {
+			return _selGroup;
+		}
+
+		_selGroup = (Group)_request.getAttribute(WebKeys.GROUP);
+
+		return _selGroup;
+	}
+
 	private HttpServletRequest _request;
+	private Group _selGroup;
 
 }

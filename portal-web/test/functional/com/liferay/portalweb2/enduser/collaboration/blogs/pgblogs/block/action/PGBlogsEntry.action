@@ -25,7 +25,7 @@
 		</case>
 
 		<case comparator="startsWith" locator-key1="YOUR_RATING_STAR_EMPTY_">
-			<execute function="Click#clickWaitForInlineCKEditor" />
+			<execute function="Click#clickWaitForInlineCKEditorNoMouseOver" />
 		</case>
 	</command>
 </definition>

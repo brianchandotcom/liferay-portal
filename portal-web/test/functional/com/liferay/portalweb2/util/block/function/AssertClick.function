@@ -170,8 +170,6 @@
 	</command>
 
 	<command name="pauseMakeVisibleAssertTextEqualsClickAt">
-		<execute selenium="mouseOver" />
-
 		<execute selenium="makeVisible" />
 
 		<execute selenium="waitForVisible" />
@@ -182,7 +180,7 @@
 
 		<execute argument1="1000" selenium="pause" />
 
-		<execute selenium="click" />
+		<execute selenium="mouseUp" />
 	</command>
 
 	<command name="waitForDMHomeAssertTextEqualsClick">

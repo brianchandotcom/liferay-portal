@@ -389,8 +389,6 @@ public class LayoutSetPrototypePropagationTest
 
 		setLinkEnabled(true);
 
-		propagateChanges(group);
-
 		layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
 			group.getGroupId(), false, prototypeLayout.getFriendlyURL());
 
@@ -613,9 +611,13 @@ public class LayoutSetPrototypePropagationTest
 			LayoutLocalServiceUtil.updateLayout(_layout);
 		}
 
+		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
+
 		SitesUtil.updateLayoutSetPrototypesLinks(
 			group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0,
 			linkEnabled, linkEnabled);
+
+		Thread.sleep(2000);
 	}
 
 	protected void testAddChildLayout(boolean layoutSetPrototypeLinkEnabled)

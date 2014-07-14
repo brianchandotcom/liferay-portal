@@ -83,9 +83,7 @@ public class PollsVoteStagedModelDataHandler
 			long voteId)
 		throws Exception {
 
-		PollsVote existingVote =
-			PollsVoteLocalServiceUtil.fetchPollsVoteByUuidAndGroupId(
-				uuid, groupId);
+		PollsVote existingVote = fetchExistingStagedModel(uuid, groupId);
 
 		Map<Long, Long> voteIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -122,9 +120,8 @@ public class PollsVoteStagedModelDataHandler
 		serviceContext.setCreateDate(vote.getVoteDate());
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			PollsVote existingVote =
-				PollsVoteLocalServiceUtil.fetchPollsVoteByUuidAndGroupId(
-					vote.getUuid(), portletDataContext.getScopeGroupId());
+			PollsVote existingVote = fetchExistingStagedModel(
+				vote.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingVote == null) {
 				serviceContext.setUuid(vote.getUuid());

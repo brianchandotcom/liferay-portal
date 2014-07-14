@@ -74,6 +74,12 @@ public class DDMFormFieldRendererRegistryImpl
 		_serviceRegistrations.put(ddmFormFieldRenderer, serviceRegistration);
 	}
 
+	public void setDefaultDDMFormFieldRenderer(
+		DDMFormFieldRenderer ddmFormFieldRenderer) {
+
+		register(ddmFormFieldRenderer);
+	}
+
 	@Override
 	public void unregister(DDMFormFieldRenderer ddmFormFieldRenderer) {
 		ServiceRegistration<DDMFormFieldRenderer> serviceRegistration =

@@ -48,8 +48,6 @@ import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldFreeMarkerRenderer;
-import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRendererRegistryUtil;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
 import com.liferay.taglib.servlet.JspFactorySwapper;
 
@@ -138,11 +136,6 @@ public class StartupAction extends SimpleAction {
 
 		IndexerRegistryUtil.register(new MBMessageIndexer());
 		IndexerRegistryUtil.register(new PluginPackageIndexer());
-
-		// Dynamic data mapping renderers
-
-		DDMFormFieldRendererRegistryUtil.register(
-			new DDMFormFieldFreeMarkerRenderer());
 
 		// Upgrade
 

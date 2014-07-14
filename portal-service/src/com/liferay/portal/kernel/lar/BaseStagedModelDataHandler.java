@@ -607,8 +607,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	}
 
 	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws PortalException {
+		String uuid, long companyId, long groupId) {
 
 		T existingStagedModel = fetchExistingStagedModel(uuid, groupId);
 

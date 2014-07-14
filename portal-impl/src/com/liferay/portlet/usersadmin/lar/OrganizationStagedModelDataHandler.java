@@ -507,8 +507,7 @@ public class OrganizationStagedModelDataHandler
 
 	@Override
 	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws PortalException {
+		String uuid, long companyId, long groupId) {
 
 		Organization organization =
 			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(

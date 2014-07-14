@@ -86,6 +86,13 @@ public class CommentManagerImpl implements CommentManager {
 		commentManager.deleteDiscussion(className, classPK);
 	}
 
+	@Override
+	public int getCommentsCount(String className, long classPK) {
+		CommentManager commentManager = getCommentManager();
+
+		return commentManager.getCommentsCount(className, classPK);
+	}
+
 	protected CommentManager getCommentManager() {
 		if (_serviceTracker.isEmpty()) {
 			return _defaultCommentManager;

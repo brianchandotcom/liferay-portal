@@ -58,6 +58,13 @@ public class BlogsUtil {
 			CommentManager.class.getName());
 	}
 
+	public static int getCommentsCount(BlogsEntry entry) {
+		CommentManager commentManager = getCommentManager();
+
+		return commentManager.getCommentsCount(
+			BlogsEntry.class.getName(), entry.getEntryId());
+	}
+
 	public static Map<String, String> getEmailDefinitionTerms(
 		PortletRequest portletRequest, String emailFromAddress,
 		String emailFromName) {

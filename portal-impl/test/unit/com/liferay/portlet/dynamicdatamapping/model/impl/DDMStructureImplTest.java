@@ -17,9 +17,18 @@ package com.liferay.portlet.dynamicdatamapping.model.impl;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,6 +38,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
+ * @author Marcellus Tavares
  */
 @PrepareForTest(
 	{
@@ -42,29 +52,282 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 		setUpDDMStructureLocalServiceUtil();
 		setUpDDMTemplateLocalServiceUtil();
 		setUpDDMFormXSDDeserializerUtil();
+		setUpDDMFormXSDSerializerUtil();
 		setUpHtmlUtil();
+		setUpLocaleUtil();
 		setUpPropsUtil();
 		setUpSAXReaderUtil();
 	}
 
 	@Test
-	public final void testHasField() throws Exception {
-		DDMStructure parentStructure = createStructure(
-			"parent", "field01", "field02");
+	public void testGetAvailableLanguageIds() throws Exception {
+		List<Locale> availableLocales = createAvailableLocales(
+			LocaleUtil.BRAZIL, LocaleUtil.US);
 
-		Assert.assertTrue(parentStructure.hasField("field01"));
-		Assert.assertTrue(parentStructure.hasField("field02"));
+		DDMForm ddmForm = createDDMForm(availableLocales, LocaleUtil.US);
+
+		DDMStructure structure = createStructure("Test Structure", ddmForm);
+
+		String[] actualAvailableLanguageIds =
+			structure.getAvailableLanguageIds();
+
+		Assert.assertEquals(2, actualAvailableLanguageIds.length);
+
+		for (String actualAvailableLanguageId :  actualAvailableLanguageIds) {
+			Locale actualAvailableLocale = LocaleUtil.fromLanguageId(
+				actualAvailableLanguageId);
+
+			Assert.assertTrue(availableLocales.contains(actualAvailableLocale));
+		}
+	}
+
+	@Test
+	public void testGetChildrenFieldNames() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		DDMFormField field1 = createTextDDMFormField("field1");
+
+		addNestedTextDDMFormFields(field1, "child1Field1", "child2Field1");
+
+		DDMFormField field2 = createTextDDMFormField("field2");
+		DDMFormField field3 = createTextDDMFormField("field3");
+
+		addDDMFormFields(ddmForm, field1, field2, field3);
+
+		DDMStructure structure = createStructure("Test Structure", ddmForm);
+
+		List<String> actualChildrenFieldNames = structure.getChildrenFieldNames(
+			"field1");
+
+		Assert.assertEquals(2, actualChildrenFieldNames.size());
+		Assert.assertTrue(actualChildrenFieldNames.contains("child1Field1"));
+		Assert.assertTrue(actualChildrenFieldNames.contains("child2Field1"));
+	}
+
+	@Test
+	public void testGetDefaultLanguageId() throws Exception {
+		DDMForm ddmForm = createDDMForm(
+			createAvailableLocales(LocaleUtil.BRAZIL, LocaleUtil.US),
+			LocaleUtil.BRAZIL);
+
+		DDMStructure structure = createStructure("Test Structure", ddmForm);
+
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.BRAZIL),
+			structure.getDefaultLanguageId());
+	}
+
+	@Test
+	public void testGetFieldLabel() throws Exception {
+		List<Locale> availableLocales = createAvailableLocales(
+			LocaleUtil.BRAZIL, LocaleUtil.US);
+
+		DDMForm ddmForm = createDDMForm(availableLocales, LocaleUtil.US);
+
+		DDMFormField field = createTextDDMFormField("field");
+
+		LocalizedValue label = field.getLabel();
+
+		label.addValue(LocaleUtil.BRAZIL, "Campo de Texto");
+		label.addValue(LocaleUtil.US, "Text Field");
+
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		ddmFormFields.add(field);
+
+		DDMStructure structure = createStructure("Test Structure", ddmForm);
+
+		Assert.assertEquals(
+			"Campo de Texto",
+			structure.getFieldLabel("field", LocaleUtil.BRAZIL));
+		Assert.assertEquals(
+			"Text Field",
+			structure.getFieldLabel("field", LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetFieldNames() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		DDMFormField field1 = createTextDDMFormField("field1");
+
+		addNestedTextDDMFormFields(field1, "child1Field1", "child2Field1");
+
+		DDMFormField field2 = createTextDDMFormField("field2");
+		DDMFormField field3 = createTextDDMFormField("field3");
+
+		addDDMFormFields(ddmForm, field1, field2, field3);
+
+		DDMStructure structure = createStructure("Test Structure", ddmForm);
+
+		Set<String> expectedFieldNames = new HashSet<String>();
+
+		expectedFieldNames.add("field1");
+		expectedFieldNames.add("child1Field1");
+		expectedFieldNames.add("child2Field1");
+		expectedFieldNames.add("field2");
+		expectedFieldNames.add("field3");
+		expectedFieldNames.add("_fieldsDisplay");
+
+		Assert.assertEquals(expectedFieldNames, structure.getFieldNames());
+	}
+
+	@Test
+	public void testGetFieldNamesWithParentStructure() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		DDMFormField field1 = createTextDDMFormField("field1");
+
+		addNestedTextDDMFormFields(field1, "child1Field1", "child2Field1");
+
+		DDMFormField field2 = createTextDDMFormField("field2");
+		DDMFormField field3 = createTextDDMFormField("field3");
+
+		addDDMFormFields(ddmForm, field1, field2, field3);
+
+		DDMStructure parentStructure = createStructure(
+			"Parent Structure", ddmForm);
 
 		DDMStructure childStructure = createStructure(
-			"child", "field03", "field04");
+			"Child Structure", "field4", "field5");
 
 		childStructure.setParentStructureId(parentStructure.getStructureId());
 
-		Assert.assertTrue(childStructure.hasField("field01"));
-		Assert.assertTrue(childStructure.hasField("field02"));
-		Assert.assertTrue(childStructure.hasField("field03"));
-		Assert.assertTrue(childStructure.hasField("field04"));
+		Set<String> expectedFieldNames = new HashSet<String>();
+
+		expectedFieldNames.add("field1");
+		expectedFieldNames.add("child1Field1");
+		expectedFieldNames.add("child2Field1");
+		expectedFieldNames.add("field2");
+		expectedFieldNames.add("field3");
+		expectedFieldNames.add("field4");
+		expectedFieldNames.add("field5");
+		expectedFieldNames.add("_fieldsDisplay");
+
+		Assert.assertEquals(expectedFieldNames, childStructure.getFieldNames());
+	}
+
+	@Test
+	public void testGetFieldTip() throws Exception {
+		List<Locale> availableLocales = createAvailableLocales(
+			LocaleUtil.BRAZIL, LocaleUtil.US);
+
+		DDMForm ddmForm = createDDMForm(availableLocales, LocaleUtil.US);
+
+		DDMFormField field = createTextDDMFormField("field");
+
+		LocalizedValue tip = field.getTip();
+
+		tip.addValue(LocaleUtil.BRAZIL, "Dica para campo de texto.");
+		tip.addValue(LocaleUtil.US, "Tip for text field");
+
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		ddmFormFields.add(field);
+
+		DDMStructure structure = createStructure("Test Structure", ddmForm);
+
+		Assert.assertEquals(
+			"Dica para campo de texto.",
+			structure.getFieldTip("field", LocaleUtil.BRAZIL));
+		Assert.assertEquals(
+			"Tip for text field",
+			structure.getFieldTip("field", LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetFieldType() throws Exception {
+		DDMForm ddmForm = createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		addTextDDMFormFields(ddmForm, "field1");
+
+		DDMStructure structure = createStructure("Test Structure", ddmForm);
+
+		Assert.assertEquals("text", structure.getFieldType("field1"));
+	}
+
+	@Test
+	public void testGetGetFieldDataType() throws Exception {
+		DDMStructure structure = createStructure(
+			"TestStructure", createDDMForm("field1"));
+
+		Assert.assertEquals("string", structure.getFieldDataType("field1"));
+	}
+
+	@Test
+	public void testGetRootFieldNames() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		DDMFormField field1 = createTextDDMFormField("field1");
+
+		addNestedTextDDMFormFields(field1, "child1Field1", "child2Field1");
+
+		DDMFormField field2 = createTextDDMFormField("field2");
+		DDMFormField field3 = createTextDDMFormField("field3");
+
+		addDDMFormFields(ddmForm, field1, field2, field3);
+
+		DDMStructure structure = createStructure("Test Structure", ddmForm);
+
+		List<String> expectedFieldNames = new ArrayList<String>();
+
+		expectedFieldNames.add("field1");
+		expectedFieldNames.add("field2");
+		expectedFieldNames.add("field3");
+		expectedFieldNames.add("_fieldsDisplay");
+
+		Assert.assertEquals(expectedFieldNames, structure.getRootFieldNames());
+	}
+
+	@Test
+	public void testHasField() throws Exception {
+		DDMStructure parentStructure = createStructure(
+			"Parent Structure", "field1", "field2");
+
+		Assert.assertTrue(parentStructure.hasField("field1"));
+		Assert.assertTrue(parentStructure.hasField("field2"));
+
+		DDMStructure childStructure = createStructure(
+			"Child Structure", "field3", "field4");
+
+		childStructure.setParentStructureId(parentStructure.getStructureId());
+
+		Assert.assertTrue(childStructure.hasField("field1"));
+		Assert.assertTrue(childStructure.hasField("field2"));
+		Assert.assertTrue(childStructure.hasField("field3"));
+		Assert.assertTrue(childStructure.hasField("field4"));
 		Assert.assertFalse(childStructure.hasField("fieldNotFound"));
+	}
+
+	@Test
+	public void testIsFieldRepeatable() throws Exception {
+		DDMForm ddmForm = createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField field1 = createTextDDMFormField(
+			"field1", "label", false, true, false);
+
+		addDDMFormFields(ddmForm, field1);
+
+		DDMStructure structure = createStructure("Test Structure", ddmForm);
+
+		Assert.assertTrue(structure.getFieldRepeatable("field1"));
+	}
+
+	@Test
+	public void testIsFieldRequired() throws Exception {
+		DDMForm ddmForm = createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField field1 = createTextDDMFormField(
+			"field1", "label", false, false, true);
+
+		addDDMFormFields(ddmForm, field1);
+
+		DDMStructure structure = createStructure("Test Structure", ddmForm);
+
+		Assert.assertTrue(structure.getFieldRequired("field1"));
 	}
 
 }

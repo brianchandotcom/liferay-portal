@@ -209,7 +209,9 @@ public class WebDriverToSeleniumBridge
 				webElement.click();
 			}
 			catch (Exception e) {
-				scrollWebElementIntoView(webElement);
+				if (!webElement.isDisplayed()) {
+					scrollWebElementIntoView(webElement);
+				}
 
 				webElement.click();
 			}
@@ -1036,7 +1038,9 @@ public class WebDriverToSeleniumBridge
 	public void mouseDown(String locator) {
 		WebElement webElement = getWebElement(locator);
 
-		scrollWebElementIntoView(webElement);
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1057,7 +1061,9 @@ public class WebDriverToSeleniumBridge
 	public void mouseDownAt(String locator, String coordString) {
 		WebElement webElement = getWebElement(locator);
 
-		scrollWebElementIntoView(webElement);
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1100,7 +1106,9 @@ public class WebDriverToSeleniumBridge
 	public void mouseMove(String locator) {
 		WebElement webElement = getWebElement(locator);
 
-		scrollWebElementIntoView(webElement);
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1119,7 +1127,9 @@ public class WebDriverToSeleniumBridge
 	public void mouseMoveAt(String locator, String coordString) {
 		WebElement webElement = getWebElement(locator);
 
-		scrollWebElementIntoView(webElement);
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1148,7 +1158,9 @@ public class WebDriverToSeleniumBridge
 	public void mouseOut(String locator) {
 		WebElement webElement = getWebElement(locator);
 
-		scrollWebElementIntoView(webElement);
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1168,7 +1180,9 @@ public class WebDriverToSeleniumBridge
 	public void mouseOver(String locator) {
 		WebElement webElement = getWebElement(locator);
 
-		scrollWebElementIntoView(webElement);
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1187,7 +1201,9 @@ public class WebDriverToSeleniumBridge
 	public void mouseUp(String locator) {
 		WebElement webElement = getWebElement(locator);
 
-		scrollWebElementIntoView(webElement);
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1206,7 +1222,9 @@ public class WebDriverToSeleniumBridge
 	public void mouseUpAt(String locator, String coordString) {
 		WebElement webElement = getWebElement(locator);
 
-		scrollWebElementIntoView(webElement);
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 

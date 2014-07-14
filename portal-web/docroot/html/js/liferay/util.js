@@ -1023,36 +1023,6 @@
 
 	Liferay.provide(
 		Util,
-		'disableSelectBoxes',
-		function(toggleBoxId, value, selectBoxId) {
-			var selectBox = A.one('#' + selectBoxId);
-			var toggleBox = A.one('#' + toggleBoxId);
-
-			if (selectBox && toggleBox) {
-				var dynamicValue = Lang.isFunction(value);
-
-				var disabled = function() {
-					var currentValue = selectBox.val();
-
-					var visible = (value == currentValue);
-
-					if (dynamicValue) {
-						visible = value(currentValue, value);
-					}
-
-					toggleBox.attr('disabled', !visible);
-				};
-
-				disabled();
-
-				selectBox.on('change', disabled);
-			}
-		},
-		['aui-base']
-	);
-
-	Liferay.provide(
-		Util,
 		'disableToggleBoxes',
 		function(checkBoxId, toggleBoxId, checkDisabled) {
 			var checkBox = A.one('#' + checkBoxId);

@@ -73,8 +73,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.search.SearchEngineInitializer;
 import com.liferay.portal.search.lucene.LuceneHelperUtil;
-import com.liferay.portal.search.lucene.LuceneIndexer;
 import com.liferay.portal.search.lucene.cluster.LuceneClusterUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
@@ -380,12 +380,13 @@ public class EditServerAction extends PortletAction {
 		if (Validator.isNull(portletId)) {
 			for (long companyId : companyIds) {
 				try {
-					LuceneIndexer luceneIndexer = new LuceneIndexer(companyId);
+					SearchEngineInitializer searchEngineInitializer =
+						new SearchEngineInitializer(companyId);
 
-					luceneIndexer.reindex();
+					searchEngineInitializer.reindex();
 
 					usedSearchEngineIds.addAll(
-						luceneIndexer.getUsedSearchEngineIds());
+						searchEngineInitializer.getUsedSearchEngineIds());
 				}
 				catch (Exception e) {
 					_log.error(e, e);

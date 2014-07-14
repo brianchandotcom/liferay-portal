@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.layoutsadmin.context;
 
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.LayoutConstants;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -72,6 +74,17 @@ public class LayoutDisplayContext {
 		return _liveGroup;
 	}
 
+	public Long getRefererPlid() {
+		if (_refererPlid != null) {
+			return _refererPlid;
+		}
+
+		_refererPlid = ParamUtil.getLong(
+			_request, "refererPlid", LayoutConstants.DEFAULT_PLID);
+
+		return _refererPlid;
+	}
+
 	public Group getSelGroup() {
 		if (_selGroup != null) {
 			return _selGroup;
@@ -80,6 +93,17 @@ public class LayoutDisplayContext {
 		_selGroup = (Group)_request.getAttribute(WebKeys.GROUP);
 
 		return _selGroup;
+	}
+
+	public Long getSelPlid() {
+		if (_selPlid != null) {
+			return _selPlid;
+		}
+
+		_selPlid = ParamUtil.getLong(
+			_request, "selPlid", LayoutConstants.DEFAULT_PLID);
+
+		return _selPlid;
 	}
 
 	public Group getStagingGroup() {
@@ -123,8 +147,10 @@ public class LayoutDisplayContext {
 	private Group _group;
 	private Long _groupId;
 	private Group _liveGroup;
+	private Long _refererPlid;
 	private HttpServletRequest _request;
 	private Group _selGroup;
+	private Long _selPlid;
 	private Group _stagingGroup;
 	private Long _stagingGroupId;
 

@@ -166,7 +166,15 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 		// Remove HTML tags
 
 		for (int i = 0; i < _HTML_TAGS.length; i++) {
-			content = content.replaceAll(_HTML_TAGS[i], StringPool.BLANK);
+			if ((_HTML_TAGS[i] == "<font[^>]*>") ||
+				(_HTML_TAGS[i] == "<div[^>]*>")) {
+
+				content = content.replaceAll(_HTML_TAGS[i], StringPool.BLANK);
+			}
+			else {
+				content = StringUtil.replace(
+					content, _HTML_TAGS[i], StringPool.BLANK);
+			}
 		}
 
 		// Images
@@ -210,8 +218,8 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 
 			int imageLength = image.length();
 
-			image = image.replaceAll("\\[{2}", StringPool.BLANK);
-			image = image.replaceAll("\\]{2}", StringPool.BLANK);
+			image = StringUtil.replace(image, "\\[[", StringPool.BLANK);
+			image = StringUtil.replace(image, "\\]]", StringPool.BLANK);
 
 			sb.replace(
 				matcher.start(0) + offset,
@@ -236,23 +244,44 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 		originalLength = 0;
 
 		while (matcher.find()) {
+			if (pattern1 == null) {
+				pattern1 = Pattern.compile("class=(.*?)[|\n\r]");
+				pattern2 = Pattern.compile("(\\|\\-)(.*)");
+				pattern3 = Pattern.compile("\\|\\+(.*)");
+				pattern4 = Pattern.compile("(?m)^!(.+)");
+				pattern5 = Pattern.compile("[\n\r]");
+				pattern6 = Pattern.compile("\\|\\-");
+				pattern7 = Pattern.compile("\\|\\|");
+			}
+
 			mediaWikiTable = sb.substring(
 				matcher.start(1) + offset, matcher.end(1) + offset);
 
 			originalLength = mediaWikiTable.length() + 4;
 
-			mediaWikiTable = mediaWikiTable.replaceAll(
-				"class=(.*?)[|\n\r]", StringPool.BLANK);
-			mediaWikiTable = mediaWikiTable.replaceAll("(\\|\\-)(.*)", "$1");
-			mediaWikiTable = mediaWikiTable.replaceAll(
-				"\\|\\+(.*)", "===$1===");
-			mediaWikiTable = mediaWikiTable.replaceAll("(?m)^!(.+)", "|=$1|");
-			mediaWikiTable = mediaWikiTable.replaceAll(
-				"[\n\r]", StringPool.BLANK);
-			mediaWikiTable = mediaWikiTable.replaceAll("\\|\\-", "\n\r");
-			mediaWikiTable = mediaWikiTable.replaceAll("\\|\\|", "|");
-			mediaWikiTable = mediaWikiTable.replaceAll(
-				"/{4}", StringPool.BLANK);
+			Matcher matcher1 = pattern1.matcher(mediaWikiTable);
+			mediaWikiTable = matcher1.replaceAll(StringPool.BLANK);
+
+			Matcher matcher2 = pattern2.matcher(mediaWikiTable);
+			mediaWikiTable = matcher2.replaceAll("$1");
+
+			Matcher matcher3 = pattern3.matcher(mediaWikiTable);
+			mediaWikiTable = matcher3.replaceAll("===$1===");
+
+			Matcher matcher4 = pattern4.matcher(mediaWikiTable);
+			mediaWikiTable = matcher4.replaceAll("|=$1|");
+
+			Matcher matcher5 = pattern5.matcher(mediaWikiTable);
+			mediaWikiTable = matcher5.replaceAll(StringPool.BLANK);
+
+			Matcher matcher6 = pattern6.matcher(mediaWikiTable);
+			mediaWikiTable = matcher6.replaceAll("\n\r");
+
+			Matcher matcher7 = pattern7.matcher(mediaWikiTable);
+			mediaWikiTable = matcher7.replaceAll("|");
+
+			mediaWikiTable = StringUtil.replace(
+				mediaWikiTable, "////", StringPool.BLANK);
 
 			sb.replace(
 				matcher.start(0) + offset,
@@ -298,5 +327,12 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 		"\\{\\|(.*?)\\|\\}", Pattern.DOTALL);
 	private Pattern _titlePattern = Pattern.compile(
 		"^=([^=]+)=", Pattern.MULTILINE);
+	private Pattern pattern1;
+	private Pattern pattern2;
+	private Pattern pattern3;
+	private Pattern pattern4;
+	private Pattern pattern5;
+	private Pattern pattern6;
+	private Pattern pattern7;
 
 }

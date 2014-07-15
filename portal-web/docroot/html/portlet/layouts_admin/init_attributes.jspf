@@ -54,7 +54,7 @@ UserGroup userGroup = layoutDisplayContext.getUserGroup();
 
 String tabs1Names = layoutDisplayContext.getTabs1Names();
 
-LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, privateLayout);
+LayoutSet selLayoutSet = layoutDisplayContext.getSelLayoutSet();
 
 String pagesName = layoutDisplayContext.getPagesName();
 

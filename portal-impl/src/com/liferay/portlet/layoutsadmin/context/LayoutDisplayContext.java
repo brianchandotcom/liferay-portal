@@ -21,11 +21,13 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
@@ -233,6 +235,17 @@ public class LayoutDisplayContext {
 		return _selLayout;
 	}
 
+	public LayoutSet getSelLayoutSet() throws PortalException {
+		if (_selLayoutSet != null) {
+			return _selLayoutSet;
+		}
+
+		_selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			getGroupId(), isPrivateLayout());
+
+		return _selLayoutSet;
+	}
+
 	public Long getSelPlid() {
 		if (_selPlid != null) {
 			return _selPlid;
@@ -382,6 +395,7 @@ public class LayoutDisplayContext {
 	private String _rootNodeName;
 	private Group _selGroup;
 	private Layout _selLayout;
+	private LayoutSet _selLayoutSet;
 	private Long _selPlid;
 	private User _selUser;
 	private Group _stagingGroup;

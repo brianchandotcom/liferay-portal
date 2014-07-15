@@ -20,9 +20,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
 
-import java.io.File;
-
-import java.net.URI;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -58,18 +55,10 @@ public class EhcacheConfigurationUtilTest {
 
 	@Before
 	public void setUp() {
-		File file = new File(
-			"portal-impl/test/unit/com/liferay/portal/cache/ehcache/" +
-				"test-multi-ehcache-config.xml");
+		_configurationURL = EhcacheConfigurationUtilTest.class.getResource(
+			"dependencies/test-multi-ehcache-config.xml");
 
-		try {
-			URI uri = file.toURI();
-
-			_configurationURL = uri.toURL();
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertNotNull(_configurationURL);
 
 		_configuration = ConfigurationFactory.parseConfiguration(
 			_configurationURL);
@@ -92,20 +81,10 @@ public class EhcacheConfigurationUtilTest {
 
 		Assert.assertNull(configuration);
 
-		File file = new File(
-			"portal-impl/test/unit/com/liferay/portal/cache/ehcache/" +
-				"test-single-ehcache-config.xml");
+		URL configurationURL = EhcacheConfigurationUtilTest.class.getResource(
+			"dependencies/test-single-ehcache-config.xml");
 
-		URL configurationURL = null;
-
-		try {
-			URI uri = file.toURI();
-
-			configurationURL = uri.toURL();
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		Assert.assertNotNull(configurationURL);
 
 		configuration = EhcacheConfigurationUtil.getConfiguration(
 			configurationURL);

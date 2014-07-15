@@ -179,10 +179,8 @@ public class ResetDatabaseExecutionTestListener
 						System.currentTimeMillis();
 			}
 
-			String backupFileName = null;
-
 			try {
-				backupFileName = SearchEngineUtil.backup(
+				String backupFileName = SearchEngineUtil.backup(
 					companyId, SearchEngineUtil.SYSTEM_ENGINE_ID, backupName);
 
 				if (initialize) {
@@ -197,10 +195,10 @@ public class ResetDatabaseExecutionTestListener
 			}
 			finally {
 				if (initialize) {
-					_initializedIndexNames.put(companyId, backupFileName);
+					_initializedIndexNames.put(companyId, backupName);
 				}
 				else {
-					_indexNames.put(companyId, backupFileName);
+					_indexNames.put(companyId, backupName);
 				}
 			}
 		}

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.MethodParametersResolver;
 
@@ -40,7 +38,6 @@ public class MethodParametersResolverImpl implements MethodParametersResolver {
 			return methodParameters;
 		}
 
-		try {
 			Class<?>[] methodParameterTypes = method.getParameterTypes();
 
 			jodd.paramo.MethodParameter[] joddMethodParameters =
@@ -53,21 +50,19 @@ public class MethodParametersResolverImpl implements MethodParametersResolver {
 					joddMethodParameters[i].getName(),
 					joddMethodParameters[i].getSignature(),
 					methodParameterTypes[i]);
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
 
-			return null;
-		}
+				try {
+					methodParameters[i].getGenericTypes();
+				}
+				catch (ClassNotFoundException cnfe) {
+					throw new IllegalArgumentException(cnfe);
+				}
+			}
 
 		_methodParameters.put(method, methodParameters);
 
 		return methodParameters;
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		MethodParametersResolverImpl.class);
 
 	private Map<AccessibleObject, MethodParameter[]> _methodParameters =
 		new HashMap<AccessibleObject, MethodParameter[]>();

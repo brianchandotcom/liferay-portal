@@ -58,7 +58,9 @@ public class JSONWebServiceRegistrator {
 			_jsonWebServiceNaming);
 	}
 
-	public void processAllBeans(String contextPath, BeanLocator beanLocator) {
+	public void processAllBeans(
+		String contextName, String contextPath, BeanLocator beanLocator) {
+
 		if (beanLocator == null) {
 			return;
 		}
@@ -66,12 +68,13 @@ public class JSONWebServiceRegistrator {
 		String[] beanNames = beanLocator.getNames();
 
 		for (String beanName : beanNames) {
-			processBean(contextPath, beanLocator, beanName);
+			processBean(contextName, contextPath, beanLocator, beanName);
 		}
 	}
 
 	public void processBean(
-		String contextPath, BeanLocator beanLocator, String beanName) {
+		String contextName, String contextPath, BeanLocator beanLocator,
+		String beanName) {
 
 		if (!PropsValues.JSON_WEB_SERVICE_ENABLED) {
 			return;
@@ -91,7 +94,8 @@ public class JSONWebServiceRegistrator {
 
 		if (jsonWebService != null) {
 			try {
-				onJSONWebServiceBean(contextPath, bean, jsonWebService);
+				onJSONWebServiceBean(
+					contextName, contextPath, bean, jsonWebService);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -99,7 +103,9 @@ public class JSONWebServiceRegistrator {
 		}
 	}
 
-	public void processBean(String contextPath, Object bean) {
+	public void processBean(
+		String contextName, String contextPath, Object bean) {
+
 		if (!PropsValues.JSON_WEB_SERVICE_ENABLED) {
 			return;
 		}
@@ -112,7 +118,8 @@ public class JSONWebServiceRegistrator {
 		}
 
 		try {
-			onJSONWebServiceBean(contextPath, bean, jsonWebService);
+			onJSONWebServiceBean(
+				contextName, contextPath, bean, jsonWebService);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -163,7 +170,7 @@ public class JSONWebServiceRegistrator {
 	}
 
 	protected void onJSONWebServiceBean(
-			String contextPath, Object serviceBean,
+			String contextName, String contextPath, Object serviceBean,
 			JSONWebService jsonWebService)
 		throws Exception {
 
@@ -194,7 +201,8 @@ public class JSONWebServiceRegistrator {
 			if (jsonWebServiceMode.equals(JSONWebServiceMode.AUTO)) {
 				if (methodJSONWebService == null) {
 					registerJSONWebServiceAction(
-						contextPath, serviceBean, serviceBeanClass, method);
+						contextName, contextPath, serviceBean, serviceBeanClass,
+						method);
 				}
 				else {
 					JSONWebServiceMode methodJSONWebServiceMode =
@@ -204,7 +212,8 @@ public class JSONWebServiceRegistrator {
 							JSONWebServiceMode.IGNORE)) {
 
 						registerJSONWebServiceAction(
-							contextPath, serviceBean, serviceBeanClass, method);
+							contextName, contextPath, serviceBean,
+							serviceBeanClass, method);
 					}
 				}
 			}
@@ -216,15 +225,16 @@ public class JSONWebServiceRegistrator {
 						JSONWebServiceMode.IGNORE)) {
 
 					registerJSONWebServiceAction(
-						contextPath, serviceBean, serviceBeanClass, method);
+						contextName, contextPath, serviceBean, serviceBeanClass,
+						method);
 				}
 			}
 		}
 	}
 
 	protected void registerJSONWebServiceAction(
-			String contextPath, Object serviceBean, Class<?> serviceBeanClass,
-			Method method)
+			String contextName, String contextPath, Object serviceBean,
+			Class<?> serviceBeanClass, Method method)
 		throws Exception {
 
 		String httpMethod = _jsonWebServiceMappingResolver.resolveHttpMethod(
@@ -255,13 +265,13 @@ public class JSONWebServiceRegistrator {
 
 		if (_wireViaUtil) {
 			JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
-				contextPath, method.getDeclaringClass(), method, path,
-				httpMethod);
+				contextName, contextPath, method.getDeclaringClass(), method,
+				path, httpMethod);
 		}
 		else {
 			JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
-				contextPath, serviceBean, serviceBeanClass, method, path,
-				httpMethod);
+				contextName, contextPath, serviceBean, serviceBeanClass, method,
+				path, httpMethod);
 		}
 	}
 

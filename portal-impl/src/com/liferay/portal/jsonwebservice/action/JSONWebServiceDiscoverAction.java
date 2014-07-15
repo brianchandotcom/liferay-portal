@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNaming;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -55,20 +56,27 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import jodd.util.ReflectUtil;
 
 /**
  * @author Igor Spasic
+ * @author Raymond Augé
  */
 public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 	public JSONWebServiceDiscoverAction(HttpServletRequest request) {
 		_basePath = request.getServletPath();
 		_baseURL = String.valueOf(request.getRequestURL());
-		_contextPath = ParamUtil.getString(
-			request, "contextPath", request.getContextPath());
+
+		ServletContext servletContext = request.getServletContext();
+
+		_contextName = GetterUtil.getString(
+			ParamUtil.getString(
+				request, "contextName", servletContext.getServletContextName()),
+			StringPool.BLANK);
 		_jsonWebServiceNaming =
 			JSONWebServiceActionsManagerUtil.getJSONWebServiceNaming();
 	}
@@ -82,7 +90,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 	public Object invoke() throws Exception {
 		Map<String, Object> resultsMap = new LinkedHashMap<String, Object>();
 
-		resultsMap.put("context", _contextPath);
+		resultsMap.put("contextName", _contextName);
 		resultsMap.put("basePath", _basePath);
 		resultsMap.put("baseURL", _baseURL);
 		resultsMap.put("services", _buildJsonWebServiceActionMappingMaps());
@@ -117,7 +125,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 		List<JSONWebServiceActionMapping> jsonWebServiceActionMappings =
 			JSONWebServiceActionsManagerUtil.getJSONWebServiceActionMappings(
-				_contextPath);
+				_contextName);
 
 		List<Map<String, Object>> jsonWebServiceActionMappingMaps =
 			new ArrayList<Map<String, Object>>(
@@ -440,7 +448,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 	private String _basePath;
 	private String _baseURL;
-	private String _contextPath;
+	private String _contextName;
 	private JSONWebServiceNaming _jsonWebServiceNaming;
 	private List<Class<?>> _types = new ArrayList<Class<?>>();
 

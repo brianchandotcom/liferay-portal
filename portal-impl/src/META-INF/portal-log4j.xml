@@ -280,6 +280,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.jsonwebservice.JSONWebServiceActionsManagerImpl">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.portal.kernel.bean.PortalBeanLocatorUtil">
 		<priority value="ERROR" />
 	</category>

@@ -19,22 +19,22 @@
 <%
 String signature = ParamUtil.getString(request, "signature");
 
-Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
+Set<String> contextNames = JSONWebServiceActionsManagerUtil.getContextNames();
 %>
 
-<c:if test="<%= contextPaths.size() > 1 %>">
-	<aui:select cssClass="lfr-api-context" label="context-path" name="contextPath">
+<c:if test="<%= contextNames.size() > 1 %>">
+	<aui:select cssClass="lfr-api-context" label="context-name" name="contextName">
 
 		<%
-		for (String curContextPath : contextPaths) {
-			String curContextPathView = curContextPath;
+		for (String curContextName : contextNames) {
+			String curContextNameView = curContextName;
 
-			if (Validator.isNull(curContextPath)) {
-				curContextPathView = StringPool.SLASH;
+			if (Validator.isNull(curContextName)) {
+				curContextNameView = "portal";
 			}
 		%>
 
-			<aui:option label="<%= curContextPathView %>" selected="<%= contextPath.equals(curContextPath) %>" value="<%= curContextPath %>" />
+			<aui:option label="<%= curContextNameView %>" localizeLabel="<%= false %>" selected="<%= contextName.equals(curContextName) %>" value="<%= curContextName %>" />
 
 		<%
 		}
@@ -50,7 +50,7 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 	<%
 	Map<String, Set> jsonWebServiceClasses = new LinkedHashMap<String, Set>();
 
-	List<JSONWebServiceActionMapping> jsonWebServiceActionMappings = JSONWebServiceActionsManagerUtil.getJSONWebServiceActionMappings(contextPath);
+	List<JSONWebServiceActionMapping> jsonWebServiceActionMappings = JSONWebServiceActionsManagerUtil.getJSONWebServiceActionMappings(contextName);
 
 	for (JSONWebServiceActionMapping jsonWebServiceActionMapping : jsonWebServiceActionMappings) {
 		Class<?> actionClass = jsonWebServiceActionMapping.getActionClass();
@@ -132,20 +132,16 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 
 	var AArray = A.Array;
 
-	<c:if test="<%= contextPaths.size() > 1 %>">
-		var contextPathSelector = A.one('#<portlet:namespace />contextPath');
+	<c:if test="<%= contextNames.size() > 1 %>">
+		var contextNameSelector = A.one('#<portlet:namespace />contextName');
 
-		if (contextPathSelector) {
-			contextPathSelector.on(
+		if (contextNameSelector) {
+			contextNameSelector.on(
 				'change',
 				function(event) {
-					var contextPath = contextPathSelector.val();
+					var contextName = contextNameSelector.val();
 
-					var location = '<%= jsonWSPath %>';
-
-					if (contextPath && (contextPath != '/')) {
-						location = Liferay.Util.addParams('contextPath=' + contextPath, location);
-					}
+					var location = Liferay.Util.addParams('contextName=' + contextName, '<%= jsonWSPath %>');;
 
 					window.location.href = location;
 				}

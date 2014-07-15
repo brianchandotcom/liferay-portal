@@ -16,25 +16,29 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.MethodParametersResolverUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Method;
 
 /**
  * @author Igor Spasic
+ * @author Raymond Augé
  */
 public class JSONWebServiceActionConfig
 	implements Comparable<JSONWebServiceActionConfig>,
 	JSONWebServiceActionMapping {
 
 	public JSONWebServiceActionConfig(
-		String contextPath, Class<?> actionClass, Method actionMethod,
-		String path, String method) {
+		String contextName, String contextPath, Class<?> actionClass,
+		Method actionMethod, String path, String method) {
 
-		_contextPath = contextPath;
+		_contextName = GetterUtil.getString(contextName, StringPool.BLANK);
+		_contextPath = GetterUtil.getString(contextPath, StringPool.BLANK);
 		_actionClass = actionClass;
 		_actionMethod = actionMethod;
 		_path = path;
@@ -46,7 +50,12 @@ public class JSONWebServiceActionConfig
 			_deprecated = true;
 		}
 
-		_fullPath = _contextPath + _path;
+		if (!_contextName.equals(StringPool.BLANK)) {
+			path = _path.substring(1);
+
+			_path = StringPool.SLASH.concat(_contextName).concat(
+				StringPool.PERIOD).concat(path);
+		}
 
 		_methodParameters =
 			MethodParametersResolverUtil.resolveMethodParameters(actionMethod);
@@ -60,7 +69,7 @@ public class JSONWebServiceActionConfig
 
 		StringBundler sb = new StringBundler(_methodParameters.length * 2 + 4);
 
-		sb.append(_fullPath);
+		sb.append(_path);
 		sb.append(CharPool.MINUS);
 		sb.append(_methodParameters.length);
 
@@ -73,10 +82,10 @@ public class JSONWebServiceActionConfig
 	}
 
 	public JSONWebServiceActionConfig(
-		String contextPath, Object actionObject, Class<?> actionClass,
-		Method actionMethod, String path, String method) {
+		String contextName, String contextPath, Object actionObject,
+		Class<?> actionClass, Method actionMethod, String path, String method) {
 
-		this(contextPath, actionClass, actionMethod, path, method);
+		this(contextName, contextPath, actionClass, actionMethod, path, method);
 
 		_actionObject = actionObject;
 
@@ -138,12 +147,13 @@ public class JSONWebServiceActionConfig
 	}
 
 	@Override
-	public String getContextPath() {
-		return _contextPath;
+	public String getContextName() {
+		return _contextName;
 	}
 
-	public String getFullPath() {
-		return _fullPath;
+	@Override
+	public String getContextPath() {
+		return _contextPath;
 	}
 
 	@Override
@@ -189,12 +199,12 @@ public class JSONWebServiceActionConfig
 		sb.append(_actionClass);
 		sb.append(", actionMethod=");
 		sb.append(_actionMethod);
+		sb.append(", contextName=");
+		sb.append(_contextName);
 		sb.append(", contextPath=");
 		sb.append(_contextPath);
 		sb.append(", deprecated=");
 		sb.append(_deprecated);
-		sb.append(", fullPath=");
-		sb.append(_fullPath);
 		sb.append(", method=");
 		sb.append(_method);
 		sb.append(", methodParameters=");
@@ -213,9 +223,9 @@ public class JSONWebServiceActionConfig
 	private Class<?> _actionClass;
 	private Method _actionMethod;
 	private Object _actionObject;
+	private String _contextName;
 	private String _contextPath;
 	private boolean _deprecated;
-	private String _fullPath;
 	private String _method;
 	private MethodParameter[] _methodParameters;
 	private String _path;

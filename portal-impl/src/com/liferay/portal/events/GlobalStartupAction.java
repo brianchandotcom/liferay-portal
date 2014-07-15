@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -54,6 +55,8 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.ServletContext;
 
 import org.jamwiki.Environment;
 
@@ -311,8 +314,10 @@ public class GlobalStartupAction extends SimpleAction {
 
 		// JSON web service
 
-		JSONWebServiceActionsManagerUtil.registerServletContext(
-			PortalContextLoaderListener.getPortalServletContextPath());
+		ServletContext servletContext = ServletContextPool.get(
+			PortalContextLoaderListener.getPortalServlerContextName());
+
+		JSONWebServiceActionsManagerUtil.registerServletContext(servletContext);
 
 		// Plugins
 

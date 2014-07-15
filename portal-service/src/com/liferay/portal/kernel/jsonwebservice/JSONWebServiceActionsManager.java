@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface JSONWebServiceActionsManager {
 
-	public Set<String> getContextPaths();
+	public Set<String> getContextNames();
 
 	public JSONWebServiceAction getJSONWebServiceAction(
 			HttpServletRequest request)
@@ -43,23 +43,21 @@ public interface JSONWebServiceActionsManager {
 		String signature);
 
 	public List<JSONWebServiceActionMapping> getJSONWebServiceActionMappings(
-		String contextPath);
+		String contextName);
 
-	public int getJSONWebServiceActionsCount(String contextPath);
+	public int getJSONWebServiceActionsCount(String contextName);
 
 	public JSONWebServiceNaming getJSONWebServiceNaming();
 
 	public void registerJSONWebServiceAction(
-		String contextPath, Class<?> actionClass, Method actionMethod,
-		String path, String method);
-
-	public void registerJSONWebServiceAction(
-		String contextPath, Object actionObject, Class<?> actionClass,
+		String contextName, String contextPath, Class<?> actionClass,
 		Method actionMethod, String path, String method);
 
-	public int registerServletContext(ServletContext servletContext);
+	public void registerJSONWebServiceAction(
+		String contextName, String contextPath, Object actionObject,
+		Class<?> actionClass, Method actionMethod, String path, String method);
 
-	public int registerServletContext(String contextPath);
+	public int registerServletContext(ServletContext servletContext);
 
 	public int unregisterJSONWebServiceActions(Object actionObject);
 

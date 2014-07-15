@@ -58,6 +58,7 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 		registerActionClass(CamelFooService.class);
 		registerActionClass(FooService.class);
+		registerActionClass(FooService.class, "somectx");
 	}
 
 	@Before
@@ -302,6 +303,71 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 		Assert.assertEquals("m-1", jsonWebServiceAction.invoke());
 
 		mockHttpServletRequest = createHttpRequest("/foo/method-one.2/id/123");
+
+		jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		Assert.assertEquals("m-1", jsonWebServiceAction.invoke());
+	}
+
+	@Test
+	public void testMatchingOverloadInContext() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/method-one/id/123");
+
+		setServletContext(mockHttpServletRequest, "somectx");
+
+		try {
+			lookupJSONWebServiceAction(mockHttpServletRequest);
+
+			Assert.fail();
+		}
+		catch (Exception e) {
+		}
+
+		mockHttpServletRequest = createHttpRequest(
+			"/foo/method-one/id/123/name/Name");
+
+		setServletContext(mockHttpServletRequest, "somectx");
+
+		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		Assert.assertEquals("m-1", jsonWebServiceAction.invoke());
+
+		mockHttpServletRequest = createHttpRequest(
+			"/foo/method-one/id/123/name-id/321");
+
+		setServletContext(mockHttpServletRequest, "somectx");
+
+		jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		Assert.assertEquals("m-2", jsonWebServiceAction.invoke());
+
+		mockHttpServletRequest = createHttpRequest(
+			"/foo/method-one.3/id/123/name-id/321");
+
+		setServletContext(mockHttpServletRequest, "somectx");
+
+		jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		Assert.assertEquals("m-3", jsonWebServiceAction.invoke());
+
+		mockHttpServletRequest = createHttpRequest(
+			"/foo/method-one/id/123/name/Name/name-id/321");
+
+		setServletContext(mockHttpServletRequest, "somectx");
+
+		jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		Assert.assertEquals("m-1", jsonWebServiceAction.invoke());
+
+		mockHttpServletRequest = createHttpRequest("/foo/method-one.2/id/123");
+
+		setServletContext(mockHttpServletRequest, "somectx");
 
 		jsonWebServiceAction = lookupJSONWebServiceAction(
 			mockHttpServletRequest);

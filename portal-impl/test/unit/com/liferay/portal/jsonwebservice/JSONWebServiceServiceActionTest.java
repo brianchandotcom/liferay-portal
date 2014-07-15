@@ -144,37 +144,37 @@ public class JSONWebServiceServiceActionTest
 
 	@Test
 	public void testServletContextInvoker1() throws Exception {
-		testServletContextInvoker("/somectx", true, "/foo/hello-world");
+		testServletContextInvoker("somectx", true, "/foo/hello-world");
 	}
 
 	@Test
 	public void testServletContextInvoker2() throws Exception {
 		testServletContextInvoker(
-			"/somectx", false, "/somectx.foo/hello-world");
+			"somectx", false, "/somectx.foo/hello-world");
 	}
 
 	@Test
 	public void testServletContextRequestParams1() throws Exception {
-		testServletContextRequestParams("/somectx", true, "/foo/hello-world");
+		testServletContextRequestParams("somectx", true, "/foo/hello-world");
 	}
 
 	@Test
 	public void testServletContextRequestParams2() throws Exception {
 		testServletContextRequestParams(
-			"/somectx", false, "/somectx.foo/hello-world");
+			"somectx", false, "/somectx.foo/hello-world");
 	}
 
 	@Test
 	public void testServletContextURL1() throws Exception {
 		testServletContextURL(
-			"/somectx", true,
+			"somectx", true,
 			"/foo/hello-world/user-id/173/world-name/Jupiter");
 	}
 
 	@Test
 	public void testServletContextURL2() throws Exception {
 		testServletContextURL(
-			"/somectx", false,
+			"somectx", false,
 			"/somectx.foo/hello-world/user-id/173/world-name/Jupiter");
 	}
 
@@ -192,10 +192,10 @@ public class JSONWebServiceServiceActionTest
 	}
 
 	protected void testServletContextInvoker(
-			String contextPath, boolean setContextPath, String query)
+			String contextName, boolean setContextPath, String query)
 		throws Exception {
 
-		registerActionClass(FooService.class, contextPath);
+		registerActionClass(FooService.class, contextName);
 
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
 
@@ -212,7 +212,7 @@ public class JSONWebServiceServiceActionTest
 			createInvokerHttpServletRequest(json);
 
 		if (setContextPath) {
-			setServletContext(mockHttpServletRequest, contextPath);
+			setServletContext(mockHttpServletRequest, contextName);
 		}
 
 		MockHttpServletResponse mockHttpServletResponse =
@@ -226,10 +226,10 @@ public class JSONWebServiceServiceActionTest
 	}
 
 	protected void testServletContextRequestParams(
-			String contextPath, boolean setContextPath, String request)
+			String contextName, boolean setContextPath, String request)
 		throws Exception {
 
-		registerActionClass(FooService.class, contextPath);
+		registerActionClass(FooService.class, contextName);
 
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
 			request);
@@ -240,7 +240,7 @@ public class JSONWebServiceServiceActionTest
 		mockHttpServletRequest.setMethod(HttpMethods.GET);
 
 		if (setContextPath) {
-			setServletContext(mockHttpServletRequest, contextPath);
+			setServletContext(mockHttpServletRequest, contextName);
 		}
 
 		MockHttpServletResponse mockHttpServletResponse =
@@ -254,10 +254,10 @@ public class JSONWebServiceServiceActionTest
 	}
 
 	protected void testServletContextURL(
-			String contextPath, boolean setContextPath, String request)
+			String contextName, boolean setContextPath, String request)
 		throws Exception {
 
-		registerActionClass(FooService.class, contextPath);
+		registerActionClass(FooService.class, contextName);
 
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
 			request);
@@ -265,7 +265,7 @@ public class JSONWebServiceServiceActionTest
 		mockHttpServletRequest.setMethod(HttpMethods.GET);
 
 		if (setContextPath) {
-			setServletContext(mockHttpServletRequest, contextPath);
+			setServletContext(mockHttpServletRequest, contextName);
 		}
 
 		MockHttpServletResponse mockHttpServletResponse =

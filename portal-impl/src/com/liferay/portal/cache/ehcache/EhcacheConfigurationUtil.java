@@ -217,9 +217,7 @@ public class EhcacheConfigurationUtil {
 		for (CacheConfiguration cacheConfiguration :
 				cacheConfigurationsMap.values()) {
 
-			if (cacheConfiguration != null) {
-				cacheConfigurations.add(cacheConfiguration);
-			}
+			cacheConfigurations.add(cacheConfiguration);
 		}
 
 		return cacheConfigurations;

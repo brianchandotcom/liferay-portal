@@ -15,7 +15,7 @@
 --%>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
+String tabs1 = layoutDisplayContext.getTabs1();
 
 String redirect = ParamUtil.getString(request, "redirect");
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
@@ -39,7 +39,7 @@ long stagingGroupId = layoutDisplayContext.getStagingGroupId();
 
 long selPlid = layoutDisplayContext.getSelPlid();
 
-boolean privateLayout = tabs1.equals("my-dashboard") || tabs1.equals("private-pages");
+boolean privateLayout = layoutDisplayContext.isPrivateLayout();
 long layoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
 UnicodeProperties groupTypeSettings = layoutDisplayContext.getGroupTypeSettings();
@@ -49,7 +49,6 @@ UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 Layout selLayout = layoutDisplayContext.getSelLayout();
 
 if (selLayout != null) {
-	privateLayout = selLayout.isPrivateLayout();
 	layoutId = selLayout.getLayoutId();
 }
 
@@ -58,23 +57,6 @@ User selUser = layoutDisplayContext.getSelUser();
 UserGroup userGroup = layoutDisplayContext.getUserGroup();
 
 String tabs1Names = layoutDisplayContext.getTabs1Names();
-
-if (liveGroup.isUser()) {
-	boolean hasPowerUserRole = RoleLocalServiceUtil.hasUserRole(selUser.getUserId(), company.getCompanyId(), RoleConstants.POWER_USER, true);
-
-	boolean privateLayoutsModifiable = (!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED || hasPowerUserRole) && PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED;
-	boolean publicLayoutsModifiable = (!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED || hasPowerUserRole) && PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED;
-
-	if (!publicLayoutsModifiable && privateLayoutsModifiable && !privateLayout) {
-		tabs1 = "my-dashboard";
-
-		privateLayout = true;
-	}
-}
-
-if (selGroup.isLayoutSetPrototype()) {
-	privateLayout = true;
-}
 
 LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, privateLayout);
 

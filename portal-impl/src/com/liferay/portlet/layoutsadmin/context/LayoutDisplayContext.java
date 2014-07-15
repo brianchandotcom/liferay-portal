@@ -40,8 +40,34 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LayoutDisplayContext {
 
-	public LayoutDisplayContext(HttpServletRequest request) {
+	public LayoutDisplayContext(HttpServletRequest request)
+		throws PortalException {
+
 		_request = request;
+
+		_tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
+
+		_privateLayout = false;
+
+		if (_tabs1.equals("my-dashboard") || _tabs1.equals("private-pages")) {
+			_privateLayout = true;
+		}
+
+		if (getSelLayout() != null) {
+			_privateLayout = getSelLayout().isPrivateLayout();
+		}
+
+		if (getLiveGroup().isUser() && !isPublicLayoutsModifiable() &&
+			isPrivateLayoutsModifiable() && !_privateLayout) {
+
+			_tabs1 = "my-dashboard";
+
+			_privateLayout = true;
+		}
+
+		if (getSelGroup().isLayoutSetPrototype()) {
+			_privateLayout = true;
+		}
 	}
 
 	public Group getGroup() {
@@ -200,6 +226,10 @@ public class LayoutDisplayContext {
 		return _stagingGroupId;
 	}
 
+	public String getTabs1() {
+		return _tabs1;
+	}
+
 	public String getTabs1Names() throws PortalException {
 		if (_tabs1Names != null) {
 			return _tabs1Names;
@@ -233,6 +263,10 @@ public class LayoutDisplayContext {
 		}
 
 		return _userGroup;
+	}
+
+	public boolean isPrivateLayout() {
+		return _privateLayout;
 	}
 
 	protected boolean hasPowerUserRole() throws PortalException {
@@ -271,6 +305,7 @@ public class LayoutDisplayContext {
 	private UnicodeProperties _groupTypeSettings;
 	private Group _liveGroup;
 	private Organization _organization;
+	private boolean _privateLayout;
 	private HttpServletRequest _request;
 	private Group _selGroup;
 	private Layout _selLayout;
@@ -278,6 +313,7 @@ public class LayoutDisplayContext {
 	private User _selUser;
 	private Group _stagingGroup;
 	private Long _stagingGroupId;
+	private String _tabs1;
 	private String _tabs1Names;
 	private UserGroup _userGroup;
 

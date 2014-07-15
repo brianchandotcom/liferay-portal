@@ -95,7 +95,6 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 			LayoutSet layoutSet = layout.getLayoutSet();
 
 			try {
-				MergeLayoutPrototypesThreadLocal.setInProgress(true);
 				WorkflowThreadLocal.setEnabled(false);
 
 				SitesUtil.mergeLayoutPrototypeLayout(group, layout);
@@ -287,7 +286,6 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 				return;
 			}
 
-			MergeLayoutPrototypesThreadLocal.setInProgress(true);
 			WorkflowThreadLocal.setEnabled(false);
 
 			SitesUtil.mergeLayoutSetPrototypeLayouts(group, layoutSet);

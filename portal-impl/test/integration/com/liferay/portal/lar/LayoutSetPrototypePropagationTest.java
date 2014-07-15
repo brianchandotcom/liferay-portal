@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.ResourceConstants;
@@ -31,6 +31,7 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
@@ -389,8 +390,6 @@ public class LayoutSetPrototypePropagationTest
 
 		setLinkEnabled(true);
 
-		propagateChanges(group);
-
 		layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
 			group.getGroupId(), false, prototypeLayout.getFriendlyURL());
 
@@ -563,9 +562,10 @@ public class LayoutSetPrototypePropagationTest
 	protected void propagateChanges(Group group) throws Exception {
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
-		LayoutLocalServiceUtil.getLayouts(
-			group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			group.getGroupId(), false);
+
+		SitesUtil.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 
 		Thread.sleep(2000);
 	}
@@ -613,9 +613,13 @@ public class LayoutSetPrototypePropagationTest
 			LayoutLocalServiceUtil.updateLayout(_layout);
 		}
 
+		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
+
 		SitesUtil.updateLayoutSetPrototypesLinks(
 			group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0,
 			linkEnabled, linkEnabled);
+
+		Thread.sleep(2000);
 	}
 
 	protected void testAddChildLayout(boolean layoutSetPrototypeLinkEnabled)

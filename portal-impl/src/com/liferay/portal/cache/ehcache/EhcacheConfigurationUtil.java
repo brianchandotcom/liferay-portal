@@ -21,7 +21,6 @@ import com.liferay.portal.util.PropsValues;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -92,25 +91,15 @@ public class EhcacheConfigurationUtil {
 			_clearBootstrapCacheLoaderConfigurations(cacheConfigurations);
 		}
 
-		if (!clusterAware) {
+		if (!clusterAware ||
+			(PropsValues.CLUSTER_LINK_ENABLED &&
+			 !PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED)) {
+
 			return configuration;
 		}
 
-		if (!PropsValues.CLUSTER_LINK_ENABLED) {
-			_clearEhcacheReplicatorConfigurations(
-				configuration, cacheConfigurations, usingDefault);
-		}
-		else if (PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
-			Map<CacheConfiguration, String> cacheEventListenerProperties =
-				_clearEhcacheReplicatorConfigurations(
-					configuration, cacheConfigurations, usingDefault);
-
-			for (Map.Entry<CacheConfiguration, String> entry :
-					cacheEventListenerProperties.entrySet()) {
-
-				_enableClusterLinkReplication(entry.getKey(), entry.getValue());
-			}
-		}
+		_configureEhcacheReplication(
+			configuration, cacheConfigurations, usingDefault);
 
 		return configuration;
 	}
@@ -164,11 +153,9 @@ public class EhcacheConfigurationUtil {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private static Map<CacheConfiguration, String>
-		_clearEhcacheReplicatorConfigurations(
-			Configuration configuration,
-			List<CacheConfiguration> cacheConfigurations,
-			boolean usingDefault) {
+	private static void _configureEhcacheReplication(
+		Configuration configuration,
+		List<CacheConfiguration> cacheConfigurations, boolean usingDefault) {
 
 		List<FactoryConfiguration> factoryConfigurations =
 			configuration.getCacheManagerPeerListenerFactoryConfigurations();
@@ -180,17 +167,16 @@ public class EhcacheConfigurationUtil {
 
 		factoryConfigurations.clear();
 
-		Map<CacheConfiguration, String> cacheEventListenerProperties =
-			new HashMap<CacheConfiguration, String>();
-
 		for (CacheConfiguration cacheConfiguration : cacheConfigurations) {
 			String properties = _clearCacheEventListenerConfigurations(
 				cacheConfiguration, usingDefault);
 
-			cacheEventListenerProperties.put(cacheConfiguration, properties);
-		}
+			if ((properties != null) &&
+				PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
 
-		return cacheEventListenerProperties;
+				_enableClusterLinkReplication(cacheConfiguration, properties);
+			}
+		}
 	}
 
 	private static void _enableClusterLinkReplication(

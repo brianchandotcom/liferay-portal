@@ -143,6 +143,16 @@ public class LayoutDisplayContext {
 		return _liveGroup;
 	}
 
+	public Long getLiveGroupId() {
+		if (_liveGroupId != null) {
+			return _liveGroupId;
+		}
+
+		_liveGroupId = getLiveGroup().getGroupId();
+
+		return _liveGroupId;
+	}
+
 	public Organization getOrganization() {
 		if (_organization != null) {
 			return _organization;
@@ -364,6 +374,7 @@ public class LayoutDisplayContext {
 	private UnicodeProperties _groupTypeSettings;
 	private Long _layoutId;
 	private Group _liveGroup;
+	private Long _liveGroupId;
 	private Organization _organization;
 	private String _pagesName;
 	private boolean _privateLayout;

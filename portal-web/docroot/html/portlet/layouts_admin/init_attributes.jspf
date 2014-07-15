@@ -33,7 +33,7 @@ Group group = layoutDisplayContext.getGroup();
 
 long groupId = layoutDisplayContext.getGroupId();
 
-long liveGroupId = liveGroup.getGroupId();
+long liveGroupId = layoutDisplayContext.getLiveGroupId();
 
 long stagingGroupId = layoutDisplayContext.getStagingGroupId();
 

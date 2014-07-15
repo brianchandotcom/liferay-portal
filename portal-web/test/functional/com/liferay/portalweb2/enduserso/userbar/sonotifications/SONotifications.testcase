@@ -2000,6 +2000,54 @@
 		</execute>
 	</command>
 
+	<command name="ViewSOAnnouncementsEntryNotificationBoldText" priority="5">
+		<var name="distributionScope" value="General" />
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryURL" value="http://www.liferay.com" />
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryAuthor" value="${entryContent}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+			<var name="textFormat" value="Bold" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+
+		<execute action="SONotifications#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_NOTIFICATIONS_ANNOUNCEMENTS_ENTRY_BOLD_PNG" />
+	</command>
+
+	<command name="ViewSOAnnouncementsEntryNotificationItalicText" priority="5">
+		<var name="distributionScope" value="General" />
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryURL" value="http://www.liferay.com" />
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryAuthor" value="${entryContent}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+			<var name="textFormat" value="Italic" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+
+		<execute action="SONotifications#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_NOTIFICATIONS_ANNOUNCEMENTS_ENTRY_ITALIC_PNG" />
+	</command>
+
 	<command name="ViewSOAnnouncementsEntryNotificationSOUser" priority="5">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
@@ -2046,6 +2094,54 @@
 			<var name="entryAuthor" value="${adminName}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
+	</command>
+
+	<command name="ViewSOAnnouncementsEntryNotificationStrikeThroughText" priority="5">
+		<var name="distributionScope" value="General" />
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryURL" value="http://www.liferay.com" />
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryAuthor" value="${entryContent}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+			<var name="textFormat" value="Strike Through" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+
+		<execute action="SONotifications#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_NOTIFICATIONS_ANNOUNCEMENTS_ENTRY_STRIKE_THROUGH_PNG" />
+	</command>
+
+	<command name="ViewSOAnnouncementsEntryNotificationUnderlineText" priority="5">
+		<var name="distributionScope" value="General" />
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryURL" value="http://www.liferay.com" />
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryAuthor" value="${entryContent}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+			<var name="textFormat" value="Underline" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+
+		<execute action="SONotifications#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_NOTIFICATIONS_ANNOUNCEMENTS_ENTRY_UNDERLINE_PNG" />
 	</command>
 
 	<command name="ViewSOSiteAnnouncementsEntryNotification" priority="5">

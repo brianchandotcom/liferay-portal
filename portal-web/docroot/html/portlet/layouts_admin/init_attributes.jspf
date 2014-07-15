@@ -60,7 +60,7 @@ String pagesName = layoutDisplayContext.getPagesName();
 
 String rootNodeName = layoutDisplayContext.getRootNodeName();
 
-List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescriptions(groupId, privateLayout, rootNodeName, locale);
+List<LayoutDescription> layoutDescriptions = layoutDisplayContext.getLayoutDescriptions();
 
 request.setAttribute(WebKeys.LAYOUT_DESCRIPTIONS, layoutDescriptions);
 %>

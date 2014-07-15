@@ -33,7 +33,11 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.LayoutDescription;
+import com.liferay.portal.util.LayoutListUtil;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -114,6 +118,21 @@ public class LayoutDisplayContext {
 		}
 
 		return _groupTypeSettings;
+	}
+
+	public List<LayoutDescription> getLayoutDescriptions() {
+		if (_layoutDescriptions != null) {
+			return _layoutDescriptions;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_layoutDescriptions = LayoutListUtil.getLayoutDescriptions(
+			getGroupId(), isPrivateLayout(), getRootNodeName(),
+			themeDisplay.getLocale());
+
+		return _layoutDescriptions;
 	}
 
 	public Long getLayoutId() {
@@ -385,6 +404,7 @@ public class LayoutDisplayContext {
 	private Group _group;
 	private Long _groupId;
 	private UnicodeProperties _groupTypeSettings;
+	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
 	private Group _liveGroup;
 	private Long _liveGroupId;

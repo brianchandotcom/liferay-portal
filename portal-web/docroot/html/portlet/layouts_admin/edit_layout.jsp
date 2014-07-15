@@ -21,19 +21,11 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
 
-Group group = (Group)request.getAttribute("edit_pages.jsp-group");
-Group liveGroup = (Group)request.getAttribute("edit_pages.jsp-liveGroup");
+Group group = layoutDisplayContext.getGroup();
 
-long groupId = ((Long)request.getAttribute("edit_pages.jsp-groupId")).longValue();
-long liveGroupId = ((Long)request.getAttribute("edit_pages.jsp-liveGroupId")).longValue();
-long stagingGroupId = ((Long)request.getAttribute("edit_pages.jsp-stagingGroupId")).longValue();
+Layout selLayout = layoutDisplayContext.getSelLayout();
 
-Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
-long selPlid = ((Long)request.getAttribute("edit_pages.jsp-selPlid")).longValue();
-long layoutId = ((Long)request.getAttribute("edit_pages.jsp-layoutId")).longValue();
-boolean privateLayout = ((Boolean)request.getAttribute("edit_pages.jsp-privateLayout")).booleanValue();
-
-PortletURL redirectURL = (PortletURL)request.getAttribute("edit_pages.jsp-redirectURL");
+PortletURL redirectURL = layoutDisplayContext.getRedirectURL();
 
 long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);
 
@@ -139,14 +131,14 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 <aui:form action='<%= HttpUtil.addParameter(editLayoutURL, "refererPlid", plid) %>' cssClass="edit-layout-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayout();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value='<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selPlid) %>' />
+	<aui:input name="redirect" type="hidden" value='<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", layoutDisplayContext.getSelPlid()) %>' />
 	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= selGroup.getGroupId() %>" />
-	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
-	<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
-	<aui:input name="selPlid" type="hidden" value="<%= selPlid %>" />
-	<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />
-	<aui:input name="layoutId" type="hidden" value="<%= layoutId %>" />
+	<aui:input name="liveGroupId" type="hidden" value="<%= layoutDisplayContext.getLiveGroupId() %>" />
+	<aui:input name="stagingGroupId" type="hidden" value="<%= layoutDisplayContext.getStagingGroupId() %>" />
+	<aui:input name="selPlid" type="hidden" value="<%= layoutDisplayContext.getSelPlid() %>" />
+	<aui:input name="privateLayout" type="hidden" value="<%= layoutDisplayContext.isPrivateLayout() %>" />
+	<aui:input name="layoutId" type="hidden" value="<%= layoutDisplayContext.getLayoutId() %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
 	<c:if test="<%= layoutRevision != null && !incomplete %>">
@@ -206,7 +198,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 					</c:when>
 				</c:choose>
 
-				<c:if test="<%= (selLayout.getGroupId() != groupId) && (selLayoutGroup.isUserGroup()) %>">
+				<c:if test="<%= (selLayout.getGroupId() != layoutDisplayContext.getGroupId()) && (selLayoutGroup.isUserGroup()) %>">
 
 					<%
 					UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(selLayoutGroup.getClassPK());
@@ -332,7 +324,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 					categorySections="<%= categorySections %>"
 					displayStyle="<%= displayStyle %>"
 					jspPath="/html/portlet/layouts_admin/layout/"
-					showButtons="<%= (selLayout.getGroupId() == groupId) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>"
+					showButtons="<%= (selLayout.getGroupId() == layoutDisplayContext.getGroupId()) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>"
 				/>
 			</c:if>
 		</c:otherwise>

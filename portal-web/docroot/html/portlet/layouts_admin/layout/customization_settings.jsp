@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
+Layout selLayout = layoutDisplayContext.getSelLayout();
 
 boolean curFreeformLayout = false;
 boolean prototypeGroup = false;

@@ -17,15 +17,15 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-Group group = (Group)request.getAttribute("edit_pages.jsp-group");
-long groupId = ((Long)request.getAttribute("edit_pages.jsp-groupId")).longValue();
-long liveGroupId = ((Long)request.getAttribute("edit_pages.jsp-liveGroupId")).longValue();
-boolean privateLayout = ((Boolean)request.getAttribute("edit_pages.jsp-privateLayout")).booleanValue();
-Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
+Group group = layoutDisplayContext.getGroup();
+long groupId = layoutDisplayContext.getGroupId();
+long liveGroupId = layoutDisplayContext.getLiveGroupId();
+boolean privateLayout = layoutDisplayContext.isPrivateLayout();
+Layout selLayout = layoutDisplayContext.getSelLayout();
 
-String rootNodeName = (String)request.getAttribute("edit_pages.jsp-rootNodeName");
+String rootNodeName = layoutDisplayContext.getRootNodeName();
 
-PortletURL redirectURL = (PortletURL)request.getAttribute("edit_pages.jsp-redirectURL");
+PortletURL redirectURL = layoutDisplayContext.getRedirectURL();
 
 Theme selTheme = null;
 ColorScheme selColorScheme = null;

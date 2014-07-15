@@ -21,19 +21,17 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
 
-Group group = (Group)request.getAttribute("edit_pages.jsp-group");
-Group liveGroup = (Group)request.getAttribute("edit_pages.jsp-liveGroup");
-long groupId = (Long)request.getAttribute("edit_pages.jsp-groupId");
-long liveGroupId = (Long)request.getAttribute("edit_pages.jsp-liveGroupId");
-long stagingGroupId = (Long)request.getAttribute("edit_pages.jsp-stagingGroupId");
-long selPlid = ((Long)request.getAttribute("edit_pages.jsp-selPlid")).longValue();
-boolean privateLayout = ((Boolean)request.getAttribute("edit_pages.jsp-privateLayout")).booleanValue();
-UnicodeProperties liveGroupTypeSettings = (UnicodeProperties)request.getAttribute("edit_pages.jsp-liveGroupTypeSettings");
-LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLayoutSet"));
+Group group = layoutDisplayContext.getGroup();
+Group liveGroup = layoutDisplayContext.getLiveGroup();
+long groupId = layoutDisplayContext.getGroupId();
+long liveGroupId = layoutDisplayContext.getLiveGroupId();
+boolean privateLayout = layoutDisplayContext.isPrivateLayout();
+UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
+LayoutSet selLayoutSet = layoutDisplayContext.getSelLayoutSet();
 
-String rootNodeName = (String)request.getAttribute("edit_pages.jsp-rootNodeName");
+String rootNodeName = layoutDisplayContext.getRootNodeName();
 
-PortletURL redirectURL = (PortletURL)request.getAttribute("edit_pages.jsp-redirectURL");
+PortletURL redirectURL = layoutDisplayContext.getRedirectURL();
 
 int pagesCount = 0;
 
@@ -110,8 +108,8 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
-	<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
-	<aui:input name="selPlid" type="hidden" value="<%= selPlid %>" />
+	<aui:input name="stagingGroupId" type="hidden" value="<%= layoutDisplayContext.getStagingGroupId() %>" />
+	<aui:input name="selPlid" type="hidden" value="<%= layoutDisplayContext.getSelPlid() %>" />
 	<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />
 	<aui:input name="layoutSetId" type="hidden" value="<%= selLayoutSet.getLayoutSetId() %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
@@ -252,7 +250,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 			Liferay.Util.focusFormField(content.one('input:text'));
 		}
 		else if (dataValue === 'view-pages') {
-			<liferay-portlet:actionURL plid="<%= selPlid %>" portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="viewPagesURL">
+			<liferay-portlet:actionURL plid="<%= layoutDisplayContext.getSelPlid() %>" portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="viewPagesURL">
 				<portlet:param name="struts_action" value="/my_sites/view" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

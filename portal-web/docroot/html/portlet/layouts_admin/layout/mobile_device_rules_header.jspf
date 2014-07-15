@@ -15,12 +15,10 @@
 --%>
 
 <%
-long selPlid = ((Long)request.getAttribute("edit_pages.jsp-selPlid")).longValue();
-
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
-portletURL.setParameter("selPlid", String.valueOf(selPlid));
+portletURL.setParameter("selPlid", String.valueOf(layoutDisplayContext.getSelPlid()));
 portletURL.setParameter("className", className);
 portletURL.setParameter("classPK", String.valueOf(classPK));
 

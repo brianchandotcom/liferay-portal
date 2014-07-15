@@ -16,9 +16,9 @@
 
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
-<%@ include file="/html/portlet/layouts_admin/init_attributes.jspf" %>
-
 <%
+String closeRedirect = ParamUtil.getString(request, "closeRedirect");
+
 String treeId = ParamUtil.getString(request, "treeId");
 boolean checkContentDisplayPage = ParamUtil.getBoolean(request, "checkContentDisplayPage", false);
 boolean defaultStateChecked = ParamUtil.getBoolean(request, "defaultStateChecked", false);
@@ -31,15 +31,15 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 PortletURL editLayoutURL = liferayPortletResponse.createRenderURL();
 
 editLayoutURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
-editLayoutURL.setParameter("tabs1", tabs1);
-editLayoutURL.setParameter("redirect", redirect);
+editLayoutURL.setParameter("tabs1", layoutDisplayContext.getTabs1());
+editLayoutURL.setParameter("redirect", layoutDisplayContext.getRedirect());
 editLayoutURL.setParameter("closeRedirect", closeRedirect);
 
 if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) || portletName.equals(PortletKeys.MY_ACCOUNT) || portletName.equals(PortletKeys.USERS_ADMIN)) {
-	editLayoutURL.setParameter("backURL", backURL);
+	editLayoutURL.setParameter("backURL", layoutDisplayContext.getBackURL());
 }
 
-editLayoutURL.setParameter("groupId", String.valueOf(liveGroupId));
+editLayoutURL.setParameter("groupId", String.valueOf(layoutDisplayContext.getLiveGroupId()));
 editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 %>
 
@@ -48,12 +48,12 @@ editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 	defaultStateChecked="<%= defaultStateChecked %>"
 	draggableTree="<%= draggableTree %>"
 	expandFirstNode="<%= expandFirstNode %>"
-	groupId="<%= groupId %>"
+	groupId="<%= layoutDisplayContext.getGroupId() %>"
 	portletURL="<%= editLayoutURL %>"
-	privateLayout="<%= privateLayout %>"
-	rootNodeName="<%= rootNodeName %>"
+	privateLayout="<%= layoutDisplayContext.isPrivateLayout() %>"
+	rootNodeName="<%= layoutDisplayContext.getRootNodeName() %>"
 	saveState="<%= saveState %>"
-	selPlid="<%= selPlid %>"
+	selPlid="<%= layoutDisplayContext.getSelPlid() %>"
 	selectableTree="<%= selectableTree %>"
 	selectedLayoutIds="<%= selectedLayoutIds %>"
 	treeId="<%= treeId %>"

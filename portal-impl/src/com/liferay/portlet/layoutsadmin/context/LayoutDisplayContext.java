@@ -35,6 +35,7 @@ import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutDescription;
 import com.liferay.portal.util.LayoutListUtil;
@@ -84,6 +85,25 @@ public class LayoutDisplayContext {
 		if (getSelGroup().isLayoutSetPrototype()) {
 			_privateLayout = true;
 		}
+
+		String portletName = getPortletName();
+
+		if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) ||
+			portletName.equals(PortletKeys.MY_ACCOUNT)) {
+
+			ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			portletDisplay.setURLBack(getBackURL());
+		}
+
+		_request.setAttribute(
+			com.liferay.portal.util.WebKeys.LAYOUT_DESCRIPTIONS,
+			getLayoutDescriptions());
+
+		_request.setAttribute("edit_pages.jsp-selLayout", getSelLayout());
 	}
 
 	public String getBackURL() {

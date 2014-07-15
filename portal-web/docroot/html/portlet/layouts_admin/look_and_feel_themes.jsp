@@ -17,8 +17,8 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
-LayoutSet selLayoutSet = (LayoutSet)request.getAttribute("edit_pages.jsp-selLayoutSet");
+Layout selLayout = layoutDisplayContext.getSelLayout();
+LayoutSet selLayoutSet = layoutDisplayContext.getSelLayoutSet();
 
 List<Theme> themes = (List<Theme>)request.getAttribute("edit_pages.jsp-themes");
 List<ColorScheme> colorSchemes = (List<ColorScheme>)request.getAttribute("edit_pages.jsp-colorSchemes");

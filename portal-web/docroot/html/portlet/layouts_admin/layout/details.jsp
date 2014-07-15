@@ -17,9 +17,8 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-Group group = (Group)request.getAttribute("edit_pages.jsp-group");
-boolean privateLayout = ((Boolean)request.getAttribute("edit_pages.jsp-privateLayout")).booleanValue();
-Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
+Group group = layoutDisplayContext.getGroup();
+Layout selLayout = layoutDisplayContext.getSelLayout();
 
 LayoutTypePortletImpl selLayoutTypePortlet = new LayoutTypePortletImpl(selLayout);
 
@@ -47,7 +46,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	String virtualHostname = layoutSet.getVirtualHostname();
 
 	if (Validator.isNull(virtualHostname) || (friendlyURLBase.indexOf(virtualHostname) == -1)) {
-		friendlyURLBase.append(group.getPathFriendlyURL(privateLayout, themeDisplay));
+		friendlyURLBase.append(group.getPathFriendlyURL(layoutDisplayContext.isPrivateLayout(), themeDisplay));
 		friendlyURLBase.append(group.getFriendlyURL());
 	}
 	%>

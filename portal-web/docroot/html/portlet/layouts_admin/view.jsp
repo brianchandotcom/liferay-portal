@@ -16,9 +16,20 @@
 
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
-<%@ include file="/html/portlet/layouts_admin/init_attributes.jspf" %>
-
 <%
+String backURL = layoutDisplayContext.getBackURL();
+Group group = layoutDisplayContext.getGroup();
+LayoutSet selLayoutSet = layoutDisplayContext.getSelLayoutSet();
+Group liveGroup = layoutDisplayContext.getLiveGroup();
+String pagesName = layoutDisplayContext.getPagesName();
+boolean privateLayout = layoutDisplayContext.isPrivateLayout();
+PortletURL redirectURL = layoutDisplayContext.getRedirectURL();
+Group selGroup = layoutDisplayContext.getSelGroup();
+Layout selLayout = layoutDisplayContext.getSelLayout();
+long selPlid = layoutDisplayContext.getSelPlid();
+String tabs1 = layoutDisplayContext.getTabs1();
+String tabs1Names = layoutDisplayContext.getTabs1Names();
+
 SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, renderResponse);
 %>
 
@@ -76,7 +87,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 			userTabs1URL.setParameter("struts_action", "/my_pages/edit_layouts");
 			userTabs1URL.setParameter("tabs1", tabs1);
 			userTabs1URL.setParameter("backURL", backURL);
-			userTabs1URL.setParameter("groupId", String.valueOf(liveGroupId));
+			userTabs1URL.setParameter("groupId", String.valueOf(layoutDisplayContext.getLiveGroupId()));
 
 			tabs1URL = userTabs1URL.toString();
 		}
@@ -103,7 +114,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 	<div class="lfr-app-column-view manage-view row">
 		<c:if test="<%= !group.isLayoutPrototype() %>">
 			<div class="col-md-3">
-				<c:if test="<%= stagingGroup != null %>">
+				<c:if test="<%= layoutDisplayContext.getStagingGroup() != null %>">
 
 					<%
 					long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
@@ -124,13 +135,13 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 
 					if (layoutSetBranch == null) {
 						try {
-							layoutSetBranch = LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(stagingGroup.getGroupId(), privateLayout);
+							layoutSetBranch = LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(layoutDisplayContext.getStagingGroupId(), privateLayout);
 						}
 						catch (NoSuchLayoutSetBranchException nslsbe) {
 						}
 					}
 
-					List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
+					List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(layoutDisplayContext.getStagingGroupId(), privateLayout);
 					%>
 
 					<c:choose>

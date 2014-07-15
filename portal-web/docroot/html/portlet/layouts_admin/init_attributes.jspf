@@ -57,23 +57,13 @@ Organization organization = layoutDisplayContext.getOrganization();
 User selUser = layoutDisplayContext.getSelUser();
 UserGroup userGroup = layoutDisplayContext.getUserGroup();
 
-String tabs1Names = "public-pages,private-pages";
+String tabs1Names = layoutDisplayContext.getTabs1Names();
 
 if (liveGroup.isUser()) {
 	boolean hasPowerUserRole = RoleLocalServiceUtil.hasUserRole(selUser.getUserId(), company.getCompanyId(), RoleConstants.POWER_USER, true);
 
 	boolean privateLayoutsModifiable = (!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED || hasPowerUserRole) && PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED;
 	boolean publicLayoutsModifiable = (!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED || hasPowerUserRole) && PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED;
-
-	if (privateLayoutsModifiable && publicLayoutsModifiable) {
-		tabs1Names = "my-profile,my-dashboard";
-	}
-	else if (privateLayoutsModifiable) {
-		tabs1Names = "my-dashboard";
-	}
-	else if (publicLayoutsModifiable) {
-		tabs1Names = "my-profile";
-	}
 
 	if (!publicLayoutsModifiable && privateLayoutsModifiable && !privateLayout) {
 		tabs1 = "my-dashboard";

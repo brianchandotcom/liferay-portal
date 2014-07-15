@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.layoutsadmin.context;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -21,12 +22,16 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -195,6 +200,28 @@ public class LayoutDisplayContext {
 		return _stagingGroupId;
 	}
 
+	public String getTabs1Names() throws PortalException {
+		if (_tabs1Names != null) {
+			return _tabs1Names;
+		}
+
+		_tabs1Names = "public-pages,private-pages";
+
+		if (getLiveGroup().isUser()) {
+			if (isPrivateLayoutsModifiable() && isPublicLayoutsModifiable()) {
+				_tabs1Names = "my-profile,my-dashboard";
+			}
+			else if (isPrivateLayoutsModifiable()) {
+				_tabs1Names = "my-dashboard";
+			}
+			else if (isPublicLayoutsModifiable()) {
+				_tabs1Names = "my-profile";
+			}
+		}
+
+		return _tabs1Names;
+	}
+
 	public UserGroup getUserGroup() {
 		if (_userGroup != null) {
 			return _userGroup;
@@ -206,6 +233,37 @@ public class LayoutDisplayContext {
 		}
 
 		return _userGroup;
+	}
+
+	protected boolean hasPowerUserRole() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return RoleLocalServiceUtil.hasUserRole(
+			getSelUser().getUserId(), themeDisplay.getCompanyId(),
+			RoleConstants.POWER_USER, true);
+	}
+
+	protected boolean isPrivateLayoutsModifiable() throws PortalException {
+		if ((!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED ||
+			 hasPowerUserRole()) &&
+			PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isPublicLayoutsModifiable() throws PortalException {
+		if ((!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED ||
+			 hasPowerUserRole()) &&
+			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private Group _group;
@@ -220,6 +278,7 @@ public class LayoutDisplayContext {
 	private User _selUser;
 	private Group _stagingGroup;
 	private Long _stagingGroupId;
+	private String _tabs1Names;
 	private UserGroup _userGroup;
 
 }

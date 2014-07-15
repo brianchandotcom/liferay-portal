@@ -1013,6 +1013,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 		margin: 20px 0;
 	}
 
+	.table-striped tbody > tr:nth-child(odd) {
+		> td, > th {
+			text-transform: capitalize;
+		}
+	}
+
 	/* ---------- Extras dockbar ---------- */
 
 	.dockbar {

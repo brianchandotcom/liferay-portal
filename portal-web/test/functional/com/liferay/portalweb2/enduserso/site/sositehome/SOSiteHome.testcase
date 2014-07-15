@@ -1859,7 +1859,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2352" name="ViewAnnouncementEntryInGmail" priority="5">
+	<command known-issues="LPS-42413" name="ViewAnnouncementEntryInGmail" priority="5">
 		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain={line.separator}announcements.entry.check.interval=1" />
 
 		<var name="entryContent" value="Announcements Entry Content" />

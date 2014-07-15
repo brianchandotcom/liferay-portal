@@ -50,6 +50,92 @@
 		<execute action="SOConfigurations#assertTextEquals" locator-key1="SUCCESS_MESSAGE_1" value1="Your request completed successfully." />
 	</command>
 
+	<command name="disableAddSOSiteCP">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Social Office Configurations" />
+		</execute>
+
+		<execute action="SOConfigurations#assertClick" locator-key1="NAVIGATION_GENERAL" value1="General" />
+
+		<execute action="SOConfigurationsGeneral#uncheck" locator-key1="SOCIAL_OFFICE_ROLE_ADD_SITE_PERMISSION_CHECKBOX" />
+		<execute action="SOConfigurationsGeneral#click" locator-key1="SAVE_BUTTON" />
+		<execute action="SOConfigurationsGeneral#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="disableSOSiteTypeCP">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Social Office Configurations" />
+		</execute>
+
+		<execute action="SOConfigurations#assertClick" locator-key1="NAVIGATION_GENERAL" value1="General" />
+
+		<if>
+			<isset var="siteTypeList" />
+			<then>
+				<for list="${siteTypeList}" param="siteType">
+					<var name="key_siteType" value="${siteType?replace(' ', '')}" />
+
+					<execute action="SOConfigurationsGeneral#uncheck" locator-key1="SOCIAL_OFFICE_SITE_ENABLE_SITE_TYPE_CHECKBOX" />
+				</for>
+			</then>
+			<else>
+				<var name="key_siteType" value="${siteType?replace(' ', '')}" />
+
+				<execute action="SOConfigurationsGeneral#uncheck" locator-key1="SOCIAL_OFFICE_SITE_ENABLE_SITE_TYPE_CHECKBOX" />
+			</else>
+		</if>
+
+		<execute action="SOConfigurationsGeneral#click" locator-key1="SAVE_BUTTON" />
+		<execute action="SOConfigurationsGeneral#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="enableAddSOSiteCP">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Social Office Configurations" />
+		</execute>
+
+		<execute action="SOConfigurations#assertClick" locator-key1="NAVIGATION_GENERAL" value1="General" />
+
+		<execute action="SOConfigurationsGeneral#check" locator-key1="SOCIAL_OFFICE_ROLE_ADD_SITE_PERMISSION_CHECKBOX" />
+		<execute action="SOConfigurationsGeneral#click" locator-key1="SAVE_BUTTON" />
+		<execute action="SOConfigurationsGeneral#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="enableSOSiteTypeCP">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Social Office Configurations" />
+		</execute>
+
+		<execute action="SOConfigurations#assertClick" locator-key1="NAVIGATION_GENERAL" value1="General" />
+
+		<if>
+			<isset var="siteTypeList" />
+			<then>
+				<for list="${siteTypeList}" param="siteType">
+					<var name="key_siteType" value="${siteType?replace(' ', '')}" />
+
+					<execute action="SOConfigurationsGeneral#check" locator-key1="SOCIAL_OFFICE_SITE_ENABLE_SITE_TYPE_CHECKBOX" />
+				</for>
+			</then>
+			<else>
+				<var name="key_siteType" value="${siteType?replace(' ', '')}" />
+
+				<execute action="SOConfigurationsGeneral#check" locator-key1="SOCIAL_OFFICE_SITE_ENABLE_SITE_TYPE_CHECKBOX" />
+			</else>
+		</if>
+
+		<execute action="SOConfigurationsGeneral#click" locator-key1="SAVE_BUTTON" />
+		<execute action="SOConfigurationsGeneral#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="tearDownConfigurationsCP">
+		<execute macro="SOConfigurations#enableAddSOSiteCP" />
+
+		<execute macro="SOConfigurations#enableSOSiteTypeCP">
+			<var name="siteTypeList" value="Open,Private Restricted,Private,Private Restricted" />
+		</execute>
+	</command>
+
 	<command name="unassignOrganizationRoleCP">
 		<var name="key_orgName" value="${orgName}" />
 

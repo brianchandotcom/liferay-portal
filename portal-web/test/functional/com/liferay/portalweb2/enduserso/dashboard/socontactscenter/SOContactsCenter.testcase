@@ -1321,7 +1321,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="SOContactsCenter#viewNonFollowing">
+		<execute macro="SOContactsCenter#viewFollower">
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
 			<var name="userFirstName" value="${adminFirstName}" />
 			<var name="userLastName" value="${adminLastName}" />
@@ -1335,7 +1335,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute macro="SOContactsCenter#viewNonFollowing">
+		<execute macro="SOContactsCenter#viewFollower">
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
 			<var name="userFirstName" value="${adminFirstName}" />
 			<var name="userLastName" value="${adminLastName}" />
@@ -1349,7 +1349,7 @@
 			<var name="userLoginFullName" value="${userName3}" />
 		</execute>
 
-		<execute macro="SOContactsCenter#viewNonFollowing">
+		<execute macro="SOContactsCenter#viewFollower">
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
 			<var name="userFirstName" value="${adminFirstName}" />
 			<var name="userLastName" value="${adminLastName}" />
@@ -1399,7 +1399,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="SOContactsCenter#viewNonFollowing">
+		<execute macro="SOContactsCenter#viewNonFollower">
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
 			<var name="userFirstName" value="${adminFirstName}" />
 			<var name="userLastName" value="${adminLastName}" />
@@ -1413,7 +1413,7 @@
 			<var name="userLoginFullName" value="${userName2}" />
 		</execute>
 
-		<execute macro="SOContactsCenter#viewNonFollowing">
+		<execute macro="SOContactsCenter#viewNonFollower">
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
 			<var name="userFirstName" value="${adminFirstName}" />
 			<var name="userLastName" value="${adminLastName}" />
@@ -1427,7 +1427,7 @@
 			<var name="userLoginFullName" value="${userName3}" />
 		</execute>
 
-		<execute macro="SOContactsCenter#viewNonFollowing">
+		<execute macro="SOContactsCenter#viewNonFollower">
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
 			<var name="userFirstName" value="${adminFirstName}" />
 			<var name="userLastName" value="${adminLastName}" />
@@ -1545,6 +1545,15 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="SOContactsCenter#viewNonFollower">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userName}" />
@@ -1572,6 +1581,20 @@
 			<var name="userListName" value="${adminListName}" />
 			<var name="userName" value="${adminName}" />
 			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#viewFollower">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 	</command>
 

@@ -2598,7 +2598,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2322" name="ViewEditedSiteActivities" priority="5">
+	<command known-issues="SOS-2357" name="ViewEditedSiteActivities" priority="5">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryDescriptionEdit" value="Bookmarks Entry Description Edit" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
@@ -3997,7 +3997,7 @@
 		<execute action="SOActivities#assertTextNotPresent" value1="${wikiPageContentEdit}" />
 	</command>
 
-	<command known-issues="SOS-2322" name="ViewRemoveBlogsEntryViewPermissionsActivities" priority="4">
+	<command known-issues="SOS-2357" name="ViewRemoveBlogsEntryViewPermissionsActivities" priority="4">
 		<var name="entryContent1" value="Blogs Entry1 Content" />
 		<var name="entryContent2" value="Blogs Entry2 Content" />
 		<var name="entryTitle1" value="Blogs Entry1 Title" />
@@ -4713,7 +4713,7 @@
 		<execute action="SOActivities#assertTextNotPresent" value1="${wikiChildPageTitle3}" />
 	</command>
 
-	<command known-issues="SOS-2322" name="ViewReplyActivities" priority="5">
+	<command known-issues="SOS-2357" name="ViewReplyActivities" priority="5">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="entryComment" value="Blogs Entry Content Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
@@ -5334,7 +5334,7 @@
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_TIME_STAMP" value1="1 minute ago." />
 	</command>
 
-	<command known-issues="SOS-2322" name="ViewSiteActivitiesDashboard" priority="5">
+	<command known-issues="SOS-2357" name="ViewSiteActivitiesDashboard" priority="5">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -5406,7 +5406,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2322" name="ViewSiteActivitiesProfile" priority="5">
+	<command known-issues="SOS-2357" name="ViewSiteActivitiesProfile" priority="5">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl1" value="http://www.google.com" />
@@ -5597,7 +5597,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2322" name="ViewSiteActivitiesSites" priority="5">
+	<command known-issues="SOS-2357" name="ViewSiteActivitiesSites" priority="5">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />

@@ -60,6 +60,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBSCRIBE_TO_PAGE_LINK</td>
+	<td>//tr[contains(.,'You are not subscribed to this page.')]/td/span/a[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIBE_TO_WIKI_LINK</td>
+	<td>//tr[contains(.,'You are not subscribed to this wiki.')]/td/span/a[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PERMISSIONS_LINK</td>
 	<td>//tr[contains(.,'Advanced Actions')]//a[contains(.,'Permissions')]</td>
 	<td></td>

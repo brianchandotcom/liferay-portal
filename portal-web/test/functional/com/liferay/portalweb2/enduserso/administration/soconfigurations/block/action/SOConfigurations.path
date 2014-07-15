@@ -78,6 +78,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_ASSIGN_SOCIAL_OFFICE</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Assign Social Office')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_GENERAL</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'General')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_ALL_CHECKBOX</td>

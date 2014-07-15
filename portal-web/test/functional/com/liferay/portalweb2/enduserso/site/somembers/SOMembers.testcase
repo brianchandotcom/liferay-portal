@@ -10,22 +10,16 @@
 	<var name="key_siteName" value="${siteName}" />
 	<var name="pageName" value="Members" />
 	<var name="password" value="test" />
-	<var name="siteDescription" value="Open Site Description" />
-	<var name="siteName" value="Open Site Name" />
-	<var name="siteType" value="Open" />
 	<var name="soPage" value="true" />
 
 	<set-up>
 		<execute macro="SOUser#firstLoginPG" />
-
-		<execute macro="SOUserBar#addSOSite">
-			<var name="siteDescription" value="${siteDescription}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteType" value="${siteType}" />
-		</execute>
 	</set-up>
 
 	<command name="AddConnection" priority="5">
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -33,6 +27,12 @@
 		<var name="userMiddleName" value="Office01" />
 		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
 
 		<execute macro="SOUser#addUserWithSORole">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
@@ -70,6 +70,9 @@
 	</command>
 
 	<command name="ConfirmMemberInviteSite" priority="5">
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -77,6 +80,12 @@
 		<var name="userMiddleName" value="Office01" />
 		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
 
 		<execute macro="SOUser#addUserWithSORole">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
@@ -128,6 +137,9 @@
 	<command name="ConfirmMemberInviteSiteByEmail" priority="5">
 		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
 
+		<var name="siteDescription" value="Social Office User Site Description" />
+		<var name="siteName" value="Social Office User Site Name" />
+		<var name="siteType" value="Open" />
 		<var name="userEmailAddress" property-value="email.address.2" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -135,6 +147,12 @@
 		<var name="userMiddleName" value="Office01" />
 		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
@@ -191,6 +209,9 @@
 	<command name="ConfirmMemberInviteSiteByEmailNonSOUser" priority="5">
 		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
 
+		<var name="siteDescription" value="Regular User Site Description" />
+		<var name="siteName" value="Regular User Site Name" />
+		<var name="siteType" value="Open" />
 		<var name="userEmailAddress" property-value="email.address.2" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -198,6 +219,12 @@
 		<var name="userMiddleName" value="Office01" />
 		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
@@ -279,6 +306,9 @@
 	<command name="ConfirmMemberInviteSiteByEmailNonUser" priority="5">
 		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain={line.separator}captcha.check.portal.create_account=false" />
 
+		<var name="siteDescription" value="Non User Site Description" />
+		<var name="siteName" value="Non User Site Name" />
+		<var name="siteType" value="Open" />
 		<var name="userEmailAddress" property-value="email.address.2" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -286,6 +316,12 @@
 		<var name="userMiddleName" value="Office01" />
 		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
@@ -348,6 +384,9 @@
 	</command>
 
 	<command name="IgnoreMemberInviteSite" priority="5">
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -355,6 +394,12 @@
 		<var name="userMiddleName" value="Office01" />
 		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
 
 		<execute macro="SOUser#addUserWithSORole">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
@@ -404,6 +449,9 @@
 	</command>
 
 	<command name="InviteConnectionSite" priority="5">
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -411,6 +459,12 @@
 		<var name="userMiddleName" value="Office01" />
 		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
 
 		<execute macro="SOUser#addUserWithSORole">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
@@ -488,6 +542,9 @@
 	</command>
 
 	<command name="InviteFollowingSite" priority="4">
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -495,6 +552,12 @@
 		<var name="userMiddleName" value="Office01" />
 		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
 
 		<execute macro="SOUser#addUserWithSORole">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
@@ -556,6 +619,9 @@
 	</command>
 
 	<command name="InviteMembersSiteRolesSite" priority="5">
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -570,6 +636,12 @@
 		<var name="userName2" value="Social02 Office02 User02" />
 		<var name="userScreenName" value="socialoffice01" />
 		<var name="userScreenName2" value="socialoffice02" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
 
 		<execute macro="SOUser#addUserWithSORole">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
@@ -659,6 +731,9 @@
 	</command>
 
 	<command name="ViewMembersSite" priority="4">
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
 		<var name="userEmailAddress3" value="socialoffice03@liferay.com" />
@@ -687,6 +762,12 @@
 		<var name="userScreenName2" value="socialoffice02" />
 		<var name="userScreenName3" value="socialoffice03" />
 		<var name="userScreenName4" value="socialoffice04" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
 
 		<execute macro="SOUser#addUserWithSORole">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
@@ -981,6 +1062,9 @@
 		<var name="roleName2" value="Site Administrator" />
 		<var name="roleNameLocalized1" value="Site Owner German" />
 		<var name="roleNameLocalized2" value="Site Administrator German" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
@@ -988,6 +1072,12 @@
 		<var name="userMiddleName" value="Office01" />
 		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
 
 		<execute macro="SOUser#addUserWithSORole">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />

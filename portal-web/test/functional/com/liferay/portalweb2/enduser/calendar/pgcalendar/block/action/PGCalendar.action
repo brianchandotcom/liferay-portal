@@ -3,6 +3,10 @@
 		<case locator-key1="SCHEDULER_EVENT_REPEAT">
 			<execute function="AssertClick#assertPartialTextClickAtAndWait" />
 		</case>
+
+		<case locator-key1="SCHEDULER_EVENT_SPECIFIC">
+			<execute function="AssertClick#assertTextClickNoMouseOver" />
+		</case>
 	</command>
 
 	<command name="assertElementPresent">

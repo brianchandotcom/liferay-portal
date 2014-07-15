@@ -22,13 +22,13 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Marcellus Tavares
@@ -42,14 +42,14 @@ public class DDLCSVExporter extends BaseDDLExporter {
 			OrderByComparator<DDLRecord> orderByComparator)
 		throws Exception {
 
-		Map<String, Map<String, String>> fieldsMap = getFieldsMap(recordSetId);
+		List<DDMFormField> ddmFormFields = getDDMFormFields(recordSetId);
 
 		StringBundler sb = new StringBundler();
 
-		for (Map<String, String> fieldMap : fieldsMap.values()) {
-			String label = fieldMap.get(FieldConstants.LABEL);
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			LocalizedValue label = ddmFormField.getLabel();
 
-			sb.append(label);
+			sb.append(label.getValue(getLocale()));
 			sb.append(CharPool.COMMA);
 		}
 
@@ -65,8 +65,8 @@ public class DDLCSVExporter extends BaseDDLExporter {
 			Fields fields = StorageEngineUtil.getFields(
 				recordVersion.getDDMStorageId());
 
-			for (Map<String, String> fieldMap : fieldsMap.values()) {
-				String name = fieldMap.get(FieldConstants.NAME);
+			for (DDMFormField ddmFormField : ddmFormFields) {
+				String name = ddmFormField.getName();
 				String value = StringPool.BLANK;
 
 				if (fields.contains(name)) {

@@ -15,11 +15,13 @@
 package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -397,41 +399,50 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		);
 	}
 
-	protected void setUpPropsUtil() {
-		mockStatic(PropsUtil.class);
+	protected void setUpPropsUtil() throws Exception {
+		Props props = mock(Props.class);
+
+		String ddmStructurePrivateFieldDataTypeKey =
+			PropsKeys.DYNAMIC_DATA_MAPPING_STRUCTURE_PRIVATE_FIELD_DATATYPE;
 
 		when(
-			PropsUtil.get(
-				PropsKeys.DYNAMIC_DATA_MAPPING_STRUCTURE_PRIVATE_FIELD_DATATYPE)
+			props.get(
+				Matchers.eq(ddmStructurePrivateFieldDataTypeKey),
+				Matchers.any(Filter.class))
 		).thenReturn(
 			"string"
 		);
 
+		String ddmStructurePrivateFieldRepeatableKey =
+			PropsKeys.DYNAMIC_DATA_MAPPING_STRUCTURE_PRIVATE_FIELD_REPEATABLE;
+
 		when(
-			PropsUtil.get(
-				PropsKeys.
-					DYNAMIC_DATA_MAPPING_STRUCTURE_PRIVATE_FIELD_REPEATABLE)
+			props.get(
+				Matchers.eq(ddmStructurePrivateFieldRepeatableKey),
+				Matchers.any(Filter.class))
 		).thenReturn(
 			"false"
 		);
 
 		when(
-			PropsUtil.get(PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS)
+			props.get(PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS)
 		).thenReturn(
 			".gif,.jpeg,.jpg,.png"
 		);
 
 		when(
-			PropsUtil.get(PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE)
+			props.get(PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE)
 		).thenReturn(
 			"51200"
 		);
 
 		when(
-			PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN)
+			props.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN)
 		).thenReturn(
 			"yyyyMMddHHmmss"
 		);
+
+		PropsUtil.setProps(props);
 	}
 
 	protected void setUpSAXReaderUtil() {

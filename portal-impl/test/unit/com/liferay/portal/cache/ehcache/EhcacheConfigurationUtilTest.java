@@ -64,6 +64,137 @@ public class EhcacheConfigurationUtilTest {
 			_configurationURL);
 	}
 
+	@AdviseWith(adviceClasses = {DisableEhcacheBootstrapAdvice.class})
+	@Test
+	public void testBootstrapDisabled() {
+		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, false);
+
+		_assertBootStrap(configuration, false);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, true);
+
+		_assertBootStrap(configuration, false);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, false);
+
+		_assertBootStrap(configuration, false);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, true);
+
+		_assertBootStrap(configuration, false);
+	}
+
+	@AdviseWith(adviceClasses = {EnableEhcacheBootstrapAdvice.class})
+	@Test
+	public void testBootstrapEnabled() {
+		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, false);
+
+		_assertBootStrap(configuration, true);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, true);
+
+		_assertBootStrap(configuration, true);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, false);
+
+		_assertBootStrap(configuration, true);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, true);
+
+		_assertBootStrap(configuration, true);
+	}
+
+	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
+	@Test
+	public void testClusterDisabled() {
+		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, false);
+
+		_assertListenerConfigsEquals(_configuration, configuration);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, true);
+
+		_assertListenerConfigsEquals(_configuration, configuration);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, false);
+
+		_assertNoDefaultReplicatorConfigs(configuration);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, true);
+
+		_assertNoListenerConfigs(configuration);
+	}
+
+	@AdviseWith(
+		adviceClasses = {
+			EnableClusterLinkAdvice.class,
+			DisableClusterLinkReplicateAdvice.class
+		}
+	)
+	@Test
+	public void testClusterEnabled1() {
+		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, false);
+
+		_assertListenerConfigsEquals(_configuration, configuration);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, true);
+
+		_assertListenerConfigsEquals(_configuration, configuration);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, false);
+
+		_assertListenerConfigsEquals(_configuration, configuration);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, true);
+
+		_assertListenerConfigsEquals(_configuration, configuration);
+	}
+
+	@AdviseWith(
+		adviceClasses = {
+			EnableClusterLinkAdvice.class,
+			EnableClusterLinkReplicateAdvice.class
+		}
+	)
+	@Test
+	public void testClusterEnabled2() {
+		Configuration configuration =
+			EhcacheConfigurationUtil.getConfiguration(
+				_configurationURL, false, false);
+
+		_assertListenerConfigsEquals(_configuration, configuration);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, true);
+
+		_assertListenerConfigsEquals(_configuration, configuration);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, false);
+
+		_assertClusterLinkReplicatorConfigs(configuration, false);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, true);
+
+		_assertClusterLinkReplicatorConfigs(configuration, true);
+	}
+
 	@Test
 	public void testMisc() {
 		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
@@ -99,137 +230,6 @@ public class EhcacheConfigurationUtilTest {
 		// For code coverage
 
 		new EhcacheConfigurationUtil();
-	}
-
-	@AdviseWith(adviceClasses = {DisableEhcacheBootstrapAdvice.class})
-	@Test
-	public void testWithBootstrapDisabled() {
-		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, false);
-
-		_assertBootStrap(configuration, false);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, true);
-
-		_assertBootStrap(configuration, false);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, false);
-
-		_assertBootStrap(configuration, false);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, true);
-
-		_assertBootStrap(configuration, false);
-	}
-
-	@AdviseWith(adviceClasses = {EnableEhcacheBootstrapAdvice.class})
-	@Test
-	public void testWithBootstrapEnabled() {
-		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, false);
-
-		_assertBootStrap(configuration, true);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, true);
-
-		_assertBootStrap(configuration, true);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, false);
-
-		_assertBootStrap(configuration, true);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, true);
-
-		_assertBootStrap(configuration, true);
-	}
-
-	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
-	@Test
-	public void testWithClusterDisabled() {
-		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, false);
-
-		_assertListenerConfigsEquals(_configuration, configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, true);
-
-		_assertListenerConfigsEquals(_configuration, configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, false);
-
-		_assertNoDefaultReplicatorConfigs(configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, true);
-
-		_assertNoListenerConfigs(configuration);
-	}
-
-	@AdviseWith(
-		adviceClasses = {
-			EnableClusterLinkAdvice.class,
-			DisableClusterLinkReplicateAdvice.class
-		}
-	)
-	@Test
-	public void testWithClusterEnabled1() {
-		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, false);
-
-		_assertListenerConfigsEquals(_configuration, configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, true);
-
-		_assertListenerConfigsEquals(_configuration, configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, false);
-
-		_assertListenerConfigsEquals(_configuration, configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, true);
-
-		_assertListenerConfigsEquals(_configuration, configuration);
-	}
-
-	@AdviseWith(
-		adviceClasses = {
-			EnableClusterLinkAdvice.class,
-			EnableClusterLinkReplicateAdvice.class
-		}
-	)
-	@Test
-	public void testWithClusterEnabled2() {
-		Configuration configuration =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, false, false);
-
-		_assertListenerConfigsEquals(_configuration, configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, false, true);
-
-		_assertListenerConfigsEquals(_configuration, configuration);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, false);
-
-		_assertClusterLinkReplicatorConfigs(configuration, false);
-
-		configuration = EhcacheConfigurationUtil.getConfiguration(
-			_configurationURL, true, true);
-
-		_assertClusterLinkReplicatorConfigs(configuration, true);
 	}
 
 	@Aspect

@@ -31,7 +31,6 @@ page import="com.liferay.portal.kernel.lar.ManifestSummary" %><%@
 page import="com.liferay.portal.kernel.lar.PortletDataContext" %><%@
 page import="com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.lar.PortletDataException" %><%@
-page import="com.liferay.portal.kernel.lar.PortletDataHandler" %><%@
 page import="com.liferay.portal.kernel.lar.PortletDataHandlerBoolean" %><%@
 page import="com.liferay.portal.kernel.lar.PortletDataHandlerControl" %><%@
 page import="com.liferay.portal.kernel.lar.PortletDataHandlerKeys" %><%@

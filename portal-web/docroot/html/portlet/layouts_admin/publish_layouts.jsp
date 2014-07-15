@@ -67,12 +67,7 @@ String layoutSetBranchName = MapUtil.getString(parameterMap, "layoutSetBranchNam
 
 boolean localPublishing = true;
 
-if (liveGroup.isStaged()) {
-	if (liveGroup.isStagedRemotely()) {
-		localPublishing = false;
-	}
-}
-else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
+if ((liveGroup.isStaged() && liveGroup.isStagedRemotely()) || cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
 	localPublishing = false;
 }
 
@@ -91,10 +86,7 @@ treeId = treeId + liveGroupId;
 
 String publishActionKey = "copy";
 
-if (liveGroup.isStaged()) {
-	publishActionKey = "publish";
-}
-else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
+if (liveGroup.isStaged() || cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
 	publishActionKey = "publish";
 }
 
@@ -115,22 +107,6 @@ catch (NoSuchLayoutException nsle) {
 treeId = treeId + privateLayout + layoutSetBranchId;
 
 long[] selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode"), ','));
-
-List<Layout> selectedLayouts = new ArrayList<Layout>();
-
-long selectedLayoutsGroupId = group.getGroupId();
-
-if (stagingGroupId > 0) {
-	selectedLayoutsGroupId = stagingGroupId;
-}
-
-for (int i = 0; i < selectedLayoutIds.length; i++) {
-	try {
-		selectedLayouts.add(LayoutLocalServiceUtil.getLayout(selectedLayoutsGroupId, privateLayout, selectedLayoutIds[i]));
-	}
-	catch (NoSuchLayoutException nsle) {
-	}
-}
 
 UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 
@@ -351,15 +327,7 @@ else {
 								</aui:fieldset>
 							</c:if>
 
-							<%
-							List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId(), false);
-							%>
-
-							<c:if test="<%= !dataSiteLevelPortlets.isEmpty() %>">
-								<aui:fieldset cssClass="options-group" label="content">
-									<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_data.jspf" %>
-								</aui:fieldset>
-							</c:if>
+							<liferay-staging:content parameterMap="<%= parameterMap %>" type="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 
 							<aui:fieldset cssClass="options-group" label="permissions">
 								<%@ include file="/html/portlet/layouts_admin/export_configuration/permissions.jspf" %>

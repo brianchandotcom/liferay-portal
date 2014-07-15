@@ -93,7 +93,7 @@ public class LuceneSearchEngine extends BaseSearchEngine {
 
 	protected String getFileName(String backupName) {
 		return SystemProperties.get(SystemProperties.TMP_DIR) +
-			File.pathSeparator + backupName;
+			File.separator + backupName;
 	}
 
 }

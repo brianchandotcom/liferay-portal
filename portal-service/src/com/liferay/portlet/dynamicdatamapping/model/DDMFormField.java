@@ -17,7 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,7 +65,7 @@ public class DDMFormField implements Serializable {
 
 	public Map<String, DDMFormField> getNestedDDMFormFieldsMap() {
 		Map<String, DDMFormField> nestedDDMFormFieldsMap =
-			new HashMap<String, DDMFormField>();
+			new LinkedHashMap<String, DDMFormField>();
 
 		for (DDMFormField nestedDDMFormField : _nestedDDMFormFields) {
 			nestedDDMFormFieldsMap.put(

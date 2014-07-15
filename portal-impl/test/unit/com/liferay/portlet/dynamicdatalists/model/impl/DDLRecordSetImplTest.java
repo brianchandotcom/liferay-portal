@@ -47,6 +47,7 @@ public class DDLRecordSetImplTest extends BaseDDMTestCase {
 	@Before
 	public void setUp() throws Exception {
 		setUpDDMFormXSDDeserializerUtil();
+		setUpDDMFormXSDSerializerUtil();
 		setUpDDMStructureLocalServiceUtil();
 		setUpDDMTemplateLocalServiceUtil();
 		setUpHtmlUtil();

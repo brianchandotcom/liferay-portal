@@ -25,12 +25,17 @@
 </tr>
 <tr>
 	<td>ADD_EVENT_BUTTON</td>
-	<td>//button[contains(@class,'btn') and contains(@class,'btn-primary') and contains(@class,'calendar-add-event-btn')]</td>
+	<td>//button[contains(.,'Add Event')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETED_CALENDAR_SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]//div[@class='yui3-widget-bd']</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,12 +51,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_CALENDAR</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Calendar')]</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li/a[contains(.,'Calendar')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_RESOURCES</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Resources')]</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li/a[contains(.,'Resources')]</td>
 	<td></td>
 </tr>
 <tr>

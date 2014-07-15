@@ -110,9 +110,11 @@
 			<var name="viewType" value="Week" />
 		</execute>
 
+		<execute action="PGCalendar#click" locator-key1="ADD_EVENT_BUTTON" value1="Add Event" />
 		<execute action="PGCalendar#assertClick" locator-key1="ADD_EVENT_BUTTON" value1="Add Event" />
 
 		<execute action="PGCalendarAddevent#selectFrame" locator-key1="ADD_EVENT_IFRAME" />
+		<execute action="PGCalendarAddevent#pause" locator1="1000" />
 		<execute action="PGCalendarAddevent#type" locator-key1="TITLE_FIELD" value1="${eventTitle}" />
 		<execute action="PGCalendarAddevent#assertElementPresent" locator-key1="START_DATE" />
 		<execute action="PGCalendarAddevent#assertElementPresent" locator-key1="START_DATE_TIME" />
@@ -1009,6 +1011,7 @@
 			<else>
 				<var name="key_tagText" value="${tagText}" />
 
+				<execute action="PGCalendarAddevent#assertClick" locator-key1="CATEGORIZATION_TAG_FIELD" />
 				<execute action="PGCalendarAddevent#type" locator-key1="CATEGORIZATION_TAG_FIELD" value1="${tagText}" />
 				<execute action="PGCalendarAddevent#assertClick" locator-key1="CATEGORIZATION_ADD_TAGS_BUTTON" value1="Add" />
 				<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="CATEGORIZATION_TAG_SPECIFIC" value1="${tagText}" />
@@ -1039,21 +1042,15 @@
 			</then>
 		</while>
 
-		<execute action="PGCalendarAgendaView#assertClick" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 		<execute action="PGCalendarAgendaView#pause" locator1="1000" />
+		<execute action="PGCalendarAgendaView#click" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
+		<execute action="PGCalendarAgendaView#confirm" locator-key1="CONFIRMATION" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
 
 		<if>
 			<condition action="PGCalendarRecurringEventDialogBox#isElementPresent" locator-key1="ALL_EVENTS_IN_THE_SERIES_BUTTON" />
 			<then>
 				<execute action="PGCalendarRecurringEventDialogBox#assertClick" locator-key1="ALL_EVENTS_IN_THE_SERIES_BUTTON" value1="All Events in the Series"  />
 			</then>
-			<elseif>
-				<condition action="PGCalendarAgendaView#isElementPresent" locator-key1="CONFIRMATION" />
-				<then>
-					<execute action="PGCalendarAgendaView#assertClick" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
-					<execute action="PGCalendarAgendaView#confirm" locator-key1="CONFIRMATION" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
-				</then>
-			</elseif>
 		</if>
 
 		<execute action="PGCalendarAgendaView#assertTextEquals" locator-key1="EMPTY_MESSAGE" value1="No events." />

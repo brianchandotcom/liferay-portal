@@ -11,9 +11,10 @@
 		</case>
 	</command>
 
-	<command name="confirm">
+	<!-- <command name="confirm">
 		<case locator-key1="CONFIRMATION">
 			<execute function="Confirm#waitForConfirmation" />
 		</case>
-	</command>
+	</command> -->
+
 </definition>

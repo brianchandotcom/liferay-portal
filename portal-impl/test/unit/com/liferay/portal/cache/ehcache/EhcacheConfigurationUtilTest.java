@@ -104,67 +104,73 @@ public class EhcacheConfigurationUtilTest {
 	@AdviseWith(adviceClasses = {DisableEhcacheBootStrapAdvice.class})
 	@Test
 	public void testWithBootStrapDisabled() {
-		Configuration configuration1 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, false, false);
-		Configuration configuration2 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, false, true);
-		Configuration configuration3 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, true, false);
-		Configuration configuration4 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, true, true);
+		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, false);
 
-		_assertBootStrap(configuration1, false);
-		_assertBootStrap(configuration2, false);
-		_assertBootStrap(configuration3, false);
-		_assertBootStrap(configuration4, false);
+		_assertBootStrap(configuration, false);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, true);
+
+		_assertBootStrap(configuration, false);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, false);
+
+		_assertBootStrap(configuration, false);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, true);
+
+		_assertBootStrap(configuration, false);
 	}
 
 	@AdviseWith(adviceClasses = {EnableEhcacheBootStrapAdvice.class})
 	@Test
 	public void testWithBootStrapEnabled() {
-		Configuration configuration1 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, false, false);
-		Configuration configuration2 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, false, true);
-		Configuration configuration3 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, true, false);
-		Configuration configuration4 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, true, true);
+		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, false);
 
-		_assertBootStrap(configuration1, true);
-		_assertBootStrap(configuration2, true);
-		_assertBootStrap(configuration3, true);
-		_assertBootStrap(configuration4, true);
+		_assertBootStrap(configuration, true);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, true);
+
+		_assertBootStrap(configuration, true);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, false);
+
+		_assertBootStrap(configuration, true);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, true);
+
+		_assertBootStrap(configuration, true);
 	}
 
 	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
 	@Test
 	public void testWithClusterDisabled() {
-		Configuration configuration1 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, false, false);
-		Configuration configuration2 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, false, true);
-		Configuration configuration3 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, true, false);
-		Configuration configuration4 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, true, true);
+		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, false);
 
-		_assertListenerConfigsEquals(_configuration, configuration1);
-		_assertListenerConfigsEquals(_configuration, configuration2);
-		_assertNoDefaultReplicatorConfigs(configuration3);
-		_assertNoListenerConfigs(configuration4);
+		_assertListenerConfigsEquals(_configuration, configuration);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, true);
+
+		_assertListenerConfigsEquals(_configuration, configuration);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, false);
+
+		_assertNoDefaultReplicatorConfigs(configuration);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, true);
+
+		_assertNoListenerConfigs(configuration);
 	}
 
 	@AdviseWith(
@@ -175,23 +181,25 @@ public class EhcacheConfigurationUtilTest {
 	)
 	@Test
 	public void testWithClusterEnabled1() {
-		Configuration configuration1 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, false, false);
-		Configuration configuration2 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, false, true);
-		Configuration configuration3 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, true, false);
-		Configuration configuration4 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, true, true);
+		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, false);
 
-		_assertListenerConfigsEquals(_configuration, configuration1);
-		_assertListenerConfigsEquals(_configuration, configuration2);
-		_assertListenerConfigsEquals(_configuration, configuration3);
-		_assertListenerConfigsEquals(_configuration, configuration4);
+		_assertListenerConfigsEquals(_configuration, configuration);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, true);
+
+		_assertListenerConfigsEquals(_configuration, configuration);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, false);
+
+		_assertListenerConfigsEquals(_configuration, configuration);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, true);
+
+		_assertListenerConfigsEquals(_configuration, configuration);
 	}
 
 	@AdviseWith(
@@ -202,23 +210,26 @@ public class EhcacheConfigurationUtilTest {
 	)
 	@Test
 	public void testWithClusterEnabled2() {
-		Configuration configuration1 =
+		Configuration configuration =
 			EhcacheConfigurationUtil.getConfiguration(
 				_configurationURL, false, false);
-		Configuration configuration2 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, false, true);
-		Configuration configuration3 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, true, false);
-		Configuration configuration4 =
-			EhcacheConfigurationUtil.getConfiguration(
-				_configurationURL, true, true);
 
-		_assertListenerConfigsEquals(_configuration, configuration1);
-		_assertListenerConfigsEquals(_configuration, configuration2);
-		_assertClusterLinkReplicatorConfigs(configuration3, false);
-		_assertClusterLinkReplicatorConfigs(configuration4, true);
+		_assertListenerConfigsEquals(_configuration, configuration);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, false, true);
+
+		_assertListenerConfigsEquals(_configuration, configuration);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, false);
+
+		_assertClusterLinkReplicatorConfigs(configuration, false);
+
+		configuration = EhcacheConfigurationUtil.getConfiguration(
+			_configurationURL, true, true);
+
+		_assertClusterLinkReplicatorConfigs(configuration, true);
 	}
 
 	@Aspect

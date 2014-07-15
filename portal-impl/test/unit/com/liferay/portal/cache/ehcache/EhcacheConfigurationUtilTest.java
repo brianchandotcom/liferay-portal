@@ -23,7 +23,6 @@ import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -345,10 +344,12 @@ public class EhcacheConfigurationUtilTest {
 
 		List<?> peerListenerFactoryConfigurations =
 			configuration.getCacheManagerPeerListenerFactoryConfigurations();
+
+		Assert.assertTrue(peerListenerFactoryConfigurations.isEmpty());
+
 		List<?> peerProviderFactoryConfigurations =
 			configuration.getCacheManagerPeerProviderFactoryConfiguration();
 
-		Assert.assertTrue(peerListenerFactoryConfigurations.isEmpty());
 		Assert.assertTrue(peerProviderFactoryConfigurations.isEmpty());
 
 		List<CacheConfiguration> cacheConfigurations =
@@ -432,11 +433,8 @@ public class EhcacheConfigurationUtilTest {
 		}
 
 		try {
-			Iterator<Entry<String, CacheConfiguration>> iterator =
-				cacheConfigurations1.entrySet().iterator();
-
-			while (iterator.hasNext()) {
-				Entry<String, CacheConfiguration> entry = iterator.next();
+			for (Entry<String, CacheConfiguration> entry :
+					cacheConfigurations1.entrySet()) {
 
 				String key = entry.getKey();
 				CacheConfiguration value1 = entry.getValue();
@@ -468,10 +466,12 @@ public class EhcacheConfigurationUtilTest {
 
 		List<?> peerListenerFactoryConfigurations =
 			configuration.getCacheManagerPeerListenerFactoryConfigurations();
+
+		Assert.assertTrue(peerListenerFactoryConfigurations.isEmpty());
+
 		List<?> peerProviderFactoryConfigurations =
 			configuration.getCacheManagerPeerProviderFactoryConfiguration();
 
-		Assert.assertTrue(peerListenerFactoryConfigurations.isEmpty());
 		Assert.assertTrue(peerProviderFactoryConfigurations.isEmpty());
 
 		List<CacheConfiguration> cacheConfigurations =
@@ -502,10 +502,12 @@ public class EhcacheConfigurationUtilTest {
 	private void _assertNoListenerConfigs(Configuration configuration) {
 		List<?> peerListenerFactoryConfigurations =
 			configuration.getCacheManagerPeerListenerFactoryConfigurations();
+
+		Assert.assertTrue(peerListenerFactoryConfigurations.isEmpty());
+
 		List<?> peerProviderFactoryConfigurations =
 			configuration.getCacheManagerPeerProviderFactoryConfiguration();
 
-		Assert.assertTrue(peerListenerFactoryConfigurations.isEmpty());
 		Assert.assertTrue(peerProviderFactoryConfigurations.isEmpty());
 
 		List<CacheConfiguration> cacheConfigurations =

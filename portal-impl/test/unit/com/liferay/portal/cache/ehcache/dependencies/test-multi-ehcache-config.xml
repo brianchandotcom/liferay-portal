@@ -1,0 +1,34 @@
+<ehcache
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd"
+>
+
+	<cacheManagerPeerProviderFactory
+		class="com.liferay.portal.cache.ehcache.LiferayCacheManagerPeerProviderFactory"
+		properties="portalPropertyKey=ehcache.multi.vm.config.location.peerProviderProperties"
+		propertySeparator=","
+	/>
+	<cacheManagerPeerListenerFactory
+		class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+	/>
+
+	<defaultCache>
+		<cacheEventListenerFactory
+			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			properties="testKey=testValue"
+			propertySeparator=","
+		/>
+		<cacheEventListenerFactory class="com.liferay.dummy.DummyCacheEventListenerFactory" />
+		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
+	</defaultCache>
+
+	<cache name="test.cache">
+		<cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.DummyCacheEventListenerFactory"
+			properties="testKey=testValue"
+			propertySeparator=","
+		/>
+		<cacheEventListenerFactory class="com.liferay.dummy.DummyCacheEventListenerFactory" />
+		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
+	</cache>
+</ehcache>

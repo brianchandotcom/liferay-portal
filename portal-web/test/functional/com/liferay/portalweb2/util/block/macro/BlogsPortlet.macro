@@ -5,11 +5,7 @@
 		</execute>
 
 		<execute action="PGBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="PGBlogsConfiguration#click" locator-key1="DISPLAY_SETTINGS_DISPLAY_TEMPLATE_MENULIST" />
-
-		<var name="key_displaySelection" value="${displaySelection}" />
-
-		<execute action="PGBlogsConfiguration#doubleClick" locator-key1="DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECTION" />
+		<execute action="PGBlogsConfiguration#select" locator-key1="DISPLAY_SETTINGS_DISPLAY_TEMPLATE_MENULIST" value1="${displaySelection}" />
 		<execute action="PGBlogsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGBlogsConfiguration#assertElementPresent" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
@@ -78,11 +74,7 @@
 		</execute>
 
 		<execute action="PGBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="PGBlogsConfiguration#click" locator-key1="DISPLAY_SETTINGS_DISPLAY_TEMPLATE_MENULIST" />
-
-		<var name="key_displaySelection" value="Full Content" />
-
-		<execute action="PGBlogsConfiguration#doubleClick" locator-key1="DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECTION" />
+		<execute action="PGBlogsConfiguration#select" locator-key1="DISPLAY_SETTINGS_DISPLAY_TEMPLATE_MENULIST" value1="Full Content" />
 		<execute action="PGBlogsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGBlogsConfiguration#assertElementPresent" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />

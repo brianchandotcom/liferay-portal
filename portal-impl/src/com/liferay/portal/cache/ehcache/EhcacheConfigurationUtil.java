@@ -89,7 +89,9 @@ public class EhcacheConfigurationUtil {
 		List<CacheConfiguration> cacheConfigurations =
 			_getAllCacheConfigurations(configuration);
 
-		_setBootstrapCacheLoaderConfigurations(cacheConfigurations);
+		if (!PropsValues.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED) {
+			_clearBootstrapCacheLoaderConfigurations(cacheConfigurations);
+		}
 
 		if (!clusterAware) {
 			return configuration;
@@ -112,6 +114,14 @@ public class EhcacheConfigurationUtil {
 		}
 
 		return configuration;
+	}
+
+	private static void _clearBootstrapCacheLoaderConfigurations(
+		List<CacheConfiguration> cacheConfigurations) {
+
+		for (CacheConfiguration cacheConfiguration : cacheConfigurations) {
+			cacheConfiguration.addBootstrapCacheLoaderFactory(null);
+		}
 	}
 
 	private static String _clearCacheEventListenerConfigurations(
@@ -226,18 +236,6 @@ public class EhcacheConfigurationUtil {
 		}
 
 		return cacheConfigurations;
-	}
-
-	private static void _setBootstrapCacheLoaderConfigurations(
-		List<CacheConfiguration> cacheConfigurations) {
-
-		if (PropsValues.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED) {
-			return;
-		}
-
-		for (CacheConfiguration cacheConfiguration : cacheConfigurations) {
-			cacheConfiguration.addBootstrapCacheLoaderFactory(null);
-		}
 	}
 
 }

@@ -132,11 +132,11 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="ApplicationDisplayTemplates#addADTviaPortletCP">
+		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
 			<var name="adtType" value="Blogs" />
 		</execute>
 

@@ -44,7 +44,7 @@
 		<echo message="override" />
 	</command>
 
-	<command known-issues="LPS-46486" name="ActivateInitialStagingWithWikiAttachment" priority="4">
+	<command name="ActivateInitialStagingWithWikiAttachment" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -465,7 +465,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-45854" name="StagingBlogs" priority="4">
+	<command name="StagingBlogs" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />
@@ -2673,7 +2673,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-46018" name="StagingPublishPage" priority="4">
+	<command name="StagingPublishPage" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -2974,7 +2974,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-46086" name="StagingRemoteLiveWebContent" priority="5">
+	<command name="StagingRemoteLiveWebContent" priority="5">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456$${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp">
@@ -3254,7 +3254,7 @@
 		<execute macro="Staging#publishToLiveNow" />
 	</command>
 
-	<command known-issues="LPS-46468" name="StagingWithPublishTemplate" priority="5" >
+	<command name="StagingWithPublishTemplate" priority="5" >
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />

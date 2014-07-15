@@ -40,17 +40,13 @@ long stagingGroupId = layoutDisplayContext.getStagingGroupId();
 long selPlid = layoutDisplayContext.getSelPlid();
 
 boolean privateLayout = layoutDisplayContext.isPrivateLayout();
-long layoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
+long layoutId = layoutDisplayContext.getLayoutId();
 
 UnicodeProperties groupTypeSettings = layoutDisplayContext.getGroupTypeSettings();
 
 UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 
 Layout selLayout = layoutDisplayContext.getSelLayout();
-
-if (selLayout != null) {
-	layoutId = selLayout.getLayoutId();
-}
 
 Organization organization = layoutDisplayContext.getOrganization();
 User selUser = layoutDisplayContext.getSelUser();

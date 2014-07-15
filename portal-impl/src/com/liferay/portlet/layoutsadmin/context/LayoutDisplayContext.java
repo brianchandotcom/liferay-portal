@@ -114,6 +114,20 @@ public class LayoutDisplayContext {
 		return _groupTypeSettings;
 	}
 
+	public Long getLayoutId() {
+		if (_layoutId != null) {
+			return _layoutId;
+		}
+
+		_layoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
+
+		if (getSelLayout() != null) {
+			_layoutId = getSelLayout().getLayoutId();
+		}
+
+		return _layoutId;
+	}
+
 	public Group getLiveGroup() {
 		if (_liveGroup != null) {
 			return _liveGroup;
@@ -334,6 +348,7 @@ public class LayoutDisplayContext {
 	private Group _group;
 	private Long _groupId;
 	private UnicodeProperties _groupTypeSettings;
+	private Long _layoutId;
 	private Group _liveGroup;
 	private Organization _organization;
 	private String _pagesName;

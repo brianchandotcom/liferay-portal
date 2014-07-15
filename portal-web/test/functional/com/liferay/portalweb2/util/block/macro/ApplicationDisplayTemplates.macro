@@ -1,23 +1,4 @@
 <definition>
-	<command name="addADTviaPortletCP">
-		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_ICON" value1="Options" />
-		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
-
-		<execute action="CPADTConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-
-		<if>
-			<condition action="CPADTConfiguration#isElementPresent" locator-key1="NAVIGATION_DISPLAY_SETTINGS" />
-			<then>
-				<execute action="CPADTConfiguration#assertClick" locator-key1="NAVIGATION_DISPLAY_SETTINGS" value1="Display Settings" />
-			</then>
-		</if>
-
-		<execute action="CPADTConfiguration#select" locator-key1="DISPLAY_TEMPLATE_SELECT" value1="${adtType} Test ADT" />
-		<execute action="CPADTConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPADTConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="CPADTConfiguration#selectFrameTop" locator-key1="CONFIGURATION_IFRAME" value1="relative=top" />
-	</command>
-
 	<command name="addADTviaPortletPG">
 		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_ICON" value1="Options" />
 		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
@@ -89,37 +70,6 @@
 		<execute action="PGApplicationdisplaytemplates#selectFrameTop" value1="relative=top" />
 	</command>
 
-	<command name="manageADTViaPortletCP">
-		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_ICON" value1="Options" />
-		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
-
-		<execute action="CPADTConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-
-		<if>
-			<condition action="CPADTConfiguration#isElementPresent" locator-key1="NAVIGATION_DISPLAY_SETTINGS" />
-			<then>
-				<execute action="CPADTConfiguration#assertClick" locator-key1="NAVIGATION_DISPLAY_SETTINGS" value1="Display Settings" />
-			</then>
-		</if>
-
-		<execute action="PGADTConfiguration#assertClick" locator-key1="MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
-
-		<var name="key_adtType" value="${adtType}" />
-
-		<execute action="PGApplicationdisplaytemplates#selectFrameTop" value1="relative=top" />
-		<execute action="PGApplicationdisplaytemplates#selectFrame" locator-key1="ADT_IFRAME" />
-		<execute action="PGApplicationdisplaytemplates#assertClick" locator-key1="ADD" value1="Add" />
-		<execute action="PGApplicationdisplaytemplates#assertClick" locator-key1="ADD_MENULIST_ADT_TEMPLATE" value1="${adtType} Template" />
-
-		<execute action="PGApplicationdisplaytemplatesAdd#type" locator-key1="NAME_FIELD" value1="${adtType} Test ADT" />
-		<execute action="PGApplicationdisplaytemplatesAdd#uploadCommonFile" locator-key1="SCRIPT_FIELD" value1="${adtFile}" />
-		<execute action="PGApplicationdisplaytemplatesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<execute action="PGApplicationdisplaytemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGApplicationdisplaytemplates#assertTextEquals" locator-key1="ADT_TABLE_NAME_1" value1="${adtType} Test ADT" />
-		<execute action="PGApplicationdisplaytemplates#selectFrameTop" value1="relative=top" />
-	</command>
-
 	<command name="tearDownADTviaPortletPG">
 		<if>
 			<condition action="BasePortlet#isElementPresent" locator-key1="OPTIONS_ICON" />
@@ -142,20 +92,6 @@
 				<execute action="PGADTConfiguration#selectFrameTop" locator-key1="CONFIGURATION_IFRAME" value1="relative=top" />
 			</then>
 		</if>
-	</command>
-
-	<command name="tearDownCP">
-		<if>
-			<condition action="CPApplicationdisplaytemplates#isElementPresent" locator-key1="ADT_TABLE_ALL_CHECKBOX" />
-			<then>
-				<execute action="CPApplicationdisplaytemplates#check" locator-key1="ADT_TABLE_ALL_CHECKBOX" />
-				<execute action="CPApplicationdisplaytemplates#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
-				<execute action="CPApplicationdisplaytemplates#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute action="CPApplicationdisplaytemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-			</then>
-		</if>
-
-		<execute action="CPApplicationdisplaytemplates#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no templates." />
 	</command>
 
 	<command name="tearDownPG">

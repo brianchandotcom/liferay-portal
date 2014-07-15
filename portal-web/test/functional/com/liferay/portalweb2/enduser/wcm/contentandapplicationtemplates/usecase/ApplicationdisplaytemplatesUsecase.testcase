@@ -631,7 +631,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-45343" name="ADTWiki" priority="3">
+	<command name="ADTWiki" priority="3">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -681,12 +681,14 @@
 			<var name="adtType" value="Wiki" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Wiki" />
-			<var name="siteScopeName" value="${siteName}" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="ApplicationDisplayTemplates#addADTviaPortletCP">
+		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
 			<var name="adtType" value="Wiki" />
 		</execute>
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -1217,6 +1218,8 @@ public class SitesImpl implements Sites {
 		}
 
 		try {
+			MergeLayoutPrototypesThreadLocal.setInProgress(true);
+
 			boolean importData = true;
 
 			long lastResetTime = GetterUtil.getLong(
@@ -1249,6 +1252,8 @@ public class SitesImpl implements Sites {
 			LayoutSetUtil.updateImpl(layoutSetPrototypeLayoutSet);
 		}
 		finally {
+			MergeLayoutPrototypesThreadLocal.setInProgress(false);
+
 			LockLocalServiceUtil.unlock(
 				LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
 				String.valueOf(layoutSet.getLayoutSetId()), owner);
@@ -1568,6 +1573,8 @@ public class SitesImpl implements Sites {
 		}
 
 		try {
+			MergeLayoutPrototypesThreadLocal.setInProgress(true);
+
 			applyLayoutPrototype(layoutPrototype, layout, true);
 		}
 		catch (Exception e) {
@@ -1581,6 +1588,8 @@ public class SitesImpl implements Sites {
 			LayoutUtil.updateImpl(layoutPrototypeLayout);
 		}
 		finally {
+			MergeLayoutPrototypesThreadLocal.setInProgress(false);
+
 			LockLocalServiceUtil.unlock(
 				LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
 				String.valueOf(layout.getPlid()), owner);

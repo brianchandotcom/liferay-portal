@@ -33,8 +33,13 @@ import net.sf.ehcache.config.ConfigurationFactory;
 import net.sf.ehcache.config.FactoryConfiguration;
 
 /**
+ * <p>
+ * See https://issues.liferay.com/browse/LPS-48535.
+ * </p>
+ *
  * @author Shuyang Zhou
  * @author Edward Han
+ * @author Tina Tian
  */
 public class EhcacheConfigurationUtil {
 

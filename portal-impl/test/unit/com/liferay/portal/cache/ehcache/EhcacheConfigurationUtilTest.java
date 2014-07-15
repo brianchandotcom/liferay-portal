@@ -101,9 +101,9 @@ public class EhcacheConfigurationUtilTest {
 		new EhcacheConfigurationUtil();
 	}
 
-	@AdviseWith(adviceClasses = {DisableEhcacheBootStrapAdvice.class})
+	@AdviseWith(adviceClasses = {DisableEhcacheBootstrapAdvice.class})
 	@Test
-	public void testWithBootStrapDisabled() {
+	public void testWithBootstrapDisabled() {
 		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
 			_configurationURL, false, false);
 
@@ -125,9 +125,9 @@ public class EhcacheConfigurationUtilTest {
 		_assertBootStrap(configuration, false);
 	}
 
-	@AdviseWith(adviceClasses = {EnableEhcacheBootStrapAdvice.class})
+	@AdviseWith(adviceClasses = {EnableEhcacheBootstrapAdvice.class})
 	@Test
-	public void testWithBootStrapEnabled() {
+	public void testWithBootstrapEnabled() {
 		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
 			_configurationURL, false, false);
 
@@ -262,7 +262,7 @@ public class EhcacheConfigurationUtilTest {
 	}
 
 	@Aspect
-	public static class DisableEhcacheBootStrapAdvice {
+	public static class DisableEhcacheBootstrapAdvice {
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
@@ -305,7 +305,7 @@ public class EhcacheConfigurationUtilTest {
 	}
 
 	@Aspect
-	public static class EnableEhcacheBootStrapAdvice {
+	public static class EnableEhcacheBootstrapAdvice {
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +

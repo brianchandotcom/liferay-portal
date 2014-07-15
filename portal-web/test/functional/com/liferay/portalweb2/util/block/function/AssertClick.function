@@ -112,6 +112,12 @@
 		<execute function="AssertClick#assertTextClickAt" />
 	</command>
 
+	<command name="assertTextClickNoMouseOver">
+		<execute function="AssertTextEquals#assertText" />
+
+		<execute selenium="click" />
+	</command>
+
 	<command name="assertTextClickTagSelector">
 		<execute function="AssertClick#assertTextClick" />
 

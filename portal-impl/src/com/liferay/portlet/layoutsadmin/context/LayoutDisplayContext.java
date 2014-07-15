@@ -15,7 +15,10 @@
 package com.liferay.portlet.layoutsadmin.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
@@ -35,9 +38,13 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutDescription;
 import com.liferay.portal.util.LayoutListUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
+
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,10 +53,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LayoutDisplayContext {
 
-	public LayoutDisplayContext(HttpServletRequest request)
+	public LayoutDisplayContext(
+			HttpServletRequest request,
+			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
 		_request = request;
+		_liferayPortletResponse = liferayPortletResponse;
 
 		_tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
 
@@ -76,19 +86,14 @@ public class LayoutDisplayContext {
 		}
 	}
 
-	public List<LayoutDescription> getLayoutDescriptions() {
-		if (_layoutDescriptions != null) {
-			return _layoutDescriptions;
+	public String getBackURL() {
+		if (_backURL != null) {
+			return _backURL;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		_backURL = ParamUtil.getString(_request, "backURL", getRedirect());
 
-		_layoutDescriptions = LayoutListUtil.getLayoutDescriptions(
-			getGroupId(), isPrivateLayout(), getRootNodeName(),
-			themeDisplay.getLocale());
-
-		return _layoutDescriptions;
+		return _backURL;
 	}
 
 	public Group getGroup() {
@@ -133,6 +138,21 @@ public class LayoutDisplayContext {
 		}
 
 		return _groupTypeSettings;
+	}
+
+	public List<LayoutDescription> getLayoutDescriptions() {
+		if (_layoutDescriptions != null) {
+			return _layoutDescriptions;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_layoutDescriptions = LayoutListUtil.getLayoutDescriptions(
+			getGroupId(), isPrivateLayout(), getRootNodeName(),
+			themeDisplay.getLocale());
+
+		return _layoutDescriptions;
 	}
 
 	public Long getLayoutId() {
@@ -216,6 +236,37 @@ public class LayoutDisplayContext {
 		}
 
 		return _pagesName;
+	}
+
+	public String getRedirect() {
+		if (_redirect != null) {
+			return _redirect;
+		}
+
+		_redirect = ParamUtil.getString(_request, "redirect");
+
+		return _redirect;
+	}
+
+	public PortletURL getRedirectURL() {
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
+		portletURL.setParameter("tabs1", getTabs1());
+		portletURL.setParameter("redirect", getRedirect());
+
+		String portletName = getPortletName();
+
+		if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) ||
+			portletName.equals(PortletKeys.MY_ACCOUNT) ||
+			portletName.equals(PortletKeys.USERS_ADMIN)) {
+
+			portletURL.setParameter("backURL", getBackURL());
+		}
+
+		portletURL.setParameter("groupId", String.valueOf(getLiveGroupId()));
+
+		return portletURL;
 	}
 
 	public String getRootNodeName() {
@@ -370,6 +421,17 @@ public class LayoutDisplayContext {
 		return _privateLayout;
 	}
 
+	protected String getPortletName() {
+		PortletConfig portletConfig = (PortletConfig)_request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		if (portletConfig == null) {
+			return StringPool.BLANK;
+		}
+
+		return portletConfig.getPortletName();
+	}
+
 	protected boolean hasPowerUserRole() throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -401,16 +463,19 @@ public class LayoutDisplayContext {
 		return false;
 	}
 
+	private String _backURL;
 	private Group _group;
 	private Long _groupId;
 	private UnicodeProperties _groupTypeSettings;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
+	private LiferayPortletResponse _liferayPortletResponse;
 	private Group _liveGroup;
 	private Long _liveGroupId;
 	private Organization _organization;
 	private String _pagesName;
 	private boolean _privateLayout;
+	private String _redirect;
 	private HttpServletRequest _request;
 	private String _rootNodeName;
 	private Group _selGroup;

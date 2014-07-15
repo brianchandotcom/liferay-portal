@@ -77,7 +77,7 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
-LayoutDisplayContext layoutDisplayContext = new LayoutDisplayContext(request);
+LayoutDisplayContext layoutDisplayContext = new LayoutDisplayContext(request, liferayPortletResponse);
 %>
 
 <%@ include file="/html/portlet/layouts_admin/init-ext.jsp" %>

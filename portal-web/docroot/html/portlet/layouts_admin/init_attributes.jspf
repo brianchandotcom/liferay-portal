@@ -17,9 +17,9 @@
 <%
 String tabs1 = layoutDisplayContext.getTabs1();
 
-String redirect = ParamUtil.getString(request, "redirect");
+String redirect = layoutDisplayContext.getRedirect();
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
-String backURL = ParamUtil.getString(request, "backURL", redirect);
+String backURL = layoutDisplayContext.getBackURL();
 
 if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) || portletName.equals(PortletKeys.MY_ACCOUNT)) {
 	portletDisplay.setURLBack(backURL);
@@ -63,19 +63,9 @@ String rootNodeName = layoutDisplayContext.getRootNodeName();
 List<LayoutDescription> layoutDescriptions = layoutDisplayContext.getLayoutDescriptions();
 
 request.setAttribute(WebKeys.LAYOUT_DESCRIPTIONS, layoutDescriptions);
+
+PortletURL redirectURL = layoutDisplayContext.getRedirectURL();
 %>
-
-<liferay-portlet:renderURL varImpl="redirectURL">
-	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
-	<portlet:param name="tabs1" value="<%= tabs1 %>" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-
-	<c:if test="<%= (portletName.equals(PortletKeys.LAYOUTS_ADMIN) || portletName.equals(PortletKeys.MY_ACCOUNT) || portletName.equals(PortletKeys.USERS_ADMIN)) %>">
-		<portlet:param name="backURL" value="<%= backURL %>" />
-	</c:if>
-
-	<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-</liferay-portlet:renderURL>
 
 <%
 request.setAttribute("edit_pages.jsp-group", group);

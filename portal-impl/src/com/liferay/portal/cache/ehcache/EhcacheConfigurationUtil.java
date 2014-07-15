@@ -22,7 +22,6 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -124,20 +123,26 @@ public class EhcacheConfigurationUtil {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private static String _clearCacheEventListenerConfigurations(
 		CacheConfiguration cacheConfiguration, boolean usingDefault) {
 
-		List<?> cacheEventListenerConfigurations =
-			cacheConfiguration.getCacheEventListenerConfigurations();
+		List<CacheEventListenerFactoryConfiguration>
+			cacheEventListenerConfigurations =
+				cacheConfiguration.getCacheEventListenerConfigurations();
 
-		String cacheEventListenerProperties = null;
+		List<CacheEventListenerFactoryConfiguration>
+			copyCacheEventListenerConfigurations =
+				new ArrayList<CacheEventListenerFactoryConfiguration>(
+					cacheEventListenerConfigurations);
 
-		Iterator<?> itr = cacheEventListenerConfigurations.iterator();
+		if (usingDefault) {
+			cacheEventListenerConfigurations.clear();
+		}
 
-		while (itr.hasNext()) {
-			CacheEventListenerFactoryConfiguration
-				cacheEventListenerFactoryConfiguration =
-					(CacheEventListenerFactoryConfiguration)itr.next();
+		for (CacheEventListenerFactoryConfiguration
+				cacheEventListenerFactoryConfiguration :
+					copyCacheEventListenerConfigurations) {
 
 			String fullyQualifiedClassPath =
 				cacheEventListenerFactoryConfiguration.
@@ -148,22 +153,14 @@ public class EhcacheConfigurationUtil {
 				fullyQualifiedClassPath.contains(
 					"net.sf.ehcache.distribution")) {
 
-				cacheEventListenerProperties =
-					cacheEventListenerFactoryConfiguration.getProperties();
+				cacheEventListenerConfigurations.remove(
+					cacheEventListenerFactoryConfiguration);
 
-				if (!usingDefault) {
-					itr.remove();
-				}
-
-				break;
+				return cacheEventListenerFactoryConfiguration.getProperties();
 			}
 		}
 
-		if (usingDefault) {
-			cacheEventListenerConfigurations.clear();
-		}
-
-		return cacheEventListenerProperties;
+		return null;
 	}
 
 	@SuppressWarnings("rawtypes")

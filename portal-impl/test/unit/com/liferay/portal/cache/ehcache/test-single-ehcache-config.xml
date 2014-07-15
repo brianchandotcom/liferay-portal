@@ -1,0 +1,8 @@
+<ehcache
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd"
+>
+	<cache name="test.cache">
+		<cacheEventListenerFactory class="com.liferay.dummy.DummyCacheEventListenerFactory" />
+	</cache>
+</ehcache>

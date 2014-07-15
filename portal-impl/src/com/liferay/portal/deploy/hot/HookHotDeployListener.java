@@ -118,9 +118,7 @@ import com.liferay.portal.security.membershippolicy.SiteMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryImpl;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil;
-import com.liferay.portal.security.pwd.PwdToolkitUtil;
 import com.liferay.portal.security.pwd.Toolkit;
-import com.liferay.portal.security.pwd.ToolkitWrapper;
 import com.liferay.portal.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.service.ServiceWrapper;
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -558,13 +556,6 @@ public class HookHotDeployListener
 
 			userGroupMembershipPolicyFactoryImpl.setUserGroupMembershipPolicy(
 				null);
-		}
-
-		if (portalProperties.containsKey(PropsKeys.PASSWORDS_TOOLKIT)) {
-			ToolkitWrapper toolkitWrapper =
-				(ToolkitWrapper)PwdToolkitUtil.getToolkit();
-
-			toolkitWrapper.setToolkit(null);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.PHONE_NUMBER_FORMAT_IMPL)) {
@@ -1828,10 +1819,8 @@ public class HookHotDeployListener
 			Toolkit toolkit = (Toolkit)newInstance(
 				portletClassLoader, Toolkit.class, toolkitClassName);
 
-			ToolkitWrapper toolkitWrapper =
-				(ToolkitWrapper)PwdToolkitUtil.getToolkit();
-
-			toolkitWrapper.setToolkit(toolkit);
+			registerService(servletContextName, toolkitClassName, Toolkit.class,
+				toolkit);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.PHONE_NUMBER_FORMAT_IMPL)) {

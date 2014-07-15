@@ -47,11 +47,12 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
@@ -217,11 +218,13 @@ public class DDLImpl implements DDL {
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		Map<String, Map<String, String>> fieldsMap =
-			ddmStructure.getFieldsMap();
+		Locale locale = LocaleUtil.fromLanguageId(
+			ddmStructure.getDefaultLanguageId());
 
-		for (Map<String, String> fields : fieldsMap.values()) {
-			String name = fields.get(FieldConstants.NAME);
+		List<DDMFormField> ddmFormFields = ddmStructure.getDDMFormFields(false);
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			String name = ddmFormField.getName();
 
 			if (ddmStructure.isFieldPrivate(name)) {
 				continue;
@@ -229,32 +232,27 @@ public class DDLImpl implements DDL {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			String dataType = fields.get(FieldConstants.DATA_TYPE);
+			String dataType = ddmFormField.getDataType();
 
 			jsonObject.put("dataType", dataType);
 
-			boolean editable = GetterUtil.getBoolean(
-				fields.get(FieldConstants.EDITABLE), true);
+			boolean readOnly = ddmFormField.isReadOnly();
 
-			jsonObject.put("editable", editable);
+			jsonObject.put("editable", !readOnly);
 
-			String label = fields.get(FieldConstants.LABEL);
+			LocalizedValue label = ddmFormField.getLabel();
 
-			jsonObject.put("label", label);
+			jsonObject.put("label", label.getValue(locale));
 
 			jsonObject.put("name", name);
 
-			boolean required = GetterUtil.getBoolean(
-				fields.get(FieldConstants.REQUIRED));
+			boolean required = ddmFormField.isRequired();
 
 			jsonObject.put("required", required);
 
-			boolean sortable = GetterUtil.getBoolean(
-				fields.get(FieldConstants.SORTABLE), true);
+			jsonObject.put("sortable", true);
 
-			jsonObject.put("sortable", sortable);
-
-			String type = fields.get(FieldConstants.TYPE);
+			String type = ddmFormField.getType();
 
 			jsonObject.put("type", type);
 

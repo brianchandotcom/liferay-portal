@@ -16,16 +16,17 @@ package com.liferay.portlet.asset.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.NoSuchClassTypeFieldException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Adolfo Pérez
@@ -90,15 +91,15 @@ public class DDMStructureClassType implements ClassType {
 
 		List<ClassTypeField> classTypeFields = new ArrayList<ClassTypeField>();
 
-		Map<String, Map<String, String>> fieldsMap = ddmStructure.getFieldsMap(
-			_languageId);
+		List<DDMFormField> ddmFormFields = ddmStructure.getDDMFormFields(false);
 
-		for (Map<String, String> fieldMap : fieldsMap.values()) {
-			String indexType = fieldMap.get("indexType");
-			boolean privateField = GetterUtil.getBoolean(
-				fieldMap.get("private"));
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			String indexType = ddmFormField.getIndexType();
+			String name = ddmFormField.getName();
 
-			String type = fieldMap.get("type");
+			boolean privateField = ddmStructure.isFieldPrivate(name);
+
+			String type = ddmFormField.getType();
 
 			if (Validator.isNull(indexType) || privateField ||
 				!ArrayUtil.contains(_SELECTABLE_DDM_STRUCTURE_FIELDS, type)) {
@@ -106,12 +107,12 @@ public class DDMStructureClassType implements ClassType {
 				continue;
 			}
 
-			String label = fieldMap.get("label");
-			String name = fieldMap.get("name");
+			LocalizedValue label = ddmFormField.getLabel();
 
 			classTypeFields.add(
 				new ClassTypeField(
-					label, name, type, ddmStructure.getStructureId()));
+					label.getValue(LocaleUtil.fromLanguageId(_languageId)),
+					name, type, ddmStructure.getStructureId()));
 		}
 
 		return classTypeFields;

@@ -158,12 +158,6 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 
 		ddmStructureImpl.setDDMForm(_ddmForm);
 
-		ddmStructureImpl.setLocalizedFieldsMap(_localizedFieldsMap);
-
-		ddmStructureImpl.setLocalizedPersistentFieldsMap(_localizedPersistentFieldsMap);
-
-		ddmStructureImpl.setLocalizedTransientFieldsMap(_localizedTransientFieldsMap);
-
 		return ddmStructureImpl;
 	}
 
@@ -188,9 +182,6 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		type = objectInput.readInt();
 
 		_ddmForm = (com.liferay.portlet.dynamicdatamapping.model.DDMForm)objectInput.readObject();
-		_localizedFieldsMap = (java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>>)objectInput.readObject();
-		_localizedPersistentFieldsMap = (java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>>)objectInput.readObject();
-		_localizedTransientFieldsMap = (java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>>)objectInput.readObject();
 	}
 
 	@Override
@@ -258,9 +249,6 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		objectOutput.writeInt(type);
 
 		objectOutput.writeObject(_ddmForm);
-		objectOutput.writeObject(_localizedFieldsMap);
-		objectOutput.writeObject(_localizedPersistentFieldsMap);
-		objectOutput.writeObject(_localizedTransientFieldsMap);
 	}
 
 	public String uuid;
@@ -280,7 +268,4 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	public String storageType;
 	public int type;
 	public com.liferay.portlet.dynamicdatamapping.model.DDMForm _ddmForm;
-	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> _localizedFieldsMap;
-	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> _localizedPersistentFieldsMap;
-	public java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> _localizedTransientFieldsMap;
 }

@@ -61,7 +61,6 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServi
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
@@ -257,13 +256,13 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 	protected boolean hasFileUploadFields(DDMStructure ddmStructure)
 		throws Exception {
 
-		Map<String, Map<String, String>> fieldsMap =
-			ddmStructure.getFieldsMap();
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmStructure.getFullHierarchyDDMFormFieldsMap(true);
 
-		for (Map<String, String> field : fieldsMap.values()) {
-			String dataType = field.get(FieldConstants.DATA_TYPE);
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			String dataType = ddmFormField.getDataType();
 
-			if (dataType.equals("file-upload")) {
+			if (Validator.equals(dataType, "file-upload")) {
 				return true;
 			}
 		}

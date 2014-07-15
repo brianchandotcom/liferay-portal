@@ -23,7 +23,7 @@ public class MockDDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 
 	@Override
 	public DDMForm deserialize(String serializedDDMForm) {
-		return null;
+		return new DDMForm();
 	}
 
 }

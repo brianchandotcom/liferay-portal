@@ -5454,6 +5454,10 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException {
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+			if (isPrivateDDMFormField(ddmFormField)) {
+				continue;
+			}
+
 			checkStructureField(ddmFormField, contentDocument.getRootElement());
 		}
 	}
@@ -6241,6 +6245,16 @@ public class JournalArticleLocalServiceImpl
 		catch (NoSuchArticleException nsae) {
 			return true;
 		}
+	}
+
+	protected boolean isPrivateDDMFormField(DDMFormField ddmFormField) {
+		String name = ddmFormField.getName();
+
+		if (name.startsWith(StringPool.UNDERLINE)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void notifySubscribers(

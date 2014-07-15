@@ -137,8 +137,8 @@
 	<command name="ConfirmMemberInviteSiteByEmail" priority="5">
 		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
 
-		<var name="siteDescription" value="Social Office User Site Description" />
-		<var name="siteName" value="Social Office User Site Name" />
+		<var name="siteDescription" value="Social Office Site Description" />
+		<var name="siteName" value="Social Office Site Name" />
 		<var name="siteType" value="Open" />
 		<var name="userEmailAddress" property-value="email.address.2" />
 		<var name="userFirstName" value="Social01" />
@@ -179,7 +179,9 @@
 		</execute>
 
 		<execute macro="SOMembers#inviteMemberByEmail">
+			<var name="existingUser" value="true" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="SOMembers#confirmMemberInviteByEmail">
@@ -209,8 +211,8 @@
 	<command name="ConfirmMemberInviteSiteByEmailNonSOUser" priority="5">
 		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
 
-		<var name="siteDescription" value="Regular User Site Description" />
-		<var name="siteName" value="Regular User Site Name" />
+		<var name="siteDescription" value="Regular Site Description" />
+		<var name="siteName" value="Regular Site Name" />
 		<var name="siteType" value="Open" />
 		<var name="userEmailAddress" property-value="email.address.2" />
 		<var name="userFirstName" value="Social01" />
@@ -262,7 +264,9 @@
 		</execute>
 
 		<execute macro="SOMembers#inviteMemberByEmail">
+			<var name="existingUser" value="true" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="SOMembers#confirmMemberInviteByEmail">
@@ -306,8 +310,8 @@
 	<command name="ConfirmMemberInviteSiteByEmailNonUser" priority="5">
 		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain={line.separator}captcha.check.portal.create_account=false" />
 
-		<var name="siteDescription" value="Non User Site Description" />
-		<var name="siteName" value="Non User Site Name" />
+		<var name="siteDescription" value="New Site Description" />
+		<var name="siteName" value="New Site Name" />
 		<var name="siteType" value="Open" />
 		<var name="userEmailAddress" property-value="email.address.2" />
 		<var name="userFirstName" value="Social01" />

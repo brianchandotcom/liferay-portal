@@ -76,6 +76,21 @@ public class LayoutDisplayContext {
 		}
 	}
 
+	public List<LayoutDescription> getLayoutDescriptions() {
+		if (_layoutDescriptions != null) {
+			return _layoutDescriptions;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_layoutDescriptions = LayoutListUtil.getLayoutDescriptions(
+			getGroupId(), isPrivateLayout(), getRootNodeName(),
+			themeDisplay.getLocale());
+
+		return _layoutDescriptions;
+	}
+
 	public Group getGroup() {
 		if (_group != null) {
 			return _group;
@@ -118,21 +133,6 @@ public class LayoutDisplayContext {
 		}
 
 		return _groupTypeSettings;
-	}
-
-	public List<LayoutDescription> getLayoutDescriptions() {
-		if (_layoutDescriptions != null) {
-			return _layoutDescriptions;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_layoutDescriptions = LayoutListUtil.getLayoutDescriptions(
-			getGroupId(), isPrivateLayout(), getRootNodeName(),
-			themeDisplay.getLocale());
-
-		return _layoutDescriptions;
 	}
 
 	public Long getLayoutId() {

@@ -165,7 +165,7 @@
 
 	<command name="changePageTypeLayoutPG">
 		<var name="key_columnName" value="${columnName}" />
-		
+
 		<execute action="DockbarEditpanel#click" locator-key1="EDIT" value1="Edit" />
 		<execute action="DockbarEditpanel#click" locator-key1="DETAILS_LAYOUT_RADIO" />
 		<execute action="DockbarEditpanel#click" locator-key1="SAVE_BUTTON" value1="Save" />

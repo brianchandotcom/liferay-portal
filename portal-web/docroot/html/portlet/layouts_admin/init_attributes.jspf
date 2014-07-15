@@ -58,7 +58,7 @@ LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, private
 
 String pagesName = layoutDisplayContext.getPagesName();
 
-String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, locale);
+String rootNodeName = layoutDisplayContext.getRootNodeName();
 
 List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescriptions(groupId, privateLayout, rootNodeName, locale);
 

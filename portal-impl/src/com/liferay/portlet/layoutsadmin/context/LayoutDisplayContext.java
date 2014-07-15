@@ -187,6 +187,20 @@ public class LayoutDisplayContext {
 		return _pagesName;
 	}
 
+	public String getRootNodeName() {
+		if (_rootNodeName != null) {
+			return _rootNodeName;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_rootNodeName = getLiveGroup().getLayoutRootNodeName(
+			isPrivateLayout(), themeDisplay.getLocale());
+
+		return _rootNodeName;
+	}
+
 	public Group getSelGroup() {
 		if (_selGroup != null) {
 			return _selGroup;
@@ -354,6 +368,7 @@ public class LayoutDisplayContext {
 	private String _pagesName;
 	private boolean _privateLayout;
 	private HttpServletRequest _request;
+	private String _rootNodeName;
 	private Group _selGroup;
 	private Layout _selLayout;
 	private Long _selPlid;

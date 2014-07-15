@@ -60,27 +60,7 @@ String tabs1Names = layoutDisplayContext.getTabs1Names();
 
 LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, privateLayout);
 
-String pagesName = null;
-
-if (liveGroup.isLayoutPrototype() || liveGroup.isLayoutSetPrototype() || liveGroup.isUserGroup()) {
-	pagesName = "pages";
-}
-else if (privateLayout) {
-	if (liveGroup.isUser()) {
-		pagesName = "my-dashboard";
-	}
-	else {
-		pagesName = "private-pages";
-	}
-}
-else {
-	if (liveGroup.isUser()) {
-		pagesName = "my-profile";
-	}
-	else {
-		pagesName = "public-pages";
-	}
-}
+String pagesName = layoutDisplayContext.getPagesName();
 
 String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, locale);
 

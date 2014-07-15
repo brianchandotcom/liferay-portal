@@ -142,6 +142,37 @@ public class LayoutDisplayContext {
 		return _organization;
 	}
 
+	public String getPagesName() {
+		if (_pagesName != null) {
+			return _pagesName;
+		}
+
+		if (getLiveGroup().isLayoutPrototype() ||
+			getLiveGroup().isLayoutSetPrototype() ||
+			getLiveGroup().isUserGroup()) {
+
+			_pagesName = "pages";
+		}
+		else if (isPrivateLayout()) {
+			if (getLiveGroup().isUser()) {
+				_pagesName = "my-dashboard";
+			}
+			else {
+				_pagesName = "private-pages";
+			}
+		}
+		else {
+			if (getLiveGroup().isUser()) {
+				_pagesName = "my-profile";
+			}
+			else {
+				_pagesName = "public-pages";
+			}
+		}
+
+		return _pagesName;
+	}
+
 	public Group getSelGroup() {
 		if (_selGroup != null) {
 			return _selGroup;
@@ -305,6 +336,7 @@ public class LayoutDisplayContext {
 	private UnicodeProperties _groupTypeSettings;
 	private Group _liveGroup;
 	private Organization _organization;
+	private String _pagesName;
 	private boolean _privateLayout;
 	private HttpServletRequest _request;
 	private Group _selGroup;

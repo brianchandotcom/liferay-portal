@@ -173,6 +173,10 @@
 	right: 0;
 	top: 0;
 	z-index: 500;
+
+	.modal-content {
+		border-width: 0;
+	}
 }
 
 .lfr-has-device-preview {

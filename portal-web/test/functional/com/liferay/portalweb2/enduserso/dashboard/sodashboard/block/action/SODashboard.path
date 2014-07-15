@@ -364,6 +364,31 @@
 	<td>so/screenshots/announcements/announcements_entry_important.png</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SCREENSHOTS_ANNOUNCEMENTS_ENTRY_BOLD_PNG</td>
+	<td>so/screenshots/announcements/announcements_entry_bold.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_ANNOUNCEMENTS_ENTRY_ITALIC_PNG</td>
+	<td>so/screenshots/announcements/announcements_entry_italic.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_ANNOUNCEMENTS_ENTRY_STRIKE_THROUGH_PNG</td>
+	<td>so/screenshots/announcements/announcements_entry_strike_through.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_ANNOUNCEMENTS_ENTRY_UNDERLINE_PNG</td>
+	<td>so/screenshots/announcements/announcements_entry_underline.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

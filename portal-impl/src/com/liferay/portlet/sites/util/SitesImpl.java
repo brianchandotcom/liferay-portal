@@ -1876,6 +1876,15 @@ public class SitesImpl implements Sites {
 			layoutSetPrototypeUuid);
 
 		LayoutLocalServiceUtil.updatePriorities(groupId, privateLayout);
+
+		// Force propagation from site template to site. See LPS-48206.
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayout);
+
+		mergeLayoutSetPrototypeLayouts(group, layoutSet);
 	}
 
 	private static final String _TEMP_DIR =

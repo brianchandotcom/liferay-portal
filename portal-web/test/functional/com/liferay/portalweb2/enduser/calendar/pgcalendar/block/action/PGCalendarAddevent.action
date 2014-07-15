@@ -36,4 +36,10 @@
 			<execute function="AssertElementPresent#assertVisible" />
 		</case>
 	</command>
+
+	<command name="type">
+		<case locator-key1="CATEGORIZATION_TAG_FIELD">
+			<execute function="Type#typePause" />
+		</case>
+	</command>
 </definition>

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.Normalizer;
 
 import java.util.Arrays;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -110,10 +111,12 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 		friendlyURL = StringUtil.toLowerCase(friendlyURL);
 		friendlyURL = Normalizer.normalizeToAscii(friendlyURL);
-		friendlyURL = friendlyURL.replaceAll(
-			friendlyURLPattern.pattern(), StringPool.DASH);
-		friendlyURL = friendlyURL.replaceAll(
-			_friendlyURLHyphenPattern.pattern(), StringPool.DASH);
+
+		Matcher matcher1 = friendlyURLPattern.matcher(friendlyURL);
+		friendlyURL = matcher1.replaceAll(StringPool.DASH);
+
+		Matcher matcher2 = _friendlyURLHyphenPattern.matcher(friendlyURL);
+		friendlyURL = matcher2.replaceAll(StringPool.DASH);
 
 		return friendlyURL;
 	}

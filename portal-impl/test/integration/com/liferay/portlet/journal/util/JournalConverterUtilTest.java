@@ -64,6 +64,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -591,10 +593,12 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		String expectedFieldsDisplayFieldValue =
 			(String)expectedFieldsDisplayField.getValue();
 
-		String regex = DDMImpl.INSTANCE_SEPARATOR.concat("\\w{8}");
+		Pattern regex = Pattern.compile(
+			DDMImpl.INSTANCE_SEPARATOR.concat("\\w{8}"));
 
-		expectedFieldsDisplayFieldValue =
-			expectedFieldsDisplayFieldValue.replaceAll(regex, StringPool.BLANK);
+		Matcher matcher = regex.matcher(expectedFieldsDisplayFieldValue);
+
+		expectedFieldsDisplayFieldValue = matcher.replaceAll(StringPool.BLANK);
 
 		expectedFieldsDisplayField.setValue(expectedFieldsDisplayFieldValue);
 
@@ -604,8 +608,9 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		String actualFieldsDisplayFieldValue =
 			(String)actualFieldsDisplayField.getValue();
 
-		actualFieldsDisplayFieldValue =
-			actualFieldsDisplayFieldValue.replaceAll(regex, StringPool.BLANK);
+		matcher = regex.matcher(actualFieldsDisplayFieldValue);
+
+		actualFieldsDisplayFieldValue = matcher.replaceAll(StringPool.BLANK);
 
 		actualFieldsDisplayField.setValue(actualFieldsDisplayFieldValue);
 

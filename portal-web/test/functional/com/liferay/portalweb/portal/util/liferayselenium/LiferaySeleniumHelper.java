@@ -1072,15 +1072,22 @@ public class LiferaySeleniumHelper {
 
 		StringBundler sb = new StringBundler();
 
-		String titleAttibute = liferaySelenium.getAttribute(locator + "@title");
+		String titleAttribute = liferaySelenium.getAttribute(
+			locator + "@title");
 
-		int x = titleAttibute.indexOf(",");
+		int numberOfComma = titleAttribute.split(",").length;
+		int x = titleAttribute.indexOf(",");
+		int y = titleAttribute.length();
 
-		sb.append(titleAttibute.substring(x + 1));
+		if (numberOfComma > 1) {
+			y = titleAttribute.indexOf(",", titleAttribute.indexOf(",") + 1);
+		}
+
+		sb.append(titleAttribute.substring(x + 1, y));
 
 		sb.append(".setHTML(\"");
 		sb.append(HtmlUtil.escapeJS(value.replace("\\", "\\\\")));
-		sb.append("\");");
+		sb.append("\")");
 
 		liferaySelenium.runScript(sb.toString());
 	}

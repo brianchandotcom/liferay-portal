@@ -334,6 +334,16 @@
 		<execute action="PGDocumentsandmediaAddshortcut#selectFrameTop" value1="relative=top" />
 		<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator-key1="DOCUMENT_SELECT_BUTTON" value1="Select" />
 		<execute action="PGDocumentsandmediaAddshortcut#selectFrame" locator-key1="SELECT_FILE_IFRAME" />
+
+		<if>
+			<isset var="dmFolderName" />
+			<then>
+				<var name="key_dmFolderName" value="${dmFolderName}" />
+
+				<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator-key1="SELECT_FOLDER_TABLE_FOLDER" value1="${dmFolderName}" />
+			</then>
+		</if>
+
 		<execute action="PGDocumentsandmediaAddshortcut#assertTextEquals" locator-key1="SELECT_FILE_DOCUMENT" value1="${dmDocumentTitle} ${dmDocumentDescription}" />
 		<execute action="PGDocumentsandmediaAddshortcut#assertClick" locator-key1="SELECT_FILE_CHOOSE_BUTTON" value1="Choose" />
 		<execute action="PGDocumentsandmediaAddshortcut#selectFrameTop" value1="relative=top" />

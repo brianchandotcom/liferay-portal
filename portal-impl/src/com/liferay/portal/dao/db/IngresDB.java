@@ -84,7 +84,7 @@ public class IngresDB extends BaseDB {
 			if (TEMPLATE[i].equals("##") ||
 				TEMPLATE[i].equals("'01/01/1970'")) {
 
-				template = template.replaceAll(TEMPLATE[i], actual[i]);
+				template = StringUtil.replace(template, TEMPLATE[i], actual[i]);
 			}
 			else if (TEMPLATE[i].equals("COMMIT_TRANSACTION")) {
 				template = StringUtil.replace(

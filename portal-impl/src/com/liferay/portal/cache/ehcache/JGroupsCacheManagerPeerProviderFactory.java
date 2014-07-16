@@ -17,6 +17,7 @@ package com.liferay.portal.cache.ehcache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Properties;
@@ -56,8 +57,8 @@ public class JGroupsCacheManagerPeerProviderFactory
 		String channelProperties = properties.getProperty("channelProperties");
 
 		if (channelProperties != null) {
-			channelProperties = channelProperties.replaceAll(
-				StringPool.SPACE, StringPool.BLANK);
+			channelProperties = StringUtil.replace(
+				channelProperties, StringPool.SPACE, StringPool.BLANK);
 
 			if (Validator.isNull(channelProperties)) {
 				channelProperties = null;

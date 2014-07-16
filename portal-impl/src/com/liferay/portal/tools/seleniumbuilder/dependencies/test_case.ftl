@@ -34,6 +34,11 @@ import com.liferay.portalweb2.util.block.macro.UserMacro;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runners.MethodSorters;
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 	<#if extendedTestCase??>
 		extends ${extendedTestCase}TestCase {
@@ -171,8 +176,20 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 
 	<#list commandElements as commandElement>
 		<#assign commandName = commandElement.attributeValue("name")>
+		<#assign priority = commandElement.attributeValue("priority")>
 
-		public void test${commandName}() throws Exception {
+		<#if priority == "1">
+			<#assign priority = "5">
+		<#elseif priority == "2">
+			<#assign priority = "4">
+		<#elseif priority == "4">
+			<#assign priority = "2">
+		<#elseif priority == "5">
+			<#assign priority = "1">
+		</#if>
+
+		@Test
+		public void test${priority}${commandName}() throws Exception {
 			boolean testPassed = false;
 			boolean testSkipped = false;
 

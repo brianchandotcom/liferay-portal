@@ -515,7 +515,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 				 *
 				 * @param uuid the UUID of the ${entity.humanNames}
 				 * @param companyId the primary key of the company
-				 * @return all the matching ${entity.humanNames}, or an empty list if no matches were found
+				 * @return the matching ${entity.humanNames}, or an empty list if no matches were found
 				 */
 				@Override
 				public List<${entity.name}> get${entity.names}ByUuidAndCompanyId(String uuid, long companyId) {
@@ -530,7 +530,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 				 * @param start the lower bound of the range of ${entity.humanNames}
 				 * @param end the upper bound of the range of ${entity.humanNames} (not inclusive)
 				 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-				 * @return all the matching ${entity.humanNames}, or an empty list if no matches were found
+				 * @return the range of matching ${entity.humanNames}, or an empty list if no matches were found
 				 */
 				@Override
 				public List<${entity.name}> get${entity.names}ByUuidAndCompanyId(String uuid, long companyId, int start, int end, OrderByComparator<${entity.name}> orderByComparator) {

@@ -52,9 +52,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class LayoutDisplayContext {
+public class LayoutsAdminDisplayContext {
 
-	public LayoutDisplayContext(
+	public LayoutsAdminDisplayContext(
 			HttpServletRequest request,
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {

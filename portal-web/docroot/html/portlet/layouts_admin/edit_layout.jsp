@@ -21,11 +21,11 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
 
-Group group = layoutDisplayContext.getGroup();
+Group group = layoutsAdminDisplayContext.getGroup();
 
-Layout selLayout = layoutDisplayContext.getSelLayout();
+Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-PortletURL redirectURL = layoutDisplayContext.getRedirectURL();
+PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 
 long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);
 
@@ -131,14 +131,14 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 <aui:form action='<%= HttpUtil.addParameter(editLayoutURL, "refererPlid", plid) %>' cssClass="edit-layout-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayout();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value='<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", layoutDisplayContext.getSelPlid()) %>' />
+	<aui:input name="redirect" type="hidden" value='<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", layoutsAdminDisplayContext.getSelPlid()) %>' />
 	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= selGroup.getGroupId() %>" />
-	<aui:input name="liveGroupId" type="hidden" value="<%= layoutDisplayContext.getLiveGroupId() %>" />
-	<aui:input name="stagingGroupId" type="hidden" value="<%= layoutDisplayContext.getStagingGroupId() %>" />
-	<aui:input name="selPlid" type="hidden" value="<%= layoutDisplayContext.getSelPlid() %>" />
-	<aui:input name="privateLayout" type="hidden" value="<%= layoutDisplayContext.isPrivateLayout() %>" />
-	<aui:input name="layoutId" type="hidden" value="<%= layoutDisplayContext.getLayoutId() %>" />
+	<aui:input name="liveGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getLiveGroupId() %>" />
+	<aui:input name="stagingGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getStagingGroupId() %>" />
+	<aui:input name="selPlid" type="hidden" value="<%= layoutsAdminDisplayContext.getSelPlid() %>" />
+	<aui:input name="privateLayout" type="hidden" value="<%= layoutsAdminDisplayContext.isPrivateLayout() %>" />
+	<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
 	<c:if test="<%= layoutRevision != null && !incomplete %>">
@@ -198,7 +198,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 					</c:when>
 				</c:choose>
 
-				<c:if test="<%= (selLayout.getGroupId() != layoutDisplayContext.getGroupId()) && (selLayoutGroup.isUserGroup()) %>">
+				<c:if test="<%= (selLayout.getGroupId() != layoutsAdminDisplayContext.getGroupId()) && (selLayoutGroup.isUserGroup()) %>">
 
 					<%
 					UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(selLayoutGroup.getClassPK());
@@ -324,7 +324,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 					categorySections="<%= categorySections %>"
 					displayStyle="<%= displayStyle %>"
 					jspPath="/html/portlet/layouts_admin/layout/"
-					showButtons="<%= (selLayout.getGroupId() == layoutDisplayContext.getGroupId()) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>"
+					showButtons="<%= (selLayout.getGroupId() == layoutsAdminDisplayContext.getGroupId()) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>"
 				/>
 			</c:if>
 		</c:otherwise>

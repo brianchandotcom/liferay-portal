@@ -17,10 +17,10 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-long groupId = layoutDisplayContext.getGroupId();
-long liveGroupId = layoutDisplayContext.getLiveGroupId();
-boolean privateLayout = layoutDisplayContext.isPrivateLayout();
-LayoutSet layoutSet = layoutDisplayContext.getSelLayoutSet();
+long groupId = layoutsAdminDisplayContext.getGroupId();
+long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
+boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
+LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 Theme selTheme = layoutSet.getTheme();
 ColorScheme selColorScheme = layoutSet.getColorScheme();

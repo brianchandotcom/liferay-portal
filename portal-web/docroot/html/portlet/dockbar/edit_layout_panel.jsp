@@ -19,8 +19,8 @@
 <%
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
-long liveGroupId = layoutDisplayContext.getLiveGroupId();
-long selPlid = layoutDisplayContext.getSelPlid();
+long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
+long selPlid = layoutsAdminDisplayContext.getSelPlid();
 %>
 
 <div id="<portlet:namespace />editLayoutContainer">

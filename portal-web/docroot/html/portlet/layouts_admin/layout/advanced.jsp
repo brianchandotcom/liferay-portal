@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-Layout selLayout = layoutDisplayContext.getSelLayout();
+Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 %>
@@ -31,7 +31,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 <liferay-ui:error exception="<%= ImageTypeException.class %>" message="please-enter-a-file-with-a-valid-file-type" />
 
 <aui:fieldset cssClass="lfr-portrait-editor">
-	<c:if test="<%= !layoutDisplayContext.getGroup().isLayoutPrototype() %>">
+	<c:if test="<%= !layoutsAdminDisplayContext.getGroup().isLayoutPrototype() %>">
 
 		<%
 		String queryString = GetterUtil.getString(layoutTypeSettings.getProperty("query-string"));

@@ -15,56 +15,56 @@
 --%>
 
 <%
-String tabs1 = layoutDisplayContext.getTabs1();
+String tabs1 = layoutsAdminDisplayContext.getTabs1();
 
-String redirect = layoutDisplayContext.getRedirect();
+String redirect = layoutsAdminDisplayContext.getRedirect();
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
-String backURL = layoutDisplayContext.getBackURL();
+String backURL = layoutsAdminDisplayContext.getBackURL();
 
 if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) || portletName.equals(PortletKeys.MY_ACCOUNT)) {
 	portletDisplay.setURLBack(backURL);
 }
 
-Group selGroup = layoutDisplayContext.getSelGroup();
+Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 
-Group liveGroup = layoutDisplayContext.getLiveGroup();
-Group stagingGroup = layoutDisplayContext.getStagingGroup();
-Group group = layoutDisplayContext.getGroup();
+Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
+Group stagingGroup = layoutsAdminDisplayContext.getStagingGroup();
+Group group = layoutsAdminDisplayContext.getGroup();
 
-long groupId = layoutDisplayContext.getGroupId();
+long groupId = layoutsAdminDisplayContext.getGroupId();
 
-long liveGroupId = layoutDisplayContext.getLiveGroupId();
+long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
 
-long stagingGroupId = layoutDisplayContext.getStagingGroupId();
+long stagingGroupId = layoutsAdminDisplayContext.getStagingGroupId();
 
-long selPlid = layoutDisplayContext.getSelPlid();
+long selPlid = layoutsAdminDisplayContext.getSelPlid();
 
-boolean privateLayout = layoutDisplayContext.isPrivateLayout();
-long layoutId = layoutDisplayContext.getLayoutId();
+boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
+long layoutId = layoutsAdminDisplayContext.getLayoutId();
 
-UnicodeProperties groupTypeSettings = layoutDisplayContext.getGroupTypeSettings();
+UnicodeProperties groupTypeSettings = layoutsAdminDisplayContext.getGroupTypeSettings();
 
 UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 
-Layout selLayout = layoutDisplayContext.getSelLayout();
+Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-Organization organization = layoutDisplayContext.getOrganization();
-User selUser = layoutDisplayContext.getSelUser();
-UserGroup userGroup = layoutDisplayContext.getUserGroup();
+Organization organization = layoutsAdminDisplayContext.getOrganization();
+User selUser = layoutsAdminDisplayContext.getSelUser();
+UserGroup userGroup = layoutsAdminDisplayContext.getUserGroup();
 
-String tabs1Names = layoutDisplayContext.getTabs1Names();
+String tabs1Names = layoutsAdminDisplayContext.getTabs1Names();
 
-LayoutSet selLayoutSet = layoutDisplayContext.getSelLayoutSet();
+LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
-String pagesName = layoutDisplayContext.getPagesName();
+String pagesName = layoutsAdminDisplayContext.getPagesName();
 
-String rootNodeName = layoutDisplayContext.getRootNodeName();
+String rootNodeName = layoutsAdminDisplayContext.getRootNodeName();
 
-List<LayoutDescription> layoutDescriptions = layoutDisplayContext.getLayoutDescriptions();
+List<LayoutDescription> layoutDescriptions = layoutsAdminDisplayContext.getLayoutDescriptions();
 
 request.setAttribute(WebKeys.LAYOUT_DESCRIPTIONS, layoutDescriptions);
 
-PortletURL redirectURL = layoutDisplayContext.getRedirectURL();
+PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 %>
 
 <%

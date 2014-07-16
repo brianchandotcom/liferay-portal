@@ -101,7 +101,7 @@ public class ShardImpl implements Shard {
 			return null;
 		}
 
-		String currentShardName = getCurrentShardName();
+		String currentShardName = _shardAdvice.getShardName();
 
 		ShardDataSourceTargetSource shardDataSourceTargetSource =
 			_shardAdvice.getShardDataSourceTargetSource();

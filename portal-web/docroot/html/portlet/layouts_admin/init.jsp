@@ -61,7 +61,7 @@ page import="com.liferay.portal.theme.NavItem" %><%@
 page import="com.liferay.portlet.backgroundtask.util.comparator.BackgroundTaskComparatorFactoryUtil" %><%@
 page import="com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException" %><%@
-page import="com.liferay.portlet.layoutsadmin.context.LayoutDisplayContext" %><%@
+page import="com.liferay.portlet.layoutsadmin.context.LayoutsAdminDisplayContext" %><%@
 page import="com.liferay.portlet.mobiledevicerules.model.MDRAction" %><%@
 page import="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup" %><%@
 page import="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance" %><%@
@@ -77,7 +77,7 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
-LayoutDisplayContext layoutDisplayContext = new LayoutDisplayContext(request, liferayPortletResponse);
+LayoutsAdminDisplayContext layoutsAdminDisplayContext = new LayoutsAdminDisplayContext(request, liferayPortletResponse);
 %>
 
 <%@ include file="/html/portlet/layouts_admin/init-ext.jsp" %>

@@ -17,12 +17,12 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-Layout selLayout = layoutDisplayContext.getSelLayout();
+Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 boolean viewTree = ParamUtil.getBoolean(request, "viewTree");
 boolean viewLayout = ParamUtil.getBoolean(request, "viewLayout");
 
-SitesUtil.addPortletBreadcrumbEntries(layoutDisplayContext.getGroup(), layoutDisplayContext.getPagesName(), layoutDisplayContext.getRedirectURL(), request, renderResponse);
+SitesUtil.addPortletBreadcrumbEntries(layoutsAdminDisplayContext.getGroup(), layoutsAdminDisplayContext.getPagesName(), layoutsAdminDisplayContext.getRedirectURL(), request, renderResponse);
 %>
 
 <c:if test="<%= viewTree %>">
@@ -43,7 +43,7 @@ SitesUtil.addPortletBreadcrumbEntries(layoutDisplayContext.getGroup(), layoutDis
 					</c:if>
 				</liferay-util:include>
 			</c:when>
-			<c:when test="<%= (layoutDisplayContext.getLiveGroupId() > 0) && GroupPermissionUtil.contains(permissionChecker, layoutDisplayContext.getLiveGroupId(), ActionKeys.VIEW) %>">
+			<c:when test="<%= (layoutsAdminDisplayContext.getLiveGroupId() > 0) && GroupPermissionUtil.contains(permissionChecker, layoutsAdminDisplayContext.getLiveGroupId(), ActionKeys.VIEW) %>">
 				<liferay-util:include page="/html/portlet/layouts_admin/edit_layout_set.jsp" />
 			</c:when>
 		</c:choose>

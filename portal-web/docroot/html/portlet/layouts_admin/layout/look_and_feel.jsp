@@ -17,15 +17,15 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-Group group = layoutDisplayContext.getGroup();
-long groupId = layoutDisplayContext.getGroupId();
-long liveGroupId = layoutDisplayContext.getLiveGroupId();
-boolean privateLayout = layoutDisplayContext.isPrivateLayout();
-Layout selLayout = layoutDisplayContext.getSelLayout();
+Group group = layoutsAdminDisplayContext.getGroup();
+long groupId = layoutsAdminDisplayContext.getGroupId();
+long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
+boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
+Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-String rootNodeName = layoutDisplayContext.getRootNodeName();
+String rootNodeName = layoutsAdminDisplayContext.getRootNodeName();
 
-PortletURL redirectURL = layoutDisplayContext.getRedirectURL();
+PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 
 Theme selTheme = null;
 ColorScheme selColorScheme = null;

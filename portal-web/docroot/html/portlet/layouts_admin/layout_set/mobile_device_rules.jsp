@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-LayoutSet selLayoutSet = layoutDisplayContext.getSelLayoutSet();
+LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 long groupId = selLayoutSet.getGroupId();
 String className = LayoutSet.class.getName();

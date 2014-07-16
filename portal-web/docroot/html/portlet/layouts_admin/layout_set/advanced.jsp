@@ -19,7 +19,7 @@
 <%
 Group guestGroup = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupConstants.GUEST);
 
-boolean mergeGuestPublicPages = PropertiesParamUtil.getBoolean(layoutDisplayContext.getGroupTypeSettings(), request, "mergeGuestPublicPages");
+boolean mergeGuestPublicPages = PropertiesParamUtil.getBoolean(layoutsAdminDisplayContext.getGroupTypeSettings(), request, "mergeGuestPublicPages");
 %>
 
 <liferay-ui:error-marker key="errorSection" value="advanced" />
@@ -28,7 +28,7 @@ boolean mergeGuestPublicPages = PropertiesParamUtil.getBoolean(layoutDisplayCont
 
 <aui:fieldset>
 	<c:choose>
-		<c:when test="<%= !layoutDisplayContext.isPrivateLayout() && (layoutDisplayContext.getLiveGroupId() != guestGroup.getGroupId()) %>">
+		<c:when test="<%= !layoutsAdminDisplayContext.isPrivateLayout() && (layoutsAdminDisplayContext.getLiveGroupId() != guestGroup.getGroupId()) %>">
 
 			<%
 			String taglibLabel = LanguageUtil.format(request, "merge-x-public-pages", HtmlUtil.escape(guestGroup.getDescriptiveName(locale)), false);

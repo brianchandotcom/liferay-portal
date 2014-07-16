@@ -17,8 +17,8 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-Group liveGroup = layoutDisplayContext.getLiveGroup();
-LayoutSet selLayoutSet = layoutDisplayContext.getSelLayoutSet();
+Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
+LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 %>
 
 <liferay-ui:error-marker key="errorSection" value="logo" />
@@ -39,7 +39,7 @@ LayoutSet selLayoutSet = layoutDisplayContext.getSelLayoutSet();
 		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 	</liferay-ui:error>
 
-	<p><%= LanguageUtil.get(request, "upload-a-logo-for-the-" + (layoutDisplayContext.isPrivateLayout() ? "private" : "public") + "-pages-that-will-be-used-instead-of-the-default-enterprise-logo") %></p>
+	<p><%= LanguageUtil.get(request, "upload-a-logo-for-the-" + (layoutsAdminDisplayContext.isPrivateLayout() ? "private" : "public") + "-pages-that-will-be-used-instead-of-the-default-enterprise-logo") %></p>
 
 	<c:if test="<%= liveGroup.isLayoutSetPrototype() %>">
 		<div class="alert alert-block">

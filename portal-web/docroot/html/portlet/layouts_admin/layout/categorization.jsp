@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-Layout selLayout = layoutDisplayContext.getSelLayout();
+Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 %>
 
 <liferay-ui:error-marker key="errorSection" value="categorization" />

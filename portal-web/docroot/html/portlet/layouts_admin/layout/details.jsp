@@ -17,8 +17,8 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-Group group = layoutDisplayContext.getGroup();
-Layout selLayout = layoutDisplayContext.getSelLayout();
+Group group = layoutsAdminDisplayContext.getGroup();
+Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 LayoutTypePortletImpl selLayoutTypePortlet = new LayoutTypePortletImpl(selLayout);
 
@@ -46,7 +46,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	String virtualHostname = layoutSet.getVirtualHostname();
 
 	if (Validator.isNull(virtualHostname) || (friendlyURLBase.indexOf(virtualHostname) == -1)) {
-		friendlyURLBase.append(group.getPathFriendlyURL(layoutDisplayContext.isPrivateLayout(), themeDisplay));
+		friendlyURLBase.append(group.getPathFriendlyURL(layoutsAdminDisplayContext.isPrivateLayout(), themeDisplay));
 		friendlyURLBase.append(group.getFriendlyURL());
 	}
 	%>

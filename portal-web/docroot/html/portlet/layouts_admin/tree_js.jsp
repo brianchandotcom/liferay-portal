@@ -31,15 +31,15 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 PortletURL editLayoutURL = liferayPortletResponse.createRenderURL();
 
 editLayoutURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
-editLayoutURL.setParameter("tabs1", layoutDisplayContext.getTabs1());
-editLayoutURL.setParameter("redirect", layoutDisplayContext.getRedirect());
+editLayoutURL.setParameter("tabs1", layoutsAdminDisplayContext.getTabs1());
+editLayoutURL.setParameter("redirect", layoutsAdminDisplayContext.getRedirect());
 editLayoutURL.setParameter("closeRedirect", closeRedirect);
 
 if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) || portletName.equals(PortletKeys.MY_ACCOUNT) || portletName.equals(PortletKeys.USERS_ADMIN)) {
-	editLayoutURL.setParameter("backURL", layoutDisplayContext.getBackURL());
+	editLayoutURL.setParameter("backURL", layoutsAdminDisplayContext.getBackURL());
 }
 
-editLayoutURL.setParameter("groupId", String.valueOf(layoutDisplayContext.getLiveGroupId()));
+editLayoutURL.setParameter("groupId", String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()));
 editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 %>
 
@@ -48,12 +48,12 @@ editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 	defaultStateChecked="<%= defaultStateChecked %>"
 	draggableTree="<%= draggableTree %>"
 	expandFirstNode="<%= expandFirstNode %>"
-	groupId="<%= layoutDisplayContext.getGroupId() %>"
+	groupId="<%= layoutsAdminDisplayContext.getGroupId() %>"
 	portletURL="<%= editLayoutURL %>"
-	privateLayout="<%= layoutDisplayContext.isPrivateLayout() %>"
-	rootNodeName="<%= layoutDisplayContext.getRootNodeName() %>"
+	privateLayout="<%= layoutsAdminDisplayContext.isPrivateLayout() %>"
+	rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
 	saveState="<%= saveState %>"
-	selPlid="<%= layoutDisplayContext.getSelPlid() %>"
+	selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
 	selectableTree="<%= selectableTree %>"
 	selectedLayoutIds="<%= selectedLayoutIds %>"
 	treeId="<%= treeId %>"

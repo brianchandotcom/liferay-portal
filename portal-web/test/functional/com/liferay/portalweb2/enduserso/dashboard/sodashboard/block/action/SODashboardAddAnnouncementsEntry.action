@@ -3,5 +3,9 @@
 		<case locator-key1="CONTENT_FIELD">
 			<execute function="Type#typeFrame" />
 		</case>
+
+		<case locator-key1="CONTENT_FIELD_FORMATTED_TEXT">
+			<execute function="Type#sendKeys" />
+		</case>
 	</command>
 </definition>

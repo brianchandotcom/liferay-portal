@@ -13,7 +13,21 @@
 		</if>
 
 		<execute action="SODashboardAddAnnouncementsEntry#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
-		<execute action="SODashboardAddAnnouncementsEntry#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+
+		<if>
+			<isset var="textFormat" />
+			<then>
+				<var name="key_textFormat" value="${textFormat}" />
+
+				<execute action="SODashboardAddAnnouncementsEntry#click" locator-key1="TEXT_FORMAT_BUTTON" />
+				<execute action="SODashboardAddAnnouncementsEntry#selectFrame" locator-key1="CONTENT_FIELD" />
+				<execute action="SODashboardAddAnnouncementsEntry#type" locator-key1="CONTENT_FIELD_FORMATTED_TEXT" value1="${entryContent}" />
+			</then>
+			<else>
+				<execute action="SODashboardAddAnnouncementsEntry#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+			</else>
+		</if>
+
 		<execute action="SODashboardAddAnnouncementsEntry#selectFrameTop" />
 		<execute action="SODashboardAddAnnouncementsEntry#selectFrame" locator-key1="ADD_ENTRY_IFRAME" />
 

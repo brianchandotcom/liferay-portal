@@ -254,6 +254,7 @@
 
 		<execute action="SOMembersInvite#assertClick" locator-key1="SEND_INVITATIONS_BUTTON" value1="Send Invitations"  />
 		<execute action="SOMembersInvite#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully."  />
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="FIND_MEMBERS_USER_PENDING" value1="${userName}" />
 	</command>
 
 	<command name="inviteMemberByEmail">
@@ -274,7 +275,15 @@
 
 		<execute action="SOMembersInvite#assertClick" locator-key1="SEND_INVITATIONS_BUTTON" value1="Send Invitations"  />
 		<execute action="SOMembersInvite#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully."  />
-		<execute action="SOMembersInvite#assertTextEquals" locator-key1="FIND_MEMBERS_USER_PENDING" value1="${userName}" />
+
+		<if>
+			<equals arg1="${existingUser}" arg2="true" />
+			<then>
+				<var name="key_userName" value="${userName}" />
+
+				<execute action="SOMembersInvite#assertTextEquals" locator-key1="FIND_MEMBERS_USER_PENDING" value1="${userName}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="requestToConnect">

@@ -49,8 +49,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEXT_FORMAT_BUTTON</td>
+	<td>//a[@title='${key_textFormat}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_FIELD</td>
 	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_FORMATTED_TEXT</td>
+	<td>//body[contains(@class,'so-announcements-portlet')]</td>
 	<td></td>
 </tr>
 <tr>

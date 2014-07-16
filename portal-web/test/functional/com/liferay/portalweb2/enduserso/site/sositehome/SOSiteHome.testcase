@@ -255,11 +255,9 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-10032" name="AddSOAnnouncementsEntryHTML" priority="5">
-		<var name="entryContentSource"><![CDATA[&ltem&gtAnnouncements Entry Content&lt&#47em&gt]]></var>
-		<var name="entryContentText" value="Announcements Entry Content" />
-		<var name="entryTitleSource"><![CDATA[<strong>Announcements Entry Title</strong>]]></var>
-		<var name="entryTitleText" value="Announcements Entry Title" />
+	<command name="AddSOAnnouncementsEntryBoldText" priority="5">
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.liferay.com" />
 
 		<execute macro="SOUserBar#addSOSite">
@@ -274,10 +272,11 @@
 		</execute>
 
 		<execute macro="SOAnnouncementsEntry#addPG">
-			<var name="distributionScope" value="General" />
-			<var name="entryContent" value="${entryContentSource}" />
-			<var name="entryTitle" value="${entryTitleSource}" />
+			<var name="distributionScope" value="${siteName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
+			<var name="textFormat" value="Bold" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -285,11 +284,13 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute action="SODashboard#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_ANNOUNCEMENTS_ENTRY_BOLD_PNG" />
+
 		<execute macro="SOAnnouncementsEntry#viewPG">
-			<var name="distributionScope" value="General" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryAuthor" value="${adminName}" />
-			<var name="entryContent" value="${entryContentText}" />
-			<var name="entryTitle" value="${entryTitleText}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 	</command>
@@ -330,6 +331,46 @@
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
 			<var name="priority" value="Important" />
+		</execute>
+	</command>
+
+	<command name="AddSOAnnouncementsEntryItalicText" priority="5">
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryURL" value="http://www.liferay.com" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${siteName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+			<var name="textFormat" value="Italic" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SODashboard#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_ANNOUNCEMENTS_ENTRY_ITALIC_PNG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${siteName}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
 		</execute>
 	</command>
 
@@ -727,6 +768,86 @@
 		<execute macro="SOAnnouncementsEntry#viewPG">
 			<var name="distributionScope" value="Open Site Name" />
 			<var name="entryAuthor" value="${userName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+	</command>
+
+	<command name="AddSOAnnouncementsEntryStrikeThroughText" priority="5">
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryURL" value="http://www.liferay.com" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${siteName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+			<var name="textFormat" value="Strike Through" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SODashboard#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_ANNOUNCEMENTS_ENTRY_STRIKE_THROUGH_PNG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${siteName}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+	</command>
+
+	<command name="AddSOAnnouncementsEntryUnderlineText" priority="5">
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryURL" value="http://www.liferay.com" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${siteName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+			<var name="textFormat" value="Underline" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SODashboard#sikuliAssertElementPresent" locator-key1="SCREENSHOTS_ANNOUNCEMENTS_ENTRY_UNDERLINE_PNG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${siteName}" />
+			<var name="entryAuthor" value="${adminName}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />

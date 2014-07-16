@@ -294,7 +294,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 			 * Returns the ${entity.humanName} with the matching UUID and company.
 			 *
 			 * @param uuid the ${entity.humanName}'s UUID
-			 * @param  companyId the primary key of the company
+			 * @param companyId the primary key of the company
 			 * @return the matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName} could not be found
 			<#list serviceBaseExceptions as exception>
 			 * @throws ${exception}
@@ -541,7 +541,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 				 * Returns the ${entity.humanName} with the matching UUID and company.
 				 *
 				 * @param uuid the ${entity.humanName}'s UUID
-				 * @param  companyId the primary key of the company
+				 * @param companyId the primary key of the company
 				 * @return the matching ${entity.humanName}
 				<#list serviceBaseExceptions as exception>
 				<#if exception == "PortalException">

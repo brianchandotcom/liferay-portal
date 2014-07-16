@@ -99,10 +99,11 @@ public class LayoutStagingBackgroundTaskExecutor
 		catch (Throwable t) {
 			Group sourceGroup = GroupLocalServiceUtil.getGroup(sourceGroupId);
 
-			ServiceContext serviceContext = (ServiceContext)taskContextMap.get(
-				"serviceContext");
-
 			if (sourceGroup.hasStagingGroup()) {
+				ServiceContext serviceContext = new ServiceContext();
+
+				serviceContext.setUserId(userId);
+
 				StagingLocalServiceUtil.disableStaging(
 					sourceGroup, serviceContext);
 			}

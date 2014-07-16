@@ -1496,6 +1496,20 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							"line break: " + fileName + " " + lineCount);
 					}
 				}
+				else if (trimmedLine.endsWith(StringPool.COMMA) &&
+						 !trimmedLine.startsWith("for (")) {
+
+					int closeParenthesisCount = StringUtil.count(
+						strippedQuotesLine, StringPool.CLOSE_PARENTHESIS);
+					int openParenthesisCount = StringUtil.count(
+						strippedQuotesLine, StringPool.OPEN_PARENTHESIS);
+
+					if (closeParenthesisCount < openParenthesisCount) {
+						processErrorMessage(
+							fileName,
+							"line break: " + fileName + " " + lineCount);
+					}
+				}
 
 				if (line.contains(StringPool.COMMA) &&
 					!line.contains(StringPool.CLOSE_PARENTHESIS) &&

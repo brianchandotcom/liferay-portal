@@ -348,8 +348,8 @@ public class WabProcessor {
 		Properties pluginPackageProperties = getPluginPackageProperties();
 
 		String[] portalDependencyJars = StringUtil.split(
-			pluginPackageProperties.getProperty("portal-dependency-jars",
-			StringPool.BLANK));
+			pluginPackageProperties.getProperty(
+				"portal-dependency-jars", StringPool.BLANK));
 
 		processFiles(
 			_pluginDir, _pluginDir.toURI(), classPath, portalDependencyJars);

@@ -1760,8 +1760,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			GetterUtil.getBoolean(
 				portletElement.elementText("active"), portletModel.isActive()));
 		portletModel.setInclude(
-			GetterUtil.getBoolean(portletElement.elementText("include"),
-			portletModel.isInclude()));
+			GetterUtil.getBoolean(
+				portletElement.elementText("include"),
+				portletModel.isInclude()));
 
 		if (Validator.isNull(servletContextName)) {
 			portletModel.setReady(true);

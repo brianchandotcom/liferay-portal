@@ -1728,8 +1728,8 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 				WeekDay weekDay = dayListItr.next();
 
 				DayAndPosition[] dayPos = {
-					new DayAndPosition(toCalendarWeekDay(weekDay),
-					weekDay.getOffset())
+					new DayAndPosition(
+						toCalendarWeekDay(weekDay), weekDay.getOffset())
 				};
 
 				recurrence.setByDay(dayPos);

@@ -14,63 +14,21 @@
 
 package com.liferay.portlet.dynamicdatamapping.util.comparator;
 
-import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 /**
  * @author Eduardo Garcia
  */
 public class StructureModifiedDateComparator
-	extends OrderByComparator<DDMStructure> {
-
-	public static final String ORDER_BY_ASC = "DDMStructure.modifiedDate ASC";
-
-	public static final String ORDER_BY_DESC = "DDMStructure.modifiedDate DESC";
-
-	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
+	extends StagedModelModifiedDateComparator<DDMStructure> {
 
 	public StructureModifiedDateComparator() {
 		this(false);
 	}
 
 	public StructureModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		super(ascending);
 	}
-
-	@Override
-	public int compare(DDMStructure structure1, DDMStructure structure2) {
-		int value = DateUtil.compareTo(
-			structure1.getModifiedDate(), structure2.getModifiedDate());
-
-		if (_ascending) {
-			return value;
-		}
-		else {
-			return -value;
-		}
-	}
-
-	@Override
-	public String getOrderBy() {
-		if (_ascending) {
-			return ORDER_BY_ASC;
-		}
-		else {
-			return ORDER_BY_DESC;
-		}
-	}
-
-	@Override
-	public String[] getOrderByFields() {
-		return ORDER_BY_FIELDS;
-	}
-
-	@Override
-	public boolean isAscending() {
-		return _ascending;
-	}
-
-	private boolean _ascending;
 
 }

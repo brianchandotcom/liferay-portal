@@ -510,11 +510,28 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 
 		<#if entity.hasUuid() && entity.hasColumn("companyId")>
 			<#if entity.hasColumn("groupId") && (entity.name != "Group")>
+				/**
+				 * Returns all the ${entity.humanNames} that match the UUID and company.
+				 *
+				 * @param uuid the UUID of the ${entity.humanNames}
+				 * @param companyId the primary key of the company
+				 * @return all the matching ${entity.humanNames}, or an empty list if no matches were found
+				 */
 				@Override
 				public List<${entity.name}> get${entity.names}ByUuidAndCompanyId(String uuid, long companyId) {
 					return ${entity.varName}Persistence.findByUuid_C(uuid, companyId);
 				}
 
+				/**
+				 * Returns a range of ${entity.humanNames} that match the UUID and company.
+				 *
+				 * @param uuid the UUID of the ${entity.humanNames}
+				 * @param companyId the primary key of the company
+				 * @param start the lower bound of the range of ${entity.humanNames}
+				 * @param end the upper bound of the range of ${entity.humanNames} (not inclusive)
+				 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+				 * @return all the matching ${entity.humanNames}, or an empty list if no matches were found
+				 */
 				@Override
 				public List<${entity.name}> get${entity.names}ByUuidAndCompanyId(String uuid, long companyId, int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
 					return ${entity.varName}Persistence.findByUuid_C(uuid, companyId, start, end, orderByComparator);

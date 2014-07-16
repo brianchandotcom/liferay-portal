@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.DateRange;
@@ -97,6 +99,14 @@ public class LayoutStagingBackgroundTaskExecutor
 				_transactionAttribute, layoutStagingCallable);
 		}
 		catch (Throwable t) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(t, t);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to execute layout publication: " + t.getMessage());
+			}
+
 			Group sourceGroup = GroupLocalServiceUtil.getGroup(sourceGroupId);
 
 			if (sourceGroup.hasStagingGroup()) {
@@ -149,6 +159,9 @@ public class LayoutStagingBackgroundTaskExecutor
 			userId, sourceGroup, branchingPublic, branchingPrivate, false,
 			serviceContext);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		LayoutStagingBackgroundTaskExecutor.class);
 
 	private TransactionAttribute _transactionAttribute =
 		TransactionAttributeBuilder.build(

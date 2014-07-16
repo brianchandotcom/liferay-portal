@@ -14,18 +14,18 @@
 
 package com.liferay.portal.test;
 
-import com.liferay.portal.kernel.test.AbstractIntegrationJUnitTestRunner;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.log.CaptureAppender;
-import com.liferay.portal.test.jdbc.ResetDatabaseUtilDataSource;
 import com.liferay.portal.test.log.ConcurrentAssertUtil;
 import com.liferay.portal.test.log.ExpectedLogsUtil;
 import com.liferay.portal.test.log.LogAssertionUtil;
-import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.FrameworkMethod;
@@ -38,7 +38,7 @@ import org.junit.runners.model.Statement;
  * @author Shuyang Zhou
  */
 public class LiferayIntegrationJUnitTestRunner
-	extends AbstractIntegrationJUnitTestRunner {
+	extends CustomizableSpringContextJUnitTestRunner {
 
 	public LiferayIntegrationJUnitTestRunner(Class<?> clazz)
 		throws InitializationError {
@@ -47,12 +47,12 @@ public class LiferayIntegrationJUnitTestRunner
 	}
 
 	@Override
-	public void initApplicationContext() {
-		System.setProperty("catalina.base", ".");
+	public void afterApplicationContextInit() {
+	}
 
-		ResetDatabaseUtilDataSource.initialize();
-
-		InitUtil.initWithSpringAndModuleFramework();
+	@Override
+	public List<String> getExtraConfigLocations() {
+		return Collections.emptyList();
 	}
 
 	@Override

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.test;
 
+import com.liferay.portal.kernel.test.AbstractIntegrationJUnitTestRunner;
+import com.liferay.portal.test.jdbc.ResetDatabaseUtilDataSource;
 import com.liferay.portal.util.InitUtil;
 
 import java.util.List;
@@ -24,7 +26,7 @@ import org.junit.runners.model.InitializationError;
  * @author Miguel Pastor
  */
 public abstract class CustomizableSpringContextJUnitTestRunner
-	extends LiferayIntegrationJUnitTestRunner {
+	extends AbstractIntegrationJUnitTestRunner {
 
 	public CustomizableSpringContextJUnitTestRunner(Class<?> clazz)
 		throws InitializationError {
@@ -40,7 +42,11 @@ public abstract class CustomizableSpringContextJUnitTestRunner
 	public void initApplicationContext() {
 		System.setProperty("catalina.base", ".");
 
+		ResetDatabaseUtilDataSource.initialize();
+
 		InitUtil.initWithSpringAndModuleFramework(getExtraConfigLocations());
+
+		afterApplicationContextInit();
 	}
 
 }

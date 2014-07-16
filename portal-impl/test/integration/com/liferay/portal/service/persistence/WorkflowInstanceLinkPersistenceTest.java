@@ -24,7 +24,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.template.TemplateException;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -32,22 +33,25 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
-import com.liferay.portal.test.persistence.test.TransactionalPersistenceAdvice;
+import com.liferay.portal.test.TransactionalTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.RandomTestUtil;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -55,10 +59,22 @@ import java.util.Set;
 /**
  * @author Brian Wing Shun Chan
  */
-@ExecutionTestListeners(listeners =  {
-	PersistenceExecutionTestListener.class})
 @RunWith(LiferayPersistenceIntegrationJUnitTestRunner.class)
 public class WorkflowInstanceLinkPersistenceTest {
+	@BeforeClass
+	public static void setupClass() throws TemplateException {
+		TemplateManagerUtil.init();
+
+		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = false;
+	}
+
+	public static void tearDownClass() {
+		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = true;
+	}
+
+	@ClassRule
+	public static TransactionalTestRule transactionalTestRule = new TransactionalTestRule();
+
 	@Before
 	public void setUp() {
 		_modelListeners = _persistence.getListeners();
@@ -70,25 +86,13 @@ public class WorkflowInstanceLinkPersistenceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Map<Serializable, BasePersistence<?>> basePersistences = _transactionalPersistenceAdvice.getBasePersistences();
+		Iterator<WorkflowInstanceLink> iterator = _models.iterator();
 
-		Set<Serializable> primaryKeys = basePersistences.keySet();
+		while (iterator.hasNext()) {
+			_persistence.remove(iterator.next());
 
-		for (Serializable primaryKey : primaryKeys) {
-			BasePersistence<?> basePersistence = basePersistences.get(primaryKey);
-
-			try {
-				basePersistence.remove(primaryKey);
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("The model with primary key " + primaryKey +
-						" was already deleted");
-				}
-			}
+			iterator.remove();
 		}
-
-		_transactionalPersistenceAdvice.reset();
 
 		for (ModelListener<WorkflowInstanceLink> modelListener : _modelListeners) {
 			_persistence.registerListener(modelListener);
@@ -148,7 +152,7 @@ public class WorkflowInstanceLinkPersistenceTest {
 
 		newWorkflowInstanceLink.setWorkflowInstanceId(RandomTestUtil.nextLong());
 
-		_persistence.update(newWorkflowInstanceLink);
+		_models.add(_persistence.update(newWorkflowInstanceLink));
 
 		WorkflowInstanceLink existingWorkflowInstanceLink = _persistence.findByPrimaryKey(newWorkflowInstanceLink.getPrimaryKey());
 
@@ -460,13 +464,13 @@ public class WorkflowInstanceLinkPersistenceTest {
 
 		workflowInstanceLink.setWorkflowInstanceId(RandomTestUtil.nextLong());
 
-		_persistence.update(workflowInstanceLink);
+		_models.add(_persistence.update(workflowInstanceLink));
 
 		return workflowInstanceLink;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WorkflowInstanceLinkPersistenceTest.class);
+	private List<WorkflowInstanceLink> _models = new ArrayList<WorkflowInstanceLink>();
 	private ModelListener<WorkflowInstanceLink>[] _modelListeners;
 	private WorkflowInstanceLinkPersistence _persistence = (WorkflowInstanceLinkPersistence)PortalBeanLocatorUtil.locate(WorkflowInstanceLinkPersistence.class.getName());
-	private TransactionalPersistenceAdvice _transactionalPersistenceAdvice = (TransactionalPersistenceAdvice)PortalBeanLocatorUtil.locate(TransactionalPersistenceAdvice.class.getName());
 }

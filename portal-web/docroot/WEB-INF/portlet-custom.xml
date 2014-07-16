@@ -117,7 +117,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>15</portlet-name>
-		<display-name>Journal</display-name>
+		<display-name>Web Content</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>

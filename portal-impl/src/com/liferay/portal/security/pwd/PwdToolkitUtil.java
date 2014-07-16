@@ -62,6 +62,6 @@ public class PwdToolkitUtil {
 
 	private static PwdToolkitUtil _instance = new PwdToolkitUtil();
 
-	private ServiceTracker<?, Toolkit> _serviceTracker;
+	private ServiceTracker<Toolkit, Toolkit> _serviceTracker;
 
 }

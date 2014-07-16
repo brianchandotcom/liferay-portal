@@ -1819,8 +1819,8 @@ public class HookHotDeployListener
 			Toolkit toolkit = (Toolkit)newInstance(
 				portletClassLoader, Toolkit.class, toolkitClassName);
 
-			registerService(servletContextName, toolkitClassName, Toolkit.class,
-				toolkit);
+			registerService(
+				servletContextName, toolkitClassName, Toolkit.class, toolkit);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.PHONE_NUMBER_FORMAT_IMPL)) {

@@ -15,6 +15,7 @@
 			<bean class="com.liferay.portal.events.StartupHelper" />
 		</property>
 	</bean>
+		<bean id="com.liferay.portal.format.IdenticalPhoneNumberFormatImpl" class="com.liferay.portal.format.IdenticalPhoneNumberFormatImpl" />
 	<bean id="com.liferay.portal.kernel.audit.AuditMessageFactoryUtil" class="com.liferay.portal.kernel.audit.AuditMessageFactoryUtil">
 		<property name="auditMessageFactory">
 			<bean class="com.liferay.portal.audit.AuditMessageFactoryImpl" />
@@ -141,11 +142,6 @@
 	<bean id="com.liferay.portal.kernel.facebook.FacebookConnectUtil" class="com.liferay.portal.kernel.facebook.FacebookConnectUtil">
 		<property name="facebookConnect">
 			<bean class="com.liferay.portal.facebook.FacebookConnectImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portal.kernel.format.PhoneNumberFormatUtil" class="com.liferay.portal.kernel.format.PhoneNumberFormatUtil">
-		<property name="phoneNumberFormat">
-			<bean class="com.liferay.portal.format.PhoneNumberFormatImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.image.GhostscriptUtil" class="com.liferay.portal.kernel.image.GhostscriptUtil">

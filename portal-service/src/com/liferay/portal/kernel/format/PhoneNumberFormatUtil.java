@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.format;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Manuel de la Peña
+ * @author Peter Fellwock
  */
 public class PhoneNumberFormatUtil {
 
@@ -27,10 +30,7 @@ public class PhoneNumberFormatUtil {
 	}
 
 	public static PhoneNumberFormat getPhoneNumberFormat() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			PhoneNumberFormatUtil.class);
-
-		return _phoneNumberFormat;
+		return _instance._serviceTracker.getService();
 	}
 
 	public static String strip(String phoneNumber) {
@@ -41,12 +41,18 @@ public class PhoneNumberFormatUtil {
 		return getPhoneNumberFormat().validate(phoneNumber);
 	}
 
-	public void setPhoneNumberFormat(PhoneNumberFormat phoneNumberFormat) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+	private PhoneNumberFormatUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		_phoneNumberFormat = phoneNumberFormat;
+		_serviceTracker = registry.trackServices(PhoneNumberFormat.class);
+
+		_serviceTracker.open();
 	}
 
-	private static PhoneNumberFormat _phoneNumberFormat;
+	private static PhoneNumberFormatUtil _instance =
+		new PhoneNumberFormatUtil();
+
+	private ServiceTracker<PhoneNumberFormat, PhoneNumberFormat>
+		_serviceTracker;
 
 }

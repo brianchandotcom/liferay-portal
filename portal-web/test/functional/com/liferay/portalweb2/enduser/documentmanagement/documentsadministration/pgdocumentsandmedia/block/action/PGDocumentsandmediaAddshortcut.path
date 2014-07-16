@@ -125,6 +125,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SELECT_FOLDER_TABLE-->
+<tr>
+	<td>SELECT_FOLDER_TABLE_FOLDER</td>
+	<td>//tr[contains(.,'${key_dmFolderName}')]/td[1]/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_TABLE_#_OF_FOLDERS</td>
+	<td>//tr[contains(.,'${key_dmFolderName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_TABLE_#_OF_DOCUMENTS</td>
+	<td>//tr[contains(.,'${key_dmFolderName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SELECT_FILE-->
 <tr>
 	<td>SELECT_FILE_DOCUMENT</td>

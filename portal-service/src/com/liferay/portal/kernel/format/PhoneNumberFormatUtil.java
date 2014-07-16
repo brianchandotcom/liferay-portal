@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.format;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -31,9 +30,6 @@ public class PhoneNumberFormatUtil {
 	}
 
 	public static PhoneNumberFormat getPhoneNumberFormat() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			PhoneNumberFormatUtil.class);
-
 		return _instance._serviceTracker.getService();
 	}
 
@@ -56,6 +52,7 @@ public class PhoneNumberFormatUtil {
 	private static PhoneNumberFormatUtil _instance =
 		new PhoneNumberFormatUtil();
 
-	private ServiceTracker<?, PhoneNumberFormat> _serviceTracker;
+	private ServiceTracker<PhoneNumberFormat, PhoneNumberFormat>
+		_serviceTracker;
 
 }

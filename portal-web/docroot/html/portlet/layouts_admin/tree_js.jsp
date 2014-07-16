@@ -27,6 +27,20 @@ boolean expandFirstNode = ParamUtil.getBoolean(request, "expandFirstNode", true)
 boolean saveState = ParamUtil.getBoolean(request, "saveState", true);
 boolean selectableTree = ParamUtil.getBoolean(request, "selectableTree");
 String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
+
+PortletURL editLayoutURL = liferayPortletResponse.createRenderURL();
+
+editLayoutURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
+editLayoutURL.setParameter("tabs1", tabs1);
+editLayoutURL.setParameter("redirect", redirect);
+editLayoutURL.setParameter("closeRedirect", closeRedirect);
+
+if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) || portletName.equals(PortletKeys.MY_ACCOUNT) || portletName.equals(PortletKeys.USERS_ADMIN)) {
+	editLayoutURL.setParameter("backURL", backURL);
+}
+
+editLayoutURL.setParameter("groupId", String.valueOf(liveGroupId));
+editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 %>
 
 <liferay-ui:layouts-tree
@@ -35,7 +49,7 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 	draggableTree="<%= draggableTree %>"
 	expandFirstNode="<%= expandFirstNode %>"
 	groupId="<%= groupId %>"
-	portletURL="<%= portletURL %>"
+	portletURL="<%= editLayoutURL %>"
 	privateLayout="<%= privateLayout %>"
 	rootNodeName="<%= rootNodeName %>"
 	saveState="<%= saveState %>"

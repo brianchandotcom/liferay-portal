@@ -177,67 +177,14 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 		</c:if>
 
 		<div class='<%= !group.isLayoutPrototype() ? "col-md-9" : "col-md-12" %>'>
-			<div id="<portlet:namespace />layoutsContainer">
-				<c:choose>
-					<c:when test="<%= selPlid > 0 %>">
-						<liferay-util:include page="/html/portlet/layouts_admin/edit_layout.jsp" />
-					</c:when>
-					<c:otherwise>
-						<liferay-util:include page="/html/portlet/layouts_admin/edit_layout_set.jsp" />
-					</c:otherwise>
-				</c:choose>
-			</div>
+			<c:choose>
+				<c:when test="<%= selPlid > 0 %>">
+					<liferay-util:include page="/html/portlet/layouts_admin/edit_layout.jsp" />
+				</c:when>
+				<c:otherwise>
+					<liferay-util:include page="/html/portlet/layouts_admin/edit_layout_set.jsp" />
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 </div>
-
-<c:if test="<%= !group.isLayoutPrototype() %>">
-	<aui:script use="aui-io-plugin-deprecated">
-		var layoutsContainer = A.one('#<portlet:namespace />layoutsContainer');
-
-		layoutsContainer.plug(
-			A.Plugin.IO,
-			{
-				autoLoad: false
-			}
-		);
-
-		A.one('#<portlet:namespace />layoutsTreeOutput').delegate(
-			'click',
-			function(event) {
-				event.preventDefault();
-
-				var link = event.currentTarget.one('a');
-
-				if (link && !event.target.hasClass('tree-hitarea')) {
-					var href = link.attr('href');
-
-					var hash = location.hash;
-
-					var prefix = '#_LFR_FN_<portlet:namespace />';
-					var historyKey = '';
-
-					if (hash.indexOf(prefix) != -1) {
-						historyKey = hash.replace(prefix, '');
-					}
-
-					var requestUri = A.Lang.sub(
-						href,
-						{
-							historyKey: historyKey
-						}
-					);
-
-					layoutsContainer.io.set('uri', requestUri);
-
-					if (layoutsContainer.ParseContent) {
-						layoutsContainer.ParseContent.get('queue').stop();
-					}
-
-					layoutsContainer.io.start();
-				}
-			},
-			'.tree-node-content'
-		);
-	</aui:script>
-</c:if>

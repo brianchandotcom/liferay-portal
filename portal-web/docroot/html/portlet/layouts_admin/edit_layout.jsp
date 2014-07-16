@@ -33,7 +33,6 @@ long selPlid = ((Long)request.getAttribute("edit_pages.jsp-selPlid")).longValue(
 long layoutId = ((Long)request.getAttribute("edit_pages.jsp-layoutId")).longValue();
 boolean privateLayout = ((Boolean)request.getAttribute("edit_pages.jsp-privateLayout")).booleanValue();
 
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_pages.jsp-portletURL");
 PortletURL redirectURL = (PortletURL)request.getAttribute("edit_pages.jsp-redirectURL");
 
 long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);

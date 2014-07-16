@@ -190,20 +190,6 @@ request.setAttribute(WebKeys.LAYOUT_DESCRIPTIONS, layoutDescriptions);
 	<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 </liferay-portlet:renderURL>
 
-<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="portletURL">
-	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
-	<portlet:param name="tabs1" value="<%= tabs1 %>" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
-
-	<c:if test="<%= (portletName.equals(PortletKeys.LAYOUTS_ADMIN) || portletName.equals(PortletKeys.MY_ACCOUNT) || portletName.equals(PortletKeys.USERS_ADMIN)) %>">
-		<portlet:param name="backURL" value="<%= backURL %>" />
-	</c:if>
-
-	<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-	<portlet:param name="viewLayout" value="<%= Boolean.TRUE.toString() %>" />
-</liferay-portlet:resourceURL>
-
 <%
 request.setAttribute("edit_pages.jsp-group", group);
 request.setAttribute("edit_pages.jsp-selGroup", selGroup);
@@ -222,6 +208,5 @@ request.setAttribute("edit_pages.jsp-selLayoutSet", selLayoutSet);
 
 request.setAttribute("edit_pages.jsp-rootNodeName", rootNodeName);
 
-request.setAttribute("edit_pages.jsp-portletURL", portletURL);
 request.setAttribute("edit_pages.jsp-redirectURL", redirectURL);
 %>

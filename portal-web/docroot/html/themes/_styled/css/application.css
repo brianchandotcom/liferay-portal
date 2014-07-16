@@ -323,8 +323,8 @@
 
 	.category-portlets & {
 		background-color: #00A2EA;
- 		color: #FFF;
- 	}
+		color: #FFF;
+	}
 }
 
 .basecelleditor [class~="form-validator-message"] {

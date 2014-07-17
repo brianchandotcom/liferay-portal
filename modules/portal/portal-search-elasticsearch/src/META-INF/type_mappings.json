@@ -66,6 +66,11 @@
 				"store": "yes",
 				"type": "string"
 			},
+			"ddmContent": {
+				"index": "analyzed",
+				"store": "yes",
+				"type": "string"
+			},
 			"description": {
 				"index": "analyzed",
 				"store": "yes",
@@ -210,6 +215,17 @@
 					"match_mapping_type": "string",
 					"mapping": {
 						"index": "not_analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_DDMFormFields": {
+					"match": "ddm*",
+					"match_mapping_type": "string",
+					"mapping": {
+						"index": "analyzed",
 						"store": "yes",
 						"type": "string"
 					}

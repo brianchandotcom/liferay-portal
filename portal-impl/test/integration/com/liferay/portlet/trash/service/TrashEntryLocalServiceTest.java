@@ -54,6 +54,7 @@ import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -89,16 +90,22 @@ public class TrashEntryLocalServiceTest {
 	@Test
 	public void testGroupMaxAgeChanged() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
+
 		Group group = setTrashEntriesMaxAge(createGroup(companyId), 2);
+
 		verifyCleanUpAfterTwoDays(group);
 	}
 
 	@Test
 	public void testGroupTrashDisabled() throws Exception {
 		Group group = createGroup(TestPropsValues.getCompanyId());
+
 		createFileEntriesAndMoveThemToTrash(group.getGroupId(), 5, 0);
+
 		setTrashEnableForGroup(group, false);
+
 		TrashEntryLocalServiceUtil.checkEntries();
+
 		Assert.assertEquals(
 			0, TrashEntryLocalServiceUtil.getTrashEntriesCount());
 	}
@@ -110,7 +117,8 @@ public class TrashEntryLocalServiceTest {
 		for (int i = 0; i < 4; i++ ) {
 			Group group = setTrashEntriesMaxAge(
 				createGroup(createCompany()), 2);
-			actual = actual + createTrashEntriesForTwoDaysExpiryTest(group);
+
+			actual += createTrashEntriesForTwoDaysExpiryTest(group);
 		}
 
 		TrashEntryLocalServiceUtil.checkEntries();
@@ -127,7 +135,8 @@ public class TrashEntryLocalServiceTest {
 
 		for (int i = 0; i < 10; i++) {
 			Group group = setTrashEntriesMaxAge(createGroup(companyId), 2);
-			actual = actual + createTrashEntriesForTwoDaysExpiryTest(group);
+
+			actual += createTrashEntriesForTwoDaysExpiryTest(group);
 		}
 
 		TrashEntryLocalServiceUtil.checkEntries();
@@ -139,9 +148,12 @@ public class TrashEntryLocalServiceTest {
 	@Test
 	public void testOneGroup() throws Exception {
 		Group group = createGroup(TestPropsValues.getCompanyId());
+
 		createFileEntriesAndMoveThemToTrash(group.getGroupId(), 5, 500);
 		createFileEntriesAndMoveThemToTrash(group.getGroupId(), 5, 0);
+
 		TrashEntryLocalServiceUtil.checkEntries();
+
 		Assert.assertEquals(
 			5, TrashEntryLocalServiceUtil.getTrashEntriesCount());
 	}
@@ -150,12 +162,14 @@ public class TrashEntryLocalServiceTest {
 	public void testWithLayoutGroup() throws Exception {
 		Group group = setTrashEntriesMaxAge(
 			createGroup(TestPropsValues.getCompanyId()), 2);
+
 		verifyCleanUpAfterTwoDays(createLayoutGroup(group.getGroupId()));
 	}
 
 	@Test
 	public void testWithStaging() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
+
 		Group group = setTrashEntriesMaxAge(createGroup(companyId), 2);
 
 		User user = UserTestUtil.getAdminUser(companyId);
@@ -172,6 +186,7 @@ public class TrashEntryLocalServiceTest {
 	@Test
 	public void testWithStagingPageScope() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
+
 		Group group = setTrashEntriesMaxAge(createGroup(companyId), 2);
 
 		User user = UserTestUtil.getAdminUser(companyId);
@@ -181,8 +196,6 @@ public class TrashEntryLocalServiceTest {
 
 		StagingLocalServiceUtil.enableLocalStaging(
 			user.getUserId(), group, false, false, serviceContext);
-
-		Thread.sleep(2000);
 
 		group = GroupLocalServiceUtil.getGroup(group.getGroupId());
 
@@ -194,6 +207,7 @@ public class TrashEntryLocalServiceTest {
 	@Test
 	public void testWithStagingTrashDisabled() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
+
 		Group group = setTrashEnableForGroup(createGroup(companyId), false);
 
 		User user = UserTestUtil.getAdminUser(companyId);
@@ -206,6 +220,7 @@ public class TrashEntryLocalServiceTest {
 			user.getUserId(), group, false, false, serviceContext);
 
 		group = GroupLocalServiceUtil.getGroup(group.getGroupId());
+
 		Group stagingGroup = group.getStagingGroup();
 
 		createFileEntriesAndMoveThemToTrash(stagingGroup.getGroupId(), 5, 0);
@@ -276,8 +291,9 @@ public class TrashEntryLocalServiceTest {
 						DLFileEntry.class.getName(),
 						fileEntry.getFileEntryId());
 
-				DateTime dateTime = new DateTime(
-					trashEntry.getCreateDate().getTime());
+				Date createDate = trashEntry.getCreateDate();
+
+				DateTime dateTime = new DateTime(createDate.getTime());
 
 				if (reduceDays > 0) {
 					dateTime = dateTime.plusDays(-reduceDays);
@@ -298,9 +314,8 @@ public class TrashEntryLocalServiceTest {
 		User user = UserTestUtil.getAdminUser(companyId);
 
 		Group group = GroupTestUtil.addGroup(
-				companyId, user.getUserId(),
-				GroupConstants.DEFAULT_PARENT_GROUP_ID,
-				RandomTestUtil.randomString(), "This is a test group.");
+			companyId, user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			RandomTestUtil.randomString(), "This is a test group.");
 
 		return GroupLocalServiceUtil.getGroup(group.getGroupId());
 	}
@@ -359,7 +374,7 @@ public class TrashEntryLocalServiceTest {
 		UnicodeProperties typeSettingsProperties =
 			group.getParentLiveGroupTypeSettingsProperties();
 
-		int trashEntriesMaxAgeCompany = PrefsPropsUtil.getInteger(
+		int companyTrashEntriesMaxAge = PrefsPropsUtil.getInteger(
 			group.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE);
 
 		if (days > 0) {
@@ -368,10 +383,10 @@ public class TrashEntryLocalServiceTest {
 		else {
 			days = GetterUtil.getInteger(
 				typeSettingsProperties.getProperty("trashEntriesMaxAge"),
-				trashEntriesMaxAgeCompany);
+				companyTrashEntriesMaxAge);
 		}
 
-		if (days != trashEntriesMaxAgeCompany) {
+		if (days != companyTrashEntriesMaxAge) {
 			typeSettingsProperties.setProperty(
 				"trashEntriesMaxAge",
 				String.valueOf(GetterUtil.getInteger(days)));
@@ -383,6 +398,7 @@ public class TrashEntryLocalServiceTest {
 		group.setTypeSettingsProperties(typeSettingsProperties);
 
 		GroupLocalServiceUtil.updateGroup(group);
+
 		return GroupLocalServiceUtil.getGroup(group.getGroupId());
 	}
 
@@ -403,7 +419,5 @@ public class TrashEntryLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private List<Group> _groups = new ArrayList<Group>();
-
-	private int _readCount = 10000;
 
 }

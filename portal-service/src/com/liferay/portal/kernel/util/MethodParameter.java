@@ -137,6 +137,9 @@ public class MethodParameter {
 		else if (c == '[') {
 			className = className.replace('/', '.');
 		}
+		else if (signature.equals(StringPool.STAR)) {
+			className = Object.class.getName();
+		}
 		else {
 			throw new IllegalArgumentException(
 				"Invalid signature " + signature);

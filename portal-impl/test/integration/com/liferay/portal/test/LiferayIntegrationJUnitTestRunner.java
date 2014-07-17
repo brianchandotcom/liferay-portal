@@ -19,7 +19,6 @@ import com.liferay.portal.log.CaptureAppender;
 import com.liferay.portal.test.log.ConcurrentAssertUtil;
 import com.liferay.portal.test.log.ExpectedLogsUtil;
 import com.liferay.portal.test.log.LogAssertionUtil;
-import com.liferay.portal.util.test.TestPropsValues;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -27,6 +26,8 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
@@ -53,6 +54,33 @@ public class LiferayIntegrationJUnitTestRunner
 	@Override
 	public List<String> getExtraConfigLocations() {
 		return Collections.emptyList();
+	}
+
+	protected static Statement logAssertStatement(
+		final Statement statement, final Method method) {
+
+		return new Statement() {
+
+			@Override
+			public void evaluate() throws Throwable {
+				ConcurrentAssertUtil.startAssert();
+
+				CaptureAppender captureAppender = ExpectedLogsUtil.startAssert(
+					method);
+
+				try {
+					LogAssertionUtil.enableLogAssertion();
+
+					statement.evaluate();
+				}
+				finally {
+					ExpectedLogsUtil.endAssert(method, captureAppender);
+
+					ConcurrentAssertUtil.endAssert();
+				}
+			}
+
+		};
 	}
 
 	@Override
@@ -93,36 +121,18 @@ public class LiferayIntegrationJUnitTestRunner
 	}
 
 	@Override
-	protected Statement methodBlock(final FrameworkMethod frameworkMethod) {
-		final Statement statement = super.methodBlock(frameworkMethod);
+	protected List<TestRule> classRules() {
+		List<TestRule> testRules = super.classRules();
 
-		if (!TestPropsValues.ASSERT_LOGS) {
-			return statement;
-		}
+		testRules.add(_testRule);
 
-		return new Statement() {
+		return testRules;
+	}
 
-			@Override
-			public void evaluate() throws Throwable {
-				ConcurrentAssertUtil.startAssert();
-
-				CaptureAppender captureAppender = ExpectedLogsUtil.startAssert(
-					frameworkMethod.getMethod());
-
-				try {
-					LogAssertionUtil.enableLogAssertion();
-
-					statement.evaluate();
-				}
-				finally {
-					ExpectedLogsUtil.endAssert(
-						frameworkMethod.getMethod(), captureAppender);
-
-					ConcurrentAssertUtil.endAssert();
-				}
-			}
-
-		};
+	@Override
+	protected Statement methodBlock(FrameworkMethod frameworkMethod) {
+		return logAssertStatement(
+			super.methodBlock(frameworkMethod), frameworkMethod.getMethod());
 	}
 
 	private static final Method _createInheritedMapMethod;
@@ -147,5 +157,14 @@ public class LiferayIntegrationJUnitTestRunner
 			throw new ExceptionInInitializerError(e);
 		}
 	}
+
+	private TestRule _testRule = new TestRule() {
+
+		@Override
+		public Statement apply(Statement statement, Description description) {
+			return logAssertStatement(statement, null);
+		}
+
+	};
 
 }

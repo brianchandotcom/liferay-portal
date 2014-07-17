@@ -32,6 +32,10 @@ public class ExpectedLogsUtil {
 	public static void endAssert(
 		Method method, CaptureAppender captureAppender) {
 
+		if (method == null) {
+			return;
+		}
+
 		ExpectedLogs expectedLogs = method.getAnnotation(ExpectedLogs.class);
 
 		if (expectedLogs == null) {
@@ -55,6 +59,10 @@ public class ExpectedLogsUtil {
 	}
 
 	public static CaptureAppender startAssert(Method method) {
+		if (method == null) {
+			return null;
+		}
+
 		ExpectedLogs expectedLogs = method.getAnnotation(ExpectedLogs.class);
 
 		if (expectedLogs == null) {

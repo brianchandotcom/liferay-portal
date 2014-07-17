@@ -14,11 +14,9 @@
 
 package com.liferay.portal.servlet.jsp.compiler.jsp;
 
-import org.apache.jasper.runtime.JspFactoryImpl;
-
-import java.util.ServiceLoader;
-
 import javax.servlet.jsp.JspFactory;
+
+import org.apache.jasper.runtime.JspFactoryImpl;
 
 /**
  * @author Raymond Augé

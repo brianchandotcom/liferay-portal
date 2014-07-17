@@ -219,8 +219,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		String changeLog = StringPool.BLANK;
 
 		_fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(),
-			"Test DLAppService.txt");
+			group.getGroupId(), folderId, "Test DLAppService.txt");
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());

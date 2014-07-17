@@ -64,10 +64,8 @@ public class UpgradeNestedPortlets extends UpgradeProcess {
 						nestedColumnIds, StringPool.UNDERLINE);
 
 					if (underlineCount == _UNDERLINE_COUNT) {
-						matcher2 = _pattern.matcher(nestedColumnIds);
-
-						String newNestedColumnIds = matcher2.replaceAll(
-							"_$1_$2");
+						String newNestedColumnIds =
+							"_" + matcher.group(1) + "_" + matcher.group(2);
 
 						newTypeSettings = StringUtil.replace(
 							newTypeSettings, nestedColumnIds,
@@ -117,7 +115,5 @@ public class UpgradeNestedPortlets extends UpgradeProcess {
 	private static Pattern _pattern = Pattern.compile(
 		"(" + PortletKeys.NESTED_PORTLETS +
 			PortletConstants.INSTANCE_SEPARATOR + "[^_,\\s=]+_)([^_,\\s=]+)");
-
-	private Matcher matcher2;
 
 }

@@ -1251,6 +1251,6 @@ public class ${entity.name}PersistenceTest {
 
 	private List<${entity.name}> _${entity.varNames} = new ArrayList<${entity.name}>();
 	private ModelListener<${entity.name}>[] _modelListeners;
-	private ${entity.name}Persistence _persistence = (${entity.name}Persistence)${beanLocatorUtilShortName}.locate(${entity.name}Persistence.class.getName());
+	private ${entity.name}Persistence _persistence = ${entity.name}Util.getPersistence();
 
 }

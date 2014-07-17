@@ -218,8 +218,8 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 
 			int imageLength = image.length();
 
-			image = StringUtil.replace(image, "\\[[", StringPool.BLANK);
-			image = StringUtil.replace(image, "\\]]", StringPool.BLANK);
+			image = StringUtil.replace(image, "[[", StringPool.BLANK);
+			image = StringUtil.replace(image, "]]", StringPool.BLANK);
 
 			sb.replace(
 				matcher.start(0) + offset,

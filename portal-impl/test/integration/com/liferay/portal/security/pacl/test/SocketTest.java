@@ -16,7 +16,7 @@ package com.liferay.portal.security.pacl.test;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.security.pacl.PACLExecutionTestListener;
+import com.liferay.portal.test.listeners.PACLExecutionTestListener;
 import com.liferay.portal.test.runners.PACLIntegrationJUnitTestRunner;
 
 import java.net.InetSocketAddress;

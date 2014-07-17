@@ -19,7 +19,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupWrapper;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserWrapper;
-import com.liferay.portal.security.pacl.PACLExecutionTestListener;
+import com.liferay.portal.test.listeners.PACLExecutionTestListener;
 import com.liferay.portal.test.runners.PACLIntegrationJUnitTestRunner;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;

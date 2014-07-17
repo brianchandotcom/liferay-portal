@@ -47,6 +47,18 @@
 		<execute action="CPPortalinstances#assertTextNotPresent" locator-key1="INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
 	</command>
 
+	<command name="editCP">
+		<var name="key_virtualHost" value="${virtualHost}" />
+
+		<execute action="CPPortalinstances#assertTextEquals" locator-key1="INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
+		<execute action="CPPortalinstances#assertClick" locator-key1="INSTANCE_TABLE_EDIT" value1="Edit" />
+
+		<execute action="CPPortalinstancesEdit#type" locator-key1="MAIL_DOMAIN_FIELD" value1="${mailDomain}" />
+		<execute action="CPPortalinstancesEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPPortalinstances#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Instances" />

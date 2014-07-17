@@ -706,4 +706,165 @@
 			<var name="threadSubject2" value="${explanationSubject}" />
 		</execute>
 	</command>
+
+	<command name="ViewMBThreadAndReplyThreadInGmail" priority="5">
+		<property name="custom.properties" value="pop.server.notifications.enabled=true{line.separator}pop.server.subdomain=" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureMailServerSettings">
+			<var name="userName" property-value="email.address.1" />
+			<var name="userPassword" property-value="email.password.1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Instances" />
+		</execute>
+
+		<execute macro="PortalInstances#editCP">
+			<var name="mailDomain" value="gmail.com" />
+			<var name="virtualHost" value="localhost" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" property-value="email.address.2" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" property-value="email.address.2" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="Liferay" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="MessageboardsPortlet#configureMessageEmailFromCP">
+			<var name="emailFromAddress" property-value="email.address.1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="MB Category Name" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" property-value="email.address.2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="MB Category Name" />
+		</execute>
+
+		<execute macro="MessageboardsPortlet#subscribePG" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="MB Category Name" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute action="BaseLiferay#pause" locator1="30000" />
+
+		<execute macro="Gmail#login">
+			<var name="userEmailAddress" property-value="email.address.2" />
+			<var name="userPassword" property-value="email.password.2" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#viewMail">
+			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailAssetType" value="MB Category Name New Message" />
+			<var name="gmailMailTableMessageTitle" value="MB Thread Message Subject" />
+			<var name="gmailMessageBody" value="MB Thread Message Body Liferay Message Boards" />
+			<var name="gmailMessageBodyClosing" value="MB Thread Message Body Liferay Message Boards" />
+			<var name="gmailMessageBodyGreeting" value="MB Thread Message Body Liferay Message Boards" />
+			<var name="gmailMessageTitle" value="MB Category Name New Message: MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="Gmail#replyMail">
+			<var name="gmailReplyMessage" value="MB Thread Message Subject Reply" />
+		</execute>
+
+		<execute action="Home#open" locator1="http://localhost:8080" />
+
+		<execute action="BaseLiferay#pause" locator1="60000" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="MB Category Name" />
+		</execute>
+
+		<var name="key_threadSubject" value="MB Thread Message Subject" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="MB Thread Message Subject" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY" value1="Test Test" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="2" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="userfn userln" />
+		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="MB Thread Message Subject" />
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_TABLE_SUBJECT_1" value1="MB Thread Message Subject" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_TABLE_SUBJECT_2" value1="RE: MB Thread Message Subject" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="MB Thread Message Subject" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="MB Thread Message Body" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="Test Test" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_1" value1="0 (0 Votes)" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_2" value1="RE: MB Thread Message Subject" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_2" value1="MB Thread Message Subject Reply" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_2" value1="userfn userln" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_2" value1="0 (0 Votes)" />
+
+		<execute macro="Gmail#tearDown">
+			<var name="userEmailAddress" property-value="email.address.2" />
+			<var name="userPassword" property-value="email.password.2" />
+		</execute>
+
+		<execute action="Home#open" locator1="http://localhost:8080" />
+	</command>
 </definition>

@@ -1929,6 +1929,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<isset property="content.targeting.plugins.includes" />
+			<then>
+				<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+module.framework.properties.felix.fileinstall.start.level=20</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="set.permission.algorithm.5" />
 			<then>
 				<replace file="portal-impl/src/portal-ext.properties" token="#permissions.user.check.algorithm=5" value="permissions.user.check.algorithm=5" />
@@ -3208,6 +3217,16 @@ if (ppstate.equals("normal")) {
 			<property name="plugin.types" value="portlets" />
 			<property name="plugins.includes" value="marketplace-portlet" />
 		</ant>
+
+		<if>
+			<isset property="content.targeting.plugins.includes" />
+			<then>
+				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+					<property name="plugins.includes" value="${content.targeting.plugins.includes}" />
+					<property name="submodule.type" value="content-targeting" />
+				</ant>
+			</then>
+		</if>
 
 		<if>
 			<isset property="hook.plugins.includes" />

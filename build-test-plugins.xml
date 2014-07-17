@@ -117,6 +117,15 @@ security-manager-enabled=true</echo>
 							ant.target="deploy"
 						/>
 					</then>
+					<elseif>
+						<isset property="submodule.type" />
+						<then>
+							<ant-execute
+								ant.dir="${lp.plugins.dir}/apps/${submodule.type}"
+								ant.target="build-app"
+							/>
+						</then>
+					</elseif>
 					<else>
 						<ant-execute
 							ant.dir="${lp.plugins.dir}"

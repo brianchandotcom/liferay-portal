@@ -164,15 +164,13 @@ public class PingbackMethodImpl implements Method {
 		String className = BlogsEntry.class.getName();
 		long classPK = entry.getEntryId();
 
-		String urlTitle = entry.getUrlTitle();
-
 		String body =
 			"[...] " + getExcerpt() + " [...] [url=" + _sourceUri + "]" +
-			LanguageUtil.get(LocaleUtil.getSiteDefault(), "read-more") +
-			"[/url]";
+				LanguageUtil.get(LocaleUtil.getSiteDefault(), "read-more") +
+					"[/url]";
 
 		ServiceContext serviceContext = buildServiceContext(
-			companyId, groupId, urlTitle);
+			companyId, groupId, entry.getUrlTitle());
 
 		_commentManager.addComment(
 			userId, groupId, className, classPK, body, serviceContext);
@@ -208,6 +206,7 @@ public class PingbackMethodImpl implements Method {
 		serviceContext.setAttribute("redirect", sb.toString());
 
 		serviceContext.setLayoutFullURL(layoutFullURL);
+
 		return serviceContext;
 	}
 

@@ -57,7 +57,9 @@ public class MBCommentManagerImpl implements CommentManager {
 				threadId, WorkflowConstants.STATUS_APPROVED);
 
 		for (MBMessage message : messages) {
-			if (message.getBody().equals(body)) {
+			String messageBody = message.getBody();
+
+			if (messageBody.equals(messageBody)) {
 				throw new DuplicateCommentException();
 			}
 		}

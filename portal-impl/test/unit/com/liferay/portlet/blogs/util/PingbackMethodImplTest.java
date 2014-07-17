@@ -243,8 +243,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 			Matchers.eq(_USER_ID), Matchers.eq(_GROUP_ID),
 			Matchers.eq(BlogsEntry.class.getName()), Matchers.eq(_ENTRY_ID),
 			Matchers.eq(
-				"[...] " + _EXCERPT_BODY + " [...] " +
-				"[url=" + _SOURCE_URI + "]" + _READ_MORE + "[/url]"),
+				"[...] " + _EXCERPT_BODY + " [...] " + "[url=" + _SOURCE_URI +
+					"]" + _READ_MORE + "[/url]"),
 			(ServiceContext)Mockito.any()
 		);
 	}
@@ -274,8 +274,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 	public void testGetExcerptWhenAnchorHasParent() throws Exception {
 		whenHttpURLToString(
 			"<body><p>" +
-			"Visit <a href='http://" + _TARGET_URI + "'>Liferay</a>" +
-			" to learn more</p></body>");
+				"Visit <a href='http://" + _TARGET_URI + "'>Liferay</a>" +
+					" to learn more</p></body>");
 
 		execute();
 
@@ -292,8 +292,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 		try {
 			whenHttpURLToString(
 				"<body>_____<p>12345<span>67890" +
-				"<a href='http://" + _TARGET_URI + "'>Liferay</a>" +
-				"12345</span>67890</p>_____</body>");
+					"<a href='http://" + _TARGET_URI + "'>Liferay</a>" +
+						"12345</span>67890</p>_____</body>");
 
 			execute();
 
@@ -563,8 +563,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 			Matchers.anyLong(), Matchers.anyLong(), Matchers.anyString(),
 			Matchers.anyLong(),
 			Matchers.eq(
-				"[...] " + excerpt +
-				" [...] [url=" + _SOURCE_URI + "]" + _READ_MORE + "[/url]"),
+				"[...] " + excerpt + " [...] [url=" + _SOURCE_URI + "]" +
+					_READ_MORE + "[/url]"),
 			(ServiceContext)Matchers.any()
 		);
 	}

@@ -18,7 +18,7 @@
 	</tear-down>
 
 	<command name="CompleteProcessAndViewNotifications" priority="5">
-		<property name="portlet.plugins.includes" value="notifications-portlet" />
+		<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet,notifications-portlet" />
 
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />
@@ -473,7 +473,7 @@
 	</command>
 
 	<command name="RejectAndResubmitProcessAndViewNotifications" priority="5">
-		<property name="portlet.plugins.includes" value="notifications-portlet" />
+		<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet,notifications-portlet" />
 
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />

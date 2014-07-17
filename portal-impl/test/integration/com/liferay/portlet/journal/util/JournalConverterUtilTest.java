@@ -593,10 +593,10 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		String expectedFieldsDisplayFieldValue =
 			(String)expectedFieldsDisplayField.getValue();
 
-		Pattern regex = Pattern.compile(
+		Pattern pattern = Pattern.compile(
 			DDMImpl.INSTANCE_SEPARATOR.concat("\\w{8}"));
 
-		Matcher matcher = regex.matcher(expectedFieldsDisplayFieldValue);
+		Matcher matcher = pattern.matcher(expectedFieldsDisplayFieldValue);
 
 		expectedFieldsDisplayFieldValue = matcher.replaceAll(StringPool.BLANK);
 
@@ -608,7 +608,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		String actualFieldsDisplayFieldValue =
 			(String)actualFieldsDisplayField.getValue();
 
-		matcher = regex.matcher(actualFieldsDisplayFieldValue);
+		matcher = pattern.matcher(actualFieldsDisplayFieldValue);
 
 		actualFieldsDisplayFieldValue = matcher.replaceAll(StringPool.BLANK);
 

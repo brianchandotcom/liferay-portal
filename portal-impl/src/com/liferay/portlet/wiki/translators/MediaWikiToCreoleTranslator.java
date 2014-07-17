@@ -166,16 +166,14 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 
 		// Remove HTML tags
 
-		for (int i = 0; i < _HTML_TAGS.length; i++) {
-			if ((_HTML_TAGS[i] == "<font[^>]*>") ||
-				(_HTML_TAGS[i] == "<div[^>]*>")) {
+		for (Pattern pattern : _HTML_TAG_PATTERNS) {
+			matcher = pattern.matcher(content);
 
-				content = content.replaceAll(_HTML_TAGS[i], StringPool.BLANK);
-			}
-			else {
-				content = StringUtil.replace(
-					content, _HTML_TAGS[i], StringPool.BLANK);
-			}
+			content = matcher.replaceAll(StringPool.BLANK);
+		}
+
+		for (String htmlTag : _HTML_TAGS) {
+			content = StringUtil.replace(content, htmlTag, StringPool.BLANK);
 		}
 
 		// Images
@@ -303,11 +301,14 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 		return TABLE_OF_CONTENTS + super.postProcess(sb.toString());
 	}
 
+	private static final Pattern[] _HTML_TAG_PATTERNS = {
+		Pattern.compile("<div[^>]*>"), Pattern.compile("<font[^>]*>")};
+
 	private static final String[] _HTML_TAGS = {
 		"<blockquote>", "</blockquote>", "<br>", "<br/>", "<br />", "<center>",
-		"</center>", "<cite>", "</cite>","<code>", "</code>", "<div[^>]*>",
-		"</div>", "<font[^>]*>", "</font>", "<hr>", "<hr/>", "<hr />", "<p>",
-		"</p>", "<tt>", "</tt>", "<var>", "</var>"
+		"</center>", "<cite>", "</cite>","<code>", "</code>", "</div>",
+		"</font>", "<hr>", "<hr/>", "<hr />", "<p>", "</p>", "<tt>", "</tt>",
+		"<var>", "</var>"
 	};
 
 	private Pattern _imagePattern = Pattern.compile(

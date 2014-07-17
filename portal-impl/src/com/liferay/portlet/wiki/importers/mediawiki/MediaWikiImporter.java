@@ -289,7 +289,7 @@ public class MediaWikiImporter implements WikiImporter {
 	}
 
 	protected String normalizeTitle(String title) {
-		Matcher matcher = _wikiPagePattern.matcher(title);
+		Matcher matcher = _wikiPageTitlesRemovePattern.matcher(title);
 
 		title = matcher.replaceAll(StringPool.BLANK);
 
@@ -705,7 +705,7 @@ public class MediaWikiImporter implements WikiImporter {
 		"#REDIRECT \\[\\[([^\\]]*)\\]\\]");
 	private static Set<String> _specialMediaWikiDirs = SetUtil.fromArray(
 		new String[] {"archive", "temp", "thumb"});
-	private static Pattern _wikiPagePattern = Pattern.compile(
+	private static Pattern _wikiPageTitlesRemovePattern = Pattern.compile(
 		PropsValues.WIKI_PAGE_TITLES_REMOVE_REGEXP);
 
 	private MediaWikiToCreoleTranslator _translator =

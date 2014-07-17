@@ -112,11 +112,13 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 		friendlyURL = StringUtil.toLowerCase(friendlyURL);
 		friendlyURL = Normalizer.normalizeToAscii(friendlyURL);
 
-		Matcher matcher1 = friendlyURLPattern.matcher(friendlyURL);
-		friendlyURL = matcher1.replaceAll(StringPool.DASH);
+		Matcher matcher = friendlyURLPattern.matcher(friendlyURL);
 
-		Matcher matcher2 = _friendlyURLHyphenPattern.matcher(friendlyURL);
-		friendlyURL = matcher2.replaceAll(StringPool.DASH);
+		friendlyURL = matcher.replaceAll(StringPool.DASH);
+
+		matcher = _friendlyURLHyphenPattern.matcher(friendlyURL);
+
+		friendlyURL = matcher.replaceAll(StringPool.DASH);
 
 		return friendlyURL;
 	}

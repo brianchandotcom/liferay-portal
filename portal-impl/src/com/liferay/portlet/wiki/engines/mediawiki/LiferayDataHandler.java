@@ -83,9 +83,11 @@ public class LiferayDataHandler extends DummyDataHandler {
 	protected long getNodeId(String virtualWiki) {
 		Matcher matcher = _pattern.matcher(virtualWiki);
 
-		String nodeId = matcher.replaceAll("$1");
+		if (matcher.find()) {
+			return GetterUtil.getLong(matcher.group(1));
+		}
 
-		return GetterUtil.getLong(nodeId);
+		return 0;
 	}
 
 	private Namespace _fileNamespace = Namespace.DEFAULT_NAMESPACES.get(

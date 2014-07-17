@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCREEN_NAME_FIELD_ALERT</td>
+	<td>//div[@role='alert']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE</td>
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>

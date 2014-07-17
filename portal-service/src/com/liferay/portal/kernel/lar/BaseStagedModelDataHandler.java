@@ -106,7 +106,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	}
 
 	@Override
-	public T fetchExistingStagedModel(String uuid, long groupId) {
+	public T fetchMissingReference(String uuid, long groupId) {
 
 		// Try to fetch the existing staged model from the actual group
 
@@ -138,7 +138,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			if (existingStagedModel == null) {
 				existingStagedModel =
-					doFetchExistingStagedModelByUuidAndCompanyId(
+					fetchStagedModelByUuidAndCompanyId(
 						uuid, originalGroup.getCompanyId());
 			}
 

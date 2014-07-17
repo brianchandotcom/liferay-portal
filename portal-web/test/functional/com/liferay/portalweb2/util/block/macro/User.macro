@@ -115,8 +115,7 @@
 			<elseif>
 				<equals arg1="${userScreenNameVariation}" arg2="Invalid" />
 				<then>
-					<execute action="CPUsersandorganizationsAdduser#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
-					<execute action="CPUsersandorganizationsAdduser#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid screen name." />
+					<execute action="CPUsersandorganizationsAdduser#assertTextEquals" locator-key1="SCREEN_NAME_FIELD_ALERT" value1="Please enter only alphanumeric characters." />
 				</then>
 			</elseif>
 			<else>

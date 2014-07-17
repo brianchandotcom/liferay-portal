@@ -1,3 +1,2 @@
-Bundle-Activator: ${classes;IMPLEMENTS;org.osgi.framework.BundleActivator}
 Bundle-Name: Liferay Web Application Bundle Extender
 Include-Resource: classes

@@ -125,6 +125,13 @@ cobertura.ser
 /portal-test/portal-test*.asc
 /portal-test/portal-test*.jar
 
+/portal-test-internal/*.iml
+/portal-test-internal/*.ipr
+/portal-test-internal/*.iws
+/portal-test-internal/classes
+/portal-test-internal/portal-test-internal*.asc
+/portal-test-internal/portal-test-internal*.jar
+
 /portal-web/*.iml
 /portal-web/*.ipr
 /portal-web/*.iws

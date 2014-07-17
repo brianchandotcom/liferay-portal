@@ -15,180 +15,57 @@
 --%>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
+String tabs1 = layoutsAdminDisplayContext.getTabs1();
 
-String redirect = ParamUtil.getString(request, "redirect");
+String redirect = layoutsAdminDisplayContext.getRedirect();
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
-String backURL = ParamUtil.getString(request, "backURL", redirect);
+String backURL = layoutsAdminDisplayContext.getBackURL();
 
 if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) || portletName.equals(PortletKeys.MY_ACCOUNT)) {
 	portletDisplay.setURLBack(backURL);
 }
 
-Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
+Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 
-Group liveGroup = null;
-Group stagingGroup = null;
+Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
+Group stagingGroup = layoutsAdminDisplayContext.getStagingGroup();
+Group group = layoutsAdminDisplayContext.getGroup();
 
-if (selGroup.isStagingGroup()) {
-	liveGroup = selGroup.getLiveGroup();
-	stagingGroup = selGroup;
-}
-else {
-	liveGroup = selGroup;
+long groupId = layoutsAdminDisplayContext.getGroupId();
 
-	if (selGroup.isStaged()) {
-		if (selGroup.isStagedRemotely()) {
-			stagingGroup = selGroup;
-		}
-		else {
-			stagingGroup = selGroup.getStagingGroup();
-		}
-	}
-}
+long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
 
-Group group = null;
+long stagingGroupId = layoutsAdminDisplayContext.getStagingGroupId();
 
-if (stagingGroup != null) {
-	group = stagingGroup;
-}
-else {
-	group = liveGroup;
-}
+long selPlid = layoutsAdminDisplayContext.getSelPlid();
 
-long groupId = liveGroup.getGroupId();
+boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
+long layoutId = layoutsAdminDisplayContext.getLayoutId();
 
-if (group != null) {
-	groupId = group.getGroupId();
-}
-
-long liveGroupId = liveGroup.getGroupId();
-
-long stagingGroupId = 0;
-
-if (stagingGroup != null) {
-	stagingGroupId = stagingGroup.getGroupId();
-}
-
-long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
-long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);
-
-boolean privateLayout = tabs1.equals("my-dashboard") || tabs1.equals("private-pages");
-long layoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
-
-UnicodeProperties groupTypeSettings = null;
-
-if (group != null) {
-	groupTypeSettings = group.getTypeSettingsProperties();
-}
-else {
-	groupTypeSettings = new UnicodeProperties();
-}
+UnicodeProperties groupTypeSettings = layoutsAdminDisplayContext.getGroupTypeSettings();
 
 UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 
-Layout selLayout = null;
+Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-if (selPlid != LayoutConstants.DEFAULT_PLID) {
-	selLayout = LayoutLocalServiceUtil.fetchLayout(selPlid);
+Organization organization = layoutsAdminDisplayContext.getOrganization();
+User selUser = layoutsAdminDisplayContext.getSelUser();
+UserGroup userGroup = layoutsAdminDisplayContext.getUserGroup();
 
-	if (selLayout != null) {
-		privateLayout = selLayout.isPrivateLayout();
-		layoutId = selLayout.getLayoutId();
-	}
-}
+String tabs1Names = layoutsAdminDisplayContext.getTabs1Names();
 
-Layout refererLayout = null;
+LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
-if (refererPlid != LayoutConstants.DEFAULT_PLID) {
-	refererLayout = LayoutLocalServiceUtil.fetchLayout(refererPlid);
-}
+String pagesName = layoutsAdminDisplayContext.getPagesName();
 
-Organization organization = null;
-User selUser = null;
-UserGroup userGroup = null;
+String rootNodeName = layoutsAdminDisplayContext.getRootNodeName();
 
-if (liveGroup.isOrganization()) {
-	organization = OrganizationLocalServiceUtil.getOrganization(liveGroup.getOrganizationId());
-}
-else if (liveGroup.isUser()) {
-	selUser = UserLocalServiceUtil.getUserById(liveGroup.getClassPK());
-}
-else if (liveGroup.isUserGroup()) {
-	userGroup = UserGroupLocalServiceUtil.getUserGroup(liveGroup.getClassPK());
-}
-
-String tabs1Names = "public-pages,private-pages";
-
-if (liveGroup.isUser()) {
-	boolean hasPowerUserRole = RoleLocalServiceUtil.hasUserRole(selUser.getUserId(), company.getCompanyId(), RoleConstants.POWER_USER, true);
-
-	boolean privateLayoutsModifiable = (!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED || hasPowerUserRole) && PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED;
-	boolean publicLayoutsModifiable = (!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED || hasPowerUserRole) && PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED;
-
-	if (privateLayoutsModifiable && publicLayoutsModifiable) {
-		tabs1Names = "my-profile,my-dashboard";
-	}
-	else if (privateLayoutsModifiable) {
-		tabs1Names = "my-dashboard";
-	}
-	else if (publicLayoutsModifiable) {
-		tabs1Names = "my-profile";
-	}
-
-	if (!publicLayoutsModifiable && privateLayoutsModifiable && !privateLayout) {
-		tabs1 = "my-dashboard";
-
-		privateLayout = true;
-	}
-}
-
-if (selGroup.isLayoutSetPrototype()) {
-	privateLayout = true;
-}
-
-LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, privateLayout);
-
-String pagesName = null;
-
-if (liveGroup.isLayoutPrototype() || liveGroup.isLayoutSetPrototype() || liveGroup.isUserGroup()) {
-	pagesName = "pages";
-}
-else if (privateLayout) {
-	if (liveGroup.isUser()) {
-		pagesName = "my-dashboard";
-	}
-	else {
-		pagesName = "private-pages";
-	}
-}
-else {
-	if (liveGroup.isUser()) {
-		pagesName = "my-profile";
-	}
-	else {
-		pagesName = "public-pages";
-	}
-}
-
-String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, locale);
-
-List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescriptions(groupId, privateLayout, rootNodeName, locale);
+List<LayoutDescription> layoutDescriptions = layoutsAdminDisplayContext.getLayoutDescriptions();
 
 request.setAttribute(WebKeys.LAYOUT_DESCRIPTIONS, layoutDescriptions);
+
+PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 %>
-
-<liferay-portlet:renderURL varImpl="redirectURL">
-	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
-	<portlet:param name="tabs1" value="<%= tabs1 %>" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-
-	<c:if test="<%= (portletName.equals(PortletKeys.LAYOUTS_ADMIN) || portletName.equals(PortletKeys.MY_ACCOUNT) || portletName.equals(PortletKeys.USERS_ADMIN)) %>">
-		<portlet:param name="backURL" value="<%= backURL %>" />
-	</c:if>
-
-	<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-</liferay-portlet:renderURL>
 
 <%
 request.setAttribute("edit_pages.jsp-group", group);

@@ -16,7 +16,12 @@
 
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
-<%@ include file="/html/portlet/layouts_admin/init_attributes.jspf" %>
+<%
+String closeRedirect = ParamUtil.getString(request, "closeRedirect");
+
+long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
+long selPlid = layoutsAdminDisplayContext.getSelPlid();
+%>
 
 <div id="<portlet:namespace />editLayoutContainer">
 	<c:choose>

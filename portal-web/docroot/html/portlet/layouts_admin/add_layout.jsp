@@ -16,9 +16,11 @@
 
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
-<%@ include file="/html/portlet/layouts_admin/init_attributes.jspf" %>
-
 <%
+boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
+Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+long selPlid = layoutsAdminDisplayContext.getSelPlid();
+
 long parentPlid = LayoutConstants.DEFAULT_PLID;
 long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
@@ -31,7 +33,7 @@ if (layout.isTypeControlPanel()) {
 		parentLayoutId = selLayout.getLayoutId();
 	}
 	else {
-		privateLayout = GetterUtil.getBoolean(request.getAttribute("edit_pages.jsp-privateLayout"));
+		privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
 	}
 }
 else {
@@ -54,7 +56,7 @@ else {
 <aui:form action="<%= editLayoutActionURL %>" enctype="multipart/form-data" method="post" name="addPageFm" onSubmit="event.preventDefault()">
 	<aui:input id="addLayoutCMD" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input id="addLayoutRedirect" name="redirect" type="hidden" value="<%= portletName.equals(PortletKeys.DOCKBAR) ? editLayoutRenderURL : currentURL %>" />
-	<aui:input id="addLayoutGroupId" name="groupId" type="hidden" value="<%= groupId %>" />
+	<aui:input id="addLayoutGroupId" name="groupId" type="hidden" value="<%= layoutsAdminDisplayContext.getGroupId() %>" />
 	<aui:input id="addLayoutPrivateLayout" name="privateLayout" type="hidden" value="<%= privateLayout %>" />
 	<aui:input id="addLayoutParentPlid" name="parentPlid" type="hidden" value="<%= parentPlid %>" />
 	<aui:input id="addLayoutParentLayoutId" name="parentLayoutId" type="hidden" value="<%= parentLayoutId %>" />
@@ -154,9 +156,9 @@ else {
 					%>
 
 					<%
-					liferayPortletRequest.setAttribute(WebKeys.LAYOUT_DESCRIPTIONS, layoutDescriptions);
+					liferayPortletRequest.setAttribute(WebKeys.LAYOUT_DESCRIPTIONS, layoutsAdminDisplayContext.getLayoutDescriptions());
 
-					int layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(group, privateLayout);
+					int layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(layoutsAdminDisplayContext.getGroup(), privateLayout);
 
 					for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
 						if (PropsValues.LAYOUT_TYPES[i].equals("portlet")) {

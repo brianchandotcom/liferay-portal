@@ -15,6 +15,7 @@
 package com.liferay.taglib.search;
 
 import com.liferay.portal.kernel.dao.search.SearchEntry;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -151,17 +152,6 @@ public class ResultRow
 
 	@Override
 	public void addJSP(
-		int index, String path, ServletContext servletContext,
-		HttpServletRequest request, HttpServletResponse response) {
-
-		addJSP(
-			index, SearchEntry.DEFAULT_ALIGN, SearchEntry.DEFAULT_VALIGN,
-			SearchEntry.DEFAULT_COLSPAN, path, servletContext, request,
-			response);
-	}
-
-	@Override
-	public void addJSP(
 		int index, String align, String valign, int colspan, String path) {
 
 		JSPSearchEntry jspSearchEntry = new JSPSearchEntry();
@@ -177,13 +167,14 @@ public class ResultRow
 	@Override
 	public void addJSP(
 		int index, String align, String valign, int colspan, String path,
-		ServletContext servletContext, HttpServletRequest request,
-		HttpServletResponse response) {
+		String cssClass, ServletContext servletContext,
+		HttpServletRequest request, HttpServletResponse response) {
 
 		JSPSearchEntry jspSearchEntry = new JSPSearchEntry();
 
 		jspSearchEntry.setAlign(align);
 		jspSearchEntry.setColspan(colspan);
+		jspSearchEntry.setCssClass(cssClass);
 		jspSearchEntry.setPath(path);
 		jspSearchEntry.setRequest(request);
 		jspSearchEntry.setResponse(response);
@@ -191,6 +182,17 @@ public class ResultRow
 		jspSearchEntry.setValign(valign);
 
 		_searchEntries.add(index, jspSearchEntry);
+	}
+
+	@Override
+	public void addJSP(
+		int index, String path, String cssClass, ServletContext servletContext,
+		HttpServletRequest request, HttpServletResponse response) {
+
+		addJSP(
+			index, SearchEntry.DEFAULT_ALIGN, SearchEntry.DEFAULT_VALIGN,
+			SearchEntry.DEFAULT_COLSPAN, path, cssClass, servletContext,
+			request, response);
 	}
 
 	@Override
@@ -203,7 +205,7 @@ public class ResultRow
 		String path, ServletContext servletContext, HttpServletRequest request,
 		HttpServletResponse response) {
 
-		addJSP(_searchEntries.size(), path, servletContext, request, response);
+		addJSP(path, StringPool.BLANK, servletContext, request, response);
 	}
 
 	@Override
@@ -231,8 +233,18 @@ public class ResultRow
 		HttpServletResponse response) {
 
 		addJSP(
-			_searchEntries.size(), align, valign, colspan, path, servletContext,
-			request, response);
+			_searchEntries.size(), align, valign, colspan, path,
+			StringPool.BLANK, servletContext, request, response);
+	}
+
+	@Override
+	public void addJSP(
+		String path, String cssClass, ServletContext servletContext,
+		HttpServletRequest request, HttpServletResponse response) {
+
+		addJSP(
+			_searchEntries.size(), path, cssClass, servletContext, request,
+			response);
 	}
 
 	@Override
@@ -249,7 +261,7 @@ public class ResultRow
 
 		addJSP(
 			_searchEntries.size(), align, valign, SearchEntry.DEFAULT_COLSPAN,
-			path, servletContext, request, response);
+			path, StringPool.BLANK, servletContext, request, response);
 	}
 
 	@Override

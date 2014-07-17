@@ -78,25 +78,12 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 
 	@Before
 	public void setUp() throws Exception {
-		List<TrashEntry> list = TrashEntryLocalServiceUtil.getTrashEntries(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		if (list.size() > 0) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Cleaning TrashEntries due previous tests did not" +
-					" clean up them properly");
-			}
-
-			clearTrashEntries(list);
-		}
+		cleanUpTrashEntries();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		clearTrashEntries(
-			TrashEntryLocalServiceUtil.getTrashEntries(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+		cleanUpTrashEntries();
 	}
 
 	@Test
@@ -231,26 +218,23 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 			0, TrashEntryLocalServiceUtil.getTrashEntriesCount());
 	}
 
-	protected void clearTrashEntries(List<TrashEntry> list) {
-		for (TrashEntry entry : list) {
+	protected void cleanUpTrashEntries() {
+		List<TrashEntry> trashEntries =
+			TrashEntryLocalServiceUtil.getTrashEntries(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (TrashEntry trashEntry : trashEntries) {
 			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(entry.getClassName());
+				TrashHandlerRegistryUtil.getTrashHandler(
+					trashEntry.getClassName());
 
 			try {
-				trashHandler.deleteTrashEntry(entry.getClassPK());
+				trashHandler.deleteTrashEntry(trashEntry.getClassPK());
 			}
-			catch (Exception e) {
+			catch (PortalException pe) {
+				_log.error(pe, pe);
 
-				// To handle situation when garbage from the previous tests
-				// does exist
-
-				try {
-					TrashEntryLocalServiceUtil.deleteEntry(entry.getEntryId());
-					_log.error(e);
-				}
-				catch (PortalException e1) {
-					_log.error(e1);
-				}
+				TrashEntryLocalServiceUtil.deleteEntry(trashEntry);
 			}
 		}
 	}

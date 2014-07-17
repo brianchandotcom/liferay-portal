@@ -90,6 +90,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INSTANCE_TABLE_EDIT</td>
+	<td>//tr[contains(.,'${key_virtualHost}')]/td[8]/span/a/span[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -40,4 +40,77 @@ page import="com.liferay.portlet.dynamicdatamapping.storage.FieldConstants" %><%
 page import="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" %>
 
+<div class="hide" id="<portlet:namespace />exportList">
+	<aui:select label="file-extension" name="fileExtension">
+		<aui:option value="csv">CSV</aui:option>
+		<aui:option value="xml">XML</aui:option>
+	</aui:select>
+</div>
+
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />exportRecordSet',
+		function(url) {
+			var A = AUI();
+
+			var form = A.Node.create('<form />');
+
+			form.setAttribute('method', 'POST');
+
+			var content = A.one('#<portlet:namespace />exportList');
+
+			if (content) {
+				form.append(content);
+				content.show();
+			}
+
+			var dialog = Liferay.Util.Window.getWindow(
+				{
+					dialog: {
+						bodyContent: form,
+						toolbars: {
+							footer: [
+								{
+									label: '<%= UnicodeLanguageUtil.get(request, "ok") %>',
+									on: {
+										click: function() {
+											submitForm(form, url, false);
+
+											dialog.hide();
+										}
+									},
+									primary: true
+								},
+								{
+									label: '<%= UnicodeLanguageUtil.get(request, "cancel") %>',
+									on: {
+										click: function() {
+											dialog.hide();
+										}
+									}
+								}
+							],
+							header: [
+								{
+									cssClass: 'close',
+									label: '\u00D7',
+									on: {
+										click: function(event) {
+											dialog.hide();
+										}
+									}
+								}
+							]
+						}
+					},
+					title: '<%= UnicodeLanguageUtil.get(request, "export") %>'
+				}
+			);
+
+		},
+		['liferay-util-window']
+	);
+</aui:script>
+
 <%@ include file="/html/portlet/dynamic_data_lists/init-ext.jsp" %>

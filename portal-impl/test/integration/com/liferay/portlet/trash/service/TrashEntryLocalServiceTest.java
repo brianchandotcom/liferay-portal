@@ -74,7 +74,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class TrashEntryLocalServiceCheckEntriesTest {
+public class TrashEntryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -396,7 +396,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		TrashEntryLocalServiceCheckEntriesTest.class);
+		TrashEntryLocalServiceTest.class);
 
 	@DeleteAfterTestRun
 	private List<Company> _companies = new ArrayList<Company>();

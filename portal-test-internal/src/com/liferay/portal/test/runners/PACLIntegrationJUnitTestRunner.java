@@ -77,7 +77,7 @@ public class PACLIntegrationJUnitTestRunner
 		_initialized = true;
 	}
 
-	protected static final String RESOURCE_PATH =
+	public static final String RESOURCE_PATH =
 		"com/liferay/portal/security/pacl/test/dependencies";
 
 	private static Class<?> _wrapTestClass(Class<?> clazz)

@@ -42,7 +42,7 @@ boolean includeBasicFileEntryType = ParamUtil.getBoolean(request, "includeBasicF
 	</aui:nav>
 
 	<aui:nav-bar-search>
-		<div class="col-xs-12 form-search">
+		<div class="form-search">
 			<liferay-portlet:renderURL varImpl="searchURL">
 				<portlet:param name="struts_action" value="<%= strutsAction %>" />
 			</liferay-portlet:renderURL>

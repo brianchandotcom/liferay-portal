@@ -76,7 +76,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 		</aui:nav>
 
 		<aui:nav-bar-search cssClass="pull-right">
-			<div class="col-xs-12 form-search">
+			<div class="form-search">
 				<liferay-ui:input-search />
 			</div>
 		</aui:nav-bar-search>

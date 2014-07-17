@@ -621,7 +621,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		User user = permissionChecker.getUser();
 
 		HttpPrincipal httpPrincipal = new HttpPrincipal(
-			remoteURL, user.getScreenName(), user.getPassword(),
+			remoteURL, user.getLogin(), user.getPassword(),
 			user.getPasswordEncrypted());
 
 		try {
@@ -664,7 +664,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		User user = permissionChecker.getUser();
 
 		HttpPrincipal httpPrincipal = new HttpPrincipal(
-			remoteURL, user.getScreenName(), user.getPassword(),
+			remoteURL, user.getLogin(), user.getPassword(),
 			user.getPasswordEncrypted());
 
 		try {
@@ -847,7 +847,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		User user = permissionChecker.getUser();
 
 		HttpPrincipal httpPrincipal = new HttpPrincipal(
-			remoteURL, user.getScreenName(), user.getPassword(),
+			remoteURL, user.getLogin(), user.getPassword(),
 			user.getPasswordEncrypted());
 
 		Map<String, String> stagedPortletIds = new HashMap<String, String>();

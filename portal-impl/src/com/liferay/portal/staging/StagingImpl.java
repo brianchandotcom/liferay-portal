@@ -1947,7 +1947,7 @@ public class StagingImpl implements Staging {
 		User user = permissionChecker.getUser();
 
 		HttpPrincipal httpPrincipal = new HttpPrincipal(
-			remoteURL, user.getEmailAddress(), user.getPassword(),
+			remoteURL, user.getLogin(), user.getPassword(),
 			user.getPasswordEncrypted());
 
 		taskContextMap.put("httpPrincipal", httpPrincipal);
@@ -2360,7 +2360,7 @@ public class StagingImpl implements Staging {
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, false);
 
 		HttpPrincipal httpPrincipal = new HttpPrincipal(
-			remoteURL, user.getEmailAddress(), user.getPassword(),
+			remoteURL, user.getLogin(), user.getPassword(),
 			user.getPasswordEncrypted());
 
 		try {

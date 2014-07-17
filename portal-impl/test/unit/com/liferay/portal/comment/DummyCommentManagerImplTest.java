@@ -36,6 +36,9 @@ public class DummyCommentManagerImplTest {
 		String subject = RandomTestUtil.randomString();
 		String body = RandomTestUtil.randomString();
 
+		_commentManager.addComment(
+			userId, groupId, className, classPK, body, null);
+
 		Assert.assertEquals(
 			0,
 			_commentManager.addComment(

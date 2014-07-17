@@ -23,6 +23,11 @@ import com.liferay.portal.service.ServiceContext;
  */
 public interface CommentManager {
 
+	public void addComment(
+			long userId, long groupId, String className, long classPK,
+			String body, ServiceContext serviceContext)
+		throws PortalException;
+
 	public long addComment(
 			long userId, long groupId, String className, long classPK,
 			String userName, String subject, String body,

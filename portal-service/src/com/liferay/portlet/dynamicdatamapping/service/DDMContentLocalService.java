@@ -49,7 +49,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 	 */
 	public com.liferay.portlet.dynamicdatamapping.model.DDMContent addContent(
 		long userId, long groupId, java.lang.String name,
-		java.lang.String description, java.lang.String xml,
+		java.lang.String description, java.lang.String data,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -292,7 +292,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMContent updateContent(
 		long contentId, java.lang.String name, java.lang.String description,
-		java.lang.String xml,
+		java.lang.String data,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

@@ -42,11 +42,11 @@ public class DDMContentLocalServiceUtil {
 	 */
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMContent addContent(
 		long userId, long groupId, java.lang.String name,
-		java.lang.String description, java.lang.String xml,
+		java.lang.String description, java.lang.String data,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addContent(userId, groupId, name, description, xml,
+				   .addContent(userId, groupId, name, description, data,
 			serviceContext);
 	}
 
@@ -333,11 +333,11 @@ public class DDMContentLocalServiceUtil {
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMContent updateContent(
 		long contentId, java.lang.String name, java.lang.String description,
-		java.lang.String xml,
+		java.lang.String data,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateContent(contentId, name, description, xml,
+				   .updateContent(contentId, name, description, data,
 			serviceContext);
 	}
 

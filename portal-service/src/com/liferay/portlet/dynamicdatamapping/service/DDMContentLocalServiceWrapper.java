@@ -36,11 +36,11 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 	@Override
 	public com.liferay.portlet.dynamicdatamapping.model.DDMContent addContent(
 		long userId, long groupId, java.lang.String name,
-		java.lang.String description, java.lang.String xml,
+		java.lang.String description, java.lang.String data,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmContentLocalService.addContent(userId, groupId, name,
-			description, xml, serviceContext);
+			description, data, serviceContext);
 	}
 
 	/**
@@ -361,11 +361,11 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 	@Override
 	public com.liferay.portlet.dynamicdatamapping.model.DDMContent updateContent(
 		long contentId, java.lang.String name, java.lang.String description,
-		java.lang.String xml,
+		java.lang.String data,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmContentLocalService.updateContent(contentId, name,
-			description, xml, serviceContext);
+			description, data, serviceContext);
 	}
 
 	/**

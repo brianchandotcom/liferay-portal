@@ -2509,7 +2509,7 @@ public class DataFactory {
 	}
 
 	protected DDMContentModel newDDMContentModel(
-		long contentId, long groupId, String xml) {
+		long contentId, long groupId, String data) {
 
 		DDMContentModel ddmContentModel = new DDMContentModelImpl();
 
@@ -2522,7 +2522,7 @@ public class DataFactory {
 		ddmContentModel.setCreateDate(nextFutureDate());
 		ddmContentModel.setModifiedDate(nextFutureDate());
 		ddmContentModel.setName(DDMStorageLink.class.getName());
-		ddmContentModel.setXml(xml);
+		ddmContentModel.setData(data);
 
 		return ddmContentModel;
 	}

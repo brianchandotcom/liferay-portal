@@ -40,7 +40,7 @@ public class DDMContentSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
-		soapModel.setXml(model.getXml());
+		soapModel.setData(model.getData());
 
 		return soapModel;
 	}
@@ -173,12 +173,12 @@ public class DDMContentSoap implements Serializable {
 		_description = description;
 	}
 
-	public String getXml() {
-		return _xml;
+	public String getData() {
+		return _data;
 	}
 
-	public void setXml(String xml) {
-		_xml = xml;
+	public void setData(String data) {
+		_data = data;
 	}
 
 	private String _uuid;
@@ -191,5 +191,5 @@ public class DDMContentSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private String _description;
-	private String _xml;
+	private String _data;
 }

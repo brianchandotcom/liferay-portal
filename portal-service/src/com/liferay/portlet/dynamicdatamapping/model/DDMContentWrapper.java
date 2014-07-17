@@ -63,7 +63,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("xml", getXml());
+		attributes.put("data", getData());
 
 		return attributes;
 	}
@@ -130,10 +130,10 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 			setDescription(description);
 		}
 
-		String xml = (String)attributes.get("xml");
+		String data = (String)attributes.get("data");
 
-		if (xml != null) {
-			setXml(xml);
+		if (data != null) {
+			setData(data);
 		}
 	}
 
@@ -181,6 +181,16 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	@Override
 	public java.util.Date getCreateDate() {
 		return _ddmContent.getCreateDate();
+	}
+
+	/**
+	* Returns the data of this d d m content.
+	*
+	* @return the data of this d d m content
+	*/
+	@Override
+	public java.lang.String getData() {
+		return _ddmContent.getData();
 	}
 
 	@Override
@@ -355,16 +365,6 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 		return _ddmContent.getUuid();
 	}
 
-	/**
-	* Returns the xml of this d d m content.
-	*
-	* @return the xml of this d d m content
-	*/
-	@Override
-	public java.lang.String getXml() {
-		return _ddmContent.getXml();
-	}
-
 	@Override
 	public int hashCode() {
 		return _ddmContent.hashCode();
@@ -436,6 +436,16 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	@Override
 	public void setCreateDate(java.util.Date createDate) {
 		_ddmContent.setCreateDate(createDate);
+	}
+
+	/**
+	* Sets the data of this d d m content.
+	*
+	* @param data the data of this d d m content
+	*/
+	@Override
+	public void setData(java.lang.String data) {
+		_ddmContent.setData(data);
 	}
 
 	/**
@@ -607,16 +617,6 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_ddmContent.setUuid(uuid);
-	}
-
-	/**
-	* Sets the xml of this d d m content.
-	*
-	* @param xml the xml of this d d m content
-	*/
-	@Override
-	public void setXml(java.lang.String xml) {
-		_ddmContent.setXml(xml);
 	}
 
 	@Override

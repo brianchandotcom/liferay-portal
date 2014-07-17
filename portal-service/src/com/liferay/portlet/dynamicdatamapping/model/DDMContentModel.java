@@ -327,19 +327,19 @@ public interface DDMContentModel extends BaseModel<DDMContent>, LocalizedModel,
 	public void setDescription(String description);
 
 	/**
-	 * Returns the xml of this d d m content.
+	 * Returns the data of this d d m content.
 	 *
-	 * @return the xml of this d d m content
+	 * @return the data of this d d m content
 	 */
 	@AutoEscape
-	public String getXml();
+	public String getData();
 
 	/**
-	 * Sets the xml of this d d m content.
+	 * Sets the data of this d d m content.
 	 *
-	 * @param xml the xml of this d d m content
+	 * @param data the data of this d d m content
 	 */
-	public void setXml(String xml);
+	public void setData(String data);
 
 	@Override
 	public boolean isNew();

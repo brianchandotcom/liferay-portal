@@ -1780,9 +1780,7 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="xml" type="String">
-			<hint-collection name="CLOB" />
-		</field>
+		<field name="data" type="String" />
 	</model>
 	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink">
 		<field name="uuid" type="String" />

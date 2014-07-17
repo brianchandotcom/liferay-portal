@@ -5,8 +5,6 @@ AUI.add(
 		var Lang = A.Lang;
 		var History = Liferay.HistoryManager;
 
-		var IE = A.UA.ie;
-
 		var CSS_SYNC_MESSAGE_HIDDEN = 'sync-message-hidden';
 
 		var DEFAULT_FOLDER_ID = 0;
@@ -198,9 +196,7 @@ AUI.add(
 
 						instance._toggleTrashAction();
 
-						var Win = A.config.win;
-
-						var html5 = (Win && Win.File && Win.FormData && Win.XMLHttpRequest);
+						var html5 = (WIN && WIN.File && WIN.FormData && WIN.XMLHttpRequest);
 
 						var permission = (themeDisplay.isSignedIn() && instance.one('#addButtonContainer'));
 

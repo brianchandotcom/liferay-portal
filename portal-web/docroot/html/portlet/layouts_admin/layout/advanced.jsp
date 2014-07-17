@@ -31,7 +31,12 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 <liferay-ui:error exception="<%= ImageTypeException.class %>" message="please-enter-a-file-with-a-valid-file-type" />
 
 <aui:fieldset cssClass="lfr-portrait-editor">
-	<c:if test="<%= !layoutsAdminDisplayContext.getGroup().isLayoutPrototype() %>">
+
+	<%
+	Group group = layoutsAdminDisplayContext.getGroup();
+	%>
+
+	<c:if test="<%= !group.isLayoutPrototype() %>">
 
 		<%
 		String queryString = GetterUtil.getString(layoutTypeSettings.getProperty("query-string"));

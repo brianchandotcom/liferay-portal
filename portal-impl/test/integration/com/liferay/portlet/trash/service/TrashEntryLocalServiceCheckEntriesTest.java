@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.trash.service;
 
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -27,20 +26,20 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.StagingLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.test.Sync;
+import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.test.CompanyTestUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -65,21 +64,20 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-
 /**
  * @author Sampsa Sohlman
  */
 @ExecutionTestListeners(
 	listeners = {
-		MainServletExecutionTestListener.class
+		MainServletExecutionTestListener.class,
+		SynchronousDestinationExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Sync
 public class TrashEntryLocalServiceCheckEntriesTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_groups = new ArrayList<Group>();
-
 		List<TrashEntry> list = TrashEntryLocalServiceUtil.getTrashEntries(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -99,32 +97,6 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 		clearTrashEntries(
 			TrashEntryLocalServiceUtil.getTrashEntries(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS));
-
-		for (Group group : _groups) {
-			List<BackgroundTask> backgroundTasks =
-				BackgroundTaskLocalServiceUtil.getBackgroundTasks(
-					group.getGroupId(),
-					BackgroundTaskConstants.STATUS_IN_PROGRESS);
-
-			int counter = 0;
-
-			while (!backgroundTasks.isEmpty() && (counter < 200)) {
-				Thread.sleep(100);
-				counter++;
-				backgroundTasks =
-					BackgroundTaskLocalServiceUtil.getBackgroundTasks(
-						group.getGroupId(),
-						BackgroundTaskConstants.STATUS_IN_PROGRESS);
-			}
-
-			GroupLocalServiceUtil.deleteGroup(group.getGroupId());
-		}
-
-		if (_companies != null) {
-			for (Long companyId : _companies ) {
-				CompanyLocalServiceUtil.deleteCompany(companyId);
-			}
-		}
 	}
 
 	@Test
@@ -284,14 +256,11 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 	}
 
 	protected long createCompany() throws Exception {
-		if (_companies == null) {
-			_companies = new ArrayList<Long>();
-		}
-
 		Company company = CompanyTestUtil.addCompany(
 			RandomTestUtil.randomString());
 
-		_companies.add(company.getCompanyId());
+		_companies.add(company);
+
 		return company.getCompanyId();
 	}
 
@@ -445,8 +414,12 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 	private static Log _log = LogFactoryUtil.getLog(
 		TrashEntryLocalServiceCheckEntriesTest.class);
 
-	private List<Long> _companies;
-	private List<Group> _groups;
+	@DeleteAfterTestRun
+	private List<Company> _companies = new ArrayList<Company>();
+
+	@DeleteAfterTestRun
+	private List<Group> _groups = new ArrayList<Group>();
+
 	private int _readCount = 10000;
 
 }

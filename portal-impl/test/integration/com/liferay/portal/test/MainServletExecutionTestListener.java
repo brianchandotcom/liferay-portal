@@ -17,10 +17,12 @@ package com.liferay.portal.test;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
 import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.PersistedModel;
@@ -204,6 +206,8 @@ public class MainServletExecutionTestListener
 		MockServletContext mockServletContext =
 			new AutoDeployMockServletContext(
 				getResourceBasePath(), new FileSystemResourceLoader());
+
+		ServletContextPool.put(StringPool.BLANK, mockServletContext);
 
 		MockServletConfig mockServletConfig = new MockServletConfig(
 			mockServletContext);

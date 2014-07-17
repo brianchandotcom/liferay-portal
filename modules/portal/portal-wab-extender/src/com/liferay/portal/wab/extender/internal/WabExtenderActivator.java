@@ -20,12 +20,17 @@ import com.liferay.portal.wab.extender.internal.handler.WabURLStreamHandlerServi
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+import javax.servlet.ServletContext;
+
 import org.apache.felix.fileinstall.ArtifactUrlTransformer;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.url.URLConstants;
 import org.osgi.service.url.URLStreamHandlerService;
 
@@ -33,16 +38,19 @@ import org.osgi.service.url.URLStreamHandlerService;
  * @author Miguel Pastor
  * @author Raymond Augé
  */
-public class WabExtenderActivator implements BundleActivator {
+@Component(
+	immediate = true
+)
+public class WabExtenderActivator {
 
-	@Override
+	@Activate
 	public void start(BundleContext bundleContext) throws Exception {
 		registerURLStreamHandlerService(bundleContext);
 
 		registerArtifactUrlTransformer(bundleContext);
 	}
 
-	@Override
+	@Deactivate
 	public void stop(BundleContext bundleContext) throws Exception {
 		_serviceRegistration.unregister();
 
@@ -75,6 +83,22 @@ public class WabExtenderActivator implements BundleActivator {
 			properties);
 	}
 
+	/*
+	 * This reference is held to force a dependency on the portal's complete
+	 * startup.
+	 */
+	@Reference(
+		target = "(original.bean=*)"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
+	protected void unsetServletContext(ServletContext servletContext) {
+		_servletContext = null;
+	}
+
+	private ServletContext _servletContext;
 	private ServiceRegistration<ArtifactUrlTransformer> _serviceRegistration;
 
 }

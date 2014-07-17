@@ -14,13 +14,14 @@
 
 package com.liferay.portlet.social.service.persistence;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
@@ -29,8 +30,9 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
-import com.liferay.portal.test.TransactionalTestRule;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.rule.NonDelegatedHibernateSessionTestRule;
+import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.RandomTestUtil;
 
@@ -43,8 +45,10 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
+
+import org.junit.rules.TestRule;
 
 import org.junit.runner.RunWith;
 
@@ -60,21 +64,22 @@ import java.util.Set;
 /**
  * @author Brian Wing Shun Chan
  */
-@RunWith(LiferayPersistenceIntegrationJUnitTestRunner.class)
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class SocialActivityAchievementPersistenceTest {
+	@Rule
+	public TestRule testRule = new NonDelegatedHibernateSessionTestRule();
+
 	@BeforeClass
 	public static void setupClass() throws TemplateException {
+		try {
+			DBUpgrader.upgrade();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
 		TemplateManagerUtil.init();
-
-		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = false;
 	}
-
-	public static void tearDownClass() {
-		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = true;
-	}
-
-	@ClassRule
-	public static TransactionalTestRule transactionalTestRule = new TransactionalTestRule();
 
 	@Before
 	public void setUp() {
@@ -537,7 +542,8 @@ public class SocialActivityAchievementPersistenceTest {
 		return socialActivityAchievement;
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(SocialActivityAchievementPersistenceTest.class);
 	private List<SocialActivityAchievement> _socialActivityAchievements = new ArrayList<SocialActivityAchievement>();
 	private ModelListener<SocialActivityAchievement>[] _modelListeners;
-	private SocialActivityAchievementPersistence _persistence = (SocialActivityAchievementPersistence)PortalBeanLocatorUtil.locate(SocialActivityAchievementPersistence.class.getName());
+	private SocialActivityAchievementPersistence _persistence = SocialActivityAchievementUtil.getPersistence();
 }

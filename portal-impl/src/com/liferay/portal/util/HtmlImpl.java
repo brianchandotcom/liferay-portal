@@ -504,9 +504,9 @@ public class HtmlImpl implements Html {
 			return null;
 		}
 
-		Matcher matcher = _newlinePattern.matcher(html);
+		html = StringUtil.replace(html, StringPool.RETURN_NEW_LINE, "<br />");
 
-		return matcher.replaceAll("<br />");
+		return StringUtil.replace(html, StringPool.NEW_LINE, "<br />");
 	}
 
 	/**
@@ -806,7 +806,6 @@ public class HtmlImpl implements Html {
 		'(', ')', '[', ']', '.', '@', ',', ':', '/', '|', '+', '-', '=', '!',
 		'<', '>', '*', '$', '"', '"', ' ', 9, 10, 13, 133, 8232};
 
-	private Pattern _newlinePattern = Pattern.compile("\r?\n");
 	private Pattern _pattern = Pattern.compile("([\\s<&]|$)");
 
 }

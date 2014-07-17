@@ -511,9 +511,9 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		}
 
 		if (data.length() > 0) {
-			Matcher matcher = _newLinePattern.matcher(data);
-
-			data = matcher.replaceAll("<br />");
+			data = StringUtil.replace(
+				data, StringPool.RETURN_NEW_LINE, "<br />");
+			data = StringUtil.replace(data, StringPool.NEW_LINE, "<br />");
 		}
 
 		return data;
@@ -754,7 +754,6 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		"^(?:https?://|/)[-;/?:@&=+$,_.!~*'()%0-9a-z]{1,512}$",
 		Pattern.CASE_INSENSITIVE);
 	private Map<String, String> _listStyles;
-	private Pattern _newLinePattern = Pattern.compile("\r?\n");
 	private Pattern _tagPattern = Pattern.compile(
 		"^/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|" +
 			"right|\\*|s|size|table|tr|th|td|li|list|font|u|url)$",

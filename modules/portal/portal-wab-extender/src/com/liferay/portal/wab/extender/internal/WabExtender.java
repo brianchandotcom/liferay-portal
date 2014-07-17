@@ -41,7 +41,7 @@ import org.osgi.service.url.URLStreamHandlerService;
 @Component(
 	immediate = true
 )
-public class WabExtenderActivator {
+public class WabExtender {
 
 	@Activate
 	public void start(BundleContext bundleContext) throws Exception {

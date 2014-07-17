@@ -64,11 +64,8 @@ public class ComboServletStaticURLGenerator {
 					else {
 						sb.append(StringPool.AMPERSAND);
 
-						if (!portletResourceAccessor.isPortalResource()) {
-							sb.append(portlet.getPortletId());
-							sb.append(StringPool.COLON);
-						}
-
+						sb.append(portlet.getPortletId());
+						sb.append(StringPool.COLON);
 						sb.append(HtmlUtil.escape(portletResource));
 
 						timestamp = Math.max(timestamp, portlet.getTimestamp());

@@ -8,16 +8,6 @@
 	<info module="${plugin.name}" organisation="com.liferay" />
 
 	<dependencies defaultconf="default">
-		<dependency name="javax.servlet.jsp.jstl" org="org.eclipse.jetty.orbit" rev="1.2.0.v201105211821" />
-		<dependency name="jetty-continuation" org="org.eclipse.jetty" rev="7.6.7.v20120910" />
-		<dependency name="jetty-http" org="org.eclipse.jetty" rev="7.6.7.v20120910" />
-		<dependency name="jetty-io" org="org.eclipse.jetty" rev="7.6.7.v20120910" />
-		<dependency name="jetty-security" org="org.eclipse.jetty" rev="7.6.7.v20120910" />
-		<dependency name="jetty-server" org="org.eclipse.jetty" rev="7.6.7.v20120910" />
-		<dependency name="jetty-servlet" org="org.eclipse.jetty" rev="7.6.7.v20120910" />
-		<dependency name="jetty-util" org="org.eclipse.jetty" rev="7.6.7.v20120910" />
-		<dependency name="jetty-websocket" org="org.eclipse.jetty" rev="7.6.7.v20120910" />
-		<dependency name="org.apache.jasper.glassfish" org="org.eclipse.jetty.orbit" rev="2.1.0.v201110031002" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 		<dependency name="phidias" org="com.github.rotty3000" rev="0.3.2" />
 	</dependencies>

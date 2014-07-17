@@ -65,7 +65,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Sampsa Sohlman
@@ -75,7 +74,7 @@ import org.powermock.api.mockito.PowerMockito;
 		MainServletExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class TrashEntryLocalServiceCheckEntriesTest  extends PowerMockito {
+public class TrashEntryLocalServiceCheckEntriesTest {
 
 	@Before
 	public void setUp() throws Exception {

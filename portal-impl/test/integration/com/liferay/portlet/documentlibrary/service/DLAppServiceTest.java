@@ -92,19 +92,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-
-		_fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(),
-			"Test DLAppService.txt");
-
-		_users = new User[ServiceTestUtil.THREAD_COUNT];
-
-		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
-			User user = UserTestUtil.addUser(
-				"DLAppServiceTest" + (i + 1), group.getGroupId());
-
-			_users[i] = user;
-		}
 	}
 
 	@After
@@ -147,6 +134,15 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	)
 	@Test
 	public void testAddFileEntriesConcurrently() throws Exception {
+		_users = new User[ServiceTestUtil.THREAD_COUNT];
+
+		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
+			User user = UserTestUtil.addUser(
+				"DLAppServiceTest" + (i + 1), group.getGroupId());
+
+			_users[i] = user;
+		}
+
 		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[_users.length];
 
 		_fileEntryIds = new long[_users.length];
@@ -195,6 +191,10 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testAddFileEntryWithDuplicateName() throws Exception {
+		_fileEntry = DLAppTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId(),
+			"Test DLAppService.txt");
+
 		addFileEntry(false);
 
 		try {
@@ -224,6 +224,10 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		long folderId = parentFolder.getFolderId();
 		String description = StringPool.BLANK;
 		String changeLog = StringPool.BLANK;
+
+		_fileEntry = DLAppTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId(),
+			"Test DLAppService.txt");
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());

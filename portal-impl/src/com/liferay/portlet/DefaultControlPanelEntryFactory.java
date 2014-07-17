@@ -16,54 +16,34 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Peter Fellwock
  */
 public class DefaultControlPanelEntryFactory {
 
 	public static ControlPanelEntry getInstance() {
-		return _controlPanelEntry;
+		return _instance._serviceTracker.getService();
 	}
 
-	public static void setInstance(ControlPanelEntry controlPanelEntry) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Set " + ClassUtil.getClassName(controlPanelEntry));
-		}
+	private DefaultControlPanelEntryFactory() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		if (controlPanelEntry == null) {
-			_controlPanelEntry = _originalControlPanelEntry;
-		}
-		else {
-			_controlPanelEntry = controlPanelEntry;
-		}
-	}
+		_serviceTracker = registry.trackServices(ControlPanelEntry.class);
 
-	public void afterPropertiesSet() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Instantiate " +
-					PropsValues.CONTROL_PANEL_DEFAULT_ENTRY_CLASS);
-		}
-
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		_originalControlPanelEntry =
-			(ControlPanelEntry)InstanceFactory.newInstance(
-				classLoader, PropsValues.CONTROL_PANEL_DEFAULT_ENTRY_CLASS);
-
-		_controlPanelEntry = _originalControlPanelEntry;
+		_serviceTracker.open();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		DefaultControlPanelEntryFactory.class);
 
-	private static volatile ControlPanelEntry _controlPanelEntry;
-	private static ControlPanelEntry _originalControlPanelEntry;
+	private static DefaultControlPanelEntryFactory _instance =
+	new DefaultControlPanelEntryFactory();
 
+	private ServiceTracker<?, ControlPanelEntry> _serviceTracker;
 }

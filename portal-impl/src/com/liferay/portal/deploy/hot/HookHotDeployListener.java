@@ -131,7 +131,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.ControlPanelEntry;
-import com.liferay.portlet.DefaultControlPanelEntryFactory;
 import com.liferay.portlet.assetpublisher.util.AssetEntryQueryProcessor;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScanner;
@@ -487,12 +486,6 @@ public class HookHotDeployListener
 			}
 
 			captchaImpl.setCaptcha(null);
-		}
-
-		if (portalProperties.containsKey(
-				PropsKeys.CONTROL_PANEL_DEFAULT_ENTRY_CLASS)) {
-
-			DefaultControlPanelEntryFactory.setInstance(null);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.DL_FILE_ENTRY_PROCESSORS)) {
@@ -1602,7 +1595,8 @@ public class HookHotDeployListener
 					portletClassLoader, ControlPanelEntry.class,
 					controlPanelEntryClassName);
 
-			DefaultControlPanelEntryFactory.setInstance(controlPanelEntry);
+			registerService(servletContextName, controlPanelEntryClassName,
+				ControlPanelEntry.class, controlPanelEntry);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.DL_FILE_ENTRY_PROCESSORS)) {

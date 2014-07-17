@@ -17,16 +17,15 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
-long selPlid = layoutsAdminDisplayContext.getSelPlid();
 
+boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
 long parentPlid = LayoutConstants.DEFAULT_PLID;
 long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
 if (layout.isTypeControlPanel()) {
-	if (selPlid != 0) {
-		selLayout = LayoutLocalServiceUtil.getLayout(selPlid);
+	if (layoutsAdminDisplayContext.getSelPlid() != 0) {
+		selLayout = LayoutLocalServiceUtil.getLayout(layoutsAdminDisplayContext.getSelPlid());
 
 		privateLayout = selLayout.isPrivateLayout();
 		parentPlid = selLayout.getPlid();

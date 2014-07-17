@@ -65,7 +65,10 @@
 		</if>
 
 		<execute macro="Page#gotoContentCP">
+			<var name="pageAccess" value="Private" />
 			<var name="portletName" value="Recycle Bin" />
+			<var name="siteName" value="test" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="RecycleBin#emptyCP" />

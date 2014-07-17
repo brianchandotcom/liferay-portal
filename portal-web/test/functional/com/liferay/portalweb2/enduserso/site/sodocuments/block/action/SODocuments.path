@@ -127,6 +127,22 @@
 	<td>//div[contains(@id,'documentLibraryCommentsPanel')][${key_commentRow}]//div[@class='lfr-discussion first']//div[@class='lfr-discussion-message']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCREENSHOTS-->
+<tr>
+	<td>SCREENSHOTS_DOCUMENTS_MULTIPLE_THUMBNAILS_PNG</td>
+	<td>so/screenshots/documents/documents_multiple_thumbnails.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

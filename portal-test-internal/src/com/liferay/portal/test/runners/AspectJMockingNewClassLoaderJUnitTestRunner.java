@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.test.AdviseWith;
 
 import java.io.File;
 
@@ -27,7 +28,6 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import com.liferay.portal.test.AdviseWith;
 import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.runners.model.FrameworkMethod;

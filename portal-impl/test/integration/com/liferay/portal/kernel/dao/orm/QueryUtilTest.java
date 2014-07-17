@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.persistence.rule.NonDelegatedHibernateSessionTestRule;
+import com.liferay.portal.test.TransactionalTestRule;
 
 import java.util.List;
 
@@ -28,7 +28,6 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 /**
@@ -38,8 +37,8 @@ import org.junit.runner.RunWith;
 public class QueryUtilTest {
 
 	@ClassRule
-	public static TestRule testRule =
-		new NonDelegatedHibernateSessionTestRule();
+	public static TransactionalTestRule transactionalTestRule =
+		new TransactionalTestRule();
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

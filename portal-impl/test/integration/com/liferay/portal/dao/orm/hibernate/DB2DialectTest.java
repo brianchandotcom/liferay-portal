@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.persistence.rule.NonDelegatedHibernateSessionTestRule;
+import com.liferay.portal.test.TransactionalTestRule;
 
 import java.util.List;
 
@@ -31,7 +31,6 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 /**
@@ -41,8 +40,8 @@ import org.junit.runner.RunWith;
 public class DB2DialectTest {
 
 	@ClassRule
-	public static TestRule testRule =
-		new NonDelegatedHibernateSessionTestRule();
+	public static TransactionalTestRule transactionalTestRule =
+		new TransactionalTestRule();
 
 	@Before
 	public void setUp() throws Exception {

@@ -295,7 +295,7 @@ AUI.add(
 				var content = instance._content;
 				var node = A.one(instance._node);
 
-				var notice = node || ANode.create('<div class="alert" dynamic="true"></div>');
+				var notice = node || ANode.create('<div class="alert alert-warning" dynamic="true"></div>');
 
 				if (content) {
 					notice.html(content);

@@ -530,7 +530,7 @@ AUI.add(
 
 						banner.replaceClass('popup-alert-notice', 'popup-alert-warning');
 
-						banner.addClass('alert-danger');
+						banner.replaceClass('alert-warning', 'alert-danger');
 
 						banner.show();
 

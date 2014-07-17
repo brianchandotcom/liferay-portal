@@ -32,9 +32,6 @@ if (layout.isTypeControlPanel()) {
 		parentPlid = selLayout.getPlid();
 		parentLayoutId = selLayout.getLayoutId();
 	}
-	else {
-		privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
-	}
 }
 else {
 	selLayout = layout;

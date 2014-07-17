@@ -26,11 +26,17 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * You'll find documentation for the behaviour of many of the methods in this
+ * class by looking up the equivalent descriptions in {@link LanguageImpl}  
+ * 
  * @author Brian Wing Shun Chan
  */
 @DoPrivileged
 public class UnicodeLanguageImpl implements UnicodeLanguage {
 
+	/**
+	 * @see {@link LanguageImpl.format(HttpServletRequest, String, LanguageWrapper)}
+	 */
 	@Override
 	public String format(
 		HttpServletRequest request, String pattern, LanguageWrapper argument) {
@@ -39,6 +45,9 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 			LanguageUtil.format(request, pattern, argument));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.format(HttpServletRequest, String, LanguageWrapper, boolean)}
+	 */
 	@Override
 	public String format(
 		HttpServletRequest request, String pattern, LanguageWrapper argument,
@@ -49,6 +58,9 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 				request, pattern, argument, translateArguments));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.format(HttpServletRequest, String, LanguageWrapper[])}
+	 */
 	@Override
 	public String format(
 		HttpServletRequest request, String pattern,
@@ -58,6 +70,9 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 			LanguageUtil.format(request, pattern, arguments));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.format(HttpServletRequest, String, LanguageWrapper[], boolean)}
+	 */
 	@Override
 	public String format(
 		HttpServletRequest request, String pattern, LanguageWrapper[] arguments,
@@ -68,6 +83,9 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 				request, pattern, arguments, translateArguments));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.format(HttpServletRequest, String, Object)}
+	 */
 	@Override
 	public String format(
 		HttpServletRequest request, String pattern, Object argument) {
@@ -76,6 +94,9 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 			LanguageUtil.format(request, pattern, argument));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.format(HttpServletRequest, String, Object, boolean)}
+	 */
 	@Override
 	public String format(
 		HttpServletRequest request, String pattern, Object argument,
@@ -86,6 +107,9 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 				request, pattern, argument, translateArguments));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.format(HttpServletRequest, String, Object[])}
+	 */
 	@Override
 	public String format(
 		HttpServletRequest request, String pattern, Object[] arguments) {
@@ -94,6 +118,9 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 			LanguageUtil.format(request, pattern, arguments));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.format(HttpServletRequest, String, Object[], boolean)}
+	 */
 	@Override
 	public String format(
 		HttpServletRequest request, String pattern, Object[] arguments,
@@ -104,12 +131,18 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 				request, pattern, arguments, translateArguments));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.format(Locale, String, Object)}
+	 */
 	@Override
 	public String format(Locale locale, String pattern, Object argument) {
 		return UnicodeFormatter.toString(
 			LanguageUtil.format(locale, pattern, argument));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.format(Locale, String, Object, boolean)}
+	 */
 	@Override
 	public String format(
 		Locale locale, String pattern, Object argument,
@@ -119,12 +152,18 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 			LanguageUtil.format(locale, pattern, argument, translateArguments));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.format(Locale, String, Object[])}
+	 */
 	@Override
 	public String format(Locale locale, String pattern, Object[] arguments) {
 		return UnicodeFormatter.toString(
 			LanguageUtil.format(locale, pattern, arguments));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.format(Locale, String, Object[], boolean)}
+	 */
 	@Override
 	public String format(
 		Locale locale, String pattern, Object[] arguments,
@@ -135,6 +174,9 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 				locale, pattern, arguments, translateArguments));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.format(ResourceBundle, String, Object)}
+	 */
 	@Override
 	public String format(
 		ResourceBundle resourceBundle, String pattern, Object argument) {
@@ -143,6 +185,9 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 			LanguageUtil.format(resourceBundle, pattern, argument));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.format(ResourceBundle, String, Object, boolean)}
+	 */
 	@Override
 	public String format(
 		ResourceBundle resourceBundle, String pattern, Object argument,
@@ -153,6 +198,9 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 				resourceBundle, pattern, argument, translateArguments));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.format(ResourceBundle, String, Object[])}
+	 */
 	@Override
 	public String format(
 		ResourceBundle resourceBundle, String pattern, Object[] arguments) {
@@ -161,6 +209,9 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 			LanguageUtil.format(resourceBundle, pattern, arguments));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.format(ResourceBundle, String, Object[], boolean)}
+	 */
 	@Override
 	public String format(
 		ResourceBundle resourceBundle, String pattern, Object[] arguments,
@@ -171,11 +222,17 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 				resourceBundle, pattern, arguments, translateArguments));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.get(HttpServletRequest, String)}
+	 */
 	@Override
 	public String get(HttpServletRequest request, String key) {
 		return UnicodeFormatter.toString(LanguageUtil.get(request, key));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.get(HttpServletRequest, String, String)}
+	 */
 	@Override
 	public String get(
 		HttpServletRequest request, String key, String defaultValue) {
@@ -184,22 +241,34 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 			LanguageUtil.get(request, key, defaultValue));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.get(Locale, String)}
+	 */
 	@Override
 	public String get(Locale locale, String key) {
 		return UnicodeFormatter.toString(LanguageUtil.get(locale, key));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.get(Locale, String, String)}
+	 */
 	@Override
 	public String get(Locale locale, String key, String defaultValue) {
 		return UnicodeFormatter.toString(
 			LanguageUtil.get(locale, key, defaultValue));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.get(ResourceBundle, String)}
+	 */
 	@Override
 	public String get(ResourceBundle resourceBundle, String key) {
 		return UnicodeFormatter.toString(LanguageUtil.get(resourceBundle, key));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.get(ResourceBundle, String, String)}
+	 */
 	@Override
 	public String get(
 		ResourceBundle resourceBundle, String key, String defaultValue) {
@@ -208,6 +277,9 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 			LanguageUtil.get(resourceBundle, key, defaultValue));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.getTimeDescription(HttpServletRequest, long)
+	 */
 	@Override
 	public String getTimeDescription(
 		HttpServletRequest request, long milliseconds) {
@@ -216,6 +288,9 @@ public class UnicodeLanguageImpl implements UnicodeLanguage {
 			LanguageUtil.getTimeDescription(request, milliseconds));
 	}
 
+	/**
+	 * @see {@link LanguageImpl.getTimeDescription(HttpServletRequest, Long)
+	 */
 	@Override
 	public String getTimeDescription(
 		HttpServletRequest request, Long milliseconds) {

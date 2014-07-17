@@ -15,7 +15,7 @@
 package com.liferay.portal.format;
 
 import com.liferay.portal.kernel.format.PhoneNumberFormat;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 
 import org.junit.runner.RunWith;
 

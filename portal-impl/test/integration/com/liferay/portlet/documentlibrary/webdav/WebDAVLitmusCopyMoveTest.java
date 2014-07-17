@@ -16,7 +16,7 @@ package com.liferay.portlet.documentlibrary.webdav;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.webdav.methods.Method;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 
 import javax.servlet.http.HttpServletResponse;
 

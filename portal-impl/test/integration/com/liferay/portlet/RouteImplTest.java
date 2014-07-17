@@ -15,7 +15,7 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.portlet.Route;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 
 import java.util.HashMap;
 import java.util.Map;

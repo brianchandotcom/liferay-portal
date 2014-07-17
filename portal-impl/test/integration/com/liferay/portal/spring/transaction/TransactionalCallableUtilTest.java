@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.persistence.ClassNameUtil;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.util.PwdGenerator;
 
 import java.util.concurrent.Callable;

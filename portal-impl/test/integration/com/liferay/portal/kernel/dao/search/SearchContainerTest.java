@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.dao.search;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 
 import javax.portlet.PortletRequest;

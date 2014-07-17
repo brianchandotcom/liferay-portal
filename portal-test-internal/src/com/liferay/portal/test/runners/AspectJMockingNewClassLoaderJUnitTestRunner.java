@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.test;
+package com.liferay.portal.test.runners;
 
 import com.liferay.portal.aspectj.WeavingClassLoader;
 import com.liferay.portal.kernel.process.ClassPathUtil;
@@ -27,6 +27,7 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.liferay.portal.test.AdviseWith;
 import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.runners.model.FrameworkMethod;

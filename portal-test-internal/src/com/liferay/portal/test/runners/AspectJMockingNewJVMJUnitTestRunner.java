@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.test;
+package com.liferay.portal.test.runners;
 
 import com.liferay.portal.aspectj.WeavingClassLoader;
 import com.liferay.portal.kernel.process.ClassPathUtil;
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.AdviseWith;
 import com.liferay.util.SerializableUtil;
 
 import java.io.File;

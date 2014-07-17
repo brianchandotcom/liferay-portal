@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.wiki.translators;
 
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 
 import org.junit.Assert;
 import org.junit.Test;

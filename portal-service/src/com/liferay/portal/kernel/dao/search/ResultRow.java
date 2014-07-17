@@ -54,16 +54,16 @@ public interface ResultRow {
 	public void addJSP(int index, String path);
 
 	public void addJSP(
-		int index, String path, ServletContext servletContext,
-		HttpServletRequest request, HttpServletResponse response);
-
-	public void addJSP(
 		int index, String align, String valign, int colspan, String path);
 
 	public void addJSP(
 		int index, String align, String valign, int colspan, String path,
-		ServletContext servletContext, HttpServletRequest request,
-		HttpServletResponse response);
+		String cssClass, ServletContext servletContext,
+		HttpServletRequest request, HttpServletResponse response);
+
+	public void addJSP(
+		int index, String path, String cssClass, ServletContext servletContext,
+		HttpServletRequest request, HttpServletResponse response);
 
 	public void addJSP(String path);
 
@@ -79,6 +79,10 @@ public interface ResultRow {
 		String align, String valign, int colspan, String path,
 		ServletContext servletContext, HttpServletRequest request,
 		HttpServletResponse response);
+
+	public void addJSP(
+		String path, String cssClass, ServletContext servletContext,
+		HttpServletRequest request, HttpServletResponse response);
 
 	public void addJSP(String align, String valign, String path);
 

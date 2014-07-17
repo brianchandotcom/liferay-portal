@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.util.ArrayList;
@@ -207,8 +208,8 @@ public class SanitizerLogWrapper extends LogWrapper {
 			String sanitizedMessage = new String(chars);
 
 			if (escapeHTML) {
-				sanitizedMessage = sanitizedMessage.replaceAll(
-					StringPool.LESS_THAN, _LESS_THAN_ESCAPED);
+				sanitizedMessage = StringUtil.replace(
+					sanitizedMessage, StringPool.LESS_THAN, _LESS_THAN_ESCAPED);
 			}
 
 			sanitizedMessage = sanitizedMessage.concat(_SANITIZED);

@@ -4861,10 +4861,8 @@ public class ServiceBuilder {
 				for (EntityColumn column : columnList) {
 					String name = column.getName();
 
-					if (finderWhere.contains(name)) {
-						finderWhere = finderWhere.replaceAll(
-							name, alias + "." + name);
-					}
+					finderWhere = StringUtil.replace(
+						finderWhere, name, alias + "." + name);
 				}
 			}
 

@@ -504,7 +504,9 @@ public class HtmlImpl implements Html {
 			return null;
 		}
 
-		return html.replaceAll("\r?\n", "<br />");
+		html = StringUtil.replace(html, StringPool.RETURN_NEW_LINE, "<br />");
+
+		return StringUtil.replace(html, StringPool.NEW_LINE, "<br />");
 	}
 
 	/**

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.wiki.translators;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.wiki.importers.mediawiki.MediaWikiImporter;
@@ -165,8 +166,14 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 
 		// Remove HTML tags
 
-		for (int i = 0; i < _HTML_TAGS.length; i++) {
-			content = content.replaceAll(_HTML_TAGS[i], StringPool.BLANK);
+		for (Pattern pattern : _HTML_TAG_PATTERNS) {
+			matcher = pattern.matcher(content);
+
+			content = matcher.replaceAll(StringPool.BLANK);
+		}
+
+		for (String htmlTag : _HTML_TAGS) {
+			content = StringUtil.replace(content, htmlTag, StringPool.BLANK);
 		}
 
 		// Images
@@ -210,8 +217,8 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 
 			int imageLength = image.length();
 
-			image = image.replaceAll("\\[{2}", StringPool.BLANK);
-			image = image.replaceAll("\\]{2}", StringPool.BLANK);
+			image = StringUtil.replace(image, "[[", StringPool.BLANK);
+			image = StringUtil.replace(image, "]]", StringPool.BLANK);
 
 			sb.replace(
 				matcher.start(0) + offset,
@@ -241,18 +248,30 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 
 			originalLength = mediaWikiTable.length() + 4;
 
-			mediaWikiTable = mediaWikiTable.replaceAll(
-				"class=(.*?)[|\n\r]", StringPool.BLANK);
-			mediaWikiTable = mediaWikiTable.replaceAll("(\\|\\-)(.*)", "$1");
-			mediaWikiTable = mediaWikiTable.replaceAll(
-				"\\|\\+(.*)", "===$1===");
-			mediaWikiTable = mediaWikiTable.replaceAll("(?m)^!(.+)", "|=$1|");
-			mediaWikiTable = mediaWikiTable.replaceAll(
-				"[\n\r]", StringPool.BLANK);
-			mediaWikiTable = mediaWikiTable.replaceAll("\\|\\-", "\n\r");
-			mediaWikiTable = mediaWikiTable.replaceAll("\\|\\|", "|");
-			mediaWikiTable = mediaWikiTable.replaceAll(
-				"/{4}", StringPool.BLANK);
+			Matcher matcher1 = pattern1.matcher(mediaWikiTable);
+
+			mediaWikiTable = matcher1.replaceAll(StringPool.BLANK);
+
+			Matcher matcher2 = pattern2.matcher(mediaWikiTable);
+
+			mediaWikiTable = matcher2.replaceAll("$1");
+
+			Matcher matcher3 = pattern3.matcher(mediaWikiTable);
+
+			mediaWikiTable = matcher3.replaceAll("===$1===");
+
+			Matcher matcher4 = pattern4.matcher(mediaWikiTable);
+
+			mediaWikiTable = matcher4.replaceAll("|=$1|");
+
+			mediaWikiTable = StringUtil.replace(
+				mediaWikiTable, CharPool.NEW_LINE, StringPool.BLANK);
+			mediaWikiTable = StringUtil.replace(
+				mediaWikiTable, CharPool.RETURN, StringPool.BLANK);
+			mediaWikiTable = StringUtil.replace(mediaWikiTable, "|-", "\n\r");
+			mediaWikiTable = StringUtil.replace(mediaWikiTable, "||", "|");
+			mediaWikiTable = StringUtil.replace(
+				mediaWikiTable, "////", StringPool.BLANK);
 
 			sb.replace(
 				matcher.start(0) + offset,
@@ -282,11 +301,14 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 		return TABLE_OF_CONTENTS + super.postProcess(sb.toString());
 	}
 
+	private static final Pattern[] _HTML_TAG_PATTERNS = {
+		Pattern.compile("<div[^>]*>"), Pattern.compile("<font[^>]*>")};
+
 	private static final String[] _HTML_TAGS = {
 		"<blockquote>", "</blockquote>", "<br>", "<br/>", "<br />", "<center>",
-		"</center>", "<cite>", "</cite>","<code>", "</code>", "<div[^>]*>",
-		"</div>", "<font[^>]*>", "</font>", "<hr>", "<hr/>", "<hr />", "<p>",
-		"</p>", "<tt>", "</tt>", "<var>", "</var>"
+		"</center>", "<cite>", "</cite>","<code>", "</code>", "</div>",
+		"</font>", "<hr>", "<hr/>", "<hr />", "<p>", "</p>", "<tt>", "</tt>",
+		"<var>", "</var>"
 	};
 
 	private Pattern _imagePattern = Pattern.compile(
@@ -298,5 +320,9 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 		"\\{\\|(.*?)\\|\\}", Pattern.DOTALL);
 	private Pattern _titlePattern = Pattern.compile(
 		"^=([^=]+)=", Pattern.MULTILINE);
+	private Pattern pattern1 = Pattern.compile("class=(.*?)[|\n\r]");
+	private Pattern pattern2 = Pattern.compile("(\\|\\-)(.*)");
+	private Pattern pattern3 = Pattern.compile("\\|\\+(.*)");
+	private Pattern pattern4 = Pattern.compile("(?m)^!(.+)");
 
 }

@@ -608,9 +608,9 @@ public class WikiUtil {
 	}
 
 	public static String processContent(String content) {
-		content = content.replaceAll("</p>", "</p>\n");
-		content = content.replaceAll("</br>", "</br>\n");
-		content = content.replaceAll("</div>", "</div>\n");
+		content = StringUtil.replace(content, "</p>", "</p>\n");
+		content = StringUtil.replace(content, "</br>", "</br>\n");
+		content = StringUtil.replace(content, "</div>", "</div>\n");
 
 		return content;
 	}

@@ -250,7 +250,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			bbCodeItems, marker, "code", BBCodeParser.TYPE_DATA, true);
 
 		code = HtmlUtil.escape(code);
-		code = code.replaceAll(StringPool.TAB, StringPool.FOUR_SPACES);
+		code = StringUtil.replace(code, StringPool.TAB, StringPool.FOUR_SPACES);
 
 		String[] lines = code.split("\r?\n");
 
@@ -511,7 +511,9 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		}
 
 		if (data.length() > 0) {
-			data = data.replaceAll("\r?\n", "<br />");
+			data = StringUtil.replace(
+				data, StringPool.RETURN_NEW_LINE, "<br />");
+			data = StringUtil.replace(data, StringPool.NEW_LINE, "<br />");
 		}
 
 		return data;

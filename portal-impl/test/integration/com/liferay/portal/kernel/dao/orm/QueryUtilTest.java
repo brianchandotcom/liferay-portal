@@ -17,25 +17,29 @@ package com.liferay.portal.kernel.dao.orm;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.rule.NonDelegatedHibernateSessionTestRule;
 
 import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 /**
  * @author Sampsa Sohlman
  */
-@ExecutionTestListeners(listeners = { PersistenceExecutionTestListener.class })
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class QueryUtilTest {
+
+	@ClassRule
+	public static TestRule testRule =
+		new NonDelegatedHibernateSessionTestRule();
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

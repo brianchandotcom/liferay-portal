@@ -205,6 +205,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-invoke', 'liferay-inline-editor-base', 'overlay', 'node-event-simulate', 'yui-later']
+		requires: ['array-invoke', 'liferay-inline-editor-base', 'node-event-simulate', 'overlay', 'yui-later']
 	}
 );

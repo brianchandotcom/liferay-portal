@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
+Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 long groupId = selLayout.getGroupId();
 String className = Layout.class.getName();
@@ -27,9 +27,7 @@ long classPK = selLayout.getPlid();
 <%@ include file="/html/portlet/layouts_admin/layout/mobile_device_rules_header.jspf" %>
 
 <%
-String rootNodeName = (String)request.getAttribute("edit_pages.jsp-rootNodeName");
-
-PortletURL redirectURL = (PortletURL)request.getAttribute("edit_pages.jsp-redirectURL");
+PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 
 int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK);
 %>
@@ -37,10 +35,10 @@ int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupIns
 <liferay-util:buffer var="rootNodeNameLink">
 	<c:choose>
 		<c:when test="<%= themeDisplay.isStateExclusive() %>">
-			<%= HtmlUtil.escape(rootNodeName) %>
+			<%= HtmlUtil.escape(layoutsAdminDisplayContext.getRootNodeName()) %>
 		</c:when>
 		<c:otherwise>
-			<aui:a href='<%= redirectURL.toString() + "#tab=mobileDeviceRules" %>'><%= HtmlUtil.escape(rootNodeName) %></aui:a>
+			<aui:a href='<%= redirectURL.toString() + "#tab=mobileDeviceRules" %>'><%= HtmlUtil.escape(layoutsAdminDisplayContext.getRootNodeName()) %></aui:a>
 		</c:otherwise>
 	</c:choose>
 </liferay-util:buffer>

@@ -17,8 +17,7 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-Group group = (Group)request.getAttribute("edit_pages.jsp-group");
-Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
+Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 %>
@@ -32,6 +31,11 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 <liferay-ui:error exception="<%= ImageTypeException.class %>" message="please-enter-a-file-with-a-valid-file-type" />
 
 <aui:fieldset cssClass="lfr-portrait-editor">
+
+	<%
+	Group group = layoutsAdminDisplayContext.getGroup();
+	%>
+
 	<c:if test="<%= !group.isLayoutPrototype() %>">
 
 		<%

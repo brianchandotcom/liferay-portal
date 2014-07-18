@@ -27,20 +27,38 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 </portlet:actionURL>
 
 <aui:form action="<%= editRecordSetURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveRecordSet();" %>'>
-	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.ADD_RECORD) && editable %>">
 		<aui:nav-bar>
 			<aui:nav cssClass="navbar-nav">
-				<portlet:renderURL var="addRecordURL">
-					<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-					<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
-				</portlet:renderURL>
+				<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.ADD_RECORD) && editable %>">
+					<portlet:renderURL var="addRecordURL">
+						<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+						<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
+					</portlet:renderURL>
 
-				<aui:nav-item href="<%= addRecordURL %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>' />
+					<aui:nav-item href="<%= addRecordURL %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>' />
+				</c:if>
+
+				<portlet:resourceURL var="exportRecordSetURL">
+					<portlet:param name="struts_action" value="/dynamic_data_lists/export" />
+					<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+				</portlet:resourceURL>
+
+				<%
+				StringBundler sb = new StringBundler(6);
+
+				sb.append("javascript:");
+				sb.append(renderResponse.getNamespace());
+				sb.append("exportRecordSet");
+				sb.append("('");
+				sb.append(exportRecordSetURL);
+				sb.append("');");
+				%>
+
+				<aui:nav-item href="<%= sb.toString() %>" iconCssClass="icon-arrow-down" label="export" />
 			</aui:nav>
 		</aui:nav-bar>
-	</c:if>
 
 	<%= DDLUtil.getTemplateContent(displayDDMTemplateId, recordSet, themeDisplay, renderRequest, renderResponse) %>
 </aui:form>

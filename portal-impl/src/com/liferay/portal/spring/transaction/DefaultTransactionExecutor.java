@@ -16,7 +16,6 @@ package com.liferay.portal.spring.transaction;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -51,10 +50,6 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 		Object returnValue = null;
 
 		try {
-			if (newTransaction) {
-				LastSessionRecorderUtil.syncLastSessionState();
-			}
-
 			returnValue = methodInvocation.proceed();
 		}
 		catch (Throwable throwable) {

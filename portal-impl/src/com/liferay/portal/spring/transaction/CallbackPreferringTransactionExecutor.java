@@ -14,8 +14,6 @@
 
 package com.liferay.portal.spring.transaction;
 
-import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
-
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
@@ -108,10 +106,6 @@ public class CallbackPreferringTransactionExecutor
 			boolean rollback = false;
 
 			try {
-				if (newTransaction) {
-					LastSessionRecorderUtil.syncLastSessionState();
-				}
-
 				return _methodInvocation.proceed();
 			}
 			catch (Throwable throwable) {

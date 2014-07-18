@@ -332,8 +332,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
 
 		try {
-			return validateMissingReference(
-				uuid, portletDataContext.getCompanyId(), liveGroupId);
+			return validateMissingReference(uuid, liveGroupId);
 		}
 		catch (Exception e) {
 			return false;
@@ -593,9 +592,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			portletDataContext, referenceElement);
 	}
 
-	protected boolean validateMissingReference(
-		String uuid, long companyId, long groupId) {
-
+	protected boolean validateMissingReference(String uuid, long groupId) {
 		T existingStagedModel = fetchMissingReference(uuid, groupId);
 
 		if (existingStagedModel == null) {

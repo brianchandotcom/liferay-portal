@@ -350,7 +350,7 @@ public class TrashEntryLocalServiceTest {
 		return GroupLocalServiceUtil.updateGroup(group);
 	}
 
-	protected Group setTrashEntriesMaxAge(Group group, double days)
+	protected Group setTrashEntriesMaxAge(Group group, int days)
 		throws Exception {
 
 		UnicodeProperties typeSettingsProperties =

@@ -99,7 +99,7 @@ public class TrashEntryLocalServiceTest {
 	public void testGroupTrashDisabled() throws Exception {
 		Group group = createGroup(TestPropsValues.getCompanyId());
 
-		createFileEntriesAndMoveThemToTrash(group.getGroupId(), 5, 0);
+		createFileEntryTrash(group.getGroupId(), 0);
 
 		setTrashEnableForGroup(group, false);
 
@@ -148,13 +148,13 @@ public class TrashEntryLocalServiceTest {
 	public void testOneGroup() throws Exception {
 		Group group = createGroup(TestPropsValues.getCompanyId());
 
-		createFileEntriesAndMoveThemToTrash(group.getGroupId(), 5, 500);
-		createFileEntriesAndMoveThemToTrash(group.getGroupId(), 5, 0);
+		createFileEntryTrash(group.getGroupId(), 500);
+		createFileEntryTrash(group.getGroupId(), 0);
 
 		TrashEntryLocalServiceUtil.checkEntries();
 
 		Assert.assertEquals(
-			5, TrashEntryLocalServiceUtil.getTrashEntriesCount());
+			1, TrashEntryLocalServiceUtil.getTrashEntriesCount());
 	}
 
 	@Test
@@ -215,7 +215,7 @@ public class TrashEntryLocalServiceTest {
 
 		Group stagingGroup = group.getStagingGroup();
 
-		createFileEntriesAndMoveThemToTrash(stagingGroup.getGroupId(), 5, 0);
+		createFileEntryTrash(stagingGroup.getGroupId(), 0);
 
 		TrashEntryLocalServiceUtil.checkEntries();
 
@@ -255,50 +255,45 @@ public class TrashEntryLocalServiceTest {
 		return company.getCompanyId();
 	}
 
-	protected void createFileEntriesAndMoveThemToTrash(
-			long groupId, int count, int reduceDays)
+	protected void createFileEntryTrash(long groupId, int reduceDays)
 		throws Exception {
 
-		createFileEntriesAndMoveThemToTrash(groupId, count, reduceDays, 0);
+		createFileEntryTrash(groupId, reduceDays, 0);
 	}
 
-	protected void createFileEntriesAndMoveThemToTrash(
-			long groupId, int count, int reduceDays, int reduceMinutes)
+	protected void createFileEntryTrash(
+			long groupId, int reduceDays, int reduceMinutes)
 		throws Exception {
 
-		for (int i = 0; i < count; i++) {
-			FileEntry fileEntry =
-				DLAppTestUtil.addFileEntry(
-					groupId, groupId,
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		FileEntry fileEntry =
+			DLAppTestUtil.addFileEntry(
+				groupId, groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-			User user = UserTestUtil.getAdminUser(fileEntry.getCompanyId());
+		User user = UserTestUtil.getAdminUser(fileEntry.getCompanyId());
 
-			DLAppLocalServiceUtil.moveFileEntryToTrash(
-				user.getUserId(), fileEntry.getFileEntryId());
+		DLAppLocalServiceUtil.moveFileEntryToTrash(
+			user.getUserId(), fileEntry.getFileEntryId());
+
+		if (reduceDays > 0) {
+			TrashEntry trashEntry =
+				TrashEntryLocalServiceUtil.getEntry(
+					DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+
+			Date createDate = trashEntry.getCreateDate();
+
+			DateTime dateTime = new DateTime(createDate.getTime());
 
 			if (reduceDays > 0) {
-				TrashEntry trashEntry =
-					TrashEntryLocalServiceUtil.getEntry(
-						DLFileEntry.class.getName(),
-						fileEntry.getFileEntryId());
-
-				Date createDate = trashEntry.getCreateDate();
-
-				DateTime dateTime = new DateTime(createDate.getTime());
-
-				if (reduceDays > 0) {
-					dateTime = dateTime.plusDays(-reduceDays);
-				}
-
-				if (reduceMinutes > 0) {
-					dateTime = dateTime.plusMinutes(-reduceMinutes);
-				}
-
-				trashEntry.setCreateDate(dateTime.toDate());
-
-				TrashEntryLocalServiceUtil.updateTrashEntry(trashEntry);
+				dateTime = dateTime.plusDays(-reduceDays);
 			}
+
+			if (reduceMinutes > 0) {
+				dateTime = dateTime.plusMinutes(-reduceMinutes);
+			}
+
+			trashEntry.setCreateDate(dateTime.toDate());
+
+			TrashEntryLocalServiceUtil.updateTrashEntry(trashEntry);
 		}
 	}
 
@@ -328,12 +323,12 @@ public class TrashEntryLocalServiceTest {
 	protected int createTrashEntriesForTwoDaysExpiryTest(Group group)
 		throws Exception {
 
-		createFileEntriesAndMoveThemToTrash(group.getGroupId(), 5, 1);
-		createFileEntriesAndMoveThemToTrash(group.getGroupId(), 5, 1, 1400);
-		createFileEntriesAndMoveThemToTrash(group.getGroupId(), 5, 2, 1);
-		createFileEntriesAndMoveThemToTrash(group.getGroupId(), 5, 3);
+		createFileEntryTrash(group.getGroupId(), 1);
+		createFileEntryTrash(group.getGroupId(), 1, 1400);
+		createFileEntryTrash(group.getGroupId(), 2, 1);
+		createFileEntryTrash(group.getGroupId(), 3);
 
-		return 10;
+		return 2;
 	}
 
 	protected Group setTrashEnableForGroup(Group group, boolean value)

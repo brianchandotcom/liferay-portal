@@ -2,14 +2,6 @@
 @import "mixins";
 
 .portlet-document-library, .portlet-dynamic-data-mapping {
-	.diagram-builder-drop-container {
-		overflow: auto;
-	}
-
-	.diagram-builder-field-icon {
-		font-size: 24px;
-	}
-
 	.field-labels-inline {
 		clear: both;
 		display: block;
@@ -22,6 +14,16 @@
 	.field {
 		.field-content {
 			clear: both;
+		}
+	}
+
+	.form-builder {
+		.property-builder-drop-container, .tab-pane {
+			min-height: 500px;
+
+			@include respond-to(phone) {
+				min-height: 100px;
+			}
 		}
 	}
 
@@ -147,6 +149,18 @@
 
 		.form-builder-source {
 			position: relative;
+		}
+	}
+
+	.property-builder-drop-container {
+		overflow: auto;
+	}
+
+	.property-builder-field {
+		padding: 5px 0;
+
+		.property-builder-field-icon {
+			font-size: 24px;
 		}
 	}
 }

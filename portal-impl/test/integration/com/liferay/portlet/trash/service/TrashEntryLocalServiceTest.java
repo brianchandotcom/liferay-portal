@@ -52,6 +52,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,14 +92,14 @@ public class TrashEntryLocalServiceTest {
 
 		Group group = setTrashEntriesMaxAge(createGroup(companyId), 2);
 
-		verifyCleanUpAfterTwoDays(group);
+		doTestCleanUp(group);
 	}
 
 	@Test
 	public void testGroupTrashDisabled() throws Exception {
 		Group group = createGroup(TestPropsValues.getCompanyId());
 
-		createFileEntryTrash(group.getGroupId(), 0);
+		createFileEntryTrash(group, false);
 
 		setTrashEnableForGroup(group, false);
 
@@ -110,45 +111,42 @@ public class TrashEntryLocalServiceTest {
 
 	@Test
 	public void testMultiCompanyCleanUp() throws Exception {
-		int actual = 0;
-
-		for (int i = 0; i < 4; i++ ) {
+		for (int i = 0; i < _companyCount; i++ ) {
 			Group group = setTrashEntriesMaxAge(
-				createGroup(createCompany()), 2);
+				createGroup(createCompany()), _maxAgeDay);
 
-			actual += createTrashEntriesForTwoDaysExpiryTest(group);
+			createTrashEntries(group);
 		}
 
 		TrashEntryLocalServiceUtil.checkEntries();
 
 		Assert.assertEquals(
-			actual, TrashEntryLocalServiceUtil.getTrashEntriesCount());
+			_companyCount * _notExpiredTrashEntryCount,
+			TrashEntryLocalServiceUtil.getTrashEntriesCount());
 	}
 
 	@Test
 	public void testMultiGroupTrashCleanUp() throws Exception {
-		long companyId = TestPropsValues.getCompanyId();
+		for (int i = 0; i < _groupCount; i++) {
+			Group group = setTrashEntriesMaxAge(
+				createGroup(TestPropsValues.getCompanyId()), _maxAgeDay);
 
-		int actual = 0;
-
-		for (int i = 0; i < 10; i++) {
-			Group group = setTrashEntriesMaxAge(createGroup(companyId), 2);
-
-			actual += createTrashEntriesForTwoDaysExpiryTest(group);
+			createTrashEntries(group);
 		}
 
 		TrashEntryLocalServiceUtil.checkEntries();
 
 		Assert.assertEquals(
-			actual, TrashEntryLocalServiceUtil.getTrashEntriesCount());
+			_groupCount * _notExpiredTrashEntryCount,
+			TrashEntryLocalServiceUtil.getTrashEntriesCount());
 	}
 
 	@Test
 	public void testOneGroup() throws Exception {
 		Group group = createGroup(TestPropsValues.getCompanyId());
 
-		createFileEntryTrash(group.getGroupId(), 500);
-		createFileEntryTrash(group.getGroupId(), 0);
+		createFileEntryTrash(group, true);
+		createFileEntryTrash(group, false);
 
 		TrashEntryLocalServiceUtil.checkEntries();
 
@@ -161,7 +159,7 @@ public class TrashEntryLocalServiceTest {
 		Group group = setTrashEntriesMaxAge(
 			createGroup(TestPropsValues.getCompanyId()), 2);
 
-		verifyCleanUpAfterTwoDays(createLayoutGroup(group));
+		doTestCleanUp(createLayoutGroup(group));
 	}
 
 	@Test
@@ -176,7 +174,7 @@ public class TrashEntryLocalServiceTest {
 			user.getUserId(), group, false, false,
 			ServiceContextTestUtil.getServiceContext(group, user.getUserId()));
 
-		verifyCleanUpAfterTwoDays(group.getStagingGroup());
+		doTestCleanUp(group.getStagingGroup());
 	}
 
 	@Test
@@ -195,7 +193,7 @@ public class TrashEntryLocalServiceTest {
 
 		group = createLayoutGroup(group.getStagingGroup());
 
-		verifyCleanUpAfterTwoDays(group);
+		doTestCleanUp(group);
 	}
 
 	@Test
@@ -214,7 +212,7 @@ public class TrashEntryLocalServiceTest {
 
 		Group stagingGroup = group.getStagingGroup();
 
-		createFileEntryTrash(stagingGroup.getGroupId(), 0);
+		createFileEntryTrash(stagingGroup, false);
 
 		TrashEntryLocalServiceUtil.checkEntries();
 
@@ -254,19 +252,22 @@ public class TrashEntryLocalServiceTest {
 		return company.getCompanyId();
 	}
 
-	protected void createFileEntryTrash(long groupId, int reduceDays)
+	protected void createFileEntryTrash(Group group, boolean expired)
 		throws Exception {
 
 		FileEntry fileEntry =
 			DLAppTestUtil.addFileEntry(
-				groupId, groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+				group.getGroupId(), group.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		User user = UserTestUtil.getAdminUser(fileEntry.getCompanyId());
 
 		DLAppLocalServiceUtil.moveFileEntryToTrash(
 			user.getUserId(), fileEntry.getFileEntryId());
 
-		if (reduceDays > 0) {
+		if (expired) {
+			int maxAge = TrashUtil.getMaxAge(group);
+
 			TrashEntry trashEntry =
 				TrashEntryLocalServiceUtil.getEntry(
 					DLFileEntry.class.getName(), fileEntry.getFileEntryId());
@@ -274,7 +275,8 @@ public class TrashEntryLocalServiceTest {
 			Date createDate = trashEntry.getCreateDate();
 
 			trashEntry.setCreateDate(
-				new Date(createDate.getTime() - Time.DAY * reduceDays));
+				new Date(
+					createDate.getTime() - maxAge * Time.MINUTE - Time.DAY));
 
 			TrashEntryLocalServiceUtil.updateTrashEntry(trashEntry);
 		}
@@ -303,15 +305,24 @@ public class TrashEntryLocalServiceTest {
 			null);
 	}
 
-	protected int createTrashEntriesForTwoDaysExpiryTest(Group group)
-		throws Exception {
+	protected void createTrashEntries(Group group) throws Exception {
+		for (int i = 0; i < _expiredTrashEntryCount; i++) {
+			createFileEntryTrash(group, true);
+		}
 
-		createFileEntryTrash(group.getGroupId(), 1);
-		createFileEntryTrash(group.getGroupId(), 1);
-		createFileEntryTrash(group.getGroupId(), 2);
-		createFileEntryTrash(group.getGroupId(), 3);
+		for (int i = 0; i < _notExpiredTrashEntryCount; i++) {
+			createFileEntryTrash(group, false);
+		}
+	}
 
-		return 2;
+	protected void doTestCleanUp(Group group) throws Exception {
+		createTrashEntries(group);
+
+		TrashEntryLocalServiceUtil.checkEntries();
+
+		Assert.assertEquals(
+			_notExpiredTrashEntryCount,
+			TrashEntryLocalServiceUtil.getTrashEntriesCount());
 	}
 
 	protected Group setTrashEnableForGroup(Group group, boolean value)
@@ -360,14 +371,11 @@ public class TrashEntryLocalServiceTest {
 		return GroupLocalServiceUtil.updateGroup(group);
 	}
 
-	protected void verifyCleanUpAfterTwoDays(Group group) throws Exception {
-		int actual = createTrashEntriesForTwoDaysExpiryTest(group);
-
-		TrashEntryLocalServiceUtil.checkEntries();
-
-		Assert.assertEquals(
-			actual, TrashEntryLocalServiceUtil.getTrashEntriesCount());
-	}
+	private static final int _companyCount = 2;
+	private static final int _expiredTrashEntryCount = 3;
+	private static final int _groupCount = 2;
+	private static final int _maxAgeDay = 5;
+	private static final int _notExpiredTrashEntryCount = 4;
 
 	private static Log _log = LogFactoryUtil.getLog(
 		TrashEntryLocalServiceTest.class);

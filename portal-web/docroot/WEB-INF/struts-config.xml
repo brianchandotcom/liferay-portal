@@ -1019,6 +1019,8 @@
 
 		<!-- Layout Set Prototypes -->
 
+		<action path="/layout_set_prototypes/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />
+
 		<action path="/layout_set_prototypes/edit_layout_set" type="com.liferay.portlet.layoutsadmin.action.EditLayoutSetAction">
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />

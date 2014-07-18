@@ -28,6 +28,16 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--BANNED_USERS_TABLE-->
 <tr>
 	<td>BANNED_USERS_TABLE_BANNED_USER</td>

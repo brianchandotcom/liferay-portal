@@ -33,6 +33,7 @@ boolean ignoreRequestValue = GetterUtil.getBoolean((String)request.getAttribute(
 String languageId = (String)request.getAttribute("liferay-ui:input-localized:languageId");
 String maxLength = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:maxLength"));
 String name = (String)request.getAttribute("liferay-ui:input-localized:name");
+String toolbarSet = (String)request.getAttribute("liferay-ui:input-localized:toolbarSet");
 String type = (String)request.getAttribute("liferay-ui:input-localized:type");
 String xml = (String)request.getAttribute("liferay-ui:input-localized:xml");
 
@@ -98,6 +99,10 @@ if ((exception != null) && fieldName.equals(focusField)) {
 		errorLocales = localizedExceptionsMap.keySet();
 	}
 }
+
+if (Validator.isNull(toolbarSet)) {
+	toolbarSet = "simple";
+}
 %>
 
 <span class="input-localized input-localized-<%= type %>" id="<portlet:namespace /><%= id %>BoundingBox">
@@ -112,7 +117,7 @@ if ((exception != null) && fieldName.equals(focusField)) {
 				onBlurMethod='<%= randomNamespace + \"OnBlurEditor\" %>'
 				onChangeMethod='<%= randomNamespace + \"OnChangeEditor\" %>'
 				onFocusMethod='<%= randomNamespace + \"OnFocusEditor\" %>'
-				toolbarSet="simple"
+				toolbarSet="<%= toolbarSet %>"
 			/>
 
 			<aui:script>

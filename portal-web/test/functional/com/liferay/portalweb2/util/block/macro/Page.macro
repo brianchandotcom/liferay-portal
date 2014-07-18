@@ -159,6 +159,13 @@
 		<execute action="Home#assertElementNotPresent" locator-key1="PAGE_DELETE" />
 	</command>
 
+	<command name="deleteLivePG">
+		<execute action="Dockbar#click" locator-key1="EDIT" />
+		<execute action="Dockbar#click" locator-key1="EDIT_LIVE_DELETE" />
+
+		<execute action="Home#confirm" locator-key1="PAGE_CONFIRM" value1="Are you sure you want to delete the selected page?" />
+	</command>
+
 	<command name="editPageLayoutColumn">
 		<execute action="Dockbar#click" locator-key1="EDIT" />
 

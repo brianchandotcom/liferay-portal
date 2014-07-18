@@ -148,6 +148,38 @@
 		<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="addMultiplePG">
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_MULTIPLE_DOCUMENTS" value1="Multiple Documents" />
+
+		<if>
+			<isset var="dmDocumentFileList" />
+			<then>
+				<for list="${dmDocumentFileList}" param="dmDocumentFile">
+					<var name="key_dmDocumentFile" value="${dmDocumentFile}" />
+
+					<execute action="PGDocumentsandmediaAddmultipledocuments#assertClick" locator-key1="SELECT_FILES_BUTTON" value1="Select Files" />
+
+					<if>
+						<equals arg1="${uploadTempFile}" arg2="true" />
+						<then>
+							<execute action="OS#sikuliUploadTempFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
+						</then>
+						<else>
+							<execute action="OS#sikuliUploadCommonFile" locator-key1="FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${dmDocumentFile}" />
+						</else>
+					</if>
+
+					<execute action="PGDocumentsandmediaAddmultipledocuments#assertChecked" locator-key1="ALL_FILES_READY_TO_BE_SAVED_CHECKBOX" />
+					<execute action="PGDocumentsandmediaAddmultipledocuments#assertElementPresent" locator-key1="ALL_FILES_READY_TO_BE_SAVED_TITLE" value1="${dmDocumentFile}" />
+				</for>
+			</then>
+		</if>
+
+		<execute action="PGDocumentsandmediaAddmultipledocuments#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDocumentsandmediaAddmultipledocuments#assertTextEquals" locator-key1="ALL_FILES_READY_TO_BE_SAVED_SUCCESS_MESSAGE" value1="Successfully saved." />
+	</command>
+
 	<command name="addPG">
 		<if>
 			<equals arg1="${stagingActivated}" arg2="true" />
@@ -253,7 +285,7 @@
 					</if>
 
 					<execute action="PGDocumentsandmediaAddmultipledocuments#assertChecked" locator-key1="ALL_FILES_READY_TO_BE_SAVED_CHECKBOX" />
-					<execute action="PGDocumentsandmediaAddmultipledocuments#assertTextEquals" locator-key1="ALL_FILES_READY_TO_BE_SAVED_TITLE" value1="${dmDocumentFile}" />
+					<execute action="PGDocumentsandmediaAddmultipledocuments#assertTextEquals" locator-key1="ALL_FILES_READY_TO_BE_SAVED_TITLE" />
 				</for>
 			</then>
 			<else>
@@ -1544,7 +1576,13 @@
 
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_THUMBNAIL" />
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_RATING" value1="Rating" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
+
+		<if>
+			<isset var="dmDocumentDescription" />
+			<then>
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
+			</then>
+		</if>
 
 		<if>
 			<isset var="tagNameList" />
@@ -1714,6 +1752,50 @@
 				</then>
 			</elseif>
 		</if>
+	</command>
+
+	<command name="viewStagingDetailsPG">
+		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_ADD" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_FOLDER" value1="Folder" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_SHORTCUT" value1="Shortcut" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_REPOSITORY" value1="Repository" />	
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_MULTIPLE_DOCUMENTS" value1="Multiple Documents" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_CONTRACT" value1="Contract" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_MARKETING_BANNER" value1="Marketing Banner" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_ONLINE_TRAINING" value1="Online Training" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_SALES_PRESENTATION" value1="Sales Presentation" />
+
+		<var name="key_dmDocumentTitle" value="Document_1.jpeg" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_MENULIST_DOWNLOAD" value1="Download" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_MENULIST_EDIT" value1="Edit" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_MENULIST_MOVE" value1="Move" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_MENULIST_CHECKOUT" value1="Checkout" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_MENULIST_DELETE" value1="Move to the Recycle Bin" />
+
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ACTIONS_MENULIST_CANCEL_CHECKOUT" value1="Cancel Checkout" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ACTIONS_MENULIST_CHECKIN" value1="Checkin" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ACTIONS_MENULIST_CHECKOUT" value1="Checkout" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ACTIONS_MENULIST_MOVE" value1="Move" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="TOOLBAR_ADD" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_ACTIONS" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_MENULIST_DOWNLOAD" value1="Download" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_MENULIST_DELETE" value1="Move to the Recycle Bin" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRY_ICON_DOCUMENT_CHECKBOX" />
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 	</command>
 
 	<command name="viewWithWorkflowCP">

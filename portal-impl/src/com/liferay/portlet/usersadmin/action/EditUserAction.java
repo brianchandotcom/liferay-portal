@@ -633,8 +633,10 @@ public class EditUserAction extends PortletAction {
 
 		List<UserGroupRole> userGroupRoles = null;
 
-		if ((actionRequest.getParameter("groupRolesGroupIds") != null) ||
-			(actionRequest.getParameter("groupRolesRoleIds") != null)) {
+		if ((actionRequest.getParameter("addGroupRolesGroupIds") != null) ||
+			(actionRequest.getParameter("addGroupRolesRoleIds") != null) ||
+			(actionRequest.getParameter("deleteGroupRolesGroupIds") != null) ||
+			(actionRequest.getParameter("deleteGroupRolesRoleIds") != null)) {
 
 			userGroupRoles = UsersAdminUtil.getUserGroupRoles(actionRequest);
 		}

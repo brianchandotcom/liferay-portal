@@ -887,41 +887,27 @@ public class UsersAdminImpl implements UsersAdmin {
 	public List<UserGroupRole> getUserGroupRoles(PortletRequest portletRequest)
 		throws PortalException {
 
-		List<UserGroupRole> userGroupRoles = new UniqueList<UserGroupRole>();
-
-		long[] groupRolesRoleIds = StringUtil.split(
-			ParamUtil.getString(portletRequest, "groupRolesRoleIds"), 0L);
-		long[] groupRolesGroupIds = StringUtil.split(
-			ParamUtil.getString(portletRequest, "groupRolesGroupIds"), 0L);
-
-		if (groupRolesGroupIds.length != groupRolesRoleIds.length) {
-			return userGroupRoles;
-		}
-
 		User user = PortalUtil.getSelectedUser(portletRequest);
 
-		long userId = 0;
-
-		if (user != null) {
-			userId = user.getUserId();
+		if (user == null) {
+			return Collections.emptyList();
 		}
 
-		for (int i = 0; i < groupRolesGroupIds.length; i++) {
-			if ((groupRolesGroupIds[i] == 0) || (groupRolesRoleIds[i] == 0)) {
-				continue;
-			}
+		Set<UserGroupRole> userGroupRoles =
+			new HashSet<UserGroupRole>(
+				UserGroupRoleLocalServiceUtil.getUserGroupRoles(
+					user.getUserId()));
 
-			UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
-				userId, groupRolesGroupIds[i], groupRolesRoleIds[i]);
+		userGroupRoles.addAll(
+			getUserGroupRoles(
+				portletRequest, user, "addGroupRolesGroupIds",
+				"addGroupRolesRoleIds"));
+		userGroupRoles.removeAll(
+			getUserGroupRoles(
+				portletRequest, user, "deleteGroupRolesGroupIds",
+				"deleteGroupRolesRoleIds"));
 
-			UserGroupRole userGroupRole =
-				UserGroupRoleLocalServiceUtil.createUserGroupRole(
-					userGroupRolePK);
-
-			userGroupRoles.add(userGroupRole);
-		}
-
-		return userGroupRoles;
+		return new ArrayList<UserGroupRole>(userGroupRoles);
 	}
 
 	@Override
@@ -1425,6 +1411,46 @@ public class UsersAdminImpl implements UsersAdmin {
 				WebsiteServiceUtil.deleteWebsite(website.getWebsiteId());
 			}
 		}
+	}
+
+	protected List<UserGroupRole> getUserGroupRoles(
+			PortletRequest portletRequest, User user, String groupIdsParam,
+			String roleIdsParam)
+		throws PortalException {
+
+		List<UserGroupRole> userGroupRoles = new UniqueList<UserGroupRole>();
+
+		long[] groupRolesGroupIds = StringUtil.split(
+			ParamUtil.getString(portletRequest, groupIdsParam), 0L);
+		long[] groupRolesRoleIds = StringUtil.split(
+			ParamUtil.getString(portletRequest, roleIdsParam), 0L);
+
+		if (groupRolesGroupIds.length != groupRolesRoleIds.length) {
+			return userGroupRoles;
+		}
+
+		long userId = 0;
+
+		if (user != null) {
+			userId = user.getUserId();
+		}
+
+		for (int i = 0; i < groupRolesGroupIds.length; i++) {
+			if ((groupRolesGroupIds[i] == 0) || (groupRolesRoleIds[i] == 0)) {
+				continue;
+			}
+
+			UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
+				userId, groupRolesGroupIds[i], groupRolesRoleIds[i]);
+
+			UserGroupRole userGroupRole =
+				UserGroupRoleLocalServiceUtil.createUserGroupRole(
+					userGroupRolePK);
+
+			userGroupRoles.add(userGroupRole);
+		}
+
+		return userGroupRoles;
 	}
 
 }

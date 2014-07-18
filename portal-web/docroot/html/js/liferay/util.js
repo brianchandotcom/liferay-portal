@@ -587,10 +587,6 @@
 			return viewable;
 		},
 
-		isArray: function(object) {
-			return !!(window.Array && object.constructor == window.Array);
-		},
-
 		isEditorPresent: function(editorImpl) {
 			return Liferay.EDITORS && Liferay.EDITORS[editorImpl];
 		},

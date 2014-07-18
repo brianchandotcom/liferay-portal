@@ -15,6 +15,9 @@ AUI.add(
 
 		var STR_EMPTY = '';
 
+		var isArray = Lang.isArray;
+		var isNumber = Lang.isNumber;
+
 		var SpreadSheet = A.Component.create(
 			{
 				ATTRS: {
@@ -24,12 +27,12 @@ AUI.add(
 					},
 
 					recordsetId: {
-						validator: Lang.isNumber,
+						validator: isNumber,
 						value: 0
 					},
 
 					structure: {
-						validator: Lang.isArray,
+						validator: isArray,
 						value: []
 					}
 				},
@@ -163,7 +166,7 @@ AUI.add(
 									value = JSON.stringify(value);
 								}
 								else if ((type === 'radio') || (type === 'select')) {
-									if (!Lang.isArray(value)) {
+									if (!isArray(value)) {
 										value = AArray(value);
 									}
 
@@ -418,7 +421,7 @@ AUI.add(
 
 									var numberValue = STR_EMPTY;
 
-									if (Lang.isNumber(number)) {
+									if (isNumber(number)) {
 										numberValue = number;
 									}
 
@@ -430,7 +433,7 @@ AUI.add(
 
 									var value = A.DataType.Number.parse(data[name]);
 
-									if (!Lang.isNumber(value)) {
+									if (!isNumber(value)) {
 										value = STR_EMPTY;
 									}
 

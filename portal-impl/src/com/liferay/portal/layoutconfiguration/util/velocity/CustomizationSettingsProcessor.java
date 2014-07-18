@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.CustomizedPages;
 import com.liferay.portal.model.Layout;
+import com.liferay.portlet.layoutsadmin.context.LayoutsAdminDisplayContext;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.taglib.aui.InputTag;
 
@@ -50,8 +51,10 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 
 		_writer = _pageContext.getOut();
 
-		Layout selLayout = (Layout)request.getAttribute(
-			"edit_pages.jsp-selLayout");
+		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
+			new LayoutsAdminDisplayContext(request, null);
+
+		Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 		_layoutTypeSettings = selLayout.getTypeSettingsProperties();
 

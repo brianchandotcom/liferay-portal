@@ -55,9 +55,8 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutsAdminDisplayContext {
 
 	public LayoutsAdminDisplayContext(
-			HttpServletRequest request,
-			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException {
+		HttpServletRequest request,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_request = request;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -102,8 +101,6 @@ public class LayoutsAdminDisplayContext {
 		_request.setAttribute(
 			com.liferay.portal.util.WebKeys.LAYOUT_DESCRIPTIONS,
 			getLayoutDescriptions());
-
-		_request.setAttribute("edit_pages.jsp-selLayout", getSelLayout());
 	}
 
 	public String getBackURL() {
@@ -452,16 +449,22 @@ public class LayoutsAdminDisplayContext {
 		return portletConfig.getPortletName();
 	}
 
-	protected boolean hasPowerUserRole() throws PortalException {
+	protected boolean hasPowerUserRole() {
 		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return RoleLocalServiceUtil.hasUserRole(
-			getSelUser().getUserId(), themeDisplay.getCompanyId(),
-			RoleConstants.POWER_USER, true);
+		try {
+			return RoleLocalServiceUtil.hasUserRole(
+				getSelUser().getUserId(), themeDisplay.getCompanyId(),
+				RoleConstants.POWER_USER, true);
+		}
+		catch (Exception e) {
+		}
+
+		return false;
 	}
 
-	protected boolean isPrivateLayoutsModifiable() throws PortalException {
+	protected boolean isPrivateLayoutsModifiable() {
 		if ((!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED ||
 			 hasPowerUserRole()) &&
 			PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) {
@@ -472,7 +475,7 @@ public class LayoutsAdminDisplayContext {
 		return false;
 	}
 
-	protected boolean isPublicLayoutsModifiable() throws PortalException {
+	protected boolean isPublicLayoutsModifiable() {
 		if ((!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED ||
 			 hasPowerUserRole()) &&
 			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {

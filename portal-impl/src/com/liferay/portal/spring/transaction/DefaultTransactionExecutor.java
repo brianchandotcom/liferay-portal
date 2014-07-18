@@ -14,9 +14,6 @@
 
 package com.liferay.portal.spring.transaction;
 
-import com.liferay.portal.cache.transactional.TransactionalPortalCacheHelper;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
@@ -49,8 +46,6 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 		if (newTransaction) {
 			fireTransactionCreatedEvent(
 				transactionAttribute, transactionStatus);
-
-			TransactionalPortalCacheHelper.begin();
 		}
 
 		Object returnValue = null;
@@ -113,17 +108,10 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 				if (throwable != null) {
 					fireTransactionRollbackedEvent(
 						transactionAttribute, transactionStatus, throwable);
-
-					TransactionalPortalCacheHelper.rollback();
-
-					EntityCacheUtil.clearLocalCache();
-					FinderCacheUtil.clearLocalCache();
 				}
 				else {
 					fireTransactionCommittedEvent(
 						transactionAttribute, transactionStatus);
-
-					TransactionalPortalCacheHelper.commit();
 				}
 			}
 		}
@@ -163,11 +151,6 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 				if (transactionStatus.isNewTransaction()) {
 					fireTransactionRollbackedEvent(
 						transactionAttribute, transactionStatus, throwable);
-
-					TransactionalPortalCacheHelper.rollback();
-
-					EntityCacheUtil.clearLocalCache();
-					FinderCacheUtil.clearLocalCache();
 				}
 			}
 		}

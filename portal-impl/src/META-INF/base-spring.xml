@@ -85,6 +85,7 @@
 	<bean class="com.liferay.portal.transaction.TransactionLifecycleManagerInitializer">
 		<property name="transactionLifecycleListeners">
 			<list>
+				<util:constant static-field="com.liferay.portal.cache.transactional.TransactionalPortalCacheHelper.TRANSACTION_LIFECYCLE_LISTENER" />
 				<util:constant static-field="com.liferay.portal.spring.transaction.TransactionCommitCallbackUtil.TRANSACTION_LIFECYCLE_LISTENER" />
 			</list>
 		</property>

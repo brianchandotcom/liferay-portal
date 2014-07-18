@@ -14,9 +14,6 @@
 
 package com.liferay.portal.spring.transaction;
 
-import com.liferay.portal.cache.transactional.TransactionalPortalCacheHelper;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -106,8 +103,6 @@ public class CallbackPreferringTransactionExecutor
 			if (newTransaction) {
 				fireTransactionCreatedEvent(
 					_transactionAttribute, transactionStatus);
-
-				TransactionalPortalCacheHelper.begin();
 			}
 
 			boolean rollback = false;
@@ -125,11 +120,6 @@ public class CallbackPreferringTransactionExecutor
 						fireTransactionRollbackedEvent(
 							_transactionAttribute, transactionStatus,
 							throwable);
-
-						TransactionalPortalCacheHelper.rollback();
-
-						EntityCacheUtil.clearLocalCache();
-						FinderCacheUtil.clearLocalCache();
 
 						rollback = true;
 					}
@@ -149,8 +139,6 @@ public class CallbackPreferringTransactionExecutor
 				if (newTransaction && !rollback) {
 					fireTransactionCommittedEvent(
 						_transactionAttribute, transactionStatus);
-
-					TransactionalPortalCacheHelper.commit();
 				}
 			}
 		}

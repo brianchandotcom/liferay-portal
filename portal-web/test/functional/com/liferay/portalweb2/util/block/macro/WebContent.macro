@@ -1339,6 +1339,17 @@
 		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Select existing web content or add some web content to be displayed in this portlet." />
 	</command>
 
+	<command name="viewDisplayPagePGViaAP">
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute action="PGAssetpublisher#assertClick" locator-key1="DISPLAY_ICON_EDIT" value1="Edit" />
+
+		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
+		<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="MENU_DISPLAY_PAGE" value1="Display Page" />
+
+		<execute action="PGAssetpublisherAddnewwebcontentDisplaypage#assertTextEquals" locator-key1="PUBLIC_DISPLAY_PAGE_ITEM" value1="${displayPageSelection}" />
+	</command>
+
 	<command name="viewEditWCViaWCD">
 		<execute action="PGWebcontentdisplay#assertElementPresent" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 		<execute action="PGWebcontentdisplay#assertElementPresent" locator-key1="EDIT_WEB_CONTENT" />

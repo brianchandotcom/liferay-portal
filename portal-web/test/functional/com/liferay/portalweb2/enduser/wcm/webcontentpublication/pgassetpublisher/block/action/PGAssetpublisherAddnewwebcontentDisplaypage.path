@@ -53,6 +53,11 @@
 	<td>//li[contains(@id,'treeContainerPublicPages')]/div/span/a[contains(.,'${key_displayPageSelection}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PUBLIC_DISPLAY_PAGE_ITEM</td>
+	<td>//span[contains(@id,'displayPageNameInput')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

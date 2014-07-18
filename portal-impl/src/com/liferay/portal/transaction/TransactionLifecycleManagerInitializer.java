@@ -12,22 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.spring.transaction;
+package com.liferay.portal.transaction;
+
+import com.liferay.portal.kernel.transaction.TransactionLifecycleListener;
+import com.liferay.portal.kernel.transaction.TransactionLifecycleManager;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
- * @author Miguel Pastor
+ * @author Shuyang Zhou
  */
-public class TransactionCommitCallbackTestUtil {
+public class TransactionLifecycleManagerInitializer {
 
-	public static List<Callable<?>> popCallbackList() {
-		return TransactionCommitCallbackUtil.popCallbackList();
-	}
+	public void setTransactionLifecycleListeners(
+		List<TransactionLifecycleListener> transactionLifecycleListeners) {
 
-	public static void pushCallbackList() {
-		TransactionCommitCallbackUtil.pushCallbackList();
+		for (TransactionLifecycleListener transactionLifecycleListener :
+				transactionLifecycleListeners) {
+
+			TransactionLifecycleManager.register(transactionLifecycleListener);
+		}
 	}
 
 }

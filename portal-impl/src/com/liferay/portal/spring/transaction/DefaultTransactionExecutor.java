@@ -14,12 +14,8 @@
 
 package com.liferay.portal.spring.transaction;
 
-import com.liferay.portal.cache.transactional.TransactionalPortalCacheHelper;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -47,18 +43,13 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 		boolean newTransaction = transactionStatus.isNewTransaction();
 
 		if (newTransaction) {
-			TransactionalPortalCacheHelper.begin();
-
-			TransactionCommitCallbackUtil.pushCallbackList();
+			fireTransactionCreatedEvent(
+				transactionAttribute, transactionStatus);
 		}
 
 		Object returnValue = null;
 
 		try {
-			if (newTransaction) {
-				LastSessionRecorderUtil.syncLastSessionState();
-			}
-
 			returnValue = methodInvocation.proceed();
 		}
 		catch (Throwable throwable) {
@@ -67,16 +58,19 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 				transactionStatus);
 		}
 
-		processCommit(platformTransactionManager, transactionStatus);
+		processCommit(
+			platformTransactionManager, transactionAttribute,
+			transactionStatus);
 
 		return returnValue;
 	}
 
 	protected void processCommit(
 		PlatformTransactionManager platformTransactionManager,
+		TransactionAttribute transactionAttribute,
 		TransactionStatus transactionStatus) {
 
-		boolean hasError = false;
+		Throwable throwable = null;
 
 		try {
 			platformTransactionManager.commit(transactionStatus);
@@ -85,7 +79,7 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 			_log.error(
 				"Application exception overridden by commit exception", tse);
 
-			hasError = true;
+			throwable = tse;
 
 			throw tse;
 		}
@@ -93,31 +87,26 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 			_log.error(
 				"Application exception overridden by commit exception", re);
 
-			hasError = true;
+			throwable = re;
 
 			throw re;
 		}
 		catch (Error e) {
 			_log.error("Application exception overridden by commit error", e);
 
-			hasError = true;
+			throwable = e;
 
 			throw e;
 		}
 		finally {
 			if (transactionStatus.isNewTransaction()) {
-				if (hasError) {
-					TransactionalPortalCacheHelper.rollback();
-
-					TransactionCommitCallbackUtil.popCallbackList();
-
-					EntityCacheUtil.clearLocalCache();
-					FinderCacheUtil.clearLocalCache();
+				if (throwable != null) {
+					fireTransactionRollbackedEvent(
+						transactionAttribute, transactionStatus, throwable);
 				}
 				else {
-					TransactionalPortalCacheHelper.commit();
-
-					invokeCallbacks();
+					fireTransactionCommittedEvent(
+						transactionAttribute, transactionStatus);
 				}
 			}
 		}
@@ -155,17 +144,15 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 			}
 			finally {
 				if (transactionStatus.isNewTransaction()) {
-					TransactionalPortalCacheHelper.rollback();
-
-					TransactionCommitCallbackUtil.popCallbackList();
-
-					EntityCacheUtil.clearLocalCache();
-					FinderCacheUtil.clearLocalCache();
+					fireTransactionRollbackedEvent(
+						transactionAttribute, transactionStatus, throwable);
 				}
 			}
 		}
 		else {
-			processCommit(platformTransactionManager, transactionStatus);
+			processCommit(
+				platformTransactionManager, transactionAttribute,
+				transactionStatus);
 		}
 
 		throw throwable;

@@ -150,6 +150,10 @@ public class TrashUtil {
 		return getTrash().isInTrash(className, classPK);
 	}
 
+	public static boolean isTrashEnabled(Group group) {
+		return getTrash().isTrashEnabled(group);
+	}
+
 	public static boolean isTrashEnabled(long groupId) throws PortalException {
 		return getTrash().isTrashEnabled(groupId);
 	}

@@ -130,7 +130,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	@Override
 	public void checkEntries() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			groupLocalService.getActionableDynamicQuery();
+			trashEntryLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {
@@ -139,24 +139,23 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 				public void performAction(Object object)
 					throws PortalException {
 
-					Group group = (Group)object;
+					TrashEntry trashEntry = (TrashEntry)object;
 
-					if (!TrashUtil.isTrashEnabled(group.getGroupId())) {
-						return;
-					}
+					Group group = groupPersistence.fetchByPrimaryKey(
+						trashEntry.getGroupId());
 
 					Date date = getMaxAge(group);
 
-					List<TrashEntry> entries =
-						trashEntryPersistence.findByG_LtCD(
-							group.getGroupId(), date);
+					Date createDate = trashEntry.getCreateDate();
 
-					for (TrashEntry entry : entries) {
+					if (createDate.before(date) ||
+						!TrashUtil.isTrashEnabled(group)) {
+
 						TrashHandler trashHandler =
 							TrashHandlerRegistryUtil.getTrashHandler(
-								entry.getClassName());
+								trashEntry.getClassName());
 
-						trashHandler.deleteTrashEntry(entry.getClassPK());
+						trashHandler.deleteTrashEntry(trashEntry.getClassPK());
 					}
 				}
 

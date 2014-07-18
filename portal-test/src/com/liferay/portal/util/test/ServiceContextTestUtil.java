@@ -15,6 +15,9 @@
 package com.liferay.portal.util.test;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 
 /**
@@ -26,20 +29,52 @@ public class ServiceContextTestUtil {
 		return getServiceContext(TestPropsValues.getGroupId());
 	}
 
+	public static ServiceContext getServiceContext(Group group, long userId)
+		throws PortalException {
+
+		return getServiceContext(
+			group.getCompanyId(), group.getGroupId(), userId);
+	}
+
 	public static ServiceContext getServiceContext(long groupId)
 		throws PortalException {
 
-		return getServiceContext(groupId, TestPropsValues.getUserId());
+		if (groupId == TestPropsValues.getGroupId()) {
+			return getServiceContext(groupId, TestPropsValues.getUserId());
+		}
+		else {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			User user = UserTestUtil.getAdminUser(group.getCompanyId());
+
+			return getServiceContext(group, user.getUserId());
+		}
 	}
 
 	public static ServiceContext getServiceContext(long groupId, long userId)
+		throws PortalException {
+
+		if (groupId == TestPropsValues.getGroupId()) {
+			return getServiceContext(
+				TestPropsValues.getCompanyId(), groupId, userId);
+		}
+		else {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			return getServiceContext(
+				group.getCompanyId(), group.getGroupId(), userId);
+		}
+	}
+
+	public static ServiceContext getServiceContext(
+			long companyId, long groupId, long userId)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
+		serviceContext.setCompanyId(companyId);
 		serviceContext.setScopeGroupId(groupId);
 		serviceContext.setUserId(userId);
 

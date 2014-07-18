@@ -24,22 +24,17 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
-
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  * @author Raymond Augé
  * @author Manuel de la Peña
+ * @author Sampsa Sohlman
  */
 public class TestPropsValues {
 
@@ -87,11 +82,11 @@ public class TestPropsValues {
 		return _groupId;
 	}
 
-	public static long getPlid() throws Exception {
+	public static long getPlid() throws PortalException {
 		return getPlid(getGroupId());
 	}
 
-	public static long getPlid(long groupId) throws Exception {
+	public static long getPlid(long groupId) {
 		if (_plid > 0) {
 			return _plid;
 		}
@@ -103,17 +98,7 @@ public class TestPropsValues {
 
 	public static User getUser() throws PortalException {
 		if (_user == null) {
-			Role role = RoleLocalServiceUtil.getRole(
-				getCompanyId(), RoleConstants.ADMINISTRATOR);
-
-			List<User> users = UserLocalServiceUtil.getRoleUsers(
-				role.getRoleId(), 0, 2);
-
-			if (!users.isEmpty()) {
-				_user = users.get(0);
-
-				_userId = _user.getUserId();
-			}
+			_user = UserTestUtil.getAdminUser(getCompanyId());
 		}
 
 		return _user;

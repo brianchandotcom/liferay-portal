@@ -133,7 +133,7 @@
 		<execute action="SOMessagesMessage#assertTextNotPresent" value1="${messageSubject}" />
 	</command>
 
-	<command name="DeleteMessageBySOUser2" priority="5">
+	<command known-issues="SOS-2365" name="DeleteMessageBySOUser2" priority="5">
 		<var name="messageBody" value="Message Body" />
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />

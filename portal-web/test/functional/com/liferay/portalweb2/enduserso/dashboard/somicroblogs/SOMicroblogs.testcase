@@ -2313,7 +2313,7 @@
 		<execute action="SOMicroblogs#assertTextNotPresent" value1="${microblogsEntryContent3}" />
 	</command>
 
-	<command name="DeleteMicroblogsEntryViewableByEveryoneComment" priority="4">
+	<command known-issues="SOS-2365" name="DeleteMicroblogsEntryViewableByEveryoneComment" priority="4">
 		<var name="microblogsEntryCommentContent" value="Microblogs Post Comment" />
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />

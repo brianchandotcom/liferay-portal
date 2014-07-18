@@ -141,7 +141,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 					TrashEntry trashEntry = (TrashEntry)object;
 
-					Group group = groupLocalService.getGroup(
+					Group group = groupPersistence.fetchByPrimaryKey(
 						trashEntry.getGroupId());
 
 					Date date = getMaxAge(group);
@@ -149,7 +149,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 					Date createDate = trashEntry.getCreateDate();
 
 					if (createDate.before(date) ||
-						!TrashUtil.isTrashEnabled(group.getGroupId())) {
+						!TrashUtil.isTrashEnabled(group)) {
 
 						TrashHandler trashHandler =
 							TrashHandlerRegistryUtil.getTrashHandler(

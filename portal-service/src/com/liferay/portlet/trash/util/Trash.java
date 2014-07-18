@@ -95,6 +95,8 @@ public interface Trash {
 	public boolean isInTrash(String className, long classPK)
 		throws PortalException;
 
+	public boolean isTrashEnabled(Group group);
+
 	public boolean isTrashEnabled(long groupId) throws PortalException;
 
 }

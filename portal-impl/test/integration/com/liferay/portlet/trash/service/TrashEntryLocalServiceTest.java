@@ -144,15 +144,7 @@ public class TrashEntryLocalServiceTest {
 
 	@Test
 	public void testOneGroup() throws Exception {
-		Group group = createGroup(TestPropsValues.getCompanyId());
-
-		createFileEntryTrash(group, true);
-		createFileEntryTrash(group, false);
-
-		TrashEntryLocalServiceUtil.checkEntries();
-
-		Assert.assertEquals(
-			1, TrashEntryLocalServiceUtil.getTrashEntriesCount());
+		doTestCleanUp(createGroup(TestPropsValues.getCompanyId()));
 	}
 
 	@Test

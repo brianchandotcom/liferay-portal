@@ -141,9 +141,11 @@ public class CompanyLocalServiceUtil {
 	*
 	* @param company the company
 	* @return the company that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.portal.model.Company deleteCompany(
-		com.liferay.portal.model.Company company) {
+		com.liferay.portal.model.Company company)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCompany(company);
 	}
 

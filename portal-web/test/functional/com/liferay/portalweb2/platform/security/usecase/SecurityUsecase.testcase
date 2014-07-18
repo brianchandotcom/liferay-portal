@@ -89,7 +89,7 @@
 		<execute action="Jsonwebservices#assertElementNotPresent" locator-key1="SECURITY_TEST_PAGE_POPULATED" />
 	</command>
 
-	<command name="ValidateCannotStealAdminAccount" priority="5">
+	<command known-issues="LPS-48684" name="ValidateCannotStealAdminAccount" priority="5">
 		<var name="url" value="http://localhost:8080/c/portal/json_service?serviceClassName=com.liferay.portal.service.UserServiceUtil&amp;serviceMethodName=updateStatus&amp;serviceParameters=[userId,status]&amp;userId=10203&amp;status=6&amp;p_auth=" />
 
 		<execute macro="Api#gotoPAuthURL" />

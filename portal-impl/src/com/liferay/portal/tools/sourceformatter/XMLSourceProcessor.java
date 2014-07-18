@@ -311,6 +311,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		_friendlyUrlRoutesSortExclusions = getExclusions(
 			"friendly.url.routes.sort.excludes");
+		_numericalPortletNameElementExclusions = getExclusions(
+			"numerical.portlet.name.element.excludes");
 
 		List<String> fileNames = getFileNames(excludes, includes);
 
@@ -590,18 +592,25 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		rootElement.sortAttributes(true);
 
+		boolean checkNumericalPortletNameElement = !isExcluded(
+			_numericalPortletNameElementExclusions, fileName);
+
 		List<Element> portletElements = rootElement.elements("portlet");
 
 		for (Element portletElement : portletElements) {
-			Element portletNameElement = portletElement.element("portlet-name");
+			if (checkNumericalPortletNameElement) {
+				Element portletNameElement = portletElement.element(
+					"portlet-name");
 
-			String portletNameText = portletNameElement.getText();
+				String portletNameText = portletNameElement.getText();
 
-			if (!Validator.isNumber(portletNameText)) {
-				processErrorMessage(
-					fileName,
-					fileName + " contains a nonstandard portlet-name element " +
-						portletNameText);
+				if (!Validator.isNumber(portletNameText)) {
+					processErrorMessage(
+						fileName,
+						fileName +
+							" contains a nonstandard portlet-name element " +
+								portletNameText);
+				}
 			}
 
 			if (fileName.endsWith("/liferay-portlet.xml")) {
@@ -1052,6 +1061,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"[\t ]-->\n[\t<]");
 
 	private List<String> _friendlyUrlRoutesSortExclusions;
+	private List<String> _numericalPortletNameElementExclusions;
 	private Pattern _poshiClosingTagPattern = Pattern.compile("</[^>/]*>");
 	private Pattern _poshiCommandsPattern = Pattern.compile(
 		"\\<command.*name=\\\"([^\\\"]*)\\\".*\\>[\\s\\S]*?\\</command\\>" +

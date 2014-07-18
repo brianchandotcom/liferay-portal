@@ -123,16 +123,20 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 				ps = con.prepareStatement(
 					"update DLFileEntry set title = ? where fileEntryId = ?");
+
 				ps.setString(1, uniqueTitle);
 				ps.setLong(2, fileEntryId);
+
 				ps.executeUpdate();
 
 				ps = con.prepareStatement(
 					"update DLFileVersion set title = ? where " +
 						"fileEntryId = ? and DLFileVersion.version = ?");
+
 				ps.setString(1, uniqueTitle);
 				ps.setLong(2, fileEntryId);
 				ps.setString(3, version);
+
 				ps.executeUpdate();
 			}
 		}

@@ -311,6 +311,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		_friendlyUrlRoutesSortExclusions = getExclusions(
 			"friendly.url.routes.sort.excludes");
+		_numericalPortletNameElementExclusions = getExclusions(
+			"numerical.portlet.name.element.excludes");
 
 		List<String> fileNames = getFileNames(excludes, includes);
 
@@ -341,11 +343,12 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			else if (fileName.endsWith("routes.xml")) {
 				newContent = formatFriendlyURLRoutesXML(fileName, newContent);
 			}
-			else if ((portalSource &&
+			else if (fileName.endsWith("/liferay-portlet.xml") ||
+					 (portalSource &&
 					  fileName.endsWith("/portlet-custom.xml")) ||
 					 (!portalSource && fileName.endsWith("/portlet.xml"))) {
 
-				newContent = formatPortletXML(newContent);
+				newContent = formatPortletXML(fileName, newContent);
 			}
 			else if (portalSource &&
 					 (fileName.endsWith(".action") ||
@@ -364,7 +367,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			else if (portalSource && fileName.endsWith("/tiles-defs.xml")) {
 				formatTilesDefsXML(fileName, newContent);
 			}
-			else if ((portalSource && fileName.endsWith("WEB-INF/web.xml")) ||
+			else if ((portalSource &&
+					  fileName.endsWith(
+						  "portal-web/docroot/WEB-INF/web.xml")) ||
 					 (!portalSource && fileName.endsWith("/web.xml"))) {
 
 				newContent = formatWebXML(fileName, newContent);
@@ -578,7 +583,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return sb.toString();
 	}
 
-	protected String formatPortletXML(String content)
+	protected String formatPortletXML(String fileName, String content)
 		throws DocumentException, IOException {
 
 		Document document = saxReaderUtil.read(content);
@@ -587,9 +592,31 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		rootElement.sortAttributes(true);
 
+		boolean checkNumericalPortletNameElement = !isExcluded(
+			_numericalPortletNameElementExclusions, fileName);
+
 		List<Element> portletElements = rootElement.elements("portlet");
 
 		for (Element portletElement : portletElements) {
+			if (checkNumericalPortletNameElement) {
+				Element portletNameElement = portletElement.element(
+					"portlet-name");
+
+				String portletNameText = portletNameElement.getText();
+
+				if (!Validator.isNumber(portletNameText)) {
+					processErrorMessage(
+						fileName,
+						fileName +
+							" contains a nonstandard portlet-name element " +
+								portletNameText);
+				}
+			}
+
+			if (fileName.endsWith("/liferay-portlet.xml")) {
+				continue;
+			}
+
 			portletElement.sortElementsByChildElement("init-param", "name");
 
 			Element portletPreferencesElement = portletElement.element(
@@ -760,8 +787,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected String formatWebXML(String fileName, String content)
 		throws IOException {
 
-		if (!fileName.contains("portal-web/docroot")) {
-		//if (!portalSource) {
+		if (!portalSource) {
 			String webXML = ContentUtil.get(
 				"com/liferay/portal/deploy/dependencies/web.xml");
 
@@ -1035,6 +1061,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"[\t ]-->\n[\t<]");
 
 	private List<String> _friendlyUrlRoutesSortExclusions;
+	private List<String> _numericalPortletNameElementExclusions;
 	private Pattern _poshiClosingTagPattern = Pattern.compile("</[^>/]*>");
 	private Pattern _poshiCommandsPattern = Pattern.compile(
 		"\\<command.*name=\\\"([^\\\"]*)\\\".*\\>[\\s\\S]*?\\</command\\>" +

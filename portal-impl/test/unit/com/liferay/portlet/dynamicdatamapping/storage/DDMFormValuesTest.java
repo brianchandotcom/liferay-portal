@@ -15,7 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 
 import java.util.List;
@@ -29,11 +29,18 @@ import org.testng.Assert;
 /**
  * @author Marcellus Tavares
  */
-public class DDMFormValuesTest {
+public class DDMFormValuesTest extends BaseDDMTestCase {
 
 	@Before
 	public void setUp() {
-		_ddmFormValues = createDDMFormValues();
+		_ddmFormValues = createDDMFormValues(null);
+
+		_ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(_FIELD_NAME, null));
+		_ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(_FIELD_NAME, null));
+		_ddmFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(_FIELD_NAME, null));
 	}
 
 	@Test
@@ -44,28 +51,6 @@ public class DDMFormValuesTest {
 		List<Value> values = ddmFormFieldValuesMap.get(_FIELD_NAME);
 
 		Assert.assertEquals(3, values.size());
-	}
-
-	protected DDMFormFieldValue createDDMFormFieldValue() {
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
-
-		ddmFormFieldValue.setName(_FIELD_NAME);
-
-		Value value = new UnlocalizedValue(StringUtil.randomString());
-
-		ddmFormFieldValue.setValue(value);
-
-		return ddmFormFieldValue;
-	}
-
-	protected DDMFormValues createDDMFormValues() {
-		DDMFormValues ddmFormValues = new DDMFormValues();
-
-		ddmFormValues.addDDMFormFieldValue(createDDMFormFieldValue());
-		ddmFormValues.addDDMFormFieldValue(createDDMFormFieldValue());
-		ddmFormValues.addDDMFormFieldValue(createDDMFormFieldValue());
-
-		return ddmFormValues;
 	}
 
 	private final String _FIELD_NAME = StringUtil.randomString();

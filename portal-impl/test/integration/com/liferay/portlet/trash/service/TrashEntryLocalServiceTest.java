@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -55,8 +56,6 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import org.joda.time.DateTime;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -258,13 +257,6 @@ public class TrashEntryLocalServiceTest {
 	protected void createFileEntryTrash(long groupId, int reduceDays)
 		throws Exception {
 
-		createFileEntryTrash(groupId, reduceDays, 0);
-	}
-
-	protected void createFileEntryTrash(
-			long groupId, int reduceDays, int reduceMinutes)
-		throws Exception {
-
 		FileEntry fileEntry =
 			DLAppTestUtil.addFileEntry(
 				groupId, groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -281,17 +273,8 @@ public class TrashEntryLocalServiceTest {
 
 			Date createDate = trashEntry.getCreateDate();
 
-			DateTime dateTime = new DateTime(createDate.getTime());
-
-			if (reduceDays > 0) {
-				dateTime = dateTime.plusDays(-reduceDays);
-			}
-
-			if (reduceMinutes > 0) {
-				dateTime = dateTime.plusMinutes(-reduceMinutes);
-			}
-
-			trashEntry.setCreateDate(dateTime.toDate());
+			trashEntry.setCreateDate(
+				new Date(createDate.getTime() - Time.DAY * reduceDays));
 
 			TrashEntryLocalServiceUtil.updateTrashEntry(trashEntry);
 		}
@@ -324,8 +307,8 @@ public class TrashEntryLocalServiceTest {
 		throws Exception {
 
 		createFileEntryTrash(group.getGroupId(), 1);
-		createFileEntryTrash(group.getGroupId(), 1, 1400);
-		createFileEntryTrash(group.getGroupId(), 2, 1);
+		createFileEntryTrash(group.getGroupId(), 1);
+		createFileEntryTrash(group.getGroupId(), 2);
 		createFileEntryTrash(group.getGroupId(), 3);
 
 		return 2;

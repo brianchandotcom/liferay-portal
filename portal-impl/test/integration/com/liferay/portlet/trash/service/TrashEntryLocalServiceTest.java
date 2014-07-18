@@ -32,7 +32,6 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.StagingLocalServiceUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
@@ -163,7 +162,7 @@ public class TrashEntryLocalServiceTest {
 		Group group = setTrashEntriesMaxAge(
 			createGroup(TestPropsValues.getCompanyId()), 2);
 
-		verifyCleanUpAfterTwoDays(createLayoutGroup(group.getGroupId()));
+		verifyCleanUpAfterTwoDays(createLayoutGroup(group));
 	}
 
 	@Test
@@ -177,8 +176,6 @@ public class TrashEntryLocalServiceTest {
 		StagingLocalServiceUtil.enableLocalStaging(
 			user.getUserId(), group, false, false,
 			ServiceContextTestUtil.getServiceContext(group, user.getUserId()));
-
-		group = GroupLocalServiceUtil.getGroup(group.getGroupId());
 
 		verifyCleanUpAfterTwoDays(group.getStagingGroup());
 	}
@@ -197,9 +194,7 @@ public class TrashEntryLocalServiceTest {
 		StagingLocalServiceUtil.enableLocalStaging(
 			user.getUserId(), group, false, false, serviceContext);
 
-		group = GroupLocalServiceUtil.getGroup(group.getGroupId());
-
-		group = createLayoutGroup(group.getStagingGroup().getGroupId());
+		group = createLayoutGroup(group.getStagingGroup());
 
 		verifyCleanUpAfterTwoDays(group);
 	}
@@ -213,13 +208,10 @@ public class TrashEntryLocalServiceTest {
 		User user = UserTestUtil.getAdminUser(companyId);
 
 		ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group, user.getUserId());
+			ServiceContextTestUtil.getServiceContext(group, user.getUserId());
 
 		StagingLocalServiceUtil.enableLocalStaging(
 			user.getUserId(), group, false, false, serviceContext);
-
-		group = GroupLocalServiceUtil.getGroup(group.getGroupId());
 
 		Group stagingGroup = group.getStagingGroup();
 
@@ -313,32 +305,24 @@ public class TrashEntryLocalServiceTest {
 	protected Group createGroup(long companyId) throws Exception {
 		User user = UserTestUtil.getAdminUser(companyId);
 
-		Group group = GroupTestUtil.addGroup(
+		return GroupTestUtil.addGroup(
 			companyId, user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			RandomTestUtil.randomString(), "This is a test group.");
-
-		return GroupLocalServiceUtil.getGroup(group.getGroupId());
 	}
 
-	protected Group createLayoutGroup(long groupId) throws Exception {
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
+	protected Group createLayoutGroup(Group group) throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(group);
-
-		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
 
 		String name = String.valueOf(layout.getPlid());
 
 		User user = UserTestUtil.getAdminUser(group.getCompanyId());
 
-		Group layoutGroup = GroupLocalServiceUtil.addGroup(
+		return GroupLocalServiceUtil.addGroup(
 			user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			Layout.class.getName(), layout.getPlid(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, null, 0, true,
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, true,
 			null);
-
-		return GroupLocalServiceUtil.getGroup(layoutGroup.getGroupId());
 	}
 
 	protected int createTrashEntriesForTwoDaysExpiryTest(Group group)
@@ -363,9 +347,7 @@ public class TrashEntryLocalServiceTest {
 
 		group.setTypeSettingsProperties(typeSettingsProperties);
 
-		GroupLocalServiceUtil.updateGroup(group);
-
-		return GroupLocalServiceUtil.getGroup(group.getGroupId());
+		return GroupLocalServiceUtil.updateGroup(group);
 	}
 
 	protected Group setTrashEntriesMaxAge(Group group, double days)
@@ -397,9 +379,7 @@ public class TrashEntryLocalServiceTest {
 
 		group.setTypeSettingsProperties(typeSettingsProperties);
 
-		GroupLocalServiceUtil.updateGroup(group);
-
-		return GroupLocalServiceUtil.getGroup(group.getGroupId());
+		return GroupLocalServiceUtil.updateGroup(group);
 	}
 
 	protected void verifyCleanUpAfterTwoDays(Group group) throws Exception {

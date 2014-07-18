@@ -278,6 +278,7 @@
 		<exception>Storage</exception>
 		<exception>StorageFieldName</exception>
 		<exception>StorageFieldRequired</exception>
+		<exception>StorageFieldValue</exception>
 		<exception>StructureDefinition</exception>
 		<exception>StructureDuplicateElement</exception>
 		<exception>StructureDuplicateStructureKey</exception>

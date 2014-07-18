@@ -15,7 +15,7 @@
 		<execute macro="Organization#tearDownCP" />
 	</tear-down>
 
-	<command name="ActivateUserActions" priority="3">
+	<command known-issues="LPS-47834" name="ActivateUserActions" priority="3">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -1370,7 +1370,7 @@
 		</execute>
 	</command>
 
-	<command name="DeactivateUserActions" priority="4">
+	<command known-issues="LPS-47834" name="DeactivateUserActions" priority="4">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -1418,7 +1418,7 @@
 		</execute>
 	</command>
 
-	<command name="DeactivateUserDeactivateButton" priority="4">
+	<command known-issues="LPS-47834" name="DeactivateUserDeactivateButton" priority="4">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -1466,7 +1466,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteOrganization" priority="5">
+	<command known-issues="LPS-47829" name="DeleteOrganization" priority="5">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 
@@ -1531,7 +1531,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteUser" priority="5">
+	<command known-issues="LPS-47834" name="DeleteUser" priority="5">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />

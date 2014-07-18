@@ -109,8 +109,9 @@ if (Validator.isNotNull(target)) {
 
 			<liferay-ui:search-container-column-text
 				name="country"
-				property="address.country.name"
-			/>
+			>
+				<liferay-ui:write bean="<%= organization %>" property="country" />
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text>
 				<c:if test="<%= (Validator.isNull(p_u_i_d) || OrganizationMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, organization.getOrganizationId())) %>">

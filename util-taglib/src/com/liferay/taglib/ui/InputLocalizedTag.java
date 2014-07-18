@@ -119,7 +119,7 @@ public class InputLocalizedTag extends IncludeTag {
 		_languageId = null;
 		_maxLength = null;
 		_name = null;
-		_toolbarSet = null;
+		_toolbarSet = "simple";
 		_type = "input";
 		_xml = null;
 	}
@@ -204,7 +204,7 @@ public class InputLocalizedTag extends IncludeTag {
 	private String _languageId;
 	private String _maxLength;
 	private String _name;
-	private String _toolbarSet;
+	private String _toolbarSet = "simple";
 	private String _type = "input";
 	private String _xml;
 

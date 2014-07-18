@@ -99,10 +99,6 @@ if ((exception != null) && fieldName.equals(focusField)) {
 		errorLocales = localizedExceptionsMap.keySet();
 	}
 }
-
-if (Validator.isNull(toolbarSet)) {
-	toolbarSet = "simple";
-}
 %>
 
 <span class="input-localized input-localized-<%= type %>" id="<portlet:namespace /><%= id %>BoundingBox">

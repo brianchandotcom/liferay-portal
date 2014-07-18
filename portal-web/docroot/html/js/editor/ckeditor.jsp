@@ -463,24 +463,24 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 				var destroyInstance = function(event) {
 					if (event.portletId === '<%= portletId %>') {
 						try {
-		 					var ckeditorInstances = window.CKEDITOR.instances;
+							var ckeditorInstances = window.CKEDITOR.instances;
 
-			 				A.Object.each(
-			 					ckeditorInstances,
-			 					function(value, key) {
-			 						var inst = ckeditorInstances[key];
+							A.Object.each(
+								ckeditorInstances,
+								function(value, key) {
+									var inst = ckeditorInstances[key];
 
-			 						delete ckeditorInstances[key];
+									delete ckeditorInstances[key];
 
-			 						inst.destroy();
-			 					}
-			 				);
-		 				}
-		 				catch(error) {
-		 				}
+									inst.destroy();
+								}
+							);
+						}
+						catch (error) {
+						}
 
-		 				Liferay.detach('destroyPortlet', destroyInstance);
-		 			}
+						Liferay.detach('destroyPortlet', destroyInstance);
+					}
 				};
 
 				Liferay.on('destroyPortlet', destroyInstance);
@@ -560,7 +560,7 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 	};
 
 	<%
-	String toogleControlsStatus = GetterUtil.getString(SessionClicks.get(request, "liferay_toggle_controls", ""));
+	String toogleControlsStatus = GetterUtil.getString(SessionClicks.get(request, "liferay_toggle_controls", "visible"));
 	%>
 
 	<c:if test='<%= (inlineEdit && toogleControlsStatus.equals("visible")) || !inlineEdit %>'>;

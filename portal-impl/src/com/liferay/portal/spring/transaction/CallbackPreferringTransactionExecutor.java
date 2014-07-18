@@ -104,6 +104,9 @@ public class CallbackPreferringTransactionExecutor
 			boolean newTransaction = transactionStatus.isNewTransaction();
 
 			if (newTransaction) {
+				fireTransactionCreatedEvent(
+					_transactionAttribute, transactionStatus);
+
 				TransactionalPortalCacheHelper.begin();
 
 				TransactionCommitCallbackUtil.pushCallbackList();
@@ -121,6 +124,10 @@ public class CallbackPreferringTransactionExecutor
 			catch (Throwable throwable) {
 				if (_transactionAttribute.rollbackOn(throwable)) {
 					if (newTransaction) {
+						fireTransactionRollbackedEvent(
+							_transactionAttribute, transactionStatus,
+							throwable);
+
 						TransactionalPortalCacheHelper.rollback();
 
 						TransactionCommitCallbackUtil.popCallbackList();
@@ -144,6 +151,9 @@ public class CallbackPreferringTransactionExecutor
 			}
 			finally {
 				if (newTransaction && !rollback) {
+					fireTransactionCommittedEvent(
+						_transactionAttribute, transactionStatus);
+
 					TransactionalPortalCacheHelper.commit();
 
 					invokeCallbacks();

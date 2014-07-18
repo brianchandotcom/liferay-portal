@@ -47,6 +47,9 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 		boolean newTransaction = transactionStatus.isNewTransaction();
 
 		if (newTransaction) {
+			fireTransactionCreatedEvent(
+				transactionAttribute, transactionStatus);
+
 			TransactionalPortalCacheHelper.begin();
 
 			TransactionCommitCallbackUtil.pushCallbackList();
@@ -67,16 +70,19 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 				transactionStatus);
 		}
 
-		processCommit(platformTransactionManager, transactionStatus);
+		processCommit(
+			platformTransactionManager, transactionAttribute,
+			transactionStatus);
 
 		return returnValue;
 	}
 
 	protected void processCommit(
 		PlatformTransactionManager platformTransactionManager,
+		TransactionAttribute transactionAttribute,
 		TransactionStatus transactionStatus) {
 
-		boolean hasError = false;
+		Throwable throwable = null;
 
 		try {
 			platformTransactionManager.commit(transactionStatus);
@@ -85,7 +91,7 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 			_log.error(
 				"Application exception overridden by commit exception", tse);
 
-			hasError = true;
+			throwable = tse;
 
 			throw tse;
 		}
@@ -93,20 +99,23 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 			_log.error(
 				"Application exception overridden by commit exception", re);
 
-			hasError = true;
+			throwable = re;
 
 			throw re;
 		}
 		catch (Error e) {
 			_log.error("Application exception overridden by commit error", e);
 
-			hasError = true;
+			throwable = e;
 
 			throw e;
 		}
 		finally {
 			if (transactionStatus.isNewTransaction()) {
-				if (hasError) {
+				if (throwable != null) {
+					fireTransactionRollbackedEvent(
+						transactionAttribute, transactionStatus, throwable);
+
 					TransactionalPortalCacheHelper.rollback();
 
 					TransactionCommitCallbackUtil.popCallbackList();
@@ -115,6 +124,9 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 					FinderCacheUtil.clearLocalCache();
 				}
 				else {
+					fireTransactionCommittedEvent(
+						transactionAttribute, transactionStatus);
+
 					TransactionalPortalCacheHelper.commit();
 
 					invokeCallbacks();
@@ -155,6 +167,9 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 			}
 			finally {
 				if (transactionStatus.isNewTransaction()) {
+					fireTransactionRollbackedEvent(
+						transactionAttribute, transactionStatus, throwable);
+
 					TransactionalPortalCacheHelper.rollback();
 
 					TransactionCommitCallbackUtil.popCallbackList();
@@ -165,7 +180,9 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 			}
 		}
 		else {
-			processCommit(platformTransactionManager, transactionStatus);
+			processCommit(
+				platformTransactionManager, transactionAttribute,
+				transactionStatus);
 		}
 
 		throw throwable;

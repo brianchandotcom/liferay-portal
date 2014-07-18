@@ -67,6 +67,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Sampsa Sohlman
+ * @author Shuyang Zhou
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -88,10 +89,9 @@ public class TrashEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGroupMaxAgeChanged() throws Exception {
-		long companyId = TestPropsValues.getCompanyId();
-
-		Group group = setTrashEntriesMaxAge(createGroup(companyId), 2);
+	public void testCustomizedMaxAge() throws Exception {
+		Group group = setTrashEntriesMaxAge(
+			createGroup(TestPropsValues.getCompanyId()), 2);
 
 		doTestCleanUp(group);
 	}
@@ -143,11 +143,6 @@ public class TrashEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testOneGroup() throws Exception {
-		doTestCleanUp(createGroup(TestPropsValues.getCompanyId()));
-	}
-
-	@Test
 	public void testWithLayoutGroup() throws Exception {
 		Group group = setTrashEntriesMaxAge(
 			createGroup(TestPropsValues.getCompanyId()), 2);
@@ -156,7 +151,12 @@ public class TrashEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testWithStaging() throws Exception {
+	public void testWithRegularGroup() throws Exception {
+		doTestCleanUp(createGroup(TestPropsValues.getCompanyId()));
+	}
+
+	@Test
+	public void testWithStagingGroup() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
 
 		Group group = setTrashEntriesMaxAge(createGroup(companyId), 2);

@@ -14,8 +14,13 @@
 
 package com.liferay.portal.kernel.transaction;
 
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Michael Young
+ * @author Shuyang Zhou
  */
 public enum Propagation {
 
@@ -27,6 +32,10 @@ public enum Propagation {
 	REQUIRES_NEW(TransactionDefinition.PROPAGATION_REQUIRES_NEW),
 	SUPPORTS(TransactionDefinition.PROPAGATION_SUPPORTS);
 
+	public static Propagation getPropagation(int value) {
+		return _lookupMap.get(value);
+	}
+
 	Propagation(int value) {
 		_value = value;
 	}
@@ -35,6 +44,15 @@ public enum Propagation {
 		return _value;
 	}
 
+	private static final Map<Integer, Propagation> _lookupMap =
+		new HashMap<Integer, Propagation>();
+
 	private int _value;
+
+	static {
+		for (Propagation propagation : EnumSet.allOf(Propagation.class)) {
+			_lookupMap.put(propagation._value, propagation);
+		}
+	}
 
 }

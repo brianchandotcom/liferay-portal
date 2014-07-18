@@ -16,6 +16,12 @@ package com.liferay.portal.spring.transaction;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionAttribute.Builder;
+import com.liferay.portal.kernel.transaction.TransactionLifecycleManager;
+import com.liferay.portal.kernel.transaction.TransactionStatus;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -25,6 +31,62 @@ import java.util.concurrent.Callable;
  * @author Shuyang Zhou
  */
 public abstract class BaseTransactionExecutor implements TransactionExecutor {
+
+	protected TransactionAttribute createTransactionAttribute(
+		org.springframework.transaction.interceptor.TransactionAttribute
+			transactionAttribute) {
+
+		Builder builder = new Builder();
+
+		builder.setIsolation(
+			Isolation.getIsolation(transactionAttribute.getIsolationLevel()));
+		builder.setPropagation(
+			Propagation.getPropagation(
+				transactionAttribute.getPropagationBehavior()));
+		builder.setReadOnly(transactionAttribute.isReadOnly());
+
+		return builder.build();
+	}
+
+	protected TransactionStatus createTransactionStatus(
+		org.springframework.transaction.TransactionStatus transactionStatus) {
+
+		return new TransactionStatus(
+			transactionStatus.isNewTransaction(),
+			transactionStatus.isRollbackOnly(),
+			transactionStatus.isCompleted());
+	}
+
+	protected void fireTransactionCommittedEvent(
+		org.springframework.transaction.interceptor.TransactionAttribute
+			transactionAttribute,
+		org.springframework.transaction.TransactionStatus transactionStatus) {
+
+		TransactionLifecycleManager.fireTransactionCommittedEvent(
+			createTransactionAttribute(transactionAttribute),
+			createTransactionStatus(transactionStatus));
+	}
+
+	protected void fireTransactionCreatedEvent(
+		org.springframework.transaction.interceptor.TransactionAttribute
+			transactionAttribute,
+		org.springframework.transaction.TransactionStatus transactionStatus) {
+
+		TransactionLifecycleManager.fireTransactionCreatedEvent(
+			createTransactionAttribute(transactionAttribute),
+			createTransactionStatus(transactionStatus));
+	}
+
+	protected void fireTransactionRollbackedEvent(
+		org.springframework.transaction.interceptor.TransactionAttribute
+			transactionAttribute,
+		org.springframework.transaction.TransactionStatus transactionStatus,
+		Throwable throwable) {
+
+		TransactionLifecycleManager.fireTransactionRollbackedEvent(
+			createTransactionAttribute(transactionAttribute),
+			createTransactionStatus(transactionStatus), throwable);
+	}
 
 	protected void invokeCallbacks() {
 		List<Callable<?>> callables =

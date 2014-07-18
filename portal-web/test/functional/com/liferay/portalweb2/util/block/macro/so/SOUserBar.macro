@@ -156,17 +156,7 @@
 			</else>
 		</if>
 
-		<if>
-			<equals arg1="${siteType}" arg2="Private" />
-			<then>
-				<execute action="SOUserBarAddSite#select" locator-key1="TYPE_SELECT" value1="value=3" />
-				<execute action="SOUserBarAddSite#assertSelectedLabel" locator-key1="TYPE_SELECT" value1="Private" />
-			</then>
-			<else>
-				<execute action="SOUserBarAddSite#select" locator-key1="TYPE_SELECT" value1="${siteType}" />
-			</else>
-		</if>
-
+		<execute action="SOUserBarAddSite#select" locator-key1="TYPE_SELECT" value1="${siteType}" />
 		<execute action="SOUserBarAddSite#click" locator-key1="SAVE_BUTTON" />
 
 		<if>
@@ -316,7 +306,7 @@
 					<then>
 						<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="${numberOfNotifications}" />
 						<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-						<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_MARK_ALL_AS_READ" value1="Mark All as Read (${numberOfNotifications})" />
+						<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_MARK_ALL_AS_READ" value1="Mark All as Read (${numberOfNotifications} of ${numberOfNotifications})" />
 						<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 
 						<execute macro="SOUserBar#viewNoNotifications" />
@@ -324,14 +314,14 @@
 					<else>
 						<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="${numberOfNotifications}" />
 						<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-						<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_MARK_ALL_AS_READ" value1="Mark All as Read (5)" />
+						<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_MARK_ALL_AS_READ" value1="Mark All as Read (5 of ${numberOfNotifications})" />
 					</else>
 				</if>
 			</then>
 			<else>
 				<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
 				<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-				<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_MARK_ALL_AS_READ" value1="Mark All as Read (1)" />
+				<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_MARK_ALL_AS_READ" value1="Mark All as Read (1 of 1)" />
 				<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 
 				<execute macro="SOUserBar#viewNoNotifications" />
@@ -511,31 +501,13 @@
 			<isset var="siteTypeList" />
 			<then>
 				<for list="${siteTypeList}" param="siteType">
-					<if>
-						<equals arg1="${siteType}" arg2="Private" />
-						<then>
-							<execute action="SOUserBarAddSite#select" locator-key1="TYPE_SELECT" value1="value=3" />
-							<execute action="SOUserBarAddSite#assertSelectedLabel" locator-key1="TYPE_SELECT" value1="Private" />
-						</then>
-						<else>
-							<execute action="SOUserBarAddSite#select" locator-key1="TYPE_SELECT" value1="${siteType}" />
-							<execute action="SOUserBarAddSite#assertSelectedLabel" locator-key1="TYPE_SELECT" value1="${siteType}" />
-						</else>
-					</if>
+					<execute action="SOUserBarAddSite#select" locator-key1="TYPE_SELECT" value1="${siteType}" />
+					<execute action="SOUserBarAddSite#assertSelectedLabel" locator-key1="TYPE_SELECT" value1="${siteType}" />
 				</for>
 			</then>
 			<else>
-				<if>
-					<equals arg1="${siteType}" arg2="Private" />
-					<then>
-						<execute action="SOUserBarAddSite#select" locator-key1="TYPE_SELECT" value1="value=3" />
-						<execute action="SOUserBarAddSite#assertSelectedLabel" locator-key1="TYPE_SELECT" value1="Private" />
-					</then>
-					<else>
-						<execute action="SOUserBarAddSite#select" locator-key1="TYPE_SELECT" value1="${siteType}" />
-						<execute action="SOUserBarAddSite#assertSelectedLabel" locator-key1="TYPE_SELECT" value1="${siteType}" />
-					</else>
-				</if>
+				<execute action="SOUserBarAddSite#select" locator-key1="TYPE_SELECT" value1="${siteType}" />
+				<execute action="SOUserBarAddSite#assertSelectedLabel" locator-key1="TYPE_SELECT" value1="${siteType}" />
 			</else>
 		</if>
 	</command>

@@ -364,7 +364,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			else if (portalSource && fileName.endsWith("/tiles-defs.xml")) {
 				formatTilesDefsXML(fileName, newContent);
 			}
-			else if ((portalSource && fileName.endsWith("WEB-INF/web.xml")) ||
+			else if ((portalSource &&
+					  fileName.endsWith(
+						  "portal-web/docroot/WEB-INF/web.xml")) ||
 					 (!portalSource && fileName.endsWith("/web.xml"))) {
 
 				newContent = formatWebXML(fileName, newContent);
@@ -760,8 +762,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected String formatWebXML(String fileName, String content)
 		throws IOException {
 
-		if (!fileName.contains("portal-web/docroot")) {
-		//if (!portalSource) {
+		if (!portalSource) {
 			String webXML = ContentUtil.get(
 				"com/liferay/portal/deploy/dependencies/web.xml");
 

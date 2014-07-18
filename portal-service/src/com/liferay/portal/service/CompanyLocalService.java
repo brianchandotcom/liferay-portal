@@ -131,10 +131,12 @@ public interface CompanyLocalService extends BaseLocalService,
 	*
 	* @param company the company
 	* @return the company that was removed
+	* @throws PortalException
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Company deleteCompany(
-		com.liferay.portal.model.Company company);
+		com.liferay.portal.model.Company company)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the company with the primary key from the database. Also notifies the appropriate model listeners.

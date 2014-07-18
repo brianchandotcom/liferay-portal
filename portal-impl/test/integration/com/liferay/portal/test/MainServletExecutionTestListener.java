@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.PersistedModel;
@@ -377,6 +378,6 @@ public class MainServletExecutionTestListener
 	private static Set<Class<?>> _orderedClasses = new LinkedHashSet<Class<?>>(
 		Arrays.asList(
 			User.class, Organization.class, Role.class, UserGroup.class,
-			Group.class));
+			Group.class, Company.class));
 
 }

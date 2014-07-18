@@ -1415,6 +1415,7 @@ rerun your task.
 							<jvmarg value="-Djava.net.preferIPv4Stack=true" />
 							<jvmarg value="-Djava.security.manager" />
 							<jvmarg value="-Djava.security.policy=${basedir}/test-classes/${test.type}/com/liferay/portal/security/pacl/security.policy" />
+							<jvmarg value="-Dliferay.mode=test" />
 							<jvmarg value="-Duser.timezone=GMT" />
 							<classpath location="test-coverage" />
 							<classpath refid="test.classpath" />
@@ -1465,6 +1466,7 @@ rerun your task.
 							<jvmarg value="-Dfile.encoding=UTF-8" />
 							<jvmarg value="-Dfixed.issues=${fixed.issues}" />
 							<jvmarg value="-Djava.net.preferIPv4Stack=true" />
+							<jvmarg value="-Dliferay.mode=test" />
 							<jvmarg value="-Duser.timezone=GMT" />
 							<classpath location="test-coverage" />
 							<classpath refid="test.classpath" />

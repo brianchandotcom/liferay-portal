@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Company;
@@ -101,7 +102,7 @@ public class TrashEntryLocalServiceTest {
 
 		createFileEntryTrash(group, false);
 
-		setTrashEnableForGroup(group, false);
+		disableTrashForGroup(group);
 
 		TrashEntryLocalServiceUtil.checkEntries();
 
@@ -200,7 +201,7 @@ public class TrashEntryLocalServiceTest {
 	public void testWithStagingTrashDisabled() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
 
-		Group group = setTrashEnableForGroup(createGroup(companyId), false);
+		Group group = disableTrashForGroup(createGroup(companyId));
 
 		User user = UserTestUtil.getAdminUser(companyId);
 
@@ -315,6 +316,17 @@ public class TrashEntryLocalServiceTest {
 		}
 	}
 
+	protected Group disableTrashForGroup(Group group) throws Exception {
+		UnicodeProperties typeSettingsProperties =
+			group.getParentLiveGroupTypeSettingsProperties();
+
+		typeSettingsProperties.setProperty("trashEnabled", StringPool.FALSE);
+
+		group.setTypeSettingsProperties(typeSettingsProperties);
+
+		return GroupLocalServiceUtil.updateGroup(group);
+	}
+
 	protected void doTestCleanUp(Group group) throws Exception {
 		createTrashEntries(group);
 
@@ -323,20 +335,6 @@ public class TrashEntryLocalServiceTest {
 		Assert.assertEquals(
 			_notExpiredTrashEntryCount,
 			TrashEntryLocalServiceUtil.getTrashEntriesCount());
-	}
-
-	protected Group setTrashEnableForGroup(Group group, boolean value)
-		throws Exception {
-
-		UnicodeProperties typeSettingsProperties =
-			group.getParentLiveGroupTypeSettingsProperties();
-
-		typeSettingsProperties.setProperty(
-			"trashEnabled", String.valueOf(value));
-
-		group.setTypeSettingsProperties(typeSettingsProperties);
-
-		return GroupLocalServiceUtil.updateGroup(group);
 	}
 
 	protected Group setTrashEntriesMaxAge(Group group, int days)

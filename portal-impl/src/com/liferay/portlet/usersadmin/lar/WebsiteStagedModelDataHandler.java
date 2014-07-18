@@ -40,13 +40,20 @@ public class WebsiteStagedModelDataHandler
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		Website website =
-			WebsiteLocalServiceUtil.fetchWebsiteByUuidAndCompanyId(
-				uuid, group.getCompanyId());
+		Website website = fetchStagedModelByUuidAndCompanyId(
+			uuid, group.getCompanyId());
 
 		if (website != null) {
 			WebsiteLocalServiceUtil.deleteWebsite(website);
 		}
+	}
+
+	@Override
+	public Website fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return WebsiteLocalServiceUtil.fetchWebsiteByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	@Override
@@ -77,9 +84,8 @@ public class WebsiteStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			website);
 
-		Website existingWebsite =
-			WebsiteLocalServiceUtil.fetchWebsiteByUuidAndCompanyId(
-				website.getUuid(), portletDataContext.getCompanyId());
+		Website existingWebsite = fetchStagedModelByUuidAndCompanyId(
+			website.getUuid(), portletDataContext.getCompanyGroupId());
 
 		Website importedWebsite = null;
 

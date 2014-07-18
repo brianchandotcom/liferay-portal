@@ -14,17 +14,22 @@
 
 package com.liferay.portlet.messageboards.lar;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
+
+import java.util.List;
 
 /**
  * @author Daniel Kocsis
@@ -38,11 +43,31 @@ public class MBBanStagedModelDataHandler
 	public void deleteStagedModel(
 		String uuid, long groupId, String className, String extraData) {
 
-		MBBan ban = fetchExistingStagedModel(uuid, groupId);
+		MBBan ban = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (ban != null) {
 			MBBanLocalServiceUtil.deleteBan(ban);
 		}
+	}
+
+	@Override
+	public MBBan fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		List<MBBan> bans = MBBanLocalServiceUtil.getMBBansByUuidAndCompanyId(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new StagedModelModifiedDateComparator<MBBan>());
+
+		if (ListUtil.isEmpty(bans)) {
+			return null;
+		}
+
+		return bans.get(0);
+	}
+
+	@Override
+	public MBBan fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
+		return MBBanLocalServiceUtil.fetchMBBanByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
@@ -67,11 +92,6 @@ public class MBBanStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			userBanElement, ExportImportPathUtil.getModelPath(ban), ban);
-	}
-
-	@Override
-	protected MBBan doFetchExistingStagedModel(String uuid, long groupId) {
-		return MBBanLocalServiceUtil.fetchMBBanByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override

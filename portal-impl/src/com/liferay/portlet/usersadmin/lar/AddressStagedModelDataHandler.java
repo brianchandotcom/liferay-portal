@@ -40,9 +40,8 @@ public class AddressStagedModelDataHandler
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		Address address =
-			AddressLocalServiceUtil.fetchAddressByUuidAndCompanyId(
-				uuid, group.getCompanyId());
+		Address address = fetchStagedModelByUuidAndCompanyId(
+			uuid, group.getCompanyId());
 
 		if (address != null) {
 			AddressLocalServiceUtil.deleteAddress(address);
@@ -50,12 +49,7 @@ public class AddressStagedModelDataHandler
 	}
 
 	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
-	}
-
-	@Override
-	protected void doExportStagedModel(
+	public void doExportStagedModel(
 			PortletDataContext portletDataContext, Address address)
 		throws Exception {
 
@@ -68,6 +62,19 @@ public class AddressStagedModelDataHandler
 	}
 
 	@Override
+	public Address fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return AddressLocalServiceUtil.fetchAddressByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	@Override
+	public String[] getClassNames() {
+		return CLASS_NAMES;
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, Address address)
 		throws Exception {
@@ -77,9 +84,8 @@ public class AddressStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			address);
 
-		Address existingAddress =
-			AddressLocalServiceUtil.fetchAddressByUuidAndCompanyId(
-				address.getUuid(), portletDataContext.getCompanyId());
+		Address existingAddress = fetchStagedModelByUuidAndCompanyId(
+			address.getUuid(), portletDataContext.getCompanyId());
 
 		Address importedAddress = null;
 

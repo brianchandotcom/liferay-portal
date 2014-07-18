@@ -14,11 +14,14 @@
 
 package com.liferay.portlet.dynamicdatalists.lar;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -43,11 +46,36 @@ public class DDLRecordSetStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		DDLRecordSet ddlRecordSet = fetchExistingStagedModel(uuid, groupId);
+		DDLRecordSet ddlRecordSet = fetchStagedModelByUuidAndGroupId(
+			uuid, groupId);
 
 		if (ddlRecordSet != null) {
 			DDLRecordSetLocalServiceUtil.deleteRecordSet(ddlRecordSet);
 		}
+	}
+
+	@Override
+	public DDLRecordSet fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		List<DDLRecordSet> recordSets =
+			DDLRecordSetLocalServiceUtil.getDDLRecordSetsByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<DDLRecordSet>());
+
+		if (ListUtil.isEmpty(recordSets)) {
+			return null;
+		}
+
+		return recordSets.get(0);
+	}
+
+	@Override
+	public DDLRecordSet fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return DDLRecordSetLocalServiceUtil.fetchDDLRecordSetByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override
@@ -88,21 +116,12 @@ public class DDLRecordSetStagedModelDataHandler
 	}
 
 	@Override
-	protected DDLRecordSet doFetchExistingStagedModel(
-		String uuid, long groupId) {
-
-		return DDLRecordSetLocalServiceUtil.fetchDDLRecordSetByUuidAndGroupId(
-			uuid, groupId);
-	}
-
-	@Override
 	protected void doImportMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,
 			long recordSetId)
 		throws Exception {
 
-		DDLRecordSet existingRecordSet = fetchExistingStagedModel(
-			uuid, groupId);
+		DDLRecordSet existingRecordSet = fetchMissingReference(uuid, groupId);
 
 		Map<Long, Long> recordSetIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -139,7 +158,7 @@ public class DDLRecordSetStagedModelDataHandler
 		DDLRecordSet importedRecordSet = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			DDLRecordSet existingRecordSet = fetchExistingStagedModel(
+			DDLRecordSet existingRecordSet = fetchStagedModelByUuidAndGroupId(
 				recordSet.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingRecordSet == null) {

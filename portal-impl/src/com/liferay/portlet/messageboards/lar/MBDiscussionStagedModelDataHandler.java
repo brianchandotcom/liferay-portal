@@ -14,9 +14,12 @@
 
 package com.liferay.portlet.messageboards.lar;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
@@ -30,6 +33,7 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,11 +48,36 @@ public class MBDiscussionStagedModelDataHandler
 	public void deleteStagedModel(
 		String uuid, long groupId, String className, String extraData) {
 
-		MBDiscussion discussion = fetchExistingStagedModel(uuid, groupId);
+		MBDiscussion discussion = fetchStagedModelByUuidAndGroupId(
+			uuid, groupId);
 
 		if (discussion != null) {
 			MBDiscussionLocalServiceUtil.deleteMBDiscussion(discussion);
 		}
+	}
+
+	@Override
+	public MBDiscussion fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		List<MBDiscussion> discussions =
+			MBDiscussionLocalServiceUtil.getMBDiscussionsByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<MBDiscussion>());
+
+		if (ListUtil.isEmpty(discussions)) {
+			return null;
+		}
+
+		return discussions.get(0);
+	}
+
+	@Override
+	public MBDiscussion fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return MBDiscussionLocalServiceUtil.fetchMBDiscussionByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override
@@ -80,14 +109,6 @@ public class MBDiscussionStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			discussionElement, ExportImportPathUtil.getModelPath(discussion),
 			discussion);
-	}
-
-	@Override
-	protected MBDiscussion doFetchExistingStagedModel(
-		String uuid, long groupId) {
-
-		return MBDiscussionLocalServiceUtil.fetchMBDiscussionByUuidAndGroupId(
-			uuid, groupId);
 	}
 
 	@Override

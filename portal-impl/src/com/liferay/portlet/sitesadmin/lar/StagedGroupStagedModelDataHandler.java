@@ -39,6 +39,13 @@ public class StagedGroupStagedModelDataHandler
 	}
 
 	@Override
+	public StagedGroup fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return null;
+	}
+
+	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}

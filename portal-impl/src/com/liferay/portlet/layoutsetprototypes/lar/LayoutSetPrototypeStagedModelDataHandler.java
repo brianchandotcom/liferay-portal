@@ -64,14 +64,20 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		LayoutSetPrototype layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.
-				fetchLayoutSetPrototypeByUuidAndCompanyId(
-					uuid, group.getCompanyId());
+			fetchStagedModelByUuidAndGroupId(uuid, group.getCompanyId());
 
 		if (layoutSetPrototype != null) {
 			LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
 				layoutSetPrototype);
 		}
+	}
+
+	@Override
+	public LayoutSetPrototype fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return LayoutSetPrototypeLocalServiceUtil.
+			fetchLayoutSetPrototypeByUuidAndCompanyId(uuid, companyId);
 	}
 
 	@Override
@@ -123,10 +129,9 @@ public class LayoutSetPrototypeStagedModelDataHandler
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			LayoutSetPrototype existingLayoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.
-					fetchLayoutSetPrototypeByUuidAndCompanyId(
-						layoutSetPrototype.getUuid(),
-						portletDataContext.getCompanyId());
+				fetchStagedModelByUuidAndCompanyId(
+					layoutSetPrototype.getUuid(),
+					portletDataContext.getCompanyId());
 
 			if (existingLayoutSetPrototype == null) {
 				serviceContext.setUuid(layoutSetPrototype.getUuid());
@@ -306,21 +311,6 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		finally {
 			StreamUtil.cleanUp(inputStream);
 		}
-	}
-
-	@Override
-	protected boolean validateMissingReference(
-		String uuid, long companyId, long groupId) {
-
-		LayoutSetPrototype layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.
-				fetchLayoutSetPrototypeByUuidAndCompanyId(uuid, companyId);
-
-		if (layoutSetPrototype == null) {
-			return false;
-		}
-
-		return true;
 	}
 
 }

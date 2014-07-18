@@ -38,6 +38,13 @@ public class StagedThemeStagedModelDataHandler
 	}
 
 	@Override
+	public StagedTheme fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return null;
+	}
+
+	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}

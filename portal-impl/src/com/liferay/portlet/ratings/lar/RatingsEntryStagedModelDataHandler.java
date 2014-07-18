@@ -43,13 +43,20 @@ public class RatingsEntryStagedModelDataHandler
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		RatingsEntry entry =
-			RatingsEntryLocalServiceUtil.fetchRatingsEntryByUuidAndCompanyId(
-				uuid, group.getCompanyId());
+		RatingsEntry entry = fetchStagedModelByUuidAndCompanyId(
+			uuid, group.getCompanyId());
 
 		if (entry != null) {
 			RatingsEntryLocalServiceUtil.deleteRatingsEntry(entry);
 		}
+	}
+
+	@Override
+	public RatingsEntry fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return RatingsEntryLocalServiceUtil.fetchRatingsEntryByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	@Override

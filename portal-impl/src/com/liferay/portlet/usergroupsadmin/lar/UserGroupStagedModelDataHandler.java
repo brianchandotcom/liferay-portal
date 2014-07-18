@@ -40,13 +40,20 @@ public class UserGroupStagedModelDataHandler
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		UserGroup userGroup =
-			UserGroupLocalServiceUtil.fetchUserGroupByUuidAndCompanyId(
-				uuid, group.getCompanyId());
+		UserGroup userGroup = fetchStagedModelByUuidAndGroupId(
+			uuid, group.getCompanyId());
 
 		if (userGroup != null) {
 			UserGroupLocalServiceUtil.deleteUserGroup(userGroup);
 		}
+	}
+
+	@Override
+	public UserGroup fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return UserGroupLocalServiceUtil.fetchUserGroupByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	@Override
@@ -82,9 +89,8 @@ public class UserGroupStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			userGroup);
 
-		UserGroup existingUserGroup =
-			UserGroupLocalServiceUtil.fetchUserGroupByUuidAndCompanyId(
-				userGroup.getUuid(), portletDataContext.getCompanyId());
+		UserGroup existingUserGroup = fetchStagedModelByUuidAndGroupId(
+			userGroup.getUuid(), portletDataContext.getGroupId());
 
 		if (existingUserGroup == null) {
 			existingUserGroup = UserGroupLocalServiceUtil.fetchUserGroup(

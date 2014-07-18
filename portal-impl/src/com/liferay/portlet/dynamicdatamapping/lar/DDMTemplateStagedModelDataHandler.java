@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.lar;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
@@ -21,8 +22,10 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -41,6 +44,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUti
 import java.io.File;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,11 +61,36 @@ public class DDMTemplateStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		DDMTemplate ddmTemplate = fetchExistingStagedModel(uuid, groupId);
+		DDMTemplate ddmTemplate = fetchStagedModelByUuidAndGroupId(
+			uuid, groupId);
 
 		if (ddmTemplate != null) {
 			DDMTemplateLocalServiceUtil.deleteTemplate(ddmTemplate);
 		}
+	}
+
+	@Override
+	public DDMTemplate fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		List<DDMTemplate> templates =
+			DDMTemplateLocalServiceUtil.getDDMTemplatesByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<DDMTemplate>());
+
+		if (ListUtil.isEmpty(templates)) {
+			return null;
+		}
+
+		return templates.get(0);
+	}
+
+	@Override
+	public DDMTemplate fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override
@@ -248,14 +277,6 @@ public class DDMTemplateStagedModelDataHandler
 	}
 
 	@Override
-	protected DDMTemplate doFetchExistingStagedModel(
-		String uuid, long groupId) {
-
-		return DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
-			uuid, groupId);
-	}
-
-	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, DDMTemplate template)
 		throws Exception {
@@ -391,7 +412,7 @@ public class DDMTemplateStagedModelDataHandler
 		DDMTemplate existingTemplate = null;
 
 		if (!preloaded) {
-			existingTemplate = fetchExistingStagedModel(uuid, groupId);
+			existingTemplate = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 		}
 		else {
 			existingTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(

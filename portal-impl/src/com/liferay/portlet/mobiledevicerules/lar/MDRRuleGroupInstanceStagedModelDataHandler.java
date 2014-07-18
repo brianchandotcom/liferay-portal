@@ -14,12 +14,15 @@
 
 package com.liferay.portlet.mobiledevicerules.lar;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,6 +37,7 @@ import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,13 +53,39 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 	public void deleteStagedModel(
 		String uuid, long groupId, String className, String extraData) {
 
-		MDRRuleGroupInstance ruleGroupInstance = fetchExistingStagedModel(
-			uuid, groupId);
+		MDRRuleGroupInstance ruleGroupInstance =
+			fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (ruleGroupInstance != null) {
 			MDRRuleGroupInstanceLocalServiceUtil.deleteRuleGroupInstance(
 				ruleGroupInstance);
 		}
+	}
+
+	@Override
+	public MDRRuleGroupInstance fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		List<MDRRuleGroupInstance> ruleGroupInstances =
+			MDRRuleGroupInstanceLocalServiceUtil.
+				getMDRRuleGroupInstancesByUuidAndCompanyId(
+					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					new StagedModelModifiedDateComparator
+						<MDRRuleGroupInstance>());
+
+		if (ListUtil.isEmpty(ruleGroupInstances)) {
+			return null;
+		}
+
+		return ruleGroupInstances.get(0);
+	}
+
+	@Override
+	public MDRRuleGroupInstance fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return MDRRuleGroupInstanceLocalServiceUtil.
+			fetchMDRRuleGroupInstanceByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
@@ -93,14 +123,6 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 			ruleGroupInstanceElement,
 			ExportImportPathUtil.getModelPath(ruleGroupInstance),
 			ruleGroupInstance);
-	}
-
-	@Override
-	protected MDRRuleGroupInstance doFetchExistingStagedModel(
-		String uuid, long groupId) {
-
-		return MDRRuleGroupInstanceLocalServiceUtil.
-			fetchMDRRuleGroupInstanceByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
@@ -175,7 +197,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			MDRRuleGroupInstance existingMDRRuleGroupInstance =
-				fetchExistingStagedModel(
+				fetchStagedModelByUuidAndGroupId(
 					ruleGroupInstance.getUuid(),
 					portletDataContext.getScopeGroupId());
 

@@ -14,13 +14,16 @@
 
 package com.liferay.portlet.blogs.lar;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,6 +38,7 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import java.io.InputStream;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * @author Zsolt Berentey
@@ -49,11 +53,35 @@ public class BlogsEntryStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		BlogsEntry entry = fetchExistingStagedModel(uuid, groupId);
+		BlogsEntry entry = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (entry != null) {
 			BlogsEntryLocalServiceUtil.deleteEntry(entry);
 		}
+	}
+
+	@Override
+	public BlogsEntry fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		List<BlogsEntry> entries =
+			BlogsEntryLocalServiceUtil.getBlogsEntriesByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<BlogsEntry>());
+
+		if (ListUtil.isEmpty(entries)) {
+			return null;
+		}
+
+		return entries.get(0);
+	}
+
+	@Override
+	public BlogsEntry fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return BlogsEntryLocalServiceUtil.fetchBlogsEntryByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override
@@ -109,12 +137,6 @@ public class BlogsEntryStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			entryElement, ExportImportPathUtil.getModelPath(entry), entry);
-	}
-
-	@Override
-	protected BlogsEntry doFetchExistingStagedModel(String uuid, long groupId) {
-		return BlogsEntryLocalServiceUtil.fetchBlogsEntryByUuidAndGroupId(
-			uuid, groupId);
 	}
 
 	@Override
@@ -185,8 +207,9 @@ public class BlogsEntryStagedModelDataHandler
 			if (portletDataContext.isDataStrategyMirror()) {
 				serviceContext.setAttribute("urlTitle", entry.getUrlTitle());
 
-				BlogsEntry existingEntry = fetchExistingStagedModel(
-					entry.getUuid(), portletDataContext.getScopeGroupId());
+				BlogsEntry existingEntry =
+					fetchStagedModelByUuidAndGroupId(
+						entry.getUuid(), portletDataContext.getScopeGroupId());
 
 				if (existingEntry == null) {
 					serviceContext.setUuid(entry.getUuid());
@@ -237,7 +260,7 @@ public class BlogsEntryStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(entry.getUserUuid());
 
-		BlogsEntry existingEntry = fetchExistingStagedModel(
+		BlogsEntry existingEntry = fetchStagedModelByUuidAndGroupId(
 			entry.getUuid(), portletDataContext.getScopeGroupId());
 
 		if ((existingEntry == null) || !existingEntry.isInTrash()) {

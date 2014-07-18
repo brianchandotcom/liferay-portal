@@ -535,7 +535,7 @@
 			<hint name="max-length">200</hint>
 		</field>
 		<field name="owner" type="String">
-			<hint name="max-length">255</hint>
+			<hint name="max-length">1024</hint>
 		</field>
 		<field name="inheritable" type="boolean" />
 		<field name="expirationDate" type="Date" />

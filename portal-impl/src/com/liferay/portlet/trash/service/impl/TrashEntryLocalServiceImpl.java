@@ -137,25 +137,25 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 				@Override
 				public void performAction(Object object)
-						throws PortalException {
+					throws PortalException {
 
-					TrashEntry entry = (TrashEntry)object;
-
-					// We trust that group is cached
+					TrashEntry trashEntry = (TrashEntry)object;
 
 					Group group = groupLocalService.getGroup(
-						entry.getGroupId());
+						trashEntry.getGroupId());
 
 					Date date = getMaxAge(group);
 
-					if (entry.getCreateDate().before(date) ||
+					Date createDate = trashEntry.getCreateDate();
+
+					if (createDate.before(date) ||
 						!TrashUtil.isTrashEnabled(group.getGroupId())) {
 
 						TrashHandler trashHandler =
 							TrashHandlerRegistryUtil.getTrashHandler(
-								entry.getClassName());
+								trashEntry.getClassName());
 
-						trashHandler.deleteTrashEntry(entry.getClassPK());
+						trashHandler.deleteTrashEntry(trashEntry.getClassPK());
 					}
 				}
 

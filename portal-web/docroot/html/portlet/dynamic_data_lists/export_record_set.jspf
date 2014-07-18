@@ -30,12 +30,13 @@
 
 			var form = A.Node.create('<form />');
 
-			form.setAttribute('method', 'POST');
+			form.attr('method', 'POST');
 
 			var content = A.one('#<portlet:namespace />exportList');
 
 			if (content) {
 				form.append(content);
+
 				content.show();
 			}
 
@@ -46,7 +47,7 @@
 						toolbars: {
 							footer: [
 								{
-									label: '<%= UnicodeLanguageUtil.get(request, "ok") %>',
+									label: '<liferay-ui:message key="ok" />',
 									on: {
 										click: function() {
 											submitForm(form, url, false);
@@ -57,7 +58,7 @@
 									primary: true
 								},
 								{
-									label: '<%= UnicodeLanguageUtil.get(request, "cancel") %>',
+									label: '<liferay-ui:message key="cancel" />',
 									on: {
 										click: function() {
 											dialog.hide();
@@ -81,7 +82,6 @@
 					title: '<%= UnicodeLanguageUtil.get(request, "export") %>'
 				}
 			);
-
 		},
 		['liferay-util-window']
 	);

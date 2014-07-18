@@ -65,13 +65,10 @@ public class MVCCEhcachePortalCache<K extends Serializable, V extends MVCCModel>
 		}
 
 		try {
-			Element newElement = null;
+			Element newElement = new Element(key, value);
 
 			if (timeToLive >= 0) {
-				newElement = new Element(key, value, timeToLive);
-			}
-			else {
-				newElement = new Element(key, value);
+				newElement.setTimeToLive(timeToLive);
 			}
 
 			Ehcache ehcache = getEhcache();

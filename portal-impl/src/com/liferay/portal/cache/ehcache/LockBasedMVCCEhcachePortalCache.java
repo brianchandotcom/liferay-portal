@@ -50,13 +50,10 @@ public class LockBasedMVCCEhcachePortalCache
 
 	@Override
 	protected void doPut(K key, V value, boolean quiet, int timeToLive) {
-		Element newElement = null;
+		Element newElement = new Element(key, value);
 
 		if (timeToLive >= 0) {
-			newElement = new Element(key, value, timeToLive);
-		}
-		else {
-			newElement = new Element(key, value);
+			newElement.setTimeToLive(timeToLive);
 		}
 
 		Ehcache ehcache = getEhcache();

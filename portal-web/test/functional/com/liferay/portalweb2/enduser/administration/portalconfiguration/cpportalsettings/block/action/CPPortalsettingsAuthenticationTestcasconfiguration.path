@@ -25,17 +25,17 @@
 </tr>
 <tr>
 	<td>LOGIN_URL_SUCCESS_MESSAGE</td>
-	<td>//tr[contains(.,'Login URL')]/td/span[contains(@class,'alert-success-label')]</td>
+	<td>//tr[contains(.,'Login URL')]/td/span[contains(@class,'lfr-status-success')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LOGOUT_URL_SUCCESS_MESSAGE</td>
-	<td>//tr[contains(.,'Logout URL')]/td/span[contains(@class,'alert-success-label')]</td>
+	<td>//tr[contains(.,'Logout URL')]/td/span[contains(@class,'lfr-status-success')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SERVER_URL_SUCCESS_MESSAGE</td>
-	<td>//tr[contains(.,'Server URL')]/td/span[contains(@class,'alert-success-label')]</td>
+	<td>//tr[contains(.,'Server URL')]/td/span[contains(@class,'lfr-status-success')]</td>
 	<td></td>
 </tr>
 </tbody>

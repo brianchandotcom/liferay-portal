@@ -341,11 +341,12 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			else if (fileName.endsWith("routes.xml")) {
 				newContent = formatFriendlyURLRoutesXML(fileName, newContent);
 			}
-			else if ((portalSource &&
+			else if (fileName.endsWith("/liferay-portlet.xml") ||
+					 (portalSource &&
 					  fileName.endsWith("/portlet-custom.xml")) ||
 					 (!portalSource && fileName.endsWith("/portlet.xml"))) {
 
-				newContent = formatPortletXML(newContent);
+				newContent = formatPortletXML(fileName, newContent);
 			}
 			else if (portalSource &&
 					 (fileName.endsWith(".action") ||
@@ -580,7 +581,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return sb.toString();
 	}
 
-	protected String formatPortletXML(String content)
+	protected String formatPortletXML(String fileName, String content)
 		throws DocumentException, IOException {
 
 		Document document = saxReaderUtil.read(content);
@@ -592,6 +593,21 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		List<Element> portletElements = rootElement.elements("portlet");
 
 		for (Element portletElement : portletElements) {
+			Element portletNameElement = portletElement.element("portlet-name");
+
+			String portletNameText = portletNameElement.getText();
+
+			if (!Validator.isNumber(portletNameText)) {
+				processErrorMessage(
+					fileName,
+					fileName + " contains a nonstandard portlet-name element " +
+						portletNameText);
+			}
+
+			if (fileName.endsWith("/liferay-portlet.xml")) {
+				continue;
+			}
+
 			portletElement.sortElementsByChildElement("init-param", "name");
 
 			Element portletPreferencesElement = portletElement.element(

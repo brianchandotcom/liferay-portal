@@ -33,6 +33,13 @@
 			</then>
 		</if>
 
+		<if>
+			<isset var="workflowDefinition" />
+			<then>
+				<execute action="PGDynamicdatalistsAddlist#select" locator-key1="WORKFLOW_SELECT" value1="${workflowDefinition}" />
+			</then>
+		</if>
+
 		<execute action="PGDynamicdatalistsAddlist#assertClick" locator-key1="DATA_DEFINITION_SELECT_LINK" value1="Select" />
 	</command>
 

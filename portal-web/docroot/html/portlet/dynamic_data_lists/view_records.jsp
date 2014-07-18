@@ -173,6 +173,8 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 	</liferay-ui:search-container>
 </aui:form>
 
+<%@ include file="/html/portlet/dynamic_data_lists/export_record_set.jspf" %>
+
 <aui:script>
 	AUI().use('liferay-portlet-dynamic-data-lists');
 </aui:script>

@@ -73,3 +73,5 @@ portletURL.setParameter("struts_action", "/dynamic_data_lists/view");
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>
+
+<%@ include file="/html/portlet/dynamic_data_lists/export_record_set.jspf" %>

@@ -27,6 +27,10 @@ import java.util.Map;
  */
 public class DDMFormFieldValue {
 
+	public DDMFormValues getDDMFormValues() {
+		return _ddmFormValues;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -53,6 +57,16 @@ public class DDMFormFieldValue {
 		return _value;
 	}
 
+	public void setDDMFormValues(DDMFormValues ddmFormValues) {
+		for (DDMFormFieldValue nestedDDMFormFieldValue :
+				_nestedDDMFormFieldValues) {
+
+			nestedDDMFormFieldValue.setDDMFormValues(ddmFormValues);
+		}
+
+		_ddmFormValues = ddmFormValues;
+	}
+
 	public void setName(String name) {
 		_name = name;
 	}
@@ -67,6 +81,7 @@ public class DDMFormFieldValue {
 		_value = value;
 	}
 
+	private DDMFormValues _ddmFormValues;
 	private String _name;
 	private List<DDMFormFieldValue> _nestedDDMFormFieldValues =
 		new ArrayList<DDMFormFieldValue>();

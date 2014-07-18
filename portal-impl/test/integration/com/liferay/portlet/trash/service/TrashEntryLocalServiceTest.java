@@ -278,9 +278,13 @@ public class TrashEntryLocalServiceTest {
 	protected Group createGroup(long companyId) throws Exception {
 		User user = UserTestUtil.getAdminUser(companyId);
 
-		return GroupTestUtil.addGroup(
+		Group group = GroupTestUtil.addGroup(
 			companyId, user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			RandomTestUtil.randomString(), "This is a test group.");
+
+		_groups.add(group);
+
+		return group;
 	}
 
 	protected Group createLayoutGroup(Group group) throws Exception {

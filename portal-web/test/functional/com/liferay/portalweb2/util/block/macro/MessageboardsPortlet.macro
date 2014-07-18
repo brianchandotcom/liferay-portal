@@ -209,6 +209,17 @@
 		<execute action="CPMessageboardsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
+	<command name="unbanUserPG">
+		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_BANNED_USERS" value1="Banned Users" />
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="PGMessageboardsBannedusers#assertClick" locator-key1="BANNED_USERS_TABLE_UNBAN_THIS_USER" value1="Unban This User" />
+		<execute action="PGMessageboardsBannedusers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGMessageboardsBannedusers#assertElementNotPresent" locator-key1="BANNED_USERS_TABLE_BANNED_USER" />
+		<execute action="PGMessageboardsBannedusers#assertTextNotPresent" value1="${userScreenName}" />
+	</command>
+
 	<command name="viewAnonymousPostingConfigurationCP">
 		<execute action="CPMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
 
@@ -239,6 +250,22 @@
 		<execute action="PGMessageboardsBannedusers#assertClick" locator-key1="BANNED_USERS_TABLE_BANNED_USER" value1="${userScreenName}" />
 
 		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${userScreenName}" />
+	</command>
+
+	<command name="viewBanPG">
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You have been banned by the moderator." />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="ADD_CATEGORY_BUTTON" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="POST_NEW_THREAD_BUTTON" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="RSS_LINK" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="SUBSCRIBE_LINK" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_MESSAGE_BOARDS_HOME" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_RECENT_POSTS" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_MY_POSTS" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_MY_SUBSCRIPTIONS" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_STATISTICS" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_BANNED_USERS" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_SEARCH_FIELD" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="NAVIGATION_SEARCH_BUTTON" />
 	</command>
 
 	<command name="viewNoPermissionCP">

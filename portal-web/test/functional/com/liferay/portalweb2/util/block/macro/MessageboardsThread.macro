@@ -114,7 +114,29 @@
 			</then>
 		</if>
 
-		<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<if>
+			<equals arg1="${saveAsDraft}" arg2="true" />
+			<then>
+				<execute action="PGMessageboardsPostthread#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+			</then>
+			<elseif>
+				<equals arg1="${preview}" arg2="true" />
+				<then>
+					<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PREVIEW_BUTTON" value1="Preview" />
+
+					<var name="key_threadSubject" value="${threadSubject}" />
+
+					<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="Edit ${threadSubject}" />
+					<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
+					<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+					<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_WORKFLOW_STATUS_1" value1="Draft" />
+					<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+			</else>
+		</if>
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -171,6 +193,13 @@
 
 	<command name="banUser">
 		<var name="key_userName" value="${userName}" />
+
+		<if>
+			<condition action="PGMessageboardsThread#isNotVisible" locator-key1="MESSAGE_USER_DETAILS" />
+			<then>
+				<execute action="PGMessageboardsThread#makeVisible" locator-key1="MESSAGE_USER_DETAILS" />
+			</then>
+		</if>
 
 		<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_BAN_THIS_USER" value1="Ban This User" />
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -258,6 +287,20 @@
 			<then>
 				<execute action="PGMessageboardsPostthread#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
 			</then>
+			<elseif>
+				<equals arg1="${preview}" arg2="true" />
+				<then>
+					<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PREVIEW_BUTTON" value1="Preview" />
+
+					<var name="key_threadSubject" value="${threadSubject}" />
+
+					<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="Edit ${threadSubject}" />
+					<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
+					<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+					<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_WORKFLOW_STATUS_1" value1="Draft" />
+					<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBodyEdit}" />
+				</then>
+			</elseif>
 			<else>
 				<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 			</else>
@@ -284,6 +327,18 @@
 
 		<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="flagPG">
+		<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_FLAG_1" value1="Flag" />
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="REPORT_INAPPROPRIATE_CONTENT_HEADER" value1="Report Inappropriate Content" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="REPORT_INAPPROPRIATE_CONTENT_WARNING" value1="You are about to report a violation of our Terms of Use. All reports are strictly confidential." />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="REPORT_INAPPROPRIATE_CONTENT_WARNING_TERMS_OF_USE_LINK" value1="Terms of Use" />
+		<execute action="PGMessageboardsThread#select" locator-key1="REPORT_INAPPROPRIATE_CONTENT_REASON_SELECT" value1="${flagReason}" />
+		<execute action="PGMessageboardsThread#assertClick" locator-key1="REPORT_INAPPROPRIATE_CONTENT_SAVE_BUTTON" value1="Save" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="REPORT_INAPPROPRIATE_CONTENT_SUCCESS_MESSAGE" value1="Although we cannot disclose our final decision, we do review every report and appreciate your effort to make sure Liferay is a safe environment for everyone." />
+		<execute action="PGMessageboardsThread#click" locator-key1="REPORT_INAPPROPRIATE_CONTENT_CLOSE_BUTTON" />
 	</command>
 
 	<command name="gotoPG">
@@ -590,6 +645,15 @@
 		<execute action="CPMessageboardsRemovedAttachments#click" locator-key1="ATTACHMENT_TABLE_ACTIONS" />
 		<execute action="CPMessageboardsRemovedAttachments#assertClick" locator-key1="ATTACHMENT_MENULIST_RESTORE" value1="Restore" />
 		<execute action="CPMessageboardsRemovedAttachments#assertTextEquals" locator-key1="INFO_MESSAGE" value1="This message does not have file attachments in the Recycle Bin." />
+	</command>
+
+	<command name="searchPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="PGMessageboards#type" locator-key1="NAVIGATION_SEARCH_FIELD" value1="${threadKeyword}" />
+		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_SEARCH_BUTTON" value1="Search" />
+
+		<execute action="PGMessageboardsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_TITLE" value1="${threadSubject}" />
 	</command>
 
 	<command name="splitThreadPG">

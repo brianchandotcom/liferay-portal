@@ -108,8 +108,6 @@ public class CallbackPreferringTransactionExecutor
 					_transactionAttribute, transactionStatus);
 
 				TransactionalPortalCacheHelper.begin();
-
-				TransactionCommitCallbackUtil.pushCallbackList();
 			}
 
 			boolean rollback = false;
@@ -129,8 +127,6 @@ public class CallbackPreferringTransactionExecutor
 							throwable);
 
 						TransactionalPortalCacheHelper.rollback();
-
-						TransactionCommitCallbackUtil.popCallbackList();
 
 						EntityCacheUtil.clearLocalCache();
 						FinderCacheUtil.clearLocalCache();
@@ -155,8 +151,6 @@ public class CallbackPreferringTransactionExecutor
 						_transactionAttribute, transactionStatus);
 
 					TransactionalPortalCacheHelper.commit();
-
-					invokeCallbacks();
 				}
 			}
 		}

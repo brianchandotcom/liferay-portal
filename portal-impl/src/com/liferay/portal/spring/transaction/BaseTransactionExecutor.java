@@ -23,9 +23,6 @@ import com.liferay.portal.kernel.transaction.TransactionAttribute.Builder;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleManager;
 import com.liferay.portal.kernel.transaction.TransactionStatus;
 
-import java.util.List;
-import java.util.concurrent.Callable;
-
 /**
  * @author Michael C. Han
  * @author Shuyang Zhou
@@ -86,20 +83,6 @@ public abstract class BaseTransactionExecutor implements TransactionExecutor {
 		TransactionLifecycleManager.fireTransactionRollbackedEvent(
 			createTransactionAttribute(transactionAttribute),
 			createTransactionStatus(transactionStatus), throwable);
-	}
-
-	protected void invokeCallbacks() {
-		List<Callable<?>> callables =
-			TransactionCommitCallbackUtil.popCallbackList();
-
-		for (Callable<?> callable : callables) {
-			try {
-				callable.call();
-			}
-			catch (Exception e) {
-				_log.error("Unable to execute transaction commit callback", e);
-			}
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -51,8 +51,6 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 				transactionAttribute, transactionStatus);
 
 			TransactionalPortalCacheHelper.begin();
-
-			TransactionCommitCallbackUtil.pushCallbackList();
 		}
 
 		Object returnValue = null;
@@ -118,8 +116,6 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 
 					TransactionalPortalCacheHelper.rollback();
 
-					TransactionCommitCallbackUtil.popCallbackList();
-
 					EntityCacheUtil.clearLocalCache();
 					FinderCacheUtil.clearLocalCache();
 				}
@@ -128,8 +124,6 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 						transactionAttribute, transactionStatus);
 
 					TransactionalPortalCacheHelper.commit();
-
-					invokeCallbacks();
 				}
 			}
 		}
@@ -171,8 +165,6 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 						transactionAttribute, transactionStatus, throwable);
 
 					TransactionalPortalCacheHelper.rollback();
-
-					TransactionCommitCallbackUtil.popCallbackList();
 
 					EntityCacheUtil.clearLocalCache();
 					FinderCacheUtil.clearLocalCache();

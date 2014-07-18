@@ -14,6 +14,11 @@
 
 package com.liferay.portal.spring.transaction;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionLifecycleListener;
+import com.liferay.portal.kernel.transaction.TransactionStatus;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 import java.util.ArrayList;
@@ -25,6 +30,45 @@ import java.util.concurrent.Callable;
  * @author Shuyang Zhou
  */
 class TransactionCommitCallbackUtil {
+
+	public static final TransactionLifecycleListener
+		TRANSACTION_LIFECYCLE_LISTENER = new TransactionLifecycleListener() {
+
+			@Override
+			public void created(
+				TransactionAttribute transactionAttribute,
+				TransactionStatus transactionStatus) {
+
+				pushCallbackList();
+			}
+
+			@Override
+			public void committed(
+				TransactionAttribute transactionAttribute,
+				TransactionStatus transactionStatus) {
+
+				List<Callable<?>> callables = popCallbackList();
+
+				for (Callable<?> callable : callables) {
+					try {
+						callable.call();
+					}
+					catch (Exception e) {
+						_log.error(
+							"Unable to execute transaction commit callback", e);
+					}
+				}
+			}
+
+			@Override
+			public void rollbacked(
+				TransactionAttribute transactionAttribute,
+				TransactionStatus transactionStatus, Throwable throwable) {
+
+				popCallbackList();
+			}
+
+		};
 
 	public static void registerCallback(Callable<?> callable) {
 		List<List<Callable<?>>> callbackListList =
@@ -70,6 +114,9 @@ class TransactionCommitCallbackUtil {
 
 		callbackListList.add(Collections.<Callable<?>>emptyList());
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		TransactionCommitCallbackUtil.class);
 
 	private static ThreadLocal<List<List<Callable<?>>>>
 		_callbackListListThreadLocal =

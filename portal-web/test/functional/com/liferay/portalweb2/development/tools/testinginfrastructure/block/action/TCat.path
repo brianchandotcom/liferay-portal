@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>APPLICATION_FOLDER</td>
-	<td>//div[@id='x-auto-209']/span[contains(.,'Applications')]</td>
+	<td>//div/span[contains(.,'Applications')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -121,6 +121,21 @@
 <tr>
 	<td>FILE_DIALOG_BOX_FILE_NAME_FIELD</td>
 	<td>os/fields/file_dialog_box_file_name_field.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON</td>
+	<td>os/icons/file_dialog_box_type_file_name_icon.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_CLICKED</td>
+	<td>os/icons/file_dialog_box_type_file_name_icon_clicked.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_LINUX</td>
+	<td>os/icons/file_dialog_box_type_file_name_icon_linux.png</td>
 	<td></td>
 </tr>
 <tr>

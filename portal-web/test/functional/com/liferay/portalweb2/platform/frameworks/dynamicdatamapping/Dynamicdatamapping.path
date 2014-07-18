@@ -56,12 +56,12 @@
 </tr>
 <tr>
 	<td>FIELDS_FIELD</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='${key_field}' and contains(@class,'diagram-builder-field-draggable')]/div</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='${key_field}' and contains(@class,'property-builder-field-draggable')]/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELDS_FIELD_UNSELECTABLE</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='${key_field}' and not(contains(@class,'diagram-builder-field-draggable'))]/div</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='${key_field}' and not(contains(@class,'property-builder-field-draggable'))]/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -218,7 +218,7 @@
 <!--FORM-->
 <tr>
 	<td>FORM_BUILDER</td>
-	<td>//div[@class='diagram-builder-drop-container']</td>
+	<td>//div[@class='property-builder-drop-container']</td>
 	<td></td>
 </tr>
 <tr>

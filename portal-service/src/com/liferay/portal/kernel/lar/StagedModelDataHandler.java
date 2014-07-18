@@ -37,6 +37,10 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 
 	public T fetchMissingReference(String uuid, long groupId);
 
+	public T fetchStagedModelByUuidAndCompanyId(String uuid, long companyId);
+
+	public T fetchStagedModelByUuidAndGroupId(String uuid, long groupId);
+
 	public String[] getClassNames();
 
 	public String getDisplayName(T StagedModel);

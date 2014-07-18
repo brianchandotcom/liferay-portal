@@ -7,6 +7,9 @@ AUI.add(
 		var HistoryManager = Liferay.HistoryManager;
 		var UploaderQueue = A.Uploader.Queue;
 
+		var isNumber = Lang.isNumber;
+		var isString = Lang.isString;
+
 		var sub = Lang.sub;
 
 		var DOC = A.config.doc;
@@ -69,15 +72,27 @@ AUI.add(
 
 		var STR_BOUNDING_BOX = 'boundingBox';
 
+		var STR_BLANK = '';
+
 		var STR_CONTENT_BOX = 'contentBox';
 
 		var STR_EXTENSION_PDF = '.pdf';
 
 		var STR_FIRST = 'first';
 
+		var STR_FOLDER_ID = 'folderId';
+
+		var STR_HOST = 'host';
+
+		var STR_LABEL = 'label';
+
 		var STR_LIST = 'list';
 
+		var STR_NAME = 'name';
+
 		var STR_NAVIGATION_OVERLAY_BACKGROUND = '#FFF';
+
+		var STR_SIZE = 'size';
 
 		var STR_SPACE = ' ';
 
@@ -130,8 +145,8 @@ AUI.add(
 						setter: function(val) {
 							var instance = this;
 
-							val.push('');
-							val.unshift('');
+							val.push(STR_BLANK);
+							val.unshift(STR_BLANK);
 
 							return val;
 						},
@@ -144,8 +159,8 @@ AUI.add(
 					},
 
 					displayStyle: {
-						validator: Lang.isString,
-						value: ''
+						validator: isString,
+						value: STR_BLANK
 					},
 
 					entriesContainer: {
@@ -157,11 +172,11 @@ AUI.add(
 						getter: function() {
 							var instance = this;
 
-							return instance.get('host')._folderId;
+							return instance.get(STR_HOST)._folderId;
 						},
-						setter: Lang.toInt,
-						validator: Lang.isNumber || Lang.isString,
 						readonly: true,
+						setter: Lang.toInt,
+						validator: isNumber || isString,
 						value: null
 					},
 
@@ -172,46 +187,47 @@ AUI.add(
 
 					maxFileSize: {
 						validator: function(val) {
-							return (Lang.isNumber(val) && (val > 0));
+							return (isNumber(val) && (val > 0));
 						},
 						value: 0
 					},
 
 					redirect: {
-						validator: Lang.isString,
-						value: ''
+						validator: isString,
+						value: STR_BLANK
 					},
 
 					uploadURL: {
-						setter: function(val) {
-							return decodeURI(val);
-						},
-						validator: Lang.isString,
-						value: ''
+						setter: '_decodeURI',
+						validator: isString,
+						value: STR_BLANK
 					},
 
 					viewFileEntryURL: {
-						setter: function(val) {
-							return decodeURI(val);
-						},
-						validator: Lang.isString,
-						value: ''
+						setter: '_decodeURI',
+						validator: isString,
+						value: STR_BLANK
 					}
 				},
+
 				AUGMENTS: [Liferay.StorageFormatter],
+
 				EXTENDS: A.Plugin.Base,
+
 				NAME: 'documentlibraryupload',
+
 				NS: 'upload',
+
 				prototype: {
 					initializer: function() {
 						var instance = this;
 
 						var appViewEntryTemplates = instance.get('appViewEntryTemplates');
 
-						instance._entriesContainer = instance.get('entriesContainer');
 						instance._columnNames = instance.get('columnNames');
 						instance._dimensions = instance.get('dimensions');
 						instance._displayStyle = instance.get('displayStyle');
+						instance._entriesContainer = instance.get('entriesContainer');
 						instance._maxFileSize = instance.get('maxFileSize');
 
 						instance._handles = [];
@@ -297,7 +313,7 @@ AUI.add(
 
 						var entriesContainer = instance._entriesContainer;
 
-						var host = instance.get('host');
+						var host = instance.get(STR_HOST);
 
 						A.getWin()._node.onbeforeunload = A.bind('_confirmUnload', instance);
 
@@ -334,9 +350,7 @@ AUI.add(
 
 										docElement.addClass('upload-drop-intent');
 
-										var target = event.target;
-
-										docElement.toggleClass('upload-drop-active', (target.compareTo(entriesContainer) || entriesContainer.contains(target)));
+										docElement.toggleClass('upload-drop-active', (event.target.compareTo(entriesContainer) || entriesContainer.contains(target)));
 
 										removeCssClassTask();
 									}
@@ -383,7 +397,7 @@ AUI.add(
 								if ((AArray.indexOf(dataTransferTypes, 'Files') > -1) && (AArray.indexOf(dataTransferTypes, 'text/html') === -1)) {
 									var parentElement = event.target.ancestor(SELECTOR_ENTRY_DISPLAY_STYLE);
 
-									parentElement.toggleClass(CSS_ACTIVE_AREA, event.type === 'dragover');
+									parentElement.toggleClass(CSS_ACTIVE_AREA, (event.type == 'dragover'));
 								}
 							},
 							SELECTOR_DATA_FOLDER
@@ -432,7 +446,7 @@ AUI.add(
 
 						var entriesContainer = instance.get('entriesContainer');
 
-						if (displayStyle === STR_LIST) {
+						if (displayStyle == STR_LIST) {
 							var searchContainer = entriesContainer.one(SELECTOR_SEARCH_CONTAINER);
 
 							entriesContainer = searchContainer.one('tbody');
@@ -442,7 +456,7 @@ AUI.add(
 						else {
 							var invisibleEntry = instance._invisibleDescriptiveEntry;
 
-							if (displayStyle === CSS_ICON) {
+							if (displayStyle == CSS_ICON) {
 								invisibleEntry = instance._invisibleIconEntry;
 							}
 
@@ -481,15 +495,15 @@ AUI.add(
 						var columnValues = AArray.map(
 							instance._columnNames,
 							function(item, index) {
-								var value = '';
+								var value = STR_BLANK;
 
-								if (item === 'name') {
+								if (item == STR_NAME) {
 									value = sub(TPL_ENTRY_ROW_TITLE, [name]);
 								}
-								else if (item === 'size') {
+								else if (item == STR_SIZE) {
 									value = instance.formatStorage(size);
 								}
-								else if (item === 'downloads') {
+								else if (item == 'downloads') {
 									value = '0';
 								}
 
@@ -533,10 +547,10 @@ AUI.add(
 								height: height,
 								on: {
 									complete: function(event) {
-										this.set('label', 'complete!');
+										this.set(STR_LABEL, 'complete!');
 									},
 									valueChange: function(event) {
-										this.set('label', event.newVal + '%');
+										this.set(STR_LABEL, event.newVal + '%');
 									}
 								},
 								width: width
@@ -548,7 +562,6 @@ AUI.add(
 						var instance = this;
 
 						var overlay = instance._createOverlay(target);
-
 						var progressBar = instance._createProgressBar();
 
 						overlay.show();
@@ -562,6 +575,10 @@ AUI.add(
 							target.overlay = overlay;
 							target.progressBar = progressBar;
 						}
+					},
+
+					_decodeURI: function(val) {
+						return decodeURI(val);
 					},
 
 					_destroyEntry: function() {
@@ -612,7 +629,7 @@ AUI.add(
 					_displayEntryError: function(node, message, displayStyle) {
 						var instance = this;
 
-						if (displayStyle === STR_LIST) {
+						if (displayStyle == STR_LIST) {
 							var imageIcon = node.one(SELECTOR_IMAGE_ICON);
 
 							imageIcon.attr('src', PATH_THEME_IMAGES + '/common/close.png');
@@ -668,7 +685,7 @@ AUI.add(
 								if (error === true) {
 									uploadResultClass = CSS_UPLOAD_ERROR;
 								}
-								else if (error === ERROR_RESULTS_MIXED) {
+								else if (error == ERROR_RESULTS_MIXED) {
 									uploadResultClass = CSS_UPLOAD_WARNING;
 								}
 							}
@@ -682,9 +699,7 @@ AUI.add(
 
 						var dataSet = instance._getDataSet();
 
-						var currentUploadData = dataSet.get(STR_FIRST);
-
-						return currentUploadData;
+						return dataSet.get(STR_FIRST);
 					},
 
 					_getDataSet: function() {
@@ -704,12 +719,12 @@ AUI.add(
 					_getDisplayStyle: function(style) {
 						var instance = this;
 
-						var displayStyleNamespace = instance.get('host').ns('displayStyle');
+						var displayStyleNamespace = instance.get(STR_HOST).ns('displayStyle');
 
 						var displayStyle = HistoryManager.get(displayStyleNamespace) || instance._displayStyle;
 
 						if (style) {
-							displayStyle = (style === displayStyle);
+							displayStyle = (style == displayStyle);
 						}
 
 						return displayStyle;
@@ -767,7 +782,7 @@ AUI.add(
 
 						var dataFolder = folderEntry && folderEntry.one('[data-folder-id]');
 
-						return (dataFolder && Lang.toInt(dataFolder.attr('data-folder-id')) || instance.get('folderId'));
+						return (dataFolder && Lang.toInt(dataFolder.attr('data-folder-id')) || instance.get(STR_FOLDER_ID));
 					},
 
 					_getMediaThumbnail: function(fileName) {
@@ -776,7 +791,7 @@ AUI.add(
 						var thumbnailName = STR_THUMBNAIL_DEFAULT;
 
 						if (REGEX_IMAGE.test(fileName)) {
-							thumbnailName = sub(TPL_IMAGE_THUMBNAIL, [instance.get('folderId'), fileName]);
+							thumbnailName = sub(TPL_IMAGE_THUMBNAIL, [instance.get(STR_FOLDER_ID), fileName]);
 						}
 						else {
 							if (LString.endsWith(fileName.toLowerCase(), STR_EXTENSION_PDF)) {
@@ -863,7 +878,7 @@ AUI.add(
 								}
 							);
 
-							uploader.get('boundingBox').hide();
+							uploader.get(STR_BOUNDING_BOX).hide();
 
 							uploader.render();
 
@@ -895,7 +910,7 @@ AUI.add(
 								message = responseData.message;
 							}
 							else {
-								message = instance.get('host').ns('fileEntryId=') + responseData.fileEntryId;
+								message = instance.get(STR_HOST).ns('fileEntryId=') + responseData.fileEntryId;
 							}
 						}
 
@@ -947,7 +962,7 @@ AUI.add(
 
 						var queue = uploader && uploader.queue;
 
-						return !!(queue && (queue.queuedFiles.length > 0 || queue.numberOfUploads > 0 || !A.Object.isEmpty(queue.currentFiles)) && queue._currentState === UploaderQueue.UPLOADING);
+						return !!(queue && ((queue.queuedFiles.length > 0) || (queue.numberOfUploads > 0) || !A.Object.isEmpty(queue.currentFiles)) && (queue._currentState == UploaderQueue.UPLOADING));
 					},
 
 					_onDataRequest: function(event) {
@@ -997,7 +1012,7 @@ AUI.add(
 
 							var folderNode = null;
 
-							var folder = (key !== instance.get('folderId'));
+							var folder = (key !== instance.get(STR_FOLDER_ID));
 
 							if (folder) {
 								folderNode = instance._getFolderEntryNode(target);
@@ -1036,7 +1051,7 @@ AUI.add(
 								instance._displayEntryError(fileNode, response.message, displayStyle);
 							}
 							else {
-								var displayStyleList = (displayStyle === STR_LIST);
+								var displayStyleList = (displayStyle == STR_LIST);
 
 								if (!displayStyleList) {
 									instance._updateThumbnail(fileNode, file.name);
@@ -1069,15 +1084,14 @@ AUI.add(
 						var instance = this;
 
 						var folderEntry = uploadData.target;
-
 						var invalidFiles = uploadData.invalidFiles;
+						var totalFilesLength = uploadData.fileList.length;
 
 						var invalidFilesLength = invalidFiles.length;
-						var totalFilesLength = uploadData.fileList.length;
 
 						var hasErrors = (invalidFilesLength !== 0);
 
-						if (hasErrors && invalidFilesLength !== totalFilesLength) {
+						if (hasErrors && (invalidFilesLength !== totalFilesLength)) {
 							hasErrors = ERROR_RESULTS_MIXED;
 						}
 
@@ -1194,7 +1208,7 @@ AUI.add(
 
 						var folderId = instance._getTargetFolderId(target);
 
-						var folder = (folderId !== instance.get('folderId'));
+						var folder = (folderId !== instance.get(STR_FOLDER_ID));
 
 						if (folder) {
 							var folderEntryNode = instance._getFolderEntryNode(target);
@@ -1255,8 +1269,8 @@ AUI.add(
 							function(item, index) {
 								var errorMessage;
 
-								var size = item.get('size') || 0;
-								var type = item.get('type') || '';
+								var size = item.get(STR_SIZE) || 0;
+								var type = item.get('type') || STR_BLANK;
 
 								var strings = instance._strings;
 
@@ -1272,8 +1286,7 @@ AUI.add(
 
 								item.errorMessage = errorMessage;
 								item.size = size;
-
-								item.name = item.get('name');
+								item.name = item.get(STR_NAME);
 
 								return !errorMessage;
 							}

@@ -78,11 +78,9 @@ AUI.add(
 						instance._eventDataRetrieveSuccess = instance.ns('dataRetrieveSuccess');
 						instance._eventOpenDocument = instance.ns('openDocument');
 						instance._eventChangeSearchFolder = instance.ns('changeSearchFolder');
-
-						instance._entriesContainer = instance.byId('entriesContainer');
-
 						instance._eventPageLoaded = instance.ns('pageLoaded');
 
+						instance._entriesContainer = instance.byId('entriesContainer');
 						instance._keywordsNode = instance.byId(STR_KEYWORDS);
 
 						if (!config.syncMessageDisabled) {
@@ -184,7 +182,12 @@ AUI.add(
 
 						instance._repositoriesData = {};
 
-						eventHandles.push(Liferay.on(config.portletId + ':portletRefreshed', A.bind('destructor', instance)));
+						eventHandles.push(
+							Liferay.on(
+								config.portletId + ':portletRefreshed',
+								A.bind('destructor', instance)
+							)
+						);
 
 						var searchFormNode = instance.one('#fm1');
 
@@ -193,7 +196,6 @@ AUI.add(
 						}
 
 						instance._toggleSyncNotification();
-
 						instance._toggleTrashAction();
 
 						var html5 = (WIN && WIN.File && WIN.FormData && WIN.XMLHttpRequest);
@@ -278,9 +280,7 @@ AUI.add(
 
 						var repositories = instance._config.repositories;
 
-						var length = repositories.length;
-
-						for (var i = 0; i < length; i++) {
+						for (var i = 0; i < repositories.length; i++) {
 							var repository = repositories[i];
 
 							if (repository.id == repositoryId) {

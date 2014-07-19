@@ -130,7 +130,8 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 
 			printer.print("</div>");
 			printer.print("</div>");
-		} else {
+		}
+		else {
 			printer.print("<p><img src=\"");
 			printer.print(sidebarNode.getSrc());
 			printer.print("\" alt=\"");

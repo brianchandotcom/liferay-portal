@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="plugin.full.version" value="1.0.1" />
+	<property name="plugin.full.version" value="1.0.0" />
 	<property name="plugin.name" value="com.liferay.markdown.converter" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />

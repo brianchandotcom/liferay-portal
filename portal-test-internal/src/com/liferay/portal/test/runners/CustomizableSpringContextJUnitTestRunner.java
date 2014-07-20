@@ -12,9 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.test;
+package com.liferay.portal.test.runners;
 
-import java.util.Arrays;
+import com.liferay.portal.kernel.test.AbstractIntegrationJUnitTestRunner;
+import com.liferay.portal.test.jdbc.ResetDatabaseUtilDataSource;
+import com.liferay.portal.util.InitUtil;
+
 import java.util.List;
 
 import org.junit.runners.model.InitializationError;
@@ -22,22 +25,28 @@ import org.junit.runners.model.InitializationError;
 /**
  * @author Miguel Pastor
  */
-public class NullThreadLocalCacheJUnitTestRunner
-	extends CustomizableSpringContextJUnitTestRunner {
+public abstract class CustomizableSpringContextJUnitTestRunner
+	extends AbstractIntegrationJUnitTestRunner {
 
-	public NullThreadLocalCacheJUnitTestRunner(Class<?> clazz)
+	public CustomizableSpringContextJUnitTestRunner(Class<?> clazz)
 		throws InitializationError {
 
 		super(clazz);
 	}
 
-	@Override
-	public void afterApplicationContextInit() {
-	}
+	public abstract void afterApplicationContextInit();
+
+	public abstract List<String> getExtraConfigLocations();
 
 	@Override
-	public List<String> getExtraConfigLocations() {
-		return Arrays.asList("META-INF/test-thread-local-spring.xml");
+	public void initApplicationContext() {
+		System.setProperty("catalina.base", ".");
+
+		ResetDatabaseUtilDataSource.initialize();
+
+		InitUtil.initWithSpringAndModuleFramework(getExtraConfigLocations());
+
+		afterApplicationContextInit();
 	}
 
 }

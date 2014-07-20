@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.security.pacl.PACLExecutionTestListener;
-import com.liferay.portal.security.pacl.PACLIntegrationJUnitTestRunner;
+import com.liferay.portal.test.listeners.PACLExecutionTestListener;
+import com.liferay.portal.test.runners.PACLIntegrationJUnitTestRunner;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

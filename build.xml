@@ -251,6 +251,7 @@
 		<ant dir="portal-impl" target="clean" inheritAll="false" />
 		<ant dir="portal-pacl" target="clean" inheritAll="false" />
 		<ant dir="portal-test" target="clean" inheritAll="false" />
+		<ant dir="portal-test-internal" target="clean" inheritAll="false" />
 
 		<ant dir="portal-web" target="clean" inheritAll="false" />
 
@@ -405,6 +406,7 @@
 		<ant dir="portal-impl" target="compile" inheritAll="false" />
 		<ant dir="portal-pacl" target="compile" inheritAll="false" />
 		<ant dir="portal-test" target="compile" inheritAll="false" />
+		<ant dir="portal-test-internal" target="compile" inheritAll="false" />
 
 		<ant dir="util-taglib" target="jar" inheritAll="false" />
 
@@ -466,6 +468,7 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 		<ant dir="portal-impl" target="deploy" inheritAll="false" />
 		<ant dir="portal-pacl" target="deploy" inheritAll="false" />
 		<ant dir="portal-test" target="deploy" inheritAll="false" />
+		<ant dir="portal-test-internal" target="deploy" inheritAll="false" />
 
 		<ant dir="portal-web" target="deploy" inheritAll="false" />
 
@@ -898,6 +901,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		<ant dir="portal-impl" target="jar" inheritAll="false" />
 		<ant dir="portal-pacl" target="jar" inheritAll="false" />
 		<ant dir="portal-test" target="jar" inheritAll="false" />
+		<ant dir="portal-test-internal" target="jar" inheritAll="false" />
 
 		<ant dir="portal-web" target="war" inheritAll="false" />
 
@@ -939,6 +943,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 
 			<packageset dir="portal-service/src" />
 			<packageset dir="portal-test/src" />
+			<packageset dir="portal-test-internal/src" />
 			<packageset dir="util-bridges/src" />
 			<packageset dir="util-java/src" />
 			<packageset dir="util-slf4j/src" />
@@ -980,6 +985,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			<packageset dir="portal-impl/src" />
 			<packageset dir="portal-service/src" />
 			<packageset dir="portal-test/src" />
+			<packageset dir="portal-test-internal/src" />
 			<packageset dir="util-bridges/src" />
 			<packageset dir="util-java/src" />
 			<packageset dir="util-slf4j/src" />

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.pacl;
+package com.liferay.portal.test.listeners;
 
 import com.liferay.portal.deploy.hot.HookHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
-import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.test.runners.PACLIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.HashMap;

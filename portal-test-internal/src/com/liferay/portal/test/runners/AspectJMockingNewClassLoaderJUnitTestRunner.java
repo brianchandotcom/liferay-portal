@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.test;
+package com.liferay.portal.test.runners;
 
 import com.liferay.portal.aspectj.WeavingClassLoader;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.test.AdviseWith;
 
 import java.io.File;
 

@@ -15,7 +15,7 @@
 package com.liferay.portal.spring.hibernate;
 
 import com.liferay.portal.service.PortalServiceUtil;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

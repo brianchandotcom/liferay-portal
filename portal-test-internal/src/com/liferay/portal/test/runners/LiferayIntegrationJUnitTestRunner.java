@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.test;
+package com.liferay.portal.test.runners;
 
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.log.CaptureAppender;

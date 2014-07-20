@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.security.pacl;
+package com.liferay.portal.test.runners;
 
 import com.liferay.portal.deploy.hot.IndexerPostProcessorRegistry;
 import com.liferay.portal.deploy.hot.SchedulerEntryRegistry;
 import com.liferay.portal.deploy.hot.ServiceWrapperRegistry;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -40,6 +39,9 @@ import org.junit.runners.model.InitializationError;
  */
 public class PACLIntegrationJUnitTestRunner
 	extends LiferayIntegrationJUnitTestRunner {
+
+	public static final String RESOURCE_PATH =
+		"com/liferay/portal/security/pacl/test/dependencies";
 
 	public PACLIntegrationJUnitTestRunner(Class<?> clazz)
 		throws InitializationError {
@@ -76,9 +78,6 @@ public class PACLIntegrationJUnitTestRunner
 
 		_initialized = true;
 	}
-
-	protected static final String RESOURCE_PATH =
-		"com/liferay/portal/security/pacl/test/dependencies";
 
 	private static Class<?> _wrapTestClass(Class<?> clazz)
 		throws InitializationError {

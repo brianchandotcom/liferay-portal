@@ -15,13 +15,10 @@
 package com.liferay.portlet.trash.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -290,18 +287,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (TrashEntry trashEntry : trashEntries) {
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					trashEntry.getClassName());
-
-			try {
-				trashHandler.deleteTrashEntry(trashEntry.getClassPK());
-			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
-
-				TrashEntryLocalServiceUtil.deleteEntry(trashEntry);
-			}
+			TrashEntryLocalServiceUtil.deleteEntry(trashEntry);
 		}
 	}
 

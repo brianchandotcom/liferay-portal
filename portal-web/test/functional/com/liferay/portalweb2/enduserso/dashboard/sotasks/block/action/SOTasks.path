@@ -131,6 +131,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TASK_PROGRESS_BAR_VISIBLE</td>
+	<td>//tr[contains(.,'${key_taskDescription}')]//div[contains(@class,'progress-wrapper')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TASK_PROGRESS_BAR</td>
 	<td>//tr[contains(.,'${key_taskDescription}')]//div[contains(@class,'progress-picker')]</td>
 	<td></td>

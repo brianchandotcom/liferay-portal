@@ -185,9 +185,10 @@
 
 		<var name="key_percentCompletion" value="${percentCompletion}" />
 
+		<execute action="SOTasks#click" locator-key1="TASK_PROGRESS_BAR_VISIBLE" />
 		<execute action="SOTasks#makeVisible" locator-key1="TASK_PROGRESS_BAR" />
 		<execute action="SOTasks#click" locator-key1="TASK_PROGRESS_BAR_PERCENT_CLICK" />
-		<execute action="SOTasks#pause" value1="1000" />
+		<execute action="SOTasks#pause" locator1="1000" />
 
 		<var name="key_taskDescription" value="${taskDescription}" />
 

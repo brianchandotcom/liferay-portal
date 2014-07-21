@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATIONS_NONE_MESSAGE</td>
-	<td>//li[@class='message']/a[contains(.,'You do not have any unread notifications.')]</td>
+	<td>//li[@class='message']/a[contains(.,'You do not have any notifications.')]</td>
 	<td></td>
 </tr>
 <tr>

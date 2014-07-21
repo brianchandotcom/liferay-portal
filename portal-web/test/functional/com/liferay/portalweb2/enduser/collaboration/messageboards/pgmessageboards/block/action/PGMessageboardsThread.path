@@ -128,8 +128,18 @@
 </tr>
 <!--MESSAGE-->
 <tr>
+	<td>MESSAGE_USER_DETAILS</td>
+	<td>//div[contains(.,'${key_userName}')]//div[@class='user-details']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_BAN_THIS_USER</td>
 	<td>//div[contains(.,'${key_userName}')]/div/span/a/span[contains(.,'Ban This User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_UNBAN_THIS_USER</td>
+	<td>//div[contains(.,'${key_userName}')]/div/span/a/span[contains(.,'Unban This User')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -348,6 +358,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_FLAG_1</td>
+	<td>xpath=(//div[@title='Flag']//a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_FLAG_2</td>
+	<td>xpath=(//div[@title='Flag']//a)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_FLAG_3</td>
+	<td>xpath=(//div[@title='Flag']//a)[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_EDIT_1</td>
 	<td>xpath=(//td/ul/li[2]/span/a/span)[1]</td>
 	<td></td>
@@ -406,6 +431,47 @@
 <tr>
 	<td>QUICK_REPLY_CANCEL_BUTTON</td>
 	<td>//button[@type='button' and contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<!--REPORT_INAPPROPRIATE_CONTENT-->
+<tr>
+	<td>REPORT_INAPPROPRIATE_CONTENT_HEADER</td>
+	<td>//h3[contains(.,'Report')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_INAPPROPRIATE_CONTENT_WARNING</td>
+	<td>//p[contains(.,'You are about to report a violation')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_INAPPROPRIATE_CONTENT_WARNING_TERMS_OF_USE_LINK</td>
+	<td>//a[@href='/c/portal/terms_of_use']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_INAPPROPRIATE_CONTENT_REASON_SELECT</td>
+	<td>//div[contains(.,'Reason for the Report')]/select[@id='_142_reason']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_INAPPROPRIATE_CONTENT_SAVE_BUTTON</td>
+	<td>//button[@id='_142_flagsSubmit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_INAPPROPRIATE_CONTENT_SUCCESS_MESSAGE</td>
+	<td>//div[contains(.,'Thank you for your report')]/p[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_INAPPROPRIATE_CONTENT_CLOSE_BUTTON</td>
+	<td>//button[contains(@class,'btn close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 </tbody>

@@ -136,7 +136,7 @@
 </tr>
 <tr>
 	<td>CONTACTS_LIST_NAME</td>
-	<td>//div[contains(@class,'lfr-contact-name')]/a</td>
+	<td>//div[contains(@class,'lfr-contact-name')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE</td>
+	<td>//div[@class='alert alert-error']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_MESSAGE_THREAD</td>
 	<td>//div[@id='messageBoardsThreadsPanelContent']/div/div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>

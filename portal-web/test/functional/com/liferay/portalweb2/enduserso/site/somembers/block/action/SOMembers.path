@@ -101,7 +101,7 @@
 </tr>
 <tr>
 	<td>MEMBERS_LIST_NAME</td>
-	<td>//div[contains(.,'${key_userEmailAddress}')]/div[contains(@class,'lfr-contact-name')]/a</td>
+	<td>//div[contains(.,'${key_userEmailAddress}')]/div[contains(@class,'lfr-contact-name')]</td>
 	<td></td>
 </tr>
 <tr>

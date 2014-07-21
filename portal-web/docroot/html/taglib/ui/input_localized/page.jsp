@@ -25,16 +25,17 @@ Locale[] availableLocales = (Locale[])request.getAttribute("liferay-ui:input-loc
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:cssClass"));
 String defaultLanguageId = (String)request.getAttribute("liferay-ui:input-localized:defaultLanguageId");
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-localized:disabled"));
+Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-ui:input-localized:dynamicAttributes");
 String fieldPrefix = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:fieldPrefix"));
 String fieldPrefixSeparator = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:fieldPrefixSeparator"));
 String id = HtmlUtil.getAUICompatibleId((String)request.getAttribute("liferay-ui:input-localized:id"));
-Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-ui:input-localized:dynamicAttributes");
 boolean ignoreRequestValue = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-localized:ignoreRequestValue"));
 String languageId = (String)request.getAttribute("liferay-ui:input-localized:languageId");
 String maxLength = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:maxLength"));
 String name = (String)request.getAttribute("liferay-ui:input-localized:name");
-String xml = (String)request.getAttribute("liferay-ui:input-localized:xml");
+String toolbarSet = (String)request.getAttribute("liferay-ui:input-localized:toolbarSet");
 String type = (String)request.getAttribute("liferay-ui:input-localized:type");
+String xml = (String)request.getAttribute("liferay-ui:input-localized:xml");
 
 Locale defaultLocale = null;
 
@@ -112,7 +113,7 @@ if ((exception != null) && fieldName.equals(focusField)) {
 				onBlurMethod='<%= randomNamespace + \"OnBlurEditor\" %>'
 				onChangeMethod='<%= randomNamespace + \"OnChangeEditor\" %>'
 				onFocusMethod='<%= randomNamespace + \"OnFocusEditor\" %>'
-				toolbarSet="simple"
+				toolbarSet="<%= toolbarSet %>"
 			/>
 
 			<aui:script>

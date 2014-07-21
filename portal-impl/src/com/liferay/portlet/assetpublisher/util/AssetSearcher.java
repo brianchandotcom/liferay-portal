@@ -112,8 +112,9 @@ public class AssetSearcher extends BaseSearcher {
 			List<Long> categoryIds = new ArrayList<Long>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-				categoryIds = AssetCategoryLocalServiceUtil.getSubcategoryIds(
-					allCategoryId);
+				categoryIds.addAll(
+					AssetCategoryLocalServiceUtil.getSubcategoryIds(
+						allCategoryId));
 			}
 
 			if (categoryIds.isEmpty()) {
@@ -201,8 +202,9 @@ public class AssetSearcher extends BaseSearcher {
 			List<Long> categoryIds = new ArrayList<Long>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-				categoryIds = AssetCategoryLocalServiceUtil.getSubcategoryIds(
-					anyCategoryId);
+				categoryIds.addAll(
+					AssetCategoryLocalServiceUtil.getSubcategoryIds(
+						anyCategoryId));
 			}
 
 			if (categoryIds.isEmpty()) {
@@ -328,8 +330,9 @@ public class AssetSearcher extends BaseSearcher {
 			List<Long> categoryIds = new ArrayList<Long>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-				categoryIds = AssetCategoryLocalServiceUtil.getSubcategoryIds(
-					notAllCategoryId);
+				categoryIds.addAll(
+					AssetCategoryLocalServiceUtil.getSubcategoryIds(
+						notAllCategoryId));
 			}
 
 			if (categoryIds.isEmpty()) {
@@ -394,8 +397,9 @@ public class AssetSearcher extends BaseSearcher {
 			List<Long> categoryIds = new ArrayList<Long>();
 
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-				categoryIds = AssetCategoryLocalServiceUtil.getSubcategoryIds(
-					notAnyCategoryId);
+				categoryIds.addAll(
+					AssetCategoryLocalServiceUtil.getSubcategoryIds(
+						notAnyCategoryId));
 			}
 
 			if (categoryIds.isEmpty()) {

@@ -181,9 +181,19 @@ Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 					<liferay-staging:menu cssClass="manage-pages-branch-menu" extended="<%= true %>" icon="/common/tool.png" message="" selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>" showManageBranches="<%= true %>"  />
 				</c:if>
 
-				<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
-					<liferay-util:param name="treeId" value="layoutsTree" />
-				</liferay-util:include>
+				<%
+				String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
+				%>
+
+				<liferay-ui:layouts-tree
+					groupId="<%= layoutsAdminDisplayContext.getGroupId() %>"
+					portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
+					privateLayout="<%= layoutsAdminDisplayContext.isPrivateLayout() %>"
+					rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
+					selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
+					selectedLayoutIds="<%= selectedLayoutIds %>"
+					treeId="layoutsTree"
+				/>
 			</div>
 		</c:if>
 

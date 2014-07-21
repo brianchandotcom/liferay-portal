@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -1445,7 +1446,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			}
 		}
 
-		doMovePage(userId, nodeId, title, newTitle, serviceContext);
+		WikiPage page = getPage(nodeId, title);
+
+		updatePage(
+			userId, page, newTitle, page.getContent(), page.getSummary(),
+			page.getMinorEdit(), page.getFormat(), page.getParentTitle(),
+			page.getRedirectTitle(), serviceContext);
 	}
 
 	@Override
@@ -2040,6 +2046,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		wikiPagePersistence.update(page);
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
+			String cmd = serviceContext.getCommand();
+
+			if (cmd.equals(Constants.RENAME)) {
+				long resourcePrimKey = page.getResourcePrimKey();
+
+				WikiPage oldPage = getPage(resourcePrimKey, true);
+
+				doMovePage(
+					userId, page.getNodeId(), oldPage.getTitle(),
+					page.getTitle(), serviceContext);
+			}
 
 			// Asset
 

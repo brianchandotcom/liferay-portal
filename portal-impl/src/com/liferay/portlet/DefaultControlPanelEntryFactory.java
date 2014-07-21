@@ -45,6 +45,7 @@ public class DefaultControlPanelEntryFactory {
 	private static DefaultControlPanelEntryFactory _instance =
 		new DefaultControlPanelEntryFactory();
 
-	private ServiceTracker<?, ControlPanelEntry> _serviceTracker;
+	private ServiceTracker<ControlPanelEntry, ControlPanelEntry>
+		_serviceTracker;
 
 }

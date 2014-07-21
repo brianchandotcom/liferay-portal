@@ -1460,8 +1460,6 @@ public class PropsValues {
 
 	public static final long POLLER_REQUEST_TIMEOUT = GetterUtil.getLong(PropsUtil.get(PropsKeys.POLLER_REQUEST_TIMEOUT));
 
-	public static final boolean POLLS_PUBLISH_TO_LIVE_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.POLLS_PUBLISH_TO_LIVE_BY_DEFAULT));
-
 	public static final boolean POP_SERVER_NOTIFICATIONS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.POP_SERVER_NOTIFICATIONS_ENABLED));
 
 	public static final int POP_SERVER_NOTIFICATIONS_INTERVAL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.POP_SERVER_NOTIFICATIONS_INTERVAL));

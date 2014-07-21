@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.polls.constants.PollsPortletKeys;
 import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.model.PollsQuestion;
 import com.liferay.portlet.polls.util.test.PollsTestUtil;
@@ -54,7 +54,7 @@ public class PollsPortletDataHandlerTest
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.POLLS;
+		return PollsPortletKeys.POLLS;
 	}
 
 }

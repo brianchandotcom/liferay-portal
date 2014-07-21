@@ -1044,7 +1044,11 @@ public class LiferaySeleniumHelper {
 		int x = 0;
 		int y = value.indexOf("${line.separator}");
 
-		String line = value.substring(x, y);
+		String line = value;
+
+		if (y != -1) {
+			line = value.substring(x, y);
+		}
 
 		liferaySelenium.typeKeys(locator, line.trim(), true);
 

@@ -228,7 +228,9 @@ public class DDMImpl implements DDM {
 			boolean localizable = GetterUtil.getBoolean(
 				ddmStructure.getFieldProperty(fieldName, "localizable"), true);
 
-			if (!localizable && translating) {
+			if (!localizable && translating &&
+				!ddmStructure.isFieldPrivate(fieldName)) {
+
 				continue;
 			}
 

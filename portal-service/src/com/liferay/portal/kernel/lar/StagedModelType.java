@@ -72,11 +72,9 @@ public class StagedModelType {
 
 		StagedModelType stagedModelType = (StagedModelType)obj;
 
-		if (stagedModelType._classNameId != _classNameId) {
-			return false;
-		}
+		if ((stagedModelType._classNameId != _classNameId) ||
+			(stagedModelType._referrerClassNameId != _referrerClassNameId)) {
 
-		if (stagedModelType._referrerClassNameId != _referrerClassNameId) {
 			return false;
 		}
 

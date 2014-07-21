@@ -54,7 +54,6 @@
 			<short-title>Polls Display</short-title>
 			<keywords>Polls</keywords>
 		</portlet-info>
-
 		<security-role-ref>
 			<role-name>power-user</role-name>
 		</security-role-ref>

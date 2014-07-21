@@ -101,6 +101,8 @@ public class SearchEngineInitializer implements Runnable {
 		try {
 			SearchEngineUtil.removeCompany(_companyId);
 
+			SearchEngineUtil.initialize(_companyId);
+
 			List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(
 				_companyId);
 

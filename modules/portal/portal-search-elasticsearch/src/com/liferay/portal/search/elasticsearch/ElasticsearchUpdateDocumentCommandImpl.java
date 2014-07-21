@@ -53,7 +53,7 @@ public class ElasticsearchUpdateDocumentCommandImpl
 	}
 
 	@Override
-	public void updateDocument(
+	public String updateDocument(
 			String documentType, SearchContext searchContext, Document document)
 		throws SearchException {
 
@@ -67,6 +67,8 @@ public class ElasticsearchUpdateDocumentCommandImpl
 			UpdateResponse updateResponse = future.get();
 
 			LogUtil.logActionResponse(_log, updateResponse);
+
+			return updateResponse.getId();
 		}
 		catch (Exception e) {
 			throw new SearchException(

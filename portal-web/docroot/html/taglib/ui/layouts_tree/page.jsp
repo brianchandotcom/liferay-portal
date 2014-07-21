@@ -23,6 +23,7 @@ boolean defaultStateChecked = GetterUtil.getBoolean((String)request.getAttribute
 boolean draggableTree = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:draggableTree"));
 boolean expandFirstNode = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:expandFirstNode"));
 long groupId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:layouts-tree:groupId"));
+boolean incomplete = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:incomplete"));
 String modules = (String)request.getAttribute("liferay-ui:layouts-tree:modules");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:layouts-tree:portletURL");
 boolean privateLayout = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:privateLayout"));
@@ -78,6 +79,7 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 	var layoutsTree = new TreeViewType(
 		{
 			boundingBox: '#<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output',
+			incomplete: <%= incomplete %>,
 			layouts: <%= layoutsJSON %>,
 			layoutURL: '<%= portletURL + StringPool.AMPERSAND + portletDisplay.getNamespace() + "selPlid={selPlid}" + StringPool.AMPERSAND + portletDisplay.getNamespace() %>',
 			maxChildren: <%= PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN %>,

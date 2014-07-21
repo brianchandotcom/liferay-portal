@@ -22,6 +22,7 @@ boolean checkContentDisplayPage = ParamUtil.getBoolean(request, "checkContentDis
 boolean defaultStateChecked = ParamUtil.getBoolean(request, "defaultStateChecked", false);
 boolean draggableTree = ParamUtil.getBoolean(request, "draggableTree", true);
 boolean expandFirstNode = ParamUtil.getBoolean(request, "expandFirstNode", true);
+boolean incomplete = ParamUtil.getBoolean(request, "incomplete", true);
 boolean saveState = ParamUtil.getBoolean(request, "saveState", true);
 boolean selectableTree = ParamUtil.getBoolean(request, "selectableTree");
 String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
@@ -33,6 +34,7 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 	draggableTree="<%= draggableTree %>"
 	expandFirstNode="<%= expandFirstNode %>"
 	groupId="<%= layoutsAdminDisplayContext.getGroupId() %>"
+	incomplete="<%= incomplete %>"
 	portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
 	privateLayout="<%= layoutsAdminDisplayContext.isPrivateLayout() %>"
 	rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"

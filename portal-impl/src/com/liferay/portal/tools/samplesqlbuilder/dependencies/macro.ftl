@@ -35,7 +35,7 @@
 		<#local ddmContentModel = dataFactory.newDDMContentModel(_entry, _currentIndex)>
 	</#if>
 
-	insert into DDMContent values ('${ddmContentModel.uuid}', ${ddmContentModel.contentId}, ${ddmContentModel.groupId}, ${ddmContentModel.companyId}, ${ddmContentModel.userId}, '${ddmContentModel.userName}', '${dataFactory.getDateString(ddmContentModel.createDate)}', '${dataFactory.getDateString(ddmContentModel.modifiedDate)}', '${ddmContentModel.name}', '${ddmContentModel.description}', '${ddmContentModel.xml}');
+	insert into DDMContent values ('${ddmContentModel.uuid}', ${ddmContentModel.contentId}, ${ddmContentModel.groupId}, ${ddmContentModel.companyId}, ${ddmContentModel.userId}, '${ddmContentModel.userName}', '${dataFactory.getDateString(ddmContentModel.createDate)}', '${dataFactory.getDateString(ddmContentModel.modifiedDate)}', '${ddmContentModel.name}', '${ddmContentModel.description}', '${ddmContentModel.data}');
 
 	<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId)>
 

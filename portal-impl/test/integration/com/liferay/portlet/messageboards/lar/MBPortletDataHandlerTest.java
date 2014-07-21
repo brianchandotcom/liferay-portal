@@ -20,6 +20,7 @@ import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -32,6 +33,7 @@ import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -68,6 +70,10 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 		Assert.assertEquals(0, categories.size());
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	@Override
 	protected void addParameters(Map<String, String[]> parameterMap) {

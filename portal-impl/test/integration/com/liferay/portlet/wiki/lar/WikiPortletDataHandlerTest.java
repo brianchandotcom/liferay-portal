@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.util.test.WikiTestUtil;
 
+import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
@@ -35,6 +37,10 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class WikiPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	@Override
 	protected void addStagedModels() throws Exception {

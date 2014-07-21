@@ -24,6 +24,7 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -55,6 +56,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -350,6 +352,10 @@ public class JournalArticleFinderTest {
 			_group.getGroupId(), _USER_ID, Collections.<Long>emptyList(),
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, queryDefinition, 0);
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	protected void prepareSortedArticles() throws Exception {
 		Calendar calendar = new GregorianCalendar();

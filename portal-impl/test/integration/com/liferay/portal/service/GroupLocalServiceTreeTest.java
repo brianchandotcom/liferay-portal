@@ -19,11 +19,13 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 
+import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
@@ -32,6 +34,10 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class GroupLocalServiceTreeTest extends BaseLocalServiceTreeTestCase {
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	@Override
 	protected TreeModel addTreeModel(TreeModel parentTreeModel)

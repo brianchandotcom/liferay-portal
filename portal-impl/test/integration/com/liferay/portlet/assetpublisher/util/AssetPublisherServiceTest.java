@@ -22,6 +22,7 @@ import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -44,6 +45,7 @@ import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -172,6 +174,10 @@ public class AssetPublisherServiceTest {
 
 		Assert.assertEquals(expectedAssetEntries, filteredAssetEntries);
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	protected void addAssetCategories(long vocabularyId) throws Exception {
 		for (String assetCategoryName : _ASSET_CATEGORY_NAMES) {

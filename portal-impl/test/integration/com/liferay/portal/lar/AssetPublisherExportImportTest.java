@@ -34,6 +34,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -62,6 +63,7 @@ import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -663,6 +665,10 @@ public class AssetPublisherExportImportTest
 	public void testSortByGlobalAssetVocabulary() throws Exception {
 		testSortByAssetVocabulary(true);
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	@Override
 	protected void exportImportPortlet(String portletId) throws Exception {

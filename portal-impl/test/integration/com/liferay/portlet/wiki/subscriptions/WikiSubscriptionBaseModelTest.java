@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionBaseModelTestCase;
 import com.liferay.portal.util.test.TestPropsValues;
@@ -27,6 +28,7 @@ import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.util.test.WikiTestUtil;
 
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -49,6 +51,10 @@ public class WikiSubscriptionBaseModelTest
 	@Test
 	public void testSubscriptionBaseModelWhenInRootContainerModel() {
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {

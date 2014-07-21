@@ -25,6 +25,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
@@ -35,6 +36,7 @@ import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
 
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -103,6 +105,10 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 	@Test
 	public void testSearchWithinDDMStructure() throws Exception {
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(

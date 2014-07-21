@@ -27,6 +27,7 @@ import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -53,6 +54,7 @@ import com.liferay.portlet.wiki.util.test.WikiTestUtil;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -370,6 +372,10 @@ public class WikiPageLocalServiceTest {
 	public void testRevertPageWithExpando() throws Exception {
 		testRevertPage(true);
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	protected void addExpandoValueToPage(WikiPage page) throws Exception {
 		ExpandoValue value = ExpandoTestUtil.addValue(

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -39,6 +40,7 @@ import com.liferay.portlet.journal.util.test.JournalTestUtil;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -244,6 +246,10 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 		Assert.assertEquals(initialCount + 1, count);
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	protected DDMTemplate copyTemplate(DDMTemplate template) throws Exception {
 		return DDMTemplateLocalServiceUtil.copyTemplate(

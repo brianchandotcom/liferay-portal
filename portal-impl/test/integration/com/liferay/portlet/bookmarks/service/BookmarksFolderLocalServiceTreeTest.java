@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.service.BaseLocalServiceTreeTestCase;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
@@ -25,6 +26,7 @@ import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
 
+import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
@@ -34,6 +36,10 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class BookmarksFolderLocalServiceTreeTest
 	extends BaseLocalServiceTreeTestCase {
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	@Override
 	protected TreeModel addTreeModel(TreeModel parentTreeModel)

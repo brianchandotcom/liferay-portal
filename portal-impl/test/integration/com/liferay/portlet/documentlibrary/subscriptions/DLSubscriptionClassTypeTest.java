@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionClassTypeTestCase;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -32,6 +33,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
@@ -47,6 +49,10 @@ import org.junit.runner.RunWith;
 @Sync
 public class DLSubscriptionClassTypeTest
 	extends BaseSubscriptionClassTypeTestCase {
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	@Override
 	protected long addBaseModelWithClassType(

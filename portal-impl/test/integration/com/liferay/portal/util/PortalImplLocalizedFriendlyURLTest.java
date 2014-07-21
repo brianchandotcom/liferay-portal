@@ -30,6 +30,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.CompanyTestUtil;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -46,6 +47,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -555,6 +557,10 @@ public class PortalImplLocalizedFriendlyURLTest {
 		testWronglyLocalizedVirtualLayoutFriendlyURL(
 			false, LocaleUtil.CANADA_FRENCH, "/tags/one", "/accueil");
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	protected void assertLocalizedSiteLayoutFriendlyURL(
 			long groupId, Layout layout, String layoutFriendlyURL,

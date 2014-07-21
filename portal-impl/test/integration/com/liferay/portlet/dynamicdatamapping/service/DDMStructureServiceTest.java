@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.service;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.RandomTestUtil;
@@ -36,6 +37,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -304,6 +306,10 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 		Assert.assertEquals(initialCount + 1, count);
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	protected DDMStructure copyStructure(DDMStructure structure)
 		throws Exception {

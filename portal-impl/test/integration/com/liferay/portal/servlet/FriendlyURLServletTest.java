@@ -22,6 +22,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.test.GroupTestUtil;
@@ -35,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -86,6 +88,10 @@ public class FriendlyURLServletTest {
 	public void testGetRedirectWithNonexistentSite() throws Exception {
 		testGetRedirect("/nonexistent-site/home", Portal.PATH_MAIN, null);
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	protected String getPath(Group group, Layout layout) {
 		return group.getFriendlyURL() + layout.getFriendlyURL();

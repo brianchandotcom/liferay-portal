@@ -21,6 +21,7 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
@@ -29,6 +30,7 @@ import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
 
 import java.util.Map;
 
+import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
@@ -52,6 +54,10 @@ public class BookmarksExportImportTest extends BasePortletExportImportTestCase {
 	public String getPortletId() {
 		return PortletKeys.BOOKMARKS;
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	@Override
 	protected StagedModel addStagedModel(long groupId) throws Exception {

@@ -27,6 +27,7 @@ import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.OrganizationTestUtil;
@@ -41,6 +42,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -423,6 +425,10 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntryLocalServiceUtil.updateEntryResources(
 			entry, new String[] {ActionKeys.ADD_DISCUSSION}, null);
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	protected BlogsEntry addEntry(boolean statusInTrash) throws Exception {
 		return addEntry(TestPropsValues.getUserId(), statusInTrash);

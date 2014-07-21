@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.polls.NoSuchQuestionException;
 import com.liferay.portlet.polls.model.PollsQuestion;
-import com.liferay.portlet.polls.util.PollsWebKeys;
 import com.liferay.portlet.polls.service.PollsQuestionServiceUtil;
+import com.liferay.portlet.polls.util.PollsWebKeys;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;

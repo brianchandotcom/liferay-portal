@@ -33,6 +33,7 @@ long groupId = BeanParamUtil.getLong(template, request, "groupId", scopeGroupId)
 long classNameId = BeanParamUtil.getLong(template, request, "classNameId");
 long classPK = BeanParamUtil.getLong(template, request, "classPK");
 
+boolean cacheable = BeanParamUtil.getBoolean(template, request, "cacheable", true);
 boolean smallImage = BeanParamUtil.getBoolean(template, request, "smallImage");
 
 DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
@@ -201,6 +202,10 @@ if (Validator.isNotNull(structureAvailableFields)) {
 						</aui:select>
 					</c:when>
 					<c:otherwise>
+						<c:if test="<%= Validator.equals(ddmDisplay.getPortletId(), PortletKeys.JOURNAL) || Validator.equals(ddmDisplay.getPortletId(), PortletKeys.JOURNAL_CONTENT) %>">
+							<aui:input helpMessage="journal-template-cacheable-help" name="cacheable" value="<%= cacheable %>" />
+						</c:if>
+
 						<div id="<portlet:namespace />smallImageContainer">
 							<div class="lfr-ddm-small-image-header">
 								<aui:input name="smallImage" />

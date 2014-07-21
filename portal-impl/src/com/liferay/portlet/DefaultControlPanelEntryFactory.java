@@ -14,8 +14,6 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -39,11 +37,9 @@ public class DefaultControlPanelEntryFactory {
 		_serviceTracker.open();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		DefaultControlPanelEntryFactory.class);
-
 	private static DefaultControlPanelEntryFactory _instance =
-	new DefaultControlPanelEntryFactory();
+		new DefaultControlPanelEntryFactory();
 
 	private ServiceTracker<?, ControlPanelEntry> _serviceTracker;
+
 }

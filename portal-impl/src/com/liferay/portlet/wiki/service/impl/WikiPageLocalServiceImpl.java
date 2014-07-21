@@ -2290,9 +2290,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		populateServiceContext(serviceContext, page);
 
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		WorkflowThreadLocal.setEnabled(false);
+
 		addPage(
 			userId, nodeId, title, version, content, summary, false, format,
 			head, parentTitle, redirectTitle, serviceContext);
+
+		WorkflowThreadLocal.setEnabled(workflowEnabled);
 
 		// Move redirects to point to the page with the new title
 

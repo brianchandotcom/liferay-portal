@@ -14,6 +14,7 @@
 
 package com.liferay.portlet;
 
+import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -32,7 +33,11 @@ public class DefaultControlPanelEntryFactory {
 	private DefaultControlPanelEntryFactory() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		_serviceTracker = registry.trackServices(ControlPanelEntry.class);
+		Filter filter = registry.getFilter(
+			"(&(!(javax.portlet.name=*))(objectClass=" +
+				ControlPanelEntry.class.getName() + "))");
+
+		_serviceTracker = registry.trackServices(filter);
 
 		_serviceTracker.open();
 	}

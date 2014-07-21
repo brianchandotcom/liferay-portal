@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-String closeRedirect = ParamUtil.getString(request, "closeRedirect");
-
 String treeId = ParamUtil.getString(request, "treeId");
 boolean checkContentDisplayPage = ParamUtil.getBoolean(request, "checkContentDisplayPage", false);
 boolean defaultStateChecked = ParamUtil.getBoolean(request, "defaultStateChecked", false);
@@ -27,20 +25,6 @@ boolean expandFirstNode = ParamUtil.getBoolean(request, "expandFirstNode", true)
 boolean saveState = ParamUtil.getBoolean(request, "saveState", true);
 boolean selectableTree = ParamUtil.getBoolean(request, "selectableTree");
 String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
-
-PortletURL editLayoutURL = liferayPortletResponse.createRenderURL();
-
-editLayoutURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
-editLayoutURL.setParameter("tabs1", layoutsAdminDisplayContext.getTabs1());
-editLayoutURL.setParameter("redirect", layoutsAdminDisplayContext.getRedirect());
-editLayoutURL.setParameter("closeRedirect", closeRedirect);
-
-if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) || portletName.equals(PortletKeys.MY_ACCOUNT) || portletName.equals(PortletKeys.USERS_ADMIN)) {
-	editLayoutURL.setParameter("backURL", layoutsAdminDisplayContext.getBackURL());
-}
-
-editLayoutURL.setParameter("groupId", String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()));
-editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 %>
 
 <liferay-ui:layouts-tree
@@ -49,7 +33,7 @@ editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 	draggableTree="<%= draggableTree %>"
 	expandFirstNode="<%= expandFirstNode %>"
 	groupId="<%= layoutsAdminDisplayContext.getGroupId() %>"
-	portletURL="<%= editLayoutURL %>"
+	portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
 	privateLayout="<%= layoutsAdminDisplayContext.isPrivateLayout() %>"
 	rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
 	saveState="<%= saveState %>"

@@ -74,6 +74,7 @@ public class VerifyLayout extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		deleteOrphanedLayouts();
 		verifyFriendlyURL();
+		verifyLayoutPrototypeLinkEnabled();
 		verifyUuid();
 	}
 
@@ -94,6 +95,16 @@ public class VerifyLayout extends VerifyProcess {
 					layoutFriendlyURL.getLanguageId());
 			}
 		}
+	}
+
+	protected void verifyLayoutPrototypeLinkEnabled() throws Exception {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("update Layout set layoutPrototypeLinkEnabled = 0 where ");
+		sb.append("type_ = 'link_to_layout' and ");
+		sb.append("layoutPrototypeLinkEnabled = 1");
+
+		runSQL(sb.toString());
 	}
 
 	protected void verifyUuid() throws Exception {

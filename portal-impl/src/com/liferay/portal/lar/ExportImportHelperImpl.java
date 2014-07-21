@@ -713,6 +713,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		content = replaceExportDLReferences(
 			portletDataContext, entityStagedModel, content,
 			exportReferencedContent);
+
 		content = replaceExportLayoutReferences(portletDataContext, content);
 		content = replaceExportLinksToLayouts(
 			portletDataContext, entityStagedModel, content);
@@ -1162,6 +1163,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		content = replaceImportDLReferences(
 			portletDataContext, entityStagedModel, content);
+
 		content = replaceImportLayoutReferences(portletDataContext, content);
 		content = replaceImportLinksToLayouts(portletDataContext, content);
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.Sync;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -38,6 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Rule;
 
 /**
  * @author Zsolt Berentey
@@ -45,6 +47,10 @@ import org.junit.Assert;
 @Sync
 public class ManifestSummaryTest
 	extends JournalArticleStagedModelDataHandlerTest {
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	@Override
 	protected void addComments(StagedModel stagedModel) throws Exception {

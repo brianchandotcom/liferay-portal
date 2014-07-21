@@ -23,6 +23,7 @@ import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.UserGroupTestUtil;
 
@@ -31,6 +32,7 @@ import java.util.Map;
 
 import org.junit.After;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
@@ -53,6 +55,10 @@ public class UserGroupStagedModelDataHandlerTest
 		_userGroup = UserGroupLocalServiceUtil.fetchUserGroupByUuidAndCompanyId(
 			_userGroup.getUuid(), _userGroup.getCompanyId());
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	@Override
 	protected StagedModel addStagedModel(

@@ -22,6 +22,7 @@ import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.UserTestUtil;
 import com.liferay.portlet.sites.search.OrganizationRoleUserChecker;
@@ -30,6 +31,7 @@ import com.liferay.portlet.usersadmin.search.UserOrganizationChecker;
 import javax.portlet.RenderResponse;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -208,5 +210,9 @@ public class OrganizationMembershipPolicyRowCheckerTest
 
 		Assert.assertTrue(organizationRoleUserChecker.isDisabled(user));
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 }

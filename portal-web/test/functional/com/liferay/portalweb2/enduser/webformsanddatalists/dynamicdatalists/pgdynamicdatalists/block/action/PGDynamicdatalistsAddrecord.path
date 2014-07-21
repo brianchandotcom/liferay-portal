@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
+	<td>//button[contains(@id,'publishButton') and contains(.,'Submit for Publication')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CANCEL_BUTTON</td>
 	<td>//a[contains(@class,'btn-cancel')]</td>
 	<td></td>

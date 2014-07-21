@@ -2294,6 +2294,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WorkflowThreadLocal.setEnabled(false);
 
+		serviceContext.setCommand(Constants.ADD);
+
 		addPage(
 			userId, nodeId, title, version, content, summary, false, format,
 			head, parentTitle, redirectTitle, serviceContext);

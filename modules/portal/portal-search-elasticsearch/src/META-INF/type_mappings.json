@@ -66,18 +66,23 @@
 				"store": "yes",
 				"type": "string"
 			},
+			"ddmContent": {
+				"index": "analyzed",
+				"store": "yes",
+				"type": "string"
+			},
 			"description": {
 				"index": "analyzed",
 				"store": "yes",
 				"type": "string"
 			},
 			"entryClassPK": {
-				"index": "not_analyzed",
+				"index": "analyzed",
 				"store": "yes",
 				"type": "string"
 			},
 			"entryClassName": {
-				"index": "not_analyzed",
+				"index": "analyzed",
 				"store": "yes",
 				"type": "string"
 			},
@@ -117,7 +122,7 @@
 				"type": "string"
 			},
 			"modified": {
-				"index": "not_analyzed",
+				"index": "analyzed",
 				"store": "yes",
 				"type": "long"
 			},
@@ -142,7 +147,7 @@
 				"type": "string"
 			},
 			"properties": {
-				"index": "not_analyzed",
+				"index": "analyzed",
 				"store": "yes",
 				"type": "string"
 			},
@@ -162,7 +167,7 @@
 				"type": "string"
 			},
 			"type": {
-				"index": "not_analyzed",
+				"index": "analyzed",
 				"store": "yes",
 				"type": "string"
 			},
@@ -172,7 +177,7 @@
 				"type": "string"
 			},
 			"url": {
-				"index": "not_analyzed",
+				"index": "analyzed",
 				"store": "yes",
 				"type": "string"
 			},
@@ -198,7 +203,7 @@
 					"match": "*",
 					"match_mapping_type": "string",
 					"mapping": {
-						"index": "not_analyzed",
+						"index": "analyzed",
 						"store": "yes",
 						"type": "string"
 					}
@@ -216,8 +221,8 @@
 				}
 			},
 			{
-				"template_CategoryNames": {
-					"match": "*CategoryNames",
+				"template_CategoryIds": {
+					"match": "*CategoryIds",
 					"match_mapping_type": "string",
 					"mapping": {
 						"index": "not_analyzed",
@@ -227,11 +232,22 @@
 				}
 			},
 			{
-				"template_CategoryIds": {
-					"match": "*CategoryIds",
+				"template_CategoryNames": {
+					"match": "*CategoryNames",
 					"match_mapping_type": "string",
 					"mapping": {
-						"index": "not_analyzed",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_DDMFormFields": {
+					"match": "ddm*",
+					"match_mapping_type": "string",
+					"mapping": {
+						"index": "analyzed",
 						"store": "yes",
 						"type": "string"
 					}

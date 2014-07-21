@@ -222,6 +222,27 @@
 		<execute action="SOMembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You are not connected to this user anymore." />
 	</command>
 
+	<command name="followMember">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Members" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<var name="key_userEmailAddress" value="${userEmailAddress}" />
+
+		<execute action="SOMembers#type" locator-key1="MEMBERS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute action="SOMembers#assertClick" locator-key1="MEMBERS_LIST_NAME" value1="${userListName}" />
+
+		<execute action="SOMembers#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOMembers#assertClick" locator-key1="FOLLOW_BUTTON" value1="Follow" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="FOLLOWING_MESSAGE" value1="Following" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="UNFOLLOW_BUTTON" value1="Unfollow" />
+		<execute action="SOMembers#assertNotVisible" locator-key1="FOLLOW_BUTTON" value1="Follow" />
+	</command>
+
 	<command name="ignoreMemberInvite">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -304,6 +325,55 @@
 		<execute action="SOMembers#assertClick" locator-key1="CONNECT_BUTTON" value1="Connect" />
 		<execute action="SOMembers#assertTextEquals" locator-key1="CONNECTION_REQUESTED_MESSAGE" value1="Connection Requested" />
 		<execute action="SOMembers#assertNotVisible" locator-key1="CONNECT_BUTTON" value1="Connect" />
+	</command>
+
+	<command name="sendMessage">
+		<var name="key_userEmailAddress" value="${userEmailAddress}" />
+
+		<execute action="SOMembers#type" locator-key1="MEMBERS_LIST_SEARCH" value1="${userEmailAddress}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOMembers#click" locator-key1="MEMBERS_LIST_NAME" value1="${userLastName}, ${userFirstName}" />
+		<execute action="SOMembers#assertClick" locator-key1="MESSAGE_BUTTON" value1="Message" />
+
+		<execute action="SOMessagesAdd#selectFrame" locator-key1="NEW_MESSAGE_IFRAME" />
+		<execute action="SOMessagesAdd#assertTextEquals" locator-key1="TO_FIELD" value1="${userName} &lt;${userScreenName}&gt;," />
+
+		<execute action="SOMessagesAdd#type" locator-key1="SUBJECT_FIELD" value1="${messageSubject}" />
+		<execute action="SOMessagesAdd#type" locator-key1="BODY_FIELD" value1="${messageBody}" />
+
+		<if>
+			<isset var="messageAttachmentFile" />
+			<then>
+				<execute action="SOMessagesAdd#uploadCommonFile" locator-key1="ATTACHMENTS_FIELD" value1="${messageAttachmentFile}" />
+			</then>
+		</if>
+
+		<execute action="SOMessagesAdd#click" locator-key1="SEND_BUTTON" />
+		<execute action="SOMessagesAdd#pause" locator1="1000" />
+
+		<execute action="SOMessages#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="unfollowMember">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Members" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+			<var name="soPage" value="true" />
+		</execute>
+
+		<var name="key_userEmailAddress" value="${userEmailAddress}" />
+
+		<execute action="SOMembers#type" locator-key1="MEMBERS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute action="SOMembers#assertClick" locator-key1="MEMBERS_LIST_NAME" value1="${userListName}" />
+
+		<execute action="SOMembers#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOMembers#assertClick" locator-key1="UNFOLLOW_BUTTON" value1="Unfollow" />
+		<execute action="SOMembers#assertNotVisible" locator-key1="FOLLOWING_MESSAGE" />
+		<execute action="SOMembers#assertTextEquals" locator-key1="FOLLOW_BUTTON" value1="Follow" />
+		<execute action="SOMembers#assertNotVisible" locator-key1="UNFOLLOW_BUTTON" />
 	</command>
 
 	<command name="viewConfirmMemberInvite">

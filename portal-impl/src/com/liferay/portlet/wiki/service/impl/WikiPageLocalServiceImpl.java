@@ -2321,16 +2321,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			userId, page, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
-
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			WikiPage.class);
-
-		indexer.delete(
-			new Object[] {page.getCompanyId(), page.getNodeId(), title});
-
-		indexer.reindex(page);
 	}
 
 	protected String getDiffsURL(

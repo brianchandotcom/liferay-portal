@@ -14,40 +14,74 @@
 
 package com.liferay.portal.kernel.lock;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Alexander Chow
+ * @author Peter Fellwock
  */
 public class LockListenerRegistryUtil {
 
 	public static LockListener getLockListener(String className) {
-		return getLockListenerRegistry().getLockListener(className);
+		return _instance._lockListenerMap.get(className);
 	}
 
-	public static LockListenerRegistry getLockListenerRegistry() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			LockListenerRegistryUtil.class);
+	private LockListenerRegistryUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		return _lockListenerRegistry;
+		_serviceTracker = registry.trackServices(
+			LockListener.class, new LockListenerServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
-	public static void register(LockListener lockListener) {
-		getLockListenerRegistry().register(lockListener);
+	private static LockListenerRegistryUtil _instance =
+		new LockListenerRegistryUtil();
+
+	private ServiceTracker<?, LockListener> _serviceTracker;
+
+	private Map<String, LockListener> _lockListenerMap =
+		new HashMap<String, LockListener>();
+
+	private class LockListenerServiceTrackerCustomizer
+	implements ServiceTrackerCustomizer<LockListener, LockListener> {
+
+		@Override
+		public LockListener addingService(
+			ServiceReference<LockListener> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			LockListener lockListener = registry.getService(serviceReference);
+
+			_lockListenerMap.put(lockListener.getClassName(), lockListener);
+
+			return lockListener;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<LockListener> serviceReference,
+			LockListener lockListener) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<LockListener> serviceReference,
+			LockListener lockListener) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_lockListenerMap.remove(lockListener);
+		}
 	}
-
-	public static void unregister(LockListener lockListener) {
-		getLockListenerRegistry().unregister(lockListener);
-	}
-
-	public void setLockListenerRegistry(
-		LockListenerRegistry lockListenerRegistry) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_lockListenerRegistry = lockListenerRegistry;
-	}
-
-	private static LockListenerRegistry _lockListenerRegistry;
-
 }

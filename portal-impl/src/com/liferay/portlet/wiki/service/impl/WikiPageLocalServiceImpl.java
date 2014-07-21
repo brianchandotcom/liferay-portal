@@ -126,6 +126,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Marcellus Tavares
  * @author Zsigmond Rab
  * @author Zsolt Berentey
+ * @author Roberto Díaz
  */
 public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
@@ -2043,13 +2044,18 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Page
 
-		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
-
 		WikiPage oldPage = null;
 
 		try {
 			oldPage = wikiPagePersistence.findByN_T_First(nodeId, title, null);
+
+			if ((version > 0) && (version != oldPage.getVersion())) {
+				throw new PageVersionException();
+			}
+
+			return updatePage(
+				userId, oldPage, StringPool.BLANK, content, summary, minorEdit,
+				format, parentTitle, redirectTitle, serviceContext);
 		}
 		catch (NoSuchPageException nspe) {
 			return addPage(
@@ -2057,134 +2063,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				content, summary, minorEdit, format, true, parentTitle,
 				redirectTitle, serviceContext);
 		}
-
-		long pageId = 0;
-
-		if (oldPage.isApproved()) {
-			pageId = counterLocalService.increment();
-		}
-		else {
-			pageId = oldPage.getPageId();
-		}
-
-		content = SanitizerUtil.sanitize(
-			user.getCompanyId(), oldPage.getGroupId(), userId,
-			WikiPage.class.getName(), pageId, "text/" + format, content);
-
-		validate(nodeId, content, format);
-
-		double oldVersion = oldPage.getVersion();
-
-		if ((version > 0) && (version != oldVersion)) {
-			throw new PageVersionException();
-		}
-
-		serviceContext.validateModifiedDate(
-			oldPage, PageVersionException.class);
-
-		long resourcePrimKey =
-			wikiPageResourceLocalService.getPageResourcePrimKey(nodeId, title);
-		long groupId = oldPage.getGroupId();
-
-		WikiPage page = oldPage;
-
-		double newVersion = oldVersion;
-
-		if (oldPage.isApproved()) {
-			newVersion = MathUtil.format(oldVersion + 0.1, 1, 1);
-
-			page = wikiPagePersistence.create(pageId);
-
-			page.setUuid(serviceContext.getUuid());
-		}
-
-		page.setResourcePrimKey(resourcePrimKey);
-		page.setGroupId(groupId);
-		page.setCompanyId(user.getCompanyId());
-		page.setUserId(user.getUserId());
-		page.setUserName(user.getFullName());
-		page.setCreateDate(serviceContext.getModifiedDate(now));
-		page.setModifiedDate(serviceContext.getModifiedDate(now));
-		page.setNodeId(nodeId);
-		page.setTitle(title);
-		page.setVersion(newVersion);
-		page.setMinorEdit(minorEdit);
-		page.setContent(content);
-
-		if (oldPage.isPending()) {
-			page.setStatus(oldPage.getStatus());
-		}
-		else {
-			page.setStatus(WorkflowConstants.STATUS_DRAFT);
-		}
-
-		page.setSummary(summary);
-		page.setFormat(format);
-
-		if (Validator.isNotNull(parentTitle)) {
-			page.setParentTitle(parentTitle);
-		}
-
-		if (Validator.isNotNull(redirectTitle)) {
-			page.setRedirectTitle(redirectTitle);
-		}
-
-		page.setExpandoBridgeAttributes(serviceContext);
-
-		wikiPagePersistence.update(page);
-
-		// Node
-
-		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
-
-		node.setLastPostDate(serviceContext.getModifiedDate(now));
-
-		wikiNodePersistence.update(node);
-
-		// Asset
-
-		updateAsset(
-			userId, page, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
-
-		// Social
-
-		if (!page.isMinorEdit() ||
-			PropsValues.WIKI_PAGE_MINOR_EDIT_ADD_SOCIAL_ACTIVITY) {
-
-			if (oldVersion == newVersion) {
-				SocialActivity lastSocialActivity =
-					socialActivityLocalService.fetchFirstActivity(
-						WikiPage.class.getName(), page.getResourcePrimKey(),
-						WikiActivityKeys.UPDATE_PAGE);
-
-				if (lastSocialActivity != null) {
-					lastSocialActivity.setCreateDate(now.getTime() + 1);
-					lastSocialActivity.setUserId(serviceContext.getUserId());
-
-					socialActivityPersistence.update(lastSocialActivity);
-				}
-			}
-			else {
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				extraDataJSONObject.put("title", page.getTitle());
-				extraDataJSONObject.put("version", page.getVersion());
-
-				socialActivityLocalService.addActivity(
-					userId, page.getGroupId(), WikiPage.class.getName(),
-					page.getResourcePrimKey(), WikiActivityKeys.UPDATE_PAGE,
-					extraDataJSONObject.toString(), 0);
-			}
-		}
-
-		// Workflow
-
-		startWorkflowInstance(userId, page, serviceContext);
-
-		return page;
 	}
 
 	@Override
@@ -2892,6 +2770,22 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 	}
 
+	protected void startWorkflowInstance(
+			long userId, WikiPage page, ServiceContext serviceContext)
+		throws PortalException {
+
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_URL, getPageURL(page, serviceContext));
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			page.getCompanyId(), page.getGroupId(), userId,
+			WikiPage.class.getName(), page.getPageId(), page, serviceContext,
+			workflowContext);
+	}
+
 	protected void restoreDependentRedirectPagesFromTrash
 			(WikiPage page, String title, String trashTitle, long trashEntryId)
 		throws PortalException {
@@ -2911,20 +2805,143 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 	}
 
-	protected void startWorkflowInstance(
-			long userId, WikiPage page, ServiceContext serviceContext)
+	protected WikiPage updatePage(
+			long userId, WikiPage oldPage, String newTitle, String content,
+			String summary, boolean minorEdit, String format,
+			String parentTitle, String redirectTitle,
+			ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
+		User user = userPersistence.findByPrimaryKey(userId);
+		Date now = new Date();
 
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_URL, getPageURL(page, serviceContext));
+		long nodeId = oldPage.getNodeId();
+		long pageId = 0;
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			page.getCompanyId(), page.getGroupId(), userId,
-			WikiPage.class.getName(), page.getPageId(), page, serviceContext,
-			workflowContext);
+		if (oldPage.isApproved()) {
+			pageId = counterLocalService.increment();
+		}
+		else {
+			pageId = oldPage.getPageId();
+		}
+
+		content = SanitizerUtil.sanitize(
+			user.getCompanyId(), oldPage.getGroupId(), userId,
+			WikiPage.class.getName(), pageId, "text/" + format, content);
+
+		validate(nodeId, content, format);
+
+		double oldVersion = oldPage.getVersion();
+
+		serviceContext.validateModifiedDate(
+			oldPage, PageVersionException.class);
+
+		long resourcePrimKey =
+			wikiPageResourceLocalService.getPageResourcePrimKey(
+				nodeId, oldPage.getTitle());
+
+		long groupId = oldPage.getGroupId();
+
+		WikiPage page = oldPage;
+
+		double newVersion = oldVersion;
+
+		if (oldPage.isApproved()) {
+			newVersion = MathUtil.format(oldVersion + 0.1, 1, 1);
+
+			page = wikiPagePersistence.create(pageId);
+
+			page.setUuid(serviceContext.getUuid());
+		}
+
+		page.setResourcePrimKey(resourcePrimKey);
+		page.setGroupId(groupId);
+		page.setCompanyId(user.getCompanyId());
+		page.setUserId(user.getUserId());
+		page.setUserName(user.getFullName());
+		page.setCreateDate(serviceContext.getModifiedDate(now));
+		page.setModifiedDate(serviceContext.getModifiedDate(now));
+		page.setNodeId(nodeId);
+		page.setTitle(
+			Validator.isNull(newTitle) ? oldPage.getTitle() : newTitle);
+		page.setVersion(newVersion);
+		page.setMinorEdit(minorEdit);
+		page.setContent(content);
+
+		if (oldPage.isPending()) {
+			page.setStatus(oldPage.getStatus());
+		}
+		else {
+			page.setStatus(WorkflowConstants.STATUS_DRAFT);
+		}
+
+		page.setSummary(summary);
+		page.setFormat(format);
+
+		if (Validator.isNotNull(parentTitle)) {
+			page.setParentTitle(parentTitle);
+		}
+
+		if (Validator.isNotNull(redirectTitle)) {
+			page.setRedirectTitle(redirectTitle);
+		}
+
+		page.setExpandoBridgeAttributes(serviceContext);
+
+		wikiPagePersistence.update(page);
+
+		// Node
+
+		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
+
+		node.setLastPostDate(serviceContext.getModifiedDate(now));
+
+		wikiNodePersistence.update(node);
+
+		// Asset
+
+		updateAsset(
+			userId, page, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
+
+		// Social
+
+		if (!page.isMinorEdit() ||
+			PropsValues.WIKI_PAGE_MINOR_EDIT_ADD_SOCIAL_ACTIVITY) {
+
+			if (oldVersion == newVersion) {
+				SocialActivity lastSocialActivity =
+					socialActivityLocalService.fetchFirstActivity(
+						WikiPage.class.getName(), page.getResourcePrimKey(),
+						WikiActivityKeys.UPDATE_PAGE);
+
+				if (lastSocialActivity != null) {
+					lastSocialActivity.setCreateDate(now.getTime() + 1);
+					lastSocialActivity.setUserId(serviceContext.getUserId());
+
+					socialActivityPersistence.update(lastSocialActivity);
+				}
+			}
+			else {
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject();
+
+				extraDataJSONObject.put("title", page.getTitle());
+				extraDataJSONObject.put("version", page.getVersion());
+
+				socialActivityLocalService.addActivity(
+					userId, page.getGroupId(), WikiPage.class.getName(),
+					page.getResourcePrimKey(), WikiActivityKeys.UPDATE_PAGE,
+					extraDataJSONObject.toString(), 0);
+			}
+		}
+
+		// Workflow
+
+		startWorkflowInstance(userId, page, serviceContext);
+
+		return page;
 	}
 
 	protected void validate(long nodeId, String content, String format)

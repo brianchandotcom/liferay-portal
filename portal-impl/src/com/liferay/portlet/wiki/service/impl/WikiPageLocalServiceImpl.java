@@ -2250,22 +2250,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			wikiPagePersistence.update(page);
 		}
 
-		// Child pages
-
-		List<WikiPage> childPages = wikiPagePersistence.findByN_P(
-			nodeId, title);
-
-		for (WikiPage childPage : childPages) {
-			childPage.setParentTitle(newTitle);
-
-			wikiPagePersistence.update(childPage);
-		}
+		// Page resource
 
 		WikiPage page = versionPages.get(versionPages.size() - 1);
 
 		long resourcePrimKey = page.getResourcePrimKey();
-
-		// Page resource
 
 		WikiPageResource pageResource =
 			wikiPageResourcePersistence.findByPrimaryKey(resourcePrimKey);
@@ -2304,15 +2293,26 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WorkflowThreadLocal.setEnabled(workflowEnabled);
 
-		// Move redirects to point to the page with the new title
+		// Child pages
 
-		List<WikiPage> redirectedPages = wikiPagePersistence.findByN_R(
+		List<WikiPage> childPages = wikiPagePersistence.findByN_P(
 			nodeId, title);
 
-		for (WikiPage redirectedPage : redirectedPages) {
-			redirectedPage.setRedirectTitle(newTitle);
+		for (WikiPage childPage : childPages) {
+			childPage.setParentTitle(newTitle);
 
-			wikiPagePersistence.update(redirectedPage);
+			wikiPagePersistence.update(childPage);
+		}
+
+		// Redirect pages
+
+		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
+			nodeId, title);
+
+		for (WikiPage redirectPage : redirectPages) {
+			redirectPage.setRedirectTitle(newTitle);
+
+			wikiPagePersistence.update(redirectPage);
 		}
 
 		// Asset

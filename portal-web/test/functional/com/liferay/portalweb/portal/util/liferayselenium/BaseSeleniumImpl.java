@@ -566,6 +566,11 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void sendKeysAceEditor(String locator, String value) {
+		LiferaySeleniumHelper.typeAceEditor(this, locator, value);
+	}
+
+	@Override
 	public void sendLogger(String id, String status) {
 	}
 

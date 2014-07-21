@@ -207,6 +207,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void sendKeys(String locator, String value);
 
+	public void sendKeysAceEditor(String locator, String value);
+
 	public void sendLogger(String id, String status);
 
 	public void sendMacroDescriptionLogger(String description);

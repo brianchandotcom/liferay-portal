@@ -189,10 +189,31 @@ public class ManifestSummary implements Serializable {
 	public long getModelAdditionCount(
 		String className, String referrerClassName) {
 
-		String manifestSummaryKey = getManifestSummaryKey(
-			className, referrerClassName);
+		if (Validator.isNull(referrerClassName) ||
+			!referrerClassName.equals(
+				StagedModelType.REFERRER_CLASS_NAME_ALL)) {
 
-		return getModelAdditionCount(manifestSummaryKey);
+			String manifestSummaryKey = getManifestSummaryKey(
+				className, referrerClassName);
+
+			return getModelAdditionCount(manifestSummaryKey);
+		}
+
+		long modelAdditionCount = 0;
+
+		for (String key : _modelAdditionCounters.keySet()) {
+			if (!key.startsWith(className)) {
+				continue;
+			}
+
+			long count = getModelAdditionCount(key);
+
+			if (count > 0) {
+				modelAdditionCount += count;
+			}
+		}
+
+		return modelAdditionCount;
 	}
 
 	public Map<String, LongWrapper> getModelAdditionCounters() {

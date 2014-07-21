@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -116,18 +116,25 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 				ddmStructureKey, nameMap, descriptionMap, definition, "xml",
 				DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 
-			String templateFileName = structureElement.elementText("template");
+			Element templateElement = structureElement.element("template");
 
-			if (Validator.isNotNull(templateFileName)) {
-				DDMTemplateLocalServiceUtil.addTemplate(
-					userId, groupId,
-					PortalUtil.getClassNameId(DDMStructure.class),
-					ddmStructure.getStructureId(), nameMap, null,
-					DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
-					DDMTemplateConstants.TEMPLATE_MODE_CREATE,
-					TemplateConstants.LANG_TYPE_FTL,
-					getContent(templateFileName), serviceContext);
+			if (templateElement == null) {
+				return;
 			}
+
+			String templateFileName = templateElement.elementText("file-name");
+
+			boolean templateCacheable = GetterUtil.getBoolean(
+				templateElement.elementText("cacheable"));
+
+			DDMTemplateLocalServiceUtil.addTemplate(
+				userId, groupId, PortalUtil.getClassNameId(DDMStructure.class),
+				ddmStructure.getStructureId(), null, nameMap, null,
+				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
+				DDMTemplateConstants.TEMPLATE_MODE_CREATE,
+				TemplateConstants.LANG_TYPE_FTL, getContent(templateFileName),
+				templateCacheable, false, StringPool.BLANK, null,
+				serviceContext);
 		}
 	}
 

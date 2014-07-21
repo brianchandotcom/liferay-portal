@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -2276,7 +2277,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Create stub page at the old location
 
 		double version = WikiPageConstants.VERSION_DEFAULT;
-		String summary = WikiPageConstants.MOVED + " to " + newTitle;
+		String summary = LanguageUtil.format(
+			serviceContext.getLocale(), "moved-to-x", newTitle);
 		String format = page.getFormat();
 		boolean head = true;
 		String parentTitle = page.getParentTitle();

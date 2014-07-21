@@ -901,10 +901,9 @@
 		<execute action="CPMyworkflowtasks#assertClick" locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="New To Do for List: DDL List" />
 
 		<execute action="MyaccountMyworkflowtasks#assertClick" locator-key1="EDIT_LINK" value1="Edit" />
-
 		<execute action="MyaccountMyworkflowtasks#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
-
 		<execute action="MyaccountMyworkflowtasks#assertTextEquals" locator-key1="VIEW_HISTORY_BUTTON" value1="View History" />
+		<execute action="MyaccountMyworkflowtasks#selectFrame" value1="relative=top" />
 
 		<execute macro="User#logoutPG" />
 

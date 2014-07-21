@@ -14,8 +14,6 @@
 
 package com.liferay.mail.util;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -39,9 +37,8 @@ public class HookFactory {
 		_serviceTracker.open();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(HookFactory.class);
-
 	private static HookFactory _instance = new HookFactory();
 
-	private ServiceTracker<?, Hook> _serviceTracker;
+	private ServiceTracker<Hook, Hook> _serviceTracker;
+
 }

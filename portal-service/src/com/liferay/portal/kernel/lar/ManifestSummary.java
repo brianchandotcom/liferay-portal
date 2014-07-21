@@ -199,14 +199,18 @@ public class ManifestSummary implements Serializable {
 			return getModelAdditionCount(manifestSummaryKey);
 		}
 
-		long modelAdditionCount = -1;
+		long modelAdditionCount = 0;
 
 		for (String key : _modelAdditionCounters.keySet()) {
 			if (!key.startsWith(className)) {
 				continue;
 			}
 
-			modelAdditionCount += getModelAdditionCount(key);
+			long count = getModelAdditionCount(key);
+
+			if (count > 0) {
+				modelAdditionCount += count;
+			}
 		}
 
 		return modelAdditionCount;

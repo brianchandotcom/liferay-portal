@@ -34,10 +34,16 @@ for (int i = 0; i < 9; i++) {
 	values.add(StringUtil.split(v));
 }
 
+int[] repeats = new int[values.size()];
+
 int rowsCount = 1;
 
-for (String[] vArray : values) {
-	rowsCount = rowsCount * vArray.length;
+for (int i = values.size() - 1; i >= 0; i--) {
+	repeats[i] = rowsCount;
+
+	String[] vArray = values.get(i);
+
+	rowsCount *= vArray.length;
 }
 %>
 
@@ -64,31 +70,20 @@ for (String[] vArray : values) {
 		</tr>
 
 		<%
-		for (int i = 0; i < rowsCount; i++) {
+		List<String[]> pagePermutations = _getPagePermutations(values, repeats, 0, rowsCount);
+
+		for (int i = 0; i < ; i++) {
+			String[] pagePermutation = pagePermutations.get(i);
 		%>
 
 			<tr>
 
 				<%
-				for (int j = 0; j < names.size(); j++) {
-					int numOfRepeats = 1;
-
-					for (int k = j + 1; k < values.size(); k++) {
-						String[] vArray = values.get(k);
-
-						numOfRepeats = numOfRepeats * vArray.length;
-					}
-
-					String[] vArray = values.get(j);
-
-					int arrayPos;
-
-					for (arrayPos = i / numOfRepeats; arrayPos >= vArray.length; arrayPos = arrayPos - vArray.length) {
-					}
+				for (String columnValue : pagePermutation) {
 				%>
 
 					<td>
-						<%= HtmlUtil.escape(vArray[arrayPos]) %>
+						<%= HtmlUtil.escape(columnValue) %>
 					</td>
 
 				<%
@@ -139,3 +134,23 @@ for (String[] vArray : values) {
 		self.close();
 	}
 </aui:script>
+
+<%!
+private List<String[]> _getPagePermutations(List<String[]> values, int[] repeats, int start, int resultEnd) {
+	List<String[]> rows = new ArrayList<String[]>(resultEnd - start);
+
+	for (int i = start; i < resultEnd; i++) {
+		String[] row = new String[values.size()];
+
+		for (int j = 0; j < row.length; j++) {
+			String[] vArray = values.get(j);
+
+			row[j] = vArray[(i / repeats[j]) % vArray.length];
+		}
+
+		rows.add(row);
+	}
+
+	return rows;
+}
+%>

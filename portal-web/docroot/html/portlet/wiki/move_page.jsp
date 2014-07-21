@@ -182,7 +182,7 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 
 <aui:script>
 	function <portlet:namespace />changeParent() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'changeParent';
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHANGE_PARENT %>';
 
 		submitForm(document.<portlet:namespace />fm);
 	}
@@ -194,7 +194,7 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 	}
 
 	function <portlet:namespace />renamePage() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'rename';
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.RENAME %>';
 
 		submitForm(document.<portlet:namespace />fm);
 	}

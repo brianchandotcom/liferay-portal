@@ -37,6 +37,8 @@ public interface Constants {
 
 	public static final String CANCEL_CHECKOUT = "cancel_checkout";
 
+	public static final String CHANGE_PARENT = "change_parent";
+
 	public static final String CHECK = "check";
 
 	public static final String CHECKIN = "checkin";

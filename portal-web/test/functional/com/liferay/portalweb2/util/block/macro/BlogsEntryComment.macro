@@ -21,7 +21,7 @@
 		<execute action="PGBlogs#pause" locator1="1000" />
 
 		<if>
-			<condition action="PGBlogsEntry#isElementPresent" locator-key1="COMMENTS_BE_THE_FIRST" />
+			<condition action="PGBlogsEntry#isElementPresent" locator-key1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
 			<then>
 				<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
 			</then>
@@ -121,6 +121,7 @@
 
 		<var name="key_entryComment" value="${entryComment}" />
 
+		<execute action="PGBlogsEntry#mouseOver" locator-key1="COMMENTS_DISCUSSION_ACTIONS" />
 		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENT_EDIT" value1="Edit" />
 		<execute action="PGBlogsEntry#type" locator-key1="COMMENT_EDIT_BODY_FIELD" value1="${entryCommentEdit}" />
 		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENT_EDIT_PUBLISH_BUTTON" value1="Publish" />
@@ -140,6 +141,16 @@
 		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${entryContent}" />
 		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_HIGHLIGHTED" value1="${entrySearchTerm}" />
 		<execute action="PGBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_COMMENT" value1="${entryComment}" />
+	</command>
+
+	<command name="subscribePG">
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_SUBSCRIBE_COMMENTS" value1="Subscribe to Comments" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_UNSUBSCRIBE_COMMENTS" value1="Unsubscribe from Comments" />
 	</command>
 
 	<command name="viewCP">
@@ -183,11 +194,8 @@
 	</command>
 
 	<command name="viewPG">
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-
 		<var name="key_entryComment" value="${entryComment}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_COMMENTS" value1="1 Comment" />

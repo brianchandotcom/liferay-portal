@@ -84,6 +84,55 @@ for (int i = values.size() - 1; i >= 0; i--) {
 
 			</liferay-ui:search-container-row>
 			<liferay-ui:search-iterator />
+			<aui:script>
+				var fieldsQuantities = opener.document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantities.value;
+				var itemQuantities = [];
+
+				if (fieldsQuantities) {
+					itemQuantities = fieldsQuantities.split(',');
+				}
+
+				while (itemQuantities.length < <%= searchContainer.getResultEnd() %>) {
+					itemQuantities.push(0);
+				}
+
+				<%
+				for (int i = searchContainer.getStart(); i < searchContainer.getResultEnd(); i++) {
+				%>
+
+					document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantity<%= i %>.value = itemQuantities[<%= i %>];
+
+				<%
+				}
+				%>
+
+				function <portlet:namespace />setItemQuantities() {
+
+					<%
+					for (int i = searchContainer.getStart(); i < searchContainer.getResultEnd(); i++) {
+					%>
+
+						itemQuantities.splice(<%= i %>, 1, document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantity<%= i %>.value);
+
+					<%
+					}
+					%>
+
+					opener.document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantities.value = itemQuantities.join(',');
+				}
+
+				function <portlet:namespace />updateItemQuantities() {
+					<portlet:namespace />setItemQuantities();
+
+					self.close();
+				}
+
+				AUI().all('ul.lfr-pagination-buttons li a').each(
+					function(node) {
+						node.on('click', <portlet:namespace />setItemQuantities);
+					}
+				);
+			</aui:script>
 		</liferay-ui:search-container>
 	</aui:fieldset>
 
@@ -93,26 +142,6 @@ for (int i = values.size() - 1; i >= 0; i--) {
 		<aui:button onClick="self.close();" type="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />updateItemQuantities() {
-		var itemQuantities = '';
-
-		<%
-		for (int i = 0; i < rowsCount; i++) {
-		%>
-
-			itemQuantities = itemQuantities + document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantity<%= i %>.value + ',';
-
-		<%
-		}
-		%>
-
-		opener.document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantities.value = itemQuantities;
-
-		self.close();
-	}
-</aui:script>
 
 <%!
 private List<String[]> _getPagePermutations(List<String[]> values, int[] repeats, int start, int resultEnd) {

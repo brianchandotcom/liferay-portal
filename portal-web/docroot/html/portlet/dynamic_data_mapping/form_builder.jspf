@@ -171,11 +171,9 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 		content = content.replace(/nestedFields/g, 'fields');
 
-		content = formBuilder.getParsedDefinition(A.JSON.parse(content));
+		content = formBuilder.deserializeDefinitionFields(A.JSON.parse(content));
 
 		formBuilder.set('fields', content);
-
-		formBuilder.setEditingField();
 	};
 
 	var setEditorSize = function() {

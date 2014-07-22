@@ -68,9 +68,12 @@ public class DLActionsDisplayContext {
 
 	public boolean isShowActions() {
 		String portletId = _portletDisplay.getId();
+		String portletResource = _portletDisplay.getPortletResource();
 
 		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
+			portletResource.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			portletResource.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 
 			return true;
 		}

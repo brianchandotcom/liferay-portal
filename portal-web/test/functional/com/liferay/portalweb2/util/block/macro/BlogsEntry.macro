@@ -611,7 +611,7 @@
 			</else>
 		</if>
 
-		<execute action="PGBlogs#selectFrame" value1="relative=top" />
+		<execute action="Home#click" locator-key1="PAGE_COLUMN_2" />
 		<execute action="PGBlogs#assertElementPresent" locator-key1="SUCCESS_MESSAGE" />
 	</command>
 

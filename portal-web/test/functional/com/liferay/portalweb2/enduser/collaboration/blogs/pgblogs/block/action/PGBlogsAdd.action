@@ -25,6 +25,12 @@
 		</case>
 	</command>
 
+	<command name="isElementPresent">
+		<case locator-key1="ABSTRACT_DROPDOWN_COLLAPSED">
+			<execute function="IsElementPresent#pauseIsElementPresent" />
+		</case>
+	</command>
+
 	<command name="paste">
 		<case locator-key1="CONTENT_FIELD">
 			<execute function="Paste#ckEditorPaste" />

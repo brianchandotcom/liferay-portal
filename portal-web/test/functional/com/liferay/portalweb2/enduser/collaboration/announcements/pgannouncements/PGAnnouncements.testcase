@@ -428,6 +428,10 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="AnnouncementsEntry#showPG">
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>

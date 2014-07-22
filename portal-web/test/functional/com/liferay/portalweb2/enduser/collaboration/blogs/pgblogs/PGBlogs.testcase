@@ -653,6 +653,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
 		<execute macro="BlogsEntry#viewPG" >
 			<var name="entryContent" value="${entryContentEdit}" />
 			<var name="entryTitle" value="${entryTitle}" />

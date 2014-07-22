@@ -196,4 +196,10 @@
 
 		<execute function="AssertClick#assertTextClickAt" />
 	</command>
+
+	<command name="waitForNodeScriptAssertTextEqualsClick">
+		<execute argument1="//script[contains(@src,'/html/js/liferay/node.js')]" selenium="waitForElementPresent" />
+
+		<execute function="AssertClick#assertTextClickAt" />
+	</command>
 </definition>

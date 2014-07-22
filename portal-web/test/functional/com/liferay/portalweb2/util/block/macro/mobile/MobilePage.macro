@@ -5,7 +5,7 @@
 		<execute macro="Page#openURL" />
 
 		<execute action="Mobiledockbar#click" locator-key1="PENCIL_ICON" />
-		<execute action="Mobiledockbar#click" locator-key1="ADD" />
+		<execute action="Mobiledockbar#assertClick" locator-key1="ADD" value1="Add" />
 
 		<execute action="MobiledockbarAddpanelcontent#assertClick" locator-key1="NAVIGATION_PAGE" value1="Page" />
 

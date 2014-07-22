@@ -18,10 +18,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -35,25 +37,18 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * @author Zsolt Balogh
  * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
 public class SanitizerImpl implements Sanitizer {
 
 	public SanitizerImpl() {
-		for (String className : PropsValues.SANITIZER_IMPL) {
-			if (Validator.isNull(className)) {
-				continue;
-			}
 
-			try {
-				Sanitizer sanitizer = (Sanitizer)InstanceFactory.newInstance(
-					className);
+		Registry registry = RegistryUtil.getRegistry();
 
-				registerSanitizer(sanitizer);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
+		_serviceTracker = registry.trackServices(
+			Sanitizer.class, new SanitizerServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 	public void registerSanitizer(Sanitizer sanitizer) {
@@ -142,4 +137,37 @@ public class SanitizerImpl implements Sanitizer {
 
 	private List<Sanitizer> _sanitizers = new CopyOnWriteArrayList<Sanitizer>();
 
+	private ServiceTracker<?, Sanitizer> _serviceTracker;
+
+	private class SanitizerServiceTrackerCustomizer
+	implements ServiceTrackerCustomizer<Sanitizer, Sanitizer> {
+
+		@Override
+		public Sanitizer addingService(
+		ServiceReference<Sanitizer> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			Sanitizer sanitizer = registry.getService(serviceReference);
+
+			_sanitizers.add(sanitizer);
+
+			return sanitizer;
+		}
+
+		@Override
+		public void modifiedService(
+		ServiceReference<Sanitizer> serviceReference, Sanitizer sanitizer) {
+		}
+
+		@Override
+		public void removedService(
+		ServiceReference<Sanitizer> serviceReference, Sanitizer sanitizer) {
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			_sanitizers.remove(sanitizer);
+		}
+	}
 }

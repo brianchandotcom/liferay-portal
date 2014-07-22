@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
@@ -91,7 +90,6 @@ import com.liferay.portal.model.Release;
 import com.liferay.portal.repository.util.ExternalRepositoryFactory;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
-import com.liferay.portal.sanitizer.SanitizerImpl;
 import com.liferay.portal.security.auth.AuthFailure;
 import com.liferay.portal.security.auth.AuthToken;
 import com.liferay.portal.security.auth.AuthTokenWhitelistUtil;
@@ -537,15 +535,6 @@ public class HookHotDeployListener
 
 			userGroupMembershipPolicyFactoryImpl.setUserGroupMembershipPolicy(
 				null);
-		}
-
-		if (portalProperties.containsKey(PropsKeys.SANITIZER_IMPL)) {
-			SanitizerContainer sanitizerContainer =
-				_sanitizerContainerMap.remove(servletContextName);
-
-			if (sanitizerContainer != null) {
-				sanitizerContainer.unregisterSanitizers();
-			}
 		}
 
 		Set<String> liferayFilterClassNames =
@@ -1818,15 +1807,12 @@ public class HookHotDeployListener
 			String[] sanitizerClassNames = StringUtil.split(
 				portalProperties.getProperty(PropsKeys.SANITIZER_IMPL));
 
-			SanitizerContainer sanitizerContainer = new SanitizerContainer();
-
-			_sanitizerContainerMap.put(servletContextName, sanitizerContainer);
-
 			for (String sanitizerClassName : sanitizerClassNames) {
 				Sanitizer sanitizer = (Sanitizer)newInstance(
 					portletClassLoader, Sanitizer.class, sanitizerClassName);
 
-				sanitizerContainer.registerSanitizer(sanitizer);
+				registerService(servletContextName, sanitizerClassName,
+					Sanitizer.class, sanitizer);
 			}
 		}
 
@@ -2672,8 +2658,6 @@ public class HookHotDeployListener
 		_PROPS_KEYS_EVENTS);
 	private Set<String> _propsKeysSessionEvents = SetUtil.fromArray(
 		_PROPS_KEYS_SESSION_EVENTS);
-	private Map<String, SanitizerContainer> _sanitizerContainerMap =
-		new HashMap<String, SanitizerContainer>();
 	private Map<String, Map<Object, ServiceRegistration<?>>>
 		_serviceRegistrations = newMap();
 	private Set<String> _servletContextNames = new HashSet<String>();
@@ -2977,30 +2961,6 @@ public class HookHotDeployListener
 		private String[] _pluginStringArray;
 		private String[] _portalStringArray;
 		private String _servletContextName;
-
-	}
-
-	private class SanitizerContainer {
-
-		public void registerSanitizer(Sanitizer sanitizer) {
-			_sanitizers.add(sanitizer);
-
-			SanitizerImpl sanitizerImpl =
-				(SanitizerImpl)SanitizerUtil.getSanitizer();
-
-			sanitizerImpl.registerSanitizer(sanitizer);
-		}
-
-		public void unregisterSanitizers() {
-			SanitizerImpl sanitizerImpl =
-				(SanitizerImpl)SanitizerUtil.getSanitizer();
-
-			for (Sanitizer sanitizer : _sanitizers) {
-				sanitizerImpl.unregisterSanitizer(sanitizer);
-			}
-		}
-
-		private List<Sanitizer> _sanitizers = new ArrayList<Sanitizer>();
 
 	}
 

@@ -71,6 +71,41 @@ public class LiferayTrashCapability implements TrashCapability {
 	}
 
 	@Override
+	public void deleteTrashEntry(FileEntry fileEntry) throws PortalException {
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		if (dlFileEntry.isInTrashExplicitly()) {
+			TrashEntryLocalServiceUtil.deleteEntry(
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId());
+		}
+		else {
+			List<DLFileVersion> dlFileVersions = dlFileEntry.getFileVersions(
+				WorkflowConstants.STATUS_ANY);
+
+			for (DLFileVersion dlFileVersion : dlFileVersions) {
+				TrashVersionLocalServiceUtil.deleteTrashVersion(
+					DLFileVersion.class.getName(),
+					dlFileVersion.getFileVersionId());
+			}
+		}
+	}
+
+	@Override
+	public void deleteTrashEntry(Folder folder) throws PortalException {
+		DLFolder dlFolder = (DLFolder)folder.getModel();
+
+		if (dlFolder.isInTrashExplicitly()) {
+			TrashEntryLocalServiceUtil.deleteEntry(
+				DLFolderConstants.getClassName(), dlFolder.getFolderId());
+		}
+		else {
+			TrashVersionLocalServiceUtil.deleteTrashVersion(
+				DLFolderConstants.getClassName(), dlFolder.getFolderId());
+		}
+	}
+
+	@Override
 	public FileEntry moveFileEntryFromTrash(
 			long userId, FileEntry fileEntry, Folder destinationFolder,
 			ServiceContext serviceContext)
@@ -118,41 +153,6 @@ public class LiferayTrashCapability implements TrashCapability {
 		throws PortalException {
 
 		DLAppHelperLocalServiceUtil.restoreFolderFromTrash(userId, folder);
-	}
-
-	protected void deleteTrashEntry(FileEntry fileEntry)
-		throws PortalException {
-
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-		if (dlFileEntry.isInTrashExplicitly()) {
-			TrashEntryLocalServiceUtil.deleteEntry(
-				DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId());
-		}
-		else {
-			List<DLFileVersion> dlFileVersions = dlFileEntry.getFileVersions(
-				WorkflowConstants.STATUS_ANY);
-
-			for (DLFileVersion dlFileVersion : dlFileVersions) {
-				TrashVersionLocalServiceUtil.deleteTrashVersion(
-					DLFileVersion.class.getName(),
-					dlFileVersion.getFileVersionId());
-			}
-		}
-	}
-
-	protected void deleteTrashEntry(Folder folder) throws PortalException {
-		DLFolder dlFolder = (DLFolder)folder.getModel();
-
-		if (dlFolder.isInTrashExplicitly()) {
-			TrashEntryLocalServiceUtil.deleteEntry(
-				DLFolderConstants.getClassName(), dlFolder.getFolderId());
-		}
-		else {
-			TrashVersionLocalServiceUtil.deleteTrashVersion(
-				DLFolderConstants.getClassName(), dlFolder.getFolderId());
-		}
 	}
 
 }

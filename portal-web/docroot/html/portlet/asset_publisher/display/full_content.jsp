@@ -17,9 +17,9 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
-String redirect = null;
+String redirect = ParamUtil.getString(request, "redirect");
 
-if (AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource())) {
+if (Validator.isNull(redirect)) {
 	redirect = ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "redirect");
 }
 

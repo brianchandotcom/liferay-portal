@@ -128,6 +128,16 @@
 		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="DOCUMENTS_AND_MEDIA_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
+	<command name="populateFieldGeolocation">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="GEOLOCATION_GEOLOCATE" value1="Geolocate" />
+		<execute action="CPDynamicdatalistsListAddrecord#sikuliClick" locator-key1="GEOLOCATION_SHARE_LOCATION_BUTTON_PNG" />
+		<execute action="CPDynamicdatalistsListAddrecord#sikuliClick" locator-key1="GEOLOCATION_SHARE_LOCATION_BUTTON_PNG" />
+		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="GEOLOCATION_LOCATION_LABEL" value1="Location:" />
+		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="GEOLOCATION_LOCATION" value1="${ddlRecordFieldData}" />
+	</command>
+
 	<command name="populateFieldHTML">
 		<var name="key_fieldName" value="${fieldName}" />
 

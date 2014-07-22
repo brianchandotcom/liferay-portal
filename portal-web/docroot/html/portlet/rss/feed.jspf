@@ -153,7 +153,7 @@ catch (Exception e) {
 					<div class="feed-entry">
 						<i class='entry-expander feed-entry-expander <%= (windowState.equals(WindowState.MAXIMIZED) || (j < expandedEntriesPerFeed)) ? "icon-collapse-alt" : "icon-expand-alt" %>'></i>
 
-						<span class="feed-entry-title"><aui:a href="<%= entryLink %>" target="_new"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a></span>
+						<span class="feed-entry-title"><aui:a href="<%= entryLink %>" target="_new"><%= HtmlUtil.render(HtmlUtil.escape(entry.getTitle())) %></aui:a></span>
 
 						<div class="feed-entry-content <%= (windowState.equals(WindowState.MAXIMIZED) || (j < expandedEntriesPerFeed)) ? "" : "hide" %>">
 							<c:if test="<%= entry.getPublishedDate() != null %>">

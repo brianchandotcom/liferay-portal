@@ -66,7 +66,7 @@
 			</then>
 		</if>
 
-		<execute action="CPKaleoformsadminEditprocess#assertClick" locator-key1="FORMS_TABLE_ASSIGN_FORM_BUTTON" value1="Assign Form" />
+		<execute action="CPKaleoformsadminEditprocess#assertClick" locator-key1="FORMS_TABLE_ASSIGN_FORM" value1="Assign Form" />
 	</command>
 
 	<command name="editProcessChooseFieldsDefinition">

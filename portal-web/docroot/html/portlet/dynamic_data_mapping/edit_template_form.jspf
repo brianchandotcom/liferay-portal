@@ -19,14 +19,7 @@ JSONArray structureJSONArray = DDMXSDUtil.getJSONArray(structure.getDefinition()
 
 _addFormTemplateFieldAttributes(structure, structureJSONArray);
 
-if (Validator.isNull(script)) {
-	script = structure.getDefinition();
-	scriptJSONArray = DDMXSDUtil.getJSONArray(script);
-}
-
-if (scriptJSONArray != null) {
-	scriptJSONArray = _addFormTemplateFieldAttributes(structure, scriptJSONArray);
-}
+_addFormTemplateFieldAttributes(structure, scriptJSONArray);
 
 String namespace = renderResponse.getNamespace();
 
@@ -54,9 +47,9 @@ if (Validator.isNotNull(portletResourceNamespace)) {
 </aui:script>
 
 <%!
-public JSONArray _addFormTemplateFieldAttributes(DDMStructure structure, JSONArray scriptJSONArray) throws Exception {
-	for (int i = 0; i < scriptJSONArray.length(); i++) {
-		JSONObject jsonObject = scriptJSONArray.getJSONObject(i);
+public void _addFormTemplateFieldAttributes(DDMStructure structure, JSONArray jsonArray) throws Exception {
+	for (int i = 0; i < jsonArray.length(); i++) {
+		JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 		String fieldName = jsonObject.getString("name");
 
@@ -67,8 +60,6 @@ public JSONArray _addFormTemplateFieldAttributes(DDMStructure structure, JSONArr
 		catch (StructureFieldException sfe) {
 		}
 	}
-
-	return scriptJSONArray;
 }
 
 public JSONArray _getFieldReadOnlyAttributes(DDMStructure structure, String fieldName) throws Exception {

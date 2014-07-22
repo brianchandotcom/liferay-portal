@@ -63,7 +63,11 @@ if (Validator.isNull(script)) {
 
 JSONArray scriptJSONArray = null;
 
-if (type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) && Validator.isNotNull(script)) {
+if (type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
+	if (Validator.isNull(script)) {
+		script = structure.getDefinition();
+	}
+
 	scriptJSONArray = DDMXSDUtil.getJSONArray(script);
 }
 

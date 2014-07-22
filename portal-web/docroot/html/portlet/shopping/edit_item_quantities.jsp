@@ -20,7 +20,7 @@
 List<String> names = new ArrayList<String>();
 List<String[]> values = new ArrayList<String[]>();
 
-for (int i = 0; i < 9; i++) {
+for (int i = 0;; i++) {
 	String n = request.getParameter("n" + i);
 	String v = request.getParameter("v" + i);
 

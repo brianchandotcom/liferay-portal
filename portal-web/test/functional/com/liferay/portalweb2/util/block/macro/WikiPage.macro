@@ -312,6 +312,36 @@
 		<execute action="PGWikidisplay#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 	</command>
 
+	<command name="addLocalizedFrontPagePG">
+		<execute action="PGWiki#assertClick" locator-key1="ADD_FRONTPAGE" value1="${emptyPageMessage}" />
+
+		<execute action="CKEditor#type" locator-key1="BODY_FIELD_LOCALIZED" value1="${wikiPageContent}" />
+		<execute action="CKEditor#selectFrame" locator-key1="BODY_FIELD_LOCALIZED" />
+
+		<if>
+			<equals arg1="${rtl}" arg2="true" />
+			<then>
+				<var name="textDirection" value="rtl" />
+			</then>
+			<else>
+				<var name="textDirection" value="ltr" />
+			</else>
+		</if>
+
+		<execute action="CKEditor#assertElementPresent" locator1="//html[@dir='${textDirection}']" />
+		<execute action="CKEditor#selectFrame" locator1="relative=top" />
+
+		<execute action="PGWikiEditpage#click" locator-key1="PUBLISH_BUTTON_LOCALIZED" />
+
+		<execute action="PGWikiAddpage#assertTextEquals" locator-key1="SUCCESS_MESSAGE_LOCALIZED" value1="${successMessage}" />
+
+		<execute action="PGWiki#assertElementPresent" locator1="//html[@dir='${textDirection}']" />
+
+		<var name="key_htmlTags" value="p" />
+
+		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_HTML_BODY" value1="${wikiPageContent}" />
+	</command>
+
 	<command name="addPagePGViaWD">
 		<execute action="PGWikidisplay#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
 

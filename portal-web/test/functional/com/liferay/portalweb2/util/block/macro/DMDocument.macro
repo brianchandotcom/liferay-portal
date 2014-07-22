@@ -741,13 +741,18 @@
 	<command name="linkImage">
 		<execute action="CKEditor#click" locator-key1="CONTENT_IMAGE_LINK" />
 		<execute action="CKEditor#assertClick" locator-key1="CONTENT_IMAGE_LINK_BROWSE_SERVER_BUTTON" value1="Browse Server" />
-
 		<execute action="CKEditor#selectFrame" locator-key1="LINK_IMAGE_BROWSE_SERVER_IFRAME" />
-		<execute action="CKEditor#click" locator-key1="LINK_IMAGE_BROWSE_SERVER_SITE_BUTTON" />
 
-		<var name="key_siteName" value="${siteName}" />
+		<if>
+			<isset var="siteName" />
+			<then>
+				<execute action="CKEditor#click" locator-key1="LINK_IMAGE_BROWSE_SERVER_SITE_BUTTON" />
 
-		<execute action="CKEditor#click" locator-key1="LINK_IMAGE_BROWSE_SERVER_SITE_MENULIST_BUTTON" />
+				<var name="key_siteName" value="${siteName}" />
+
+				<execute action="CKEditor#click" locator-key1="LINK_IMAGE_BROWSE_SERVER_SITE_MENULIST_BUTTON" />
+			</then>
+		</if>
 
 		<if>
 			<isset var="key_folderName" />
@@ -763,9 +768,7 @@
 		<var name="key_documentName" value="${documentName}" />
 
 		<execute action="CKEditor#assertClick" locator-key1="LINK_IMAGE_BROWSE_SERVER_DOCUMENT_CHOOSE_BUTTON" value1="Choose" />
-
 		<execute action="CKEditor#selectFrame" value1="relative=top" />
-
 		<execute action="CKEditor#assertClick" locator-key1="CONTENT_IMAGE_LINK_OK_BUTTON" value1="OK" />
 	</command>
 

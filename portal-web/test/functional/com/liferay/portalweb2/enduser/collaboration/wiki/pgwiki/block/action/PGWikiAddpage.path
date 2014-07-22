@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE_LOCALIZED</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TITLE_ERROR_MESSAGE</td>
 	<td>//div[contains(@class,'alert-danger') and contains(.,'Please enter a valid title')]</td>
 	<td></td>

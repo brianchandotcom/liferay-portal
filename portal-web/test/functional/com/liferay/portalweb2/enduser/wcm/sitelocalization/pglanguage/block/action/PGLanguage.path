@@ -20,6 +20,11 @@
 </tr>
 <!--LANGUAGE_MENU-->
 <tr>
+	<td>LANGUAGE_MENU_ARABIC</td>
+	<td>//a[@lang='ar-SA']/img</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LANGUAGE_MENU_CHINESE</td>
 	<td>//a[@lang='zh-CN']/img</td>
 	<td></td>

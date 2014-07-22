@@ -4,6 +4,10 @@
 			<execute function="Type#typeFrameWaitForCKEditor" />
 		</case>
 
+		<case locator-key1="BODY_FIELD_LOCALIZED">
+			<execute function="Type#typeFrameWaitForCKEditor" />
+		</case>
+
 		<case locator-key1="BODY_FIELD_SOURCE_ON">
 			<execute function="Type#type" />
 		</case>

@@ -60,6 +60,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WIKI_PAGE_HTML_BODY</td>
+	<td>//div[@class='wiki-body']/${key_htmlTags}</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WIKI_PAGE_BODY_LINK</td>
 	<td>//div[@class='wiki-body']/p/a</td>
 	<td></td>

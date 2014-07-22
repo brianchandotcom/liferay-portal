@@ -1,10 +1,16 @@
 <definition>
 	<command name="selectLanguagePG">
 		<if>
-			<equals arg1="${language}" arg2="Chinese (China)" />
+			<equals arg1="${language}" arg2="Arabic (Saudi Arabia)" />
 			<then>
-				<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_CHINESE" />
+				<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_ARABIC" />
 			</then>
+			<elseif>
+				<equals arg1="${language}" arg2="Chinese (China)" />
+				<then>
+					<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_CHINESE" />
+				</then>
+			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="English (United States)" />
 				<then>

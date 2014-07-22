@@ -304,7 +304,6 @@
 
 		<execute macro="DMDocument#linkImage">
 			<var name="documentName" value="DM Document Title" />
-			<var name="navButton" value="Documents" />
 			<var name="siteName" value="Liferay" />
 		</execute>
 

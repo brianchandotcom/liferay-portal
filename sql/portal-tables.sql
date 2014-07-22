@@ -2003,7 +2003,7 @@ create table ShoppingOrder (
 create table ShoppingOrderItem (
 	orderItemId LONG not null primary key,
 	orderId LONG,
-	itemId VARCHAR(75) null,
+	itemId TEXT null,
 	sku VARCHAR(75) null,
 	name VARCHAR(200) null,
 	description STRING null,

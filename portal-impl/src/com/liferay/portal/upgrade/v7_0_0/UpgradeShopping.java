@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_0_0.util.ShoppingCartTable;
+import com.liferay.portal.upgrade.v7_0_0.util.ShoppingOrderItemTable;
 import com.liferay.portal.upgrade.v7_0_0.util.ShoppingOrderTable;
 
 import java.sql.SQLException;
@@ -45,6 +46,17 @@ public class UpgradeShopping extends UpgradeProcess {
 				ShoppingOrderTable.TABLE_NAME, ShoppingOrderTable.TABLE_COLUMNS,
 				ShoppingOrderTable.TABLE_SQL_CREATE,
 				ShoppingOrderTable.TABLE_SQL_ADD_INDEXES);
+		}
+
+		try {
+			runSQL("alter_column_type ShoppingOrderItem itemId TEXT null");
+		}
+		catch (SQLException sqle) {
+			upgradeTable(
+				ShoppingOrderItemTable.TABLE_NAME,
+				ShoppingOrderItemTable.TABLE_COLUMNS,
+				ShoppingOrderItemTable.TABLE_SQL_CREATE,
+				ShoppingOrderItemTable.TABLE_SQL_ADD_INDEXES);
 		}
 	}
 

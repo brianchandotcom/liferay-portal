@@ -2568,7 +2568,9 @@
 	<model name="com.liferay.portlet.shopping.model.ShoppingOrderItem">
 		<field name="orderItemId" type="long" />
 		<field name="orderId" type="long" />
-		<field name="itemId" type="String" />
+		<field name="itemId" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="sku" type="String" />
 		<field name="name" type="String">
 			<hint name="max-length">200</hint>

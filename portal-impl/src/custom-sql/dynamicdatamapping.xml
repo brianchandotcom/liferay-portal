@@ -39,10 +39,10 @@
 							(storageType LIKE ? [$AND_OR_NULL_CHECK$])
 						) AND
 						(type_ = ?)
-			) TEMP_TABLE
-			INNER JOIN
-				DDMStructure ON
-					(TEMP_TABLE.uuid_ = DDMStructure.uuid_)
+				) TEMP_TABLE
+				INNER JOIN
+					DDMStructure ON
+						(TEMP_TABLE.uuid_ = DDMStructure.uuid_)
 			ORDER BY
 				DDMStructure.structureId DESC
 		]]>
@@ -113,10 +113,10 @@
 									(DDMStructure.classNameId = ?)
 							))
 						)
-			) TEMP_TABLE
-			INNER JOIN
-				DDMTemplate ON
-					(TEMP_TABLE.uuid_ = DDMTemplate.uuid_)
+				) TEMP_TABLE
+				INNER JOIN
+					DDMTemplate ON
+						(TEMP_TABLE.uuid_ = DDMTemplate.uuid_)
 			ORDER BY
 				DDMTemplate.templateId DESC
 		]]>
@@ -143,10 +143,10 @@
 							(mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(language LIKE ? [$AND_OR_NULL_CHECK$])
 						)
-			) TEMP_TABLE
-			INNER JOIN
-				DDMTemplate ON
-					(TEMP_TABLE.uuid_ = DDMTemplate.uuid_)
+				) TEMP_TABLE
+				INNER JOIN
+					DDMTemplate ON
+						(TEMP_TABLE.uuid_ = DDMTemplate.uuid_)
 			ORDER BY
 				DDMTemplate.templateId DESC
 		]]>

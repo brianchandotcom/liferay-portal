@@ -45,19 +45,19 @@ String structureKey = BeanParamUtil.getString(structure, request, "structureKey"
 
 String script = BeanParamUtil.getString(structure, request, "definition");
 
-JSONArray scriptJSONArray = null;
+JSONArray fieldsJSONArray = null;
 
 if (Validator.isNotNull(script)) {
 	if (structure != null) {
 		try {
-			scriptJSONArray = DDMXSDUtil.getJSONArray(structure, script);
+			fieldsJSONArray = DDMXSDUtil.getJSONArray(structure, script);
 		}
 		catch (Exception e) {
-			scriptJSONArray = DDMXSDUtil.getJSONArray(structure.getDefinition());
+			fieldsJSONArray = DDMXSDUtil.getJSONArray(structure.getDefinition());
 		}
 	}
 	else {
-		scriptJSONArray = DDMXSDUtil.getJSONArray(script);
+		fieldsJSONArray = DDMXSDUtil.getJSONArray(script);
 	}
 }
 %>

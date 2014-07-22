@@ -15,11 +15,13 @@
 --%>
 
 <%
-JSONArray structureJSONArray = DDMXSDUtil.getJSONArray(structure.getDefinition());
+JSONArray structureJSONArray = _getFormTemplateFieldsJSONArray(structure, structure.getDefinition());
 
-_addFormTemplateFieldAttributes(structure, structureJSONArray);
+if (Validator.isNull(script)) {
+	script = structure.getDefinition();
+}
 
-_addFormTemplateFieldAttributes(structure, scriptJSONArray);
+JSONArray fieldsJSONArray = _getFormTemplateFieldsJSONArray(structure, script);
 
 String namespace = renderResponse.getNamespace();
 
@@ -149,5 +151,13 @@ public JSONArray _getFieldReadOnlyAttributes(DDMStructure structure, String fiel
 	}
 
 	return readOnlyAttributesJSONArray;
+}
+
+public JSONArray _getFormTemplateFieldsJSONArray(DDMStructure structure, String script) throws Exception {
+	JSONArray jsonArray = DDMXSDUtil.getJSONArray(script);
+
+	_addFormTemplateFieldAttributes(structure, jsonArray);
+
+	return jsonArray;
 }
 %>

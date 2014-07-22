@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.journal.NoSuchFolderException;
@@ -45,7 +46,13 @@ public class ViewAction extends PortletAction {
 		throws Exception {
 
 		try {
-			ActionUtil.getArticle(renderRequest);
+			String strutsAction = ParamUtil.getString(
+				renderRequest, "struts_action");
+
+			if (strutsAction.equals("/journal/select_version")) {
+				ActionUtil.getArticle(renderRequest);
+			}
+
 			ActionUtil.getFolder(renderRequest);
 		}
 		catch (Exception e) {

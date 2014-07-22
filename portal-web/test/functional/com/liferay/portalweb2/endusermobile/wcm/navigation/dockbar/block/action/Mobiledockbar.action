@@ -1,7 +1,13 @@
 <definition>
+	<command name="assertClick">
+		<case locator-key1="ADD">
+			<execute function="AssertClick#waitForNodeScriptAssertTextEqualsClick" />
+		</case>
+	</command>
+
 	<command name="click">
 		<case locator-key1="PENCIL_ICON">
-			<execute function="Click#clickAtClickDockbar" />
+			<execute function="Click#waitForNavigationInteractionTouchScriptClickAt" />
 		</case>
 
 		<case locator-key1="REORDER_ICON">

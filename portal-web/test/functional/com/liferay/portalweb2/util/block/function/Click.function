@@ -233,4 +233,10 @@
 
 		<execute function="Click#valueClickAtAndWait" />
 	</command>
+
+	<command name="waitForNavigationInteractionTouchScriptClickAt">
+		<execute argument1="//script[contains(@src,'html/js/liferay/navigation_interaction_touch.js')]" selenium="waitForElementPresent" />
+
+		<execute function="Click#clickAt" />
+	</command>
 </definition>

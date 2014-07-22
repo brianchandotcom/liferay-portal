@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -69,6 +70,7 @@ import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -516,6 +518,10 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 		Assert.assertEquals(expectedMap, actualMap);
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	protected void assertEquals(
 		DDMForm expectedDDMForm, DDMForm actualDDMForm) {

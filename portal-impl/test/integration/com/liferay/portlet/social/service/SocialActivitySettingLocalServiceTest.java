@@ -16,6 +16,7 @@ package com.liferay.portlet.social.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
@@ -24,6 +25,7 @@ import com.liferay.portlet.social.util.SocialConfigurationUtil;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -95,5 +97,9 @@ public class SocialActivitySettingLocalServiceTest
 			SocialActivitySettingLocalServiceUtil.isEnabled(
 				_group.getGroupId(), classNameId, 1));
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 }

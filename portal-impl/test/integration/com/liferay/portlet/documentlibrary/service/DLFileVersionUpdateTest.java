@@ -22,11 +22,13 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -65,6 +67,10 @@ public class DLFileVersionUpdateTest extends BaseDLAppTestCase {
 			_BASE_FILE_NAME, _ZERO_BYTES,
 			ContentTypes.APPLICATION_OCTET_STREAM);
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 	protected void testVersionUpdate(
 			String addFileName, byte[] addBytes, String addMimeType,

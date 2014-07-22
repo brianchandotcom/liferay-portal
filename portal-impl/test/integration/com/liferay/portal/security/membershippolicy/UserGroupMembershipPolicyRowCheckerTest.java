@@ -19,6 +19,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.UserTestUtil;
 import com.liferay.portlet.usergroupsadmin.search.UserUserGroupChecker;
@@ -26,6 +27,7 @@ import com.liferay.portlet.usergroupsadmin.search.UserUserGroupChecker;
 import javax.portlet.RenderResponse;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -120,5 +122,9 @@ public class UserGroupMembershipPolicyRowCheckerTest
 
 		Assert.assertTrue(userUserGroupChecker.isDisabled(user));
 	}
+
+	@Rule
+	public DeleteAfterTestRunRule deleteAfterTestRunRule =
+		new DeleteAfterTestRunRule(this);
 
 }

@@ -379,8 +379,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMENTS_DISCUSSION_ACTIONS</td>
+	<td>//div[contains(@class,'lfr-discussion-body')]//ul[@class='lfr-discussion-actions']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENTS_ADD</td>
 	<td>//span[contains(@class,'taglib-text') and contains(.,'Add Comment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_SUBSCRIBE_COMMENTS</td>
+	<td>//span[@class='subscribe-link']/a/span</td>
 	<td></td>
 </tr>
 <tr>

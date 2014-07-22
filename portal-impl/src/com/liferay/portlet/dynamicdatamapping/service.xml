@@ -271,8 +271,8 @@
 	</entity>
 	<exceptions>
 		<exception>Content</exception>
-		<exception>ContentName</exception>
 		<exception>ContentData</exception>
+		<exception>ContentName</exception>
 		<exception>RequiredStructure</exception>
 		<exception>RequiredTemplate</exception>
 		<exception>Storage</exception>

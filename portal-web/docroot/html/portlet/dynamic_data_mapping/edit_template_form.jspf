@@ -15,6 +15,10 @@
 --%>
 
 <%
+JSONArray structureJSONArray = DDMXSDUtil.getJSONArray(structure.getDefinition());
+
+_addFormTemplateFieldAttributes(structure, structureJSONArray);
+
 if (Validator.isNull(script)) {
 	script = structure.getDefinition();
 	scriptJSONArray = DDMXSDUtil.getJSONArray(script);
@@ -36,7 +40,7 @@ if (Validator.isNotNull(portletResourceNamespace)) {
 
 <aui:script>
 	window['<%= HtmlUtil.escapeJS(namespace) %>getAvailableFields'] = function(A, FormBuilder) {
-		var availableFields = <%= scriptJSONArray.toString() %>;
+		var availableFields = <%= structureJSONArray.toString() %>;
 
 		A.Array.each(
 			availableFields,

@@ -90,17 +90,17 @@
 </tr>
 <tr>
 	<td>GEOLOCATION_GEOLOCATE</td>
-	<td>//div[contains(@data-fieldname,'Geolocation')]/div/button[contains(.,'Geolocate')]</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/div/button[contains(.,'Geolocate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GEOLOCATION_LOCATION_LABEL</td>
-	<td>//p[contains(@id,'Geolocation')]/strong</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/p/strong</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GEOLOCATION_LOCATION</td>
-	<td>//span[contains(@id,'Geolocation')]</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/p/span</td>
 	<td></td>
 </tr>
 <tr>

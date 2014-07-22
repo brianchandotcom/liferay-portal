@@ -57,11 +57,9 @@ public class DeleteAfterTestRunRule implements TestRule {
 		_instance = instance;
 	}
 
-	public void after(Description description) {
+	public void after(Class testClass) {
 		Map<Class<?>, FieldBag> deleteAfterTestRunFieldBags =
 			new HashMap<Class<?>, FieldBag>();
-
-		Class<?> testClass = description.getTestClass();
 
 		while (testClass != null) {
 			for (Field field : testClass.getDeclaredFields()) {
@@ -185,7 +183,7 @@ public class DeleteAfterTestRunRule implements TestRule {
 					statement.evaluate();
 				}
 				finally {
-					after(description);
+					after(description.getTestClass());
 				}
 			}
 

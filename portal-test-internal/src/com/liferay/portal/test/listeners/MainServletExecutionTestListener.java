@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.servlet.MainServlet;
+import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.util.test.TestPropsValues;
 
 import java.io.File;
@@ -55,6 +56,14 @@ public class MainServletExecutionTestListener
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
+
+	@Override
+	public void runAfterTest(TestContext testContext) {
+		DeleteAfterTestRunRule deleteAfterTestRunRule =
+			new DeleteAfterTestRunRule(testContext.getInstance());
+
+		deleteAfterTestRunRule.after(testContext.getClazz());
 	}
 
 	@Override

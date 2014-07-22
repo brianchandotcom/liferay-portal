@@ -6,10 +6,17 @@ AUI.add(
 		var FormBuilderTextField = A.FormBuilderTextField;
 		var FormBuilderTypes = A.FormBuilderField.types;
 
+		var LiferayFormBuilderUtil = Liferay.FormBuilder.Util;
+
 		var Lang = A.Lang;
 
 		var booleanParse = A.DataType.Boolean.parse;
 		var camelize = Liferay.Util.camelize;
+		var instanceOf = A.instanceOf;
+		var isObject = Lang.isObject;
+		var isUndefined = Lang.isUndefined;
+		var isNull = Lang.isNull;
+		var isValue = Lang.isValue;
 		var trim = A.Lang.trim;
 
 		var STR_BLANK = '';
@@ -40,7 +47,11 @@ AUI.add(
 
 		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
+		var LOCALIZABLE_FIELD_ATTRS = Liferay.FormBuilder.LOCALIZABLE_FIELD_ATTRS;
+
 		var UNIQUE_FIELD_NAMES_MAP = Liferay.FormBuilder.UNIQUE_FIELD_NAMES_MAP;
+
+		var UNLOCALIZABLE_FIELD_ATTRS = Liferay.FormBuilder.UNLOCALIZABLE_FIELD_ATTRS;
 
 		DEFAULTS_FORM_VALIDATOR.STRINGS.structureDuplicateFieldName = Liferay.Language.get('please-enter-a-unique-field-name');
 
@@ -202,10 +213,10 @@ AUI.add(
 						var instance = this;
 
 						if (val) {
-							Liferay.FormBuilder.Util.getFileEntry(
+							LiferayFormBuilderUtil.getFileEntry(
 								val,
 								function(fileEntry) {
-									var url = Liferay.FormBuilder.Util.getFileEntryURL(fileEntry);
+									var url = LiferayFormBuilderUtil.getFileEntryURL(fileEntry);
 
 									instance._syncFileLabel(fileEntry.title, url);
 								}
@@ -348,12 +359,12 @@ AUI.add(
 						if (options && options.size()) {
 							options.set('selected', false);
 
-							if (Lang.isValue(val)) {
-								var selLayout = Liferay.FormBuilder.Util.parseJSON(val);
+							if (isValue(val)) {
+								var selLayout = LiferayFormBuilderUtil.parseJSON(val);
 
 								options.each(
 									function(item, index) {
-										var curLayout = Liferay.FormBuilder.Util.parseJSON(item.attr('value'));
+										var curLayout = LiferayFormBuilderUtil.parseJSON(item.attr('value'));
 
 										if ((curLayout.groupId === selLayout.groupId) &&
 											(curLayout.layoutId === selLayout.layoutId) &&
@@ -405,7 +416,7 @@ AUI.add(
 			},
 
 			name: {
-				setter: Liferay.FormBuilder.normalizeKey,
+				setter: LiferayFormBuilderUtil.normalizeKey,
 				validator: function(val) {
 					return !UNIQUE_FIELD_NAMES_MAP.has(val);
 				},
@@ -455,7 +466,331 @@ AUI.add(
 			UNIQUE_FIELD_NAMES_MAP.put(instance.get('name'), instance);
 		};
 
-		A.Base.mix(A.FormBuilderField, [LiferayFormBuilderField]);
+		var LiferayFormBuilderSerializableField = function() {
+		};
+
+		LiferayFormBuilderSerializableField.prototype._addStructureFieldLocalizedAttributes = function(fieldJSON) {
+			var instance = this;
+
+			AArray.each(
+				LOCALIZABLE_FIELD_ATTRS,
+				function(attr) {
+					if (attr === 'options') {
+						if (instanceOf(instance, A.FormBuilderMultipleChoiceField)) {
+							instance._addStructureFieldOptions(fieldJSON);
+						}
+					}
+					else {
+						fieldJSON[attr] = instance._getLocalizedValue(attr);
+					}
+				}
+			);
+		};
+
+		LiferayFormBuilderSerializableField.prototype._addStructureFieldUnlocalizedAttributes = function(fieldJSON) {
+			var instance = this;
+
+			AArray.each(
+				UNLOCALIZABLE_FIELD_ATTRS,
+				function(attr) {
+					fieldJSON[attr] = instance.get(attr);
+				}
+			);
+		};
+
+		LiferayFormBuilderSerializableField.prototype._addStructureFieldOptions = function(fieldJSON) {
+			var instance = this;
+
+			var options = instance.get('options');
+
+			var fieldOptions = [];
+
+			if (options) {
+				AArray.each(
+					options,
+					function(option) {
+						var fieldOption = {};
+
+						var localizationMap = option.localizationMap;
+
+						fieldOption.value = option.value;
+						fieldOption.label = {};
+
+						A.each(
+							localizationMap,
+							function(item, index, collection) {
+								fieldOption.label[index] = LiferayFormBuilderUtil.normalizeValue(item.label);
+							}
+						);
+
+						fieldOptions.push(fieldOption);
+					}
+				);
+
+				fieldJSON.options = fieldOptions;
+			}
+		};
+
+		LiferayFormBuilderSerializableField.prototype._addStructureFieldNestedFields = function(fieldJSON) {
+			var instance = this;
+
+			var nestedFields = [];
+
+			instance.get('fields').each(
+				function(childField) {
+					nestedFields.push(
+						childField.serialize()
+					);
+				}
+			);
+
+			if (nestedFields.length > 0) {
+				fieldJSON.nestedFields = nestedFields;
+			}
+		};
+
+		LiferayFormBuilderSerializableField.prototype._getLocalizedValue = function(attribute) {
+			var instance = this;
+
+			var builder = instance.get('builder');
+
+			var localizationMap = instance.get('localizationMap');
+
+			var localizedValue = {};
+
+			var translationManager = builder.translationManager;
+
+			AArray.each(
+				translationManager.get('availableLocales'),
+				function(locale) {
+					var value = A.Object.getValue(localizationMap, [locale, attribute]);
+
+					if (!isValue(value)) {
+						value = STR_BLANK;
+					}
+
+					localizedValue[locale] = LiferayFormBuilderUtil.normalizeValue(value);
+				}
+			);
+
+			return localizedValue;
+		};
+
+		LiferayFormBuilderSerializableField.prototype.serialize = function() {
+			var instance = this;
+
+			var fieldJSON = {};
+
+			instance._addStructureFieldLocalizedAttributes(fieldJSON);
+			instance._addStructureFieldUnlocalizedAttributes(fieldJSON);
+			instance._addStructureFieldNestedFields(fieldJSON);
+
+			return fieldJSON;
+		};
+
+		var LiferayFormBuilderLocalizableField = function() {
+		};
+
+		LiferayFormBuilderLocalizableField.ATTRS = {
+			localizationMap: {
+				value: {}
+			},
+
+			readOnlyAttributes: {
+				getter: '_getReadOnlyAttributes'
+			}
+		};
+
+		LiferayFormBuilderLocalizableField.prototype.initializer = function() {
+			var instance = this;
+
+			var builder = instance.get('builder');
+
+			instance.after('render', instance._afterLocalizableFieldRender);
+
+			A.each(
+				LOCALIZABLE_FIELD_ATTRS,
+				function(localizableField) {
+					instance.after(localizableField + 'Change', instance._afterLocalizableFieldChange);
+				}
+			);
+
+			builder.translationManager.after('editingLocaleChange', instance._afterEditingLocaleChange, instance);
+		};
+
+		LiferayFormBuilderLocalizableField.prototype._afterEditingLocaleChange = function(event) {
+			var instance = this;
+
+			instance._syncLocaleUI(event.newVal);
+		};
+
+		LiferayFormBuilderLocalizableField.prototype._afterLocalizableFieldChange = function(event) {
+			var instance = this;
+
+			var builder = instance.get('builder');
+
+			var translationManager = builder.translationManager;
+
+			var editingLocale = translationManager.get('editingLocale');
+
+			instance._updateLocalizationMapAttribute(editingLocale, event.attrName);
+		};
+
+		LiferayFormBuilderLocalizableField.prototype._afterLocalizableFieldRender = function(event) {
+			var instance = this;
+
+			var builder = instance.get('builder');
+
+			var translationManager = builder.translationManager;
+
+			var editingLocale = translationManager.get('editingLocale');
+
+			instance._updateLocalizationMap(editingLocale);
+		};
+
+		LiferayFormBuilderLocalizableField.prototype._getReadOnlyAttributes = function(val) {
+			var instance = this;
+
+			var builder = instance.get('builder');
+
+			var translationManager = builder.translationManager;
+
+			var defaultLocale = translationManager.get('defaultLocale');
+			var editingLocale = translationManager.get('editingLocale');
+
+			AArray.each(
+				UNLOCALIZABLE_FIELD_ATTRS,
+				function(item, index) {
+					if (defaultLocale === editingLocale) {
+						AArray.removeItem(val, item);
+					}
+					else {
+						val.push(item);
+					}
+				}
+			);
+
+			return AArray.dedupe(val);
+		};
+
+		LiferayFormBuilderLocalizableField.prototype._syncLocaleUI = function(locale) {
+			var instance = this;
+
+			var builder = instance.get('builder');
+
+			var localizationMap = instance.get('localizationMap');
+
+			var localeMap = localizationMap[locale];
+
+			if (isObject(localeMap)) {
+				AArray.each(
+					LOCALIZABLE_FIELD_ATTRS,
+					function(item, index) {
+						if (item !== 'options') {
+							var localizedItem = localeMap[item];
+
+							if (!isUndefined(localizedItem) && !isNull(localizedItem)) {
+								instance.set(item, localizedItem);
+							}
+						}
+					}
+				);
+
+				builder._syncUniqueField(instance);
+			}
+
+			if (instanceOf(instance, A.FormBuilderMultipleChoiceField)) {
+				instance._syncOptionsLocaleUI(locale);
+			}
+
+			if (builder.editingField === instance) {
+				builder.propertyList.set('data', instance.getProperties());
+			}
+		};
+
+		LiferayFormBuilderLocalizableField.prototype._syncOptionsLocaleUI = function(locale) {
+			var instance = this;
+
+			var options = instance.get('options');
+
+			AArray.each(
+				options,
+				function(item, index) {
+					var localizationMap = item.localizationMap;
+
+					if (isObject(localizationMap)) {
+						var localeMap = localizationMap[locale];
+
+						if (isObject(localeMap)) {
+							item.label = localeMap.label;
+						}
+					}
+				}
+			);
+
+			instance.set('options', options);
+		};
+
+		LiferayFormBuilderLocalizableField.prototype._updateLocalizationMap = function(locale) {
+			var instance = this;
+
+			AArray.each(
+				LOCALIZABLE_FIELD_ATTRS,
+				function(item, index) {
+					instance._updateLocalizationMapAttribute(locale, item);
+				}
+			);
+		};
+
+		LiferayFormBuilderLocalizableField.prototype._updateLocalizationMapAttribute = function(locale, attributeName) {
+			var instance = this;
+
+			if (attributeName === 'options') {
+				instance._updateLocalizationMapOptions(locale);
+			}
+			else {
+				var localizationMap = {};
+
+				localizationMap[locale] = instance.getAttrs([attributeName]);
+
+				instance.set(
+					'localizationMap',
+					A.mix(
+						instance.get('localizationMap'),
+						localizationMap,
+						true,
+						null,
+						0,
+						true
+					)
+				);
+			}
+		};
+
+		LiferayFormBuilderLocalizableField.prototype._updateLocalizationMapOptions = function(locale) {
+			var instance = this;
+
+			var options = instance.get('options');
+
+			AArray.each(
+				options,
+				function(item, index) {
+					var localizationMap = item.localizationMap;
+
+					if (!isObject(localizationMap)) {
+						localizationMap = {};
+					}
+
+					localizationMap[locale] = {
+						label: item.label
+					};
+
+					item.localizationMap = localizationMap;
+				}
+			);
+		};
+
+		A.Base.mix(A.FormBuilderField, [LiferayFormBuilderField, LiferayFormBuilderLocalizableField, LiferayFormBuilderSerializableField]);
 
 		var FormBuilderProto = A.FormBuilderField.prototype;
 

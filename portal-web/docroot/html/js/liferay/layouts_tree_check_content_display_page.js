@@ -59,7 +59,7 @@ AUI.add(
 									node,
 									cssClass,
 									label,
-									title
+									Liferay.Language.get('this-page-is-not-a-content-display-page')
 								]
 							);
 						}

@@ -108,7 +108,6 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 			<portlet:param name="checkContentDisplayPage" value="true" />
 			<portlet:param name="eventName" value='<%= renderResponse.getNamespace() + "selectDisplayPage" %>' />
-			<portlet:param name="showGroupsSelector" value="true" />
 			<portlet:param name="tabs1Names" value="pages" />
 		</liferay-portlet:renderURL>
 
@@ -129,7 +128,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 							},
 							eventName: '<portlet:namespace />selectDisplayPage',
 							id: '<portlet:namespace />selectDisplayPage',
-							title: '<%= LanguageUtil.get(locale, "select-document") %>',
+							title: '<%= LanguageUtil.get(locale, "select-page") %>',
 							uri: '<%= documentSelectorURL.toString() %>'
 						},
 						function(event) {

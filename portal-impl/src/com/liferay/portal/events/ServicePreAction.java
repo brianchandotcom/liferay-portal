@@ -974,12 +974,12 @@ public class ServicePreAction extends Action {
 				themeDisplay.setShowPageSettingsIcon(true);
 
 				LiferayPortletURL pageSettingsURL = new PortletURLImpl(
-					request, PortletKeys.LAYOUTS_ADMIN, controlPanelPlid,
+					request, PortletKeys.GROUP_PAGES, controlPanelPlid,
 					PortletRequest.RENDER_PHASE);
 
 				pageSettingsURL.setDoAsGroupId(scopeGroupId);
 				pageSettingsURL.setParameter(
-					"struts_action", "/layouts_admin/edit_layouts");
+					"struts_action", "/group_pages/edit_layouts");
 
 				if (layout.isPrivateLayout()) {
 					pageSettingsURL.setParameter("tabs1", "private-pages");
@@ -1125,12 +1125,12 @@ public class ServicePreAction extends Action {
 				themeDisplay.setShowSiteMapSettingsIcon(true);
 
 				LiferayPortletURL siteMapSettingsURL = new PortletURLImpl(
-					request, PortletKeys.LAYOUTS_ADMIN, controlPanelPlid,
+					request, PortletKeys.GROUP_PAGES, controlPanelPlid,
 					PortletRequest.RENDER_PHASE);
 
 				siteMapSettingsURL.setDoAsGroupId(scopeGroupId);
 				siteMapSettingsURL.setParameter(
-					"struts_action", "/layouts_admin/edit_layouts");
+					"struts_action", "/group_pages/edit_layouts");
 
 				if (layout.isPrivateLayout()) {
 					siteMapSettingsURL.setParameter("tabs1", "private-pages");

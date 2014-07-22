@@ -461,12 +461,12 @@
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.add_layout" />
 		</action>
 
-		<action path="/dockbar/add_panel" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction" >
+		<action path="/dockbar/add_panel" type="com.liferay.portlet.grouppages.action.EditLayoutsAction" >
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.dockbar.add_panel" />
 			<forward name="portlet.layouts_admin.error" path="portlet.dockbar.add_panel" />
 		</action>
 
-		<action path="/dockbar/edit_layout_panel" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
+		<action path="/dockbar/edit_layout_panel" type="com.liferay.portlet.grouppages.action.EditLayoutsAction">
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.dockbar.edit_layout_panel" />
 			<forward name="portlet.layouts_admin.error" path="portlet.dockbar.edit_layout_panel" />
 		</action>
@@ -917,7 +917,7 @@
 
 		<action path="/journal/rss" type="com.liferay.portlet.journal.action.RSSAction" />
 
-		<action path="/journal/select_display_page" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction" />
+		<action path="/journal/select_display_page" type="com.liferay.portlet.grouppages.action.EditLayoutsAction" />
 
 		<action path="/journal/select_folder" type="com.liferay.portlet.journal.action.EditFolderAction">
 			<forward name="portlet.journal.edit_folder" path="portlet.journal.select_folder" />
@@ -1698,11 +1698,6 @@
 
 		<!-- Roles Admin -->
 
-		<action path="/roles_admin/edit_layouts" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
 		<action path="/roles_admin/edit_role" type="com.liferay.portlet.rolesadmin.action.EditRoleAction">
 			<forward name="portlet.roles_admin.edit_role" path="portlet.roles_admin.edit_role" />
 			<forward name="portlet.roles_admin.error" path="portlet.roles_admin.error" />
@@ -1970,7 +1965,7 @@
 			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
 		</action>
 
-		<action path="/staging_bar/edit_layouts" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
+		<action path="/staging_bar/edit_layouts" type="com.liferay.portlet.grouppages.action.EditLayoutsAction">
 			<forward name="portlet.layouts_admin.error" path="portlet.staging_bar.view" />
 		</action>
 

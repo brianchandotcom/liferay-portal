@@ -119,7 +119,7 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 			Element templateElement = structureElement.element("template");
 
 			if (templateElement == null) {
-				return;
+				continue;
 			}
 
 			String templateFileName = templateElement.elementText("file-name");

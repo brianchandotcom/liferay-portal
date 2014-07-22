@@ -50,30 +50,42 @@ public class AssetEntryServiceTest {
 
 	@Test
 	public void testGetEntriesCountNoFilters() throws Exception {
-		AssetTestUtil.addAssetEntry(_group.getGroupId());
-
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-		int count = AssetEntryLocalServiceUtil.getEntriesCount(assetEntryQuery);
+		int initialCount = AssetEntryLocalServiceUtil.getEntriesCount(
+			assetEntryQuery);
 
-		Assert.assertEquals(1, count);
+		AssetTestUtil.addAssetEntry(_group.getGroupId());
+
+		assetEntryQuery = new AssetEntryQuery();
+
+		int actualCount = AssetEntryLocalServiceUtil.getEntriesCount(
+			assetEntryQuery);
+
+		Assert.assertEquals(initialCount + 1, actualCount);
 	}
 
 	@Test
 	public void testGetEntriesNoFilters() throws Exception {
-		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
-			_group.getGroupId());
-
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		List<AssetEntry> initialEntries = AssetEntryLocalServiceUtil.getEntries(
+			assetEntryQuery);
+
+		int initialEntriesCount = initialEntries.size();
+
+		AssetTestUtil.addAssetEntry(_group.getGroupId());
+
+		assetEntryQuery = new AssetEntryQuery();
 
 		List<AssetEntry> entries = AssetEntryLocalServiceUtil.getEntries(
 			assetEntryQuery);
 
-		Assert.assertEquals(1, entries.size());
+		Assert.assertEquals(initialEntriesCount + 1, entries.size());
 
-		AssetEntry assetEntry1 = entries.get(0);
+		AssetEntry assetEntry = entries.get(0);
 
-		Assert.assertEquals(assetEntry.getEntryId(), assetEntry1.getEntryId());
+		Assert.assertTrue(entries.contains(assetEntry));
 	}
 
 	@Test

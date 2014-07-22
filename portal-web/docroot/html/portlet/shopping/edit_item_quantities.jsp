@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/shopping/init.jsp" %>
 
 <%
-String[] fieldsQuantities = StringUtil.split(ParamUtil.getString(request, "fieldsQuantities"));
-
 List<String> names = new ArrayList<String>();
 List<String[]> values = new ArrayList<String[]>();
 
@@ -49,63 +47,44 @@ for (int i = values.size() - 1; i >= 0; i--) {
 
 <aui:form method="post" name="fm">
 	<aui:fieldset>
-		<table border="1" cellpadding="4" cellspacing="0">
-		<tr>
+		<liferay-ui:search-container
+			headerNames="<%= StringUtil.merge(names) %>"
+			iteratorURL="<%= currentURLObj %>"
+			total="<%= rowsCount %>"
+		>
 
-			<%
-			for (String name : names) {
-			%>
+		<liferay-ui:search-container-results
+			results="<%= _getPagePermutations(values, repeats, searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+		/>
 
-				<td>
-					<strong><%= HtmlUtil.escape(name) %></strong>
-				</td>
-
-			<%
-			}
-			%>
-
-			<td>
-				<strong><liferay-ui:message key="quantity" /></strong>
-			</td>
-		</tr>
-
-		<%
-		List<String[]> pagePermutations = _getPagePermutations(values, repeats, 0, rowsCount);
-
-		for (int i = 0; i < ; i++) {
-			String[] pagePermutation = pagePermutations.get(i);
-		%>
-
-			<tr>
+			<liferay-ui:search-container-row
+				className="String[]"
+				modelVar="rowValues"
+			>
 
 				<%
-				for (String columnValue : pagePermutation) {
+				for (int i = 0; i < rowValues.length; i++) {
 				%>
 
-					<td>
-						<%= HtmlUtil.escape(columnValue) %>
-					</td>
+					<liferay-ui:search-container-column-text
+						name="<%= names.get(i) %>"
+						value="<%= rowValues[i] %>"
+					/>
 
 				<%
 				}
 
-				int fieldsQuantity = 0;
-
-				if (i < fieldsQuantities.length) {
-					fieldsQuantity = GetterUtil.getInteger(fieldsQuantities[i]);
-				}
+				request.setAttribute("start", searchContainer.getStart());
 				%>
 
-				<td>
-					<aui:input label="" name='<%= "fieldsQuantity" + i %>' size="4" title="quantity" type="text" value="<%= fieldsQuantity %>" />
-				</td>
-			</tr>
+				<liferay-ui:search-container-column-jsp
+					name="quantity"
+					path="/html/portlet/shopping/edit_item_quantities_row.jsp"
+				/>
 
-		<%
-		}
-		%>
-
-		</table>
+			</liferay-ui:search-container-row>
+			<liferay-ui:search-iterator />
+		</liferay-ui:search-container>
 	</aui:fieldset>
 
 	<aui:button-row>

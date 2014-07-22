@@ -25,7 +25,7 @@
 
 		<column name="name" type="String" localized="true" />
 		<column name="description" type="String" />
-		<column name="xml" type="String" />
+		<column name="data" type="String" />
 
 		<!-- Finder methods -->
 
@@ -271,8 +271,8 @@
 	</entity>
 	<exceptions>
 		<exception>Content</exception>
+		<exception>ContentData</exception>
 		<exception>ContentName</exception>
-		<exception>ContentXml</exception>
 		<exception>RequiredStructure</exception>
 		<exception>RequiredTemplate</exception>
 		<exception>Storage</exception>

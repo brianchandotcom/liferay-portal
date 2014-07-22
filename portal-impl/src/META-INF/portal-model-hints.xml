@@ -1780,7 +1780,7 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="xml" type="String">
+		<field name="data" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 	</model>

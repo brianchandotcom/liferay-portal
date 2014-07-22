@@ -1841,7 +1841,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="xml" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="data" type="com.liferay.portal.dao.orm.hibernate.StringType" column="data_" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkImpl" table="DDMStorageLink">
 		<cache usage="read-write" />

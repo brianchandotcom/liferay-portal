@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.upgrade.v7_0_0.util.DDMContentTable;
 import com.liferay.portal.upgrade.v7_0_0.util.DDMStructureTable;
 
 import java.sql.SQLException;
@@ -34,6 +35,16 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				DDMStructureTable.TABLE_NAME, DDMStructureTable.TABLE_COLUMNS,
 				DDMStructureTable.TABLE_SQL_CREATE,
 				DDMStructureTable.TABLE_SQL_ADD_INDEXES);
+		}
+
+		try {
+			runSQL("alter_column_name DDMContent xml data_ TEXT null");
+		}
+		catch (SQLException sqle) {
+			upgradeTable(
+				DDMContentTable.TABLE_NAME, DDMContentTable.TABLE_COLUMNS,
+				DDMContentTable.TABLE_SQL_CREATE,
+				DDMContentTable.TABLE_SQL_ADD_INDEXES);
 		}
 	}
 

@@ -2770,7 +2770,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		ddmContentImpl.setModifiedDate(ddmContent.getModifiedDate());
 		ddmContentImpl.setName(ddmContent.getName());
 		ddmContentImpl.setDescription(ddmContent.getDescription());
-		ddmContentImpl.setXml(ddmContent.getXml());
+		ddmContentImpl.setData(ddmContent.getData());
 
 		return ddmContentImpl;
 	}
@@ -3176,7 +3176,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(DDMContentPersistenceImpl.class);
 	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
+				"uuid", "data"
 			});
 	private static DDMContent _nullDDMContent = new DDMContentImpl() {
 			@Override

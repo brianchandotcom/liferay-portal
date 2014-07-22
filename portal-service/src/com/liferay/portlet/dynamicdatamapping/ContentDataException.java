@@ -19,21 +19,21 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ContentXmlException extends PortalException {
+public class ContentDataException extends PortalException {
 
-	public ContentXmlException() {
+	public ContentDataException() {
 		super();
 	}
 
-	public ContentXmlException(String msg) {
+	public ContentDataException(String msg) {
 		super(msg);
 	}
 
-	public ContentXmlException(String msg, Throwable cause) {
+	public ContentDataException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public ContentXmlException(Throwable cause) {
+	public ContentDataException(Throwable cause) {
 		super(cause);
 	}
 

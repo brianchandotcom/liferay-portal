@@ -156,7 +156,7 @@ public class DDMContentPersistenceTest {
 
 		newDDMContent.setDescription(RandomTestUtil.randomString());
 
-		newDDMContent.setXml(RandomTestUtil.randomString());
+		newDDMContent.setData(RandomTestUtil.randomString());
 
 		_ddmContents.add(_persistence.update(newDDMContent));
 
@@ -184,7 +184,8 @@ public class DDMContentPersistenceTest {
 			newDDMContent.getName());
 		Assert.assertEquals(existingDDMContent.getDescription(),
 			newDDMContent.getDescription());
-		Assert.assertEquals(existingDDMContent.getXml(), newDDMContent.getXml());
+		Assert.assertEquals(existingDDMContent.getData(),
+			newDDMContent.getData());
 	}
 
 	@Test
@@ -292,7 +293,7 @@ public class DDMContentPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("DDMContent", "uuid", true,
 			"contentId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"name", true, "description", true, "xml", true);
+			"name", true, "description", true, "data", true);
 	}
 
 	@Test
@@ -531,7 +532,7 @@ public class DDMContentPersistenceTest {
 
 		ddmContent.setDescription(RandomTestUtil.randomString());
 
-		ddmContent.setXml(RandomTestUtil.randomString());
+		ddmContent.setData(RandomTestUtil.randomString());
 
 		_ddmContents.add(_persistence.update(ddmContent));
 

@@ -52,12 +52,16 @@ public class AssetEntryServiceTest {
 	public void testGetEntriesCountNoFilters() throws Exception {
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
+		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
+
 		int initialCount = AssetEntryLocalServiceUtil.getEntriesCount(
 			assetEntryQuery);
 
 		AssetTestUtil.addAssetEntry(_group.getGroupId());
 
 		assetEntryQuery = new AssetEntryQuery();
+
+		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
 
 		int actualCount = AssetEntryLocalServiceUtil.getEntriesCount(
 			assetEntryQuery);
@@ -69,6 +73,8 @@ public class AssetEntryServiceTest {
 	public void testGetEntriesNoFilters() throws Exception {
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
+		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
+
 		List<AssetEntry> initialEntries = AssetEntryLocalServiceUtil.getEntries(
 			assetEntryQuery);
 
@@ -77,6 +83,8 @@ public class AssetEntryServiceTest {
 		AssetTestUtil.addAssetEntry(_group.getGroupId());
 
 		assetEntryQuery = new AssetEntryQuery();
+
+		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
 
 		List<AssetEntry> entries = AssetEntryLocalServiceUtil.getEntries(
 			assetEntryQuery);
@@ -94,6 +102,7 @@ public class AssetEntryServiceTest {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
+		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
 		assetEntryQuery.setOrderByCol1("publishDate");
 		assetEntryQuery.setOrderByType1("DESC");
 
@@ -112,6 +121,7 @@ public class AssetEntryServiceTest {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
+		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
 		assetEntryQuery.setOrderByCol1("ratings");
 		assetEntryQuery.setOrderByType1("DESC");
 

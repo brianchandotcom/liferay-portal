@@ -25,6 +25,7 @@ request.setAttribute(WebKeys.GROUP, group);
 
 String eventName = ParamUtil.getString(request, "eventName");
 
+boolean checkContentDisplayPage = ParamUtil.getBoolean(request, "checkContentDisplayPage");
 boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
 %>
 
@@ -58,10 +59,10 @@ LayoutsAdminDisplayContext layoutsAdminDisplayContext = new LayoutsAdminDisplayC
 				%>
 
 				<liferay-ui:layouts-tree
+					checkContentDisplayPage="<%= checkContentDisplayPage %>"
 					draggableTree="<%= false %>"
 					groupId="<%= groupId %>"
 					portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
-					privateLayout="<%= layoutsAdminDisplayContext.isPrivateLayout() %>"
 					rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
 					saveState="<%= false %>"
 					selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
@@ -81,10 +82,11 @@ LayoutsAdminDisplayContext layoutsAdminDisplayContext = new LayoutsAdminDisplayC
 				%>
 
 				<liferay-ui:layouts-tree
+					checkContentDisplayPage="<%= checkContentDisplayPage %>"
 					draggableTree="<%= false %>"
 					groupId="<%= groupId %>"
 					portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
-					privateLayout="<%= layoutsAdminDisplayContext.isPrivateLayout() %>"
+					privateLayout="true"
 					rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
 					saveState="<%= false %>"
 					selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
@@ -167,6 +169,8 @@ LayoutsAdminDisplayContext layoutsAdminDisplayContext = new LayoutsAdminDisplayC
 
 		var url = link.attr('data-url');
 
+		var uuid = link.attr('data-uuid');
+
 		var selectPageMessage = A.one('#<portlet:namespace />selectPageMessage');
 
 		var button = selectPageMessage.one('.selector-button');
@@ -179,6 +183,10 @@ LayoutsAdminDisplayContext layoutsAdminDisplayContext = new LayoutsAdminDisplayC
 			messageType = 'info';
 
 			button.attr('data-url', url);
+
+			button.attr('data-uuid', uuid);
+
+			button.attr('data-layoutpath', messageText);
 		}
 
 		Liferay.Util.toggleDisabled(button, disabled);

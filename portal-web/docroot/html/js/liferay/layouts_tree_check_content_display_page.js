@@ -1,6 +1,10 @@
 AUI.add(
 	'liferay-layouts-tree-check-content-display-page',
 	function(A) {
+		var CSS_TREE_HITAREA = A.getClassName('tree', 'hitarea');
+
+		var CSS_LAYOUT_INVALID = 'layout-page-invalid';
+
 		var STR_HOST = 'host';
 
 		var LayoutsTreeCheckContentDisplayPage = A.Component.create(
@@ -15,11 +19,16 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
+						var host = instance.get(STR_HOST);
+
 						instance._eventHandles = [
 							instance.afterHostEvent('append', instance._onTreeAppend, instance),
 							instance.doAfter('_formatRootNode', instance._formatRootNode, instance),
-							instance.doBefore('_formatNodeLabel', instance._beforeFormatNodeLabel, instance)
+							instance.doBefore('_formatNodeLabel', instance._beforeFormatNodeLabel, instance),
+							instance.doBefore('_onClickNodeEl', instance._beforeClickNodeEl, instance)
 						];
+
+						host.get('boundingBox').addClass('lfr-tree-display-page');
 					},
 
 					destructor: function() {
@@ -28,9 +37,21 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
+					_beforeClickNodeEl: function(event) {
+						var instance = this;
+
+						if (!event.target.test('.' + CSS_TREE_HITAREA)) {
+							var link = event.currentTarget.one('a');
+
+							if (!link || link.hasClass(CSS_LAYOUT_INVALID)) {
+								return new A.Do.Halt();
+							}
+						}
+					},
+
 					_beforeFormatNodeLabel: function(node, cssClass, label, title) {
 						if (!node.contentDisplayPage) {
-							cssClass += ' layout-page-invalid';
+							cssClass = cssClass + ' ' + CSS_LAYOUT_INVALID;
 
 							return new A.Do.AlterArgs(
 								'Added layout-page-invalid CSS class',

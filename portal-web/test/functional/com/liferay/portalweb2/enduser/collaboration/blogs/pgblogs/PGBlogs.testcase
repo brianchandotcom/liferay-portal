@@ -1147,6 +1147,32 @@
 		</execute>
 	</command>
 
+	<command name="SubscribeToBlogsEntryComment" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#subscribePG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#viewSubscribedPG" />
+	</command>
+
 	<command name="UserFlagsEntryAndAdminViewsNotificationInGmail" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />

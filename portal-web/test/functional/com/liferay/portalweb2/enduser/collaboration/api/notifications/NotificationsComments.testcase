@@ -16,7 +16,7 @@
 		<execute macro="ServerAdministration#tearDownDMFileUploadSettings" />
 	</tear-down>
 
-	<command name="ViewWebSiteNotificationForNewComment" priority="5">
+	<command name="ViewWebsiteNotificationForNewCommentViaBlogs" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -36,6 +36,10 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
 		<execute macro="BlogsEntryComment#subscribePG">
@@ -66,13 +70,11 @@
 			<var name="assetType" value="Comment" />
 			<var name="content" value="Blogs Entry Title" />
 			<var name="contentBody" value="Blogs Entry Comment" />
-			<var name="notificationCount" value="1" />
 			<var name="user" value="Test Test" />
 		</execute>
 
 		<execute macro="Notifications#navigateToContent">
 			<var name="contentBody" value="Blogs Entry Comment" />
-			<var name="notificationCount" value="1" />
 		</execute>
 
 		<execute macro="BlogsEntryComment#viewPG">
@@ -80,9 +82,13 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="userFullName" value="Test Test" />
 		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
 	</command>
 
-	<command name="ViewWebSiteNotificationForUpdatedComment" priority="5">
+	<command name="ViewWebsiteNotificationForUpdatedCommentViaBlogs" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -133,19 +139,21 @@
 			<var name="assetType" value="Comment" />
 			<var name="content" value="Blogs Entry Title" />
 			<var name="contentBody" value="Blogs Entry Comment Edit" />
-			<var name="notificationCount" value="1" />
 			<var name="user" value="Test Test" />
 		</execute>
 
 		<execute macro="Notifications#navigateToContent">
 			<var name="contentBody" value="Blogs Entry Comment Edit" />
-			<var name="notificationCount" value="1" />
 		</execute>
 
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="entryComment" value="Blogs Entry Comment Edit" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="userFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
 		</execute>
 	</command>
 </definition>

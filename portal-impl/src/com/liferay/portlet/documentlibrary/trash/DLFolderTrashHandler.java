@@ -15,36 +15,28 @@
 package com.liferay.portlet.documentlibrary.trash;
 
 import com.liferay.portal.InvalidRepositoryException;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ContainerModel;
-import com.liferay.portal.repository.liferayrepository.LiferayRepository;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.asset.DLFolderAssetRenderer;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
-
-import java.util.List;
 
 import javax.portlet.PortletRequest;
 
@@ -79,21 +71,14 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 	@Override
 	public void deleteTrashEntry(long classPK) throws PortalException {
-		DLFolder dlFolder = DLFolderLocalServiceUtil.getDLFolder(classPK);
+		Repository repository = getRepository(classPK);
 
-		List<DLFileEntry> dlFileEntries =
-			DLFileEntryLocalServiceUtil.getGroupFileEntries(
-				dlFolder.getGroupId(), 0, classPK, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
 
-		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			DLAppHelperLocalServiceUtil.deleteFileEntry(
-				new LiferayFileEntry(dlFileEntry));
-		}
+		Folder folder = repository.getFolder(classPK);
 
-		DLAppHelperLocalServiceUtil.deleteFolder(new LiferayFolder(dlFolder));
-
-		DLFolderLocalServiceUtil.deleteFolder(classPK, false);
+		trashCapability.deleteFolder(folder);
 	}
 
 	@Override
@@ -249,9 +234,15 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 		Repository repository = getRepository(classPK);
 
-		DLAppHelperLocalServiceUtil.moveFolderFromTrash(
-			userId, repository.getFolder(classPK), containerModelId,
-			serviceContext);
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
+		Folder folder = repository.getFolder(classPK);
+
+		Folder destinationFolder = repository.getFolder(containerModelId);
+
+		trashCapability.moveFolderFromTrash(
+			userId, folder, destinationFolder, serviceContext);
 	}
 
 	@Override
@@ -260,8 +251,12 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 		Repository repository = getRepository(classPK);
 
-		DLAppHelperLocalServiceUtil.restoreFolderFromTrash(
-			userId, repository.getFolder(classPK));
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
+		Folder folder = repository.getFolder(classPK);
+
+		trashCapability.restoreFolderFromTrash(userId, folder);
 	}
 
 	@Override
@@ -308,7 +303,7 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
 			classPK, 0, 0);
 
-		if (!(repository instanceof LiferayRepository)) {
+		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			throw new InvalidRepositoryException(
 				"Repository " + repository.getRepositoryId() +
 					" does not support trash operations");

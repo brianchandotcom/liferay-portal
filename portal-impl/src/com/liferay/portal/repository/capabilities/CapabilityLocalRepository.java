@@ -17,6 +17,7 @@ package com.liferay.portal.repository.capabilities;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -87,12 +88,34 @@ public class CapabilityLocalRepository
 
 	@Override
 	public void deleteFileEntry(long fileEntryId) throws PortalException {
-		getRepository().deleteFileEntry(fileEntryId);
+		LocalRepository localRepository = getRepository();
+
+		if (isCapabilityProvided(TrashCapability.class)) {
+			TrashCapability trashCapability = getCapability(
+				TrashCapability.class);
+
+			FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
+
+			trashCapability.deleteTrashEntry(fileEntry);
+		}
+
+		localRepository.deleteFileEntry(fileEntryId);
 	}
 
 	@Override
 	public void deleteFolder(long folderId) throws PortalException {
-		getRepository().deleteFolder(folderId);
+		LocalRepository localRepository = getRepository();
+
+		if (isCapabilityProvided(TrashCapability.class)) {
+			TrashCapability trashCapability = getCapability(
+				TrashCapability.class);
+
+			Folder folder = localRepository.getFolder(folderId);
+
+			trashCapability.deleteTrashEntry(folder);
+		}
+
+		localRepository.deleteFolder(folderId);
 	}
 
 	@Override

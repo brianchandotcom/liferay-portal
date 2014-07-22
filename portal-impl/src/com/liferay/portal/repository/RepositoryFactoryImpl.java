@@ -15,9 +15,9 @@
 package com.liferay.portal.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.repository.capabilities.CapabilityRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -34,11 +34,16 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 	implements RepositoryFactory {
 
 	@Override
-	protected BaseRepository createExternalRepository(
+	protected Repository createExternalRepository(
 			long repositoryId, long classNameId)
 		throws PortalException {
 
-		return createExternalRepositoryImpl(repositoryId, classNameId);
+		Repository repository = createExternalRepositoryImpl(
+			repositoryId, classNameId);
+
+		return new CapabilityRepository(
+			repository, getDefaultExternalCapabilities(),
+			getDefaultExternalExports());
 	}
 
 	@Override
@@ -49,11 +54,26 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);
 
-		return create(repositoryId);
+		Repository repository = create(repositoryId);
+
+		return new CapabilityRepository(
+			repository, getDefaultExternalCapabilities(),
+			getDefaultExternalExports());
 	}
 
 	@Override
-	protected LiferayRepository createLiferayRepositoryInstance(
+	protected Repository createInternalRepositoryInstance(
+		long groupId, long repositoryId, long dlFolderId) {
+
+		Repository repository = createLiferayInternalRepository(
+			groupId, repositoryId, dlFolderId);
+
+		return new CapabilityRepository(
+			repository, getDefaultInternalCapabilities(),
+			getDefaultInternalExports());
+	}
+
+	protected Repository createLiferayInternalRepository(
 		long groupId, long repositoryId, long dlFolderId) {
 
 		return new LiferayRepository(

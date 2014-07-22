@@ -17,11 +17,11 @@ package com.liferay.portlet.documentlibrary.trash;
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.TrashedModel;
-import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RepositoryServiceUtil;
@@ -213,7 +213,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
 			0, dlFileShortcut.getToFileEntryId(), 0);
 
-		if (!(repository instanceof LiferayRepository)) {
+		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			throw new InvalidRepositoryException(
 				"Repository " + repository.getRepositoryId() +
 					" does not support trash operations");

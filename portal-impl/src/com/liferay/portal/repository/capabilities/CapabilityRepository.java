@@ -17,6 +17,7 @@ package com.liferay.portal.repository.capabilities;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -144,14 +145,36 @@ public class CapabilityRepository
 
 	@Override
 	public void deleteFileEntry(long fileEntryId) throws PortalException {
-		getRepository().deleteFileEntry(fileEntryId);
+		Repository repository = getRepository();
+
+		if (isCapabilityProvided(TrashCapability.class)) {
+			TrashCapability trashCapability = getCapability(
+				TrashCapability.class);
+
+			FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+
+			trashCapability.deleteTrashEntry(fileEntry);
+		}
+
+		repository.deleteFileEntry(fileEntryId);
 	}
 
 	@Override
 	public void deleteFileEntry(long folderId, String title)
 		throws PortalException {
 
-		getRepository().deleteFileEntry(folderId, title);
+		Repository repository = getRepository();
+
+		if (isCapabilityProvided(TrashCapability.class)) {
+			TrashCapability trashCapability = getCapability(
+				TrashCapability.class);
+
+			FileEntry fileEntry = repository.getFileEntry(folderId, title);
+
+			trashCapability.deleteTrashEntry(fileEntry);
+		}
+
+		repository.deleteFileEntry(folderId, title);
 	}
 
 	@Override
@@ -163,14 +186,36 @@ public class CapabilityRepository
 
 	@Override
 	public void deleteFolder(long folderId) throws PortalException {
-		getRepository().deleteFolder(folderId);
+		Repository repository = getRepository();
+
+		if (isCapabilityProvided(TrashCapability.class)) {
+			TrashCapability trashCapability = getCapability(
+				TrashCapability.class);
+
+			Folder folder = repository.getFolder(folderId);
+
+			trashCapability.deleteTrashEntry(folder);
+		}
+
+		repository.deleteFolder(folderId);
 	}
 
 	@Override
 	public void deleteFolder(long parentFolderId, String title)
 		throws PortalException {
 
-		getRepository().deleteFolder(parentFolderId, title);
+		Repository repository = getRepository();
+
+		if (isCapabilityProvided(TrashCapability.class)) {
+			TrashCapability trashCapability = getCapability(
+				TrashCapability.class);
+
+			Folder folder = repository.getFolder(parentFolderId, title);
+
+			trashCapability.deleteTrashEntry(folder);
+		}
+
+		repository.deleteFolder(parentFolderId, title);
 	}
 
 	@Override

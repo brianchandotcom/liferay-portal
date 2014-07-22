@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryException;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -45,7 +46,6 @@ import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
-import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -2220,7 +2220,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getFileEntryRepository(fileEntryId);
 
-		if (!(repository instanceof LiferayRepository)) {
+		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			throw new InvalidRepositoryException(
 				"Repository " + repository.getRepositoryId() +
 					" does not support trash operations");
@@ -2231,8 +2231,13 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		DLFileEntryPermission.check(
 			getPermissionChecker(), fileEntry, ActionKeys.UPDATE);
 
-		return dlAppHelperLocalService.moveFileEntryFromTrash(
-			getUserId(), fileEntry, newFolderId, serviceContext);
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
+		Folder destinationFolder = repository.getFolder(newFolderId);
+
+		return trashCapability.moveFileEntryFromTrash(
+			getUserId(), fileEntry, destinationFolder, serviceContext);
 	}
 
 	/**
@@ -2248,7 +2253,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getFileEntryRepository(fileEntryId);
 
-		if (!(repository instanceof LiferayRepository)) {
+		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			throw new InvalidRepositoryException(
 				"Repository " + repository.getRepositoryId() +
 					" does not support trash operations");
@@ -2259,8 +2264,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		DLFileEntryPermission.check(
 			getPermissionChecker(), fileEntry, ActionKeys.DELETE);
 
-		return dlAppHelperLocalService.moveFileEntryToTrash(
-			getUserId(), fileEntry);
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
+		return trashCapability.moveFileEntryToTrash(getUserId(), fileEntry);
 	}
 
 	/**
@@ -2375,7 +2382,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getFolderRepository(folderId);
 
-		if (!(repository instanceof LiferayRepository)) {
+		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			throw new InvalidRepositoryException(
 				"Repository " + repository.getRepositoryId() +
 					" does not support trash operations");
@@ -2386,8 +2393,13 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		DLFolderPermission.check(
 			getPermissionChecker(), folder, ActionKeys.UPDATE);
 
-		return dlAppHelperLocalService.moveFolderFromTrash(
-			getUserId(), folder, parentFolderId, serviceContext);
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
+		Folder destinationFolder = repository.getFolder(parentFolderId);
+
+		return trashCapability.moveFolderFromTrash(
+			getUserId(), folder, destinationFolder, serviceContext);
 	}
 
 	/**
@@ -2401,7 +2413,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public Folder moveFolderToTrash(long folderId) throws PortalException {
 		Repository repository = getFolderRepository(folderId);
 
-		if (!(repository instanceof LiferayRepository)) {
+		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			throw new InvalidRepositoryException(
 				"Repository " + repository.getRepositoryId() +
 					" does not support trash operations");
@@ -2412,7 +2424,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		DLFolderPermission.check(
 			getPermissionChecker(), folder, ActionKeys.DELETE);
 
-		return dlAppHelperLocalService.moveFolderToTrash(getUserId(), folder);
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
+		return trashCapability.moveFolderToTrash(getUserId(), folder);
 	}
 
 	/**
@@ -2483,7 +2498,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getFileEntryRepository(fileEntryId);
 
-		if (!(repository instanceof LiferayRepository)) {
+		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			throw new InvalidRepositoryException(
 				"Repository " + repository.getRepositoryId() +
 					" does not support trash operations");
@@ -2494,8 +2509,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		DLFileEntryPermission.check(
 			getPermissionChecker(), fileEntry, ActionKeys.DELETE);
 
-		dlAppHelperLocalService.restoreFileEntryFromTrash(
-			getUserId(), fileEntry);
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
+		trashCapability.restoreFileEntryFromTrash(getUserId(), fileEntry);
 	}
 
 	/**
@@ -2527,7 +2544,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public void restoreFolderFromTrash(long folderId) throws PortalException {
 		Repository repository = getFolderRepository(folderId);
 
-		if (!(repository instanceof LiferayRepository)) {
+		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			throw new InvalidRepositoryException(
 				"Repository " + repository.getRepositoryId() +
 					" does not support trash operations");
@@ -2538,7 +2555,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		DLFolderPermission.check(
 			getPermissionChecker(), folder, ActionKeys.DELETE);
 
-		dlAppHelperLocalService.restoreFolderFromTrash(getUserId(), folder);
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
+		trashCapability.restoreFolderFromTrash(getUserId(), folder);
 	}
 
 	/**

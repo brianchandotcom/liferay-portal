@@ -369,23 +369,6 @@
 	}
 }
 
-.display-page-dialog {
-	.tree-label {
-		a {
-			color: black;
-		}
-
-		.layout-page-invalid {
-			color: #AAA;
-			font-style: italic;
-		}
-	}
-
-	.selected-page-message {
-		margin: 5px 0;
-	}
-}
-
 .structure-message {
 	margin-top: 5px;
 }

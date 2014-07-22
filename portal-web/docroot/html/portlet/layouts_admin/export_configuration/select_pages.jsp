@@ -31,10 +31,6 @@ long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
-String treeId = ParamUtil.getString(request, "treeId");
-
-long[] selectedLayoutIds = StringUtil.split(ParamUtil.getString(request, "selectedLayoutIds"), 0L);
-
 Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("select_pages.jsp-parameterMap"), Collections.emptyMap());
 %>
 
@@ -51,13 +47,24 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 		</div>
 
 		<div class="selected-pages" id="<portlet:namespace />pane">
-			<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
-				<liferay-util:param name="tabs1" value='<%= privateLayout ? "private-pages" : "public-pages" %>' />
-				<liferay-util:param name="incomplete" value="<%= Boolean.FALSE.toString() %>" />
-				<liferay-util:param name="treeId" value="<%= treeId %>" />
-				<liferay-util:param name="defaultStateChecked" value="1" />
-				<liferay-util:param name="selectableTree" value="1" />
-			</liferay-util:include>
+
+			<%
+			String treeId = ParamUtil.getString(request, "treeId");
+			String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
+			%>
+
+			<liferay-ui:layouts-tree
+				defaultStateChecked="<%= true %>"
+				groupId="<%= layoutsAdminDisplayContext.getGroupId() %>"
+				incomplete="<%= false %>"
+				portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
+				privateLayout="<%= layoutsAdminDisplayContext.isPrivateLayout() %>"
+				rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
+				selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
+				selectableTree="<%= true %>"
+				selectedLayoutIds="<%= selectedLayoutIds %>"
+				treeId="<%= treeId %>"
+			/>
 		</div>
 
 		<c:if test="<%= cmd.equals(Constants.PUBLISH) %>">

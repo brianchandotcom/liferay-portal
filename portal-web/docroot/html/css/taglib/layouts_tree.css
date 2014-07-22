@@ -1,0 +1,23 @@
+.lfr-tree-display-page {
+	.tree-node .tree-node-over .tree-label {
+		text-decoration: none;
+	}
+
+	.tree-label {
+		cursor: default;
+
+		a {
+			color: black;
+		}
+
+		.layout-page-invalid {
+			color: #AAA;
+			font-style: italic;
+
+			&:hover {
+				cursor: default;
+				text-decoration: none;
+			}
+		}
+	}
+}

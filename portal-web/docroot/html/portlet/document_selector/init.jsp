@@ -29,6 +29,7 @@ page import="com.liferay.portlet.documentselector.util.DocumentSelectorUtil" %><
 page import="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil" %><%@
 page import="com.liferay.portlet.journal.search.FileEntryDisplayTerms" %><%@
 page import="com.liferay.portlet.journal.search.FileEntrySearch" %><%@
+page import="com.liferay.portlet.layoutsadmin.context.LayoutsAdminDisplayContext" %><%@
 page import="com.liferay.portlet.wiki.model.WikiPage" %><%@
 page import="com.liferay.portlet.wiki.model.WikiPageResource" %><%@
 page import="com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil" %><%@

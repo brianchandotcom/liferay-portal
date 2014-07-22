@@ -49,6 +49,69 @@
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_WORKFLOW" value1="${workflowDefinition} (Version 1)" />
 	</command>
 
+	<command name="editProcess">
+		<var name="key_kfProcessName" value="${kfProcessName}" />
+
+		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_MENULIST_EDIT" value1="Edit" />
+	</command>
+
+	<command name="editProcessAssignForm">
+		<var name="key_workflowDefinitionTask" value="${workflowDefinitionTask}" />
+
+		<if>
+			<equals arg1="kfPendingForm" arg2="true" />
+			<then>
+				<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Updating the fields definition or workflow will cause loss of data." />
+			</then>
+		</if>
+
+		<execute action="CPKaleoformsadminEditprocess#assertClick" locator-key1="FORMS_TABLE_ASSIGN_FORM_BUTTON" value1="Assign Form" />
+	</command>
+
+	<command name="editProcessChooseFieldsDefinition">
+		<var name="key_fieldsDefinitionName" value="${fieldsDefinitionName}" />
+
+		<if>
+			<equals arg1="kfPendingForm" arg2="true" />
+			<then>
+				<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Updating the fields definition or workflow will cause loss of data." />
+			</then>
+		</if>
+
+		<execute action="CPKaleoformsadminEditprocess#assertClick" locator-key1="FIELDS_DEFINITION_TABLE_NAME" value1="${fieldsDefinitionName}" />
+		<execute action="CPKaleoformsadminEditprocess#assertClick" locator-key1="FIELDS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadminEditprocess#assertClick" locator-key1="FIELDS_DEFINITION_MENULIST_CHOOSE" value1="Choose" />
+		<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="SELECTED_DEFINITION" value1="${fieldsDefinitionName}" />
+	</command>
+
+	<command name="editProcessChooseWorkflow">
+		<var name="key_workflowDefinition" value="${workflowDefinition}" />
+
+		<if>
+			<equals arg1="kfPendingForm" arg2="true" />
+			<then>
+				<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Updating the fields definition or workflow will cause loss of data." />
+			</then>
+		</if>
+
+		<execute action="CPKaleoformsadminEditprocess#assertClick" locator-key1="WORKFLOW_TABLE_NAME" value1="${workflowDefinition}" />
+		<execute action="CPKaleoformsadminEditprocess#assertClick" locator-key1="WORKFLOW_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadminEditprocess#assertClick" locator-key1="WORKFLOW_MENULIST_CHOOSE" value1="Choose" />
+		<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="SELECTED_WORKFLOW" value1="${workflowDefinition} (Version 1)" />
+	</command>
+
+	<command name="editProcessDetails">
+		<execute action="CPKaleoformsadminEditprocess#type" locator-key1="DETAILS_NAME_FIELD" value1="${kfProcessName}" />
+
+		<if>
+			<equals arg1="kfPendingForm" arg2="true" />
+			<then>
+				<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Updating the fields definition or workflow will cause loss of data." />
+			</then>
+		</if>
+	</command>
+
 	<command name="next">
 		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="NEXT_BUTTON_INACTIVE" />
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="NEXT_BUTTON" value1="Next" />

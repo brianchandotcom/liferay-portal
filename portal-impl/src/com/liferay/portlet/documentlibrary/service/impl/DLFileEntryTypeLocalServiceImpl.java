@@ -411,6 +411,10 @@ public class DLFileEntryTypeLocalServiceImpl
 			ddmStructureIds = ArrayUtil.append(ddmStructureIds, ddmStructureId);
 		}
 
+		validate(
+			fileEntryTypeId, dlFileEntryType.getGroupId(),
+			dlFileEntryType.getFileEntryTypeKey(), ddmStructureIds);
+
 		dlFileEntryType.setModifiedDate(serviceContext.getModifiedDate(null));
 		dlFileEntryType.setNameMap(nameMap);
 		dlFileEntryType.setDescriptionMap(descriptionMap);

@@ -502,7 +502,7 @@ public class PortalImpl implements Portal {
 		_reservedParams.add("switchGroup");
 
 		_servletContextName =
-			PortalContextLoaderListener.getPortalServlerContextName();
+			PortalContextLoaderListener.getPortalServletContextName();
 	}
 
 	@Override

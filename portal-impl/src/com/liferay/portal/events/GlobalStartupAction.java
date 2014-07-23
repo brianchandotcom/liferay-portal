@@ -315,7 +315,7 @@ public class GlobalStartupAction extends SimpleAction {
 		// JSON web service
 
 		ServletContext servletContext = ServletContextPool.get(
-			PortalContextLoaderListener.getPortalServlerContextName());
+			PortalContextLoaderListener.getPortalServletContextName());
 
 		JSONWebServiceActionsManagerUtil.registerServletContext(servletContext);
 

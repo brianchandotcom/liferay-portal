@@ -349,7 +349,7 @@ public class FileChecker extends BaseChecker {
 		// Plugin can do anything, except execute, in its own work folder
 
 		ServletContext servletContext = ServletContextPool.get(
-			PortalContextLoaderListener.getPortalServlerContextName());
+			PortalContextLoaderListener.getPortalServletContextName());
 
 		if (!actions.equals(FILE_PERMISSION_ACTION_EXECUTE) &&
 			(_workDir != null)) {

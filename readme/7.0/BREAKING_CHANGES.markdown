@@ -392,43 +392,41 @@ and it allows for easier recovery, when possible.
 
 ---------------------------------------
 
-### Removed trash logic from `DLAppHelperLocalService` methods
+### Removed Trash Logic from `DLAppHelperLocalService` Methods
 - **Date:** 2014-Jul-22
 - **JIRA Ticket:** LPS-47508
 
 #### What changed?
 
-The methods `deleteFileEntry` and `deleteFolder` in `DLAppHelperLocalService`
-deleted the corresponding trash entry in the database. This logic has been
-removed from these methods.
+The `deleteFileEntry()` and `deleteFolder()` methods in
+`DLAppHelperLocalService` deleted the corresponding trash entry in the database.
+This logic has been removed from these methods.
 
 #### Who is affected?
 
-Every caller of `deleteFileEntry` and `deleteFolder`.
+Every caller of the `deleteFileEntry()` and `deleteFolder()` methods.
 
 #### How should I update my code?
 
 There is no direct replacement. Trash operations are now accessible through the
 `TrashCapability` implementations for each repository:
 
-```
-Repository repository = getRepository();
+    Repository repository = getRepository();
 
-TrashCapability trashCapability = repository.getCapability(
-    TrashCapability.class);
+    TrashCapability trashCapability = repository.getCapability(
+        TrashCapability.class);
 
-FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+    FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
-trashCapability.deleteFileEntry(fileEntry);
-```
+    trashCapability.deleteFileEntry(fileEntry);
 
-Note that the `deleteFileEntry` and `deleteFolder` methods in `TrashCapability`
-not only remove the trash entry, but also the folder or file entry itself (and
-any associated data as assets, previews, etc.).
+Note that the `deleteFileEntry()` and `deleteFolder()` methods in
+`TrashCapability` not only remove the trash entry, but also the folder or file
+entry itself, and any associated data such as assets, previews, etc.
 
 #### Why was this change made?
 
-To make possible for different kinds of repositories to support trash
-operations in a uniform way. 
+To allow different kinds of repositories to support trash operations in a
+uniform way.
 
 ---------------------------------------

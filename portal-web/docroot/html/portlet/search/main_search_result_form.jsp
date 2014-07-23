@@ -125,6 +125,10 @@ if (summary != null) {
 	<span class="asset-entry">
 		<span class="asset-entry-type">
 			<%= ResourceActionsUtil.getModelResource(themeDisplay.getLocale(), className) %>
+
+			<c:if test="<%= className.equals(JournalArticle.class.getName()) && (locale != summary.getLocale()) %>">
+				<liferay-ui:icon image='<%= "../language/" + LocaleUtil.toLanguageId(summary.getLocale()) %>' message='<%= LanguageUtil.format(locale, "this-result-comes-from-the-x-version-of-this-web-content", LocaleUtil.getLongDisplayName(summary.getLocale(), new HashSet<String>())) %>' />
+			</c:if>
 		</span>
 
 		<span class="asset-entry-title">

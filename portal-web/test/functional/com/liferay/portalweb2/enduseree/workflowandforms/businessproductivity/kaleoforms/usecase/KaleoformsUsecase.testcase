@@ -460,21 +460,21 @@
 
 		<execute macro="KaleoFormsAdmin#next" />
 
-		<execute macro="KaleoFormsAdmin#editProcessChooseFieldsDefinition">
+		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
 			<var name="fieldsDefinitionName" value="To Do" />
 			<var name="kfPendingForm" value="true" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
-		<execute macro="KaleoFormsAdmin#editProcessChooseWorkflow">
+		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="kfPendingForm" value="true" />
 			<var name="workflowDefinition" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
-		<execute macro="KaleoFormsAdmin#editProcessAssignForm">
+		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfPendingForm" value="true" />
 			<var name="workflowDefinitionTask" value="create" />
 		</execute>
@@ -557,19 +557,19 @@
 
 		<execute macro="KaleoFormsAdmin#next" />
 
-		<execute macro="KaleoFormsAdmin#editProcessChooseFieldsDefinition">
+		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
 			<var name="fieldsDefinitionName" value="Inventory" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
-		<execute macro="KaleoFormsAdmin#editProcessChooseWorkflow">
+		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinition" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
-		<execute macro="KaleoFormsAdmin#editProcessAssignForm">
+		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="workflowDefinitionTask" value="create" />
 		</execute>
 

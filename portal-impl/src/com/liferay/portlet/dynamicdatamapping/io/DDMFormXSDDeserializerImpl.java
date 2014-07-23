@@ -121,6 +121,7 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 		setDDMFormFieldReadOnly(dynamicElementElement, ddmFormField);
 		setDDMFormFieldRepeatable(dynamicElementElement, ddmFormField);
 		setDDMFormFieldRequired(dynamicElementElement, ddmFormField);
+		setDDMFormFieldShowLabel(dynamicElementElement, ddmFormField);
 
 		List<Element> metadataElements = dynamicElementElement.elements(
 			"meta-data");
@@ -346,6 +347,15 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 		List<DDMFormField> ddmFormFields = getDDMFormFields(rootElement);
 
 		ddmForm.setDDMFormFields(ddmFormFields);
+	}
+
+	protected void setDDMFormFieldShowLabel(
+		Element dynamicElementElement, DDMFormField ddmFormField) {
+
+		boolean showLabel = GetterUtil.getBoolean(
+			dynamicElementElement.attributeValue("showLabel"), true);
+
+		ddmFormField.setShowLabel(showLabel);
 	}
 
 	protected void setDDMFormLocalizedValuesDefaultLocale(DDMForm ddmForm) {

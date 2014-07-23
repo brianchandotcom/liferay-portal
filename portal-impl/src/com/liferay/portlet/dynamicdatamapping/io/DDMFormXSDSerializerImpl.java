@@ -71,6 +71,8 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 			"repeatable", Boolean.toString(ddmFormField.isRepeatable()));
 		dynamicElementElement.addAttribute(
 			"required", Boolean.toString(ddmFormField.isRequired()));
+		dynamicElementElement.addAttribute(
+			"showLabel", Boolean.toString(ddmFormField.isShowLabel()));
 		dynamicElementElement.addAttribute("type", ddmFormField.getType());
 	}
 

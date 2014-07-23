@@ -116,6 +116,7 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 		jsonObject.put("readOnly", ddmFormField.isReadOnly());
 		jsonObject.put("repeatable", ddmFormField.isRepeatable());
 		jsonObject.put("required", ddmFormField.isRequired());
+		jsonObject.put("showLabel", ddmFormField.isShowLabel());
 		jsonObject.put("type", ddmFormField.getType());
 	}
 

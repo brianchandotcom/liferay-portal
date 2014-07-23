@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -201,6 +202,10 @@ public class JavadocManagerImpl implements JavadocManager {
 					JavadocMethod javadocMethod = parseJavadocMethod(
 						servletContextName, clazz, methodElement);
 
+					if (javadocMethod == null) {
+						continue;
+					}
+
 					_javadocMethods.put(
 						javadocMethod.getMethod(), javadocMethod);
 				}
@@ -248,6 +253,14 @@ public class JavadocManagerImpl implements JavadocManager {
 		throws Exception {
 
 		String name = methodElement.elementText("name");
+
+		if (clazz.getSimpleName().equals(name)) {
+			return null;
+		}
+
+		if (name.startsWith(StringPool.UNDERLINE)) {
+			return null;
+		}
 
 		List<Element> paramElements = methodElement.elements("param");
 

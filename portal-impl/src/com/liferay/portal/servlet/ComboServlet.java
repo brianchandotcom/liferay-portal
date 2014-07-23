@@ -51,6 +51,7 @@ import com.liferay.portlet.PortletConfigFactoryUtil;
 import java.io.IOException;
 import java.io.Serializable;
 
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -209,7 +210,7 @@ public class ComboServlet extends HttpServlet {
 				byte[] bytes = new byte[0];
 
 				if (Validator.isNotNull(modulePath)) {
-					URL url = getResourceURL(modulePath);
+					URL url = getResourceURL(request, modulePath);
 
 					if (url == null) {
 						response.setHeader(
@@ -359,7 +360,9 @@ public class ComboServlet extends HttpServlet {
 		return fileContentBag._fileContent;
 	}
 
-	protected URL getResourceURL(String modulePath) throws Exception {
+	protected URL getResourceURL(HttpServletRequest request, String modulePath)
+		throws Exception {
+
 		String portletId = getModulePortletId(modulePath);
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
@@ -376,13 +379,26 @@ public class ComboServlet extends HttpServlet {
 
 		URL url = servletContext.getResource(resourcePath);
 
-		if (url == null) {
-			throw new ServletException(
-				"Resource " + resourcePath + " does not exist in " +
-					portlet.getContextPath());
+		if (url != null) {
+			return url;
 		}
 
-		return url;
+		url = new URL(
+			request.getScheme(), request.getLocalAddr(),
+			request.getLocalPort(), contextPath + resourcePath);
+
+		HttpURLConnection connection =
+			(HttpURLConnection)url.openConnection();
+
+		int responseCode = connection.getResponseCode();
+
+		if (responseCode == 200) {
+			return url;
+		}
+
+		throw new ServletException(
+			"Resource " + resourcePath + " does not exist in " +
+				portlet.getContextPath());
 	}
 
 	protected String translate(
@@ -413,6 +429,12 @@ public class ComboServlet extends HttpServlet {
 
 	protected boolean validateModuleExtension(String moduleName)
 		throws Exception {
+
+		int pos = moduleName.indexOf('?');
+
+		if (pos != -1) {
+			moduleName = moduleName.substring(0, pos);
+		}
 
 		boolean validModuleExtension = false;
 

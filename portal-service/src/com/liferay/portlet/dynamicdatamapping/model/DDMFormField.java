@@ -114,6 +114,10 @@ public class DDMFormField implements Serializable {
 		return _required;
 	}
 
+	public boolean isShowLabel() {
+		return _showLabel;
+	}
+
 	public void setDataType(String dataType) {
 		_dataType = dataType;
 	}
@@ -176,6 +180,10 @@ public class DDMFormField implements Serializable {
 		_required = required;
 	}
 
+	public void setShowLabel(boolean showLabel) {
+		_showLabel = showLabel;
+	}
+
 	public void setStyle(LocalizedValue style) {
 		_style = style;
 	}
@@ -204,6 +212,7 @@ public class DDMFormField implements Serializable {
 	private boolean _readOnly;
 	private boolean _repeatable;
 	private boolean _required;
+	private boolean _showLabel;
 	private LocalizedValue _style = new LocalizedValue();
 	private LocalizedValue _tip = new LocalizedValue();
 	private String _type;

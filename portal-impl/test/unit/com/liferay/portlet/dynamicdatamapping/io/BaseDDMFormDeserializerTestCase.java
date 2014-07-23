@@ -132,12 +132,14 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 		Assert.assertEquals("checkbox", ddmFormField.getType());
 		Assert.assertTrue(ddmFormField.isRepeatable());
 		Assert.assertFalse(ddmFormField.isRequired());
+		Assert.assertFalse(ddmFormField.isShowLabel());
 	}
 
 	protected void testDateDDMFormField(DDMFormField ddmFormField) {
 		Assert.assertNotNull(ddmFormField);
 		Assert.assertEquals("date", ddmFormField.getDataType());
 		Assert.assertEquals("ddm-date", ddmFormField.getType());
+		Assert.assertTrue(ddmFormField.isShowLabel());
 	}
 
 	protected void testDecimalDDMFormField(DDMFormField ddmFormField) {
@@ -156,6 +158,7 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 		Assert.assertNotNull(ddmFormField);
 		Assert.assertEquals("document-library", ddmFormField.getDataType());
 		Assert.assertEquals("ddm-documentlibrary", ddmFormField.getType());
+		Assert.assertTrue(ddmFormField.isShowLabel());
 	}
 
 	protected void testNestedDDMFormFields(DDMFormField ddmFormField) {

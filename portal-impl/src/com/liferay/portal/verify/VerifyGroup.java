@@ -53,7 +53,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -314,26 +314,28 @@ public class VerifyGroup extends VerifyProcess {
 	protected void verifyStagingTypeSettingsProperties(
 		UnicodeProperties typeSettingsProperties) {
 
-		Set<String> keys = new HashSet<String>();
+		Set<String> keys = typeSettingsProperties.keySet();
 
-		for (String key : typeSettingsProperties.keySet()) {
-			if (key.contains(StagingConstants.STAGED_PORTLET)) {
-				keys.add(key);
+		Iterator<String> iterator = keys.iterator();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			if (!key.contains(StagingConstants.STAGED_PORTLET)) {
+				continue;
 			}
-		}
 
-		for (String key : keys) {
 			String portletId = StringUtil.replace(
 				key, StagingConstants.STAGED_PORTLET, StringPool.BLANK);
 
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
 			if (portlet == null) {
-				typeSettingsProperties.remove(key);
-
 				if (_log.isInfoEnabled()) {
-					_log.info("removing type settings property: " + key);
+					_log.info("Removing type settings property: " + key);
 				}
+
+				iterator.remove();
 
 				continue;
 			}
@@ -344,11 +346,11 @@ public class VerifyGroup extends VerifyProcess {
 			if ((portletDataHandler == null) ||
 				!portletDataHandler.isDataSiteLevel()) {
 
-				typeSettingsProperties.remove(key);
-
 				if (_log.isInfoEnabled()) {
-					_log.info("removing type settings property: " + key);
+					_log.info("Removing type settings property: " + key);
 				}
+
+				iterator.remove();
 			}
 		}
 	}

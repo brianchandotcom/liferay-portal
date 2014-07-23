@@ -39,10 +39,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alberto Chaparro
  */
-@ExecutionTestListeners(
-	listeners = {
-		MainServletExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class UserGroupRoleServiceTest {
 

@@ -84,7 +84,7 @@ public class WorkflowPermissionImpl implements WorkflowPermission {
 				return null;
 			}
 
-			boolean hasPermission = isWorkflowTaskAssignedToUser(
+			boolean hasPermission = isWorkflowTaskAssignedToUserOrUserRoles(
 				permissionChecker, workflowInstance);
 
 			if (!hasPermission && actionId.equals(ActionKeys.VIEW)) {
@@ -98,7 +98,7 @@ public class WorkflowPermissionImpl implements WorkflowPermission {
 		return null;
 	}
 
-	protected boolean isWorkflowTaskAssignedToUser(
+	protected boolean isWorkflowTaskAssignedToUserOrUserRoles(
 			PermissionChecker permissionChecker,
 			WorkflowInstance workflowInstance)
 		throws WorkflowException {
@@ -107,6 +107,11 @@ public class WorkflowPermissionImpl implements WorkflowPermission {
 			WorkflowTaskManagerUtil.getWorkflowTaskCountByWorkflowInstance(
 				permissionChecker.getCompanyId(), permissionChecker.getUserId(),
 				workflowInstance.getWorkflowInstanceId(), Boolean.FALSE);
+
+		count +=
+			WorkflowTaskManagerUtil.getWorkflowTaskCountByUserRoles(
+				permissionChecker.getCompanyId(), permissionChecker.getUserId(),
+				Boolean.FALSE);
 
 		if (count > 0) {
 			return true;

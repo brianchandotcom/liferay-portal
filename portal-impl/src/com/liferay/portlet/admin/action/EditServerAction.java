@@ -21,6 +21,7 @@ import com.liferay.portal.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.portal.convert.ConvertProcess;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.cluster.Address;
@@ -256,7 +257,7 @@ public class EditServerAction extends PortletAction {
 	}
 
 	protected void cacheSingle() throws Exception {
-		WebCachePoolUtil.clear();
+		SingleVMPoolUtil.clear();
 	}
 
 	protected String convertProcess(

@@ -399,7 +399,7 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
 		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_VIEW" value1="View" />
 		<execute action="PGDynamicdatalists#pause" locator1="1000" />
 
@@ -690,7 +690,7 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="LIST_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_ACTIONS_1" />
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="LIST_MENULIST_PERMISSIONS" value1="Permissions" />
 
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
@@ -723,7 +723,7 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="LIST_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_ACTIONS_1" />
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="LIST_MENULIST_PERMISSIONS" value1="Permissions" />
 
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />

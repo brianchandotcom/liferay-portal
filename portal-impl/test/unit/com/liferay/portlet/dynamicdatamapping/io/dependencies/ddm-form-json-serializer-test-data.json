@@ -38,6 +38,7 @@
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
+					"showLabel": true,
 					"type": "select"
 				}
 		     ],
@@ -48,6 +49,7 @@
 			"readOnly": false,
 			"repeatable": true,
 			"required": false,
+			"showLabel": true,
 			"type": "text"
 		}, 
 		{
@@ -74,6 +76,7 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": true,
+			"showLabel": false,
 			"type": "radio"
 		},
 		{
@@ -101,6 +104,7 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
+			"showLabel": true,
 			"type": "select"
 		},
 		{
@@ -120,6 +124,7 @@
 			"readOnly": false,
 			"repeatable": true,
 			"required": false,
+			"showLabel": true,
 			"type": "text"
 		}
 	]

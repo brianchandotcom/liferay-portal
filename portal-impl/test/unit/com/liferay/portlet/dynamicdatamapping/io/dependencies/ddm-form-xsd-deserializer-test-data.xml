@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US,pt_BR" default-locale="en_US">
-	<dynamic-element dataType="boolean" indexType="keyword" localizable="true" name="Boolean2282" readOnly="false" repeatable="true" required="false" showLabel="true" type="checkbox" width="">
+	<dynamic-element dataType="boolean" indexType="keyword" localizable="true" name="Boolean2282" readOnly="false" repeatable="true" required="false" showLabel="false" type="checkbox" width="">
 		<meta-data locale="en_US">
 			<entry name="label"><![CDATA[Boolean]]></entry>
 			<entry name="predefinedValue"><![CDATA[false]]></entry>
@@ -25,7 +25,7 @@
 			<entry name="tip"><![CDATA[]]></entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="double" fieldNamespace="ddm" indexType="keyword" localizable="true" name="Decimal3479" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-decimal" width="small">
+	<dynamic-element dataType="double" fieldNamespace="ddm" indexType="keyword" localizable="true" name="Decimal3479" readOnly="false" repeatable="false" required="false" type="ddm-decimal" width="small">
 		<meta-data locale="en_US">
 			<entry name="label"><![CDATA[Decimal]]></entry>
 			<entry name="predefinedValue"><![CDATA[]]></entry>

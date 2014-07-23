@@ -101,6 +101,7 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		ddmFormField.setDataType("string");
 		ddmFormField.setDDMFormFieldOptions(createDDMFormFieldOptions());
 		ddmFormField.setRequired(true);
+		ddmFormField.setShowLabel(false);
 
 		return ddmFormField;
 	}
@@ -111,6 +112,7 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		ddmFormField.setDataType("string");
 		ddmFormField.setIndexType("");
 		ddmFormField.setMultiple(true);
+		ddmFormField.setShowLabel(true);
 
 		DDMFormFieldOptions ddmFormFieldOptions = createDDMFormFieldOptions();
 
@@ -129,6 +131,7 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		ddmFormField.setPredefinedValue(
 			createTextDDMFormFieldPredefinedValue());
 		ddmFormField.setRepeatable(true);
+		ddmFormField.setShowLabel(true);
 
 		return ddmFormField;
 	}

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US,pt_BR" default-locale="en_US">
-	<dynamic-element dataType="string" localizable="false" multiple="false" name="BooleanField" readOnly="false" repeatable="false" required="true" type="radio">
+	<dynamic-element dataType="string" localizable="false" multiple="false" name="BooleanField" readOnly="false" showLabel="false" repeatable="false" required="true" type="radio">
 		<dynamic-element name="option_1234" type="option" value="Value 1">
 			<meta-data locale="en_US">
 				<entry name="label">Option 1</entry>
@@ -19,8 +19,8 @@
 			</meta-data>
 		</dynamic-element>
 	</dynamic-element>
-	<dynamic-element dataType="string" indexType="keyword" localizable="false" multiple="false" name="ParentField" readOnly="false" repeatable="true" required="false" type="text">
-		<dynamic-element dataType="string" indexType="" localizable="false" multiple="true" name="ChildField" readOnly="false" repeatable="false" required="false" type="select">
+	<dynamic-element dataType="string" indexType="keyword" localizable="false" multiple="false" name="ParentField" readOnly="false" repeatable="true" required="false" showLabel="true" type="text">
+		<dynamic-element dataType="string" indexType="" localizable="false" multiple="true" name="ChildField" readOnly="false" repeatable="false" required="false" showLabel="true" type="select">
 			<dynamic-element name="option_1234" type="option" value="Value 1">
 				<meta-data locale="en_US">
 					<entry name="label">Option 1</entry>
@@ -47,7 +47,7 @@
 			<entry name="label">Texto</entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="string" indexType="" localizable="false" multiple="true" name="SelectField" readOnly="false" repeatable="false" required="false" type="select">
+	<dynamic-element dataType="string" indexType="" localizable="false" multiple="true" name="SelectField" readOnly="false" repeatable="false" required="false" showLabel="true" type="select">
 		<dynamic-element name="option_1234" type="option" value="Value 1">
 			<meta-data locale="en_US">
 				<entry name="label">Option 1</entry>
@@ -65,7 +65,7 @@
 			</meta-data>
 		</dynamic-element>
 	</dynamic-element>
-	<dynamic-element dataType="string" indexType="keyword" localizable="false" multiple="false" name="TextField" readOnly="false" repeatable="true" required="false" type="text">
+	<dynamic-element dataType="string" indexType="keyword" localizable="false" multiple="false" name="TextField" readOnly="false" repeatable="true" required="false" showLabel="true" type="text">
 		<meta-data locale="en_US">
 			<entry name="predefinedValue">Example</entry>
 			<entry name="label">Text</entry>

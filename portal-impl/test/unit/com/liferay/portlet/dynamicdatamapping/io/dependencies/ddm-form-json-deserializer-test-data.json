@@ -19,6 +19,7 @@
 			"readOnly": false,
 			"repeatable": true,
 			"required": false,
+			"showLabel": false,
 			"tip": {
 				"en_US": "",
 				"pt_BR": ""
@@ -43,6 +44,7 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
+			"showLabel": true,
 			"tip": {
 				"en_US": "",
 				"pt_BR": ""
@@ -91,6 +93,7 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
+			"showLabel": true,
 			"tip": {
 				"en_US": "",
 				"pt_BR": ""
@@ -115,6 +118,7 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
+			"showLabel": true,
 			"tip": {
 				"en_US": "",
 				"pt_BR": ""
@@ -139,6 +143,7 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
+			"showLabel": true,
 			"tip": {
 				"en_US": "",
 				"pt_BR": ""
@@ -163,6 +168,7 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
+			"showLabel": true,
 			"tip": {
 				"en_US": "",
 				"pt_BR": ""
@@ -187,6 +193,7 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
+			"showLabel": true,
 			"tip": {
 				"en_US": "",
 				"pt_BR": ""
@@ -211,6 +218,7 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
+			"showLabel": true,
 			"tip": {
 				"en_US": "",
 				"pt_BR": ""
@@ -236,6 +244,7 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
+			"showLabel": true,
 			"tip": {
 				"en_US": "",
 				"pt_BR": ""
@@ -282,6 +291,7 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
+			"showLabel": true,
 			"tip": {
 				"en_US": "",
 				"pt_BR": ""
@@ -328,6 +338,7 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
+			"showLabel": true,
 			"tip": {
 				"en_US": "",
 				"pt_BR": ""
@@ -351,6 +362,7 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
+			"showLabel": true,
 			"style": {
 				"en_US": "",
 				"pt_BR": ""
@@ -378,6 +390,7 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
+			"showLabel": true,
 			"tip": {
 				"en_US": "",
 				"pt_BR": ""
@@ -401,6 +414,7 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
+			"showLabel": true,
 			"tip": {
 				"en_US": "",
 				"pt_BR": ""
@@ -470,6 +484,7 @@
 							"readOnly": false,
 							"repeatable": false,
 							"required": false,
+							"showLabel": true,
 							"tip": {
 								"en_US": "",
 								"pt_BR": ""
@@ -484,6 +499,7 @@
 					"readOnly": false,
 					"repeatable": false,
 					"required": false,
+					"showLabel": true,
 					"style": {
 						"en_US": "",
 						"pt_BR": ""
@@ -502,6 +518,7 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
+			"showLabel": true,
 			"tip": {
 				"en_US": "",
 				"pt_BR": ""

@@ -23,26 +23,28 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 /**
  * @author Kwang Lee
  */
-public class AppiumDriverImpl extends BaseWebDriverImpl {
+public class AppiumWebDriverImpl extends BaseWebDriverImpl {
 
-	public AppiumDriverImpl(String projectDirName, String browserURL) {
+	public AppiumWebDriverImpl(String projectDirName, String browserURL) {
 		super(
 			projectDirName, browserURL,
-			new AppiumDriver(url, _desiredCapabilities));
+			new AppiumDriver(_url, _desiredCapabilities));
 	}
 
 	private static DesiredCapabilities _desiredCapabilities = null;
-	private static URL url = null;
+	private static URL _url = null;
 
 	static {
 		try {
-			url = new URL("http://0.0.0.0:4723/wd/hub/");
+			_url = new URL("http://0.0.0.0:4723/wd/hub/");
 		}
 		catch (Exception e) {
 		}
 
 		_desiredCapabilities = DesiredCapabilities.android();
+
 		_desiredCapabilities.setCapability("browserName", "Browser");
+		_desiredCapabilities.setCapability("deviceName", "emulatorName");
 		_desiredCapabilities.setCapability("platformName", "Android");
 		_desiredCapabilities.setCapability("platformVersion", "4.4");
 	}

@@ -404,12 +404,14 @@ This logic has been removed from these methods.
 
 #### Who is affected?
 
-Every caller of the `deleteFileEntry()` and `deleteFolder()` methods.
+Every caller of the `deleteFileEntry()` and `deleteFolder()` methods is
+affected.
 
 #### How should I update my code?
 
 There is no direct replacement. Trash operations are now accessible through the
-`TrashCapability` implementations for each repository:
+`TrashCapability` implementations for each repository. The following code
+demonstrates using a `TrashCapability` instance to delete a `FileEntry`:
 
     Repository repository = getRepository();
 
@@ -421,12 +423,12 @@ There is no direct replacement. Trash operations are now accessible through the
     trashCapability.deleteFileEntry(fileEntry);
 
 Note that the `deleteFileEntry()` and `deleteFolder()` methods in
-`TrashCapability` not only remove the trash entry, but also the folder or file
-entry itself, and any associated data such as assets, previews, etc.
+`TrashCapability` not only remove the trash entry, but also remove the folder or
+file entry itself, and any associated data, such as assets, previews, etc.
 
 #### Why was this change made?
 
-To allow different kinds of repositories to support trash operations in a
-uniform way.
+This change was made to allow different kinds of repositories to support trash
+operations in a uniform way.
 
 ---------------------------------------

@@ -72,12 +72,12 @@
 </tr>
 <tr>
 	<td>FORM_FIELDS_2_HEADER</td>
-	<td>//div[@class='control-group input-select-wrapper' and contains(.,'${key_form2Title}')]/label[contains(@for,'webformportlet')]</td>
+	<td>//div[@class='form-group input-select-wrapper' and contains(.,'${key_form2Title}')]/label[contains(@for,'webformportlet')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_FIELDS_2_SELECT</td>
-	<td>//div[@class='control-group input-select-wrapper' and contains(.,'${key_form2Title}')]/select</td>
+	<td>//div[@class='form-group input-select-wrapper' and contains(.,'${key_form2Title}')]/select</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,12 +92,12 @@
 </tr>
 <tr>
 	<td>FORM_FIELDS_3_HEADER</td>
-	<td>//div[contains(@class,'control-group input-text-wrapper') and contains(.,'${key_form3Title}')]/label[contains(@for,'webformportlet')]</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_form3Title}')]/label[contains(@for,'webformportlet')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_FIELDS_3_FIELD</td>
-	<td>//div[contains(@class,'control-group input-text-wrapper') and contains(.,'${key_form3Title}')]/textarea</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_form3Title}')]/textarea</td>
 	<td></td>
 </tr>
 </tbody>

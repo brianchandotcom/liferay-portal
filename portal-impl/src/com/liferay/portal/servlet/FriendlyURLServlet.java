@@ -180,10 +180,7 @@ public class FriendlyURLServlet extends HttpServlet {
 	protected String getPathInfo(HttpServletRequest request) {
 		String requestURI = request.getRequestURI();
 
-		String contextPath = request.getContextPath();
-
-		return requestURI.substring(
-			contextPath.length() + _friendlyURLPathPrefix.length());
+		return requestURI.substring(_friendlyURLPathPrefix.length());
 	}
 
 	protected Object[] getRedirect(

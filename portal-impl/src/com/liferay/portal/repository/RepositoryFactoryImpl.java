@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
+import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
-import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -76,33 +76,22 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);
 
-		long classNameId = getRepositoryClassNameId(repositoryId);
-
-		return createExternalRepository(repositoryId, classNameId);
+		return create(repositoryId);
 	}
 
 	@Override
-	protected Repository createInternalRepositoryInstance(
-		long groupId, long repositoryId, long dlFolderId) {
+	protected Repository createInternalRepository(long repositoryId)
+		throws PortalException {
 
-		Repository repository = createLiferayInternalRepository(
-			groupId, repositoryId, dlFolderId);
+		RepositoryCreator liferayRepositoryCreator =
+			getLiferayRepositoryCreator();
+
+		Repository repository = liferayRepositoryCreator.createRepository(
+			repositoryId);
 
 		return new CapabilityRepository(
 			repository, getInternalSupportedCapabilities(),
 			getInternalExportedCapabilityClasses());
-	}
-
-	protected Repository createLiferayInternalRepository(
-		long groupId, long repositoryId, long dlFolderId) {
-
-		return new LiferayRepository(
-			getRepositoryLocalService(), getRepositoryService(),
-			getDlAppHelperLocalService(), getDlFileEntryLocalService(),
-			getDlFileEntryService(), getDlFileEntryTypeLocalService(),
-			getDlFileVersionLocalService(), getDlFileVersionService(),
-			getDlFolderLocalService(), getDlFolderService(),
-			getResourceLocalService(), groupId, repositoryId, dlFolderId);
 	}
 
 	protected CMISRepositoryHandler getCMISRepositoryHandler(

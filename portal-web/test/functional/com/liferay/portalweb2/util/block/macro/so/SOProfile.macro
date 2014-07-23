@@ -1160,6 +1160,51 @@
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INTRODUCTION_CONTENT" value1="${userIntroduction}"  />
 	</command>
 
+	<command name="viewLocalizedPG">
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#assertClick" locator1="//span[contains(.,'${myProfileLocalized}')]" value1="${myProfileLocalized}" />
+
+		<execute macro="SOUserBar#showEditControls" />
+
+		<var name="key_pageName" value="${profilePageLocalized}" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_PAGE" value1="${profilePageLocalized}" />
+
+		<var name="key_portletName" value="${profilePortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${profilePortletLocalized?uppercase()}" />
+
+		<var name="key_portletName" value="${microblogsStatusUpdatePortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${microblogsStatusUpdatePortletLocalized?uppercase()}" />
+
+		<var name="key_pageName" value="${contactsPageLocalized}" />
+
+		<execute action="SOProfile#assertClick" locator-key1="NAVIGATION_PAGE" value1="${contactsPageLocalized}" />
+
+		<var name="key_portletName" value="${profilePortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${profilePortletLocalized?uppercase()}" />
+
+		<var name="key_portletName" value="${contactsCenterPortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${contactsCenterPortletLocalized?uppercase()}" />
+
+		<var name="key_pageName" value="${microblogsPageLocalized}" />
+
+		<execute action="SOProfile#assertClick" locator-key1="NAVIGATION_PAGE" value1="${microblogsPageLocalized}" />
+
+		<var name="key_portletName" value="${profilePortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${profilePortletLocalized?uppercase()}" />
+
+		<var name="key_portletName" value="${microblogsPortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${microblogsPortletLocalized?uppercase()}" />
+	</command>
+
 	<command name="viewMicroblogsEntryMention">
 		<var name="microblogsEntryContent" value="${microblogsEntryContent} ${mentionUserName}" />
 

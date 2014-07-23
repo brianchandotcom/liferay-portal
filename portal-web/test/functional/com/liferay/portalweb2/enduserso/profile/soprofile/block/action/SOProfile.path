@@ -150,6 +150,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAVIGATION_PAGE</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'${key_pageName}')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

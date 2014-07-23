@@ -102,6 +102,11 @@
 </tr>
 <!--DISPLAY_SETTINGS-->
 <tr>
+	<td>DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT</td>
+	<td>//div[contains(.,'Maximum Items to Display')]//select[contains(@id,'pageDelta')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_SETTINGS_DISPLAY_TEMPLATE_MENULIST</td>
 	<td>//select[contains(@id,'displayStyle')]</td>
 	<td></td>

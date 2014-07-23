@@ -79,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_NAME</td>
+	<td>//a[contains(text(),'${key_pageName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GO_TO</td>
 	<td>//li[contains(@class,'go-to')]//input[contains(@class,'search-input')]</td>
 	<td></td>

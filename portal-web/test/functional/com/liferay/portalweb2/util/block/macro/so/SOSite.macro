@@ -96,6 +96,106 @@
 		<execute macro="Site#tearDownCP" />
 	</command>
 
+	<command name="viewLocalizedPG">
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOUserBar#showEditControls" />
+
+		<var name="key_pageName" value="${homePageLocalized}" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_PAGE" value1="${homePageLocalized}" />
+		<execute action="SOSiteHome#assertTextNotPresent" value1="-" />
+
+		<var name="key_portletName" value="${announcementsPortletLocalized}" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${announcementsPortletLocalized}" />
+
+		<var name="key_portletName" value="${activitiesPortletLocalized}" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${activitiesPortletLocalized}" />
+
+		<var name="key_portletName" value="${welcomePortletLocalized}" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${welcomePortletLocalized}" />
+
+		<var name="key_portletName" value="${bookmarksPortletLocalized}" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${bookmarksPortletLocalized}" />
+
+		<var name="key_portletName" value="${rssPortletLocalized}" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${rssPortletLocalized}" />
+
+		<var name="key_portletName" value="${recentDownloadsPortletLocalized}" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${recentDownloadsPortletLocalized}" />
+
+		<var name="key_portletName" value="${eventsPortletLocalized}" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${eventsPortletLocalized}" />
+
+		<var name="key_pageName" value="${calendarPageLocalized}" />
+
+		<execute action="SOSiteHome#assertClick" locator-key1="NAVIGATION_PAGE" value1="${calendarPageLocalized}" />
+
+		<var name="key_portletName" value="${calendarPortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${calendarPortletLocalized?uppercase()}" />
+
+		<var name="key_pageName" value="${documentsPageLocalized}" />
+
+		<execute action="SOSiteHome#assertClick" locator-key1="NAVIGATION_PAGE" value1="${documentsPageLocalized}" />
+
+		<var name="key_portletName" value="${documentsAndMediaPortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${documentsAndMediaPortletLocalized?uppercase()}" />
+
+		<var name="key_pageName" value="${forumsPageLocalized}" />
+
+		<execute action="SOSiteHome#assertClick" locator-key1="NAVIGATION_PAGE" value1="${forumsPageLocalized}" />
+
+		<var name="key_portletName" value="${breadcrumbPortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${breadcrumbPortletLocalized?uppercase()}" />
+
+		<var name="key_portletName" value="${messageBoardsPortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${messageBoardsPortletLocalized?uppercase()}" />
+
+		<var name="key_pageName" value="${blogsPageLocalized}" />
+
+		<execute action="SOSiteHome#assertClick" locator-key1="NAVIGATION_PAGE" value1="${blogsPageLocalized}" />
+
+		<var name="key_portletName" value="${blogsPortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${blogsPortletLocalized?uppercase()}" />
+
+		<var name="key_portletName" value="${recentBlogsPortletLocalized}" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${recentBlogsPortletLocalized}" />
+
+		<var name="key_pageName" value="${wikiPageLocalized}" />
+
+		<execute action="SOSiteHome#assertClick" locator-key1="NAVIGATION_PAGE" value1="${wikiPageLocalized}" />
+
+		<var name="key_portletName" value="${wikiPortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${wikiPortletLocalized?uppercase()}" />
+
+		<var name="key_pageName" value="${membersPageLocalized}" />
+
+		<execute action="SOSiteHome#assertClick" locator-key1="NAVIGATION_PAGE" value1="${membersPageLocalized}" />
+
+		<var name="key_portletName" value="${inviteMembersPortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${inviteMembersPortletLocalized?uppercase()}" />
+
+		<execute action="Home#assertTextEquals" locator1="//div[contains(@class,'portlet-borderless')]/span[@class='portlet-title-default' and .='${membersPortletLocalized}']" value1="${membersPortletLocalized?uppercase()}" />
+	</command>
+
 	<command name="viewSOSite">
 		<var name="key_siteName" value="${siteName}" />
 

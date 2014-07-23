@@ -1,11 +1,44 @@
 <definition>
 	<command name="configureDisplayTemplatePG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
+		<if>
+			<equals arg1="${soPage}" arg2="true" />
+			<then>
+				<execute macro="SOPortlet#gotoPortletOptions">
+					<var name="portletName" value="Blogs" />
+					<var name="portletOption" value="Configuration" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Portlet#gotoPortletOptions">
+					<var name="portletOption" value="Configuration" />
+				</execute>
+			</else>
+		</if>
 
 		<execute action="PGBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGBlogsConfiguration#select" locator-key1="DISPLAY_SETTINGS_DISPLAY_TEMPLATE_MENULIST" value1="${displaySelection}" />
+		<execute action="PGBlogsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGBlogsConfiguration#assertElementPresent" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="configureMaxItemsToDisplayPG">
+		<if>
+			<equals arg1="${soPage}" arg2="true" />
+			<then>
+				<execute macro="SOPortlet#gotoPortletOptions">
+					<var name="portletName" value="Blogs" />
+					<var name="portletOption" value="Configuration" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Portlet#gotoPortletOptions">
+					<var name="portletOption" value="Configuration" />
+				</execute>
+			</else>
+		</if>
+
+		<execute action="PGBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGBlogsConfiguration#select" locator-key1="DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="${maximumItemsToDisplay}" />
 		<execute action="PGBlogsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGBlogsConfiguration#assertElementPresent" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
@@ -23,9 +56,20 @@
 	</command>
 
 	<command name="configureScopePG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
+		<if>
+			<equals arg1="${soPage}" arg2="true" />
+			<then>
+				<execute macro="SOPortlet#gotoPortletOptions">
+					<var name="portletName" value="Blogs" />
+					<var name="portletOption" value="Configuration" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Portlet#gotoPortletOptions">
+					<var name="portletOption" value="Configuration" />
+				</execute>
+			</else>
+		</if>
 
 		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
@@ -69,9 +113,20 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
+		<if>
+			<equals arg1="${soPage}" arg2="true" />
+			<then>
+				<execute macro="SOPortlet#gotoPortletOptions">
+					<var name="portletName" value="Blogs" />
+					<var name="portletOption" value="Configuration" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Portlet#gotoPortletOptions">
+					<var name="portletOption" value="Configuration" />
+				</execute>
+			</else>
+		</if>
 
 		<execute action="PGBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGBlogsConfiguration#select" locator-key1="DISPLAY_SETTINGS_DISPLAY_TEMPLATE_MENULIST" value1="Full Content" />
@@ -159,9 +214,20 @@
 	</command>
 
 	<command name="viewScopePG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configuration" />
-		</execute>
+		<if>
+			<equals arg1="${soPage}" arg2="true" />
+			<then>
+				<execute macro="SOPortlet#gotoPortletOptions">
+					<var name="portletName" value="Blogs" />
+					<var name="portletOption" value="Configuration" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Portlet#gotoPortletOptions">
+					<var name="portletOption" value="Configuration" />
+				</execute>
+			</else>
+		</if>
 
 		<execute action="BasePortletConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 

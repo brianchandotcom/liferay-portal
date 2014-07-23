@@ -1232,4 +1232,126 @@
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="DISCONNECT_BUTTON" value1="Disconnect" />
 		<execute action="SOContactscenter#assertElementNotPresent" locator-key1="CONNECT_BUTTON" />
 	</command>
+
+	<command name="ViewProfileLocalized" priority="4">
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editDisplaySettingsCP">
+			<var name="languageName" value="Spanish (Spain)" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOProfile#viewLocalizedPG">
+			<var name="contactsCenterPortletLocalized" value="Centro de contactos" />
+			<var name="contactsPageLocalized" value="Contactos" />
+			<var name="microblogsPageLocalized" value="Microblogs" />
+			<var name="microblogsPortletLocalized" value="Microblogs" />
+			<var name="microblogsStatusUpdatePortletLocalized" value="Actualización del estado de microblogs" />
+			<var name="myProfileLocalized" value="Mi Perfil" />
+			<var name="profilePageLocalized" value="Perfil" />
+			<var name="profilePortletLocalized" value="Perfil" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editDisplaySettingsCP">
+			<var name="languageName" value="French (France)" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOProfile#viewLocalizedPG">
+			<var name="contactsCenterPortletLocalized" value="Centre de contacts" />
+			<var name="contactsPageLocalized" value="Contient" />
+			<var name="microblogsPageLocalized" value="Microblogs" />
+			<var name="microblogsPortletLocalized" value="Microblogs" />
+			<var name="microblogsStatusUpdatePortletLocalized" value="Mise à jour de statut de microblogs" />
+			<var name="myProfileLocalized" value="Mon Profil" />
+			<var name="profilePageLocalized" value="Profil" />
+			<var name="profilePortletLocalized" value="Profil" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editDisplaySettingsCP">
+			<var name="languageName" value="German (Germany)" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOProfile#viewLocalizedPG">
+			<var name="contactsCenterPortletLocalized" value="Contacts Center" />
+			<var name="contactsPageLocalized" value="Kontakte" />
+			<var name="microblogsPageLocalized" value="Microblogs" />
+			<var name="microblogsPortletLocalized" value="Microblogs" />
+			<var name="microblogsStatusUpdatePortletLocalized" value="Microblogs Status Update" />
+			<var name="myProfileLocalized" value="Mein Profil" />
+			<var name="profilePageLocalized" value="Profil" />
+			<var name="profilePortletLocalized" value="Profile" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editDisplaySettingsCP">
+			<var name="languageName" value="Chinese (China)" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOProfile#viewLocalizedPG">
+			<var name="contactsCenterPortletLocalized" value="联系中心" />
+			<var name="contactsPageLocalized" value="联系人" />
+			<var name="microblogsPageLocalized" value="微博" />
+			<var name="microblogsPortletLocalized" value="微博" />
+			<var name="microblogsStatusUpdatePortletLocalized" value="微博状态更新" />
+			<var name="myProfileLocalized" value="我的个人资料" />
+			<var name="profilePageLocalized" value="概况" />
+			<var name="profilePortletLocalized" value="配置文件" />
+		</execute>
+	</command>
 </definition>

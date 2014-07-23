@@ -24,6 +24,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MEMBERS_PORTLET_CONFIGURATION_BAR</td>
+	<td>//div[contains(@class,'contacts-portlet') and contains(@class,'portlet-borderless')]//span[contains(@class,'portlet-actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEMBERS_PORTLET_OPTIONS_ICON</td>
+	<td>//div[contains(@class,'contacts-portlet') and contains(@class,'portlet-borderless')]//span[contains(@class,'portlet-actions')]//a[contains(.,'Options')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEMBERS_PORTLET_REMOVE_ICON</td>
+	<td>//div[contains(@class,'contacts-portlet') and contains(@class,'portlet-borderless')]//span[contains(@class,'portlet-actions')]//a[contains(.,'Remove')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONNECTION_REQUESTED_MESSAGE</td>
 	<td>//span[contains(@class,'disabled')]/span[2]</td>
 	<td></td>

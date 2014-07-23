@@ -333,6 +333,97 @@
 		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME" value1="${siteName}" />
 	</command>
 
+	<command name="viewLocalizedPG">
+		<var name="key_pageName" value="${contactsCenterPageLocalized}" />
+
+		<execute action="SOUserBar#assertTextEquals" locator-key1="PAGE_NAME" value1="${contactsCenterPageLocalized}" />
+
+		<var name="key_pageName" value="${microblogsPageLocalized}" />
+
+		<execute action="SOUserBar#assertTextEquals" locator-key1="PAGE_NAME" value1="${microblogsPageLocalized}" />
+
+		<var name="key_pageName" value="${messagesPageLocalized}" />
+
+		<execute action="SOUserBar#assertTextEquals" locator-key1="PAGE_NAME" value1="${messagesPageLocalized}" />
+
+		<var name="key_pageName" value="${myDocumentsPageLocalized}" />
+
+		<execute action="SOUserBar#assertTextEquals" locator-key1="PAGE_NAME" value1="${myDocumentsPageLocalized}" />
+
+		<var name="key_pageName" value="${tasksPageLocalized}" />
+
+		<execute action="SOUserBar#assertTextEquals" locator-key1="PAGE_NAME" value1="${tasksPageLocalized}" />
+
+		<var name="key_pageName" value="${dashboardPageLocalized}" />
+
+		<execute action="SOUserBar#assertClick" locator-key1="PAGE_NAME" value1="${dashboardPageLocalized}" />
+
+		<execute macro="SOUserBar#showEditControls" />
+
+		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_PAGE" value1="${dashboardPageLocalized}" />
+		<execute action="SODashboard#assertTextNotPresent" value1="-" />
+
+		<var name="key_portletName" value="${microblogsStatusUpdatePortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${microblogsStatusUpdatePortletLocalized?uppercase()}" />
+
+		<var name="key_portletName" value="${announcementsPortletLocalized}" />
+
+		<execute action="SODashboard#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${announcementsPortletLocalized}" />
+
+		<var name="key_portletName" value="${activitiesPortletLocalized}" />
+
+		<execute action="SODashboard#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${activitiesPortletLocalized}" />
+
+		<var name="key_portletName" value="${upcomingTasksPortletLocalized}" />
+
+		<execute action="SODashboard#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${upcomingTasksPortletLocalized}" />
+
+		<var name="key_portletName" value="${eventsPortletLocalized}" />
+
+		<execute action="SODashboard#assertTextEquals" locator-key1="PORTLET_TITLE" value1="${eventsPortletLocalized}" />
+
+		<var name="key_pageName" value="${contactsCenterPageLocalized}" />
+
+		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${contactsCenterPageLocalized}" />
+
+		<var name="key_portletName" value="${contactsCenterPortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${contactsCenterPortletLocalized?uppercase()}" />
+
+		<var name="key_pageName" value="${microblogsPageLocalized}" />
+
+		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${microblogsPageLocalized}" />
+
+		<var name="key_portletName" value="${microblogsPortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${microblogsPortletLocalized?uppercase()}" />
+
+		<var name="key_pageName" value="${messagesPageLocalized}" />
+
+		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${messagesPageLocalized}" />
+
+		<var name="key_portletName" value="${privateMessagingPortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${privateMessagingPortletLocalized?uppercase()}" />
+
+		<var name="key_pageName" value="${myDocumentsPageLocalized}" />
+
+		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${myDocumentsPageLocalized}" />
+
+		<var name="key_portletName" value="${documentsAndMediaPortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${documentsAndMediaPortletLocalized?uppercase()}" />
+
+		<var name="key_pageName" value="${tasksPageLocalized}" />
+
+		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${tasksPageLocalized}" />
+
+		<var name="key_portletName" value="${tasksPortletLocalized}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${tasksPortletLocalized?uppercase()}" />
+	</command>
+
 	<command name="viewTodaysEvent">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 

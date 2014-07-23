@@ -5,6 +5,7 @@
 		<execute action="CPPortalinstancesAdd#type" locator-key1="WEB_ID_FIELD" value1="${webId}" />
 		<execute action="CPPortalinstancesAdd#type" locator-key1="VIRTUAL_HOST_FIELD" value1="${virtualHost}" />
 		<execute action="CPPortalinstancesAdd#type" locator-key1="MAIL_DOMAIN_FIELD" value1="${mailDomain}" />
+
 		<if>
 			<equals arg1="${maxUsers}" arg2="true" />
 			<then>

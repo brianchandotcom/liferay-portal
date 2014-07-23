@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
+import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Repository;
@@ -31,14 +32,13 @@ import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.repository.liferayrepository.LiferayRepositoryCreator;
 import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
 import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.RepositoryLocalService;
-import com.liferay.portal.service.RepositoryService;
-import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
@@ -48,7 +48,6 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
@@ -160,23 +159,8 @@ public abstract class BaseRepositoryFactory<T> {
 		return baseRepository;
 	}
 
-	protected T createInternalRepository(long repositoryId) {
-		long dlFolderId = 0;
-		long groupId = 0;
-
-		Repository repository = getRepository(repositoryId);
-
-		if (repository == null) {
-			groupId = repositoryId;
-		}
-		else {
-			groupId = repository.getGroupId();
-			dlFolderId = repository.getDlFolderId();
-		}
-
-		return createInternalRepositoryInstance(
-			groupId, repositoryId, dlFolderId);
-	}
+	protected abstract T createInternalRepository(long repositoryId)
+		throws PortalException;
 
 	protected T createInternalRepository(
 			long folderId, long fileEntryId, long fileVersionId)
@@ -213,21 +197,6 @@ public abstract class BaseRepositoryFactory<T> {
 		}
 	}
 
-	protected abstract T createInternalRepositoryInstance(
-		long groupId, long repositoryId, long dlFolderId);
-
-	protected AssetEntryLocalService getAssetEntryLocalService() {
-		return _assetEntryLocalService;
-	}
-
-	protected ClassNameLocalService getClassNameLocalService() {
-		return _classNameLocalService;
-	}
-
-	protected CompanyLocalService getCompanyLocalService() {
-		return _companyLocalService;
-	}
-
 	protected long getDefaultClassNameId() {
 		if (_defaultClassNameId == 0) {
 			_defaultClassNameId = _classNameLocalService.getClassNameId(
@@ -261,20 +230,12 @@ public abstract class BaseRepositoryFactory<T> {
 		return _internalSupportedCapabilities;
 	}
 
-	protected DLAppHelperLocalService getDlAppHelperLocalService() {
-		return _dlAppHelperLocalService;
-	}
-
 	protected DLFileEntryLocalService getDlFileEntryLocalService() {
 		return _dlFileEntryLocalService;
 	}
 
 	protected DLFileEntryService getDlFileEntryService() {
 		return _dlFileEntryService;
-	}
-
-	protected DLFileEntryTypeLocalService getDlFileEntryTypeLocalService() {
-		return _dlFileEntryTypeLocalService;
 	}
 
 	protected DLFileVersionLocalService getDlFileVersionLocalService() {
@@ -302,6 +263,10 @@ public abstract class BaseRepositoryFactory<T> {
 	protected abstract long getFolderRepositoryId(long folderId)
 		throws PortalException;
 
+	protected RepositoryCreator getLiferayRepositoryCreator() {
+		return _liferayRepositoryCreator;
+	}
+
 	protected abstract Repository getRepository(long repositoryId);
 
 	protected long getRepositoryClassNameId(long repositoryId) {
@@ -314,10 +279,6 @@ public abstract class BaseRepositoryFactory<T> {
 
 		return _classNameLocalService.getClassNameId(
 			LiferayRepository.class.getName());
-	}
-
-	protected RepositoryEntryLocalService getRepositoryEntryLocalService() {
-		return _repositoryEntryLocalService;
 	}
 
 	protected long getRepositoryId(
@@ -337,104 +298,6 @@ public abstract class BaseRepositoryFactory<T> {
 		return _repositoryLocalService;
 	}
 
-	protected RepositoryService getRepositoryService() {
-		return _repositoryService;
-	}
-
-	protected ResourceLocalService getResourceLocalService() {
-		return _resourceLocalService;
-	}
-
-	protected UserLocalService getUserLocalService() {
-		return _userLocalService;
-	}
-
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	protected void setClassNameLocalService(
-		ClassNameLocalService classNameLocalService) {
-
-		_classNameLocalService = classNameLocalService;
-	}
-
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	protected void setDlAppHelperLocalService(
-		DLAppHelperLocalService dlAppHelperLocalService) {
-
-		_dlAppHelperLocalService = dlAppHelperLocalService;
-	}
-
-	protected void setDlFileEntryLocalService(
-		DLFileEntryLocalService dlFileEntryLocalService) {
-
-		_dlFileEntryLocalService = dlFileEntryLocalService;
-	}
-
-	protected void setDlFileEntryService(
-		DLFileEntryService dlFileEntryService) {
-
-		_dlFileEntryService = dlFileEntryService;
-	}
-
-	protected void setDlFileEntryTypeLocalService(
-		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
-
-		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
-	}
-
-	protected void setDlFileVersionLocalService(
-		DLFileVersionLocalService dlFileVersionLocalService) {
-
-		_dlFileVersionLocalService = dlFileVersionLocalService;
-	}
-
-	protected void setDlFileVersionService(
-		DLFileVersionService dlFileVersionService) {
-
-		_dlFileVersionService = dlFileVersionService;
-	}
-
-	protected void setDlFolderLocalService(
-		DLFolderLocalService dlFolderLocalService) {
-
-		_dlFolderLocalService = dlFolderLocalService;
-	}
-
-	protected void setDlFolderService(DLFolderService dlFolderService) {
-		_dlFolderService = dlFolderService;
-	}
-
-	protected void setRepositoryEntryLocalService(
-		RepositoryEntryLocalService repositoryEntryLocalService) {
-
-		_repositoryEntryLocalService = repositoryEntryLocalService;
-	}
-
-	protected void setRepositoryLocalService(
-		RepositoryLocalService repositoryLocalService) {
-
-		_repositoryLocalService = repositoryLocalService;
-	}
-
-	protected void setRepositoryService(RepositoryService repositoryService) {
-		_repositoryService = repositoryService;
-	}
-
-	protected void setResourceLocalService(
-		ResourceLocalService resourceLocalService) {
-
-		_resourceLocalService = resourceLocalService;
-	}
-
 	protected void setupRepository(
 		long repositoryId, Repository repository,
 		BaseRepository baseRepository) {
@@ -450,10 +313,6 @@ public abstract class BaseRepositoryFactory<T> {
 		baseRepository.setTypeSettingsProperties(
 			repository.getTypeSettingsProperties());
 		baseRepository.setUserLocalService(_userLocalService);
-	}
-
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 	}
 
 	private static Set<Class<? extends Capability>>
@@ -493,9 +352,6 @@ public abstract class BaseRepositoryFactory<T> {
 	@BeanReference(type = DLFileEntryService.class)
 	private DLFileEntryService _dlFileEntryService;
 
-	@BeanReference(type = DLFileEntryTypeLocalService.class)
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-
 	@BeanReference(type = DLFileVersionLocalService.class)
 	private DLFileVersionLocalService _dlFileVersionLocalService;
 
@@ -508,17 +364,14 @@ public abstract class BaseRepositoryFactory<T> {
 	@BeanReference(type = DLFolderService.class)
 	private DLFolderService _dlFolderService;
 
+	@BeanReference(type = LiferayRepositoryCreator.class)
+	private RepositoryCreator _liferayRepositoryCreator;
+
 	@BeanReference(type = RepositoryEntryLocalService.class)
 	private RepositoryEntryLocalService _repositoryEntryLocalService;
 
 	@BeanReference(type = RepositoryLocalService.class)
 	private RepositoryLocalService _repositoryLocalService;
-
-	@BeanReference(type = RepositoryService.class)
-	private RepositoryService _repositoryService;
-
-	@BeanReference(type = ResourceLocalService.class)
-	private ResourceLocalService _resourceLocalService;
 
 	@BeanReference(type = UserLocalService.class)
 	private UserLocalService _userLocalService;

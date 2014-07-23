@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.LocalRepositoryFactory;
 import com.liferay.portal.kernel.repository.RepositoryFactoryUtil;
+import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
-import com.liferay.portal.repository.liferayrepository.LiferayLocalRepository;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
@@ -71,27 +71,18 @@ public class LocalRepositoryFactoryImpl
 	}
 
 	@Override
-	protected LocalRepository createInternalRepositoryInstance(
-		long groupId, long repositoryId, long dlFolderId) {
+	protected LocalRepository createInternalRepository(long repositoryId)
+		throws PortalException {
 
-		LocalRepository localRepository = createLiferayInternalRepository(
-			groupId, repositoryId, dlFolderId);
+		RepositoryCreator liferayRepositoryCreator =
+			getLiferayRepositoryCreator();
+
+		LocalRepository localRepository =
+			liferayRepositoryCreator.createLocalRepository(repositoryId);
 
 		return new CapabilityLocalRepository(
 			localRepository, getInternalSupportedCapabilities(),
 			getInternalExportedCapabilityClasses());
-	}
-
-	protected LocalRepository createLiferayInternalRepository(
-		long groupId, long repositoryId, long dlFolderId) {
-
-		return new LiferayLocalRepository(
-			getRepositoryLocalService(), getRepositoryService(),
-			getDlAppHelperLocalService(), getDlFileEntryLocalService(),
-			getDlFileEntryService(), getDlFileEntryTypeLocalService(),
-			getDlFileVersionLocalService(), getDlFileVersionService(),
-			getDlFolderLocalService(), getDlFolderService(),
-			getResourceLocalService(), groupId, repositoryId, dlFolderId);
 	}
 
 	@Override

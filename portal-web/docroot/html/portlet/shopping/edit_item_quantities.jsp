@@ -83,7 +83,7 @@ for (int i = values.size() - 1; i >= 0; i--) {
 				/>
 
 			</liferay-ui:search-container-row>
-			<liferay-ui:search-iterator />
+
 			<aui:script>
 				var fieldsQuantities = opener.document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantities.value;
 				var itemQuantities = [];
@@ -133,6 +133,8 @@ for (int i = values.size() - 1; i >= 0; i--) {
 					}
 				);
 			</aui:script>
+
+			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>
 	</aui:fieldset>
 

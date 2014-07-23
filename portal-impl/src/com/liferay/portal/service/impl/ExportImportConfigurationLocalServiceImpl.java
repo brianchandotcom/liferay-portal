@@ -16,6 +16,8 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -39,6 +41,7 @@ import java.util.Map;
 public class ExportImportConfigurationLocalServiceImpl
 	extends ExportImportConfigurationLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ExportImportConfiguration addExportImportConfiguration(
 			long userId, long groupId, String name, String description,
@@ -89,11 +92,13 @@ public class ExportImportConfigurationLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return addExportImportConfiguration(
-			userId, groupId, name, description, type, settingsMap,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+		return exportImportConfigurationLocalService.
+			addExportImportConfiguration(
+				userId, groupId, name, description, type, settingsMap,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public ExportImportConfiguration deleteExportImportConfiguration(
@@ -167,6 +172,7 @@ public class ExportImportConfigurationLocalServiceImpl
 			groupId, type, WorkflowConstants.STATUS_APPROVED);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ExportImportConfiguration moveExportImportConfigurationToTrash(
 			long userId, long exportImportConfigurationId)
@@ -191,6 +197,7 @@ public class ExportImportConfigurationLocalServiceImpl
 		return exportImportConfiguration;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ExportImportConfiguration restoreExportImportConfigurationFromTrash(
 			long userId, long exportImportConfigurationId)
@@ -215,6 +222,7 @@ public class ExportImportConfigurationLocalServiceImpl
 		return exportImportConfiguration;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ExportImportConfiguration updateExportImportConfiguration(
 			long userId, long exportImportConfigurationId, String name,
@@ -245,6 +253,7 @@ public class ExportImportConfigurationLocalServiceImpl
 			exportImportConfiguration);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ExportImportConfiguration updateStatus(
 			long userId, long exportImportConfigurationId, int status)

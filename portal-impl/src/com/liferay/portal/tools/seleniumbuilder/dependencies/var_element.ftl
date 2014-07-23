@@ -53,10 +53,10 @@
 		"contains", "endsWith", "equalsIgnoreBreakLine", "equalsIgnoreCase",
 		"isAlertPresent", "isChecked", "isConfirmation", "isConsoleTextPresent",
 		"isElementNotPresent", "isElementPresent", "isElementPresentAfterWait",
-		"isIgnorableErrorLine", "isLowerCase", "isNotChecked",
-		"isNotPartialText", "isNotText", "isNotValue", "isNotVisible",
-		"isTCatEnabled", "isTextNotPresent", "isTextPresent", "isVisible",
-		"isUpperCase", "matches", "matchesIgnoreCase", "startsWith"
+		"isIgnorableErrorLine", "isLowerCase", "isMobileDeviceEnabled",
+		"isNotChecked", "isNotPartialText", "isNotText", "isNotValue",
+		"isNotVisible", "isTCatEnabled", "isTextNotPresent", "isTextPresent",
+		"isVisible", "isUpperCase", "matches", "matchesIgnoreCase", "startsWith"
 	]>
 
 	<#assign methodName = method?substring(x + 1, y)>

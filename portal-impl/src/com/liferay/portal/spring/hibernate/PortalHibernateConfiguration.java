@@ -15,6 +15,7 @@
 package com.liferay.portal.spring.hibernate;
 
 import com.liferay.portal.dao.orm.hibernate.event.MVCCSynchronizerPostUpdateEventListener;
+import com.liferay.portal.dao.orm.hibernate.event.NestableAutoFlushEventListener;
 import com.liferay.portal.dao.shard.ShardSpringSessionContext;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
@@ -49,6 +50,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.dialect.Dialect;
+import org.hibernate.event.AutoFlushEventListener;
 import org.hibernate.event.EventListeners;
 import org.hibernate.event.PostUpdateEventListener;
 
@@ -181,6 +183,10 @@ public class PortalHibernateConfiguration
 				EventListeners eventListeners =
 					configuration.getEventListeners();
 
+				eventListeners.setAutoFlushEventListeners(
+					new AutoFlushEventListener[] {
+						NestableAutoFlushEventListener.INSTANCE
+					});
 				eventListeners.setPostUpdateEventListeners(
 					new PostUpdateEventListener[] {
 						MVCCSynchronizerPostUpdateEventListener.INSTANCE

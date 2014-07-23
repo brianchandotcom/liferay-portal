@@ -282,20 +282,21 @@ public class UserGroupRoleServiceTest {
 
 	@Test
 	public void testGroupOwnerRemovingGroupAdminRoleByUsers() throws Exception {
-		Group site = GroupTestUtil.addGroup();
+		_group = GroupTestUtil.addGroup();
 
 		Role role = RoleLocalServiceUtil.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
 
-		_subjectUser = UserTestUtil.addGroupOwnerUser(site);
-		_objectUser = UserTestUtil.addGroupAdminUser(site);
+		_subjectUser = UserTestUtil.addGroupOwnerUser(_group);
+		_objectUser = UserTestUtil.addGroupAdminUser(_group);
 
 		deleteUserGroupRolesByUser(
-			site.getGroupId(), role.getRoleId(), _subjectUser, _objectUser);
+			_group.getGroupId(), role.getRoleId(), _subjectUser, _objectUser);
 
 		Assert.assertFalse(
 			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				_objectUser.getUserId(), site.getGroupId(), role.getRoleId()));
+				_objectUser.getUserId(), _group.getGroupId(),
+				role.getRoleId()));
 	}
 
 	@Test

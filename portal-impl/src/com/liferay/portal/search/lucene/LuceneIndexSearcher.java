@@ -566,6 +566,9 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 				Locale locale = queryConfig.getLocale();
 
 				getSnippet(
+					document, query, Field.ASSET_CATEGORY_TITLES, locale,
+					subsetDocument, queryTerms);
+				getSnippet(
 					document, query, Field.CONTENT, locale, subsetDocument,
 					queryTerms);
 				getSnippet(

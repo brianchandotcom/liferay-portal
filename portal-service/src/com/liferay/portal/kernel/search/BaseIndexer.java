@@ -1069,6 +1069,9 @@ public abstract class BaseIndexer implements Indexer {
 		searchQuery.addTerms(Field.KEYWORDS, keywords, searchContext.isLike());
 
 		addSearchExpando(searchQuery, searchContext, keywords);
+		addSearchLocalizedTerm(
+			searchQuery, searchContext, Field.ASSET_CATEGORY_TITLES,
+			searchContext.isLike());
 	}
 
 	protected void addSearchLayout(

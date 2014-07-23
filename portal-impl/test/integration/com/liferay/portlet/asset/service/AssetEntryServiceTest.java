@@ -59,8 +59,6 @@ public class AssetEntryServiceTest {
 
 		AssetTestUtil.addAssetEntry(_group.getGroupId());
 
-		assetEntryQuery = new AssetEntryQuery();
-
 		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
 
 		int actualCount = AssetEntryLocalServiceUtil.getEntriesCount(
@@ -82,8 +80,6 @@ public class AssetEntryServiceTest {
 
 		AssetTestUtil.addAssetEntry(_group.getGroupId());
 
-		assetEntryQuery = new AssetEntryQuery();
-
 		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
 
 		List<AssetEntry> entries = AssetEntryLocalServiceUtil.getEntries(
@@ -103,6 +99,7 @@ public class AssetEntryServiceTest {
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
 		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
+
 		assetEntryQuery.setOrderByCol1("publishDate");
 		assetEntryQuery.setOrderByType1("DESC");
 
@@ -122,6 +119,7 @@ public class AssetEntryServiceTest {
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
 		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
+
 		assetEntryQuery.setOrderByCol1("ratings");
 		assetEntryQuery.setOrderByType1("DESC");
 

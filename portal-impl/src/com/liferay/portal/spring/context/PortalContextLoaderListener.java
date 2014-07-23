@@ -90,8 +90,8 @@ import org.springframework.web.context.ContextLoaderListener;
  */
 public class PortalContextLoaderListener extends ContextLoaderListener {
 
-	public static String getPortalServlerContextName() {
-		return _portalServlerContextName;
+	public static String getPortalServletContextName() {
+		return _portalServletContextName;
 	}
 
 	public static String getPortalServletContextPath() {
@@ -199,16 +199,16 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		final ServletContext servletContext =
 			servletContextEvent.getServletContext();
 
-		_portalServlerContextName = servletContext.getServletContextName();
+		_portalServletContextName = servletContext.getServletContextName();
 
-		if (_portalServlerContextName == null) {
-			_portalServlerContextName = StringPool.BLANK;
+		if (_portalServletContextName == null) {
+			_portalServletContextName = StringPool.BLANK;
 		}
 
 		if (ServerDetector.isJetty() &&
-			_portalServlerContextName.equals(StringPool.SLASH)) {
+			_portalServletContextName.equals(StringPool.SLASH)) {
 
-			_portalServlerContextName = StringPool.BLANK;
+			_portalServletContextName = StringPool.BLANK;
 		}
 
 		_portalServletContextPath = servletContext.getContextPath();
@@ -216,7 +216,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		if (ServerDetector.isWebSphere() &&
 			_portalServletContextPath.isEmpty()) {
 
-			_portalServlerContextName = StringPool.BLANK;
+			_portalServletContextName = StringPool.BLANK;
 		}
 
 		ClassPathUtil.initializeClassPaths(servletContext);
@@ -278,9 +278,9 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
 
-		ClassLoaderPool.register(_portalServlerContextName, portalClassLoader);
+		ClassLoaderPool.register(_portalServletContextName, portalClassLoader);
 
-		ServletContextPool.put(_portalServlerContextName, servletContext);
+		ServletContextPool.put(_portalServletContextName, servletContext);
 
 		BeanLocatorImpl beanLocatorImpl = new BeanLocatorImpl(
 			portalClassLoader, applicationContext);
@@ -359,7 +359,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		PortalContextLoaderListener.class);
 
 	private static Field _filteredPropertyDescriptorsCacheField;
-	private static String _portalServlerContextName = StringPool.BLANK;
+	private static String _portalServletContextName = StringPool.BLANK;
 	private static String _portalServletContextPath = StringPool.SLASH;
 
 	private IndexerPostProcessorRegistry _indexerPostProcessorRegistry;

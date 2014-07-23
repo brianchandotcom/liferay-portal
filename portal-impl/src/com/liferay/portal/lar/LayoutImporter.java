@@ -746,6 +746,11 @@ public class LayoutImporter {
 
 		GroupLocalServiceUtil.updateSite(groupId, true);
 
+		// Page priorities
+
+		updateLayoutPriorities(
+			portletDataContext, layoutElements, privateLayout);
+
 		// Last merge time is updated only if there aren not any modified
 		// layouts
 
@@ -794,11 +799,6 @@ public class LayoutImporter {
 				LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 			}
 		}
-
-		// Page priorities
-
-		updateLayoutPriorities(
-			portletDataContext, layoutElements, privateLayout);
 
 		// Deletion system events
 

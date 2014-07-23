@@ -492,7 +492,12 @@ public class DDMImpl implements DDM {
 			Serializable fieldValue = serviceContext.getAttribute(
 				fieldNameValue);
 
-			if (fieldDataType.equals(FieldConstants.DATE)) {
+			if (DDMImpl.TYPE_CHECKBOX.equals(fieldType) &&
+				Validator.isNull(fieldValue)) {
+
+				fieldValue = "false";
+			}
+			else if (fieldDataType.equals(FieldConstants.DATE)) {
 				int fieldValueMonth = GetterUtil.getInteger(
 					serviceContext.getAttribute(fieldNameValue + "Month"));
 				int fieldValueDay = GetterUtil.getInteger(

@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Igor Spasic
  */
@@ -54,10 +57,7 @@ public class MethodParameter {
 
 		char c = signature.charAt(0);
 
-		if ((c == 'B') || (c == 'C') || (c == 'D') || (c == 'F') ||
-			(c == 'I') || (c == 'J') || (c == 'S') || (c == 'V') ||
-			(c == 'Z')) {
-
+		if (_isPrimitive(c)) {
 			if (signature.length() != 1) {
 				throw new IllegalArgumentException("Invalid: " + signature);
 			}
@@ -68,9 +68,6 @@ public class MethodParameter {
 		}
 		else if (c == '[') {
 			className = className.replace('/', '.');
-		}
-		else if (signature.equals(StringPool.STAR)) {
-			className = Object.class.getName();
 		}
 		else {
 			throw new IllegalArgumentException(
@@ -146,15 +143,16 @@ public class MethodParameter {
 		String generics = signatures.substring(
 			leftBracketIndex + 1, rightBracketIndex);
 
-		Class<?>[] genericTypes =
-			new Class<?>[StringUtil.count(generics, StringPool.SEMICOLON) + 1];
+		List<Class<?>> genericTypeslist = new ArrayList<>();
 
-		StringBundler sb = new StringBundler(generics.length());
-
-		int count = 0;
 		int level = 0;
+		int index = 0;
 
-		for (char c : generics.toCharArray()) {
+		while (index < generics.length()) {
+			char c = generics.charAt(index);
+
+			index++;
+
 			if (c == CharPool.LESS_THAN) {
 				level++;
 			}
@@ -162,35 +160,60 @@ public class MethodParameter {
 				level--;
 			}
 			else if (level == 0) {
-				sb.append(c);
+				String extractedTopLevelGenericName = null;
 
-				if (c == CharPool.SEMICOLON) {
-					String extractedTopLevelGenericName = _getGenericName(
-						sb.toString());
+				if (c == 'L') {
+					int endIndex = generics.indexOf(';', index) + 1;
 
-					if (Validator.isNotNull(extractedTopLevelGenericName)) {
-						genericTypes[count] = _getGenericType(
-							extractedTopLevelGenericName);
+					extractedTopLevelGenericName = _getGenericName(
+						generics.substring(index - 1, endIndex));
+
+					index = endIndex;
+				}
+				else if (c == '[') {
+					char nextChar = generics.charAt(index);
+
+					if (_isPrimitive(nextChar)) {
+						extractedTopLevelGenericName = _getGenericName(
+							generics.substring(index - 1, index + 1));
+
+						index++;
 					}
+					else if (nextChar == 'L') {
+						int endIndex = generics.indexOf(';', index) + 1;
 
-					sb.setIndex(0);
+						extractedTopLevelGenericName = _getGenericName(
+							generics.substring(index - 1, endIndex));
 
-					count++;
+						index = endIndex;
+					}
+				}
+
+				if (extractedTopLevelGenericName != null) {
+					if (Validator.isNotNull(extractedTopLevelGenericName)) {
+						genericTypeslist.add(
+							_getGenericType(extractedTopLevelGenericName));
+					}
 				}
 			}
 		}
 
-		if (sb.length() > 0) {
-			String extractedTopLevelGenericName = _getGenericName(
-				sb.toString());
-
-			if (Validator.isNotNull(extractedTopLevelGenericName)) {
-				genericTypes[count] = _getGenericType(
-					extractedTopLevelGenericName);
-			}
+		if (genericTypeslist.isEmpty()) {
+			return null;
 		}
 
-		return genericTypes;
+		return genericTypeslist.toArray(new Class<?>[genericTypeslist.size()]);
+	}
+
+	private static boolean _isPrimitive(char c) {
+		if ((c == 'B') || (c == 'C') || (c == 'D') || (c == 'F') ||
+			(c == 'I') || (c == 'J') || (c == 'S') || (c == 'V') ||
+			(c == 'Z')) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	private ClassLoader _contextClassLoader;

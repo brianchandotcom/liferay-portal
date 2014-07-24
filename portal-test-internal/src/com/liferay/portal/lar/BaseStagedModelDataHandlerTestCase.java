@@ -299,6 +299,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		portletDataContext.setImportDataRootElement(rootElement);
 
+		portletDataContext.setSourceCompanyId(stagingGroup.getCompanyId());
+
 		Group sourceCompanyGroup = GroupLocalServiceUtil.getCompanyGroup(
 			stagingGroup.getCompanyId());
 

@@ -63,6 +63,13 @@ public class ExportImportPathUtil {
 	 */
 	public static final String PATH_PREFIX_SERVICE = "service";
 
+	public static String getCompanyModelPath(
+		long companyId, String className, long classPK) {
+
+		return getModelPath(
+			PATH_PREFIX_COMPANY, companyId, className, classPK, null);
+	}
+
 	/**
 	 * Returns the expando-specific path for the entity path. The entity path
 	 * must include an XML file.

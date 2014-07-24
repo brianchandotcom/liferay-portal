@@ -46,8 +46,12 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 			long repositoryId, long classNameId)
 		throws PortalException {
 
-		Repository repository = createExternalRepositoryImpl(
-			repositoryId, classNameId);
+		RepositoryCreator externalRepositoryCreator =
+			getExternalRepositoryCreator();
+
+		Repository repository = externalRepositoryCreator.createRepository(
+			repositoryId);
+		
 		Map<Class<? extends Capability>, Capability>
 			externalSupportedCapabilities = getExternalSupportedCapabilities();
 		Set<Class<? extends Capability>> externalExportedCapabilityClasses =

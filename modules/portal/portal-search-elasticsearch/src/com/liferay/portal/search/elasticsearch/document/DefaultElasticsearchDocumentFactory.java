@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -73,9 +75,13 @@ public class DefaultElasticsearchDocumentFactory
 				valuesList.add(value.trim());
 			}
 
-			if (!valuesList.isEmpty()) {
-				xContentBuilder.field(name, field.getValues());
+			if (valuesList.isEmpty()) {
+				return;
 			}
+
+			doAddField(
+				xContentBuilder, field, name,
+				valuesList.toArray(new String[valuesList.size()]));
 		}
 		else {
 			Map<Locale, String> localizedValues = field.getLocalizedValues();
@@ -95,13 +101,13 @@ public class DefaultElasticsearchDocumentFactory
 					LocaleUtil.getDefault());
 
 				if (languageId.equals(defaultLanguageId)) {
-					xContentBuilder.field(name, value.trim());
+					doAddField(xContentBuilder, field, name, value.trim());
 				}
 
 				String localizedName = DocumentImpl.getLocalizedName(
 					languageId, name);
 
-				xContentBuilder.field(localizedName, value.trim());
+				doAddField(xContentBuilder, field, localizedName, value.trim());
 			}
 		}
 	}
@@ -142,6 +148,54 @@ public class DefaultElasticsearchDocumentFactory
 		}
 		else {
 			xContentBuilder.endObject();
+		}
+	}
+
+	protected void doAddField(
+			XContentBuilder xContentBuilder, Field field, String fieldName,
+			String... values)
+		throws IOException {
+
+		xContentBuilder.field(fieldName);
+
+		if (field.isArray() || (values.length > 1)) {
+			xContentBuilder.startArray();
+		}
+
+		for (String value : values) {
+			xContentBuilder.value(translateValue(field, value));
+		}
+
+		if (field.isArray() || (values.length > 1)) {
+			xContentBuilder.endArray();
+		}
+	}
+
+	protected Object translateValue(Field field, String value) {
+		if (!field.isNumeric()) {
+			return value;
+		}
+		else {
+			Class numericClass = field.getNumericClass();
+
+			if (numericClass.equals(BigDecimal.class)) {
+				return new BigDecimal(value);
+			}
+			else if (numericClass.equals(Double.class)) {
+				return Double.valueOf(value);
+			}
+			else if (numericClass.equals(Float.class)) {
+				return Float.valueOf(value);
+			}
+			else if (numericClass.equals(Integer.class)) {
+				return Integer.valueOf(value);
+			}
+			else if (numericClass.equals(Short.class)) {
+				return Short.valueOf(value);
+			}
+			else {
+				return Long.valueOf(value);
+			}
 		}
 	}
 

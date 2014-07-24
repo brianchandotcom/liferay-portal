@@ -194,7 +194,9 @@ public class BundleServletContext
 			_log.info("The service has already been unregistered");
 		}
 
-		FileUtil.deltree(_tempDir);
+		if (_tempDir != null) {
+			FileUtil.deltree(_tempDir);
+		}
 	}
 
 	@Override

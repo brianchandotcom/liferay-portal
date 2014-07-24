@@ -8,7 +8,7 @@ forScopeVariables.putAll(executeScopeVariables);
 
 if (!RuntimeVariables.evaluateVariable("${forList}", executeScopeVariables).equals("")) {
 	for (String ${forParam} : RuntimeVariables.evaluateVariable("${forList}", executeScopeVariables).split(",")) {
-		forScopeVariables.put("${forParam}", ${forParam});
+		forScopeVariables.put("${forParam?trim}", ${forParam});
 
 		<#assign void = forParameterStack.push("${forParam}")>
 

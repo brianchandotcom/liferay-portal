@@ -109,6 +109,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTACTS_LINK</td>
+	<td>//div[contains(@class,'contacts-count contacts')]/div/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -23,6 +23,7 @@ import org.pegdown.LinkRenderer;
 import org.pegdown.ToHtmlSerializer;
 import org.pegdown.ast.HeaderNode;
 import org.pegdown.ast.Node;
+import org.pegdown.ast.ParaNode;
 import org.pegdown.ast.SuperNode;
 import org.pegdown.ast.TextNode;
 
@@ -104,9 +105,9 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 		String alt = sidebarNode.getAlt();
 
 		if (alt.equalsIgnoreCase("note")) {
-			printer.print("<div class=\"sidebar\">");
+			printer.print("<div class=\"sidebar-note\">");
 			printer.print("<div class=\"sidebar-note-image\"></div>");
-			printer.print("<div class=\"sidebar-note-paragraph\">");
+			printer.print("<div class=\"sidebar-note-text\">");
 
 			visitChildren(sidebarNode);
 
@@ -114,9 +115,9 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 			printer.print("</div>");
 		}
 		else if (alt.equalsIgnoreCase("tip")) {
-			printer.print("<div class=\"sidebar\">");
+			printer.print("<div class=\"sidebar-tip\">");
 			printer.print("<div class=\"sidebar-tip-image\"></div>");
-			printer.print("<div class=\"sidebar-tip-paragraph\">");
+			printer.print("<div class=\"sidebar-tip-text\">");
 
 			visitChildren(sidebarNode);
 
@@ -124,9 +125,9 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 			printer.print("</div>");
 		}
 		else if (alt.equalsIgnoreCase("warning")) {
-			printer.print("<div class=\"sidebar\">");
+			printer.print("<div class=\"sidebar-warning\">");
 			printer.print("<div class=\"sidebar-warning-image\"></div>");
-			printer.print("<div class=\"sidebar-warning-paragraph\">");
+			printer.print("<div class=\"sidebar-warning-text\">");
 
 			visitChildren(sidebarNode);
 
@@ -145,5 +146,70 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 			printer.print("</p>");
 		}
 	}
+	
+	@Override
+	public void visit(TextNode node) {
+		String text = node.getText();
+		
+		if (text.equals("$beginSBnote$")) {
+			printer.print("<div class=\"sidebar-note\">");
+			printer.print("<div class=\"sidebar-note-image\"></div>");
+			printer.print("<div class=\"sidebar-note-text\">");
+		}
+		else if (text.equals("$beginSBtip$")) {
+			printer.print("<div class=\"sidebar-tip\">");
+			printer.print("<div class=\"sidebar-tip-image\"></div>");
+			printer.print("<div class=\"sidebar-tip-text\">");
+		}
+		else if (text.equals("$beginSBwarning$")) {
+			printer.print("<div class=\"sidebar-warning\">");
+			printer.print("<div class=\"sidebar-warning-image\"></div>");
+			printer.print("<div class=\"sidebar-warning-text\">");
+		}
+		else if (text.equals("$endSBnote$")
+				|| text.equals("$endSBtip$")
+				|| text.equals("$endSBwarning$")) {
+			printer.print("</div></div>");
+		}
+		else if (abbreviations.isEmpty()) {
+			printer.print(text);
+		}
+		else {
+			printWithAbbreviations(text);
+		}
+	}
+
+	@Override
+    public void visit(ParaNode node) {
+		List<Node> childNodes = node.getChildren();
+		
+		boolean print = true;
+		
+		for (Node childNode : childNodes) {
+			List<Node> secondLevelChildNodes = childNode.getChildren();
+			
+			for (Node secondLevelChildNode : secondLevelChildNodes) {	
+				if (secondLevelChildNode instanceof TextNode) {
+					TextNode textNode = (TextNode)secondLevelChildNode;
+					
+					String text = textNode.getText();
+					
+					if (text.equals("$beginSBnote$")
+							|| text.equals("$beginSBtip$")
+							|| text.equals("$beginSBwarning$")
+							|| text.equals("$endSBnote$")
+							|| text.equals("$endSBtip$")
+							|| text.equals("$endSBwarning$")) {
+						visitChildren(node);
+						print = false;
+					}
+				}
+			}
+		}
+		
+		if (print) {
+			printTag(node, "p");
+		}
+    }
 
 }

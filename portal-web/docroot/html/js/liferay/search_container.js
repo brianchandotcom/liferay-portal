@@ -82,6 +82,19 @@ AUI.add(
 						var contentBox = instance.get('contentBox');
 
 						instance._dataStore = A.one('#' + id + 'PrimaryKeys');
+
+						if (instance._dataStore) {
+							var dataStoreForm = instance._dataStore.attr('form');
+
+							if (dataStoreForm) {
+								var method = dataStoreForm.attr('method').toLowerCase();
+
+								if (method && method == 'get') {
+									instance._dataStore = null;
+								}
+							}
+						}
+
 						instance._table = contentBox.one('table');
 						instance._parentContainer = contentBox.ancestor('.lfr-search-container');
 

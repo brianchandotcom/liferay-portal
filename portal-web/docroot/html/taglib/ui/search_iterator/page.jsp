@@ -343,9 +343,7 @@ List<String> primaryKeys = new ArrayList<String>();
 </c:if>
 
 <c:if test="<%= Validator.isNotNull(id) %>">
-	<c:if test="<%= (rowChecker != null) %>">
-		<input id="<%= namespace + id %>PrimaryKeys" name="<%= namespace + id %>PrimaryKeys" type="hidden" value="<%= StringUtil.merge(primaryKeys) %>" />
-	</c:if>
+	<input id="<%= namespace + id %>PrimaryKeys" name="<%= namespace + id %>PrimaryKeys" type="hidden" value="" />
 
 	<aui:script use="liferay-search-container">
 		var searchContainer = new Liferay.SearchContainer(
@@ -360,9 +358,7 @@ List<String> primaryKeys = new ArrayList<String>();
 			}
 		).render();
 
-		<c:if test="<%= (rowChecker == null) %>">
-			searchContainer.updateDataStore('<%= StringUtil.merge(primaryKeys) %>');
-		</c:if>
+		searchContainer.updateDataStore('<%= StringUtil.merge(primaryKeys) %>');
 	</aui:script>
 </c:if>
 

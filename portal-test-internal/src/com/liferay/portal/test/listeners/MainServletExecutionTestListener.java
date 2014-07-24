@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.servlet.MainServlet;
+import com.liferay.portal.test.mock.AutoDeployMockServletContext;
 import com.liferay.portal.test.rule.DeleteAfterTestRunRule;
 import com.liferay.portal.util.test.TestPropsValues;
 
@@ -72,8 +73,7 @@ public class MainServletExecutionTestListener
 		}
 
 		MockServletContext mockServletContext =
-			new AutoDeployMockServletContext(
-				getResourceBasePath(), new FileSystemResourceLoader());
+			new AutoDeployMockServletContext(new FileSystemResourceLoader());
 
 		ServletContextPool.put(StringPool.BLANK, mockServletContext);
 
@@ -91,28 +91,7 @@ public class MainServletExecutionTestListener
 		}
 	}
 
-	protected String getResourceBasePath() {
-		File file = new File("portal-web/docroot");
-
-		return "file:" + file.getAbsolutePath();
-	}
-
 	protected static MainServlet mainServlet;
-
-	protected class AutoDeployMockServletContext extends MockServletContext {
-
-		public AutoDeployMockServletContext(
-			String resourceBasePath, ResourceLoader resourceLoader) {
-
-			super(resourceBasePath, resourceLoader);
-		}
-
-		/**
-		 * @see com.liferay.portal.server.capabilities.TomcatServerCapabilities
-		 */
-		protected Boolean autoDeploy = Boolean.TRUE;
-
-	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		MainServletExecutionTestListener.class);

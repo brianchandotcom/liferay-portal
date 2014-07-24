@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
+import com.liferay.portal.test.mock.AutoDeployMockServletContext;
 import com.liferay.portal.test.runners.PACLIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
 
@@ -83,7 +84,7 @@ public class PACLExecutionTestListener
 
 		if (servletContext == null) {
 			servletContext = new AutoDeployMockServletContext(
-				getResourceBasePath(), new FileSystemResourceLoader());
+				new FileSystemResourceLoader());
 
 			servletContext.setAttribute(
 				InvokerFilterHelper.class.getName(), new InvokerFilterHelper());

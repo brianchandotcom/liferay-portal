@@ -1573,6 +1573,20 @@ hw.keyboard=yes
 	<target name="prepare-portal-ext-properties" depends="generate-test-properties">
 		<prepare-fix-pack-bundle />
 
+		<if>
+			<os family="unix" />
+			<then>
+				<exec executable="/bin/bash" os="${os.unix}" outputproperty="ipv4.address">
+					<arg value="-c" />
+					<arg value="ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'" />
+				</exec>
+			</then>
+			<else>
+				<hostinfo prefix="host.info" host="${env.COMPUTERNAME}.local" />
+				<property name="ipv4.address" value="${host.info.ADDR4}" />
+			</else>
+		</if>
+
 		<echo file="portal-impl/src/portal-ext.properties">liferay.home=${liferay.home}
 
 plugin.notifications.enabled=false
@@ -1596,7 +1610,9 @@ mail.session.jndi.name=
 
 axis.servlet.hosts.allowed=
 
-tunnel.servlet.hosts.allowed=</echo>
+tunnel.servlet.hosts.allowed=
+
+virtual.hosts.valid.hosts=${ipv4.address}</echo>
 
 		<if>
 			<equals arg1="${cluster.enabled}" arg2="true" />

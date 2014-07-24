@@ -17,7 +17,8 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
+long groupId = ParamUtil.getLong(request, "groupId");
+String articleId = ParamUtil.getString(request, "articleId");
 
 double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
 String eventName = ParamUtil.getString(request, "eventName", renderResponse.getNamespace() + "selectVersionFm");
@@ -26,8 +27,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/select_version");
 portletURL.setParameter("redirect", currentURL);
-portletURL.setParameter("groupId", String.valueOf(article.getGroupId()));
-portletURL.setParameter("articleId", article.getArticleId());
+portletURL.setParameter("groupId", String.valueOf(groupId));
+portletURL.setParameter("articleId", articleId);
 portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 %>
 
@@ -35,10 +36,10 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 	<liferay-ui:search-container
 		id="journalArticleVersionSearchContainer"
 		iteratorURL="<%= portletURL %>"
-		total="<%= JournalArticleLocalServiceUtil.getArticlesCount(article.getGroupId(), article.getArticleId()) %>"
+		total="<%= JournalArticleLocalServiceUtil.getArticlesCount(groupId, articleId) %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= JournalArticleLocalServiceUtil.getArticles(article.getGroupId(), article.getArticleId(), searchContainer.getStart(), searchContainer.getEnd(), new ArticleVersionComparator()) %>"
+			results="<%= JournalArticleLocalServiceUtil.getArticles(groupId, articleId, searchContainer.getStart(), searchContainer.getEnd(), new ArticleVersionComparator()) %>"
 		/>
 
 		<liferay-ui:search-container-row

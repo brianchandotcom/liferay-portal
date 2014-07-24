@@ -192,19 +192,26 @@ AUI.add(
 						return items[selected];
 					},
 
+					getValue: function(languageId) {
+						var instance = this;
+
+						if (!Lang.isValue(languageId)) {
+							languageId = defaultLanguageId;
+						}
+
+						return instance._getInputLanguage(languageId).val();
+					},
+
 					selectFlag: function(languageId) {
 						var instance = this;
 
 						var inputPlaceholder = instance.get(STR_INPUT_PLACEHOLDER);
 
-						var inputLanguage = instance._getInputLanguage(languageId);
-						var defaultInputLanguage = instance._getInputLanguage(defaultLanguageId);
-
-						var defaultLanguageValue = defaultInputLanguage.val();
+						var defaultLanguageValue = instance.getValue(defaultLanguageId);
 
 						var editor = instance.get('editor');
 
-						inputPlaceholder.val(inputLanguage.val());
+						inputPlaceholder.val(instance.getValue(languageId));
 
 						inputPlaceholder.attr('dir', Liferay.Language.direction[languageId]);
 						inputPlaceholder.attr('placeholder', defaultLanguageValue);

@@ -4761,6 +4761,8 @@ public class JournalArticleLocalServiceImpl
 
 			article.setStatus(WorkflowConstants.STATUS_DRAFT);
 			article.setStatusDate(new Date());
+
+			article.setExpandoBridgeAttributes(oldArticle);
 		}
 		else {
 			article = oldArticle;

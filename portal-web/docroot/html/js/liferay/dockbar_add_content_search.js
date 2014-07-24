@@ -41,6 +41,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-dockbar', 'liferay-dockbar-add-search']
+		requires: ['aui-base', 'liferay-dockbar', 'liferay-search-filter']
 	}
 );

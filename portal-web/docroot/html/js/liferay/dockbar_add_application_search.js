@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-dockbar-add-application-search',
+	'liferay-panel-search',
 	function(A) {
 		var Dockbar = Liferay.Dockbar;
 
@@ -191,6 +191,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-dockbar-add-search']
+		requires: ['aui-base', 'liferay-search-filter']
 	}
 );

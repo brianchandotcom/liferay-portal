@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-dockbar-add-search',
+	'liferay-search-filter',
 	function(A) {
 		var Lang = A.Lang;
 

@@ -1,0 +1,69 @@
+{
+	"LiferayDocumentType": {
+		"properties": {
+			"articleId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"folderId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"id": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"languageId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"leftOrganizationId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"nodeId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"path": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"rightOrganizationId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"treePath": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"uid": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			}
+		},
+		"dynamic_templates": [
+			{
+				"template_ddm": {
+					"match": "ddm*",
+					"match_mapping_type": "string",
+					"mapping": {
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			}
+		]
+	}
+}

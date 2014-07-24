@@ -38,8 +38,11 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 			long repositoryId, long classNameId)
 		throws PortalException {
 
-		Repository repository = createExternalRepositoryImpl(
-			repositoryId, classNameId);
+		RepositoryCreator externalRepositoryCreator =
+			getExternalRepositoryCreator();
+
+		Repository repository = externalRepositoryCreator.createRepository(
+			repositoryId);
 
 		return new CapabilityRepository(
 			repository, getExternalSupportedCapabilities(),

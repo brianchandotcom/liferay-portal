@@ -248,6 +248,7 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.repository.liferayrepository.LiferayRepositoryCreator" class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryCreator" />
+	<bean id="com.liferay.portal.repository.external.ExternalRepositoryCreator" class="com.liferay.portal.repository.external.ExternalRepositoryCreator" />
 	<bean id="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil" class="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil">
 		<property name="sPIRegistry">
 			<bean class="com.liferay.portal.resiliency.spi.SPIRegistryImpl">

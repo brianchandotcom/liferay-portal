@@ -91,6 +91,18 @@ public class MethodParameter {
 		return typeName;
 	}
 
+	private static boolean _isPrimitive(char c) {
+		if ((c == 'B') || (c == 'C') || (c == 'D') || (c == 'F') ||
+			(c == 'I') || (c == 'J') || (c == 'S') || (c == 'V') ||
+			(c == 'Z')) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	private ClassLoader _getContextClassLoader() {
 		if (_contextClassLoader != null) {
 			return _contextClassLoader;
@@ -203,18 +215,6 @@ public class MethodParameter {
 		}
 
 		return genericTypeslist.toArray(new Class<?>[genericTypeslist.size()]);
-	}
-
-	private static boolean _isPrimitive(char c) {
-		if ((c == 'B') || (c == 'C') || (c == 'D') || (c == 'F') ||
-			(c == 'I') || (c == 'J') || (c == 'S') || (c == 'V') ||
-			(c == 'Z')) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	private ClassLoader _contextClassLoader;

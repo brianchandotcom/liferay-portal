@@ -59,9 +59,6 @@
 	<bean id="destination.message_boards_mailing_list" class="com.liferay.portal.kernel.messaging.ParallelDestination">
 		<property name="name" value="liferay/message_boards_mailing_list" />
 	</bean>
-	<bean id="destination.push_notification" class="com.liferay.portal.kernel.messaging.SerialDestination">
-		<property name="name" value="liferay/push_notification" />
-	</bean>
 	<bean id="destination.subscription_clean_up" class="com.liferay.portal.kernel.messaging.ParallelDestination">
 		<property name="name" value="liferay/subscription_clean_up" />
 	</bean>
@@ -139,7 +136,6 @@
 				<ref bean="destination.live_users" />
 				<ref bean="destination.marketplace" />
 				<ref bean="destination.message_boards_mailing_list" />
-				<ref bean="destination.push_notification" />
 				<ref bean="destination.subscription_clean_up" />
 				<ref bean="destination.subscription_sender" />
 			</list>

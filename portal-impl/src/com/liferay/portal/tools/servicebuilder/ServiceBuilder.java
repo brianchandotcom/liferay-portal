@@ -315,6 +315,7 @@ public class ServiceBuilder {
 				"\t-Dservice.tpl.persistence=" + _TPL_ROOT + "persistence.ftl\n"+
 				"\t-Dservice.tpl.persistence_impl=" + _TPL_ROOT + "persistence_impl.ftl\n"+
 				"\t-Dservice.tpl.persistence_util=" + _TPL_ROOT + "persistence_util.ftl\n"+
+				"\t-Dservice.tpl.module_service_props_util=" + _TPL_ROOT + "module_service_props_util.ftl.ftl\n"+
 				"\t-Dservice.tpl.props=" + _TPL_ROOT + "props.ftl\n"+
 				"\t-Dservice.tpl.remoting_xml=" + _TPL_ROOT + "remoting_xml.ftl\n"+
 				"\t-Dservice.tpl.service=" + _TPL_ROOT + "service.ftl\n"+
@@ -561,6 +562,8 @@ public class ServiceBuilder {
 			"persistence_impl", _tplPersistenceImpl);
 		_tplPersistenceUtil = _getTplProperty(
 			"persistence_util", _tplPersistenceUtil);
+		_tplModuleServiceProps = _getTplProperty(
+			"module_service_props_util", _tplModuleServiceProps);
 		_tplProps = _getTplProperty("props", _tplProps);
 		_tplRemotingXml = _getTplProperty("remoting_xml", _tplRemotingXml);
 		_tplService = _getTplProperty("service", _tplService);
@@ -698,6 +701,8 @@ public class ServiceBuilder {
 
 			_ejbList = new ArrayList<Entity>();
 			_entityMappings = new HashMap<String, EntityMapping>();
+
+			_createModuleServicePropsUtil();
 
 			List<Element> entityElements = rootElement.elements("entity");
 
@@ -2509,6 +2514,33 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/model/" + entity.getName() + "Wrapper.java");
 
 		writeFile(modelFile, content, _author);
+	}
+
+	private void _createModuleServicePropsUtil() throws Exception {
+		if (Validator.isNull(_osgiModule)) {
+			return;
+		}
+
+		File file = new File(
+			_implDir + "/" + StringUtil.replace(_propsUtil, ".", "/")
+				+ ".java");
+
+		if (file.exists()) {
+			return;
+		}
+
+		Map<String, Object> context = _getContext();
+
+		int indexOf = _propsUtil.lastIndexOf(".");
+
+		context.put(
+			"moduleServicePropsUtilClass", _propsUtil.substring(indexOf + 1));
+		context.put(
+			"moduleServicePropsUtilPackage", _propsUtil.substring(0, indexOf));
+
+		String content = _processTemplate(_tplModuleServiceProps, context);
+
+		writeFile(file, content);
 	}
 
 	private void _createPersistence(Entity entity) throws Exception {
@@ -5207,6 +5239,8 @@ public class ServiceBuilder {
 	private String _tplModelImpl = _TPL_ROOT + "model_impl.ftl";
 	private String _tplModelSoap = _TPL_ROOT + "model_soap.ftl";
 	private String _tplModelWrapper = _TPL_ROOT + "model_wrapper.ftl";
+	private String _tplModuleServiceProps =
+		_TPL_ROOT + "module_service_props_util.ftl";
 	private String _tplPersistence = _TPL_ROOT + "persistence.ftl";
 	private String _tplPersistenceImpl = _TPL_ROOT + "persistence_impl.ftl";
 	private String _tplPersistenceTest = _TPL_ROOT + "persistence_test.ftl";

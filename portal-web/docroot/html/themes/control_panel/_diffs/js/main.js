@@ -6,6 +6,7 @@ if (!themeDisplay.isStatePopUp()) {
 		'aui-live-search-deprecated',
 		'aui-overlay-context-panel-deprecated',
 		'event-mouseenter',
+		'liferay-dockbar-add-application-search',
 		'liferay-message',
 		'liferay-store',
 		'node-focusmanager',
@@ -145,44 +146,15 @@ if (!themeDisplay.isStatePopUp()) {
 				_createLiveSearch: function() {
 					var instance = this;
 
-					var searchPanelInput = instance._searchPanelInput;
-
-					var liveSearch = new A.LiveSearch(
+					new Liferay.PanelSearch(
 						{
-							data: function(node) {
-								return node.text();
-							},
-
-							after: {
-								search: function(event) {
-									instance._searchActive = true;
-
-									instance._refreshFocusManagerTask();
-
-									if (!trim(liveSearch.get('searchValue'))) {
-										body.removeClass(CSS_SEARCH_PANEL_ACTIVE);
-
-										instance._searchActive = false;
-									}
-								}
-							},
-
-							input: searchPanelInput,
-							nodes: SELECTOR_SEARCH_NODES,
-
-							on: {
-								search: function(event) {
-									if (trim(liveSearch.get('searchValue'))) {
-										body.addClass(CSS_SEARCH_PANEL_ACTIVE);
-
-										instance._searchActive = true;
-									}
-								}
-							}
+							categorySelector: '.panel-page-category',
+							inputNode: instance._searchPanelInput,
+							nodeList: '#controlPanelMenuAddContentPanelContainer',
+							nodeSelector: 'li',
+							togglerId: '_160_controlPanelMenuAddContentPanelContainer'
 						}
 					);
-
-					instance._liveSearch = liveSearch;
 				},
 
 				_focusSearchBar: function(event) {

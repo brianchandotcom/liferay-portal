@@ -3,8 +3,6 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var Dockbar = Liferay.Dockbar;
-
 		var SearchImpl = A.Component.create (
 			{
 				AUGMENTS: [A.AutoCompleteBase],
@@ -24,16 +22,20 @@ AUI.add(
 			}
 		);
 
-		var AddSearch = A.Component.create(
+		var SearchFilter = A.Component.create(
 			{
-				EXTENDS: SearchImpl,
-
-				NAME: 'addsearch',
-
 				ATTRS: {
 					minQueryLength: {
 						validator: Lang.isNumber,
 						value: 0
+					},
+
+					nodeList: {
+						setter: A.one
+					},
+
+					nodeSelector: {
+						validator: Lang.isString
 					},
 
 					queryDelay: {
@@ -49,15 +51,57 @@ AUI.add(
 					resultTextLocator: {
 						setter: '_setLocator',
 						value: 'search'
+					},
+
+					searchDataLocator: {
+						value: 'data-search'
+					}
+				},
+
+				EXTENDS: SearchImpl,
+
+				NAME: 'searchfilter',
+
+				prototype: {
+					initializer: function(config) {
+						var instance = this;
+
+						var nodeList = instance.get('nodeList');
+
+						if (nodeList) {
+							var nodeSelector = instance.get('nodeSelector');
+
+							var nodes = nodeList.all(nodeSelector);
+
+							var searchDataLocator = instance.get('searchDataLocator');
+
+							var searchData = [];
+
+							nodes.each(
+								function(item, index) {
+									searchData.push(
+										{
+											node: item,
+											search: item.attr(searchDataLocator)
+										}
+									);
+								}
+							);
+
+							instance.set('source', searchData);
+
+							instance._nodes = nodes;
+							instance._searchData = searchData;
+						}
 					}
 				}
 			}
 		);
 
-		Dockbar.AddSearch = AddSearch;
+		Liferay.SearchFilter = SearchFilter;
 	},
 	'',
 	{
-		requires: ['aui-base', 'autocomplete-base', 'autocomplete-filters', 'liferay-dockbar']
+		requires: ['aui-base', 'autocomplete-base', 'autocomplete-filters']
 	}
 );

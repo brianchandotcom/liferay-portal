@@ -3,163 +3,194 @@ AUI.add(
 	function(A) {
 		var Dockbar = Liferay.Dockbar;
 
-		var AddSearch = Dockbar.AddSearch;
+		var Lang = A.Lang;
 
-		var CSS_LFR_CONTENT_ITEM_SELECTOR = '.lfr-content-item';
+		var PanelSearch = A.Component.create(
+			{
+				ATTRS: {
+					categorySelector: {
+						validator: Lang.isString
+					},
 
-		var CSS_LFR_CATEGORY_CONTAINER = 'lfr-add-content';
+					inputNode: {
+						setter: A.one
+					},
 
-		var CSS_LFR_CATEGORY_CONTAINER_SELECTOR = '.' + CSS_LFR_CATEGORY_CONTAINER;
+					nodeContainerSelector: {
+						validator: Lang.isString
+					},
 
-		var CSS_LFR_CONTENT_CATEGORY = 'lfr-content-category';
+					nodeList: {
+						setter: A.one
+					},
 
-		var CSS_LFR_CONTENT_CATEGORY_SELECTOR = '.' + CSS_LFR_CONTENT_CATEGORY;
-
-		var STR_NODES = 'nodes';
-
-		var AddApplicationSearch = function() {
-		};
-
-		AddApplicationSearch.prototype = {
-			initializer: function(config) {
-				var instance = this;
-
-				var namespace = config.namespace || '';
-
-				var nodeList = instance.get('nodeList');
-
-				instance._categories = nodeList.all(CSS_LFR_CONTENT_CATEGORY_SELECTOR);
-				instance._categoryContainers = nodeList.all(CSS_LFR_CATEGORY_CONTAINER_SELECTOR);
-				instance._togglerDelegate = Liferay.component(namespace + 'addApplicationPanelContainer');
-
-				var applicationSearch = new AddSearch(
-					{
-						inputNode: instance.get('inputNode'),
-						source: instance.get('searchData')
+					nodeSelector: {
+						validator: Lang.isString
 					}
-				);
+				},
 
-				instance._search = applicationSearch;
+				EXTENDS: A.Base,
 
-				instance._bindUISearch();
-			},
+				NAME: 'panelsearch',
 
-			_bindUISearch: function() {
-				var instance = this;
+				prototype: {
+					initializer: function(config) {
+						var instance = this;
 
-				instance._eventHandles = instance._eventHandles || [];
+						var nodeList = instance.get('nodeList');
 
-				instance._eventHandles.push(
-					instance._search.on('results', instance._updateList, instance),
-					instance.get('inputNode').on('keydown', instance._onSearchInputKeyDown, instance)
-				);
-			},
+						instance._categories = nodeList.all(instance.get('categorySelector'));
 
-			_onSearchInputKeyDown: function(event) {
-				if (event.isKey('ENTER')) {
-					event.halt();
-				}
-			},
+						instance._togglerDelegate = Liferay.component(config.togglerId);
 
-			_setItemsVisibility: function(visible) {
-				var instance = this;
-
-				instance.get(STR_NODES).each(
-					function(item, index) {
-						var contentItem = item.ancestor(CSS_LFR_CONTENT_ITEM_SELECTOR);
-
-						if (contentItem) {
-							contentItem.toggle(visible);
-						}
-					}
-				);
-			},
-
-			_updateList: function(event) {
-				var instance = this;
-
-				instance._togglerDelegate.createAll();
-
-				var query = event.query;
-
-				if (!instance._collapsedCategories) {
-					instance._collapsedCategories = [];
-
-					instance._categories.each(
-						function(item, index) {
-							var header = item.one('.toggler-header');
-
-							if (header && header.hasClass('toggler-header-collapsed')) {
-								instance._collapsedCategories.push(item);
-							}
-						}
-					);
-				}
-
-				if (!query) {
-					instance._categoryContainers.show();
-
-					instance._setItemsVisibility(true);
-
-					if (instance._collapsedCategories) {
-						A.each(
-							instance._collapsedCategories,
-							function(item, index) {
-								var categoryIndex = instance._categories.indexOf(item);
-
-								var togglerItems = instance._togglerDelegate.items;
-
-								togglerItems[categoryIndex].collapse(
-									{
-										silent: true
-									}
-								);
+						var applicationSearch = new Liferay.SearchFilter(
+							{
+								inputNode: instance.get('inputNode'),
+								nodeList: nodeList,
+								nodeSelector: instance.get('nodeSelector')
 							}
 						);
 
-						instance._collapsedCategories = null;
-					}
-				}
-				else {
-					if (query === '*') {
-						instance._categoryContainers.show();
+						instance._nodes = applicationSearch._nodes;
+						instance._search = applicationSearch;
 
-						instance._setItemsVisibility(true);
-					}
-					else {
-						instance._categoryContainers.hide();
+						instance._bindUISearch();
+					},
 
-						instance._setItemsVisibility(false);
+					_bindUISearch: function() {
+						var instance = this;
 
-						A.each(
-							event.results,
+						instance._eventHandles = instance._eventHandles || [];
+
+						instance._eventHandles.push(
+							instance._search.on('results', instance._updateList, instance),
+							instance.get('inputNode').on('keydown', instance._onSearchInputKeyDown, instance)
+						);
+					},
+
+					_onSearchInputKeyDown: function(event) {
+						if (event.isKey('ENTER')) {
+							event.halt();
+						}
+					},
+
+					_setItemsVisibility: function(visible) {
+						var instance = this;
+
+						instance._nodes.each(
 							function(item, index) {
-								var node = item.raw.node;
+								var contentItem = item;
 
-								node.ancestor(CSS_LFR_CONTENT_ITEM_SELECTOR).show();
+								var nodeContainerSelector = instance.get('nodeContainerSelector');
 
-								var contentParent = node.ancestorsByClassName(CSS_LFR_CATEGORY_CONTAINER);
+								if (nodeContainerSelector) {
+									contentItem = item.ancestor(nodeContainerSelector);
+								}
 
-								if (contentParent) {
-									contentParent.show();
+								if (contentItem) {
+									contentItem.toggle(visible);
 								}
 							}
 						);
-					}
+					},
 
-					instance._togglerDelegate.expandAll(
-						{
-							silent: true
+					_updateList: function(event) {
+						var instance = this;
+
+						instance._togglerDelegate.createAll();
+
+						var categories = instance._categories;
+
+						var query = event.query;
+
+						if (!instance._collapsedCategories) {
+							instance._collapsedCategories = [];
+
+							categories.each(
+								function(item, index) {
+									var header = item.one('.toggler-header');
+
+									if (header && header.hasClass('toggler-header-collapsed')) {
+										instance._collapsedCategories.push(item);
+									}
+								}
+							);
 						}
-					);
+
+						if (!query) {
+							categories.show();
+
+							instance._setItemsVisibility(true);
+
+							if (instance._collapsedCategories) {
+								A.each(
+									instance._collapsedCategories,
+									function(item, index) {
+										var categoryIndex = categories.indexOf(item);
+
+										var togglerItems = instance._togglerDelegate.items;
+
+										togglerItems[categoryIndex].collapse(
+											{
+												silent: true
+											}
+										);
+									}
+								);
+
+								instance._collapsedCategories = null;
+							}
+						}
+						else {
+							if (query === '*') {
+								categories.show();
+
+								instance._setItemsVisibility(true);
+							}
+							else {
+								categories.hide();
+
+								instance._setItemsVisibility(false);
+
+								A.each(
+									event.results,
+									function(item, index) {
+										var node = item.raw.node;
+
+										var nodeContainerSelector = instance.get('nodeContainerSelector');
+
+										if (nodeContainerSelector) {
+											node = node.ancestor(nodeContainerSelector);
+										}
+
+										if (node) {
+											node.show();
+										}
+
+										var contentParent = node.ancestorsByClassName(instance.get('categorySelector'));
+
+										if (contentParent) {
+											contentParent.show();
+										}
+									}
+								);
+							}
+
+							instance._togglerDelegate.expandAll(
+								{
+									silent: true
+								}
+							);
+						}
+					}
 				}
 			}
-		};
+		);
 
-		Dockbar.AddApplicationSearch = AddApplicationSearch;
+		Liferay.PanelSearch = PanelSearch;
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-dockbar', 'liferay-dockbar-add-search']
+		requires: ['aui-base', 'liferay-dockbar-add-search']
 	}
 );

@@ -110,7 +110,7 @@ public class DocumentImpl implements Document {
 
 		String sortableFieldName = getSortableFieldName(name);
 
-		Field field = _createField(sortableFieldName, datesTime);
+		Field field = createField(sortableFieldName, datesTime);
 
 		field.setNumeric(true);
 		field.setNumericClass(Long.class);
@@ -318,7 +318,7 @@ public class DocumentImpl implements Document {
 			value = StringUtil.toLowerCase(value);
 		}
 
-		Field field = _createField(name, value);
+		Field field = createField(name, value);
 
 		for (String fieldName : Field.UNSCORED_FIELD_NAMES) {
 			if (StringUtil.equalsIgnoreCase(name, fieldName)) {
@@ -333,7 +333,7 @@ public class DocumentImpl implements Document {
 			return;
 		}
 
-		_createField(name, values);
+		createField(name, values);
 	}
 
 	@Override
@@ -363,7 +363,7 @@ public class DocumentImpl implements Document {
 			values = lowerCaseValues;
 		}
 
-		_createField(name, values);
+		createField(name, values);
 	}
 
 	@Override
@@ -372,7 +372,7 @@ public class DocumentImpl implements Document {
 			return;
 		}
 
-		Field field = _createField(name, values);
+		Field field = createField(name, values);
 
 		field.setTokenized(true);
 	}
@@ -504,7 +504,7 @@ public class DocumentImpl implements Document {
 
 		String sortableFieldName = getSortableFieldName(name);
 
-		Field field = _createField(sortableFieldName, values);
+		Field field = createField(sortableFieldName, values);
 
 		field.setNumeric(true);
 		field.setNumericClass(clazz);
@@ -518,7 +518,7 @@ public class DocumentImpl implements Document {
 			return;
 		}
 
-		Field field = _createField(name, value);
+		Field field = createField(name, value);
 
 		field.setTokenized(true);
 
@@ -540,7 +540,7 @@ public class DocumentImpl implements Document {
 			return;
 		}
 
-		Field field = _createField(name, values);
+		Field field = createField(name, values);
 
 		field.setTokenized(true);
 	}
@@ -689,8 +689,7 @@ public class DocumentImpl implements Document {
 
 	@Override
 	public Field getField(String name) {
-
-		return _getField(name, false);
+		return doGetField(name, false);
 	}
 
 	@Override
@@ -766,12 +765,45 @@ public class DocumentImpl implements Document {
 		return sb.toString();
 	}
 
+	protected Field createField(String name) {
+		return doGetField(name, true);
+	}
+
+	protected Field createField(
+		String name, Map<Locale, String> localizedValues) {
+
+		Field field = createField(name);
+
+		field.setLocalizedValues(localizedValues);
+
+		return field;
+	}
+
+	protected Field createField(String name, String... values) {
+		Field field = createField(name);
+
+		field.setValues(values);
+
+		return field;
+	}
+
+	protected Field doGetField(String name, boolean createIfNotExists) {
+		Field field = _fields.get(name);
+
+		if ((field == null) && createIfNotExists) {
+			field = new Field(name);
+
+			_fields.put(name, field);
+		}
+
+		return field;
+	}
+
 	protected void setSortableTextFields(Set<String> sortableTextFields) {
 		_sortableTextFields = sortableTextFields;
 	}
 
 	protected void toString(StringBundler sb, Collection<Field> fields) {
-
 		sb.append(StringPool.OPEN_CURLY_BRACE);
 
 		boolean firstField = true;
@@ -799,42 +831,6 @@ public class DocumentImpl implements Document {
 		}
 
 		sb.append(StringPool.CLOSE_CURLY_BRACE);
-	}
-
-	private Field _createField(String name) {
-
-		return _getField(name, true);
-	}
-
-	private Field _createField(String name,
-	Map<Locale, String> localizedValues) {
-
-		Field field = _createField(name);
-
-		field.setLocalizedValues(localizedValues);
-
-		return field;
-	}
-
-	private Field _createField(String name, String... values) {
-
-		Field field = _createField(name);
-
-		field.setValues(values);
-
-		return field;
-	}
-
-	private Field _getField(String name, boolean createIfNotExists) {
-
-		Field field = _fields.get(name);
-
-		if ((field == null) && createIfNotExists) {
-			field = new Field(name);
-			_fields.put(name, field);
-		}
-
-		return field;
 	}
 
 	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(

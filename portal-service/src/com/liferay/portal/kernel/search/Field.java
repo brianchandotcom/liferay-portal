@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -240,6 +241,10 @@ public class Field implements Serializable {
 		return _boost;
 	}
 
+	public List<Field> getFields() {
+		return _nestedFields;
+	}
+
 	public Map<Locale, String> getLocalizedValues() {
 		return _localizedValues;
 	}
@@ -248,17 +253,11 @@ public class Field implements Serializable {
 		return _name;
 	}
 
-	public List<Field> getFields() {
-
-		return _nestedFields;
-	}
-
 	public Class<? extends Number> getNumericClass() {
 		return _numericClass;
 	}
 
 	public Field getParent() {
-
 		return _parent;
 	}
 
@@ -325,7 +324,6 @@ public class Field implements Serializable {
 	}
 
 	public void setParent(Field _parent) {
-
 		this._parent = _parent;
 	}
 
@@ -343,56 +341,42 @@ public class Field implements Serializable {
 
 	public static class NestedFieldBuilder {
 
-		public NestedFieldBuilder() {
-		}
+		public NestedFieldBuilder addNestedField(
+			String name, String... values) {
 
-		public NestedFieldBuilder addSimpleField(String name, String... values)
-		{
+			Field field = new Field(name);
 
-			Field newField = new Field(name);
+			field.addField(new Field("value", values));
 
-			newField.addField(new Field("value", values));
-
-			addNewField(newField);
+			_doAddField(field);
 
 			return this;
 		}
 
-		protected void addNewField(Field newField) {
-
-			Field current = _fieldsStack.getLast();
-
-			current.addField(newField);
+		public NestedFieldBuilder endArray() {
+			return endField();
 		}
 
-		public Field build() {
+		public NestedFieldBuilder endField() {
+			if (_fields.size() > 1) {
+				_fields.removeLast();
+			}
 
-			if (!_fieldsStack.isEmpty()) {
-				return _fieldsStack.getLast();
+			return this;
+		}
+
+		public Field getField() {
+			if (!_fields.isEmpty()) {
+				return _fields.getLast();
 			}
 
 			return null;
 		}
 
-		public NestedFieldBuilder endArray() {
-
-			return endField();
-		}
-
-		public NestedFieldBuilder endField() {
-
-			if (_fieldsStack.size() > 1) {
-				_fieldsStack.removeLast();
-			}
-
-			return this;
-		}
-
 		public NestedFieldBuilder startArray(String name) {
-
 			FieldArray field = new FieldArray(name);
 
-			return _startField(field);
+			return _doStartField(field);
 		}
 
 		public NestedFieldBuilder startField() {
@@ -400,24 +384,29 @@ public class Field implements Serializable {
 		}
 
 		public NestedFieldBuilder startField(String name) {
-
 			Field field = new Field(name);
 
-			return _startField(field);
+			return _doStartField(field);
 		}
 
-		private NestedFieldBuilder _startField(Field field) {
+		private void _doAddField(Field newField) {
+			Field current = _fields.getLast();
 
-			if (!_fieldsStack.isEmpty()) {
-				addNewField(field);
+			current.addField(newField);
+		}
+
+		private NestedFieldBuilder _doStartField(Field field) {
+			if (!_fields.isEmpty()) {
+				_doAddField(field);
 			}
 
-			_fieldsStack.add(field);
+			_fields.add(field);
 
 			return this;
 		}
 
-		private LinkedList<Field> _fieldsStack = new LinkedList<Field>();
+		private LinkedList<Field> _fields = new LinkedList<Field>();
+
 	}
 
 	private float _boost = 1;

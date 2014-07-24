@@ -108,6 +108,10 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 	}
 
 	private Object _convertType(Object inputObject, Class<?> targetType) {
+		if (targetType == null) {
+			return inputObject;
+		}
+
 		Object outputObject = null;
 
 		try {

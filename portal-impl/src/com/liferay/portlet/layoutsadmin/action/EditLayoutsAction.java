@@ -349,35 +349,6 @@ public class EditLayoutsAction extends PortletAction {
 			getForward(renderRequest, "portlet.layouts_admin.edit_layouts"));
 	}
 
-	@Override
-	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
-
-		PortletContext portletContext = portletConfig.getPortletContext();
-
-		PortletRequestDispatcher portletRequestDispatcher = null;
-
-		if (cmd.equals(ActionKeys.VIEW_TREE)) {
-			getGroup(resourceRequest);
-
-			portletRequestDispatcher = portletContext.getRequestDispatcher(
-				"/html/portlet/layouts_admin/tree_js.jsp");
-		}
-		else {
-			getGroup(resourceRequest);
-
-			portletRequestDispatcher = portletContext.getRequestDispatcher(
-				"/html/portlet/layouts_admin/view_resources.jsp");
-		}
-
-		portletRequestDispatcher.include(resourceRequest, resourceResponse);
-	}
-
 	protected void checkPermission(
 			PermissionChecker permissionChecker, Group group, Layout layout,
 			long selPlid)

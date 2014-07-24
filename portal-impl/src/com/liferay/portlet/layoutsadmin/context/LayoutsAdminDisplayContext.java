@@ -119,6 +119,32 @@ public class LayoutsAdminDisplayContext {
 		return _backURL;
 	}
 
+	public PortletURL getEditLayoutURL() {
+		String closeRedirect = ParamUtil.getString(_request, "closeRedirect");
+
+		PortletURL editLayoutURL = _liferayPortletResponse.createRenderURL();
+
+		editLayoutURL.setParameter(
+			"struts_action", "/layouts_admin/edit_layouts");
+		editLayoutURL.setParameter("tabs1", getTabs1());
+		editLayoutURL.setParameter("redirect", getRedirect());
+		editLayoutURL.setParameter("closeRedirect", closeRedirect);
+
+		String portletName = getPortletName();
+
+		if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) ||
+			portletName.equals(PortletKeys.MY_ACCOUNT) ||
+			portletName.equals(PortletKeys.USERS_ADMIN)) {
+
+			editLayoutURL.setParameter("backURL", getBackURL());
+		}
+
+		editLayoutURL.setParameter("groupId", String.valueOf(getLiveGroupId()));
+		editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
+
+		return editLayoutURL;
+	}
+
 	public Group getGroup() {
 		if (_group != null) {
 			return _group;

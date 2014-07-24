@@ -917,8 +917,6 @@
 
 		<action path="/journal/rss" type="com.liferay.portlet.journal.action.RSSAction" />
 
-		<action path="/journal/select_display_page" type="com.liferay.portlet.grouppages.action.EditLayoutsAction" />
-
 		<action path="/journal/select_folder" type="com.liferay.portlet.journal.action.EditFolderAction">
 			<forward name="portlet.journal.edit_folder" path="portlet.journal.select_folder" />
 			<forward name="portlet.journal.error" path="portlet.journal.error" />

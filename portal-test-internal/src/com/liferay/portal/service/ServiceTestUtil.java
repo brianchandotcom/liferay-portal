@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Role;
@@ -52,6 +53,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -230,6 +232,19 @@ public class ServiceTestUtil {
 		// Asset renderers
 
 		PortalRegisterTestUtil.registerAssetRendererFactories();
+
+		// Service context thread local
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setPortalURL("http://tests:8080");
+		serviceContext.setPathMain("path");
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		// Locale thread local
+
+		LocaleThreadLocal.setThemeDisplayLocale(new Locale("en", "US"));
 
 		// Company
 

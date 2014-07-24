@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper;
+import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
 import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
@@ -45,7 +46,7 @@ import org.springframework.mock.web.MockServletContext;
  * @author Raymond Augé
  */
 public class PACLExecutionTestListener
-	extends MainServletExecutionTestListener {
+	extends AbstractExecutionTestListener {
 
 	@Override
 	public void runAfterClass(TestContext testContext) {

@@ -36,6 +36,9 @@ import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
 import com.liferay.portlet.dynamicdatamapping.StructureNameException;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
@@ -200,6 +203,20 @@ public class EditStructureAction extends PortletAction {
 		}
 	}
 
+	protected DDMForm getDDMForm(ActionRequest actionRequest) throws Exception {
+		String definition = ParamUtil.getString(actionRequest, "definition");
+
+		return DDMFormJSONDeserializerUtil.deserialize(definition);
+	}
+
+	protected String getDefinition(ActionRequest actionRequest)
+		throws Exception {
+
+		DDMForm ddmForm = getDDMForm(actionRequest);
+
+		return DDMFormXSDSerializerUtil.serialize(ddmForm);
+	}
+
 	protected String getSaveAndContinueRedirect(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			DDMStructure structure, String redirect)
@@ -256,7 +273,7 @@ public class EditStructureAction extends PortletAction {
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		String definition = ParamUtil.getString(actionRequest, "definition");
+		String definition = getDefinition(actionRequest);
 		String storageType = ParamUtil.getString(actionRequest, "storageType");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

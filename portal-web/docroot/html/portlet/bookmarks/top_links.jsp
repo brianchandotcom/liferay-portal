@@ -67,7 +67,7 @@ portletURL.setParameter("tag", StringPool.BLANK);
 		</liferay-portlet:renderURL>
 
 		<aui:nav-bar-search>
-			<div class="col-xs-12 form-search">
+			<div class="form-search">
 				<aui:form action="<%= searchURL %>" method="get" name="searchFm">
 					<liferay-portlet:renderURLParams varImpl="searchURL" />
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

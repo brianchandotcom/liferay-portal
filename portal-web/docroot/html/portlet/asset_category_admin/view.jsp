@@ -54,7 +54,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 		</aui:nav>
 
 		<aui:nav-bar-search cssClass="pull-right">
-			<div class="col-xs-12 form-search">
+			<div class="form-search">
 				<liferay-ui:input-search />
 			</div>
 		</aui:nav-bar-search>

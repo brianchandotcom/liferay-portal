@@ -84,7 +84,7 @@ AUI.add(
 						instance._dataStore = A.one('#' + id + 'PrimaryKeys');
 
 						if (instance._dataStore) {
-							var dataStoreForm = instance._dataStore.ancestor('form');
+							var dataStoreForm = instance._dataStore.attr('form');
 
 							if (dataStoreForm) {
 								var method = dataStoreForm.attr('method').toLowerCase();

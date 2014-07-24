@@ -55,7 +55,15 @@ public abstract class BaseElasticsearchConnection
 		ClusterHealthRequestBuilder clusterHealthRequestBuilder =
 			clusterAdminClient.prepareHealth();
 
-		clusterHealthRequestBuilder.setTimeout(TimeValue.timeValueSeconds(30));
+		if (PortalRunMode.isTestMode()) {
+			clusterHealthRequestBuilder.setTimeout(
+				TimeValue.timeValueMillis(100));
+		}
+		else {
+			clusterHealthRequestBuilder.setTimeout(
+				TimeValue.timeValueSeconds(30));
+		}
+
 		clusterHealthRequestBuilder.setWaitForGreenStatus();
 		clusterHealthRequestBuilder.setWaitForNodes(">1");
 

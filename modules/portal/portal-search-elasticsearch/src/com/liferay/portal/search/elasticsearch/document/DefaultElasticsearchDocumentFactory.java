@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -49,13 +51,23 @@ public class DefaultElasticsearchDocumentFactory
 			String name = field.getName();
 
 			if (!field.isLocalized()) {
-				for (String value : field.getValues()) {
+				String[] values = field.getValues();
+
+				List<String> valuesList = new ArrayList<String>(values.length);
+
+				for (String value : values) {
 					if (Validator.isNull(value)) {
 						continue;
 					}
 
-					xContentBuilder.field(name, value.trim());
+					valuesList.add(value.trim());
 				}
+
+				if (valuesList.isEmpty()) {
+					continue;
+				}
+
+				xContentBuilder.field(name, field.getValues());
 			}
 			else {
 				Map<Locale, String> localizedValues =

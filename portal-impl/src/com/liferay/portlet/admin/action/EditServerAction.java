@@ -21,6 +21,7 @@ import com.liferay.portal.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.portal.convert.ConvertProcess;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.cluster.Address;
@@ -70,7 +71,6 @@ import com.liferay.portal.kernel.util.ThreadUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.search.SearchEngineInitializer;
@@ -256,7 +256,7 @@ public class EditServerAction extends PortletAction {
 	}
 
 	protected void cacheSingle() throws Exception {
-		WebCachePoolUtil.clear();
+		SingleVMPoolUtil.clear();
 	}
 
 	protected String convertProcess(

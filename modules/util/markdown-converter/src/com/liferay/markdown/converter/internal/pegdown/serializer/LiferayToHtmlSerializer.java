@@ -68,6 +68,39 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 		super.visit(node);
 	}
 
+	@Override
+	public void visit(ParaNode node) {
+		List<Node> childNodes = node.getChildren();
+
+		boolean print = true;
+
+		for (Node childNode : childNodes) {
+			List<Node> grandChildNodes = childNode.getChildren();
+
+			for (Node grandChildNode : grandChildNodes) {
+				if (grandChildNode instanceof TextNode) {
+					TextNode textNode = (TextNode)grandChildNode;
+
+					String text = textNode.getText();
+
+					if (text.equals("$beginSBnote$") ||
+						text.equals("$beginSBtip$") ||
+						text.equals("$beginSBwarning$") ||
+						text.equals("$endSBnote$") ||
+						text.equals("$endSBtip$") ||
+						text.equals("$endSBwarning$")) {
+						visitChildren(node);
+						print = false;
+					}
+				}
+			}
+		}
+
+		if (print) {
+			printTag(node, "p");
+		}
+	}
+
 	public void visit(PicWithCaptionNode picWithCaptionNode) {
 		print(picWithCaptionNode);
 	}
@@ -86,6 +119,38 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 		}
 		else {
 			visitChildren(superNode);
+		}
+	}
+
+	@Override
+	public void visit(TextNode node) {
+		String text = node.getText();
+
+		if (text.equals("$beginSBnote$")) {
+			printer.print("<div class=\"sidebar-note\">");
+			printer.print("<div class=\"sidebar-note-image\"></div>");
+			printer.print("<div class=\"sidebar-note-text\">");
+		}
+		else if (text.equals("$beginSBtip$")) {
+			printer.print("<div class=\"sidebar-tip\">");
+			printer.print("<div class=\"sidebar-tip-image\"></div>");
+			printer.print("<div class=\"sidebar-tip-text\">");
+		}
+		else if (text.equals("$beginSBwarning$")) {
+			printer.print("<div class=\"sidebar-warning\">");
+			printer.print("<div class=\"sidebar-warning-image\"></div>");
+			printer.print("<div class=\"sidebar-warning-text\">");
+		}
+		else if (text.equals("$endSBnote$") ||
+				 text.equals("$endSBtip$") ||
+				 text.equals("$endSBwarning$")) {
+			printer.print("</div></div>");
+		}
+		else if (abbreviations.isEmpty()) {
+			printer.print(text);
+		}
+		else {
+			printWithAbbreviations(text);
 		}
 	}
 
@@ -146,70 +211,5 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 			printer.print("</p>");
 		}
 	}
-	
-	@Override
-	public void visit(TextNode node) {
-		String text = node.getText();
-		
-		if (text.equals("$beginSBnote$")) {
-			printer.print("<div class=\"sidebar-note\">");
-			printer.print("<div class=\"sidebar-note-image\"></div>");
-			printer.print("<div class=\"sidebar-note-text\">");
-		}
-		else if (text.equals("$beginSBtip$")) {
-			printer.print("<div class=\"sidebar-tip\">");
-			printer.print("<div class=\"sidebar-tip-image\"></div>");
-			printer.print("<div class=\"sidebar-tip-text\">");
-		}
-		else if (text.equals("$beginSBwarning$")) {
-			printer.print("<div class=\"sidebar-warning\">");
-			printer.print("<div class=\"sidebar-warning-image\"></div>");
-			printer.print("<div class=\"sidebar-warning-text\">");
-		}
-		else if (text.equals("$endSBnote$")
-				|| text.equals("$endSBtip$")
-				|| text.equals("$endSBwarning$")) {
-			printer.print("</div></div>");
-		}
-		else if (abbreviations.isEmpty()) {
-			printer.print(text);
-		}
-		else {
-			printWithAbbreviations(text);
-		}
-	}
-
-	@Override
-    public void visit(ParaNode node) {
-		List<Node> childNodes = node.getChildren();
-		
-		boolean print = true;
-		
-		for (Node childNode : childNodes) {
-			List<Node> secondLevelChildNodes = childNode.getChildren();
-			
-			for (Node secondLevelChildNode : secondLevelChildNodes) {	
-				if (secondLevelChildNode instanceof TextNode) {
-					TextNode textNode = (TextNode)secondLevelChildNode;
-					
-					String text = textNode.getText();
-					
-					if (text.equals("$beginSBnote$")
-							|| text.equals("$beginSBtip$")
-							|| text.equals("$beginSBwarning$")
-							|| text.equals("$endSBnote$")
-							|| text.equals("$endSBtip$")
-							|| text.equals("$endSBwarning$")) {
-						visitChildren(node);
-						print = false;
-					}
-				}
-			}
-		}
-		
-		if (print) {
-			printTag(node, "p");
-		}
-    }
 
 }

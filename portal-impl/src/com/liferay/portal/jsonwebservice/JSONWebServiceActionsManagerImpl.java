@@ -483,9 +483,11 @@ public class JSONWebServiceActionsManagerImpl
 		int dotIndex = path.indexOf(CharPool.PERIOD, offset);
 
 		if (dotIndex != -1) {
-			hint = GetterUtil.getInteger(path.substring(dotIndex + 1));
+			hint = GetterUtil.getInteger(path.substring(dotIndex + 1), -1);
 
-			path = path.substring(0, dotIndex);
+			if (hint != -1) {
+				path = path.substring(0, dotIndex);
+			}
 		}
 
 		int firstIndex = _pathBinarySearch.findFirst(path);

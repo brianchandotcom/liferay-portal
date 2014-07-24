@@ -996,10 +996,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				MBThread thread = (MBThread)object;
 
-				TrashEntry trashEntry = trashEntryLocalService.fetchEntry(
-					MBThread.class.getName(), thread.getThreadId());
-
-				if (trashEntry != null) {
+				if (!thread.isInTrashImplicitly()) {
 					continue;
 				}
 
@@ -1042,10 +1039,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				MBCategory category = (MBCategory)object;
 
-				TrashEntry trashEntry = trashEntryLocalService.fetchEntry(
-					MBCategory.class.getName(), category.getCategoryId());
-
-				if (trashEntry != null) {
+				if (!category.isInTrashImplicitly()) {
 					continue;
 				}
 

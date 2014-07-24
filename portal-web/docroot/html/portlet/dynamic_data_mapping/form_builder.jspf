@@ -215,7 +215,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 			portletNamespace: '<portlet:namespace />',
 			portletResourceNamespace: '<%= HtmlUtil.escapeJS(portletResourceNamespace) %>',
-
+			srcNode: '#<portlet:namespace />formBuilderContent',
 			translationManager: {
 
 				<c:if test="<%= availableLocalesJSONArray.length() > 0 %>">
@@ -226,9 +226,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 				defaultLocale: '<%= HtmlUtil.escapeJS(defaultLanguageId) %>',
 				localesMap: <%= localesMapJSONObject.toString() %>,
 				srcNode: '#<portlet:namespace />translationManager .lfr-translation-manager-content'
-			},
-
-			srcNode: '#<portlet:namespace />formBuilderContent'
+			}
 		}
 	).render();
 

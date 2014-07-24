@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
+import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -2401,6 +2402,12 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	protected void initXStream() {
 		_xStream = new XStream();
+
+		Map<Class<?>, String> aliases = XStreamAliasRegistryUtil.getAliases();
+
+		for (Map.Entry<Class<?>, String> alias : aliases.entrySet()) {
+			_xStream.alias(alias.getValue(), alias.getKey());
+		}
 
 		_xStream.omitField(HashMap.class, "cache_bitmask");
 	}

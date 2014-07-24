@@ -163,7 +163,8 @@ public class MethodParameter {
 				String extractedTopLevelGenericName = null;
 
 				if (c == 'L') {
-					int endIndex = generics.indexOf(';', index) + 1;
+					int endIndex =
+						generics.indexOf(StringPool.SEMICOLON, index) + 1;
 
 					extractedTopLevelGenericName = _getGenericName(
 						generics.substring(index - 1, endIndex));
@@ -180,7 +181,8 @@ public class MethodParameter {
 						index++;
 					}
 					else if (nextChar == 'L') {
-						int endIndex = generics.indexOf(';', index) + 1;
+						int endIndex =
+							generics.indexOf(StringPool.SEMICOLON, index) + 1;
 
 						extractedTopLevelGenericName = _getGenericName(
 							generics.substring(index - 1, endIndex));
@@ -189,11 +191,9 @@ public class MethodParameter {
 					}
 				}
 
-				if (extractedTopLevelGenericName != null) {
-					if (Validator.isNotNull(extractedTopLevelGenericName)) {
-						genericTypeslist.add(
-							_getGenericType(extractedTopLevelGenericName));
-					}
+				if (Validator.isNotNull(extractedTopLevelGenericName)) {
+					genericTypeslist.add(
+						_getGenericType(extractedTopLevelGenericName));
 				}
 			}
 		}
@@ -209,6 +209,7 @@ public class MethodParameter {
 		if ((c == 'B') || (c == 'C') || (c == 'D') || (c == 'F') ||
 			(c == 'I') || (c == 'J') || (c == 'S') || (c == 'V') ||
 			(c == 'Z')) {
+
 			return true;
 		}
 		else {

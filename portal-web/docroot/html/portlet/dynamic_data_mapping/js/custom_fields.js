@@ -63,7 +63,7 @@ AUI.add(
 		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get('please-enter-only-alphanumeric-characters');
 
 		DEFAULTS_FORM_VALIDATOR.RULES.structureFieldName = function(value) {
-			return (/^[\w\-]+$/).test(value);
+			return (/^[\w]+$/).test(value);
 		};
 
 		var applyStyles = function(node, styleContent) {

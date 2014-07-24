@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -47,63 +48,101 @@ public class DefaultElasticsearchDocumentFactory
 
 		Map<String, Field> fields = document.getFields();
 
-		for (Field field : fields.values()) {
-			String name = field.getName();
-
-			if (!field.isLocalized()) {
-				String[] values = field.getValues();
-
-				List<String> valuesList = new ArrayList<String>(values.length);
-
-				for (String value : values) {
-					if (Validator.isNull(value)) {
-						continue;
-					}
-
-					valuesList.add(value.trim());
-				}
-
-				if (valuesList.isEmpty()) {
-					continue;
-				}
-
-				xContentBuilder.field(name, field.getValues());
-			}
-			else {
-				Map<Locale, String> localizedValues =
-					field.getLocalizedValues();
-
-				for (Map.Entry<Locale, String> entry :
-						localizedValues.entrySet()) {
-
-					String value = entry.getValue();
-
-					if (Validator.isNull(value)) {
-						continue;
-					}
-
-					Locale locale = entry.getKey();
-
-					String languageId = LocaleUtil.toLanguageId(locale);
-
-					String defaultLanguageId = LocaleUtil.toLanguageId(
-						LocaleUtil.getDefault());
-
-					if (languageId.equals(defaultLanguageId)) {
-						xContentBuilder.field(name, value.trim());
-					}
-
-					String localizedName = DocumentImpl.getLocalizedName(
-						languageId, name);
-
-					xContentBuilder.field(localizedName, value.trim());
-				}
-			}
-		}
+		addFields(fields.values(), xContentBuilder);
 
 		xContentBuilder.endObject();
 
 		return xContentBuilder.string();
+	}
+
+	protected void addField(XContentBuilder xContentBuilder, Field field)
+		throws IOException {
+
+		String name = field.getName();
+
+		if (!field.isLocalized()) {
+			String[] values = field.getValues();
+
+			List<String> valuesList = new ArrayList<String>(values.length);
+
+			for (String value : values) {
+				if (Validator.isNull(value)) {
+					continue;
+				}
+
+				valuesList.add(value.trim());
+			}
+
+			if (!valuesList.isEmpty()) {
+				xContentBuilder.field(name, field.getValues());
+			}
+		}
+		else {
+			Map<Locale, String> localizedValues = field.getLocalizedValues();
+
+			for (Map.Entry<Locale, String> entry : localizedValues.entrySet()) {
+				String value = entry.getValue();
+
+				if (Validator.isNull(value)) {
+					continue;
+				}
+
+				Locale locale = entry.getKey();
+
+				String languageId = LocaleUtil.toLanguageId(locale);
+
+				String defaultLanguageId = LocaleUtil.toLanguageId(
+					LocaleUtil.getDefault());
+
+				if (languageId.equals(defaultLanguageId)) {
+					xContentBuilder.field(name, value.trim());
+				}
+
+				String localizedName = DocumentImpl.getLocalizedName(
+					languageId, name);
+
+				xContentBuilder.field(localizedName, value.trim());
+			}
+		}
+	}
+
+	protected void addFields(
+			Collection<Field> fields, XContentBuilder xContentBuilder)
+		throws IOException {
+
+		for (Field field : fields) {
+			if (!field.hasChildren()) {
+				addField(xContentBuilder, field);
+			}
+			else {
+				addNestedField(xContentBuilder, field);
+			}
+		}
+	}
+
+	protected void addNestedField(XContentBuilder xContentBuilder, Field field)
+		throws IOException {
+
+		if (field.isArray()) {
+			xContentBuilder.startArray(field.getName());
+		}
+		else {
+			if (Validator.isNull(field.getName())) {
+				xContentBuilder.startObject();
+			}
+			else {
+				xContentBuilder.startObject(field.getName());
+			}
+		}
+
+		addFields(field.getFields(), xContentBuilder);
+
+		if (field.isArray()) {
+			xContentBuilder.endArray();
+		}
+		else {
+			xContentBuilder.endObject();
+		}
 	}
 
 }

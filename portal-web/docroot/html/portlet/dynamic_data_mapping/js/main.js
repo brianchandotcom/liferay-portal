@@ -563,6 +563,14 @@ AUI.add(
 						return fields;
 					},
 
+					_setFields: function() {
+						var instance = this;
+
+						LiferayFormBuilder.UNIQUE_FIELD_NAMES_MAP.clear();
+
+						return LiferayFormBuilder.superclass._setFields.apply(instance, arguments);
+					},
+
 					_syncFieldOptionsLocaleUI: function(field, locale) {
 						var instance = this;
 

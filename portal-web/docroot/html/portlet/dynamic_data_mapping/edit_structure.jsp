@@ -57,7 +57,11 @@ if (Validator.isNotNull(script)) {
 		}
 	}
 	else {
-		fieldsJSONArray = DDMXSDUtil.getJSONArray(script);
+		try {
+			fieldsJSONArray = DDMXSDUtil.getJSONArray(script);
+		}
+		catch (Exception e) {
+		}
 	}
 }
 %>

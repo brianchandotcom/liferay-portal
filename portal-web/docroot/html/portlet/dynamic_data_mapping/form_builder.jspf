@@ -203,6 +203,9 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 				},
 				dataType: 'JSON',
 				on: {
+					complete: function() {
+						getLoadingMask().toggle(false);
+					},
 					failure: function(message) {
 						displayMessage(MESSAGE_FAILURE, '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>');
 					},
@@ -215,8 +218,6 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 						else if (Lang.isObject(responseData)) {
 							displayMessage(MESSAGE_FAILURE, responseData.exception);
 						}
-
-						getLoadingMask().toggle(false);
 					}
 				}
 			}

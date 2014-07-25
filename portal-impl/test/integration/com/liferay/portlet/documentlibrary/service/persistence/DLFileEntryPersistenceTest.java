@@ -351,20 +351,6 @@ public class DLFileEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByF_N() {
-		try {
-			_persistence.countByF_N(RandomTestUtil.nextLong(), StringPool.BLANK);
-
-			_persistence.countByF_N(0L, StringPool.NULL);
-
-			_persistence.countByF_N(0L, (String)null);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
-	}
-
-	@Test
 	public void testCountByG_U() {
 		try {
 			_persistence.countByG_U(RandomTestUtil.nextLong(),
@@ -395,6 +381,20 @@ public class DLFileEntryPersistenceTest {
 		try {
 			_persistence.countByG_F(RandomTestUtil.nextLong(),
 				new long[] { RandomTestUtil.nextLong(), 0L });
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByF_N() {
+		try {
+			_persistence.countByF_N(RandomTestUtil.nextLong(), StringPool.BLANK);
+
+			_persistence.countByF_N(0L, StringPool.NULL);
+
+			_persistence.countByF_N(0L, (String)null);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());

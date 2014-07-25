@@ -829,628 +829,6 @@ public class BlogsEntryUtil {
 	}
 
 	/**
-	* Returns all the blogs entries where companyId = &#63; and userId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @return the matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U(
-		long companyId, long userId) {
-		return getPersistence().findByC_U(companyId, userId);
-	}
-
-	/**
-	* Returns a range of all the blogs entries where companyId = &#63; and userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @return the range of matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U(
-		long companyId, long userId, int start, int end) {
-		return getPersistence().findByC_U(companyId, userId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the blogs entries where companyId = &#63; and userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U(
-		long companyId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .findByC_U(companyId, userId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs entry in the ordered set where companyId = &#63; and userId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_U_First(
-		long companyId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_U_First(companyId, userId, orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs entry in the ordered set where companyId = &#63; and userId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_U_First(
-		long companyId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_U_First(companyId, userId, orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_U_Last(
-		long companyId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_U_Last(companyId, userId, orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_U_Last(
-		long companyId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_U_Last(companyId, userId, orderByComparator);
-	}
-
-	/**
-	* Returns the blogs entries before and after the current blogs entry in the ordered set where companyId = &#63; and userId = &#63;.
-	*
-	* @param entryId the primary key of the current blogs entry
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry[] findByC_U_PrevAndNext(
-		long entryId, long companyId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_U_PrevAndNext(entryId, companyId, userId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the blogs entries where companyId = &#63; and userId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	*/
-	public static void removeByC_U(long companyId, long userId) {
-		getPersistence().removeByC_U(companyId, userId);
-	}
-
-	/**
-	* Returns the number of blogs entries where companyId = &#63; and userId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @return the number of matching blogs entries
-	*/
-	public static int countByC_U(long companyId, long userId) {
-		return getPersistence().countByC_U(companyId, userId);
-	}
-
-	/**
-	* Returns all the blogs entries where companyId = &#63; and displayDate &lt; &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @return the matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD(
-		long companyId, java.util.Date displayDate) {
-		return getPersistence().findByC_LtD(companyId, displayDate);
-	}
-
-	/**
-	* Returns a range of all the blogs entries where companyId = &#63; and displayDate &lt; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @return the range of matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD(
-		long companyId, java.util.Date displayDate, int start, int end) {
-		return getPersistence().findByC_LtD(companyId, displayDate, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the blogs entries where companyId = &#63; and displayDate &lt; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD(
-		long companyId, java.util.Date displayDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .findByC_LtD(companyId, displayDate, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_LtD_First(
-		long companyId, java.util.Date displayDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_LtD_First(companyId, displayDate, orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_LtD_First(
-		long companyId, java.util.Date displayDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_LtD_First(companyId, displayDate, orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_LtD_Last(
-		long companyId, java.util.Date displayDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_LtD_Last(companyId, displayDate, orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_LtD_Last(
-		long companyId, java.util.Date displayDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_LtD_Last(companyId, displayDate, orderByComparator);
-	}
-
-	/**
-	* Returns the blogs entries before and after the current blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63;.
-	*
-	* @param entryId the primary key of the current blogs entry
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry[] findByC_LtD_PrevAndNext(
-		long entryId, long companyId, java.util.Date displayDate,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_LtD_PrevAndNext(entryId, companyId, displayDate,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the blogs entries where companyId = &#63; and displayDate &lt; &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	*/
-	public static void removeByC_LtD(long companyId, java.util.Date displayDate) {
-		getPersistence().removeByC_LtD(companyId, displayDate);
-	}
-
-	/**
-	* Returns the number of blogs entries where companyId = &#63; and displayDate &lt; &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @return the number of matching blogs entries
-	*/
-	public static int countByC_LtD(long companyId, java.util.Date displayDate) {
-		return getPersistence().countByC_LtD(companyId, displayDate);
-	}
-
-	/**
-	* Returns all the blogs entries where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @return the matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_NotS(
-		long companyId, int status) {
-		return getPersistence().findByC_NotS(companyId, status);
-	}
-
-	/**
-	* Returns a range of all the blogs entries where companyId = &#63; and status &ne; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @return the range of matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_NotS(
-		long companyId, int status, int start, int end) {
-		return getPersistence().findByC_NotS(companyId, status, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the blogs entries where companyId = &#63; and status &ne; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_NotS(
-		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .findByC_NotS(companyId, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs entry in the ordered set where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_NotS_First(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_NotS_First(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs entry in the ordered set where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_NotS_First(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_NotS_First(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs entry in the ordered set where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_NotS_Last(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_NotS_Last(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs entry in the ordered set where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_NotS_Last(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_NotS_Last(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the blogs entries before and after the current blogs entry in the ordered set where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param entryId the primary key of the current blogs entry
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry[] findByC_NotS_PrevAndNext(
-		long entryId, long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_NotS_PrevAndNext(entryId, companyId, status,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the blogs entries where companyId = &#63; and status &ne; &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	*/
-	public static void removeByC_NotS(long companyId, int status) {
-		getPersistence().removeByC_NotS(companyId, status);
-	}
-
-	/**
-	* Returns the number of blogs entries where companyId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @return the number of matching blogs entries
-	*/
-	public static int countByC_NotS(long companyId, int status) {
-		return getPersistence().countByC_NotS(companyId, status);
-	}
-
-	/**
-	* Returns all the blogs entries where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @return the matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_S(
-		long companyId, int status) {
-		return getPersistence().findByC_S(companyId, status);
-	}
-
-	/**
-	* Returns a range of all the blogs entries where companyId = &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @return the range of matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_S(
-		long companyId, int status, int start, int end) {
-		return getPersistence().findByC_S(companyId, status, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the blogs entries where companyId = &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_S(
-		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .findByC_S(companyId, status, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs entry in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_S_First(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_S_First(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs entry in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_S_First(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_S_First(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs entry in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_S_Last(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_S_Last(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs entry in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_S_Last(
-		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_S_Last(companyId, status, orderByComparator);
-	}
-
-	/**
-	* Returns the blogs entries before and after the current blogs entry in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param entryId the primary key of the current blogs entry
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry[] findByC_S_PrevAndNext(
-		long entryId, long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_S_PrevAndNext(entryId, companyId, status,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the blogs entries where companyId = &#63; and status = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	*/
-	public static void removeByC_S(long companyId, int status) {
-		getPersistence().removeByC_S(companyId, status);
-	}
-
-	/**
-	* Returns the number of blogs entries where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @return the number of matching blogs entries
-	*/
-	public static int countByC_S(long companyId, int status) {
-		return getPersistence().countByC_S(companyId, status);
-	}
-
-	/**
 	* Returns the blogs entry where groupId = &#63; and urlTitle = &#63; or throws a {@link com.liferay.portlet.blogs.NoSuchEntryException} if it could not be found.
 	*
 	* @param groupId the group ID
@@ -2228,6 +1606,628 @@ public class BlogsEntryUtil {
 	}
 
 	/**
+	* Returns all the blogs entries where companyId = &#63; and userId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @return the matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U(
+		long companyId, long userId) {
+		return getPersistence().findByC_U(companyId, userId);
+	}
+
+	/**
+	* Returns a range of all the blogs entries where companyId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @return the range of matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U(
+		long companyId, long userId, int start, int end) {
+		return getPersistence().findByC_U(companyId, userId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63; and userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U(
+		long companyId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .findByC_U(companyId, userId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where companyId = &#63; and userId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_U_First(
+		long companyId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_U_First(companyId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where companyId = &#63; and userId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_U_First(
+		long companyId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_U_First(companyId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_U_Last(
+		long companyId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_U_Last(companyId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_U_Last(
+		long companyId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_U_Last(companyId, userId, orderByComparator);
+	}
+
+	/**
+	* Returns the blogs entries before and after the current blogs entry in the ordered set where companyId = &#63; and userId = &#63;.
+	*
+	* @param entryId the primary key of the current blogs entry
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry[] findByC_U_PrevAndNext(
+		long entryId, long companyId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_U_PrevAndNext(entryId, companyId, userId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the blogs entries where companyId = &#63; and userId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	*/
+	public static void removeByC_U(long companyId, long userId) {
+		getPersistence().removeByC_U(companyId, userId);
+	}
+
+	/**
+	* Returns the number of blogs entries where companyId = &#63; and userId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @return the number of matching blogs entries
+	*/
+	public static int countByC_U(long companyId, long userId) {
+		return getPersistence().countByC_U(companyId, userId);
+	}
+
+	/**
+	* Returns all the blogs entries where companyId = &#63; and displayDate &lt; &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @return the matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD(
+		long companyId, java.util.Date displayDate) {
+		return getPersistence().findByC_LtD(companyId, displayDate);
+	}
+
+	/**
+	* Returns a range of all the blogs entries where companyId = &#63; and displayDate &lt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @return the range of matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD(
+		long companyId, java.util.Date displayDate, int start, int end) {
+		return getPersistence().findByC_LtD(companyId, displayDate, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63; and displayDate &lt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD(
+		long companyId, java.util.Date displayDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .findByC_LtD(companyId, displayDate, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_LtD_First(
+		long companyId, java.util.Date displayDate,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_LtD_First(companyId, displayDate, orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_LtD_First(
+		long companyId, java.util.Date displayDate,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_LtD_First(companyId, displayDate, orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_LtD_Last(
+		long companyId, java.util.Date displayDate,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_LtD_Last(companyId, displayDate, orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_LtD_Last(
+		long companyId, java.util.Date displayDate,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_LtD_Last(companyId, displayDate, orderByComparator);
+	}
+
+	/**
+	* Returns the blogs entries before and after the current blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63;.
+	*
+	* @param entryId the primary key of the current blogs entry
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry[] findByC_LtD_PrevAndNext(
+		long entryId, long companyId, java.util.Date displayDate,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_LtD_PrevAndNext(entryId, companyId, displayDate,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the blogs entries where companyId = &#63; and displayDate &lt; &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	*/
+	public static void removeByC_LtD(long companyId, java.util.Date displayDate) {
+		getPersistence().removeByC_LtD(companyId, displayDate);
+	}
+
+	/**
+	* Returns the number of blogs entries where companyId = &#63; and displayDate &lt; &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @return the number of matching blogs entries
+	*/
+	public static int countByC_LtD(long companyId, java.util.Date displayDate) {
+		return getPersistence().countByC_LtD(companyId, displayDate);
+	}
+
+	/**
+	* Returns all the blogs entries where companyId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @return the matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_NotS(
+		long companyId, int status) {
+		return getPersistence().findByC_NotS(companyId, status);
+	}
+
+	/**
+	* Returns a range of all the blogs entries where companyId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @return the range of matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_NotS(
+		long companyId, int status, int start, int end) {
+		return getPersistence().findByC_NotS(companyId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_NotS(
+		long companyId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .findByC_NotS(companyId, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where companyId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_NotS_First(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_NotS_First(companyId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where companyId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_NotS_First(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_NotS_First(companyId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where companyId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_NotS_Last(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_NotS_Last(companyId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where companyId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_NotS_Last(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_NotS_Last(companyId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the blogs entries before and after the current blogs entry in the ordered set where companyId = &#63; and status &ne; &#63;.
+	*
+	* @param entryId the primary key of the current blogs entry
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry[] findByC_NotS_PrevAndNext(
+		long entryId, long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_NotS_PrevAndNext(entryId, companyId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the blogs entries where companyId = &#63; and status &ne; &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	*/
+	public static void removeByC_NotS(long companyId, int status) {
+		getPersistence().removeByC_NotS(companyId, status);
+	}
+
+	/**
+	* Returns the number of blogs entries where companyId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @return the number of matching blogs entries
+	*/
+	public static int countByC_NotS(long companyId, int status) {
+		return getPersistence().countByC_NotS(companyId, status);
+	}
+
+	/**
+	* Returns all the blogs entries where companyId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @return the matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_S(
+		long companyId, int status) {
+		return getPersistence().findByC_S(companyId, status);
+	}
+
+	/**
+	* Returns a range of all the blogs entries where companyId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @return the range of matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_S(
+		long companyId, int status, int start, int end) {
+		return getPersistence().findByC_S(companyId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_S(
+		long companyId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .findByC_S(companyId, status, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where companyId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_S_First(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_S_First(companyId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where companyId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_S_First(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_S_First(companyId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where companyId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_S_Last(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_S_Last(companyId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where companyId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_S_Last(
+		long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_S_Last(companyId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the blogs entries before and after the current blogs entry in the ordered set where companyId = &#63; and status = &#63;.
+	*
+	* @param entryId the primary key of the current blogs entry
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry[] findByC_S_PrevAndNext(
+		long entryId, long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_S_PrevAndNext(entryId, companyId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the blogs entries where companyId = &#63; and status = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	*/
+	public static void removeByC_S(long companyId, int status) {
+		getPersistence().removeByC_S(companyId, status);
+	}
+
+	/**
+	* Returns the number of blogs entries where companyId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @return the number of matching blogs entries
+	*/
+	public static int countByC_S(long companyId, int status) {
+		return getPersistence().countByC_S(companyId, status);
+	}
+
+	/**
 	* Returns all the blogs entries where displayDate &lt; &#63; and status = &#63;.
 	*
 	* @param displayDate the display date
@@ -2381,698 +2381,6 @@ public class BlogsEntryUtil {
 	*/
 	public static int countByLtD_S(java.util.Date displayDate, int status) {
 		return getPersistence().countByLtD_S(displayDate, status);
-	}
-
-	/**
-	* Returns all the blogs entries where companyId = &#63; and userId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @return the matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_NotS(
-		long companyId, long userId, int status) {
-		return getPersistence().findByC_U_NotS(companyId, userId, status);
-	}
-
-	/**
-	* Returns a range of all the blogs entries where companyId = &#63; and userId = &#63; and status &ne; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @return the range of matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_NotS(
-		long companyId, long userId, int status, int start, int end) {
-		return getPersistence()
-				   .findByC_U_NotS(companyId, userId, status, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the blogs entries where companyId = &#63; and userId = &#63; and status &ne; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_NotS(
-		long companyId, long userId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .findByC_U_NotS(companyId, userId, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_U_NotS_First(
-		long companyId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_U_NotS_First(companyId, userId, status,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_U_NotS_First(
-		long companyId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_U_NotS_First(companyId, userId, status,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_U_NotS_Last(
-		long companyId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_U_NotS_Last(companyId, userId, status,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_U_NotS_Last(
-		long companyId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_U_NotS_Last(companyId, userId, status,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the blogs entries before and after the current blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status &ne; &#63;.
-	*
-	* @param entryId the primary key of the current blogs entry
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry[] findByC_U_NotS_PrevAndNext(
-		long entryId, long companyId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_U_NotS_PrevAndNext(entryId, companyId, userId,
-			status, orderByComparator);
-	}
-
-	/**
-	* Removes all the blogs entries where companyId = &#63; and userId = &#63; and status &ne; &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	*/
-	public static void removeByC_U_NotS(long companyId, long userId, int status) {
-		getPersistence().removeByC_U_NotS(companyId, userId, status);
-	}
-
-	/**
-	* Returns the number of blogs entries where companyId = &#63; and userId = &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @return the number of matching blogs entries
-	*/
-	public static int countByC_U_NotS(long companyId, long userId, int status) {
-		return getPersistence().countByC_U_NotS(companyId, userId, status);
-	}
-
-	/**
-	* Returns all the blogs entries where companyId = &#63; and userId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @return the matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_S(
-		long companyId, long userId, int status) {
-		return getPersistence().findByC_U_S(companyId, userId, status);
-	}
-
-	/**
-	* Returns a range of all the blogs entries where companyId = &#63; and userId = &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @return the range of matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_S(
-		long companyId, long userId, int status, int start, int end) {
-		return getPersistence()
-				   .findByC_U_S(companyId, userId, status, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the blogs entries where companyId = &#63; and userId = &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_S(
-		long companyId, long userId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .findByC_U_S(companyId, userId, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_U_S_First(
-		long companyId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_U_S_First(companyId, userId, status,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_U_S_First(
-		long companyId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_U_S_First(companyId, userId, status,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_U_S_Last(
-		long companyId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_U_S_Last(companyId, userId, status,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_U_S_Last(
-		long companyId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_U_S_Last(companyId, userId, status,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the blogs entries before and after the current blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status = &#63;.
-	*
-	* @param entryId the primary key of the current blogs entry
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry[] findByC_U_S_PrevAndNext(
-		long entryId, long companyId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_U_S_PrevAndNext(entryId, companyId, userId, status,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the blogs entries where companyId = &#63; and userId = &#63; and status = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	*/
-	public static void removeByC_U_S(long companyId, long userId, int status) {
-		getPersistence().removeByC_U_S(companyId, userId, status);
-	}
-
-	/**
-	* Returns the number of blogs entries where companyId = &#63; and userId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param userId the user ID
-	* @param status the status
-	* @return the number of matching blogs entries
-	*/
-	public static int countByC_U_S(long companyId, long userId, int status) {
-		return getPersistence().countByC_U_S(companyId, userId, status);
-	}
-
-	/**
-	* Returns all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @return the matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_NotS(
-		long companyId, java.util.Date displayDate, int status) {
-		return getPersistence().findByC_LtD_NotS(companyId, displayDate, status);
-	}
-
-	/**
-	* Returns a range of all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @return the range of matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_NotS(
-		long companyId, java.util.Date displayDate, int status, int start,
-		int end) {
-		return getPersistence()
-				   .findByC_LtD_NotS(companyId, displayDate, status, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_NotS(
-		long companyId, java.util.Date displayDate, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .findByC_LtD_NotS(companyId, displayDate, status, start,
-			end, orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_LtD_NotS_First(
-		long companyId, java.util.Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_LtD_NotS_First(companyId, displayDate, status,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_LtD_NotS_First(
-		long companyId, java.util.Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_LtD_NotS_First(companyId, displayDate, status,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_LtD_NotS_Last(
-		long companyId, java.util.Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_LtD_NotS_Last(companyId, displayDate, status,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_LtD_NotS_Last(
-		long companyId, java.util.Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_LtD_NotS_Last(companyId, displayDate, status,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the blogs entries before and after the current blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	*
-	* @param entryId the primary key of the current blogs entry
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry[] findByC_LtD_NotS_PrevAndNext(
-		long entryId, long companyId, java.util.Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_LtD_NotS_PrevAndNext(entryId, companyId,
-			displayDate, status, orderByComparator);
-	}
-
-	/**
-	* Removes all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	*/
-	public static void removeByC_LtD_NotS(long companyId,
-		java.util.Date displayDate, int status) {
-		getPersistence().removeByC_LtD_NotS(companyId, displayDate, status);
-	}
-
-	/**
-	* Returns the number of blogs entries where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @return the number of matching blogs entries
-	*/
-	public static int countByC_LtD_NotS(long companyId,
-		java.util.Date displayDate, int status) {
-		return getPersistence().countByC_LtD_NotS(companyId, displayDate, status);
-	}
-
-	/**
-	* Returns all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @return the matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_S(
-		long companyId, java.util.Date displayDate, int status) {
-		return getPersistence().findByC_LtD_S(companyId, displayDate, status);
-	}
-
-	/**
-	* Returns a range of all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @return the range of matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_S(
-		long companyId, java.util.Date displayDate, int status, int start,
-		int end) {
-		return getPersistence()
-				   .findByC_LtD_S(companyId, displayDate, status, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @param start the lower bound of the range of blogs entries
-	* @param end the upper bound of the range of blogs entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching blogs entries
-	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_S(
-		long companyId, java.util.Date displayDate, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .findByC_LtD_S(companyId, displayDate, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_LtD_S_First(
-		long companyId, java.util.Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_LtD_S_First(companyId, displayDate, status,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_LtD_S_First(
-		long companyId, java.util.Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_LtD_S_First(companyId, displayDate, status,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_LtD_S_Last(
-		long companyId, java.util.Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_LtD_S_Last(companyId, displayDate, status,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_LtD_S_Last(
-		long companyId, java.util.Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_LtD_S_Last(companyId, displayDate, status,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the blogs entries before and after the current blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	*
-	* @param entryId the primary key of the current blogs entry
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next blogs entry
-	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
-	*/
-	public static com.liferay.portlet.blogs.model.BlogsEntry[] findByC_LtD_S_PrevAndNext(
-		long entryId, long companyId, java.util.Date displayDate, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchEntryException {
-		return getPersistence()
-				   .findByC_LtD_S_PrevAndNext(entryId, companyId, displayDate,
-			status, orderByComparator);
-	}
-
-	/**
-	* Removes all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	*/
-	public static void removeByC_LtD_S(long companyId,
-		java.util.Date displayDate, int status) {
-		getPersistence().removeByC_LtD_S(companyId, displayDate, status);
-	}
-
-	/**
-	* Returns the number of blogs entries where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param displayDate the display date
-	* @param status the status
-	* @return the number of matching blogs entries
-	*/
-	public static int countByC_LtD_S(long companyId,
-		java.util.Date displayDate, int status) {
-		return getPersistence().countByC_LtD_S(companyId, displayDate, status);
 	}
 
 	/**
@@ -4387,6 +3695,698 @@ public class BlogsEntryUtil {
 		java.util.Date displayDate, int status) {
 		return getPersistence()
 				   .filterCountByG_LtD_S(groupId, displayDate, status);
+	}
+
+	/**
+	* Returns all the blogs entries where companyId = &#63; and userId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @return the matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_NotS(
+		long companyId, long userId, int status) {
+		return getPersistence().findByC_U_NotS(companyId, userId, status);
+	}
+
+	/**
+	* Returns a range of all the blogs entries where companyId = &#63; and userId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @return the range of matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_NotS(
+		long companyId, long userId, int status, int start, int end) {
+		return getPersistence()
+				   .findByC_U_NotS(companyId, userId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63; and userId = &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_NotS(
+		long companyId, long userId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .findByC_U_NotS(companyId, userId, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_U_NotS_First(
+		long companyId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_U_NotS_First(companyId, userId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_U_NotS_First(
+		long companyId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_U_NotS_First(companyId, userId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_U_NotS_Last(
+		long companyId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_U_NotS_Last(companyId, userId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_U_NotS_Last(
+		long companyId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_U_NotS_Last(companyId, userId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the blogs entries before and after the current blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status &ne; &#63;.
+	*
+	* @param entryId the primary key of the current blogs entry
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry[] findByC_U_NotS_PrevAndNext(
+		long entryId, long companyId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_U_NotS_PrevAndNext(entryId, companyId, userId,
+			status, orderByComparator);
+	}
+
+	/**
+	* Removes all the blogs entries where companyId = &#63; and userId = &#63; and status &ne; &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	*/
+	public static void removeByC_U_NotS(long companyId, long userId, int status) {
+		getPersistence().removeByC_U_NotS(companyId, userId, status);
+	}
+
+	/**
+	* Returns the number of blogs entries where companyId = &#63; and userId = &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @return the number of matching blogs entries
+	*/
+	public static int countByC_U_NotS(long companyId, long userId, int status) {
+		return getPersistence().countByC_U_NotS(companyId, userId, status);
+	}
+
+	/**
+	* Returns all the blogs entries where companyId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @return the matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_S(
+		long companyId, long userId, int status) {
+		return getPersistence().findByC_U_S(companyId, userId, status);
+	}
+
+	/**
+	* Returns a range of all the blogs entries where companyId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @return the range of matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_S(
+		long companyId, long userId, int status, int start, int end) {
+		return getPersistence()
+				   .findByC_U_S(companyId, userId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_U_S(
+		long companyId, long userId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .findByC_U_S(companyId, userId, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_U_S_First(
+		long companyId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_U_S_First(companyId, userId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_U_S_First(
+		long companyId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_U_S_First(companyId, userId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_U_S_Last(
+		long companyId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_U_S_Last(companyId, userId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_U_S_Last(
+		long companyId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_U_S_Last(companyId, userId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the blogs entries before and after the current blogs entry in the ordered set where companyId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param entryId the primary key of the current blogs entry
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry[] findByC_U_S_PrevAndNext(
+		long entryId, long companyId, long userId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_U_S_PrevAndNext(entryId, companyId, userId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the blogs entries where companyId = &#63; and userId = &#63; and status = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	*/
+	public static void removeByC_U_S(long companyId, long userId, int status) {
+		getPersistence().removeByC_U_S(companyId, userId, status);
+	}
+
+	/**
+	* Returns the number of blogs entries where companyId = &#63; and userId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param userId the user ID
+	* @param status the status
+	* @return the number of matching blogs entries
+	*/
+	public static int countByC_U_S(long companyId, long userId, int status) {
+		return getPersistence().countByC_U_S(companyId, userId, status);
+	}
+
+	/**
+	* Returns all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @return the matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_NotS(
+		long companyId, java.util.Date displayDate, int status) {
+		return getPersistence().findByC_LtD_NotS(companyId, displayDate, status);
+	}
+
+	/**
+	* Returns a range of all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @return the range of matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_NotS(
+		long companyId, java.util.Date displayDate, int status, int start,
+		int end) {
+		return getPersistence()
+				   .findByC_LtD_NotS(companyId, displayDate, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_NotS(
+		long companyId, java.util.Date displayDate, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .findByC_LtD_NotS(companyId, displayDate, status, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_LtD_NotS_First(
+		long companyId, java.util.Date displayDate, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_LtD_NotS_First(companyId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_LtD_NotS_First(
+		long companyId, java.util.Date displayDate, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_LtD_NotS_First(companyId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_LtD_NotS_Last(
+		long companyId, java.util.Date displayDate, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_LtD_NotS_Last(companyId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_LtD_NotS_Last(
+		long companyId, java.util.Date displayDate, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_LtD_NotS_Last(companyId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the blogs entries before and after the current blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
+	*
+	* @param entryId the primary key of the current blogs entry
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry[] findByC_LtD_NotS_PrevAndNext(
+		long entryId, long companyId, java.util.Date displayDate, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_LtD_NotS_PrevAndNext(entryId, companyId,
+			displayDate, status, orderByComparator);
+	}
+
+	/**
+	* Removes all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	*/
+	public static void removeByC_LtD_NotS(long companyId,
+		java.util.Date displayDate, int status) {
+		getPersistence().removeByC_LtD_NotS(companyId, displayDate, status);
+	}
+
+	/**
+	* Returns the number of blogs entries where companyId = &#63; and displayDate &lt; &#63; and status &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @return the number of matching blogs entries
+	*/
+	public static int countByC_LtD_NotS(long companyId,
+		java.util.Date displayDate, int status) {
+		return getPersistence().countByC_LtD_NotS(companyId, displayDate, status);
+	}
+
+	/**
+	* Returns all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @return the matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_S(
+		long companyId, java.util.Date displayDate, int status) {
+		return getPersistence().findByC_LtD_S(companyId, displayDate, status);
+	}
+
+	/**
+	* Returns a range of all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @return the range of matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_S(
+		long companyId, java.util.Date displayDate, int status, int start,
+		int end) {
+		return getPersistence()
+				   .findByC_LtD_S(companyId, displayDate, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.blogs.model.impl.BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching blogs entries
+	*/
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByC_LtD_S(
+		long companyId, java.util.Date displayDate, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .findByC_LtD_S(companyId, displayDate, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_LtD_S_First(
+		long companyId, java.util.Date displayDate, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_LtD_S_First(companyId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_LtD_S_First(
+		long companyId, java.util.Date displayDate, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_LtD_S_First(companyId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry findByC_LtD_S_Last(
+		long companyId, java.util.Date displayDate, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_LtD_S_Last(companyId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry fetchByC_LtD_S_Last(
+		long companyId, java.util.Date displayDate, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_LtD_S_Last(companyId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the blogs entries before and after the current blogs entry in the ordered set where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param entryId the primary key of the current blogs entry
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next blogs entry
+	* @throws com.liferay.portlet.blogs.NoSuchEntryException if a blogs entry with the primary key could not be found
+	*/
+	public static com.liferay.portlet.blogs.model.BlogsEntry[] findByC_LtD_S_PrevAndNext(
+		long entryId, long companyId, java.util.Date displayDate, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_LtD_S_PrevAndNext(entryId, companyId, displayDate,
+			status, orderByComparator);
+	}
+
+	/**
+	* Removes all the blogs entries where companyId = &#63; and displayDate &lt; &#63; and status = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	*/
+	public static void removeByC_LtD_S(long companyId,
+		java.util.Date displayDate, int status) {
+		getPersistence().removeByC_LtD_S(companyId, displayDate, status);
+	}
+
+	/**
+	* Returns the number of blogs entries where companyId = &#63; and displayDate &lt; &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param displayDate the display date
+	* @param status the status
+	* @return the number of matching blogs entries
+	*/
+	public static int countByC_LtD_S(long companyId,
+		java.util.Date displayDate, int status) {
+		return getPersistence().countByC_LtD_S(companyId, displayDate, status);
 	}
 
 	/**

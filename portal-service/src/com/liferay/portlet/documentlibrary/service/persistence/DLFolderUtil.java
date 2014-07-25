@@ -1438,6 +1438,78 @@ public class DLFolderUtil {
 	}
 
 	/**
+	* Returns the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFolderException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param parentFolderId the parent folder ID
+	* @param name the name
+	* @return the matching document library folder
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching document library folder could not be found
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFolder findByG_P_N(
+		long groupId, long parentFolderId, java.lang.String name)
+		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		return getPersistence().findByG_P_N(groupId, parentFolderId, name);
+	}
+
+	/**
+	* Returns the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param parentFolderId the parent folder ID
+	* @param name the name
+	* @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByG_P_N(
+		long groupId, long parentFolderId, java.lang.String name) {
+		return getPersistence().fetchByG_P_N(groupId, parentFolderId, name);
+	}
+
+	/**
+	* Returns the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param parentFolderId the parent folder ID
+	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByG_P_N(
+		long groupId, long parentFolderId, java.lang.String name,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByG_P_N(groupId, parentFolderId, name,
+			retrieveFromCache);
+	}
+
+	/**
+	* Removes the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param parentFolderId the parent folder ID
+	* @param name the name
+	* @return the document library folder that was removed
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFolder removeByG_P_N(
+		long groupId, long parentFolderId, java.lang.String name)
+		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
+		return getPersistence().removeByG_P_N(groupId, parentFolderId, name);
+	}
+
+	/**
+	* Returns the number of document library folders where groupId = &#63; and parentFolderId = &#63; and name = &#63;.
+	*
+	* @param groupId the group ID
+	* @param parentFolderId the parent folder ID
+	* @param name the name
+	* @return the number of matching document library folders
+	*/
+	public static int countByG_P_N(long groupId, long parentFolderId,
+		java.lang.String name) {
+		return getPersistence().countByG_P_N(groupId, parentFolderId, name);
+	}
+
+	/**
 	* Returns all the document library folders where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
 	*
 	* @param folderId the folder ID
@@ -1604,78 +1676,6 @@ public class DLFolderUtil {
 		return getPersistence()
 				   .countByF_C_P_NotS(folderId, companyId, parentFolderId,
 			status);
-	}
-
-	/**
-	* Returns the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchFolderException} if it could not be found.
-	*
-	* @param groupId the group ID
-	* @param parentFolderId the parent folder ID
-	* @param name the name
-	* @return the matching document library folder
-	* @throws com.liferay.portlet.documentlibrary.NoSuchFolderException if a matching document library folder could not be found
-	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFolder findByG_P_N(
-		long groupId, long parentFolderId, java.lang.String name)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
-		return getPersistence().findByG_P_N(groupId, parentFolderId, name);
-	}
-
-	/**
-	* Returns the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param groupId the group ID
-	* @param parentFolderId the parent folder ID
-	* @param name the name
-	* @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
-	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByG_P_N(
-		long groupId, long parentFolderId, java.lang.String name) {
-		return getPersistence().fetchByG_P_N(groupId, parentFolderId, name);
-	}
-
-	/**
-	* Returns the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param groupId the group ID
-	* @param parentFolderId the parent folder ID
-	* @param name the name
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
-	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchByG_P_N(
-		long groupId, long parentFolderId, java.lang.String name,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .fetchByG_P_N(groupId, parentFolderId, name,
-			retrieveFromCache);
-	}
-
-	/**
-	* Removes the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param parentFolderId the parent folder ID
-	* @param name the name
-	* @return the document library folder that was removed
-	*/
-	public static com.liferay.portlet.documentlibrary.model.DLFolder removeByG_P_N(
-		long groupId, long parentFolderId, java.lang.String name)
-		throws com.liferay.portlet.documentlibrary.NoSuchFolderException {
-		return getPersistence().removeByG_P_N(groupId, parentFolderId, name);
-	}
-
-	/**
-	* Returns the number of document library folders where groupId = &#63; and parentFolderId = &#63; and name = &#63;.
-	*
-	* @param groupId the group ID
-	* @param parentFolderId the parent folder ID
-	* @param name the name
-	* @return the number of matching document library folders
-	*/
-	public static int countByG_P_N(long groupId, long parentFolderId,
-		java.lang.String name) {
-		return getPersistence().countByG_P_N(groupId, parentFolderId, name);
 	}
 
 	/**

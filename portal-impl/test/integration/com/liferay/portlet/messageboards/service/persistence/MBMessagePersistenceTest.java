@@ -313,6 +313,18 @@ public class MBMessagePersistenceTest {
 	}
 
 	@Test
+	public void testCountByUserId() {
+		try {
+			_persistence.countByUserId(RandomTestUtil.nextLong());
+
+			_persistence.countByUserId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByThreadId() {
 		try {
 			_persistence.countByThreadId(RandomTestUtil.nextLong());
@@ -330,18 +342,6 @@ public class MBMessagePersistenceTest {
 			_persistence.countByThreadReplies(RandomTestUtil.nextLong());
 
 			_persistence.countByThreadReplies(0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
-	}
-
-	@Test
-	public void testCountByUserId() {
-		try {
-			_persistence.countByUserId(RandomTestUtil.nextLong());
-
-			_persistence.countByUserId(0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());

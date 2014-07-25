@@ -174,6 +174,18 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
+		java.lang.String name, long primKey,
+		java.util.List<java.lang.String> actionIds)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getAvailableResourceBlockPermissionActionIds(
+	String, long, List)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
 		long[] roleIds, java.lang.String name, long primKey,
 		java.util.List<java.lang.String> actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException;

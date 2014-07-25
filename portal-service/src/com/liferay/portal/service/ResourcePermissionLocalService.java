@@ -282,6 +282,12 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourcePermissionActionIds(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey,
+		java.util.Collection<java.lang.String> actionIds);
+
 	/**
 	* Returns the intersection of action IDs the role has permission at the
 	* scope to perform on resources of the type.
@@ -305,6 +311,12 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 		java.util.Collection<java.lang.String> actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getAvailableResourcePermissionActionIds(
+	long, String, int, String, Collection)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourcePermissionActionIds(
 		long companyId, java.lang.String name, int scope,

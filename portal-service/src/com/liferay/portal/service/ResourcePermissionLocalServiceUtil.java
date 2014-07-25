@@ -310,6 +310,15 @@ public class ResourcePermissionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourcePermissionActionIds(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey,
+		java.util.Collection<java.lang.String> actionIds) {
+		return getService()
+				   .getAvailableResourcePermissionActionIds(companyId, name,
+			scope, primKey, actionIds);
+	}
+
 	/**
 	* Returns the intersection of action IDs the role has permission at the
 	* scope to perform on resources of the type.
@@ -336,6 +345,12 @@ public class ResourcePermissionLocalServiceUtil {
 			scope, primKey, roleId, actionIds);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getAvailableResourcePermissionActionIds(
+	long, String, int, String, Collection)}
+	*/
+	@Deprecated
 	public static java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourcePermissionActionIds(
 		long companyId, java.lang.String name, int scope,
 		java.lang.String primKey, long[] roleIds,

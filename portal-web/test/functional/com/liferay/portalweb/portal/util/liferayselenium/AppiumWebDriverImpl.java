@@ -44,7 +44,7 @@ public class AppiumWebDriverImpl extends BaseWebDriverImpl {
 		_desiredCapabilities = DesiredCapabilities.android();
 
 		_desiredCapabilities.setCapability("browserName", "Browser");
-		_desiredCapabilities.setCapability("deviceName", "emulatorName");
+		_desiredCapabilities.setCapability("deviceName", "deviceName");
 		_desiredCapabilities.setCapability("platformName", "Android");
 		_desiredCapabilities.setCapability("platformVersion", "4.4");
 	}

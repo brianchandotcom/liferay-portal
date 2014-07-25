@@ -102,6 +102,80 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkServiceXMLFinders(
+			String fileName, Element entityElement, String entityName,
+			String portalTablesContent)
+		throws Exception {
+
+		List<String> columnNames = getColumnNames(
+			entityName, portalTablesContent);
+
+		List<Element> finderElements = entityElement.elements("finder");
+
+		List<Element> previousFinderColumnElements = null;
+
+		for (Element finderElement : finderElements) {
+			String finderName = finderElement.attributeValue("name");
+
+			List<Element> finderColumnElements = finderElement.elements(
+				"finder-column");
+
+			if (previousFinderColumnElements == null) {
+				previousFinderColumnElements = finderColumnElements;
+
+				continue;
+			}
+
+			int finderColumnCount = finderColumnElements.size();
+			int previousFinderColumnCount = previousFinderColumnElements.size();
+
+			if (previousFinderColumnCount > finderColumnCount) {
+				processErrorMessage(
+					fileName,
+					"order by number of columms: " + fileName + " " +
+						entityName + " " + finderName);
+
+				return;
+			}
+
+			if (previousFinderColumnCount < finderColumnCount) {
+				previousFinderColumnElements = finderColumnElements;
+
+				continue;
+			}
+
+			for (int i = 0; i < finderColumnCount; i++) {
+				Element finderColumnElement = finderColumnElements.get(i);
+				Element previousFinderColumnElement =
+					previousFinderColumnElements.get(i);
+
+				String finderColumnName = finderColumnElement.attributeValue(
+					"name");
+				String previousFinderColumnName =
+					previousFinderColumnElement.attributeValue("name");
+
+				int index = columnNames.indexOf(finderColumnName);
+				int previousIndex = columnNames.indexOf(
+					previousFinderColumnName);
+
+				if (previousIndex > index) {
+					processErrorMessage(
+						fileName,
+						"order by column order in table: " + fileName + " " +
+							entityName + " " + finderName);
+
+					return;
+				}
+
+				if (previousIndex < index) {
+					break;
+				}
+			}
+
+			previousFinderColumnElements = finderColumnElements;
+		}
+	}
+
 	protected void checkServiceXMLReferences(
 		String fileName, Element entityElement, String entityName) {
 
@@ -377,6 +451,12 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		_numericalPortletNameElementExclusions = getExclusions(
 			"numerical.portlet.name.element.excludes");
 
+		String portalTablesContent = null;
+
+		if (portalSource) {
+			portalTablesContent = getContent("sql/portal-tables.sql", 4);
+		}
+
 		List<String> fileNames = getFileNames(excludes, includes);
 
 		for (String fileName : fileNames) {
@@ -422,7 +502,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				newContent = formatPoshiXML(fileName, newContent);
 			}
 			else if (portalSource && fileName.endsWith("/service.xml")) {
-				formatServiceXML(fileName, newContent);
+				formatServiceXML(fileName, newContent, portalTablesContent);
 			}
 			else if (portalSource && fileName.endsWith("/struts-config.xml")) {
 				formatStrutsConfigXML(fileName, newContent);
@@ -714,8 +794,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return fixPoshiXMLNumberOfTabs(content);
 	}
 
-	protected void formatServiceXML(String fileName, String content)
-		throws DocumentException {
+	protected void formatServiceXML(
+			String fileName, String content, String portalTablesContent)
+		throws Exception {
 
 		Document document = saxReaderUtil.read(content);
 
@@ -735,6 +816,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 					fileName, "sort: " + fileName + " " + entityName);
 			}
 
+			checkServiceXMLFinders(
+				fileName, entityElement, entityName, portalTablesContent);
 			checkServiceXMLReferences(fileName, entityElement, entityName);
 
 			previousEntityName = entityName;
@@ -881,6 +964,43 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		return newContent.substring(0, x) + sb.toString() +
 			newContent.substring(y);
+	}
+
+	protected List<String> getColumnNames(
+			String entityName, String portalTablesContent)
+		throws Exception {
+
+		List<String> columnNames = new ArrayList<String>();
+
+		Pattern pattern = Pattern.compile(
+			"create table " + entityName + "_? \\(\n([\\s\\S]*?)\n\\);");
+
+		Matcher matcher = pattern.matcher(portalTablesContent);
+
+		if (!matcher.find()) {
+			return columnNames;
+		}
+
+		String tableContent = matcher.group(1);
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(tableContent));
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			line = StringUtil.trim(line);
+
+			String columnName = line.substring(
+				0, line.indexOf(StringPool.SPACE));
+
+			columnName = StringUtil.replace(
+				columnName, StringPool.UNDERLINE, StringPool.BLANK);
+
+			columnNames.add(columnName);
+		}
+
+		return columnNames;
 	}
 
 	protected String sortPoshiAttributes(String fileName, String content)

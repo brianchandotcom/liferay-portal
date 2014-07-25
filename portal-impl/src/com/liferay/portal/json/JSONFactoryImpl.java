@@ -322,30 +322,13 @@ public class JSONFactoryImpl implements JSONFactory {
 			throwable = throwable.getCause();
 		}
 
-		String throwableTypeName = ClassUtil.getClassName(throwable);
+		JSONObject jsonObject = createJSONObject();
 
 		String throwableMessage = throwable.getMessage();
 
 		if (Validator.isNull(throwableMessage)) {
 			throwableMessage = throwable.toString();
 		}
-
-		Throwable rootCause = throwable;
-
-		while (rootCause.getCause() != null) {
-			rootCause = rootCause.getCause();
-		}
-
-		String rootCauseName = ClassUtil.getClassName(rootCause);
-
-		String rootCauseMessage = rootCause.getMessage();
-
-		if (Validator.isNull(rootCauseMessage)) {
-			rootCauseMessage = rootCause.toString();
-		}
-
-
-		JSONObject jsonObject = createJSONObject();
 
 		// maintain compatibility with 6.2.x
 
@@ -354,18 +337,32 @@ public class JSONFactoryImpl implements JSONFactory {
 
 		JSONObject error = createJSONObject();
 
-		error.put("message", throwableMessage);
-		error.put("type", throwableTypeName);
-
 		jsonObject.put("error", error);
 
-		if (rootCause != throwable) {
+		error.put("message", throwableMessage);
+		error.put("type", ClassUtil.getClassName(throwable));
+
+		Throwable causeThrowable = throwable.getCause();
+
+		JSONObject parentJSONObject = error;
+
+		while (causeThrowable != null) {
 			JSONObject cause = createJSONObject();
 
-			cause.put("message", rootCauseMessage);
-			cause.put("type", rootCauseName);
+			throwableMessage = causeThrowable.getMessage();
 
-			jsonObject.put("cause", cause);
+			if (Validator.isNull(throwableMessage)) {
+				throwableMessage = causeThrowable.toString();
+			}
+
+			cause.put("message", throwableMessage);
+			cause.put("type", ClassUtil.getClassName(causeThrowable));
+
+			parentJSONObject.put("cause", cause);
+
+			causeThrowable = causeThrowable.getCause();
+
+			parentJSONObject = cause;
 		}
 
 		return jsonObject.toString();

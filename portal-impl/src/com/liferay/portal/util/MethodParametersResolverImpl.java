@@ -49,14 +49,7 @@ public class MethodParametersResolverImpl implements MethodParametersResolver {
 				methodParameters[i] = new MethodParameter(
 					joddMethodParameters[i].getName(),
 					joddMethodParameters[i].getSignature(),
-					methodParameterTypes[i]);
-
-				try {
-					methodParameters[i].getGenericTypes();
-				}
-				catch (ClassNotFoundException cnfe) {
-					throw new IllegalArgumentException(cnfe);
-				}
+					methodParameterTypes[i], true);
 			}
 
 		_methodParameters.put(method, methodParameters);

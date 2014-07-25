@@ -835,10 +835,7 @@ public class DLAppHelperLocalServiceImpl
 
 				DLFileEntry dlFileEntry = (DLFileEntry)object;
 
-				TrashEntry trashEntry = trashEntryLocalService.fetchEntry(
-					DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
-
-				if (trashEntry != null) {
+				if (!dlFileEntry.isInTrashImplicitly()) {
 					continue;
 				}
 
@@ -905,11 +902,7 @@ public class DLAppHelperLocalServiceImpl
 
 				DLFileShortcut dlFileShortcut = (DLFileShortcut)object;
 
-				TrashEntry trashEntry = trashEntryLocalService.fetchEntry(
-					DLFileShortcut.class.getName(),
-					dlFileShortcut.getFileShortcutId());
-
-				if (trashEntry != null) {
+				if (!dlFileShortcut.isInTrashImplicitly()) {
 					continue;
 				}
 
@@ -938,10 +931,7 @@ public class DLAppHelperLocalServiceImpl
 
 				DLFolder dlFolder = (DLFolder)object;
 
-				TrashEntry trashEntry = trashEntryLocalService.fetchEntry(
-					DLFolder.class.getName(), dlFolder.getFolderId());
-
-				if (trashEntry != null) {
+				if (!dlFolder.isInTrashImplicitly()) {
 					continue;
 				}
 

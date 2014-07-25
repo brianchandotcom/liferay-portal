@@ -1206,11 +1206,7 @@ public class JournalFolderLocalServiceImpl
 
 				JournalArticle article = (JournalArticle)object;
 
-				TrashEntry trashEntry = trashEntryLocalService.fetchEntry(
-					JournalArticle.class.getName(),
-					article.getResourcePrimKey());
-
-				if (trashEntry != null) {
+				if (!article.isInTrashImplicitly()) {
 					continue;
 				}
 
@@ -1279,10 +1275,7 @@ public class JournalFolderLocalServiceImpl
 
 				JournalFolder folder = (JournalFolder)object;
 
-				TrashEntry trashEntry = trashEntryLocalService.fetchEntry(
-					JournalFolder.class.getName(), folder.getFolderId());
-
-				if (trashEntry != null) {
+				if (!folder.isInTrashImplicitly()) {
 					continue;
 				}
 

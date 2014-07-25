@@ -804,10 +804,7 @@ public class BookmarksFolderLocalServiceImpl
 
 				BookmarksEntry entry = (BookmarksEntry)object;
 
-				TrashEntry trashEntry = trashEntryLocalService.fetchEntry(
-					BookmarksEntry.class.getName(), entry.getEntryId());
-
-				if (trashEntry != null) {
+				if (entry.isInTrashImplicitly()) {
 					continue;
 				}
 
@@ -853,10 +850,7 @@ public class BookmarksFolderLocalServiceImpl
 
 				BookmarksFolder folder = (BookmarksFolder)object;
 
-				TrashEntry trashEntry = trashEntryLocalService.fetchEntry(
-					BookmarksFolder.class.getName(), folder.getFolderId());
-
-				if (trashEntry != null) {
+				if (folder.isInTrashImplicitly()) {
 					continue;
 				}
 

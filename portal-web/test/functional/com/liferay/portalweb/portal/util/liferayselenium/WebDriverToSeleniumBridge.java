@@ -1180,25 +1180,27 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void mouseOver(String locator) {
-		if (!TestPropsValues.MOBILE_DEVICE_ENABLED) {
-			WebElement webElement = getWebElement(locator);
-
-			if (!webElement.isDisplayed()) {
-				scrollWebElementIntoView(webElement);
-			}
-
-			WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-			WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-			Actions actions = new Actions(webDriver);
-
-			actions.moveToElement(webElement);
-
-			Action action = actions.build();
-
-			action.perform();
+		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
+			return;
 		}
+
+		WebElement webElement = getWebElement(locator);
+
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		Actions actions = new Actions(webDriver);
+
+		actions.moveToElement(webElement);
+
+		Action action = actions.build();
+
+		action.perform();
 	}
 
 	@Override
@@ -1603,6 +1605,10 @@ public class WebDriverToSeleniumBridge
 	public void type(String locator, String value) {
 		WebElement webElement = getWebElement(locator);
 
+		if (!webElement.isEnabled()) {
+			return;
+		}
+
 		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
 			webElement.clear();
 
@@ -1614,11 +1620,11 @@ public class WebDriverToSeleniumBridge
 			catch (Exception e) {
 			}
 
-			Screen _screen = new Screen();
+			Screen screen = new Screen();
 
-			_screen.type(value);
+			screen.type(value);
 		}
-		else if (webElement.isEnabled()) {
+		else {
 			webElement.clear();
 
 			webElement.sendKeys(value);

@@ -35,18 +35,18 @@ public class AppiumWebDriverImpl extends BaseWebDriverImpl {
 	private static URL _url = null;
 
 	static {
-		try {
-			_url = new URL("http://0.0.0.0:4723/wd/hub/");
-		}
-		catch (Exception e) {
-		}
-
 		_desiredCapabilities = DesiredCapabilities.android();
 
 		_desiredCapabilities.setCapability("browserName", "Browser");
 		_desiredCapabilities.setCapability("deviceName", "deviceName");
 		_desiredCapabilities.setCapability("platformName", "Android");
 		_desiredCapabilities.setCapability("platformVersion", "4.4");
+
+		try {
+			_url = new URL("http://0.0.0.0:4723/wd/hub/");
+		}
+		catch (Exception e) {
+		}
 	}
 
 }

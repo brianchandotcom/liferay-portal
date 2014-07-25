@@ -99,62 +99,7 @@ public class SeleniumUtil extends TestPropsValues {
 			}
 		}
 		else if (SELENIUM_IMPLEMENTATION.equals(WebDriver.class.getName())) {
-			if ((BROWSER_TYPE.equals("*chrome") ||
-				 BROWSER_TYPE.equals("*firefox")) && !MOBILE_DEVICE_ENABLED) {
-
-				if (SELENIUM_LOGGER_ENABLED) {
-					_selenium = _wrapWithLoggerHandler(
-						new FirefoxWebDriverImpl(projectDir, portalURL));
-				}
-				else {
-					_selenium = new FirefoxWebDriverImpl(projectDir, portalURL);
-				}
-			}
-			else if (BROWSER_TYPE.equals("*googlechrome") &&
-					 !MOBILE_DEVICE_ENABLED) {
-
-				System.setProperty(
-					"webdriver.chrome.driver",
-					TestPropsValues.SELENIUM_EXECUTABLE_DIR_NAME +
-						"\\chromedriver.exe");
-
-				if (SELENIUM_LOGGER_ENABLED) {
-					_selenium = _wrapWithLoggerHandler(
-						new ChromeWebDriverImpl(projectDir, portalURL));
-				}
-				else {
-					_selenium = new ChromeWebDriverImpl(projectDir, portalURL);
-				}
-			}
-			else if ((BROWSER_TYPE.equals("*iehta") ||
-					  BROWSER_TYPE.equals("*iexplore")) &&
-					 !MOBILE_DEVICE_ENABLED) {
-
-				System.setProperty(
-					"webdriver.ie.driver",
-					TestPropsValues.SELENIUM_EXECUTABLE_DIR_NAME +
-						"\\IEDriverServer.exe");
-
-				if (SELENIUM_LOGGER_ENABLED) {
-					_selenium = _wrapWithLoggerHandler(
-						new InternetExplorerWebDriverImpl(
-							projectDir, portalURL));
-				}
-				else {
-					_selenium = new InternetExplorerWebDriverImpl(
-						projectDir, portalURL);
-				}
-			}
-			else if (BROWSER_TYPE.equals("*safari") && !MOBILE_DEVICE_ENABLED) {
-				if (SELENIUM_LOGGER_ENABLED) {
-					_selenium = _wrapWithLoggerHandler(
-						new SafariWebDriverImpl(projectDir, portalURL));
-				}
-				else {
-					_selenium = new SafariWebDriverImpl(projectDir, portalURL);
-				}
-			}
-			else if (MOBILE_DEVICE_ENABLED) {
+			if (MOBILE_DEVICE_ENABLED) {
 				if (SELENIUM_LOGGER_ENABLED) {
 					_selenium = _wrapWithLoggerHandler(
 						new AppiumWebDriverImpl(projectDir, portalURL));
@@ -164,8 +109,65 @@ public class SeleniumUtil extends TestPropsValues {
 				}
 			}
 			else {
-				throw new RuntimeException(
-					"Invalid browser type " + BROWSER_TYPE);
+				if (BROWSER_TYPE.equals("*chrome") ||
+					BROWSER_TYPE.equals("*firefox")) {
+
+					if (SELENIUM_LOGGER_ENABLED) {
+						_selenium = _wrapWithLoggerHandler(
+							new FirefoxWebDriverImpl(projectDir, portalURL));
+					}
+					else {
+						_selenium = new FirefoxWebDriverImpl(
+							projectDir, portalURL);
+					}
+				}
+				else if (BROWSER_TYPE.equals("*googlechrome")) {
+					System.setProperty(
+						"webdriver.chrome.driver",
+						TestPropsValues.SELENIUM_EXECUTABLE_DIR_NAME +
+							"\\chromedriver.exe");
+
+					if (SELENIUM_LOGGER_ENABLED) {
+						_selenium = _wrapWithLoggerHandler(
+							new ChromeWebDriverImpl(projectDir, portalURL));
+					}
+					else {
+						_selenium = new ChromeWebDriverImpl(
+							projectDir, portalURL);
+					}
+				}
+				else if (BROWSER_TYPE.equals("*iehta") ||
+						 BROWSER_TYPE.equals("*iexplore")) {
+
+					System.setProperty(
+						"webdriver.ie.driver",
+						TestPropsValues.SELENIUM_EXECUTABLE_DIR_NAME +
+							"\\IEDriverServer.exe");
+
+					if (SELENIUM_LOGGER_ENABLED) {
+						_selenium = _wrapWithLoggerHandler(
+							new InternetExplorerWebDriverImpl(
+								projectDir, portalURL));
+					}
+					else {
+						_selenium = new InternetExplorerWebDriverImpl(
+							projectDir, portalURL);
+					}
+				}
+				else if (BROWSER_TYPE.equals("*safari")) {
+					if (SELENIUM_LOGGER_ENABLED) {
+						_selenium = _wrapWithLoggerHandler(
+							new SafariWebDriverImpl(projectDir, portalURL));
+					}
+					else {
+						_selenium = new SafariWebDriverImpl(
+							projectDir, portalURL);
+					}
+				}
+				else {
+					throw new RuntimeException(
+						"Invalid browser type " + BROWSER_TYPE);
+				}
 			}
 		}
 	}

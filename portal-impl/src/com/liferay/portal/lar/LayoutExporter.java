@@ -244,8 +244,6 @@ public class LayoutExporter {
 
 		stopWatch.start();
 
-		LayoutCache layoutCache = new LayoutCache();
-
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 		PortletDataContext portletDataContext =
@@ -522,8 +520,8 @@ public class LayoutExporter {
 					companyId, portletId, parameterMap, type);
 
 			_portletExporter.exportPortlet(
-				portletDataContext, layoutCache, portletId, layout,
-				portletsElement, exportPermissions,
+				portletDataContext, portletId, layout, portletsElement,
+				exportPermissions,
 				exportPortletControlsMap.get(
 					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
 				exportPortletControlsMap.get(

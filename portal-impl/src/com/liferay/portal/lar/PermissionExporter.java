@@ -139,12 +139,9 @@ public class PermissionExporter {
 	}
 
 	protected void exportPortletPermissions(
-			PortletDataContext portletDataContext, LayoutCache layoutCache,
-			String portletId, Layout layout, Element portletElement)
+			PortletDataContext portletDataContext, String portletId,
+			Layout layout, Element portletElement)
 		throws Exception {
-
-		long companyId = portletDataContext.getCompanyId();
-		long groupId = portletDataContext.getGroupId();
 
 		String resourceName = PortletConstants.getRootPortletId(portletId);
 		String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(

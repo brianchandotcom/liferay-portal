@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>MobileDevice</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MobileDevice</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Mobile Device</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOBILE_DEVICE_SCREENSHOT</td>
+	<td>mobile/screenshots/mobile_device_screenshot.png</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

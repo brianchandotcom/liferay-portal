@@ -45,8 +45,7 @@ import org.springframework.mock.web.MockServletContext;
 /**
  * @author Raymond Augé
  */
-public class PACLExecutionTestListener
-	extends AbstractExecutionTestListener {
+public class PACLExecutionTestListener extends AbstractExecutionTestListener {
 
 	@Override
 	public void runAfterClass(TestContext testContext) {

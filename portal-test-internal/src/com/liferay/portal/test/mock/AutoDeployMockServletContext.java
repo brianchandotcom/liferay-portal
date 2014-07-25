@@ -24,19 +24,18 @@ import java.io.File;
 public class AutoDeployMockServletContext extends MockServletContext {
 
 	public AutoDeployMockServletContext(ResourceLoader resourceLoader) {
-
 		super(getResourceBasePath(), resourceLoader);
 	}
-
-	/**
-	 * @see com.liferay.portal.server.capabilities.TomcatServerCapabilities
-	 */
-	protected Boolean autoDeploy = Boolean.TRUE;
 
 	protected static String getResourceBasePath() {
 		File file = new File("portal-web/docroot");
 
 		return "file:" + file.getAbsolutePath();
 	}
+
+	/**
+	 * @see com.liferay.portal.server.capabilities.TomcatServerCapabilities
+	 */
+	protected Boolean autoDeploy = Boolean.TRUE;
 
 }

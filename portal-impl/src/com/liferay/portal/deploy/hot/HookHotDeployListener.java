@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.format.PhoneNumberFormat;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.LockListener;
-import com.liferay.portal.kernel.lock.LockListenerRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
@@ -504,15 +503,6 @@ public class HookHotDeployListener
 
 		if (portalProperties.containsKey(PropsKeys.DL_STORE_IMPL)) {
 			StoreFactory.setInstance(null);
-		}
-
-		if (portalProperties.containsKey(LOCK_LISTENERS)) {
-			LockListenerContainer lockListenerContainer =
-				_lockListenerContainerMap.remove(servletContextName);
-
-			if (lockListenerContainer != null) {
-				lockListenerContainer.unregisterLockListeners();
-			}
 		}
 
 		if (portalProperties.containsKey(PropsKeys.MEMBERSHIP_POLICY_ROLES)) {
@@ -1662,16 +1652,6 @@ public class HookHotDeployListener
 		}
 
 		if (portalProperties.containsKey(LOCK_LISTENERS)) {
-			LockListenerContainer lockListenerContainer =
-				_lockListenerContainerMap.get(servletContextName);
-
-			if (lockListenerContainer == null) {
-				lockListenerContainer = new LockListenerContainer();
-
-				_lockListenerContainerMap.put(
-					servletContextName, lockListenerContainer);
-			}
-
 			String[] lockListenerClassNames = StringUtil.split(
 				portalProperties.getProperty(LOCK_LISTENERS));
 
@@ -1680,7 +1660,9 @@ public class HookHotDeployListener
 					portletClassLoader, LockListener.class,
 					lockListenerClassName);
 
-				lockListenerContainer.registerLockListener(lockListener);
+				registerService(
+					servletContextName, lockListenerClassName,
+					LockListener.class, lockListener);
 			}
 		}
 
@@ -2644,8 +2626,6 @@ public class HookHotDeployListener
 			new HashMap<String, HotDeployListenersContainer>();
 	private Map<String, LanguagesContainer> _languagesContainerMap =
 		new HashMap<String, LanguagesContainer>();
-	private Map<String, LockListenerContainer> _lockListenerContainerMap =
-		new HashMap<String, LockListenerContainer>();
 	private Map<String, StringArraysContainer> _mergeStringArraysContainerMap =
 		new HashMap<String, StringArraysContainer>();
 	private Map<String, ModelListenersContainer> _modelListenersContainerMap =
@@ -2806,27 +2786,6 @@ public class HookHotDeployListener
 
 		private Map<Locale, Map<String, String>> _languagesMap =
 			new HashMap<Locale, Map<String, String>>();
-
-	}
-
-	private class LockListenerContainer {
-
-		public void registerLockListener(LockListener lockListener) {
-			LockListenerRegistryUtil.register(lockListener);
-
-			_lockListeners.add(lockListener);
-		}
-
-		public void unregisterLockListeners() {
-			for (LockListener lockListener : _lockListeners) {
-				LockListenerRegistryUtil.unregister(lockListener);
-			}
-
-			_lockListeners.clear();
-		}
-
-		private List<LockListener> _lockListeners =
-			new ArrayList<LockListener>();
 
 	}
 

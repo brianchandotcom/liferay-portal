@@ -832,23 +832,15 @@ create database lportal2 character set utf8;</echo>
 		</delete>
 	</target>
 
-	<target name="clean-up-android-emulator">
+	<target name="clean-up-android-device">
 		<exec executable="/bin/bash" os="${os.unix}">
 			<arg value="-c" />
-			<arg value="android" />
-			<arg value="delete" />
-			<arg value="avd" />
-			<arg value="-n" />
-			<arg value="${emulator.name}" />
+			<arg value="android delete avd -n deviceName" />
 		</exec>
 
 		<exec executable="cmd.exe" os="${os.windows}">
 			<arg value="/c" />
-			<arg value="android" />
-			<arg value="delete" />
-			<arg value="avd" />
-			<arg value="-n" />
-			<arg value="${emulator.name}" />
+			<arg value="android delete avd -n deviceName" />
 		</exec>
 	</target>
 
@@ -1544,45 +1536,20 @@ create database lportal2 character set utf8;</echo>
 		</if>
 	</target>
 
-	<target name="prepare-android-emulator">
+	<target name="prepare-android-device">
 		<exec executable="/bin/bash" os="${os.unix}">
 			<arg value="-c" />
-			<arg value="echo" />
-			<arg value="no" />
-			<arg value="|" />
-			<arg value="android" />
-			<arg value="create" />
-			<arg value="avd" />
-			<arg value="-n" />
-			<arg value="${emulator.name}" />
-			<arg value="-t" />
-			<arg value="${emulator.target.number}" />
+			<arg value="echo no | android create avd -n deviceName -t android-19" />
 		</exec>
 
 		<exec executable="cmd.exe" os="${os.windows}">
 			<arg value="/c" />
-			<arg value="android" />
-			<arg value="create" />
-			<arg value="avd" />
-			<arg value="-n" />
-			<arg value="${emulator.name}" />
-			<arg value="-t" />
-			<arg value="${emulator.target.number}" />
+			<arg value="echo no | android create avd -n deviceName -t android-19" />
 		</exec>
 
-		<if>
-			<os family="unix" />
-			<then>
-				<echo file="/root/.android/avd/${emulator.name}.avd/config.ini" append="true">
+		<echo file="${user.home}/.android/avd/deviceName.avd/config.ini" append="true">
 hw.keyboard=yes
-				</echo>
-			</then>
-			<else>
-				<echo file="${user.home}/.android/avd/${emulator.name}.avd/config.ini" append="true">
-hw.keyboard=yes
-				</echo>
-			</else>
-		</if>
+		</echo>
 	</target>
 
 	<target name="prepare-portal-ext-properties" depends="generate-test-properties">
@@ -3187,9 +3154,9 @@ if (ppstate.equals("normal")) {
 		<if>
 			<equals arg1="${mobile.device.enabled}" arg2="true" />
 			<then>
-				<antcall target="prepare-android-emulator" />
+				<antcall target="prepare-android-device" />
 
-				<antcall target="start-android-emulator" />
+				<antcall target="start-android-device" />
 
 				<antcall target="start-appium" />
 			</then>
@@ -3445,9 +3412,9 @@ if (ppstate.equals("normal")) {
 		<if>
 			<equals arg1="${mobile.device.enabled}" arg2="true" />
 			<then>
-				<antcall target="stop-android-emulator" />
+				<antcall target="stop-android-device" />
 
-				<antcall target="clean-up-android-emulator" />
+				<antcall target="clean-up-android-device" />
 
 				<antcall target="stop-appium" />
 			</then>
@@ -3472,40 +3439,34 @@ if (ppstate.equals("normal")) {
 		</if>
 	</target>
 
-	<target name="start-android-emulator">
+	<target name="start-android-device">
 		<exec executable="/bin/bash" os="${os.unix}" spawn="true">
 			<arg value="-c" />
-			<arg value="emulator" />
-			<arg value="-avd" />
-			<arg value="${emulator.name}" />
-			<arg value="-no-boot-anim" />
+			<arg value="emulator -avd deviceName -no-boot-anim" />
 		</exec>
 
 		<exec executable="cmd.exe" os="${os.windows}">
 			<arg value="/c" />
-			<arg value="emulator" />
-			<arg value="-avd" />
-			<arg value="${emulator.name}" />
-			<arg value="-no-boot-anim" />
+			<arg value="emulator -avd deviceName -no-boot-anim" />
 		</exec>
 
 		<sleep seconds="120" />
 	</target>
 
-	<target name="start-appium" >
-		<exec executable="gnome-terminal" os="${os.unix}" spawn="true">
-			<arg value="-e" />
-			<arg value="service" />
-			<arg value="appium" />
-			<arg value="start" />
-		</exec>
+	<target name="start-appium">
+		<parallel>
+			<daemons>
+				<exec executable="/bin/bash" os="${os.unix}">
+					<arg value="-c" />
+					<arg value="${appium.unix.cmd}" />
+				</exec>
 
-		<exec dir="${appium.win32.dir}" executable="cmd.exe" os="${os.windows}">
-			<arg value="/c" />
-			<arg value="start" />
-			<arg value="node" />
-			<arg value="appium" />
-		</exec>
+				<exec dir="${appium.win32.dir}" executable="cmd.exe" os="${os.windows}">
+					<arg value="/c" />
+					<arg value="${appium.win32.cmd}" />
+				</exec>
+			</daemons>
+		</parallel>
 	</target>
 
 	<target name="start-app-server">
@@ -3594,33 +3555,27 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		</java>
 	</target>
 
-	<target name="stop-android-emulator">
+	<target name="stop-android-device">
 		<exec executable="/bin/bash" os="${os.unix}">
 			<arg value="-c" />
-			<arg value="adb" />
-			<arg value="emu" />
-			<arg value="kill" />
+			<arg value="adb emu kill" />
 		</exec>
 
 		<exec executable="cmd.exe" os="${os.windows}">
 			<arg value="/c" />
-			<arg value="adb" />
-			<arg value="emu" />
-			<arg value="kill" />
+			<arg value="adb emu kill" />
 		</exec>
 	</target>
 
 	<target name="stop-appium">
-		<exec executable="/bin/bash" os="${os.unix}" spawn="true" >
+		<exec executable="/bin/bash" os="${os.unix}" >
 			<arg value="-c" />
-			<arg value="killall" />
-			<arg value="node" />
+			<arg value="killall node" />
 		</exec>
 
 		<exec executable="cmd.exe" os="${os.windows}" >
 			<arg value="/c" />
-			<arg value="tskill" />
-			<arg value="node" />
+			<arg value="tskill node" />
 		</exec>
 	</target>
 

@@ -507,10 +507,6 @@ public class HookHotDeployListener
 			StoreFactory.setInstance(null);
 		}
 
-		if (portalProperties.containsKey(PropsKeys.MAIL_HOOK_IMPL)) {
-			com.liferay.mail.util.HookFactory.setInstance(null);
-		}
-
 		if (portalProperties.containsKey(PropsKeys.MEMBERSHIP_POLICY_ROLES)) {
 			RoleMembershipPolicyFactoryImpl roleMembershipPolicyFactoryImpl =
 				(RoleMembershipPolicyFactoryImpl)
@@ -1675,7 +1671,8 @@ public class HookHotDeployListener
 					portletClassLoader, LockListener.class,
 					lockListenerClassName);
 
-				registerService(servletContextName, lockListenerClassName,
+				registerService(
+					servletContextName, lockListenerClassName,
 					LockListener.class, lockListener);
 			}
 		}

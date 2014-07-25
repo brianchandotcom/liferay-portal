@@ -51,7 +51,7 @@ public class LockListenerRegistryUtil {
 		new HashMap<String, LockListener>();
 
 	private class LockListenerServiceTrackerCustomizer
-	implements ServiceTrackerCustomizer<LockListener, LockListener> {
+		implements ServiceTrackerCustomizer<LockListener, LockListener> {
 
 		@Override
 		public LockListener addingService(

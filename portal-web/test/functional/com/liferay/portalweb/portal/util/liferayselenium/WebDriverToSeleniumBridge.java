@@ -63,6 +63,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import org.sikuli.script.Screen;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -1178,6 +1180,10 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void mouseOver(String locator) {
+		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
+			return;
+		}
+
 		WebElement webElement = getWebElement(locator);
 
 		if (!webElement.isDisplayed()) {
@@ -1599,7 +1605,26 @@ public class WebDriverToSeleniumBridge
 	public void type(String locator, String value) {
 		WebElement webElement = getWebElement(locator);
 
-		if (webElement.isEnabled()) {
+		if (!webElement.isEnabled()) {
+			return;
+		}
+
+		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
+			webElement.clear();
+
+			webElement.click();
+
+			try {
+				Thread.sleep(1000);
+			}
+			catch (Exception e) {
+			}
+
+			Screen screen = new Screen();
+
+			screen.type(value);
+		}
+		else {
 			webElement.clear();
 
 			webElement.sendKeys(value);

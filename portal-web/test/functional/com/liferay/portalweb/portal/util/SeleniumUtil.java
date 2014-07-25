@@ -17,6 +17,7 @@ package com.liferay.portalweb.portal.util;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portalweb.portal.util.liferayselenium.AppiumWebDriverImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.ChromeWebDriverImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.DefaultSeleniumImpl;
 import com.liferay.portalweb.portal.util.liferayselenium.FirefoxWebDriverImpl;
@@ -98,61 +99,75 @@ public class SeleniumUtil extends TestPropsValues {
 			}
 		}
 		else if (SELENIUM_IMPLEMENTATION.equals(WebDriver.class.getName())) {
-			if (BROWSER_TYPE.equals("*chrome") ||
-				BROWSER_TYPE.equals("*firefox")) {
-
+			if (MOBILE_DEVICE_ENABLED) {
 				if (SELENIUM_LOGGER_ENABLED) {
 					_selenium = _wrapWithLoggerHandler(
-						new FirefoxWebDriverImpl(projectDir, portalURL));
+						new AppiumWebDriverImpl(projectDir, portalURL));
 				}
 				else {
-					_selenium = new FirefoxWebDriverImpl(projectDir, portalURL);
-				}
-			}
-			else if (BROWSER_TYPE.equals("*googlechrome")) {
-				System.setProperty(
-					"webdriver.chrome.driver",
-					TestPropsValues.SELENIUM_EXECUTABLE_DIR_NAME +
-						"\\chromedriver.exe");
-
-				if (SELENIUM_LOGGER_ENABLED) {
-					_selenium = _wrapWithLoggerHandler(
-						new ChromeWebDriverImpl(projectDir, portalURL));
-				}
-				else {
-					_selenium = new ChromeWebDriverImpl(projectDir, portalURL);
-				}
-			}
-			else if (BROWSER_TYPE.equals("*iehta") ||
-					 BROWSER_TYPE.equals("*iexplore")) {
-
-				System.setProperty(
-					"webdriver.ie.driver",
-					TestPropsValues.SELENIUM_EXECUTABLE_DIR_NAME +
-						"\\IEDriverServer.exe");
-
-				if (SELENIUM_LOGGER_ENABLED) {
-					_selenium = _wrapWithLoggerHandler(
-						new InternetExplorerWebDriverImpl(
-							projectDir, portalURL));
-				}
-				else {
-					_selenium = new InternetExplorerWebDriverImpl(
-						projectDir, portalURL);
-				}
-			}
-			else if (BROWSER_TYPE.equals("*safari")) {
-				if (SELENIUM_LOGGER_ENABLED) {
-					_selenium = _wrapWithLoggerHandler(
-						new SafariWebDriverImpl(projectDir, portalURL));
-				}
-				else {
-					_selenium = new SafariWebDriverImpl(projectDir, portalURL);
+					_selenium = new AppiumWebDriverImpl(projectDir, portalURL);
 				}
 			}
 			else {
-				throw new RuntimeException(
-					"Invalid browser type " + BROWSER_TYPE);
+				if (BROWSER_TYPE.equals("*chrome") ||
+					BROWSER_TYPE.equals("*firefox")) {
+
+					if (SELENIUM_LOGGER_ENABLED) {
+						_selenium = _wrapWithLoggerHandler(
+							new FirefoxWebDriverImpl(projectDir, portalURL));
+					}
+					else {
+						_selenium = new FirefoxWebDriverImpl(
+							projectDir, portalURL);
+					}
+				}
+				else if (BROWSER_TYPE.equals("*googlechrome")) {
+					System.setProperty(
+						"webdriver.chrome.driver",
+						TestPropsValues.SELENIUM_EXECUTABLE_DIR_NAME +
+							"\\chromedriver.exe");
+
+					if (SELENIUM_LOGGER_ENABLED) {
+						_selenium = _wrapWithLoggerHandler(
+							new ChromeWebDriverImpl(projectDir, portalURL));
+					}
+					else {
+						_selenium = new ChromeWebDriverImpl(
+							projectDir, portalURL);
+					}
+				}
+				else if (BROWSER_TYPE.equals("*iehta") ||
+						 BROWSER_TYPE.equals("*iexplore")) {
+
+					System.setProperty(
+						"webdriver.ie.driver",
+						TestPropsValues.SELENIUM_EXECUTABLE_DIR_NAME +
+							"\\IEDriverServer.exe");
+
+					if (SELENIUM_LOGGER_ENABLED) {
+						_selenium = _wrapWithLoggerHandler(
+							new InternetExplorerWebDriverImpl(
+								projectDir, portalURL));
+					}
+					else {
+						_selenium = new InternetExplorerWebDriverImpl(
+							projectDir, portalURL);
+					}
+				}
+				else if (BROWSER_TYPE.equals("*safari")) {
+					if (SELENIUM_LOGGER_ENABLED) {
+						_selenium = _wrapWithLoggerHandler(
+							new SafariWebDriverImpl(projectDir, portalURL));
+					}
+					else {
+						_selenium = new SafariWebDriverImpl(
+							projectDir, portalURL);
+					}
+				}
+				else {
+					throw new RuntimeException(
+						"Invalid browser type " + BROWSER_TYPE);
+				}
 			}
 		}
 	}

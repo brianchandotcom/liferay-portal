@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -262,21 +263,18 @@ public class SocialRequestInterpreterLocalServiceImpl
 	}
 
 	protected String getSocialRequestPortletId(SocialRequest request) {
-		String portletId = null;
+		String portletId = StringPool.BLANK;
+
+		String extraData = request.getExtraData();
 
 		try {
-			String extraData = request.getExtraData();
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
+				extraData);
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			if (extraData != null) {
-				jsonObject = JSONFactoryUtil.createJSONObject(extraData);
-			}
-
-			portletId = jsonObject.getString("portletId");
+			portletId = extraDataJSONObject.getString("portletId");
 		}
-		catch (JSONException e) {
-			_log.error(e, e);
+		catch (JSONException jsone) {
+			_log.error("Unable to create JSON object from " + extraData);
 		}
 
 		return portletId;

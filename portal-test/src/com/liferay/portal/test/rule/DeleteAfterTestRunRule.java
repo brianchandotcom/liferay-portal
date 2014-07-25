@@ -321,7 +321,7 @@ public class DeleteAfterTestRunRule implements TestRule {
 	private static Set<Class<?>> _orderedClasses = new LinkedHashSet<Class<?>>(
 		Arrays.asList(
 			User.class, Organization.class, Role.class, UserGroup.class,
-			Group.class));
+			Group.class, Company.class));
 
 	private Object _instance;
 

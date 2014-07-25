@@ -1,12 +1,21 @@
 AUI.add(
 	'liferay-util-window',
 	function(A) {
-		var Lang = A.Lang;
-
 		var DOM = A.DOM;
+		var Lang = A.Lang;
+		var UA = A.UA;
 
 		var Util = Liferay.Util;
 		var Window = Util.Window;
+
+		var IE9 = (UA.ie == 9);
+
+		var setWidth = function(modal, width) {
+			if (IE9) {
+				modal.set('width', width + 1);
+				modal.set('width', width);
+			}
+		};
 
 		var LiferayModal = A.Component.create(
 			{
@@ -127,6 +136,12 @@ AUI.add(
 					modal.after(
 						'destroy',
 						function(event) {
+							var openerInFrame = !!modal._opener.frameElement;
+
+							if (IE9 && openerInFrame) {
+								instance._syncWindowsUI();
+							}
+
 							instance._unregister(modal);
 
 							modal = null;
@@ -168,7 +183,7 @@ AUI.add(
 
 									iframeNode.focus();
 
-									if (A.UA.ios) {
+									if (UA.ios) {
 										iframeNode.attr('scrolling', 'no');
 									}
 								}
@@ -392,7 +407,17 @@ AUI.add(
 
 						width *= modal.get('autoWidthRatio');
 
-						modal.set('width', width);
+						var widthInitial = modal.get('width');
+
+						if (width != widthInitial) {
+							modal.set('width', width);
+						}
+						else {
+							setWidth(modal, widthInitial);
+						}
+					}
+					else {
+						setWidth(modal, modal.get('width'));
 					}
 				},
 

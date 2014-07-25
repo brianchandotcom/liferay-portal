@@ -322,20 +322,6 @@ public class JournalFolderPersistenceTest {
 	}
 
 	@Test
-	public void testCountByF_C_P_NotS() {
-		try {
-			_persistence.countByF_C_P_NotS(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-				RandomTestUtil.nextInt());
-
-			_persistence.countByF_C_P_NotS(0L, 0L, 0L, 0);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
-	}
-
-	@Test
 	public void testCountByG_P_N() {
 		try {
 			_persistence.countByG_P_N(RandomTestUtil.nextLong(),
@@ -370,6 +356,20 @@ public class JournalFolderPersistenceTest {
 				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
 			_persistence.countByG_P_NotS(0L, 0L, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByF_C_P_NotS() {
+		try {
+			_persistence.countByF_C_P_NotS(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
+
+			_persistence.countByF_C_P_NotS(0L, 0L, 0L, 0);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());

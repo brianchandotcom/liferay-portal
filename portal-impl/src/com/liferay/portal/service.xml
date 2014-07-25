@@ -781,15 +781,15 @@
 			<finder-column name="privateLayout" />
 			<finder-column name="parentLayoutId" />
 		</finder>
-		<finder name="G_P_F" return-type="Layout" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="privateLayout" />
-			<finder-column name="friendlyURL" />
-		</finder>
 		<finder name="G_P_T" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
 			<finder-column name="type" />
+		</finder>
+		<finder name="G_P_F" return-type="Layout" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="privateLayout" />
+			<finder-column name="friendlyURL" />
 		</finder>
 		<finder name="G_P_SPLU" return-type="Layout">
 			<finder-column name="groupId" />

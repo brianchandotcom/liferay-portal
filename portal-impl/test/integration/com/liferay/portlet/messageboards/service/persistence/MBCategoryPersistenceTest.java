@@ -341,31 +341,6 @@ public class MBCategoryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P_S() {
-		try {
-			_persistence.countByG_P_S(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
-
-			_persistence.countByG_P_S(0L, 0L, 0);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
-	}
-
-	@Test
-	public void testCountByG_P_SArrayable() {
-		try {
-			_persistence.countByG_P_S(RandomTestUtil.nextLong(),
-				new long[] { RandomTestUtil.nextLong(), 0L },
-				RandomTestUtil.nextInt());
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
-	}
-
-	@Test
 	public void testCountByNotC_G_P() {
 		try {
 			_persistence.countByNotC_G_P(RandomTestUtil.nextLong(),
@@ -385,6 +360,31 @@ public class MBCategoryPersistenceTest {
 					RandomTestUtil.nextLong(), 0L
 				}, RandomTestUtil.nextLong(),
 				new long[] { RandomTestUtil.nextLong(), 0L });
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_P_S() {
+		try {
+			_persistence.countByG_P_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+			_persistence.countByG_P_S(0L, 0L, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_P_SArrayable() {
+		try {
+			_persistence.countByG_P_S(RandomTestUtil.nextLong(),
+				new long[] { RandomTestUtil.nextLong(), 0L },
+				RandomTestUtil.nextInt());
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());

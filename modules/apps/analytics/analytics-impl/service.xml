@@ -60,19 +60,19 @@
 			<finder-column name="classPK" />
 			<finder-column name="type" />
 		</finder>
+		<finder name="GtCD_R_R_E_E" return-type="Collection">
+			<finder-column name="createDate" comparator="&gt;" />
+			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassPK" />
+			<finder-column name="elementKey" />
+			<finder-column name="type" />
+		</finder>
 		<finder name="GtCD_C_C_R_R_E" return-type="Collection">
 			<finder-column name="createDate" comparator="&gt;" />
 			<finder-column name="className" />
 			<finder-column name="classPK" />
 			<finder-column name="referrerClassName" />
 			<finder-column name="referrerClassPK" />
-			<finder-column name="type" />
-		</finder>
-		<finder name="GtCD_R_R_E_E" return-type="Collection">
-			<finder-column name="createDate" comparator="&gt;" />
-			<finder-column name="referrerClassName" />
-			<finder-column name="referrerClassPK" />
-			<finder-column name="elementKey" />
 			<finder-column name="type" />
 		</finder>
 	</entity>

@@ -280,11 +280,11 @@ public class CalEventPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() {
+	public void testCountByGroupId() {
 		try {
-			_persistence.countByCompanyId(RandomTestUtil.nextLong());
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
-			_persistence.countByCompanyId(0L);
+			_persistence.countByGroupId(0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -292,11 +292,11 @@ public class CalEventPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() {
+	public void testCountByCompanyId() {
 		try {
-			_persistence.countByGroupId(RandomTestUtil.nextLong());
+			_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
-			_persistence.countByGroupId(0L);
+			_persistence.countByCompanyId(0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());

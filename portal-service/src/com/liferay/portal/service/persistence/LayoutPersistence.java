@@ -1396,66 +1396,6 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		long parentLayoutId);
 
 	/**
-	* Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or throws a {@link com.liferay.portal.NoSuchLayoutException} if it could not be found.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param friendlyURL the friendly u r l
-	* @return the matching layout
-	* @throws com.liferay.portal.NoSuchLayoutException if a matching layout could not be found
-	*/
-	public com.liferay.portal.model.Layout findByG_P_F(long groupId,
-		boolean privateLayout, java.lang.String friendlyURL)
-		throws com.liferay.portal.NoSuchLayoutException;
-
-	/**
-	* Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param friendlyURL the friendly u r l
-	* @return the matching layout, or <code>null</code> if a matching layout could not be found
-	*/
-	public com.liferay.portal.model.Layout fetchByG_P_F(long groupId,
-		boolean privateLayout, java.lang.String friendlyURL);
-
-	/**
-	* Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param friendlyURL the friendly u r l
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching layout, or <code>null</code> if a matching layout could not be found
-	*/
-	public com.liferay.portal.model.Layout fetchByG_P_F(long groupId,
-		boolean privateLayout, java.lang.String friendlyURL,
-		boolean retrieveFromCache);
-
-	/**
-	* Removes the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param friendlyURL the friendly u r l
-	* @return the layout that was removed
-	*/
-	public com.liferay.portal.model.Layout removeByG_P_F(long groupId,
-		boolean privateLayout, java.lang.String friendlyURL)
-		throws com.liferay.portal.NoSuchLayoutException;
-
-	/**
-	* Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
-	*
-	* @param groupId the group ID
-	* @param privateLayout the private layout
-	* @param friendlyURL the friendly u r l
-	* @return the number of matching layouts
-	*/
-	public int countByG_P_F(long groupId, boolean privateLayout,
-		java.lang.String friendlyURL);
-
-	/**
 	* Returns all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID
@@ -1672,6 +1612,66 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	*/
 	public int filterCountByG_P_T(long groupId, boolean privateLayout,
 		java.lang.String type);
+
+	/**
+	* Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or throws a {@link com.liferay.portal.NoSuchLayoutException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param privateLayout the private layout
+	* @param friendlyURL the friendly u r l
+	* @return the matching layout
+	* @throws com.liferay.portal.NoSuchLayoutException if a matching layout could not be found
+	*/
+	public com.liferay.portal.model.Layout findByG_P_F(long groupId,
+		boolean privateLayout, java.lang.String friendlyURL)
+		throws com.liferay.portal.NoSuchLayoutException;
+
+	/**
+	* Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param privateLayout the private layout
+	* @param friendlyURL the friendly u r l
+	* @return the matching layout, or <code>null</code> if a matching layout could not be found
+	*/
+	public com.liferay.portal.model.Layout fetchByG_P_F(long groupId,
+		boolean privateLayout, java.lang.String friendlyURL);
+
+	/**
+	* Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param privateLayout the private layout
+	* @param friendlyURL the friendly u r l
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching layout, or <code>null</code> if a matching layout could not be found
+	*/
+	public com.liferay.portal.model.Layout fetchByG_P_F(long groupId,
+		boolean privateLayout, java.lang.String friendlyURL,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param privateLayout the private layout
+	* @param friendlyURL the friendly u r l
+	* @return the layout that was removed
+	*/
+	public com.liferay.portal.model.Layout removeByG_P_F(long groupId,
+		boolean privateLayout, java.lang.String friendlyURL)
+		throws com.liferay.portal.NoSuchLayoutException;
+
+	/**
+	* Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	*
+	* @param groupId the group ID
+	* @param privateLayout the private layout
+	* @param friendlyURL the friendly u r l
+	* @return the number of matching layouts
+	*/
+	public int countByG_P_F(long groupId, boolean privateLayout,
+		java.lang.String friendlyURL);
 
 	/**
 	* Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or throws a {@link com.liferay.portal.NoSuchLayoutException} if it could not be found.

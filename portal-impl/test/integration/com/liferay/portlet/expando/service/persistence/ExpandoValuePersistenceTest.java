@@ -222,12 +222,12 @@ public class ExpandoValuePersistenceTest {
 	}
 
 	@Test
-	public void testCountByT_CPK() {
+	public void testCountByT_R() {
 		try {
-			_persistence.countByT_CPK(RandomTestUtil.nextLong(),
+			_persistence.countByT_R(RandomTestUtil.nextLong(),
 				RandomTestUtil.nextLong());
 
-			_persistence.countByT_CPK(0L, 0L);
+			_persistence.countByT_R(0L, 0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -235,12 +235,12 @@ public class ExpandoValuePersistenceTest {
 	}
 
 	@Test
-	public void testCountByT_R() {
+	public void testCountByT_CPK() {
 		try {
-			_persistence.countByT_R(RandomTestUtil.nextLong(),
+			_persistence.countByT_CPK(RandomTestUtil.nextLong(),
 				RandomTestUtil.nextLong());
 
-			_persistence.countByT_R(0L, 0L);
+			_persistence.countByT_CPK(0L, 0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());

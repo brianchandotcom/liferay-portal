@@ -32,25 +32,6 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 		_blogsEntryService = blogsEntryService;
 	}
 
-	@Override
-	public com.liferay.portlet.blogs.model.BlogsEntry addEntry(
-		java.lang.String title, java.lang.String deckTitle,
-		java.lang.String description, java.lang.String content,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
-		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		boolean smallImage, java.lang.String smallImageURL,
-		java.lang.String smallImageFileName,
-		java.io.InputStream smallImageInputStream,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntryService.addEntry(title, deckTitle, description,
-			content, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, allowPingbacks,
-			allowTrackbacks, trackbacks, smallImage, smallImageURL,
-			smallImageFileName, smallImageInputStream, serviceContext);
-	}
-
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addEntry(String, String,
 	String, String, int, int, int, int, int, boolean, boolean,
@@ -74,6 +55,25 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 			smallImage, smallImageURL, smallImageFileName,
 			smallImageInputStream, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.blogs.model.BlogsEntry addEntry(
+		java.lang.String title, java.lang.String subtitle,
+		java.lang.String description, java.lang.String content,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
+		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		boolean smallImage, java.lang.String smallImageURL,
+		java.lang.String smallImageFileName,
+		java.io.InputStream smallImageInputStream,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryService.addEntry(title, subtitle, description,
+			content, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, allowPingbacks,
+			allowTrackbacks, trackbacks, smallImage, smallImageURL,
+			smallImageFileName, smallImageInputStream, serviceContext);
 	}
 
 	@Override
@@ -240,26 +240,6 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 
 	@Override
 	public com.liferay.portlet.blogs.model.BlogsEntry updateEntry(
-		long entryId, java.lang.String title, java.lang.String deckTitle,
-		java.lang.String description, java.lang.String content,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
-		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		boolean smallImage, java.lang.String smallImageURL,
-		java.lang.String smallImageFileName,
-		java.io.InputStream smallImageInputStream,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntryService.updateEntry(entryId, title, deckTitle,
-			description, content, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			allowPingbacks, allowTrackbacks, trackbacks, smallImage,
-			smallImageURL, smallImageFileName, smallImageInputStream,
-			serviceContext);
-	}
-
-	@Override
-	public com.liferay.portlet.blogs.model.BlogsEntry updateEntry(
 		long entryId, java.lang.String title, java.lang.String description,
 		java.lang.String content, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -274,6 +254,26 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 			displayDateHour, displayDateMinute, allowPingbacks,
 			allowTrackbacks, trackbacks, smallImage, smallImageURL,
 			smallImageFileName, smallImageInputStream, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.blogs.model.BlogsEntry updateEntry(
+		long entryId, java.lang.String title, java.lang.String subtitle,
+		java.lang.String description, java.lang.String content,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
+		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		boolean smallImage, java.lang.String smallImageURL,
+		java.lang.String smallImageFileName,
+		java.io.InputStream smallImageInputStream,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryService.updateEntry(entryId, title, subtitle,
+			description, content, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			allowPingbacks, allowTrackbacks, trackbacks, smallImage,
+			smallImageURL, smallImageFileName, smallImageInputStream,
+			serviceContext);
 	}
 
 	/**

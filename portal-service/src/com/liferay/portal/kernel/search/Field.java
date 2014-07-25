@@ -76,8 +76,6 @@ public class Field implements Serializable {
 
 	public static final String CREATE_DATE = "createDate";
 
-	public static final String DECK_TITLE = "deckTitle";
-
 	public static final String DEFAULT_LANGUAGE_ID = "defaultLanguageId";
 
 	public static final String DESCRIPTION = "description";
@@ -153,6 +151,8 @@ public class Field implements Serializable {
 	public static final String STAGING_GROUP = "stagingGroup";
 
 	public static final String STATUS = "status";
+
+	public static final String SUBTITLE = "subtitle";
 
 	public static final String TITLE = "title";
 

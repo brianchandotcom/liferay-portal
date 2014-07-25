@@ -62,7 +62,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("title", getTitle());
-		attributes.put("deckTitle", getDeckTitle());
+		attributes.put("subtitle", getSubtitle());
 		attributes.put("urlTitle", getUrlTitle());
 		attributes.put("description", getDescription());
 		attributes.put("content", getContent());
@@ -137,10 +137,10 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 			setTitle(title);
 		}
 
-		String deckTitle = (String)attributes.get("deckTitle");
+		String subtitle = (String)attributes.get("subtitle");
 
-		if (deckTitle != null) {
-			setDeckTitle(deckTitle);
+		if (subtitle != null) {
+			setSubtitle(subtitle);
 		}
 
 		String urlTitle = (String)attributes.get("urlTitle");
@@ -295,16 +295,6 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public java.util.Date getCreateDate() {
 		return _blogsEntry.getCreateDate();
-	}
-
-	/**
-	* Returns the deck title of this blogs entry.
-	*
-	* @return the deck title of this blogs entry
-	*/
-	@Override
-	public java.lang.String getDeckTitle() {
-		return _blogsEntry.getDeckTitle();
 	}
 
 	/**
@@ -467,6 +457,16 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public java.util.Date getStatusDate() {
 		return _blogsEntry.getStatusDate();
+	}
+
+	/**
+	* Returns the subtitle of this blogs entry.
+	*
+	* @return the subtitle of this blogs entry
+	*/
+	@Override
+	public java.lang.String getSubtitle() {
+		return _blogsEntry.getSubtitle();
 	}
 
 	/**
@@ -796,16 +796,6 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	/**
-	* Sets the deck title of this blogs entry.
-	*
-	* @param deckTitle the deck title of this blogs entry
-	*/
-	@Override
-	public void setDeckTitle(java.lang.String deckTitle) {
-		_blogsEntry.setDeckTitle(deckTitle);
-	}
-
-	/**
 	* Sets the description of this blogs entry.
 	*
 	* @param description the description of this blogs entry
@@ -976,6 +966,16 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public void setStatusDate(java.util.Date statusDate) {
 		_blogsEntry.setStatusDate(statusDate);
+	}
+
+	/**
+	* Sets the subtitle of this blogs entry.
+	*
+	* @param subtitle the subtitle of this blogs entry
+	*/
+	@Override
+	public void setSubtitle(java.lang.String subtitle) {
+		_blogsEntry.setSubtitle(subtitle);
 	}
 
 	/**

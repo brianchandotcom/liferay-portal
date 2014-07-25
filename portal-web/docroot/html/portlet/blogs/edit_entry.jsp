@@ -96,7 +96,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	<aui:fieldset>
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="title" />
 
-		<aui:input name="deckTitle" />
+		<aui:input name="subtitle" />
 
 		<aui:input name="displayDate" />
 

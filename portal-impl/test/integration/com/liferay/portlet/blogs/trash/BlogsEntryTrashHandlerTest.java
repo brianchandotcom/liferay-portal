@@ -180,7 +180,7 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		throws Exception {
 
 		String title = getSearchKeywords();
-		String deckTitle = StringPool.BLANK;
+		String subtitle = StringPool.BLANK;
 		String description = "Description";
 		String content = "Content";
 		int displayDateMonth = 1;
@@ -201,7 +201,7 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), title, deckTitle, description, content,
+			TestPropsValues.getUserId(), title, subtitle, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 			smallImage, smallImageURL, smallImageFileName,

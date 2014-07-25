@@ -91,7 +91,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 	@Override
 	public BlogsEntry addEntry(
-			String title, String deckTitle, String description, String content,
+			String title, String subtitle, String description, String content,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 			boolean allowTrackbacks, String[] trackbacks, boolean smallImage,
@@ -104,7 +104,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			ActionKeys.ADD_ENTRY);
 
 		return blogsEntryLocalService.addEntry(
-			getUserId(), title, deckTitle, description, content,
+			getUserId(), title, subtitle, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 			smallImage, smallImageURL, smallImageFileName,
@@ -443,7 +443,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 	@Override
 	public BlogsEntry updateEntry(
-			long entryId, String title, String deckTitle, String description,
+			long entryId, String title, String subtitle, String description,
 			String content, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			boolean allowPingbacks, boolean allowTrackbacks,
@@ -456,7 +456,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			getPermissionChecker(), entryId, ActionKeys.UPDATE);
 
 		return blogsEntryLocalService.updateEntry(
-			getUserId(), entryId, title, deckTitle, description, content,
+			getUserId(), entryId, title, subtitle, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 			smallImage, smallImageURL, smallImageFileName,

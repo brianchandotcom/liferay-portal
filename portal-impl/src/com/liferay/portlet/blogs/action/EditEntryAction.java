@@ -460,7 +460,7 @@ public class EditEntryAction extends PortletAction {
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
 		String title = ParamUtil.getString(actionRequest, "title");
-		String deckTitle = ParamUtil.getString(actionRequest, "deckTitle");
+		String subtitle = ParamUtil.getString(actionRequest, "subtitle");
 		String description = ParamUtil.getString(actionRequest, "description");
 		String content = ParamUtil.getString(actionRequest, "content");
 
@@ -530,7 +530,7 @@ public class EditEntryAction extends PortletAction {
 				// Add entry
 
 				entry = BlogsEntryServiceUtil.addEntry(
-					title, deckTitle, description, content, displayDateMonth,
+					title, subtitle, description, content, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, allowPingbacks, allowTrackbacks,
 					trackbacks, smallImage, smallImageURL, smallImageFileName,
@@ -549,7 +549,7 @@ public class EditEntryAction extends PortletAction {
 				String tempOldUrlTitle = entry.getUrlTitle();
 
 				entry = BlogsEntryServiceUtil.updateEntry(
-					entryId, title, deckTitle, description, content,
+					entryId, title, subtitle, description, content,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, allowPingbacks,
 					allowTrackbacks, trackbacks, smallImage, smallImageURL,

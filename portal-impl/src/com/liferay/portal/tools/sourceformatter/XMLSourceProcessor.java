@@ -74,6 +74,69 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
+	protected void checkServiceXMLExceptions(
+		String fileName, Element rootElement) {
+
+		Element exceptionsElement = rootElement.element("exceptions");
+
+		if (exceptionsElement == null) {
+			return;
+		}
+
+		List<Element> exceptionElements = exceptionsElement.elements(
+			"exception");
+
+		String previousException = StringPool.BLANK;
+
+		for (Element exceptionElement : exceptionElements) {
+			String exception = exceptionElement.getStringValue();
+
+			if (Validator.isNotNull(previousException) &&
+				(previousException.compareToIgnoreCase(exception) > 0)) {
+
+				processErrorMessage(
+					fileName, "sort: " + fileName + " " + exception);
+			}
+
+			previousException = exception;
+		}
+	}
+
+	protected void checkServiceXMLReferences(
+		String fileName, Element entityElement, String entityName) {
+
+		String previousReferenceEntity = StringPool.BLANK;
+		String previousReferencePackagePath = StringPool.BLANK;
+
+		List<Element> referenceElements = entityElement.elements(
+			"reference");
+
+		for (Element referenceElement : referenceElements) {
+			String referenceEntity = referenceElement.attributeValue(
+				"entity");
+			String referencePackagePath = referenceElement.attributeValue(
+				"package-path");
+
+			if (Validator.isNotNull(previousReferencePackagePath)) {
+				if ((previousReferencePackagePath.compareToIgnoreCase(
+						referencePackagePath) > 0) ||
+					(previousReferencePackagePath.equals(
+						referencePackagePath) &&
+					 (previousReferenceEntity.compareToIgnoreCase(
+						 referenceEntity) > 0))) {
+
+					processErrorMessage(
+						fileName,
+						"sort: " + fileName + " " + entityName + " " +
+							referenceEntity);
+				}
+			}
+
+			previousReferenceEntity = referenceEntity;
+			previousReferencePackagePath = referencePackagePath;
+		}
+	}
+
 	protected String fixAntXMLProjectName(String fileName, String content) {
 		int x = 0;
 
@@ -672,63 +735,12 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 					fileName, "sort: " + fileName + " " + entityName);
 			}
 
-			String previousReferenceEntity = StringPool.BLANK;
-			String previousReferencePackagePath = StringPool.BLANK;
-
-			List<Element> referenceElements = entityElement.elements(
-				"reference");
-
-			for (Element referenceElement : referenceElements) {
-				String referenceEntity = referenceElement.attributeValue(
-					"entity");
-				String referencePackagePath = referenceElement.attributeValue(
-					"package-path");
-
-				if (Validator.isNotNull(previousReferencePackagePath)) {
-					if ((previousReferencePackagePath.compareToIgnoreCase(
-							referencePackagePath) > 0) ||
-						(previousReferencePackagePath.equals(
-							referencePackagePath) &&
-						 (previousReferenceEntity.compareToIgnoreCase(
-							 referenceEntity) > 0))) {
-
-						processErrorMessage(
-							fileName,
-							"sort: " + fileName + " " + entityName + " " +
-								referenceEntity);
-					}
-				}
-
-				previousReferenceEntity = referenceEntity;
-				previousReferencePackagePath = referencePackagePath;
-			}
+			checkServiceXMLReferences(fileName, entityElement, entityName);
 
 			previousEntityName = entityName;
 		}
 
-		Element exceptionsElement = rootElement.element("exceptions");
-
-		if (exceptionsElement == null) {
-			return;
-		}
-
-		List<Element> exceptionElements = exceptionsElement.elements(
-			"exception");
-
-		String previousException = StringPool.BLANK;
-
-		for (Element exceptionElement : exceptionElements) {
-			String exception = exceptionElement.getStringValue();
-
-			if (Validator.isNotNull(previousException) &&
-				(previousException.compareToIgnoreCase(exception) > 0)) {
-
-				processErrorMessage(
-					fileName, "sort: " + fileName + " " + exception);
-			}
-
-			previousException = exception;
-		}
+		checkServiceXMLExceptions(fileName, rootElement);
 	}
 
 	protected void formatStrutsConfigXML(String fileName, String content)

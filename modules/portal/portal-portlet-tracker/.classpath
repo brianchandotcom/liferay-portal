@@ -16,7 +16,10 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/javax.servlet.jsp.jar" />
 	<classpathentry kind="lib" path="lib/org.apache.felix.scr.jar" />
+	<classpathentry kind="lib" path="lib/org.eclipse.equinox.http.servlet.jar" />
+	<classpathentry kind="lib" path="lib/org.osgi.compendium.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

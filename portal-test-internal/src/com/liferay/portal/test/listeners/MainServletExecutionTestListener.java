@@ -28,11 +28,6 @@ import com.liferay.portal.util.test.TestPropsValues;
 
 import java.io.File;
 
-import java.lang.reflect.Field;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.ServletException;
 
 import org.springframework.core.io.FileSystemResourceLoader;
@@ -103,29 +98,6 @@ public class MainServletExecutionTestListener
 	}
 
 	protected static MainServlet mainServlet;
-
-	protected static class FieldBag {
-
-		public FieldBag(Class<?> fieldClass) {
-			_fieldClass = fieldClass;
-		}
-
-		public void addField(Field field) {
-			_fields.add(field);
-		}
-
-		public Class<?> getFieldClass() {
-			return _fieldClass;
-		}
-
-		public List<Field> getFields() {
-			return _fields;
-		}
-
-		private Class<?> _fieldClass;
-		private List<Field> _fields = new ArrayList<Field>();
-
-	}
 
 	protected class AutoDeployMockServletContext extends MockServletContext {
 

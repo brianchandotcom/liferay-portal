@@ -1,9 +1,5 @@
-Bundle-ClassPath:\
-	.,\
-	lib/geoip-api.jar
 Bundle-Name: Liferay IP Geocoder
 Export-Package:\
 	com.liferay.ip.geocoder
-Include-Resource:\
-	classes,\
-	{lib/geoip-api.jar=lib/geoip-api.jar}
+Private-Package:\
+	com.liferay.ip.geocoder.internal

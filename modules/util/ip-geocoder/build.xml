@@ -3,6 +3,7 @@
 
 <project>
 	<property name="osgi.ide.dependencies" value="xz.jar" />
+	<property name="osgi.runtime.dependencies" value="geoip-api.jar" />
 	<property name="plugin.full.version" value="1.0.0" />
 	<property name="plugin.name" value="com.liferay.ip.geocoder" />
 

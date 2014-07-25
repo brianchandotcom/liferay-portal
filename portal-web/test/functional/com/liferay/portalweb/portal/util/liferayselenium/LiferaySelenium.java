@@ -144,6 +144,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean isHTMLSourceTextPresent(String value) throws Exception;
 
+	public boolean isMobileDeviceEnabled();
+
 	public boolean isNotChecked(String locator);
 
 	public boolean isNotPartialText(String locator, String value);

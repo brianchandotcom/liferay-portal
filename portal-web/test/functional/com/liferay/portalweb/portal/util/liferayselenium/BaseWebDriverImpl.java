@@ -499,6 +499,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public boolean isMobileDeviceEnabled() {
+		return LiferaySeleniumHelper.isMobileDeviceEnabled();
+	}
+
+	@Override
 	public boolean isNotChecked(String locator) {
 		return LiferaySeleniumHelper.isNotChecked(this, locator);
 	}

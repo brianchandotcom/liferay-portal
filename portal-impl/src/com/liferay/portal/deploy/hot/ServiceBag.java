@@ -15,6 +15,7 @@
 package com.liferay.portal.deploy.hot;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.service.ServiceWrapper;
 
@@ -25,13 +26,27 @@ import org.springframework.aop.target.SingletonTargetSource;
 /**
  * @author Raymond Augé
  */
-public class ServiceBag {
+public class ServiceBag<T> {
 
 	public ServiceBag(
 		ClassLoader classLoader, AdvisedSupport advisedSupport,
-		Class<?> serviceTypeClass, final ServiceWrapper<?> serviceWrapper) {
+		Class<?> serviceTypeClass, final ServiceWrapper<T> serviceWrapper) {
 
 		_advisedSupport = advisedSupport;
+
+		Object previousService = serviceWrapper.getWrappedService();
+
+		if (!(previousService instanceof ServiceWrapper)) {
+			ClassLoader portalClassLoader =
+				PortalClassLoaderUtil.getClassLoader();
+
+			previousService = ProxyUtil.newProxyInstance(
+				portalClassLoader, new Class<?>[] {serviceTypeClass},
+					new ClassLoaderBeanHandler(
+						previousService, portalClassLoader));
+
+			serviceWrapper.setWrappedService((T)previousService);
+		}
 
 		Object nextTarget = ProxyUtil.newProxyInstance(
 			classLoader,

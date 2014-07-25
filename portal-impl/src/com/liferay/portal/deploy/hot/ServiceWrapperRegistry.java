@@ -14,11 +14,9 @@
 
 package com.liferay.portal.deploy.hot;
 
-import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.service.ServiceWrapper;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManagerUtil;
@@ -136,21 +134,9 @@ public class ServiceWrapperRegistry {
 
 			TargetSource targetSource = advisedSupport.getTargetSource();
 
-			Object previousService = targetSource.getTarget();
+			serviceWrapper.setWrappedService((T)targetSource.getTarget());
 
-			if (!(previousService instanceof ServiceWrapper)) {
-				ClassLoader portalClassLoader =
-					PortalClassLoaderUtil.getClassLoader();
-
-				previousService = ProxyUtil.newProxyInstance(
-					portalClassLoader, new Class<?>[] {serviceTypeClass},
-						new ClassLoaderBeanHandler(
-							previousService, portalClassLoader));
-			}
-
-			serviceWrapper.setWrappedService((T)previousService);
-
-			return new ServiceBag(
+			return new ServiceBag<T>(
 				classLoader, advisedSupport, serviceTypeClass, serviceWrapper);
 		}
 

@@ -134,11 +134,9 @@ public class ServiceWrapperRegistry {
 
 			TargetSource targetSource = advisedSupport.getTargetSource();
 
-			Object previousService = targetSource.getTarget();
+			serviceWrapper.setWrappedService((T)targetSource.getTarget());
 
-			serviceWrapper.setWrappedService((T)previousService);
-
-			return new ServiceBag(
+			return new ServiceBag<T>(
 				classLoader, advisedSupport, serviceTypeClass, serviceWrapper);
 		}
 

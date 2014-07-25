@@ -23,6 +23,7 @@ import com.liferay.portal.parsers.creole.parser.Creole10Lexer;
 import com.liferay.portal.parsers.creole.parser.Creole10Parser;
 import com.liferay.portal.parsers.creole.visitor.impl.XhtmlTranslationVisitor;
 import com.liferay.portal.test.mockito.ReturnArgumentCalledAnswer;
+import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portal.util.PropsUtil;
 
 import java.io.IOException;
@@ -48,19 +49,15 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Miguel Pastor
  * @author Manuel de la Peña
  */
-@PrepareForTest({HtmlUtil.class, PropsUtil.class})
+@PrepareForTest({PropsUtil.class})
 @RunWith(PowerMockRunner.class)
 public class TranslationToXHTMLTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		mockStatic(HtmlUtil.class);
+		HtmlUtil htmlUtil = new HtmlUtil();
 
-		when(
-			HtmlUtil.escape(Mockito.anyString())
-		).then(
-			new ReturnArgumentCalledAnswer<String>(0)
-		);
+		htmlUtil.setHtml(new HtmlImpl());
 
 		mockStatic(PropsUtil.class);
 
@@ -82,7 +79,7 @@ public class TranslationToXHTMLTest extends PowerMockito {
 	@Test
 	public void testEscapedEscapedCharacter() {
 		Assert.assertEquals(
-			"<p>~\"~ is escaped\" </p>", translate("escape-2.creole"));
+			"<p>~&#034;~ is escaped&#034; </p>", translate("escape-2.creole"));
 	}
 
 	@Test
@@ -103,8 +100,8 @@ public class TranslationToXHTMLTest extends PowerMockito {
 	@Test
 	public void testInterwikiFlickr() {
 		Assert.assertEquals(
-			"<p><a href=\"http://www.flickr.com/search/?w=all&m=text" +
-				"&q=Liferay\">Liferay</a> </p>",
+			"<p><a href=\"http://www.flickr.com/search/?w=all&amp;m=text" +
+				"&amp;q=Liferay\">Liferay</a> </p>",
 			translate("interwikiflickr.creole"));
 	}
 

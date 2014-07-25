@@ -328,30 +328,28 @@ public class JAASTest {
 			}
 		);
 
-		if (_mainServlet == null) {
-			MockServletContext mockServletContext =
-				new AutoDeployMockServletContext(
-					new FileSystemResourceLoader());
+		MockServletContext mockServletContext =
+			new AutoDeployMockServletContext(
+				new FileSystemResourceLoader());
 
-			MockServletConfig mockServletConfig = new MockServletConfig(
-				mockServletContext);
+		MockServletConfig mockServletConfig = new MockServletConfig(
+			mockServletContext);
 
-			_mainServlet = new MainServlet();
+		MainServlet mainServlet = new MainServlet();
 
-			try {
-				_mainServlet.init(mockServletConfig);
-			}
-			catch (ServletException se) {
-				throw new RuntimeException(
-					"The main servlet could not be initialized");
-			}
+		try {
+			mainServlet.init(mockServletConfig);
+		}
+		catch (ServletException se) {
+			throw new RuntimeException(
+				"The main servlet could not be initialized");
 		}
 
 		Date lastLoginDate = _user.getLastLoginDate();
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(
-				_mainServlet.getServletContext(), HttpMethods.GET,
+				mainServlet.getServletContext(), HttpMethods.GET,
 				StringPool.SLASH);
 
 		mockHttpServletRequest.setRemoteUser(String.valueOf(_user.getUserId()));
@@ -365,7 +363,7 @@ public class JAASTest {
 			EventsProcessorUtil.registerEvent(
 				PropsKeys.LOGIN_EVENTS_POST, postJAASAction);
 
-			_mainServlet.service(
+			mainServlet.service(
 				mockHttpServletRequest, new MockHttpServletResponse());
 
 			Assert.assertEquals(2, counter.getValue());
@@ -419,8 +417,6 @@ public class JAASTest {
 			}
 		}
 	}
-
-	private static MainServlet _mainServlet;
 
 	private String _jaasAuthType;
 	private Field _jaasAuthTypeField;

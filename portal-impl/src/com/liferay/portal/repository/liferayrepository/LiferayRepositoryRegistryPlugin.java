@@ -14,9 +14,12 @@
 
 package com.liferay.portal.repository.liferayrepository;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryRegistryPlugin;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
+import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreatorRegistry;
+import com.liferay.portal.service.ClassNameLocalService;
 
 /**
  * @author Adolfo Pérez
@@ -24,16 +27,35 @@ import com.liferay.portal.kernel.repository.registry.RepositoryCreatorRegistry;
 public class LiferayRepositoryRegistryPlugin
 	extends BaseRepositoryRegistryPlugin {
 
+	public long getClassNameId() {
+		if (_classNameId == 0) {
+			_classNameId = _classNameLocalService.getClassNameId(
+				LiferayRepository.class);
+		}
+
+		return _classNameId;
+	}
+
 	@Override
 	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
-		throw new UnsupportedOperationException("Not implemented");
 	}
 
 	@Override
 	public void registerRepositoryCreator(
 		RepositoryCreatorRegistry repositoryCreatorRegistry) {
 
-		throw new UnsupportedOperationException("Not implemented");
+		repositoryCreatorRegistry.setRepositoryCreator(_repositoryCreator);
 	}
+
+	public void setRepositoryCreator(RepositoryCreator repositoryCreator) {
+		_repositoryCreator = repositoryCreator;
+	}
+
+	private long _classNameId;
+
+	@BeanReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	private RepositoryCreator _repositoryCreator;
 
 }

@@ -12,18 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.registry;
+package com.liferay.portal.repository.registry;
+
+import com.liferay.portal.kernel.repository.capabilities.Capability;
+import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Adolfo Pérez
  */
-public interface RepositoryRegistryPlugin {
+public interface RepositoryConfiguration {
 
-	public long getClassNameId();
+	public Set<Class<? extends Capability>> getPublicCapabilities();
 
-	public void registerCapabilities(CapabilityRegistry capabilityRegistry);
+	public RepositoryCreator getRepositoryCreator();
 
-	public void registerRepositoryCreator(
-		RepositoryCreatorRegistry repositoryCreatorRegistry);
+	public Map<Class<? extends Capability>, Capability>
+		getSupportedCapabilities();
 
 }

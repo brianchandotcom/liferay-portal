@@ -12,18 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.registry;
+package com.liferay.portal.repository.registry;
 
 /**
  * @author Adolfo Pérez
  */
-public interface RepositoryRegistryPlugin {
+public interface RepositoryCatalog {
 
-	public long getClassNameId();
-
-	public void registerCapabilities(CapabilityRegistry capabilityRegistry);
-
-	public void registerRepositoryCreator(
-		RepositoryCreatorRegistry repositoryCreatorRegistry);
+	public RepositoryConfiguration getConfiguration(long classNameId);
 
 }

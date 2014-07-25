@@ -58,8 +58,8 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		sb.append(modifiedDate);
 		sb.append(", title=");
 		sb.append(title);
-		sb.append(", deckTitle=");
-		sb.append(deckTitle);
+		sb.append(", subtitle=");
+		sb.append(subtitle);
 		sb.append(", urlTitle=");
 		sb.append(urlTitle);
 		sb.append(", description=");
@@ -137,11 +137,11 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 			blogsEntryImpl.setTitle(title);
 		}
 
-		if (deckTitle == null) {
-			blogsEntryImpl.setDeckTitle(StringPool.BLANK);
+		if (subtitle == null) {
+			blogsEntryImpl.setSubtitle(StringPool.BLANK);
 		}
 		else {
-			blogsEntryImpl.setDeckTitle(deckTitle);
+			blogsEntryImpl.setSubtitle(subtitle);
 		}
 
 		if (urlTitle == null) {
@@ -225,7 +225,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		title = objectInput.readUTF();
-		deckTitle = objectInput.readUTF();
+		subtitle = objectInput.readUTF();
 		urlTitle = objectInput.readUTF();
 		description = objectInput.readUTF();
 		content = objectInput.readUTF();
@@ -274,11 +274,11 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 			objectOutput.writeUTF(title);
 		}
 
-		if (deckTitle == null) {
+		if (subtitle == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(deckTitle);
+			objectOutput.writeUTF(subtitle);
 		}
 
 		if (urlTitle == null) {
@@ -345,7 +345,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 	public long createDate;
 	public long modifiedDate;
 	public String title;
-	public String deckTitle;
+	public String subtitle;
 	public String urlTitle;
 	public String description;
 	public String content;

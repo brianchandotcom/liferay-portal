@@ -237,7 +237,7 @@ create table BlogsEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	title VARCHAR(150) null,
-	deckTitle STRING null,
+	subtitle STRING null,
 	urlTitle VARCHAR(150) null,
 	description STRING null,
 	content TEXT null,

@@ -154,7 +154,7 @@ public class BlogsEntryPersistenceTest {
 
 		newBlogsEntry.setTitle(RandomTestUtil.randomString());
 
-		newBlogsEntry.setDeckTitle(RandomTestUtil.randomString());
+		newBlogsEntry.setSubtitle(RandomTestUtil.randomString());
 
 		newBlogsEntry.setUrlTitle(RandomTestUtil.randomString());
 
@@ -208,8 +208,8 @@ public class BlogsEntryPersistenceTest {
 			Time.getShortTimestamp(newBlogsEntry.getModifiedDate()));
 		Assert.assertEquals(existingBlogsEntry.getTitle(),
 			newBlogsEntry.getTitle());
-		Assert.assertEquals(existingBlogsEntry.getDeckTitle(),
-			newBlogsEntry.getDeckTitle());
+		Assert.assertEquals(existingBlogsEntry.getSubtitle(),
+			newBlogsEntry.getSubtitle());
 		Assert.assertEquals(existingBlogsEntry.getUrlTitle(),
 			newBlogsEntry.getUrlTitle());
 		Assert.assertEquals(existingBlogsEntry.getDescription(),
@@ -622,7 +622,7 @@ public class BlogsEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("BlogsEntry", "uuid", true,
 			"entryId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"title", true, "deckTitle", true, "urlTitle", true, "description",
+			"title", true, "subtitle", true, "urlTitle", true, "description",
 			true, "content", true, "displayDate", true, "allowPingbacks", true,
 			"allowTrackbacks", true, "trackbacks", true, "smallImage", true,
 			"smallImageId", true, "smallImageURL", true, "status", true,
@@ -869,7 +869,7 @@ public class BlogsEntryPersistenceTest {
 
 		blogsEntry.setTitle(RandomTestUtil.randomString());
 
-		blogsEntry.setDeckTitle(RandomTestUtil.randomString());
+		blogsEntry.setSubtitle(RandomTestUtil.randomString());
 
 		blogsEntry.setUrlTitle(RandomTestUtil.randomString());
 

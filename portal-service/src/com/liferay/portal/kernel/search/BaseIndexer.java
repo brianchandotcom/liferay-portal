@@ -1069,6 +1069,9 @@ public abstract class BaseIndexer implements Indexer {
 		searchQuery.addTerms(Field.KEYWORDS, keywords, searchContext.isLike());
 
 		addSearchExpando(searchQuery, searchContext, keywords);
+		addSearchLocalizedTerm(
+			searchQuery, searchContext, Field.ASSET_CATEGORY_TITLES,
+			searchContext.isLike());
 	}
 
 	protected void addSearchLayout(
@@ -1653,6 +1656,9 @@ public abstract class BaseIndexer implements Indexer {
 	protected Locale getSnippetLocale(Document document, Locale locale) {
 		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
 
+		String localizedAssetCategoryTitlesName =
+			prefix +
+			DocumentImpl.getLocalizedName(locale, Field.ASSET_CATEGORY_TITLES);
 		String localizedContentName =
 			prefix + DocumentImpl.getLocalizedName(locale, Field.CONTENT);
 		String localizedDescriptionName =
@@ -1660,7 +1666,8 @@ public abstract class BaseIndexer implements Indexer {
 		String localizedTitleName =
 			prefix + DocumentImpl.getLocalizedName(locale, Field.TITLE);
 
-		if ((document.getField(localizedContentName) != null) ||
+		if ((document.getField(localizedAssetCategoryTitlesName) != null) ||
+			(document.getField(localizedContentName) != null) ||
 			(document.getField(localizedDescriptionName) != null) ||
 			(document.getField(localizedTitleName) != null)) {
 

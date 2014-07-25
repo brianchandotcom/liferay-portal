@@ -181,6 +181,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			return;
 		}
 
+		addHighlightedField(
+			searchRequestBuilder, queryConfig, Field.ASSET_CATEGORY_TITLES);
 		addHighlightedField(searchRequestBuilder, queryConfig, Field.CONTENT);
 		addHighlightedField(
 			searchRequestBuilder, queryConfig, Field.DESCRIPTION);
@@ -274,6 +276,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			return;
 		}
 
+		addSnippets(
+			document, queryTerms, highlightFields, Field.ASSET_CATEGORY_TITLES,
+			queryConfig.getLocale());
 		addSnippets(
 			document, queryTerms, highlightFields, Field.CONTENT,
 			queryConfig.getLocale());

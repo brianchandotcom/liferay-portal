@@ -110,7 +110,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 		%>
 
 		<div class="form-group">
-			<aui:input label="document" name="toFileEntryTitle" type="resource" url="<%= toFileEntryTitle %>" />
+			<aui:input label="document" name="toFileEntryTitle" type="resource" value="<%= toFileEntryTitle %>" />
 
 			<aui:button disabled="<%= (toGroup == null) %>" name="selectToFileEntryButton" value="select" />
 		</div>

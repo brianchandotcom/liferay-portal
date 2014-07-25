@@ -105,15 +105,15 @@
 			<finder-column name="companyId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_P_S" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="parentCategoryId" arrayable-operator="OR" />
-			<finder-column name="status" />
-		</finder>
 		<finder name="NotC_G_P" return-type="Collection">
 			<finder-column name="categoryId" comparator="!=" arrayable-operator="AND" />
 			<finder-column name="groupId" />
 			<finder-column name="parentCategoryId" arrayable-operator="OR" />
+		</finder>
+		<finder name="G_P_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="parentCategoryId" arrayable-operator="OR" />
+			<finder-column name="status" />
 		</finder>
 		<finder name="NotC_G_P_S" return-type="Collection">
 			<finder-column name="categoryId" comparator="!=" arrayable-operator="AND" />
@@ -290,14 +290,14 @@
 		<finder name="CompanyId" return-type="Collection" where="categoryId != -1">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="UserId" return-type="Collection" where="categoryId != -1">
+			<finder-column name="userId" />
+		</finder>
 		<finder name="ThreadId" return-type="Collection">
 			<finder-column name="threadId" />
 		</finder>
 		<finder name="ThreadReplies" return-type="Collection" where="parentMessageId != 0" db-index="false">
 			<finder-column name="threadId" />
-		</finder>
-		<finder name="UserId" return-type="Collection" where="categoryId != -1">
-			<finder-column name="userId" />
 		</finder>
 		<finder name="G_U" return-type="Collection" where="(categoryId != -1) AND (anonymous = [$FALSE$])">
 			<finder-column name="groupId" />

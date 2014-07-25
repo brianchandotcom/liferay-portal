@@ -19,13 +19,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
-import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
+import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
-import com.liferay.portal.repository.external.ExternalRepositoryCreator;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
-import com.liferay.portal.repository.liferayrepository.LiferayRepositoryCreator;
+import com.liferay.portal.repository.registry.RepositoryCatalog;
+import com.liferay.portal.repository.registry.RepositoryConfiguration;
 import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.RepositoryLocalService;
@@ -182,10 +182,6 @@ public abstract class BaseRepositoryFactory<T> {
 		return _dlFolderService;
 	}
 
-	protected RepositoryCreator getExternalRepositoryCreator() {
-		return _externalRepositoryCreator;
-	}
-
 	protected abstract long getFileEntryRepositoryId(long fileEntryId)
 		throws PortalException;
 
@@ -194,10 +190,6 @@ public abstract class BaseRepositoryFactory<T> {
 
 	protected abstract long getFolderRepositoryId(long folderId)
 		throws PortalException;
-
-	protected RepositoryCreator getLiferayRepositoryCreator() {
-		return _liferayRepositoryCreator;
-	}
 
 	protected abstract Repository getRepository(long repositoryId);
 
@@ -211,6 +203,16 @@ public abstract class BaseRepositoryFactory<T> {
 
 		return _classNameLocalService.getClassNameId(
 			LiferayRepository.class.getName());
+	}
+
+	protected RepositoryConfiguration getRepositoryConfiguration(
+			long classNameId)
+		throws PortalException {
+
+		ClassName className = _classNameLocalService.getClassName(classNameId);
+
+		return _repositoryCatalog.getRepositoryConfiguration(
+			className.getClassName());
 	}
 
 	protected long getRepositoryId(
@@ -270,11 +272,8 @@ public abstract class BaseRepositoryFactory<T> {
 	@BeanReference(type = DLFolderService.class)
 	private DLFolderService _dlFolderService;
 
-	@BeanReference(type = ExternalRepositoryCreator.class)
-	private RepositoryCreator _externalRepositoryCreator;
-
-	@BeanReference(type = LiferayRepositoryCreator.class)
-	private RepositoryCreator _liferayRepositoryCreator;
+	@BeanReference(type = RepositoryCatalog.class)
+	private RepositoryCatalog _repositoryCatalog;
 
 	@BeanReference(type = RepositoryEntryLocalService.class)
 	private RepositoryEntryLocalService _repositoryEntryLocalService;

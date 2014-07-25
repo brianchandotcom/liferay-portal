@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.LocalRepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
+import com.liferay.portal.repository.registry.RepositoryConfiguration;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
@@ -40,11 +41,14 @@ public class LocalRepositoryFactoryImpl
 			long repositoryId, long classNameId)
 		throws PortalException {
 
-		RepositoryCreator externalRepositoryCreator =
-			getExternalRepositoryCreator();
+		RepositoryConfiguration repositoryConfiguration =
+			getRepositoryConfiguration(classNameId);
+
+		RepositoryCreator repositoryCreator =
+			repositoryConfiguration.getRepositoryCreator();
 
 		LocalRepository localRepository =
-			externalRepositoryCreator.createLocalRepository(repositoryId);
+			repositoryCreator.createLocalRepository(repositoryId);
 
 		return new CapabilityLocalRepository(
 			localRepository, getExternalSupportedCapabilities(),
@@ -66,11 +70,14 @@ public class LocalRepositoryFactoryImpl
 	protected LocalRepository createInternalRepository(long repositoryId)
 		throws PortalException {
 
-		RepositoryCreator liferayRepositoryCreator =
-			getLiferayRepositoryCreator();
+		RepositoryConfiguration repositoryConfiguration =
+			getRepositoryConfiguration(getDefaultClassNameId());
+
+		RepositoryCreator repositoryCreator =
+			repositoryConfiguration.getRepositoryCreator();
 
 		LocalRepository localRepository =
-			liferayRepositoryCreator.createLocalRepository(repositoryId);
+			repositoryCreator.createLocalRepository(repositoryId);
 
 		return new CapabilityLocalRepository(
 			localRepository, getInternalSupportedCapabilities(),

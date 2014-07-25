@@ -15,6 +15,7 @@
 package com.liferay.portal.repository.external;
 
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryRegistryPlugin;
+import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreatorRegistry;
 
 /**
@@ -23,11 +24,26 @@ import com.liferay.portal.kernel.repository.registry.RepositoryCreatorRegistry;
 public class LegacyExternalRepositoryRegistryPlugin
 	extends BaseRepositoryRegistryPlugin {
 
+	public LegacyExternalRepositoryRegistryPlugin(
+		String className, RepositoryCreator repositoryCreator) {
+
+		_className = className;
+		_repositoryCreator = repositoryCreator;
+	}
+
+	@Override
+	public String getClassName() {
+		return _className;
+	}
+
 	@Override
 	public void registerRepositoryCreator(
 		RepositoryCreatorRegistry repositoryCreatorRegistry) {
 
-		throw new UnsupportedOperationException("Not implemented");
+		repositoryCreatorRegistry.setRepositoryCreator(_repositoryCreator);
 	}
+
+	private String _className;
+	private RepositoryCreator _repositoryCreator;
 
 }

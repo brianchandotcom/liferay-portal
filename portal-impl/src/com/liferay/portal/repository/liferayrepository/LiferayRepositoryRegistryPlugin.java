@@ -16,6 +16,7 @@ package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryRegistryPlugin;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
+import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreatorRegistry;
 
 /**
@@ -25,15 +26,25 @@ public class LiferayRepositoryRegistryPlugin
 	extends BaseRepositoryRegistryPlugin {
 
 	@Override
+	public String getClassName() {
+		return LiferayRepository.class.getName();
+	}
+
+	@Override
 	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
-		throw new UnsupportedOperationException("Not implemented");
 	}
 
 	@Override
 	public void registerRepositoryCreator(
 		RepositoryCreatorRegistry repositoryCreatorRegistry) {
 
-		throw new UnsupportedOperationException("Not implemented");
+		repositoryCreatorRegistry.setRepositoryCreator(_repositoryCreator);
 	}
+
+	public void setRepositoryCreator(RepositoryCreator repositoryCreator) {
+		_repositoryCreator = repositoryCreator;
+	}
+
+	private RepositoryCreator _repositoryCreator;
 
 }

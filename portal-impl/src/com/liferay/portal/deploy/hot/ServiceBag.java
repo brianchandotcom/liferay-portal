@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.service.ServiceWrapper;
 
+import java.lang.reflect.InvocationHandler;
+
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.target.SingletonTargetSource;
@@ -85,8 +87,24 @@ public class ServiceBag<T> {
 
 				if (previousService == null) {
 
-					// There is no previous service, so we need to change the
-					// target source
+					// There is no previous service, so we need to unwrap portal
+					// classloader bean handler and change the target source
+
+					if (!(wrappedService instanceof ServiceWrapper) &&
+							ProxyUtil.isProxyClass(wrappedService.getClass())) {
+
+						InvocationHandler invocationHandler =
+							ProxyUtil.getInvocationHandler(wrappedService);
+
+						if (invocationHandler instanceof
+								ClassLoaderBeanHandler) {
+
+							ClassLoaderBeanHandler classLoaderBeanHandler =
+								(ClassLoaderBeanHandler)invocationHandler;
+
+							wrappedService = classLoaderBeanHandler.getBean();
+						}
+					}
 
 					TargetSource previousTargetSource =
 						new SingletonTargetSource(wrappedService);

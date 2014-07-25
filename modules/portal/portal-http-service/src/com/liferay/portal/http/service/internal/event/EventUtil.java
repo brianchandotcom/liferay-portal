@@ -14,7 +14,7 @@
 
 package com.liferay.portal.http.service.internal.event;
 
-import com.liferay.portal.http.service.internal.servlet.BundleServletContext;
+import com.liferay.portal.http.service.internal.WabUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -116,8 +116,7 @@ public class EventUtil
 		properties.put("bundle.symbolicName", bundle.getSymbolicName());
 		properties.put("bundle.version", bundle.getVersion());
 
-		String servletContextName = BundleServletContext.getServletContextName(
-			bundle, true);
+		String servletContextName = WabUtil.getWebContextName(bundle);
 
 		String contextPath = StringPool.SLASH.concat(servletContextName);
 
@@ -135,8 +134,8 @@ public class EventUtil
 					continue;
 				}
 
-				String curServletContextName =
-					BundleServletContext.getServletContextName(curBundle);
+				String curServletContextName = WabUtil.getWebContextName(
+					bundle);
 
 				if ((curServletContextName != null) &&
 					curServletContextName.equals(servletContextName)) {

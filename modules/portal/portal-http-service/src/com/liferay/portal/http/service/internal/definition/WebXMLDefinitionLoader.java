@@ -14,9 +14,13 @@
 
 package com.liferay.portal.http.service.internal.definition;
 
+import com.liferay.portal.http.service.internal.WabResourceServlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
@@ -24,7 +28,12 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EventListener;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
@@ -44,7 +53,7 @@ public class WebXMLDefinitionLoader {
 
 		Document document = SAXReaderUtil.read(
 			classLoader.getResource(
-				"com/liferay/portal/http/service/internal/servlet" +
+				"com/liferay/portal/http/service/internal" +
 					"/dependencies/default-web.xml"));
 
 		_defaultWebXmlRootElement = document.getRootElement();
@@ -77,18 +86,65 @@ public class WebXMLDefinitionLoader {
 		return webXML;
 	}
 
-	protected String getURLPattern(Element element) {
-		String urlPattern = element.elementText("url-pattern");
+	protected List<String> getDispatchers(Element element) {
+		List<String> dispatchers = new ArrayList<String>();
 
-		if (urlPattern.endsWith(_SLASH_STAR) && (urlPattern.length() > 2)) {
-			urlPattern = urlPattern.substring(0, urlPattern.length() - 2);
+		for (Element curElement : element.elements("dispatcher")) {
+			dispatchers.add(StringUtil.toUpperCase(curElement.getTextTrim()));
 		}
 
-		if (urlPattern.startsWith(StringPool.STAR)) {
-			urlPattern = StringPool.SLASH.concat(urlPattern);
+		return dispatchers;
+	}
+
+	protected Map<String, String> getErrorPageLocationMappings(
+		List<Element> elements) {
+
+		Map<String, String> errorPages = new HashMap<String, String>();
+
+		for (Element element : elements) {
+			String errorCode = element.elementText("error-code");
+			String exceptionType = element.elementTextTrim("exception-type");
+			String location = element.elementTextTrim("location");
+
+			if (Validator.isNotNull(errorCode)) {
+				errorPages.put(location, errorCode);
+			}
+			else if (Validator.isNotNull(exceptionType)) {
+				errorPages.put(location, exceptionType);
+			}
 		}
 
-		return urlPattern;
+		return errorPages;
+	}
+
+	protected List<String> getServletNames(Element element) {
+		List<String> servletNames = new ArrayList<String>();
+
+		for (Element curElement : element.elements("servlet-name")) {
+			servletNames.add(curElement.getTextTrim());
+		}
+
+		return servletNames;
+	}
+
+	protected List<String> getURLPatterns(Element element) {
+		List<String> urlPatterns = new ArrayList<String>();
+
+		for (Element curElement : element.elements("url-pattern")) {
+			String urlPattern = curElement.getTextTrim();
+
+			if (urlPattern.endsWith(_SLASH_STAR) && (urlPattern.length() > 2)) {
+				urlPattern = urlPattern.substring(0, urlPattern.length() - 2);
+			}
+
+			if (urlPattern.startsWith(StringPool.STAR)) {
+				urlPattern = StringPool.SLASH.concat(urlPattern);
+			}
+
+			urlPatterns.add(urlPattern);
+		}
+
+		return urlPatterns;
 	}
 
 	protected void readContextParameters(
@@ -108,9 +164,12 @@ public class WebXMLDefinitionLoader {
 
 		List<Element> filterElements = rootElement.elements("filter");
 
-		for (Element filterElement : filterElements) {
-			FilterDefinition filterDefinition = new FilterDefinition();
+		List<Element> filterMappingElements = rootElement.elements(
+			"filter-mapping");
 
+		Collections.reverse(new ArrayList<Element>(filterMappingElements));
+
+		for (Element filterElement : filterElements) {
 			String filterClassName = filterElement.elementText("filter-class");
 
 			Class<?> clazz = null;
@@ -126,7 +185,18 @@ public class WebXMLDefinitionLoader {
 
 			Filter filter = (Filter)clazz.newInstance();
 
+			FilterDefinition filterDefinition = new FilterDefinition();
+
 			filterDefinition.setFilter(filter);
+
+			String filterName = filterElement.elementText("filter-name");
+
+			filterDefinition.setName(filterName);
+
+			boolean asyncSupported = GetterUtil.getBoolean(
+				filterElement.elementText("async-supported"));
+
+			filterDefinition.setAsyncSupported(asyncSupported);
 
 			List<Element> initParamElements = filterElement.elements(
 				"init-param");
@@ -138,21 +208,29 @@ public class WebXMLDefinitionLoader {
 				filterDefinition.setInitParameter(paramName, paramValue);
 			}
 
-			String filterName = filterElement.elementText("filter-name");
+			for (int i = 0; i < filterMappingElements.size(); i++) {
+				Element filterMappingElement = filterMappingElements.get(i);
 
-			filterDefinition.setName(filterName);
-
-			List<Element> filterMappingElements = rootElement.elements(
-				"filter-mapping");
-
-			for (Element filterMappingElement : filterMappingElements) {
 				String filterMappingElementFilterName =
 					filterMappingElement.elementText("filter-name");
 
 				if (filterMappingElementFilterName.equals(filterName)) {
-					String urlPattern = getURLPattern(filterMappingElement);
+					List<String> dispatchers = getDispatchers(
+						filterMappingElement);
 
-					filterDefinition.addURLPattern(urlPattern);
+					filterDefinition.setDispatchers(dispatchers);
+
+					List<String> servletNames = getServletNames(
+						filterMappingElement);
+
+					filterDefinition.setServletNames(servletNames);
+
+					List<String> urlPatterns = getURLPatterns(
+						filterMappingElement);
+
+					filterDefinition.setURLPatterns(urlPatterns);
+
+					filterDefinition.setPriority(i);
 				}
 			}
 
@@ -172,10 +250,11 @@ public class WebXMLDefinitionLoader {
 			String listenerClassName = listenerElement.elementText(
 				"listener-class");
 
-			Class<?> clazz = null;
+			Class<? extends EventListener> clazz = null;
 
 			try {
-				clazz = bundle.loadClass(listenerClassName);
+				clazz = bundle.loadClass(listenerClassName).asSubclass(
+					EventListener.class);
 			}
 			catch (Exception e) {
 				_log.error("Unable to load listener " + listenerClassName);
@@ -183,7 +262,7 @@ public class WebXMLDefinitionLoader {
 				continue;
 			}
 
-			Object listener = clazz.newInstance();
+			EventListener listener = clazz.newInstance();
 
 			listenerDefinition.setListener(listener);
 
@@ -197,16 +276,30 @@ public class WebXMLDefinitionLoader {
 
 		List<Element> servletElements = rootElement.elements("servlet");
 
-		for (Element servletElement : servletElements) {
-			ServletDefinition servletDefinition = new ServletDefinition();
+		List<Element> servletMappingElements = rootElement.elements(
+			"servlet-mapping");
 
+		List<Element> errorPageElements = rootElement.elements(
+			"error-page");
+
+		Map<String, String> errorPageLocationMappings =
+			getErrorPageLocationMappings(errorPageElements);
+
+		for (Element servletElement : servletElements) {
 			String servletClassName = servletElement.elementText(
 				"servlet-class");
 
 			Class<?> servletClass = null;
 
 			try {
-				servletClass = bundle.loadClass(servletClassName);
+				if (WabResourceServlet.class.getName().equals(
+						servletClassName)) {
+
+					servletClass = WabResourceServlet.class;
+				}
+				else {
+					servletClass = bundle.loadClass(servletClassName);
+				}
 			}
 			catch (Exception e) {
 				_log.error("Unable to load servlet " + servletClassName);
@@ -216,7 +309,18 @@ public class WebXMLDefinitionLoader {
 
 			Servlet servlet = (Servlet)servletClass.newInstance();
 
+			ServletDefinition servletDefinition = new ServletDefinition();
+
 			servletDefinition.setServlet(servlet);
+
+			String servletName = servletElement.elementText("servlet-name");
+
+			servletDefinition.setName(servletName);
+
+			boolean asyncSupported = GetterUtil.getBoolean(
+				servletElement.elementText("async-supported"));
+
+			servletDefinition.setAsyncSupported(asyncSupported);
 
 			List<Element> initParamElements = servletElement.elements(
 				"init-param");
@@ -228,23 +332,30 @@ public class WebXMLDefinitionLoader {
 				servletDefinition.setInitParameter(paramName, paramValue);
 			}
 
-			String servletName = servletElement.elementText("servlet-name");
-
-			servletDefinition.setName(servletName);
-
-			List<Element> servletMappingElements = rootElement.elements(
-				"servlet-mapping");
+			List<String> errorPages = new ArrayList<String>();
 
 			for (Element servletMappingElement : servletMappingElements) {
 				String servletMappingElementServletName =
 					servletMappingElement.elementText("servlet-name");
 
 				if (servletMappingElementServletName.equals(servletName)) {
-					String urlPattern = getURLPattern(servletMappingElement);
+					List<String> urlPatterns = getURLPatterns(
+						servletMappingElement);
 
-					servletDefinition.addURLPattern(urlPattern);
+					for (String urlPattern : urlPatterns) {
+						servletDefinition.addURLPattern(urlPattern);
+
+						String errorPage = errorPageLocationMappings.get(
+							urlPattern);
+
+						if (errorPage != null) {
+							errorPages.add(errorPage);
+						}
+					}
 				}
 			}
+
+			servletDefinition.setErrorPages(errorPages);
 
 			webXML.setServletDefinition(servletName, servletDefinition);
 		}

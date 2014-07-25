@@ -15,19 +15,14 @@
 package com.liferay.portal.http.service.internal;
 
 import com.liferay.portal.http.service.internal.event.EventUtil;
-import com.liferay.portal.http.service.internal.servlet.BundleServletContext;
-import com.liferay.portal.http.service.internal.servlet.WebExtenderServlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
-import javax.servlet.ServletContext;
+import org.eclipse.equinox.http.servlet.ExtendedHttpService;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -38,138 +33,84 @@ import org.osgi.framework.BundleContext;
  */
 public class WebBundleDeployer {
 
-	public WebBundleDeployer(WebExtenderServlet webExtenderServlet)
+	public WebBundleDeployer(
+			BundleContext bundleContext,
+			ExtendedHttpService extendedHttpService)
 		throws Exception {
 
-		_webExtenderServlet = webExtenderServlet;
+		_bundleContext = bundleContext;
+		_extendedHttpService = extendedHttpService;
 	}
 
 	public void close() {
-		Set<String> servletContextNames = ServletContextPool.keySet();
+		Set<Bundle> bundles = _wabBundles.keySet();
 
-		for (String servletContextName : servletContextNames) {
-			ServletContext servletContext = ServletContextPool.get(
-				servletContextName);
-
-			if (!(servletContext instanceof BundleServletContext)) {
-				continue;
-			}
-
-			BundleServletContext bundleServletContext =
-				(BundleServletContext)servletContext;
-
-			Bundle bundle = bundleServletContext.getBundle();
-
+		for (Bundle bundle : bundles) {
 			try {
-				doStop(bundle, servletContextName);
+				doStop(bundle);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
 			}
 		}
-
-		_webExtenderServlet = null;
 	}
 
 	public void doStart(Bundle bundle, String servletContextName) {
-		if (bundle.getState() != Bundle.ACTIVE) {
-			return;
-		}
-
 		EventUtil.sendEvent(bundle, EventUtil.DEPLOYING, null, false);
 
-		ServletContext servletContext = ServletContextPool.get(
-			servletContextName);
-
-		if (servletContext != null) {
-			EventUtil.sendEvent(bundle, EventUtil.FAILED, null, true);
-
-			_collidedWABBundleIds.add(bundle.getBundleId());
-
-			return;
-		}
-
 		try {
-			BundleServletContext bundleServletContext =
-				new BundleServletContext(
-					bundle, servletContextName,
-					_webExtenderServlet.getServletContext());
+			String contextPath = WabUtil.getWebContextPath(bundle);
 
-			bundleServletContext.open();
+			WabBundleProcessor wabBundleProcessor = new WabBundleProcessor(
+				bundle, servletContextName, contextPath, _extendedHttpService);
 
-			ServletContextPool.put(servletContextName, bundleServletContext);
+			wabBundleProcessor.init();
+
+			_wabBundles.put(bundle, wabBundleProcessor);
 		}
 		catch (Exception e) {
 			EventUtil.sendEvent(bundle, EventUtil.FAILED, e, false);
 		}
 	}
 
-	public void doStop(Bundle bundle, String servletContextName) {
+	public void doStop(Bundle bundle) {
+		WabBundleProcessor wabBundleProcessor = _wabBundles.remove(bundle);
+
+		if (wabBundleProcessor == null) {
+			throw new IllegalArgumentException("Bundle is not a WAB.");
+		}
+
 		EventUtil.sendEvent(bundle, EventUtil.UNDEPLOYING, null, false);
 
-		BundleServletContext bundleServletContext = null;
-
-		ServletContext servletContext = ServletContextPool.get(
-			servletContextName);
-
-		if ((servletContext != null) &&
-			(servletContext instanceof BundleServletContext)) {
-
-			bundleServletContext = (BundleServletContext)servletContext;
-		}
-
-		if (bundleServletContext == null) {
-			EventUtil.sendEvent(bundle, EventUtil.UNDEPLOYED, null, false);
-
-			ServletContextPool.remove(servletContextName);
-
-			return;
-		}
-
 		try {
-			bundleServletContext.close();
+			wabBundleProcessor.destroy();
 		}
 		catch (Exception e) {
-			EventUtil.sendEvent(bundle, EventUtil.FAILED, null, false);
+			EventUtil.sendEvent(bundle, EventUtil.FAILED, e, false);
 		}
 
 		EventUtil.sendEvent(bundle, EventUtil.UNDEPLOYED, null, false);
 
-		ServletContextPool.remove(servletContextName);
-
-		handleCollidedWABs(bundle, servletContextName);
+		handleCollidedWABs(bundle);
 	}
 
-	protected void handleCollidedWABs(
-		Bundle bundle, String servletContextName) {
+	protected void handleCollidedWABs(Bundle bundle) {
+		String servletContextName = WabUtil.getWebContextName(bundle);
 
-		if (_collidedWABBundleIds.isEmpty()) {
-			return;
-		}
+		Set<Bundle> wabBundles = _wabBundles.keySet();
 
-		BundleContext bundleContext = _webExtenderServlet.getBundleContext();
-
-		Iterator<Long> iterator = _collidedWABBundleIds.iterator();
-
-		while (iterator.hasNext()) {
-			long bundleId = iterator.next();
-
-			Bundle curBundle = bundleContext.getBundle(bundleId);
-
-			if (curBundle == null) {
-				iterator.remove();
+		for (Bundle curBundle : _bundleContext.getBundles()) {
+			if (WabUtil.isFragmentBundle(curBundle) ||
+				WabUtil.isNotActiveBundle(bundle) ||
+				wabBundles.contains(curBundle) ||
+				bundle.equals(curBundle)) {
 
 				continue;
 			}
 
-			String curServletContextName =
-				BundleServletContext.getServletContextName(curBundle);
+			String curServletContextName = WabUtil.getWebContextName(curBundle);
 
-			if (servletContextName.equals(curServletContextName) &&
-				(bundle.getBundleId() != curBundle.getBundleId())) {
-
-				iterator.remove();
-
+			if (servletContextName.equals(curServletContextName)) {
 				doStart(curBundle, servletContextName);
 
 				break;
@@ -179,8 +120,9 @@ public class WebBundleDeployer {
 
 	private static Log _log = LogFactoryUtil.getLog(WebBundleDeployer.class);
 
-	private List<Long> _collidedWABBundleIds = Collections.synchronizedList(
-		new ArrayList<Long>());
-	private WebExtenderServlet _webExtenderServlet;
+	private BundleContext _bundleContext;
+	private Map<Bundle, WabBundleProcessor> _wabBundles =
+		new ConcurrentHashMap<Bundle, WabBundleProcessor>();
+	private ExtendedHttpService _extendedHttpService;
 
 }

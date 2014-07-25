@@ -22,7 +22,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.framework.Bundle;
+import org.osgi.service.http.context.ServletContextHelper;
 
 /**
  * @author Raymond Augé
@@ -31,12 +31,13 @@ public class BundleServletContextInvocationHandler
 	implements InvocationHandler {
 
 	public BundleServletContextInvocationHandler(
-		ServletContext servletContext, Bundle bundle, ClassLoader classLoader) {
+		ServletContext servletContext,
+		ServletContextHelper servletContextHelper, ClassLoader classLoader) {
 
 		_servletContext = servletContext;
 
 		_bundleServletContext = new BundleServletContext(
-			servletContext, bundle, classLoader);
+			servletContext, servletContextHelper, classLoader);
 	}
 
 	@Override

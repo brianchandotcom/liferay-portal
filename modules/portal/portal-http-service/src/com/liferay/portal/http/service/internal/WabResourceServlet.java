@@ -11,29 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+package com.liferay.portal.http.service.internal;
 
-package com.liferay.portal.portlet.tracker.internal;
-
-import com.liferay.portlet.PortletBagFactory;
-
-import javax.portlet.Portlet;
+import javax.servlet.http.HttpServlet;
 
 /**
+ * This class is simply a placeholder for registring default resource handling
+ * with the http service.
+ *
  * @author Raymond Augé
  */
-public class BundlePortletBagFactory extends PortletBagFactory {
-
-	public BundlePortletBagFactory(Portlet portlet) {
-		_portlet = portlet;
-	}
-
-	@Override
-	protected Portlet getPortletInstance(
-		com.liferay.portal.model.Portlet portletModel) {
-
-		return _portlet;
-	}
-
-	private Portlet _portlet;
-
+public class WabResourceServlet extends HttpServlet {
 }

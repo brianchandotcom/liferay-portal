@@ -26,8 +26,24 @@ import javax.servlet.Filter;
  */
 public class FilterDefinition {
 
+	public void addDispatcher(String dispatcher) {
+		_dispatchers.add(dispatcher);
+	}
+
+	public void addServletName(String servletName) {
+		_servletNames.add(servletName);
+	}
+
 	public void addURLPattern(String urlPattern) {
 		_urlPatterns.add(urlPattern);
+	}
+
+	public boolean isAsyncSupported() {
+		return _asyncSupported;
+	}
+
+	public List<String> getDispatchers() {
+		return _dispatchers;
 	}
 
 	public Filter getFilter() {
@@ -42,8 +58,24 @@ public class FilterDefinition {
 		return _name;
 	}
 
+	public int getPriority() {
+		return _priority;
+	}
+
+	public List<String> getServletNames() {
+		return _servletNames;
+	}
+
 	public List<String> getURLPatterns() {
 		return _urlPatterns;
+	}
+
+	public void setAsyncSupported(boolean asyncSupported) {
+		_asyncSupported = asyncSupported;
+	}
+
+	public void setDispatchers(List<String> dispatchers) {
+		_dispatchers.addAll(dispatchers);
 	}
 
 	public void setFilter(Filter filter) {
@@ -55,19 +87,31 @@ public class FilterDefinition {
 	}
 
 	public void setInitParameters(Map<String, String> initParameters) {
-		_initParameters = initParameters;
+		_initParameters.putAll(initParameters);
 	}
 
 	public void setName(String name) {
 		_name = name;
 	}
 
-	public void setURLPatterns(List<String> urlPatterns) {
-		_urlPatterns = urlPatterns;
+	public void setPriority(int priority) {
+		_priority = priority;
 	}
 
+	public void setServletNames(List<String> servletNames) {
+		_servletNames.addAll(servletNames);
+	}
+
+	public void setURLPatterns(List<String> urlPatterns) {
+		_urlPatterns.addAll(urlPatterns);
+	}
+
+	private boolean _asyncSupported = false;
+	private List<String> _dispatchers = new ArrayList<String>();
 	private Filter _filter;
 	private Map<String, String> _initParameters = new HashMap<String, String>();
+	private int _priority = 0;
+	private List<String> _servletNames = new ArrayList<String>();
 	private String _name;
 	private List<String> _urlPatterns = new ArrayList<String>();
 

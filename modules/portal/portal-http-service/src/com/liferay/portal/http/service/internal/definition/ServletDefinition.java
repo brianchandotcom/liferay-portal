@@ -30,6 +30,10 @@ public class ServletDefinition {
 		_urlPatterns.add(urlPattern);
 	}
 
+	public List<String> getErrorPages() {
+		return _errorPages;
+	}
+
 	public Map<String, String> getInitParameters() {
 		return _initParameters;
 	}
@@ -44,6 +48,18 @@ public class ServletDefinition {
 
 	public List<String> getURLPatterns() {
 		return _urlPatterns;
+	}
+
+	public boolean isAsyncSupported() {
+		return _asyncSupported;
+	}
+
+	public void setAsyncSupported(boolean asyncSupported) {
+		_asyncSupported = asyncSupported;
+	}
+
+	public void setErrorPages(List<String> errorPages) {
+		_errorPages.addAll(errorPages);
 	}
 
 	public void setInitParameter(String name, String value) {
@@ -66,6 +82,8 @@ public class ServletDefinition {
 		_urlPatterns = urlPatterns;
 	}
 
+	private boolean _asyncSupported = false;
+	private List<String> _errorPages = new ArrayList<String>();
 	private Map<String, String> _initParameters = new HashMap<String, String>();
 	private String _name;
 	private Servlet _servlet;

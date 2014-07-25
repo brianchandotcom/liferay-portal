@@ -248,8 +248,18 @@
 			<bean class="com.liferay.portal.repository.RepositoryFactoryImpl" depends-on="com.liferay.portal.model.ModelHintsUtil" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.repository.liferayrepository.LiferayRepositoryCreator" class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryCreator" />
-	<bean id="com.liferay.portal.repository.external.ExternalRepositoryCreator" class="com.liferay.portal.repository.external.ExternalRepositoryCreator" />
+	<bean id="com.liferay.portal.repository.registry.RepositoryCatalog" class="com.liferay.portal.repository.registry.RepositoryCatalogImpl" init-method="loadDefaultRepositoryRegistryPlugins">
+		<property name="legacyExternalRepositoryCreator">
+			<bean class="com.liferay.portal.repository.external.LegacyExternalRepositoryCreator" />
+		</property>
+		<property name="liferayRepositoryRegistryPlugin">
+			<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryRegistryPlugin">
+				<property name="repositoryCreator">
+					<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryCreator" />
+				</property>
+			</bean>
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil" class="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil">
 		<property name="sPIRegistry">
 			<bean class="com.liferay.portal.resiliency.spi.SPIRegistryImpl">

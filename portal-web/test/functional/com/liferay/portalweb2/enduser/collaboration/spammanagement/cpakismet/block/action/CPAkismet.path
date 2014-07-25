@@ -13,7 +13,6 @@
 	<td></td>
 	<td>CPAkismet</td>
 </tr>
-<!---->
 <tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>

@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>WIKI_PAGE_TABLE_STATUS</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/span//strong</td>
 	<td></td>
 </tr>
 <tr>

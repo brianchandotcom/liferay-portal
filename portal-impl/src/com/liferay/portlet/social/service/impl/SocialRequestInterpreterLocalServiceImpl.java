@@ -14,6 +14,12 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.social.model.SocialRequest;
@@ -136,10 +142,19 @@ public class SocialRequestInterpreterLocalServiceImpl
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
 		String className = PortalUtil.getClassName(request.getClassNameId());
+		String requestPortletId = getSocialRequestPortletId(request);
 
 		for (int i = 0; i < _requestInterpreters.size(); i++) {
 			SocialRequestInterpreterImpl requestInterpreter =
 				(SocialRequestInterpreterImpl)_requestInterpreters.get(i);
+
+			if (Validator.isNotNull(requestPortletId)) {
+				String portletId = requestInterpreter.getPortletId();
+
+				if (!requestPortletId.equals(portletId)) {
+					continue;
+				}
+			}
 
 			if (requestInterpreter.hasClassName(className)) {
 				SocialRequestFeedEntry requestFeedEntry =
@@ -176,10 +191,19 @@ public class SocialRequestInterpreterLocalServiceImpl
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
 		String className = PortalUtil.getClassName(request.getClassNameId());
+		String requestPortletId = getSocialRequestPortletId(request);
 
 		for (int i = 0; i < _requestInterpreters.size(); i++) {
 			SocialRequestInterpreterImpl requestInterpreter =
 				(SocialRequestInterpreterImpl)_requestInterpreters.get(i);
+
+			if (Validator.isNotNull(requestPortletId)) {
+				String portletId = requestInterpreter.getPortletId();
+
+				if (!requestPortletId.equals(portletId)) {
+					continue;
+				}
+			}
 
 			if (requestInterpreter.hasClassName(className)) {
 				boolean value = requestInterpreter.processConfirmation(
@@ -212,10 +236,19 @@ public class SocialRequestInterpreterLocalServiceImpl
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
 		String className = PortalUtil.getClassName(request.getClassNameId());
+		String requestPortletId = getSocialRequestPortletId(request);
 
 		for (int i = 0; i < _requestInterpreters.size(); i++) {
 			SocialRequestInterpreterImpl requestInterpreter =
 				(SocialRequestInterpreterImpl)_requestInterpreters.get(i);
+
+			if (Validator.isNotNull(requestPortletId)) {
+				String portletId = requestInterpreter.getPortletId();
+
+				if (!requestPortletId.equals(portletId)) {
+					continue;
+				}
+			}
 
 			if (requestInterpreter.hasClassName(className)) {
 				boolean value = requestInterpreter.processRejection(
@@ -227,6 +260,30 @@ public class SocialRequestInterpreterLocalServiceImpl
 			}
 		}
 	}
+
+	protected String getSocialRequestPortletId(SocialRequest request) {
+		String portletId = null;
+
+		try {
+			String extraData = request.getExtraData();
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			if (extraData != null) {
+				jsonObject = JSONFactoryUtil.createJSONObject(extraData);
+			}
+
+			portletId = jsonObject.getString("portletId");
+		}
+		catch (JSONException e) {
+			_log.error(e, e);
+		}
+
+		return portletId;
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		SocialRequestInterpreterLocalServiceImpl.class);
 
 	private List<SocialRequestInterpreter> _requestInterpreters =
 		new CopyOnWriteArrayList<SocialRequestInterpreter>();

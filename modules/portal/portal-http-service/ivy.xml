@@ -17,6 +17,9 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency name="org.apache.felix.eventadmin" org="org.apache.felix" rev="1.3.2"/>
+		<dependency name="org.eclipse.equinox.http.servlet" org="org.eclipse.equinox" rev="latest.integration" />
+		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 	</dependencies>
 </ivy-module>

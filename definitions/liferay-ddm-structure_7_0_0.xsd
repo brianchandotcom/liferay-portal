@@ -59,6 +59,7 @@
 	</xs:group>
 	<xs:simpleType name="data-type">
 		<xs:restriction base="xs:string">
+			<xs:enumeration value="" />
 			<xs:enumeration value="boolean" />
 			<xs:enumeration value="date" />
 			<xs:enumeration value="double" />

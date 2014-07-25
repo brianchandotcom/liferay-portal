@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -33,11 +32,6 @@ import java.awt.event.InputEvent;
 
 import java.io.StringReader;
 
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1276,53 +1270,7 @@ public class WebDriverToSeleniumBridge
 		String targetURL = "";
 
 		if (url.startsWith("/")) {
-			if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
-				try {
-					if (OSDetector.isWindows()) {
-						String ipAddress =
-							InetAddress.getLocalHost().toString();
-
-						String[] localHost = StringUtil.split(ipAddress, "/");
-
-						ipAddress = localHost[1];
-
-						String portalURL = "http://" + ipAddress + ":8080";
-
-						targetURL = portalURL + url;
-					}
-					else {
-						Enumeration<NetworkInterface> ifaces =
-							NetworkInterface.getNetworkInterfaces();
-
-						while (ifaces.hasMoreElements()) {
-							NetworkInterface iface = ifaces.nextElement();
-
-							Enumeration<InetAddress> addresses =
-								iface.getInetAddresses();
-
-							while (addresses.hasMoreElements()) {
-								InetAddress addr = addresses.nextElement();
-
-								if (addr instanceof Inet4Address &&
-									!addr.isLoopbackAddress()) {
-
-									String ipAddress = addr.toString();
-
-									String portalURL =
-										"http:/" + ipAddress + ":8080";
-
-									targetURL = portalURL + url;
-								}
-							}
-						}
-					}
-				}
-				catch (Exception e) {
-			}
-			}
-			else {
-				targetURL = TestPropsValues.PORTAL_URL + url;
-			}
+			targetURL = TestPropsValues.PORTAL_URL + url;
 		}
 		else {
 			targetURL = url;

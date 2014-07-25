@@ -23,6 +23,7 @@ Import-Package: com.liferay.portal.bootstrap,\
 	com.liferay.portal.servlet.jsp.compiler.el;version='1.0.0',\
 	com.liferay.portal.servlet.jsp.compiler.jsp;version='1.0.0',\
 	com.liferay.portal.util,\
+	com.sun.el;version='[3.0.0,4.0)',\
 	com.sun.el.lang;version='[3.0.0,4.0)',\
 	com.sun.el.parser;version='[3.0.0,4.0)',\
 	com.sun.el.stream;version='[3.0.0,4.0)',\

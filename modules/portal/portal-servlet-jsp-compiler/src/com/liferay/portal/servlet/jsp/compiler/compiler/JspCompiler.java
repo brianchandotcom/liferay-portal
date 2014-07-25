@@ -16,7 +16,13 @@ package com.liferay.portal.servlet.jsp.compiler.compiler;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.Node;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.servlet.jsp.compiler.compiler.internal.JspResolverFactory;
 import com.liferay.portal.util.ClassLoaderUtil;
 
@@ -32,7 +38,9 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
@@ -199,6 +207,27 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		return super.getJavaFileManager(javaFileManager);
 	}
 
+	protected String getTldUri(URL url) {
+		try {
+			Document document = SAXReaderUtil.read(url, false);
+
+			XPath xPath = SAXReaderUtil.createXPath(
+				"/ns:taglib/ns:uri/text()", "ns",
+				"http://java.sun.com/xml/ns/j2ee");
+
+			Node node = xPath.selectSingleNode(document);
+
+			if (node != null) {
+				return node.asXML();
+			}
+
+			return document.valueOf("/taglib/uri/text()");
+		}
+		catch (DocumentException e) {
+			return null;
+		}
+	}
+
 	protected void initClassPath(ServletContext servletContext) {
 		_lock.lock();
 
@@ -235,6 +264,28 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		tldMappings.put(
 			"http://java.sun.com/jsp/jstl/core",
 			new String[] {"/WEB-INF/tld/c.tld", null});
+
+		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+
+		Collection<String> wiringEntries = bundleWiring.listResources(
+			"/", "*.tld", BundleWiring.FINDENTRIES_RECURSE);
+
+		Iterator<String> iterator = wiringEntries.iterator();
+
+		while (iterator.hasNext()) {
+			String resourcePath = iterator.next();
+
+			URL url = _bundle.getResource(resourcePath);
+
+			String uri = getTldUri(url);
+
+			if (uri != null) {
+				tldMappings.put(
+					uri,
+					new String[] {
+						StringPool.SLASH.concat(resourcePath), null});
+			}
+		}
 
 		servletContext.setAttribute(
 			Constants.JSP_TLD_URI_TO_LOCATION_MAP, tldMappings);

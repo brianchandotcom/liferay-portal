@@ -1811,8 +1811,9 @@ public class HookHotDeployListener
 				Sanitizer sanitizer = (Sanitizer)newInstance(
 					portletClassLoader, Sanitizer.class, sanitizerClassName);
 
-				registerService(servletContextName, sanitizerClassName,
-					Sanitizer.class, sanitizer);
+				registerService(
+					servletContextName, sanitizerClassName, Sanitizer.class,
+					sanitizer);
 			}
 		}
 

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.sanitizer;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -42,17 +40,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class SanitizerImpl implements Sanitizer {
 
 	public SanitizerImpl() {
-
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
 			Sanitizer.class, new SanitizerServiceTrackerCustomizer());
 
 		_serviceTracker.open();
-	}
-
-	public void registerSanitizer(Sanitizer sanitizer) {
-		_sanitizers.add(sanitizer);
 	}
 
 	@Override
@@ -133,18 +126,16 @@ public class SanitizerImpl implements Sanitizer {
 		_sanitizers.remove(sanitizer);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SanitizerImpl.class);
-
 	private List<Sanitizer> _sanitizers = new CopyOnWriteArrayList<Sanitizer>();
 
 	private ServiceTracker<?, Sanitizer> _serviceTracker;
 
 	private class SanitizerServiceTrackerCustomizer
-	implements ServiceTrackerCustomizer<Sanitizer, Sanitizer> {
+		implements ServiceTrackerCustomizer<Sanitizer, Sanitizer> {
 
 		@Override
 		public Sanitizer addingService(
-		ServiceReference<Sanitizer> serviceReference) {
+			ServiceReference<Sanitizer> serviceReference) {
 
 			Registry registry = RegistryUtil.getRegistry();
 
@@ -157,17 +148,20 @@ public class SanitizerImpl implements Sanitizer {
 
 		@Override
 		public void modifiedService(
-		ServiceReference<Sanitizer> serviceReference, Sanitizer sanitizer) {
+			ServiceReference<Sanitizer> serviceReference, Sanitizer sanitizer) {
 		}
 
 		@Override
 		public void removedService(
-		ServiceReference<Sanitizer> serviceReference, Sanitizer sanitizer) {
+			ServiceReference<Sanitizer> serviceReference, Sanitizer sanitizer) {
+
 			Registry registry = RegistryUtil.getRegistry();
 
 			registry.ungetService(serviceReference);
 
 			_sanitizers.remove(sanitizer);
 		}
+
 	}
+
 }

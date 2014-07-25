@@ -14,7 +14,6 @@
 
 package com.liferay.portal.http.service.internal;
 
-import com.liferay.portal.http.service.internal.servlet.BundleServletContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -39,15 +38,18 @@ public class StartedBundleListener implements BundleListener {
 
 		Bundle bundle = bundleEvent.getBundle();
 
-		String servletContextName = BundleServletContext.getServletContextName(
-			bundle);
+		String servletContextName = WabUtil.getWebContextName(bundle);
 
 		if (Validator.isNull(servletContextName)) {
 			return;
 		}
 
 		try {
-			if (type == BundleEvent.STARTED) {
+			if ((type & BundleEvent.STARTED) == BundleEvent.STARTED) {
+				if (WabUtil.isNotActiveBundle(bundle)) {
+					return;
+				}
+
 				_webBundleDeployer.doStart(bundle, servletContextName);
 			}
 		}

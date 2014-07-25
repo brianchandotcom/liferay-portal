@@ -98,7 +98,7 @@ JSONArray fieldsJSONArray = _getFormTemplateFieldsJSONArray(structure, script);
 			var editingField = window.<portlet:namespace />formBuilder.editingField;
 
 			if (editingField) {
-				window.<portlet:namespace />formBuilder.propertyList.set('data', window.<portlet:namespace />formBuilder.getFieldProperties(editingField));
+				window.<portlet:namespace />formBuilder.propertyList.set('data', window.<portlet:namespace />formBuilder.getFieldProperties(editingField, true));
 			}
 		},
 		['aui-base']

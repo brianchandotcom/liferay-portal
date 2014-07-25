@@ -51,11 +51,6 @@
 				"store": "yes",
 				"type": "string"
 			},
-			"availableLanguageIds": {
-				"index": "not_analyzed",
-				"store": "yes",
-				"type": "string"
-			},
 			"comments": {
 				"index": "analyzed",
 				"store": "yes",

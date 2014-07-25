@@ -368,8 +368,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 		String[] languageIds = getLanguageIds(
 			defaultLanguageId, article.getDocument());
 
-		document.addKeyword("availableLanguageIds", languageIds);
-
 		for (String languageId : languageIds) {
 			String content = extractDDMContent(article, languageId);
 

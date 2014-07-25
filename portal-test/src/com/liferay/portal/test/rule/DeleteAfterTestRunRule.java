@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.PersistedModel;
@@ -52,8 +53,6 @@ import org.junit.runners.model.Statement;
 public class DeleteAfterTestRunRule implements TestRule {
 
 	public DeleteAfterTestRunRule(Object instance) {
-		super();
-
 		_instance = instance;
 	}
 

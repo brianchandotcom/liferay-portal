@@ -7,4 +7,8 @@
 
 		<execute action="CPSites#pause" locator1="5000" />
 	</command>
+
+	<command name="Smoke" priority="5">
+		<execute macro="User#firstLoginPG" />
+	</command>
 </definition>

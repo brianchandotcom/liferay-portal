@@ -74,4 +74,8 @@
 		<execute action="DockbarPreviewpanel#assertTextEquals" locator-key1="PREVIEW_MESSAGE" value1="Preview may not be accurate." />
 		<execute action="Dockbar#selectFrame" locator1="//iframe[@id='devicePreviewIframe']" />
 	</command>
+
+	<command name="selectMobileDevice">
+		<execute action="MobileDevice#sikuliClick" locator-key1="MOBILE_DEVICE_SCREENSHOT" />
+	</command>
 </definition>

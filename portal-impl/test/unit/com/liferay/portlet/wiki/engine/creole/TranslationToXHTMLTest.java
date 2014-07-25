@@ -21,7 +21,6 @@ import com.liferay.portal.parsers.creole.ast.WikiPageNode;
 import com.liferay.portal.parsers.creole.parser.Creole10Lexer;
 import com.liferay.portal.parsers.creole.parser.Creole10Parser;
 import com.liferay.portal.parsers.creole.visitor.impl.XhtmlTranslationVisitor;
-import com.liferay.portal.test.mockito.ReturnArgumentCalledAnswer;
 import com.liferay.portal.util.HtmlImpl;
 
 import java.io.IOException;
@@ -34,8 +33,6 @@ import org.antlr.runtime.RecognitionException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Miguel Pastor

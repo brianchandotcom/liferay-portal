@@ -447,27 +447,18 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		Locale snippetLocale = getSnippetLocale(document, locale);
 
-		if (snippetLocale == null) {
+		String localizedTitleName = DocumentImpl.getLocalizedName(
+			locale, Field.TITLE);
+
+		if ((snippetLocale == null) ||
+			(document.getField(localizedTitleName) == null)) {
+
 			snippetLocale = LocaleUtil.fromLanguageId(
 				document.get("defaultLanguageId"));
 		}
 
 		String title = document.get(
 			snippetLocale, Field.SNIPPET + StringPool.UNDERLINE + Field.TITLE);
-
-		if (Validator.isNull(title)) {
-			String localizedName = DocumentImpl.getLocalizedName(
-				snippetLocale, Field.TITLE);
-
-			title = document.get(localizedName);
-
-			if (Validator.isNull(title)) {
-				snippetLocale = LocaleUtil.fromLanguageId(
-					document.get("defaultLanguageId"));
-
-				title = document.get(snippetLocale, Field.TITLE);
-			}
-		}
 
 		String content = getDDMContentSummary(
 			document, snippetLocale, portletRequest, portletResponse);

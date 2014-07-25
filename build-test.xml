@@ -38,6 +38,21 @@
 	<propertycopy from="testray.build.${testray.build.type}.name" name="testray.build.name" />
 	<propertycopy from="testray.product.${testray.product.type}.version" name="testray.product.version" />
 
+	<if>
+		<os family="unix" />
+		<then>
+			<exec executable="/bin/bash" os="${os.unix}" outputproperty="ip.address">
+				<arg value="-c" />
+				<arg value="ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'" />
+			</exec>
+		</then>
+		<else>
+			<hostinfo host="${env.COMPUTERNAME}.local" prefix="host.info" />
+
+			<property name="ip.address" value="${host.info.ADDR4}" />
+		</else>
+	</if>
+
 	<macrodef name="prepare-additional-bundles">
 		<sequential>
 			<if>
@@ -1573,20 +1588,6 @@ hw.keyboard=yes
 	<target name="prepare-portal-ext-properties" depends="generate-test-properties">
 		<prepare-fix-pack-bundle />
 
-		<if>
-			<os family="unix" />
-			<then>
-				<exec executable="/bin/bash" os="${os.unix}" outputproperty="ipv4.address">
-					<arg value="-c" />
-					<arg value="ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'" />
-				</exec>
-			</then>
-			<else>
-				<hostinfo prefix="host.info" host="${env.COMPUTERNAME}.local" />
-				<property name="ipv4.address" value="${host.info.ADDR4}" />
-			</else>
-		</if>
-
 		<echo file="portal-impl/src/portal-ext.properties">liferay.home=${liferay.home}
 
 plugin.notifications.enabled=false
@@ -1608,11 +1609,11 @@ setup.wizard.enabled=false
 
 mail.session.jndi.name=
 
+virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}
+
 axis.servlet.hosts.allowed=
 
-tunnel.servlet.hosts.allowed=
-
-virtual.hosts.valid.hosts=${ipv4.address}</echo>
+tunnel.servlet.hosts.allowed=</echo>
 
 		<if>
 			<equals arg1="${cluster.enabled}" arg2="true" />
@@ -2256,6 +2257,14 @@ tck.url=true</echo>
 					portal.url=file:///${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/selenium/dependencies/Site.html
 				</echo>
 			</then>
+			<elseif>
+				<equals arg1="${mobile.device.enabled}" arg2="true" />
+				<then>
+					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+						portal.url=http://${ip.address}:8080
+					</echo>
+				</then>
+			</elseif>
 			<elseif>
 				<isset property="portal.url" />
 				<then>

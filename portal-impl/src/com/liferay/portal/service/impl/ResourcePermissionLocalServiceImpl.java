@@ -325,9 +325,8 @@ public class ResourcePermissionLocalServiceImpl
 
 	@Override
 	public Map<Long, Set<String>> getAvailableResourcePermissionActionIds(
-			long companyId, String name, int scope, String primKey,
-			Collection<String> actionIds)
-		throws PortalException {
+		long companyId, String name, int scope, String primKey,
+		Collection<String> actionIds) {
 
 		if (actionIds.isEmpty()) {
 			return Collections.emptyMap();

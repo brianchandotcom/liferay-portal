@@ -28,11 +28,11 @@ import org.springframework.aop.target.SingletonTargetSource;
 /**
  * @author Raymond Augé
  */
-public class ServiceBag<T> {
+public class ServiceBag<V> {
 
 	public ServiceBag(
 		ClassLoader classLoader, AdvisedSupport advisedSupport,
-		Class<?> serviceTypeClass, final ServiceWrapper<T> serviceWrapper) {
+		Class<?> serviceTypeClass, final ServiceWrapper<V> serviceWrapper) {
 
 		_advisedSupport = advisedSupport;
 
@@ -47,7 +47,7 @@ public class ServiceBag<T> {
 					new ClassLoaderBeanHandler(
 						previousService, portalClassLoader));
 
-			serviceWrapper.setWrappedService((T)previousService);
+			serviceWrapper.setWrappedService((V)previousService);
 		}
 
 		Object nextTarget = ProxyUtil.newProxyInstance(

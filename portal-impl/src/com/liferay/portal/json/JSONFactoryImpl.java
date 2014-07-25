@@ -312,27 +312,61 @@ public class JSONFactoryImpl implements JSONFactory {
 				_log.warn(me, me);
 			}
 
-			throw new IllegalStateException("Unable to serialize oject", me);
+			throw new IllegalStateException("Unable to serialize object", me);
 		}
 	}
 
 	@Override
 	public String serializeThrowable(Throwable throwable) {
-		JSONObject jsonObject = createJSONObject();
-
 		if (throwable instanceof InvocationTargetException) {
 			throwable = throwable.getCause();
 		}
 
-		jsonObject.put("exception", ClassUtil.getClassName(throwable));
+		String throwableTypeName = ClassUtil.getClassName(throwable);
 
-		String message = throwable.getMessage();
+		String throwableMessage = throwable.getMessage();
 
-		if (Validator.isNull(message)) {
-			message = throwable.toString();
+		if (Validator.isNull(throwableMessage)) {
+			throwableMessage = throwable.toString();
 		}
 
-		jsonObject.put("message", message);
+		Throwable rootCause = throwable;
+
+		while (rootCause.getCause() != null) {
+			rootCause = rootCause.getCause();
+		}
+
+		String rootCauseName = ClassUtil.getClassName(rootCause);
+
+		String rootCauseMessage = rootCause.getMessage();
+
+		if (Validator.isNull(rootCauseMessage)) {
+			rootCauseMessage = rootCause.toString();
+		}
+
+
+		JSONObject jsonObject = createJSONObject();
+
+		// maintain compatibility with 6.2.x
+
+		jsonObject.put("exception", throwableMessage);
+		jsonObject.put("throwable", throwable.toString());
+
+		JSONObject error = createJSONObject();
+
+		error.put("message", throwableMessage);
+		error.put("type", throwableTypeName);
+
+		jsonObject.put("error", error);
+
+		if (rootCause != throwable) {
+			JSONObject cause = createJSONObject();
+
+			cause.put("message", rootCauseMessage);
+			cause.put("type", rootCauseName);
+
+			jsonObject.put("cause", cause);
+		}
 
 		return jsonObject.toString();
 	}

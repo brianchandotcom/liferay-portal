@@ -354,16 +354,12 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
-	public void addPermissions(Class<?> clazz, long classPK)
-		throws PortalException {
-
+	public void addPermissions(Class<?> clazz, long classPK) {
 		addPermissions(clazz.getName(), classPK);
 	}
 
 	@Override
-	public void addPermissions(String resourceName, long resourcePK)
-		throws PortalException {
-
+	public void addPermissions(String resourceName, long resourcePK) {
 		if (!MapUtil.getBoolean(
 				_parameterMap, PortletDataHandlerKeys.PERMISSIONS)) {
 
@@ -373,8 +369,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 		List<String> actionIds = ResourceActionsUtil.getModelResourceActions(
 			resourceName);
 
-		Map<Long, Set<String>> roleIdsToActionIds = getActionIds(
-			resourceName, resourcePK, actionIds);
+		Map<Long, Set<String>> roleIdsToActionIds = null;
+
+		try {
+			roleIdsToActionIds = getActionIds(
+				resourceName, resourcePK, actionIds);
+		}
+		catch (PortalException pe) {
+			return;
+		}
 
 		List<KeyValuePair> permissions = new ArrayList<KeyValuePair>();
 
@@ -384,7 +387,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 			long roleId = entry.getKey();
 			Set<String> availableActionIds = entry.getValue();
 
-			Role role = RoleLocalServiceUtil.getRole(roleId);
+			Role role = RoleLocalServiceUtil.fetchRole(roleId);
+
+			if (role == null) {
+				continue;
+			}
 
 			String roleName = role.getName();
 

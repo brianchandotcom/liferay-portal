@@ -14,7 +14,6 @@
 
 package com.liferay.portal.http.service.internal;
 
-import com.liferay.portal.http.service.internal.servlet.BundleServletContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -39,16 +38,15 @@ public class StoppedBundleListener implements SynchronousBundleListener {
 
 		Bundle bundle = bundleEvent.getBundle();
 
-		String servletContextName = BundleServletContext.getServletContextName(
-			bundle);
+		String servletContextName = WabUtil.getWebContextName(bundle);
 
 		if (Validator.isNull(servletContextName)) {
 			return;
 		}
 
 		try {
-			if (type == BundleEvent.STOPPED) {
-				_webBundleDeployer.doStop(bundle, servletContextName);
+			if ((type & BundleEvent.STOPPED) == BundleEvent.STOPPED) {
+				_webBundleDeployer.doStop(bundle);
 			}
 		}
 		catch (Exception e) {

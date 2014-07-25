@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -448,32 +447,29 @@ public class JournalArticleIndexer extends BaseIndexer {
 		Document document, Locale locale, String snippet, PortletURL portletURL,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
-
 		Locale snippetLocale = getSnippetLocale(document, locale);
 
 		if (snippetLocale == null) {
-			String[] availableLanguageIds = document.getValues(
-				"availableLanguageIds");
-
-			String localizedAssetCategoryTitlesName =
-				prefix + DocumentImpl.getLocalizedName(
-					locale, Field.ASSET_CATEGORY_TITLES);
-
-			if ((document.getField(localizedAssetCategoryTitlesName) != null) &&
-				ArrayUtil.contains(
-					availableLanguageIds, LocaleUtil.toLanguageId(locale))) {
-
-				snippetLocale = locale;
-			}
-			else {
-				snippetLocale = LocaleUtil.fromLanguageId(
-					document.get("defaultLanguageId"));
-			}
+			snippetLocale = LocaleUtil.fromLanguageId(
+				document.get("defaultLanguageId"));
 		}
 
 		String title = document.get(
-			snippetLocale, prefix + Field.TITLE, Field.TITLE);
+			snippetLocale, Field.SNIPPET + StringPool.UNDERLINE + Field.TITLE);
+
+		if (Validator.isNull(title)) {
+			String localizedName = DocumentImpl.getLocalizedName(
+				snippetLocale, Field.TITLE);
+
+			title = document.get(localizedName);
+
+			if (Validator.isNull(title)) {
+				snippetLocale = LocaleUtil.fromLanguageId(
+					document.get("defaultLanguageId"));
+
+				title = document.get(snippetLocale, Field.TITLE);
+			}
+		}
 
 		String content = getDDMContentSummary(
 			document, snippetLocale, portletRequest, portletResponse);

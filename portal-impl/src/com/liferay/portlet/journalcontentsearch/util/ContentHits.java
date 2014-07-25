@@ -43,7 +43,7 @@ public class ContentHits {
 		List<Document> docs = new ArrayList<Document>();
 		List<Float> scores = new ArrayList<Float>();
 
-		for (int i = 0; i < hits.getLength(); i++) {
+		for (int i = 0; i < hits.getDocs().length; i++) {
 			Document doc = hits.doc(i);
 
 			String articleId = doc.get(Field.ARTICLE_ID);

@@ -969,6 +969,128 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
+	/* ---------- Alloy Editor ---------- */
+
+	.alloy-editor {
+		outline: 0;
+	}
+
+	.alloy-editor-toolbar {
+		border: solid 1px #327CB4;
+
+		.alloy-editor-toolbar-content {
+			.alloy-editor-button {
+				background-color: transparent;
+				background-image: none;
+				border: solid 1px #348BD3;
+				border-bottom-width: 0;
+				border-right-color: #2C83CD;
+				border-top-width: 0;
+				color: #124E8D;
+
+				&:active, &:focus {
+					color: #124E8D;
+				}
+
+				&:hover {
+					background-image: none;
+					border-left: solid 1px #348BD3;
+					border-right: solid 1px #2C83CD;
+					color: #FFF;
+				}
+
+				&:first-child {
+					border-left-width: 0;
+				}
+
+				&:last-child {
+					border-right-width: 0;
+				}
+
+				&.yui3-button-selected {
+					color: #FFF;
+				}
+			}
+
+			.link-wrapper {
+				.alloy-editor-button {
+					border-width: 0;
+				}
+
+				.input-close-container, .show-buttons-container {
+					margin-top: 2px;
+				}
+
+				.input-wrapper {
+					margin: 3px 0;
+
+					.input-container {
+						border-color: #DDD;
+						padding: 1px;
+
+						input {
+							border-width: 0;
+							margin: 0;
+							padding: 2px 5px;
+						}
+
+						.input-clear {
+							color: #CCC;
+							font-size: 1.1em;
+							margin: 0 6px;
+						}
+					}
+				}
+
+				.input-close-container {
+					background: transparent;
+
+					.alloy-editor-button {
+						color: #FFF;
+					}
+				}
+
+				.switch-to-edit {
+					margin-left: 2px;
+				}
+			}
+		}
+
+		&.alloy-editor-arrow-box-bottom {
+			&:after {
+				border-top-color: #1B7BC8;
+			}
+
+			&:before {
+				border-top-color: #327CB4;
+			}
+		}
+
+		&.alloy-editor-arrow-box-top {
+			&:after {
+				border-bottom-color: #278FE2;
+			}
+
+			&:before {
+				border-bottom-color: #327CB4;
+			}
+		}
+	}
+
+	.alloy-editor-tooltip-link {
+		border: solid 1px #327CB4;
+		color: #FFF;
+		padding: 3px 2px;
+
+		.link-container .link-preview {
+			color: #FFF;
+		}
+
+		.link-container .icon-link-container {
+			vertical-align: middle;
+		}
+	}
+
 	/* ---------- Extras ---------- */
 
 	$prefixes: ("-webkit-", "-moz-", "-o-", "");
@@ -979,6 +1101,13 @@ $dockbarOpenGradientStart: #0EA6F9;
 			color: #FFF;
 
 			@include text-shadow(-1px -1px rgba(0, 0, 0, 0.3));
+		}
+
+		.alloy-editor ::#{$prefix}selection {
+			background: #E1EDF9 !important;
+			color: #000;
+
+			@include text-shadow(none);
 		}
 	}
 
@@ -1095,6 +1224,27 @@ $dockbarOpenGradientStart: #0EA6F9;
 				@include box-shadow(none);
 			}
 		}
+	}
+
+	.alloy-editor-toolbar {
+		@include background-image(linear-gradient(#278FE2, #1B7BC8));
+		@include border-radius(3px);
+		@include opacity(0.95);
+
+		.alloy-editor-toolbar-content .alloy-editor-button {
+			@include box-shadow(none);
+			@include transition-property(color);
+
+			&:hover {
+				@include box-shadow(none);
+			}
+		}
+	}
+
+	.alloy-editor-tooltip-link {
+		@include background-image(linear-gradient(#278FE2, #1B7BC8));
+		@include border-radius(3px);
+		@include opacity(0.95);
 	}
 
 	body.yui3-skin-sam .yui3-widget-mask {

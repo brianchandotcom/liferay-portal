@@ -1390,7 +1390,7 @@
 			<sanitize content-type="text/plain" modes="ALL" />
 			<validator name="required" />
 		</field>
-		<field name="deckTitle" type="String">
+		<field name="subtitle" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="urlTitle" type="String">

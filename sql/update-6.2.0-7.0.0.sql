@@ -1,4 +1,4 @@
-alter table BlogsEntry add deckTitle STRING null;
+alter table BlogsEntry add subtitle STRING null;
 
 create table ExportImportConfiguration (
 	mvccVersion LONG default 0,

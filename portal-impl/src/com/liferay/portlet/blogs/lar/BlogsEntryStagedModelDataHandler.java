@@ -192,7 +192,7 @@ public class BlogsEntryStagedModelDataHandler
 					serviceContext.setUuid(entry.getUuid());
 
 					importedEntry = BlogsEntryLocalServiceUtil.addEntry(
-						userId, entry.getTitle(), entry.getDeckTitle(),
+						userId, entry.getTitle(), entry.getSubtitle(),
 						entry.getDescription(), entry.getContent(),
 						displayDateMonth, displayDateDay, displayDateYear,
 						displayDateHour, displayDateMinute, allowPingbacks,
@@ -203,7 +203,7 @@ public class BlogsEntryStagedModelDataHandler
 				else {
 					importedEntry = BlogsEntryLocalServiceUtil.updateEntry(
 						userId, existingEntry.getEntryId(), entry.getTitle(),
-						entry.getDeckTitle(), entry.getDescription(),
+						entry.getSubtitle(), entry.getDescription(),
 						entry.getContent(), displayDateMonth, displayDateDay,
 						displayDateYear, displayDateHour, displayDateMinute,
 						allowPingbacks, allowTrackbacks, trackbacks,
@@ -214,7 +214,7 @@ public class BlogsEntryStagedModelDataHandler
 			}
 			else {
 				importedEntry = BlogsEntryLocalServiceUtil.addEntry(
-					userId, entry.getTitle(), entry.getDeckTitle(),
+					userId, entry.getTitle(), entry.getSubtitle(),
 					entry.getDescription(), entry.getContent(),
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, allowPingbacks,

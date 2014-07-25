@@ -116,7 +116,7 @@ public class BlogsTestUtil {
 		try {
 			WorkflowThreadLocal.setEnabled(true);
 
-			String deckTitle = StringPool.BLANK;
+			String subtitle = StringPool.BLANK;
 			String description = "Description";
 			String content = "Content";
 			int displayDateMonth = 1;
@@ -143,11 +143,11 @@ public class BlogsTestUtil {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-				userId, title, deckTitle, description, content,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, allowPingbacks,
-				allowTrackbacks, trackbacks, smallImage, smallImageURL,
-				smallImageFileName, smallImageInputStream, serviceContext);
+				userId, title, subtitle, description, content, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
+				smallImage, smallImageURL, smallImageFileName,
+				smallImageInputStream, serviceContext);
 
 			if (approved) {
 				return updateStatus(entry, serviceContext);

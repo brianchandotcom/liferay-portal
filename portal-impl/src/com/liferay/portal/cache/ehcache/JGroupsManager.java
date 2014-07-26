@@ -235,20 +235,35 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 		}
 
 		int event = jGroupEventMessage.getEvent();
+
+		if (event == JGroupEventMessage.REMOVE_ALL) {
+			cache.removeAll(true);
+
+			return;
+		}
+
 		Serializable key = jGroupEventMessage.getSerializableKey();
+
+		if (key == null) {
+			throw new NullPointerException("Key is null");
+		}
 
 		if ((event == JGroupEventMessage.REMOVE) &&
 			(cache.getQuiet(key) != null)) {
 
 			cache.remove(key, true);
 		}
-		else if (event == JGroupEventMessage.REMOVE_ALL) {
-			cache.removeAll(true);
-		}
 		else if (event == JGroupEventMessage.PUT) {
 			Element element = jGroupEventMessage.getElement();
 
-			cache.put(new Element(key, element.getObjectValue()), true);
+			Object value = element.getObjectValue();
+
+			if (value == null) {
+				cache.remove(key, true);
+			}
+			else {
+				cache.put(new Element(key, value), true);
+			}
 		}
 	}
 

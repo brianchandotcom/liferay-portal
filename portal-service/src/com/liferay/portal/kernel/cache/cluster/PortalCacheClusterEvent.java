@@ -36,6 +36,22 @@ public class PortalCacheClusterEvent implements Serializable {
 		String cacheName, Serializable elementKey, Serializable elementValue,
 		PortalCacheClusterEventType portalCacheClusterEventType) {
 
+		if (cacheName == null) {
+			throw new NullPointerException("Cache name is null");
+		}
+
+		if (portalCacheClusterEventType == null) {
+			throw new NullPointerException(
+				"Portal cache cluster event type is null");
+		}
+
+		if ((elementKey == null) &&
+			!portalCacheClusterEventType.equals(
+				PortalCacheClusterEventType.REMOVE_ALL)) {
+
+			throw new NullPointerException("Element key is null");
+		}
+
 		_cacheName = cacheName;
 		_elementKey = elementKey;
 		_elementValue = elementValue;

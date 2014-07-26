@@ -20,7 +20,7 @@ import java.io.Serializable;
  * @author Tina Tian
  */
 public abstract class AbstractPortalCache<K extends Serializable, V>
-	implements PortalCache<K, V> {
+	implements LowLevelCache<K, V> {
 
 	@Override
 	public V get(K key) {
@@ -42,6 +42,28 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 	}
 
 	@Override
+	public V putIfAbsent(K key, V value) {
+		return putIfAbsent(key, value, DEFAULT_TIME_TO_LIVE);
+	}
+
+	@Override
+	public V putIfAbsent(K key, V value, int timeToLive) {
+		if (key == null) {
+			throw new NullPointerException("Key is null");
+		}
+
+		if (value == null) {
+			throw new NullPointerException("Value is null");
+		}
+
+		if ((timeToLive != DEFAULT_TIME_TO_LIVE) && (timeToLive < 0)) {
+			throw new IllegalArgumentException("Time to live is negative");
+		}
+
+		return doPutIfAbsent(key, value, timeToLive);
+	}
+
+	@Override
 	public void putQuiet(K key, V value) {
 		put(key, value, DEFAULT_TIME_TO_LIVE, true);
 	}
@@ -60,12 +82,82 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 		doRemove(key);
 	}
 
+	@Override
+	public boolean remove(K key, V value) {
+		if (key == null) {
+			throw new NullPointerException("Key is null");
+		}
+
+		if (value == null) {
+			throw new NullPointerException("Value is null");
+		}
+
+		return doRemove(key, value);
+	}
+
+	@Override
+	public V replace(K key, V value) {
+		return replace(key, value, DEFAULT_TIME_TO_LIVE);
+	}
+
+	@Override
+	public V replace(K key, V value, int timeToLive) {
+		if (key == null) {
+			throw new NullPointerException("Key is null");
+		}
+
+		if (value == null) {
+			throw new NullPointerException("Value is null");
+		}
+
+		if ((timeToLive != DEFAULT_TIME_TO_LIVE) && (timeToLive < 0)) {
+			throw new IllegalArgumentException("Time to live is negative");
+		}
+
+		return doReplace(key, value, timeToLive);
+	}
+
+	@Override
+	public boolean replace(K key, V oldValue, V newValue) {
+		return replace(key, oldValue, newValue, DEFAULT_TIME_TO_LIVE);
+	}
+
+	@Override
+	public boolean replace(K key, V oldValue, V newValue, int timeToLive) {
+		if (key == null) {
+			throw new NullPointerException("Key is null");
+		}
+
+		if (oldValue == null) {
+			throw new NullPointerException("Old value is null");
+		}
+
+		if (newValue == null) {
+			throw new NullPointerException("New value is null");
+		}
+
+		if ((timeToLive != DEFAULT_TIME_TO_LIVE) && (timeToLive < 0)) {
+			throw new IllegalArgumentException("Time to live is negative");
+		}
+
+		return doReplace(key, oldValue, newValue, timeToLive);
+	}
+
 	protected abstract V doGet(K key);
 
 	protected abstract void doPut(
 		K key, V value, int timeToLive, boolean quiet);
 
+	protected abstract V doPutIfAbsent(K key, V value, int timeToLive);
+
 	protected abstract void doRemove(K key);
+
+	protected abstract boolean doRemove(K key, V value);
+
+	protected abstract V doReplace(K key, V value, int timeToLive);
+
+	protected abstract boolean doReplace(
+		K key, V oldValue, V newValue, int timeToLive);
 
 	protected void put(K key, V value, int timeToLive, boolean quiet) {
 		if (key == null) {

@@ -157,8 +157,61 @@ public class EhcachePortalCache<K extends Serializable, V>
 	}
 
 	@Override
+	protected V doPutIfAbsent(K key, V value, int timeToLive) {
+		Element element = new Element(key, value);
+
+		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
+			element.setTimeToLive(timeToLive);
+		}
+
+		Element oldElement = ehcache.putIfAbsent(element);
+
+		if (oldElement == null) {
+			return null;
+		}
+
+		return (V)oldElement.getObjectValue();
+	}
+
+	@Override
 	protected void doRemove(K key) {
 		ehcache.remove(key);
+	}
+
+	@Override
+	protected boolean doRemove(K key, V value) {
+		Element element = new Element(key, value);
+
+		return ehcache.removeElement(element);
+	}
+
+	@Override
+	protected V doReplace(K key, V value, int timeToLive) {
+		Element element = new Element(key, value);
+
+		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
+			element.setTimeToLive(timeToLive);
+		}
+
+		Element oldElement = ehcache.replace(element);
+
+		if (oldElement == null) {
+			return null;
+		}
+
+		return (V)oldElement.getObjectValue();
+	}
+
+	@Override
+	protected boolean doReplace(K key, V oldValue, V newValue, int timeToLive) {
+		Element oldElement = new Element(key, oldValue);
+		Element newElement = new Element(key, newValue);
+
+		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
+			newElement.setTimeToLive(timeToLive);
+		}
+
+		return ehcache.replace(oldElement, newElement);
 	}
 
 	protected NotificationScope getNotificationScope(

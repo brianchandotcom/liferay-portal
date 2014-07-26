@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 
 import java.io.Serializable;
 
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -35,14 +34,14 @@ public class MemoryPortalCache<K extends Serializable, V>
 
 	public MemoryPortalCache(String name, int initialCapacity) {
 		_name = name;
-		_map = new ConcurrentHashMap<K, V>(initialCapacity);
+		_concurrentHashMap = new ConcurrentHashMap<K, V>(initialCapacity);
 	}
 
 	public void destroy() {
 		removeAll();
 
 		_cacheListeners = null;
-		_map = null;
+		_concurrentHashMap = null;
 		_name = null;
 	}
 
@@ -66,7 +65,7 @@ public class MemoryPortalCache<K extends Serializable, V>
 
 	@Override
 	public void removeAll() {
-		_map.clear();
+		_concurrentHashMap.clear();
 
 		for (CacheListener<K, V> cacheListener : _cacheListeners) {
 			cacheListener.notifyRemoveAll(this);
@@ -85,12 +84,12 @@ public class MemoryPortalCache<K extends Serializable, V>
 
 	@Override
 	protected V doGet(K key) {
-		return _map.get(key);
+		return _concurrentHashMap.get(key);
 	}
 
 	@Override
 	protected void doPut(K key, V value, int timeToLive, boolean quiet) {
-		V oldValue = _map.put(key, value);
+		V oldValue = _concurrentHashMap.put(key, value);
 
 		if (!quiet) {
 			notifyPutEvents(key, value, oldValue != null);
@@ -98,12 +97,60 @@ public class MemoryPortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	protected void doRemove(K key) {
-		V value = _map.remove(key);
+	protected V doPutIfAbsent(K key, V value, int timeToLive) {
+		V oldValue = _concurrentHashMap.putIfAbsent(key, value);
 
-		for (CacheListener<K, V> cacheListener : _cacheListeners) {
-			cacheListener.notifyEntryRemoved(this, key, value);
+		if (oldValue == null) {
+			notifyPutEvents(key, value, false);
 		}
+
+		return oldValue;
+	}
+
+	@Override
+	protected void doRemove(K key) {
+		V value = _concurrentHashMap.remove(key);
+
+		if (value != null) {
+			for (CacheListener<K, V> cacheListener : _cacheListeners) {
+				cacheListener.notifyEntryRemoved(this, key, value);
+			}
+		}
+	}
+
+	@Override
+	protected boolean doRemove(K key, V value) {
+		boolean removed = _concurrentHashMap.remove(key, value);
+
+		if (removed) {
+			for (CacheListener<K, V> cacheListener : _cacheListeners) {
+				cacheListener.notifyEntryRemoved(this, key, value);
+			}
+		}
+
+		return removed;
+	}
+
+	@Override
+	protected V doReplace(K key, V value, int timeToLive) {
+		V oldValue = _concurrentHashMap.replace(key, value);
+
+		if (oldValue != null) {
+			notifyPutEvents(key, value, true);
+		}
+
+		return oldValue;
+	}
+
+	@Override
+	protected boolean doReplace(K key, V oldValue, V newValue, int timeToLive) {
+		boolean replaced = _concurrentHashMap.replace(key, oldValue, newValue);
+
+		if (replaced) {
+			notifyPutEvents(key, newValue, true);
+		}
+
+		return replaced;
 	}
 
 	protected void notifyPutEvents(K key, V value, boolean updated) {
@@ -121,7 +168,7 @@ public class MemoryPortalCache<K extends Serializable, V>
 
 	private Set<CacheListener<K, V>> _cacheListeners =
 		new ConcurrentHashSet<CacheListener<K, V>>();
-	private Map<K, V> _map;
+	private ConcurrentHashMap<K, V> _concurrentHashMap;
 	private String _name;
 
 }

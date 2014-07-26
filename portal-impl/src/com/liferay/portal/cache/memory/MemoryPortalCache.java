@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.memory;
 
+import com.liferay.portal.kernel.cache.AbstractPortalCache;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
-import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 
 import java.io.Serializable;
@@ -31,7 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Shuyang Zhou
  */
 public class MemoryPortalCache<K extends Serializable, V>
-	implements PortalCache<K, V> {
+	extends AbstractPortalCache<K, V> {
 
 	public MemoryPortalCache(String name, int initialCapacity) {
 		_name = name;
@@ -47,37 +47,8 @@ public class MemoryPortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public V get(K key) {
-		return _map.get(key);
-	}
-
-	@Override
 	public String getName() {
 		return _name;
-	}
-
-	@Override
-	public void put(K key, V value) {
-		V oldValue = _map.put(key, value);
-
-		notifyPutEvents(key, value, oldValue != null);
-	}
-
-	@Override
-	public void put(K key, V value, int timeToLive) {
-		V oldValue = _map.put(key, value);
-
-		notifyPutEvents(key, value, oldValue != null);
-	}
-
-	@Override
-	public void putQuiet(K key, V value) {
-		_map.put(key, value);
-	}
-
-	@Override
-	public void putQuiet(K key, V value, int timeToLive) {
-		_map.put(key, value);
 	}
 
 	@Override
@@ -91,15 +62,6 @@ public class MemoryPortalCache<K extends Serializable, V>
 		CacheListenerScope cacheListenerScope) {
 
 		registerCacheListener(cacheListener);
-	}
-
-	@Override
-	public void remove(K key) {
-		V value = _map.remove(key);
-
-		for (CacheListener<K, V> cacheListener : _cacheListeners) {
-			cacheListener.notifyEntryRemoved(this, key, value);
-		}
 	}
 
 	@Override
@@ -119,6 +81,29 @@ public class MemoryPortalCache<K extends Serializable, V>
 	@Override
 	public void unregisterCacheListeners() {
 		_cacheListeners.clear();
+	}
+
+	@Override
+	protected V doGet(K key) {
+		return _map.get(key);
+	}
+
+	@Override
+	protected void doPut(K key, V value, int timeToLive, boolean quiet) {
+		V oldValue = _map.put(key, value);
+
+		if (!quiet) {
+			notifyPutEvents(key, value, oldValue != null);
+		}
+	}
+
+	@Override
+	protected void doRemove(K key) {
+		V value = _map.remove(key);
+
+		for (CacheListener<K, V> cacheListener : _cacheListeners) {
+			cacheListener.notifyEntryRemoved(this, key, value);
+		}
 	}
 
 	protected void notifyPutEvents(K key, V value, boolean updated) {

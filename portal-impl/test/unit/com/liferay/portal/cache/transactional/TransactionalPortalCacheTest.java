@@ -174,6 +174,67 @@ public class TransactionalPortalCacheTest {
 
 	@AdviseWith(adviceClasses = {EnableTransactionalCacheAdvice.class})
 	@Test
+	public void testTransactionalCacheWithParameterValidatation() {
+		TransactionalPortalCacheHelper.begin();
+
+		// Get
+
+		try {
+			_transactionalPortalCache.get(null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Key is null", npe.getMessage());
+		}
+
+		// Put 1
+
+		try {
+			_transactionalPortalCache.put(null, null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Key is null", npe.getMessage());
+		}
+
+		// Put 2
+
+		try {
+			_transactionalPortalCache.put(_KEY_1, null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Value is null", npe.getMessage());
+		}
+
+		// Put 3
+
+		try {
+			_transactionalPortalCache.put(_KEY_1, _VALUE_1, -1);
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals("Time to live is negative", iae.getMessage());
+		}
+
+		// Remove
+
+		try {
+			_transactionalPortalCache.remove(null);
+
+			Assert.fail();
+		}
+		catch (NullPointerException npe) {
+			Assert.assertEquals("Key is null", npe.getMessage());
+		}
+	}
+
+	@AdviseWith(adviceClasses = {EnableTransactionalCacheAdvice.class})
+	@Test
 	public void testTransactionalCacheWithTTL() {
 		doTestTransactionalCache(true);
 	}
@@ -215,18 +276,6 @@ public class TransactionalPortalCacheTest {
 		TransactionalPortalCacheHelper.begin();
 
 		_transactionalPortalCache.removeAll();
-
-		Assert.assertNull(_transactionalPortalCache.get(_KEY_1));
-		Assert.assertNull(_transactionalPortalCache.get(_KEY_2));
-		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
-		Assert.assertNull(_portalCache.get(_KEY_2));
-
-		if (ttl) {
-			_transactionalPortalCache.put(_KEY_1, null, 10);
-		}
-		else {
-			_transactionalPortalCache.put(_KEY_1, null);
-		}
 
 		Assert.assertNull(_transactionalPortalCache.get(_KEY_1));
 		Assert.assertNull(_transactionalPortalCache.get(_KEY_2));
@@ -278,23 +327,9 @@ public class TransactionalPortalCacheTest {
 		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
 		Assert.assertNull(_portalCache.get(_KEY_2));
 
-		_transactionalPortalCache.putQuiet(_KEY_1, null);
+		_transactionalPortalCache.putQuiet(_KEY_1, _VALUE_2, 10);
 
-		Assert.assertNull(_transactionalPortalCache.get(_KEY_1));
-		Assert.assertNull(_transactionalPortalCache.get(_KEY_2));
-		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
-		Assert.assertNull(_portalCache.get(_KEY_2));
-
-		_transactionalPortalCache.putQuiet(_KEY_1, _VALUE_1, 10);
-
-		Assert.assertEquals(_VALUE_1, _transactionalPortalCache.get(_KEY_1));
-		Assert.assertNull(_transactionalPortalCache.get(_KEY_2));
-		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
-		Assert.assertNull(_portalCache.get(_KEY_2));
-
-		_transactionalPortalCache.putQuiet(_KEY_1, null, 10);
-
-		Assert.assertNull(_transactionalPortalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_2, _transactionalPortalCache.get(_KEY_1));
 		Assert.assertNull(_transactionalPortalCache.get(_KEY_2));
 		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
 		Assert.assertNull(_portalCache.get(_KEY_2));
@@ -308,6 +343,8 @@ public class TransactionalPortalCacheTest {
 		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
 		Assert.assertNull(_portalCache.get(_KEY_2));
 
+		_recordCacheListener.assertNothing();
+
 		// Commit 1
 
 		TransactionalPortalCacheHelper.begin();
@@ -318,34 +355,10 @@ public class TransactionalPortalCacheTest {
 		Assert.assertNull(_portalCache.get(_KEY_2));
 
 		if (ttl) {
-			_transactionalPortalCache.put(_KEY_1, null, 10);
-		}
-		else {
-			_transactionalPortalCache.put(_KEY_1, null);
-		}
-
-		Assert.assertNull(_transactionalPortalCache.get(_KEY_1));
-		Assert.assertNull(_transactionalPortalCache.get(_KEY_2));
-		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
-		Assert.assertNull(_portalCache.get(_KEY_2));
-
-		if (ttl) {
 			_transactionalPortalCache.put(_KEY_2, _VALUE_2, 10);
 		}
 		else {
 			_transactionalPortalCache.put(_KEY_2, _VALUE_2);
-		}
-
-		Assert.assertNull(_transactionalPortalCache.get(_KEY_1));
-		Assert.assertEquals(_VALUE_2, _transactionalPortalCache.get(_KEY_2));
-		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
-		Assert.assertNull(_portalCache.get(_KEY_2));
-
-		if (ttl) {
-			_transactionalPortalCache.put(_KEY_1, _VALUE_1, 10);
-		}
-		else {
-			_transactionalPortalCache.put(_KEY_1, _VALUE_1);
 		}
 
 		Assert.assertEquals(_VALUE_1, _transactionalPortalCache.get(_KEY_1));

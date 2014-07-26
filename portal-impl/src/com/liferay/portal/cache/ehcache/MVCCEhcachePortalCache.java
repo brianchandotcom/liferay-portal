@@ -37,7 +37,7 @@ public class MVCCEhcachePortalCache<K extends Serializable, V extends MVCCModel>
 
 	@Override
 	public void put(K key, V value) {
-		doPut(key, value, false, -1);
+		doPut(key, value, false, DEFAULT_TIME_TO_LIVE);
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class MVCCEhcachePortalCache<K extends Serializable, V extends MVCCModel>
 
 	@Override
 	public void putQuiet(K key, V value) {
-		doPut(key, value, true, -1);
+		doPut(key, value, true, DEFAULT_TIME_TO_LIVE);
 	}
 
 	@Override
@@ -56,6 +56,18 @@ public class MVCCEhcachePortalCache<K extends Serializable, V extends MVCCModel>
 	}
 
 	protected void doPut(K key, V value, boolean quiet, int timeToLive) {
+		if (key == null) {
+			throw new NullPointerException("Key is null");
+		}
+
+		if (value == null) {
+			throw new NullPointerException("Value is null");
+		}
+
+		if ((timeToLive != DEFAULT_TIME_TO_LIVE) && (timeToLive < 0)) {
+			throw new IllegalArgumentException("Time to live is negative");
+		}
+
 		boolean replicate = false;
 
 		if (quiet) {
@@ -86,9 +98,7 @@ public class MVCCEhcachePortalCache<K extends Serializable, V extends MVCCModel>
 
 				V oldValue = (V)oldElement.getObjectValue();
 
-				if ((oldValue != null) &&
-					(value.getMvccVersion() <= oldValue.getMvccVersion())) {
-
+				if (value.getMvccVersion() <= oldValue.getMvccVersion()) {
 					return;
 				}
 

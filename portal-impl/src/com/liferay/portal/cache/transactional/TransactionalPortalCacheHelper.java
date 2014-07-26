@@ -193,7 +193,8 @@ public class TransactionalPortalCacheHelper {
 	}
 
 	private static ValueEntry _NULL_HOLDER_VALUE_ENTRY = new ValueEntry(
-		TransactionalPortalCache.NULL_HOLDER, false, -1);
+		TransactionalPortalCache.NULL_HOLDER, false,
+		PortalCache.DEFAULT_TIME_TO_LIVE);
 
 	private static ThreadLocal<List<PortalCacheMap>>
 		_portalCacheMapsThreadLocal =
@@ -268,20 +269,10 @@ public class TransactionalPortalCacheHelper {
 				portalCache.remove(key);
 			}
 			else if (_quiet) {
-				if (_ttl >= 0) {
-					portalCache.putQuiet(key, _value, _ttl);
-				}
-				else {
-					portalCache.putQuiet(key, _value);
-				}
+				portalCache.putQuiet(key, _value, _ttl);
 			}
 			else {
-				if (_ttl >= 0) {
-					portalCache.put(key, _value, _ttl);
-				}
-				else {
-					portalCache.put(key, _value);
-				}
+				portalCache.put(key, _value, _ttl);
 			}
 		}
 

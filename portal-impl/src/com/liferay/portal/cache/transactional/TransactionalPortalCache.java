@@ -35,6 +35,10 @@ public class TransactionalPortalCache<K extends Serializable, V>
 		V result = null;
 
 		if (TransactionalPortalCacheHelper.isEnabled()) {
+			if (key == null) {
+				throw new NullPointerException("Key is null");
+			}
+
 			result = TransactionalPortalCacheHelper.get(portalCache, key);
 
 			if (result == NULL_HOLDER) {
@@ -51,37 +55,33 @@ public class TransactionalPortalCache<K extends Serializable, V>
 
 	@Override
 	public void put(K key, V value) {
-		doPut(key, value, false, -1);
+		doPut(key, value, false, DEFAULT_TIME_TO_LIVE);
 	}
 
 	@Override
 	public void put(K key, V value, int timeToLive) {
-		if (timeToLive < 0) {
-			throw new IllegalArgumentException("Time to live is negative");
-		}
-
 		doPut(key, value, false, timeToLive);
 	}
 
 	@Override
 	public void putQuiet(K key, V value) {
-		doPut(key, value, true, -1);
+		doPut(key, value, true, DEFAULT_TIME_TO_LIVE);
 	}
 
 	@Override
 	public void putQuiet(K key, V value, int timeToLive) {
-		if (timeToLive < 0) {
-			throw new IllegalArgumentException("Time to live is negative");
-		}
-
 		doPut(key, value, true, timeToLive);
 	}
 
 	@Override
 	public void remove(K key) {
 		if (TransactionalPortalCacheHelper.isEnabled()) {
+			if (key == null) {
+				throw new NullPointerException("Key is null");
+			}
+
 			TransactionalPortalCacheHelper.put(
-				portalCache, key, (V)NULL_HOLDER, false, -1);
+				portalCache, key, (V)NULL_HOLDER, false, DEFAULT_TIME_TO_LIVE);
 		}
 		else {
 			portalCache.remove(key);
@@ -100,31 +100,27 @@ public class TransactionalPortalCache<K extends Serializable, V>
 
 	protected void doPut(K key, V value, boolean quiet, int timeToLive) {
 		if (TransactionalPortalCacheHelper.isEnabled()) {
+			if (key == null) {
+				throw new NullPointerException("Key is null");
+			}
+
 			if (value == null) {
-				TransactionalPortalCacheHelper.put(
-					portalCache, key, (V)NULL_HOLDER, quiet, timeToLive);
+				throw new NullPointerException("Value is null");
 			}
-			else {
-				TransactionalPortalCacheHelper.put(
-					portalCache, key, value, quiet, timeToLive);
+
+			if ((timeToLive != DEFAULT_TIME_TO_LIVE) && (timeToLive < 0)) {
+				throw new IllegalArgumentException("Time to live is negative");
 			}
+
+			TransactionalPortalCacheHelper.put(
+				portalCache, key, value, quiet, timeToLive);
 		}
 		else {
 			if (quiet) {
-				if (timeToLive >= 0) {
-					portalCache.putQuiet(key, value, timeToLive);
-				}
-				else {
-					portalCache.putQuiet(key, value);
-				}
+				portalCache.putQuiet(key, value, timeToLive);
 			}
 			else {
-				if (timeToLive >= 0) {
-					portalCache.put(key, value, timeToLive);
-				}
-				else {
-					portalCache.put(key, value);
-				}
+				portalCache.put(key, value, timeToLive);
 			}
 		}
 	}

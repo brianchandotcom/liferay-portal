@@ -32,19 +32,19 @@ public class LockBasedMVCCEhcachePortalCache
 		EhcachePortalCache<K, V> ehcachePortalCache) {
 
 		super(ehcachePortalCache);
+
+		_ehcache = ehcachePortalCache.ehcache;
 	}
 
 	@Override
 	public void remove(K key) {
-		Ehcache ehcache = getEhcache();
-
-		ehcache.acquireWriteLockOnKey(key);
+		_ehcache.acquireWriteLockOnKey(key);
 
 		try {
 			super.remove(key);
 		}
 		finally {
-			ehcache.releaseWriteLockOnKey(key);
+			_ehcache.releaseWriteLockOnKey(key);
 		}
 	}
 
@@ -68,15 +68,13 @@ public class LockBasedMVCCEhcachePortalCache
 			newElement.setTimeToLive(timeToLive);
 		}
 
-		Ehcache ehcache = getEhcache();
-
-		ehcache.acquireWriteLockOnKey(key);
+		_ehcache.acquireWriteLockOnKey(key);
 
 		try {
-			Element oldElement = ehcache.get(key);
+			Element oldElement = _ehcache.get(key);
 
 			if (oldElement == null) {
-				ehcache.put(newElement, quiet);
+				_ehcache.put(newElement, quiet);
 
 				return;
 			}
@@ -87,11 +85,13 @@ public class LockBasedMVCCEhcachePortalCache
 				return;
 			}
 
-			ehcache.put(newElement, quiet);
+			_ehcache.put(newElement, quiet);
 		}
 		finally {
-			ehcache.releaseWriteLockOnKey(key);
+			_ehcache.releaseWriteLockOnKey(key);
 		}
 	}
+
+	private Ehcache _ehcache;
 
 }

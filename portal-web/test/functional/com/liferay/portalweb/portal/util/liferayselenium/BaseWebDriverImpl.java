@@ -216,6 +216,14 @@ public abstract class BaseWebDriverImpl
 					continue;
 				}
 
+				// LPS-42469
+
+				if (javaScriptErrorValue.contains(
+						"https://apis.google.com/_/+1/fastbutton")) {
+
+					continue;
+				}
+
 				throw new Exception(javaScriptErrorValue);
 			}
 		}

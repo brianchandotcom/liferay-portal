@@ -12,27 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.repository.registry;
+package com.liferay.portal.kernel.repository.event;
 
-import com.liferay.portal.kernel.repository.capabilities.Capability;
-import com.liferay.portal.kernel.repository.event.RepositoryEventHandler;
-import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
-
-import java.util.Map;
-import java.util.Set;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Adolfo Pérez
  */
-public interface RepositoryConfiguration {
+public interface RepositoryEventListener <S extends RepositoryEventType, T> {
 
-	public Set<Class<? extends Capability>> getExportedCapabilities();
-
-	public RepositoryCreator getRepositoryCreator();
-
-	public RepositoryEventHandler getRepositoryEventHandler();
-
-	public Map<Class<? extends Capability>, Capability>
-		getSupportedCapabilities();
+	public void execute(T target) throws PortalException;
 
 }

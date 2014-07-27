@@ -248,21 +248,18 @@ public class SocialRequestInterpreterLocalServiceImpl
 	}
 
 	protected String getSocialRequestPortletId(SocialRequest request) {
-		String portletId = StringPool.BLANK;
-
-		String extraData = request.getExtraData();
-
 		try {
 			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
-				extraData);
+				request.getExtraData());
 
-			portletId = extraDataJSONObject.getString("portletId");
+			return extraDataJSONObject.getString("portletId");
 		}
 		catch (JSONException jsone) {
-			_log.error("Unable to create JSON object from " + extraData);
-		}
+			_log.error(
+				"Unable to create JSON object from " + request.getExtraData());
 
-		return portletId;
+			return StringPool.BLANK;
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

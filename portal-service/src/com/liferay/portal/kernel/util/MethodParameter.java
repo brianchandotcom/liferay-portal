@@ -175,11 +175,10 @@ public class MethodParameter {
 				String extractedTopLevelGenericName = null;
 
 				if (c == 'L') {
-					int endIndex =
-						generics.indexOf(StringPool.SEMICOLON, index) + 1;
-
 					int bracketIndex =
 						generics.indexOf(StringPool.LESS_THAN, index);
+					int endIndex =
+						generics.indexOf(StringPool.SEMICOLON, index) + 1;
 
 					if ((bracketIndex != -1) && (bracketIndex < endIndex)) {
 						endIndex = bracketIndex;

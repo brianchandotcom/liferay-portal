@@ -15,9 +15,11 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.deploy.hot.ServiceBag;
+import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
@@ -1537,10 +1539,14 @@ public class PortletPreferencesLocalServiceTest {
 			long companyId, long ownerId, int ownerType, long plid,
 			String portletId) {
 
+			ClassLoaderBeanHandler classLoaderBeanHandler =
+				(ClassLoaderBeanHandler)ProxyUtil.getInvocationHandler(
+					getWrappedService());
+
 			try {
 				return (javax.portlet.PortletPreferences)
 					ReflectionTestUtil.invoke(
-						getWrappedService(), "getPreferences",
+						classLoaderBeanHandler.getBean(), "getPreferences",
 						new Class[] {
 							long.class, long.class, int.class, long.class,
 							String.class, String.class, boolean.class},

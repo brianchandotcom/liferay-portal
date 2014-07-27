@@ -1,0 +1,522 @@
+{
+	"_default_": {
+		"properties": {
+			"assetCategoryIds": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"assetTagIds": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"createDate": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"companyId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"entryClassPK": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"entryClassName": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"expirationDate": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"groupId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"modified": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"portletId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"publishDate": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"removedDate": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"removedByUser": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"rootEntryClassName": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"rootEntryClassPK": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"scopeGroupId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"status": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"type": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"userId": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"userName": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
+			"visible": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			}
+		},
+		"dynamic_templates": [
+			{
+				"template__sortable": {
+					"match": "*_sortable",
+					"match_mapping_type": "string",
+					"mapping": {
+						"index": "not_analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_assetCategoryTitles": {
+					"match": "assetCategoryTitles*",
+					"match_mapping_type": "string",
+					"mapping": {
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_expando": {
+					"match": "expando_*",
+					"match_mapping_type": "string",
+					"mapping": {
+						"index": "not_analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_ar": {
+					"match": "*_ar_[A-Z]{2}*",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "arabic",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_bg": {
+					"match": "*_bg_BG",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "bulgarian",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_ca": {
+					"match": "\\w+_ca_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex",
+					"mapping": {
+						"analyzer": "catalan",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_cs": {
+					"match": "*_cs_CZ",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "czech",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_da": {
+					"match": "*_da_DK",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "danish",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_de": {
+					"match": "*_de_DE",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "german",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_el": {
+					"match": "*_el_GR",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "greek",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_en": {
+					"match": "\\w+_en_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex",
+					"mapping": {
+						"analyzer": "english",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_es": {
+					"match": "\\w+_es_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex",
+					"mapping": {
+						"analyzer": "spanish",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_eu": {
+					"match": "*_eu_ES",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "basque",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_fa": {
+					"match": "*_fa_IR",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "persian",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_fi": {
+					"match": "*_fi_FI",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "finnish",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_fr": {
+					"match": "\\w+_fr_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex",
+					"mapping": {
+						"analyzer": "french",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_hi": {
+					"match": "*_hi_IN",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "hindi",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_hu": {
+					"match": "*_hu_HU",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "hungarian",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_hy": {
+					"match": "*_hy_AR",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "armenian",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_id": {
+					"match": "*_id_ID",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "indonesian",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_it": {
+					"match": "*_it_IT",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "italian",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_ja": {
+					"match": "*_ja_JP",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "cjk",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_ko": {
+					"match": "*_ko_KR",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "cjk",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_nl": {
+					"match": "*_nl_NL",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "dutch",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_no": {
+					"match": "*_nb_NO",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "norwegian",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_pt": {
+					"match": "*_pt_BR",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "brazilian",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_pt": {
+					"match": "*_pt_PT",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "portuguese",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_ro": {
+					"match": "*_ro_RO",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "romanian",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_ru": {
+					"match": "*_ru_RU",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "russian",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_sv": {
+					"match": "*_sv_SE",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "swedish",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_th": {
+					"match": "*_th_TH",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "thai",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_tr": {
+					"match": "*_tr_TR",
+					"match_mapping_type": "string",
+					"mapping": {
+						"analyzer": "turkish",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_zh": {
+					"match": "\\w+_zh_[A-Z]{2}\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex",
+					"mapping": {
+						"analyzer": "chinese",
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_": {
+					"match": "*",
+					"match_mapping_type": "string",
+					"mapping": {
+						"index": "analyzed",
+						"store": "yes",
+						"type": "string"
+					}
+				}
+			}
+		]
+	}
+}

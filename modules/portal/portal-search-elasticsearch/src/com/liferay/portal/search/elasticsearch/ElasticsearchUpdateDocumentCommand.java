@@ -25,7 +25,7 @@ import java.util.Collection;
  */
 public interface ElasticsearchUpdateDocumentCommand {
 
-	public void updateDocument(
+	public String updateDocument(
 			String documentType, SearchContext searchContext, Document document)
 		throws SearchException;
 

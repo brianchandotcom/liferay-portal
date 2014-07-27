@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseSearchEngine;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.util.LogUtil;
@@ -26,6 +27,10 @@ import java.util.concurrent.Future;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus;
+import org.elasticsearch.action.admin.cluster.repositories.get.GetRepositoriesRequestBuilder;
+import org.elasticsearch.action.admin.cluster.repositories.get.GetRepositoriesResponse;
+import org.elasticsearch.action.admin.cluster.repositories.put.PutRepositoryRequestBuilder;
+import org.elasticsearch.action.admin.cluster.repositories.put.PutRepositoryResponse;
 import org.elasticsearch.action.admin.cluster.snapshots.create.CreateSnapshotRequestBuilder;
 import org.elasticsearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
 import org.elasticsearch.action.admin.cluster.snapshots.delete.DeleteSnapshotRequestBuilder;
@@ -33,6 +38,9 @@ import org.elasticsearch.action.admin.cluster.snapshots.delete.DeleteSnapshotRes
 import org.elasticsearch.action.admin.cluster.snapshots.restore.RestoreSnapshotRequestBuilder;
 import org.elasticsearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
 import org.elasticsearch.client.ClusterAdminClient;
+import org.elasticsearch.cluster.metadata.RepositoryMetaData;
+import org.elasticsearch.common.collect.ImmutableList;
+import org.elasticsearch.common.settings.ImmutableSettings;
 
 /**
  * @author Michael C. Han
@@ -53,6 +61,8 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		createSnapshotRequestBuilder.setWaitForCompletion(true);
 
 		try {
+			createBackupRepository(clusterAdminClient);
+
 			Future<CreateSnapshotResponse> future =
 				createSnapshotRequestBuilder.execute();
 
@@ -169,6 +179,44 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 	public void setIndexFactory(IndexFactory indexFactory) {
 		_indexFactory = indexFactory;
+	}
+
+	protected void createBackupRepository(ClusterAdminClient clusterAdminClient)
+		throws Exception {
+
+		GetRepositoriesRequestBuilder getRepositoriesRequestBuilder =
+			clusterAdminClient.prepareGetRepositories(_BACKUP_REPOSITORY_NAME);
+
+		Future<GetRepositoriesResponse> future =
+			getRepositoriesRequestBuilder.execute();
+
+		GetRepositoriesResponse getRepositoriesResponse = future.get();
+
+		ImmutableList<RepositoryMetaData> repositoriesMetaData =
+			getRepositoriesResponse.repositories();
+
+		if (repositoriesMetaData.size() > 0) {
+			return;
+		}
+
+		ImmutableSettings.Builder builder = ImmutableSettings.settingsBuilder();
+
+		String location = SystemProperties.get("java.io.tmpdir") + "/es_backup";
+
+		builder.put("location", location);
+
+		PutRepositoryRequestBuilder putRepositoryRequestBuilder =
+			clusterAdminClient.preparePutRepository(_BACKUP_REPOSITORY_NAME);
+
+		putRepositoryRequestBuilder.setType("fs");
+		putRepositoryRequestBuilder.setSettings(builder);
+
+		Future<PutRepositoryResponse> execute =
+			putRepositoryRequestBuilder.execute();
+
+		PutRepositoryResponse putRepositoryResponse = execute.get();
+
+		LogUtil.logActionResponse(_log, putRepositoryResponse);
 	}
 
 	private static final String _BACKUP_REPOSITORY_NAME = "liferay_backup";

@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -181,6 +184,10 @@ public class Field implements Serializable {
 
 	public static final String VIEW_COUNT = "viewCount";
 
+	public Field(String name) {
+		_name = name;
+	}
+
 	public Field(String name, Map<Locale, String> localizedValues) {
 		_name = name;
 		_localizedValues = localizedValues;
@@ -226,8 +233,16 @@ public class Field implements Serializable {
 		setTokenized(tokenized);
 	}
 
+	public void addField(Field nested) {
+		_nestedFields.add(nested);
+	}
+
 	public float getBoost() {
 		return _boost;
+	}
+
+	public List<Field> getFields() {
+		return _nestedFields;
 	}
 
 	public Map<Locale, String> getLocalizedValues() {
@@ -240,6 +255,10 @@ public class Field implements Serializable {
 
 	public Class<? extends Number> getNumericClass() {
 		return _numericClass;
+	}
+
+	public Field getParent() {
+		return _parent;
 	}
 
 	public String getValue() {
@@ -255,6 +274,14 @@ public class Field implements Serializable {
 		return _values;
 	}
 
+	public boolean hasChildren() {
+		return !getFields().isEmpty();
+	}
+
+	public boolean isArray() {
+		return false;
+	}
+
 	public boolean isLocalized() {
 		if (_localizedValues != null) {
 			return true;
@@ -262,6 +289,10 @@ public class Field implements Serializable {
 		else {
 			return false;
 		}
+	}
+
+	public boolean isNested() {
+		return getParent() != null;
 	}
 
 	public boolean isNumeric() {
@@ -276,6 +307,10 @@ public class Field implements Serializable {
 		_boost = boost;
 	}
 
+	public void setLocalizedValues(Map<Locale, String> localizedValues) {
+		_localizedValues = localizedValues;
+	}
+
 	public void setName(String name) {
 		_name = name;
 	}
@@ -286,6 +321,10 @@ public class Field implements Serializable {
 
 	public void setNumericClass(Class<? extends Number> numericClass) {
 		_numericClass = numericClass;
+	}
+
+	public void setParent(Field _parent) {
+		this._parent = _parent;
 	}
 
 	public void setTokenized(boolean tokenized) {
@@ -300,11 +339,83 @@ public class Field implements Serializable {
 		_values = values;
 	}
 
+	public static class NestedFieldBuilder {
+
+		public NestedFieldBuilder addNestedField(
+			String name, String... values) {
+
+			Field field = new Field(name);
+
+			field.addField(new Field("value", values));
+
+			_doAddField(field);
+
+			return this;
+		}
+
+		public NestedFieldBuilder endArray() {
+			return endField();
+		}
+
+		public NestedFieldBuilder endField() {
+			if (_fields.size() > 1) {
+				_fields.removeLast();
+			}
+
+			return this;
+		}
+
+		public Field getField() {
+			if (!_fields.isEmpty()) {
+				return _fields.getLast();
+			}
+
+			return null;
+		}
+
+		public NestedFieldBuilder startArray(String name) {
+			FieldArray field = new FieldArray(name);
+
+			return _doStartField(field);
+		}
+
+		public NestedFieldBuilder startField() {
+			return startField(null);
+		}
+
+		public NestedFieldBuilder startField(String name) {
+			Field field = new Field(name);
+
+			return _doStartField(field);
+		}
+
+		private void _doAddField(Field newField) {
+			Field current = _fields.getLast();
+
+			current.addField(newField);
+		}
+
+		private NestedFieldBuilder _doStartField(Field field) {
+			if (!_fields.isEmpty()) {
+				_doAddField(field);
+			}
+
+			_fields.add(field);
+
+			return this;
+		}
+
+		private LinkedList<Field> _fields = new LinkedList<Field>();
+
+	}
+
 	private float _boost = 1;
 	private Map<Locale, String> _localizedValues;
 	private String _name;
+	private List<Field> _nestedFields = new ArrayList<Field>();
 	private boolean _numeric;
 	private Class<? extends Number> _numericClass;
+	private Field _parent;
 	private boolean _tokenized;
 	private String[] _values;
 

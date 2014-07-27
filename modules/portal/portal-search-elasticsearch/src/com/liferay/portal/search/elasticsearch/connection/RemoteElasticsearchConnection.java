@@ -46,6 +46,8 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 				"There must be at least one transport address");
 		}
 
+		builder.classLoader(getClass().getClassLoader());
+
 		builder.loadFromClasspath(getConfigFileName());
 
 		TransportClient transportClient = new TransportClient(builder);

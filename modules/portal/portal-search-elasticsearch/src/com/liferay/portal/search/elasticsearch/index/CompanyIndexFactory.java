@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch.index;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.util.LogUtil;
 
 import java.util.HashMap;
@@ -31,6 +32,7 @@ import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsReques
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.IndicesAdminClient;
+import org.elasticsearch.common.settings.ImmutableSettings;
 
 /**
  * @author Michael C. Han
@@ -49,6 +51,17 @@ public class CompanyIndexFactory implements IndexFactory {
 
 		CreateIndexRequestBuilder createIndexRequestBuilder =
 			indicesAdminClient.prepareCreate(String.valueOf(companyId));
+
+		if (Validator.isNotNull(_indexConfigFile)) {
+			ImmutableSettings.Builder builder =
+				ImmutableSettings.settingsBuilder();
+
+			builder.classLoader(getClass().getClassLoader());
+
+			builder.loadFromClasspath(_indexConfigFile);
+
+			createIndexRequestBuilder.setSettings(builder);
+		}
 
 		for (Map.Entry<String, String> entry : _typeMappings.entrySet()) {
 			Class<?> clazz = getClass();
@@ -88,6 +101,10 @@ public class CompanyIndexFactory implements IndexFactory {
 		LogUtil.logActionResponse(_log, deleteIndexResponse);
 	}
 
+	public void setIndexConfigFile(String indexConfigFile) {
+		_indexConfigFile = indexConfigFile;
+	}
+
 	public void setTypeMappings(Map<String, String> typeMappings) {
 		_typeMappings = typeMappings;
 	}
@@ -109,6 +126,7 @@ public class CompanyIndexFactory implements IndexFactory {
 
 	private static Log _log = LogFactoryUtil.getLog(CompanyIndexFactory.class);
 
+	private String _indexConfigFile;
 	private Map<String, String> _typeMappings = new HashMap<String, String>();
 
 }

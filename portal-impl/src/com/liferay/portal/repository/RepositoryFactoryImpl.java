@@ -47,8 +47,8 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 
 		return new CapabilityRepository(
 			repositoryCreator.createRepository(repositoryId),
-			getExternalSupportedCapabilities(),
-			getExternalExportedCapabilityClasses());
+			repositoryConfiguration.getSupportedCapabilities(),
+			repositoryConfiguration.getPublicCapabilities());
 	}
 
 	@Override
@@ -76,8 +76,8 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 			repositoryId);
 
 		return new CapabilityRepository(
-			repository, getInternalSupportedCapabilities(),
-			getInternalExportedCapabilityClasses());
+			repository, repositoryConfiguration.getSupportedCapabilities(),
+			repositoryConfiguration.getPublicCapabilities());
 	}
 
 	@Override

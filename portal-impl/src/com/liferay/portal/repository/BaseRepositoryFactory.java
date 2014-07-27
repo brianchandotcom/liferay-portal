@@ -17,11 +17,8 @@ package com.liferay.portal.repository;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
-import com.liferay.portal.kernel.repository.capabilities.Capability;
-import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
-import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.registry.RepositoryCatalog;
 import com.liferay.portal.repository.registry.RepositoryConfiguration;
@@ -38,11 +35,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Adolfo Pérez
@@ -128,30 +120,6 @@ public abstract class BaseRepositoryFactory<T> {
 		return _defaultClassNameId;
 	}
 
-	protected Map<Class<? extends Capability>, Capability>
-		getExternalSupportedCapabilities() {
-
-		return _externalSupportedCapabilities;
-	}
-
-	protected Set<Class<? extends Capability>>
-		getExternalExportedCapabilityClasses() {
-
-		return _externalExportedCapabilityClasses;
-	}
-
-	protected Set<Class<? extends Capability>>
-		getInternalExportedCapabilityClasses() {
-
-		return _internalExportedCapabilityClasses;
-	}
-
-	protected Map<Class<? extends Capability>, Capability>
-		getInternalSupportedCapabilities() {
-
-		return _internalSupportedCapabilities;
-	}
-
 	protected DLFileEntryLocalService getDlFileEntryLocalService() {
 		return _dlFileEntryLocalService;
 	}
@@ -220,23 +188,6 @@ public abstract class BaseRepositoryFactory<T> {
 
 	protected RepositoryLocalService getRepositoryLocalService() {
 		return _repositoryLocalService;
-	}
-
-	private static Set<Class<? extends Capability>>
-		_externalExportedCapabilityClasses = Collections.emptySet();
-	private static Map<Class<? extends Capability>, Capability>
-		_externalSupportedCapabilities = Collections.emptyMap();
-	private static Set<Class<? extends Capability>>
-		_internalExportedCapabilityClasses =
-			Collections.<Class<? extends Capability>>singleton(
-				TrashCapability.class);
-	private static Map<Class<? extends Capability>, Capability>
-		_internalSupportedCapabilities =
-			new HashMap<Class<? extends Capability>, Capability>();
-
-	static {
-		_internalSupportedCapabilities.put(
-			TrashCapability.class, new LiferayTrashCapability());
 	}
 
 	@BeanReference(type = ClassNameLocalService.class)

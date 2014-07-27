@@ -12,25 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.registry;
+package com.liferay.portal.kernel.repository.event;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.RepositoryModel;
 
 /**
  * @author Adolfo Pérez
  */
-public abstract class BaseRepositoryRegistryPlugin
-	implements RepositoryRegistryPlugin {
+public interface RepositoryEventHandler {
 
-	@Override
-	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
-	}
-
-	@Override
-	public abstract void registerRepositoryCreator(
-		RepositoryCreatorRegistry repositoryCreatorRegistry);
-
-	@Override
-	public void registerRepositoryEventListeners(
-		RepositoryEventRegistry repositoryEventRegistry) {
-	}
+	public <S extends RepositoryEventType, T extends RepositoryModel<T>>
+		void trigger(Class<S> eventTypeClass, Class<T> modelClass, T payload)
+		throws PortalException;
 
 }

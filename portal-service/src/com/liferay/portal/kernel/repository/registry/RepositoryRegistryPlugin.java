@@ -26,4 +26,7 @@ public interface RepositoryRegistryPlugin {
 	public void registerRepositoryCreator(
 		RepositoryCreatorRegistry repositoryCreatorRegistry);
 
+	public void registerRepositoryEventListeners(
+		RepositoryEventRegistry repositoryEventRegistry);
+
 }

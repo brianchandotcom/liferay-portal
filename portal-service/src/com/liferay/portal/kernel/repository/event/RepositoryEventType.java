@@ -12,25 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.registry;
+package com.liferay.portal.kernel.repository.event;
 
 /**
  * @author Adolfo Pérez
  */
-public abstract class BaseRepositoryRegistryPlugin
-	implements RepositoryRegistryPlugin {
+public interface RepositoryEventType {
 
-	@Override
-	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
-	}
-
-	@Override
-	public abstract void registerRepositoryCreator(
-		RepositoryCreatorRegistry repositoryCreatorRegistry);
-
-	@Override
-	public void registerRepositoryEventListeners(
-		RepositoryEventRegistry repositoryEventRegistry) {
-	}
+	public interface Delete extends RepositoryEventType {}
 
 }

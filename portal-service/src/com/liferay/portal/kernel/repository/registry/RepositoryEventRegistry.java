@@ -14,23 +14,18 @@
 
 package com.liferay.portal.kernel.repository.registry;
 
+import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
+import com.liferay.portal.kernel.repository.model.RepositoryModel;
+
 /**
  * @author Adolfo Pérez
  */
-public abstract class BaseRepositoryRegistryPlugin
-	implements RepositoryRegistryPlugin {
+public interface RepositoryEventRegistry {
 
-	@Override
-	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
-	}
-
-	@Override
-	public abstract void registerRepositoryCreator(
-		RepositoryCreatorRegistry repositoryCreatorRegistry);
-
-	@Override
-	public void registerRepositoryEventListeners(
-		RepositoryEventRegistry repositoryEventRegistry) {
-	}
+	public <S extends RepositoryEventType, T extends RepositoryModel<T>>
+		void registerRepositoryEventListener(
+			Class<S> eventTypeClass, Class<T> modelClass,
+			RepositoryEventListener<S, T> action);
 
 }

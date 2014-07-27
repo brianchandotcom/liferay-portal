@@ -15,7 +15,6 @@
 package com.liferay.portal.repository.external;
 
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryRegistryPlugin;
-import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreatorRegistry;
 
@@ -35,10 +34,6 @@ public class ExternalRepositoryRegistryPlugin
 	@Override
 	public long getClassNameId() {
 		return _classNameId;
-	}
-
-	@Override
-	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
 	}
 
 	@Override

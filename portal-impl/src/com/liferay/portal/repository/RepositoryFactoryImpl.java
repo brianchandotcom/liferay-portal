@@ -57,9 +57,10 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 			repositoryId);
 
 		Map<Class<? extends Capability>, Capability>
-			externalSupportedCapabilities = getExternalSupportedCapabilities();
+			externalSupportedCapabilities =
+				repositoryConfiguration.getSupportedCapabilities();
 		Set<Class<? extends Capability>> externalExportedCapabilityClasses =
-			getExternalExportedCapabilityClasses();
+			repositoryConfiguration.getExportedCapabilities();
 
 		CMISRepositoryHandler cmisRepositoryHandler = getCMISRepositoryHandler(
 			repository);
@@ -101,8 +102,8 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 			repositoryId);
 
 		return new CapabilityRepository(
-			repository, getInternalSupportedCapabilities(),
-			getInternalExportedCapabilityClasses());
+			repository, repositoryConfiguration.getSupportedCapabilities(),
+			repositoryConfiguration.getExportedCapabilities());
 	}
 
 	protected CMISRepositoryHandler getCMISRepositoryHandler(

@@ -14,10 +14,12 @@
 
 package com.liferay.portal.repository.liferayrepository;
 
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryRegistryPlugin;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreatorRegistry;
+import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 
 /**
  * @author Adolfo Pérez
@@ -32,6 +34,8 @@ public class LiferayRepositoryRegistryPlugin
 
 	@Override
 	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
+		capabilityRegistry.addExportedCapability(
+			TrashCapability.class, new LiferayTrashCapability());
 	}
 
 	@Override

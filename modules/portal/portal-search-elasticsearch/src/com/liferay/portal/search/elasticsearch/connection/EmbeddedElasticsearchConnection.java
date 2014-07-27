@@ -43,6 +43,8 @@ public class EmbeddedElasticsearchConnection
 	protected Client createClient(ImmutableSettings.Builder builder) {
 		NodeBuilder nodeBuilder = NodeBuilder.nodeBuilder();
 
+		builder.classLoader(getClass().getClassLoader());
+
 		builder.loadFromClasspath(getConfigFileName());
 
 		nodeBuilder.settings(builder);

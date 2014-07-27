@@ -149,15 +149,10 @@ public class SocialRequestInterpreterLocalServiceImpl
 			SocialRequestInterpreterImpl requestInterpreter =
 				(SocialRequestInterpreterImpl)_requestInterpreters.get(i);
 
-			if (Validator.isNotNull(requestPortletId)) {
-				String portletId = requestInterpreter.getPortletId();
+			if ((Validator.isNull(requestPortletId) ||
+				 requestPortletId.equals(requestInterpreter.getPortletId())) &&
+				requestInterpreter.hasClassName(className)) {
 
-				if (!requestPortletId.equals(portletId)) {
-					continue;
-				}
-			}
-
-			if (requestInterpreter.hasClassName(className)) {
 				SocialRequestFeedEntry requestFeedEntry =
 					requestInterpreter.interpret(request, themeDisplay);
 
@@ -198,15 +193,10 @@ public class SocialRequestInterpreterLocalServiceImpl
 			SocialRequestInterpreterImpl requestInterpreter =
 				(SocialRequestInterpreterImpl)_requestInterpreters.get(i);
 
-			if (Validator.isNotNull(requestPortletId)) {
-				String portletId = requestInterpreter.getPortletId();
+			if ((Validator.isNull(requestPortletId) ||
+				 requestPortletId.equals(requestInterpreter.getPortletId())) &&
+				requestInterpreter.hasClassName(className)) {
 
-				if (!requestPortletId.equals(portletId)) {
-					continue;
-				}
-			}
-
-			if (requestInterpreter.hasClassName(className)) {
 				boolean value = requestInterpreter.processConfirmation(
 					request, themeDisplay);
 
@@ -243,15 +233,10 @@ public class SocialRequestInterpreterLocalServiceImpl
 			SocialRequestInterpreterImpl requestInterpreter =
 				(SocialRequestInterpreterImpl)_requestInterpreters.get(i);
 
-			if (Validator.isNotNull(requestPortletId)) {
-				String portletId = requestInterpreter.getPortletId();
+			if ((Validator.isNull(requestPortletId) ||
+				 requestPortletId.equals(requestInterpreter.getPortletId())) &&
+				requestInterpreter.hasClassName(className)) {
 
-				if (!requestPortletId.equals(portletId)) {
-					continue;
-				}
-			}
-
-			if (requestInterpreter.hasClassName(className)) {
 				boolean value = requestInterpreter.processRejection(
 					request, themeDisplay);
 

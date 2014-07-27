@@ -175,11 +175,25 @@ public class MethodParameter {
 				String extractedTopLevelGenericName = null;
 
 				if (c == 'L') {
+					int bracketIndex =
+						generics.indexOf(StringPool.LESS_THAN, index);
 					int endIndex =
 						generics.indexOf(StringPool.SEMICOLON, index) + 1;
 
-					extractedTopLevelGenericName = _getGenericName(
-						generics.substring(index - 1, endIndex));
+					if ((bracketIndex != -1) && (bracketIndex < endIndex)) {
+						endIndex = bracketIndex;
+
+						extractedTopLevelGenericName = _getGenericName(
+							generics.substring(index - 1, endIndex));
+
+						extractedTopLevelGenericName =
+							extractedTopLevelGenericName.concat(
+								StringPool.SEMICOLON);
+					}
+					else {
+						extractedTopLevelGenericName = _getGenericName(
+							generics.substring(index - 1, endIndex));
+					}
 
 					index = endIndex;
 				}

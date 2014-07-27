@@ -31,4 +31,9 @@ public abstract class BaseRepositoryRegistryPlugin
 	public abstract void registerRepositoryCreator(
 		RepositoryCreatorRegistry repositoryCreatorRegistry);
 
+	@Override
+	public void registerRepositoryEventListeners(
+		RepositoryEventRegistry repositoryEventRegistry) {
+	}
+
 }

@@ -1,5 +1,9 @@
 <definition>
 	<command name="assertTextEquals">
+		<case locator-key1="ERROR_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
 		<case locator-key1="DOCUMENT_INFO_TAGS">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>

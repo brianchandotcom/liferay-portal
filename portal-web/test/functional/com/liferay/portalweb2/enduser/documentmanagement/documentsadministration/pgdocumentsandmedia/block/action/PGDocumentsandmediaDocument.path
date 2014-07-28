@@ -19,8 +19,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGDocumentsandmedia</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>BACK_BUTTON</td>
-	<td>//a[@id='_20_TabsBack']/span[contains(.,'Back')]</td>
+	<td>//a[contains(@id,'TabsBack')]/span[contains(.,'Back')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE</td>
+	<td>xpath=(//div[contains(@class,'alert-danger')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -29,28 +44,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert-success')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CHECKOUT_SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'lfr-asset-column-details')]/div[contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>BACK_BUTTON</td>
-	<td>//a[@id='_20_TabsBack']/span[contains(.,'Back')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DOCUMENT_HEADER_TITLE</td>
 	<td>//h3[@class='header-title']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFIRMATION</td>
-	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -61,42 +61,42 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_DOWNLOAD_BUTTON</td>
-	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Download')]</td>
+	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Download')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_EDIT_BUTTON</td>
-	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Edit')]</td>
+	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_MOVE_BUTTON</td>
-	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Move')]</td>
+	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Move')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_CHECKOUT_BUTTON</td>
-	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Checkout')]</td>
+	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Checkout')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_CANCEL_CHECKOUT_BUTTON</td>
-	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Cancel Checkout')]</td>
+	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Cancel Checkout')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_PERMISSIONS_BUTTON</td>
-	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Permissions')]</td>
+	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_CHECKIN_BUTTON</td>
-	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Checkin')]</td>
+	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Checkin')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_MOVE_TO_RECYCLE_BIN_BUTTON</td>
-	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Move to the Recycle Bin')]</td>
+	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>

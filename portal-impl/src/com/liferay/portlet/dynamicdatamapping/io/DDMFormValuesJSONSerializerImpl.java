@@ -108,6 +108,7 @@ public class DDMFormValuesJSONSerializerImpl
 	protected JSONObject toJSONObject(DDMFormFieldValue ddmFormFieldValue) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		jsonObject.put("instanceId", ddmFormFieldValue.getInstanceId());
 		jsonObject.put("name", ddmFormFieldValue.getName());
 
 		addNestedFieldValues(

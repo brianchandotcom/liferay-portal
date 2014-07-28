@@ -79,6 +79,7 @@ public class DDMFormValuesJSONDeserializerImpl
 	protected DDMFormFieldValue getDDMFormFieldValue(JSONObject jsonObject) {
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
+		ddmFormFieldValue.setInstanceId(jsonObject.getString("instanceId"));
 		ddmFormFieldValue.setName(jsonObject.getString("name"));
 
 		setDDMFormFieldValueValue(jsonObject, ddmFormFieldValue);

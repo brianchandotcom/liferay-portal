@@ -3,6 +3,7 @@
 	"availableLanguageIds": ["en_US", "pt_BR"],
 	"fieldValues": [
 		{
+			"instanceId": "maky",
 			"name": "Boolean2282",
 			"value": {
 				"en_US": "false",
@@ -10,6 +11,7 @@
 			}
 		},
 		{
+			"instanceId": "autx",
 			"name": "Documents_and_Media4036",
 			"value": {
 				"en_US": "{\"groupId\":10192,\"uuid\":\"c8acdf70-e101-46a6-83e5-c5f5e087b0dc\",\"version\":1.0}",
@@ -17,6 +19,7 @@
 			}
 		},
 		{
+			"instanceId": "powq",
 			"name": "Geolocation4273",
 			"value": {
 				"en_US": "{\"latitude\":34.0286226,\"longitude\":-117.8103367}",
@@ -24,6 +27,7 @@
 			}
 		},
 		{
+			"instanceId": "lamn",
 			"name": "HTML4512",
 			"value": {
 				"en_US": "<p>This is a test.<\/p>",
@@ -31,6 +35,7 @@
 			}
 		},
 		{
+			"instanceId": "labt",
 			"name": "Image4751",
 			"value": {
 				"en_US": "{\"alt\":\"This is a image description.\",\"data\":\"base64Value\"}",
@@ -38,6 +43,7 @@
 			}
 		},
 		{
+			"instanceId": "nast",
 			"name": "Link_to_Page5224",
 			"value": {
 				"en_US": "{\"groupId\":10192,\"layoutId\":1,\"privateLayout\":false}",
@@ -45,6 +51,7 @@
 			}
 		}, 
 		{
+			"instanceId": "yhar",
 			"name": "Select5979",
 			"value": {
 				"en_US": "[\"Value 1\",\"Value 3\"]",

@@ -73,6 +73,7 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	protected DDMFormFieldValue createBooleanDDMFormFieldValue() {
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
+		ddmFormFieldValue.setInstanceId("njar");
 		ddmFormFieldValue.setName("Boolean2282");
 		ddmFormFieldValue.setNestedDDMFormFields(
 			createBooleanNestedDDMFormFieldValues());
@@ -85,8 +86,8 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			new ArrayList<DDMFormFieldValue>();
 
-		ddmFormFieldValues.add(createHTMLDDMFormFieldValue(0));
-		ddmFormFieldValues.add(createHTMLDDMFormFieldValue(1));
+		ddmFormFieldValues.add(createHTMLDDMFormFieldValue(0, "nabr"));
+		ddmFormFieldValues.add(createHTMLDDMFormFieldValue(1, "uwyg"));
 
 		return ddmFormFieldValues;
 	}
@@ -122,9 +123,12 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 		return ddmFormValues;
 	}
 
-	protected DDMFormFieldValue createHTMLDDMFormFieldValue(int index) {
+	protected DDMFormFieldValue createHTMLDDMFormFieldValue(
+		int index, String instanceId) {
+
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
+		ddmFormFieldValue.setInstanceId(instanceId);
 		ddmFormFieldValue.setName("HTML4512");
 		ddmFormFieldValue.setValue(createHTMLValue(index));
 
@@ -141,9 +145,12 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 		return value;
 	}
 
-	protected DDMFormFieldValue createImageDDMFormFieldValue(int index) {
+	protected DDMFormFieldValue createImageDDMFormFieldValue(
+		int index, String instanceId) {
+
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
+		ddmFormFieldValue.setInstanceId(instanceId);
 		ddmFormFieldValue.setName("Image4751");
 		ddmFormFieldValue.setValue(createImageValue(index));
 
@@ -154,9 +161,9 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 		List<DDMFormFieldValue> imageDDMFormFieldValues =
 			new ArrayList<DDMFormFieldValue>();
 
-		for (int i = 0; i < 3; i++) {
-			imageDDMFormFieldValues.add(createImageDDMFormFieldValue(i));
-		}
+		imageDDMFormFieldValues.add(createImageDDMFormFieldValue(0, "uaht"));
+		imageDDMFormFieldValues.add(createImageDDMFormFieldValue(1, "pppj"));
+		imageDDMFormFieldValues.add(createImageDDMFormFieldValue(2, "nmab"));
 
 		return imageDDMFormFieldValues;
 	}
@@ -170,12 +177,15 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 		return new UnlocalizedValue(jsonObject.toString());
 	}
 
-	protected DDMFormFieldValue createSeparatorDDMFormFieldValue(int index) {
+	protected DDMFormFieldValue createSeparatorDDMFormFieldValue(
+		int index, String instanceId) {
+
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
+		ddmFormFieldValue.setInstanceId(instanceId);
 		ddmFormFieldValue.setName("Separator7211");
 		ddmFormFieldValue.setNestedDDMFormFields(
-			createSeparatorNestedDDMFormFieldValues(index));
+			createSeparatorNestedDDMFormFieldValues(index, "xyz" + index));
 
 		return ddmFormFieldValue;
 	}
@@ -184,28 +194,33 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 		List<DDMFormFieldValue> separatorDDMFormFieldValues =
 			new ArrayList<DDMFormFieldValue>();
 
-		for (int i = 0; i < 2; i++) {
-			separatorDDMFormFieldValues.add(
-				createSeparatorDDMFormFieldValue(i));
-		}
+		separatorDDMFormFieldValues.add(
+			createSeparatorDDMFormFieldValue(0, "uayx"));
+
+		separatorDDMFormFieldValues.add(
+			createSeparatorDDMFormFieldValue(1, "lahy"));
 
 		return separatorDDMFormFieldValues;
 	}
 
 	protected List<DDMFormFieldValue> createSeparatorNestedDDMFormFieldValues(
-		int index) {
+		int index, String instanceId) {
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			new ArrayList<DDMFormFieldValue>();
 
-		ddmFormFieldValues.add(createTextBoxDDMFormFieldValue(index));
+		ddmFormFieldValues.add(
+			createTextBoxDDMFormFieldValue(index, instanceId));
 
 		return ddmFormFieldValues;
 	}
 
-	protected DDMFormFieldValue createTextBoxDDMFormFieldValue(int index) {
+	protected DDMFormFieldValue createTextBoxDDMFormFieldValue(
+		int index, String instanceId) {
+
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
+		ddmFormFieldValue.setInstanceId(instanceId);
 		ddmFormFieldValue.setName("Text_Box6748");
 		ddmFormFieldValue.setValue(createTextBoxValue(index));
 
@@ -224,6 +239,7 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	protected DDMFormFieldValue createTextDDMFormFieldValue() {
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
+		ddmFormFieldValue.setInstanceId("baht");
 		ddmFormFieldValue.setName("Text6513");
 		ddmFormFieldValue.setValue(createTextValue());
 

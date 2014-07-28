@@ -3,6 +3,7 @@
 	"availableLanguageIds": ["en_US", "pt_BR"],
 	"fieldValues": [
 		{
+			"instanceId": "baht",
 			"name": "Separator7211",
 			"nestedFieldValues": [
 				{
@@ -15,6 +16,7 @@
 			]
 		},
 		{
+			"instanceId": "ywhr",
 			"name": "Separator7211",
 			"nestedFieldValues": [
 				{
@@ -27,6 +29,7 @@
 			]
 		},
 		{
+			"instanceId": "mahr",
 			"name": "Separator7211",
 			"nestedFieldValues": [
 				{

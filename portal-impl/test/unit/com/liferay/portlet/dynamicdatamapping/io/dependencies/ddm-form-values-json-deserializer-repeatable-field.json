@@ -3,6 +3,7 @@
 	"availableLanguageIds": ["en_US", "pt_BR"],
 	"fieldValues": [
 		{
+			"instanceId": "jhtr",
 			"name": "Text6513",
 			"value": {
 				"en_US": "Name 0",
@@ -10,6 +11,7 @@
 			}
 		},
 		{
+			"instanceId": "plwu",
 			"name": "Text6513",
 			"value": {
 				"en_US": "Name 1",
@@ -17,6 +19,7 @@
 			}
 		},
 		{
+			"instanceId": "pkqa",
 			"name": "Text6513",
 			"value": {
 				"en_US": "Name 2",

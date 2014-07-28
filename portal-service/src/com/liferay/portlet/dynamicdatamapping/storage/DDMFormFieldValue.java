@@ -31,6 +31,10 @@ public class DDMFormFieldValue {
 		return _ddmFormValues;
 	}
 
+	public String getInstanceId() {
+		return _instanceId;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -67,6 +71,10 @@ public class DDMFormFieldValue {
 		_ddmFormValues = ddmFormValues;
 	}
 
+	public void setInstanceId(String instanceId) {
+		_instanceId = instanceId;
+	}
+
 	public void setName(String name) {
 		_name = name;
 	}
@@ -82,6 +90,7 @@ public class DDMFormFieldValue {
 	}
 
 	private DDMFormValues _ddmFormValues;
+	private String _instanceId;
 	private String _name;
 	private List<DDMFormFieldValue> _nestedDDMFormFieldValues =
 		new ArrayList<DDMFormFieldValue>();

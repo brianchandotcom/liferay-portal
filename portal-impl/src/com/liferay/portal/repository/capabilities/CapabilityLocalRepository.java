@@ -58,9 +58,16 @@ public class CapabilityLocalRepository
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return getRepository().addFileEntry(
+		LocalRepository repository = getRepository();
+
+		FileEntry fileEntry = repository.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, file, serviceContext);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Add.class, FileEntry.class, fileEntry);
+
+		return fileEntry;
 	}
 
 	@Override
@@ -70,9 +77,16 @@ public class CapabilityLocalRepository
 			long size, ServiceContext serviceContext)
 		throws PortalException {
 
-		return getRepository().addFileEntry(
+		LocalRepository repository = getRepository();
+
+		FileEntry fileEntry = repository.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, is, size, serviceContext);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Add.class, FileEntry.class, fileEntry);
+
+		return fileEntry;
 	}
 
 	@Override
@@ -81,8 +95,15 @@ public class CapabilityLocalRepository
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return getRepository().addFolder(
+		LocalRepository repository = getRepository();
+
+		Folder folder = repository.addFolder(
 			userId, parentFolderId, title, description, serviceContext);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Add.class, Folder.class, folder);
+
+		return folder;
 	}
 
 	@Override
@@ -177,8 +198,15 @@ public class CapabilityLocalRepository
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return getRepository().moveFileEntry(
+		LocalRepository localRepository = getRepository();
+
+		FileEntry fileEntry = localRepository.moveFileEntry(
 			userId, fileEntryId, newFolderId, serviceContext);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Move.class, FileEntry.class, fileEntry);
+
+		return fileEntry;
 	}
 
 	@Override
@@ -187,8 +215,15 @@ public class CapabilityLocalRepository
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return getRepository().moveFolder(
+		LocalRepository localRepository = getRepository();
+
+		Folder folder = localRepository.moveFolder(
 			userId, folderId, parentFolderId, serviceContext);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Move.class, Folder.class, folder);
+
+		return folder;
 	}
 
 	@Override
@@ -210,9 +245,16 @@ public class CapabilityLocalRepository
 			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException {
 
-		return getRepository().updateFileEntry(
+		LocalRepository localRepository = getRepository();
+
+		FileEntry fileEntry = localRepository.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
+
+		return fileEntry;
 	}
 
 	@Override
@@ -223,9 +265,16 @@ public class CapabilityLocalRepository
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return getRepository().updateFileEntry(
+		LocalRepository localRepository = getRepository();
+
+		FileEntry fileEntry = localRepository.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
+
+		return fileEntry;
 	}
 
 	@Override
@@ -234,8 +283,15 @@ public class CapabilityLocalRepository
 			String description, ServiceContext serviceContext)
 		throws PortalException {
 
-		return getRepository().updateFolder(
+		LocalRepository localRepository = getRepository();
+
+		Folder folder = localRepository.updateFolder(
 			folderId, parentFolderId, title, description, serviceContext);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Update.class, Folder.class, folder);
+
+		return folder;
 	}
 
 	private RepositoryEventTrigger _repositoryEventTrigger;

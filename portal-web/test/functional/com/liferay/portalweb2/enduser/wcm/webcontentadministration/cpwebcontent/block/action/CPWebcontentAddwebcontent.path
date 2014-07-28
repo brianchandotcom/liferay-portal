@@ -221,7 +221,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MENU__PERMISSIONS</td>
+	<td>MENU_PERMISSIONS</td>
 	<td>//a[@id='_15_permissionsLink']</td>
 	<td></td>
 </tr>
@@ -260,6 +260,17 @@
 <tr>
 	<td>DISPLAY_PAGE_SELECTION</td>
 	<td>//span[contains(@id,'displayPageNameInput')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PERMISSIONS-->
+<tr>
+	<td>PERMISSIONS_VIEWABLE_BY_SELECT</td>
+	<td>//select[@id='_15_inputPermissionsViewRole']</td>
 	<td></td>
 </tr>
 </tbody>

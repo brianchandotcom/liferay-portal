@@ -15,15 +15,13 @@
 package com.liferay.portlet.wiki.engine.creole;
 
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.parsers.creole.ast.WikiPageNode;
 import com.liferay.portal.parsers.creole.parser.Creole10Lexer;
 import com.liferay.portal.parsers.creole.parser.Creole10Parser;
 import com.liferay.portal.parsers.creole.visitor.impl.XhtmlTranslationVisitor;
-import com.liferay.portal.test.mockito.ReturnArgumentCalledAnswer;
-import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.HtmlImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,57 +30,27 @@ import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Miguel Pastor
  * @author Manuel de la Peña
  */
-@PrepareForTest({HtmlUtil.class, PropsUtil.class})
-@RunWith(PowerMockRunner.class)
-public class TranslationToXHTMLTest extends PowerMockito {
+public class TranslationToXHTMLTest {
 
 	@Before
 	public void setUp() {
-		mockStatic(HtmlUtil.class);
+		HtmlUtil htmlUtil = new HtmlUtil();
 
-		when(
-			HtmlUtil.escape(Mockito.anyString())
-		).then(
-			new ReturnArgumentCalledAnswer<String>(0)
-		);
-
-		mockStatic(PropsUtil.class);
-
-		when(
-			PropsUtil.getArray(
-				PropsKeys.WIKI_PARSERS_CREOLE_SUPPORTED_PROTOCOLS)
-		).thenReturn(
-			new String[] {
-				"http://", "https://", "ftp://", "mailto:", "mms://"
-			}
-		);
-	}
-
-	@After
-	public void tearDown() {
-		verifyStatic();
+		htmlUtil.setHtml(new HtmlImpl());
 	}
 
 	@Test
 	public void testEscapedEscapedCharacter() {
 		Assert.assertEquals(
-			"<p>~\"~ is escaped\" </p>", translate("escape-2.creole"));
+			"<p>~&#034;~ is escaped&#034; </p>", translate("escape-2.creole"));
 	}
 
 	@Test
@@ -103,8 +71,8 @@ public class TranslationToXHTMLTest extends PowerMockito {
 	@Test
 	public void testInterwikiFlickr() {
 		Assert.assertEquals(
-			"<p><a href=\"http://www.flickr.com/search/?w=all&m=text" +
-				"&q=Liferay\">Liferay</a> </p>",
+			"<p><a href=\"http://www.flickr.com/search/?w=all&amp;m=text" +
+				"&amp;q=Liferay\">Liferay</a> </p>",
 			translate("interwikiflickr.creole"));
 	}
 

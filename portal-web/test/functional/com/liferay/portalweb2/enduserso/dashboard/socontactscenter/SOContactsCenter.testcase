@@ -725,6 +725,123 @@
 		</execute>
 	</command>
 
+	<command name="BlockFollowingUser" priority="4">
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#followUser">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#viewFollowing">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#viewFollower">
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userFirstName" value="${adminFirstName}" />
+			<var name="userLastName" value="${adminLastName}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#blockUser">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#viewBlockedUser">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#viewBlockingUser">
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userFirstName" value="${adminFirstName}" />
+			<var name="userLastName" value="${adminLastName}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#unblockUser">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#viewUser">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#viewUser">
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userFirstName" value="${adminFirstName}" />
+			<var name="userLastName" value="${adminLastName}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+	</command>
+
 	<command name="BlockUser" priority="3">
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -1033,19 +1150,13 @@
 
 		<execute macro="SOContactsCenter#viewConnection">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userListName" value="${userListName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="SOContactsCenter#disconnectFromConnection">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userListName" value="${userListName}" />
-			<var name="userName" value="${userName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="SOContactsCenter#viewNonConnection">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userListName" value="${userListName}" />
 			<var name="userName" value="${userName}" />
@@ -1067,6 +1178,14 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="SOContactsCenter#viewNonConnection">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userName}" />
@@ -1076,6 +1195,14 @@
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
 			<var name="userFirstName" value="${adminFirstName}" />
 			<var name="userLastName" value="${adminLastName}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#viewNonConnection">
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userFirstName" value="${adminFirstName}" />
 			<var name="userListName" value="${adminListName}" />
 			<var name="userName" value="${adminName}" />
 			<var name="userScreenName" value="${adminScreenName}" />
@@ -1393,40 +1520,6 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="SOContactsCenter#followUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userListName" value="${userListName}" />
-			<var name="userName" value="${userName}" />
-		</execute>
-
-		<execute macro="SOContactsCenter#viewFollowing">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userListName" value="${userListName}" />
-			<var name="userName" value="${userName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userName}" />
-		</execute>
-
-		<execute macro="SOContactsCenter#viewFollower">
-			<var name="userEmailAddress" value="${adminEmailAddress}" />
-			<var name="userFirstName" value="${adminFirstName}" />
-			<var name="userLastName" value="${adminLastName}" />
-			<var name="userListName" value="${adminListName}" />
-			<var name="userName" value="${adminName}" />
-			<var name="userScreenName" value="${adminScreenName}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
-			<var name="userLoginFullName" value="${adminName}" />
-		</execute>
-
 		<execute macro="SOContactsCenter#requestToConnect">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userListName" value="${userListName}" />
@@ -1449,56 +1542,6 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SOContactsCenter#viewConnection">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userListName" value="${userListName}" />
-			<var name="userName" value="${userName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="SOContactsCenter#viewFollowing">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userListName" value="${userListName}" />
-			<var name="userName" value="${userName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userName}" />
-		</execute>
-
-		<execute macro="SOContactsCenter#viewFollower">
-			<var name="userEmailAddress" value="${adminEmailAddress}" />
-			<var name="userFirstName" value="${adminFirstName}" />
-			<var name="userLastName" value="${adminLastName}" />
-			<var name="userListName" value="${adminListName}" />
-			<var name="userName" value="${adminName}" />
-			<var name="userScreenName" value="${adminScreenName}" />
-		</execute>
-	</command>
-
-	<command name="FollowThenBlockUser" priority="4">
-		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
-		<var name="userFirstName" value="Social01" />
-		<var name="userLastName" value="User01" />
-		<var name="userListName" value="User01, Social01" />
-		<var name="userMiddleName" value="Office01" />
-		<var name="userName" value="Social01 Office01 User01" />
-		<var name="userScreenName" value="socialoffice01" />
-
-		<execute macro="SOUser#addUserWithSORole">
-			<var name="adminEmailAddress" value="test@liferay.com" />
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
 		<execute macro="SOContactsCenter#followUser">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userListName" value="${userListName}" />
@@ -1514,6 +1557,14 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="SOContactsCenter#viewConnection">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userName}" />
@@ -1528,80 +1579,9 @@
 			<var name="userScreenName" value="${adminScreenName}" />
 		</execute>
 
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
-			<var name="userLoginFullName" value="${adminName}" />
-		</execute>
-
-		<execute macro="SOContactsCenter#unfollowUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userListName" value="${userListName}" />
-			<var name="userName" value="${userName}" />
-		</execute>
-
-		<execute macro="SOContactsCenter#blockUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userListName" value="${userListName}" />
-			<var name="userName" value="${userName}" />
-		</execute>
-
-		<execute macro="SOContactsCenter#viewBlockedUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userListName" value="${userListName}" />
-			<var name="userName" value="${userName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userName}" />
-		</execute>
-
-		<execute macro="SOContactsCenter#viewBlockingUser">
+		<execute macro="SOContactsCenter#viewConnection">
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
 			<var name="userFirstName" value="${adminFirstName}" />
-			<var name="userLastName" value="${adminLastName}" />
-			<var name="userListName" value="${adminListName}" />
-			<var name="userName" value="${adminName}" />
-			<var name="userScreenName" value="${adminScreenName}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
-			<var name="userLoginFullName" value="${adminName}" />
-		</execute>
-
-		<execute macro="SOContactsCenter#unblockUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userListName" value="${userListName}" />
-			<var name="userName" value="${userName}" />
-		</execute>
-
-		<execute macro="SOContactsCenter#viewUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userListName" value="${userListName}" />
-			<var name="userName" value="${userName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Contacts Center" />
-			<var name="soDashboard" value="true" />
-		</execute>
-
-		<execute macro="SOContactsCenter#viewUser">
-			<var name="userEmailAddress" value="${adminEmailAddress}" />
-			<var name="userFirstName" value="${adminFirstName}" />
-			<var name="userLastName" value="${adminLastName}" />
 			<var name="userListName" value="${adminListName}" />
 			<var name="userName" value="${adminName}" />
 			<var name="userScreenName" value="${adminScreenName}" />
@@ -1684,6 +1664,23 @@
 			<var name="userName" value="${userName}" />
 		</execute>
 
+		<execute macro="SOContactsCenter#viewConnection">
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userFirstName" value="${adminFirstName}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#viewNonFollower">
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userFirstName" value="${adminFirstName}" />
+			<var name="userLastName" value="${adminLastName}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
 			<var name="userLoginFullName" value="${adminName}" />
@@ -1691,6 +1688,16 @@
 
 		<execute macro="SOContactsCenter#viewConnection">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#viewNonFollowing">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
 			<var name="userListName" value="${userListName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />
@@ -1705,6 +1712,7 @@
 
 		<execute macro="SOContactsCenter#viewNonConnection">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userListName" value="${userListName}" />
 			<var name="userName" value="${userName}" />
 			<var name="userScreenName" value="${userScreenName}" />

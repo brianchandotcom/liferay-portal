@@ -28,7 +28,7 @@ public class AutoDeployMockServletContext extends MockServletContext {
 		super(getResourceBasePath(), resourceLoader);
 	}
 
-	protected String getResourceBasePath() {
+	protected static String getResourceBasePath() {
 		File file = new File("portal-web/docroot");
 
 		return "file:" + file.getAbsolutePath();

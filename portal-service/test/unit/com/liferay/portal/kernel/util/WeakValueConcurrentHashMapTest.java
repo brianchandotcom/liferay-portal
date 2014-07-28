@@ -16,80 +16,48 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.memory.DummyFinalizeAction;
 import com.liferay.portal.kernel.memory.FinalizeManager;
+import com.liferay.portal.kernel.test.GCUtil;
+import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
 
-import org.junit.After;
+import java.util.Map;
+
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Shuyang Zhou
  */
-@PrepareForTest(PropsUtil.class)
-@RunWith(PowerMockRunner.class)
-public class WeakValueConcurrentHashMapTest extends PowerMockito {
-
-	@Before
-	public void setUp() throws Exception {
-		mockStatic(PropsUtil.class);
-
-		when(
-			PropsUtil.get(PropsKeys.FINALIZE_MANAGER_THREAD_ENABLED)
-		).thenReturn(
-			"false"
-		);
-	}
-
-	@After
-	public void tearDown() {
-		PowerMockito.verifyStatic();
-	}
+@RunWith(NewClassLoaderJUnitTestRunner.class)
+public class WeakValueConcurrentHashMapTest {
 
 	@Test
 	public void testAutoRemove() throws Exception {
-		WeakValueConcurrentHashMap<String, Object> weakValueConcurrentHashMap =
+		System.setProperty(
+			FinalizeManager.class.getName() + ".thread.enabled",
+			StringPool.FALSE);
+
+		Map<String, Object> map =
 			new WeakValueConcurrentHashMap<String, Object>();
 
 		String testKey = "testKey";
 		Object testValue = new Object();
 
-		weakValueConcurrentHashMap.put(testKey, testValue);
+		map.put(testKey, testValue);
 
-		long startTime = System.currentTimeMillis();
+		GCUtil.gc();
 
-		while ((System.currentTimeMillis() - startTime) < 100) {
-			System.gc();
-
-			Thread.sleep(1);
-
-			Assert.assertTrue(weakValueConcurrentHashMap.containsKey(testKey));
-		}
+		Assert.assertTrue(map.containsKey(testKey));
 
 		testValue = null;
 
-		startTime = System.currentTimeMillis();
+		GCUtil.gc();
 
-		while ((System.currentTimeMillis() - startTime) < 100) {
-			System.gc();
-
-			Thread.sleep(1);
-
-			if (!FinalizeManager.THREAD_ENABLED) {
-				FinalizeManager.register(
-					new Object(), new DummyFinalizeAction());
-			}
-
-			if (!weakValueConcurrentHashMap.containsKey(testKey)) {
-				break;
-			}
+		if (!FinalizeManager.THREAD_ENABLED) {
+			FinalizeManager.register(new Object(), new DummyFinalizeAction());
 		}
 
-		Assert.assertFalse(weakValueConcurrentHashMap.containsKey(testKey));
+		Assert.assertFalse(map.containsKey(testKey));
 	}
 
 }

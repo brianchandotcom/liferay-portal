@@ -17,6 +17,7 @@ package com.liferay.portal.bean;
 import com.liferay.portal.kernel.memory.EqualityWeakReference;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunner;
 
@@ -312,22 +313,11 @@ public class ConstantsBeanFactoryImplTest {
 		constantsBean1 = null;
 		constantsBeanClass1 = null;
 
-		long startTime = System.currentTimeMillis();
+		GCUtil.gc();
 
-		while ((System.currentTimeMillis() - startTime) < 1000) {
-			System.gc();
-
-			Thread.sleep(1);
-
-			Assert.assertSame(
-				constantsBean2,
-				constantsBeanImpl.getConstantsBean(constantsClass2));
-
-			if (constantsBeans.size() == 1) {
-				break;
-			}
-		}
-
+		Assert.assertSame(
+			constantsBean2,
+			constantsBeanImpl.getConstantsBean(constantsClass2));
 		Assert.assertEquals(1, constantsBeans.size());
 	}
 

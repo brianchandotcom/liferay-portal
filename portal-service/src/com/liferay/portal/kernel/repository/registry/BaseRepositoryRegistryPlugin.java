@@ -21,6 +21,15 @@ public abstract class BaseRepositoryRegistryPlugin
 	implements RepositoryRegistryPlugin {
 
 	@Override
+	public abstract String getClassName();
+
+	@Override
+	public abstract long getClassNameId();
+
+	@Override
+	public abstract boolean isExternalRepository();
+
+	@Override
 	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
 	}
 

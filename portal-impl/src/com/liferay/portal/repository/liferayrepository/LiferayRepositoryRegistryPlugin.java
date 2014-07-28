@@ -30,13 +30,22 @@ import com.liferay.portal.service.ClassNameLocalService;
 public class LiferayRepositoryRegistryPlugin
 	extends BaseRepositoryRegistryPlugin {
 
+	public String getClassName() {
+		return LiferayRepository.class.getName();
+	}
+
 	public long getClassNameId() {
 		if (_classNameId == 0) {
 			_classNameId = _classNameLocalService.getClassNameId(
-				LiferayRepository.class);
+				getClassName());
 		}
 
 		return _classNameId;
+	}
+
+	@Override
+	public boolean isExternalRepository() {
+		return false;
 	}
 
 	@Override

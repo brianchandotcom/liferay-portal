@@ -19,7 +19,11 @@ package com.liferay.portal.kernel.repository.registry;
  */
 public interface RepositoryRegistryPlugin {
 
+	public String getClassName();
+
 	public long getClassNameId();
+
+	public boolean isExternalRepository();
 
 	public void registerCapabilities(CapabilityRegistry capabilityRegistry);
 

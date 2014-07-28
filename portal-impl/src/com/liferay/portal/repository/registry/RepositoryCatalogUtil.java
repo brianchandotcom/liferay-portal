@@ -14,6 +14,7 @@
 
 package com.liferay.portal.repository.registry;
 
+import com.liferay.portal.kernel.repository.registry.RepositoryRegistryPlugin;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.repository.util.ExternalRepositoryFactory;
 
@@ -35,10 +36,21 @@ public class RepositoryCatalogUtil {
 			className, externalRepositoryFactory);
 	}
 
+	public static void registerRepositoryRegistryPlugin(
+		RepositoryRegistryPlugin repositoryRegistryPlugin) {
+
+		_repositoryCatalog.registerRepositoryRegistryPlugin(
+			repositoryRegistryPlugin);
+	}
+
 	public static void unregisterLegacyExternalRepositoryFactory(
 		String className) {
 
 		_repositoryCatalog.unregisterLegacyExternalRepositoryFactory(className);
+	}
+
+	public static void unregisterRepositoryRegistryPlugin(String className) {
+		_repositoryCatalog.unregisterRepositoryRegistryPlugin(className);
 	}
 
 	public void setRepositoryCatalog(RepositoryCatalog repositoryCatalog) {

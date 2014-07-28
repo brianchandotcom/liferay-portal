@@ -14,11 +14,22 @@
 
 package com.liferay.portal.repository.registry;
 
+import com.liferay.portal.repository.util.ExternalRepositoryFactory;
+
+import java.util.Collection;
+
 /**
  * @author Adolfo Pérez
  */
 public interface RepositoryCatalog {
 
 	public RepositoryConfiguration getConfiguration(long classNameId);
+
+	public Collection<String> getExternalRepositoryClassNames();
+
+	public void registerLegacyExternalRepositoryFactory(
+		String className, ExternalRepositoryFactory externalRepositoryFactory);
+
+	public void unregisterLegacyExternalRepositoryFactory(String className);
 
 }

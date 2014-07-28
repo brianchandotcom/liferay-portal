@@ -260,6 +260,9 @@
 			</bean>
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.repository.registry.RepositoryCatalogUtil" class="com.liferay.portal.repository.registry.RepositoryCatalogUtil">
+		<property name="repositoryCatalog" ref="com.liferay.portal.repository.registry.RepositoryCatalog" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil" class="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil">
 		<property name="sPIRegistry">
 			<bean class="com.liferay.portal.resiliency.spi.SPIRegistryImpl">

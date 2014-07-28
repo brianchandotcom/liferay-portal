@@ -151,12 +151,12 @@ public class NavTag extends BaseNavTag implements BodyTag {
 
 		_namespacedId = getId();
 
-		if (Validator.isNull(_namespacedId)) {
-			_namespacedId = StringUtil.randomId();
-		}
-
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
+
+		if (Validator.isNull(_namespacedId)) {
+			_namespacedId = AUIUtil.getId(request, "navTag");
+		}
 
 		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);

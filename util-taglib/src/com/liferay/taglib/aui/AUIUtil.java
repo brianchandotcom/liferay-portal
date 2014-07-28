@@ -14,12 +14,15 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -217,5 +220,16 @@ public class AUIUtil {
 
 		return null;
 	}
+
+	public static String getId(HttpServletRequest request, String name) {
+		String normalizedName = FriendlyURLNormalizerUtil.normalize(
+			name, _friendlyURLPattern);
+
+		return PortalUtil.getUniqueElementId(
+			request, StringPool.BLANK, normalizedName);
+	}
+
+	private static Pattern _friendlyURLPattern = Pattern.compile(
+		"[^a-z0-9/_-]");
 
 }

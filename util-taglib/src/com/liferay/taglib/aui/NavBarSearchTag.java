@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseNavBarSearchTag;
 
@@ -83,12 +82,12 @@ public class NavBarSearchTag extends BaseNavBarSearchTag {
 
 		_namespacedId = getId();
 
-		if (Validator.isNull(_namespacedId)) {
-			_namespacedId = StringUtil.randomId();
-		}
-
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
+
+		if (Validator.isNull(_namespacedId)) {
+			_namespacedId = AUIUtil.getId(request, "navBar");
+		}
 
 		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);

@@ -785,6 +785,11 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             com.liferay.portal.kernel.repository.capabilities.SyncCapability}
+	 */
+	@Deprecated
 	@Override
 	public void registerDLSyncEventCallback(String event, FileEntry fileEntry)
 		throws PortalException {
@@ -809,6 +814,11 @@ public class DLAppHelperLocalServiceImpl
 			event, DLSyncConstants.TYPE_FILE, fileEntry.getFileEntryId());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             com.liferay.portal.kernel.repository.capabilities.SyncCapability}
+	 */
+	@Deprecated
 	@Override
 	public void registerDLSyncEventCallback(String event, Folder folder) {
 		if (isStagingGroup(folder.getGroupId()) ||
@@ -1937,6 +1947,10 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0  As of 7.0.0, with no direct replacement.
+	 */
+	@Deprecated
 	protected boolean isStagingGroup(long groupId) {
 		try {
 			Group group = groupLocalService.getGroup(groupId);
@@ -2095,6 +2109,11 @@ public class DLAppHelperLocalServiceImpl
 			});
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             com.liferay.portal.kernel.repository.capabilities.SyncCapability}
+	 */
+	@Deprecated
 	protected void registerDLSyncEventCallback(
 		final String event, final String type, final long typePK) {
 

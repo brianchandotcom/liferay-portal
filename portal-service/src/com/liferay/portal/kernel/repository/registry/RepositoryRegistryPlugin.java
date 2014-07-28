@@ -21,6 +21,8 @@ public interface RepositoryRegistryPlugin {
 
 	public String getClassName();
 
+	public boolean isExternalRepository();
+
 	public void registerCapabilities(CapabilityRegistry capabilityRegistry);
 
 	public void registerRepositoryCreator(

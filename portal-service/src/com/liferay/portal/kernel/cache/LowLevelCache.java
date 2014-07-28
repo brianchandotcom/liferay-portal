@@ -21,7 +21,7 @@ import java.io.Serializable;
 /**
  * @author Tina Tian
  */
-public interface LowLevelCache <K extends Serializable, V>
+public interface LowLevelCache<K extends Serializable, V>
 	extends PortalCache<K, V> {
 
 	@Proxy

@@ -185,7 +185,7 @@ public class TransactionalPortalCacheTest {
 	public void testTransactionalCacheWithParameterValidatation() {
 		TransactionalPortalCacheHelper.begin();
 
-		// Get
+		// Get with null key
 
 		try {
 			_transactionalPortalCache.get(null);
@@ -196,10 +196,10 @@ public class TransactionalPortalCacheTest {
 			Assert.assertEquals("Key is null", npe.getMessage());
 		}
 
-		// Put 1
+		// Put with null key
 
 		try {
-			_transactionalPortalCache.put(null, null);
+			_transactionalPortalCache.put(null, _VALUE_1);
 
 			Assert.fail();
 		}
@@ -207,7 +207,7 @@ public class TransactionalPortalCacheTest {
 			Assert.assertEquals("Key is null", npe.getMessage());
 		}
 
-		// Put 2
+		// Put with null value
 
 		try {
 			_transactionalPortalCache.put(_KEY_1, null);
@@ -218,7 +218,7 @@ public class TransactionalPortalCacheTest {
 			Assert.assertEquals("Value is null", npe.getMessage());
 		}
 
-		// Put 3
+		// Put with negative ttl
 
 		try {
 			_transactionalPortalCache.put(_KEY_1, _VALUE_1, -1);
@@ -229,7 +229,7 @@ public class TransactionalPortalCacheTest {
 			Assert.assertEquals("Time to live is negative", iae.getMessage());
 		}
 
-		// Remove
+		// Remove with null key
 
 		try {
 			_transactionalPortalCache.remove(null);

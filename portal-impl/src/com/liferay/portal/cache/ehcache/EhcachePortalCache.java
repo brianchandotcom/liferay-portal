@@ -135,9 +135,8 @@ public class EhcachePortalCache<K extends Serializable, V>
 		if (element == null) {
 			return null;
 		}
-		else {
-			return (V)element.getObjectValue();
-		}
+
+		return (V)element.getObjectValue();
 	}
 
 	@Override

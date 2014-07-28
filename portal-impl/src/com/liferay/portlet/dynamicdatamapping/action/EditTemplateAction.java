@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -42,6 +41,9 @@ import com.liferay.portlet.dynamicdatamapping.TemplateNameException;
 import com.liferay.portlet.dynamicdatamapping.TemplateScriptException;
 import com.liferay.portlet.dynamicdatamapping.TemplateSmallImageNameException;
 import com.liferay.portlet.dynamicdatamapping.TemplateSmallImageSizeException;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
@@ -237,22 +239,29 @@ public class EditTemplateAction extends PortletAction {
 	protected String getScript(UploadPortletRequest uploadPortletRequest)
 		throws Exception {
 
+		String type = ParamUtil.getString(uploadPortletRequest, "type");
+
 		String scriptContent = ParamUtil.getString(
 			uploadPortletRequest, "scriptContent");
 
 		File file = uploadPortletRequest.getFile("script");
 
-		if (file == null) {
-			return scriptContent;
+		if (file != null) {
+			scriptContent = FileUtil.read(file);
+
+			if (Validator.isNotNull(scriptContent) && !isValidFile(file)) {
+				throw new TemplateScriptException();
+			}
 		}
 
-		String script = FileUtil.read(file);
+		if (type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
+			DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(
+				scriptContent);
 
-		if (Validator.isNotNull(script) && !isValidFile(file)) {
-			throw new TemplateScriptException();
+			scriptContent = DDMFormXSDSerializerUtil.serialize(ddmForm);
 		}
 
-		return GetterUtil.getString(script, scriptContent);
+		return scriptContent;
 	}
 
 	protected boolean isValidFile(File file) {

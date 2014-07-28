@@ -19,6 +19,10 @@
 		<case locator-key1="ERROR_MESSAGE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
+
+		<case locator-key1="DOCUMENT_MENULIST_DOWNLOAD">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
 	</command>
 
 	<command name="isElementPresent">

@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_LIVE_DELETE</td>
+	<td>//li/a[@title='Delete']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

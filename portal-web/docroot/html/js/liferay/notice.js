@@ -168,8 +168,8 @@ AUI.add(
 				var instance = this;
 
 				if (instance._useToggleButton) {
-					instance._hideText = instance._toggleText.hide || Liferay.Language.get(STR_HIDE);
-					instance._showText = instance._toggleText.show || Liferay.Language.get(STR_SHOW);
+					instance._hideText = instance._toggleText.hide || Liferay.Language.get('hide');
+					instance._showText = instance._toggleText.show || Liferay.Language.get('show');
 
 					var toggleButton = ANode.create('<a class="toggle-button" href="javascript:;"><span>' + instance._hideText + '</span></a>');
 					var toggleSpan = toggleButton.one('span');
@@ -234,10 +234,8 @@ AUI.add(
 						}
 					);
 				}
-				else {
-					if (instance._timeout > -1) {
-						instance._hideHandle = A.later(instance._timeout, notice, STR_HIDE);
-					}
+				else if (instance._timeout > -1) {
+					instance._hideHandle = A.later(instance._timeout, notice, STR_HIDE);
 				}
 
 				Liferay.fire(
@@ -295,7 +293,7 @@ AUI.add(
 				var content = instance._content;
 				var node = A.one(instance._node);
 
-				var notice = node || ANode.create('<div class="alert" dynamic="true"></div>');
+				var notice = node || ANode.create('<div class="alert alert-warning" dynamic="true"></div>');
 
 				if (content) {
 					notice.html(content);

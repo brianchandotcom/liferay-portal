@@ -27,18 +27,18 @@ AUI.add(
 					autoExtend: {
 						value: false
 					},
-					redirectUrl: {
-						value: ''
-					},
 					redirectOnExpire: {
 						value: true
 					},
-					sessionState: {
-						value: 'active'
+					redirectUrl: {
+						value: ''
 					},
 					sessionLength: {
 						getter: '_getLengthInMillis',
 						value: 0
+					},
+					sessionState: {
+						value: 'active'
 					},
 					timestamp: {
 						getter: '_getTimestamp',
@@ -75,6 +75,18 @@ AUI.add(
 						instance._startTimer();
 					},
 
+					expire: function() {
+						var instance = this;
+
+						instance.set('sessionState', 'expired', SRC_EVENT_OBJ);
+					},
+
+					extend: function() {
+						var instance = this;
+
+						instance.set('sessionState', 'active', SRC_EVENT_OBJ);
+					},
+
 					registerInterval: function(fn) {
 						var instance = this;
 
@@ -107,18 +119,6 @@ AUI.add(
 						}
 
 						return fnId;
-					},
-
-					expire: function() {
-						var instance = this;
-
-						instance.set('sessionState', 'expired', SRC_EVENT_OBJ);
-					},
-
-					extend: function() {
-						var instance = this;
-
-						instance.set('sessionState', 'active', SRC_EVENT_OBJ);
 					},
 
 					warn: function() {
@@ -475,6 +475,42 @@ AUI.add(
 						);
 					},
 
+					_formatNumber: function(value) {
+						var instance = this;
+
+						var floor = Math.floor;
+						var padNumber = Lang.String.padNumber;
+
+						return Lang.String.padNumber(Math.floor(value), 2);
+					},
+
+					_formatTime: function(time) {
+						var instance = this;
+
+						time = Number(time);
+
+						if (Lang.isNumber(time) && time > 0) {
+							time /= 1000;
+
+							BUFFER_TIME[0] = instance._formatNumber(time / 3600);
+
+							time %= 3600;
+
+							BUFFER_TIME[1] = instance._formatNumber(time / 60);
+
+							time %= 60;
+
+							BUFFER_TIME[2] = instance._formatNumber(time);
+
+							time = BUFFER_TIME.join(':');
+						}
+						else {
+							time = 0;
+						}
+
+						return time;
+					},
+
 					_getBanner: function() {
 						var instance = this;
 
@@ -530,7 +566,7 @@ AUI.add(
 
 						banner.replaceClass('popup-alert-notice', 'popup-alert-warning');
 
-						banner.addClass('alert-danger');
+						banner.replaceClass('alert-warning', 'alert-danger');
 
 						banner.show();
 
@@ -547,42 +583,6 @@ AUI.add(
 						counterTextNode.text(instance._formatTime(remainingTime));
 
 						DOC.title = banner.text();
-					},
-
-					_formatNumber: function(value) {
-						var instance = this;
-
-						var floor = Math.floor;
-						var padNumber = Lang.String.padNumber;
-
-						return Lang.String.padNumber(Math.floor(value), 2);
-					},
-
-					_formatTime: function(time) {
-						var instance = this;
-
-						time = Number(time);
-
-						if (Lang.isNumber(time) && time > 0) {
-							time /= 1000;
-
-							BUFFER_TIME[0] = instance._formatNumber(time / 3600);
-
-							time %= 3600;
-
-							BUFFER_TIME[1] = instance._formatNumber(time / 60);
-
-							time %= 60;
-
-							BUFFER_TIME[2] = instance._formatNumber(time);
-
-							time = BUFFER_TIME.join(':');
-						}
-						else {
-							time = 0;
-						}
-
-						return time;
 					}
 				}
 			}

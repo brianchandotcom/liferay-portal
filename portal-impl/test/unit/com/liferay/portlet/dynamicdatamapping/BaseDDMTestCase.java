@@ -221,7 +221,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		structure.setName(name);
 		structure.setDefinition(definition);
 
-		_structures.put(structure.getStructureId(), structure);
+		structures.put(structure.getStructureId(), structure);
 
 		return structure;
 	}
@@ -242,7 +242,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		template.setMode(mode);
 		template.setScript(script);
 
-		_templates.put(template.getTemplateId(), template);
+		templates.put(template.getTemplateId(), template);
 
 		return template;
 	}
@@ -252,7 +252,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected DDMFormField createTextDDMFormField(
-		String name, String label,  boolean localizable, boolean repeatable,
+		String name, String label, boolean localizable, boolean repeatable,
 		boolean required) {
 
 		DDMFormField ddmFormField = new DDMFormField(name, "text");
@@ -328,7 +328,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 					Long structureId = (Long)args[0];
 
-					return _structures.get(structureId);
+					return structures.get(structureId);
 				}
 
 			}
@@ -351,7 +351,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 					Long templateId = (Long)args[0];
 
-					return _templates.get(templateId);
+					return templates.get(templateId);
 				}
 
 			}
@@ -476,9 +476,9 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		saxReaderUtil.setSAXReader(new SAXReaderImpl());
 	}
 
-	private Map<Long, DDMStructure> _structures =
+	protected Map<Long, DDMStructure> structures =
 		new HashMap<Long, DDMStructure>();
-	private Map<Long, DDMTemplate> _templates =
+	protected Map<Long, DDMTemplate> templates =
 		new HashMap<Long, DDMTemplate>();
 
 }

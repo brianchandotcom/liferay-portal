@@ -64,8 +64,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -354,7 +352,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		Fields actualFields = JournalConverterUtil.getDDMFields(
 			_ddmStructure, content);
 
-		assertEquals(expectedFields, actualFields);
+		Assert.assertEquals(expectedFields, actualFields);
 	}
 
 	@Test
@@ -401,7 +399,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 			Fields actualFields = JournalConverterUtil.getDDMFields(
 				_ddmStructure, document.asXML());
 
-			assertEquals(expectedFields, actualFields);
+			Assert.assertEquals(expectedFields, actualFields);
 		}
 	}
 
@@ -441,7 +439,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		Fields actualFields = JournalConverterUtil.getDDMFields(
 			_ddmStructure, content);
 
-		assertEquals(expectedFields, actualFields);
+		Assert.assertEquals(expectedFields, actualFields);
 	}
 
 	@Test
@@ -462,7 +460,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		Fields actualFields = JournalConverterUtil.getDDMFields(
 			_ddmStructure, content);
 
-		assertEquals(expectedFields, actualFields);
+		Assert.assertEquals(expectedFields, actualFields);
 	}
 
 	@Test
@@ -486,7 +484,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		Fields actualFields = JournalConverterUtil.getDDMFields(
 			_ddmStructure, content);
 
-		assertEquals(expectedFields, actualFields);
+		Assert.assertEquals(expectedFields, actualFields);
 	}
 
 	@Test
@@ -498,7 +496,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		Fields actualFields = JournalConverterUtil.getDDMFields(
 			_ddmStructure, content);
 
-		assertEquals(expectedFields, actualFields);
+		Assert.assertEquals(expectedFields, actualFields);
 	}
 
 	@Test
@@ -584,37 +582,6 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 			assertEquals(expectedOptionLabels, actualOptionLabels);
 		}
-	}
-
-	protected void assertEquals(Fields expectedFields, Fields actualFields) {
-		Field expectedFieldsDisplayField = expectedFields.get(
-			DDMImpl.FIELDS_DISPLAY_NAME);
-
-		String expectedFieldsDisplayFieldValue =
-			(String)expectedFieldsDisplayField.getValue();
-
-		Pattern pattern = Pattern.compile(
-			DDMImpl.INSTANCE_SEPARATOR.concat("\\w{8}"));
-
-		Matcher matcher = pattern.matcher(expectedFieldsDisplayFieldValue);
-
-		expectedFieldsDisplayFieldValue = matcher.replaceAll(StringPool.BLANK);
-
-		expectedFieldsDisplayField.setValue(expectedFieldsDisplayFieldValue);
-
-		Field actualFieldsDisplayField = actualFields.get(
-			DDMImpl.FIELDS_DISPLAY_NAME);
-
-		String actualFieldsDisplayFieldValue =
-			(String)actualFieldsDisplayField.getValue();
-
-		matcher = pattern.matcher(actualFieldsDisplayFieldValue);
-
-		actualFieldsDisplayFieldValue = matcher.replaceAll(StringPool.BLANK);
-
-		actualFieldsDisplayField.setValue(actualFieldsDisplayFieldValue);
-
-		Assert.assertEquals(expectedFields, actualFields);
 	}
 
 	protected void assertEquals(

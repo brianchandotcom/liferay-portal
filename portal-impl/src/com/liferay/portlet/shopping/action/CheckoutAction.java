@@ -37,6 +37,7 @@ import com.liferay.portlet.shopping.CCExpirationException;
 import com.liferay.portlet.shopping.CCNameException;
 import com.liferay.portlet.shopping.CCNumberException;
 import com.liferay.portlet.shopping.CCTypeException;
+import com.liferay.portlet.shopping.NoSuchOrderException;
 import com.liferay.portlet.shopping.ShippingCityException;
 import com.liferay.portlet.shopping.ShippingCountryException;
 import com.liferay.portlet.shopping.ShippingEmailAddressException;
@@ -77,9 +78,15 @@ public class CheckoutAction extends CartAction {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		getLatestOrder(actionRequest);
+		if (cmd.equals(Constants.CHECKOUT)) {
+			checkout(actionRequest);
 
-		if (cmd.equals(Constants.SAVE)) {
+			setForward(actionRequest, "portlet.shopping.checkout_first");
+		}
+		else if (!hasLatestOrder(actionRequest)) {
+			setForward(actionRequest, "portlet.shopping.checkout_third");
+		}
+		else if (cmd.equals(Constants.SAVE)) {
 			updateCart(actionRequest, actionResponse);
 			updateLatestOrder(actionRequest);
 			saveLatestOrder(actionRequest);
@@ -136,6 +143,16 @@ public class CheckoutAction extends CartAction {
 		}
 	}
 
+	protected void checkout(ActionRequest actionRequest) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!hasLatestOrder(actionRequest)) {
+			ShoppingOrderLocalServiceUtil.addLatestOrder(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
+		}
+	}
+
 	protected void forwardCheckout(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -176,16 +193,21 @@ public class CheckoutAction extends CartAction {
 		}
 	}
 
-	protected void getLatestOrder(ActionRequest actionRequest)
+	protected boolean hasLatestOrder(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(
-			themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
+		try {
+			ShoppingOrderLocalServiceUtil.getLatestOrder(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
+		}
+		catch (NoSuchOrderException nsoe) {
+			return false;
+		}
 
-		actionRequest.setAttribute(WebKeys.SHOPPING_ORDER, order);
+		return true;
 	}
 
 	@Override

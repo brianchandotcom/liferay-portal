@@ -285,7 +285,7 @@
 					</if>
 
 					<execute action="PGDocumentsandmediaAddmultipledocuments#assertChecked" locator-key1="ALL_FILES_READY_TO_BE_SAVED_CHECKBOX" />
-					<execute action="PGDocumentsandmediaAddmultipledocuments#assertTextEquals" locator-key1="ALL_FILES_READY_TO_BE_SAVED_TITLE" />
+					<execute action="PGDocumentsandmediaAddmultipledocuments#assertTextEquals" locator-key1="ALL_FILES_READY_TO_BE_SAVED_TITLE" value1="${dmDocumentFile}" />
 				</for>
 			</then>
 			<else>
@@ -1758,7 +1758,7 @@
 		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_ADD" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_FOLDER" value1="Folder" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_SHORTCUT" value1="Shortcut" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_REPOSITORY" value1="Repository" />	
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_REPOSITORY" value1="Repository" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_MULTIPLE_DOCUMENTS" value1="Multiple Documents" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ADD_MENULIST_CONTRACT" value1="Contract" />

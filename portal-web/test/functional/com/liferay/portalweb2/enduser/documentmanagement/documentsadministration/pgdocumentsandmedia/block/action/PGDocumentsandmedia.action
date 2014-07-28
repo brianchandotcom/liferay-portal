@@ -22,7 +22,7 @@
 
 		<case locator-key1="DOCUMENT_MENULIST_DOWNLOAD">
 			<execute function="AssertTextEquals#assertPartialText" />
-		</case>		
+		</case>
 	</command>
 
 	<command name="isElementPresent">

@@ -2320,7 +2320,7 @@
 		<execute macro="Page#viewCustomLogoPG" />
 	</command>
 
-	<command name="StagingMultipleDM" priority="5">	
+	<command name="StagingMultipleDM" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />

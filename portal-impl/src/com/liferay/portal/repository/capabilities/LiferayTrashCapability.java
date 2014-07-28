@@ -18,8 +18,11 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -116,16 +119,6 @@ public class LiferayTrashCapability implements TrashCapability {
 	}
 
 	@Override
-	public void deleteTrashEntry(FileEntry fileEntry) throws PortalException {
-		deleteTrashEntry((DLFileEntry)fileEntry.getModel());
-	}
-
-	@Override
-	public void deleteTrashEntry(Folder folder) throws PortalException {
-		deleteTrashEntry((DLFolder)folder.getModel());
-	}
-
-	@Override
 	public FileEntry moveFileEntryFromTrash(
 			long userId, FileEntry fileEntry, Folder destinationFolder,
 			ServiceContext serviceContext)
@@ -158,6 +151,17 @@ public class LiferayTrashCapability implements TrashCapability {
 		throws PortalException {
 
 		return DLAppHelperLocalServiceUtil.moveFolderToTrash(userId, folder);
+	}
+
+	public void registerRepositoryEventListeners(
+		RepositoryEventRegistry repositoryEventRegistry) {
+
+		repositoryEventRegistry.registerRepositoryEventListener(
+			RepositoryEventType.Delete.class, FileEntry.class,
+			new DeleteFileEntryRepositoryEventListener());
+		repositoryEventRegistry.registerRepositoryEventListener(
+			RepositoryEventType.Delete.class, Folder.class,
+			new DeleteFolderRepositoryEventListener());
 	}
 
 	@Override
@@ -219,6 +223,16 @@ public class LiferayTrashCapability implements TrashCapability {
 		}
 	}
 
+	protected void deleteTrashEntry(FileEntry fileEntry)
+		throws PortalException {
+
+		deleteTrashEntry((DLFileEntry)fileEntry.getModel());
+	}
+
+	protected void deleteTrashEntry(Folder folder) throws PortalException {
+		deleteTrashEntry((DLFolder)folder.getModel());
+	}
+
 	private static final Accessor<TrashEntry, Long> _TRASH_ENTRY_ID_ACCESSOR =
 		new Accessor<TrashEntry, Long>() {
 
@@ -238,5 +252,26 @@ public class LiferayTrashCapability implements TrashCapability {
 			}
 
 		};
+
+	private class DeleteFileEntryRepositoryEventListener
+		implements RepositoryEventListener
+			<RepositoryEventType.Delete, FileEntry> {
+
+		@Override
+		public void execute(FileEntry fileEntry) throws PortalException {
+			LiferayTrashCapability.this.deleteTrashEntry(fileEntry);
+		}
+
+	}
+
+	private class DeleteFolderRepositoryEventListener
+		implements RepositoryEventListener<RepositoryEventType.Delete, Folder> {
+
+		@Override
+		public void execute(Folder folder) throws PortalException {
+			LiferayTrashCapability.this.deleteTrashEntry(folder);
+		}
+
+	}
 
 }

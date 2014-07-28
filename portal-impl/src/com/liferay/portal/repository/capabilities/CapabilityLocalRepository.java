@@ -17,7 +17,8 @@ package com.liferay.portal.repository.capabilities;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
-import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventHandler;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -41,10 +42,13 @@ public class CapabilityLocalRepository
 	public CapabilityLocalRepository(
 		LocalRepository localRepository,
 		Map<Class<? extends Capability>, Capability> supportedCapabilities,
-		Set<Class<? extends Capability>> exportedCapabilityClasses) {
+		Set<Class<? extends Capability>> exportedCapabilityClasses,
+		RepositoryEventHandler repositoryEventHandler) {
 
 		super(
 			localRepository, supportedCapabilities, exportedCapabilityClasses);
+
+		_repositoryEventHandler = repositoryEventHandler;
 	}
 
 	@Override
@@ -90,14 +94,10 @@ public class CapabilityLocalRepository
 	public void deleteFileEntry(long fileEntryId) throws PortalException {
 		LocalRepository localRepository = getRepository();
 
-		if (isCapabilityProvided(TrashCapability.class)) {
-			TrashCapability trashCapability = getCapability(
-				TrashCapability.class);
+		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 
-			FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
-
-			trashCapability.deleteTrashEntry(fileEntry);
-		}
+		_repositoryEventHandler.trigger(
+			RepositoryEventType.Delete.class, FileEntry.class, fileEntry);
 
 		localRepository.deleteFileEntry(fileEntryId);
 	}
@@ -106,14 +106,10 @@ public class CapabilityLocalRepository
 	public void deleteFolder(long folderId) throws PortalException {
 		LocalRepository localRepository = getRepository();
 
-		if (isCapabilityProvided(TrashCapability.class)) {
-			TrashCapability trashCapability = getCapability(
-				TrashCapability.class);
+		Folder folder = localRepository.getFolder(folderId);
 
-			Folder folder = localRepository.getFolder(folderId);
-
-			trashCapability.deleteTrashEntry(folder);
-		}
+		_repositoryEventHandler.trigger(
+			RepositoryEventType.Delete.class, Folder.class, folder);
 
 		localRepository.deleteFolder(folderId);
 	}
@@ -235,5 +231,7 @@ public class CapabilityLocalRepository
 		return getRepository().updateFolder(
 			folderId, parentFolderId, title, description, serviceContext);
 	}
+
+	private final RepositoryEventHandler _repositoryEventHandler;
 
 }

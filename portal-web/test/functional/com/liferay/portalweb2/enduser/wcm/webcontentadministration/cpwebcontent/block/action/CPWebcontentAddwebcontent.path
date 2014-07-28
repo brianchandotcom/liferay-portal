@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DESCRIPTIVE_WORKFLOW_STATUS</td>
+	<td>//span[@class='workflow-status']/strong</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECTED_STRUCTURE</td>
 	<td>//span[@id='_15_structureNameLabel']</td>
 	<td></td>

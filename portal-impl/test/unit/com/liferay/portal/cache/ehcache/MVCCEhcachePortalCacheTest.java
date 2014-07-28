@@ -118,7 +118,7 @@ public class MVCCEhcachePortalCacheTest {
 		thread1.join();
 		thread2.join();
 
-		_assertVersion(_mvccEhcachePortalCache.get(_KEY_1), _VERSION_1);
+		_assertVersion(_VERSION_1, _mvccEhcachePortalCache.get(_KEY_1));
 
 		_testCacheListener.assertPut(_KEY_1, new MockMVCCModel(_VERSION_1));
 		_testCacheListener.assertActionsCount(1);
@@ -161,7 +161,7 @@ public class MVCCEhcachePortalCacheTest {
 		thread1.join();
 		thread2.join();
 
-		_assertVersion(_mvccEhcachePortalCache.get(_KEY_1), _VERSION_2);
+		_assertVersion(_VERSION_2, _mvccEhcachePortalCache.get(_KEY_1));
 
 		_testCacheListener.assertUpdated(_KEY_1, new MockMVCCModel(_VERSION_2));
 		_testCacheListener.assertActionsCount(1);
@@ -275,7 +275,7 @@ public class MVCCEhcachePortalCacheTest {
 			_mvccEhcachePortalCache.put(_KEY_1, new MockMVCCModel(_VERSION_1));
 		}
 
-		_assertVersion(_mvccEhcachePortalCache.get(_KEY_1), _VERSION_1);
+		_assertVersion(_VERSION_1, _mvccEhcachePortalCache.get(_KEY_1));
 
 		_testCacheListener.assertPut(_KEY_1, new MockMVCCModel(_VERSION_1));
 		_testCacheListener.assertActionsCount(1);
@@ -291,7 +291,7 @@ public class MVCCEhcachePortalCacheTest {
 			_mvccEhcachePortalCache.put(_KEY_1, new MockMVCCModel(_VERSION_0));
 		}
 
-		_assertVersion(_mvccEhcachePortalCache.get(_KEY_1), _VERSION_1);
+		_assertVersion(_VERSION_1, _mvccEhcachePortalCache.get(_KEY_1));
 
 		_testCacheListener.assertActionsCount(0);
 
@@ -305,7 +305,7 @@ public class MVCCEhcachePortalCacheTest {
 			_mvccEhcachePortalCache.put(_KEY_1, new MockMVCCModel(_VERSION_2));
 		}
 
-		_assertVersion(_mvccEhcachePortalCache.get(_KEY_1), _VERSION_2);
+		_assertVersion(_VERSION_2, _mvccEhcachePortalCache.get(_KEY_1));
 
 		_testCacheListener.assertUpdated(_KEY_1, new MockMVCCModel(_VERSION_2));
 		_testCacheListener.assertActionsCount(1);
@@ -322,13 +322,13 @@ public class MVCCEhcachePortalCacheTest {
 				_KEY_2, new MockMVCCModel(_VERSION_1));
 		}
 
-		_assertVersion(_mvccEhcachePortalCache.get(_KEY_2), _VERSION_1);
+		_assertVersion(_VERSION_1, _mvccEhcachePortalCache.get(_KEY_2));
 
 		_testCacheListener.assertActionsCount(0);
 	}
 
-	private void _assertVersion(MVCCModel mvccModel, long version) {
-		Assert.assertEquals(mvccModel.getMvccVersion(), version);
+	private void _assertVersion(long version, MVCCModel mvccModel) {
+		Assert.assertEquals(version, mvccModel.getMvccVersion());
 	}
 
 	private static final String _CACHE_NAME = "CACHE_NAME";

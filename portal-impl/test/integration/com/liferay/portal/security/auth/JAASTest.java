@@ -329,8 +329,7 @@ public class JAASTest {
 		);
 
 		MockServletContext mockServletContext =
-			new AutoDeployMockServletContext(
-				new FileSystemResourceLoader());
+			new AutoDeployMockServletContext(new FileSystemResourceLoader());
 
 		MockServletConfig mockServletConfig = new MockServletConfig(
 			mockServletContext);

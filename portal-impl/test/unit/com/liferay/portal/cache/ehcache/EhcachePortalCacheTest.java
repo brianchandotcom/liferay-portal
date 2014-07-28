@@ -25,6 +25,8 @@ import java.util.Set;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
 import net.sf.ehcache.event.CacheEventListener;
 import net.sf.ehcache.event.RegisteredEventListeners;
 
@@ -398,78 +400,72 @@ public class EhcachePortalCacheTest {
 		Assert.assertEquals(_VALUE_1, _ehcachePortalCache.get(_KEY_1));
 		Assert.assertNull(_ehcachePortalCache.get(_KEY_2));
 
+		int timeToLive = 600;
+
 		// Put
 
-		_ehcachePortalCache.put(_KEY_2, _VALUE_2, 3);
+		_ehcachePortalCache.put(_KEY_2, _VALUE_2, timeToLive);
 
-		Assert.assertEquals(_VALUE_1, _ehcachePortalCache.get(_KEY_1));
-		Assert.assertEquals(_VALUE_2, _ehcachePortalCache.get(_KEY_2));
+		Ehcache ehcache = _ehcachePortalCache.ehcache;
 
-		Thread.sleep(5000);
+		Element element = ehcache.get(_KEY_2);
 
-		Assert.assertEquals(_VALUE_1, _ehcachePortalCache.get(_KEY_1));
-		Assert.assertNull(_ehcachePortalCache.get(_KEY_2));
+		Assert.assertEquals(_KEY_2, element.getObjectKey());
+		Assert.assertEquals(_VALUE_2, element.getObjectValue());
+		Assert.assertEquals(timeToLive, element.getTimeToLive());
 
 		_defaultCacheListener.assertPut(_KEY_2, _VALUE_2);
-		_defaultCacheListener.assertExpired(_KEY_2, _VALUE_2);
-		_defaultCacheListener.assertActionsCount(2);
 		_defaultCacheListener.reset();
 
 		// Put if absent
 
-		_ehcachePortalCache.putIfAbsent(_KEY_2, _VALUE_2, 3);
+		ehcache.removeElement(element);
 
-		Assert.assertEquals(_VALUE_1, _ehcachePortalCache.get(_KEY_1));
-		Assert.assertEquals(_VALUE_2, _ehcachePortalCache.get(_KEY_2));
+		_ehcachePortalCache.putIfAbsent(_KEY_2, _VALUE_2, timeToLive);
 
-		Thread.sleep(5000);
+		element = ehcache.get(_KEY_2);
 
-		Assert.assertEquals(_VALUE_1, _ehcachePortalCache.get(_KEY_1));
-		Assert.assertNull(_ehcachePortalCache.get(_KEY_2));
+		Assert.assertEquals(_KEY_2, element.getObjectKey());
+		Assert.assertEquals(_VALUE_2, element.getObjectValue());
+		Assert.assertEquals(timeToLive, element.getTimeToLive());
 
 		_defaultCacheListener.assertPut(_KEY_2, _VALUE_2);
-		_defaultCacheListener.assertExpired(_KEY_2, _VALUE_2);
-		_defaultCacheListener.assertActionsCount(2);
 		_defaultCacheListener.reset();
 
 		// Replace 1
 
-		_ehcachePortalCache.replace(_KEY_1, _VALUE_2, 3);
+		ehcache.removeElement(element);
 
-		Assert.assertEquals(_VALUE_2, _ehcachePortalCache.get(_KEY_1));
-		Assert.assertNull(_ehcachePortalCache.get(_KEY_2));
+		_ehcachePortalCache.replace(_KEY_1, _VALUE_2, timeToLive);
 
-		Thread.sleep(5000);
+		element = ehcache.get(_KEY_1);
 
-		Assert.assertNull(_ehcachePortalCache.get(_KEY_1));
-		Assert.assertNull(_ehcachePortalCache.get(_KEY_2));
+		Assert.assertEquals(_KEY_1, element.getObjectKey());
+		Assert.assertEquals(_VALUE_2, element.getObjectValue());
+		Assert.assertEquals(timeToLive, element.getTimeToLive());
 
 		_defaultCacheListener.assertUpdated(_KEY_1, _VALUE_2);
-		_defaultCacheListener.assertExpired(_KEY_1, _VALUE_2);
-		_defaultCacheListener.assertActionsCount(2);
 		_defaultCacheListener.reset();
 
 		// Replace 2
+
+		ehcache.removeElement(element);
 
 		_ehcachePortalCache.put(_KEY_1, _VALUE_1);
 
 		Assert.assertEquals(_VALUE_1, _ehcachePortalCache.get(_KEY_1));
 		Assert.assertNull(_ehcachePortalCache.get(_KEY_2));
 
-		_ehcachePortalCache.replace(_KEY_1, _VALUE_1, _VALUE_2, 3);
+		_ehcachePortalCache.replace(_KEY_1, _VALUE_1, _VALUE_2, timeToLive);
 
-		Assert.assertEquals(_VALUE_2, _ehcachePortalCache.get(_KEY_1));
-		Assert.assertNull(_ehcachePortalCache.get(_KEY_2));
+		element = ehcache.get(_KEY_1);
 
-		Thread.sleep(5000);
-
-		Assert.assertNull(_ehcachePortalCache.get(_KEY_1));
-		Assert.assertNull(_ehcachePortalCache.get(_KEY_2));
+		Assert.assertEquals(_KEY_1, element.getObjectKey());
+		Assert.assertEquals(_VALUE_2, element.getObjectValue());
+		Assert.assertEquals(timeToLive, element.getTimeToLive());
 
 		_defaultCacheListener.assertPut(_KEY_1, _VALUE_1);
 		_defaultCacheListener.assertUpdated(_KEY_1, _VALUE_2);
-		_defaultCacheListener.assertExpired(_KEY_1, _VALUE_2);
-		_defaultCacheListener.assertActionsCount(3);
 		_defaultCacheListener.reset();
 	}
 

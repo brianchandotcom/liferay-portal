@@ -288,7 +288,7 @@ AUI.add(
 							showSearchInfo: true
 						};
 
-						if (event.searchEverywhere) {
+						if (event.searchInRootFolder) {
 							searchData[SEARCH_REPOSITORY_ID] = instance._config.repositories[0].id;
 							searchData[STR_SEARCH_FOLDER_ID] = instance._config.folders.rootFolderId;
 							searchData[STR_SHOW_REPOSITORY_TABS] = true;

@@ -312,6 +312,7 @@ public class VerifyProperties extends VerifyProcess {
 		"message.boards.email.message.updated.signature",
 		"message.boards.thread.locking.enabled", "portal.ctx",
 		"portal.security.manager.enable", "permissions.list.filter",
+		"permissions.thread.local.cache.max.size",
 		"permissions.user.check.algorithm", "persistence.provider",
 		"scheduler.classes", "schema.run.minimal", "shard.available.names",
 		"velocity.engine.resource.manager",

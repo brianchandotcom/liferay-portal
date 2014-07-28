@@ -121,7 +121,7 @@ public class MVCCEhcachePortalCacheTest {
 		_assertVersion(_mvccEhcachePortalCache.get(_KEY_1), _VERSION_1);
 
 		_testCacheListener.assertPut(_KEY_1, new MockMVCCModel(_VERSION_1));
-		_testCacheListener.assertActionsNumber(1);
+		_testCacheListener.assertActionsCount(1);
 		_testCacheListener.reset();
 
 		// Concurrent Put 2
@@ -164,7 +164,7 @@ public class MVCCEhcachePortalCacheTest {
 		_assertVersion(_mvccEhcachePortalCache.get(_KEY_1), _VERSION_2);
 
 		_testCacheListener.assertUpdated(_KEY_1, new MockMVCCModel(_VERSION_2));
-		_testCacheListener.assertActionsNumber(1);
+		_testCacheListener.assertActionsCount(1);
 		_testCacheListener.reset();
 
 		// Put with Exception
@@ -179,7 +179,7 @@ public class MVCCEhcachePortalCacheTest {
 		catch (Exception e) {
 			Assert.assertNull(_mvccEhcachePortalCache.get(_KEY_2));
 
-			_testCacheListener.assertActionsNumber(0);
+			_testCacheListener.assertActionsCount(0);
 		}
 	}
 
@@ -278,7 +278,7 @@ public class MVCCEhcachePortalCacheTest {
 		_assertVersion(_mvccEhcachePortalCache.get(_KEY_1), _VERSION_1);
 
 		_testCacheListener.assertPut(_KEY_1, new MockMVCCModel(_VERSION_1));
-		_testCacheListener.assertActionsNumber(1);
+		_testCacheListener.assertActionsCount(1);
 		_testCacheListener.reset();
 
 		// Put 2
@@ -293,7 +293,7 @@ public class MVCCEhcachePortalCacheTest {
 
 		_assertVersion(_mvccEhcachePortalCache.get(_KEY_1), _VERSION_1);
 
-		_testCacheListener.assertActionsNumber(0);
+		_testCacheListener.assertActionsCount(0);
 
 		// Put 3
 
@@ -308,7 +308,7 @@ public class MVCCEhcachePortalCacheTest {
 		_assertVersion(_mvccEhcachePortalCache.get(_KEY_1), _VERSION_2);
 
 		_testCacheListener.assertUpdated(_KEY_1, new MockMVCCModel(_VERSION_2));
-		_testCacheListener.assertActionsNumber(1);
+		_testCacheListener.assertActionsCount(1);
 		_testCacheListener.reset();
 
 		// Putquiet
@@ -324,7 +324,7 @@ public class MVCCEhcachePortalCacheTest {
 
 		_assertVersion(_mvccEhcachePortalCache.get(_KEY_2), _VERSION_1);
 
-		_testCacheListener.assertActionsNumber(0);
+		_testCacheListener.assertActionsCount(0);
 	}
 
 	private void _assertVersion(MVCCModel mvccModel, long version) {

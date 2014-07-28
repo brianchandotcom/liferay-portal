@@ -32,8 +32,8 @@ import org.junit.Assert;
 public class TestCacheListener<K extends Serializable, V>
 	implements CacheListener<K, V> {
 
-	public void assertActionsNumber(int number) {
-		Assert.assertEquals(number, _actions.size());
+	public void assertActionsCount(int count) {
+		Assert.assertEquals(count, _actions.size());
 	}
 
 	public void assertEvicted(K key, V value) {

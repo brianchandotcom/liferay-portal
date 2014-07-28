@@ -2327,6 +2327,7 @@
 
 		<execute macro="DMDocument#moveToHomePG">
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

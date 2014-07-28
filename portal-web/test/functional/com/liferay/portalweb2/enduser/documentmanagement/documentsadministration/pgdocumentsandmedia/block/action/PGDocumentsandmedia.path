@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
-	<td>//form[@id='_20_undoForm']</td>
+	<td>//form[contains(@id,'undoForm')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,11 +46,6 @@
 <tr>
 	<td>ERROR_MESSAGE</td>
 	<td>//div[contains(@class,'alert-danger')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUBSCRIBE_LINK</td>
-	<td>//div[@class='subscribe-action']/span/a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -81,22 +76,22 @@
 <!--FILTER-->
 <tr>
 	<td>FILTER_HOME</td>
-	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Home')]/a/span</td>
+	<td>//div[contains(@id,'folderContainer')]/ul/li[contains(.,'Home')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_HOME_ACTIONS</td>
-	<td>//div[@id='_20_folderContainer']//span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a</td>
+	<td>//div[contains(@id,'folderContainer')]//span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_RECENT</td>
-	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Recent')]/a/span</td>
+	<td>//div[contains(@id,'folderContainer')]/ul/li[contains(.,'Recent')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_MINE</td>
-	<td>//div[@id='_20_folderContainer']/ul/li[contains(.,'Mine')]/a/span</td>
+	<td>//div[contains(@id,'folderContainer')]/ul/li[contains(.,'Mine')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -133,32 +128,32 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_SELECT_ALL_CHECKBOX</td>
-	<td>//input[@id='_20_allRowIds']</td>
+	<td>//input[contains(@id,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ACTIONS</td>
-	<td>//ul[@id='_20_toolbarContainer']/li/a/span[contains(.,'Actions')]</td>
+	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD</td>
-	<td>//ul[@id='_20_toolbarContainer']/li/a/span[contains(.,'Add')]</td>
+	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Add']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_SORT_BY</td>
-	<td>//ul[@id='_20_toolbarContainer']/li/a/span[contains(.,'Sort By')]</td>
+	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Sort By']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_MANAGE</td>
-	<td>//ul[@id='_20_toolbarContainer']/li/a/span[contains(.,'Manage')]</td>
+	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Manage']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_DISPLAY_STYLE</td>
-	<td>//div[@id='_20_displayStyleButtons']/div/a</td>
+	<td>//div[contains(@id,'displayStyleButtons')]/li/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -190,7 +185,7 @@
 <!--BASIC_SEARCH-->
 <tr>
 	<td>BASIC_SEARCH_FIELD</td>
-	<td>//input[@name='_20_keywords']</td>
+	<td>//input[contains(@id,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -206,27 +201,27 @@
 <!--ACTIONS_MENULIST-->
 <tr>
 	<td>ACTIONS_MENULIST_CANCEL_CHECKOUT</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Cancel Checkout')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[@title='Cancel Checkout']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIONS_MENULIST_CHECKIN</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Checkin')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[@title='Checkin']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIONS_MENULIST_CHECKOUT</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li[3]/a[contains(.,'Checkout')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[@title='Checkout']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIONS_MENULIST_MOVE</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Move')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[@title='Move']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li[@id='_20_moveToTrashAction']/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[@title='Move to the Recycle Bin']</td>
 	<td></td>
 </tr>
 <tr>
@@ -237,52 +232,52 @@
 <!--ADD_MENULIST-->
 <tr>
 	<td>ADD_MENULIST_FOLDER</td>
-	<td>//li[@id='_20_addButtonContainer']/ul/li[contains(.,'Folder')]/a</td>
+	<td>//li[contains(@id,'addButtonContainer')]/ul/li/a[@role='menuitem' and contains(.,'Folder')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_SHORTCUT</td>
-	<td>//a[@role='menuitem' and contains(.,'Shortcut')]</td>
+	<td>//li[contains(@id,'addButtonContainer')]/ul/li/a[@role='menuitem' and contains(.,'Shortcut')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_REPOSITORY</td>
-	<td>//li[@id='_20_addButtonContainer']/ul/li[contains(.,'Repository')]/a</td>
+	<td>//li[contains(@id,'addButtonContainer')]/ul/li/a[@role='menuitem' and contains(.,'Repository')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_MULTIPLE_DOCUMENTS</td>
-	<td>//a[@role='menuitem' and contains(.,'Multiple Documents')]</td>
+	<td>//li[contains(@id,'addButtonContainer')]/ul/li/a[@role='menuitem' and contains(.,'Multiple Documents')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_BASIC_DOCUMENT</td>
-	<td>//a[@role='menuitem' and contains(.,'Basic Document')]</td>
+	<td>//li[contains(@id,'addButtonContainer')]/ul/li/a[@role='menuitem' and contains(.,'Basic Document')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_CONTRACT</td>
-	<td>//a[@role='menuitem' and contains(.,'Contract')]</td>
+	<td>//li[contains(@id,'addButtonContainer')]/ul/li/a[@role='menuitem' and contains(.,'Contract')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_MARKETING_BANNER</td>
-	<td>//a[@role='menuitem' and contains(.,'Marketing Banner')]</td>
+	<td>//li[contains(@id,'addButtonContainer')]/ul/li/a[@role='menuitem' and contains(.,'Marketing Banner')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_ONLINE_TRAINING</td>
-	<td>//a[@role='menuitem' and contains(.,'Online Training')]</td>
+	<td>//li[contains(@id,'addButtonContainer')]/ul/li/a[@role='menuitem' and contains(.,'Online Training')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_SALES_PRESENTATION</td>
-	<td>//a[@role='menuitem' and contains(.,'Sales Presentation')]</td>
+	<td>//li[contains(@id,'addButtonContainer')]/ul/li/a[@role='menuitem' and contains(.,'Sales Presentation')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MENULIST_DOCUMENT_TYPE</td>
-	<td>//a[@role='menuitem' and contains(.,'${key_dmDocumentTypeName}')]</td>
+	<td>//li[contains(@id,'addButtonContainer')]/ul/li/a[@role='menuitem' and contains(.,'${key_dmDocumentTypeName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -340,12 +335,12 @@
 <!--BREADCRUMB-->
 <tr>
 	<td>BREADCRUMB_HOME</td>
-	<td>//div[@id='_20_breadcrumbContainer']/ul/li[1]</td>
+	<td>//div[contains(@id,'breadcrumbContainer')]//ul/li[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BREADCRUMB_FOLDER_NAME</td>
-	<td>//div[@id='_20_breadcrumbContainer']/ul/li[contains(.,'${key_dmFolderName}')]</td>
+	<td>//div[contains(@id,'breadcrumbContainer')]//ul/li[contains(.,'${key_dmFolderName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -356,7 +351,7 @@
 <!--LIFERAY_SYNC-->
 <tr>
 	<td>LIFERAY_SYNC_LINK</td>
-	<td>//div[@id='_20_syncNotificationContent']/a</td>
+	<td>//div[contains(@id,'syncNotificationContent')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -485,7 +480,7 @@
 </tr>
 <tr>
 	<td>ENTRY_LIST_DOCUMENT_ACTION</td>
-	<td>//tr[@data-title='${key_dmDocumentTitle}']//a[@id='_20_ocerSearchContainer_1_menu']</td>
+	<td>//tr[@data-title='${key_dmDocumentTitle}']//span[contains(@class,'entry-action')]/div/a/</td>
 	<td></td>
 </tr>
 <tr>
@@ -494,6 +489,11 @@
 	<td></td>
 </tr>
 <!--FOLDER_MENULIST-->
+<tr>
+	<td>FOLDER_MENULIST_DOWNLOAD</td>
+	<td>//a[@role='menuitem' and contains(.,'Download')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>FOLDER_MENULIST_EDIT</td>
 	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
@@ -531,13 +531,13 @@
 </tr>
 <!--DOCUMENT_MENULIST-->
 <tr>
-	<td>DOCUMENT_MENULIST_EDIT</td>
-	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td>DOCUMENT_MENULIST_DOWNLOAD</td>
+	<td>//a[@role='menuitem' and contains(.,'Download')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_MENULIST_DOWNLOAD</td>
-	<td>//a[@role='menuitem' and contains(.,'Download')]</td>
+	<td>DOCUMENT_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>

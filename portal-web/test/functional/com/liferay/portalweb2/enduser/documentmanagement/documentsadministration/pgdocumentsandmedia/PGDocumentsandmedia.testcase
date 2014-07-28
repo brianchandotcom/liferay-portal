@@ -175,46 +175,30 @@
 	</command>
 
 	<command name="AddDocuments" priority="5">
-		<var name="dmDocumentDescription" value="DM Document Description" />
+		<var name="dmDocumentCounterList" value="1,2,3" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-		</execute>
+		<for list="${dmDocumentCounterList}" param="entryCount" >
+			<execute macro="DMDocument#addPG">
+				<var name="dmDocumentDescription" value="DM Document Description" />
+				<var name="dmDocumentFile" value="Document_${entryCount}.doc" />
+				<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+			</execute>
+		</for>
 
-		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentTitle" value="Document_1.doc" />
-		</execute>
+		<for list="${dmDocumentCounterList}" param="entryCount" >
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="${pageName}" />
+			</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentFile" value="Document_2.doc" />
-			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-		</execute>
-
-		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentTitle" value="Document_2.doc" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentFile" value="Document_3.doc" />
-			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-		</execute>
-
-		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentTitle" value="Document_3.doc" />
-		</execute>
+			<execute macro="DMDocument#viewAllPG">
+				<var name="dmDocumentDescription" value="DM Document Description" />
+				<var name="dmDocumentTitle" value="Document_${entryCount}.doc" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="AddDocumentType" priority="5">

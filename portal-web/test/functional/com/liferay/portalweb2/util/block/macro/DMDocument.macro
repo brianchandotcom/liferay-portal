@@ -538,7 +538,7 @@
 		<if>
 			<equals arg1="${checkedOut}" arg2="true" />
 			<then>
-				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You cannot modify this document because it was locked by ${userName}" />
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You cannot modify this document because it was locked by ${userName}" />
 			</then>
 			<else>
 				<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
@@ -840,7 +840,9 @@
 	</command>
 
 	<command name="moveToFolderPG">
-		<execute action="PGDocumentsandmediaFolder#check" locator-key1="FOLDER_ENTRIES_DOCUMENT_CHECKBOX" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="PGDocumentsandmediaFolder#check" locator-key1="ENTRY_ICON_FOLDER_CHECKBOX" />
 		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
 		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="ACTIONS_MENULIST_MOVE" value1="Move" />
 
@@ -867,7 +869,9 @@
 	</command>
 
 	<command name="moveToHomePG">
-		<execute action="PGDocumentsandmediaFolder#check" locator-key1="FOLDER_ENTRIES_DOCUMENT_CHECKBOX" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="PGDocumentsandmediaFolder#check" locator-key1="ENTRY_ICON_FOLDER_CHECKBOX" />
 		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
 		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="ACTIONS_MENULIST_MOVE" value1="Move" />
 
@@ -1559,7 +1563,7 @@
 	<command name="viewLockPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="FOLDER_ENTRIES_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="ENTRY_ICON_FOLDER_TITLE" value1="${dmDocumentTitle}" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />

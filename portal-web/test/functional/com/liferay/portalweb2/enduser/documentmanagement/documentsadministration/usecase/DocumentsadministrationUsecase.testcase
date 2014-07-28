@@ -220,7 +220,7 @@
 		</execute>
 
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_VERSION" value1="Version PWC" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_WORKFLOW_STATUS" value1="Status: Draft" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_WORKFLOW_STATUS" value1="Draft" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -280,7 +280,7 @@
 		</execute>
 
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_VERSION" value1="Version 1.1" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_WORKFLOW_STATUS" value1="Status: Approved" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_WORKFLOW_STATUS" value1="Approved" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -320,7 +320,7 @@
 		</execute>
 
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_VERSION" value1="Version 1.1" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_WORKFLOW_STATUS" value1="Status: Approved" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_WORKFLOW_STATUS" value1="Approved" />
 	</command>
 
 	<command name="Comments" priority="5">

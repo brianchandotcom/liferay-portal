@@ -76,6 +76,8 @@ if (assetRendererFactory != null) {
 		viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
 
 		viewURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString);
+
+		viewURL = AssetUtil.checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
 	}
 	else {
 		viewURL = viewFullContentURL.toString();

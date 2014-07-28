@@ -15,12 +15,7 @@
 package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
-import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
-import com.liferay.portal.kernel.repository.event.RepositoryEventType;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryRegistryPlugin;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
@@ -61,13 +56,7 @@ public class LiferayRepositoryRegistryPlugin
 	public void registerRepositoryEventListeners(
 		RepositoryEventRegistry repositoryEventRegistry) {
 
-		repositoryEventRegistry.registerRepositoryEventListener(
-			RepositoryEventType.Delete.class, FileEntry.class,
-			new DeleteFileEntryRepositoryEventListener());
-
-		repositoryEventRegistry.registerRepositoryEventListener(
-			RepositoryEventType.Delete.class, Folder.class,
-			new DeleteFolderRepositoryEventListener());
+		_trashCapability.registerEventListeners(repositoryEventRegistry);
 	}
 
 	public void setRepositoryCreator(RepositoryCreator repositoryCreator) {
@@ -80,27 +69,7 @@ public class LiferayRepositoryRegistryPlugin
 	private ClassNameLocalService _classNameLocalService;
 
 	private RepositoryCreator _repositoryCreator;
-	private TrashCapability _trashCapability = new LiferayTrashCapability();
-
-	private class DeleteFileEntryRepositoryEventListener
-		implements RepositoryEventListener
-			<RepositoryEventType.Delete, FileEntry> {
-
-		@Override
-		public void execute(FileEntry fileEntry) throws PortalException {
-			_trashCapability.deleteTrashEntry(fileEntry);
-		}
-
-	}
-
-	private class DeleteFolderRepositoryEventListener
-		implements RepositoryEventListener<RepositoryEventType.Delete, Folder> {
-
-		@Override
-		public void execute(Folder folder) throws PortalException {
-			_trashCapability.deleteTrashEntry(folder);
-		}
-
-	}
+	private LiferayTrashCapability _trashCapability =
+		new LiferayTrashCapability();
 
 }

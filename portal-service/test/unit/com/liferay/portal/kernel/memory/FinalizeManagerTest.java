@@ -15,11 +15,9 @@
 package com.liferay.portal.kernel.memory;
 
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
 import com.liferay.portal.kernel.util.ThreadUtil;
-
-import java.lang.ref.ReferenceQueue;
-import java.lang.ref.WeakReference;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -61,7 +59,7 @@ public class FinalizeManagerTest {
 
 		testObject = null;
 
-		gc();
+		GCUtil.gc();
 
 		FinalizeManager.register(new Object(), markFinalizeAction);
 
@@ -82,7 +80,7 @@ public class FinalizeManagerTest {
 
 		testObject = null;
 
-		gc();
+		GCUtil.gc();
 
 		long startTime = System.currentTimeMillis();
 
@@ -133,21 +131,6 @@ public class FinalizeManagerTest {
 						"state");
 			}
 		}
-	}
-
-	private static void gc() throws InterruptedException {
-		ReferenceQueue<Object> referenceQueue = new ReferenceQueue<Object>();
-
-		WeakReference<Object> weakReference = new WeakReference<Object>(
-			new Object(), referenceQueue);
-
-		while (weakReference.get() != null) {
-			System.gc();
-
-			System.runFinalization();
-		}
-
-		Assert.assertSame(weakReference, referenceQueue.remove());
 	}
 
 	private static final String _THREAD_ENABLED_KEY =

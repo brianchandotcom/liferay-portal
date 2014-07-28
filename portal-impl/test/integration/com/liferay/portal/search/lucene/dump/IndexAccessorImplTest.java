@@ -50,8 +50,6 @@ public class IndexAccessorImplTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		System.gc();
-
 		String indexPath = PropsValues.LUCENE_DIR.concat(
 			String.valueOf(_TEST_COMPANY_ID)).concat(StringPool.SLASH);
 

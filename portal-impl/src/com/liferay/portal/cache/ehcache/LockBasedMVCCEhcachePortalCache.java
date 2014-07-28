@@ -49,7 +49,7 @@ public class LockBasedMVCCEhcachePortalCache
 	}
 
 	@Override
-	protected void doPut(K key, V value, boolean quiet, int timeToLive) {
+	protected void doPut(K key, V value, int timeToLive, boolean quiet) {
 		if (key == null) {
 			throw new NullPointerException("Key is null");
 		}

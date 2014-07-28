@@ -79,22 +79,22 @@ public class BlockingPortalCache<K extends Serializable, V>
 
 	@Override
 	public void put(K key, V value) {
-		doPut(key, value, false, DEFAULT_TIME_TO_LIVE);
+		doPut(key, value, DEFAULT_TIME_TO_LIVE, false);
 	}
 
 	@Override
 	public void put(K key, V value, int timeToLive) {
-		doPut(key, value, false, timeToLive);
+		doPut(key, value, timeToLive, false);
 	}
 
 	@Override
 	public void putQuiet(K key, V value) {
-		doPut(key, value, true, DEFAULT_TIME_TO_LIVE);
+		doPut(key, value, DEFAULT_TIME_TO_LIVE, true);
 	}
 
 	@Override
 	public void putQuiet(K key, V value, int timeToLive) {
-		doPut(key, value, true, timeToLive);
+		doPut(key, value, timeToLive, true);
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class BlockingPortalCache<K extends Serializable, V>
 		_competeLatchMap.clear();
 	}
 
-	protected void doPut(K key, V value, boolean quiet, int timeToLive) {
+	protected void doPut(K key, V value, int timeToLive, boolean quiet) {
 		if (quiet) {
 			portalCache.putQuiet(key, value, timeToLive);
 		}

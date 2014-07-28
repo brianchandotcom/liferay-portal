@@ -35,25 +35,25 @@ public class MVCCEhcachePortalCache<K extends Serializable, V extends MVCCModel>
 
 	@Override
 	public void put(K key, V value) {
-		doPut(key, value, false, DEFAULT_TIME_TO_LIVE);
+		doPut(key, value, DEFAULT_TIME_TO_LIVE, false);
 	}
 
 	@Override
 	public void put(K key, V value, int timeToLive) {
-		doPut(key, value, false, timeToLive);
+		doPut(key, value, timeToLive, false);
 	}
 
 	@Override
 	public void putQuiet(K key, V value) {
-		doPut(key, value, true, DEFAULT_TIME_TO_LIVE);
+		doPut(key, value, DEFAULT_TIME_TO_LIVE, true);
 	}
 
 	@Override
 	public void putQuiet(K key, V value, int timeToLive) {
-		doPut(key, value, true, timeToLive);
+		doPut(key, value, timeToLive, true);
 	}
 
-	protected void doPut(K key, V value, boolean quiet, int timeToLive) {
+	protected void doPut(K key, V value, int timeToLive, boolean quiet) {
 		boolean replicate = false;
 
 		if (quiet) {

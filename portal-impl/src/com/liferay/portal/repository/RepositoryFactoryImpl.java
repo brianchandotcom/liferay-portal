@@ -74,7 +74,8 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 
 		return new CapabilityRepository(
 			repository, externalSupportedCapabilities,
-			externalExportedCapabilityClasses);
+			externalExportedCapabilityClasses,
+			repositoryConfiguration.getRepositoryEventHandler());
 	}
 
 	@Override
@@ -103,7 +104,8 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 
 		return new CapabilityRepository(
 			repository, repositoryConfiguration.getSupportedCapabilities(),
-			repositoryConfiguration.getExportedCapabilities());
+			repositoryConfiguration.getExportedCapabilities(),
+			repositoryConfiguration.getRepositoryEventHandler());
 	}
 
 	protected CMISRepositoryHandler getCMISRepositoryHandler(

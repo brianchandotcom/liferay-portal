@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -340,6 +341,76 @@ public class Field implements Serializable {
 
 	public void setValues(String[] values) {
 		_values = values;
+	}
+
+	public static class NestedFieldBuilder {
+
+		public NestedFieldBuilder addNestedField(
+			String name, String... values) {
+
+			Field field = new Field(name);
+
+			field.addField(new Field("value", values));
+
+			_doAddField(field);
+
+			return this;
+		}
+
+		public NestedFieldBuilder endArray() {
+			return endField();
+		}
+
+		public NestedFieldBuilder endField() {
+			if (_fields.size() > 1) {
+				_fields.removeLast();
+			}
+
+			return this;
+		}
+
+		public Field getField() {
+			if (!_fields.isEmpty()) {
+				return _fields.getLast();
+			}
+
+			return null;
+		}
+
+		public NestedFieldBuilder startArray(String name) {
+			FieldArray field = new FieldArray(name);
+
+			return _doStartField(field);
+		}
+
+		public NestedFieldBuilder startField() {
+			return startField(null);
+		}
+
+		public NestedFieldBuilder startField(String name) {
+			Field field = new Field(name);
+
+			return _doStartField(field);
+		}
+
+		private void _doAddField(Field newField) {
+			Field current = _fields.getLast();
+
+			current.addField(newField);
+		}
+
+		private NestedFieldBuilder _doStartField(Field field) {
+			if (!_fields.isEmpty()) {
+				_doAddField(field);
+			}
+
+			_fields.add(field);
+
+			return this;
+		}
+
+		private LinkedList<Field> _fields = new LinkedList<Field>();
+
 	}
 
 	private float _boost = 1;

@@ -14,11 +14,17 @@
 
 package com.liferay.portal.repository.liferayrepository;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryRegistryPlugin;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreatorRegistry;
+import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 
 /**
@@ -35,7 +41,7 @@ public class LiferayRepositoryRegistryPlugin
 	@Override
 	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
 		capabilityRegistry.addExportedCapability(
-			TrashCapability.class, new LiferayTrashCapability());
+			TrashCapability.class, _liferayTrashCapability);
 	}
 
 	@Override
@@ -45,10 +51,45 @@ public class LiferayRepositoryRegistryPlugin
 		repositoryCreatorRegistry.setRepositoryCreator(_repositoryCreator);
 	}
 
+	@Override
+	public void registerRepositoryEventListeners(
+		RepositoryEventRegistry repositoryEventRegistry) {
+
+		repositoryEventRegistry.registerRepositoryEventListener(
+			RepositoryEventType.Delete.class, FileEntry.class,
+			new DeleteFileEntryRepositoryEventListener());
+		repositoryEventRegistry.registerRepositoryEventListener(
+			RepositoryEventType.Delete.class, Folder.class,
+			new DeleteFolderRepositoryEventListener());
+	}
+
 	public void setRepositoryCreator(RepositoryCreator repositoryCreator) {
 		_repositoryCreator = repositoryCreator;
 	}
 
+	private TrashCapability _liferayTrashCapability =
+		new LiferayTrashCapability();
 	private RepositoryCreator _repositoryCreator;
+
+	private class DeleteFileEntryRepositoryEventListener
+		implements RepositoryEventListener
+			<RepositoryEventType.Delete, FileEntry> {
+
+		@Override
+		public void execute(FileEntry fileEntry) throws PortalException {
+			_liferayTrashCapability.deleteTrashEntry(fileEntry);
+		}
+
+	}
+
+	private class DeleteFolderRepositoryEventListener
+		implements RepositoryEventListener<RepositoryEventType.Delete, Folder> {
+
+		@Override
+		public void execute(Folder folder) throws PortalException {
+			_liferayTrashCapability.deleteTrashEntry(folder);
+		}
+
+	}
 
 }

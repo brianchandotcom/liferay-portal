@@ -280,6 +280,14 @@
 					vertical-align: text-bottom;
 				}
 			}
+
+			.content-link {
+				border: 1px solid;
+				display: inline-block;
+				font-size: 14px;
+				padding: 5px 7px;
+				vertical-align: bottom;
+			}
 		}
 
 		@include respond-to(phone) {

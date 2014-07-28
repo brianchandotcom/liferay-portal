@@ -255,6 +255,7 @@
 					'liferay-dockbar-add-base': {
 						path: 'dockbar_add_base.js',
 						requires: [
+							'anim',
 							'aui-base',
 							'liferay-dockbar',
 							'liferay-layout'

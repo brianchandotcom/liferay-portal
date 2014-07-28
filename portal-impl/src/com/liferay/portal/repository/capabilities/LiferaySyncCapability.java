@@ -42,57 +42,57 @@ public class LiferaySyncCapability implements SyncCapability {
 
 	@Override
 	public void addFolder(Folder folder) throws PortalException {
-		throw new UnsupportedOperationException("not implemented");
+		registerDLSyncEventCallback(DLSyncConstants.EVENT_ADD, folder);
 	}
 
 	@Override
 	public void deleteFileEntry(FileEntry fileEntry) throws PortalException {
-		throw new UnsupportedOperationException("not implemented");
+		registerDLSyncEventCallback(DLSyncConstants.EVENT_DELETE, fileEntry);
 	}
 
 	@Override
 	public void deleteFolder(Folder folder) throws PortalException {
-		throw new UnsupportedOperationException("not implemented");
+		registerDLSyncEventCallback(DLSyncConstants.EVENT_DELETE, folder);
 	}
 
 	@Override
 	public void moveFileEntry(FileEntry fileEntry) throws PortalException {
-		throw new UnsupportedOperationException("not implemented");
+		registerDLSyncEventCallback(DLSyncConstants.EVENT_MOVE, fileEntry);
 	}
 
 	@Override
 	public void moveFolder(Folder folder) throws PortalException {
-		throw new UnsupportedOperationException("not implemented");
+		registerDLSyncEventCallback(DLSyncConstants.EVENT_MOVE, folder);
 	}
 
 	@Override
 	public void restoreFileEntry(FileEntry fileEntry) throws PortalException {
-		throw new UnsupportedOperationException("not implemented");
+		registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, fileEntry);
 	}
 
 	@Override
 	public void restoreFolder(Folder folder) throws PortalException {
-		throw new UnsupportedOperationException("not implemented");
+		registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, folder);
 	}
 
 	@Override
 	public void trashFileEntry(FileEntry fileEntry) throws PortalException {
-		throw new UnsupportedOperationException("not implemented");
+		registerDLSyncEventCallback(DLSyncConstants.EVENT_TRASH, fileEntry);
 	}
 
 	@Override
 	public void trashFolder(Folder folder) throws PortalException {
-		throw new UnsupportedOperationException("not implemented");
+		registerDLSyncEventCallback(DLSyncConstants.EVENT_TRASH, folder);
 	}
 
 	@Override
 	public void updateFileEntry(FileEntry fileEntry) throws PortalException {
-		throw new UnsupportedOperationException("not implemented");
+		registerDLSyncEventCallback(DLSyncConstants.EVENT_UPDATE, fileEntry);
 	}
 
 	@Override
 	public void updateFolder(Folder folder) throws PortalException {
-		throw new UnsupportedOperationException("not implemented");
+		registerDLSyncEventCallback(DLSyncConstants.EVENT_UPDATE, folder);
 	}
 
 	protected boolean isStagingGroup(long groupId) {

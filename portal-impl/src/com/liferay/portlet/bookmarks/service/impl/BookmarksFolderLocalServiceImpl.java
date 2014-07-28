@@ -804,7 +804,7 @@ public class BookmarksFolderLocalServiceImpl
 
 				BookmarksEntry entry = (BookmarksEntry)object;
 
-				if (entry.isInTrashImplicitly()) {
+				if (!entry.isInTrashImplicitly()) {
 					continue;
 				}
 
@@ -850,7 +850,7 @@ public class BookmarksFolderLocalServiceImpl
 
 				BookmarksFolder folder = (BookmarksFolder)object;
 
-				if (folder.isInTrashImplicitly()) {
+				if (!folder.isInTrashImplicitly()) {
 					continue;
 				}
 

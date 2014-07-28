@@ -248,18 +248,6 @@
 			<bean class="com.liferay.portal.repository.RepositoryFactoryImpl" depends-on="com.liferay.portal.model.ModelHintsUtil" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.repository.registry.RepositoryCatalog" class="com.liferay.portal.repository.registry.RepositoryCatalogImpl" init-method="loadDefaultRepositoryRegistryPlugins">
-		<property name="legacyExternalRepositoryCreator">
-			<bean class="com.liferay.portal.repository.external.LegacyExternalRepositoryCreator" />
-		</property>
-		<property name="liferayRepositoryRegistryPlugin">
-			<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryRegistryPlugin">
-				<property name="repositoryCreator">
-					<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryCreator" />
-				</property>
-			</bean>
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil" class="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil">
 		<property name="sPIRegistry">
 			<bean class="com.liferay.portal.resiliency.spi.SPIRegistryImpl">
@@ -564,6 +552,21 @@
 	<bean id="com.liferay.portal.portletfilerepository.PortletFileRepository" class="com.liferay.portal.portletfilerepository.PortletFileRepositoryImpl" />
 	<bean id="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" class="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil">
 		<property name="portletFileRepository" ref="com.liferay.portal.portletfilerepository.PortletFileRepository" />
+	</bean>
+	<bean id="com.liferay.portal.repository.registry.RepositoryCatalog" class="com.liferay.portal.repository.registry.RepositoryCatalogImpl" init-method="loadDefaultRepositoryRegistryPlugins">
+		<property name="legacyExternalRepositoryCreator">
+			<bean class="com.liferay.portal.repository.external.LegacyExternalRepositoryCreator" />
+		</property>
+		<property name="liferayRepositoryRegistryPlugin">
+			<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryRegistryPlugin">
+				<property name="repositoryCreator">
+					<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryCreator" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.repository.registry.RepositoryCatalogUtil" class="com.liferay.portal.repository.registry.RepositoryCatalogUtil">
+		<property name="repositoryCatalog" ref="com.liferay.portal.repository.registry.RepositoryCatalog" />
 	</bean>
 	<bean id="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper" class="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper" factory-method="createPortalResiliencyPortletContainerWrapper">
 		<constructor-arg name="portletContainer" ref="com.liferay.portlet.PortletContainerImpl" />

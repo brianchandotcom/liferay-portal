@@ -115,7 +115,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 				<%= (folder != null) ? LanguageUtil.format(request, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(folder.getName())}, false) : LanguageUtil.format(request, "searched-for-x-everywhere", HtmlUtil.escape(keywords), false) %>
 			</span>
 
-			<c:if test="<%= folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
+			<c:if test="<%= folderId != rootFolderId %>">
 				<span class="change-search-folder">
 
 					<%

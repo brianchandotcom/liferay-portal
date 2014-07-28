@@ -166,7 +166,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATION_MENU_MARK_ALL_AS_READ</td>
-	<td>//a[contains(text(),'Mark All as Read')]</td>
+	<td>//a[@class='mark-all-as-read']</td>
 	<td></td>
 </tr>
 <tr>

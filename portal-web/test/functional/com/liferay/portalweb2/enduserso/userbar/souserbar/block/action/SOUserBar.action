@@ -1,10 +1,4 @@
 <definition>
-	<command name="assertElementNotPresent">
-		<case locator-key1="NOTIFICATION_MENU_MARK_ALL_AS_READ">
-			<execute function="AssertElementNotPresent#assertNotVisible" />
-		</case>
-	</command>
-
 	<command name="assertTextEquals">
 		<case locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT">
 			<execute function="AssertTextEquals#assertPartialText" />

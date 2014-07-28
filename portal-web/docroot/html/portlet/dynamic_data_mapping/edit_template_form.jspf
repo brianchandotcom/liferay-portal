@@ -87,18 +87,20 @@ JSONArray fieldsJSONArray = _getFormTemplateFieldsJSONArray(structure, script);
 		function(mode) {
 			var A = AUI();
 
+			var formBuilder = window.<portlet:namespace />formBuilder;
+
 			var modeEdit = (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>');
 
-			window.<portlet:namespace />formBuilder.set('allowRemoveRequiredFields', modeEdit);
+			formBuilder.set('allowRemoveRequiredFields', modeEdit);
 
-			window.<portlet:namespace />formBuilder.get('fields').each(A.rbind('<portlet:namespace />setFieldsHiddenAttributes', window, mode));
+			formBuilder.get('fields').each(A.rbind('<portlet:namespace />setFieldsHiddenAttributes', window, mode));
 
-			A.Array.each(window.<portlet:namespace />formBuilder.get('availableFields'), A.rbind('<portlet:namespace />setFieldsHiddenAttributes', window, mode));
+			A.Array.each(formBuilder.get('availableFields'), A.rbind('<portlet:namespace />setFieldsHiddenAttributes', window, mode));
 
-			var editingField = window.<portlet:namespace />formBuilder.editingField;
+			var editingField = formBuilder.editingField;
 
 			if (editingField) {
-				window.<portlet:namespace />formBuilder.propertyList.set('data', window.<portlet:namespace />formBuilder.getFieldProperties(editingField));
+				formBuilder.propertyList.set('data', formBuilder.getFieldProperties(editingField, true));
 			}
 		},
 		['aui-base']

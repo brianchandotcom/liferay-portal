@@ -148,6 +148,8 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
+						instance.MAP_HIDDEN_FIELD_ATTRS = A.clone(MAP_HIDDEN_FIELD_ATTRS);
+
 						var translationManager = instance.translationManager = new Liferay.TranslationManager(instance.get('translationManager'));
 
 						instance.after(

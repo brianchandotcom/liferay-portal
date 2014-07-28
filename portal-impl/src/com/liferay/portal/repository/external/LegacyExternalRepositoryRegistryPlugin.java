@@ -37,6 +37,11 @@ public class LegacyExternalRepositoryRegistryPlugin
 	}
 
 	@Override
+	public boolean isExternalRepository() {
+		return true;
+	}
+
+	@Override
 	public void registerRepositoryCreator(
 		RepositoryCreatorRegistry repositoryCreatorRegistry) {
 

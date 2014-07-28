@@ -34,6 +34,11 @@ public class LiferayRepositoryRegistryPlugin
 	}
 
 	@Override
+	public boolean isExternalRepository() {
+		return false;
+	}
+
+	@Override
 	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
 		capabilityRegistry.addExportedCapability(
 			TrashCapability.class, _liferayTrashCapability);

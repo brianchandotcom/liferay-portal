@@ -24,6 +24,9 @@ public abstract class BaseRepositoryRegistryPlugin
 	public abstract String getClassName();
 
 	@Override
+	public abstract boolean isExternalRepository();
+
+	@Override
 	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
 	}
 

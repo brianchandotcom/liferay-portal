@@ -264,7 +264,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			EntityCacheUtil.clearCache();
 			EntityCacheUtil.clearLocalCache();
 			PermissionCacheUtil.clearCache();
-			PermissionCacheUtil.clearLocalCache();
 			TemplateResourceLoaderUtil.clearCache();
 			WikiCacheUtil.clearCache(0);
 

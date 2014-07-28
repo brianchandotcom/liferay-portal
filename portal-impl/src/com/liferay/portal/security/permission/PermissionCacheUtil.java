@@ -17,16 +17,11 @@ package com.liferay.portal.security.permission;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
-
-import java.util.Map;
-
-import org.apache.commons.collections.map.LRUMap;
 
 /**
  * @author Charles May
@@ -56,26 +51,16 @@ public class PermissionCacheUtil {
 			return;
 		}
 
-		clearLocalCache();
-
 		_permissionCheckerBagPortalCache.removeAll();
 		_permissionPortalCache.removeAll();
 		_resourceBlockIdsBagCache.removeAll();
 		_userPermissionCheckerBagPortalCache.removeAll();
 	}
 
-	public static void clearLocalCache() {
-		if (_localCacheAvailable) {
-			Map<Serializable, Object> localCache = _localCache.get();
-
-			localCache.clear();
-		}
-	}
-
 	public static PermissionCheckerBag getBag(long userId, long groupId) {
 		BagKey bagKey = new BagKey(userId, groupId);
 
-		return get(bagKey, _permissionCheckerBagPortalCache);
+		return _permissionCheckerBagPortalCache.get(bagKey);
 	}
 
 	public static Boolean getPermission(
@@ -85,7 +70,7 @@ public class PermissionCacheUtil {
 		PermissionKey permissionKey = new PermissionKey(
 			userId, signedIn, groupId, name, primKey, actionId);
 
-		return get(permissionKey, _permissionPortalCache);
+		return _permissionPortalCache.get(permissionKey);
 	}
 
 	public static ResourceBlockIdsBag getResourceBlockIdsBag(
@@ -94,11 +79,11 @@ public class PermissionCacheUtil {
 		ResourceBlockIdsBagKey resourceBlockIdsBagKey =
 			new ResourceBlockIdsBagKey(companyId, groupId, userId, name);
 
-		return get(resourceBlockIdsBagKey, _resourceBlockIdsBagCache);
+		return _resourceBlockIdsBagCache.get(resourceBlockIdsBagKey);
 	}
 
 	public static UserPermissionCheckerBag getUserBag(long userId) {
-		return get(userId, _userPermissionCheckerBagPortalCache);
+		return _userPermissionCheckerBagPortalCache.get(userId);
 	}
 
 	public static void putBag(
@@ -110,7 +95,7 @@ public class PermissionCacheUtil {
 
 		BagKey bagKey = new BagKey(userId, groupId);
 
-		put(bagKey, bag, _permissionCheckerBagPortalCache);
+		_permissionCheckerBagPortalCache.put(bagKey, bag);
 	}
 
 	public static void putPermission(
@@ -120,7 +105,7 @@ public class PermissionCacheUtil {
 		PermissionKey permissionKey = new PermissionKey(
 			userId, signedIn, groupId, name, primKey, actionId);
 
-		put(permissionKey, value, _permissionPortalCache);
+		_permissionPortalCache.put(permissionKey, value);
 	}
 
 	public static void putResourceBlockIdsBag(
@@ -134,53 +119,17 @@ public class PermissionCacheUtil {
 		ResourceBlockIdsBagKey resourceBlockIdsBagKey =
 			new ResourceBlockIdsBagKey(companyId, groupId, userId, name);
 
-		put(
-			resourceBlockIdsBagKey, resourceBlockIdsBag,
-			_resourceBlockIdsBagCache);
+		_resourceBlockIdsBagCache.put(
+			resourceBlockIdsBagKey, resourceBlockIdsBag);
 	}
 
 	public static void putUserBag(
 		long userId, UserPermissionCheckerBag userPermissionCheckerBag) {
 
-		put(
-			userId, userPermissionCheckerBag,
-			_userPermissionCheckerBagPortalCache);
+		_userPermissionCheckerBagPortalCache.put(
+			userId, userPermissionCheckerBag);
 	}
 
-	protected static
-		<K extends Serializable, V, C extends PortalCache<K, V>> V get(
-			K key, C portalCache) {
-
-		V value = null;
-
-		if (_localCacheAvailable) {
-			Map<K, V> localCache = _localCache.get();
-
-			value = localCache.get(key);
-		}
-
-		if (value == null) {
-			value = portalCache.get(key);
-		}
-
-		return value;
-	}
-
-	protected static
-		<K extends Serializable, V, C extends PortalCache<K, V>> void put(
-			K key, V value, C portalCache) {
-
-		if (_localCacheAvailable) {
-			Map<K, V> localCache = _localCache.get();
-
-			localCache.put(key, value);
-		}
-
-		portalCache.put(key, value);
-	}
-
-	private static ThreadLocal<LRUMap> _localCache;
-	private static boolean _localCacheAvailable;
 	private static PortalCache<BagKey, PermissionCheckerBag>
 		_permissionCheckerBagPortalCache = MultiVMPoolUtil.getCache(
 			PERMISSION_CHECKER_BAG_CACHE_NAME,
@@ -331,16 +280,6 @@ public class PermissionCacheUtil {
 		private final String _name;
 		private final long _userId;
 
-	}
-
-	static {
-		if (PropsValues.PERMISSIONS_THREAD_LOCAL_CACHE_MAX_SIZE > 0) {
-			_localCache = new AutoResetThreadLocal<LRUMap>(
-				PermissionCacheUtil.class + "._localCache",
-				new LRUMap(
-					PropsValues.PERMISSIONS_THREAD_LOCAL_CACHE_MAX_SIZE));
-			_localCacheAvailable = true;
-		}
 	}
 
 }

@@ -15,14 +15,20 @@
 package com.liferay.portal.repository.capabilities;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryModel;
+import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
@@ -30,6 +36,9 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncEvent;
 import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +72,38 @@ public class LiferaySyncCapability implements SyncCapability {
 	@Override
 	public void moveFolder(Folder folder) throws PortalException {
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_MOVE, folder);
+	}
+
+	public void registerRepositoryEventListeners(
+		RepositoryEventRegistry repositoryEventRegistry) {
+
+		registerRepositoryEventListener(
+			repositoryEventRegistry, RepositoryEventType.Add.class,
+			Folder.class, "addFolder");
+
+		registerRepositoryEventListener(
+			repositoryEventRegistry, RepositoryEventType.Update.class,
+			FileEntry.class, "updateFileEntry");
+
+		registerRepositoryEventListener(
+			repositoryEventRegistry, RepositoryEventType.Update.class,
+			Folder.class, "updateFolder");
+
+		registerRepositoryEventListener(
+			repositoryEventRegistry, RepositoryEventType.Delete.class,
+			FileEntry.class, "deleteFileEntry");
+
+		registerRepositoryEventListener(
+			repositoryEventRegistry, RepositoryEventType.Delete.class,
+			Folder.class, "deleteFolder");
+
+		registerRepositoryEventListener(
+			repositoryEventRegistry, RepositoryEventType.Move.class,
+			FileEntry.class, "moveFileEntry");
+
+		registerRepositoryEventListener(
+			repositoryEventRegistry, RepositoryEventType.Move.class,
+			Folder.class, "moveFolder");
 	}
 
 	@Override
@@ -174,6 +215,50 @@ public class LiferaySyncCapability implements SyncCapability {
 
 		registerDLSyncEventCallback(
 			event, DLSyncConstants.TYPE_FOLDER, folder.getFolderId());
+	}
+
+	protected <S extends RepositoryEventType, T extends RepositoryModel<T>>
+		void registerRepositoryEventListener(
+			RepositoryEventRegistry repositoryEventRegistry, Class<S> eventType,
+			Class<T> modelClass, String methodName) {
+
+		RepositoryEventListener<S, T> eventListener =
+			new MethodKeyRepositoryEventListener<S, T>(
+				new MethodKey(
+					LiferaySyncCapability.class, methodName, modelClass));
+
+		repositoryEventRegistry.registerRepositoryEventListener(
+			eventType, modelClass, eventListener);
+	}
+
+	private class MethodKeyRepositoryEventListener
+			<S extends RepositoryEventType, T extends RepositoryModel<T>>
+		implements RepositoryEventListener<S, T> {
+
+		public MethodKeyRepositoryEventListener(MethodKey methodKey) {
+			_methodKey = methodKey;
+		}
+
+		@Override
+		public void execute(T target) throws PortalException {
+			try {
+				Method method = _methodKey.getMethod();
+
+				method.invoke(LiferaySyncCapability.this, target);
+			}
+			catch (IllegalAccessException iae) {
+				throw new SystemException(iae);
+			}
+			catch (InvocationTargetException ite) {
+				throw new SystemException(ite);
+			}
+			catch (NoSuchMethodException nsme) {
+				throw new SystemException(nsme);
+			}
+		}
+
+		private MethodKey _methodKey;
+
 	}
 
 }

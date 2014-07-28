@@ -110,6 +110,31 @@
 	<td></td>
 </tr>
 <tr>
+	<td>YOUR_RATING_STAR_CLICK_1</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[contains(@class,'rating-element icon-star')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_CLICK_2</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[contains(@class,'rating-element icon-star')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_CLICK_3</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[contains(@class,'rating-element icon-star')])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_CLICK_4</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[contains(@class,'rating-element icon-star')])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_CLICK_5</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[contains(@class,'rating-element icon-star')])[5]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>YOUR_RATING_STAR_EMPTY_1</td>
 	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[1]</td>
 	<td></td>

@@ -918,7 +918,7 @@
 
 		<execute action="PGCalendarVieweventdetails#selectFrame" locator-key1="VIEW_EVENT_IFRAME" />
 		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="EVENT_TITLE" value1="${eventTitle}" />
-		<execute action="PGCalendarVieweventdetails#click" locator-key1="YOUR_RATING_STAR_EMPTY_4" />
+		<execute action="PGCalendarVieweventdetails#click" locator-key1="YOUR_RATING_STAR_CLICK_4" />
 
 		<execute action="PGCalendarVieweventdetails#selectFrame" value1="relative=top" />
 	</command>

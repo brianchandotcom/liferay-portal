@@ -239,6 +239,7 @@ public class JournalConverterImpl implements JournalConverter {
 		throws Exception {
 
 		String name = dynamicElementElement.attributeValue("name");
+		String instanceId = dynamicElementElement.attributeValue("instance-id");
 
 		if (!ddmStructure.hasField(name)) {
 			return;
@@ -263,7 +264,7 @@ public class JournalConverterImpl implements JournalConverter {
 			}
 		}
 
-		updateFieldsDisplay(ddmFields, name);
+		updateFieldsDisplay(ddmFields, name, instanceId);
 
 		List<Element> childrenDynamicElementElements =
 			dynamicElementElement.elements("dynamic-element");
@@ -429,6 +430,30 @@ public class JournalConverterImpl implements JournalConverter {
 		return ddmField;
 	}
 
+	protected String getFieldInstanceId(
+		Fields ddmFields, String fieldName, int index) {
+
+		Field fieldsDisplayField = ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+
+		String prefix = fieldName.concat(DDMImpl.INSTANCE_SEPARATOR);
+
+		String[] fieldsDisplayValues = StringUtil.split(
+			(String)fieldsDisplayField.getValue());
+
+		for (String fieldsDisplayValue : fieldsDisplayValues) {
+			if (fieldsDisplayValue.startsWith(prefix)) {
+				index--;
+
+				if (index < 0) {
+					return StringUtil.extractLast(
+						fieldsDisplayValue, DDMImpl.INSTANCE_SEPARATOR);
+				}
+			}
+		}
+
+		return null;
+	}
+
 	protected Serializable getFieldValue(
 			String dataType, String type, Element dynamicContentElement)
 		throws Exception {
@@ -553,6 +578,12 @@ public class JournalConverterImpl implements JournalConverter {
 				childDynamicElementElement.addAttribute(
 					"index", String.valueOf(i));
 
+				String instanceId = getFieldInstanceId(
+					ddmFields, fieldName, (count + i));
+
+				childDynamicElementElement.addAttribute(
+					"instance-id", instanceId);
+
 				updateContentDynamicElement(
 					childDynamicElementElement, ddmStructure, ddmFields,
 					ddmFieldsCounter);
@@ -587,6 +618,10 @@ public class JournalConverterImpl implements JournalConverter {
 		int count = ddmFieldsCounter.get(fieldName);
 
 		dynamicElementElement.addAttribute("index", String.valueOf(count));
+
+		String instanceId = getFieldInstanceId(ddmFields, fieldName, count);
+
+		dynamicElementElement.addAttribute("instance-id", instanceId);
 
 		Field ddmField = ddmFields.get(fieldName);
 
@@ -814,10 +849,15 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 	}
 
-	protected void updateFieldsDisplay(Fields ddmFields, String fieldName) {
-		String fieldsDisplayValue =
-			fieldName.concat(DDMImpl.INSTANCE_SEPARATOR).concat(
-				StringUtil.randomString());
+	protected void updateFieldsDisplay(
+		Fields ddmFields, String fieldName, String instanceId) {
+
+		if (Validator.isNull(instanceId)) {
+			instanceId = StringUtil.randomString();
+		}
+
+		String fieldsDisplayValue = fieldName.concat(
+			DDMImpl.INSTANCE_SEPARATOR).concat(instanceId);
 
 		Field fieldsDisplayField = ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 

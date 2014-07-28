@@ -576,6 +576,35 @@
 		</if>
 	</command>
 
+	<command name="addWithStructureAndWorkflowCP">
+		<var name="key_structureName" value="${structureName}" />
+
+		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_ADD" value1="Add"  />
+		<execute action="CPWebcontent#assertClick" locator-key1="ADD_MENULIST_STRUCTURE_NAME" value1="${structureName}" />
+
+		<execute action="CPWebcontentAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
+
+		<if>
+			<isset var="webContentText" />
+			<then>
+				<var name="key_fieldName" value="Text" />
+
+				<execute action="CPWebcontentAddwebcontent#type" locator-key1="TEXT_FIELD" value1="${webContentText}" />
+			</then>
+		</if>
+
+		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+	</command>
+
 	<command name="addWithStructureCP">
 		<var name="key_structureName" value="${structureName}" />
 
@@ -1489,6 +1518,19 @@
 		<execute action="CPWebcontent#assertTextEquals" locator-key1="ADD_MENULIST_STRUCTURE_NAME" value1="${structureName}" />
 	</command>
 
+	<command name="viewStructureWithWorkflowCP">
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_WORKFLOW_STATUS" value1="${workflowStatus}" />
+		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+
+		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="DESCRIPTIVE_WORKFLOW_STATUS" value1="${workflowStatusDescriptive}" />
+		<execute action="CPWebcontentEditwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
+	</command>
+
 	<command name="viewTextFieldWidth">
 		<var name="key_structureName" value="${structureName}" />
 
@@ -1579,6 +1621,7 @@
 		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_WORKFLOW_STATUS" value1="${workflowStatus}" />
 		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
 
+		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="DESCRIPTIVE_WORKFLOW_STATUS" value1="${workflowStatusDescriptive}" />
 		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 		<execute action="CPWebcontentAddwebcontent#selectFrame" locator-key1="CONTENT_FIELD" />
 		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="BODY_FIELD" value1="${webContentContent}" />

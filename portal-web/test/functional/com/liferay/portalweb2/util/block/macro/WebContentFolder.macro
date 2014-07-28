@@ -37,6 +37,48 @@
 		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${subfolderName}" />
 	</command>
 
+	<command name="configureWorkflowCP">
+		<execute macro="WebContentFolder#gotoEditCP">
+			<var name="folderName" value="${folderName}" />
+			<var name="webContentTitle" value="${folderName}" />
+		</execute>
+
+		<if>
+			<equals arg1="${workflowRestriction}" arg2="Parent Folder" />
+			<then>
+				<execute action="CPWebcontentEditfolder#click" locator-key1="WORKFLOW_PARENT_FOLDER_RADIO" />
+			</then>
+			<elseif>
+				<equals arg1="${workflowRestriction}" arg2="Specific Restrictions" />
+				<then>
+					<execute action="CPWebcontentEditfolder#click" locator-key1="WORKFLOW_SPECIFIC_RESTRICTIONS_RADIO" />
+					<execute action="CPWebcontentEditfolder#assertClick" locator-key1="WORKFLOW_SPECIFIC_RESTRICTIONS_CHOOSE_STRUCTURE_BUTTON" value1="Choose Structure" />
+
+					<execute action="CPWebcontentStructuresAddstructure#selectFrame" value1="relative=top" />
+
+					<execute action="CPWebcontentStructuresAddStructureChoosestructure#selectFrame" locator-key1="STRUCTURE_IFRAME" />
+
+					<var name="key_structureName" value="${structureName}" />
+
+					<execute action="CPWebcontentStructuresAddStructureChoosestructure#assertClick" locator-key1="STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+
+					<execute action="CPWebcontentEditfolder#select" locator-key1="WORKFLOW_SPECIFIC_RESTRICTIONS_STRUCTURE_WORKFLOW_SELECT" value1="${workflowDefinition}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${workflowRestriction}" arg2="Default Workflow" />
+				<then>
+					<execute action="CPWebcontentEditfolder#click" locator-key1="WORKFLOW_DEFAULT_WORKFLOW_RADIO" />
+					<execute action="CPWebcontentEditfolder#select" locator-key1="WORKFLOW_DEFAULT_WORKFLOW_WORKFLOW_SELECT" value1="${workflowDefinition}" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="CPWebcontentEditfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="gotoCP">
 		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
 		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
@@ -45,6 +87,16 @@
 
 		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
 		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
+	</command>
+
+	<command name="gotoEditCP">
+		<var name="key_webContentTitle" value="${folderName}" />
+
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute action="CPWebcontent#click" locator-key1="ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
+		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
 	</command>
 
 	<command name="moveToRecycleBinCP">

@@ -16,8 +16,6 @@ package com.liferay.portlet.wiki.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -131,7 +129,6 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			getUserId(), nodeId, title, fileName, inputStream, mimeType);
 	}
 
-	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public void addPageAttachments(
 			long nodeId, String title,

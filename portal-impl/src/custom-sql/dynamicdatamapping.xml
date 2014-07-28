@@ -22,19 +22,27 @@
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D_S_T">
 		<![CDATA[
 			SELECT
-				DISTINCT {DDMStructure.*}
+				{DDMStructure.*}
 			FROM
-				DDMStructure
-			WHERE
-				(companyId = ?) AND
-				[$GROUP_ID$]
-				(classNameId = ? OR ? IS NULL) AND
 				(
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(storageType LIKE ? [$AND_OR_NULL_CHECK$])
-				) AND
-				(type_ = ?)
+					SELECT DISTINCT
+						uuid_
+					FROM
+						DDMStructure
+					WHERE
+						(companyId = ?) AND
+						[$GROUP_ID$]
+						(classNameId = ? OR ? IS NULL) AND
+						(
+							(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(storageType LIKE ? [$AND_OR_NULL_CHECK$])
+						) AND
+						(type_ = ?)
+				) TEMP_TABLE
+				INNER JOIN
+					DDMStructure ON
+						(TEMP_TABLE.uuid_ = DDMStructure.uuid_)
 			ORDER BY
 				DDMStructure.structureId DESC
 		]]>
@@ -84,23 +92,31 @@
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByG_C_SC">
 		<![CDATA[
 			SELECT
-				DISTINCT {DDMTemplate.*}
+				{DDMTemplate.*}
 			FROM
-				DDMTemplate
-			WHERE
-				[$GROUP_ID$]
-				(classNameId = ?) AND
 				(
-					(classPK = 0) OR
-					(classPK IN (
-						SELECT
-							DDMStructure.structureId
-						FROM
-							DDMStructure
-						WHERE
-							(DDMStructure.classNameId = ?)
-					))
-				)
+					SELECT DISTINCT
+						uuid_
+					FROM
+						DDMTemplate
+					WHERE
+						[$GROUP_ID$]
+						(classNameId = ?) AND
+						(
+							(classPK = 0) OR
+							(classPK IN (
+								SELECT
+									DDMStructure.structureId
+								FROM
+									DDMStructure
+								WHERE
+									(DDMStructure.classNameId = ?)
+							))
+						)
+				) TEMP_TABLE
+				INNER JOIN
+					DDMTemplate ON
+						(TEMP_TABLE.uuid_ = DDMTemplate.uuid_)
 			ORDER BY
 				DDMTemplate.templateId DESC
 		]]>
@@ -108,21 +124,29 @@
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByC_G_C_C_N_D_T_M_L">
 		<![CDATA[
 			SELECT
-				DISTINCT {DDMTemplate.*}
+				{DDMTemplate.*}
 			FROM
-				DDMTemplate
-			WHERE
-				(companyId = ?) AND
-				[$GROUP_ID$]
-				[$CLASSNAME_ID$]
-				[$CLASS_PK$]
 				(
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(type_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(language LIKE ? [$AND_OR_NULL_CHECK$])
-				)
+					SELECT DISTINCT
+						uuid_
+					FROM
+						DDMTemplate
+					WHERE
+						(companyId = ?) AND
+						[$GROUP_ID$]
+						[$CLASSNAME_ID$]
+						[$CLASS_PK$]
+						(
+							(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(type_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(language LIKE ? [$AND_OR_NULL_CHECK$])
+						)
+				) TEMP_TABLE
+				INNER JOIN
+					DDMTemplate ON
+						(TEMP_TABLE.uuid_ = DDMTemplate.uuid_)
 			ORDER BY
 				DDMTemplate.templateId DESC
 		]]>

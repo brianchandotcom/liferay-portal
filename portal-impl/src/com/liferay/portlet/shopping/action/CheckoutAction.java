@@ -87,10 +87,7 @@ public class CheckoutAction extends CartAction {
 			setForward(actionRequest, "portlet.shopping.checkout_third");
 		}
 		else if (cmd.equals(Constants.SAVE)) {
-			updateCart(actionRequest, actionResponse);
-			updateLatestOrder(actionRequest);
-			saveLatestOrder(actionRequest);
-			forwardCheckout(actionRequest, actionResponse);
+			saveLatestOder(actionRequest, actionResponse);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			try {
@@ -154,16 +151,14 @@ public class CheckoutAction extends CartAction {
 	}
 
 	protected void forwardCheckout(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ShoppingOrder order)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		ShoppingCart cart = ShoppingUtil.getCart(actionRequest);
-
-		ShoppingOrder order = (ShoppingOrder)actionRequest.getAttribute(
-			WebKeys.SHOPPING_ORDER);
 
 		ShoppingSettings shoppingSettings = ShoppingSettings.getInstance(
 			themeDisplay.getScopeGroupId());
@@ -215,7 +210,8 @@ public class CheckoutAction extends CartAction {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
 
-	protected void saveLatestOrder(ActionRequest actionRequest)
+	protected void saveLatestOder(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		ShoppingCart cart = ShoppingUtil.getCart(actionRequest);
@@ -223,7 +219,7 @@ public class CheckoutAction extends CartAction {
 		ShoppingOrder order = ShoppingOrderLocalServiceUtil.saveLatestOrder(
 			cart);
 
-		actionRequest.setAttribute(WebKeys.SHOPPING_ORDER, order);
+		forwardCheckout(actionRequest, actionResponse, order);
 	}
 
 	protected void updateLatestOrder(ActionRequest actionRequest)
@@ -296,7 +292,7 @@ public class CheckoutAction extends CartAction {
 
 		String comments = ParamUtil.getString(actionRequest, "comments");
 
-		ShoppingOrder order = ShoppingOrderLocalServiceUtil.updateLatestOrder(
+		ShoppingOrderLocalServiceUtil.updateLatestOrder(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 			billingFirstName, billingLastName, billingEmailAddress,
 			billingCompany, billingStreet, billingCity, billingState,
@@ -305,8 +301,6 @@ public class CheckoutAction extends CartAction {
 			shippingCompany, shippingStreet, shippingCity, shippingState,
 			shippingZip, shippingCountry, shippingPhone, ccName, ccType,
 			ccNumber, ccExpMonth, ccExpYear, ccVerNumber, comments);
-
-		actionRequest.setAttribute(WebKeys.SHOPPING_ORDER, order);
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

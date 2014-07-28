@@ -31,6 +31,7 @@ import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.servlet.MainServlet;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.mock.AutoDeployMockServletContext;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.TestPropsValues;
@@ -77,7 +78,7 @@ import org.springframework.mock.web.MockServletContext;
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class JAASTest extends MainServletExecutionTestListener {
+public class JAASTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -327,23 +328,20 @@ public class JAASTest extends MainServletExecutionTestListener {
 			}
 		);
 
-		if (mainServlet == null) {
-			MockServletContext mockServletContext =
-				new AutoDeployMockServletContext(
-					getResourceBasePath(), new FileSystemResourceLoader());
+		MockServletContext mockServletContext =
+			new AutoDeployMockServletContext(new FileSystemResourceLoader());
 
-			MockServletConfig mockServletConfig = new MockServletConfig(
-				mockServletContext);
+		MockServletConfig mockServletConfig = new MockServletConfig(
+			mockServletContext);
 
-			mainServlet = new MainServlet();
+		MainServlet mainServlet = new MainServlet();
 
-			try {
-				mainServlet.init(mockServletConfig);
-			}
-			catch (ServletException se) {
-				throw new RuntimeException(
-					"The main servlet could not be initialized");
-			}
+		try {
+			mainServlet.init(mockServletConfig);
+		}
+		catch (ServletException se) {
+			throw new RuntimeException(
+				"The main servlet could not be initialized");
 		}
 
 		Date lastLoginDate = _user.getLastLoginDate();

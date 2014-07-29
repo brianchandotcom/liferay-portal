@@ -1348,6 +1348,8 @@
 		<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="MENU_DISPLAY_PAGE" value1="Display Page" />
 
 		<execute action="PGAssetpublisherAddnewwebcontentDisplaypage#assertTextEquals" locator-key1="PUBLIC_DISPLAY_PAGE_ITEM" value1="${displayPageSelection}" />
+
+		<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewEditWCViaWCD">

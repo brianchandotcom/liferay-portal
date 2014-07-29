@@ -27,5 +27,5 @@ else {
 List<AssetEntry> assetEntries = AssetUtil.getAssetEntries(hits);
 
 searchContainer.setResults(assetEntries);
-searchContainer.setTotal(assetEntries.size());
+searchContainer.setTotal(hits.getLength());
 %>

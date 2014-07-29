@@ -31,8 +31,10 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Pablo Carvalho
@@ -89,8 +91,8 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 		return (Element)xPathSelector.selectSingleNode(parentElement);
 	}
 
-	protected List<Locale> getAvailableLocales(Element rootElement) {
-		List<Locale> availableLocales = new ArrayList<Locale>();
+	protected Set<Locale> getAvailableLocales(Element rootElement) {
+		Set<Locale> availableLocales = new HashSet<Locale>();
 
 		String availableLanguageIds = rootElement.attributeValue(
 			"available-locales");
@@ -178,7 +180,7 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 	protected void setDDMFormAvailableLocales(
 		Element rootElement, DDMForm ddmForm) {
 
-		List<Locale> availableLocales = getAvailableLocales(rootElement);
+		Set<Locale> availableLocales = getAvailableLocales(rootElement);
 
 		ddmForm.setAvailableLocales(availableLocales);
 	}

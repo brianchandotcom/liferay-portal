@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Pablo Carvalho
@@ -184,19 +185,12 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 	}
 
 	protected String getAvailableLanguagesIds(DDMForm ddmForm) {
-		List<Locale> availableLocales = ddmForm.getAvailableLocales();
+		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
-		StringBuilder sb = new StringBuilder(2 * availableLocales.size() - 1);
+		String[] availableLanguageIds = LocaleUtil.toLanguageIds(
+			availableLocales.toArray(new Locale[availableLocales.size()]));
 
-		for (int i = 0; i < availableLocales.size(); i++) {
-			if (i != 0) {
-				sb.append(",");
-			}
-
-			sb.append(LocaleUtil.toLanguageId(availableLocales.get(i)));
-		}
-
-		return sb.toString();
+		return StringUtil.merge(availableLanguageIds);
 	}
 
 	protected Map<Locale, Map<String, String>> getDDMFormFieldMetadataMap(

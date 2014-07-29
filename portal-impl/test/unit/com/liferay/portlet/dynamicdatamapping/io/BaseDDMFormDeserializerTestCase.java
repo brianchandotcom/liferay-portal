@@ -108,7 +108,7 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 	protected abstract String getTestFileExtension();
 
 	protected void testAvailableLocales(DDMForm ddmForm) {
-		List<Locale> availableLocales = ddmForm.getAvailableLocales();
+		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
 		Assert.assertEquals(2, availableLocales.size());
 		Assert.assertTrue(availableLocales.contains(LocaleUtil.US));

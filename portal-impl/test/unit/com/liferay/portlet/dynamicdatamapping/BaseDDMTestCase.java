@@ -52,11 +52,12 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.runner.RunWith;
 
@@ -126,8 +127,8 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		return dynamicElement;
 	}
 
-	protected List<Locale> createAvailableLocales(Locale... locales) {
-		List<Locale> availableLocales = new ArrayList<Locale>();
+	protected Set<Locale> createAvailableLocales(Locale... locales) {
+		Set<Locale> availableLocales = new LinkedHashSet<Locale>();
 
 		for (Locale locale : locales) {
 			availableLocales.add(locale);
@@ -137,7 +138,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected DDMForm createDDMForm(
-		List<Locale> availableLocales, Locale defaultLocale) {
+		Set<Locale> availableLocales, Locale defaultLocale) {
 
 		DDMForm ddmForm = new DDMForm();
 

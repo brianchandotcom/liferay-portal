@@ -26,6 +26,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -186,7 +187,7 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 	}
 
 	protected void testAvailableLocales(DDMFormValues ddmFormValues) {
-		List<Locale> availableLocales = ddmFormValues.getAvailableLocales();
+		Set<Locale> availableLocales = ddmFormValues.getAvailableLocales();
 
 		Assert.assertEquals(2, availableLocales.size());
 		Assert.assertTrue(availableLocales.contains(LocaleUtil.US));

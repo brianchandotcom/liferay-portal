@@ -26,7 +26,6 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -59,15 +58,6 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 			ddmFormValues);
 
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
-	}
-
-	protected List<Locale> createAvailableLocales() {
-		List<Locale> availableLocales = new ArrayList<Locale>();
-
-		availableLocales.add(LocaleUtil.US);
-		availableLocales.add(LocaleUtil.BRAZIL);
-
-		return availableLocales;
 	}
 
 	protected DDMFormFieldValue createBooleanDDMFormFieldValue() {
@@ -116,7 +106,8 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	protected DDMFormValues createDDMFormValues() {
 		DDMFormValues ddmFormValues = new DDMFormValues();
 
-		ddmFormValues.setAvailableLocales(createAvailableLocales());
+		ddmFormValues.setAvailableLocales(
+			createAvailableLocales(LocaleUtil.BRAZIL, LocaleUtil.US));
 		ddmFormValues.setDDMFormFieldValues(createDDMFormFieldValues());
 		ddmFormValues.setDefaultLocale(LocaleUtil.US);
 

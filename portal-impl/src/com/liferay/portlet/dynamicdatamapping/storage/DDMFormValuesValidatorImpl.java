@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.StorageException;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldNameException;
@@ -106,7 +105,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 	}
 
 	protected void validateDDMFormFieldValueLocales(
-			DDMFormField ddmFormField, List<Locale> availableLocales,
+			DDMFormField ddmFormField, Set<Locale> availableLocales,
 			Locale defaultLocale, Value value)
 		throws StorageException {
 
@@ -114,12 +113,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			return;
 		}
 
-		Set<Locale> ddmFormValuesAvailableLocales = SetUtil.fromList(
-			availableLocales);
-
-		if (!ddmFormValuesAvailableLocales.equals(
-				value.getAvailableLocales())) {
-
+		if (!availableLocales.equals(value.getAvailableLocales())) {
 			throw new StorageFieldValueException(
 				"Invalid available locales set for field " +
 					ddmFormField.getName());

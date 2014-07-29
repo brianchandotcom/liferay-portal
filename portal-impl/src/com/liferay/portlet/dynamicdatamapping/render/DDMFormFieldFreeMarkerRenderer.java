@@ -57,6 +57,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -234,7 +235,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 
 		DDMForm ddmForm = ddmFormField.getDDMForm();
 
-		List<Locale> availableLocales = ddmForm.getAvailableLocales();
+		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
 		Locale defaultLocale = ddmForm.getDefaultLocale();
 

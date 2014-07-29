@@ -24,6 +24,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Marcellus Tavares
@@ -44,7 +45,7 @@ public class DDMFormValuesJSONSerializerImpl
 	}
 
 	protected void addAvailableLanguageIds(
-		JSONObject jsonObject, List<Locale> availableLocales) {
+		JSONObject jsonObject, Set<Locale> availableLocales) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

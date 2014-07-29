@@ -28,9 +28,11 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Marcellus Tavares
@@ -63,8 +65,8 @@ public class DDMFormValuesJSONDeserializerImpl
 		}
 	}
 
-	protected List<Locale> getAvailableLocales(JSONArray jsonArray) {
-		List<Locale> availableLocales = new ArrayList<Locale>();
+	protected Set<Locale> getAvailableLocales(JSONArray jsonArray) {
+		Set<Locale> availableLocales = new HashSet<Locale>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			Locale availableLocale = LocaleUtil.fromLanguageId(
@@ -204,7 +206,7 @@ public class DDMFormValuesJSONDeserializerImpl
 	protected void setDDMFormValuesAvailableLocales(
 		JSONArray jsonArray, DDMFormValues ddmFormValues) {
 
-		List<Locale> availableLocales = getAvailableLocales(jsonArray);
+		Set<Locale> availableLocales = getAvailableLocales(jsonArray);
 
 		ddmFormValues.setAvailableLocales(availableLocales);
 	}

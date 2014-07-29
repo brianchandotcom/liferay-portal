@@ -60,7 +60,7 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 
 	@Test
 	public void testGetAvailableLanguageIds() throws Exception {
-		List<Locale> availableLocales = createAvailableLocales(
+		Set<Locale> availableLocales = createAvailableLocales(
 			LocaleUtil.BRAZIL, LocaleUtil.US);
 
 		DDMForm ddmForm = createDDMForm(availableLocales, LocaleUtil.US);
@@ -118,10 +118,9 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 
 	@Test
 	public void testGetFieldLabel() throws Exception {
-		List<Locale> availableLocales = createAvailableLocales(
-			LocaleUtil.BRAZIL, LocaleUtil.US);
-
-		DDMForm ddmForm = createDDMForm(availableLocales, LocaleUtil.US);
+		DDMForm ddmForm = createDDMForm(
+			createAvailableLocales(LocaleUtil.BRAZIL, LocaleUtil.US),
+			LocaleUtil.US);
 
 		DDMFormField field = createTextDDMFormField("field");
 
@@ -208,10 +207,9 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 
 	@Test
 	public void testGetFieldTip() throws Exception {
-		List<Locale> availableLocales = createAvailableLocales(
-			LocaleUtil.BRAZIL, LocaleUtil.US);
-
-		DDMForm ddmForm = createDDMForm(availableLocales, LocaleUtil.US);
+		DDMForm ddmForm = createDDMForm(
+			createAvailableLocales(LocaleUtil.BRAZIL, LocaleUtil.US),
+			LocaleUtil.US);
 
 		DDMFormField field = createTextDDMFormField("field");
 

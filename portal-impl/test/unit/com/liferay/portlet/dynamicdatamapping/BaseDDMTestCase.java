@@ -413,6 +413,14 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		).thenReturn(
 			"pt_BR"
 		);
+
+		when(
+			LocaleUtil.toLanguageIds(
+				Matchers.eq(new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US})
+			)
+		).thenReturn(
+			new String[] {"pt_BR", "en_US"}
+		);
 	}
 
 	protected void setUpLocalizationUtil() {

@@ -710,6 +710,11 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void typeScreen(String value) {
+		LiferaySeleniumHelper.typeScreen(value);
+	}
+
+	@Override
 	public void uploadCommonFile(String location, String value) {
 		super.type(location, _projectDirName + _dependenciesDirName + value);
 	}

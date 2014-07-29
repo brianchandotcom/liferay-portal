@@ -1085,6 +1085,10 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.runScript(sb.toString());
 	}
 
+	public static void typeScreen(String value) {
+		_screen.type(value);
+	}
+
 	public static void waitForElementNotPresent(
 			LiferaySelenium liferaySelenium, String locator)
 		throws Exception {

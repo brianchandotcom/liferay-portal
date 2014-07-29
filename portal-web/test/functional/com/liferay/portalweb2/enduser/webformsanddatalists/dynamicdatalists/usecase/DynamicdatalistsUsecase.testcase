@@ -306,6 +306,50 @@
 		<execute action="PGDynamicdatalistsAddrecord#assertTextEquals" locator-key1="RECORD_FIELD_ALERT" value1="Please enter a valid number." />
 	</command>
 
+	<command name="AssertFieldAfterNavigatingToManageTemplates" priority="4">
+		<description message="This is a use case for LPS-48736." />
+
+		<var name="ddlDataDefinitionName" value="Data Definition Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#click" locator-key1="BACK_TAB" />
+
+		<var name="key_dataDefinitionName" value="${ddlDataDefinitionName}" />
+
+		<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_NAME" value1="${ddlDataDefinitionName}" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="HEADER_TITLE" value1="${ddlDataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="NAME_FIELD" value1="${ddlDataDefinitionName}" />
+
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+	</command>
+
 	<command name="AssertGuestCannotEditRecord" priority="4">
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition Name" />

@@ -411,13 +411,7 @@ public class ListUtil {
 	}
 
 	public static <T, V extends T> List<T> toList(List<V> vlist) {
-		List<T> tList = new ArrayList<T>(vlist);
-
-		for (V v : vlist) {
-			tList.add(v);
-		}
-
-		return tList;
+		return new ArrayList<T>(vlist);
 	}
 
 	public static List<Long> toList(long[] array) {

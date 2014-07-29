@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
+import com.liferay.portal.kernel.repository.event.SyncRepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -48,6 +49,11 @@ import java.util.concurrent.Callable;
  * @author Adolfo Pérez
  */
 public class LiferaySyncCapability implements SyncCapability {
+
+	@Override
+	public void addFileEntry(FileEntry fileEntry) throws PortalException {
+		registerDLSyncEventCallback(DLSyncConstants.EVENT_ADD, fileEntry);
+	}
 
 	@Override
 	public void addFolder(Folder folder) throws PortalException {
@@ -77,6 +83,8 @@ public class LiferaySyncCapability implements SyncCapability {
 	public void registerRepositoryEventListeners(
 		RepositoryEventRegistry repositoryEventRegistry) {
 
+		// Core events
+
 		registerRepositoryEventListener(
 			repositoryEventRegistry, RepositoryEventType.Add.class,
 			Folder.class, "addFolder");
@@ -104,6 +112,17 @@ public class LiferaySyncCapability implements SyncCapability {
 		registerRepositoryEventListener(
 			repositoryEventRegistry, RepositoryEventType.Move.class,
 			Folder.class, "moveFolder");
+
+		// Sync events
+
+		registerRepositoryEventListener(
+			repositoryEventRegistry, SyncRepositoryEventType.DelayedAdd.class,
+			FileEntry.class, "addFileEntry");
+
+		registerRepositoryEventListener(
+			repositoryEventRegistry,
+			SyncRepositoryEventType.DelayedUpdate.class, FileEntry.class,
+			"updateFileEntry");
 	}
 
 	@Override

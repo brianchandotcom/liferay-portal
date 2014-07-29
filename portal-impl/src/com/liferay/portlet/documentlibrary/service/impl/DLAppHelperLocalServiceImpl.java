@@ -25,9 +25,14 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
+import com.liferay.portal.kernel.repository.event.RepositoryEventTypeUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
@@ -1444,7 +1449,10 @@ public class DLAppHelperLocalServiceImpl
 			String event = (String)workflowContext.get("event");
 
 			if (Validator.isNotNull(event)) {
-				registerDLSyncEventCallback(event, fileEntry);
+				triggerRepositoryEvent(
+					fileEntry.getRepositoryId(),
+					RepositoryEventTypeUtil.toSyncEvent(event), FileEntry.class,
+					fileEntry);
 			}
 
 			if ((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
@@ -2128,6 +2136,25 @@ public class DLAppHelperLocalServiceImpl
 
 			}
 		);
+	}
+
+	protected <T extends RepositoryModel<T>> void triggerRepositoryEvent(
+			long repositoryId, Class<? extends RepositoryEventType> eventType,
+			Class<T> modelClass, T model)
+		throws PortalException {
+
+		Repository repository = repositoryLocalService.getRepositoryImpl(
+			repositoryId);
+
+		if (repository.isCapabilityProvided(
+				RepositoryEventTriggerCapability.class)) {
+
+			RepositoryEventTriggerCapability eventTriggerCapability =
+				repository.getCapability(
+					RepositoryEventTriggerCapability.class);
+
+			eventTriggerCapability.trigger(eventType, modelClass, model);
+		}
 	}
 
 }

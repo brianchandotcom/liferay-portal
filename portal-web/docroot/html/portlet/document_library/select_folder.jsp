@@ -72,6 +72,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 
 	portletURL.setParameter("struts_action", "/document_library/select_folder");
 	portletURL.setParameter("folderId", String.valueOf(folderId));
+	portletURL.setParameter("ignoreRootFolder", StringPool.TRUE);
 	%>
 
 	<liferay-ui:search-container
@@ -92,6 +93,8 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 			<liferay-portlet:renderURL varImpl="rowURL">
 				<portlet:param name="struts_action" value="/document_library/select_folder" />
 				<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(curFolder.getGroupId()) %>" />
+				<portlet:param name="ignoreRootFolder" value="true" />
 			</liferay-portlet:renderURL>
 
 			<%

@@ -9,7 +9,7 @@
 		<execute macro="Vocabulary#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LIFERAYQA-9791" name="AddCategories" priority="4">
+	<command name="AddCategories" priority="4">
 		<var name="categoryName1" value="Category Name 1" />
 		<var name="categoryName2" value="Category Name 2" />
 		<var name="categoryName3" value="Category Name 3" />
@@ -78,7 +78,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddCategory" priority="5">
+	<command name="AddCategory" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
@@ -96,7 +96,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddCategoryProperties" priority="5">
+	<command name="AddCategoryProperties" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="propertiesKeyField" value="Category Property" />
 		<var name="propertiesValueField" value="Category Property" />
@@ -143,7 +143,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddCategoryProperty" priority="5">
+	<command name="AddCategoryProperty" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="propertiesKeyField" value="Category Property" />
 		<var name="propertiesValueField" value="Category Property" />
@@ -178,7 +178,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddCategoryToVocabulary" priority="5">
+	<command name="AddCategoryToVocabulary" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
@@ -205,7 +205,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddCategoryViewableByAnyone" priority="5">
+	<command name="AddCategoryViewableByAnyone" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="viewableBy" value="Anyone (Guest Role)" />
 		<var name="vocabularyName" value="Vocabulary Name" />
@@ -231,7 +231,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddCategoryViewableByOwner" priority="4">
+	<command name="AddCategoryViewableByOwner" priority="4">
 		<var name="categoryName" value="Category Name" />
 		<var name="viewableBy" value="Owner" />
 		<var name="vocabularyName" value="Vocabulary Name" />
@@ -257,7 +257,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddCategoryViewableBySiteMembers" priority="4">
+	<command name="AddCategoryViewableBySiteMembers" priority="4">
 		<var name="categoryName" value="Category Name" />
 		<var name="viewableBy" value="Site Members" />
 		<var name="vocabularyName" value="Vocabulary Name" />
@@ -283,7 +283,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddSubcategories" priority="4">
+	<command name="AddSubcategories" priority="4">
 		<var name="categoryName" value="Category Name" />
 		<var name="subcategoryName1" value="Subcategory Name 1" />
 		<var name="subcategoryName2" value="Subcategory Name 2" />
@@ -364,7 +364,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddSubcategory" priority="5">
+	<command name="AddSubcategory" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="subcategoryName" value="Subcategory Name" />
 		<var name="vocabularyName" value="Vocabulary Name" />
@@ -395,7 +395,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddVocabularies" priority="4">
+	<command name="AddVocabularies" priority="4">
 		<var name="vocabularyName1" value="Vocabulary Name 1" />
 		<var name="vocabularyName2" value="Vocabulary Name 2" />
 		<var name="vocabularyName3" value="Vocabulary Name 3" />
@@ -433,7 +433,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddVocabulary" priority="5">
+	<command name="AddVocabulary" priority="5">
 		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -449,7 +449,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddVocabularyAssetTypeAllAssetTypes" priority="5">
+	<command name="AddVocabularyAssetTypeAllAssetTypes" priority="5">
 		<var name="vocabularyAssociatedAssetType" value="All Asset Types" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
@@ -468,7 +468,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddVocabularyAssetTypeBlogsEntry" priority="5">
+	<command name="AddVocabularyAssetTypeBlogsEntry" priority="5">
 		<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
@@ -487,7 +487,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddVocabularyAssetTypeBookmarksEntry" priority="5">
+	<command name="AddVocabularyAssetTypeBookmarksEntry" priority="5">
 		<var name="vocabularyAssociatedAssetType" value="Bookmarks Entry" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
@@ -506,7 +506,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddVocabularyAssetTypeDocument" priority="5">
+	<command name="AddVocabularyAssetTypeDocument" priority="5">
 		<var name="vocabularyAssociatedAssetType" value="Document" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
@@ -525,7 +525,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddVocabularyAssetTypes" priority="4">
+	<command name="AddVocabularyAssetTypes" priority="4">
 		<var name="vocabularyAssociatedAssetType1" value="Blogs Entry" />
 		<var name="vocabularyAssociatedAssetType2" value="Web Content Article" />
 		<var name="vocabularyName1" value="Vocabulary Name 1" />
@@ -560,7 +560,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddVocabularyAssetTypeUser" priority="5">
+	<command name="AddVocabularyAssetTypeUser" priority="5">
 		<var name="vocabularyAssociatedAssetType" value="User" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
@@ -579,7 +579,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddVocabularyAssetTypeWebContent" priority="5">
+	<command name="AddVocabularyAssetTypeWebContent" priority="5">
 		<var name="vocabularyAssociatedAssetType" value="Web Content Article" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
@@ -598,7 +598,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddVocabularyAssetTypeWikiPage" priority="5">
+	<command name="AddVocabularyAssetTypeWikiPage" priority="5">
 		<var name="vocabularyAssociatedAssetType" value="Wiki Page" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
@@ -617,7 +617,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddVocabularyDisallowMultipleCategories" priority="4" >
+	<command name="AddVocabularyDisallowMultipleCategories" priority="4" >
 		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -639,7 +639,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddVocabularyViewableByGuest" priority="5">
+	<command name="AddVocabularyViewableByGuest" priority="5">
 		<var name="viewableBy" value="Anyone (Guest Role)" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
@@ -661,7 +661,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddVocabularyViewableByOwner" priority="4">
+	<command name="AddVocabularyViewableByOwner" priority="4">
 		<var name="viewableBy" value="Owner" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
@@ -683,7 +683,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddVocabularyViewableBySiteMembers" priority="4">
+	<command name="AddVocabularyViewableBySiteMembers" priority="4">
 		<var name="viewableBy" value="Site Members" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
@@ -705,7 +705,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="CannotAddCategoryWithNullTitle" priority="3">
+	<command name="CannotAddCategoryWithNullTitle" priority="3">
 		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -721,7 +721,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="CannotAddVocabularyWithNullTitle" priority="3">
+	<command name="CannotAddVocabularyWithNullTitle" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -729,7 +729,7 @@
 		<execute macro="Vocabulary#addVocabularyWithNullTitle" />
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="DeleteAssociatedAssetTypeViaVocabulary" priority="3">
+	<command name="DeleteAssociatedAssetTypeViaVocabulary" priority="3">
 		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -756,7 +756,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="DeleteCategories" priority="4">
+	<command name="DeleteCategories" priority="4">
 		<var name="categoryName1" value="Category Name 1" />
 		<var name="categoryName2" value="Category Name 2" />
 		<var name="categoryName3" value="Category Name 3" />
@@ -806,7 +806,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="DeleteCategory" priority="5">
+	<command name="DeleteCategory" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
@@ -829,7 +829,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="DeleteCategoryByDetails" priority="5">
+	<command name="DeleteCategoryByDetails" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
@@ -852,7 +852,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="DeleteCategoryProperty2" priority="4">
+	<command name="DeleteCategoryProperty2" priority="4">
 		<var name="categoryName" value="Category Name" />
 		<var name="propertiesKeyField" value="Category Property" />
 		<var name="propertiesValueField" value="Category Property" />
@@ -899,7 +899,7 @@
 		<execute action="CPCategories#assertTextNotPresent" locator-key1="CATEGORY_DETAILS_PROPERTY_VALUE" value1="Category Property 2 Value" />
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="DeleteSubcategoryViaActions" priority="5">
+	<command name="DeleteSubcategoryViaActions" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="subcategoryName" value="Subcategory Name" />
 		<var name="vocabularyName" value="Vocabulary Name" />
@@ -934,7 +934,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="DeleteSubcategoryViaDetails" priority="3">
+	<command name="DeleteSubcategoryViaDetails" priority="3">
 		<var name="categoryName" value="Category Name" />
 		<var name="subcategoryName" value="Subcategory Name" />
 		<var name="vocabularyName" value="Vocabulary Name" />
@@ -969,7 +969,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="DeleteVocabulary" priority="5">
+	<command name="DeleteVocabulary" priority="5">
 		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -985,7 +985,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="DeleteVocabularyByDetails" priority="4">
+	<command name="DeleteVocabularyByDetails" priority="4">
 		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -1001,7 +1001,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="EditCategory" priority="5">
+	<command name="EditCategory" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="categoryNameEdit" value="Category Name Edit" />
 		<var name="vocabularyName" value="Vocabulary Name" />
@@ -1026,7 +1026,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="EditCategoryProperty" priority="4">
+	<command name="EditCategoryProperty" priority="4">
 		<var name="categoryName" value="Category Name" />
 		<var name="propertiesKeyField" value="Category Property" />
 		<var name="propertiesValueField" value="Category Property" />
@@ -1074,7 +1074,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="EditSubcategory" priority="5">
+	<command name="EditSubcategory" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="subcategoryName" value="Subcategory Name" />
 		<var name="subcategoryNameEdit" value="Subcategory Name Edit" />
@@ -1107,7 +1107,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="EditVocabulary" priority="5">
+	<command name="EditVocabulary" priority="5">
 		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="vocabularyNameEdit" value="Vocabulary Name Edit" />
 
@@ -1125,7 +1125,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="EditVocabularyDraganddrop" priority="5">
+	<command name="EditVocabularyDraganddrop" priority="5">
 		<var name="categoryName" value="Category Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -1154,7 +1154,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="MoveCategoryViaEdit" priority="3">
+	<command name="MoveCategoryViaEdit" priority="3">
 		<var name="categoryName" value="Category Name" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="vocabularyName2" value="Vocabulary Name 2" />
@@ -1189,7 +1189,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="ValidateClickingCloseButtonDoesNotSaveVocabulary" priority="5">
+	<command name="ValidateClickingCloseButtonDoesNotSaveVocabulary" priority="5">
 		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">

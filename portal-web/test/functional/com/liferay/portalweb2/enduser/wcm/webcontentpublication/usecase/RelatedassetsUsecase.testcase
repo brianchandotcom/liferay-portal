@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command known-issues="LIFERAYQA-9791" name="AssertRelatedAssetsDisplayWithCategory" priority="4">
+	<command name="AssertRelatedAssetsDisplayWithCategory" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

@@ -11,7 +11,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LIFERAYQA-9791" name="AddTag" priority="5">
+	<command name="AddTag" priority="5">
 		<var name="tagName" value="tag name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -23,7 +23,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddTags" priority="5">
+	<command name="AddTags" priority="5">
 		<var name="tagName1" value="tag name 1" />
 		<var name="tagName2" value="tag name 2" />
 		<var name="tagName3" value="tag name 3" />
@@ -49,7 +49,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddTagsAdmin" priority="5">
+	<command name="AddTagsAdmin" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -280,7 +280,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="DeleteTag" priority="5">
+	<command name="DeleteTag" priority="5">
 		<var name="tagName" value="tag name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -300,7 +300,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="EditTag" priority="5">
+	<command name="EditTag" priority="5">
 		<var name="tagName" value="tag name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -316,7 +316,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="EditTagCancel" priority="5">
+	<command name="EditTagCancel" priority="5">
 		<var name="tagName" value="tag name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -332,7 +332,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="SearchTag" priority="5">
+	<command name="SearchTag" priority="5">
 		<var name="tagName1" value="tag name 1" />
 		<var name="tagName2" value="tag name 2" />
 		<var name="tagName3" value="tag name 3" />

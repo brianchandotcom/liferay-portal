@@ -118,4 +118,7 @@ public interface BeanProperties {
 
 	public void setProperty(Object bean, String param, Object value);
 
+	public void setPropertyForcedSilent(
+		Object bean, String param, Object value);
+
 }

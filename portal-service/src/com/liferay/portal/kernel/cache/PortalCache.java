@@ -26,6 +26,8 @@ import java.io.Serializable;
  */
 public interface PortalCache<K extends Serializable, V> {
 
+	public static final int DEFAULT_TIME_TO_LIVE = Integer.MIN_VALUE;
+
 	@Proxy
 	public V get(K key);
 

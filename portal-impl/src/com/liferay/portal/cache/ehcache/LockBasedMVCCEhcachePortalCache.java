@@ -32,56 +32,66 @@ public class LockBasedMVCCEhcachePortalCache
 		EhcachePortalCache<K, V> ehcachePortalCache) {
 
 		super(ehcachePortalCache);
+
+		_ehcache = ehcachePortalCache.ehcache;
 	}
 
 	@Override
 	public void remove(K key) {
-		Ehcache ehcache = getEhcache();
-
-		ehcache.acquireWriteLockOnKey(key);
+		_ehcache.acquireWriteLockOnKey(key);
 
 		try {
 			super.remove(key);
 		}
 		finally {
-			ehcache.releaseWriteLockOnKey(key);
+			_ehcache.releaseWriteLockOnKey(key);
 		}
 	}
 
 	@Override
-	protected void doPut(K key, V value, boolean quiet, int timeToLive) {
+	protected void doPut(K key, V value, int timeToLive, boolean quiet) {
+		if (key == null) {
+			throw new NullPointerException("Key is null");
+		}
+
+		if (value == null) {
+			throw new NullPointerException("Value is null");
+		}
+
+		if ((timeToLive != DEFAULT_TIME_TO_LIVE) && (timeToLive < 0)) {
+			throw new IllegalArgumentException("Time to live is negative");
+		}
+
 		Element newElement = new Element(key, value);
 
 		if (timeToLive >= 0) {
 			newElement.setTimeToLive(timeToLive);
 		}
 
-		Ehcache ehcache = getEhcache();
-
-		ehcache.acquireWriteLockOnKey(key);
+		_ehcache.acquireWriteLockOnKey(key);
 
 		try {
-			Element oldElement = ehcache.get(key);
+			Element oldElement = _ehcache.get(key);
 
 			if (oldElement == null) {
-				ehcache.put(newElement, quiet);
+				_ehcache.put(newElement, quiet);
 
 				return;
 			}
 
 			V oldValue = (V)oldElement.getObjectValue();
 
-			if ((oldValue != null) &&
-				(value.getMvccVersion() <= oldValue.getMvccVersion())) {
-
+			if (value.getMvccVersion() <= oldValue.getMvccVersion()) {
 				return;
 			}
 
-			ehcache.put(newElement, quiet);
+			_ehcache.put(newElement, quiet);
 		}
 		finally {
-			ehcache.releaseWriteLockOnKey(key);
+			_ehcache.releaseWriteLockOnKey(key);
 		}
 	}
+
+	private Ehcache _ehcache;
 
 }

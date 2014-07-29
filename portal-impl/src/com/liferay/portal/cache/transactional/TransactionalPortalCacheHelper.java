@@ -152,7 +152,7 @@ public class TransactionalPortalCacheHelper {
 			portalCacheMap.put(portalCache, uncommittedBuffer);
 		}
 
-		uncommittedBuffer.put(key, new ValueEntry(value, quiet, ttl));
+		uncommittedBuffer.put(key, new ValueEntry(value, ttl, quiet));
 	}
 
 	protected static <K extends Serializable, V> void removeAll(
@@ -193,7 +193,8 @@ public class TransactionalPortalCacheHelper {
 	}
 
 	private static ValueEntry _NULL_HOLDER_VALUE_ENTRY = new ValueEntry(
-		TransactionalPortalCache.NULL_HOLDER, false, -1);
+		TransactionalPortalCache.NULL_HOLDER, PortalCache.DEFAULT_TIME_TO_LIVE,
+		false);
 
 	private static ThreadLocal<List<PortalCacheMap>>
 		_portalCacheMapsThreadLocal =
@@ -255,10 +256,10 @@ public class TransactionalPortalCacheHelper {
 
 	private static class ValueEntry {
 
-		public ValueEntry(Object value, boolean quiet, int ttl) {
+		public ValueEntry(Object value, int ttl, boolean quiet) {
 			_value = value;
-			_quiet = quiet;
 			_ttl = ttl;
+			_quiet = quiet;
 		}
 
 		public void commitTo(
@@ -268,20 +269,10 @@ public class TransactionalPortalCacheHelper {
 				portalCache.remove(key);
 			}
 			else if (_quiet) {
-				if (_ttl >= 0) {
-					portalCache.putQuiet(key, _value, _ttl);
-				}
-				else {
-					portalCache.putQuiet(key, _value);
-				}
+				portalCache.putQuiet(key, _value, _ttl);
 			}
 			else {
-				if (_ttl >= 0) {
-					portalCache.put(key, _value, _ttl);
-				}
-				else {
-					portalCache.put(key, _value);
-				}
+				portalCache.put(key, _value, _ttl);
 			}
 		}
 

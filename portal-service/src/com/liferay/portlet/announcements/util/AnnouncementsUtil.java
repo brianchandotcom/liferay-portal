@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
@@ -113,7 +112,7 @@ public class AnnouncementsUtil {
 
 		// Role announcements
 
-		List<Role> roles = new UniqueList<Role>();
+		List<Role> roles = new ArrayList<Role>();
 
 		if (!groupsList.isEmpty()) {
 			roles = RoleLocalServiceUtil.getUserRelatedRoles(
@@ -152,7 +151,8 @@ public class AnnouncementsUtil {
 		}
 
 		if (!roles.isEmpty()) {
-			scopes.put(_ROLE_CLASS_NAME_ID, _getRoleIds(roles));
+			scopes.put(
+				_ROLE_CLASS_NAME_ID, _getRoleIds(ListUtil.unique(roles)));
 		}
 
 		return scopes;

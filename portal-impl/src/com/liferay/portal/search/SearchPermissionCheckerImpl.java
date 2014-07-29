@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -293,9 +292,9 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			return query;
 		}
 
-		List<Group> groups = new UniqueList<Group>();
-		List<Role> roles = new UniqueList<Role>();
-		List<UserGroupRole> userGroupRoles = new UniqueList<UserGroupRole>();
+		List<Group> groups = new ArrayList<Group>();
+		List<Role> roles = new ArrayList<Role>();
+		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
 		Map<Long, List<Role>> groupIdsToRoles = new HashMap<Long, List<Role>>();
 
 		roles.addAll(permissionCheckerBag.getRoles());
@@ -345,7 +344,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		return doGetPermissionQuery_6(
 			companyId, groupIds, userId, className, query, searchContext,
-			advancedPermissionChecker, groups, roles, userGroupRoles,
+			advancedPermissionChecker, ListUtil.unique(groups),
+			ListUtil.unique(roles), ListUtil.unique(userGroupRoles),
 			groupIdsToRoles);
 	}
 

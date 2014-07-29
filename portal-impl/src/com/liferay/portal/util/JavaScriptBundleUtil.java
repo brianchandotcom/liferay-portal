@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.UniqueList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ public class JavaScriptBundleUtil {
 			List<String> fileNamesList = new ArrayList<String>();
 
 			List<String> dependencies = _getDependencies(
-				bundleId, new UniqueList<String>());
+				bundleId, new ArrayList<String>());
 
 			for (String dependency : dependencies) {
 				String[] dependencyFileNames = PropsUtil.getArray(dependency);
@@ -62,7 +62,7 @@ public class JavaScriptBundleUtil {
 		String bundleId, List<String> dependencies) {
 
 		if (!ArrayUtil.contains(PropsValues.JAVASCRIPT_BUNDLE_IDS, bundleId)) {
-			return dependencies;
+			return ListUtil.unique(dependencies);
 		}
 
 		String[] bundleDependencies = PropsUtil.getArray(
@@ -82,7 +82,7 @@ public class JavaScriptBundleUtil {
 
 		dependencies.add(bundleId);
 
-		return dependencies;
+		return ListUtil.unique(dependencies);
 	}
 
 	private static final String _CACHE_NAME =

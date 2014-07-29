@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
@@ -364,12 +363,12 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 			params.put("site", Boolean.TRUE);
 
-			return groupLocalService.search(
-				permissionChecker.getCompanyId(), null, null, null, params,
-				true, 0, max);
+			return ListUtil.unique(
+				groupLocalService.search(permissionChecker.getCompanyId(), null,
+				null, null, params, true, 0, max));
 		}
 
-		List<Group> groups = new UniqueList<Group>();
+		List<Group> groups = new ArrayList<Group>();
 
 		List<Group> userSitesGroups = getUserSitesGroups(null, max);
 
@@ -386,7 +385,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			}
 		}
 
-		return groups;
+		return ListUtil.unique(groups);
 	}
 
 	/**
@@ -497,7 +496,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		List<Group> groups = groupLocalService.getUserOrganizationsGroups(
 			userId, start, end);
 
-		return filterGroups(groups);
+		return filterGroups(ListUtil.unique(groups));
 	}
 
 	/**
@@ -647,7 +646,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			return Collections.emptyList();
 		}
 
-		List<Group> userSiteGroups = new UniqueList<Group>();
+		List<Group> userSiteGroups = new ArrayList<Group>();
 
 		int start = QueryUtil.ALL_POS;
 		int end = QueryUtil.ALL_POS;
@@ -738,7 +737,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		return Collections.unmodifiableList(
-			ListUtil.subList(userSiteGroups, start, end));
+			ListUtil.subList(ListUtil.unique(userSiteGroups), start, end));
 	}
 
 	/**

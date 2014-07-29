@@ -93,7 +93,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.language.LanguageResources;
@@ -1280,7 +1279,7 @@ public class PortalImpl implements Portal {
 			long userId, long companyId, long groupId, String portletId)
 		throws PortalException {
 
-		List<Group> groups = new UniqueList<Group>();
+		List<Group> groups = new ArrayList<Group>();
 
 		LinkedHashMap<String, Object> params =
 			new LinkedHashMap<String, Object>();
@@ -1311,7 +1310,7 @@ public class PortalImpl implements Portal {
 
 		List<Group> filteredGroups = new ArrayList<Group>();
 
-		for (Group group : groups) {
+		for (Group group : ListUtil.unique(groups)) {
 			if (group.hasStagingGroup()) {
 				Group stagingGroup = group.getStagingGroup();
 
@@ -1885,7 +1884,7 @@ public class PortalImpl implements Portal {
 	public List<Group> getCurrentAndAncestorSiteGroups(long groupId)
 		throws PortalException {
 
-		List<Group> groups = new UniqueList<Group>();
+		List<Group> groups = new ArrayList<Group>();
 
 		Group siteGroup = doGetCurrentSiteGroup(groupId);
 
@@ -1895,7 +1894,7 @@ public class PortalImpl implements Portal {
 
 		groups.addAll(doGetAncestorSiteGroups(groupId, false));
 
-		return groups;
+		return ListUtil.unique(groups);
 	}
 
 	@Override
@@ -5029,7 +5028,7 @@ public class PortalImpl implements Portal {
 			long companyId, long groupId, long userId)
 		throws PortalException {
 
-		List<Group> groups = new UniqueList<Group>();
+		List<Group> groups = new ArrayList<Group>();
 
 		Group siteGroup = doGetCurrentSiteGroup(groupId);
 
@@ -5082,6 +5081,8 @@ public class PortalImpl implements Portal {
 		}
 
 		long[] groupIds = new long[groups.size()];
+
+		groups = ListUtil.unique(groups);
 
 		for (int i = 0; i < groups.size(); i++) {
 			Group group = groups.get(i);
@@ -7667,7 +7668,7 @@ public class PortalImpl implements Portal {
 			long groupId, boolean checkContentSharingWithChildrenEnabled)
 		throws PortalException {
 
-		List<Group> groups = new UniqueList<Group>();
+		List<Group> groups = new ArrayList<Group>();
 
 		long siteGroupId = getSiteGroupId(groupId);
 
@@ -7689,7 +7690,7 @@ public class PortalImpl implements Portal {
 					siteGroup.getCompanyId()));
 		}
 
-		return groups;
+		return ListUtil.unique(groups);
 	}
 
 	protected Group doGetCurrentSiteGroup(long groupId) throws PortalException {

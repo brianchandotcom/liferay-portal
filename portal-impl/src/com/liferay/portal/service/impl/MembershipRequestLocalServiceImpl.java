@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.MembershipRequest;
@@ -194,7 +193,7 @@ public class
 	protected List<Long> getGroupAdministratorUserIds(long groupId)
 		throws PortalException {
 
-		List<Long> userIds = new UniqueList<Long>();
+		List<Long> userIds = new ArrayList<Long>();
 
 		Group group = groupLocalService.getGroup(groupId);
 		String modelResource = Group.class.getName();
@@ -271,7 +270,7 @@ public class
 			}
 		}
 
-		return userIds;
+		return ListUtil.unique(userIds);
 	}
 
 	protected void notify(

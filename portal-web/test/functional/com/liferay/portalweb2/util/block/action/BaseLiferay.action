@@ -325,12 +325,6 @@
 		</default>
 	</command>
 
-	<command name="resizeWindow">
-		<default>
-			<execute function="ResizeWindow#resizeWindow" />
-		</default>
-	</command>
-
 	<command name="scrollWebElementIntoView">
 		<default>
 			<execute function="ScrollWebElementIntoView#scrollWebElementIntoView" />
@@ -362,6 +356,12 @@
 	<command name="selectWindow">
 		<default>
 			<execute function="SelectWindow#selectWindow" />
+		</default>
+	</command>
+
+	<command name="setWindowSize">
+		<default>
+			<execute function="SetWindowSize#setWindowSize" />
 		</default>
 	</command>
 

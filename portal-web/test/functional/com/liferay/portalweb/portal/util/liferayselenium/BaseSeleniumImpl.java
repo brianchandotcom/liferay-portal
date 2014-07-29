@@ -509,10 +509,6 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void resizeWindow(String value) throws Exception {
-	}
-
-	@Override
 	public void saveScreenshot() throws Exception {
 		if (!TestPropsValues.SAVE_SCREENSHOT) {
 			return;
@@ -610,6 +606,10 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public void setTimeoutImplicit(String timeout) {
+	}
+
+	@Override
+	public void setWindowSize(String coordString) {
 	}
 
 	@Override

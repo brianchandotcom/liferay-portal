@@ -190,8 +190,6 @@ public interface LiferaySelenium extends Selenium {
 
 	public void replyToEmail(String to, String body) throws Exception;
 
-	public void resizeWindow(String value) throws Exception;
-
 	public void saveScreenshot() throws Exception;
 
 	public void saveScreenshotAndSource() throws Exception;
@@ -224,6 +222,8 @@ public interface LiferaySelenium extends Selenium {
 	public void setPrimaryTestSuiteName(String primaryTestSuiteName);
 
 	public void setTimeoutImplicit(String timeout);
+
+	public void setWindowSize(String coordString);
 
 	public void sikuliAssertElementNotPresent(String image) throws Exception;
 

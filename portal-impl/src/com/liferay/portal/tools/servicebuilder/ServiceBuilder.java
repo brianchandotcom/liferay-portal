@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.StringUtil_IW;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.kernel.xml.Document;
@@ -4512,8 +4511,7 @@ public class ServiceBuilder {
 	private List<Entity> _mergeReferenceList(Entity entity) {
 		List<Entity> referenceList = entity.getReferenceList();
 
-		List<Entity> list = new UniqueList<Entity>(
-			_ejbList.size() + referenceList.size());
+		List<Entity> list = new ArrayList<Entity>();
 
 		if (_autoImportDefaultReferences) {
 			list.addAll(_ejbList);
@@ -4524,7 +4522,7 @@ public class ServiceBuilder {
 
 		list.addAll(referenceList);
 
-		return list;
+		return ListUtil.unique(list);
 	}
 
 	private void _parseEntity(Element entityElement) throws Exception {

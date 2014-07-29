@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -41,6 +41,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -179,13 +180,14 @@ public class JournalContentPortletLayoutListener
 			portletIds.addAll(getRuntimePortletIds(ddmTemplate.getScript()));
 		}
 
-		return portletIds.toArray(new String[portletIds.size()]);
+		return ListUtil.unique(
+			portletIds).toArray(new String[portletIds.size()]);
 	}
 
 	protected List<String> getRuntimePortletIds(String content)
 		throws Exception {
 
-		List<String> portletIds = new UniqueList<String>();
+		List<String> portletIds = new ArrayList<String>();
 
 		for (int index = 0;;) {
 			index = content.indexOf(PortletLogic.OPEN_TAG, index);
@@ -216,7 +218,7 @@ public class JournalContentPortletLayoutListener
 			index = closeIndex;
 		}
 
-		return portletIds;
+		return ListUtil.unique(portletIds);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -44,7 +45,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.model.Group;
@@ -329,12 +329,12 @@ public class EditGroupAction extends PortletAction {
 	protected List<Team> getTeams(PortletRequest portletRequest)
 		throws Exception {
 
-		List<Team> teams = new UniqueList<Team>();
+		List<Team> teams = new ArrayList<Team>();
 
 		long[] teamsTeamIds = StringUtil.split(
 			ParamUtil.getString(portletRequest, "teamsTeamIds"), 0L);
 
-		for (long teamsTeamId : teamsTeamIds) {
+		for (long teamsTeamId : ArrayUtil.unique(teamsTeamIds)) {
 			if (teamsTeamId == 0) {
 				continue;
 			}

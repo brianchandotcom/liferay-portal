@@ -76,7 +76,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -2793,7 +2792,7 @@ public class HookHotDeployListener
 
 		@Override
 		public String[] getStringArray() {
-			List<String> mergedStringList = new UniqueList<String>();
+			List<String> mergedStringList = new ArrayList<String>();
 
 			mergedStringList.addAll(ListUtil.fromArray(_portalStringArray));
 
@@ -2804,6 +2803,8 @@ public class HookHotDeployListener
 
 				mergedStringList.addAll(ListUtil.fromArray(pluginStringArray));
 			}
+
+			mergedStringList = ListUtil.unique(mergedStringList);
 
 			return mergedStringList.toArray(
 				new String[mergedStringList.size()]);

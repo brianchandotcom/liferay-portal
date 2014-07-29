@@ -22,13 +22,13 @@ import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -168,14 +168,14 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public List<Group> getDescendants(boolean site) {
-		List<Group> descendants = new UniqueList<Group>();
+		List<Group> descendants = new ArrayList<Group>();
 
 		for (Group group : getChildren(site)) {
 			descendants.add(group);
 			descendants.addAll(group.getDescendants(site));
 		}
 
-		return descendants;
+		return ListUtil.unique(descendants);
 	}
 
 	@Override

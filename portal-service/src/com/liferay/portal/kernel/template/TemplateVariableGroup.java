@@ -16,9 +16,10 @@ package com.liferay.portal.kernel.template;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.UniqueList;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 
 /**
  * @author Jorge Ferrer
@@ -130,7 +131,8 @@ public class TemplateVariableGroup {
 	public Collection<TemplateVariableDefinition>
 		getTemplateVariableDefinitions() {
 
-		return _templateVariableDefinitions;
+		return new ArrayList<TemplateVariableDefinition>(
+			_templateVariableDefinitions);
 	}
 
 	public boolean isAutocompleteEnabled() {
@@ -158,6 +160,6 @@ public class TemplateVariableGroup {
 	private String[] _restrictedVariables;
 	private Collection<TemplateVariableDefinition>
 		_templateVariableDefinitions =
-			new UniqueList<TemplateVariableDefinition>();
+			new LinkedHashSet<TemplateVariableDefinition>();
 
 }

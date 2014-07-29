@@ -19,6 +19,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -87,7 +88,7 @@ public class ReflectionUtil {
 	public static Class<?>[] getInterfaces(
 		Object object, ClassLoader classLoader) {
 
-		List<Class<?>> interfaceClasses = new UniqueList<Class<?>>();
+		List<Class<?>> interfaceClasses = new ArrayList<Class<?>>();
 
 		Class<?> clazz = object.getClass();
 
@@ -100,6 +101,8 @@ public class ReflectionUtil {
 
 			superClass = superClass.getSuperclass();
 		}
+
+		interfaceClasses = ListUtil.unique(interfaceClasses);
 
 		return interfaceClasses.toArray(new Class<?>[interfaceClasses.size()]);
 	}

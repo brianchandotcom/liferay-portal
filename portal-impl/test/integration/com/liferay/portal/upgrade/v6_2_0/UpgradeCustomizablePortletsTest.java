@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.model.Group;
@@ -82,6 +83,8 @@ public class UpgradeCustomizablePortletsTest
 		upgradeCustomizablePreferences(
 			portalPreferencesWrapper, ownerId, ownerType, preferences);
 
+		_newPortletIds = ListUtil.unique(_newPortletIds);
+
 		Assert.assertEquals(_newPortletIds.size(), 4);
 		Assert.assertFalse(PortletConstants.hasUserId(_newPortletIds.get(0)));
 		Assert.assertTrue(PortletConstants.hasUserId(_newPortletIds.get(1)));
@@ -132,6 +135,8 @@ public class UpgradeCustomizablePortletsTest
 		portalPreferencesWrapper.store();
 
 		doUpgrade();
+
+		_newPortletIds = ListUtil.unique(_newPortletIds);
 
 		Assert.assertEquals(_newPortletIds.size(), 4);
 		Assert.assertFalse(PortletConstants.hasUserId(_newPortletIds.get(0)));

@@ -16,9 +16,9 @@ package com.liferay.portlet.nestedportlets.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTemplate;
@@ -31,6 +31,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -85,7 +86,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			}
 		}
 
-		List<String> columnNames = new UniqueList<String>();
+		List<String> columnNames = new ArrayList<String>();
 
 		for (String columnId : columnIds) {
 			if (!columnId.contains(portletId)) {
@@ -95,7 +96,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			}
 		}
 
-		return columnNames;
+		return ListUtil.unique(columnNames);
 	}
 
 	protected void reorganizeNestedColumns(

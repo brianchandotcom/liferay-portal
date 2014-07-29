@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -267,7 +266,7 @@ public class LayoutTemplateLocalServiceImpl
 		String servletContextName, ServletContext servletContext, String[] xmls,
 		PluginPackage pluginPackage) {
 
-		List<LayoutTemplate> layoutTemplates = new UniqueList<LayoutTemplate>();
+		List<LayoutTemplate> layoutTemplates = new ArrayList<LayoutTemplate>();
 
 		try {
 			for (String xml : xmls) {
@@ -281,7 +280,7 @@ public class LayoutTemplateLocalServiceImpl
 			_log.error(e, e);
 		}
 
-		return layoutTemplates;
+		return ListUtil.unique(layoutTemplates);
 	}
 
 	@Override

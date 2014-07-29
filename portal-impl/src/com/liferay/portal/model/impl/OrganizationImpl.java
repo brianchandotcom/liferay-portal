@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
@@ -141,14 +141,14 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 
 	@Override
 	public List<Organization> getDescendants() {
-		List<Organization> descendants = new UniqueList<Organization>();
+		List<Organization> descendants = new ArrayList<Organization>();
 
 		for (Organization suborganization : getSuborganizations()) {
 			descendants.add(suborganization);
 			descendants.addAll(suborganization.getDescendants());
 		}
 
-		return descendants;
+		return ListUtil.unique(descendants);
 	}
 
 	@Override

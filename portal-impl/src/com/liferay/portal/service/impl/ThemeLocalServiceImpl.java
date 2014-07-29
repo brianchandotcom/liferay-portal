@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThemeFactoryUtil;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -293,7 +292,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		String themesPath, boolean loadFromServletContext, String[] xmls,
 		PluginPackage pluginPackage) {
 
-		List<Theme> themes = new UniqueList<Theme>();
+		List<Theme> themes = new ArrayList<Theme>();
 
 		try {
 			for (String xml : xmls) {
@@ -309,7 +308,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 		_themesPool.clear();
 
-		return themes;
+		return ListUtil.unique(themes);
 	}
 
 	@Override

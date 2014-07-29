@@ -1096,7 +1096,10 @@ public abstract class BaseDB implements DB {
 				sb.append(variable);
 			}
 			else {
+				sb.append("(?<!\\[\\$)");
 				sb.append(variable);
+				sb.append("(?!\\$\\])");
+
 				sb.append("\\b");
 			}
 

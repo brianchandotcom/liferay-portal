@@ -37,6 +37,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
@@ -267,7 +268,9 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 					ddmStructure.getStructureId(), name, StringPool.BLANK);
 
 				if (ddmStructure.isFieldPrivate(name)) {
-					field.setValue(RandomTestUtil.randomString());
+					field.setValue(
+						RandomTestUtil.randomString() +
+							DDMImpl.INSTANCE_SEPARATOR);
 				}
 
 				fields.put(field);

@@ -1,0 +1,5 @@
+Export-Package:\
+	*
+Include-Resource:\
+	classes,\
+	@${project.dir}/../lib/development/dumbster.jar

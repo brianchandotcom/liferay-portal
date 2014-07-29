@@ -342,6 +342,8 @@
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="HEADER_TITLE" value1="${ddlDataDefinitionName}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="NAME_FIELD" value1="${ddlDataDefinitionName}" />
 
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
+
 		<execute macro="DynamicDataMapping#viewField">
 			<var name="fieldFieldLabel" value="Text" />
 			<var name="fieldName" value="Text" />

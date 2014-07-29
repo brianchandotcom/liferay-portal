@@ -70,7 +70,7 @@ public class DLAppLocalServiceTest {
 		}
 
 		@Test
-		public void testAddAssetEntryWhenAddingFolder() throws Exception {
+		public void shouldAddAssetEntry() throws Exception {
 			Folder folder = addFolder(_group.getGroupId(), false);
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
@@ -80,27 +80,27 @@ public class DLAppLocalServiceTest {
 		}
 
 		@Test
-		public void testAddFolder() throws Exception {
-			Folder folder = addFolder(_group.getGroupId(), true);
-
-			Assert.assertTrue(folder != null);
-		}
-
-		@Test
-		public void testAddRootFolder() throws Exception {
-			Folder folder = addFolder(_group.getGroupId(), false);
-
-			Assert.assertTrue(folder != null);
-		}
-
-		@Test
-		public void testFireSyncEventWhenAddingFolder() throws Exception {
+		public void shouldFireSyncEvent() throws Exception {
 			AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_ADD);
 
 			addFolder(_group.getGroupId(), true);
 
 			Assert.assertEquals(1, counter.get());
+		}
+
+		@Test
+		public void shouldSucceedForNonRootFolders() throws Exception {
+			Folder folder = addFolder(_group.getGroupId(), false);
+
+			Assert.assertTrue(folder != null);
+		}
+
+		@Test
+		public void shouldSucceedForRootFolder() throws Exception {
+			Folder folder = addFolder(_group.getGroupId(), true);
+
+			Assert.assertTrue(folder != null);
 		}
 
 		@DeleteAfterTestRun
@@ -123,7 +123,7 @@ public class DLAppLocalServiceTest {
 		}
 
 		@Test
-		public void testFireSyncEventWhenUpdatingFileEntry() throws Throwable {
+		public void shouldFireSyncEvent() throws Throwable {
 			AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_UPDATE);
 
@@ -138,9 +138,7 @@ public class DLAppLocalServiceTest {
 		}
 
 		@Test
-		public void testUpdateAssetEntryWhenUpdatingFileEntry()
-			throws Exception {
-
+		public void shouldUpdateAssetEntry() throws Exception {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
@@ -174,8 +172,20 @@ public class DLAppLocalServiceTest {
 			_group = GroupTestUtil.addGroup();
 		}
 
+		@Test(expected = NoSuchFolderException.class)
+		public void shouldFailForDefaultParentFolder() throws Exception {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			DLAppLocalServiceUtil.updateFolder(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				serviceContext);
+		}
+
 		@Test
-		public void testUpdateAssetEntryWhenUpdatingFolder() throws Exception {
+		public void shouldUpdateAssetEntry() throws Exception {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
@@ -189,18 +199,6 @@ public class DLAppLocalServiceTest {
 				DLFolderConstants.getClassName(), folder.getFolderId());
 
 			Assert.assertEquals("New Name", assetEntry.getTitle());
-		}
-
-		@Test(expected = NoSuchFolderException.class)
-		public void testUpdateDefaultParentFolder() throws Exception {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-			DLAppLocalServiceUtil.updateFolder(
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				serviceContext);
 		}
 
 		@DeleteAfterTestRun

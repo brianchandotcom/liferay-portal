@@ -108,7 +108,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	@Override
 	public T fetchMissingReference(String uuid, long groupId) {
 
-		// Try to fetch the existing staged model from the actual group
+		// Try to fetch the existing staged model from the importing group
 
 		T existingStagedModel = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
@@ -121,6 +121,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			// Try to fetch the existing staged model from the parent sites
 
 			Group originalGroup = GroupLocalServiceUtil.getGroup(groupId);
+
 			Group group = originalGroup.getParentGroup();
 
 			while (group != null) {
@@ -147,7 +148,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				_log.debug(e, e);
 			}
 			else if (_log.isWarnEnabled()) {
-				_log.warn("Unable to fetch staged model from group " + groupId);
+				_log.warn(
+					"Unable to fetch missing reference staged model from " +
+						"group " + groupId);
 			}
 
 			return null;

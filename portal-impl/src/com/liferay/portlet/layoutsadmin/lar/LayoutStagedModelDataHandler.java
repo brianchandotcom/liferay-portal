@@ -786,7 +786,7 @@ public class LayoutStagedModelDataHandler
 	protected Layout fetchMissingReference(
 		String uuid, long groupId, boolean privateLayout) {
 
-		// Try to fetch it from the actual group
+		// Try to fetch the existing layout from the importing group
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 			uuid, groupId, privateLayout);
@@ -797,9 +797,10 @@ public class LayoutStagedModelDataHandler
 
 		try {
 
-			// Try to fetch the existing staged model from the parent sites
+			// Try to fetch the existing layout from the parent sites
 
 			Group originalGroup = GroupLocalServiceUtil.getGroup(groupId);
+
 			Group group = originalGroup.getParentGroup();
 
 			while (group != null) {
@@ -832,7 +833,9 @@ public class LayoutStagedModelDataHandler
 				_log.debug(e, e);
 			}
 			else if (_log.isWarnEnabled()) {
-				_log.warn("Unable to fetch layout from group " + groupId);
+				_log.warn(
+					"Unable to fetch missing reference layout from group " +
+						groupId);
 			}
 
 			return null;

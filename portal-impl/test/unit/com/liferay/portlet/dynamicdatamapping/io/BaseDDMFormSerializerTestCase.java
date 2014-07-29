@@ -130,8 +130,8 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 	protected LocalizedValue createTextDDMFormFieldLabel() {
 		LocalizedValue label = new LocalizedValue();
 
-		label.addValue(LocaleUtil.BRAZIL, "Texto");
-		label.addValue(LocaleUtil.US, "Text");
+		label.addString(LocaleUtil.BRAZIL, "Texto");
+		label.addString(LocaleUtil.US, "Text");
 
 		return label;
 	}
@@ -139,8 +139,8 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 	protected LocalizedValue createTextDDMFormFieldPredefinedValue() {
 		LocalizedValue predefinedValue = new LocalizedValue();
 
-		predefinedValue.addValue(LocaleUtil.BRAZIL, "Exemplo");
-		predefinedValue.addValue(LocaleUtil.US, "Example");
+		predefinedValue.addString(LocaleUtil.BRAZIL, "Exemplo");
+		predefinedValue.addString(LocaleUtil.US, "Example");
 
 		return predefinedValue;
 	}

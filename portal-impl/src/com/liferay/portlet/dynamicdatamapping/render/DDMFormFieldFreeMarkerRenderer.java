@@ -123,19 +123,19 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 
 		LocalizedValue label = ddmFormField.getLabel();
 
-		fieldContext.put("label", label.getValue(locale));
+		fieldContext.put("label", label.getString(locale));
 
 		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
-		fieldContext.put("predefinedValue", predefinedValue.getValue(locale));
+		fieldContext.put("predefinedValue", predefinedValue.getString(locale));
 
 		LocalizedValue style = ddmFormField.getStyle();
 
-		fieldContext.put("style", style.getValue(locale));
+		fieldContext.put("style", style.getString(locale));
 
 		LocalizedValue tip = ddmFormField.getTip();
 
-		fieldContext.put("tip", tip.getValue(locale));
+		fieldContext.put("tip", tip.getString(locale));
 	}
 
 	protected void addStructureProperties(
@@ -201,7 +201,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 
 			LocalizedValue label = ddmFormFieldOptions.getOptionLabels(value);
 
-			fieldStructure.put("label", label.getValue(locale));
+			fieldStructure.put("label", label.getString(locale));
 
 			fieldStructure.put("name", StringUtil.randomId());
 			fieldStructure.put("value", value);

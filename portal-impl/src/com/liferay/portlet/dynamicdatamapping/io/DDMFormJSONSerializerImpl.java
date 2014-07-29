@@ -168,7 +168,7 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 		for (Locale availableLocale : localizedValue.getAvailableLocales()) {
 			jsonObject.put(
 				LocaleUtil.toLanguageId(availableLocale),
-				localizedValue.getValue(availableLocale));
+				localizedValue.getString(availableLocale));
 		}
 
 		return jsonObject;

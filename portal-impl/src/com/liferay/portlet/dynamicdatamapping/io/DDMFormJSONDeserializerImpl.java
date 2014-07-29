@@ -185,7 +185,7 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 		while (itr.hasNext()) {
 			String languageId = itr.next();
 
-			localizedValue.addValue(
+			localizedValue.addString(
 				LocaleUtil.fromLanguageId(languageId),
 				jsonObject.getString(languageId));
 		}

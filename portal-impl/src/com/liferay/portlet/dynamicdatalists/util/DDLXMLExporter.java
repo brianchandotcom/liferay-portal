@@ -89,7 +89,7 @@ public class DDLXMLExporter extends BaseDDLExporter {
 				}
 
 				addFieldElement(
-					fieldsElement, label.getValue(getLocale()), value);
+					fieldsElement, label.getString(getLocale()), value);
 			}
 		}
 

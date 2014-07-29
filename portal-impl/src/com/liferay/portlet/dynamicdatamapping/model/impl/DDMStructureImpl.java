@@ -149,7 +149,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 		LocalizedValue label = ddmFormField.getLabel();
 
-		return label.getValue(locale);
+		return label.getString(locale);
 	}
 
 	@Override
@@ -199,7 +199,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 		LocalizedValue tip = ddmFormField.getTip();
 
-		return tip.getValue(locale);
+		return tip.getString(locale);
 	}
 
 	@Override

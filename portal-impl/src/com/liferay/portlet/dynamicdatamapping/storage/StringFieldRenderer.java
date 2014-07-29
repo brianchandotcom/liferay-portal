@@ -119,7 +119,7 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 				continue;
 			}
 
-			sb.append(label.getValue(locale));
+			sb.append(label.getString(locale));
 
 			if ((i + 1) < jsonArray.length()) {
 				sb.append(StringPool.COMMA_AND_SPACE);

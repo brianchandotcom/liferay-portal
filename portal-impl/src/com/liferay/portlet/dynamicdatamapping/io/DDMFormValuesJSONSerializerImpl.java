@@ -90,7 +90,7 @@ public class DDMFormValuesJSONSerializerImpl
 			jsonObject.put("value", toJSONObject(value));
 		}
 		else {
-			jsonObject.put("value", value.getValue(LocaleUtil.ROOT));
+			jsonObject.put("value", value.getString(LocaleUtil.ROOT));
 		}
 	}
 
@@ -125,7 +125,7 @@ public class DDMFormValuesJSONSerializerImpl
 		for (Locale availableLocale : value.getAvailableLocales()) {
 			jsonObject.put(
 				LocaleUtil.toLanguageId(availableLocale),
-				value.getValue(availableLocale));
+				value.getString(availableLocale));
 		}
 
 		return jsonObject;

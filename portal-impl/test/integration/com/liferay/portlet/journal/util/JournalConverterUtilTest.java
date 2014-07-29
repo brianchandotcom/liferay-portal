@@ -592,10 +592,10 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 			expectedLocalizedValue.getAvailableLocales();
 
 		for (Locale expectedLocale : expectedAvailableLocales) {
-			String expectedValue = expectedLocalizedValue.getValue(
+			String expectedValue = expectedLocalizedValue.getString(
 				expectedLocale);
 
-			String actualValue = actualLocalizedValue.getValue(expectedLocale);
+			String actualValue = actualLocalizedValue.getString(expectedLocale);
 
 			Assert.assertEquals(expectedValue, actualValue);
 		}

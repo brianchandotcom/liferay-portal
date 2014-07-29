@@ -126,8 +126,8 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 
 		LocalizedValue label = field.getLabel();
 
-		label.addValue(LocaleUtil.BRAZIL, "Campo de Texto");
-		label.addValue(LocaleUtil.US, "Text Field");
+		label.addString(LocaleUtil.BRAZIL, "Campo de Texto");
+		label.addString(LocaleUtil.US, "Text Field");
 
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
@@ -215,8 +215,8 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 
 		LocalizedValue tip = field.getTip();
 
-		tip.addValue(LocaleUtil.BRAZIL, "Dica para campo de texto.");
-		tip.addValue(LocaleUtil.US, "Tip for text field");
+		tip.addString(LocaleUtil.BRAZIL, "Dica para campo de texto.");
+		tip.addString(LocaleUtil.US, "Tip for text field");
 
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 

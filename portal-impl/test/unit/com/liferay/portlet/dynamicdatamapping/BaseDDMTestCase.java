@@ -265,7 +265,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 		LocalizedValue localizedValue = ddmFormField.getLabel();
 
-		localizedValue.addValue(LocaleUtil.US, label);
+		localizedValue.addString(LocaleUtil.US, label);
 
 		return ddmFormField;
 	}

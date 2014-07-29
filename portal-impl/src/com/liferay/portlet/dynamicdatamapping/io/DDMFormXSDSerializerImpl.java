@@ -152,7 +152,7 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 			}
 
 			metadataMap.put(
-				entryName, localizedValue.getValue(availableLocale));
+				entryName, localizedValue.getString(availableLocale));
 		}
 	}
 
@@ -223,7 +223,7 @@ public class DDMFormXSDSerializerImpl implements DDMFormXSDSerializer {
 				new HashMap<String, String>();
 
 			optionMetadataEntries.put(
-				"label", optionLabels.getValue(availableLocale));
+				"label", optionLabels.getString(availableLocale));
 
 			optionLabelsMap.put(availableLocale, optionMetadataEntries);
 		}

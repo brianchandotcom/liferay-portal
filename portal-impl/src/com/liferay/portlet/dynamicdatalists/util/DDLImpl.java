@@ -242,7 +242,7 @@ public class DDLImpl implements DDL {
 
 			LocalizedValue label = ddmFormField.getLabel();
 
-			jsonObject.put("label", label.getValue(locale));
+			jsonObject.put("label", label.getString(locale));
 
 			jsonObject.put("name", name);
 

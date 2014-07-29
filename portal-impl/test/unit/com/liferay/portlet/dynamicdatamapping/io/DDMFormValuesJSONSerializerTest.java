@@ -85,8 +85,8 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	protected Value createBooleanValue() {
 		Value value = new LocalizedValue();
 
-		value.addValue(LocaleUtil.US, "false");
-		value.addValue(LocaleUtil.BRAZIL, "true");
+		value.addString(LocaleUtil.US, "false");
+		value.addString(LocaleUtil.BRAZIL, "true");
 
 		return value;
 	}
@@ -129,8 +129,8 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	protected Value createHTMLValue(int index) {
 		Value value = new LocalizedValue();
 
-		value.addValue(LocaleUtil.US, "<p>This is a test. " + index + "</p>");
-		value.addValue(
+		value.addString(LocaleUtil.US, "<p>This is a test. " + index + "</p>");
+		value.addString(
 			LocaleUtil.BRAZIL, "<p>Isto e um teste. " + index + "</p>");
 
 		return value;
@@ -221,8 +221,8 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	protected Value createTextBoxValue(int index) {
 		Value value = new LocalizedValue();
 
-		value.addValue(LocaleUtil.US, "Content " + index);
-		value.addValue(LocaleUtil.BRAZIL, "Conteudo " + index);
+		value.addString(LocaleUtil.US, "Content " + index);
+		value.addString(LocaleUtil.BRAZIL, "Conteudo " + index);
 
 		return value;
 	}
@@ -240,8 +240,8 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	protected Value createTextValue() {
 		Value value = new LocalizedValue();
 
-		value.addValue(LocaleUtil.US, "Text");
-		value.addValue(LocaleUtil.BRAZIL, "Texto");
+		value.addString(LocaleUtil.US, "Text");
+		value.addString(LocaleUtil.BRAZIL, "Texto");
 
 		return value;
 	}

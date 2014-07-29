@@ -262,7 +262,7 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 		if (labelElement != null) {
 			LocalizedValue label = ddmFormField.getLabel();
 
-			label.addValue(locale, labelElement.getText());
+			label.addString(locale, labelElement.getText());
 		}
 
 		Element predefinedValueElement = fetchMetadataEntry(
@@ -271,7 +271,7 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 		if (predefinedValueElement != null) {
 			LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
-			predefinedValue.addValue(locale, predefinedValueElement.getText());
+			predefinedValue.addString(locale, predefinedValueElement.getText());
 		}
 
 		Element styleElement = fetchMetadataEntry(metadataElement, "style");
@@ -279,7 +279,7 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 		if (styleElement != null) {
 			LocalizedValue style = ddmFormField.getStyle();
 
-			style.addValue(locale, styleElement.getText());
+			style.addString(locale, styleElement.getText());
 		}
 
 		Element tipElement = fetchMetadataEntry(metadataElement, "tip");
@@ -287,7 +287,7 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 		if (tipElement != null) {
 			LocalizedValue tip = ddmFormField.getTip();
 
-			tip.addValue(locale, tipElement.getText());
+			tip.addString(locale, tipElement.getText());
 		}
 	}
 

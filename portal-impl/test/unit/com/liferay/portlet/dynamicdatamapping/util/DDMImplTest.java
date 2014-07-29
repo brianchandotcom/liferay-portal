@@ -418,7 +418,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 		LocalizedValue localizedValue = ddmFormField.getLabel();
 
-		localizedValue.addValue(LocaleUtil.US, label);
+		localizedValue.addString(LocaleUtil.US, label);
 
 		return ddmFormField;
 	}

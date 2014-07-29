@@ -166,7 +166,7 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 		LocalizedValue label = ddmFormField.getLabel();
 
-		label.addValue(LocaleUtil.US, StringUtil.randomString());
+		label.addString(LocaleUtil.US, StringUtil.randomString());
 
 		return ddmFormField;
 	}

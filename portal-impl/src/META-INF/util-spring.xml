@@ -178,10 +178,9 @@
 			<bean class="com.liferay.portal.json.JSONIncludesManagerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager" class="com.liferay.portal.jsonwebservice.JSONWebServiceActionsManagerImpl" />
 	<bean id="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil" class="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil">
-		<property name="JSONWebServiceActionsManager">
-			<bean class="com.liferay.portal.jsonwebservice.JSONWebServiceActionsManagerImpl" />
-		</property>
+		<property name="JSONWebServiceActionsManager" ref="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.language.LanguageUtil" class="com.liferay.portal.kernel.language.LanguageUtil">
 		<property name="language">

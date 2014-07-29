@@ -1,0 +1,46 @@
+<definition component-name="portal-tools">
+	<property name="testray.main.component.name" value="Tools" />
+
+	<var name="pageName" value="Message Boards Page" />
+	<var name="portletName" value="Message Boards" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<command name="BlockQuote" priority="5">
+		<var name="threadBody" value="MB Thread Message Body" />
+		<var name="threadSubject" value="MB Thread Message Subject" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGMessageboards#click" locator-key1="POST_NEW_THREAD_BUTTON" />
+
+		<execute action="PGMessageboardsPostthread#click" locator-key1="BLOCK_QUOTE_BUTTON" />
+		<execute action="PGMessageboardsPostthread#type" locator-key1="SUBJECT_FIELD" value1="${threadSubject}" />
+		<execute action="PGMessageboardsPostthread#click" locator-key1="BLOCK_QUOTE_FIELD" value1="70,400" />
+		<execute action="PGMessageboardsPostthread#typeScreen" locator1="${threadBody}" />
+
+		<take-screenshot />
+
+		<execute action="PGMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPBlogsAdd#pause" locator1="5000" />
+	</command>
+</definition>

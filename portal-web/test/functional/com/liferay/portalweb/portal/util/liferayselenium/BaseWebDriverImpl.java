@@ -840,6 +840,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void typeScreen(String value) {
+		LiferaySeleniumHelper.typeScreen(value);
+	}
+
+	@Override
 	public void uploadCommonFile(String location, String value) {
 		uploadFile(location, _projectDirName + _dependenciesDirName + value);
 	}

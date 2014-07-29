@@ -263,6 +263,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void typeKeys(String locator, String value, boolean typeAceEditor);
 
+	public void typeScreen(String value);
+
 	public void uploadCommonFile(String locator, String value);
 
 	public void uploadFile(String locator, String value);

@@ -1,0 +1,5 @@
+<definition>
+	<command name="typeScreen">
+		<execute selenium="typeScreen" />
+	</command>
+</definition>

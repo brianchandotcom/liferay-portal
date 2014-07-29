@@ -459,6 +459,14 @@
 		</default>
 	</command>
 
+	<command name="typeScreen">
+		<default>
+			<description message="Type the value ${value1}." />
+
+			<execute function="TypeScreen#typeScreen" />
+		</default>
+	</command>
+
 	<command name="uncheck">
 		<default>
 			<execute function="Uncheck#clickAt" />

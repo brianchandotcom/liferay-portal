@@ -1,4 +1,10 @@
 <definition>
+	<command name="click">
+		<case locator-key1="BLOCK_QUOTE_FIELD">
+			<execute function="Click#clickAt" />
+		</case>
+	</command>
+
 	<command name="copy">
 		<case locator-key1="BODY_FIELD">
 			<execute function="Copy#ckEditorCopy" />

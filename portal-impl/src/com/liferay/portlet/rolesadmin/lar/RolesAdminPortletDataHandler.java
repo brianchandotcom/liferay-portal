@@ -26,9 +26,11 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.Team;
+import com.liferay.portal.model.impl.RoleImpl;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -58,6 +60,8 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 				Role.class.getName(), StagedModelType.REFERRER_CLASS_NAME_ALL
 			));
 		setSupportsDataStrategyCopyAsNew(false);
+
+		XStreamAliasRegistryUtil.register(RoleImpl.class, "Role");
 	}
 
 	@Override

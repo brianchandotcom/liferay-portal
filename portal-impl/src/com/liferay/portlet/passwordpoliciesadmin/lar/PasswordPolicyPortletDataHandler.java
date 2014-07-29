@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.PasswordPolicy;
+import com.liferay.portal.model.impl.PasswordPolicyImpl;
 import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
 
 import java.util.List;
@@ -46,6 +48,9 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "password-policies", true, true, null,
 				PasswordPolicy.class.getName()));
 		setSupportsDataStrategyCopyAsNew(false);
+
+		XStreamAliasRegistryUtil.register(
+			PasswordPolicyImpl.class, "PasswordPolicy");
 	}
 
 	@Override

@@ -21,9 +21,11 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
+import com.liferay.portal.model.impl.OrganizationImpl;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 
 import java.util.List;
@@ -47,6 +49,9 @@ public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "organizations", true, true, null,
 				Organization.class.getName()));
 		setSupportsDataStrategyCopyAsNew(false);
+
+		XStreamAliasRegistryUtil.register(
+			OrganizationImpl.class, "Organization");
 	}
 
 	@Override

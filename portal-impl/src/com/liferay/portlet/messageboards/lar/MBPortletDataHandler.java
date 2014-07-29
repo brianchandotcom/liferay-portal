@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.model.MBBan;
@@ -27,6 +28,10 @@ import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThreadFlag;
+import com.liferay.portlet.messageboards.model.impl.MBBanImpl;
+import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
+import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
+import com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -68,6 +73,12 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		setImportControls(getExportControls());
 		setPublishToLiveByDefault(
 			PropsValues.MESSAGE_BOARDS_PUBLISH_TO_LIVE_BY_DEFAULT);
+
+		XStreamAliasRegistryUtil.register(MBBanImpl.class, "MBBan");
+		XStreamAliasRegistryUtil.register(MBCategoryImpl.class, "MBCategory");
+		XStreamAliasRegistryUtil.register(MBMessageImpl.class, "MBMessage");
+		XStreamAliasRegistryUtil.register(
+			MBThreadFlagImpl.class, "MBThreadFlag");
 	}
 
 	@Override

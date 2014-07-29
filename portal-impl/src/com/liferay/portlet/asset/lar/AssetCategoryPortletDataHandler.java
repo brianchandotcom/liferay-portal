@@ -20,9 +20,12 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.model.impl.AssetCategoryImpl;
+import com.liferay.portlet.asset.model.impl.AssetVocabularyImpl;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
@@ -50,6 +53,11 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "vocabularies", true, false, null,
 				AssetVocabulary.class.getName()));
 		setPublishToLiveByDefault(true);
+
+		XStreamAliasRegistryUtil.register(
+			AssetCategoryImpl.class, "AssetCategory");
+		XStreamAliasRegistryUtil.register(
+			AssetVocabularyImpl.class, "AssetVocabulary");
 	}
 
 	@Override

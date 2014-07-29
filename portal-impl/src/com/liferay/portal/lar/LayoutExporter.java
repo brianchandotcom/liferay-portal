@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.PortletDataHandlerStatusMessageSenderUtil;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.Settings;
@@ -682,6 +683,7 @@ public class LayoutExporter {
 	}
 
 	private LayoutExporter() {
+		XStreamAliasRegistryUtil.register(LayoutImpl.class, "Layout");
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutExporter.class);

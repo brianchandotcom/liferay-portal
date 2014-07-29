@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.impl.LayoutSetPrototypeImpl;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 
 import java.util.List;
@@ -51,6 +53,9 @@ public class LayoutSetPrototypePortletDataHandler
 				},
 				LayoutSetPrototype.class.getName()
 			));
+
+		XStreamAliasRegistryUtil.register(
+			LayoutSetPrototypeImpl.class, "LayoutSetPrototype");
 	}
 
 	@Override

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PortalUtil;
@@ -29,6 +30,10 @@ import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
+import com.liferay.portlet.mobiledevicerules.model.impl.MDRActionImpl;
+import com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupImpl;
+import com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupInstanceImpl;
+import com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleImpl;
 import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
@@ -63,6 +68,13 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 		setImportControls(getExportControls());
 		setPublishToLiveByDefault(
 			PropsValues.MOBILE_DEVICE_RULES_PUBLISH_TO_LIVE_BY_DEFAULT);
+
+		XStreamAliasRegistryUtil.register(MDRActionImpl.class, "MDRAction");
+		XStreamAliasRegistryUtil.register(MDRRuleImpl.class, "MDRRule");
+		XStreamAliasRegistryUtil.register(
+			MDRRuleGroupImpl.class, "MDRRuleGroup");
+		XStreamAliasRegistryUtil.register(
+			MDRRuleGroupInstanceImpl.class, "MDRRuleGroupInstance");
 	}
 
 	@Override

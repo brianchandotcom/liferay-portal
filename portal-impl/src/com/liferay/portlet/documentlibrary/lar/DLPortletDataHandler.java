@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -41,6 +42,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
+import com.liferay.portal.model.impl.RepositoryEntryImpl;
+import com.liferay.portal.model.impl.RepositoryImpl;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -52,6 +55,10 @@ import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
+import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl;
+import com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutImpl;
+import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
@@ -107,6 +114,16 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "shortcuts", true, false, null,
 				DLFileShortcut.class.getName()));
 		setPublishToLiveByDefault(PropsValues.DL_PUBLISH_TO_LIVE_BY_DEFAULT);
+
+		XStreamAliasRegistryUtil.register(DLFileEntryImpl.class, "DLFileEntry");
+		XStreamAliasRegistryUtil.register(
+			DLFileEntryTypeImpl.class, "DLFileEntryType");
+		XStreamAliasRegistryUtil.register(
+			DLFileShortcutImpl.class, "DLFileShortcut");
+		XStreamAliasRegistryUtil.register(DLFolderImpl.class, "DLFolder");
+		XStreamAliasRegistryUtil.register(RepositoryImpl.class, "Repository");
+		XStreamAliasRegistryUtil.register(
+			RepositoryEntryImpl.class, "RepositoryEntry");
 	}
 
 	@Override

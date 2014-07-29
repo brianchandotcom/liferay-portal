@@ -108,35 +108,31 @@ public abstract class BaseModelUserNotificationHandler
 		ServiceContext serviceContext) {
 
 		String message = StringPool.BLANK;
-		String title = StringPool.BLANK;
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				assetRenderer.getClassName());
 
-		String typeName = HtmlUtil.escape(
-			assetRendererFactory.getTypeName(serviceContext.getLocale()));
-
-		String userFullName = HtmlUtil.escape(assetRenderer.getUserName());
+		String typeName = assetRendererFactory.getTypeName(
+			serviceContext.getLocale());
 
 		int notificationType = jsonObject.getInt("notificationType");
 
 		if (notificationType ==
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
 
-			message = "added-a-new-x";
+			message = "x-added-a-new-x";
 		}
 		else if (notificationType ==
 					UserNotificationDefinition.
 						NOTIFICATION_TYPE_UPDATE_ENTRY) {
 
-			message = "updated-a-x";
+			message = "x-updated-a-x";
 		}
 
-		title = StringUtil.toLowerCase(
-			serviceContext.translate(message, typeName));
-
-		return userFullName.concat(StringPool.SPACE).concat(title);
+		return serviceContext.translate(
+			message, HtmlUtil.escape(assetRenderer.getUserName()),
+			StringUtil.toLowerCase(HtmlUtil.escape(typeName)));
 	}
 
 }

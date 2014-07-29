@@ -375,6 +375,45 @@ public class DDMImplTest extends BaseDDMTestCase {
 			"Conteudo 2", "Content 3");
 	}
 
+	@Test
+	public void testMergeFieldsWithFieldsValuesWithNoInstanceSuffix()
+		throws Exception {
+
+		DDMForm ddmForm = createDDMForm();
+
+		addDDMFormFields(
+			ddmForm, createTextDDMFormField("Content", "", true, true, false));
+
+		DDMStructure ddmStructure = createStructure("Test Structure", ddmForm);
+
+		Field existingContentField = createField(
+			ddmStructure.getStructureId(), "Content",
+			createValuesList("Content 1", "Content 2", "Content 3"),
+			createValuesList("Conteudo 1", "Conteudo 2 ", "Conteudo 3"));
+
+		Field existingFieldsDisplayField = createFieldsDisplayField(
+			ddmStructure.getStructureId(), "Content,Content,Content");
+
+		Fields existingFields = createFields(
+			existingContentField, existingFieldsDisplayField);
+
+		Field newContentField = createField(
+			ddmStructure.getStructureId(), "Content",
+			createValuesList("Content 1", "Content 3"), null);
+
+		Field newFieldsDisplayField = createFieldsDisplayField(
+			ddmStructure.getStructureId(), "Content,Content");
+
+		Fields newFields = createFields(newContentField, newFieldsDisplayField);
+
+		try {
+			_ddmImpl.mergeFields(newFields, existingFields);
+		}
+		catch (NullPointerException npe) {
+			Assert.fail();
+		}
+	}
+
 	protected Field createField(
 		long ddmStructureId, String fieldName, List<Serializable> enValues,
 		List<Serializable> ptValues) {

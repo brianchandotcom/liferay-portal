@@ -29,6 +29,7 @@ import com.thoughtworks.selenium.Selenium;
 
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 
 import java.io.StringReader;
 
@@ -222,43 +223,69 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void clickAt(String locator, String coordString) {
-		if (locator.contains("x:")) {
-			String url = getHtmlNodeHref(locator);
+		clickAt(locator, coordString, true);
+	}
 
-			open(url);
-		}
-		else {
+	public void clickAt(
+		String locator, String coordString, boolean scrollIntoView) {
+
+		if (coordString.contains(",")) {
+			WebElement bodyWebElement = getWebElement("//body");
+
+			WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+			WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+			WebDriver.Options options = webDriver.manage();
+
+			WebDriver.Window window = options.window();
+
+			Point windowPoint = window.getPosition();
+
 			WebElement webElement = getWebElement(locator);
 
-			if (coordString.contains(",")) {
-				WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+			Point webElementPoint = webElement.getLocation();
 
-				WebDriver webDriver = wrapsDriver.getWrappedDriver();
+			String[] coords = coordString.split(",");
 
-				Actions actions = new Actions(webDriver);
+			int offsetX = GetterUtil.getInteger(coords[0]);
+			int offsetY = GetterUtil.getInteger(coords[1]);
 
-				String[] coords = coordString.split(",");
+			int clickDestinationX;
+			int clickDestinationY;
 
-				int x = GetterUtil.getInteger(coords[0]);
-				int y = GetterUtil.getInteger(coords[1]);
+			if (scrollIntoView) {
+				scrollWebElementIntoView(webElement);
 
-				actions.moveToElement(webElement, x, y);
-				actions.click();
-
-				Action action = actions.build();
-
-				action.perform();
+				clickDestinationX =
+					windowPoint.getX() + webElementPoint.getX() + offsetX;
+				clickDestinationY = windowPoint.getY() + offsetY;
 			}
 			else {
-				try {
-					webElement.click();
-				}
-				catch (Exception e) {
-					scrollWebElementIntoView(webElement);
-
-					webElement.click();
-				}
+				clickDestinationX =
+					windowPoint.getX() + webElementPoint.getX() + offsetX;
+				clickDestinationY =
+					windowPoint.getY() + webElementPoint.getY() + offsetY;
 			}
+
+			try {
+				Robot robot = new Robot();
+
+				robot.mouseMove(clickDestinationX, clickDestinationY);
+
+				robot.mousePress(KeyEvent.BUTTON1_MASK);
+
+				robot.delay(1500);
+
+				robot.mouseRelease(KeyEvent.BUTTON1_MASK);
+
+				robot.delay(1500);
+			}
+			catch (Exception e) {
+			}
+		}
+		else {
+			click(locator);
 		}
 	}
 

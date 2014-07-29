@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -584,6 +585,13 @@ public class DDMXSDImpl implements DDMXSD {
 		}
 
 		return null;
+	}
+
+	@Override
+	public String getXSD(String json) throws PortalException {
+		DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(json);
+
+		return DDMFormXSDSerializerUtil.serialize(ddmForm);
 	}
 
 	protected JSONArray addStructureFieldAttributes(

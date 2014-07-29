@@ -58,6 +58,7 @@ import javax.servlet.jsp.tagext.BodyContent;
  * @author Shuyang Zhou
  * @author Eduardo Lundgren
  * @author Raymond Augé
+ * @author Carlos Sierra
  */
 public class IncludeTag extends AttributesTagSupport {
 

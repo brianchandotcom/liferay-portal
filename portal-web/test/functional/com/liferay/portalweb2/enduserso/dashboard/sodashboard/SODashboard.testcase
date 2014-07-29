@@ -66,6 +66,45 @@
 		</execute>
 	</command>
 
+	<command name="AddSOAnnouncementsEntryExpired" priority="3">
+		<var name="distributionScope" value="General" />
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryURL" value="http://www.liferay.com" />
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+			<var name="scheduledExpiration" value="true" />
+		</execute>
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute action="SODashboard#pause" value1="60000" />
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewEmptyPG">
+			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+			<var name="expiredEntry" value="true" />
+		</execute>
+	</command>
+
 	<command name="AddSOAnnouncementsEntryImportant" priority="4">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
@@ -92,6 +131,38 @@
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
 			<var name="priority" value="Important" />
+		</execute>
+	</command>
+
+	<command name="AddSOAnnouncementsEntryNewsType" priority="3">
+		<var name="distributionScope" value="General" />
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryTitleEdit" value="Announcements Entry Title Edit" />
+		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="type" value="News" />
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+			<var name="type" value="${type}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+			<var name="type" value="${type}" />
 		</execute>
 	</command>
 
@@ -251,6 +322,38 @@
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
 			<var name="viewManageEntries" value="false" />
+		</execute>
+	</command>
+
+	<command name="AddSOAnnouncementsEntryTestType" priority="3">
+		<var name="distributionScope" value="General" />
+		<var name="entryContent" value="Announcements Entry Content" />
+		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
+		<var name="entryTitle" value="Announcements Entry Title" />
+		<var name="entryTitleEdit" value="Announcements Entry Title Edit" />
+		<var name="entryURL" value="http://www.liferay.com" />
+		<var name="type" value="Test" />
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#addPG">
+			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+			<var name="type" value="${type}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOAnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryAuthor" value="${adminName}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
+			<var name="type" value="${type}" />
 		</execute>
 	</command>
 
@@ -1219,6 +1322,171 @@
 		</execute>
 
 		<execute action="SODashboard#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
+	</command>
+
+	<command name="ViewEvent6DaysIntoFutureEventsDisplay" priority="3">
+		<var name="eventTitle1" value="Calendar Event1 Title" />
+		<var name="eventTitle2" value="Calendar Event2 Title" />
+		<var name="eventTitle3" value="Calendar Event3 Title" />
+		<var name="eventTitle4" value="Calendar Event4 Title" />
+		<var name="eventTitle5" value="Calendar Event5 Title" />
+		<var name="eventTitle6" value="Calendar Event6 Title" />
+		<var name="eventTitle7" value="Calendar Event7 Title" />
+		<var name="eventType" value="Regular" />
+		<var name="pageName" value="Calendar Page" />
+		<var name="portletName" value="Calendar" />
+		<var name="soPage" value="true" />
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOUserBar#addPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addPortlet">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#addRepeatingEventsPG">
+			<var name="eventTitle" value="${eventTitle1}" />
+			<var name="numberOfRepeats" value="7" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#editFutureEventPG">
+			<var name="daysIntoFuture" value="1" />
+			<var name="eventTitle" value="${eventTitle2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#editFutureEventPG">
+			<var name="daysIntoFuture" value="2" />
+			<var name="eventTitle" value="${eventTitle3}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#editFutureEventPG">
+			<var name="daysIntoFuture" value="3" />
+			<var name="eventTitle" value="${eventTitle4}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#editFutureEventPG">
+			<var name="daysIntoFuture" value="4" />
+			<var name="eventTitle" value="${eventTitle5}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#editFutureEventPG">
+			<var name="daysIntoFuture" value="5" />
+			<var name="eventTitle" value="${eventTitle6}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#editFutureEventPG">
+			<var name="daysIntoFuture" value="6" />
+			<var name="eventTitle" value="${eventTitle7}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#deleteFutureEventPG">
+			<var name="daysIntoFuture" value="0" />
+			<var name="eventTitle" value="${eventTitle1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+			<var name="eventTitle" value="${eventTitle2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+			<var name="eventTitle" value="${eventTitle3}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+			<var name="eventTitle" value="${eventTitle4}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+			<var name="eventTitle" value="${eventTitle5}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+			<var name="eventTitle" value="${eventTitle6}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SODashboard#assertTextEquals" locator-key1="EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
+		<execute action="SODashboard#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
+		<execute action="SODashboard#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
+		<execute action="SODashboard#assertTextNotPresent" value1="${eventTitle6}" />
+
+		<execute macro="SOEvents#configureEventsPortletDisplayDays">
+			<var name="maxDisplayDays" value="5" />
+		</execute>
+
+		<execute action="SODashboard#assertTextEquals" locator-key1="EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
+		<execute action="SODashboard#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
+		<execute action="SODashboard#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
+		<execute action="SODashboard#assertTextNotPresent" value1="${eventTitle6}" />
 	</command>
 
 	<command name="ViewEventEventsDisplay" priority="5">

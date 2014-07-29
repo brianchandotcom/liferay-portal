@@ -6,6 +6,13 @@
 		<execute action="SODashboardAddAnnouncementsEntry#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 
 		<if>
+			<isset var="type" />
+			<then>
+				<execute action="SODashboardAddAnnouncementsEntry#select" locator-key1="TYPE_SELECT" value1="${type}" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="priority" />
 			<then>
 				<execute action="SODashboardAddAnnouncementsEntry#select" locator-key1="PRIORITY_SELECT" value1="${priority}" />
@@ -42,6 +49,13 @@
 			<equals arg1="${scheduled}" arg2="true" />
 			<then>
 				<execute macro="SOAnnouncementsEntry#scheduleFutureTimeCmd" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${scheduledExpiration}" arg2="true" />
+			<then>
+				<execute macro="SOAnnouncementsEntry#scheduleFutureExpirationTimeCmd" />
 			</then>
 		</if>
 
@@ -250,6 +264,53 @@
 		<execute action="SODashboardAddAnnouncementsEntry#selectFrameTop" />
 	</command>
 
+	<command name="scheduleFutureExpirationTimeCmd">
+		<var locator-key="DISPLAY_DATE_DATE_DAY" name="expirationDateDay" path="SODashboardAddAnnouncementsEntry" />
+
+		<var locator-key="DISPLAY_DATE_DATE_MONTH" name="expirationDateMonth" path="SODashboardAddAnnouncementsEntry" />
+		<var name="expirationDateMonth" value="${expirationDateMonth?increment()}" />
+
+		<var locator-key="DISPLAY_DATE_DATE_YEAR" name="expirationDateYear" path="SODashboardAddAnnouncementsEntry" />
+		<var name="expirationDate" value="${expirationDateMonth}/${expirationDateDay}/${expirationDateYear}" />
+
+		<execute action="SODashboardAddAnnouncementsEntry#type" locator-key1="EXPIRATION_DATE_DATE_INPUT" value1="${expirationDate}" />
+
+		<var locator-key="DISPLAY_DATE_DATE_HOUR" name="expirationDateHour" path="SODashboardAddAnnouncementsEntry" />
+		<var name="expirationDateHourLength" value="${expirationDateHour?length()}" />
+
+		<if>
+			<equals arg1="${expirationDateHourLength}" arg2="1" />
+			<then>
+				<var name="expirationDateHour" value="0${expirationDateHour}" />
+			</then>
+			<else>
+				<var name="expirationDateHour" value="${expirationDateHour}" />
+			</else>
+		</if>
+
+		<var locator-key="DISPLAY_DATE_DATE_MINUTE" name="expirationDateMinute" path="SODashboardAddAnnouncementsEntry" />
+		<var name="expirationDateMinuteFuture" value="${expirationDateMinute?increment()}" />
+		<var name="expirationDateMinuteFuture" value="${expirationDateMinuteFuture?increment()}" />
+		<var name="expirationDateMinuteFutureLength" value="${expirationDateMinuteFuture?length()}" />
+
+		<if>
+			<equals arg1="${expirationDateMinuteFutureLength}" arg2="1" />
+			<then>
+				<var name="expirationDateMinuteFuture" value="0${expirationDateMinuteFuture}" />
+			</then>
+			<else>
+				<var name="expirationDateMinuteFuture" value="${expirationDateMinuteFuture}" />
+			</else>
+		</if>
+
+		<var locator-key="DISPLAY_DATE_DATE_MERIDIAN" name="expirationDateMeridian" path="SODashboardAddAnnouncementsEntry" />
+		<var name="expirationDateMeridian" value="${expirationDateMeridian?replace('0', 'AM')}" />
+		<var name="expirationDateMeridian" value="${expirationDateMeridian?replace('1', 'PM')}" />
+		<var name="expirationTime" value="${expirationDateHour}:${expirationDateMinuteFuture} ${expirationDateMeridian}" />
+
+		<execute action="SODashboardAddAnnouncementsEntry#type" locator-key1="EXPIRATION_DATE_TIME_INPUT" value1="${expirationTime}" />
+	</command>
+
 	<command name="scheduleFutureTimeCmd">
 		<execute action="SODashboardAddAnnouncementsEntry#uncheck" locator-key1="DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX" />
 
@@ -331,10 +392,32 @@
 
 				<execute action="SODashboardManageAnnouncementsEntry#selectFrame" locator-key1="MANAGE_ENTRY_IFRAME" />
 
-				<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No entries were found." />
-				<execute action="SODashboardManageAnnouncementsEntry#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-				<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No entries were found." />
-				<execute action="SODashboardManageAnnouncementsEntry#assertTextNotPresent" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+				<if>
+					<equals arg1="${expiredEntry}" arg2="true" />
+					<then>
+						<execute action="SODashboardManageAnnouncementsEntry#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+						<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+						<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_AUTHOR" value1="${entryAuthor}" />
+						<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" value1="Ago" />
+
+						<if>
+							<isset var="type" />
+							<then>
+								<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TYPE" value1="${type}" />
+							</then>
+							<else>
+								<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TYPE" value1="General" />
+							</else>
+						</if>
+					</then>
+					<else>
+						<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No entries were found." />
+						<execute action="SODashboardManageAnnouncementsEntry#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+						<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No entries were found." />
+						<execute action="SODashboardManageAnnouncementsEntry#assertTextNotPresent" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
+					</else>
+				</if>
+
 				<execute action="SODashboardManageAnnouncementsEntry#selectFrameTop" />
 			</else>
 		</if>
@@ -393,7 +476,17 @@
 				<execute action="SODashboardManageAnnouncementsEntry#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 				<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
 				<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_AUTHOR" value1="${entryAuthor}" />
-				<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TYPE" value1="General" />
+
+				<if>
+					<isset var="type" />
+					<then>
+						<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TYPE" value1="${type}" />
+					</then>
+					<else>
+						<execute action="SODashboardManageAnnouncementsEntry#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TYPE" value1="General" />
+					</else>
+				</if>
+
 				<execute action="SODashboardManageAnnouncementsEntry#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_MODIFIED_DATE" />
 				<execute action="SODashboardManageAnnouncementsEntry#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_DISPLAY_DATE" />
 				<execute action="SODashboardManageAnnouncementsEntry#assertElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_EXPIRATION_DATE" />

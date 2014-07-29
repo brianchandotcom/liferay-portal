@@ -85,6 +85,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_DATE_DATE_DAY</td>
+	<td>//input[contains(@id,'displaydateday')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_DATE_MONTH</td>
+	<td>//input[contains(@id,'displaydatemonth')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_DATE_YEAR</td>
+	<td>//input[contains(@id,'displaydateyear')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_DATE_TIME_INPUT</td>
 	<td>//input[contains(@id,'displayDateTime')]</td>
 	<td></td>

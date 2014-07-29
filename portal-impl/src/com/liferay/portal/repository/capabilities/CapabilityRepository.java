@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import java.io.File;
 import java.io.InputStream;
@@ -697,8 +698,10 @@ public class CapabilityRepository
 		Folder folder = repository.updateFolder(
 			folderId, title, description, serviceContext);
 
-		_repositoryEventTrigger.trigger(
-			RepositoryEventType.Update.class, Folder.class, folder);
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			_repositoryEventTrigger.trigger(
+				RepositoryEventType.Update.class, Folder.class, folder);
+		}
 
 		return folder;
 	}

@@ -342,27 +342,25 @@ public class JSONFactoryImpl implements JSONFactory {
 		error.put("message", throwableMessage);
 		error.put("type", ClassUtil.getClassName(throwable));
 
-		Throwable causeThrowable = throwable.getCause();
+		Throwable rootCauseThrowable = throwable;
 
-		JSONObject parentJSONObject = error;
+		while (rootCauseThrowable.getCause() != null) {
+			rootCauseThrowable = rootCauseThrowable.getCause();
+		}
 
-		while (causeThrowable != null) {
-			JSONObject cause = createJSONObject();
+		if (rootCauseThrowable != throwable) {
+			JSONObject rootCause = createJSONObject();
 
-			throwableMessage = causeThrowable.getMessage();
+			throwableMessage = rootCauseThrowable.getMessage();
 
 			if (Validator.isNull(throwableMessage)) {
-				throwableMessage = causeThrowable.toString();
+				throwableMessage = rootCauseThrowable.toString();
 			}
 
-			cause.put("message", throwableMessage);
-			cause.put("type", ClassUtil.getClassName(causeThrowable));
+			rootCause.put("message", throwableMessage);
+			rootCause.put("type", ClassUtil.getClassName(rootCauseThrowable));
 
-			parentJSONObject.put("cause", cause);
-
-			causeThrowable = causeThrowable.getCause();
-
-			parentJSONObject = cause;
+			jsonObject.put("rootCause", rootCause);
 		}
 
 		return jsonObject.toString();

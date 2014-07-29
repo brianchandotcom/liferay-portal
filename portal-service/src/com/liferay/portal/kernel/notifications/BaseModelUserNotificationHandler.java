@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -130,9 +131,13 @@ public abstract class BaseModelUserNotificationHandler
 			message = "x-updated-a-x";
 		}
 
-		return serviceContext.translate(
-			message, HtmlUtil.escape(assetRenderer.getUserName()),
-			StringUtil.toLowerCase(HtmlUtil.escape(typeName)));
+		return LanguageUtil.format(
+			serviceContext.getLocale(), message,
+			new String[] {
+				HtmlUtil.escape(assetRenderer.getUserName()),
+				StringUtil.toLowerCase(HtmlUtil.escape(typeName))
+			},
+			false);
 	}
 
 }

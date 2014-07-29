@@ -25,13 +25,13 @@ import java.util.Set;
  */
 public interface Value extends Serializable {
 
-	public void addValue(Locale locale, String value);
+	public void addString(Locale locale, String value);
 
 	public Set<Locale> getAvailableLocales();
 
 	public Locale getDefaultLocale();
 
-	public String getValue(Locale locale);
+	public String getString(Locale locale);
 
 	public Map<Locale, String> getValues();
 

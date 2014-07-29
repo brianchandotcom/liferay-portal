@@ -31,7 +31,7 @@ public class UnlocalizedValue implements Value {
 	}
 
 	@Override
-	public void addValue(Locale locale, String value) {
+	public void addString(Locale locale, String value) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -46,7 +46,7 @@ public class UnlocalizedValue implements Value {
 	}
 
 	@Override
-	public String getValue(Locale locale) {
+	public String getString(Locale locale) {
 		return _values.get(LocaleUtil.ROOT);
 	}
 

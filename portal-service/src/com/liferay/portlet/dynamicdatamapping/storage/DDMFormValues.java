@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Marcellus Tavares
@@ -35,7 +36,7 @@ public class DDMFormValues {
 		_ddmFormFieldValues.add(ddmFormFieldValue);
 	}
 
-	public List<Locale> getAvailableLocales() {
+	public Set<Locale> getAvailableLocales() {
 		return _availableLocales;
 	}
 
@@ -71,7 +72,7 @@ public class DDMFormValues {
 		return _defaultLocale;
 	}
 
-	public void setAvailableLocales(List<Locale> availableLocales) {
+	public void setAvailableLocales(Set<Locale> availableLocales) {
 		_availableLocales = availableLocales;
 	}
 
@@ -93,7 +94,7 @@ public class DDMFormValues {
 		_defaultLocale = defaultLocale;
 	}
 
-	private List<Locale> _availableLocales;
+	private Set<Locale> _availableLocales;
 	private DDMForm _ddmForm;
 	private List<DDMFormFieldValue> _ddmFormFieldValues =
 		new ArrayList<DDMFormFieldValue>();

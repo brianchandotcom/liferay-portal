@@ -2245,7 +2245,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntrySOSitePrivateDeleted" priority="4">
+	<command name="SearchBlogsEntrySOSitePrivateDeleted" priority="3">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ALL_CHECKBOX" />
@@ -2467,7 +2467,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntrySOSitePrivateRestrictedDeleted" priority="4">
+	<command name="SearchBlogsEntrySOSitePrivateRestrictedDeleted" priority="3">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ALL_CHECKBOX" />
@@ -2689,7 +2689,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntrySOSitePublicRestrictedDeleted" priority="4">
+	<command name="SearchBlogsEntrySOSitePublicRestrictedDeleted" priority="3">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ALL_CHECKBOX" />
@@ -3021,7 +3021,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2355" name="SearchBookmarksEntrySOSitePrivateDeleted" priority="4">
+	<command known-issues="SOS-2355" name="SearchBookmarksEntrySOSitePrivateDeleted" priority="3">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -3149,7 +3149,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2355" name="SearchBookmarksEntrySOSitePrivateRestrictedDeleted" priority="4">
+	<command known-issues="SOS-2355" name="SearchBookmarksEntrySOSitePrivateRestrictedDeleted" priority="3">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -3277,7 +3277,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2355" name="SearchBookmarksEntrySOSitePublicRestrictedDeleted" priority="4">
+	<command known-issues="SOS-2355" name="SearchBookmarksEntrySOSitePublicRestrictedDeleted" priority="3">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -5583,7 +5583,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWikiPageSOSitePrivateDeleted" priority="4">
+	<command name="SearchWikiPageSOSitePrivateDeleted" priority="3">
 		<var name="portletName" value="Search" />
 		<var name="siteDescription" value="Private Site Description" />
 		<var name="siteName" value="Private Site Name" />
@@ -5700,7 +5700,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWikiPageSOSitePrivateRestrictedDeleted" priority="4">
+	<command name="SearchWikiPageSOSitePrivateRestrictedDeleted" priority="3">
 		<var name="portletName" value="Search" />
 		<var name="siteDescription" value="Private Restricted Site Description" />
 		<var name="siteName" value="Private Restricted Site Name" />
@@ -5817,7 +5817,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWikiPageSOSitePublicRestrictedDeleted" priority="4">
+	<command name="SearchWikiPageSOSitePublicRestrictedDeleted" priority="3">
 		<var name="portletName" value="Search" />
 		<var name="siteDescription" value="Public Restricted Site Description" />
 		<var name="siteName" value="Public Restricted Site Name" />

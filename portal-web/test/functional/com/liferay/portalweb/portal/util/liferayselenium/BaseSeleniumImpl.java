@@ -609,6 +609,10 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void setWindowSize(String coordString) {
+	}
+
+	@Override
 	public void sikuliAssertElementNotPresent(String image) throws Exception {
 		LiferaySeleniumHelper.sikuliAssertElementNotPresent(this, image);
 	}

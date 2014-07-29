@@ -359,6 +359,12 @@
 		</default>
 	</command>
 
+	<command name="setWindowSize">
+		<default>
+			<execute function="SetWindowSize#setWindowSize" />
+		</default>
+	</command>
+
 	<command name="sikuliAssertElementNotPresent">
 		<default>
 			<execute function="SikuliAssertElementNotPresent#sikuliAssertElementNotPresent" />

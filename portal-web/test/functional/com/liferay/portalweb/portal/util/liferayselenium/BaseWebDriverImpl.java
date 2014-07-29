@@ -745,6 +745,26 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void setWindowSize(String coordString) {
+		WebElement bodyWebElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		WebDriver.Options options = webDriver.manage();
+
+		WebDriver.Window window = options.window();
+
+		String[] screenResolution = StringUtil.split(coordString, ",");
+
+		int x = GetterUtil.getInteger(screenResolution[0]);
+		int y = GetterUtil.getInteger(screenResolution[1]);
+
+		window.setSize(new Dimension(x, y));
+	}
+
+	@Override
 	public void sikuliAssertElementNotPresent(String image) throws Exception {
 		LiferaySeleniumHelper.sikuliAssertElementNotPresent(this, image);
 	}

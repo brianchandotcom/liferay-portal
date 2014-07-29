@@ -87,7 +87,7 @@ public class CheckoutAction extends CartAction {
 			setForward(actionRequest, "portlet.shopping.checkout_third");
 		}
 		else if (cmd.equals(Constants.SAVE)) {
-			saveLatestOder(actionRequest, actionResponse);
+			saveLatestOrder(actionRequest, actionResponse);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			try {
@@ -141,10 +141,10 @@ public class CheckoutAction extends CartAction {
 	}
 
 	protected void checkout(ActionRequest actionRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		if (!hasLatestOrder(actionRequest)) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 			ShoppingOrderLocalServiceUtil.addLatestOrder(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
 		}
@@ -210,7 +210,7 @@ public class CheckoutAction extends CartAction {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
 
-	protected void saveLatestOder(
+	protected void saveLatestOrder(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

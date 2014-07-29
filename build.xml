@@ -277,6 +277,8 @@
 			/>
 		</delete>
 
+		<delete dir="${liferay.home}/data/elasticsearch" />
+
 		<delete dir="${liferay.home}/osgi" />
 
 		<delete dir="test-coverage" />

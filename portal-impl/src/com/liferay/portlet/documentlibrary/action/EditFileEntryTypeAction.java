@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
@@ -45,6 +46,7 @@ import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException
 import com.liferay.portlet.dynamicdatamapping.StructureNameException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -193,6 +195,14 @@ public class EditFileEntryTypeAction extends PortletAction {
 		DLFileEntryTypeServiceUtil.deleteFileEntryType(fileEntryTypeId);
 	}
 
+	protected String getDefinition(ServiceContext serviceContext)
+		throws PortalException {
+
+		String definition = ParamUtil.getString(serviceContext, "definition");
+
+		return DDMXSDUtil.getXSD(definition);
+	}
+
 	protected long[] getLongArray(PortletRequest portletRequest, String name) {
 		String value = portletRequest.getParameter(name);
 
@@ -249,6 +259,9 @@ public class EditFileEntryTypeAction extends PortletAction {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntryType.class.getName(), actionRequest);
+
+		serviceContext.setAttribute(
+			"definition", getDefinition(serviceContext));
 
 		if (fileEntryTypeId <= 0) {
 

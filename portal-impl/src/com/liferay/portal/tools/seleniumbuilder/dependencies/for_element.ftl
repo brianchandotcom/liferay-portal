@@ -6,8 +6,20 @@ forScopeVariables = new HashMap<String, String>();
 
 forScopeVariables.putAll(executeScopeVariables);
 
-if (!RuntimeVariables.evaluateVariable("${forList}", executeScopeVariables).equals("")) {
-	for (String ${forParam} : RuntimeVariables.evaluateVariable("${forList}", executeScopeVariables).split(",")) {
+<#assign forListArray = stringUtil.split("${forList}", ",")>
+
+<#assign forListString = "">
+
+<#list forListArray as forListItem>
+	<#assign forListString = "${forListString}${forListItem?trim}">
+
+	<#if forListItem_has_next>
+		<#assign forListString = "${forListString},">
+	</#if>
+</#list>
+
+if (!RuntimeVariables.evaluateVariable("${forListString}", executeScopeVariables).equals("")) {
+	for (String ${forParam} : RuntimeVariables.evaluateVariable("${forListString}", executeScopeVariables).split(",")) {
 		forScopeVariables.put("${forParam}", ${forParam});
 
 		<#assign void = forParameterStack.push("${forParam}")>

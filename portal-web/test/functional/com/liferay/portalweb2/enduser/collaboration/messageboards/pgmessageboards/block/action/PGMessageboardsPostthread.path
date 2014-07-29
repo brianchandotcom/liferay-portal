@@ -39,6 +39,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLOCK_QUOTE_BUTTON</td>
+	<td>//span[@class='cke_button_icon cke_button__blockquote_icon']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOCK_QUOTE_FIELD</td>
+	<td>//div[@id='cke__19_editor']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SOURCE_BUTTON</td>
 	<td>//a[contains(@class,'cke_button__source')]</td>
 	<td></td>

@@ -22,11 +22,11 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -37,6 +37,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
@@ -44,6 +45,7 @@ import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -237,6 +239,39 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 			DLFileEntryConstants.VERSION_DEFAULT, fileEntry.getVersion());
 	}
 
+	protected Field createField(DDMStructure ddmStructure, String name) {
+		Field field = new Field(
+			ddmStructure.getStructureId(), name, StringPool.BLANK);
+
+		field.setDefaultLocale(LocaleUtil.US);
+
+		return field;
+	}
+
+	protected Field createFieldsDisplayField(
+		DDMStructure ddmStructure, Set<String> fieldNames) {
+
+		List<String> fieldsDisplayValues = new ArrayList<String>();
+
+		for (String fieldName : fieldNames) {
+			if (ddmStructure.isFieldPrivate(fieldName)) {
+				continue;
+			}
+
+			fieldsDisplayValues.add(
+				fieldName + DDMImpl.INSTANCE_SEPARATOR +
+				StringUtil.randomString());
+		}
+
+		Field fieldsDisplayField = new Field(
+			ddmStructure.getStructureId(), DDMImpl.FIELDS_DISPLAY_NAME,
+			StringUtil.merge(fieldsDisplayValues));
+
+		fieldsDisplayField.setDefaultLocale(LocaleUtil.US);
+
+		return fieldsDisplayField;
+	}
+
 	protected ServiceContext getServiceContext() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -260,18 +295,22 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 		for (DDMStructure ddmStructure : ddmStructures) {
 			Fields fields = new Fields();
 
-			Set<String> names = ddmStructure.getFieldNames();
+			Set<String> fieldNames = ddmStructure.getFieldNames();
 
-			for (String name : names) {
-				Field field = new Field(
-					ddmStructure.getStructureId(), name, StringPool.BLANK);
-
-				if (ddmStructure.isFieldPrivate(name)) {
-					field.setValue(RandomTestUtil.randomString());
+			for (String fieldName : fieldNames) {
+				if (ddmStructure.isFieldPrivate(fieldName)) {
+					continue;
 				}
+
+				Field field = createField(ddmStructure, fieldName);
 
 				fields.put(field);
 			}
+
+			Field fieldsDisplayField = createFieldsDisplayField(
+				ddmStructure, fieldNames);
+
+			fields.put(fieldsDisplayField);
 
 			serviceContext.setAttribute(
 				Fields.class.getName() + ddmStructure.getStructureId(), fields);

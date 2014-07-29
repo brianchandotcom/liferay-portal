@@ -137,10 +137,8 @@ public class BookmarksEntryStagedModelDataHandler
 		BookmarksEntry importedEntry = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			BookmarksEntry existingEntry =
-				BookmarksEntryLocalServiceUtil.
-					fetchBookmarksEntryByUuidAndGroupId(
-						entry.getUuid(), portletDataContext.getScopeGroupId());
+			BookmarksEntry existingEntry = fetchStagedModelByUuidAndGroupId(
+				entry.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingEntry == null) {
 				serviceContext.setUuid(entry.getUuid());

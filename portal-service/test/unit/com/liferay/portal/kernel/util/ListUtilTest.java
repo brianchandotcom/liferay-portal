@@ -373,6 +373,21 @@ public class ListUtilTest {
 	}
 
 	@Test
+	public void testToList() throws Exception {
+		List<String> list = new ArrayList<String>();
+
+		list.add("aaa");
+		list.add("bbb");
+		list.add("ccc");
+
+		List<Object> list2 = ListUtil.toList(list);
+
+		Assert.assertArrayEquals(
+			new Object[] {"aaa", "bbb", "ccc"},
+			list2.toArray());
+	}
+
+	@Test
 	public void testToStringIntegerList() throws Exception {
 		List<Integer> list = new ArrayList<Integer>();
 

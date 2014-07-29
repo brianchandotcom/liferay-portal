@@ -2245,6 +2245,670 @@
 		</execute>
 	</command>
 
+	<command name="SearchBlogsEntrySOSitePrivateDeleted" priority="4">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ALL_CHECKBOX" />
+		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_ALL_CHECKBOX" />
+		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+		<var name="permissionNavigationValue" value="Blogs" />
+		<var name="portletName" value="Search" />
+		<var name="roleName" value="Blogs Site Role Name" />
+		<var name="roleType" value="Site" />
+		<var name="siteDescription" value="Private Site Description" />
+		<var name="siteName" value="Private Site Name" />
+		<var name="siteType" value="Private" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Members" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#inviteMember">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmMemberInvite">
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="roleType" value="${roleType}" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey1}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Add Entry" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Permissions" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Subscribe" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey2}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Add Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Delete" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Delete Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Permissions" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Update" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Update Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#assignRoleCP">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Blogs" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOUserBar#deleteSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Blogs" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Entry" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntrySOSitePrivateRestrictedDeleted" priority="4">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ALL_CHECKBOX" />
+		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_ALL_CHECKBOX" />
+		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+		<var name="permissionNavigationValue" value="Blogs" />
+		<var name="portletName" value="Search" />
+		<var name="roleName" value="Blogs Site Role Name" />
+		<var name="roleType" value="Site" />
+		<var name="siteDescription" value="Private Restricted Site Description" />
+		<var name="siteName" value="Private Restricted Site Name" />
+		<var name="siteType" value="Private Restricted" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Members" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#inviteMember">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmMemberInvite">
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="roleType" value="${roleType}" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey1}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Add Entry" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Permissions" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Subscribe" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey2}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Add Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Delete" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Delete Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Permissions" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Update" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Update Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#assignRoleCP">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Blogs" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOUserBar#deleteSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Blogs" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Entry" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntrySOSitePublicRestrictedDeleted" priority="4">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ALL_CHECKBOX" />
+		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_ALL_CHECKBOX" />
+		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+		<var name="permissionNavigationValue" value="Blogs" />
+		<var name="portletName" value="Search" />
+		<var name="roleName" value="Blogs Site Role Name" />
+		<var name="roleType" value="Site" />
+		<var name="siteDescription" value="Public Restricted Site Description" />
+		<var name="siteName" value="Public Restricted Site Name" />
+		<var name="siteType" value="Public Restricted" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Members" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#inviteMember">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmMemberInvite">
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="roleType" value="${roleType}" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey1}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Add Entry" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Permissions" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Subscribe" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey2}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Add Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Delete" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Delete Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Permissions" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Update" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Update Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#assignRoleCP">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOUserBar#deleteSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Blogs" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Entry" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryTitle}" />
+			<var name="searchAssetTitle" value="${entryContent}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+	</command>
+
 	<command known-issues="SOS-2355" name="SearchBookmarksEntrySOSiteOpenDeleted" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
@@ -2288,6 +2952,388 @@
 		</execute>
 
 		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOBookmarks#addBookmarksEntry">
+			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}" />
+			<var name="bookmarksEntryName" value="${bookmarksEntryName}" />
+			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOUserBar#deleteSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Bookmarks" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Entry" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="http://www.google.com" />
+		</execute>
+	</command>
+
+	<command known-issues="SOS-2355" name="SearchBookmarksEntrySOSitePrivateDeleted" priority="4">
+		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
+		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
+		<var name="bookmarksEntryUrl" value="http://www.google.com" />
+		<var name="portletName" value="Search" />
+		<var name="siteDescription" value="Private Site Description" />
+		<var name="siteName" value="Private Site Name" />
+		<var name="siteType" value="Private" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Members" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#inviteMember">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmMemberInvite">
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOBookmarks#addBookmarksEntry">
+			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}" />
+			<var name="bookmarksEntryName" value="${bookmarksEntryName}" />
+			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOUserBar#deleteSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Bookmarks" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Entry" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="http://www.google.com" />
+		</execute>
+	</command>
+
+	<command known-issues="SOS-2355" name="SearchBookmarksEntrySOSitePrivateRestrictedDeleted" priority="4">
+		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
+		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
+		<var name="bookmarksEntryUrl" value="http://www.google.com" />
+		<var name="portletName" value="Search" />
+		<var name="siteDescription" value="Private Restricted Site Description" />
+		<var name="siteName" value="Private Restricted Site Name" />
+		<var name="siteType" value="Private Restricted" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Members" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#inviteMember">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmMemberInvite">
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOBookmarks#addBookmarksEntry">
+			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}" />
+			<var name="bookmarksEntryName" value="${bookmarksEntryName}" />
+			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOUserBar#deleteSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Bookmarks" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Entry" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${bookmarksEntryDescription}" />
+			<var name="searchAssetTitle" value="${bookmarksEntryName}" />
+			<var name="searchAssetType" value="Bookmarks Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="http://www.google.com" />
+		</execute>
+	</command>
+
+	<command known-issues="SOS-2355" name="SearchBookmarksEntrySOSitePublicRestrictedDeleted" priority="4">
+		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
+		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
+		<var name="bookmarksEntryUrl" value="http://www.google.com" />
+		<var name="portletName" value="Search" />
+		<var name="siteDescription" value="Public Restricted Site Description" />
+		<var name="siteName" value="Public Restricted Site Name" />
+		<var name="siteType" value="Public Restricted" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Members" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#inviteMember">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmMemberInvite">
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Home" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -4537,6 +5583,355 @@
 		</execute>
 	</command>
 
+	<command name="SearchWikiPageSOSitePrivateDeleted" priority="4">
+		<var name="portletName" value="Search" />
+		<var name="siteDescription" value="Private Site Description" />
+		<var name="siteName" value="Private Site Name" />
+		<var name="siteType" value="Private" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+		<var name="wikiPageContent" value="Wiki Page Content" />
+		<var name="wikiPageTitle" value="Wiki Page Title" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Members" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#inviteMember">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmMemberInvite">
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Wiki" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addPG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOUserBar#deleteSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Wiki" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Page" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+	</command>
+
+	<command name="SearchWikiPageSOSitePrivateRestrictedDeleted" priority="4">
+		<var name="portletName" value="Search" />
+		<var name="siteDescription" value="Private Restricted Site Description" />
+		<var name="siteName" value="Private Restricted Site Name" />
+		<var name="siteType" value="Private Restricted" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+		<var name="wikiPageContent" value="Wiki Page Content" />
+		<var name="wikiPageTitle" value="Wiki Page Title" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Members" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#inviteMember">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmMemberInvite">
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageAccess" value="Private" />
+			<var name="pageName" value="Wiki" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addPG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOUserBar#deleteSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Wiki" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Page" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+	</command>
+
+	<command name="SearchWikiPageSOSitePublicRestrictedDeleted" priority="4">
+		<var name="portletName" value="Search" />
+		<var name="siteDescription" value="Public Restricted Site Description" />
+		<var name="siteName" value="Public Restricted Site Name" />
+		<var name="siteType" value="Public Restricted" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+		<var name="wikiPageContent" value="Wiki Page Content" />
+		<var name="wikiPageTitle" value="Wiki Page Title" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Members" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOMembers#inviteMember">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOMembers#confirmMemberInvite">
+			<var name="senderName" value="${adminName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#addPG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOUserBar#deleteSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Wiki" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Page" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchSocialOffice" value="true" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+	</command>
+
 	<command name="ViewSOSiteLocalized" priority="4">
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
@@ -4726,8 +6121,8 @@
 		<execute macro="SOSite#viewLocalizedPG">
 			<var name="activitiesPortletLocalized" value="活动" />
 			<var name="announcementsPortletLocalized" value="公告" />
-			<var name="blogsPageLocalized" value="博客" />
-			<var name="blogsPortletLocalized" value="博客" />
+			<var name="blogsPageLocalized" value="�?�客" />
+			<var name="blogsPortletLocalized" value="�?�客" />
 			<var name="bookmarksPortletLocalized" value="书签" />
 			<var name="breadcrumbPortletLocalized" value="路径导航" />
 			<var name="calendarPageLocalized" value="日历" />
@@ -4735,13 +6130,13 @@
 			<var name="documentsAndMediaPortletLocalized" value="文档媒体库" />
 			<var name="documentsPageLocalized" value="文档" />
 			<var name="eventsPortletLocalized" value="事件" />
-			<var name="forumsPageLocalized" value="论坛" />
+			<var name="forumsPageLocalized" value="论�?�" />
 			<var name="homePageLocalized" value="主页" />
-			<var name="inviteMembersPortletLocalized" value="邀请成员" />
-			<var name="membersPageLocalized" value="成员" />
-			<var name="membersPortletLocalized" value="成员" />
-			<var name="messageBoardsPortletLocalized" value="留言板" />
-			<var name="recentBlogsPortletLocalized" value="最近博客" />
+			<var name="inviteMembersPortletLocalized" value="邀请�?员" />
+			<var name="membersPageLocalized" value="�?员" />
+			<var name="membersPortletLocalized" value="�?员" />
+			<var name="messageBoardsPortletLocalized" value="留言�?�" />
+			<var name="recentBlogsPortletLocalized" value="最近�?�客" />
 			<var name="recentDownloadsPortletLocalized" value="最近下载" />
 			<var name="rssPortletLocalized" value="RSS" />
 			<var name="siteName" value="${siteName}" />

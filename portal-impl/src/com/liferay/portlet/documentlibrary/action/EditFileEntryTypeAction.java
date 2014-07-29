@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
@@ -43,11 +44,9 @@ import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
 import com.liferay.portlet.dynamicdatamapping.StructureNameException;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -196,18 +195,12 @@ public class EditFileEntryTypeAction extends PortletAction {
 		DLFileEntryTypeServiceUtil.deleteFileEntryType(fileEntryTypeId);
 	}
 
-	protected DDMForm getDDMForm(ActionRequest actionRequest) throws Exception {
-		String definition = ParamUtil.getString(actionRequest, "definition");
+	protected String getDefinition(ServiceContext serviceContext)
+		throws PortalException {
 
-		return DDMFormJSONDeserializerUtil.deserialize(definition);
-	}
+		String definition = ParamUtil.getString(serviceContext, "definition");
 
-	protected String getDefinition(ActionRequest actionRequest)
-		throws Exception {
-
-		DDMForm ddmForm = getDDMForm(actionRequest);
-
-		return DDMFormXSDSerializerUtil.serialize(ddmForm);
+		return DDMXSDUtil.getXSD(definition);
 	}
 
 	protected long[] getLongArray(PortletRequest portletRequest, String name) {
@@ -267,8 +260,8 @@ public class EditFileEntryTypeAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntryType.class.getName(), actionRequest);
 
-
-		serviceContext.setAttribute("definition", getDefinition(actionRequest));
+		serviceContext.setAttribute(
+			"definition", getDefinition(serviceContext));
 
 		if (fileEntryTypeId <= 0) {
 
@@ -295,4 +288,5 @@ public class EditFileEntryTypeAction extends PortletAction {
 				serviceContext);
 		}
 	}
+
 }

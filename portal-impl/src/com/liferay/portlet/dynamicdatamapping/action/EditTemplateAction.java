@@ -41,12 +41,10 @@ import com.liferay.portlet.dynamicdatamapping.TemplateNameException;
 import com.liferay.portlet.dynamicdatamapping.TemplateScriptException;
 import com.liferay.portlet.dynamicdatamapping.TemplateSmallImageNameException;
 import com.liferay.portlet.dynamicdatamapping.TemplateSmallImageSizeException;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil;
 
 import java.io.File;
 
@@ -255,10 +253,7 @@ public class EditTemplateAction extends PortletAction {
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
 
 		if (type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
-			DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(
-				scriptContent);
-
-			scriptContent = DDMFormXSDSerializerUtil.serialize(ddmForm);
+			scriptContent = DDMXSDUtil.getXSD(scriptContent);
 		}
 
 		return scriptContent;

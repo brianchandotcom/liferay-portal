@@ -43,6 +43,9 @@ import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
 import com.liferay.portlet.dynamicdatamapping.StructureNameException;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDSerializerUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
@@ -193,6 +196,20 @@ public class EditFileEntryTypeAction extends PortletAction {
 		DLFileEntryTypeServiceUtil.deleteFileEntryType(fileEntryTypeId);
 	}
 
+	protected DDMForm getDDMForm(ActionRequest actionRequest) throws Exception {
+		String definition = ParamUtil.getString(actionRequest, "definition");
+
+		return DDMFormJSONDeserializerUtil.deserialize(definition);
+	}
+
+	protected String getDefinition(ActionRequest actionRequest)
+		throws Exception {
+
+		DDMForm ddmForm = getDDMForm(actionRequest);
+
+		return DDMFormXSDSerializerUtil.serialize(ddmForm);
+	}
+
 	protected long[] getLongArray(PortletRequest portletRequest, String name) {
 		String value = portletRequest.getParameter(name);
 
@@ -250,6 +267,9 @@ public class EditFileEntryTypeAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntryType.class.getName(), actionRequest);
 
+
+		serviceContext.setAttribute("definition", getDefinition(actionRequest));
+
 		if (fileEntryTypeId <= 0) {
 
 			// Add file entry type
@@ -275,5 +295,4 @@ public class EditFileEntryTypeAction extends PortletAction {
 				serviceContext);
 		}
 	}
-
 }

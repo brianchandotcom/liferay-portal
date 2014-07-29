@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.event.SyncRepositoryEventType;
+import com.liferay.portal.kernel.repository.event.TrashRepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -123,6 +124,28 @@ public class LiferaySyncCapability implements SyncCapability {
 			repositoryEventRegistry,
 			SyncRepositoryEventType.DelayedUpdate.class, FileEntry.class,
 			"updateFileEntry");
+
+		// Trash events
+
+		registerRepositoryEventListener(
+			repositoryEventRegistry,
+			TrashRepositoryEventType.EntryTrashed.class, FileEntry.class,
+			"trashFileEntry");
+
+		registerRepositoryEventListener(
+			repositoryEventRegistry,
+			TrashRepositoryEventType.EntryRestored.class, FileEntry.class,
+			"restoreFileEntry");
+
+		registerRepositoryEventListener(
+			repositoryEventRegistry,
+			TrashRepositoryEventType.EntryRestored.class, Folder.class,
+			"restoreFolder");
+
+		registerRepositoryEventListener(
+			repositoryEventRegistry,
+			TrashRepositoryEventType.EntryTrashed.class, Folder.class,
+			"trashFolder");
 	}
 
 	@Override

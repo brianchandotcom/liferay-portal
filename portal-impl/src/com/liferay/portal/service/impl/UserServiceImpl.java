@@ -1016,6 +1016,25 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return userLocalService.hasRoleUser(companyId, name, userId, inherited);
 	}
 
+	/**
+	 * Sends an email to the user with the email address containing a new
+	 * password or a link to reset the password, depending on the portal
+	 * settings. The content of this email can be specified in
+	 * <code>portal.properties</code> with the
+	 * <code>admin.email.password</code> keys and overridden through the
+	 * "Portal Settings" UI.
+	 *
+	 * This method sends the email asynchronously and returns before the email
+	 * was sent, so an error in the delivery won't affect its return value.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  emailAddress the user's email address
+	 * @return true if the user will receive a notification with the password
+	 *         and false if the notification will contain a reset link instead.
+	 * @throws PortalException if a user with the specified email address could
+	 *         not be found.
+	 * @since 7.0.0
+	 */
 	@Override
 	public boolean sendPasswordByEmailAddress(
 			long companyId, String emailAddress)
@@ -1025,6 +1044,25 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			companyId, emailAddress);
 	}
 
+	/**
+	 * Sends an email to the user with the screen name containing a new
+	 * password or a link to reset the password, depending on the portal
+	 * settings. The content of this email can be specified in
+	 * <code>portal.properties</code> with the
+	 * <code>admin.email.password</code> keys and overridden through the
+	 * "Portal Settings" UI.
+	 *
+	 * This method sends the email asynchronously and returns before the email
+	 * was sent, so an error in the delivery won't affect its return value.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  screenName the user's screen name
+	 * @return true if the new password was sent and false if a reset link was
+	 * 		   sent to user.
+	 * @throws PortalException if a user with the specified email address could
+	 *         not be found.
+	 * @since 7.0.0
+	 */
 	@Override
 	public boolean sendPasswordByScreenName(long companyId, String screenName)
 		throws PortalException {
@@ -1032,6 +1070,25 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return userLocalService.sendPasswordByScreenName(companyId, screenName);
 	}
 
+	/**
+	 * Sends an email to the user with the user identifier containing a new
+	 * password or a link to reset the password, depending on the portal
+	 * settings. The content of this email can be specified in
+	 * <code>portal.properties</code> with the
+	 * <code>admin.email.password</code> keys and overridden through the
+	 * "Portal Settings" UI.
+	 *
+	 * This method sends the email asynchronously and returns before the email
+	 * was sent, so an error in the delivery won't affect its return value.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  userId the user's primary key
+	 * @return true if the new password was sent and false if a reset link was
+	 * 		   sent to user.
+	 * @throws PortalException if a user with the specified email address could
+	 *         not be found.
+	 * @since 7.0.0
+	 */
 	@Override
 	public boolean sendPasswordByUserId(long userId) throws PortalException {
 		return userLocalService.sendPasswordByUserId(userId);

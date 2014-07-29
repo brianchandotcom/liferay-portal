@@ -26,12 +26,14 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.service.PortletItemLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 
@@ -85,7 +87,20 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	@Override
 	public List<String> getMultiValuedKeys(String settingsId) {
-		return _multiValuedKeysMap.get(settingsId);
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(settingsId);
+
+		if ((portlet != null) && portlet.isInstanceable()) {
+			settingsId = portlet.getRootPortletId();
+		}
+
+		List<String> multiValuedKeys = _multiValuedKeysMap.get(settingsId);
+
+		if (multiValuedKeys == null) {
+			throw new IllegalStateException(
+				"No multi valued keys found for settings ID " + settingsId);
+		}
+
+		return multiValuedKeys;
 	}
 
 	@Override
@@ -168,6 +183,17 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	public void registerSettingsMetadata(
 		String settingsId, FallbackKeys fallbackKeys,
 		String[] multiValuedKeysArray) {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(settingsId);
+
+		if ((portlet != null) && portlet.isInstanceable()) {
+			settingsId = portlet.getRootPortletId();
+		}
+
+		if (_multiValuedKeysMap.get(settingsId) != null) {
+			throw new IllegalStateException(
+				"Multi valued keys could not be overwriten for " + settingsId);
+		}
 
 		_fallbackKeysMap.put(settingsId, fallbackKeys);
 

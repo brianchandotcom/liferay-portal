@@ -323,11 +323,6 @@ public class SettingsConfigurationAction
 		List<String> multiValuedKeys = settingsFactory.getMultiValuedKeys(
 			settingsId);
 
-		if (multiValuedKeys == null) {
-			throw new IllegalStateException(
-				"No multi valued keys found for settings ID " + settingsId);
-		}
-
 		for (String multiValuedKey : multiValuedKeys) {
 			String multiValuedValue = getParameter(
 				actionRequest, multiValuedKey);

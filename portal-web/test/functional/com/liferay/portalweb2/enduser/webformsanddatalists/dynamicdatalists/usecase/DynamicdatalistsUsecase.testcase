@@ -306,7 +306,9 @@
 		<execute action="PGDynamicdatalistsAddrecord#assertTextEquals" locator-key1="RECORD_FIELD_ALERT" value1="Please enter a valid number." />
 	</command>
 
-	<command name="AssertDefinitionFieldViaManageTemplates" priority="4">
+	<command name="AssertFieldAfterNavigatingToManageTemplates" priority="4">
+		<description message="This is a use case for LPS-48736." />
+
 		<var name="ddlDataDefinitionName" value="Data Definition Title" />
 
 		<execute macro="Page#gotoContentCP">
@@ -331,12 +333,20 @@
 		<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#click" locator-key1="BACK_TAB" />
 
-		<execute macro="DDLDataDefinition#viewCP">
+		<var name="key_dataDefinitionName" value="${ddlDataDefinitionName}" />
+
+		<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_NAME" value1="${ddlDataDefinitionName}" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="HEADER_TITLE" value1="${ddlDataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="NAME_FIELD" value1="${ddlDataDefinitionName}" />
+
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#viewField">
 			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
 		</execute>
 	</command>
 

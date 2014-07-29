@@ -90,7 +90,11 @@ public class IncludeTag extends AttributesTagSupport {
 				return processEndTag();
 			}
 
+			invokeExtensionAt(ExtensionPoint.BEFORE_END, false);
+
 			doInclude(page);
+
+			invokeExtensionAt(ExtensionPoint.AFTER_END, false);
 
 			return EVAL_PAGE;
 		}
@@ -130,7 +134,11 @@ public class IncludeTag extends AttributesTagSupport {
 				return processStartTag();
 			}
 
+			invokeExtensionAt(ExtensionPoint.BEFORE_START, true);
+
 			doInclude(page);
+
+			invokeExtensionAt(ExtensionPoint.AFTER_START, true);
 
 			return EVAL_BODY_INCLUDE;
 		}

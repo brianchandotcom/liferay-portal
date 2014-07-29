@@ -105,6 +105,10 @@ public interface Document extends Cloneable, Serializable {
 	public void addLocalizedKeyword(
 		String name, Map<Locale, String> values, boolean lowerCase);
 
+	public void addLocalizedKeyword(
+		String name, Map<Locale, String> values, boolean lowerCase,
+		boolean sortable);
+
 	public void addLocalizedText(String name, Map<Locale, String> values);
 
 	/**

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -888,8 +889,8 @@ public class AssetUtil {
 			sortField = Field.MODIFIED_DATE;
 		}
 		else if (sortField.equals("title")) {
-			sortField = "localized_title_".concat(
-				LocaleUtil.toLanguageId(locale));
+			sortField = DocumentImpl.getSortableFieldName(
+				"localized_title_".concat(LocaleUtil.toLanguageId(locale)));
 		}
 
 		return SortFactoryUtil.getSort(

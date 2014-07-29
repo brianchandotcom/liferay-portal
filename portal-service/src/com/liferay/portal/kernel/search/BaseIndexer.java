@@ -632,7 +632,7 @@ public abstract class BaseIndexer implements Indexer {
 		document.addNumber(Field.VIEW_COUNT, assetEntry.getViewCount());
 
 		document.addLocalizedKeyword(
-			"localized_title", assetEntry.getTitleMap(), true);
+			"localized_title", assetEntry.getTitleMap(), true, true);
 		document.addKeyword("visible", assetEntry.isVisible());
 	}
 

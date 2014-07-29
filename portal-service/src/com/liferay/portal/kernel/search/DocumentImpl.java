@@ -71,6 +71,32 @@ public class DocumentImpl implements Document {
 		return name.concat(StringPool.UNDERLINE).concat(_SORTABLE_FIELD_SUFFIX);
 	}
 
+	public static String getSortFieldName(Sort sort, String scoreFieldName) {
+		String fieldName = sort.getFieldName();
+
+		if (fieldName.endsWith(_SORTABLE_FIELD_SUFFIX)) {
+			return fieldName;
+		}
+
+		String sortFieldName = null;
+
+		if (DocumentImpl.isSortableTextField(fieldName) ||
+			(sort.getType() != Sort.STRING_TYPE)) {
+
+			sortFieldName = DocumentImpl.getSortableFieldName(fieldName);
+		}
+
+		if (Validator.isNull(sortFieldName)) {
+			sortFieldName = scoreFieldName;
+		}
+
+		return sortFieldName;
+	}
+
+	public static boolean isSortableFieldName(String name) {
+		return name.endsWith(_SORTABLE_FIELD_SUFFIX);
+	}
+
 	public static boolean isSortableTextField(String name) {
 		return _defaultSortableTextFields.contains(name);
 	}
@@ -364,6 +390,32 @@ public class DocumentImpl implements Document {
 		}
 
 		createField(name, values);
+	}
+
+	@Override
+	public void addLocalizedKeyword(
+		String name, Map<Locale, String> values, boolean lowerCase,
+		boolean sortable) {
+
+		if ((values == null) || values.isEmpty()) {
+			return;
+		}
+
+		if (lowerCase) {
+			Map<Locale, String> lowerCaseValues = new HashMap<Locale, String>(
+				values.size());
+
+			for (Map.Entry<Locale, String> entry : values.entrySet()) {
+				String value = GetterUtil.getString(entry.getValue());
+
+				lowerCaseValues.put(
+					entry.getKey(), StringUtil.toLowerCase(value));
+			}
+
+			values = lowerCaseValues;
+		}
+
+		createField(name, values, sortable);
 	}
 
 	@Override
@@ -770,21 +822,35 @@ public class DocumentImpl implements Document {
 	}
 
 	protected Field createField(
+		String name, boolean sortable, String... values) {
+
+		Field field = createField(name);
+
+		field.setValues(values);
+		field.setSortable(sortable);
+
+		return field;
+	}
+
+	protected Field createField(
 		String name, Map<Locale, String> localizedValues) {
+
+		return createField(name, localizedValues, false);
+	}
+
+	protected Field createField(
+		String name, Map<Locale, String> localizedValues, boolean sortable) {
 
 		Field field = createField(name);
 
 		field.setLocalizedValues(localizedValues);
+		field.setSortable(sortable);
 
 		return field;
 	}
 
 	protected Field createField(String name, String... values) {
-		Field field = createField(name);
-
-		field.setValues(values);
-
-		return field;
+		return createField(name, false, values);
 	}
 
 	protected Field doGetField(String name, boolean createIfNew) {

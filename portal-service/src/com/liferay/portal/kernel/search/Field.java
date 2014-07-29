@@ -303,6 +303,10 @@ public class Field implements Serializable {
 		return _numeric;
 	}
 
+	public boolean isSortable() {
+		return _sortable;
+	}
+
 	public boolean isTokenized() {
 		return _tokenized;
 	}
@@ -329,6 +333,10 @@ public class Field implements Serializable {
 
 	public void setParentField(Field parentField) {
 		_parentField = parentField;
+	}
+
+	public void setSortable(boolean sortable) {
+		_sortable = sortable;
 	}
 
 	public void setTokenized(boolean tokenized) {
@@ -421,6 +429,7 @@ public class Field implements Serializable {
 	private boolean _numeric;
 	private Class<? extends Number> _numericClass;
 	private Field _parentField;
+	private boolean _sortable;
 	private boolean _tokenized;
 	private String[] _values;
 

@@ -79,9 +79,15 @@ public class DefaultElasticsearchDocumentFactory
 				return;
 			}
 
-			doAddField(
-				xContentBuilder, field, name,
-				valuesList.toArray(new String[valuesList.size()]));
+			values = valuesList.toArray(new String[valuesList.size()]);
+
+			doAddField(xContentBuilder, field, name, values);
+
+			if (field.isSortable()) {
+				String sortFieldName = DocumentImpl.getSortableFieldName(name);
+
+				doAddField(xContentBuilder, field, sortFieldName, values);
+			}
 		}
 		else {
 			Map<Locale, String> localizedValues = field.getLocalizedValues();
@@ -100,14 +106,24 @@ public class DefaultElasticsearchDocumentFactory
 				String defaultLanguageId = LocaleUtil.toLanguageId(
 					LocaleUtil.getDefault());
 
+				value = value.trim();
+
 				if (languageId.equals(defaultLanguageId)) {
-					doAddField(xContentBuilder, field, name, value.trim());
+					doAddField(xContentBuilder, field, name, value);
 				}
 
 				String localizedName = DocumentImpl.getLocalizedName(
 					languageId, name);
 
-				doAddField(xContentBuilder, field, localizedName, value.trim());
+				doAddField(xContentBuilder, field, localizedName, value);
+
+				if (field.isSortable()) {
+					String sortableFieldName =
+						DocumentImpl.getSortableFieldName(localizedName);
+
+					doAddField(
+						xContentBuilder, field, sortableFieldName, value);
+				}
 			}
 		}
 	}

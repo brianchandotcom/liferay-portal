@@ -7,6 +7,22 @@
 
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 
+	var MAP_ATTRIBUTES = {
+		img: [
+			'alt',
+			'class',
+			'dir',
+			'id',
+			'lang',
+			'longdesc',
+			'title',
+			{
+				fn: '_setImgStyle',
+				name: 'style'
+			}
+		]
+	};
+
 	var MAP_FONT_SIZE = {
 		1: 10,
 		2: 12,
@@ -121,7 +137,7 @@
 
 	var TOKEN_TAG_START = Parser.TOKEN_TAG_START;
 
-	var tplImage = new CKEDITOR.template('<img src="{imageSrc}" {imageSize} />');
+	var tplImage = new CKEDITOR.template('<img src="{imageSrc}" {attributes} />');
 
 	var Converter = function(config) {
 		var instance = this;
@@ -212,6 +228,50 @@
 			return MAP_FONT_SIZE[fontSize] || MAP_FONT_SIZE.defaultSize;
 		},
 
+		_handleAttributes: function(token, tagName) {
+			var instance = this;
+
+			var attrs = '';
+
+			var attributesMap = MAP_ATTRIBUTES[tagName];
+
+			if (attributesMap && token.attribute) {
+				var attrRegex = /\s*([^=]+)\s*=\s*"([^"]+)"\s*/g;
+
+				var attributes = {};
+
+				var bbCodeAttr;
+
+				while (bbCodeAttr = attrRegex.exec(token.attribute)) {
+					attributes[bbCodeAttr[1]] = bbCodeAttr[2];
+				}
+
+				for (i=0; i < attributesMap.length; i++) {
+					var attr = attributesMap[i];
+
+					var attrName;
+
+					var attrValue;
+
+					if (typeof attr === 'string') {
+						attrName = attr;
+						attrValue = attributes[attr];
+
+					}
+					else if (typeof attr === 'object') {
+						attrName = attr.name;
+						attrValue = instance[attr.fn].call(instance, attributes);
+					}
+
+					if (attrValue) {
+						attrs += ' ' + attrName + '="' + attrValue + '"';
+					}
+				}
+			}
+
+			return attrs;
+		},
+
 		_handleCode: function(token) {
 			var instance = this;
 
@@ -297,29 +357,9 @@
 
 			var imageSize = '';
 
-			if (token.attribute) {
-				var dimensions = token.attribute.split('x');
-
-				imageSize = 'style="';
-
-				var width = dimensions[0];
-
-				if (width && width !== 'auto') {
-					imageSize += 'width: ' + CKTools.htmlEncodeAttr(width) + 'px;';
-				}
-
-				var height = dimensions[1];
-
-				if (height && height !== 'auto') {
-					imageSize += 'height: ' + CKTools.htmlEncodeAttr(height) + 'px;';
-				}
-
-				imageSize += '"';
-			}
-
 			var result = tplImage.output(
 				{
-					imageSize: imageSize,
+					attributes: instance._handleAttributes(token, token.value),
 					imageSrc: imageSrc
 				}
 			);
@@ -547,6 +587,38 @@
 			instance._parsedData = null;
 
 			instance._noParse = false;
+		},
+
+		_setImgStyle: function(attributes) {
+			var instance = this;
+
+			var imgStyle = attributes.style || '';
+
+			if (attributes.width) {
+				var attrWidth = 'width: ' + attributes.width;
+				var styleWidthRegex = /width:\s*(\d+)/;
+
+				if (styleWidthRegex.test(imgStyle)) {
+					imgStyle = imgStyle.replace(styleWidthRegex, attrWidth);
+				}
+				else {
+					imgStyle += attrWidth;
+				}
+			}
+
+			if (attributes.height) {
+				var attrHeight = 'height: ' + attributes.height;
+				var styleHeightRegex = /height:\s*(\d+)/;
+
+				if (styleHeightRegex.test(imgStyle)) {
+					imgStyle = imgStyle.replace(styleHeightRegex, attrHeight);
+				}
+				else {
+					imgStyle += attrHeight;
+				}
+			}
+
+			return imgStyle;
 		}
 	};
 

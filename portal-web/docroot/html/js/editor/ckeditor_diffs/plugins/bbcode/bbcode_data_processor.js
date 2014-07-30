@@ -9,6 +9,27 @@
 		return val;
 	};
 
+	var MAP_ATTRIBUTES = {
+		img: [
+			'alt',
+			'class',
+			'dir',
+			{
+				fn: '_getStyleHeight',
+				name: 'height'
+			},
+			'id',
+			'lang',
+			'longdesc',
+			'style',
+			'title',
+			{
+				fn: '_getStyleWidth',
+				name: 'width'
+			}
+		]
+	};
+
 	var MAP_HANDLERS = {
 		a: '_handleLink',
 		blockquote: '_handleQuote',
@@ -323,6 +344,26 @@
 			return index;
 		},
 
+		_getStyleDimension: function(element, dimension) {
+			var instance = this;
+
+			var domElement = new CKEDITOR.dom.element(element);
+
+			return domElement.getStyle(dimension).replace('px', '');
+		},
+
+		_getStyleHeight: function(element) {
+			var instance = this;
+
+			return instance._getStyleDimension(element, 'height');
+		},
+
+		_getStyleWidth: function(element) {
+			var instance = this;
+
+			return instance._getStyleDimension(element, 'width');
+		},
+
 		_handle: function(node) {
 			var instance = this;
 
@@ -360,6 +401,44 @@
 			}
 
 			instance._handleData(node.data, node);
+		},
+
+		_handleAttributes: function(element, tagName) {
+			var instance = this;
+
+			var attrs = '';
+
+			if (tagName) {
+				var attributesMap = MAP_ATTRIBUTES[tagName.toLowerCase()];
+
+				if (attributesMap) {
+					var i;
+
+					for (i=0; i < attributesMap.length; i++) {
+						var attr = attributesMap[i];
+
+						var attrName;
+
+						var attrValue;
+
+						if (typeof attr === 'string') {
+							attrName = attr;
+							attrValue = element.getAttribute(attr);
+
+						}
+						else if (typeof attr === 'object') {
+							attrName = attr.name;
+							attrValue = instance[attr.fn].call(instance, element);
+						}
+
+						if (attrValue) {
+							attrs += ' ' + attrName + '="' + attrValue + '"';
+						}
+					}
+				}
+			}
+
+			return attrs;
 		},
 
 		_handleBreak: function(element, listTagsIn, listTagsOut) {
@@ -495,21 +574,7 @@
 			else {
 				var attrSrc = element.getAttribute('src');
 
-				var domElement = new CKEDITOR.dom.element(element);
-
-				var height = domElement.getStyle('height').replace('px', '') || 'auto';
-				var width = domElement.getStyle('width').replace('px', '') || 'auto';
-
-				var openTag = '[img]';
-
-				if ((height !== 'auto') || (width !== 'auto')) {
-					openTag = tplImageOpenTag.output(
-						{
-							height: height,
-							width: width
-						}
-					);
-				}
+				var openTag = '[img' + instance._handleAttributes(element, element.tagName) + ']';
 
 				listTagsIn.push(openTag);
 				listTagsIn.push(attrSrc);

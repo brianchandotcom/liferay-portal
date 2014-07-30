@@ -408,9 +408,10 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 		try {
 			_ddmImpl.mergeFields(newFields, existingFields);
+
+			Assert.fail();
 		}
 		catch (NullPointerException npe) {
-			Assert.fail();
 		}
 	}
 

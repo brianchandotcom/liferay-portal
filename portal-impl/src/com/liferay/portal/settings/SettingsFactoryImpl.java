@@ -87,11 +87,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	@Override
 	public List<String> getMultiValuedKeys(String settingsId) {
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(settingsId);
-
-		if ((portlet != null) && portlet.isInstanceable()) {
-			settingsId = portlet.getRootPortletId();
-		}
+		settingsId = PortletConstants.getRootPortletId(settingsId);
 
 		List<String> multiValuedKeys = _multiValuedKeysMap.get(settingsId);
 
@@ -184,11 +180,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		String settingsId, FallbackKeys fallbackKeys,
 		String[] multiValuedKeysArray) {
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(settingsId);
-
-		if ((portlet != null) && portlet.isInstanceable()) {
-			settingsId = portlet.getRootPortletId();
-		}
+		settingsId = PortletConstants.getRootPortletId(settingsId);
 
 		if (_multiValuedKeysMap.get(settingsId) != null) {
 			throw new IllegalStateException(

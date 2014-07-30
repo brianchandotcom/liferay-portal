@@ -1012,26 +1012,33 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 	@Override
 	public boolean sendPasswordByEmailAddress(
-			long companyId, String emailAddress, ServiceContext serviceContext)
+			long companyId, String emailAddress)
 		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		return userLocalService.sendPasswordByEmailAddress(
 			companyId, emailAddress, serviceContext);
 	}
 
 	@Override
-	public boolean sendPasswordByScreenName(
-			long companyId, String screenName, ServiceContext serviceContext)
+	public boolean sendPasswordByScreenName(long companyId, String screenName)
 		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		return userLocalService.sendPasswordByScreenName(
 			companyId, screenName, serviceContext);
 	}
 
 	@Override
-	public boolean sendPasswordByUserId(
-			long companyId, long userId, ServiceContext serviceContext)
+	public boolean sendPasswordByUserId(long companyId, long userId)
 		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		return userLocalService.sendPasswordByUserId(
 			companyId, userId, serviceContext);

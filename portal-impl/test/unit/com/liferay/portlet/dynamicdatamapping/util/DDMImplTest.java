@@ -501,29 +501,4 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 	private DDMImpl _ddmImpl = new DDMImpl();
 
-	private class MockField extends Field {
-
-		public MockField(
-			long ddmStructureId, String name, List<Serializable> values,
-			Locale locale) {
-
-			super(ddmStructureId, name, values, locale);
-		}
-
-		public MockField(
-			long ddmStructureId, String name,
-			Map<Locale, List<Serializable>> valuesMap, Locale defaultLocale) {
-
-			super(ddmStructureId, name, valuesMap, defaultLocale);
-		}
-
-		@Override
-		public DDMStructure getDDMStructure() {
-			return structures.get(getDDMStructureId());
-		}
-
-		private static final long serialVersionUID = 1L;
-
-	}
-
 }

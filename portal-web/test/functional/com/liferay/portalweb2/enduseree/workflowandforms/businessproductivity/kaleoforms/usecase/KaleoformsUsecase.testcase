@@ -10,7 +10,9 @@
 	<tear-down>
 		<execute macro="KaleoFormsAdmin#tearDownProcess" />
 
-		<execute macro="DDLDataDefinition#tearDownCP" />
+		<execute macro="DataDefinitionTemplate#tearDownTemplateCP" />
+
+		<execute macro="DataDefinition#tearDownCP" />
 
 		<execute macro="DMDocument#tearDownCP" />
 
@@ -60,7 +62,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="fieldsDefinitionName" value="${dataDefinitionName}" />
+			<var name="kfFieldsDefinitionName" value="${dataDefinitionName}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -175,7 +177,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="fieldsDefinitionName" value="To Do" />
+			<var name="kfFieldsDefinitionName" value="To Do" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -345,7 +347,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="EditProcessDataDefinitionAfterFormSubmission" priority="5">
+	<command name="EditProcessFieldsDefinitionAfterFormSubmission" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Kaleo Forms Admin" />
 		</execute>
@@ -359,7 +361,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="fieldsDefinitionName" value="Inventory" />
+			<var name="kfFieldsDefinitionName" value="Inventory" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -461,7 +463,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="fieldsDefinitionName" value="To Do" />
+			<var name="kfFieldsDefinitionName" value="To Do" />
 			<var name="kfPendingForm" value="true" />
 		</execute>
 
@@ -502,7 +504,7 @@
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 	</command>
 
-	<command name="EditProcessDataDefinitionBeforeFormSubmission" priority="5">
+	<command name="EditProcessFieldsDefinitionBeforeFormSubmission" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Kaleo Forms Admin" />
 		</execute>
@@ -516,7 +518,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="fieldsDefinitionName" value="To Do" />
+			<var name="kfFieldsDefinitionName" value="To Do" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -558,7 +560,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="fieldsDefinitionName" value="Inventory" />
+			<var name="kfFieldsDefinitionName" value="Inventory" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -732,7 +734,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="fieldsDefinitionName" value="${dataDefinitionName}" />
+			<var name="kfFieldsDefinitionName" value="${dataDefinitionName}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -861,7 +863,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="fieldsDefinitionName" value="${dataDefinitionName}" />
+			<var name="kfFieldsDefinitionName" value="${dataDefinitionName}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />

@@ -834,6 +834,28 @@
 		</execute>
 	</command>
 
+	<command name="ResetChanges" priority="4">
+		<var name="portletName" value="Hello World" />
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOUserBar#addPortlet">
+			<var name="pageName" value="Dashboard" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SOUserBar#resetChanges" />
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<var name="key_portletName" value="${portletName}" />
+
+		<execute action="SODashboard#assertElementNotPresent" locator-key1="PORTLET_TITLE" />
+		<execute action="SODashboard#assertTextNotPresent" value1="${portletName}" />
+	</command>
+
 	<command name="ViewAllDayEventEventsDisplay" priority="4">
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="All Day" />

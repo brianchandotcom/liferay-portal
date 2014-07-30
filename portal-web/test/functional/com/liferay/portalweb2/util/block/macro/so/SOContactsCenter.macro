@@ -125,17 +125,50 @@
 	<command name="confirmRequestToConnect">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
+		<if>
+			<and>
+				<isset var="numberOfNotifications" />
+				<not>
+					<equals arg1="${numberOfNotifications}" arg2="1" />
+				</not>
+			</and>
+			<then>
+				<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="${numberOfNotifications}" />
+			</then>
+			<else>
+				<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
+			</else>
+		</if>
+
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_COUNT" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SENDER" value1="${senderName}" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="would like to add you as a connection." />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_CONFIRM" value1="Confirm" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_CONFIRM" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+
+		<if>
+			<or>
+				<not>
+					<isset var="numberOfNotifications" />
+				</not>
+				<equals arg1="${numberOfNotifications}" arg2="1" />
+			</or>
+			<then>
+				<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
+			</then>
+		</if>
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
 
-		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LINK_CONNECTIONS" value1="You have 1 connections." />
+		<if>
+			<isset var="numberOfConnections" />
+			<then>
+				<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LINK_CONNECTIONS" value1="You have ${numberOfConnections} connections." />
+			</then>
+			<else>
+				<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LINK_CONNECTIONS" value1="You have 1 connections." />
+			</else>
+		</if>
 	</command>
 
 	<command name="disconnectFromConnection">

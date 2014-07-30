@@ -118,7 +118,7 @@ if ((folder == null) || (folder.getFolderId() == rootFolderId)) {
 	<liferay-util:buffer var="searchInfo">
 		<div class="search-info">
 			<span class="keywords">
-				<%= (searchEverywhere) ? LanguageUtil.format(request, "searched-for-x-in-the-root-folder", HtmlUtil.escape(keywords), false) : LanguageUtil.format(request, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(folder.getName())}, false) %>
+				<%= (!searchEverywhere) ? LanguageUtil.format(request, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(folder.getName())}, false) : LanguageUtil.format(request, "searched-for-x-everywhere", HtmlUtil.escape(keywords), false) %>
 			</span>
 
 			<c:if test="<%= folderId != rootFolderId %>">
@@ -128,7 +128,7 @@ if ((folder == null) || (folder.getFolderId() == rootFolderId)) {
 					String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "changeSearchFolder', {searchEverywhere: " + (!searchEverywhere) + "});";
 					%>
 
-					<aui:button onClick="<%= taglibOnClick %>" value='<%= searchEverywhere ? "search-in-the-current-folder" : "search-in-the-root-folder" %>' />
+					<aui:button onClick="<%= taglibOnClick %>" value='<%= !searchEverywhere ? "search-everywhere" : "search-in-the-current-folder" %>' />
 				</span>
 			</c:if>
 

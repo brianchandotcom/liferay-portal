@@ -16,7 +16,13 @@ package com.liferay.portal.servlet.jsp.compiler.compiler;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.Node;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.servlet.jsp.compiler.compiler.internal.JspResolverFactory;
 import com.liferay.portal.util.ClassLoaderUtil;
 
@@ -32,7 +38,9 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
@@ -50,6 +58,12 @@ import org.apache.jasper.compiler.ErrorDispatcher;
 import org.apache.jasper.compiler.Jsr199JavaCompiler;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.wiring.BundleRequirement;
+import org.osgi.framework.wiring.BundleRevision;
+import org.osgi.framework.wiring.BundleWire;
+import org.osgi.framework.wiring.BundleWiring;
 
 import org.phidias.compile.BundleJavaManager;
 
@@ -69,10 +83,34 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		ServletContext servletContext =
 			jspCompilationContext.getServletContext();
 
-		_bundle = (Bundle)servletContext.getAttribute("osgi-bundle");
+		BundleContext bundleContext =
+			(BundleContext)servletContext.getAttribute("osgi-bundlecontext");
+
+		_bundle = bundleContext.getBundle();
 
 		initClassPath(servletContext);
 		initTLDMappings(servletContext);
+	}
+
+	protected void addBundleWirings(BundleJavaManager bundleJavaManager) {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+		List<BundleWire> providedWires = bundleWiring.getRequiredWires(null);
+
+		for (BundleWire bundleWire : providedWires) {
+			BundleWiring providerWiring = bundleWire.getProviderWiring();
+
+			bundleJavaManager.addBundleWiring(providerWiring);
+		}
+
+		List<BundleRequirement> requirements = bundleWiring.getRequirements(
+			BundleRevision.PACKAGE_NAMESPACE);
+
+		for (BundleRequirement bundleRequirement : requirements) {
+			bundleJavaManager.addBundleRequirement(bundleRequirement);
+		}
 	}
 
 	protected void addDependenciesToClassPath() {
@@ -147,8 +185,14 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				standardJavaFileManager.setLocation(
 					StandardLocation.CLASS_PATH, _classPath);
 
+				if (_log.isTraceEnabled()) {
+					options.add("-verbose");
+				}
+
 				BundleJavaManager bundleJavaManager = new BundleJavaManager(
 					_bundle, standardJavaFileManager, options, true);
+
+				addBundleWirings(bundleJavaManager);
 
 				bundleJavaManager.setResourceResolver(
 					JspResolverFactory.getResourceResolver());
@@ -161,6 +205,27 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		}
 
 		return super.getJavaFileManager(javaFileManager);
+	}
+
+	protected String getTldUri(URL url) {
+		try {
+			Document document = SAXReaderUtil.read(url, false);
+
+			XPath xPath = SAXReaderUtil.createXPath(
+				"/ns:taglib/ns:uri/text()", "ns",
+				"http://java.sun.com/xml/ns/j2ee");
+
+			Node node = xPath.selectSingleNode(document);
+
+			if (node != null) {
+				return node.asXML();
+			}
+
+			return document.valueOf("/taglib/uri/text()");
+		}
+		catch (DocumentException e) {
+			return null;
+		}
 	}
 
 	protected void initClassPath(ServletContext servletContext) {
@@ -200,6 +265,28 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			"http://java.sun.com/jsp/jstl/core",
 			new String[] {"/WEB-INF/tld/c.tld", null});
 
+		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+
+		Collection<String> wiringEntries = bundleWiring.listResources(
+			"/", "*.tld", BundleWiring.FINDENTRIES_RECURSE);
+
+		Iterator<String> iterator = wiringEntries.iterator();
+
+		while (iterator.hasNext()) {
+			String resourcePath = iterator.next();
+
+			URL url = _bundle.getResource(resourcePath);
+
+			String uri = getTldUri(url);
+
+			if (uri != null) {
+				tldMappings.put(
+					uri,
+					new String[] {
+						StringPool.SLASH.concat(resourcePath), null});
+			}
+		}
+
 		servletContext.setAttribute(
 			Constants.JSP_TLD_URI_TO_LOCATION_MAP, tldMappings);
 	}
@@ -235,9 +322,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 	private static final String[] _JSP_COMPILER_DEPENDENCIES = {
 		"com.liferay.portal.kernel.exception.PortalException",
-		"com.liferay.portal.util.PortalImpl", "javax.el.ELException",
-		"javax.portlet.PortletException", "javax.servlet.ServletException",
-		"javax.servlet.jsp.JspException"
+		"com.liferay.portal.util.PortalImpl",
+		"javax.portlet.PortletException", "javax.servlet.ServletException"
 	};
 
 	private static Log _log = LogFactoryUtil.getLog(JspCompiler.class);

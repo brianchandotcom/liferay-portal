@@ -2,11 +2,8 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="original.lib.name" value="org.apache.jasper.glassfish" />
-	<property name="original.lib.url" value="http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/orbit" />
-	<property name="original.lib.version" value="2.1.0.v201110031002" />
-	<property name="osgi.runtime.dependencies" value="javax.*.jar,jetty-*.jar,phidias.jar" />
-	<property name="plugin.full.version" value="7.0.0.1" />
+	<property name="osgi.runtime.dependencies" value="javax.el.jar,javax.servlet.jsp-api.jar,javax.servlet.jsp.jstl-api.jar,javax.servlet.jsp.jstl.jar,phidias.jar" />
+	<property name="plugin.full.version" value="1.0.0" />
 	<property name="plugin.name" value="com.liferay.portal.servlet.jsp.compiler" />
 	<property name="schemas.dir" value="src/javax/servlet/jsp/resources" />
 	<property name="schemas.url" value="http://svn.apache.org/repos/asf/tomcat/tc7.0.x/trunk/java/javax/servlet/jsp/resources" />
@@ -16,14 +13,6 @@
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
 
 	<target name="compile">
-		<antcall target="patch">
-			<param name="patch.destination" value="org/apache/jasper/EmbeddedServletOptions.java,org/apache/jasper/JspC.java,org/apache/jasper/Options.java,org/apache/jasper/compiler/Compiler.java,org/apache/jasper/compiler/Generator.java,org/apache/jasper/compiler/Jsr199JavaCompiler.java,org/apache/jasper/compiler/JspRuntimeContext.java,org/apache/jasper/compiler/TldLocationsCache.java,org/apache/jasper/runtime/PageContextImpl.java" />
-			<param name="patch.original.lib.name" value="${original.lib.name}" />
-			<param name="patch.original.lib.version" value="${original.lib.version}" />
-			<param name="patch.original.lib.url" value="${original.lib.url}" />
-			<param name="patch.source" value="patches" />
-		</antcall>
-
 		<if>
 			<not>
 				<available file="${schemas.dir}" />

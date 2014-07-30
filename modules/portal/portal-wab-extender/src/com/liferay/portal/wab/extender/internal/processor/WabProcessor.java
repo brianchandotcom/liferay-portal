@@ -46,11 +46,9 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.util.Portal;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.wab.extender.internal.introspection.ClassLoaderSource;
 import com.liferay.portal.wab.extender.internal.introspection.Source;
@@ -87,6 +85,7 @@ import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.depend.DependencyVisitor;
@@ -235,6 +234,50 @@ public class WabProcessor {
 		}
 		finally {
 			DependencyManagementThreadLocal.setEnabled(enabled);
+		}
+	}
+
+	protected void expandServiceJarIntoClassesDir(URI uri, File zipFile)
+		throws IOException {
+
+		File webInfClasses = new File(uri.resolve("WEB-INF/classes").getPath());
+
+		ZipInputStream zipInputStream = new ZipInputStream(
+			new FileInputStream(zipFile));
+
+		try {
+			for (ZipEntry zipEntry;
+					(zipEntry = zipInputStream.getNextEntry()) != null;
+						zipInputStream.closeEntry()) {
+
+				String zipEntryName = zipEntry.getName();
+
+				if (zipEntry.isDirectory()) {
+					File newFile = new File(webInfClasses, zipEntry.getName());
+
+					newFile.mkdirs();
+
+					continue;
+				}
+
+				File newFile = new File(webInfClasses, zipEntry.getName());
+
+				newFile.getParentFile().mkdirs();
+
+				FileOutputStream fileOutputStream = new FileOutputStream(
+					newFile);
+
+				try {
+					StreamUtil.transfer(
+						zipInputStream, fileOutputStream, false);
+				}
+				finally {
+					fileOutputStream.close();
+				}
+			}
+		}
+		finally {
+			zipInputStream.close();
 		}
 	}
 
@@ -518,21 +561,6 @@ public class WabProcessor {
 
 		sb.append(StringUtil.merge(_exportPackageNames.toArray()));
 
-		if (Validator.isNotNull(_servicePackageName)) {
-			sb.append(StringPool.COMMA);
-			sb.append(StringPool.EXCLAMATION);
-			sb.append(_servicePackageName);
-			sb.append(".model.impl.*,!");
-			sb.append(_servicePackageName);
-			sb.append(".service.base.*,!");
-			sb.append(_servicePackageName);
-			sb.append(".service.impl.*,!");
-			sb.append(_servicePackageName);
-			sb.append(".service.http.*,");
-			sb.append(_servicePackageName);
-			sb.append(".*");
-		}
-
 		analyzer.setProperty(Constants.EXPORT_PACKAGE, sb.toString());
 	}
 
@@ -604,12 +632,18 @@ public class WabProcessor {
 			}
 
 			if (path.equals("WEB-INF/service.xml")) {
-				processServicePackageName(file);
+				processServicePackageName(uri, file);
 			}
 
 			if (path.startsWith("WEB-INF/lib/")) {
-				if (path.endsWith("-service.jar") &&
-					!path.endsWith(_context.concat("-service.jar"))) {
+				if (path.endsWith("-service.jar")) {
+					if (path.endsWith(_context.concat("-service.jar"))) {
+						expandServiceJarIntoClassesDir(uri, file);
+					}
+
+					// Ignore any other "-service.jar" so they use real imports
+
+					_ignoredResources.add(path);
 
 					continue;
 				}
@@ -754,76 +788,6 @@ public class WabProcessor {
 		processImportPackageNames(analyzer);
 	}
 
-	protected void processPortletXML() throws IOException {
-		File file = new File(
-			_pluginDir, "WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD);
-
-		if (!file.exists()) {
-			return;
-		}
-
-		Document document = readDocument(file);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> elements = rootElement.elements("portlet");
-
-		for (Element element : elements) {
-			processPortletXML(element, rootElement.getQName());
-		}
-
-		formatDocument(file, document);
-	}
-
-	protected void processPortletXML(Element element, QName qName) {
-		String portletName = PortalUtil.getJsSafePortletId(
-			element.elementText("portlet-name"));
-
-		String invokerPortletName =
-			Portal.PATH_MODULE.substring(1) + _context + StringPool.SLASH +
-				portletName;
-
-		XPath xPath = SAXReaderUtil.createXPath(
-			"x:init-param[x:name/text()='com.liferay.portal." +
-				"invokerPortletName']",
-			"x", "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd");
-
-		Element invokerPortletNameElement = (Element)xPath.selectSingleNode(
-			element);
-
-		if (invokerPortletNameElement == null) {
-			Element portletClassElement = element.element("portlet-class");
-
-			List<Node> nodes = element.content();
-
-			int index = nodes.indexOf(portletClassElement);
-
-			Element initParamElement = SAXReaderUtil.createElement(
-				SAXReaderUtil.createQName("init-param", qName.getNamespace()));
-
-			addElement(
-				initParamElement, "name",
-				"com.liferay.portal.invokerPortletName");
-			addElement(initParamElement, "value", invokerPortletName);
-
-			nodes.add(index + 1, initParamElement);
-		}
-		else {
-			Element valueElement = invokerPortletNameElement.element("value");
-
-			invokerPortletName = valueElement.getTextTrim();
-
-			if (!invokerPortletName.startsWith(StringPool.SLASH)) {
-				invokerPortletName = StringPool.SLASH + invokerPortletName;
-			}
-
-			invokerPortletName =
-				Portal.PATH_MODULE.substring(1) + _context + invokerPortletName;
-
-			valueElement.setText(invokerPortletName);
-		}
-	}
-
 	protected Set<String> processReferencedDependencies(
 		Source source, String className) {
 
@@ -872,13 +836,45 @@ public class WabProcessor {
 		analyzer.setProperty(Constants.REQUIRE_BUNDLE, sb.toString());
 	}
 
-	protected void processServicePackageName(File file) {
+	protected void processServicePackageName(URI uri, File file) {
 		try {
 			Document document = SAXReaderUtil.read(file);
 
 			Element rootElement = document.getRootElement();
 
 			_servicePackageName = rootElement.attributeValue("package-path");
+
+			_exportPackageNames.add(versionedServicePackage(""));
+			_importPackageNames.add(versionedServicePackage(""));
+			_exportPackageNames.add(versionedServicePackage(".model"));
+			_importPackageNames.add(versionedServicePackage(".model"));
+			_exportPackageNames.add(versionedServicePackage(".model.impl"));
+			_importPackageNames.add(versionedServicePackage(".model.impl"));
+			_exportPackageNames.add(versionedServicePackage(".persistence"));
+			_importPackageNames.add(versionedServicePackage(".persistence"));
+			_exportPackageNames.add(versionedServicePackage(".persistence.impl"));
+			_importPackageNames.add(versionedServicePackage(".persistence.impl"));
+			_exportPackageNames.add(versionedServicePackage(".service"));
+			_importPackageNames.add(versionedServicePackage(".service"));
+			_exportPackageNames.add(versionedServicePackage(".service.base"));
+			_importPackageNames.add(versionedServicePackage(".service.base"));
+			_exportPackageNames.add(versionedServicePackage(".service.impl"));
+			_importPackageNames.add(versionedServicePackage(".service.impl"));
+			_exportPackageNames.add(versionedServicePackage(".service.http"));
+			_importPackageNames.add(versionedServicePackage(".service.http"));
+
+			_importPackageNames.add("com.liferay.portal.wab.extender");
+
+			File metaInfDir = new File(uri.resolve("WEB-INF/classes/META-INF"));
+
+			metaInfDir.mkdirs();
+
+			Class<?> clazz = getClass();
+
+			FileUtil.write(
+				new File(metaInfDir, "servicebeanpostprocessor-spring.xml"),
+				clazz.getResourceAsStream(
+					"/com/liferay/portal/wab/extender/internal/dependencies/servicebeanpostprocessor-spring.xml"));
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -963,6 +959,8 @@ public class WabProcessor {
 
 		Element rootElement = document.getRootElement();
 
+		processServiceBeanPostProcessor(rootElement);
+
 		for (Element element : rootElement.elements("filter")) {
 			Element filterClassElement = element.element("filter-class");
 
@@ -980,6 +978,47 @@ public class WabProcessor {
 		}
 
 		formatDocument(file, document);
+	}
+
+	protected void processServiceBeanPostProcessor(Element rootElement) {
+		boolean exists = false;
+
+		for (Element contextParamElement :
+				rootElement.elements("context-param")) {
+
+			Element paramNameElement = contextParamElement.element(
+				"param-name");
+			String paramName = paramNameElement.getTextTrim();
+
+			if (!paramName.equals("portalContextConfigLocation")) {
+				continue;
+			}
+
+			exists = true;
+
+			Element paramValueElement = contextParamElement.element(
+				"param-value");
+
+			String paramValue = paramValueElement.getTextTrim();
+
+			paramValueElement.setText(
+				paramValue.concat(StringPool.COMMA).concat(_SERVICE_XML));
+		}
+
+		if (exists) {
+			return;
+		}
+
+		Element contextParamElement = rootElement.addElement("context-param");
+
+		Element paramNameElement = contextParamElement.addElement("param-name");
+
+		paramNameElement.setText("portalContextConfigLocation");
+
+		Element paramValueElement = contextParamElement.addElement(
+			"param-value");
+
+		paramValueElement.setText(_SERVICE_XML);
 	}
 
 	protected void processXMLDependencies(
@@ -1039,16 +1078,15 @@ public class WabProcessor {
 		analyzer.setBase(_pluginDir);
 		analyzer.setJar(_pluginDir);
 
+		processBundleVersion(analyzer);
+
 		processBundleClasspath(analyzer);
 		processBundleSymbolicName(analyzer);
 		processExtraHeaders(analyzer);
 
-		processBundleVersion(analyzer);
-
 		processBundleManifestVersion(analyzer);
 
 		processLiferayPortletXML();
-		processPortletXML();
 		processWebXML("WEB-INF/web.xml");
 		processWebXML("WEB-INF/liferay-web.xml");
 
@@ -1074,6 +1112,10 @@ public class WabProcessor {
 		processWebContextPath(manifest);
 
 		writeManifest(manifest);
+	}
+
+	protected String versionedServicePackage(String subPackage) {
+		return _servicePackageName + subPackage + ";version=" + _bundleVersion;
 	}
 
 	protected void writeGeneratedWab(File file) throws IOException {
@@ -1190,6 +1232,9 @@ public class WabProcessor {
 			outputStream.close();
 		}
 	}
+
+	private static final String _SERVICE_XML =
+		"/WEB-INF/classes/META-INF/servicebeanpostprocessor-spring.xml";
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);
 

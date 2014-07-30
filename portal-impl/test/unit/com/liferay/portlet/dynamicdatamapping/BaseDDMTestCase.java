@@ -415,11 +415,27 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		);
 
 		when(
-			LocaleUtil.toLanguageIds(
-				Matchers.eq(new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US})
-			)
-		).thenReturn(
-			new String[] {"pt_BR", "en_US"}
+			LocaleUtil.toLanguageIds((Locale[])Matchers.any())
+		).then(
+			new Answer<String[]>() {
+
+				@Override
+				public String[] answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					Object[] args = invocationOnMock.getArguments();
+
+					Locale[] locales = (Locale[])args[0];
+
+					String[] languageIds = new String[locales.length];
+
+					for (int i = 0; i < locales.length; i++) {
+						languageIds[i] = LocaleUtil.toLanguageId(locales[i]);
+					}
+
+					return languageIds;
+				}
+			}
 		);
 	}
 

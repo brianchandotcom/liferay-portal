@@ -70,13 +70,9 @@ public class EhcacheStreamBootstrapHelpUtil {
 
 		ServerSocket serverSocket = serverSocketChannel.socket();
 
-		PortalCacheManager<?, ?> portalCacheManager =
-			(PortalCacheManager<?, ?>)PortalBeanLocatorUtil.locate(
-				_BEAN_NAME_MULTI_VM_PORTAL_CACHE_MANAGER);
-
 		EhcacheStreamServerThread ehcacheStreamServerThread =
 			new EhcacheStreamServerThread(
-				serverSocket, portalCacheManager, cacheNames);
+				serverSocket, _getPortalCacheManager(), cacheNames);
 
 		ehcacheStreamServerThread.start();
 
@@ -104,9 +100,7 @@ public class EhcacheStreamBootstrapHelpUtil {
 			return;
 		}
 
-		PortalCacheManager<?, ?> portalCacheManager =
-			(PortalCacheManager<?, ?>)PortalBeanLocatorUtil.locate(
-				_BEAN_NAME_MULTI_VM_PORTAL_CACHE_MANAGER);
+		PortalCacheManager<?, ?> portalCacheManager = _getPortalCacheManager();
 
 		if (!cacheManagerName.equals(portalCacheManager.getName())) {
 			return;
@@ -228,8 +222,16 @@ public class EhcacheStreamBootstrapHelpUtil {
 		}
 	}
 
-	private static final String _BEAN_NAME_MULTI_VM_PORTAL_CACHE_MANAGER =
-		"com.liferay.portal.kernel.cache.MultiVMPortalCacheManager";
+	private static PortalCacheManager<?, ?> _getPortalCacheManager() {
+		if (_portalCacheManager == null) {
+			_portalCacheManager =
+				(PortalCacheManager<?, ?>)PortalBeanLocatorUtil.locate(
+					"com.liferay.portal.kernel.cache." +
+						"MultiVMPortalCacheManager");
+		}
+
+		return _portalCacheManager;
+	}
 
 	private static final String _COMMAND_SOCKET_CLOSE = "${SOCKET_CLOSE}";
 
@@ -240,6 +242,7 @@ public class EhcacheStreamBootstrapHelpUtil {
 		new MethodKey(
 			EhcacheStreamBootstrapHelpUtil.class,
 			"createServerSocketFromCluster", List.class);
+	private static volatile PortalCacheManager<?, ?> _portalCacheManager;
 	private static ServerSocketConfigurator _serverSocketConfigurator =
 		new SocketCacheServerSocketConfiguration();
 

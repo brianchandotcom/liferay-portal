@@ -67,7 +67,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -150,6 +149,7 @@ import java.lang.reflect.Field;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -2795,14 +2795,12 @@ public class HookHotDeployListener
 		public String[] getStringArray() {
 			Set<String> mergedStringSet = new LinkedHashSet<String>();
 
-			mergedStringSet.addAll(ListUtil.fromArray(_portalStringArray));
+			mergedStringSet.addAll(Arrays.asList(_portalStringArray));
 
 			for (Map.Entry<String, String[]> entry :
 					_pluginStringArrayMap.entrySet()) {
 
-				String[] pluginStringArray = entry.getValue();
-
-				mergedStringSet.addAll(ListUtil.fromArray(pluginStringArray));
+				mergedStringSet.addAll(Arrays.asList(entry.getValue()));
 			}
 
 			return mergedStringSet.toArray(new String[mergedStringSet.size()]);

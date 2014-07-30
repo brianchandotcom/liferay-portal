@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,9 +47,11 @@ import com.liferay.registry.collections.ServiceRegistrationMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -191,7 +192,7 @@ public class WebDAVUtil {
 
 		// Communities
 
-		List<Group> groups = new ArrayList<Group>();
+		Set<Group> groups = new HashSet<Group>();
 
 		LinkedHashMap<String, Object> params =
 			new LinkedHashMap<String, Object>();
@@ -218,9 +219,11 @@ public class WebDAVUtil {
 			groups.add(user.getGroup());
 		}
 
-		Collections.sort(ListUtil.unique(groups), orderByComparator);
+		List<Group> groupList = new ArrayList<Group>(groups);
 
-		return groups;
+		Collections.sort(groupList, orderByComparator);
+
+		return groupList;
 	}
 
 	public static WebDAVUtil getInstance() {

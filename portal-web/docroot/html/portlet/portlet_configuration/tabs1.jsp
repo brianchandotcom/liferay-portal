@@ -79,7 +79,7 @@ int pos = 0;
 
 String tabs1Names = StringPool.BLANK;
 
-if (Validator.isNotNull(selPortlet.getConfigurationActionClass())) {
+if (Validator.isNotNull(selPortlet.getConfigurationActionInstance())) {
 	tabs1Names += ",setup";
 
 	request.setAttribute("liferay-ui:tabs:url" + pos++, configurationURL.toString());

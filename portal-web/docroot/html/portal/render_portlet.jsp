@@ -199,7 +199,7 @@ if (!portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 
 		showConfigurationIcon = true;
 
-		boolean supportsConfigurationLAR = Validator.isNotNull(portlet.getConfigurationActionClass());
+		boolean supportsConfigurationLAR = Validator.isNotNull(portlet.getConfigurationActionInstance());
 		boolean supportsDataLAR = !(portlet.getPortletDataHandlerInstance() instanceof DefaultConfigurationPortletDataHandler);
 
 		if (supportsConfigurationLAR || supportsDataLAR || !group.isControlPanel()) {
@@ -411,7 +411,7 @@ urlConfiguration.setWindowState(LiferayWindowState.POP_UP);
 
 urlConfiguration.setEscapeXml(false);
 
-if (Validator.isNotNull(portlet.getConfigurationActionClass())) {
+if (Validator.isNotNull(portlet.getConfigurationActionInstance())) {
 	urlConfiguration.setParameter("struts_action", "/portlet_configuration/edit_configuration");
 }
 else if (PortletPermissionUtil.contains(permissionChecker, layout, portletDisplay.getId(), ActionKeys.PERMISSIONS)) {
@@ -684,7 +684,7 @@ if (group.isControlPanel()) {
 	portletDisplay.setShowMoveIcon(false);
 	portletDisplay.setShowPortletCssIcon(false);
 
-	if (!portlet.isPreferencesUniquePerLayout() && Validator.isNotNull(portlet.getConfigurationActionClass())) {
+	if (!portlet.isPreferencesUniquePerLayout() && Validator.isNotNull(portlet.getConfigurationActionInstance())) {
 		portletDisplay.setShowConfigurationIcon(true);
 	}
 }

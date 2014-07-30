@@ -229,7 +229,20 @@ public class WebDriverToSeleniumBridge
 	public void clickAt(
 		String locator, String coordString, boolean scrollIntoView) {
 
+		int offsetX = 0;
+		int offsetY = 0;
+
 		if (coordString.contains(",")) {
+			String[] coords = coordString.split(",");
+
+			offsetX = GetterUtil.getInteger(coords[0]);
+			offsetY = GetterUtil.getInteger(coords[1]);
+		}
+
+		if ((offsetX == 0) && (offsetY == 0)) {
+			click(locator);
+		}
+		else {
 			WebElement bodyWebElement = getWebElement("//body");
 
 			WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
@@ -245,11 +258,6 @@ public class WebDriverToSeleniumBridge
 			WebElement webElement = getWebElement(locator);
 
 			Point webElementPoint = webElement.getLocation();
-
-			String[] coords = coordString.split(",");
-
-			int offsetX = GetterUtil.getInteger(coords[0]);
-			int offsetY = GetterUtil.getInteger(coords[1]);
 
 			int clickDestinationX = 0;
 			int clickDestinationY = 0;
@@ -283,9 +291,6 @@ public class WebDriverToSeleniumBridge
 			}
 			catch (Exception e) {
 			}
-		}
-		else {
-			click(locator);
 		}
 	}
 

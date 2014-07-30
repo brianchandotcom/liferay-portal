@@ -255,6 +255,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 				/>
 
 				mainUrl: '<%= mainURL %>',
+				rootFolderId: '<%= rootFolderId %>',
 				strutsAction: '/document_library/view'
 			},
 			maxFileSize: <%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %>,

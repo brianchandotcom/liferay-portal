@@ -249,8 +249,8 @@
 	</bean>
 	<bean id="com.liferay.portal.repository.registry.RepositoryCatalog" class="com.liferay.portal.repository.registry.RepositoryCatalogImpl" init-method="loadBuiltinRegistryPlugins">
 		<property name="classNameLocalService" ref="com.liferay.portal.service.ClassNameLocalService" />
-		<property name="externalRepositoryCreator">
-			<bean class="com.liferay.portal.repository.external.ExternalRepositoryCreator" />
+		<property name="legacyExternalRepositoryCreator">
+			<bean class="com.liferay.portal.repository.external.LegacyExternalRepositoryCreator" />
 		</property>
 		<property name="liferayRepositoryRegistryPlugin">
 			<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryRegistryPlugin">

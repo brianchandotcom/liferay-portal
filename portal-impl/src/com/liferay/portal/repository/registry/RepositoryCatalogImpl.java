@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.kernel.repository.registry.RepositoryRegistryPlugin;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.repository.external.ExternalRepositoryRegistryPlugin;
+import com.liferay.portal.repository.external.LegacyExternalRepositoryRegistryPlugin;
 import com.liferay.portal.repository.util.ExternalRepositoryFactory;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
@@ -75,8 +75,8 @@ public class RepositoryCatalogImpl implements RepositoryCatalog {
 		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		RepositoryRegistryPlugin repositoryRegistryPlugin =
-			new ExternalRepositoryRegistryPlugin(
-				className, classNameId, _externalRepositoryCreator);
+			new LegacyExternalRepositoryRegistryPlugin(
+				className, classNameId, _legacyExternalRepositoryCreator);
 
 		registerRepositoryRegistryPlugin(repositoryRegistryPlugin);
 	}
@@ -101,10 +101,10 @@ public class RepositoryCatalogImpl implements RepositoryCatalog {
 		_classNameLocalService = classNameLocalService;
 	}
 
-	public void setExternalRepositoryCreator(
+	public void setLegacyExternalRepositoryCreator(
 		RepositoryCreator repositoryCreator) {
 
-		_externalRepositoryCreator = repositoryCreator;
+		_legacyExternalRepositoryCreator = repositoryCreator;
 	}
 
 	public void setLiferayRepositoryRegistryPlugin(
@@ -147,7 +147,7 @@ public class RepositoryCatalogImpl implements RepositoryCatalog {
 
 	private ClassNameLocalService _classNameLocalService;
 	private Set<String> _externalRepositoriesClassNames;
-	private RepositoryCreator _externalRepositoryCreator;
+	private RepositoryCreator _legacyExternalRepositoryCreator;
 	private RepositoryRegistryPlugin _liferayRepositoryRegistryPlugin;
 	private Map<Long, RepositoryConfiguration> _repositoryRegistryPlugins;
 

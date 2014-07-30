@@ -28,6 +28,7 @@
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
+		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 		<var name="pageName" value="Kaleo Forms" />
 		<var name="workflowDefinition" value="Single Approver" />
@@ -56,6 +57,7 @@
 		<execute macro="KaleoFormsAdmin#addProcess" />
 
 		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="kfProcessDescription" value="${kfProcessDescription}" />
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -160,6 +162,7 @@
 	</command>
 
 	<command name="CompleteProcessPredefined" priority="5">
+		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
 		<var name="pageName" value="Kaleo Forms" />
 		<var name="workflowDefinition" value="Single Approver" />
@@ -171,6 +174,7 @@
 		<execute macro="KaleoFormsAdmin#addProcess" />
 
 		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="kfProcessDescription" value="${kfProcessDescription}" />
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -355,6 +359,7 @@
 		<execute macro="KaleoFormsAdmin#addProcess" />
 
 		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="kfProcessName" value="Kaleo Forms Process Description" />
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
@@ -457,7 +462,6 @@
 
 		<execute macro="KaleoFormsAdmin#editProcessDetails">
 			<var name="kfPendingForm" value="true" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -512,6 +516,7 @@
 		<execute macro="KaleoFormsAdmin#addProcess" />
 
 		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
@@ -554,7 +559,8 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#editProcessDetails">
-			<var name="kfProcessName" value="Kaleo Forms Process Edited" />
+			<var name="kfProcessDescriptionEdit" value="Kaleo Forms Process Description Edited" />
+			<var name="kfProcessNameEdit" value="Kaleo Forms Process Edited" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -700,6 +706,7 @@
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
+		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 		<var name="pageName" value="Kaleo Forms" />
 		<var name="workflowDefinition" value="Single Approver" />
@@ -728,6 +735,7 @@
 		<execute macro="KaleoFormsAdmin#addProcess" />
 
 		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="kfProcessDescription" value="${kfProcessDescription}" />
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -829,6 +837,7 @@
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
+		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 		<var name="pageName" value="Kaleo Forms" />
 		<var name="workflowDefinition" value="Single Approver" />
@@ -857,6 +866,7 @@
 		<execute macro="KaleoFormsAdmin#addProcess" />
 
 		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="kfProcessDescription" value="${kfProcessDescription}" />
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 

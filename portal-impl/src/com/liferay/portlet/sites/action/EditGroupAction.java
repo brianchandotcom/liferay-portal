@@ -331,10 +331,11 @@ public class EditGroupAction extends PortletAction {
 
 		List<Team> teams = new ArrayList<Team>();
 
-		long[] teamsTeamIds = StringUtil.split(
-			ParamUtil.getString(portletRequest, "teamsTeamIds"), 0L);
+		long[] teamsTeamIds = ArrayUtil.unique(
+			StringUtil.split(
+				ParamUtil.getString(portletRequest, "teamsTeamIds"), 0L));
 
-		for (long teamsTeamId : ArrayUtil.unique(teamsTeamIds)) {
+		for (long teamsTeamId : teamsTeamIds) {
 			if (teamsTeamId == 0) {
 				continue;
 			}

@@ -17,7 +17,6 @@ package com.liferay.portal.upgrade.v6_2_0;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletConstants;
@@ -39,6 +38,7 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jodd.util.ArraysUtil;
@@ -82,8 +82,6 @@ public class UpgradeCustomizablePortletsTest
 
 		upgradeCustomizablePreferences(
 			portalPreferencesWrapper, ownerId, ownerType, preferences);
-
-		_newPortletIds = ListUtil.unique(_newPortletIds);
 
 		Assert.assertEquals(_newPortletIds.size(), 4);
 		Assert.assertFalse(PortletConstants.hasUserId(_newPortletIds.get(0)));
@@ -135,8 +133,6 @@ public class UpgradeCustomizablePortletsTest
 		portalPreferencesWrapper.store();
 
 		doUpgrade();
-
-		_newPortletIds = ListUtil.unique(_newPortletIds);
 
 		Assert.assertEquals(_newPortletIds.size(), 4);
 		Assert.assertFalse(PortletConstants.hasUserId(_newPortletIds.get(0)));
@@ -263,6 +259,8 @@ public class UpgradeCustomizablePortletsTest
 
 		_newPortletIds.add(newPortletId);
 
+		_newPortletIds = ListUtil.unique(_newPortletIds);
+
 		return newPortletId;
 	}
 
@@ -272,6 +270,6 @@ public class UpgradeCustomizablePortletsTest
 	};
 
 	private boolean _invokeSuper;
-	private List<String> _newPortletIds = new UniqueList<String>();
+	private List<String> _newPortletIds = new ArrayList<String>();
 
 }

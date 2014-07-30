@@ -20,7 +20,6 @@ import com.liferay.portal.cache.ehcache.EhcachePortalCache;
 import com.liferay.portal.cache.ehcache.ModifiableEhcacheWrapper;
 import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -314,7 +313,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		}
 
 		@Override
-		public void clearAll() throws PortalCacheException {
+		public void clearAll() {
 			throw new UnsupportedOperationException();
 		}
 
@@ -324,9 +323,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		}
 
 		@Override
-		public PortalCache<K, V> getCache(String name)
-			throws PortalCacheException {
-
+		public PortalCache<K, V> getCache(String name) {
 			PortalCache<K, V> portalCache = _portalCaches.get(name);
 
 			if (portalCache != null) {
@@ -353,9 +350,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		}
 
 		@Override
-		public PortalCache<K, V> getCache(String name, boolean blocking)
-			throws PortalCacheException {
-
+		public PortalCache<K, V> getCache(String name, boolean blocking) {
 			throw new UnsupportedOperationException();
 		}
 

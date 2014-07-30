@@ -69,19 +69,18 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 		handlePortalCacheClusterEvent(portalCacheClusterEvent);
 	}
 
-	@SuppressWarnings("unchecked")
-	protected <K extends Serializable, V extends Serializable>
-		void handlePortalCacheClusterEvent(
-			PortalCacheClusterEvent portalCacheClusterEvent) {
+	protected void handlePortalCacheClusterEvent(
+		PortalCacheClusterEvent portalCacheClusterEvent) {
 
 		String cacheName = portalCacheClusterEvent.getCacheName();
 
-		PortalCache<K, V> portalCache =
-			(PortalCache<K, V>)_portalCacheManager.getCache(cacheName);
+		PortalCache<Serializable, Serializable> portalCache =
+			(PortalCache<Serializable, Serializable>)
+				_portalCacheManager.getCache(cacheName);
 
 		if ((portalCache == null) && (_hibernateCacheManager != null)) {
-			portalCache = (PortalCache<K, V>)_hibernateCacheManager.getCache(
-				cacheName);
+			portalCache = (PortalCache<Serializable, Serializable>)
+				_hibernateCacheManager.getCache(cacheName);
 		}
 
 		if (portalCache == null) {
@@ -106,8 +105,8 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 					 portalCacheClusterEventType.equals(
 						PortalCacheClusterEventType.UPDATE)) {
 
-					K key = (K)portalCacheClusterEvent.getElementKey();
-					V value = (V)portalCacheClusterEvent.getElementValue();
+				Serializable key = portalCacheClusterEvent.getElementKey();
+				Serializable value = portalCacheClusterEvent.getElementValue();
 
 				if (value == null) {
 					portalCache.remove(key);
@@ -118,7 +117,7 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 				}
 			}
 			else {
-				portalCache.remove((K)portalCacheClusterEvent.getElementKey());
+				portalCache.remove(portalCacheClusterEvent.getElementKey());
 			}
 		}
 		finally {

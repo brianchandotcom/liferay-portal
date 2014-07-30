@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.nio.intraband.proxy.annotation.Proxy;
 
 import java.io.Serializable;
 
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Edward Han
@@ -30,6 +32,8 @@ public interface PortalCache<K extends Serializable, V> {
 
 	@Proxy
 	public V get(K key);
+
+	public List<K> getKeys();
 
 	@Id
 	public String getName();

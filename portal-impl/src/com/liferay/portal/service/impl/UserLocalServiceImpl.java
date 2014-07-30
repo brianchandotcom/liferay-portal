@@ -3790,7 +3790,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	@Override
 	public boolean sendPasswordByUserId(
-			long companyId, long userId, ServiceContext serviceContext)
+			long userId, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);

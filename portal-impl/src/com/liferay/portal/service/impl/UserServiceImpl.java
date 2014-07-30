@@ -1034,14 +1034,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	@Override
-	public boolean sendPasswordByUserId(long companyId, long userId)
-		throws PortalException {
-
+	public boolean sendPasswordByUserId(long userId) throws PortalException {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		return userLocalService.sendPasswordByUserId(
-			companyId, userId, serviceContext);
+		return userLocalService.sendPasswordByUserId(userId, serviceContext);
 	}
 
 	/**

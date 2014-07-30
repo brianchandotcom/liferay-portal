@@ -1940,6 +1940,47 @@
 		</execute>
 	</command>
 
+	<command name="ResetChanges" priority="4">
+		<var name="portletName" value="Hello World" />
+		<var name="siteDescription" value="Open Site Description" />
+		<var name="siteName" value="Open Site Name" />
+		<var name="siteType" value="Open" />
+		<var name="soPage" value="true" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOUserBar#addPortlet">
+			<var name="pageName" value="Home" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOUserBar#resetChanges" />
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_portletName" value="${portletName}" />
+
+		<execute action="SOSiteHome#assertElementNotPresent" locator-key1="PORTLET_TITLE" />
+		<execute action="SOSiteHome#assertTextNotPresent" value1="${portletName}" />
+	</command>
+
 	<command name="ViewAllDayEventEventsDisplay" priority="4">
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="All Day" />

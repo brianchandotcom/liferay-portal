@@ -1099,6 +1099,28 @@
 		</execute>
 	</command>
 
+	<command name="ResetChanges" priority="4">
+		<var name="portletName" value="Hello World" />
+
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute macro="SOUserBar#addPortlet">
+			<var name="pageName" value="Profile" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute macro="SOUserBar#resetChanges" />
+
+		<execute macro="Page#gotoMyProfile" />
+
+		<var name="key_portletName" value="${portletName}" />
+
+		<execute action="SODashboard#assertElementNotPresent" locator-key1="PORTLET_TITLE" />
+		<execute action="SODashboard#assertTextNotPresent" value1="${portletName}" />
+	</command>
+
 	<command name="SearchConnectionProfile" priority="5">
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />

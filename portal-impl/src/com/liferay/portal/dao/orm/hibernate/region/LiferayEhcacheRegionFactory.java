@@ -360,6 +360,11 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		}
 
 		@Override
+		public String getName() {
+			return _cacheManager.getName();
+		}
+
+		@Override
 		public void reconfigureCaches(URL configurationURL) {
 			throw new UnsupportedOperationException();
 		}

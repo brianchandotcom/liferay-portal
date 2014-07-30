@@ -203,6 +203,11 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
+	public String getName() {
+		return _cacheManager.getName();
+	}
+
+	@Override
 	public void reconfigureCaches(URL configurationURL) {
 		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
 			configurationURL, _clusterAware, _usingDefault);

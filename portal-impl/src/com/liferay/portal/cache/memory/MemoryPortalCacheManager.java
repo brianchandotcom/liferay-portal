@@ -101,6 +101,11 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
+	public String getName() {
+		return _name;
+	}
+
+	@Override
 	public void reconfigureCaches(URL configurationURL) {
 	}
 
@@ -135,6 +140,10 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 		_cacheManagerInitialCapacity = cacheManagerInitialCapacity;
 	}
 
+	public void setName(String name) {
+		_name = name;
+	}
+
 	@Override
 	public boolean unregisterCacheManagerListener(
 		CacheManagerListener cacheManagerListener) {
@@ -152,5 +161,6 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	private Set<CacheManagerListener> _cacheManagerListeners =
 		new CopyOnWriteArraySet<CacheManagerListener>();
 	private Map<String, MemoryPortalCache<K, V>> _memoryPortalCaches;
+	private String _name = "memory-portal-cache";
 
 }

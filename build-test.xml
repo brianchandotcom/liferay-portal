@@ -2635,6 +2635,15 @@ plugins.includes=marketplace-portlet</echo>
 				</then>
 			</elseif>
 			<else>
+				<if>
+					<equals arg1="${liferay.portal.bundle}" arg2="6.1.20" />
+					<then>
+						<echo file="app.server.${user.name}.properties" append="true">
+							app.server.tomcat.version=7.0.27
+						</echo>
+					</then>
+				</if>
+
 				<mkdir dir="${app.server.parent.dir}" />
 
 				<tstamp>

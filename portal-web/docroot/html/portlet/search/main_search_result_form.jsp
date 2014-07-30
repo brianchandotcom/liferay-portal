@@ -129,7 +129,7 @@ if (summary != null) {
 			<%= ResourceActionsUtil.getModelResource(themeDisplay.getLocale(), className) %>
 
 			<c:if test="<%= locale != summary.getLocale() %>">
-				<liferay-ui:icon image='<%= "../language/" + LocaleUtil.toLanguageId(summary.getLocale()) %>' message='<%= LanguageUtil.format(locale, "this-result-comes-from-the-x-version-of-this-web-content", LocaleUtil.getLongDisplayName(summary.getLocale(), new HashSet<String>())) %>' />
+				<liferay-ui:icon image='<%= "../language/" + LocaleUtil.toLanguageId(summary.getLocale()) %>' message='<%= LanguageUtil.format(locale, "this-result-comes-from-the-x-version-of-this-content", LocaleUtil.getLongDisplayName(summary.getLocale(), new HashSet<String>())) %>' />
 			</c:if>
 		</span>
 

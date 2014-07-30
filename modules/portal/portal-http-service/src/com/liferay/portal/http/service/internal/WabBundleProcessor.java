@@ -98,13 +98,7 @@ public class WabBundleProcessor {
 
 			initContext();
 
-			Exception e = initListeners();
-
-			if (e != null) {
-				destroy();
-
-				throw e;
-			}
+			initListeners();
 
 			initFilters();
 
@@ -232,7 +226,7 @@ public class WabBundleProcessor {
 		}
 	}
 
-	protected Exception initListeners() {
+	protected void initListeners() throws Exception {
 		List<ListenerDefinition> listenerDefinitions =
 			_webXML.getListenerDefinitions();
 
@@ -242,11 +236,15 @@ public class WabBundleProcessor {
 					listenerDefinition.getEventListener(), _servletContextName);
 			}
 			catch (Exception e) {
-				return e;
+				try {
+					destroy();
+				}
+				catch (Exception e1) {
+				}
+
+				throw e;
 			}
 		}
-
-		return null;
 	}
 
 	protected void initServlets() {

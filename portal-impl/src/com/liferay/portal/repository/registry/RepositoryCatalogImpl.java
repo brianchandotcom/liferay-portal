@@ -15,9 +15,11 @@
 package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.kernel.repository.registry.RepositoryRegistryPlugin;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.model.ClassName;
 import com.liferay.portal.repository.external.LegacyExternalRepositoryRegistryPlugin;
 import com.liferay.portal.repository.util.ExternalRepositoryFactory;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
@@ -51,7 +53,7 @@ public class RepositoryCatalogImpl implements RepositoryCatalog {
 		return _externalRepositoriesClassNames;
 	}
 
-	public void loadBuiltinRegistryPlugins() {
+	public void loadBuiltinRegistryPlugins() throws PortalException {
 		registerRepositoryRegistryPlugin(_liferayRepositoryRegistryPlugin);
 
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
@@ -67,7 +69,9 @@ public class RepositoryCatalogImpl implements RepositoryCatalog {
 
 	@Override
 	public void registerLegacyExternalRepositoryFactory(
-		String className, ExternalRepositoryFactory externalRepositoryFactory) {
+			String className,
+			ExternalRepositoryFactory externalRepositoryFactory)
+		throws PortalException {
 
 		ExternalRepositoryFactoryUtil.registerExternalRepositoryFactory(
 			className, externalRepositoryFactory);
@@ -76,18 +80,24 @@ public class RepositoryCatalogImpl implements RepositoryCatalog {
 
 		RepositoryRegistryPlugin repositoryRegistryPlugin =
 			new LegacyExternalRepositoryRegistryPlugin(
-				className, classNameId, _legacyExternalRepositoryCreator);
+				classNameId, _legacyExternalRepositoryCreator);
 
 		registerRepositoryRegistryPlugin(repositoryRegistryPlugin);
 	}
 
 	@Override
 	public void registerRepositoryRegistryPlugin(
-		RepositoryRegistryPlugin repositoryRegistryPlugin) {
+			RepositoryRegistryPlugin repositoryRegistryPlugin)
+		throws PortalException {
 
 		if (repositoryRegistryPlugin.isExternalRepository()) {
+			long classNameId = repositoryRegistryPlugin.getClassNameId();
+
+			ClassName className = _classNameLocalService.getClassName(
+				classNameId);
+
 			_externalRepositoriesClassNames.add(
-				repositoryRegistryPlugin.getClassName());
+				className.getClassName());
 		}
 
 		_repositoryRegistryPlugins.put(

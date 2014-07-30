@@ -21,9 +21,6 @@ public abstract class BaseRepositoryRegistryPlugin
 	implements RepositoryRegistryPlugin {
 
 	@Override
-	public abstract String getClassName();
-
-	@Override
 	public abstract long getClassNameId();
 
 	@Override

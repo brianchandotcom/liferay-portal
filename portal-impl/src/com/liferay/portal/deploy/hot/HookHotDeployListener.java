@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.events.InvokerSimpleAction;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.SessionAction;
 import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.format.PhoneNumberFormat;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.LockListener;
@@ -2719,8 +2720,9 @@ public class HookHotDeployListener
 	private class DLRepositoryContainer {
 
 		public void registerRepositoryFactory(
-			String className,
-			ExternalRepositoryFactory externalRepositoryFactory) {
+				String className,
+				ExternalRepositoryFactory externalRepositoryFactory)
+			throws PortalException {
 
 			RepositoryCatalogUtil.registerLegacyExternalRepositoryFactory(
 				className, externalRepositoryFactory);

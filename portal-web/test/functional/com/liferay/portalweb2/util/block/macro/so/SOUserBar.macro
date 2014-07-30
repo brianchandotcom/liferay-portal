@@ -366,6 +366,15 @@
 		<execute action="SOUserBarSitesDirectory#assertElementPresent" locator-key1="MEMBERSHIP_REQUESTED_ICON" />
 	</command>
 
+	<command name="resetChanges">
+		<execute macro="SOUserBar#showEditControls" />
+
+		<execute action="SOUserBar#assertTextEquals" locator-key1="RESET_CHANGES_MESSAGE" value1="This page has been changed since the last update from the site template." />
+		<execute action="SOUserBar#assertClick" locator-key1="RESET_CHANGES_BUTTON" value1="Reset Changes" />
+		<execute action="SOUserBar#assertElementNotPresent" locator-key1="RESET_CHANGES_MESSAGE" />
+		<execute action="SOUserBar#assertElementNotPresent" locator-key1="RESET_CHANGES_BUTTON" />
+	</command>
+
 	<command name="searchSOSite">
 		<var name="key_siteName" value="${siteName}" />
 

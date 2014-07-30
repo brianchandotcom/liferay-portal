@@ -15,10 +15,11 @@
 package com.liferay.portal.cache.cluster.clusterlink.messaging;
 
 import com.liferay.portal.cache.cluster.ClusterReplicationThreadLocal;
-import com.liferay.portal.cache.ehcache.EhcachePortalCacheManager;
 import com.liferay.portal.dao.orm.hibernate.region.LiferayEhcacheRegionFactory;
 import com.liferay.portal.dao.orm.hibernate.region.SingletonLiferayEhcacheRegionFactory;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEvent;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEventType;
 import com.liferay.portal.kernel.io.Deserializer;
@@ -31,10 +32,6 @@ import java.io.Serializable;
 
 import java.nio.ByteBuffer;
 
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.Element;
-
 /**
  * @author Shuyang Zhou
  */
@@ -44,13 +41,12 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 		LiferayEhcacheRegionFactory liferayEhcacheRegionFactory =
 			SingletonLiferayEhcacheRegionFactory.getInstance();
 
-		_hibernateCacheManager = liferayEhcacheRegionFactory.getCacheManager();
+		_hibernateCacheManager =
+			liferayEhcacheRegionFactory.getPortalCacheManager();
 
-		EhcachePortalCacheManager<?, ?> ehcachePortalCacheManager =
-			(EhcachePortalCacheManager<?, ?>)PortalBeanLocatorUtil.locate(
+		_portalCacheManager =
+			(PortalCacheManager<?, ?>)PortalBeanLocatorUtil.locate(
 				_MULTI_VM_PORTAL_CACHE_MANAGER_BEAN_NAME);
-
-		_portalCacheManager = ehcachePortalCacheManager.getEhcacheManager();
 	}
 
 	@Override
@@ -70,52 +66,62 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 			return;
 		}
 
+		handlePortalCacheClusterEvent(portalCacheClusterEvent);
+	}
+
+	protected void handlePortalCacheClusterEvent(
+		PortalCacheClusterEvent portalCacheClusterEvent) {
+
 		String cacheName = portalCacheClusterEvent.getCacheName();
 
-		Ehcache ehcache = _portalCacheManager.getEhcache(cacheName);
+		PortalCache<Serializable, Serializable> portalCache =
+			(PortalCache<Serializable, Serializable>)
+				_portalCacheManager.getCache(cacheName);
 
-		if ((ehcache == null) && (_hibernateCacheManager != null)) {
-			ehcache = _hibernateCacheManager.getEhcache(cacheName);
+		if ((portalCache == null) && (_hibernateCacheManager != null)) {
+			portalCache = (PortalCache<Serializable, Serializable>)
+				_hibernateCacheManager.getCache(cacheName);
 		}
 
-		if (ehcache != null) {
-			PortalCacheClusterEventType portalCacheClusterEventType =
-				portalCacheClusterEvent.getEventType();
+		if (portalCache == null) {
+			return;
+		}
 
-			boolean replicate = ClusterReplicationThreadLocal.isReplicate();
+		PortalCacheClusterEventType portalCacheClusterEventType =
+			portalCacheClusterEvent.getEventType();
 
-			ClusterReplicationThreadLocal.setReplicate(false);
+		boolean replicate = ClusterReplicationThreadLocal.isReplicate();
 
-			try {
-				if (portalCacheClusterEventType.equals(
-						PortalCacheClusterEventType.REMOVE_ALL)) {
+		ClusterReplicationThreadLocal.setReplicate(false);
 
-					ehcache.removeAll();
-				}
-				else if (portalCacheClusterEventType.equals(
-							PortalCacheClusterEventType.PUT) ||
-						 portalCacheClusterEventType.equals(
-							PortalCacheClusterEventType.UPDATE)) {
+		try {
+			if (portalCacheClusterEventType.equals(
+					PortalCacheClusterEventType.REMOVE_ALL)) {
 
-					Serializable elementKey =
-						portalCacheClusterEvent.getElementKey();
-					Serializable elementValue =
-						portalCacheClusterEvent.getElementValue();
+				portalCache.removeAll();
+			}
+			else if (portalCacheClusterEventType.equals(
+						PortalCacheClusterEventType.PUT) ||
+					 portalCacheClusterEventType.equals(
+						PortalCacheClusterEventType.UPDATE)) {
 
-					if (elementValue == null) {
-						ehcache.remove(elementKey);
-					}
-					else {
-						ehcache.put(new Element(elementKey, elementValue));
-					}
+				Serializable key = portalCacheClusterEvent.getElementKey();
+				Serializable value = portalCacheClusterEvent.getElementValue();
+
+				if (value == null) {
+					portalCache.remove(key);
 				}
 				else {
-					ehcache.remove(portalCacheClusterEvent.getElementKey());
+					portalCache.put(
+						key, value, portalCacheClusterEvent.getTimeToLive());
 				}
 			}
-			finally {
-				ClusterReplicationThreadLocal.setReplicate(replicate);
+			else {
+				portalCache.remove(portalCacheClusterEvent.getElementKey());
 			}
+		}
+		finally {
+			ClusterReplicationThreadLocal.setReplicate(replicate);
 		}
 	}
 
@@ -125,7 +131,7 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 	private static Log _log = LogFactoryUtil.getLog(
 		ClusterLinkPortalCacheClusterListener.class);
 
-	private CacheManager _hibernateCacheManager;
-	private CacheManager _portalCacheManager;
+	private PortalCacheManager<?, ?> _hibernateCacheManager;
+	private PortalCacheManager<?, ?> _portalCacheManager;
 
 }

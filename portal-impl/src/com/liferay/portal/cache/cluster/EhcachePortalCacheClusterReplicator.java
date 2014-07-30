@@ -80,9 +80,9 @@ public class EhcachePortalCacheClusterReplicator implements CacheEventListener {
 				ehcache.getName(), key, PortalCacheClusterEventType.PUT);
 
 		if (_replicatePutsViaCopy) {
-			Serializable value = (Serializable)element.getObjectValue();
-
-			portalCacheClusterEvent.setElementValue(value);
+			portalCacheClusterEvent.setElementValue(
+				(Serializable)element.getObjectValue());
+			portalCacheClusterEvent.setTimeToLive(element.getTimeToLive());
 		}
 
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
@@ -124,9 +124,9 @@ public class EhcachePortalCacheClusterReplicator implements CacheEventListener {
 				ehcache.getName(), key, PortalCacheClusterEventType.UPDATE);
 
 		if (_replicateUpdatesViaCopy) {
-			Serializable value = (Serializable)element.getObjectValue();
-
-			portalCacheClusterEvent.setElementValue(value);
+			portalCacheClusterEvent.setElementValue(
+				(Serializable)element.getObjectValue());
+			portalCacheClusterEvent.setTimeToLive(element.getTimeToLive());
 		}
 
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);

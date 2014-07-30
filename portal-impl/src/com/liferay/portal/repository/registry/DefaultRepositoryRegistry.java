@@ -42,29 +42,31 @@ public class DefaultRepositoryRegistry
 		RepositoryEventRegistry {
 
 	public DefaultRepositoryRegistry() {
-		_publicCapabilities = new HashSet<Class<? extends Capability>>();
+		_exportedCapabilities = new HashSet<Class<? extends Capability>>();
+
 		_supportedCapabilities =
 			new HashMap<Class<? extends Capability>, Capability>();
 	}
 
 	@Override
-	public <S extends Capability, T extends S> void addPrivateCapability(
+	public <S extends Capability, T extends S> void addSupportedCapability(
 		Class<S> capabilityClass, T capability) {
 
 		_supportedCapabilities.put(capabilityClass, capability);
 	}
 
 	@Override
-	public <S extends Capability, T extends S> void addPublicCapability(
+	public <S extends Capability, T extends S> void addExportedCapability(
 		Class<S> capabilityClass, T capability) {
 
-		_publicCapabilities.add(capabilityClass);
+		_exportedCapabilities.add(capabilityClass);
+
 		_supportedCapabilities.put(capabilityClass, capability);
 	}
 
 	@Override
-	public Set<Class<? extends Capability>> getPublicCapabilities() {
-		return _publicCapabilities;
+	public Set<Class<? extends Capability>> getExportedCapabilities() {
+		return _exportedCapabilities;
 	}
 
 	@Override
@@ -130,7 +132,7 @@ public class DefaultRepositoryRegistry
 	private Map<Tuple, Collection<RepositoryEventListener<?, ?>>>
 		_eventListenerMap =
 			new HashMap<Tuple, Collection<RepositoryEventListener<?, ?>>>();
-	private Set<Class<? extends Capability>> _publicCapabilities;
+	private Set<Class<? extends Capability>> _exportedCapabilities;
 	private RepositoryCreator _repositoryCreator;
 	private Map<Class<? extends Capability>, Capability> _supportedCapabilities;
 

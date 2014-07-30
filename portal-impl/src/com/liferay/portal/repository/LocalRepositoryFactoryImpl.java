@@ -52,7 +52,7 @@ public class LocalRepositoryFactoryImpl
 
 		return new CapabilityLocalRepository(
 			localRepository, repositoryConfiguration.getSupportedCapabilities(),
-			repositoryConfiguration.getPublicCapabilities(),
+			repositoryConfiguration.getExportedCapabilities(),
 			repositoryConfiguration.getRepositoryEventHandler());
 	}
 
@@ -82,7 +82,7 @@ public class LocalRepositoryFactoryImpl
 
 		return new CapabilityLocalRepository(
 			localRepository, repositoryConfiguration.getSupportedCapabilities(),
-			repositoryConfiguration.getPublicCapabilities(),
+			repositoryConfiguration.getExportedCapabilities(),
 			repositoryConfiguration.getRepositoryEventHandler());
 	}
 

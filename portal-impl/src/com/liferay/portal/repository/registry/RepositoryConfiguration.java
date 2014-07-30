@@ -26,7 +26,7 @@ import java.util.Set;
  */
 public interface RepositoryConfiguration {
 
-	public Set<Class<? extends Capability>> getPublicCapabilities();
+	public Set<Class<? extends Capability>> getExportedCapabilities();
 
 	public RepositoryCreator getRepositoryCreator();
 

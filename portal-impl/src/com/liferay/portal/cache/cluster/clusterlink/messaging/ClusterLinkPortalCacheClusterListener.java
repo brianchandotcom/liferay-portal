@@ -19,6 +19,7 @@ import com.liferay.portal.cache.ehcache.EhcachePortalCacheManager;
 import com.liferay.portal.dao.orm.hibernate.region.LiferayEhcacheRegionFactory;
 import com.liferay.portal.dao.orm.hibernate.region.SingletonLiferayEhcacheRegionFactory;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEvent;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEventType;
 import com.liferay.portal.kernel.io.Deserializer;
@@ -106,7 +107,16 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 						ehcache.remove(elementKey);
 					}
 					else {
-						ehcache.put(new Element(elementKey, elementValue));
+						Element element = new Element(elementKey, elementValue);
+
+						int timeToLive =
+							portalCacheClusterEvent.getTimeToLive();
+
+						if (timeToLive != PortalCache.DEFAULT_TIME_TO_LIVE) {
+							element.setTimeToLive(timeToLive);
+						}
+
+						ehcache.put(element);
 					}
 				}
 				else {

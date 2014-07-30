@@ -32,6 +32,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -101,76 +102,29 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void checkServiceXMLFinders(
-			String fileName, Element entityElement, String entityName,
-			String portalTablesContent)
+			String fileName, Element entityElement, String entityName)
 		throws Exception {
 
-		List<String> columnNames = getColumnNames(
-			entityName, portalTablesContent);
+		_columnNames = getColumnNames(fileName, entityName);
+
+		FinderElementComparator finderElementComparator =
+			new FinderElementComparator();
 
 		List<Element> finderElements = entityElement.elements("finder");
 
-		List<Element> previousFinderColumnElements = null;
+		for (int i = 1; i < finderElements.size(); i++) {
+			Element finderElement = finderElements.get(i);
+			Element previousFinderElement = finderElements.get(i - 1);
 
-		for (Element finderElement : finderElements) {
-			String finderName = finderElement.attributeValue("name");
+			if (finderElementComparator.compare(
+					previousFinderElement, finderElement) > 0) {
 
-			List<Element> finderColumnElements = finderElement.elements(
-				"finder-column");
+				String finderName = finderElement.attributeValue("name");
 
-			if (previousFinderColumnElements == null) {
-				previousFinderColumnElements = finderColumnElements;
-
-				continue;
-			}
-
-			int finderColumnCount = finderColumnElements.size();
-			int previousFinderColumnCount = previousFinderColumnElements.size();
-
-			if (previousFinderColumnCount > finderColumnCount) {
 				processErrorMessage(
 					fileName,
-					"order by number of columms: " + fileName + " " +
-						entityName + " " + finderName);
-
-				return;
+					"order: " + fileName + " " + entityName + " " + finderName);
 			}
-
-			if (previousFinderColumnCount < finderColumnCount) {
-				previousFinderColumnElements = finderColumnElements;
-
-				continue;
-			}
-
-			for (int i = 0; i < finderColumnCount; i++) {
-				Element finderColumnElement = finderColumnElements.get(i);
-				Element previousFinderColumnElement =
-					previousFinderColumnElements.get(i);
-
-				String finderColumnName = finderColumnElement.attributeValue(
-					"name");
-				String previousFinderColumnName =
-					previousFinderColumnElement.attributeValue("name");
-
-				int index = columnNames.indexOf(finderColumnName);
-				int previousIndex = columnNames.indexOf(
-					previousFinderColumnName);
-
-				if (previousIndex > index) {
-					processErrorMessage(
-						fileName,
-						"order by column order in table: " + fileName + " " +
-							entityName + " " + finderName);
-
-					return;
-				}
-
-				if (previousIndex < index) {
-					break;
-				}
-			}
-
-			previousFinderColumnElements = finderColumnElements;
 		}
 	}
 
@@ -449,12 +403,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		_numericalPortletNameElementExclusions = getExclusions(
 			"numerical.portlet.name.element.excludes");
 
-		String portalTablesContent = null;
-
-		if (portalSource) {
-			portalTablesContent = getContent("sql/portal-tables.sql", 4);
-		}
-
 		List<String> fileNames = getFileNames(excludes, includes);
 
 		for (String fileName : fileNames) {
@@ -499,8 +447,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 				newContent = formatPoshiXML(fileName, newContent);
 			}
-			else if (portalSource && fileName.endsWith("/service.xml")) {
-				formatServiceXML(fileName, newContent, portalTablesContent);
+			else if (fileName.endsWith("/service.xml")) {
+				formatServiceXML(fileName, newContent);
 			}
 			else if (portalSource && fileName.endsWith("/struts-config.xml")) {
 				formatStrutsConfigXML(fileName, newContent);
@@ -790,8 +738,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return fixPoshiXMLNumberOfTabs(content);
 	}
 
-	protected void formatServiceXML(
-			String fileName, String content, String portalTablesContent)
+	protected void formatServiceXML(String fileName, String content)
 		throws Exception {
 
 		Document document = saxReaderUtil.read(content);
@@ -812,8 +759,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 					fileName, "sort: " + fileName + " " + entityName);
 			}
 
-			checkServiceXMLFinders(
-				fileName, entityElement, entityName, portalTablesContent);
+			checkServiceXMLFinders(fileName, entityElement, entityName);
 			checkServiceXMLReferences(fileName, entityElement, entityName);
 
 			previousEntityName = entityName;
@@ -962,8 +908,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent.substring(y);
 	}
 
-	protected List<String> getColumnNames(
-			String entityName, String portalTablesContent)
+	protected List<String> getColumnNames(String fileName, String entityName)
 		throws Exception {
 
 		List<String> columnNames = new ArrayList<String>();
@@ -971,7 +916,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		Pattern pattern = Pattern.compile(
 			"create table " + entityName + "_? \\(\n([\\s\\S]*?)\n\\);");
 
-		Matcher matcher = pattern.matcher(portalTablesContent);
+		Matcher matcher = pattern.matcher(getTablesContent(fileName));
 
 		if (!matcher.find()) {
 			return columnNames;
@@ -997,6 +942,20 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return columnNames;
+	}
+
+	protected String getTablesContent(String fileName) throws Exception {
+		if (portalSource) {
+			if (_tablesContent == null) {
+				_tablesContent = getContent("sql/portal-tables.sql", 4);
+			}
+
+			return _tablesContent;
+		}
+
+		int pos = fileName.lastIndexOf(StringPool.SLASH);
+
+		return getContent(fileName.substring(0, pos)  + "/sql/tables.sql", 1);
 	}
 
 	protected String sortPoshiAttributes(String fileName, String content)
@@ -1188,6 +1147,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private static Pattern _commentPattern2 = Pattern.compile(
 		"[\t ]-->\n[\t<]");
 
+	private List<String> _columnNames;
 	private List<String> _friendlyUrlRoutesSortExclusions;
 	private List<String> _numericalPortletNameElementExclusions;
 	private Pattern _poshiClosingTagPattern = Pattern.compile("</[^>/]*>");
@@ -1219,5 +1179,72 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"((?:[\\t]*+\\<var.*?\\>\\n[\\t]*+){2,}?)" +
 			"(?:(?:\\n){1,}+|\\</execute\\>)");
 	private Pattern _poshiWholeTagPattern = Pattern.compile("<[^\\>^/]*\\/>");
+	private String _tablesContent;
+
+	private class FinderElementComparator implements Comparator<Element> {
+
+		@Override
+		public int compare(Element finderElement1, Element finderElement2) {
+			List<Element> finderColumnElements1 = finderElement1.elements(
+				"finder-column");
+			List<Element> finderColumnElements2 = finderElement2.elements(
+				"finder-column");
+
+			int finderColumnCount1 = finderColumnElements1.size();
+			int finderColumnCount2 = finderColumnElements2.size();
+
+			if (finderColumnCount1 != finderColumnCount2) {
+				return finderColumnCount1 - finderColumnCount2;
+			}
+
+			for (int i = 0; i < finderColumnCount1; i++) {
+				Element finderColumnElement1 = finderColumnElements1.get(i);
+				Element finderColumnElement2 = finderColumnElements2.get(i);
+
+				String finderColumnName1 = finderColumnElement1.attributeValue(
+					"name");
+				String finderColumnName2 = finderColumnElement2.attributeValue(
+					"name");
+
+				int index1 = _columnNames.indexOf(finderColumnName1);
+				int index2 = _columnNames.indexOf(finderColumnName2);
+
+				if (index1 != index2) {
+					return index1 - index2;
+				}
+			}
+
+			String finderName1 = finderElement1.attributeValue("name");
+			String finderName2 = finderElement2.attributeValue("name");
+
+			int startsWithWeight = StringUtil.startsWithWeight(
+				finderName1, finderName2);
+
+			String strippedFinderName1 = finderName1.substring(
+				startsWithWeight);
+			String strippedFinderName2 = finderName2.substring(
+				startsWithWeight);
+
+			if (strippedFinderName1.startsWith("Gt") ||
+				strippedFinderName1.startsWith("Like") ||
+				strippedFinderName1.startsWith("Lt") ||
+				strippedFinderName1.startsWith("Not")) {
+
+				if (!strippedFinderName2.startsWith("Gt") &&
+					!strippedFinderName2.startsWith("Like") &&
+					!strippedFinderName2.startsWith("Lt") &&
+					!strippedFinderName2.startsWith("Not")) {
+
+					return 1;
+				}
+				else {
+					return strippedFinderName1.compareTo(strippedFinderName2);
+				}
+			}
+
+			return 0;
+		}
+
+	}
 
 }

@@ -318,11 +318,11 @@ public class JSONFactoryImpl implements JSONFactory {
 
 	@Override
 	public String serializeThrowable(Throwable throwable) {
+		JSONObject jsonObject = createJSONObject();
+
 		if (throwable instanceof InvocationTargetException) {
 			throwable = throwable.getCause();
 		}
-
-		JSONObject jsonObject = createJSONObject();
 
 		String throwableMessage = throwable.getMessage();
 
@@ -330,17 +330,19 @@ public class JSONFactoryImpl implements JSONFactory {
 			throwableMessage = throwable.toString();
 		}
 
-		// maintain compatibility with 6.2.x
+		JSONObject errorJSONObject = createJSONObject();
+
+		errorJSONObject.put("message", throwableMessage);
+		errorJSONObject.put("type", ClassUtil.getClassName(throwable));
+
+		jsonObject.put("error", errorJSONObject);
 
 		jsonObject.put("exception", throwableMessage);
 		jsonObject.put("throwable", throwable.toString());
 
-		JSONObject error = createJSONObject();
-
-		jsonObject.put("error", error);
-
-		error.put("message", throwableMessage);
-		error.put("type", ClassUtil.getClassName(throwable));
+		if (throwable.getCause() == null) {
+			return jsonObject.toString();
+		}
 
 		Throwable rootCauseThrowable = throwable;
 
@@ -348,20 +350,20 @@ public class JSONFactoryImpl implements JSONFactory {
 			rootCauseThrowable = rootCauseThrowable.getCause();
 		}
 
-		if (rootCauseThrowable != throwable) {
-			JSONObject rootCause = createJSONObject();
+		JSONObject rootCauseJSONObject = createJSONObject();
 
-			throwableMessage = rootCauseThrowable.getMessage();
+		throwableMessage = rootCauseThrowable.getMessage();
 
-			if (Validator.isNull(throwableMessage)) {
-				throwableMessage = rootCauseThrowable.toString();
-			}
-
-			rootCause.put("message", throwableMessage);
-			rootCause.put("type", ClassUtil.getClassName(rootCauseThrowable));
-
-			jsonObject.put("rootCause", rootCause);
+		if (Validator.isNull(throwableMessage)) {
+			throwableMessage = rootCauseThrowable.toString();
 		}
+
+		rootCauseJSONObject.put("message", throwableMessage);
+
+		rootCauseJSONObject.put(
+			"type", ClassUtil.getClassName(rootCauseThrowable));
+
+		jsonObject.put("rootCause", rootCauseJSONObject);
 
 		return jsonObject.toString();
 	}

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.http.service.internal;
 
+import com.liferay.portal.http.service.internal.event.EventUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,6 +41,8 @@ public class WabFactory {
 	@Activate
 	public void activate(ComponentContext componentContext) {
 		_bundleContext = componentContext.getBundleContext();
+
+		EventUtil.start(_bundleContext);
 
 		try {
 			_webBundleDeployer = new WebBundleDeployer(
@@ -77,6 +80,8 @@ public class WabFactory {
 		_stoppedBundleListener = null;
 
 		_bundleContext = null;
+
+		EventUtil.close();
 	}
 
 	protected void checkStartableBundles() {

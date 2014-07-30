@@ -118,4 +118,6 @@ public interface BeanProperties {
 
 	public void setProperty(Object bean, String param, Object value);
 
+	public void setPropertySilent(Object bean, String param, Object value);
+
 }

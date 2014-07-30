@@ -607,6 +607,11 @@ public class BeanPropertiesImpl implements BeanProperties {
 		}
 	}
 
+	@Override
+	public void setPropertySilent(Object bean, String param, Object value) {
+		BeanUtil.setPropertyForcedSilent(bean, param, value);
+	}
+
 	protected Date getDate(String param, HttpServletRequest request) {
 		int month = ParamUtil.getInteger(request, param + "Month");
 		int day = ParamUtil.getInteger(request, param + "Day");

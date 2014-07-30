@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Formtag ViewExtension Enabler
+Bundle-Version: ${plugin.full.version}
+Include-Resource: classes

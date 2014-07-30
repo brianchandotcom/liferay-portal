@@ -133,6 +133,7 @@ import com.liferay.portal.security.pwd.PwdToolkitUtil;
 import com.liferay.portal.security.pwd.RegExpToolkit;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -3766,38 +3767,35 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	@Override
 	public boolean sendPasswordByEmailAddress(
-			long companyId, String emailAddress, ServiceContext serviceContext)
+			long companyId, String emailAddress)
 		throws PortalException {
 
 		User user = userPersistence.findByC_EA(companyId, emailAddress);
 
 		return sendPassword(
 			user.getCompanyId(), user.getEmailAddress(), null, null, null, null,
-			serviceContext);
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	@Override
-	public boolean sendPasswordByScreenName(
-			long companyId, String screenName, ServiceContext serviceContext)
+	public boolean sendPasswordByScreenName(long companyId, String screenName)
 		throws PortalException {
 
 		User user = userPersistence.findByC_SN(companyId, screenName);
 
 		return sendPassword(
 			user.getCompanyId(), user.getEmailAddress(), null, null, null, null,
-			serviceContext);
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	@Override
-	public boolean sendPasswordByUserId(
-			long userId, ServiceContext serviceContext)
-		throws PortalException {
+	public boolean sendPasswordByUserId(long userId) throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		return sendPassword(
 			user.getCompanyId(), user.getEmailAddress(), null, null, null, null,
-			serviceContext);
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	/**

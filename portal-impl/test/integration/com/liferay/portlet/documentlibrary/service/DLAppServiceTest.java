@@ -168,7 +168,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			level = "ERROR", loggerClass = JDBCExceptionReporter.class
 		)
 		@Test
-		public void testAddFileEntriesConcurrently() throws Exception {
+		public void shouldSucceedWithConcurrentAccess() throws Exception {
 			_users = new User[ServiceTestUtil.THREAD_COUNT];
 
 			for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
@@ -226,7 +226,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		@Test
-		public void testAddFileEntryWithNullBytes() throws Exception {
+		public void shouldSucceedWithNullBytes() throws Exception {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -239,7 +239,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		@Test
-		public void testAddFileEntryWithNullFile() throws Exception {
+		public void shouldSucceedWithNullFile() throws Exception {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -252,7 +252,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		@Test
-		public void testAddFileEntryWithNullInputStream() throws Exception {
+		public void shouldSucceedWithNullInputStream() throws Exception {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -360,7 +360,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	public static class WhenAddingAFolder extends BaseDLAppTestCase {
 
 		@Test
-		public void testAddAssetEntryWhenAddingFolder() throws PortalException {
+		public void shouldAddAssetEntry() throws PortalException {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -376,17 +376,12 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		@Test
-		public void testFireSyncEventWhenAddingFolder() throws Exception {
+		public void shouldFireSyncEvent() throws Exception {
 			AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_ADD);
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-			DLAppServiceUtil.addFolder(
-				group.getGroupId(), parentFolder.getFolderId(),
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				serviceContext);
+			DLAppTestUtil.addFolder(
+				group.getGroupId(), parentFolder.getFolderId());
 
 			Assert.assertEquals(1, counter.get());
 		}
@@ -403,7 +398,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	public static class WhenCopyingAFolder extends BaseDLAppTestCase {
 
 		@Test
-		public void testFireSyncEventWhenCopyingFolder() throws Exception {
+		public void shouldFireSyncEvent() throws Exception {
 			AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
 				DLSyncConstants.EVENT_ADD);
 
@@ -440,24 +435,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	public static class WhenDeletingAFolder extends BaseDLAppTestCase {
 
 		@Test
-		public void testDeleteExplicitlyTrashedFolder() throws Exception {
-			Folder folder = DLAppTestUtil.addFolder(
-				group.getGroupId(), parentFolder.getFolderId());
+		public void shouldDeleteImplicitlyTrashedChildFolder()
+			throws Exception {
 
-			Folder subfolder = DLAppTestUtil.addFolder(
-				group.getGroupId(), folder.getFolderId());
-
-			DLAppServiceUtil.moveFolderToTrash(subfolder.getFolderId());
-
-			DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
-
-			DLAppServiceUtil.deleteFolder(folder.getFolderId());
-
-			DLAppServiceUtil.getFolder(subfolder.getFolderId());
-		}
-
-		@Test
-		public void testDeleteImplicitlyTrashedFolder() throws Exception {
 			int initialFoldersCount = DLAppServiceUtil.getFoldersCount(
 				group.getGroupId(), parentFolder.getFolderId());
 
@@ -474,6 +454,23 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				group.getGroupId(), parentFolder.getFolderId());
 
 			Assert.assertEquals(initialFoldersCount, foldersCount);
+		}
+
+		@Test
+		public void shouldSkipExplicitlyTrashedChildFolder() throws Exception {
+			Folder folder = DLAppTestUtil.addFolder(
+				group.getGroupId(), parentFolder.getFolderId());
+
+			Folder subfolder = DLAppTestUtil.addFolder(
+				group.getGroupId(), folder.getFolderId());
+
+			DLAppServiceUtil.moveFolderToTrash(subfolder.getFolderId());
+
+			DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
+
+			DLAppServiceUtil.deleteFolder(folder.getFolderId());
+
+			DLAppServiceUtil.getFolder(subfolder.getFolderId());
 		}
 
 	}
@@ -488,28 +485,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	public static class WhenDeletingAFolderByName extends BaseDLAppTestCase {
 
 		@Test
-		public void testDeleteExplicitlyTrashedFolderByName() throws Exception {
-			Folder folder = DLAppTestUtil.addFolder(
-				group.getGroupId(), parentFolder.getFolderId());
+		public void shouldDeleteImplicitlyTrashedChildFolder()
+			throws Exception {
 
-			Folder subfolder = DLAppTestUtil.addFolder(
-				group.getGroupId(), folder.getFolderId());
-
-			DLAppServiceUtil.moveFolderToTrash(subfolder.getFolderId());
-
-			DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
-
-			folder = DLAppServiceUtil.getFolder(folder.getFolderId());
-
-			DLAppServiceUtil.deleteFolder(
-				folder.getRepositoryId(), folder.getParentFolderId(),
-				folder.getName());
-
-			DLAppServiceUtil.getFolder(subfolder.getFolderId());
-		}
-
-		@Test
-		public void testDeleteImplicitlyTrashedFolderByName() throws Exception {
 			int initialFoldersCount = DLAppServiceUtil.getFoldersCount(
 				group.getGroupId(), parentFolder.getFolderId());
 
@@ -530,6 +508,27 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				group.getGroupId(), parentFolder.getFolderId());
 
 			Assert.assertEquals(initialFoldersCount, foldersCount);
+		}
+
+		@Test
+		public void shouldSkipExplicitlyTrashedChildFolder() throws Exception {
+			Folder folder = DLAppTestUtil.addFolder(
+				group.getGroupId(), parentFolder.getFolderId());
+
+			Folder subfolder = DLAppTestUtil.addFolder(
+				group.getGroupId(), folder.getFolderId());
+
+			DLAppServiceUtil.moveFolderToTrash(subfolder.getFolderId());
+
+			DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
+
+			folder = DLAppServiceUtil.getFolder(folder.getFolderId());
+
+			DLAppServiceUtil.deleteFolder(
+				folder.getRepositoryId(), folder.getParentFolderId(),
+				folder.getName());
+
+			DLAppServiceUtil.getFolder(subfolder.getFolderId());
 		}
 
 	}
@@ -597,13 +596,13 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		@Test
-		public void testSearchFileInRootFolder() throws Exception {
+		public void shouldFindFileEntryInRootFolder() throws Exception {
 			searchFile(
 				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 		}
 
 		@Test
-		public void testSearchFileInSubFolder() throws Exception {
+		public void shouldFindFileEntryInSubfolder() throws Exception {
 			searchFile(group.getGroupId(), parentFolder.getFolderId());
 		}
 
@@ -711,6 +710,17 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		@Test
+		public void shouldSucceedForRootFolder() throws Exception {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			DLAppServiceUtil.updateFolder(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				serviceContext);
+		}
+
+		@Test
 		public void shouldSucceedWithNullBytes() throws Exception {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -770,7 +780,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	public static class WhenUpdatingAFolder extends BaseDLAppTestCase {
 
 		@Test
-		public void testUpdateDefaultParentFolder() throws Exception {
+		public void shouldSucceedForDefaultParentFolder() throws Exception {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 

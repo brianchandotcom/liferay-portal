@@ -541,7 +541,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 
 		<aui:button onClick='<%= renderResponse.getNamespace() + "emptyCart();" %>' value="empty-cart" />
 
-		<aui:button disabled="<%=items.isEmpty() %>" onClick='<%= renderResponse.getNamespace() + "checkout();" %>' value="checkout" />
+		<aui:button disabled="<%= items.isEmpty() %>" onClick='<%= renderResponse.getNamespace() + "checkout();" %>' value="checkout" />
 	</aui:button-row>
 </aui:form>
 

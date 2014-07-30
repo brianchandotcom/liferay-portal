@@ -1412,11 +1412,11 @@ public class UsersAdminImpl implements UsersAdmin {
 		}
 	}
 
-	protected List<UserGroupRole> getUserGroupRoles(
+	protected Set<UserGroupRole> getUserGroupRoles(
 		PortletRequest portletRequest, User user, String groupIdsParam,
 		String roleIdsParam) {
 
-		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+		Set<UserGroupRole> userGroupRoles = new HashSet<UserGroupRole>();
 
 		long[] groupRolesGroupIds = StringUtil.split(
 			ParamUtil.getString(portletRequest, groupIdsParam), 0L);
@@ -1424,7 +1424,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			ParamUtil.getString(portletRequest, roleIdsParam), 0L);
 
 		if (groupRolesGroupIds.length != groupRolesRoleIds.length) {
-			return ListUtil.unique(userGroupRoles);
+			return userGroupRoles;
 		}
 
 		long userId = 0;
@@ -1448,7 +1448,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			userGroupRoles.add(userGroupRole);
 		}
 
-		return ListUtil.unique(userGroupRoles);
+		return userGroupRoles;
 	}
 
 }

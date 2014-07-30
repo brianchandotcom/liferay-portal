@@ -133,7 +133,9 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		return timestampsRegion;
 	}
 
-	public PortalCacheManager<?, ?> getPortalCacheManager() {
+	public PortalCacheManager<Serializable, Serializable>
+		getPortalCacheManager() {
+
 		return _portalCacheManager;
 	}
 
@@ -302,11 +304,11 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		LiferayEhcacheRegionFactory.class);
 
 	private MBeanRegisteringPortalLifecycle _mBeanRegisteringPortalLifecycle;
-	private PortalCacheManager<?, ?> _portalCacheManager;
+	private PortalCacheManager<Serializable, Serializable> _portalCacheManager;
 	private boolean _usingDefault;
 
-	private class HibernatePortalCacheManager<K extends Serializable, V>
-		implements PortalCacheManager<K, V> {
+	private class HibernatePortalCacheManager
+		implements PortalCacheManager<Serializable, Serializable> {
 
 		public HibernatePortalCacheManager(CacheManager cacheManager) {
 			_cacheManager = cacheManager;
@@ -323,8 +325,9 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		}
 
 		@Override
-		public PortalCache<K, V> getCache(String name) {
-			PortalCache<K, V> portalCache = _portalCaches.get(name);
+		public PortalCache<Serializable, Serializable> getCache(String name) {
+			PortalCache<Serializable, Serializable> portalCache =
+				_portalCaches.get(name);
 
 			if (portalCache != null) {
 				return portalCache;
@@ -340,7 +343,9 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 					Cache cache = _cacheManager.getCache(name);
 
-					portalCache = new EhcachePortalCache<K, V>(cache);
+					portalCache =
+						new EhcachePortalCache<Serializable, Serializable>(
+							cache);
 
 					_portalCaches.put(name, portalCache);
 				}
@@ -350,7 +355,9 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		}
 
 		@Override
-		public PortalCache<K, V> getCache(String name, boolean blocking) {
+		public PortalCache<Serializable, Serializable> getCache(
+			String name, boolean blocking) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -394,8 +401,9 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		}
 
 		private CacheManager _cacheManager;
-		private Map<String, PortalCache<K, V>> _portalCaches =
-			new HashMap<String, PortalCache<K, V>>();
+		private Map<String, PortalCache<Serializable, Serializable>>
+			_portalCaches =
+				new HashMap<String, PortalCache<Serializable, Serializable>>();
 
 	}
 

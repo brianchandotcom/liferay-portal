@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal JSON Web Services Tracker
+Bundle-Version: ${plugin.full.version}
+Private-Package: com.liferay.portal.jsonws.tracker.internal

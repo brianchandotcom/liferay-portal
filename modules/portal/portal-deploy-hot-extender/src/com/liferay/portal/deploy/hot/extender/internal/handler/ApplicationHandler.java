@@ -14,7 +14,6 @@
 
 package com.liferay.portal.deploy.hot.extender.internal.handler;
 
-import com.liferay.portal.deploy.hot.JSONWebServiceHotDeployListener;
 import com.liferay.portal.deploy.hot.MessagingHotDeployListener;
 import com.liferay.portal.deploy.hot.PortletHotDeployListener;
 import com.liferay.portal.deploy.hot.extender.internal.event.ModuleHotDeployEvent;
@@ -66,7 +65,6 @@ public class ApplicationHandler {
 
 		_hotDeployListeners.add(new ServicesHotDeployListener());
 
-		_hotDeployListeners.add(new JSONWebServiceHotDeployListener());
 		_hotDeployListeners.add(new PortletHotDeployListener());
 
 		_hotDeployListeners.add(new MessagingHotDeployListener());

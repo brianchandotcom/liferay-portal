@@ -115,7 +115,13 @@ public class FileEntryStagedModelDataHandler
 	public FileEntry fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return FileEntryUtil.fetchByUUID_R(uuid, groupId);
+		try {
+			return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+				uuid, groupId);
+		}
+		catch (PortalException pe) {
+			return null;
+		}
 	}
 
 	@Override

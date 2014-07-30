@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -100,9 +99,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -905,7 +906,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public List<WikiPage> getIncomingLinks(long nodeId, String title)
 		throws PortalException {
 
-		List<WikiPage> links = new UniqueList<WikiPage>();
+		Set<WikiPage> links = new HashSet<WikiPage>();
 
 		List<WikiPage> pages = wikiPagePersistence.findByN_H(nodeId, true);
 
@@ -925,7 +926,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			}
 		}
 
-		return ListUtil.sort(links);
+		return ListUtil.sort(new ArrayList<WikiPage>(links));
 	}
 
 	@Override

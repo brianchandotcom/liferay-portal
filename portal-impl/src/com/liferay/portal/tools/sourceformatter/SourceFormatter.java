@@ -17,10 +17,11 @@ package com.liferay.portal.tools.sourceformatter;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.portal.kernel.util.UniqueList;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -181,7 +182,7 @@ public class SourceFormatter {
 	}
 
 	private boolean _autoFix;
-	private List<String> _errorMessages = new UniqueList<String>();
+	private Set<String> _errorMessages = new LinkedHashSet<String>();
 	private SourceMismatchException _firstSourceMismatchException;
 	private String _mainReleaseVersion;
 	private boolean _printErrors;

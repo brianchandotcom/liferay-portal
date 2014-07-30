@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CustomizedPages;
 import com.liferay.portal.model.Group;
@@ -67,8 +66,10 @@ import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -1043,7 +1044,7 @@ public class LayoutTypePortletImpl
 
 		long plid = getPlid();
 
-		List<String> customPortletIds = new UniqueList<String>();
+		Set<String> customPortletIds = new HashSet<String>();
 
 		for (String columnId : getColumns()) {
 			String value = _portalPreferences.getValue(
@@ -1798,7 +1799,7 @@ public class LayoutTypePortletImpl
 	}
 
 	protected void onRemoveFromLayout(String[] portletIds) {
-		List<String> portletIdList = new UniqueList<String>();
+		Set<String> portletIdList = new HashSet<String>();
 
 		for (String portletId : portletIds) {
 			removeModesPortletId(portletId);

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -37,6 +36,7 @@ import com.liferay.portlet.social.model.SocialActivityProcessor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -67,7 +67,7 @@ public class SocialConfigurationImpl implements SocialConfiguration {
 	public List<String> getActivityCounterNames(
 		int ownerType, boolean transientCounter) {
 
-		List<String> activityCounterNames = new UniqueList<String>();
+		Set<String> activityCounterNames = new LinkedHashSet<String>();
 
 		for (Map<Integer, SocialActivityDefinition> activityDefinitions :
 				_activityDefinitions.values()) {
@@ -92,7 +92,7 @@ public class SocialConfigurationImpl implements SocialConfiguration {
 			}
 		}
 
-		return activityCounterNames;
+		return new ArrayList<String>(activityCounterNames);
 	}
 
 	@Override

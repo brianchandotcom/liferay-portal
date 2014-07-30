@@ -81,7 +81,7 @@
 										childGroups = GroupLocalServiceUtil.getLayoutsGroups(group.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new GroupNameComparator(true));
 									}
 
-									List<Group> visibleGroups = new UniqueList<Group>();
+									Set<Group> visibleGroups = new LinkedHashSet<Group>();
 
 									for (Group childGroup : childGroups) {
 										if (childGroup.hasPublicLayouts()) {
@@ -98,7 +98,7 @@
 									%>
 
 									<liferay-ui:search-container-results
-										results="<%= ListUtil.subList(visibleGroups, searchContainer.getStart(), searchContainer.getEnd()) %>"
+										results="<%= ListUtil.subList(new ArrayList<Group>(visibleGroups), searchContainer.getStart(), searchContainer.getEnd()) %>"
 									/>
 
 									<liferay-ui:search-container-row
@@ -164,23 +164,6 @@ private void _buildSitesList(Group rootGroup, Group curGroup, List<Group> branch
 	}
 	else {
 		childGroups = GroupLocalServiceUtil.getLayoutsGroups(curGroup.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new GroupNameComparator(true));
-	}
-
-	List<Group> visibleGroups = new UniqueList<Group>();
-
-	for (Group childGroup : childGroups) {
-		if (childGroup.hasPublicLayouts()) {
-			visibleGroups.add(childGroup);
-		}
-		else {
-			User user = themeDisplay.getUser();
-
-			List<Group> mySiteGroups = user.getMySiteGroups(true, QueryUtil.ALL_POS);
-
-			if (mySiteGroups.contains(childGroup)) {
-				visibleGroups.add(childGroup);
-			}
-		}
 	}
 
 	if (childGroups.isEmpty()) {

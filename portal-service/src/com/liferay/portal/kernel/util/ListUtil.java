@@ -29,6 +29,7 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -521,6 +522,18 @@ public class ListUtil {
 		}
 
 		return sb.toString();
+	}
+
+	public static <T> List<T> unique(List<T> list) {
+		Set<T> set = new LinkedHashSet<T>();
+
+		set.addAll(list);
+
+		if (list.size() == set.size()) {
+			return list;
+		}
+
+		return new ArrayList<T>(set);
 	}
 
 	private static Class<? extends List<?>> _unmodifiableListClass;

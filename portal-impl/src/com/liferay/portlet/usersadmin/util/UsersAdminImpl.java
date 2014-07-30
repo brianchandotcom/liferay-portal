@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.EmailAddress;
@@ -1413,11 +1412,11 @@ public class UsersAdminImpl implements UsersAdmin {
 		}
 	}
 
-	protected List<UserGroupRole> getUserGroupRoles(
+	protected Set<UserGroupRole> getUserGroupRoles(
 		PortletRequest portletRequest, User user, String groupIdsParam,
 		String roleIdsParam) {
 
-		List<UserGroupRole> userGroupRoles = new UniqueList<UserGroupRole>();
+		Set<UserGroupRole> userGroupRoles = new HashSet<UserGroupRole>();
 
 		long[] groupRolesGroupIds = StringUtil.split(
 			ParamUtil.getString(portletRequest, groupIdsParam), 0L);

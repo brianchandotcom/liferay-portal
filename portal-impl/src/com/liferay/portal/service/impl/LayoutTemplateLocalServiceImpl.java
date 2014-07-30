@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -47,6 +46,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -267,7 +267,8 @@ public class LayoutTemplateLocalServiceImpl
 		String servletContextName, ServletContext servletContext, String[] xmls,
 		PluginPackage pluginPackage) {
 
-		List<LayoutTemplate> layoutTemplates = new UniqueList<LayoutTemplate>();
+		Set<LayoutTemplate> layoutTemplates =
+			new LinkedHashSet<LayoutTemplate>();
 
 		try {
 			for (String xml : xmls) {
@@ -281,7 +282,7 @@ public class LayoutTemplateLocalServiceImpl
 			_log.error(e, e);
 		}
 
-		return layoutTemplates;
+		return new ArrayList<LayoutTemplate>(layoutTemplates);
 	}
 
 	@Override

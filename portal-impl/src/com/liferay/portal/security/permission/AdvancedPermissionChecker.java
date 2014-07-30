@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -54,6 +53,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -864,7 +864,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return userOrgs;
 		}
 
-		List<Organization> organizations = new UniqueList<Organization>();
+		Set<Organization> organizations = new LinkedHashSet<Organization>();
 
 		for (Organization organization : userOrgs) {
 			if (!organizations.contains(organization)) {
@@ -878,7 +878,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			}
 		}
 
-		return organizations;
+		return new ArrayList<Organization>(organizations);
 	}
 
 	protected boolean hasGuestPermission(

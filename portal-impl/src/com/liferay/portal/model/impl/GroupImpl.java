@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -61,9 +60,11 @@ import com.liferay.portal.util.PropsValues;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Represents either a site or a generic resource container.
@@ -168,14 +169,14 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public List<Group> getDescendants(boolean site) {
-		List<Group> descendants = new UniqueList<Group>();
+		Set<Group> descendants = new LinkedHashSet<Group>();
 
 		for (Group group : getChildren(site)) {
 			descendants.add(group);
 			descendants.addAll(group.getDescendants(site));
 		}
 
-		return descendants;
+		return new ArrayList<Group>(descendants);
 	}
 
 	@Override

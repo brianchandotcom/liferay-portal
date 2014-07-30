@@ -28,6 +28,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -2042,63 +2043,63 @@ public class ArrayUtil {
 	}
 
 	public static byte[] unique(byte[] array) {
-		List<Byte> list = new UniqueList<Byte>();
+		Set<Byte> set = new LinkedHashSet<Byte>();
 
 		for (int i = 0; i < array.length; i++) {
-			list.add(array[i]);
+			set.add(array[i]);
 		}
 
-		return toArray(list.toArray(new Byte[list.size()]));
+		return toArray(set.toArray(new Byte[set.size()]));
 	}
 
 	public static double[] unique(double[] array) {
-		List<Double> list = new UniqueList<Double>();
+		Set<Double> set = new LinkedHashSet<Double>();
 
 		for (int i = 0; i < array.length; i++) {
-			list.add(array[i]);
+			set.add(array[i]);
 		}
 
-		return toArray(list.toArray(new Double[list.size()]));
+		return toArray(set.toArray(new Double[set.size()]));
 	}
 
 	public static float[] unique(float[] array) {
-		List<Float> list = new UniqueList<Float>();
+		Set<Float> set = new LinkedHashSet<Float>();
 
 		for (int i = 0; i < array.length; i++) {
-			list.add(array[i]);
+			set.add(array[i]);
 		}
 
-		return toArray(list.toArray(new Float[list.size()]));
+		return toArray(set.toArray(new Float[set.size()]));
 	}
 
 	public static int[] unique(int[] array) {
-		List<Integer> list = new UniqueList<Integer>();
+		Set<Integer> set = new LinkedHashSet<Integer>();
 
 		for (int i = 0; i < array.length; i++) {
-			list.add(array[i]);
+			set.add(array[i]);
 		}
 
-		return toArray(list.toArray(new Integer[list.size()]));
+		return toArray(set.toArray(new Integer[set.size()]));
 	}
 
 	public static long[] unique(long[] array) {
-		List<Long> list = new UniqueList<Long>();
+		Set<Long> set = new LinkedHashSet<Long>();
 
 		for (int i = 0; i < array.length; i++) {
-			list.add(array[i]);
+			set.add(array[i]);
 		}
 
-		return toArray(list.toArray(new Long[list.size()]));
+		return toArray(set.toArray(new Long[set.size()]));
 	}
 
 	public static short[] unique(short[] array) {
-		List<Short> list = new UniqueList<Short>();
+		Set<Short> set = new LinkedHashSet<Short>();
 
 		for (int i = 0; i < array.length; i++) {
-			list.add(array[i]);
+			set.add(array[i]);
 		}
 
-		return toArray(list.toArray(new Short[list.size()]));
+		return toArray(set.toArray(new Short[set.size()]));
 	}
 
 }

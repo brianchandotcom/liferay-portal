@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.PropsUtil;
@@ -48,7 +47,8 @@ import java.security.Permissions;
 
 import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -216,7 +216,7 @@ public class FileChecker extends BaseChecker {
 		return false;
 	}
 
-	protected void addCanonicalPath(List<String> paths, String path) {
+	protected void addCanonicalPath(Set<String> paths, String path) {
 		Iterator<String> itr = paths.iterator();
 
 		while (itr.hasNext()) {
@@ -242,7 +242,7 @@ public class FileChecker extends BaseChecker {
 		paths.add(path);
 	}
 
-	protected void addCanonicalPaths(List<String> paths, File directory)
+	protected void addCanonicalPaths(Set<String> paths, File directory)
 		throws IOException {
 
 		addCanonicalPath(
@@ -269,7 +269,7 @@ public class FileChecker extends BaseChecker {
 		}
 	}
 
-	protected void addDefaultReadPaths(List<String> paths, String selector) {
+	protected void addDefaultReadPaths(Set<String> paths, String selector) {
 		String[] pathsArray = PropsUtil.getArray(
 			PropsKeys.PORTAL_SECURITY_MANAGER_FILE_CHECKER_DEFAULT_READ_PATHS,
 			new Filter(selector));
@@ -383,7 +383,7 @@ public class FileChecker extends BaseChecker {
 			return;
 		}
 
-		List<String> paths = new UniqueList<String>();
+		Set<String> paths = new LinkedHashSet<String>();
 
 		// JDK
 

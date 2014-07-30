@@ -66,7 +66,7 @@ if (organization != null) {
 	headerTitle = LanguageUtil.format(request, "edit-x", organization.getName(), false);
 }
 else if (Validator.isNotNull(type)) {
-	headerTitle = LanguageUtil.format(request, "add-x", type, false);
+	headerTitle = LanguageUtil.format(request, "add-x", type);
 }
 else {
 	headerTitle = LanguageUtil.get(request, "add-organization");

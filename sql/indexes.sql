@@ -197,7 +197,7 @@ create index IX_F147CF3F on DLFileEntryTypes_DDMStructures (structureId);
 create index IX_5BB6AD6C on DLFileEntryTypes_DLFolders (fileEntryTypeId);
 create index IX_6E00A2EC on DLFileEntryTypes_DLFolders (folderId);
 
-create unique index IX_38F0315 on DLFileRank (companyId, userId, fileEntryId);
+create index IX_38F0315 on DLFileRank (companyId, userId, fileEntryId);
 create index IX_A65A1F8B on DLFileRank (fileEntryId);
 create index IX_4E96195B on DLFileRank (groupId, userId, active_);
 create index IX_EED06670 on DLFileRank (userId);

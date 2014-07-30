@@ -362,7 +362,7 @@
 			<finder-column name="userId" />
 			<finder-column name="active" />
 		</finder>
-		<finder name="C_U_F" return-type="DLFileRank" unique="true">
+		<finder name="C_U_F" return-type="DLFileRank">
 			<finder-column name="companyId" />
 			<finder-column name="userId" />
 			<finder-column name="fileEntryId" />

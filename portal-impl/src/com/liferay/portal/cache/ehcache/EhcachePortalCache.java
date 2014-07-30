@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.cache.CacheListenerScope;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -39,6 +40,11 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	public EhcachePortalCache(Ehcache ehcache) {
 		this.ehcache = ehcache;
+	}
+
+	@Override
+	public List<K> getKeys() {
+		return (List<K>)ehcache.getKeys();
 	}
 
 	@Override

@@ -118,6 +118,7 @@ public class InvokerFilterHelper {
 		FilterMapping filterMapping, String filterName, boolean after) {
 
 		int i = 0;
+		int index = 0;
 
 		if (Validator.isNotNull(filterName)) {
 			Filter filter = _filters.get(filterName);
@@ -127,14 +128,19 @@ public class InvokerFilterHelper {
 					FilterMapping currentFilterMapping = _filterMappings.get(i);
 
 					if (currentFilterMapping.getFilter() == filter) {
-						break;
+						if (after) {
+							index = i;
+						}
+						else {
+							break;
+						}
 					}
 				}
 			}
 		}
 
 		if (after) {
-			i++;
+			i = ++index;
 		}
 
 		_filterMappings.add(i, filterMapping);

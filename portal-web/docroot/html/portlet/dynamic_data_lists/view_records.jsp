@@ -57,7 +57,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 
 		LocalizedValue label = ddmFormField.getLabel();
 
-		headerNames.add(label.getValue(locale));
+		headerNames.add(label.getString(locale));
 	}
 
 	if (hasUpdatePermission) {

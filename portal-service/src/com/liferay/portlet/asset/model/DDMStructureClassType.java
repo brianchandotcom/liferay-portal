@@ -111,7 +111,7 @@ public class DDMStructureClassType implements ClassType {
 
 			classTypeFields.add(
 				new ClassTypeField(
-					label.getValue(LocaleUtil.fromLanguageId(_languageId)),
+					label.getString(LocaleUtil.fromLanguageId(_languageId)),
 					name, type, ddmStructure.getStructureId()));
 		}
 

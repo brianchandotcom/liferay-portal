@@ -26,9 +26,11 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Marcellus Tavares
@@ -74,8 +76,8 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 		}
 	}
 
-	protected List<Locale> getAvailableLocales(JSONArray jsonArray) {
-		List<Locale> availableLocales = new ArrayList<Locale>();
+	protected Set<Locale> getAvailableLocales(JSONArray jsonArray) {
+		Set<Locale> availableLocales = new HashSet<Locale>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			Locale availableLocale = LocaleUtil.fromLanguageId(
@@ -158,7 +160,7 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 	protected void setDDMFormAvailableLocales(
 		JSONArray jsonArray, DDMForm ddmForm) {
 
-		List<Locale> availableLocales = getAvailableLocales(jsonArray);
+		Set<Locale> availableLocales = getAvailableLocales(jsonArray);
 
 		ddmForm.setAvailableLocales(availableLocales);
 	}
@@ -183,7 +185,7 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 		while (itr.hasNext()) {
 			String languageId = itr.next();
 
-			localizedValue.addValue(
+			localizedValue.addString(
 				LocaleUtil.fromLanguageId(languageId),
 				jsonObject.getString(languageId));
 		}

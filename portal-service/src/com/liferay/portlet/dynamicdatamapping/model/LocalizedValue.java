@@ -35,7 +35,7 @@ public class LocalizedValue implements Value {
 	}
 
 	@Override
-	public void addValue(Locale locale, String value) {
+	public void addString(Locale locale, String value) {
 		_values.put(locale, value);
 	}
 
@@ -50,7 +50,7 @@ public class LocalizedValue implements Value {
 	}
 
 	@Override
-	public String getValue(Locale locale) {
+	public String getString(Locale locale) {
 		String value = _values.get(locale);
 
 		if (value == null) {

@@ -23,26 +23,17 @@ import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author Pablo Carvalho
  */
 public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 
-	protected List<Locale> createAvailableLocales() {
-		List<Locale> availableLocales = new ArrayList<Locale>();
-
-		availableLocales.add(LocaleUtil.BRAZIL);
-		availableLocales.add(LocaleUtil.US);
-
-		return availableLocales;
-	}
-
 	protected DDMForm createDDMForm() {
 		DDMForm ddmForm = new DDMForm();
 
-		ddmForm.setAvailableLocales(createAvailableLocales());
+		ddmForm.setAvailableLocales(
+			createAvailableLocales(LocaleUtil.BRAZIL, LocaleUtil.US));
 		ddmForm.setDDMFormFields(createDDMFormFields());
 		ddmForm.setDefaultLocale(LocaleUtil.US);
 
@@ -139,8 +130,8 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 	protected LocalizedValue createTextDDMFormFieldLabel() {
 		LocalizedValue label = new LocalizedValue();
 
-		label.addValue(LocaleUtil.BRAZIL, "Texto");
-		label.addValue(LocaleUtil.US, "Text");
+		label.addString(LocaleUtil.BRAZIL, "Texto");
+		label.addString(LocaleUtil.US, "Text");
 
 		return label;
 	}
@@ -148,8 +139,8 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 	protected LocalizedValue createTextDDMFormFieldPredefinedValue() {
 		LocalizedValue predefinedValue = new LocalizedValue();
 
-		predefinedValue.addValue(LocaleUtil.BRAZIL, "Exemplo");
-		predefinedValue.addValue(LocaleUtil.US, "Example");
+		predefinedValue.addString(LocaleUtil.BRAZIL, "Exemplo");
+		predefinedValue.addString(LocaleUtil.US, "Example");
 
 		return predefinedValue;
 	}

@@ -108,7 +108,7 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 	protected abstract String getTestFileExtension();
 
 	protected void testAvailableLocales(DDMForm ddmForm) {
-		List<Locale> availableLocales = ddmForm.getAvailableLocales();
+		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
 		Assert.assertEquals(2, availableLocales.size());
 		Assert.assertTrue(availableLocales.contains(LocaleUtil.US));
@@ -122,12 +122,12 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 
 		LocalizedValue label = ddmFormField.getLabel();
 
-		Assert.assertEquals("Boolean", label.getValue(LocaleUtil.US));
-		Assert.assertEquals("Booleano", label.getValue(LocaleUtil.BRAZIL));
+		Assert.assertEquals("Boolean", label.getString(LocaleUtil.US));
+		Assert.assertEquals("Booleano", label.getString(LocaleUtil.BRAZIL));
 
 		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
-		Assert.assertEquals("false", predefinedValue.getValue(LocaleUtil.US));
+		Assert.assertEquals("false", predefinedValue.getString(LocaleUtil.US));
 
 		Assert.assertEquals("checkbox", ddmFormField.getType());
 		Assert.assertTrue(ddmFormField.isRepeatable());
@@ -197,7 +197,7 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
 		Assert.assertEquals(
-			"[\"Value 1\"]", predefinedValue.getValue(LocaleUtil.US));
+			"[\"Value 1\"]", predefinedValue.getString(LocaleUtil.US));
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();
@@ -212,9 +212,9 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 		LocalizedValue value1Labels = ddmFormFieldOptions.getOptionLabels(
 			"Value 1");
 
-		Assert.assertEquals("Option 1", value1Labels.getValue(LocaleUtil.US));
+		Assert.assertEquals("Option 1", value1Labels.getString(LocaleUtil.US));
 		Assert.assertEquals(
-			"Opcao 1", value1Labels.getValue(LocaleUtil.BRAZIL));
+			"Opcao 1", value1Labels.getString(LocaleUtil.BRAZIL));
 	}
 
 }

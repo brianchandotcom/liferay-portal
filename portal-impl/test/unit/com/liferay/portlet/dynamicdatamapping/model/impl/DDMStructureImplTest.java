@@ -60,7 +60,7 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 
 	@Test
 	public void testGetAvailableLanguageIds() throws Exception {
-		List<Locale> availableLocales = createAvailableLocales(
+		Set<Locale> availableLocales = createAvailableLocales(
 			LocaleUtil.BRAZIL, LocaleUtil.US);
 
 		DDMForm ddmForm = createDDMForm(availableLocales, LocaleUtil.US);
@@ -118,17 +118,16 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 
 	@Test
 	public void testGetFieldLabel() throws Exception {
-		List<Locale> availableLocales = createAvailableLocales(
-			LocaleUtil.BRAZIL, LocaleUtil.US);
-
-		DDMForm ddmForm = createDDMForm(availableLocales, LocaleUtil.US);
+		DDMForm ddmForm = createDDMForm(
+			createAvailableLocales(LocaleUtil.BRAZIL, LocaleUtil.US),
+			LocaleUtil.US);
 
 		DDMFormField field = createTextDDMFormField("field");
 
 		LocalizedValue label = field.getLabel();
 
-		label.addValue(LocaleUtil.BRAZIL, "Campo de Texto");
-		label.addValue(LocaleUtil.US, "Text Field");
+		label.addString(LocaleUtil.BRAZIL, "Campo de Texto");
+		label.addString(LocaleUtil.US, "Text Field");
 
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
@@ -208,17 +207,16 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 
 	@Test
 	public void testGetFieldTip() throws Exception {
-		List<Locale> availableLocales = createAvailableLocales(
-			LocaleUtil.BRAZIL, LocaleUtil.US);
-
-		DDMForm ddmForm = createDDMForm(availableLocales, LocaleUtil.US);
+		DDMForm ddmForm = createDDMForm(
+			createAvailableLocales(LocaleUtil.BRAZIL, LocaleUtil.US),
+			LocaleUtil.US);
 
 		DDMFormField field = createTextDDMFormField("field");
 
 		LocalizedValue tip = field.getTip();
 
-		tip.addValue(LocaleUtil.BRAZIL, "Dica para campo de texto.");
-		tip.addValue(LocaleUtil.US, "Tip for text field");
+		tip.addString(LocaleUtil.BRAZIL, "Dica para campo de texto.");
+		tip.addString(LocaleUtil.US, "Tip for text field");
 
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 

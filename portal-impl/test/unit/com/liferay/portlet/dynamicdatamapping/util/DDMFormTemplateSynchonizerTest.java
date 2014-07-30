@@ -31,7 +31,6 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUti
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -136,18 +135,10 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 		ddmFormFields.add(ddmFormField);
 	}
 
-	protected List<Locale> createAvailableLocales() {
-		List<Locale> availableLocales = new ArrayList<Locale>();
-
-		availableLocales.add(LocaleUtil.US);
-
-		return availableLocales;
-	}
-
 	protected DDMForm createDDMForm() {
 		DDMForm ddmForm = new DDMForm();
 
-		ddmForm.setAvailableLocales(createAvailableLocales());
+		ddmForm.setAvailableLocales(createAvailableLocales(LocaleUtil.US));
 		ddmForm.setDefaultLocale(LocaleUtil.US);
 
 		return ddmForm;
@@ -175,7 +166,7 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 		LocalizedValue label = ddmFormField.getLabel();
 
-		label.addValue(LocaleUtil.US, StringUtil.randomString());
+		label.addString(LocaleUtil.US, StringUtil.randomString());
 
 		return ddmFormField;
 	}

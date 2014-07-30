@@ -6584,7 +6584,7 @@ public class JournalArticleLocalServiceImpl
 		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
 		for (Locale locale : predefinedValue.getAvailableLocales()) {
-			predefinedValue.addValue(locale, ddmFormFieldValue);
+			predefinedValue.addString(locale, ddmFormFieldValue);
 		}
 	}
 

@@ -62,16 +62,10 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	public String[] getAvailableLanguageIds() {
 		DDMForm ddmForm = getDDMForm();
 
-		List<Locale> availableLocales = ddmForm.getAvailableLocales();
+		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
-		String[] availableLanguageIds = new String[availableLocales.size()];
-
-		for (int i = 0; i < availableLocales.size(); i++) {
-			availableLanguageIds[i] = LocaleUtil.toLanguageId(
-				availableLocales.get(i));
-		}
-
-		return availableLanguageIds;
+		return LocaleUtil.toLanguageIds(
+			availableLocales.toArray(new Locale[availableLocales.size()]));
 	}
 
 	@Override
@@ -155,7 +149,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 		LocalizedValue label = ddmFormField.getLabel();
 
-		return label.getValue(locale);
+		return label.getString(locale);
 	}
 
 	@Override
@@ -205,7 +199,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 		LocalizedValue tip = ddmFormField.getTip();
 
-		return tip.getValue(locale);
+		return tip.getString(locale);
 	}
 
 	@Override

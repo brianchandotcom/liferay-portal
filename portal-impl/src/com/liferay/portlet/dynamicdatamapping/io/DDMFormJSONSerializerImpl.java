@@ -45,7 +45,7 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 	}
 
 	protected void addAvailableLanguageIds(
-		JSONObject jsonObject, List<Locale> availableLocales) {
+		JSONObject jsonObject, Set<Locale> availableLocales) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -168,7 +168,7 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 		for (Locale availableLocale : localizedValue.getAvailableLocales()) {
 			jsonObject.put(
 				LocaleUtil.toLanguageId(availableLocale),
-				localizedValue.getValue(availableLocale));
+				localizedValue.getString(availableLocale));
 		}
 
 		return jsonObject;

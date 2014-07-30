@@ -43,7 +43,7 @@ public class DDMFormFieldOptions implements Serializable {
 			_options.put(optionValue, labels);
 		}
 
-		labels.addValue(locale, label);
+		labels.addString(locale, label);
 	}
 
 	public Locale getDefaultLocale() {

@@ -267,7 +267,7 @@
 		<execute action="PGAssetpublisherConfigurationManual#assertTextEquals" locator-key1="ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="${localDocumentTypeName}" />
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AssetPublisherCategoriesLocalization" priority="3">
+	<command name="AssetPublisherCategoriesLocalization" priority="3">
 		<var name="categoryLocalization1" value="Kategorienamen" />
 		<var name="categoryLocalization2" value="Nom de la Catégorie" />
 		<var name="categoryName" value="Vocabulary1 Category" />

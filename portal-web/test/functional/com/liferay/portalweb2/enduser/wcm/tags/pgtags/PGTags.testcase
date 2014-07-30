@@ -11,7 +11,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LIFERAYQA-9791" name="AddAutoAssertionTagViaBlogs" priority="5">
+	<command name="AddAutoAssertionTagViaBlogs" priority="5">
 		<var name="pageName" value="Page Name" />
 		<var name="siteName" value="Site Name" />
 		<var name="tagName1" value="tag name 1" />
@@ -71,7 +71,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddFrontPageTag" priority="5">
+	<command name="AddFrontPageTag" priority="5">
 		<var name="pageName" value="Page Name" />
 		<var name="siteName" value="Site Name" />
 
@@ -114,7 +114,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddMultipleTagsViaBlogs" priority="5">
+	<command name="AddMultipleTagsViaBlogs" priority="5">
 		<var name="pageName" value="Page Name" />
 		<var name="siteName" value="Site Name" />
 		<var name="tagName1" value="tag name 1" />
@@ -168,7 +168,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddSelectTagViaBlogs" priority="5">
+	<command name="AddSelectTagViaBlogs" priority="5">
 		<var name="pageName" value="Page Name" />
 		<var name="siteName" value="Site Name" />
 		<var name="tagName1" value="tag name 1" />
@@ -229,7 +229,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddTagViaBlogs" priority="5">
+	<command name="AddTagViaBlogs" priority="5">
 		<var name="pageName" value="Page Name" />
 		<var name="siteName" value="Site Name" />
 
@@ -268,7 +268,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="AddUTFTagViaBlogs" priority="5">
+	<command name="AddUTFTagViaBlogs" priority="5">
 		<var name="pageName" value="Page Name" />
 		<var name="siteName" value="Site Name" />
 
@@ -307,7 +307,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="RemoveSelectTagViaBlogs" priority="5">
+	<command name="RemoveSelectTagViaBlogs" priority="5">
 		<var name="pageName" value="Page Name" />
 		<var name="siteName" value="Site Name" />
 		<var name="tagName1" value="tag name 1" />
@@ -374,7 +374,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="RemoveTagViaBlogs" priority="5">
+	<command name="RemoveTagViaBlogs" priority="5">
 		<var name="pageName" value="Page Name" />
 		<var name="siteName" value="Site Name" />
 		<var name="tagName1" value="tag name 1" />
@@ -440,7 +440,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LIFERAYQA-9791" name="SearchMultipleTagsViaBlogs" priority="5">
+	<command name="SearchMultipleTagsViaBlogs" priority="5">
 		<var name="entryContent1" value="Entry Content 1" />
 		<var name="entryContent2" value="Entry Content 2" />
 		<var name="entryContent3" value="Entry Content 3" />

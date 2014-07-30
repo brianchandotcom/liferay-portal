@@ -1990,17 +1990,14 @@ public interface UserLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean sendPasswordByEmailAddress(long companyId,
-		java.lang.String emailAddress,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String emailAddress)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean sendPasswordByScreenName(long companyId,
-		java.lang.String screenName,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String screenName)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public boolean sendPasswordByUserId(long companyId, long userId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public boolean sendPasswordByUserId(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**

@@ -1087,6 +1087,16 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>extension</name>
+		<tag-class>com.liferay.taglib.util.ExtensionTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>extensionId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>flags</name>
 		<tag-class>com.liferay.taglib.ui.FlagsTag</tag-class>
 		<body-content>JSP</body-content>

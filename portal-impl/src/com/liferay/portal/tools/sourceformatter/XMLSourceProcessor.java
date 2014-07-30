@@ -32,6 +32,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -104,104 +105,26 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			String fileName, Element entityElement, String entityName)
 		throws Exception {
 
-		List<String> columnNames = getColumnNames(fileName, entityName);
+		_columnNames = getColumnNames(fileName, entityName);
+
+		FinderElementComparator finderElementComparator =
+			new FinderElementComparator();
 
 		List<Element> finderElements = entityElement.elements("finder");
 
-		List<Element> previousFinderColumnElements = null;
-		String previousFinderName = null;
+		for (int i = 1; i < finderElements.size(); i++) {
+			Element finderElement = finderElements.get(i);
+			Element previousFinderElement = finderElements.get(i - 1);
 
-		finderElementsLoop:
-		for (Element finderElement : finderElements) {
-			List<Element> finderColumnElements = finderElement.elements(
-				"finder-column");
-			String finderName = finderElement.attributeValue("name");
+			if (finderElementComparator.compare(
+					previousFinderElement, finderElement) > 0) {
 
-			if (previousFinderColumnElements == null) {
-				previousFinderColumnElements = finderColumnElements;
-				previousFinderName = finderName;
+				String finderName = finderElement.attributeValue("name");
 
-				continue;
-			}
-
-			int finderColumnCount = finderColumnElements.size();
-			int previousFinderColumnCount = previousFinderColumnElements.size();
-
-			if (previousFinderColumnCount > finderColumnCount) {
 				processErrorMessage(
 					fileName,
-					"order by number of columms: " + fileName + " " +
-						entityName + " " + finderName);
-
-				return;
+					"order: " + fileName + " " + entityName + " " + finderName);
 			}
-
-			if (previousFinderColumnCount < finderColumnCount) {
-				previousFinderColumnElements = finderColumnElements;
-				previousFinderName = finderName;
-
-				continue;
-			}
-
-			for (int i = 0; i < finderColumnCount; i++) {
-				Element finderColumnElement = finderColumnElements.get(i);
-				Element previousFinderColumnElement =
-					previousFinderColumnElements.get(i);
-
-				String finderColumnName = finderColumnElement.attributeValue(
-					"name");
-				String previousFinderColumnName =
-					previousFinderColumnElement.attributeValue("name");
-
-				int index = columnNames.indexOf(finderColumnName);
-				int previousIndex = columnNames.indexOf(
-					previousFinderColumnName);
-
-				if (previousIndex > index) {
-					processErrorMessage(
-						fileName,
-						"order by column order in table: " + fileName + " " +
-							entityName + " " + finderName);
-
-					return;
-				}
-
-				if (previousIndex < index) {
-					previousFinderColumnElements = finderColumnElements;
-					previousFinderName = finderName;
-
-					continue finderElementsLoop;
-				}
-			}
-
-			int startsWithWeight = StringUtil.startsWithWeight(
-				previousFinderName, finderName);
-
-			String strippedPreviousFinderName = previousFinderName.substring(
-				startsWithWeight);
-			String strippedFinderName = finderName.substring(startsWithWeight);
-
-			if (strippedPreviousFinderName.startsWith("Gt") ||
-				strippedPreviousFinderName.startsWith("Like") ||
-				strippedPreviousFinderName.startsWith("Lt") ||
-				strippedPreviousFinderName.startsWith("Not")) {
-
-				if ((!strippedFinderName.startsWith("Gt") &&
-					 !strippedFinderName.startsWith("Like") &&
-					 !strippedFinderName.startsWith("Lt") &&
-					 !strippedFinderName.startsWith("Not")) ||
-					(strippedPreviousFinderName.compareTo(strippedFinderName) >
-						0)) {
-
-					processErrorMessage(
-						fileName,
-						"order: " + fileName + " " + entityName + " " +
-							finderName);
-				}
-			}
-
-			previousFinderColumnElements = finderColumnElements;
-			previousFinderName = finderName;
 		}
 	}
 
@@ -1224,6 +1147,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private static Pattern _commentPattern2 = Pattern.compile(
 		"[\t ]-->\n[\t<]");
 
+	private List<String> _columnNames;
 	private List<String> _friendlyUrlRoutesSortExclusions;
 	private List<String> _numericalPortletNameElementExclusions;
 	private Pattern _poshiClosingTagPattern = Pattern.compile("</[^>/]*>");
@@ -1256,5 +1180,71 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			"(?:(?:\\n){1,}+|\\</execute\\>)");
 	private Pattern _poshiWholeTagPattern = Pattern.compile("<[^\\>^/]*\\/>");
 	private String _tablesContent;
+
+	private class FinderElementComparator implements Comparator<Element> {
+
+		@Override
+		public int compare(Element finderElement1, Element finderElement2) {
+			List<Element> finderColumnElements1 = finderElement1.elements(
+				"finder-column");
+			List<Element> finderColumnElements2 = finderElement2.elements(
+				"finder-column");
+
+			int finderColumnCount1 = finderColumnElements1.size();
+			int finderColumnCount2 = finderColumnElements2.size();
+
+			if (finderColumnCount1 != finderColumnCount2) {
+				return finderColumnCount1 - finderColumnCount2;
+			}
+
+			for (int i = 0; i < finderColumnCount1; i++) {
+				Element finderColumnElement1 = finderColumnElements1.get(i);
+				Element finderColumnElement2 = finderColumnElements2.get(i);
+
+				String finderColumnName1 = finderColumnElement1.attributeValue(
+					"name");
+				String finderColumnName2 = finderColumnElement2.attributeValue(
+					"name");
+
+				int index1 = _columnNames.indexOf(finderColumnName1);
+				int index2 = _columnNames.indexOf(finderColumnName2);
+
+				if (index1 != index2) {
+					return index1 - index2;
+				}
+			}
+
+			String finderName1 = finderElement1.attributeValue("name");
+			String finderName2 = finderElement2.attributeValue("name");
+
+			int startsWithWeight = StringUtil.startsWithWeight(
+				finderName1, finderName2);
+
+			String strippedFinderName1 = finderName1.substring(
+				startsWithWeight);
+			String strippedFinderName2 = finderName2.substring(
+				startsWithWeight);
+
+			if (strippedFinderName1.startsWith("Gt") ||
+				strippedFinderName1.startsWith("Like") ||
+				strippedFinderName1.startsWith("Lt") ||
+				strippedFinderName1.startsWith("Not")) {
+
+				if (!strippedFinderName2.startsWith("Gt") &&
+					!strippedFinderName2.startsWith("Like") &&
+					!strippedFinderName2.startsWith("Lt") &&
+					!strippedFinderName2.startsWith("Not")) {
+
+					return 1;
+				}
+				else {
+					return strippedFinderName1.compareTo(strippedFinderName2);
+				}
+			}
+
+			return 0;
+		}
+
+	}
 
 }

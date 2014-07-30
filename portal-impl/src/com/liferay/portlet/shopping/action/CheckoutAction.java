@@ -142,8 +142,8 @@ public class CheckoutAction extends CartAction {
 
 	protected void checkout(ActionRequest actionRequest) throws Exception {
 		if (!hasLatestOrder(actionRequest)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			ShoppingOrderLocalServiceUtil.addLatestOrder(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
@@ -191,18 +191,18 @@ public class CheckoutAction extends CartAction {
 	protected boolean hasLatestOrder(ActionRequest actionRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			ShoppingOrderLocalServiceUtil.getLatestOrder(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
+
+			return true;
 		}
 		catch (NoSuchOrderException nsoe) {
 			return false;
 		}
-
-		return true;
 	}
 
 	@Override

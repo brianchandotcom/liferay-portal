@@ -1799,7 +1799,7 @@ public class LayoutTypePortletImpl
 	}
 
 	protected void onRemoveFromLayout(String[] portletIds) {
-		List<String> portletIdList = new ArrayList<String>();
+		Set<String> portletIdList = new HashSet<String>();
 
 		for (String portletId : portletIds) {
 			removeModesPortletId(portletId);

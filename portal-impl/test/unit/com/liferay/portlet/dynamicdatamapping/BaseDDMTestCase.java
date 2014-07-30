@@ -249,7 +249,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected DDMFormField createTextDDMFormField(String name) {
-		return createTextDDMFormField(name, name, false, false, false);
+		return createTextDDMFormField(name, name, true, false, false);
 	}
 
 	protected DDMFormField createTextDDMFormField(

@@ -108,8 +108,8 @@ public class DDMImplTest extends BaseDDMTestCase {
 		DDMForm ddmForm = createDDMForm();
 
 		addDDMFormFields(
-			ddmForm, createTextDDMFormField("Title", "", true, false, false),
-			createTextDDMFormField("Content", "", true, false, false));
+			ddmForm, createTextDDMFormField("Title"),
+			createTextDDMFormField("Content"));
 
 		DDMStructure ddmStructure = createStructure("Test Structure", ddmForm);
 
@@ -197,8 +197,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 		DDMForm ddmForm = createDDMForm();
 
-		addDDMFormFields(
-			ddmForm, createTextDDMFormField("Title", "", true, false, false));
+		addDDMFormFields(ddmForm, createTextDDMFormField("Title"));
 
 		DDMStructure ddmStructure = createStructure("Test Structure", ddmForm);
 

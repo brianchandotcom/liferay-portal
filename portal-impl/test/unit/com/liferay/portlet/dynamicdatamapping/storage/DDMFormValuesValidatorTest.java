@@ -86,8 +86,7 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 
 		DDMForm ddmForm = createDDMForm();
 
-		DDMFormField ddmFormField = createTextDDMFormField(
-			"name", "", true, false, false);
+		DDMFormField ddmFormField = createTextDDMFormField("name");
 
 		addDDMFormFields(ddmForm, ddmFormField);
 
@@ -165,7 +164,8 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 
 		DDMForm ddmForm = createDDMForm();
 
-		DDMFormField ddmFormField = createTextDDMFormField("name");
+		DDMFormField ddmFormField = createTextDDMFormField(
+			"name", "", false, false, false);
 
 		addDDMFormFields(ddmForm, ddmFormField);
 
@@ -215,8 +215,7 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 
 		DDMForm ddmForm = createDDMForm();
 
-		DDMFormField ddmFormField = createTextDDMFormField(
-			"name", "", true, false, false);
+		DDMFormField ddmFormField = createTextDDMFormField("name");
 
 		addDDMFormFields(ddmForm, ddmFormField);
 
@@ -239,8 +238,7 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 
 		DDMForm ddmForm = createDDMForm();
 
-		DDMFormField ddmFormField = createTextDDMFormField(
-			"name", "", true, false, false);
+		DDMFormField ddmFormField = createTextDDMFormField("name");
 
 		addDDMFormFields(ddmForm, ddmFormField);
 

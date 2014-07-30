@@ -37,7 +37,7 @@ if (selContact != null) {
 
 <h3><liferay-ui:message key="details" /></h3>
 
-<div class="row">
+<div class="fieldset-container">
 	<aui:fieldset cssClass="col-md-6">
 		<liferay-ui:success key="verificationEmailSent" message="your-email-verification-code-has-been-sent-and-the-new-email-address-will-be-applied-to-your-account-once-it-has-been-verified" />
 

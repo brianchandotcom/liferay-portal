@@ -130,6 +130,12 @@ img.icon {
 	}
 }
 
+.modal-open .alert.taglib-portal-message {
+	@include respond-to(phone, tablet) {
+		position: fixed;
+	}
+}
+
 .lfr-token-list {
 	clear: both;
 	margin: 1em 0;

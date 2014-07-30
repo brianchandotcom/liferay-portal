@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.template;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
@@ -131,8 +130,7 @@ public class TemplateVariableGroup {
 	public Collection<TemplateVariableDefinition>
 		getTemplateVariableDefinitions() {
 
-		return new ArrayList<TemplateVariableDefinition>(
-			_templateVariableDefinitions);
+		return _templateVariableDefinitions;
 	}
 
 	public boolean isAutocompleteEnabled() {

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -47,8 +46,10 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Julio Camarero
@@ -143,7 +144,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		// Recipients
 
-		List<User> recipients = getRecipients(
+		Set<User> recipients = getRecipients(
 			companyId, serviceContext.getScopeGroupId());
 
 		for (User recipient : recipients) {
@@ -164,10 +165,10 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		}
 	}
 
-	protected List<User> getRecipients(long companyId, long groupId)
+	protected Set<User> getRecipients(long companyId, long groupId)
 		throws PortalException {
 
-		List<User> recipients = new ArrayList<User>();
+		Set<User> recipients = new LinkedHashSet<User>();
 
 		List<String> roleNames = new ArrayList<String>();
 
@@ -206,7 +207,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 				UserLocalServiceUtil.getRoleUsers(role.getRoleId()));
 		}
 
-		return ListUtil.unique(recipients);
+		return recipients;
 	}
 
 	protected void notify(

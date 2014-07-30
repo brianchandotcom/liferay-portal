@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PathUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -46,10 +45,10 @@ import java.net.URLConnection;
 import java.security.Permission;
 import java.security.Permissions;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -217,7 +216,7 @@ public class FileChecker extends BaseChecker {
 		return false;
 	}
 
-	protected void addCanonicalPath(List<String> paths, String path) {
+	protected void addCanonicalPath(Set<String> paths, String path) {
 		Iterator<String> itr = paths.iterator();
 
 		while (itr.hasNext()) {
@@ -243,7 +242,7 @@ public class FileChecker extends BaseChecker {
 		paths.add(path);
 	}
 
-	protected void addCanonicalPaths(List<String> paths, File directory)
+	protected void addCanonicalPaths(Set<String> paths, File directory)
 		throws IOException {
 
 		addCanonicalPath(
@@ -270,7 +269,7 @@ public class FileChecker extends BaseChecker {
 		}
 	}
 
-	protected void addDefaultReadPaths(List<String> paths, String selector) {
+	protected void addDefaultReadPaths(Set<String> paths, String selector) {
 		String[] pathsArray = PropsUtil.getArray(
 			PropsKeys.PORTAL_SECURITY_MANAGER_FILE_CHECKER_DEFAULT_READ_PATHS,
 			new Filter(selector));
@@ -384,7 +383,7 @@ public class FileChecker extends BaseChecker {
 			return;
 		}
 
-		List<String> paths = new ArrayList<String>();
+		Set<String> paths = new LinkedHashSet<String>();
 
 		// JDK
 
@@ -394,7 +393,7 @@ public class FileChecker extends BaseChecker {
 		try {
 			File file = new File(System.getProperty("java.home") + "/lib");
 
-			addCanonicalPaths(ListUtil.unique(paths), file);
+			addCanonicalPaths(paths, file);
 
 			ClassLoader classLoader = ClassLoader.getSystemClassLoader();
 
@@ -445,7 +444,7 @@ public class FileChecker extends BaseChecker {
 						}
 					}
 
-					addCanonicalPath(ListUtil.unique(paths), fileName);
+					addCanonicalPath(paths, fileName);
 				}
 			}
 		}
@@ -468,10 +467,9 @@ public class FileChecker extends BaseChecker {
 
 		// Portal
 
-		addDefaultReadPaths(
-			ListUtil.unique(paths), ServerDetector.getServerId());
+		addDefaultReadPaths(paths, ServerDetector.getServerId());
 
-		for (String path : ListUtil.unique(paths)) {
+		for (String path : paths) {
 			addPermission(path, actions);
 		}
 	}

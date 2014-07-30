@@ -53,8 +53,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Provides the remote service for accessing, adding, deleting, and updating
@@ -368,7 +370,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				null, null, params, true, 0, max));
 		}
 
-		List<Group> groups = new ArrayList<Group>();
+		Set<Group> groups = new LinkedHashSet<Group>();
 
 		List<Group> userSitesGroups = getUserSitesGroups(null, max);
 
@@ -385,7 +387,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			}
 		}
 
-		return ListUtil.unique(groups);
+		return new ArrayList<Group>(groups);
 	}
 
 	/**
@@ -496,7 +498,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		List<Group> groups = groupLocalService.getUserOrganizationsGroups(
 			userId, start, end);
 
-		return filterGroups(ListUtil.unique(groups));
+		return filterGroups(groups);
 	}
 
 	/**

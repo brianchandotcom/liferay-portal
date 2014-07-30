@@ -245,6 +245,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1112,14 +1113,14 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public long[] getAncestorSiteGroupIds(long groupId) throws PortalException {
-		List<Group> groups = doGetAncestorSiteGroups(groupId, false);
+		Set<Group> groups = doGetAncestorSiteGroups(groupId, false);
 
 		long[] groupIds = new long[groups.size()];
 
-		for (int i = 0; i < groups.size(); i++) {
-			Group group = groups.get(i);
+		int i = 0;
 
-			groupIds[i] = group.getGroupId();
+		for (Group group : groups) {
+			groupIds[i++] = group.getGroupId();
 		}
 
 		return groupIds;
@@ -1884,7 +1885,7 @@ public class PortalImpl implements Portal {
 	public List<Group> getCurrentAndAncestorSiteGroups(long groupId)
 		throws PortalException {
 
-		List<Group> groups = new ArrayList<Group>();
+		Set<Group> groups = new LinkedHashSet<Group>();
 
 		Group siteGroup = doGetCurrentSiteGroup(groupId);
 
@@ -1894,7 +1895,7 @@ public class PortalImpl implements Portal {
 
 		groups.addAll(doGetAncestorSiteGroups(groupId, false));
 
-		return ListUtil.unique(groups);
+		return new ArrayList<Group>(groups);
 	}
 
 	@Override
@@ -5028,7 +5029,7 @@ public class PortalImpl implements Portal {
 			long companyId, long groupId, long userId)
 		throws PortalException {
 
-		List<Group> groups = new ArrayList<Group>();
+		Set<Group> groups = new LinkedHashSet<Group>();
 
 		Group siteGroup = doGetCurrentSiteGroup(groupId);
 
@@ -5082,12 +5083,10 @@ public class PortalImpl implements Portal {
 
 		long[] groupIds = new long[groups.size()];
 
-		groups = ListUtil.unique(groups);
+		int i = 0;
 
-		for (int i = 0; i < groups.size(); i++) {
-			Group group = groups.get(i);
-
-			groupIds[i] = group.getGroupId();
+		for (Group group : groups) {
+			groupIds[i++] = group.getGroupId();
 		}
 
 		return groupIds;
@@ -7664,11 +7663,11 @@ public class PortalImpl implements Portal {
 		return StringPool.SLASH.concat(languageId);
 	}
 
-	protected List<Group> doGetAncestorSiteGroups(
+	protected Set<Group> doGetAncestorSiteGroups(
 			long groupId, boolean checkContentSharingWithChildrenEnabled)
 		throws PortalException {
 
-		List<Group> groups = new ArrayList<Group>();
+		Set<Group> groups = new LinkedHashSet<Group>();
 
 		long siteGroupId = getSiteGroupId(groupId);
 
@@ -7690,7 +7689,7 @@ public class PortalImpl implements Portal {
 					siteGroup.getCompanyId()));
 		}
 
-		return ListUtil.unique(groups);
+		return groups;
 	}
 
 	protected Group doGetCurrentSiteGroup(long groupId) throws PortalException {

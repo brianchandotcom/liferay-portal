@@ -55,8 +55,10 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Allen Chiang
@@ -292,9 +294,9 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			return query;
 		}
 
-		List<Group> groups = new ArrayList<Group>();
-		List<Role> roles = new ArrayList<Role>();
-		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+		Set<Group> groups = new LinkedHashSet<Group>();
+		Set<Role> roles = new LinkedHashSet<Role>();
+		Set<UserGroupRole> userGroupRoles = new LinkedHashSet<UserGroupRole>();
 		Map<Long, List<Role>> groupIdsToRoles = new HashMap<Long, List<Role>>();
 
 		roles.addAll(permissionCheckerBag.getRoles());
@@ -303,8 +305,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			groups.addAll(GroupLocalServiceUtil.getUserGroups(userId, true));
 			groups.addAll(permissionCheckerBag.getGroups());
 
-			userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(
-				userId);
+			userGroupRoles.addAll(
+				UserGroupRoleLocalServiceUtil.getUserGroupRoles( userId));
 		}
 		else {
 			groups.addAll(permissionCheckerBag.getGroups());
@@ -344,8 +346,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		return doGetPermissionQuery_6(
 			companyId, groupIds, userId, className, query, searchContext,
-			advancedPermissionChecker, ListUtil.unique(groups),
-			ListUtil.unique(roles), ListUtil.unique(userGroupRoles),
+			advancedPermissionChecker, groups, roles, userGroupRoles,
 			groupIdsToRoles);
 	}
 
@@ -353,8 +354,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			long companyId, long[] groupIds, long userId, String className,
 			Query query, SearchContext searchContext,
 			AdvancedPermissionChecker advancedPermissionChecker,
-			List<Group> groups, List<Role> roles,
-			List<UserGroupRole> userGroupRoles,
+			Set<Group> groups, Set<Role> roles,
+			Set<UserGroupRole> userGroupRoles,
 			Map<Long, List<Role>> groupIdsToRoles)
 		throws Exception {
 

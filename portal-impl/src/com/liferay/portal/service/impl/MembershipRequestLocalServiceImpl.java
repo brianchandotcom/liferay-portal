@@ -39,7 +39,9 @@ import com.liferay.portal.util.SubscriptionSender;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Jorge Ferrer
@@ -193,7 +195,7 @@ public class
 	protected List<Long> getGroupAdministratorUserIds(long groupId)
 		throws PortalException {
 
-		List<Long> userIds = new ArrayList<Long>();
+		Set<Long> userIds = new LinkedHashSet<Long>();
 
 		Group group = groupLocalService.getGroup(groupId);
 		String modelResource = Group.class.getName();
@@ -270,7 +272,7 @@ public class
 			}
 		}
 
-		return ListUtil.unique(userIds);
+		return new ArrayList<Long>(userIds);
 	}
 
 	protected void notify(

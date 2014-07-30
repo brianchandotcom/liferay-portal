@@ -18,11 +18,12 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Eduardo Lundgren
@@ -39,8 +40,8 @@ public class JavaScriptBundleUtil {
 		if (fileNames == null) {
 			List<String> fileNamesList = new ArrayList<String>();
 
-			List<String> dependencies = _getDependencies(
-				bundleId, new ArrayList<String>());
+			Set<String> dependencies = _getDependencies(
+				bundleId, new LinkedHashSet<String>());
 
 			for (String dependency : dependencies) {
 				String[] dependencyFileNames = PropsUtil.getArray(dependency);
@@ -58,11 +59,11 @@ public class JavaScriptBundleUtil {
 		return fileNames;
 	}
 
-	private static List<String> _getDependencies(
-		String bundleId, List<String> dependencies) {
+	private static Set<String> _getDependencies(
+		String bundleId, Set<String> dependencies) {
 
 		if (!ArrayUtil.contains(PropsValues.JAVASCRIPT_BUNDLE_IDS, bundleId)) {
-			return ListUtil.unique(dependencies);
+			return dependencies;
 		}
 
 		String[] bundleDependencies = PropsUtil.getArray(
@@ -82,7 +83,7 @@ public class JavaScriptBundleUtil {
 
 		dependencies.add(bundleId);
 
-		return ListUtil.unique(dependencies);
+		return dependencies;
 	}
 
 	private static final String _CACHE_NAME =

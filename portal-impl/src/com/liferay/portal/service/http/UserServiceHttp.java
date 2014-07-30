@@ -1014,8 +1014,7 @@ public class UserServiceHttp {
 
 	public static boolean sendPasswordByEmailAddress(
 		HttpPrincipal httpPrincipal, long companyId,
-		java.lang.String emailAddress,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String emailAddress)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class,
@@ -1023,7 +1022,7 @@ public class UserServiceHttp {
 					_sendPasswordByEmailAddressParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, emailAddress, serviceContext);
+					companyId, emailAddress);
 
 			Object returnObj = null;
 
@@ -1048,9 +1047,7 @@ public class UserServiceHttp {
 	}
 
 	public static boolean sendPasswordByScreenName(
-		HttpPrincipal httpPrincipal, long companyId,
-		java.lang.String screenName,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		HttpPrincipal httpPrincipal, long companyId, java.lang.String screenName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class,
@@ -1058,7 +1055,7 @@ public class UserServiceHttp {
 					_sendPasswordByScreenNameParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, screenName, serviceContext);
+					companyId, screenName);
 
 			Object returnObj = null;
 
@@ -1083,16 +1080,13 @@ public class UserServiceHttp {
 	}
 
 	public static boolean sendPasswordByUserId(HttpPrincipal httpPrincipal,
-		long companyId, long userId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long userId) throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class,
 					"sendPasswordByUserId",
 					_sendPasswordByUserIdParameterTypes31);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, userId, serviceContext);
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId);
 
 			Object returnObj = null;
 
@@ -2089,16 +2083,13 @@ public class UserServiceHttp {
 			long.class, java.lang.String.class, long.class, boolean.class
 		};
 	private static final Class<?>[] _sendPasswordByEmailAddressParameterTypes29 = new Class[] {
-			long.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _sendPasswordByScreenNameParameterTypes30 = new Class[] {
-			long.class, java.lang.String.class,
-			com.liferay.portal.service.ServiceContext.class
+			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _sendPasswordByUserIdParameterTypes31 = new Class[] {
-			long.class, long.class,
-			com.liferay.portal.service.ServiceContext.class
+			long.class
 		};
 	private static final Class<?>[] _setRoleUsersParameterTypes32 = new Class[] {
 			long.class, long[].class

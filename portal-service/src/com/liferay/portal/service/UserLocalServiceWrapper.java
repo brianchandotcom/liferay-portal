@@ -2459,28 +2459,23 @@ public class UserLocalServiceWrapper implements UserLocalService,
 
 	@Override
 	public boolean sendPasswordByEmailAddress(long companyId,
-		java.lang.String emailAddress,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String emailAddress)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userLocalService.sendPasswordByEmailAddress(companyId,
-			emailAddress, serviceContext);
+			emailAddress);
 	}
 
 	@Override
 	public boolean sendPasswordByScreenName(long companyId,
-		java.lang.String screenName,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String screenName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userLocalService.sendPasswordByScreenName(companyId,
-			screenName, serviceContext);
+		return _userLocalService.sendPasswordByScreenName(companyId, screenName);
 	}
 
 	@Override
-	public boolean sendPasswordByUserId(long companyId, long userId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public boolean sendPasswordByUserId(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _userLocalService.sendPasswordByUserId(companyId, userId,
-			serviceContext);
+		return _userLocalService.sendPasswordByUserId(userId);
 	}
 
 	/**

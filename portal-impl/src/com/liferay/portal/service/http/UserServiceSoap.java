@@ -966,12 +966,10 @@ public class UserServiceSoap {
 	}
 
 	public static boolean sendPasswordByEmailAddress(long companyId,
-		java.lang.String emailAddress,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws RemoteException {
+		java.lang.String emailAddress) throws RemoteException {
 		try {
 			boolean returnValue = UserServiceUtil.sendPasswordByEmailAddress(companyId,
-					emailAddress, serviceContext);
+					emailAddress);
 
 			return returnValue;
 		}
@@ -983,12 +981,10 @@ public class UserServiceSoap {
 	}
 
 	public static boolean sendPasswordByScreenName(long companyId,
-		java.lang.String screenName,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws RemoteException {
+		java.lang.String screenName) throws RemoteException {
 		try {
 			boolean returnValue = UserServiceUtil.sendPasswordByScreenName(companyId,
-					screenName, serviceContext);
+					screenName);
 
 			return returnValue;
 		}
@@ -999,12 +995,10 @@ public class UserServiceSoap {
 		}
 	}
 
-	public static boolean sendPasswordByUserId(long companyId, long userId,
-		com.liferay.portal.service.ServiceContext serviceContext)
+	public static boolean sendPasswordByUserId(long userId)
 		throws RemoteException {
 		try {
-			boolean returnValue = UserServiceUtil.sendPasswordByUserId(companyId,
-					userId, serviceContext);
+			boolean returnValue = UserServiceUtil.sendPasswordByUserId(userId);
 
 			return returnValue;
 		}

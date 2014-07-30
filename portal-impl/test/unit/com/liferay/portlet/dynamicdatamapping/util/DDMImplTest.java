@@ -108,8 +108,8 @@ public class DDMImplTest extends BaseDDMTestCase {
 		DDMForm ddmForm = createDDMForm();
 
 		addDDMFormFields(
-			ddmForm, createTextDDMFormField("Title", "", true, false, false),
-			createTextDDMFormField("Content", "", true, false, false));
+			ddmForm, createTextDDMFormField("Title"),
+			createTextDDMFormField("Content"));
 
 		DDMStructure ddmStructure = createStructure("Test Structure", ddmForm);
 
@@ -197,8 +197,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 		DDMForm ddmForm = createDDMForm();
 
-		addDDMFormFields(
-			ddmForm, createTextDDMFormField("Title", "", true, false, false));
+		addDDMFormFields(ddmForm, createTextDDMFormField("Title"));
 
 		DDMStructure ddmStructure = createStructure("Test Structure", ddmForm);
 
@@ -408,9 +407,10 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 		try {
 			_ddmImpl.mergeFields(newFields, existingFields);
+
+			Assert.fail();
 		}
 		catch (NullPointerException npe) {
-			Assert.fail();
 		}
 	}
 
@@ -500,30 +500,5 @@ public class DDMImplTest extends BaseDDMTestCase {
 	}
 
 	private DDMImpl _ddmImpl = new DDMImpl();
-
-	private class MockField extends Field {
-
-		public MockField(
-			long ddmStructureId, String name, List<Serializable> values,
-			Locale locale) {
-
-			super(ddmStructureId, name, values, locale);
-		}
-
-		public MockField(
-			long ddmStructureId, String name,
-			Map<Locale, List<Serializable>> valuesMap, Locale defaultLocale) {
-
-			super(ddmStructureId, name, valuesMap, defaultLocale);
-		}
-
-		@Override
-		public DDMStructure getDDMStructure() {
-			return structures.get(getDDMStructureId());
-		}
-
-		private static final long serialVersionUID = 1L;
-
-	}
 
 }

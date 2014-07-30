@@ -109,15 +109,17 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		List<Element> finderElements = entityElement.elements("finder");
 
 		List<Element> previousFinderColumnElements = null;
+		String previousFinderName = null;
 
+		finderElementsLoop:
 		for (Element finderElement : finderElements) {
-			String finderName = finderElement.attributeValue("name");
-
 			List<Element> finderColumnElements = finderElement.elements(
 				"finder-column");
+			String finderName = finderElement.attributeValue("name");
 
 			if (previousFinderColumnElements == null) {
 				previousFinderColumnElements = finderColumnElements;
+				previousFinderName = finderName;
 
 				continue;
 			}
@@ -136,6 +138,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			if (previousFinderColumnCount < finderColumnCount) {
 				previousFinderColumnElements = finderColumnElements;
+				previousFinderName = finderName;
 
 				continue;
 			}
@@ -164,11 +167,41 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				}
 
 				if (previousIndex < index) {
-					break;
+					previousFinderColumnElements = finderColumnElements;
+					previousFinderName = finderName;
+
+					continue finderElementsLoop;
+				}
+			}
+
+			int startsWithWeight = StringUtil.startsWithWeight(
+				previousFinderName, finderName);
+
+			String strippedPreviousFinderName = previousFinderName.substring(
+				startsWithWeight);
+			String strippedFinderName = finderName.substring(startsWithWeight);
+
+			if (strippedPreviousFinderName.startsWith("Gt") ||
+				strippedPreviousFinderName.startsWith("Like") ||
+				strippedPreviousFinderName.startsWith("Lt") ||
+				strippedPreviousFinderName.startsWith("Not")) {
+
+				if ((!strippedFinderName.startsWith("Gt") &&
+					 !strippedFinderName.startsWith("Like") &&
+					 !strippedFinderName.startsWith("Lt") &&
+					 !strippedFinderName.startsWith("Not")) ||
+					(strippedPreviousFinderName.compareTo(strippedFinderName) >
+						0)) {
+
+					processErrorMessage(
+						fileName,
+						"order: " + fileName + " " + entityName + " " +
+							finderName);
 				}
 			}
 
 			previousFinderColumnElements = finderColumnElements;
+			previousFinderName = finderName;
 		}
 	}
 

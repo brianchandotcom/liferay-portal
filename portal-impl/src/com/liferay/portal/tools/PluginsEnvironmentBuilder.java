@@ -432,7 +432,9 @@ public class PluginsEnvironmentBuilder {
 			portalJars.add("commons-logging.jar");
 			portalJars.add("log4j.jar");
 
-			Collections.sort(ListUtil.unique(portalJars));
+			portalJars = ListUtil.unique(portalJars);
+
+			Collections.sort(portalJars);
 		}
 
 		String[] customJarsArray = libDir.list(new GlobFilenameFilter("*.jar"));
@@ -517,7 +519,9 @@ public class PluginsEnvironmentBuilder {
 			addClasspathEntry(sb, "/portal/lib/global/" + jar, attributes);
 		}
 
-		Collections.sort(ListUtil.unique(portalJars));
+		portalJars = ListUtil.unique(portalJars);
+
+		Collections.sort(portalJars);
 
 		for (String jar : portalJars) {
 			if (!jar.equals("util-slf4j.jar")) {

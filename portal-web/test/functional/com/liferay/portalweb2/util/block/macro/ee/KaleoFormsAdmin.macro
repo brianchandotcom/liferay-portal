@@ -21,6 +21,7 @@
 	<command name="addProcessDetails">
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="NEXT_BUTTON_INACTIVE" value1="Next" />
 		<execute action="CPKaleoformsadminNewprocess#type" locator-key1="DETAILS_NAME_FIELD" value1="${kfProcessName}" />
+		<execute action="CPKaleoformsadminNewprocess#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${kfProcessDescription}" />
 	</command>
 
 	<command name="addWorkflow">
@@ -134,7 +135,20 @@
 	</command>
 
 	<command name="editProcessDetails">
-		<execute action="CPKaleoformsadminEditprocess#type" locator-key1="DETAILS_NAME_FIELD" value1="${kfProcessName}" />
+
+		<if>
+			<isset var="kfProcessNameEdit" />
+			<then>
+				<execute action="CPKaleoformsadminEditprocess#type" locator-key1="DETAILS_NAME_FIELD" value1="${kfProcessNameEdit}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="kfProcessDescriptionEdit" />
+			<then>
+				<execute action="CPKaleoformsadminEditprocess#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${kfProcessDescriptionEdit}" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="kfPendingForm" arg2="true" />

@@ -353,8 +353,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		synchronized (this) {
 			checkPortletActions(portlet, actions);
 
-			setActions(
-				_portletResourceActions, portlet.getPortletId(), actions);
+			_portletResourceActions.put(portlet.getPortletId(), actions);
 		}
 
 		return new ArrayList<String>(actions);
@@ -386,7 +385,7 @@ public class ResourceActionsImpl implements ResourceActions {
 				checkPortletGroupDefaultActions(groupDefaultActions);
 
 				_portletResourceGroupDefaultActions.put(
-					name, Collections.unmodifiableSet(groupDefaultActions));
+					name, groupDefaultActions);
 			}
 
 			Set<String> guestDefaultActions =
@@ -398,7 +397,7 @@ public class ResourceActionsImpl implements ResourceActions {
 				checkPortletGuestDefaultActions(guestDefaultActions);
 
 				_portletResourceGuestDefaultActions.put(
-					name, Collections.unmodifiableSet(guestDefaultActions));
+					name, guestDefaultActions);
 			}
 
 			Set<String> layoutManagerActions =
@@ -410,10 +409,10 @@ public class ResourceActionsImpl implements ResourceActions {
 				checkPortletLayoutManagerActions(layoutManagerActions);
 
 				_portletResourceLayoutManagerActions.put(
-					name, Collections.unmodifiableSet(layoutManagerActions));
+					name, layoutManagerActions);
 			}
 
-			actions = setActions(_portletResourceActions, name, actions);
+			_portletResourceActions.put(name, actions);
 		}
 
 		return new ArrayList<String>(actions);
@@ -461,7 +460,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		actions.add(ActionKeys.CONFIGURATION);
 		actions.add(ActionKeys.PERMISSIONS);
 
-		setActions(_portletResourceGuestUnsupportedActions, name, actions);
+		_portletResourceGuestUnsupportedActions.put(name, actions);
 
 		return new ArrayList<String>(actions);
 	}
@@ -485,7 +484,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			actions.add(ActionKeys.PREFERENCES);
 			actions.add(ActionKeys.VIEW);
 
-			setActions(_portletResourceLayoutManagerActions, name, actions);
+			_portletResourceLayoutManagerActions.put(name, actions);
 		}
 
 		return new ArrayList<String>(actions);
@@ -911,7 +910,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		groupDefaultActions.addAll(readActionKeys(groupDefaultsElement));
 
-		setActions(actionsMap, name, groupDefaultActions);
+		actionsMap.put(name, groupDefaultActions);
 	}
 
 	protected Set<String> readGuestDefaultActions(
@@ -942,7 +941,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		checkGuestUnsupportedActions(
 			guestUnsupportedActions, guestDefaultActions);
 
-		setActions(actionsMap, name, guestUnsupportedActions);
+		actionsMap.put(name, guestUnsupportedActions);
 	}
 
 	protected void readLayoutManagerActions(
@@ -961,7 +960,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			layoutManagerActions.addAll(supportsActions);
 		}
 
-		setActions(actionsMap, name, layoutManagerActions);
+		actionsMap.put(name, layoutManagerActions);
 	}
 
 	protected void readModelResource(
@@ -1028,7 +1027,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		checkModelActions(supportsActions);
 
-		setActions(_modelResourceActions, name, supportsActions);
+		_modelResourceActions.put(name, supportsActions);
 
 		readGroupDefaultActions(
 			modelResourceElement, _modelResourceGroupDefaultActions, name);
@@ -1040,8 +1039,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			modelResourceElement, _modelResourceGuestUnsupportedActions, name,
 			guestDefaultActions);
 
-		setActions(
-			_modelResourceGuestDefaultActions, name, guestDefaultActions);
+		_modelResourceGuestDefaultActions.put(name, guestDefaultActions);
 
 		readOwnerDefaultActions(
 			modelResourceElement, _modelResourceOwnerDefaultActions, name);
@@ -1062,7 +1060,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		ownerDefaultActions.addAll(readActionKeys(ownerDefaultsElement));
 
-		setActions(actionsMap, name, ownerDefaultActions);
+		actionsMap.put(name, ownerDefaultActions);
 	}
 
 	protected void readPortletResource(
@@ -1086,8 +1084,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			checkPortletActions(name, supportsActions);
 		}
 
-		supportsActions = setActions(
-			_portletResourceActions, name, supportsActions);
+		_portletResourceActions.put(name, supportsActions);
 
 		readGroupDefaultActions(
 			portletResourceElement, _portletResourceGroupDefaultActions, name);
@@ -1099,8 +1096,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			portletResourceElement, _portletResourceGuestUnsupportedActions,
 			name, guestDefaultActions);
 
-		setActions(
-			_portletResourceGuestDefaultActions, name, guestDefaultActions);
+		_portletResourceGuestDefaultActions.put(name, guestDefaultActions);
 
 		readLayoutManagerActions(
 			portletResourceElement, _portletResourceLayoutManagerActions, name,
@@ -1119,16 +1115,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		supportsActions.addAll(readActionKeys(supportsElement));
 
 		return supportsActions;
-	}
-
-	protected Set<String> setActions(
-		Map<String, Set<String>> actionsMap, String name, Set<String> actions) {
-
-		actions = Collections.unmodifiableSet(actions);
-
-		actionsMap.put(name, actions);
-
-		return actions;
 	}
 
 	@BeanReference(type = PortletLocalService.class)

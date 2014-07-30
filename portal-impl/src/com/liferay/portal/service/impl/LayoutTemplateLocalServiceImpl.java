@@ -46,6 +46,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -266,7 +267,8 @@ public class LayoutTemplateLocalServiceImpl
 		String servletContextName, ServletContext servletContext, String[] xmls,
 		PluginPackage pluginPackage) {
 
-		List<LayoutTemplate> layoutTemplates = new ArrayList<LayoutTemplate>();
+		Set<LayoutTemplate> layoutTemplates =
+			new LinkedHashSet<LayoutTemplate>();
 
 		try {
 			for (String xml : xmls) {
@@ -280,7 +282,7 @@ public class LayoutTemplateLocalServiceImpl
 			_log.error(e, e);
 		}
 
-		return ListUtil.unique(layoutTemplates);
+		return new ArrayList<LayoutTemplate>(layoutTemplates);
 	}
 
 	@Override

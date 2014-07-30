@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateVariableDefinition;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -41,8 +40,10 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -160,8 +161,8 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 			return Collections.emptyList();
 		}
 
-		List<TemplateVariableDefinition> templateVariableDefinitions =
-			new ArrayList<TemplateVariableDefinition>();
+		Set<TemplateVariableDefinition> templateVariableDefinitions =
+			new LinkedHashSet<TemplateVariableDefinition>();
 
 		// Declared variables
 
@@ -222,7 +223,8 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 			templateVariableDefinitions.add(variableDefinition);
 		}
 
-		return ListUtil.unique(templateVariableDefinitions);
+		return new ArrayList<TemplateVariableDefinition>(
+			templateVariableDefinitions);
 	}
 
 	protected JSONObject getAutocompleteVariableJSONObject(Class<?> clazz) {

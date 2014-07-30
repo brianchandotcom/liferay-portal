@@ -92,6 +92,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -4511,7 +4512,7 @@ public class ServiceBuilder {
 	private List<Entity> _mergeReferenceList(Entity entity) {
 		List<Entity> referenceList = entity.getReferenceList();
 
-		List<Entity> list = new ArrayList<Entity>();
+		Set<Entity> list = new LinkedHashSet<Entity>();
 
 		if (_autoImportDefaultReferences) {
 			list.addAll(_ejbList);
@@ -4522,7 +4523,7 @@ public class ServiceBuilder {
 
 		list.addAll(referenceList);
 
-		return ListUtil.unique(list);
+		return new ArrayList<Entity>(list);
 	}
 
 	private void _parseEntity(Element entityElement) throws Exception {

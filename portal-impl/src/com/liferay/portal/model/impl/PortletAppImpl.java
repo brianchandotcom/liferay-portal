@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -139,7 +138,7 @@ public class PortletAppImpl implements PortletApp {
 
 	@Override
 	public List<Portlet> getPortlets() {
-		return ListUtil.unique(_portlets);
+		return new ArrayList<Portlet>(_portlets);
 	}
 
 	@Override
@@ -235,7 +234,7 @@ public class PortletAppImpl implements PortletApp {
 		new LinkedHashSet<PortletFilter>();
 	private Map<String, PortletFilter> _portletFiltersByFilterName =
 		new HashMap<String, PortletFilter>();
-	private List<Portlet> _portlets = new ArrayList<Portlet>();
+	private Set<Portlet> _portlets = new LinkedHashSet<Portlet>();
 	private Set<PortletURLListener> _portletURLListeners =
 		new LinkedHashSet<PortletURLListener>();
 	private Map<String, PortletURLListener>

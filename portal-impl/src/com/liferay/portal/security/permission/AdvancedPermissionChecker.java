@@ -53,6 +53,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -863,7 +864,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return userOrgs;
 		}
 
-		List<Organization> organizations = new ArrayList<Organization>();
+		Set<Organization> organizations = new LinkedHashSet<Organization>();
 
 		for (Organization organization : userOrgs) {
 			if (!organizations.contains(organization)) {
@@ -877,7 +878,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			}
 		}
 
-		return ListUtil.unique(organizations);
+		return new ArrayList<Organization>(organizations);
 	}
 
 	protected boolean hasGuestPermission(

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -35,8 +34,9 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.sites.action.ActionUtil;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -159,7 +159,7 @@ public class ExportLayoutsAction extends PortletAction {
 	protected long[] getLayoutIds(PortletRequest portletRequest)
 		throws Exception {
 
-		List<Layout> layouts = new ArrayList<Layout>();
+		Set<Layout> layouts = new LinkedHashSet<Layout>();
 
 		Map<Long, Boolean> layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(
 			portletRequest);
@@ -179,7 +179,8 @@ public class ExportLayoutsAction extends PortletAction {
 			}
 		}
 
-		return ExportImportHelperUtil.getLayoutIds(ListUtil.unique(layouts));
+		return ExportImportHelperUtil.getLayoutIds(
+			new ArrayList<Layout>(layouts));
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ExportLayoutsAction.class);

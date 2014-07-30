@@ -52,6 +52,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -292,7 +293,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		String themesPath, boolean loadFromServletContext, String[] xmls,
 		PluginPackage pluginPackage) {
 
-		List<Theme> themes = new ArrayList<Theme>();
+		Set<Theme> themes = new LinkedHashSet<Theme>();
 
 		try {
 			for (String xml : xmls) {
@@ -308,7 +309,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 
 		_themesPool.clear();
 
-		return ListUtil.unique(themes);
+		return new ArrayList<Theme>(themes);
 	}
 
 	@Override

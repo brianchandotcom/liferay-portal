@@ -44,6 +44,15 @@ security-manager-enabled=true</echo>
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${liferay.portal.bundle}" arg2="6.1.20" />
+			<then>
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties" append="true">
+
+app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
+			</then>
+		</if>
+
 		<for list="${plugins.includes}" param="plugin">
 			<sequential>
 				<if>

@@ -143,16 +143,12 @@ public class SocialRequestInterpreterLocalServiceImpl
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
 		String className = PortalUtil.getClassName(request.getClassNameId());
-		String requestPortletId = getSocialRequestPortletId(request);
 
 		for (int i = 0; i < _requestInterpreters.size(); i++) {
 			SocialRequestInterpreterImpl requestInterpreter =
 				(SocialRequestInterpreterImpl)_requestInterpreters.get(i);
 
-			if ((Validator.isNull(requestPortletId) ||
-				 requestPortletId.equals(requestInterpreter.getPortletId())) &&
-				requestInterpreter.hasClassName(className)) {
-
+			if (matches(requestInterpreter, className, request)) {
 				SocialRequestFeedEntry requestFeedEntry =
 					requestInterpreter.interpret(request, themeDisplay);
 
@@ -187,16 +183,12 @@ public class SocialRequestInterpreterLocalServiceImpl
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
 		String className = PortalUtil.getClassName(request.getClassNameId());
-		String requestPortletId = getSocialRequestPortletId(request);
 
 		for (int i = 0; i < _requestInterpreters.size(); i++) {
 			SocialRequestInterpreterImpl requestInterpreter =
 				(SocialRequestInterpreterImpl)_requestInterpreters.get(i);
 
-			if ((Validator.isNull(requestPortletId) ||
-				 requestPortletId.equals(requestInterpreter.getPortletId())) &&
-				requestInterpreter.hasClassName(className)) {
-
+			if (matches(requestInterpreter, className, request)) {
 				boolean value = requestInterpreter.processConfirmation(
 					request, themeDisplay);
 
@@ -227,16 +219,12 @@ public class SocialRequestInterpreterLocalServiceImpl
 		SocialRequest request, ThemeDisplay themeDisplay) {
 
 		String className = PortalUtil.getClassName(request.getClassNameId());
-		String requestPortletId = getSocialRequestPortletId(request);
 
 		for (int i = 0; i < _requestInterpreters.size(); i++) {
 			SocialRequestInterpreterImpl requestInterpreter =
 				(SocialRequestInterpreterImpl)_requestInterpreters.get(i);
 
-			if ((Validator.isNull(requestPortletId) ||
-				 requestPortletId.equals(requestInterpreter.getPortletId())) &&
-				requestInterpreter.hasClassName(className)) {
-
+			if (matches(requestInterpreter, className, request)) {
 				boolean value = requestInterpreter.processRejection(
 					request, themeDisplay);
 
@@ -260,6 +248,25 @@ public class SocialRequestInterpreterLocalServiceImpl
 
 			return StringPool.BLANK;
 		}
+	}
+
+	protected boolean matches(
+		SocialRequestInterpreterImpl requestInterpreter, String className,
+		SocialRequest request) {
+
+		if (!requestInterpreter.hasClassName(className)) {
+			return false;
+		}
+
+		String requestPortletId = getSocialRequestPortletId(request);
+
+		if (Validator.isNull(requestPortletId) ||
+			requestInterpreter.getPortletId().equals(requestPortletId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

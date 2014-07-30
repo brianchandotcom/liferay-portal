@@ -45,8 +45,9 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 			liferayEhcacheRegionFactory.getPortalCacheManager();
 
 		_portalCacheManager =
-			(PortalCacheManager<?, ?>)PortalBeanLocatorUtil.locate(
-				_MULTI_VM_PORTAL_CACHE_MANAGER_BEAN_NAME);
+			(PortalCacheManager<Serializable, Serializable>)
+				PortalBeanLocatorUtil.locate(
+					_MULTI_VM_PORTAL_CACHE_MANAGER_BEAN_NAME);
 	}
 
 	@Override
@@ -75,12 +76,10 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 		String cacheName = portalCacheClusterEvent.getCacheName();
 
 		PortalCache<Serializable, Serializable> portalCache =
-			(PortalCache<Serializable, Serializable>)
-				_portalCacheManager.getCache(cacheName);
+			_portalCacheManager.getCache(cacheName);
 
 		if ((portalCache == null) && (_hibernateCacheManager != null)) {
-			portalCache = (PortalCache<Serializable, Serializable>)
-				_hibernateCacheManager.getCache(cacheName);
+			portalCache = _hibernateCacheManager.getCache(cacheName);
 		}
 
 		if (portalCache == null) {
@@ -131,7 +130,8 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 	private static Log _log = LogFactoryUtil.getLog(
 		ClusterLinkPortalCacheClusterListener.class);
 
-	private PortalCacheManager<?, ?> _hibernateCacheManager;
-	private PortalCacheManager<?, ?> _portalCacheManager;
+	private PortalCacheManager<Serializable, Serializable>
+		_hibernateCacheManager;
+	private PortalCacheManager<Serializable, Serializable> _portalCacheManager;
 
 }

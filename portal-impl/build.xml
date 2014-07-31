@@ -226,7 +226,7 @@ public class Creole10Parser]]></replacevalue>
 	</target>
 
 	<target name="build-ehcache-xsd">
-		<get dest="ehcache.xsd" src="http://ehcache.org/ehcache.xsd " />
+		<get dest="ehcache.xsd" src="http://ehcache.org/ehcache.xsd" />
 
 		<xmltask source="ehcache.xsd" dest="src/ehcache/ehcache.xsd">
 			<replace path="/xs:schema/xs:element[@name='ehcache']/xs:complexType/xs:attribute[@name='name']/@use" withText="required" />
@@ -234,10 +234,11 @@ public class Creole10Parser]]></replacevalue>
 
 		<replace file="src/ehcache/ehcache.xsd">
 			<replacefilter>
-				<replacetoken><![CDATA[<?xml]]></replacetoken>
-				<replacevalue><![CDATA[<!-- @generated -->
+				<replacetoken><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>]]></replacetoken>
+				<replacevalue><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
-<?xml]]></replacevalue>
+<!-- @generated -->
+]]></replacevalue>
 			</replacefilter>
 		</replace>
 

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -128,14 +127,11 @@ public class ComboServlet extends HttpServlet {
 
 		Set<String> modulePathsSet = new LinkedHashSet<String>();
 
-		Enumeration<String> enu = request.getParameterNames();
+		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
+			request.getQueryString());
 
-		if (ServerDetector.isWebSphere()) {
-			Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
-				request.getQueryString());
-
-			enu = Collections.enumeration(parameterMap.keySet());
-		}
+		Enumeration<String> enu = Collections.enumeration(
+			parameterMap.keySet());
 
 		while (enu.hasMoreElements()) {
 			String name = enu.nextElement();
@@ -143,6 +139,8 @@ public class ComboServlet extends HttpServlet {
 			if (_protectedParameters.contains(name)) {
 				continue;
 			}
+
+			name = HttpUtil.decodePath(name);
 
 			modulePathsSet.add(name);
 		}

@@ -243,11 +243,13 @@ public class EditTemplateAction extends PortletAction {
 		File file = uploadPortletRequest.getFile("script");
 
 		if (file != null) {
-			scriptContent = FileUtil.read(file);
+			String fileScriptContent = FileUtil.read(file);
 
-			if (Validator.isNotNull(scriptContent) && !isValidFile(file)) {
+			if (Validator.isNotNull(fileScriptContent) && !isValidFile(file)) {
 				throw new TemplateScriptException();
 			}
+
+			return fileScriptContent;
 		}
 
 		String type = ParamUtil.getString(uploadPortletRequest, "type");

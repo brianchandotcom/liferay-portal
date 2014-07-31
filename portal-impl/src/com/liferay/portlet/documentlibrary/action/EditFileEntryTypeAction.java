@@ -42,6 +42,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
+import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
 import com.liferay.portlet.dynamicdatamapping.StructureNameException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -104,6 +105,7 @@ public class EditFileEntryTypeAction extends PortletAction {
 		catch (Exception e) {
 			if (e instanceof DuplicateFileEntryTypeException ||
 				e instanceof NoSuchMetadataSetException ||
+				e instanceof StructureDefinitionException ||
 				e instanceof StructureDuplicateElementException ||
 				e instanceof StructureNameException) {
 
@@ -198,9 +200,15 @@ public class EditFileEntryTypeAction extends PortletAction {
 	protected String getDefinition(ServiceContext serviceContext)
 		throws PortalException {
 
-		String definition = ParamUtil.getString(serviceContext, "definition");
+		try {
+			String definition = ParamUtil.getString(
+				serviceContext, "definition");
 
-		return DDMXSDUtil.getXSD(definition);
+			return DDMXSDUtil.getXSD(definition);
+		}
+		catch (PortalException pe) {
+			throw new StructureDefinitionException(pe);
+		}
 	}
 
 	protected long[] getLongArray(PortletRequest portletRequest, String name) {

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -253,7 +254,12 @@ public class EditTemplateAction extends PortletAction {
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
 
 		if (type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
-			scriptContent = DDMXSDUtil.getXSD(scriptContent);
+			try {
+				scriptContent = DDMXSDUtil.getXSD(scriptContent);
+			}
+			catch (PortalException pe) {
+				throw new TemplateScriptException();
+			}
 		}
 
 		return scriptContent;

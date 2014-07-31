@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.action;
 
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
@@ -201,6 +202,20 @@ public class EditStructureAction extends PortletAction {
 		}
 	}
 
+	protected String getDefinition(ActionRequest actionRequest)
+		throws PortalException {
+
+		try {
+			String definition = ParamUtil.getString(
+				actionRequest, "definition");
+
+			return DDMXSDUtil.getXSD(definition);
+		}
+		catch (PortalException pe) {
+			throw new StructureDefinitionException(pe);
+		}
+	}
+
 	protected String getSaveAndContinueRedirect(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			DDMStructure structure, String redirect)
@@ -257,7 +272,7 @@ public class EditStructureAction extends PortletAction {
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		String definition = ParamUtil.getString(actionRequest, "definition");
+		String definition = getDefinition(actionRequest);
 		String storageType = ParamUtil.getString(actionRequest, "storageType");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -268,14 +283,13 @@ public class EditStructureAction extends PortletAction {
 		if (cmd.equals(Constants.ADD)) {
 			structure = DDMStructureServiceUtil.addStructure(
 				groupId, parentStructureId, scopeClassNameId, structureKey,
-				nameMap, descriptionMap, DDMXSDUtil.getXSD(definition),
-				storageType, DDMStructureConstants.TYPE_DEFAULT,
-				serviceContext);
+				nameMap, descriptionMap, definition, storageType,
+				DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			structure = DDMStructureServiceUtil.updateStructure(
-				classPK, parentStructureId, nameMap, descriptionMap,
-				DDMXSDUtil.getXSD(definition), serviceContext);
+				classPK, parentStructureId, nameMap, descriptionMap, definition,
+				serviceContext);
 		}
 
 		return structure;

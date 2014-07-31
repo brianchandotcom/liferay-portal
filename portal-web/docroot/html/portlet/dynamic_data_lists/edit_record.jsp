@@ -146,7 +146,11 @@ if (translating) {
 								<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
 							</liferay-portlet:renderURL>
 
-							var url = '<%= updateDefaultLanguageURL %>' + '&<portlet:namespace />defaultLanguageId=' + event.newVal;
+							var url = Liferay.PortletURL.createURL('<%= updateDefaultLanguageURL %>');
+
+							url.setPortletId('<%= portletDisplay.getId() %>')
+
+							url.setParameter('defaultLanguageId', event.newVal);
 
 							window.location.href = url;
 						},

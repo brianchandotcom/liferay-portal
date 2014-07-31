@@ -11,6 +11,35 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="DefualtPortalLandingPage" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#editDefaultLandingPageCP">
+			<var name="defaultLandingPage" value="/web/guest/landing" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Liferay" />
+			<var name="sitePageName" value="landing" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute action="Home#assertLocation" value1="http://localhost:8080/web/guest/landing" />
+	</command>
+
 	<command name="DeletePortalInstance" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Instances" />

@@ -225,6 +225,25 @@ public class Creole10Parser]]></replacevalue>
 		<ant dir="../portal-web" target="build-css" />
 	</target>
 
+	<target name="build-ehcache-xsd">
+		<get dest="ehcache.xsd" src="http://ehcache.org/ehcache.xsd " />
+
+		<xmltask source="ehcache.xsd" dest="src/ehcache/ehcache.xsd">
+			<replace path="/xs:schema/xs:element[@name='ehcache']/xs:complexType/xs:attribute[@name='name']/@use" withText="required" />
+		</xmltask>
+
+		<replace file="src/ehcache/ehcache.xsd">
+			<replacefilter>
+				<replacetoken><![CDATA[<?xml]]></replacetoken>
+				<replacevalue><![CDATA[<!-- @generated -->
+
+<?xml]]></replacevalue>
+			</replacefilter>
+		</replace>
+
+		<delete file="ehcache.xsd" />
+	</target>
+
 	<target name="build-db">
 		<ant dir="../sql" target="build-db" />
 	</target>

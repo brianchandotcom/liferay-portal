@@ -987,7 +987,7 @@ $editLayoutPanelWidth: 460px;
 		z-index: 1100;
 
 		@include respond-to(phone, tablet) {
-			margin: 0 0 0 -20px;
+			margin: 0;
 			position: static;
 			width: auto;
 
@@ -1039,7 +1039,7 @@ $editLayoutPanelWidth: 460px;
 		}
 
 		@include respond-to(phone) {
-			padding-left: 20px;
+			padding-left: 0;
 		}
 
 		@include respond-to(tablet) {

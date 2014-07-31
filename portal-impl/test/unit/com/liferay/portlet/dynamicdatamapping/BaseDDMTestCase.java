@@ -49,11 +49,14 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUti
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -216,6 +219,39 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		return document;
 	}
 
+	protected Field createField(
+		long ddmStructureId, String fieldName, List<Serializable> enValues,
+		List<Serializable> ptValues) {
+
+		Map<Locale, List<Serializable>> valuesMap = createValuesMap(
+			enValues, ptValues);
+
+		return new MockField(
+			ddmStructureId, fieldName, valuesMap, LocaleUtil.US);
+	}
+
+	protected Fields createFields(Field... fieldsArray) {
+		Fields fields = new Fields();
+
+		for (Field field : fieldsArray) {
+			fields.put(field);
+		}
+
+		return fields;
+	}
+
+	protected Field createFieldsDisplayField(
+		long ddmStructureId, String value) {
+
+		Field fieldsDisplayField = new MockField(
+			ddmStructureId, DDMImpl.FIELDS_DISPLAY_NAME,
+			createValuesList(value), LocaleUtil.US);
+
+		fieldsDisplayField.setDefaultLocale(LocaleUtil.US);
+
+		return fieldsDisplayField;
+	}
+
 	protected Document createSampleDocument() {
 		Document document = createEmptyDocument();
 
@@ -283,6 +319,33 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		localizedValue.addString(LocaleUtil.US, label);
 
 		return ddmFormField;
+	}
+
+	protected List<Serializable> createValuesList(String... valuesString) {
+		List<Serializable> values = new ArrayList<Serializable>();
+
+		for (String valueString : valuesString) {
+			values.add(valueString);
+		}
+
+		return values;
+	}
+
+	protected Map<Locale, List<Serializable>> createValuesMap(
+		List<Serializable> enValues, List<Serializable> ptValues) {
+
+		Map<Locale, List<Serializable>> valuesMap =
+			new HashMap<Locale, List<Serializable>>();
+
+		if (enValues != null) {
+			valuesMap.put(LocaleUtil.US, enValues);
+		}
+
+		if (ptValues != null) {
+			valuesMap.put(LocaleUtil.BRAZIL, ptValues);
+		}
+
+		return valuesMap;
 	}
 
 	protected DDMStructure getStructure(long structureId) {

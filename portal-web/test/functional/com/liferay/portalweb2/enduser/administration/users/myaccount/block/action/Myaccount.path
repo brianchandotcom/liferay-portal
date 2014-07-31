@@ -188,6 +188,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_MIDDLE_NAME_FIELD</td>
+	<td>//input[@id='_2_middleName']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS_PICTURE_CHANGE_BUTTON</td>
 	<td>//button[contains(@class,'edit-logo')]</td>
 	<td></td>

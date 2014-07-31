@@ -519,6 +519,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTROL_PANEL_MANAGE_BUTTON</td>
+	<td>//a[@id='controlPanelHomeActionManageSite']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

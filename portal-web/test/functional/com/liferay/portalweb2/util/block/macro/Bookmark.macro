@@ -139,6 +139,17 @@
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
 	</command>
 
+	<command name="addRelatedAssetBookmarksEntryPG">
+		<execute action="PGBookmarksAddBookmarkRelatedAssets#selectFrame" locator-key1="SELECT_BOOKMARKS_ENTRY_IFRAME" />
+		<execute action="PGBookmarksAddBookmarkRelatedAssets#assertClick" locator-key1="NAVIGATION_ADD_BOOKMARKS_ENTRY" value1="Add Bookmarks Entry" />
+
+		<execute action="PGBookmarksAddBookmarkRelatedAssets#type" locator-key1="NAME_FIELD" value1="${bookmarkName}" />
+		<execute action="PGBookmarksAddBookmarkRelatedAssets#type" locator-key1="URL_FIELD" value1="${bookmarkURL}" />
+
+		<execute action="PGBookmarksAddBookmarkRelatedAssets#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGBookmarksAddBookmarkRelatedAssets#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="addToSubfolderCP">
 		<var name="key_folderName" value="${folderName}" />
 

@@ -73,6 +73,32 @@
 	<td>//a[contains(@class,'btn-cancel')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RELATED_ASSETS-->
+<tr>
+	<td>RELATED_ASSETS_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='bookmarksEntryAssetLinksPanel']/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='bookmarksEntryAssetLinksPanel']/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_SELECT</td>
+	<td>//div[contains(@class,'select-existing')]/a[@title='Select']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_MENULIST_SELECTION</td>
+	<td>//li[contains(@class,'asset-selector') and contains(.,'${key_assetType}')]/a/span</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

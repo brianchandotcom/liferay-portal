@@ -142,15 +142,19 @@ if (translating) {
 				translationManager.after(
 					{
 						defaultLocaleChange: function(event) {
-							<liferay-portlet:renderURL copyCurrentRenderParameters="<%= true %>" var="updateDefaultLanguageURL">
+							<liferay-portlet:renderURL var="updateDefaultLanguageURL">
 								<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
 							</liferay-portlet:renderURL>
 
 							var url = Liferay.PortletURL.createURL('<%= updateDefaultLanguageURL %>');
 
-							url.setPortletId('<%= portletDisplay.getId() %>')
+							url.setPortletId('<%= portletDisplay.getId() %>');
 
 							url.setParameter('defaultLanguageId', event.newVal);
+							url.setParameter('formDDMTemplateId', <%= formDDMTemplateId %>);
+							url.setParameter('recordId', <%= recordId %>);
+							url.setParameter('recordSetId', <%= recordSetId %>);
+							url.setParameter('redirect', '<%= redirect %>');
 
 							window.location.href = url;
 						},

@@ -57,7 +57,7 @@ public class CamelCaseUtil {
 		return sb.toString();
 	}
 
-	public static String normalizeCamelCase(String s) {
+	public static String normalizeCamelCase(String s, boolean onlyFirstWord) {
 		StringBuilder sb = new StringBuilder();
 
 		boolean upperCase = false;
@@ -72,7 +72,7 @@ public class CamelCaseUtil {
 				continue;
 			}
 
-			if (c == '.') {
+			if (onlyFirstWord && c == '.') {
 				afterDot = true;
 
 				sb.append(c);

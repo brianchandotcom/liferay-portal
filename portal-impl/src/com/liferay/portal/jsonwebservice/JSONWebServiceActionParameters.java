@@ -132,7 +132,8 @@ public class JSONWebServiceActionParameters {
 		for (String parameterName : parameterNames) {
 			String value = jsonRPCRequest.getParameter(parameterName);
 
-			parameterName = CamelCaseUtil.normalizeCamelCase(parameterName);
+			parameterName = CamelCaseUtil.normalizeCamelCase(
+				parameterName, true);
 
 			_parameters.put(parameterName, value);
 		}
@@ -229,7 +230,7 @@ public class JSONWebServiceActionParameters {
 				}
 			}
 
-			name = CamelCaseUtil.normalizeCamelCase(name);
+			name = CamelCaseUtil.normalizeCamelCase(name, true);
 
 			_parameters.put(name, value);
 		}

@@ -413,7 +413,8 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		for (int i = 0; i < methodParameters.length; i++) {
 			String parameterName = methodParameters[i].getName();
 
-			parameterName = CamelCaseUtil.normalizeCamelCase(parameterName);
+			parameterName = CamelCaseUtil.normalizeCamelCase(
+				parameterName, true);
 
 			Object value = _jsonWebServiceActionParameters.getParameter(
 				parameterName);

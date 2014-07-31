@@ -33,7 +33,7 @@
 		<execute action="PGMessageboardsPostthread#click" locator-key1="BLOCK_QUOTE_BUTTON" />
 		<execute action="PGMessageboardsPostthread#type" locator-key1="SUBJECT_FIELD" value1="${threadSubject}" />
 		<execute action="PGMessageboardsPostthread#click" locator-key1="BLOCK_QUOTE_FIELD" value1="70,400" />
-		<execute action="PGMessageboardsPostthread#typeScreen" locator1="${threadBody}" />
+		<execute action="PGMessageboardsPostthread#typeScreen" value1="${threadBody}" />
 
 		<take-screenshot />
 

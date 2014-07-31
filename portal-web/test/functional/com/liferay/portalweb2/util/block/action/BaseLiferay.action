@@ -267,6 +267,12 @@
 		</default>
 	</command>
 
+	<command name="keyPressNative">
+		<default>
+			<execute function="KeyPressNative#keyPressNative" />
+		</default>
+	</command>
+
 	<command name="makeVisible">
 		<default>
 			<execute function="MakeVisible#makeVisible" />

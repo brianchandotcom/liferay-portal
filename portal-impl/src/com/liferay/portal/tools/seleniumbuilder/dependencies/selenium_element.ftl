@@ -13,8 +13,8 @@ liferaySelenium.${selenium}(
 		(selenium = "assertConsoleTextPresent") ||
 		(selenium = "assertLocation") ||
 		(selenium = "assertTextNotPresent") ||
-		(selenium = "assertTextPresent") ||
-		(selenium = "waitForConfirmation") ||
+		(selenium = "assertTextPresent") || (selenium = "keyPressNative") ||
+		(selenium = "typeScreen") || (selenium = "waitForConfirmation") ||
 		(selenium = "waitForTextNotPresent") ||
 		(selenium = "waitForTextPresent")
 	>

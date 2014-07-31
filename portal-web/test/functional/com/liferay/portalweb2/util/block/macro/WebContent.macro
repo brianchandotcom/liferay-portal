@@ -1625,7 +1625,6 @@
 		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 		<execute action="CPWebcontentAddwebcontent#selectFrame" locator-key1="CONTENT_FIELD" />
 		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="BODY_FIELD" value1="${webContentContent}" />
-
 		<execute action="CPWebcontentAddwebcontent#selectFrameTop" />
 	</command>
 

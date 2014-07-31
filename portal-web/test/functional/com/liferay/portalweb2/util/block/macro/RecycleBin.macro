@@ -46,17 +46,29 @@
 		<var name="key_assetName" value="${assetName}" />
 
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_TABLE_TYPE" value1="${assetType}" />
 		<execute action="CPRecyclebin#click" locator-key1="RECYCLE_BIN_TABLE_ACTIONS" />
 		<execute action="CPRecyclebin#assertClick" locator-key1="RECYCLE_BIN_MENULIST_RESTORE" value1="Restore" />
 
-		<var name="key_assetType" value="${assetType}" />
+		<if>
+			<isset var="assetType" />
+			<then>
+				<var name="key_assetType" value="${assetType}" />
 
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_CONTENT" value1="${assetType}" />
+				<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_CONTENT" value1="${assetType}" />
+			</then>
+			<else>
+				<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The item was restored." />
+			</else>
+		</if>
 
-		<var name="key_assetRestoreLocation" value="${assetRestoreLocation}" />
+		<if>
+			<isset var="assetRestoreLocation" />
+			<then>
+				<var name="key_assetRestoreLocation" value="${assetRestoreLocation}" />
 
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RESTORE_LOCATION" value1="${assetRestoreLocation}" />
+				<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RESTORE_LOCATION" value1="${assetRestoreLocation}" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${multipleAssets}" arg2="true" />

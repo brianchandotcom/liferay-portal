@@ -21,6 +21,23 @@
 		<execute action="BasePortletConfiguration#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="gotoBookmarksSelectionPG">
+		<execute action="PGBookmarks#assertClick" locator-key1="FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
+
+		<if>
+			<condition action="PGBookmarksAddBookmark#isElementPresent" locator-key1="RELATED_ASSETS_PANEL_COLLAPSED" />
+			<then>
+				<execute action="PGBookmarksAddBookmark#click" locator-key1="RELATED_ASSETS_PANEL_COLLAPSED" />
+				<execute action="PGBookmarksAddBookmark#assertElementPresent" locator-key1="RELATED_ASSETS_PANEL_EXPANDED" />
+			</then>
+		</if>
+
+		<var name="key_assetType" value="${assetType}" />
+
+		<execute action="PGBookmarksAddBookmark#assertClick" locator-key1="RELATED_ASSETS_SELECT" value1="Select" />
+		<execute action="PGBookmarksAddBookmark#assertClick" locator-key1="RELATED_ASSETS_MENULIST_SELECTION" value1="${assetType}" />
+	</command>
+
 	<command name="gotoWebContentSelectionCP">
 		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 		<execute action="CPWebcontent#assertClick" locator-key1="ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />

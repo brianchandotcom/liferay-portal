@@ -986,6 +986,27 @@
 		<execute action="Myaccount#assertClick" locator-key1="MENU_USER_INFORMATION_DETAILS" value1="Details" />
 
 		<if>
+			<isset var="userFirstNameEdit" />
+			<then>
+				<execute action="Myaccount#type" locator-key1="DETAILS_FIRST_NAME_FIELD" value1="${userFirstNameEdit}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userLastNameEdit" />
+			<then>
+				<execute action="Myaccount#type" locator-key1="DETAILS_LAST_NAME_FIELD" value1="${userLastNameEdit}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userMiddleNameEdit" />
+			<then>
+				<execute action="Myaccount#type" locator-key1="DETAILS_MIDDLE_NAME_FIELD" value1="${userMiddleNameEdit}" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="userScreenNameEdit" />
 			<then>
 				<execute action="Myaccount#type" locator-key1="DETAILS_SCREEN_NAME_FIELD" value1="${userScreenNameEdit}" />

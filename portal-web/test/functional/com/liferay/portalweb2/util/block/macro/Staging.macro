@@ -238,6 +238,13 @@
 		</if>
 
 		<if>
+			<equals arg1="${checkAllContent}" arg2="true" />
+			<then>
+				<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_ALL_CONTENT_RADIO" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${uncheckContent}" arg2="true" />
 			<then>
 				<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
@@ -281,6 +288,17 @@
 		</if>
 
 		<execute action="CPSitesEdit#assertElementNotPresent" locator-key1="STAGING_ENABLED_ON_PUBLIC_PAGES_CHECKBOX" />
+	</command>
+
+	<command name="editPublishTemplate">
+		<execute action="StagingPublishtolivenow#assertClick" locator-key1="PUBLISH_TEMPLATES_BUTTON" value1="Publish Templates" />
+
+		<var name="key_publishTemplateName" value="${publishTemplateName}" />
+
+		<execute action="StagingPublishtolivenow#assertTextEquals" locator-key1="PUBLISH_TEMPLATES_TABLE_NAME" value1="${publishTemplateName}" />
+		<execute action="StagingPublishtolivenow#assertClick" locator-key1="PUBLISH_TEMPLATES_TABLE_NAME" value1="${publishTemplateName}" />
+		<execute action="StagingPublishtolivenow#type" locator-key1="PUBLISH_TEMPLATES_NAME_FIELD" value1="${publishTemplateNameEdit}" />
+		<execute action="StagingPublishtolivenow#type" locator-key1="PUBLISH_TEMPLATES_DESCRIPTION_FIELD" value1="${publishTemplateDescriptionEdit}" />
 	</command>
 
 	<command name="editSitePageVariationPG">
@@ -400,6 +418,15 @@
 		<execute action="PGStagingManagesitepagesvariations#selectFrameTop" value1="relative=top" />
 		<execute action="PGStagingManagesitepagesvariations#selectFrame" locator-key1="MANAGE_SITE_PAGES_VARIATIONS_IFRAME" />
 		<execute action="PGStagingManagesitepagesvariations#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Site page variation was merged." />
+	</command>
+
+	<command name="moveToTheRecycleBinPublishTemplate">
+		<execute action="StagingPublishtolivenow#assertClick" locator-key1="PUBLISH_TEMPLATES_BUTTON" value1="Publish Templates" />
+
+		<var name="key_publishTemplateName" value="${publishTemplateName}" />
+
+		<execute action="StagingPublishtolivenow#click" locator-key1="PUBLISH_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_BUTTON" />
+		<execute action="StagingPublishtolivenow#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The Export Import Template ${publishTemplateName} was moved to the Recycle Bin." />
 	</command>
 
 	<command name="publishGlobalToLiveCP">
@@ -831,6 +858,15 @@
 		<execute action="BasePortletStaging#assertTextEquals" locator-key1="STAGING_CONTENT_INFO" value1="${contentInformation}" />
 		<execute action="BasePortletStaging#assertTextEquals" locator-key1="STAGING_DATE_RANGE" value1="${stagingDateRange}" />
 		<execute action="BasePortletStaging#selectFrameTop" />
+	</command>
+
+	<command name="viewPublishTemplate">
+		<execute action="StagingPublishtolivenow#assertClick" locator-key1="PUBLISH_TEMPLATES_BUTTON" value1="Publish Templates" />
+
+		<var name="key_publishTemplateName" value="${publishTemplateName}" />
+
+		<execute action="StagingPublishtolivenow#assertTextEquals" locator-key1="PUBLISH_TEMPLATES_TABLE_NAME" value1="${publishTemplateName}" />
+		<execute action="StagingPublishtolivenow#assertTextEquals" locator-key1="PUBLISH_TEMPLATES_TABLE_DESCRIPTION" value1="${publishTemplateDescription}" />
 	</command>
 
 	<command name="viewSitePagesVariationPG">

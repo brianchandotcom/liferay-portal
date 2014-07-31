@@ -289,7 +289,13 @@ public abstract class FindAction extends Action {
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-		if ((groupId == layout.getGroupId()) ||
+		long layoutGroupId = layout.getGroupId();
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		long parentGroupId = group.getParentGroupId();
+
+		if ((groupId == layoutGroupId) || (parentGroupId == layoutGroupId) ||
 			(layout.isPrivateLayout() &&
 			 !SitesUtil.isUserGroupLayoutSetViewable(
 				permissionChecker, layout.getGroup()))) {

@@ -28,13 +28,13 @@ import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NullSafeStringComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ModelListener;
+import com.liferay.portal.model.ModelListenerRegistrationUtil;
 import com.liferay.portal.model.ModelWrapper;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
@@ -63,6 +63,7 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Peter Fellwock
  */
 public class BasePersistenceImpl<T extends BaseModel<T>>
 	implements BasePersistence<T>, SessionFactory {
@@ -219,7 +220,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	public ModelListener<T>[] getListeners() {
-		return listeners;
+		return (ModelListener<T>[])
+			ModelListenerRegistrationUtil.getModelListeners(this);
 	}
 
 	@Override
@@ -252,12 +254,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	public void registerListener(ModelListener<T> listener) {
-		List<ModelListener<T>> listenersList = ListUtil.fromArray(listeners);
-
-		listenersList.add(listener);
-
-		listeners = listenersList.toArray(
-			new ModelListener[listenersList.size()]);
+		ModelListenerRegistrationUtil.register(listener);
 	}
 
 	@Override
@@ -273,6 +270,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 			model = modelWrapper.getWrappedModel();
 		}
+
+		ModelListener<T>[] listeners = getListeners();
 
 		for (ModelListener<T> listener : listeners) {
 			listener.onBeforeRemove(model);
@@ -300,12 +299,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	public void unregisterListener(ModelListener<T> listener) {
-		List<ModelListener<T>> listenersList = ListUtil.fromArray(listeners);
-
-		listenersList.remove(listener);
-
-		listeners = listenersList.toArray(
-			new ModelListener[listenersList.size()]);
+		ModelListenerRegistrationUtil.unregister(listener);
 	}
 
 	@Override
@@ -317,6 +311,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		}
 
 		boolean isNew = model.isNew();
+
+		ModelListener<T>[] listeners = getListeners();
 
 		for (ModelListener<T> listener : listeners) {
 			if (isNew) {
@@ -354,6 +350,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		}
 
 		boolean isNew = model.isNew();
+
+		ModelListener<T>[] listeners = getListeners();
 
 		for (ModelListener<T> listener : listeners) {
 			if (isNew) {

@@ -46,8 +46,8 @@ public class ComboServletStaticURLGenerator {
 			for (PortletResourceAccessor portletResourceAccessor :
 					_portletResourceAccessors) {
 
-				List<String> portletResources = ListUtil.sort(
-					portletResourceAccessor.get(portlet));
+				List<String> portletResources = portletResourceAccessor.get(
+					portlet);
 
 				for (String portletResource : portletResources) {
 					if (!_predicateFilter.filter(portletResource)) {

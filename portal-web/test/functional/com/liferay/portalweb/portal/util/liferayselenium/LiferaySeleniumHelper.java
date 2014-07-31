@@ -919,50 +919,6 @@ public class LiferaySeleniumHelper {
 		robot.mouseRelease(InputEvent.BUTTON1_MASK);
 	}
 
-	public static void sikuliKeyPress(
-			LiferaySelenium liferaySelenium, String value)
-		throws Exception {
-
-		if (value.contains(",")) {
-			String[] values = value.split(",");
-
-			String keyButton = values[0];
-			int loops = GetterUtil.getInteger(values[1]);
-
-			if (keyButton.equals("Down")) {
-				while (loops > 0) {
-					_screen.type(Key.DOWN);
-					liferaySelenium.pause("500");
-					loops--;
-				}
-			}
-			else if (keyButton.equals("Left")) {
-				while (loops > 0) {
-					_screen.type(Key.LEFT);
-					liferaySelenium.pause("500");
-					loops--;
-				}
-			}
-			else if (keyButton.equals("Right")) {
-				while (loops > 0) {
-					_screen.type(Key.RIGHT);
-					liferaySelenium.pause("500");
-					loops--;
-				}
-			}
-			else if (keyButton.equals("Up")) {
-				while (loops > 0) {
-					_screen.type(Key.UP);
-					liferaySelenium.pause("500");
-					loops--;
-				}
-			}
-		}
-		else {
-			_screen.type(value);
-		}
-	}
-
 	public static void sikuliLeftMouseDown(LiferaySelenium liferaySelenium)
 		throws Exception {
 

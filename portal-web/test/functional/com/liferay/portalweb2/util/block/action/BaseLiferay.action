@@ -267,6 +267,12 @@
 		</default>
 	</command>
 
+	<command name="keyPressNative">
+		<default>
+			<execute function="KeyPressNative#keyPressNative" />
+		</default>
+	</command>
+
 	<command name="makeVisible">
 		<default>
 			<execute function="MakeVisible#makeVisible" />
@@ -388,12 +394,6 @@
 	<command name="sikuliDragAndDrop">
 		<default>
 			<execute function="SikuliDragAndDrop#sikuliDragAndDrop" />
-		</default>
-	</command>
-
-	<command name="sikuliKeyPress">
-		<default>
-			<execute function="SikuliKeyPress#sikuliKeyPress" />
 		</default>
 	</command>
 

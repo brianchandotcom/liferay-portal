@@ -64,6 +64,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import org.sikuli.api.robot.Key;
 import org.sikuli.script.Screen;
 
 import org.w3c.dom.Document;
@@ -1011,7 +1012,19 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void keyPressNative(String keycode) {
-		throw new UnsupportedOperationException();
+		if (keycode.startsWith("\\")) {
+			int index = GetterUtil.getInteger(keycode.substring(1));
+
+			if ((index >= 48) && (index <= 90)) {
+				_screen.type(StringPool.ASCII_TABLE[index]);
+			}
+			else {
+				_screen.type(_keyArray[index]);
+			}
+		}
+		else {
+			_screen.type(keycode);
+		}
 	}
 
 	@Override
@@ -1889,22 +1902,13 @@ public class WebDriverToSeleniumBridge
 
 		_keysArray[107] = Keys.ADD;
 		_keysArray[18] = Keys.ALT;
-		_keysArray[40] = Keys.ARROW_DOWN;
-		_keysArray[37] = Keys.ARROW_LEFT;
-		_keysArray[39] = Keys.ARROW_RIGHT;
-		_keysArray[38] = Keys.ARROW_UP;
 		_keysArray[8] = Keys.BACK_SPACE;
-		//keyTable[] = Keys.CANCEL;
-		//keyTable[] = Keys.CLEAR;
-		//keyTable[] = Keys.COMMAND;
 		_keysArray[17] = Keys.CONTROL;
 		_keysArray[110] = Keys.DECIMAL;
 		_keysArray[46] = Keys.DELETE;
 		_keysArray[111] = Keys.DIVIDE;
-		//keyTable[] = Keys.DOWN;
-		//keyTable[] = Keys.END;
-		_keysArray[13] = Keys.RETURN;
-		//keyTable[] = Keys.EQUALS;
+		_keysArray[40] = Keys.DOWN;
+		_keysArray[13] = Keys.ENTER;
 		_keysArray[27] = Keys.ESCAPE;
 		_keysArray[112] = Keys.F1;
 		_keysArray[121] = Keys.F10;
@@ -1918,15 +1922,9 @@ public class WebDriverToSeleniumBridge
 		_keysArray[118] = Keys.F7;
 		_keysArray[119] = Keys.F8;
 		_keysArray[120] = Keys.F9;
-		//keyTable[] = Keys.HELP;
 		_keysArray[36] = Keys.HOME;
 		_keysArray[45] = Keys.INSERT;
-		//keyTable[] = Keys.LEFT;
-		//keyTable[] = Keys.LEFT_ALT;
-		//keyTable[] = Keys.LEFT_CONTROL;
-		//keyTable[] = Keys.LEFT_SHIFT;
-		//keyTable[] = Keys.META;
-		//keyTable[] = Keys.NULL;
+		_keysArray[37] = Keys.LEFT;
 		_keysArray[96] = Keys.NUMPAD0;
 		_keysArray[97] = Keys.NUMPAD1;
 		_keysArray[98] = Keys.NUMPAD2;
@@ -1940,15 +1938,59 @@ public class WebDriverToSeleniumBridge
 		_keysArray[34] = Keys.PAGE_DOWN;
 		_keysArray[33] = Keys.PAGE_UP;
 		_keysArray[19] = Keys.PAUSE;
-		//keyTable[] = Keys.RETURN;
-		//keyTable[] = Keys.RIGHT;
-		//keyTable[] = Keys.SEMICOLON;
-		//keyTable[] = Keys.SEPARATOR;
+		_keysArray[39] = Keys.RIGHT;
 		_keysArray[16] = Keys.SHIFT;
 		_keysArray[32] = Keys.SPACE;
 		_keysArray[109] = Keys.SUBTRACT;
 		_keysArray[9] = Keys.TAB;
-		//keyTable[] = Keys.UP;
+		_keysArray[38] = Keys.UP;
+
+		// ASCII to WebDriver
+
+		_keyArray[107] = Key.ADD;
+		_keyArray[18] = Key.ALT;
+		_keyArray[8] = Key.BACKSPACE;
+		_keyArray[17] = Key.CTRL;
+		_keyArray[46] = Key.DELETE;
+		_keyArray[111] = Key.DIVIDE;
+		_keyArray[40] = Key.DOWN;
+		_keyArray[35] = Key.END;
+		_keyArray[13] = Key.ENTER;
+		_keyArray[27] = Key.ESC;
+		_keyArray[112] = Key.F1;
+		_keyArray[121] = Key.F10;
+		_keyArray[122] = Key.F11;
+		_keyArray[123] = Key.F12;
+		_keyArray[113] = Key.F2;
+		_keyArray[114] = Key.F3;
+		_keyArray[115] = Key.F4;
+		_keyArray[116] = Key.F5;
+		_keyArray[117] = Key.F6;
+		_keyArray[118] = Key.F7;
+		_keyArray[119] = Key.F8;
+		_keyArray[120] = Key.F9;
+		_keyArray[36] = Key.HOME;
+		_keyArray[45] = Key.INSERT;
+		_keyArray[37] = Key.LEFT;
+		_keyArray[109] = Key.MINUS;
+		_keyArray[96] = Key.NUM0;
+		_keyArray[97] = Key.NUM1;
+		_keyArray[98] = Key.NUM2;
+		_keyArray[99] = Key.NUM3;
+		_keyArray[100] = Key.NUM4;
+		_keyArray[101] = Key.NUM5;
+		_keyArray[102] = Key.NUM6;
+		_keyArray[103] = Key.NUM7;
+		_keyArray[104] = Key.NUM8;
+		_keyArray[105] = Key.NUM9;
+		_keyArray[34] = Key.PAGE_DOWN;
+		_keyArray[33] = Key.PAGE_UP;
+		_keyArray[19] = Key.PAUSE;
+		_keyArray[39] = Key.RIGHT;
+		_keyArray[16] = Key.SHIFT;
+		_keyArray[32] = Key.SPACE;
+		_keyArray[9] = Key.TAB;
+		_keyArray[38] = Key.UP;
 	}
 
 	protected void initKeysSpecialChars() {
@@ -2033,8 +2075,10 @@ public class WebDriverToSeleniumBridge
 		WebDriverToSeleniumBridge.class);
 
 	private Stack<WebElement> _frameWebElements = new Stack<WebElement>();
+	private String[] _keyArray = new String[128];
 	private Keys[] _keysArray = new Keys[128];
 	private Map<String, String> _keysSpecialChars =
 		new HashMap<String, String>();
+	private Screen _screen = new Screen();
 
 }

@@ -234,8 +234,6 @@ public interface LiferaySelenium extends Selenium {
 	public void sikuliDragAndDrop(String image, String coordString)
 		throws Exception;
 
-	public void sikuliKeyPress(String value) throws Exception;
-
 	public void sikuliLeftMouseDown() throws Exception;
 
 	public void sikuliLeftMouseUp() throws Exception;

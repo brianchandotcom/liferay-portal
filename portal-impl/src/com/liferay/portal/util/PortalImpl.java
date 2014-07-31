@@ -5112,16 +5112,16 @@ public class PortalImpl implements Portal {
 		}
 
 		return getSiteAdministrationURL(
-			request, themeDisplay, portlet.getPortletName());
+			request, themeDisplay, portlet.getPortletId());
 	}
 
 	@Override
 	public PortletURL getSiteAdministrationURL(
 		HttpServletRequest request, ThemeDisplay themeDisplay,
-		String portletName) {
+		String portletId) {
 
 		LiferayPortletURL siteAdministrationURL = PortletURLFactoryUtil.create(
-			request, portletName, themeDisplay.getPlid(),
+			request, portletId, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		siteAdministrationURL.setControlPanelCategory(
@@ -5144,7 +5144,7 @@ public class PortalImpl implements Portal {
 		}
 
 		return getSiteAdministrationURL(
-			portletResponse, themeDisplay, portlet.getPortletName());
+			portletResponse, themeDisplay, portlet.getPortletId());
 	}
 
 	@Override

@@ -75,8 +75,8 @@ public class LiferayRepositoryRegistryPlugin
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;
 
-	private RepositoryCreator _repositoryCreator;
 	private LiferayTrashCapability _liferayTrashCapability =
 		new LiferayTrashCapability();
+	private RepositoryCreator _repositoryCreator;
 
 }

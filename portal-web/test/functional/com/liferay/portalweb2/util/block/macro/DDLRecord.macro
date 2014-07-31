@@ -154,7 +154,7 @@
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_recordFieldData" value="${ddlRecordFieldData}" />
 
-		<execute action="CPDynamicdatalistsListAddrecord#select" locator-key1="LINK_TO_PAGE_SELECT" value1="regexp:.*${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecord#select" locator-key1="LINK_TO_PAGE_SELECT" value1="regexp:–\s+${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldNumber">

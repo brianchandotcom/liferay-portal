@@ -19,6 +19,7 @@ import com.liferay.portal.http.service.internal.servlet.WebExtenderServlet;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.DocumentException;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -122,6 +123,13 @@ public class HttpSupport {
 			bundleServletContext.setServletContextName(servletContextName);
 
 			ServletContextPool.put(servletContextName, bundleServletContext);
+
+			try {
+				bundleServletContext.open();
+			}
+			catch (DocumentException de) {
+				throw new RuntimeException(de);
+			}
 
 			servletContext = bundleServletContext;
 		}

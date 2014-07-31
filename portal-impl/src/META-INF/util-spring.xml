@@ -551,7 +551,7 @@
 	<bean id="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" class="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil">
 		<property name="portletFileRepository" ref="com.liferay.portal.portletfilerepository.PortletFileRepository" />
 	</bean>
-	<bean id="com.liferay.portal.repository.registry.RepositoryCatalog" class="com.liferay.portal.repository.registry.RepositoryCatalogImpl" init-method="loadBuiltinRegistryPlugins">
+	<bean id="com.liferay.portal.repository.registry.RepositoryCatalog" class="com.liferay.portal.repository.registry.RepositoryCatalogImpl" init-method="loadDefaultRepositoryRegistryPlugins">
 		<property name="classNameLocalService" ref="com.liferay.portal.service.ClassNameLocalService" />
 		<property name="legacyExternalRepositoryCreator">
 			<bean class="com.liferay.portal.repository.external.LegacyExternalRepositoryCreator" />

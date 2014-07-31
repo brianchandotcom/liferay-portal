@@ -212,7 +212,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 					}
 				);
 			}
-			catch(error) {
+			catch (error) {
 			}
 
 			Liferay.detach('destroyPortlet', destroyInstance);

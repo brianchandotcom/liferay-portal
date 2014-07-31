@@ -3,17 +3,6 @@
 
 	<var name="siteName" value="Site Name" />
 
-	<tear-down>
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Role#tearDownCP" />
-
-		<execute macro="Site#tearDownCP" />
-	</tear-down>
-
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 
@@ -35,6 +24,17 @@
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 	</set-up>
+
+	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Role#tearDownCP" />
+
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
 
 	<command name="ActivateDeactivateRemoteStaging" priority="5">
 		<echo message="override" />

@@ -18,12 +18,8 @@ import com.liferay.portal.spring.extender.internal.blueprint.ModuleBeanFactoryPo
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
 
 import java.io.IOException;
-import java.io.InputStream;
-
-import java.net.URL;
 
 import java.util.Dictionary;
-import java.util.Enumeration;
 
 import org.eclipse.gemini.blueprint.context.DelegatedExecutionOsgiBundleApplicationContext;
 import org.eclipse.gemini.blueprint.context.support.OsgiBundleXmlApplicationContext;
@@ -34,10 +30,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
-import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericApplicationContext;
-import org.springframework.core.io.InputStreamResource;
 
 /**
  * @author Miguel Pastor
@@ -91,33 +84,17 @@ public class ModuleApplicationContextCreator
 			Bundle bundle, ClassLoader classLoader)
 		throws IOException {
 
-		GenericApplicationContext genericApplicationContext =
-			new GenericApplicationContext();
+		OsgiBundleXmlApplicationContext osgiBundleXmlApplicationContext =
+			new OsgiBundleXmlApplicationContext(
+				new String[] {"META-INF/spring/parent/*.xml"});
 
-		genericApplicationContext.setClassLoader(classLoader);
+		osgiBundleXmlApplicationContext.setBundleContext(
+			bundle.getBundleContext());
+		osgiBundleXmlApplicationContext.setClassLoader(classLoader);
 
-		XmlBeanDefinitionReader xmlBeanDefinitionReader =
-			new XmlBeanDefinitionReader(genericApplicationContext);
+		osgiBundleXmlApplicationContext.refresh();
 
-		xmlBeanDefinitionReader.setValidating(false);
-		xmlBeanDefinitionReader.setValidationMode(
-			XmlBeanDefinitionReader.VALIDATION_NONE);
-
-		Enumeration<URL> enumeration = bundle.findEntries(
-			"META-INF/spring/parent", "*.xml", true);
-
-		while (enumeration.hasMoreElements()) {
-			URL url = enumeration.nextElement();
-
-			InputStream inputStream = url.openStream();
-
-			xmlBeanDefinitionReader.loadBeanDefinitions(
-				new InputStreamResource(inputStream));
-		}
-
-		genericApplicationContext.refresh();
-
-		return genericApplicationContext;
+		return osgiBundleXmlApplicationContext;
 	}
 
 	private Bundle _getExtenderBundle() {

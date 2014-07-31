@@ -198,6 +198,25 @@ public class EditTemplateAction extends PortletAction {
 		}
 	}
 
+	protected String getFileScriptContent(
+			UploadPortletRequest uploadPortletRequest)
+		throws Exception {
+
+		File file = uploadPortletRequest.getFile("script");
+
+		if (file == null) {
+			return null;
+		}
+
+		String fileScriptContent = FileUtil.read(file);
+
+		if (Validator.isNotNull(fileScriptContent) && !isValidFile(file)) {
+			throw new TemplateScriptException();
+		}
+
+		return fileScriptContent;
+	}
+
 	protected String getSaveAndContinueRedirect(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			DDMTemplate template, String redirect)
@@ -237,20 +256,14 @@ public class EditTemplateAction extends PortletAction {
 	protected String getScript(UploadPortletRequest uploadPortletRequest)
 		throws Exception {
 
-		String scriptContent = ParamUtil.getString(
-			uploadPortletRequest, "scriptContent");
+		String fileScriptContent = getFileScriptContent(uploadPortletRequest);
 
-		File file = uploadPortletRequest.getFile("script");
-
-		if (file != null) {
-			String fileScriptContent = FileUtil.read(file);
-
-			if (Validator.isNotNull(fileScriptContent) && !isValidFile(file)) {
-				throw new TemplateScriptException();
-			}
-
+		if (Validator.isNotNull(fileScriptContent)) {
 			return fileScriptContent;
 		}
+
+		String scriptContent = ParamUtil.getString(
+			uploadPortletRequest, "scriptContent");
 
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
 

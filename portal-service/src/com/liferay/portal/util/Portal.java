@@ -1218,6 +1218,8 @@ public interface Portal {
 	@Deprecated
 	public String getUserValue(long userId, String param, String defaultValue);
 
+	public String getValidPortalDomain(long companyId, String domain);
+
 	public long getValidUserId(long companyId, long userId)
 		throws PortalException;
 

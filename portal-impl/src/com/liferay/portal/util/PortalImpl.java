@@ -8168,7 +8168,7 @@ public class PortalImpl implements Portal {
 		return sb.toString();
 	}
 
-	protected String getValidPortalDomain(long companyId, String domain) {
+	public String getValidPortalDomain(long companyId, String domain) {
 		if (isValidVirtualHost(domain)) {
 			return domain;
 		}

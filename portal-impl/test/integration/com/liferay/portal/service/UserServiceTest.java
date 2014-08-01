@@ -66,6 +66,153 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class UserServiceTest {
 
+	@RunWith(Enclosed.class)
+	public static class WhenSendPasswordEmail {
+
+		@ExecutionTestListeners(
+			listeners = {
+				MainServletExecutionTestListener.class,
+				ResetDatabaseExecutionTestListener.class,
+				SynchronousMailExecutionTestListener.class
+			})
+		@RunWith(LiferayIntegrationJUnitTestRunner.class)
+		@Sync
+		public static class WithResetLink {
+
+			@Before
+			public void setUp() throws Exception {
+				_user = UserTestUtil.addUser();
+
+				PortletPreferences portletPreferences =
+					PrefsPropsUtil.getPreferences(_user.getCompanyId(), false);
+
+				portletPreferences.setValue(
+					PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
+					Boolean.FALSE.toString());
+
+				portletPreferences.setValue(
+					PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
+					Boolean.TRUE.toString());
+
+				portletPreferences.store();
+
+				_beforeInboxSize = MailServiceTestUtil.getInboxSize();
+			}
+
+			@Test
+			public void shouldSendResetLinkEmailByEmailAddress()
+				throws Exception {
+
+				boolean isPasswordReset =
+					UserServiceUtil.sendPasswordByEmailAddress(
+						_user.getCompanyId(), _user.getEmailAddress());
+
+				Assert.assertFalse(isPasswordReset);
+				Assert.assertEquals(
+					_beforeInboxSize + 1, MailServiceTestUtil.getInboxSize());
+			}
+
+			@Test
+			public void shouldSendResetLinkEmailByScreenName()
+				throws Exception {
+
+				boolean isPasswordReset =
+					UserServiceUtil.sendPasswordByScreenName(
+						_user.getCompanyId(), _user.getScreenName());
+
+				Assert.assertFalse(isPasswordReset);
+				Assert.assertEquals(
+					_beforeInboxSize + 1, MailServiceTestUtil.getInboxSize());
+			}
+
+			@Test
+			public void shouldSendResetLinkEmailByUserId() throws Exception {
+				boolean isPasswordReset =
+					UserServiceUtil.sendPasswordByUserId(_user.getUserId());
+
+				Assert.assertFalse(isPasswordReset);
+				Assert.assertEquals(
+					_beforeInboxSize + 1, MailServiceTestUtil.getInboxSize());
+			}
+
+			private int _beforeInboxSize;
+			private User _user;
+
+		}
+
+		@ExecutionTestListeners(
+			listeners = {
+				MainServletExecutionTestListener.class,
+				ResetDatabaseExecutionTestListener.class,
+				SynchronousMailExecutionTestListener.class
+			})
+		@RunWith(LiferayIntegrationJUnitTestRunner.class)
+		@Sync
+		public static class WithNewPassword {
+
+			@Before
+			public void setUp() throws Exception {
+				_user = UserTestUtil.addUser();
+
+				PortletPreferences portletPreferences =
+					PrefsPropsUtil.getPreferences(_user.getCompanyId(), false);
+
+				portletPreferences.setValue(
+					PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
+					Boolean.TRUE.toString());
+
+				portletPreferences.setValue(
+					PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
+					Boolean.FALSE.toString());
+
+				portletPreferences.store();
+
+				_beforeInboxSize = MailServiceTestUtil.getInboxSize();
+			}
+
+			@Test
+			public void shouldSendNewPasswordEmailByEmailAddress()
+				throws Exception {
+
+				boolean isPasswordReset =
+					UserServiceUtil.sendPasswordByEmailAddress(
+						_user.getCompanyId(), _user.getEmailAddress());
+
+				Assert.assertTrue(isPasswordReset);
+				Assert.assertEquals(
+					_beforeInboxSize + 1, MailServiceTestUtil.getInboxSize());
+			}
+
+			@Test
+			public void shouldSendNewPasswordEmailByScreenName()
+				throws Exception {
+
+				boolean isPasswordReset =
+					UserServiceUtil.sendPasswordByScreenName(
+						_user.getCompanyId(), _user.getScreenName());
+
+				Assert.assertTrue(isPasswordReset);
+				Assert.assertEquals(
+					_beforeInboxSize + 1, MailServiceTestUtil.getInboxSize());
+			}
+
+			@Test
+			public void shouldSendNewPasswordEmailByUserId() throws Exception {
+				boolean isPasswordReset =
+					UserServiceUtil.sendPasswordByUserId(_user.getUserId());
+
+				Assert.assertTrue(isPasswordReset);
+				Assert.assertEquals(
+					_beforeInboxSize + 1, MailServiceTestUtil.getInboxSize());
+			}
+
+			private int _beforeInboxSize;
+			private User _user;
+
+		}
+
+	}
+
 	@ExecutionTestListeners(
 		listeners = {
 			MainServletExecutionTestListener.class,

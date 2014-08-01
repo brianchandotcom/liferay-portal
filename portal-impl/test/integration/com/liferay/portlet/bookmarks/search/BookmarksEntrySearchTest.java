@@ -122,6 +122,11 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	protected void deleteBaseModel(long primaryKey) throws Exception {
+		BookmarksEntryServiceUtil.deleteEntry(primaryKey);
+	}
+
+	@Override
 	protected Class<?> getBaseModelClass() {
 		return BookmarksEntry.class;
 	}
@@ -171,6 +176,19 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		return hits.getLength();
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			BaseModel<?> baseModel, String keywords,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		BookmarksEntry bookmarksEntry = (BookmarksEntry)baseModel;
+
+		bookmarksEntry.setName(keywords);
+
+		return BookmarksTestUtil.updateEntry(bookmarksEntry);
 	}
 
 }

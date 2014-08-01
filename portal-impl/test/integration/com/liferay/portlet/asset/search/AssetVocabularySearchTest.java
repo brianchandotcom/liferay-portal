@@ -23,6 +23,7 @@ import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
 
 import java.util.Locale;
@@ -138,6 +139,11 @@ public class AssetVocabularySearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	protected void deleteBaseModel(long primaryKey) throws Exception {
+		AssetVocabularyServiceUtil.deleteVocabulary(primaryKey);
+	}
+
+	@Override
 	protected Class<?> getBaseModelClass() {
 		return AssetVocabulary.class;
 	}
@@ -145,6 +151,20 @@ public class AssetVocabularySearchTest extends BaseSearchTestCase {
 	@Override
 	protected String getSearchKeywords() {
 		return "Title";
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			BaseModel<?> baseModel, String keywords,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = (AssetVocabulary)baseModel;
+
+		assetVocabulary.setTitle(keywords);
+
+		return AssetVocabularyLocalServiceUtil.updateAssetVocabulary(
+			assetVocabulary);
 	}
 
 }

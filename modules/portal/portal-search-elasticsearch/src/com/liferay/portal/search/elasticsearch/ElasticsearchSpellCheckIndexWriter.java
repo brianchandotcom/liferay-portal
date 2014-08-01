@@ -85,7 +85,7 @@ public class ElasticsearchSpellCheckIndexWriter
 		throws SearchException {
 
 		_elasticsearchUpdateDocumentCommand.updateDocument(
-			documentType, searchContext, document);
+			documentType, searchContext, document, false);
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class ElasticsearchSpellCheckIndexWriter
 		throws SearchException {
 
 		_elasticsearchUpdateDocumentCommand.updateDocuments(
-			documentType, searchContext, documents);
+			documentType, searchContext, documents, false);
 	}
 
 	@Override

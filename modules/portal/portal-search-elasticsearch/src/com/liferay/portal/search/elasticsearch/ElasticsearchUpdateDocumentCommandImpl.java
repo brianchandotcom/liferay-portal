@@ -19,17 +19,24 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.document.ElasticsearchDocumentFactory;
+import com.liferay.portal.search.elasticsearch.util.DocumentTypes;
 import com.liferay.portal.search.elasticsearch.util.LogUtil;
 
 import java.io.IOException;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.Future;
 
+import org.elasticsearch.action.ActionResponse;
+import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.delete.DeleteRequestBuilder;
 import org.elasticsearch.action.update.UpdateRequestBuilder;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.Client;
@@ -54,52 +61,37 @@ public class ElasticsearchUpdateDocumentCommandImpl
 
 	@Override
 	public String updateDocument(
-			String documentType, SearchContext searchContext, Document document)
+			String documentType, SearchContext searchContext, Document document,
+			boolean deleteFirst)
 		throws SearchException {
 
-		try {
-			UpdateRequestBuilder updateRequestBuilder =
-				buildUpdateRequestBuilder(
-					documentType, searchContext, document);
+		BulkResponse bulkResponse = doUpdateDocuments(
+			documentType, searchContext, Arrays.asList(document), deleteFirst);
 
-			Future<UpdateResponse> future = updateRequestBuilder.execute();
+		BulkItemResponse[] bulkItemResponses = bulkResponse.getItems();
 
-			UpdateResponse updateResponse = future.get();
+		for (BulkItemResponse bulkItemResponse : bulkItemResponses) {
+			ActionResponse actionResponse = bulkItemResponse.getResponse();
 
-			LogUtil.logActionResponse(_log, updateResponse);
+			if (actionResponse instanceof UpdateResponse) {
+				UpdateResponse updateResponse = (UpdateResponse)actionResponse;
 
-			return updateResponse.getId();
+				return updateResponse.getId();
+			}
 		}
-		catch (Exception e) {
-			throw new SearchException(
-				"Unable to update document " + document, e);
-		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override
 	public void updateDocuments(
 			String documentType, SearchContext searchContext,
-			Collection<Document> documents)
+			Collection<Document> documents, boolean deleteFirst)
 		throws SearchException {
 
 		try {
-			Client client = _elasticsearchConnectionManager.getClient();
-
-			BulkRequestBuilder bulkRequestBuilder = client.prepareBulk();
-
-			for (Document document : documents) {
-				UpdateRequestBuilder updateRequestBuilder =
-					buildUpdateRequestBuilder(
-						documentType, searchContext, document);
-
-				bulkRequestBuilder.add(updateRequestBuilder);
-			}
-
-			Future<BulkResponse> future = bulkRequestBuilder.execute();
-
-			BulkResponse bulkResponse = future.get();
-
-			LogUtil.logActionResponse(_log, bulkResponse);
+			doUpdateDocuments(
+				documentType, searchContext, documents, deleteFirst);
 		}
 		catch (Exception e) {
 			throw new SearchException(
@@ -124,6 +116,51 @@ public class ElasticsearchUpdateDocumentCommandImpl
 		updateRequestBuilder.setDocAsUpsert(true);
 
 		return updateRequestBuilder;
+	}
+
+	protected BulkResponse doUpdateDocuments(
+			String documentType, SearchContext searchContext,
+			Collection<Document> documents, boolean deleteFirst)
+		throws SearchException {
+
+		try {
+			Client client = _elasticsearchConnectionManager.getClient();
+
+			BulkRequestBuilder bulkRequestBuilder = client.prepareBulk();
+
+			for (Document document : documents) {
+				if (deleteFirst) {
+					DeleteRequestBuilder deleteRequestBuilder =
+						client.prepareDelete(
+							String.valueOf(searchContext.getCompanyId()),
+							DocumentTypes.LIFERAY, document.getUID());
+
+					bulkRequestBuilder.add(deleteRequestBuilder);
+				}
+
+				UpdateRequestBuilder updateRequestBuilder =
+					buildUpdateRequestBuilder(
+						documentType, searchContext, document);
+
+				bulkRequestBuilder.add(updateRequestBuilder);
+			}
+
+			if (PortalRunMode.isTestMode()) {
+				bulkRequestBuilder.setRefresh(true);
+			}
+
+			Future<BulkResponse> future = bulkRequestBuilder.execute();
+
+			BulkResponse bulkResponse = future.get();
+
+			LogUtil.logActionResponse(_log, bulkResponse);
+
+			return bulkResponse;
+		}
+		catch (Exception e) {
+			throw new SearchException(
+				"Unable to update documents " + documents, e);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

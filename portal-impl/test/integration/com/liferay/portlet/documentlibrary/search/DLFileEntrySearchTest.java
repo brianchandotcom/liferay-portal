@@ -44,6 +44,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -185,6 +186,11 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			folderId, keywords + ".txt", keywords, approved, serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
+	}
+
+	@Override
+	protected void deleteBaseModel(long primaryKey) throws Exception {
+		DLFileEntryLocalServiceUtil.deleteDLFileEntry(primaryKey);
 	}
 
 	@Override

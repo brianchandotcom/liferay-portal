@@ -27,6 +27,8 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import org.junit.Ignore;
@@ -132,6 +134,11 @@ public class DLFolderSearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	protected void deleteBaseModel(long primaryKey) throws Exception {
+		DLAppLocalServiceUtil.deleteFolder(primaryKey);
+	}
+
+	@Override
 	protected Class<?> getBaseModelClass() {
 		return DLFolder.class;
 	}
@@ -165,6 +172,19 @@ public class DLFolderSearchTest extends BaseSearchTestCase {
 	@Override
 	protected String getSearchKeywords() {
 		return "Title";
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			BaseModel<?> baseModel, String keywords,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		DLFolder dlFolder = (DLFolder)baseModel;
+
+		dlFolder.setName(keywords);
+
+		return DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
 	}
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;

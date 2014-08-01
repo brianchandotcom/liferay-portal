@@ -26,6 +26,8 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
 
 import org.junit.Ignore;
@@ -128,6 +130,11 @@ public class BookmarksFolderSearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	protected void deleteBaseModel(long primaryKey) throws Exception {
+		BookmarksFolderServiceUtil.deleteFolder(primaryKey);
+	}
+
+	@Override
 	protected Class<?> getBaseModelClass() {
 		return BookmarksFolder.class;
 	}
@@ -155,6 +162,20 @@ public class BookmarksFolderSearchTest extends BaseSearchTestCase {
 	@Override
 	protected String getSearchKeywords() {
 		return "Title";
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			BaseModel<?> baseModel, String keywords,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		BookmarksFolder bookmarksFolder = (BookmarksFolder)baseModel;
+
+		bookmarksFolder.setName(keywords);
+
+		return BookmarksFolderLocalServiceUtil.updateBookmarksFolder(
+			bookmarksFolder);
 	}
 
 }

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.util.DocumentTypes;
 import com.liferay.portal.search.elasticsearch.util.LogUtil;
@@ -49,7 +50,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		throws SearchException {
 
 		_elasticsearchUpdateDocumentCommand.updateDocument(
-			DocumentTypes.LIFERAY, searchContext, document);
+			DocumentTypes.LIFERAY, searchContext, document, false);
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		throws SearchException {
 
 		_elasticsearchUpdateDocumentCommand.updateDocuments(
-			DocumentTypes.LIFERAY, searchContext, documents);
+			DocumentTypes.LIFERAY, searchContext, documents, false);
 	}
 
 	@Override
@@ -71,6 +72,10 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 			DeleteRequestBuilder deleteRequestBuilder = client.prepareDelete(
 				String.valueOf(searchContext.getCompanyId()),
 				DocumentTypes.LIFERAY, uid);
+
+			if (PortalRunMode.isTestMode()) {
+				deleteRequestBuilder.setRefresh(true);
+			}
 
 			Future<DeleteResponse> future = deleteRequestBuilder.execute();
 
@@ -100,6 +105,10 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 						DocumentTypes.LIFERAY, uid);
 
 				bulkRequestBuilder.add(deleteRequestBuilder);
+			}
+
+			if (PortalRunMode.isTestMode()) {
+				bulkRequestBuilder.setRefresh(true);
 			}
 
 			Future<BulkResponse> future = bulkRequestBuilder.execute();
@@ -163,7 +172,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		throws SearchException {
 
 		_elasticsearchUpdateDocumentCommand.updateDocument(
-			DocumentTypes.LIFERAY, searchContext, document);
+			DocumentTypes.LIFERAY, searchContext, document, true);
 	}
 
 	@Override
@@ -172,7 +181,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		throws SearchException {
 
 		_elasticsearchUpdateDocumentCommand.updateDocuments(
-			DocumentTypes.LIFERAY, searchContext, documents);
+			DocumentTypes.LIFERAY, searchContext, documents, true);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

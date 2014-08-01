@@ -38,6 +38,7 @@ import java.util.Map;
 
 /**
  * @author Julio Camarero
+ * @author Roberto Díaz
  */
 public class WikiTestUtil {
 
@@ -165,6 +166,8 @@ public class WikiTestUtil {
 			WorkflowThreadLocal.setEnabled(true);
 
 			serviceContext = (ServiceContext)serviceContext.clone();
+
+			serviceContext.setCommand(Constants.ADD);
 
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);

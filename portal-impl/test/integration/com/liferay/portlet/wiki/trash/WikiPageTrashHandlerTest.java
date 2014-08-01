@@ -930,7 +930,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 			group.getGroupId(), _node.getNodeId(), false, false);
 
 		Assert.assertEquals(
-			initialTrashVersionsCount + 2,
+			initialTrashVersionsCount + 3,
 			TrashVersionLocalServiceUtil.getTrashVersionsCount());
 	}
 

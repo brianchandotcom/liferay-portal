@@ -71,6 +71,7 @@ import com.liferay.portal.service.MembershipRequestServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -518,6 +519,8 @@ public class EditGroupAction extends PortletAction {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Group.class.getName(), actionRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		Group liveGroup = null;
 		String oldFriendlyURL = null;

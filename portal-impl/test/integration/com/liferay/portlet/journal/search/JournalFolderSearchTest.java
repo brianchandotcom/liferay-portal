@@ -26,6 +26,7 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
+import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import org.junit.Ignore;
@@ -128,6 +129,11 @@ public class JournalFolderSearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	protected void deleteBaseModel(BaseModel<?> baseModel) throws Exception {
+		JournalFolderLocalServiceUtil.deleteFolder((JournalFolder)baseModel);
+	}
+
+	@Override
 	protected Class<?> getBaseModelClass() {
 		return JournalFolder.class;
 	}
@@ -155,6 +161,19 @@ public class JournalFolderSearchTest extends BaseSearchTestCase {
 	@Override
 	protected String getSearchKeywords() {
 		return "Title";
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			BaseModel<?> baseModel, String keywords,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		JournalFolder journalFolder = (JournalFolder)baseModel;
+
+		journalFolder.setName(keywords);
+
+		return JournalFolderLocalServiceUtil.updateJournalFolder(journalFolder);
 	}
 
 }

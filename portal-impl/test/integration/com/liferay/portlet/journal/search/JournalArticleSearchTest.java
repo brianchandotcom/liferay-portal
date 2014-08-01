@@ -128,6 +128,11 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	protected void deleteBaseModel(BaseModel<?> baseModel) throws Exception {
+		JournalArticleLocalServiceUtil.deleteArticle((JournalArticle)baseModel);
+	}
+
+	@Override
 	protected void expireBaseModelVersions(
 			BaseModel<?> baseModel, boolean expireAllVersions,
 			ServiceContext serviceContext)

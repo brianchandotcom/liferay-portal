@@ -122,6 +122,21 @@ public abstract class BaseSearchTestCase {
 	}
 
 	@Test
+	public void testSearchBaseModelWithDelete() throws Exception {
+		searchBaseModelWithDelete();
+	}
+
+	@Test
+	public void testSearchBaseModelWithTrash() throws Exception {
+		searchBaseModelWithTrash();
+	}
+
+	@Test
+	public void testSearchBaseModelWithUpdate() throws Exception {
+		searchBaseModelWithUpdate();
+	}
+
+	@Test
 	public void testSearchByDDMStructureField() throws Exception {
 		searchByDDMStructureField();
 	}
@@ -240,6 +255,13 @@ public abstract class BaseSearchTestCase {
 			serviceContext.getScopeGroupId(), getBaseModelClassName(),
 			getBaseModelClassPK(classedModel), message.getThreadId(),
 			message.getMessageId(), message.getSubject(), body, serviceContext);
+	}
+
+	protected void deleteBaseModel(BaseModel<?> baseModel) throws Exception {
+		deleteBaseModel((Long)baseModel.getPrimaryKeyObj());
+	}
+
+	protected void deleteBaseModel(long primaryKey) throws Exception {
 	}
 
 	protected void expireBaseModelVersions(
@@ -382,6 +404,114 @@ public abstract class BaseSearchTestCase {
 		searchContext.setKeywords(keywords);
 
 		return searchBaseModelsCount(clazz, groupId, searchContext);
+	}
+
+	protected void searchBaseModelWithDelete() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId(), searchContext);
+
+		String keywords = RandomTestUtil.randomString();
+
+		baseModel = addBaseModel(
+			parentBaseModel, true, keywords, serviceContext);
+
+		Assert.assertEquals(
+			initialBaseModelsSearchCount + 1,
+			searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId(), searchContext));
+
+		deleteBaseModel(baseModel);
+
+		searchContext.setKeywords(keywords);
+
+		Assert.assertEquals(
+			initialBaseModelsSearchCount,
+			searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId(), searchContext));
+	}
+
+	protected void searchBaseModelWithTrash() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId(), searchContext);
+
+		String keywords = RandomTestUtil.randomString();
+
+		baseModel = addBaseModel(
+			parentBaseModel, true, keywords, serviceContext);
+
+		Assert.assertEquals(
+			initialBaseModelsSearchCount + 1,
+			searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId(), searchContext));
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		searchContext.setKeywords(keywords);
+
+		Assert.assertEquals(
+			initialBaseModelsSearchCount,
+			searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId(), searchContext));
+	}
+
+	protected void searchBaseModelWithUpdate() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId(), searchContext);
+
+		String keywords = RandomTestUtil.randomString();
+
+		baseModel = addBaseModel(
+			parentBaseModel, true, keywords, serviceContext);
+
+		Assert.assertEquals(
+			initialBaseModelsSearchCount + 1,
+			searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId(), searchContext));
+
+		String updatedKeywords = RandomTestUtil.randomString();
+
+		updateBaseModel(baseModel, updatedKeywords, serviceContext);
+
+		searchContext.setKeywords(keywords);
+
+		Assert.assertEquals(
+			initialBaseModelsSearchCount,
+			searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId(), searchContext));
+
+		searchContext.setKeywords(updatedKeywords);
+
+		Assert.assertEquals(
+			initialBaseModelsSearchCount + 1,
+			searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId(), searchContext));
 	}
 
 	protected void searchByDDMStructureField() throws Exception {

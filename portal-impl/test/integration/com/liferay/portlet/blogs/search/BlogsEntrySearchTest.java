@@ -126,6 +126,11 @@ public class BlogsEntrySearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	protected void deleteBaseModel(long primaryKey) throws Exception {
+		BlogsEntryLocalServiceUtil.deleteBlogsEntry(primaryKey);
+	}
+
+	@Override
 	protected Class<?> getBaseModelClass() {
 		return BlogsEntry.class;
 	}
@@ -139,6 +144,19 @@ public class BlogsEntrySearchTest extends BaseSearchTestCase {
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
 		BlogsEntryLocalServiceUtil.moveEntryToTrash(
 			TestPropsValues.getUserId(), primaryKey);
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			BaseModel<?> baseModel, String keywords,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		BlogsEntry blogsEntry = (BlogsEntry)baseModel;
+
+		blogsEntry.setTitle(keywords);
+
+		return BlogsTestUtil.updateEntry(blogsEntry, true);
 	}
 
 }

@@ -162,9 +162,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 		StringBundler sb = new StringBundler(7);
 
 		sb.append(DDM_FIELD_NAMESPACE);
-		sb.append(StringPool.FORWARD_SLASH);
+		sb.append(StringPool.DOUBLE_UNDERLINE);
 		sb.append(ddmStructureId);
-		sb.append(StringPool.FORWARD_SLASH);
+		sb.append(StringPool.DOUBLE_UNDERLINE);
 		sb.append(fieldName);
 
 		if (locale != null) {

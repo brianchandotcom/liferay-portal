@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_DESCRIPTION_FIELD</td>
+	<td>//textarea[contains(@id,'kaleoformsportlet_description')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

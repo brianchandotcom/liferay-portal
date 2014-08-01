@@ -668,10 +668,10 @@ public class DLFileEntryLocalServiceImpl
 
 		int pages = count / _DELETE_INTERVAL;
 
-		for (int i = 0; i <= pages; i++) {
-			int start = (i * _DELETE_INTERVAL);
-			int end = start + _DELETE_INTERVAL;
+		int start = 0;
+		int end = _DELETE_INTERVAL;
 
+		for (int i = 0; i <= pages; i++) {
 			List<DLFileEntry> dlFileEntries = dlFileEntryPersistence.findByG_F(
 				groupId, folderId, start, end);
 
@@ -680,6 +680,10 @@ public class DLFileEntryLocalServiceImpl
 					!dlFileEntry.isInTrashExplicitly()) {
 
 					dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+				}
+				else {
+					start++;
+					end++;
 				}
 			}
 		}

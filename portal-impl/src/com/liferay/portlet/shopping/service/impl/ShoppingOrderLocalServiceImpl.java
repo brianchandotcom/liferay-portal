@@ -270,19 +270,8 @@ public class ShoppingOrderLocalServiceImpl
 	public ShoppingOrder getLatestOrder(long userId, long groupId)
 		throws PortalException {
 
-		List<ShoppingOrder> orders = shoppingOrderPersistence.findByG_U_PPPS(
-			groupId, userId, ShoppingOrderConstants.STATUS_LATEST, 0, 1);
-
-		ShoppingOrder order = null;
-
-		if (orders.size() == 1) {
-			order = orders.get(0);
-		}
-		else {
-			order = shoppingOrderLocalService.addLatestOrder(userId, groupId);
-		}
-
-		return order;
+		return shoppingOrderPersistence.findByG_U_PPPS_First(
+			groupId, userId, ShoppingOrderConstants.STATUS_LATEST, null);
 	}
 
 	@Override

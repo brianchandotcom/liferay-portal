@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/shopping/init.jsp" %>
 
 <%
-ShoppingOrder order = (ShoppingOrder)request.getAttribute(WebKeys.SHOPPING_ORDER);
+ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserId(), themeDisplay.getScopeGroupId());
 
 String billingState = BeanParamUtil.getString(order, request, "billingState");
 String billingStateSel = ParamUtil.getString(request, "billingStateSel");

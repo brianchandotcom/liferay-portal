@@ -26,7 +26,7 @@ ShoppingCoupon coupon = cart.getCoupon();
 int altShipping = cart.getAltShipping();
 String altShippingName = shoppingSettings.getAlternativeShippingName(altShipping);
 
-ShoppingOrder order = (ShoppingOrder)request.getAttribute(WebKeys.SHOPPING_ORDER);
+ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserId(), themeDisplay.getScopeGroupId());
 %>
 
 <portlet:actionURL var="checkoutSecondURL">

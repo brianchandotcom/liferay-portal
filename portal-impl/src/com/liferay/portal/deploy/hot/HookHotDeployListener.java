@@ -80,7 +80,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Release;
@@ -597,7 +596,7 @@ public class HookHotDeployListener
 			rootElement);
 
 		initStrutsActions(servletContextName, portletClassLoader, rootElement);
-		
+
 		List<Element> modelListenerElements = rootElement.elements(
 			"model-listener");
 
@@ -606,9 +605,9 @@ public class HookHotDeployListener
 			String modelListenerClassName = modelListenerElement.elementText(
 				"model-listener-class");
 
-			initModelListener(servletContextName, portletClassLoader, modelName,
+			initModelListener(
+				servletContextName, portletClassLoader, modelName,
 				modelListenerClassName);
-
 		}
 
 		List<Element> eventElements = rootElement.elements("event");
@@ -1292,21 +1291,17 @@ public class HookHotDeployListener
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	protected void initModelListener(
 			String servletContextName, ClassLoader portletClassLoader,
 			String modelName, String modelListenerClassName)
 		throws Exception {
 
-		ModelListener<BaseModel<?>> modelListener =
-			(ModelListener<BaseModel<?>>)newInstance(
-				portletClassLoader, ModelListener.class,
-				modelListenerClassName);
-		
-		registerService(servletContextName, modelListenerClassName, 
-			ModelListener.class, modelListener);
+		ModelListener<?> modelListener = (ModelListener<?>)newInstance(
+			portletClassLoader, ModelListener.class, modelListenerClassName);
 
-
+		registerService(
+			servletContextName, modelListenerClassName, ModelListener.class,
+			modelListener);
 	}
 
 	protected void initModelListeners(
@@ -1327,8 +1322,9 @@ public class HookHotDeployListener
 				(String)entry.getValue());
 
 			for (String modelListenerClassName : modelListenerClassNames) {
-				initModelListener(servletContextName, portletClassLoader, 
-					modelName, modelListenerClassName);
+				initModelListener(
+					servletContextName, portletClassLoader, modelName,
+					modelListenerClassName);
 			}
 		}
 	}

@@ -84,18 +84,26 @@ public class ReflectionUtil {
 
 	public static Class<?> getGenericSuperType(Class<?> clazz) {
 		try {
-			ParameterizedType pt = ((ParameterizedType)clazz.getGenericSuperclass());
-			Type[] args = pt.getActualTypeArguments();
+			ParameterizedType parameterizedType =
+				(ParameterizedType)clazz.getGenericSuperclass();
 
-			if (args.length > 0) {
-				return (Class<?>)args[0];
+			Type[] arguments = parameterizedType.getActualTypeArguments();
+
+			if (arguments.length > 0) {
+				return (Class<?>)arguments[0];
 			}
-
-		}catch (Throwable t) {
+		}
+		catch (Throwable t) {
 		}
 
 		return null;
-	} public static Class<?>[] getInterfaces(
+	}
+
+	public static Class<?>[] getInterfaces(Object object) {
+		return getInterfaces(object, null);
+	}
+
+	public static Class<?>[] getInterfaces(
 		Object object, ClassLoader classLoader) {
 
 		Set<Class<?>> interfaceClasses = new LinkedHashSet<Class<?>>();
@@ -214,10 +222,6 @@ public class ReflectionUtil {
 			catch (ClassNotFoundException cnfe) {
 			}
 		}
-	}
-
-	public static Class<?>[] getInterfaces(Object object) {
-		return getInterfaces(object, null);
 	}
 
 }

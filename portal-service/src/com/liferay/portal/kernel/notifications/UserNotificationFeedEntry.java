@@ -22,7 +22,10 @@ import com.liferay.portal.kernel.util.StringPool;
  */
 public class UserNotificationFeedEntry {
 
-	public UserNotificationFeedEntry(String body, String link) {
+	public UserNotificationFeedEntry(
+		boolean actionable, String body, String link) {
+
+		setActionable(actionable);
 		setBody(body);
 		setLink(link);
 	}
@@ -59,6 +62,15 @@ public class UserNotificationFeedEntry {
 		_portletId = GetterUtil.getString(portletId);
 	}
 
+	public boolean isActionable() {
+		return _actionable;
+	}
+
+	public void setActionable(boolean actionable) {
+		_actionable = actionable;
+	}
+
+	private boolean _actionable;
 	private String _body;
 	private String _link;
 	private boolean _openDialog;

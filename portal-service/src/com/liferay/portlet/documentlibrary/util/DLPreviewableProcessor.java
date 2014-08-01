@@ -599,6 +599,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			Element fileEntryElement, String binPathName, int index)
 		throws PortalException {
 
+		if (!isThumbnailEnabled(index)) {
+			return;
+		}
+
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		if (!hasThumbnail(fileVersion, index)) {
@@ -1131,6 +1135,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			FileEntry importedFileEntry, Element fileEntryElement,
 			String binPathName, int index)
 		throws Exception {
+
+		if (!isThumbnailEnabled(index)) {
+			return;
+		}
 
 		if (!portletDataContext.isPerformDirectBinaryImport()) {
 			importThumbnailFromLAR(

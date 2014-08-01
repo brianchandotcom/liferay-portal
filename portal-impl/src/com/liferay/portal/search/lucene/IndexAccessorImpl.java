@@ -146,6 +146,10 @@ public class IndexAccessorImpl implements IndexAccessor {
 		catch (Exception e) {
 			_log.error("Closing Lucene writer failed for " + _companyId, e);
 		}
+
+		if (_scheduledExecutorService != null) {
+			_scheduledExecutorService.shutdownNow();
+		}
 	}
 
 	@Override
@@ -459,7 +463,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 			return;
 		}
 
-		ScheduledExecutorService scheduledExecutorService =
+		_scheduledExecutorService =
 			Executors.newSingleThreadScheduledExecutor();
 
 		Runnable runnable = new Runnable() {
@@ -478,7 +482,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 		};
 
-		scheduledExecutorService.scheduleWithFixedDelay(
+		_scheduledExecutorService.scheduleWithFixedDelay(
 			runnable, 0, PropsValues.LUCENE_COMMIT_TIME_INTERVAL,
 			TimeUnit.MILLISECONDS);
 	}
@@ -550,6 +554,7 @@ public class IndexAccessorImpl implements IndexAccessor {
 	private IndexSearcherManager _indexSearcherManager;
 	private IndexWriter _indexWriter;
 	private String _path;
+	private ScheduledExecutorService _scheduledExecutorService;
 
 	private static class InvalidateProcessCallable
 		implements ProcessCallable<Serializable> {

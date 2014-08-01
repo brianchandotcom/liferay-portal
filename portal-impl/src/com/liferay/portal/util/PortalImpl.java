@@ -5930,6 +5930,55 @@ public class PortalImpl implements Portal {
 		}
 	}
 
+	public String getValidPortalDomain(long companyId, String domain) {
+		if (Validator.isHostName(domain)) {
+			if (isValidVirtualHost(domain)) {
+				return domain;
+			}
+
+			if (StringUtil.equalsIgnoreCase(
+					domain, PropsValues.WEB_SERVER_HOST)) {
+
+				return PropsValues.WEB_SERVER_HOST;
+			}
+
+			if (isValidVirtualHostname(domain)) {
+				return domain;
+			}
+
+			if (StringUtil.equalsIgnoreCase(
+					domain, getCDNHostHttp(companyId))) {
+
+				return domain;
+			}
+
+			if (StringUtil.equalsIgnoreCase(
+					domain, getCDNHostHttps(companyId))) {
+
+				return domain;
+			}
+		}
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Set the property \"" + PropsKeys.VIRTUAL_HOSTS_VALID_HOSTS +
+					"\" in portal.properties to allow \"" + domain +
+						"\" as a domain");
+		}
+
+		try {
+			Company company = CompanyLocalServiceUtil.getCompanyById(
+				getDefaultCompanyId());
+
+			return company.getVirtualHostname();
+		}
+		catch (Exception e) {
+			_log.error("Unable to load default portal instance", e);
+		}
+
+		return _LOCALHOST;
+	}
+
 	@Override
 	public long getValidUserId(long companyId, long userId)
 		throws PortalException {
@@ -8166,49 +8215,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return sb.toString();
-	}
-
-	public String getValidPortalDomain(long companyId, String domain) {
-		if (Validator.isHostName(domain)) {
-		if (isValidVirtualHost(domain)) {
-			return domain;
-		}
-
-		if (StringUtil.equalsIgnoreCase(domain, PropsValues.WEB_SERVER_HOST)) {
-			return PropsValues.WEB_SERVER_HOST;
-		}
-
-		if (isValidVirtualHostname(domain)) {
-			return domain;
-		}
-
-		if (StringUtil.equalsIgnoreCase(domain, getCDNHostHttp(companyId))) {
-			return domain;
-		}
-
-		if (StringUtil.equalsIgnoreCase(domain, getCDNHostHttps(companyId))) {
-			return domain;
-		}
-		}
-
-		if (_log.isWarnEnabled()) {
-			_log.warn(
-				"Set the property \"" + PropsKeys.VIRTUAL_HOSTS_VALID_HOSTS +
-					"\" in portal.properties to allow \"" + domain +
-						"\" as a domain");
-		}
-
-		try {
-			Company company = CompanyLocalServiceUtil.getCompanyById(
-				getDefaultCompanyId());
-
-			return company.getVirtualHostname();
-		}
-		catch (Exception e) {
-			_log.error("Unable to load default portal instance", e);
-		}
-
-		return _LOCALHOST;
 	}
 
 	protected boolean isAlwaysAllowDoAsUser(HttpServletRequest request)

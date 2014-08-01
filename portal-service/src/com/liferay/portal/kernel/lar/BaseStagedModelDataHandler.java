@@ -556,32 +556,15 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		}
 
 		if (stagedModel instanceof TrashedModel) {
-			try {
-				TrashedModel trashedModel = (TrashedModel)stagedModel;
+			TrashedModel trashedModel = (TrashedModel)stagedModel;
 
-				if (trashedModel.isInTrash()) {
-					PortletDataException pde = new PortletDataException(
-						PortletDataException.STATUS_IN_TRASH);
+			if (trashedModel.isInTrash()) {
+				PortletDataException pde = new PortletDataException(
+					PortletDataException.STATUS_IN_TRASH);
 
-					pde.setStagedModel(stagedModel);
+				pde.setStagedModel(stagedModel);
 
-					throw pde;
-				}
-			}
-			catch (PortletDataException pde) {
 				throw pde;
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to check trash status for " +
-							stagedModel.getModelClassName() +
-								" with primary key " +
-									stagedModel.getPrimaryKeyObj());
-				}
 			}
 		}
 	}

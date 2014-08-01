@@ -1075,12 +1075,11 @@ public class LiferaySeleniumHelper {
 		String titleAttribute = liferaySelenium.getAttribute(
 			locator + "@title");
 
-		int numberOfComma = titleAttribute.split(",").length;
 		int x = titleAttribute.indexOf(",");
-		int y = titleAttribute.length();
+		int y = titleAttribute.indexOf(",", x + 1);
 
-		if (numberOfComma > 1) {
-			y = titleAttribute.indexOf(",", titleAttribute.indexOf(",") + 1);
+		if (y == -1) {
+			y = titleAttribute.length();
 		}
 
 		sb.append(titleAttribute.substring(x + 1, y));

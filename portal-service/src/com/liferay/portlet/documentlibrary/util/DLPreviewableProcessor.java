@@ -1222,7 +1222,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			THUMBNAIL_INDEX_CUSTOM_2);
 	}
 
-	protected boolean isThumbnailEnabled(int index) throws Exception {
+	protected boolean isThumbnailEnabled(int index) {
 		if (index == THUMBNAIL_INDEX_DEFAULT) {
 			if (GetterUtil.getBoolean(
 					PropsUtil.get(

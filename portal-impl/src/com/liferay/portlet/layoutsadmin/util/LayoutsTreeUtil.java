@@ -166,6 +166,16 @@ public class LayoutsTreeUtil {
 
 				layoutTreeNode.setChildLayoutTreeNodes(childLayoutTreeNodes);
 			}
+			else if (layout.hasChildren()) {
+				List<Layout> children = LayoutServiceUtil.getLayouts(
+					groupId, privateLayout, layout.getLayoutId(), incomplete,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+				LayoutTreeNodes childrenLayoutTreeNodes = new LayoutTreeNodes(
+					new ArrayList<LayoutTreeNode>(), children.size());
+
+				layoutTreeNode.setChildLayoutTreeNodes(childrenLayoutTreeNodes);
+			}
 
 			layoutTreeNodes.add(layoutTreeNode);
 		}

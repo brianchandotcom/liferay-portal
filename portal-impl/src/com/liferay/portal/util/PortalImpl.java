@@ -4150,12 +4150,8 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getPortalURL(HttpServletRequest request, boolean secure) {
-		long companyId = getCompanyId(request);
-
-		String domain = getValidPortalDomain(
-			companyId, request.getServerName());
-
-		return getPortalURL(domain, request.getServerPort(), secure);
+		return getPortalURL(
+			request.getServerName(), request.getServerPort(), secure);
 	}
 
 	@Override
@@ -4202,12 +4198,9 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getPortalURL(PortletRequest portletRequest, boolean secure) {
-		long companyId = getCompanyId(portletRequest);
-
-		String domain = getValidPortalDomain(
-			companyId, portletRequest.getServerName());
-
-		return getPortalURL(domain, portletRequest.getServerPort(), secure);
+		return getPortalURL(
+			portletRequest.getServerName(), portletRequest.getServerPort(),
+			secure);
 	}
 
 	@Override

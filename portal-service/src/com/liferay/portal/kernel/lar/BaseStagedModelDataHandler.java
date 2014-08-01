@@ -560,11 +560,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			try {
 				TrashedModel trashedModel = (TrashedModel)stagedModel;
 
-				TrashHandler trashHandler = trashedModel.getTrashHandler();
-
-				long trashEntryclassPK = trashedModel.getTrashEntryClassPK();
-
-				if (trashHandler.isInTrash(trashEntryclassPK)) {
+				if (trashedModel.isInTrash()) {
 					PortletDataException pde = new PortletDataException(
 						PortletDataException.STATUS_IN_TRASH);
 

@@ -63,9 +63,11 @@ public class GetLayoutsAction extends JSONAction {
 		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 		long parentLayoutId = ParamUtil.getLong(request, "parentLayoutId");
 		boolean incomplete = ParamUtil.getBoolean(request, "incomplete", true);
+		String treeId = ParamUtil.getString(request, "treeId");
 
 		return LayoutsTreeUtil.getLayoutsJSON(
-			request, groupId, privateLayout, parentLayoutId, incomplete);
+			request, groupId, privateLayout, parentLayoutId, incomplete,
+			treeId);
 	}
 
 }

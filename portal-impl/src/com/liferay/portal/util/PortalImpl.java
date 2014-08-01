@@ -8169,6 +8169,7 @@ public class PortalImpl implements Portal {
 	}
 
 	public String getValidPortalDomain(long companyId, String domain) {
+		if (Validator.isHostName(domain)) {
 		if (isValidVirtualHost(domain)) {
 			return domain;
 		}
@@ -8187,6 +8188,7 @@ public class PortalImpl implements Portal {
 
 		if (StringUtil.equalsIgnoreCase(domain, getCDNHostHttps(companyId))) {
 			return domain;
+		}
 		}
 
 		if (_log.isWarnEnabled()) {

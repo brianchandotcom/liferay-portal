@@ -69,37 +69,32 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 	}
 
 	@Override
-	public void visit(ParaNode node) {
+    public void visit(ParaNode node) {
 		List<Node> childNodes = node.getChildren();
-
+		
 		boolean print = true;
-
+		
 		for (Node childNode : childNodes) {
-			List<Node> grandChildNodes = childNode.getChildren();
-
-			for (Node grandChildNode : grandChildNodes) {
-				if (grandChildNode instanceof TextNode) {
-					TextNode textNode = (TextNode)grandChildNode;
-
+			List<Node> grandchildNodes = childNode.getChildren();
+			
+			for (Node grandchildNode : grandchildNodes) {	
+				if (grandchildNode instanceof TextNode) {
+					TextNode textNode = (TextNode)grandchildNode;
+					
 					String text = textNode.getText();
-
-					if (text.equals("$beginSBnote$") ||
-						text.equals("$beginSBtip$") ||
-						text.equals("$beginSBwarning$") ||
-						text.equals("$endSBnote$") ||
-						text.equals("$endSBtip$") ||
-						text.equals("$endSBwarning$")) {
+					
+					if (text.equals("+$$$") || text.equals("$$$")) {
 						visitChildren(node);
 						print = false;
 					}
 				}
 			}
 		}
-
+		
 		if (print) {
 			printTag(node, "p");
 		}
-	}
+    }
 
 	public void visit(PicWithCaptionNode picWithCaptionNode) {
 		print(picWithCaptionNode);
@@ -125,25 +120,13 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 	@Override
 	public void visit(TextNode node) {
 		String text = node.getText();
-
-		if (text.equals("$beginSBnote$")) {
-			printer.print("<div class=\"sidebar-note\">");
-			printer.print("<div class=\"sidebar-note-image\"></div>");
-			printer.print("<div class=\"sidebar-note-text\">");
+		
+		if (text.equals("+$$$")) {
+			printer.print("<div class=\"sidebar\">");
+			printer.print("<div class=\"sidebar-image\"></div>");
+			printer.print("<div class=\"sidebar-text\">");
 		}
-		else if (text.equals("$beginSBtip$")) {
-			printer.print("<div class=\"sidebar-tip\">");
-			printer.print("<div class=\"sidebar-tip-image\"></div>");
-			printer.print("<div class=\"sidebar-tip-text\">");
-		}
-		else if (text.equals("$beginSBwarning$")) {
-			printer.print("<div class=\"sidebar-warning\">");
-			printer.print("<div class=\"sidebar-warning-image\"></div>");
-			printer.print("<div class=\"sidebar-warning-text\">");
-		}
-		else if (text.equals("$endSBnote$") ||
-				 text.equals("$endSBtip$") ||
-				 text.equals("$endSBwarning$")) {
+		else if (text.equals("$$$")) {
 			printer.print("</div></div>");
 		}
 		else if (abbreviations.isEmpty()) {

@@ -27,7 +27,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_terms_of_use")) 
 %>
 
 <style type="text/css">
-	.dockbar {
+	.dockbar .container-fluid .nav.nav-add-controls {
 		display: none;
 	}
 </style>

@@ -1107,10 +1107,12 @@
 
 			form = A.one(form);
 
+			var allBoxChecked = A.one(allBox).get(STR_CHECKED);
+
 			form.all(selector).each(
 				function(item, index) {
-					if (!item._node.disabled) {
-						item.attr(STR_CHECKED, A.one(allBox).get(STR_CHECKED));
+					if (!item.attr('disabled')) {
+						item.attr(STR_CHECKED, allBoxChecked);
 					}
 				}
 			)

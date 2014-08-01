@@ -189,6 +189,12 @@
 		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
 	</command>
 
+	<command name="editDefaultLandingPageCP">
+		<execute action="CPPortalsettings#type" locator-key1="NAVIGATION_DEFAULT_LANDING_PAGE_FIELD" value1="${defaultLandingPage}" />
+		<execute action="CPPortalsettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalsettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="editVirtualHostCP">
 		<execute action="CPPortalsettings#type" locator-key1="MAIN_CONFIGURATION_VIRTUAL_HOST_FIELD" value1="${virtualHostName}" />
 		<execute action="CPPortalsettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />

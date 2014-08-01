@@ -14,59 +14,85 @@
 
 package com.liferay.portal.security.membershippolicy;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 /**
  * @author Sergio González
  * @author Shuyang Zhou
  * @author Roberto Díaz
+ * @author Peter Fellwock
  */
 public class RoleMembershipPolicyFactoryImpl
-	implements RoleMembershipPolicyFactory {
-
-	public void afterPropertiesSet() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Instantiate " + PropsValues.MEMBERSHIP_POLICY_ROLES);
-		}
-
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		_originalRoleMembershipPolicy =
-			(RoleMembershipPolicy)InstanceFactory.newInstance(
-				classLoader, PropsValues.MEMBERSHIP_POLICY_ROLES);
-
-		_roleMembershipPolicy = _originalRoleMembershipPolicy;
-	}
+		implements RoleMembershipPolicyFactory {
 
 	@Override
 	public RoleMembershipPolicy getRoleMembershipPolicy() {
-		return _roleMembershipPolicy;
+		return _instance._serviceTracker.getService();
 	}
 
-	public void setRoleMembershipPolicy(
-		RoleMembershipPolicy roleMembershipPolicy) {
+	private RoleMembershipPolicyFactoryImpl() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Set " + ClassUtil.getClassName(roleMembershipPolicy));
-		}
+		_serviceTracker = registry.trackServices(RoleMembershipPolicy.class,
+			new RoleMembershipPolicyTrackerCustomizer());
 
-		if (roleMembershipPolicy == null) {
-			_roleMembershipPolicy = _originalRoleMembershipPolicy;
-		}
-		else {
-			_roleMembershipPolicy = roleMembershipPolicy;
-		}
+		_serviceTracker.open();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		RoleMembershipPolicyFactoryImpl.class);
+	private static RoleMembershipPolicyFactoryImpl _instance =
+		new RoleMembershipPolicyFactoryImpl();
 
-	private static RoleMembershipPolicy _originalRoleMembershipPolicy;
-	private static volatile RoleMembershipPolicy _roleMembershipPolicy;
+	private ServiceTracker<?, RoleMembershipPolicy> _serviceTracker;
+	
+	private class RoleMembershipPolicyTrackerCustomizer
+	implements ServiceTrackerCustomizer
+		<RoleMembershipPolicy, RoleMembershipPolicy> {
+
+		@Override
+		public RoleMembershipPolicy addingService(
+			ServiceReference<RoleMembershipPolicy> serviceReference) {
+	
+			Registry registry = RegistryUtil.getRegistry();
+	
+			RoleMembershipPolicy roleMembershipPolicy = registry.getService(
+				serviceReference);
+				
+			if(PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY){
+				try {
+					roleMembershipPolicy.verifyPolicy();
+				}
+				catch (PortalException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+	
+			return roleMembershipPolicy;
+		}
+	
+		@Override
+		public void modifiedService(
+			ServiceReference<RoleMembershipPolicy> serviceReference,
+			RoleMembershipPolicy roleMembershipPolicy) {
+		}
+	
+		@Override
+		public void removedService(
+			ServiceReference<RoleMembershipPolicy> serviceReference,
+			RoleMembershipPolicy roleMembershipPolicy) {
+	
+			Registry registry = RegistryUtil.getRegistry();
+	
+			registry.ungetService(serviceReference);
+	
+		}
+	
+	}
 
 }

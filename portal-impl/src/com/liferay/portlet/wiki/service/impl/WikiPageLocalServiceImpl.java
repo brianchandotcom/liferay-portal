@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MathUtil;
@@ -1449,6 +1450,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = getPage(nodeId, title);
 
+		serviceContext.setCommand(Constants.RENAME);
+
 		updatePage(
 			userId, page, newTitle, page.getContent(), page.getSummary(),
 			page.getMinorEdit(), page.getFormat(), page.getParentTitle(),
@@ -2047,7 +2050,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		wikiPagePersistence.update(page);
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-			String cmd = serviceContext.getCommand();
+			String cmd = GetterUtil.getString(
+				workflowContext.get(WorkflowConstants.CONTEXT_COMMAND));
 
 			if (cmd.equals(Constants.RENAME)) {
 				long resourcePrimKey = page.getResourcePrimKey();
@@ -2802,6 +2806,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		Map<String, Serializable> workflowContext =
 			new HashMap<String, Serializable>();
 
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_COMMAND, serviceContext.getCommand());
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_URL, getPageURL(page, serviceContext));
 

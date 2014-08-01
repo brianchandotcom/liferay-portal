@@ -211,6 +211,7 @@ String iconMenuId = null;
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+							<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
 						</portlet:renderURL>
 
 						<liferay-ui:icon
@@ -232,7 +233,7 @@ String iconMenuId = null;
 							<portlet:param name="redirect" value="<%= redirect %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-							<portlet:param name="rootFolder" value="true" />
+							<portlet:param name="rootFolder" value="<%= Boolean.TRUE.toString() %>" />
 						</portlet:renderURL>
 
 						<liferay-ui:icon
@@ -266,6 +267,7 @@ String iconMenuId = null;
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+							<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
 						</portlet:renderURL>
 
 						<liferay-ui:icon

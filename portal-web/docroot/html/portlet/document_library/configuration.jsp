@@ -129,6 +129,7 @@ DLConfigurationDisplayContext dlConfigurationDisplayContext = new DLConfiguratio
 
 								<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 									<portlet:param name="struts_action" value="/document_library/select_folder" />
+									<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
 								</liferay-portlet:renderURL>
 
 								uri: '<%= selectFolderURL.toString() %>'

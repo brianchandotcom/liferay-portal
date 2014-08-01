@@ -192,7 +192,10 @@ public class ActionUtil {
 
 		long folderId = ParamUtil.getLong(request, "folderId");
 
-		if (folderId <= 0) {
+		boolean ignoreRootFolder = ParamUtil.getBoolean(
+			request, "ignoreRootFolder");
+
+		if ((folderId <= 0) && !ignoreRootFolder) {
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			String portletId = portletDisplay.getId();

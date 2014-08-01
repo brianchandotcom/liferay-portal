@@ -25,16 +25,12 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MVCCModel;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserTracker;
 import com.liferay.portal.model.impl.UserTrackerImpl;
 import com.liferay.portal.model.impl.UserTrackerModelImpl;
@@ -42,7 +38,6 @@ import com.liferay.portal.service.persistence.UserTrackerPersistence;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -2231,25 +2226,6 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 * Initializes the user tracker persistence.
 	 */
 	public void afterPropertiesSet() {
-		String[] listenerClassNames = StringUtil.split(GetterUtil.getString(
-					com.liferay.portal.util.PropsUtil.get(
-						"value.object.listener.com.liferay.portal.model.UserTracker")));
-
-		if (listenerClassNames.length > 0) {
-			try {
-				List<ModelListener<UserTracker>> listenersList = new ArrayList<ModelListener<UserTracker>>();
-
-				for (String listenerClassName : listenerClassNames) {
-					listenersList.add((ModelListener<UserTracker>)InstanceFactory.newInstance(
-							getClassLoader(), listenerClassName));
-				}
-
-				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);
-			}
-			catch (Exception e) {
-				_log.error(e);
-			}
-		}
 	}
 
 	public void destroy() {

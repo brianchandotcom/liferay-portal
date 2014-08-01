@@ -335,7 +335,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	@Override
 	public String extractText(
-			InputStream is, String fileName, int maxStringLength) {
+		InputStream is, String fileName, int maxStringLength) {
 
 		String text = null;
 

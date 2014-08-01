@@ -135,7 +135,6 @@
 	</command>
 
 	<command name="editProcessDetails">
-
 		<if>
 			<isset var="kfProcessNameEdit" />
 			<then>

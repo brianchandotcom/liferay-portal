@@ -1,7 +1,6 @@
 package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -27,40 +26,25 @@ public class ModelListenerRegistrationUtil {
 		_instance._unregister(modelListener.getClass().getName());
 	}
 
-	public static <T> ModelListener<T>[] getModelListeners(
-		BasePersistence< ? extends BaseModel<T>> persistenceImpl) {
-
-		Class<?> superClass = ReflectionUtil.getGenericSuperType(
-			persistenceImpl.getClass());
-		Class<?> key = ReflectionUtil.getGenericSuperType(
-			superClass.getClass());
-
-		if (key == null) {
-			return
-				(ModelListener<T>[]) _instance._getModelListeners(superClass);
-		}
-
-		return (ModelListener<T>[]) _instance._getModelListeners(key);
+	public static <T> ModelListener<T>[] getModelListeners(Class<T> clazz) {
+			return _instance._getModelListeners(clazz);
 	}
 
-	private <T> ModelListener<T>[] _getModelListeners(Class<T> key) {
-
-		List<ModelListener<?>> list = _modelListenerMap.get(key);
+	private <T> ModelListener<T>[] _getModelListeners(Class<T> clazz) {
+		List<ModelListener<?>> list = _modelListenerMap.get(clazz);
 
 		if (list == null) {
 			list = new ArrayList<ModelListener<?>>();
-			List<ModelListener<?>> previousList =
-				_modelListenerMap.putIfAbsent(key, list);
+
+			List<ModelListener<?>> previousList = _modelListenerMap.putIfAbsent(
+				clazz, list);
 
 			if (previousList != null) {
 				list = previousList;
 			}
 		}
 
-		ModelListener<T>[] array = list.toArray(
-			new ModelListener[list.size()]);
-
-		return array;
+		return list.toArray(new ModelListener[list.size()]);
 	}
 
 	private ModelListenerRegistrationUtil() {

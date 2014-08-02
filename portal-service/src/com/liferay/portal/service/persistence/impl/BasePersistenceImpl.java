@@ -220,8 +220,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	public ModelListener<T>[] getListeners() {
-		return (ModelListener<T>[])
-			ModelListenerRegistrationUtil.getModelListeners(this);
+		return ModelListenerRegistrationUtil.getModelListeners(getModelClass());
 	}
 
 	@Override

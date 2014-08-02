@@ -36,7 +36,7 @@ public class ModelListenerRegistrationUtil {
 			superClass.getClass());
 
 		if (key == null) {
-			return 
+			return
 				(ModelListener<T>[]) _instance._getModelListeners(superClass);
 		}
 
@@ -49,7 +49,7 @@ public class ModelListenerRegistrationUtil {
 
 		if (list == null) {
 			list = new ArrayList<ModelListener<?>>();
-			List<ModelListener<?>> previousList = 
+			List<ModelListener<?>> previousList =
 				_modelListenerMap.putIfAbsent(key, list);
 
 			if (previousList != null) {
@@ -57,7 +57,7 @@ public class ModelListenerRegistrationUtil {
 			}
 		}
 
-		ModelListener<T>[] array = (ModelListener<T>[])list.toArray(
+		ModelListener<T>[] array = list.toArray(
 			new ModelListener[list.size()]);
 
 		return array;
@@ -86,7 +86,7 @@ public class ModelListenerRegistrationUtil {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		ServiceReference<ModelListener<?>> serviceReference = 
+		ServiceReference<ModelListener<?>> serviceReference =
 			registry.getServiceReference(key);
 
 		if (serviceReference != null) {
@@ -94,7 +94,7 @@ public class ModelListenerRegistrationUtil {
 		}
 	}
 
-	private static ModelListenerRegistrationUtil _instance = 
+	private static ModelListenerRegistrationUtil _instance =
 		new ModelListenerRegistrationUtil();
 
 	private ServiceTracker<ModelListener<?>, ModelListener<?>> _serviceTracker;
@@ -119,7 +119,7 @@ public class ModelListenerRegistrationUtil {
 
 			if (list == null) {
 				list = new ArrayList<ModelListener<?>>();
-				List<ModelListener<?>> previousList = 
+				List<ModelListener<?>> previousList =
 					_modelListenerMap.putIfAbsent(key, list);
 
 				if (previousList != null) {
@@ -134,13 +134,13 @@ public class ModelListenerRegistrationUtil {
 
 		@Override
 		public void modifiedService(
-			ServiceReference<ModelListener<?>> serviceReference, 
+			ServiceReference<ModelListener<?>> serviceReference,
 			ModelListener<?> service) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<ModelListener<?>> serviceReference, 
+			ServiceReference<ModelListener<?>> serviceReference,
 			ModelListener<?> service) {
 
 			Registry registry = RegistryUtil.getRegistry();

@@ -109,6 +109,130 @@
 		</if>
 	</command>
 
+	<command name="editEmailTemplatePG">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<if>
+			<equals arg1="${calendarType}" arg2="My Calendars" />
+			<then>
+				<var name="key_calendarName" value="${calendarName}" />
+				<var name="key_user" value="${user}" />
+
+				<execute action="PGCalendar#assertTextEquals" locator-key1="MY_CALENDARS_CALENDAR_ADDITIONAL" value1="${user} - ${calendarName}" />
+				<execute action="PGCalendar#click" locator-key1="MY_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW" />
+				<execute action="PGCalendar#assertClick" locator-key1="MY_CALENDARS_CALENDAR_MENULIST_CALENDAR_SETTINGS" value1="Calendar Settings" />
+			</then>
+			<elseif>
+				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
+				<then>
+					<var name="key_calendarName" value="${calendarName}" />
+					<var name="key_site" value="${site}" />
+
+					<execute action="PGCalendar#assertTextEquals" locator-key1="CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL" value1="${site} - ${calendarName}" />
+					<execute action="PGCalendar#click" locator-key1="CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW" />
+					<execute action="PGCalendar#assertClick" locator-key1="CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_CALENDAR_SETTINGS" value1="Calendar Settings" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${calendarType}" arg2="Other Calendars" />
+				<then>
+					<var name="key_calendarName" value="${calendarName}" />
+					<var name="key_site" value="${site}" />
+
+					<execute action="PGCalendar#assertTextEquals" locator-key1="OTHER_CALENDARS_CALENDAR" value1="${calendarName}" />
+					<execute action="PGCalendar#click" locator-key1="OTHER_CALENDARS_CALENDAR_MENULIST_ARROW" value1="${calendarName}" />
+					<execute action="PGCalendar#assertClick" locator-key1="OTHER_CALENDARS_CALENDAR_MENULIST_CALENDAR_SETTINGS" value1="Calendar Settings" />
+				</then>
+			</elseif>
+		</if>
+
+		<var name="key_calendarName" value="${calendarName}" />
+
+		<execute action="PGCalendarCalendarSettings#selectFrame" locator-key1="CALENDAR_SETTING_IFRAME" />
+		<execute action="PGCalendarCalendarSettings#assertTextEquals" locator-key1="HEADER_TITLE" value1="${calendarName}" />
+		<execute action="PGCalendarCalendarSettings#assertClick" locator-key1="NAVIGATION_NOTIFICATION_TEMPLATES_TAB" value1="Notification Templates" />
+		<execute action="PGCalendarCalendarSettings#assertTextEquals" locator-key1="NOTIFICATION_TEMPLATES_HEADER_TITLE" value1="${calendarName}" />
+
+		<if>
+			<equals arg1="${inviteEmail}" arg2="true" />
+			<then>
+				<execute action="PGCalendarCalendarSettings#assertElementPresent" locator-key1="NOTIFICATION_TEMPLATES_INVITE_EMAIL_TAB_ACTIVE" />
+			</then>
+			<elseif>
+				<condition action="PGCalendarCalendarSettings#isElementNotPresent" locator-key1="NOTIFICATION_TEMPLATES_INVITE_EMAIL_TAB_ACTIVE" />
+				<then>
+					<execute action="PGCalendarCalendarSettings#assertClick" locator-key1="NOTIFICATION_TEMPLATES_INVITE_EMAIL_TAB_INACTIVE" value1="Invite Email" />
+				</then>
+			</elseif>
+		</if>
+
+		<if>
+			<equals arg1="${reminderEmail}" arg2="true" />
+			<then>
+				<execute action="PGCalendarCalendarSettings#assertElementNotPresent" locator-key1="NOTIFICATION_TEMPLATES_REMINDER_EMAIL_TAB_ACTIVE" />
+				<execute action="PGCalendarCalendarSettings#assertClick" locator-key1="NOTIFICATION_TEMPLATES_REMINDER_EMAIL_TAB_INACTIVE" value1="Reminder Email" />
+			</then>
+			<elseif>
+				<condition action="PGCalendarCalendarSettings#isElementPresent" locator-key1="NOTIFICATION_TEMPLATES_REMINDER_EMAIL_TAB_ACTIVE" />
+				<then>
+					<execute action="PGCalendarCalendarSettings#assertElementPresent" locator-key1="NOTIFICATION_TEMPLATES_INVITE_EMAIL_TAB_ACTIVE" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="PGCalendarCalendarSettings#type" locator-key1="NOTIFICATION_TEMPLATES_FROM_NAME_FIELD" value1="${fromNameEdit}" />
+		<execute action="PGCalendarCalendarSettings#type" locator-key1="NOTIFICATION_TEMPLATES_FROM_ADDRESS_FIELD" value1="${fromAddressEdit}" />
+
+		<if>
+			<equals arg1="${inviteEmail}" arg2="true" />
+			<then>
+				<execute action="PGCalendarCalendarSettings#type" locator-key1="NOTIFICATION_TEMPLATES_SUBJECT_FIELD" value1="[$PORTLET_NAME$]: Edited Event Notification for [$EVENT_TITLE$]" />
+				<execute action="PGCalendarCalendarSettings#type" locator-key1="NOTIFICATION_TEMPLATES_BODY_FIELD" value1="[$TO_NAME$],
+
+				This is an edited event invite email.
+
+				Sincerely,
+				[$FROM_NAME$]
+				[$FROM_ADDRESS$]
+				[$PORTAL_URL$]" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${reminderEmail}" arg2="true" />
+			<then>
+				<execute action="PGCalendarCalendarSettings#type" locator-key1="NOTIFICATION_TEMPLATES_SUBJECT_FIELD" value1="[$PORTLET_NAME$]: Edited Event Reminder for [$EVENT_TITLE$]" />
+				<execute action="PGCalendarCalendarSettings#type" locator-key1="NOTIFICATION_TEMPLATES_BODY_FIELD" value1="[$TO_NAME$],
+
+				This is an edited event reminder email.
+
+				Sincerely,
+				[$FROM_NAME$]
+				[$FROM_ADDRESS$]
+				[$PORTAL_URL$]" />
+			</then>
+		</if>
+
+		<execute action="PGCalendarCalendarSettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<if>
+			<condition action="PGCalendarCalendarSettings#isElementPresent" locator-key1="SUCCESS_MESSAGE" />
+			<then>
+				<execute action="PGCalendarCalendarSettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="PGCalendarCalendarSettings#selectFrame" value1="relative=top" />
+			</then>
+			<else>
+				<execute action="PGCalendarCalendarSettings#selectFrame" value1="relative=top" />
+
+				<execute action="PGCalendar#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</else>
+		</if>
+
+		<execute action="PGCalendar#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="editPG">
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />

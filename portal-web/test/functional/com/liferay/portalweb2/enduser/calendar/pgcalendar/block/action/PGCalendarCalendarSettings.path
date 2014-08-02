@@ -80,13 +80,69 @@
 </tr>
 <!--NAVIGATION-->
 <tr>
-	<td>NAVIGATION_CALENDAR</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Calendar')]</td>
+	<td>NAVIGATION_GENERAL_TAB</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li/a[contains(.,'General')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NAVIGATION_NOTIFICATION_TEMPLATES</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Resources')]</td>
+	<td>NAVIGATION_NOTIFICATION_TEMPLATES_TAB</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li/a[contains(.,'Notification Templates')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NOTIFICATION_TEMPLATES-->
+<tr>
+	<td>NOTIFICATION_TEMPLATES_HEADER_TITLE</td>
+	<td>//h3[@class='header-title']/span[contains(.,'${key_calendarName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_TEMPLATES_BACK_BUTTON</td>
+	<td>//a[@title='Back']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_TEMPLATES_INVITE_EMAIL_TAB_ACTIVE</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li[@class='tab active']/a[contains(.,'Invite Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_TEMPLATES_INVITE_EMAIL_TAB_INACTIVE</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li[@class='tab']/a[contains(.,'Invite Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_TEMPLATES_REMINDER_EMAIL_TAB_ACTIVE</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li[@class='tab active']/a[contains(.,'Reminder Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_TEMPLATES_REMINDER_EMAIL_TAB_INACTIVE</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]/li[@class='tab']/a[contains(.,'Reminder Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_TEMPLATES_FROM_NAME_FIELD</td>
+	<td>//input[contains(@id,'calendarportlet_fromName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_TEMPLATES_FROM_ADDRESS_FIELD</td>
+	<td>//input[contains(@id,'calendarportlet_fromAddress')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_TEMPLATES_SUBJECT_FIELD</td>
+	<td>//input[contains(@id,'calendarportlet_subject')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_TEMPLATES_BODY_FIELD</td>
+	<td>//div[contains(@class,'cke_contents')]/iframe</td>
 	<td></td>
 </tr>
 </tbody>

@@ -833,7 +833,7 @@
 			<var name="user" value="${adminName}" />
 		</execute>
 
-		<execute macro="LAR#exportSiteCP">
+		<execute macro="LAR#configureExportSiteCP">
 			<var name="exportPermissions" value="false" />
 			<var name="larFileName" value="${larFileName}" />
 			<var name="siteName" value="${siteName}" />

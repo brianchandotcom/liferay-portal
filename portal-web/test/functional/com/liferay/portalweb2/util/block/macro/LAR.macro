@@ -1,69 +1,17 @@
 <definition>
-	<command name="exportCmd">
-		<if>
-			<isset var="larFileName" />
-			<then>
-				<execute action="BasePortletExport#type" locator-key1="EXPORT_FILE_NAME" value1="${larFileName}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${exportPermissions}" arg2="true" />
-			<then>
-				<execute action="BasePortletExport#check" locator-key1="PERMISSIONS_CHECKBOX" />
-			</then>
-		</if>
-
-		<execute action="BasePortletExport#assertClick" locator-key1="EXPORT_BUTTON" value1="Export" />
-
-		<var name="key_larFileName" value="${larFileName}" />
-
-		<execute action="BasePortletExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-		<execute action="BasePortletExport#assertClick" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" value1="${larFileName}" />
-		<execute action="BasePortletExport#downloadTempFile" locator1="${larFileName}" />
-		<execute action="BasePortletExport#selectFrame" value1="relative=top" />
+	<command name="addExportTemplateCP">
+		<execute action="CPSitepagesExport#click" locator-key1="EXPORT_TEMPLATES_NEW_BUTTON" />
+		<execute action="CPSitepagesExport#type" locator-key1="EXPORT_TEMPLATES_NAME_FIELD" value1="${exportTemplateName}" />
+		<execute action="CPSitepagesExport#type" locator-key1="EXPORT_TEMPLATES_DESCRIPTION_FIELD" value1="${exportTemplateDescription}" />
 	</command>
 
-	<command name="exportDDL">
-		<execute macro="LAR#gotoExportImportCmd" />
-
-		<execute macro="LAR#exportCmd">
-			<var name="larFileName" value="${larFileName}" />
-		</execute>
-	</command>
-
-	<command name="exportPortlet">
-		<execute macro="LAR#gotoExportImportCmd" />
-
-		<execute macro="LAR#exportCmd">
-			<var name="larFileName" value="${larFileName}" />
-		</execute>
-	</command>
-
-	<command name="exportSiteCmd">
-		<execute action="CPSitepagesExport#assertClick" locator-key1="EXPORT_BUTTON" value1="Export" />
-
-		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-
-		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
-
-		<echo message="value name ${valueName}" />
-
-		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
-
-		<echo message="import file name ${larFileName}" />
-
-		<execute action="CPSitepagesExport#click" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute action="CPSitepagesExport#downloadTempFile" />
-	</command>
-
-	<command name="exportSiteCP">
+	<command name="configureExportSiteCP">
 		<execute macro="LAR#gotoExportSiteCmd" />
 
-		<execute macro="LAR#exportSiteOptionsCmd" />
+		<execute macro="LAR#configureExportSiteOptionsCmd" />
 	</command>
 
-	<command name="exportSiteOptionsCmd">
+	<command name="configureExportSiteOptionsCmd">
 		<if>
 			<equals arg1="${exportPermissions}" arg2="true" />
 			<then>
@@ -197,6 +145,81 @@
 		</if>
 	</command>
 
+	<command name="configureExportTemplateCP">
+		<execute macro="LAR#configureExportSiteOptionsCmd" />
+	</command>
+
+	<command name="exportCmd">
+		<if>
+			<isset var="larFileName" />
+			<then>
+				<execute action="BasePortletExport#type" locator-key1="EXPORT_FILE_NAME" value1="${larFileName}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${exportPermissions}" arg2="true" />
+			<then>
+				<execute action="BasePortletExport#check" locator-key1="PERMISSIONS_CHECKBOX" />
+			</then>
+		</if>
+
+		<execute action="BasePortletExport#assertClick" locator-key1="EXPORT_BUTTON" value1="Export" />
+
+		<var name="key_larFileName" value="${larFileName}" />
+
+		<execute action="BasePortletExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute action="BasePortletExport#assertClick" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" value1="${larFileName}" />
+		<execute action="BasePortletExport#downloadTempFile" locator1="${larFileName}" />
+		<execute action="BasePortletExport#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="exportDDL">
+		<execute macro="LAR#gotoExportImportCmd" />
+
+		<execute macro="LAR#exportCmd">
+			<var name="larFileName" value="${larFileName}" />
+		</execute>
+	</command>
+
+	<command name="exportExportTemplateCP">
+		<var name="key_exportTemplateName" value="${exportTemplateName}" />
+
+		<execute action="CPSitepagesExport#click" locator-key1="EXPORT_TEMPLATES_TABLE_EXPORT_BUTTON" />
+
+		<var name="exportTemplateName" value="${exportTemplateName?replace(' ', '_')}" />
+		<var name="key_larFileName" value="${exportTemplateName}" />
+		<echo message="${exportTemplateName}" />
+
+		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" value1="${exportTemplateName}" />
+	</command>
+
+	<command name="exportPortlet">
+		<execute macro="LAR#gotoExportImportCmd" />
+
+		<execute macro="LAR#exportCmd">
+			<var name="larFileName" value="${larFileName}" />
+		</execute>
+	</command>
+
+	<command name="exportSiteCmd">
+		<execute action="CPSitepagesExport#assertClick" locator-key1="EXPORT_BUTTON" value1="Export" />
+
+		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText(&quot;//tr/td[5]/span/a&quot;)" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+
+		<echo message="import file name ${larFileName}" />
+
+		<execute action="CPSitepagesExport#click" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute action="CPSitepagesExport#downloadTempFile" />
+	</command>
+
 	<command name="exportUserGroups">
 		<execute macro="LAR#gotoExportImportCmd" />
 
@@ -220,6 +243,12 @@
 		</execute>
 
 		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_EXPORT" value1="Export" />
+	</command>
+
+	<command name="gotoExportTemplateCP">
+		<execute macro="LAR#gotoExportSiteCmd" />
+
+		<execute action="CPSitepagesExport#click" locator-key1="EXPORT_TEMPLATE_BUTTON" />
 	</command>
 
 	<command name="gotoImportSiteCmd">
@@ -299,6 +328,24 @@
 		</if>
 	</command>
 
+	<command name="moveToTheRecycleBinExportTemplate">
+		<execute action="CPSitepagesExport#click" locator-key1="EXPORT_TEMPLATE_BUTTON" />
+
+		<var name="key_exportTemplateName" value="${exportTemplateName}" />
+
+		<execute action="CPSitepagesExport#click" locator-key1="EXPORT_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_BUTTON" />
+		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="EXPORT_MESSAGE" value1="The Export Import Template ${exportTemplateName} was moved to the Recycle Bin." />
+	</command>
+
+	<command name="saveExportTemplateCP">
+		<execute action="CPSitepagesExport#assertClick" locator-key1="EXPORT_TEMPLATES_SAVE_BUTTON" value1="Save" />
+
+		<var name="key_exportTemplateName" value="${exportTemplateName}" />
+
+		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
+		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="EXPORT_TEMPLATES_TABLE_DESCRIPTION" value1="${exportTemplateDescription}" />
+	</command>
+
 	<command name="selectImportFileCmd">
 		<execute action="BasePortletImport#assertClick" locator-key1="NAVIGATION_IMPORT" value1="Import" />
 		<execute action="BasePortletImport#assertClick" locator-key1="SELECT_FILE_BUTTON" value1="Select File" />
@@ -333,6 +380,13 @@
 				<execute action="CPSitepagesImport#assertTextEquals" locator-key1="FILE_NAME" value1="${larFileName}" />
 			</else>
 		</if>
+	</command>
+
+	<command name="viewExportTemplateCP">
+		<var name="key_exportTemplateName" value="${exportTemplateName}" />
+
+		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
+		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="EXPORT_TEMPLATES_TABLE_DESCRIPTION" value1="${exportTemplateDescription}" />
 	</command>
 
 	<command name="viewSitePagesExportApplications">

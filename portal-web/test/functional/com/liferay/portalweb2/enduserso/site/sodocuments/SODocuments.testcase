@@ -2827,7 +2827,7 @@
 			<var name="roleName" value="Guest" />
 		</execute>
 
-		<execute macro="LAR#exportSiteCP">
+		<execute macro="LAR#configureExportSiteCP">
 			<var name="exportPermissions" value="true" />
 			<var name="larFileName" value="${larFileName}" />
 			<var name="siteName" value="${siteName}" />
@@ -3472,7 +3472,7 @@
 			<var name="previousVersion" value="true" />
 		</execute>
 
-		<execute macro="LAR#exportSiteCP">
+		<execute macro="LAR#configureExportSiteCP">
 			<var name="exportPermissions" value="true" />
 			<var name="larFileName" value="${larFileName}" />
 			<var name="siteName" value="${siteName}" />

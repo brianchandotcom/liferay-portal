@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ADD_RESOURCE_BUTTON</td>
-	<td>//a[contains(@class,'btn btn-default') and contains (.,'Add Resource')]</td>
+	<td>//a[contains(@class,'btn') and contains (.,'Add Resource')]</td>
 	<td></td>
 </tr>
 <tr>

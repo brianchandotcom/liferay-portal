@@ -50,7 +50,6 @@ public class ModelListenerRegistrationUtil {
 	}
 
 	private ModelListenerRegistrationUtil() {
-
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter(
@@ -86,22 +85,24 @@ public class ModelListenerRegistrationUtil {
 	private static ModelListenerRegistrationUtil _instance =
 		new ModelListenerRegistrationUtil();
 
-	private ServiceTracker<ModelListener<?>, ModelListener<?>> _serviceTracker;
-
 	private ConcurrentMap<Class<?>, List<ModelListener<?>>> _modelListenerMap =
 		new ConcurrentHashMap<Class<?>, List<ModelListener<?>>>();
 	private Map<String, ServiceRegistration<?>> _serviceRegistrations =
 		new ConcurrentHashMap<String, ServiceRegistration<?>>();
+	private ServiceTracker<ModelListener<?>, ModelListener<?>> _serviceTracker;
 
 	private class ModelListenerTrackerCustomizer
-	implements ServiceTrackerCustomizer<ModelListener<?>, ModelListener<?>> {
+		implements
+			ServiceTrackerCustomizer<ModelListener<?>, ModelListener<?>> {
 
 		@Override
 		public ModelListener<?> addingService(
 			ServiceReference<ModelListener<?>> serviceReference) {
+
 			Registry registry = RegistryUtil.getRegistry();
 
-			ModelListener<?> service = registry.getService(serviceReference);
+			ModelListener<?> modelListener = registry.getService(
+				serviceReference);
 
 			Class<?> key = ReflectionUtil.getGenericSuperType(
 				service.getClass());
@@ -110,6 +111,7 @@ public class ModelListenerRegistrationUtil {
 
 			if (list == null) {
 				list = new ArrayList<ModelListener<?>>();
+
 				List<ModelListener<?>> previousList =
 					_modelListenerMap.putIfAbsent(key, list);
 
@@ -118,21 +120,21 @@ public class ModelListenerRegistrationUtil {
 				}
 			}
 
-			list.add(service);
+			list.add(modelListener);
 
-			return service;
+			return modelListener;
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<ModelListener<?>> serviceReference,
-			ModelListener<?> service) {
+			ModelListener<?> modelListener) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<ModelListener<?>> serviceReference,
-			ModelListener<?> service) {
+			ModelListener<?> modelListener) {
 
 			Registry registry = RegistryUtil.getRegistry();
 

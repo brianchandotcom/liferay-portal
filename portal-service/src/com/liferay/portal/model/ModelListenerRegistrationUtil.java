@@ -141,9 +141,15 @@ public class ModelListenerRegistrationUtil {
 
 			registry.ungetService(serviceReference);
 
-			String key = service.getClass().getName();
+			Class<?> clazz = modelListener.getClass();
 
-			_modelListenerMap.remove(key);
+			clazz = ReflectionUtil.getGenericSuperType(clazz);
+
+			List<ModelListener<?>> list = _modelListenerMap.get(clazz);
+
+			if (list != null) {
+				list.remove(modelListener);
+			}
 		}
 	}
 }

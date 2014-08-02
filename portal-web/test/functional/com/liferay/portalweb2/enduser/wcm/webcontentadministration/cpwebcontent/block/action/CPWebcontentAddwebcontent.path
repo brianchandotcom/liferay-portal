@@ -39,7 +39,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DESCRIPTIVE_WORKFLOW_STATUS</td>
+	<td>WORKFLOW_STATUS</td>
 	<td>//span[@class='workflow-status']/strong</td>
 	<td></td>
 </tr>

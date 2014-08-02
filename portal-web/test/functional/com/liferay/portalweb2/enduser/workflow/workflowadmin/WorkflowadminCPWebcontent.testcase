@@ -40,8 +40,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -180,8 +179,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -201,8 +199,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -284,8 +281,7 @@
 
 		<execute macro="WebContent#viewStructureWithWorkflowCP">
 			<var name="webContentTitle" value="WC Folder WCWithStructure Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -344,8 +340,7 @@
 
 		<execute macro="WebContent#viewStructureWithWorkflowCP">
 			<var name="webContentTitle" value="WC Folder WCWithStructure Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -416,8 +411,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -442,8 +436,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -503,8 +496,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -519,8 +511,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -551,8 +542,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -562,8 +552,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -633,7 +622,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
-			<var name="workflowAssetType" value="Web Content" />
+			<var name="workflowAssetType" value="Web Content Article" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -644,8 +633,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -711,8 +699,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -732,8 +719,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -762,8 +748,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Update)" />
+			<var name="workflowTask" value="Update" />
 		</execute>
 	</command>
 
@@ -829,8 +814,7 @@
 
 		<execute macro="WebContent#viewStructureWithWorkflowCP">
 			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -870,8 +854,7 @@
 
 		<execute macro="WebContent#viewStructureWithWorkflowCP">
 			<var name="webContentTitle" value="WC Folder WebContent Structure Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -904,8 +887,7 @@
 
 		<execute macro="WebContent#viewStructureWithWorkflowCP">
 			<var name="webContentTitle" value="WC Folder WebContent Structure Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Update)" />
+			<var name="workflowTask" value="Update" />
 		</execute>
 	</command>
 
@@ -952,8 +934,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -978,8 +959,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -1013,8 +993,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Update)" />
+			<var name="workflowTask" value="Update" />
 		</execute>
 	</command>
 
@@ -1050,8 +1029,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -1066,8 +1044,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -1098,8 +1075,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -1109,8 +1085,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Review)" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -1163,8 +1138,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Update)" />
+			<var name="workflowTask" value="Update" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -1174,8 +1148,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Update)" />
+			<var name="workflowTask" value="Update" />
 		</execute>
 	</command>
 
@@ -1232,8 +1205,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
-			<var name="workflowStatus" value="Pending" />
-			<var name="workflowStatusDescriptive" value="Pending (Update)" />
+			<var name="workflowTask" value="Update" />
 		</execute>
 	</command>
 </definition>

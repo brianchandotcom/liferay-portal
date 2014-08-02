@@ -5,11 +5,13 @@ import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -60,21 +62,24 @@ public class ModelListenerRegistrationUtil {
 		_serviceTracker.open();
 	}
 
-	private void _register(String key, ModelListener<?> modelListener) {
+	private <T> void _register(
+		String className, ModelListener<T> modelListener) {
+
 		Registry registry = RegistryUtil.getRegistry();
 
-		registry.registerService(key, modelListener);
+		ServiceRegistration<?> serviceRegistration =
+			registry.registerService(
+				ModelListener.class.getName(), modelListener);
+
+		_serviceRegistrations.put(className, serviceRegistration);
 	}
 
-	private void _unregister(String key) {
+	private void _unregister(String className) {
+		ServiceRegistration<?> serviceRegistration =
+			_serviceRegistrations.remove(className);
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		ServiceReference<ModelListener<?>> serviceReference =
-			registry.getServiceReference(key);
-
-		if (serviceReference != null) {
-			registry.ungetService(serviceReference);
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
 		}
 	}
 
@@ -85,6 +90,8 @@ public class ModelListenerRegistrationUtil {
 
 	private ConcurrentMap<Class<?>, List<ModelListener<?>>> _modelListenerMap =
 		new ConcurrentHashMap<Class<?>, List<ModelListener<?>>>();
+	private Map<String, ServiceRegistration<?>> _serviceRegistrations =
+		new ConcurrentHashMap<String, ServiceRegistration<?>>();
 
 	private class ModelListenerTrackerCustomizer
 	implements ServiceTrackerCustomizer<ModelListener<?>, ModelListener<?>> {

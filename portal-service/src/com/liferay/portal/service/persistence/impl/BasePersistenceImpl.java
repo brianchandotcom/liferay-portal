@@ -529,6 +529,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	protected static final String WHERE_OR = " OR ";
 
+	/*
+	 * This was left behind to not break legacy services. They would still
+	 * collect their listeners through their afterPropertiesSet method
+	 */
 	protected ModelListener<T>[] listeners = new ModelListener[0];
 
 	private static Log _log = LogFactoryUtil.getLog(BasePersistenceImpl.class);

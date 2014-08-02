@@ -19,16 +19,8 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class ModelListenerRegistrationUtil {
 
-	public static void register(String key, ModelListener<?> modelListener) {
-		_instance._register(key, modelListener);
-	}
-
 	public static void register(ModelListener<?> modelListener) {
 		_instance._register(modelListener.getClass().getName(), modelListener);
-	}
-
-	public static void unregister(String key) {
-		_instance._unregister(key);
 	}
 
 	public static void unregister(ModelListener<?> modelListener) {
@@ -69,12 +61,6 @@ public class ModelListenerRegistrationUtil {
 			new ModelListener[list.size()]);
 
 		return array;
-	}
-
-	protected ClassLoader getClassLoader() {
-		Class<?> clazz = getClass();
-
-		return clazz.getClassLoader();
 	}
 
 	private ModelListenerRegistrationUtil() {

@@ -503,7 +503,6 @@
 			<condition action="CPPortalWorkflowconfiguration#isElementPresent" locator-key1="DEFINITION_TABLE_ACTIONS_UPLOADED" />
 			<then>
 				<execute macro="Workflow#deactivateUploadedWorkflowDefinition" />
-
 				<execute macro="Workflow#deleteWorkflowDefinition" />
 			</then>
 		</while>

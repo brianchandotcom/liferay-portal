@@ -104,16 +104,17 @@ public class ModelListenerRegistrationUtil {
 			ModelListener<?> modelListener = registry.getService(
 				serviceReference);
 
-			Class<?> key = ReflectionUtil.getGenericSuperType(
-				service.getClass());
+			Class<?> clazz = modelListener.getClass();
 
-			List<ModelListener<?>> list = _modelListenerMap.get(key);
+			clazz = ReflectionUtil.getGenericSuperType(clazz);
+
+			List<ModelListener<?>> list = _modelListenerMap.get(clazz);
 
 			if (list == null) {
 				list = new ArrayList<ModelListener<?>>();
 
 				List<ModelListener<?>> previousList =
-					_modelListenerMap.putIfAbsent(key, list);
+					_modelListenerMap.putIfAbsent(clazz, list);
 
 				if (previousList != null) {
 					list = previousList;

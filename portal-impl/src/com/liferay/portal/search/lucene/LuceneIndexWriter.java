@@ -218,7 +218,7 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 					if (languageId.equals(defaultLanguageId)) {
 						_addLuceneFieldable(
 							luceneDocument, name, numeric, numericClass,
-							field.isSortable(), tokenized, boost, value);
+							tokenized, field.isSortable(), boost, value);
 					}
 
 					String localizedName = DocumentImpl.getLocalizedName(
@@ -226,7 +226,7 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 
 					_addLuceneFieldable(
 						luceneDocument, localizedName, numeric, numericClass,
-						field.isSortable(), tokenized, boost, value);
+						tokenized, field.isSortable(), boost, value);
 				}
 			}
 		}

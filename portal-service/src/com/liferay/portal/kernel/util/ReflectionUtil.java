@@ -18,6 +18,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -78,6 +80,23 @@ public class ReflectionUtil {
 		}
 
 		return method;
+	}
+
+	public static Class<?> getGenericSuperType(Class<?> clazz) {
+		try {
+			ParameterizedType parameterizedType =
+				(ParameterizedType)clazz.getGenericSuperclass();
+
+			Type[] arguments = parameterizedType.getActualTypeArguments();
+
+			if (arguments.length > 0) {
+				return (Class<?>)arguments[0];
+			}
+		}
+		catch (Throwable t) {
+		}
+
+		return null;
 	}
 
 	public static Class<?>[] getInterfaces(Object object) {

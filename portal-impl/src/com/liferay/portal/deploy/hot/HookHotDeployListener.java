@@ -80,7 +80,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Release;
@@ -598,18 +597,6 @@ public class HookHotDeployListener
 
 		initStrutsActions(servletContextName, portletClassLoader, rootElement);
 
-		// Begin backwards compatibility for 5.1.0
-
-		ModelListenersContainer modelListenersContainer =
-			_modelListenersContainerMap.get(servletContextName);
-
-		if (modelListenersContainer == null) {
-			modelListenersContainer = new ModelListenersContainer();
-
-			_modelListenersContainerMap.put(
-				servletContextName, modelListenersContainer);
-		}
-
 		List<Element> modelListenerElements = rootElement.elements(
 			"model-listener");
 
@@ -618,14 +605,9 @@ public class HookHotDeployListener
 			String modelListenerClassName = modelListenerElement.elementText(
 				"model-listener-class");
 
-			ModelListener<BaseModel<?>> modelListener = initModelListener(
+			initModelListener(
 				servletContextName, portletClassLoader, modelName,
 				modelListenerClassName);
-
-			if (modelListener != null) {
-				modelListenersContainer.registerModelListener(
-					modelName, modelListener);
-			}
 		}
 
 		List<Element> eventElements = rootElement.elements("event");
@@ -693,14 +675,6 @@ public class HookHotDeployListener
 
 		if (languagesContainer != null) {
 			languagesContainer.unregisterLanguages();
-		}
-
-		ModelListenersContainer modelListenersContainer =
-			_modelListenersContainerMap.remove(servletContextName);
-
-		if (modelListenersContainer != null) {
-			modelListenersContainer.unregisterModelListeners(
-				servletContextName);
 		}
 
 		Properties portalProperties = _portalPropertiesMap.remove(
@@ -1317,35 +1291,23 @@ public class HookHotDeployListener
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
-	protected ModelListener<BaseModel<?>> initModelListener(
+	protected void initModelListener(
 			String servletContextName, ClassLoader portletClassLoader,
 			String modelName, String modelListenerClassName)
 		throws Exception {
 
-		ModelListener<BaseModel<?>> modelListener =
-			(ModelListener<BaseModel<?>>)newInstance(
-				portletClassLoader, ModelListener.class,
-				modelListenerClassName);
+		ModelListener<?> modelListener = (ModelListener<?>)newInstance(
+			portletClassLoader, ModelListener.class, modelListenerClassName);
 
-		BasePersistence persistence = getPersistence(
-			servletContextName, modelName);
-
-		persistence.registerListener(modelListener);
-
-		return modelListener;
+		registerService(
+			servletContextName, modelListenerClassName, ModelListener.class,
+			modelListener);
 	}
 
 	protected void initModelListeners(
 			String servletContextName, ClassLoader portletClassLoader,
 			Properties portalProperties)
 		throws Exception {
-
-		ModelListenersContainer modelListenersContainer =
-			new ModelListenersContainer();
-
-		_modelListenersContainerMap.put(
-			servletContextName, modelListenersContainer);
 
 		for (Map.Entry<Object, Object> entry : portalProperties.entrySet()) {
 			String key = (String)entry.getKey();
@@ -1360,14 +1322,9 @@ public class HookHotDeployListener
 				(String)entry.getValue());
 
 			for (String modelListenerClassName : modelListenerClassNames) {
-				ModelListener<BaseModel<?>> modelListener = initModelListener(
+				initModelListener(
 					servletContextName, portletClassLoader, modelName,
 					modelListenerClassName);
-
-				if (modelListener != null) {
-					modelListenersContainer.registerModelListener(
-						modelName, modelListener);
-				}
 			}
 		}
 	}
@@ -2628,8 +2585,6 @@ public class HookHotDeployListener
 		new HashMap<String, LanguagesContainer>();
 	private Map<String, StringArraysContainer> _mergeStringArraysContainerMap =
 		new HashMap<String, StringArraysContainer>();
-	private Map<String, ModelListenersContainer> _modelListenersContainerMap =
-		new HashMap<String, ModelListenersContainer>();
 	private Map<String, StringArraysContainer>
 		_overrideStringArraysContainerMap =
 			new HashMap<String, StringArraysContainer>();
@@ -2826,49 +2781,6 @@ public class HookHotDeployListener
 		private Map<String, String[]> _pluginStringArrayMap =
 			new HashMap<String, String[]>();
 		private String[] _portalStringArray;
-
-	}
-
-	private class ModelListenersContainer {
-
-		public void registerModelListener(
-			String modelName, ModelListener<BaseModel<?>> modelListener) {
-
-			List<ModelListener<BaseModel<?>>> modelListeners =
-				_modelListenersMap.get(modelName);
-
-			if (modelListeners == null) {
-				modelListeners = new ArrayList<ModelListener<BaseModel<?>>>();
-
-				_modelListenersMap.put(modelName, modelListeners);
-			}
-
-			modelListeners.add(modelListener);
-		}
-
-		@SuppressWarnings("rawtypes")
-		public void unregisterModelListeners(String servletContextName) {
-			for (Map.Entry<String, List<ModelListener<BaseModel<?>>>> entry :
-					_modelListenersMap.entrySet()) {
-
-				String modelName = entry.getKey();
-				List<ModelListener<BaseModel<?>>> modelListeners =
-					entry.getValue();
-
-				BasePersistence persistence = getPersistence(
-					servletContextName, modelName);
-
-				for (ModelListener<BaseModel<?>> modelListener :
-						modelListeners) {
-
-					persistence.unregisterListener(modelListener);
-				}
-			}
-		}
-
-		private Map<String, List<ModelListener<BaseModel<?>>>>
-			_modelListenersMap =
-				new HashMap<String, List<ModelListener<BaseModel<?>>>>();
 
 	}
 

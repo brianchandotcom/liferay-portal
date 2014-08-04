@@ -1230,14 +1230,15 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			FileVersion fileVersion, RenderedImage renderedImage)
 		throws Exception {
 
-		storeThumbnailmage(fileVersion, renderedImage, THUMBNAIL_INDEX_DEFAULT);
-		storeThumbnailmage(
+		storeThumbnailImage(
+			fileVersion, renderedImage, THUMBNAIL_INDEX_DEFAULT);
+		storeThumbnailImage(
 			fileVersion, renderedImage, THUMBNAIL_INDEX_CUSTOM_1);
-		storeThumbnailmage(
+		storeThumbnailImage(
 			fileVersion, renderedImage, THUMBNAIL_INDEX_CUSTOM_2);
 	}
 
-	protected void storeThumbnailmage(
+	protected void storeThumbnailImage(
 			FileVersion fileVersion, RenderedImage renderedImage, int index)
 		throws Exception {
 

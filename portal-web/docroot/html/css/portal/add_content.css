@@ -31,24 +31,23 @@
 			}
 		}
 
-		.btn-toolbar {
-			.form-group-inline {
-				display: inline;
-
-				.search-query {
-					margin-bottom: 0;
-				}
-
-				@include respond-to(phone, tablet) {
-					.search-query {
-						width: 65%;
-					}
-				}
+		.content-search {
+			.input-select-wrapper, .input-text-wrapper {
+				float: left;
 			}
 
-			.form-group-inline, .btn-group {
-				margin-right: 5px;
+			.input-select-wrapper {
+				padding-left: 15px;
+				width: 25%;
 			}
+
+			.input-text-wrapper {
+				width: 75%;
+			}
+		}
+
+		.navbar {
+			clear: left;
 		}
 
 		.display-style-buttons-container {

@@ -41,6 +41,9 @@ public interface ProjectionFactory {
 
 	public Projection rowCount();
 
+	public Projection sqlGroupProjection(
+		String sql, String groupBy, String[] columnAliases, Type[] types);
+
 	public Projection sqlProjection(
 		String sql, String[] columnAliases, Type[] types);
 

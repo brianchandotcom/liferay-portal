@@ -72,6 +72,13 @@ public class ProjectionFactoryUtil {
 		return getProjectionFactory().rowCount();
 	}
 
+	public static Projection sqlGroupProjection(
+		String sql, String groupBy, String[] columnAliases, Type[] types) {
+
+		return getProjectionFactory().sqlGroupProjection(
+			sql, groupBy, columnAliases, types);
+	}
+
 	public static Projection sqlProjection(
 		String sql, String[] columnAliases, Type[] types) {
 

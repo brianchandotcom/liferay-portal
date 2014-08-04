@@ -91,6 +91,28 @@ public class ProjectionFactoryImpl implements ProjectionFactory {
 	}
 
 	@Override
+	public Projection sqlGroupProjection(
+		String sql, String groupBy, String[] columnAliases, Type[] types) {
+
+		if (ArrayUtil.isEmpty(types)) {
+			return new ProjectionImpl(
+				Projections.sqlGroupProjection(
+					sql, groupBy, columnAliases, null));
+		}
+
+		org.hibernate.type.Type[] hibernateTypes =
+			new org.hibernate.type.Type[types.length];
+
+		for (int i = 0; i < types.length; i++) {
+			hibernateTypes[i] = TypeTranslator.translate(types[i]);
+		}
+
+		return new ProjectionImpl(
+			Projections.sqlGroupProjection(
+				sql, groupBy, columnAliases, hibernateTypes));
+	}
+
+	@Override
 	public Projection sqlProjection(
 		String sql, String[] columnAliases, Type[] types) {
 

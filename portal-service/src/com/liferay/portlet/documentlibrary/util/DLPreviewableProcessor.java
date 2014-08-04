@@ -988,27 +988,22 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	}
 
 	protected boolean hasThumbnails(FileVersion fileVersion) {
-		try {
-			if (isThumbnailEnabled(THUMBNAIL_INDEX_DEFAULT)) {
-				if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_DEFAULT)) {
-					return false;
-				}
-			}
-
-			if (isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_1)) {
-				if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_1)) {
-					return false;
-				}
-			}
-
-			if (isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_2)) {
-				if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_2)) {
-					return false;
-				}
+		if (isThumbnailEnabled(THUMBNAIL_INDEX_DEFAULT)) {
+			if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_DEFAULT)) {
+				return false;
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+
+		if (isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_1)) {
+			if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_1)) {
+				return false;
+			}
+		}
+
+		if (isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_2)) {
+			if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_2)) {
+				return false;
+			}
 		}
 
 		return true;

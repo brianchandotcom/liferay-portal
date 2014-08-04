@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
@@ -22,6 +24,8 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,9 +122,11 @@ public class ModelListenerRegistrationUtil {
 			ModelListener<?> modelListener = registry.getService(
 				serviceReference);
 
-			Class<?> clazz = modelListener.getClass();
+			Class<?> clazz = getModelListeners(modelListener);
 
-			clazz = ReflectionUtil.getGenericSuperType(clazz);
+			if (clazz == null) {
+				return null;
+			}
 
 			List<ModelListener<?>> modelListeners = _modelListeners.get(clazz);
 
@@ -155,15 +161,33 @@ public class ModelListenerRegistrationUtil {
 
 			registry.ungetService(serviceReference);
 
-			Class<?> clazz = modelListener.getClass();
-
-			clazz = ReflectionUtil.getGenericSuperType(clazz);
+			Class<?> clazz = getModelListeners(modelListener);
 
 			List<ModelListener<?>> modelListeners = _modelListeners.get(clazz);
 
 			if (modelListeners != null) {
 				modelListeners.remove(modelListener);
 			}
+		}
+
+		private Class<?> getModelListeners(ModelListener<?> modelListener) {
+			Class<?> clazz = modelListener.getClass();
+
+			if (ProxyUtil.isProxyClass(clazz)) {
+				InvocationHandler invocationHandler =
+					ProxyUtil.getInvocationHandler(modelListener);
+
+				if (invocationHandler instanceof ClassLoaderBeanHandler) {
+					ClassLoaderBeanHandler classLoaderBeanHandler =
+						(ClassLoaderBeanHandler)invocationHandler;
+
+					Object bean = classLoaderBeanHandler.getBean();
+
+					clazz = bean.getClass();
+				}
+			}
+
+			return ReflectionUtil.getGenericSuperType(clazz);
 		}
 
 	}

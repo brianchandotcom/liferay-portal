@@ -69,9 +69,8 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 		}
 		else {
 			String validPortalDomain = PortalUtil.getValidPortalDomain(PortalUtil.getDefaultCompanyId(), request.getServerName());
-			redirect = PortalUtil.getPortalURL(validPortalDomain, request.getServerPort(), request.isSecure());
-			redirect = redirect + PortalUtil.getPathContext();
-			redirect = redirect + PortalUtil.getRelativeHomeURL(request);
+
+			redirect = PortalUtil.getPortalURL(validPortalDomain, request.getServerPort(), request.isSecure()) + PortalUtil.getPathContext() + PortalUtil.getRelativeHomeURL(request);
 		}
 
 		if (!request.isRequestedSessionIdFromCookie()) {

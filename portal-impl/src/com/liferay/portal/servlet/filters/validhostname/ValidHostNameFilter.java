@@ -33,6 +33,7 @@ public class ValidHostNameFilter extends BasePortalFilter implements TryFilter {
 		throws Exception {
 
 		String serverName = request.getServerName();
+
 		String validDomain = PortalUtil.getValidPortalDomain(
 			PortalUtil.getDefaultCompanyId(), serverName);
 

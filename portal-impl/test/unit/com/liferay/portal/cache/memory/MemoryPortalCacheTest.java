@@ -129,6 +129,18 @@ public class MemoryPortalCacheTest {
 	}
 
 	@Test
+	public void testGetKeys() {
+		_memoryPortalCache.put(_KEY_2, _VALUE_2);
+
+		List<String> keys = _memoryPortalCache.getKeys();
+
+		Assert.assertEquals(2, keys.size());
+
+		Assert.assertTrue(keys.contains(_KEY_1));
+		Assert.assertTrue(keys.contains(_KEY_2));
+	}
+
+	@Test
 	public void testGetName() {
 		Assert.assertEquals(_CACHE_NAME, _memoryPortalCache.getName());
 	}

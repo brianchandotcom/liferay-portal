@@ -1230,7 +1230,7 @@ public class WabProcessor {
 	}
 
 	private static final String _SERVICE_BEAN_POST_PROCESSOR_SPRING_XML =
-		"/WEB-INF/classes/META-INF/servicebeanpostprocessor-spring.xml";
+		"/WEB-INF/classes/META-INF/service-bean-post-processor-spring.xml";
 
 	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);
 

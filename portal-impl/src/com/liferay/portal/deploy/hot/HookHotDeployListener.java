@@ -108,8 +108,6 @@ import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryI
 import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryUtil;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicy;
-import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryImpl;
-import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil;
 import com.liferay.portal.security.pwd.Toolkit;
 import com.liferay.portal.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.service.ServiceWrapper;
@@ -511,19 +509,6 @@ public class HookHotDeployListener
 						getRoleMembershipPolicyFactory();
 
 			roleMembershipPolicyFactoryImpl.setRoleMembershipPolicy(null);
-		}
-
-		if (portalProperties.containsKey(
-				PropsKeys.MEMBERSHIP_POLICY_USER_GROUPS)) {
-
-			UserGroupMembershipPolicyFactoryImpl
-				userGroupMembershipPolicyFactoryImpl =
-					(UserGroupMembershipPolicyFactoryImpl)
-						UserGroupMembershipPolicyFactoryUtil.
-							getUserGroupMembershipPolicyFactory();
-
-			userGroupMembershipPolicyFactoryImpl.setUserGroupMembershipPolicy(
-				null);
 		}
 
 		Set<String> liferayFilterClassNames =
@@ -1698,23 +1683,14 @@ public class HookHotDeployListener
 				portalProperties.getProperty(
 					PropsKeys.MEMBERSHIP_POLICY_USER_GROUPS);
 
-			UserGroupMembershipPolicyFactoryImpl
-				userGroupMembershipPolicyFactoryImpl =
-					(UserGroupMembershipPolicyFactoryImpl)
-						UserGroupMembershipPolicyFactoryUtil.
-							getUserGroupMembershipPolicyFactory();
-
 			UserGroupMembershipPolicy userGroupMembershipPolicy =
 				(UserGroupMembershipPolicy)newInstance(
 					portletClassLoader, UserGroupMembershipPolicy.class,
 					userGroupMembershipPolicyClassName);
 
-			userGroupMembershipPolicyFactoryImpl.setUserGroupMembershipPolicy(
-				userGroupMembershipPolicy);
-
-			if (PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY) {
-				userGroupMembershipPolicy.verifyPolicy();
-			}
+			registerService(servletContextName,
+				userGroupMembershipPolicyClassName,
+				UserGroupMembershipPolicy.class, userGroupMembershipPolicy);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.PASSWORDS_TOOLKIT)) {

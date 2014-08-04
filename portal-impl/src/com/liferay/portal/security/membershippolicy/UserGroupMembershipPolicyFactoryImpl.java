@@ -14,61 +14,81 @@
 
 package com.liferay.portal.security.membershippolicy;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 /**
  * @author Sergio González
  * @author Shuyang Zhou
+ * @author Peter Fellwock
  */
 public class UserGroupMembershipPolicyFactoryImpl
 	implements UserGroupMembershipPolicyFactory {
 
-	public void afterPropertiesSet() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Instantiate " + PropsValues.MEMBERSHIP_POLICY_USER_GROUPS);
-		}
-
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		_originalUserGroupMembershipPolicy =
-			(UserGroupMembershipPolicy)InstanceFactory.newInstance(
-				classLoader, PropsValues.MEMBERSHIP_POLICY_USER_GROUPS);
-
-		_userGroupMembershipPolicy = _originalUserGroupMembershipPolicy;
-	}
-
 	@Override
 	public UserGroupMembershipPolicy getUserGroupMembershipPolicy() {
-		return _userGroupMembershipPolicy;
+		return _instance._serviceTracker.getService();
 	}
 
-	public void setUserGroupMembershipPolicy(
+	private UserGroupMembershipPolicyFactoryImpl() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			UserGroupMembershipPolicy.class,
+			new UserGroupMembershipPolicyTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
+	private static UserGroupMembershipPolicyFactoryImpl
+	_instance = new UserGroupMembershipPolicyFactoryImpl();
+
+	private ServiceTracker<?, UserGroupMembershipPolicy> _serviceTracker;
+
+	private class UserGroupMembershipPolicyTrackerCustomizer
+	implements ServiceTrackerCustomizer
+	<UserGroupMembershipPolicy, UserGroupMembershipPolicy> {
+
+		@Override
+		public UserGroupMembershipPolicy addingService(
+		ServiceReference<UserGroupMembershipPolicy> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			UserGroupMembershipPolicy userGroupMembershipPolicy =
+				registry.getService(serviceReference);
+
+			if (PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY) {
+				try {
+					userGroupMembershipPolicy.verifyPolicy();
+				}
+				catch (PortalException e) {
+					e.printStackTrace();
+				}
+			}
+
+			return userGroupMembershipPolicy;
+		}
+
+		@Override
+		public void modifiedService(
+		ServiceReference<UserGroupMembershipPolicy> serviceReference,
+		UserGroupMembershipPolicy userGroupMembershipPolicy) {
+		}
+
+		@Override
+		public void removedService(
+		ServiceReference<UserGroupMembershipPolicy> serviceReference,
 		UserGroupMembershipPolicy userGroupMembershipPolicy) {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Set " + ClassUtil.getClassName(userGroupMembershipPolicy));
-		}
+			Registry registry = RegistryUtil.getRegistry();
 
-		if (userGroupMembershipPolicy == null) {
-			_userGroupMembershipPolicy = _originalUserGroupMembershipPolicy;
-		}
-		else {
-			_userGroupMembershipPolicy = userGroupMembershipPolicy;
+			registry.ungetService(serviceReference);
 		}
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		UserGroupMembershipPolicyFactoryImpl.class);
-
-	private static UserGroupMembershipPolicy _originalUserGroupMembershipPolicy;
-	private static volatile UserGroupMembershipPolicy
-		_userGroupMembershipPolicy;
-
 }

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.PrimitiveLongList;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -28,12 +27,11 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -57,51 +55,24 @@ public class PermissionExporter {
 	}
 
 	protected void exportPermissions(
-			LayoutCache layoutCache, long companyId, long groupId,
-			String resourceName, String resourcePrimKey,
-			Element permissionsElement, boolean portletActions)
+			PortletDataContext portletDataContext, String resourceName,
+			String resourcePrimKey, Element permissionsElement)
 		throws Exception {
 
-		List<Role> roles = layoutCache.getGroupRoles(groupId, resourceName);
+		List<String> actionIds = ResourceActionsUtil.getPortletResourceActions(
+			resourceName);
 
-		List<String> actionIds = null;
-
-		if (portletActions) {
-			actionIds = ResourceActionsUtil.getPortletResourceActions(
-				resourceName);
-		}
-		else {
-			actionIds = ResourceActionsUtil.getModelResourceActions(
-				resourceName);
-		}
-
-		if (actionIds.isEmpty()) {
-			return;
-		}
-
-		PrimitiveLongList roleIds = new PrimitiveLongList(roles.size());
-		Map<Long, Role> roleIdsToRoles = new HashMap<Long, Role>();
-
-		for (Role role : roles) {
-			String roleName = role.getName();
-
-			if (roleName.equals(RoleConstants.ADMINISTRATOR)) {
-				continue;
-			}
-
-			roleIds.add(role.getRoleId());
-			roleIdsToRoles.put(role.getRoleId(), role);
-		}
-
-		Map<Long, Set<String>> roleIdsToActionIds =
+		Map<Long, Set<String>> roleToActionIds =
 			ResourcePermissionLocalServiceUtil.
 				getAvailableResourcePermissionActionIds(
-					companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
-					resourcePrimKey, roleIds.getArray(), actionIds);
+					portletDataContext.getCompanyId(), resourceName,
+					ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey,
+					actionIds);
 
-		for (Role role : roleIdsToRoles.values()) {
-			Set<String> availableActionIds = roleIdsToActionIds.get(
-				role.getRoleId());
+		for (Map.Entry<Long, Set<String>> entry : roleToActionIds.entrySet()) {
+			long roleId = entry.getKey();
+
+			Role role = RoleLocalServiceUtil.fetchRole(roleId);
 
 			Element roleElement = permissionsElement.addElement("role");
 
@@ -111,14 +82,12 @@ public class PermissionExporter {
 			roleElement.addAttribute("type", String.valueOf(role.getType()));
 			roleElement.addAttribute("subtype", role.getSubtype());
 
-			if ((availableActionIds == null) || availableActionIds.isEmpty()) {
-				continue;
-			}
+			Set<String> availableActionIds = entry.getValue();
 
-			for (String action : availableActionIds) {
+			for (String actionId : availableActionIds) {
 				Element actionKeyElement = roleElement.addElement("action-key");
 
-				actionKeyElement.addText(action);
+				actionKeyElement.addText(actionId);
 			}
 		}
 	}
@@ -170,12 +139,9 @@ public class PermissionExporter {
 	}
 
 	protected void exportPortletPermissions(
-			PortletDataContext portletDataContext, LayoutCache layoutCache,
-			String portletId, Layout layout, Element portletElement)
+			PortletDataContext portletDataContext, String portletId,
+			Layout layout, Element portletElement)
 		throws Exception {
-
-		long companyId = portletDataContext.getCompanyId();
-		long groupId = portletDataContext.getGroupId();
 
 		String resourceName = PortletConstants.getRootPortletId(portletId);
 		String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
@@ -184,8 +150,8 @@ public class PermissionExporter {
 		Element permissionsElement = portletElement.addElement("permissions");
 
 		exportPermissions(
-			layoutCache, companyId, groupId, resourceName, resourcePrimKey,
-			permissionsElement, true);
+			portletDataContext, resourceName, resourcePrimKey,
+			permissionsElement);
 	}
 
 	private PermissionExporter() {

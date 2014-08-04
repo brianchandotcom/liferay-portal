@@ -203,6 +203,21 @@ public class ResourceBlockPermissionLocalServiceWrapper
 
 	@Override
 	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
+		java.lang.String name, long primKey,
+		java.util.List<java.lang.String> actionIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceBlockPermissionLocalService.getAvailableResourceBlockPermissionActionIds(name,
+			primKey, actionIds);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getAvailableResourceBlockPermissionActionIds(
+	String, long, List)}
+	*/
+	@Deprecated
+	@Override
+	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
 		long[] roleIds, java.lang.String name, long primKey,
 		java.util.List<java.lang.String> actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {

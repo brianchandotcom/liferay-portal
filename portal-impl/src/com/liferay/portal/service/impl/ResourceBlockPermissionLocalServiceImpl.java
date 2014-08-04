@@ -21,6 +21,7 @@ import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.service.base.ResourceBlockPermissionLocalServiceBaseImpl;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -69,39 +70,58 @@ public class ResourceBlockPermissionLocalServiceImpl
 			resourceBlockId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getAvailableResourceBlockPermissionActionIds(
+	 *             String, long, List)}
+	 */
+	@Deprecated
 	@Override
 	public Map<Long, Set<String>> getAvailableResourceBlockPermissionActionIds(
 			long[] roleIds, String name, long primKey, List<String> actionIds)
 		throws PortalException {
 
+		return getAvailableResourceBlockPermissionActionIds(
+			name, primKey, actionIds);
+	}
+
+	@Override
+	public Map<Long, Set<String>> getAvailableResourceBlockPermissionActionIds(
+			String name, long primKey, List<String> actionIds)
+		throws PortalException {
+
+		if (actionIds.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
 		ResourceBlock resourceBlock =
 			resourceBlockLocalService.getResourceBlock(name, primKey);
+
+		List<ResourceBlockPermission> resourceBlockPermissions =
+			resourceBlockPermissionPersistence.findByResourceBlockId(
+				resourceBlock.getResourceBlockId());
 
 		Map<Long, Set<String>> roleIdsToActionIds =
 			new HashMap<Long, Set<String>>();
 
-		for (long roleId : roleIds) {
-			Set<String> availableActionIds = roleIdsToActionIds.get(roleId);
+		for (ResourceBlockPermission resourceBlockPermission :
+				resourceBlockPermissions) {
 
-			if (availableActionIds != null) {
-				continue;
-			}
+			Set<String> availableActionIds = new HashSet<String>();
 
 			List<String> resourceBlockActionIds =
-				resourceBlockLocalService.getPermissions(resourceBlock, roleId);
-
-			if (resourceBlockActionIds.isEmpty()) {
-				continue;
-			}
-
-			availableActionIds = new HashSet<String>();
-
-			roleIdsToActionIds.put(roleId, availableActionIds);
+				resourceBlockLocalService.getActionIds(
+					name, resourceBlockPermission.getActionIds());
 
 			for (String actionId : actionIds) {
 				if (resourceBlockActionIds.contains(actionId)) {
 					availableActionIds.add(actionId);
 				}
+			}
+
+			if (availableActionIds.size() > 0) {
+				roleIdsToActionIds.put(
+					resourceBlockPermission.getRoleId(), availableActionIds);
 			}
 		}
 

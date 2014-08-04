@@ -155,8 +155,7 @@ public class PermissionExportImportTest extends PowerMockito {
 			PermissionExporter.getInstance();
 
 		permissionExporter.exportPortletPermissions(
-			portletDataContext, new LayoutCache(), _PORTLET_ID, exportLayout,
-			portletElement);
+			portletDataContext, _PORTLET_ID, exportLayout, portletElement);
 
 		return portletElement;
 	}

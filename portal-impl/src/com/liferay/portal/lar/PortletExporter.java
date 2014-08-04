@@ -267,8 +267,6 @@ public class PortletExporter {
 
 		stopWatch.start();
 
-		LayoutCache layoutCache = new LayoutCache();
-
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 		if (!layout.isTypeControlPanel() && !layout.isTypePanel() &&
@@ -394,7 +392,7 @@ public class PortletExporter {
 				layout.getCompanyId(), portletId, parameterMap);
 
 		exportPortlet(
-			portletDataContext, layoutCache, portletId, layout, rootElement,
+			portletDataContext, portletId, layout, rootElement,
 			exportPermissions,
 			exportPortletControlsMap.get(
 				PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
@@ -653,11 +651,10 @@ public class PortletExporter {
 	}
 
 	protected void exportPortlet(
-			PortletDataContext portletDataContext, LayoutCache layoutCache,
-			String portletId, Layout layout, Element parentElement,
-			boolean exportPermissions, boolean exportPortletArchivedSetups,
-			boolean exportPortletData, boolean exportPortletSetup,
-			boolean exportPortletUserPreferences)
+			PortletDataContext portletDataContext, String portletId,
+			Layout layout, Element parentElement, boolean exportPermissions,
+			boolean exportPortletArchivedSetups, boolean exportPortletData,
+			boolean exportPortletSetup, boolean exportPortletUserPreferences)
 		throws Exception {
 
 		long plid = PortletKeys.PREFS_OWNER_ID_DEFAULT;
@@ -849,8 +846,7 @@ public class PortletExporter {
 
 		if (exportPermissions) {
 			_permissionExporter.exportPortletPermissions(
-				portletDataContext, layoutCache, portletId, layout,
-				portletElement);
+				portletDataContext, portletId, layout, portletElement);
 		}
 
 		// Zip

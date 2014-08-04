@@ -55,10 +55,10 @@ public class MovePageAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals("changeParent")) {
+			if (cmd.equals(Constants.CHANGE_PARENT)) {
 				changeParentPage(actionRequest);
 			}
-			else if (cmd.equals("rename")) {
+			else if (cmd.equals(Constants.RENAME)) {
 				renamePage(actionRequest);
 			}
 

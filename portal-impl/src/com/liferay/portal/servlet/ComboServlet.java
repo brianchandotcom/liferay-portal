@@ -255,7 +255,9 @@ public class ComboServlet extends HttpServlet {
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
-		resourcePath = portlet.getContextPath().concat(resourcePath);
+		if (!resourcePath.startsWith(portlet.getContextPath())) {
+			resourcePath = portlet.getContextPath().concat(resourcePath);
+		}
 
 		String fileContentKey = resourcePath.concat(StringPool.QUESTION).concat(
 			minifierType);

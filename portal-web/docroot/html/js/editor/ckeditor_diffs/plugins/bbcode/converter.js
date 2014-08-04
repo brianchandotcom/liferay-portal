@@ -49,6 +49,19 @@
 		right: '_handleTextAlign'
 	};
 
+	var MAP_IMAGE_ATTRIBUTES = {
+		'alt': 1,
+		'class': 1,
+		'dir': 1,
+		'height': 1,
+		'id': 1,
+		'lang': 1,
+		'longdesc': 1,
+		'style': 1,
+		'title': 1,
+		'width': 1
+	};
+
 	var MAP_LIST_STYLES = {
 		1: 'list-style-type: decimal;',
 		a: 'list-style-type: lower-alpha;'
@@ -62,6 +75,8 @@
 		th: 3,
 		table: 2
 	};
+
+	var REGEX_ATTRS = /\s*([^=]+)\s*=\s*"([^"]+)"\s*/g;
 
 	var REGEX_COLOR = /^(:?aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|#(?:[0-9a-f]{3})?[0-9a-f]{3})$/i;
 
@@ -121,7 +136,7 @@
 
 	var TOKEN_TAG_START = Parser.TOKEN_TAG_START;
 
-	var tplImage = new CKEDITOR.template('<img src="{imageSrc}" {imageSize} />');
+	var tplImage = new CKEDITOR.template('<img src="{imageSrc}" {attributes} />');
 
 	var Converter = function(config) {
 		var instance = this;
@@ -295,36 +310,38 @@
 				imageSrc = CKTools.htmlEncodeAttr(imageSrcInput);
 			}
 
-			var imageSize = '';
-
-			if (token.attribute) {
-				var dimensions = token.attribute.split('x');
-
-				imageSize = 'style="';
-
-				var width = dimensions[0];
-
-				if (width && width !== 'auto') {
-					imageSize += 'width: ' + CKTools.htmlEncodeAttr(width) + 'px;';
-				}
-
-				var height = dimensions[1];
-
-				if (height && height !== 'auto') {
-					imageSize += 'height: ' + CKTools.htmlEncodeAttr(height) + 'px;';
-				}
-
-				imageSize += '"';
-			}
-
 			var result = tplImage.output(
 				{
-					imageSize: imageSize,
+					attributes: instance._handleImageAttributes(token, token.value),
 					imageSrc: imageSrc
 				}
 			);
 
 			instance._result.push(result);
+		},
+
+		_handleImageAttributes: function(token) {
+			var instance = this;
+
+			var attrs = '';
+
+			if (token.attribute) {
+				var bbCodeAttr;
+
+				while ((bbCodeAttr = REGEX_ATTRS.exec(token.attribute))) {
+					var attrName = bbCodeAttr[1];
+
+					if (MAP_IMAGE_ATTRIBUTES[attrName]) {
+						var attrValue = bbCodeAttr[2];
+
+						if (attrValue) {
+							attrs += ' ' + attrName + '="' + instance._escapeHTML(attrValue) + '"';
+						}
+					}
+				}
+			}
+
+			return attrs;
 		},
 
 		_handleList: function(token) {

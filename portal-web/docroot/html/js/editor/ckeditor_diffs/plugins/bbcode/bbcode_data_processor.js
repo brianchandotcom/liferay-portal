@@ -39,6 +39,19 @@
 		strong: '_handleStrong'
 	};
 
+	var MAP_IMAGE_ATTRIBUTES = [
+		'alt',
+		'class',
+		'dir',
+		'height',
+		'id',
+		'lang',
+		'longdesc',
+		'style',
+		'title',
+		'width'
+	];
+
 	var MAP_LINK_HANDLERS = {
 		0: 'email'
 	};
@@ -56,8 +69,6 @@
 	var REGEX_LIST_ALPHA = /(upper|lower)-alpha/i;
 
 	var REGEX_NEWLINE = /\r?\n/g;
-
-	var REGEX_NOT_WHITESPACE = /[^\t\n\r ]/;
 
 	var REGEX_PERCENT = /%$/i;
 
@@ -94,8 +105,6 @@
 	var TAG_TD = 'td';
 
 	var tplImage = new CKEDITOR.template('<img src="{image}" />');
-
-	var tplImageOpenTag = new CKEDITOR.template('[img={width}x{height}]');
 
 	var emoticonImages;
 	var emoticonPath;
@@ -495,27 +504,31 @@
 			else {
 				var attrSrc = element.getAttribute('src');
 
-				var domElement = new CKEDITOR.dom.element(element);
-
-				var height = domElement.getStyle('height').replace('px', '') || 'auto';
-				var width = domElement.getStyle('width').replace('px', '') || 'auto';
-
-				var openTag = '[img]';
-
-				if ((height !== 'auto') || (width !== 'auto')) {
-					openTag = tplImageOpenTag.output(
-						{
-							height: height,
-							width: width
-						}
-					);
-				}
+				var openTag = '[img' + instance._handleImageAttributes(element) + ']';
 
 				listTagsIn.push(openTag);
 				listTagsIn.push(attrSrc);
 
 				listTagsOut.push('[/img]');
 			}
+		},
+
+		_handleImageAttributes: function(element) {
+			var attrs = '';
+
+			var length = MAP_IMAGE_ATTRIBUTES.length;
+
+			for (var i = 0; i < length; i++) {
+				var attrName = MAP_IMAGE_ATTRIBUTES[i];
+
+				var attrValue = element.getAttribute(attrName);
+
+				if (attrValue) {
+					attrs += ' ' + attrName + '="' + attrValue + '"';
+				}
+			}
+
+			return attrs;
 		},
 
 		_handleLineThrough: function(element, listTagsIn, listTagsOut) {
@@ -715,23 +728,6 @@
 			}
 		},
 
-		_handleStyleTextDecoration: function(element, stylesTagsIn, stylesTagsOut) {
-			var style = element.style;
-
-			var textDecoration = style.textDecoration.toLowerCase();
-
-			if (textDecoration == 'line-through') {
-				stylesTagsIn.push('[s]');
-
-				stylesTagsOut.push('[/s]');
-			}
-			else if (textDecoration == 'underline') {
-				stylesTagsIn.push('[u]');
-
-				stylesTagsOut.push('[/u]');
-			}
-		},
-
 		_handleStyles: function(element, stylesTagsIn, stylesTagsOut) {
 			var instance = this;
 
@@ -748,6 +744,23 @@
 				instance._handleStyleFontSize(element, stylesTagsIn, stylesTagsOut);
 				instance._handleStyleItalic(element, stylesTagsIn, stylesTagsOut);
 				instance._handleStyleTextDecoration(element, stylesTagsIn, stylesTagsOut);
+			}
+		},
+
+		_handleStyleTextDecoration: function(element, stylesTagsIn, stylesTagsOut) {
+			var style = element.style;
+
+			var textDecoration = style.textDecoration.toLowerCase();
+
+			if (textDecoration == 'line-through') {
+				stylesTagsIn.push('[s]');
+
+				stylesTagsOut.push('[/s]');
+			}
+			else if (textDecoration == 'underline') {
+				stylesTagsIn.push('[u]');
+
+				stylesTagsOut.push('[/u]');
 			}
 		},
 

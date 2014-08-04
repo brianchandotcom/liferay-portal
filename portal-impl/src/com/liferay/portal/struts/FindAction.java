@@ -289,15 +289,16 @@ public abstract class FindAction extends Action {
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
+		Group targetGroup = GroupLocalServiceUtil.getGroup(groupId);
+
 		if ((groupId == layout.getGroupId()) ||
+			(targetGroup.getParentGroupId() == layout.getGroupId()) ||
 			(layout.isPrivateLayout() &&
 			 !SitesUtil.isUserGroupLayoutSetViewable(
 				permissionChecker, layout.getGroup()))) {
 
 			return;
 		}
-
-		Group targetGroup = GroupLocalServiceUtil.getGroup(groupId);
 
 		layout = new VirtualLayout(layout, targetGroup);
 

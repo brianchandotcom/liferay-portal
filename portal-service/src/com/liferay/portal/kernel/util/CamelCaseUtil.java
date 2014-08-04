@@ -60,26 +60,15 @@ public class CamelCaseUtil {
 	public static String normalizeCamelCase(
 		String s, boolean normalizeInnerTerms) {
 
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder(s);
 
 		boolean upperCase = false;
-		boolean afterDot = false;
 
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
 
-			if (afterDot) {
-				sb.append(c);
-
-				continue;
-			}
-
-			if (!normalizeInnerTerms && c == '.') {
-				afterDot = true;
-
-				sb.append(c);
-
-				continue;
+			if (!normalizeInnerTerms && (c == CharPool.PERIOD)) {
+				return sb.toString();
 			}
 
 			boolean nextUpperCase = true;
@@ -87,14 +76,14 @@ public class CamelCaseUtil {
 			if (i < (s.length() - 1)) {
 				char nextChar = s.charAt(i + 1);
 
-				if (nextChar != '.') {
+				if (nextChar != CharPool.PERIOD) {
 					nextUpperCase = Character.isUpperCase(nextChar);
 				}
 			}
 
 			if ((i > 0) && Character.isUpperCase(c)) {
 				if (upperCase && nextUpperCase) {
-					c = Character.toLowerCase(c);
+					sb.setCharAt(i, Character.toLowerCase(c));
 				}
 
 				upperCase = true;
@@ -102,8 +91,6 @@ public class CamelCaseUtil {
 			else {
 				upperCase = false;
 			}
-
-			sb.append(c);
 		}
 
 		return sb.toString();

@@ -62,7 +62,6 @@ public class CamelCaseUtilTest {
 		Assert.assertEquals(
 			"camelCase.fooURL",
 			CamelCaseUtil.normalizeCamelCase("camelCASE.fooURL", false));
-
 	}
 
 	@Test

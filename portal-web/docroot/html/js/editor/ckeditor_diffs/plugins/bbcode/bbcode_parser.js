@@ -499,31 +499,6 @@
 			return MAP_FONT_SIZE[fontSize] || MAP_FONT_SIZE.defaultSize;
 		},
 
-		_handleImageAttributes: function(token) {
-			var instance = this;
-
-			var attrs = '';
-
-			if (token.attribute) {
-				var bbCodeAttr;
-
-				while ((bbCodeAttr = REGEX_ATTRS.exec(token.attribute))) {
-					var attrName = bbCodeAttr[1];
-
-					if (MAP_IMAGE_ATTRIBUTES[attrName]) {
-						var attrValue = bbCodeAttr[2];
-
-						if (attrValue) {
-							attrs += ' ' + attrName + '="' + instance._escapeHTML(attrValue) + '"';
-						}
-					}
-
-				}
-			}
-
-			return attrs;
-		},
-
 		_handleCode: function(token) {
 			var instance = this;
 
@@ -615,6 +590,30 @@
 			);
 
 			instance._result.push(result);
+		},
+
+		_handleImageAttributes: function(token) {
+			var instance = this;
+
+			var attrs = '';
+
+			if (token.attribute) {
+				var bbCodeAttr;
+
+				while ((bbCodeAttr = REGEX_ATTRS.exec(token.attribute))) {
+					var attrName = bbCodeAttr[1];
+
+					if (MAP_IMAGE_ATTRIBUTES[attrName]) {
+						var attrValue = bbCodeAttr[2];
+
+						if (attrValue) {
+							attrs += ' ' + attrName + '="' + instance._escapeHTML(attrValue) + '"';
+						}
+					}
+				}
+			}
+
+			return attrs;
 		},
 
 		_handleList: function(token) {

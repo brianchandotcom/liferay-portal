@@ -1097,7 +1097,7 @@ public class PortletTracker
 
 	@Reference
 	protected void setHttpServiceRuntime(
-		HttpServiceRuntime httpServiceRuntime, Map<String, String> properties) {
+		HttpServiceRuntime httpServiceRuntime, Map<String, Object> properties) {
 
 		_httpServiceEndpoints = StringPlus.asList(
 			properties.get(
@@ -1160,7 +1160,7 @@ public class PortletTracker
 	}
 
 	protected void unsetHttpServiceRuntime(
-		HttpServiceRuntime httpServiceRuntime, Map<String, String> properties) {
+		HttpServiceRuntime httpServiceRuntime, Map<String, Object> properties) {
 
 		_httpServiceEndpoints = null;
 	}

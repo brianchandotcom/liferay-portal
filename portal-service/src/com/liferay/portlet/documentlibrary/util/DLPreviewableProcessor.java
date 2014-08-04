@@ -1216,28 +1216,6 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		MessageBusUtil.sendMessage(destinationName, payload);
 	}
 
-	protected void storeThumbnailImages(FileVersion fileVersion, File file)
-		throws Exception {
-
-		ImageBag imageBag = ImageToolUtil.read(file);
-
-		RenderedImage renderedImage = imageBag.getRenderedImage();
-
-		storeThumbnailImages(fileVersion, renderedImage);
-	}
-
-	protected void storeThumbnailImages(
-			FileVersion fileVersion, RenderedImage renderedImage)
-		throws Exception {
-
-		storeThumbnailImage(
-			fileVersion, renderedImage, THUMBNAIL_INDEX_DEFAULT);
-		storeThumbnailImage(
-			fileVersion, renderedImage, THUMBNAIL_INDEX_CUSTOM_1);
-		storeThumbnailImage(
-			fileVersion, renderedImage, THUMBNAIL_INDEX_CUSTOM_2);
-	}
-
 	protected void storeThumbnailImage(
 			FileVersion fileVersion, RenderedImage renderedImage, int index)
 		throws Exception {
@@ -1282,6 +1260,28 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		finally {
 			FileUtil.delete(file);
 		}
+	}
+
+	protected void storeThumbnailImages(FileVersion fileVersion, File file)
+		throws Exception {
+
+		ImageBag imageBag = ImageToolUtil.read(file);
+
+		RenderedImage renderedImage = imageBag.getRenderedImage();
+
+		storeThumbnailImages(fileVersion, renderedImage);
+	}
+
+	protected void storeThumbnailImages(
+			FileVersion fileVersion, RenderedImage renderedImage)
+		throws Exception {
+
+		storeThumbnailImage(
+			fileVersion, renderedImage, THUMBNAIL_INDEX_DEFAULT);
+		storeThumbnailImage(
+			fileVersion, renderedImage, THUMBNAIL_INDEX_CUSTOM_1);
+		storeThumbnailImage(
+			fileVersion, renderedImage, THUMBNAIL_INDEX_CUSTOM_2);
 	}
 
 	protected Map<String, Future<?>> futures =

@@ -46,6 +46,10 @@ public interface Document extends Cloneable, Serializable {
 	public void addFile(String name, InputStream is, String fileExt)
 		throws IOException;
 
+	public void addFile(
+			String name, InputStream is, String fileExt, int maxStringLength)
+		throws IOException;
+
 	public void addKeyword(String name, boolean value);
 
 	public void addKeyword(String name, Boolean value);

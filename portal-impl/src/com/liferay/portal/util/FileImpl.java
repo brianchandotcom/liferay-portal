@@ -330,6 +330,13 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	@Override
 	public String extractText(InputStream is, String fileName) {
+		return extractText(is, fileName, -1);
+	}
+
+	@Override
+	public String extractText(
+		InputStream is, String fileName, int maxStringLength) {
+
 		String text = null;
 
 		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
@@ -344,7 +351,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 			Tika tika = new Tika();
 
-			tika.setMaxStringLength(-1);
+			tika.setMaxStringLength(maxStringLength);
 
 			boolean forkProcess = false;
 

@@ -1089,6 +1089,8 @@ public interface PropsKeys {
 
 	public static final String INDEX_SEARCH_SPELL_CHECKER_SUPPORTED_LOCALES = "index.search.spell.checker.supported.locales";
 
+	public static final String INDEX_SEARCH_WRITER_MAX_QUEUE_SIZE = "index.search.writer.max.queue.size";
+
 	public static final String INDEX_SORTABLE_TEXT_FIELDS = "index.sortable.text.fields";
 
 	public static final String INDEX_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH = "index.sortable.text.fields.truncated.length";

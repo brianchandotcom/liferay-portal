@@ -345,28 +345,14 @@ public class DLFileEntryIndexer extends BaseIndexer {
 		InputStream is = null;
 
 		try {
-			if (PropsValues.DL_FILE_INDEXING_MAX_SIZE == 0) {
+			String[] ignoreExtensions = PrefsPropsUtil.getStringArray(
+				PropsKeys.DL_FILE_INDEXING_IGNORE_EXTENSIONS, StringPool.COMMA);
+
+			if (ArrayUtil.contains(
+					ignoreExtensions,
+					StringPool.PERIOD + dlFileEntry.getExtension())) {
+
 				indexContent = false;
-			}
-			else if (PropsValues.DL_FILE_INDEXING_MAX_SIZE != -1) {
-				if (dlFileEntry.getSize() >
-						PropsValues.DL_FILE_INDEXING_MAX_SIZE) {
-
-					indexContent = false;
-				}
-			}
-
-			if (indexContent) {
-				String[] ignoreExtensions = PrefsPropsUtil.getStringArray(
-					PropsKeys.DL_FILE_INDEXING_IGNORE_EXTENSIONS,
-					StringPool.COMMA);
-
-				if (ArrayUtil.contains(
-						ignoreExtensions,
-						StringPool.PERIOD + dlFileEntry.getExtension())) {
-
-					indexContent = false;
-				}
 			}
 
 			if (indexContent) {
@@ -386,7 +372,8 @@ public class DLFileEntryIndexer extends BaseIndexer {
 				if (is != null) {
 					try {
 						document.addFile(
-							Field.CONTENT, is, dlFileEntry.getTitle());
+							Field.CONTENT, is, dlFileEntry.getTitle(),
+							PropsValues.DL_FILE_INDEXING_MAX_SIZE);
 					}
 					catch (IOException ioe) {
 						throw new SearchException(

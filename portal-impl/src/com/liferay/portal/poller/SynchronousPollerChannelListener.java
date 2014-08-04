@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.notifications.ChannelException;
 import com.liferay.portal.kernel.notifications.ChannelHubManagerUtil;
 import com.liferay.portal.kernel.notifications.ChannelListener;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 
@@ -30,6 +29,10 @@ import java.util.List;
  */
 public class SynchronousPollerChannelListener implements ChannelListener {
 
+	public SynchronousPollerChannelListener() {
+	}
+
+	@Deprecated
 	public SynchronousPollerChannelListener(
 		long companyId, long userId,
 		JSONObject pollerResponseHeaderJSONObject) {
@@ -46,7 +49,17 @@ public class SynchronousPollerChannelListener implements ChannelListener {
 		this.notify();
 	}
 
+	@Deprecated
 	public synchronized String getNotificationEvents(long timeout)
+		throws ChannelException {
+
+		return getNotificationEvents(
+			_companyId, _userId, _pollerResponseHeaderJSONObject, timeout);
+	}
+
+	public synchronized String getNotificationEvents(
+			long companyId, long userId,
+			JSONObject pollerResponseHeaderJSONObject, long timeout)
 		throws ChannelException {
 
 		try {
@@ -57,19 +70,13 @@ public class SynchronousPollerChannelListener implements ChannelListener {
 		catch (InterruptedException ie) {
 		}
 
-		try {
-			Thread.sleep(PropsValues.POLLER_NOTIFICATIONS_TIMEOUT);
-		}
-		catch (InterruptedException ie) {
-		}
-
 		List<NotificationEvent> notificationEvents =
 			ChannelHubManagerUtil.fetchNotificationEvents(
-				_companyId, _userId, true);
+				companyId, userId, true);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		jsonArray.put(_pollerResponseHeaderJSONObject);
+		jsonArray.put(pollerResponseHeaderJSONObject);
 
 		for (NotificationEvent notificationEvent : notificationEvents) {
 			jsonArray.put(notificationEvent.toJSONObject());

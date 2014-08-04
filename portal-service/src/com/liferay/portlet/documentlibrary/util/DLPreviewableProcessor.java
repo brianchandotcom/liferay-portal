@@ -360,11 +360,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		deleteThumbnail(
 			companyId, groupId, fileEntryId, fileVersionId, thumbnailType,
 			THUMBNAIL_INDEX_DEFAULT);
-
 		deleteThumbnail(
 			companyId, groupId, fileEntryId, fileVersionId, thumbnailType,
 			THUMBNAIL_INDEX_CUSTOM_1);
-
 		deleteThumbnail(
 			companyId, groupId, fileEntryId, fileVersionId, thumbnailType,
 			THUMBNAIL_INDEX_CUSTOM_2);
@@ -622,12 +620,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 				portletDataContext, fileEntry, fileEntryElement,
 				"bin-path-thumbnail-default-" + binPathSuffix,
 				THUMBNAIL_INDEX_DEFAULT);
-
 			exportThumbnail(
 				portletDataContext, fileEntry, fileEntryElement,
 				"bin-path-thumbnail-custom-1-" + binPathSuffix,
 				THUMBNAIL_INDEX_CUSTOM_1);
-
 			exportThumbnail(
 				portletDataContext, fileEntry, fileEntryElement,
 				"bin-path-thumbnail-custom-2-" + binPathSuffix,
@@ -1170,12 +1166,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			portletDataContext, fileEntry, importedFileEntry, fileEntryElement,
 			"bin-path-thumbnail-default-" + binPathSuffix,
 			THUMBNAIL_INDEX_DEFAULT);
-
 		importThumbnail(
 			portletDataContext, fileEntry, importedFileEntry, fileEntryElement,
 			"bin-path-thumbnail-custom-1-" + binPathSuffix,
 			THUMBNAIL_INDEX_CUSTOM_1);
-
 		importThumbnail(
 			portletDataContext, fileEntry, importedFileEntry, fileEntryElement,
 			"bin-path-thumbnail-custom-2-" + binPathSuffix,

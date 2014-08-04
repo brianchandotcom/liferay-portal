@@ -444,6 +444,17 @@
 /* ---------- Modals ---------- */
 
 .aui {
+	&.dialog-iframe-root-node #main-content {
+		bottom: 0;
+		left: 0;
+		overflow: auto;
+		padding: 20px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		-webkit-overflow-scrolling: touch;
+	}
+
 	.modal {
 		display: block;
 		margin: 0;
@@ -455,14 +466,17 @@
 		overflow: auto;
 
 		&.dialog-iframe-bd {
-			overflow-x: hidden;
-			overflow-y: auto;
+			overflow: hidden;
 		}
 	}
 
 	.modal-hidden {
 		display: none;
 	}
+}
+
+.modal-open body {
+	position: fixed;
 }
 
 /* ---------- Loading mask ---------- */
@@ -840,32 +854,8 @@
 	}
 }
 
-/* LPS-45287 */
+/* LPS-44925 - Borders not showing on modal android 4.4.2 */
 
-.ios.mobile {
-	.dialog-iframe-modal {
-		height: auto !important;
-		position: absolute !important;
-		top: 10px !important;
-
-		&, .dialog-iframe-bd, .dialog-iframe-node, .modal-content {
-			height: auto !important;
-			overflow: visible;
-		}
-
-		.dialog-iframe-bd {
-			max-height: none !important;
-		}
-
-		.dialog-iframe-node {
-			min-width: 100%;
-			width: 100px;
-		}
-	}
-
-	&.dialog-iframe-root-node {
-		&, .dialog-iframe-popup {
-			overflow: auto;
-		}
-	}
+.aui .modal-content .dialog-iframe-node {
+	border: 1px solid transparent;
 }

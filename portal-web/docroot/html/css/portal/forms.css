@@ -3,6 +3,7 @@
 
 .form-group-inline {
 	display: inline-block;
+	vertical-align: middle;
 }
 
 .button-holder {

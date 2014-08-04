@@ -988,22 +988,14 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	}
 
 	protected boolean hasThumbnails(FileVersion fileVersion) {
-		if (isThumbnailEnabled(THUMBNAIL_INDEX_DEFAULT)) {
-			if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_DEFAULT)) {
-				return false;
-			}
-		}
+		if ((isThumbnailEnabled(THUMBNAIL_INDEX_DEFAULT) &&
+			 !hasThumbnail(fileVersion, THUMBNAIL_INDEX_DEFAULT)) ||
+			(isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_1) &&
+			 !hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_1)) ||
+			(isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_2) &&
+			 !hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_2))) {
 
-		if (isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_1)) {
-			if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_1)) {
-				return false;
-			}
-		}
-
-		if (isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_2)) {
-			if (!hasThumbnail(fileVersion, THUMBNAIL_INDEX_CUSTOM_2)) {
-				return false;
-			}
+			return false;
 		}
 
 		return true;
@@ -1218,35 +1210,31 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	}
 
 	protected boolean isThumbnailEnabled(int index) {
-		if (index == THUMBNAIL_INDEX_DEFAULT) {
-			if (GetterUtil.getBoolean(
-					PropsUtil.get(
-						PropsKeys.DL_FILE_ENTRY_THUMBNAIL_ENABLED))) {
+		if ((index == THUMBNAIL_INDEX_DEFAULT) &&
+			GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_ENABLED))) {
 
-				return true;
-			}
+			return true;
 		}
-		else if (index == THUMBNAIL_INDEX_CUSTOM_1) {
-			if ((PrefsPropsUtil.getInteger(
-					PropsKeys.
-						DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT) > 0) ||
-				(PrefsPropsUtil.getInteger(
-					PropsKeys.
-						DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_WIDTH) > 0)) {
+		else if ((index == THUMBNAIL_INDEX_CUSTOM_1) &&
+				 ((PrefsPropsUtil.getInteger(
+					 PropsKeys.
+						 DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT) > 0) ||
+				  (PrefsPropsUtil.getInteger(
+					  PropsKeys.
+						  DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_WIDTH) > 0))) {
 
-				return true;
-			}
+			return true;
 		}
-		else if (index == THUMBNAIL_INDEX_CUSTOM_2) {
-			if ((PrefsPropsUtil.getInteger(
-					PropsKeys.
-						DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_HEIGHT) > 0) ||
-				(PrefsPropsUtil.getInteger(
-					PropsKeys.
-						DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH) > 0)) {
+		else if ((index == THUMBNAIL_INDEX_CUSTOM_2) &&
+				 ((PrefsPropsUtil.getInteger(
+					 PropsKeys.
+						 DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_HEIGHT) > 0) ||
+				  (PrefsPropsUtil.getInteger(
+					  PropsKeys.
+						  DL_FILE_ENTRY_THUMBNAIL_CUSTOM_2_MAX_WIDTH) > 0))) {
 
-				return true;
-			}
+			return true;
 		}
 
 		return false;

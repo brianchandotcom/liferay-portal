@@ -334,6 +334,7 @@ public class PortalImplCanonicalURLTest {
 		themeDisplay.setLayoutSet(group.getPublicLayoutSet());
 		themeDisplay.setServerPort(80);
 		themeDisplay.setSiteGroupId(group.getGroupId());
+		themeDisplay.setServerName("test.com");
 
 		return themeDisplay;
 	}

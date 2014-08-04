@@ -665,7 +665,15 @@
 	</command>
 
 	<command name="viewPG">
-		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
+		<if>
+			<isset var="pageNameEdit" />
+			<then>
+				<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${pageNameEdit}" />
+			</then>
+			<else>
+				<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewSpecificPG">

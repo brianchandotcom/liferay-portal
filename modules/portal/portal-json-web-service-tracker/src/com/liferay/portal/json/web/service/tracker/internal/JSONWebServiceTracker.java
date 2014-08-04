@@ -15,10 +15,13 @@
 package com.liferay.portal.json.web.service.tracker.internal;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
+import com.liferay.portal.util.ClassLoaderUtil;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -97,7 +100,19 @@ public class JSONWebServiceTracker
 			"json.web.service.path");
 		Object service = getService(serviceReference);
 
-		_jsonWebServiceActionsManager.registerService(path, service);
+		ClassLoader classLoader = _getBundleClassLoader(
+			serviceReference.getBundle());
+		ClassLoader contextClassLoader =
+			ClassLoaderUtil.getContextClassLoader();
+
+		ClassLoaderUtil.setContextClassLoader(classLoader);
+
+		try {
+			_jsonWebServiceActionsManager.registerService(path, service);
+		}
+		finally {
+			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+		}
 
 		return service;
 	}
@@ -117,6 +132,12 @@ public class JSONWebServiceTracker
 		JSONWebServiceActionsManager jsonWebServiceActionsManager) {
 
 		_jsonWebServiceActionsManager = null;
+	}
+
+	private ClassLoader _getBundleClassLoader(Bundle bundle) {
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+		return bundleWiring.getClassLoader();
 	}
 
 	private ComponentContext _componentContext;

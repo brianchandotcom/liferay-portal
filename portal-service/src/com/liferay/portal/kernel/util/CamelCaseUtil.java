@@ -32,14 +32,11 @@ public class CamelCaseUtil {
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
 
-			boolean nextUpperCase = true;
-
-			if (i < (s.length() - 1)) {
-				nextUpperCase = Character.isUpperCase(s.charAt(i + 1));
-			}
-
 			if ((i > 0) && Character.isUpperCase(c)) {
-				if (!upperCase || !nextUpperCase) {
+				if (!upperCase ||
+					((i < (s.length() - 1)) &&
+					 !Character.isUpperCase(s.charAt(i + 1)))) {
+
 					sb.append(delimiter);
 				}
 
@@ -71,17 +68,19 @@ public class CamelCaseUtil {
 				return sb.toString();
 			}
 
-			boolean nextUpperCase = true;
-
-			if (i < (s.length() - 1)) {
-				char nextChar = s.charAt(i + 1);
-
-				if (nextChar != CharPool.PERIOD) {
-					nextUpperCase = Character.isUpperCase(nextChar);
-				}
-			}
-
 			if ((i > 0) && Character.isUpperCase(c)) {
+				boolean nextUpperCase = true;
+
+				if (i < (s.length() - 1)) {
+					char nextChar = s.charAt(i + 1);
+
+					if ((nextChar != CharPool.PERIOD) &&
+						!Character.isUpperCase(nextChar)) {
+
+						nextUpperCase = false;
+					}
+				}
+
 				if (upperCase && nextUpperCase) {
 					sb.setCharAt(i, Character.toLowerCase(c));
 				}

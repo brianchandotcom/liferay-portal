@@ -277,70 +277,43 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 	}
 
-	protected void copyThumbnails(
-		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
+	protected void copyThumbnail(
+		FileVersion sourceFileVersion, FileVersion destinationFileVersion,
+		int index) {
 
 		try {
-			if (isThumbnailEnabled(THUMBNAIL_INDEX_DEFAULT)) {
-				if (hasThumbnail(sourceFileVersion, THUMBNAIL_INDEX_DEFAULT) &&
-					!hasThumbnail(
-						destinationFileVersion, THUMBNAIL_INDEX_DEFAULT)) {
+			if (isThumbnailEnabled(index) &&
+				hasThumbnail(sourceFileVersion, index) &&
+				!hasThumbnail(destinationFileVersion, index)) {
 
-					InputStream is = doGetThumbnailAsStream(
-						sourceFileVersion, THUMBNAIL_INDEX_DEFAULT);
+				InputStream is = doGetThumbnailAsStream(
+					sourceFileVersion, index);
 
-					String thumbnailFilePath = getThumbnailFilePath(
-						destinationFileVersion,
-						getThumbnailType(destinationFileVersion),
-						THUMBNAIL_INDEX_DEFAULT);
+				String thumbnailFilePath = getThumbnailFilePath(
+					destinationFileVersion,
+					getThumbnailType(destinationFileVersion), index);
 
-					addFileToStore(
-						destinationFileVersion.getCompanyId(), THUMBNAIL_PATH,
-						thumbnailFilePath, is);
-				}
-			}
-
-			if (isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_1)) {
-				if (hasThumbnail(sourceFileVersion, THUMBNAIL_INDEX_CUSTOM_1) &&
-					!hasThumbnail(
-						destinationFileVersion, THUMBNAIL_INDEX_CUSTOM_1)) {
-
-					InputStream is = doGetThumbnailAsStream(
-						sourceFileVersion, THUMBNAIL_INDEX_CUSTOM_1);
-
-					String thumbnailFilePath = getThumbnailFilePath(
-						destinationFileVersion,
-						getThumbnailType(destinationFileVersion),
-						THUMBNAIL_INDEX_CUSTOM_1);
-
-					addFileToStore(
-						destinationFileVersion.getCompanyId(), THUMBNAIL_PATH,
-						thumbnailFilePath, is);
-				}
-			}
-
-			if (isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_2)) {
-				if (hasThumbnail(sourceFileVersion, THUMBNAIL_INDEX_CUSTOM_2) &&
-					!hasThumbnail(
-						destinationFileVersion, THUMBNAIL_INDEX_CUSTOM_2)) {
-
-					InputStream is = doGetThumbnailAsStream(
-						sourceFileVersion, THUMBNAIL_INDEX_CUSTOM_2);
-
-					String thumbnailFilePath = getThumbnailFilePath(
-						destinationFileVersion,
-						getThumbnailType(destinationFileVersion),
-						THUMBNAIL_INDEX_CUSTOM_2);
-
-					addFileToStore(
-						destinationFileVersion.getCompanyId(), THUMBNAIL_PATH,
-						thumbnailFilePath, is);
-				}
+				addFileToStore(
+					destinationFileVersion.getCompanyId(), THUMBNAIL_PATH,
+					thumbnailFilePath, is);
 			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
+
+	protected void copyThumbnails(
+		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
+
+		copyThumbnail(
+			sourceFileVersion, destinationFileVersion, THUMBNAIL_INDEX_DEFAULT);
+		copyThumbnail(
+			sourceFileVersion, destinationFileVersion,
+			THUMBNAIL_INDEX_CUSTOM_1);
+		copyThumbnail(
+			sourceFileVersion, destinationFileVersion,
+			THUMBNAIL_INDEX_CUSTOM_2);
 	}
 
 	protected void deleteFiles(

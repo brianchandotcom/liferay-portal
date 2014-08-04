@@ -120,7 +120,7 @@ public abstract class BaseUserNotificationHandler
 
 		String link = getLink(userNotificationEvent, serviceContext);
 
-		return new UserNotificationFeedEntry(body, link);
+		return new UserNotificationFeedEntry(isActionable(), body, link);
 	}
 
 	protected String getBody(

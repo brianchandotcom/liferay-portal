@@ -1215,8 +1215,8 @@ public class ServicePreAction extends Action {
 
 			if (myAccountPortlet != null) {
 				PortletURLImpl myAccountURL = new PortletURLImpl(
-					request, myAccountPortlet.getPortletName(),
-					controlPanelPlid, PortletRequest.RENDER_PHASE);
+					request, myAccountPortlet.getPortletId(), controlPanelPlid,
+					PortletRequest.RENDER_PHASE);
 
 				if (scopeGroupId > 0) {
 					myAccountURL.setDoAsGroupId(scopeGroupId);

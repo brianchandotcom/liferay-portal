@@ -7,22 +7,6 @@
 
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 
-	var MAP_ATTRIBUTES = {
-		img: [
-			'alt',
-			'class',
-			'dir',
-			'id',
-			'lang',
-			'longdesc',
-			'title',
-			{
-				fn: '_setImgStyle',
-				name: 'style'
-			}
-		]
-	};
-
 	var MAP_FONT_SIZE = {
 		1: 10,
 		2: 12,
@@ -65,6 +49,19 @@
 		right: '_handleTextAlign'
 	};
 
+	var MAP_IMAGE_ATTRIBUTES = {
+		'alt': 1,
+		'class': 1,
+		'dir': 1,
+		'height': 1,
+		'id': 1,
+		'lang': 1,
+		'longdesc': 1,
+		'style': 1,
+		'title': 1,
+		'width': 1
+	};
+
 	var MAP_LIST_STYLES = {
 		1: 'list-style-type: decimal;',
 		a: 'list-style-type: lower-alpha;'
@@ -78,6 +75,8 @@
 		th: 3,
 		table: 2
 	};
+
+	var REGEX_ATTRS = /\s*([^=]+)\s*=\s*"([^"]+)"\s*/g;
 
 	var REGEX_COLOR = /^(:?aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|#(?:[0-9a-f]{3})?[0-9a-f]{3})$/i;
 
@@ -228,44 +227,25 @@
 			return MAP_FONT_SIZE[fontSize] || MAP_FONT_SIZE.defaultSize;
 		},
 
-		_handleAttributes: function(token, tagName) {
+		_handleImageAttributes: function(token) {
 			var instance = this;
 
 			var attrs = '';
 
-			var attributesMap = MAP_ATTRIBUTES[tagName];
-
-			if (attributesMap && token.attribute) {
-				var attrRegex = /\s*([^=]+)\s*=\s*"([^"]+)"\s*/g;
-
-				var attributes = {};
-
+			if (token.attribute) {
 				var bbCodeAttr;
 
-				while (bbCodeAttr = attrRegex.exec(token.attribute)) {
-					attributes[bbCodeAttr[1]] = bbCodeAttr[2];
-				}
+				while ((bbCodeAttr = REGEX_ATTRS.exec(token.attribute))) {
+					var attrName = bbCodeAttr[1];
 
-				for (i=0; i < attributesMap.length; i++) {
-					var attr = attributesMap[i];
+					if (MAP_IMAGE_ATTRIBUTES[attrName]) {
+						var attrValue = bbCodeAttr[2];
 
-					var attrName;
-
-					var attrValue;
-
-					if (typeof attr === 'string') {
-						attrName = attr;
-						attrValue = attributes[attr];
-
-					}
-					else if (typeof attr === 'object') {
-						attrName = attr.name;
-						attrValue = instance[attr.fn].call(instance, attributes);
+						if (attrValue) {
+							attrs += ' ' + attrName + '="' + instance._escapeHTML(attrValue) + '"';
+						}
 					}
 
-					if (attrValue) {
-						attrs += ' ' + attrName + '="' + attrValue + '"';
-					}
 				}
 			}
 
@@ -355,11 +335,9 @@
 				imageSrc = CKTools.htmlEncodeAttr(imageSrcInput);
 			}
 
-			var imageSize = '';
-
 			var result = tplImage.output(
 				{
-					attributes: instance._handleAttributes(token, token.value),
+					attributes: instance._handleImageAttributes(token, token.value),
 					imageSrc: imageSrc
 				}
 			);
@@ -587,38 +565,6 @@
 			instance._parsedData = null;
 
 			instance._noParse = false;
-		},
-
-		_setImgStyle: function(attributes) {
-			var instance = this;
-
-			var imgStyle = attributes.style || '';
-
-			if (attributes.width) {
-				var attrWidth = 'width: ' + attributes.width;
-				var styleWidthRegex = /width:\s*(\d+)/;
-
-				if (styleWidthRegex.test(imgStyle)) {
-					imgStyle = imgStyle.replace(styleWidthRegex, attrWidth);
-				}
-				else {
-					imgStyle += attrWidth;
-				}
-			}
-
-			if (attributes.height) {
-				var attrHeight = 'height: ' + attributes.height;
-				var styleHeightRegex = /height:\s*(\d+)/;
-
-				if (styleHeightRegex.test(imgStyle)) {
-					imgStyle = imgStyle.replace(styleHeightRegex, attrHeight);
-				}
-				else {
-					imgStyle += attrHeight;
-				}
-			}
-
-			return imgStyle;
 		}
 	};
 

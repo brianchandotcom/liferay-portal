@@ -9,27 +9,6 @@
 		return val;
 	};
 
-	var MAP_ATTRIBUTES = {
-		img: [
-			'alt',
-			'class',
-			'dir',
-			{
-				fn: '_getStyleHeight',
-				name: 'height'
-			},
-			'id',
-			'lang',
-			'longdesc',
-			'style',
-			'title',
-			{
-				fn: '_getStyleWidth',
-				name: 'width'
-			}
-		]
-	};
-
 	var MAP_HANDLERS = {
 		a: '_handleLink',
 		blockquote: '_handleQuote',
@@ -60,6 +39,19 @@
 		strong: '_handleStrong'
 	};
 
+	var MAP_IMAGE_ATTRIBUTES = [
+		'alt',
+		'class',
+		'dir',
+		'height',
+		'id',
+		'lang',
+		'longdesc',
+		'style',
+		'title',
+		'width'
+	];
+
 	var MAP_LINK_HANDLERS = {
 		0: 'email'
 	};
@@ -77,8 +69,6 @@
 	var REGEX_LIST_ALPHA = /(upper|lower)-alpha/i;
 
 	var REGEX_NEWLINE = /\r?\n/g;
-
-	var REGEX_NOT_WHITESPACE = /[^\t\n\r ]/;
 
 	var REGEX_PERCENT = /%$/i;
 
@@ -115,8 +105,6 @@
 	var TAG_TD = 'td';
 
 	var tplImage = new CKEDITOR.template('<img src="{image}" />');
-
-	var tplImageOpenTag = new CKEDITOR.template('[img={width}x{height}]');
 
 	var emoticonImages;
 	var emoticonPath;
@@ -344,26 +332,6 @@
 			return index;
 		},
 
-		_getStyleDimension: function(element, dimension) {
-			var instance = this;
-
-			var domElement = new CKEDITOR.dom.element(element);
-
-			return domElement.getStyle(dimension).replace('px', '');
-		},
-
-		_getStyleHeight: function(element) {
-			var instance = this;
-
-			return instance._getStyleDimension(element, 'height');
-		},
-
-		_getStyleWidth: function(element) {
-			var instance = this;
-
-			return instance._getStyleDimension(element, 'width');
-		},
-
 		_handle: function(node) {
 			var instance = this;
 
@@ -403,38 +371,18 @@
 			instance._handleData(node.data, node);
 		},
 
-		_handleAttributes: function(element, tagName) {
-			var instance = this;
-
+		_handleImageAttributes: function(element) {
 			var attrs = '';
 
-			if (tagName) {
-				var attributesMap = MAP_ATTRIBUTES[tagName.toLowerCase()];
+			var length = MAP_IMAGE_ATTRIBUTES.length;
 
-				if (attributesMap) {
-					var i;
+			for (var i = 0; i < length; i++) {
+				var attrName = MAP_IMAGE_ATTRIBUTES[i];
 
-					for (i=0; i < attributesMap.length; i++) {
-						var attr = attributesMap[i];
+				var attrValue = element.getAttribute(attrName);
 
-						var attrName;
-
-						var attrValue;
-
-						if (typeof attr === 'string') {
-							attrName = attr;
-							attrValue = element.getAttribute(attr);
-
-						}
-						else if (typeof attr === 'object') {
-							attrName = attr.name;
-							attrValue = instance[attr.fn].call(instance, element);
-						}
-
-						if (attrValue) {
-							attrs += ' ' + attrName + '="' + attrValue + '"';
-						}
-					}
+				if (attrValue) {
+					attrs += ' ' + attrName + '="' + attrValue + '"';
 				}
 			}
 
@@ -574,7 +522,7 @@
 			else {
 				var attrSrc = element.getAttribute('src');
 
-				var openTag = '[img' + instance._handleAttributes(element, element.tagName) + ']';
+				var openTag = '[img' + instance._handleImageAttributes(element) + ']';
 
 				listTagsIn.push(openTag);
 				listTagsIn.push(attrSrc);

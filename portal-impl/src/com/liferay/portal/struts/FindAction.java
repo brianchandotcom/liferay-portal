@@ -291,9 +291,9 @@ public abstract class FindAction extends Action {
 
 		long layoutGroupId = layout.getGroupId();
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group targetGroup = GroupLocalServiceUtil.getGroup(groupId);
 
-		long parentGroupId = group.getParentGroupId();
+		long parentGroupId = targetGroup.getParentGroupId();
 
 		if ((groupId == layoutGroupId) || (parentGroupId == layoutGroupId) ||
 			(layout.isPrivateLayout() &&
@@ -302,8 +302,6 @@ public abstract class FindAction extends Action {
 
 			return;
 		}
-
-		Group targetGroup = GroupLocalServiceUtil.getGroup(groupId);
 
 		layout = new VirtualLayout(layout, targetGroup);
 

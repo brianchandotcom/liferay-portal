@@ -84,13 +84,6 @@ public class JSONWebServiceTracker
 		unregisterService(service);
 	}
 
-	@Reference
-	public void setJSONWebServiceActionsManager(
-		JSONWebServiceActionsManager jsonWebServiceActionsManager) {
-
-		_jsonWebServiceActionsManager = jsonWebServiceActionsManager;
-	}
-
 	protected Object getService(ServiceReference<Object> serviceReference) {
 		BundleContext bundleContext = _componentContext.getBundleContext();
 
@@ -107,6 +100,19 @@ public class JSONWebServiceTracker
 		_jsonWebServiceActionsManager.registerService(path, service);
 
 		return service;
+	}
+
+	@Reference
+	protected void setJSONWebServiceActionsManager(
+		JSONWebServiceActionsManager jsonWebServiceActionsManager) {
+
+		_jsonWebServiceActionsManager = jsonWebServiceActionsManager;
+	}
+
+	protected void unsetJSONWebServiceActionsManager(
+		JSONWebServiceActionsManager jsonWebServiceActionsManager) {
+
+		_jsonWebServiceActionsManager = null;
 	}
 
 	private void unregisterService(Object service) {

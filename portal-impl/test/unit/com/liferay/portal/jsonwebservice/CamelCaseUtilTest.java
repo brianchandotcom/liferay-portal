@@ -37,12 +37,9 @@ public class CamelCaseUtilTest {
 	@Test
 	public void testNormalization() {
 		Assert.assertEquals(
-			"camelCase", CamelCaseUtil.normalizeCamelCase("camelCase", false));
-		Assert.assertEquals(
 			"camelCase", CamelCaseUtil.normalizeCamelCase("camelCase", true));
 		Assert.assertEquals(
-			"camelCaseWord",
-			CamelCaseUtil.normalizeCamelCase("camelCASEWord", false));
+			"camelCase", CamelCaseUtil.normalizeCamelCase("camelCase", false));
 		Assert.assertEquals(
 			"camelCaseWord",
 			CamelCaseUtil.normalizeCamelCase("camelCASEWord", true));
@@ -53,15 +50,18 @@ public class CamelCaseUtilTest {
 			"camelCaseWord",
 			CamelCaseUtil.normalizeCamelCase("camelCASEWord", true));
 		Assert.assertEquals(
-			"camelCase", CamelCaseUtil.normalizeCamelCase("camelCASE", false));
+			"camelCaseWord",
+			CamelCaseUtil.normalizeCamelCase("camelCASEWord", false));
 		Assert.assertEquals(
 			"camelCase", CamelCaseUtil.normalizeCamelCase("camelCASE", true));
 		Assert.assertEquals(
+			"camelCase", CamelCaseUtil.normalizeCamelCase("camelCASE", false));
+		Assert.assertEquals(
 			"camelCase.fooUrl",
-			CamelCaseUtil.normalizeCamelCase("camelCASE.fooURL", false));
+			CamelCaseUtil.normalizeCamelCase("camelCASE.fooURL", true));
 		Assert.assertEquals(
 			"camelCase.fooURL",
-			CamelCaseUtil.normalizeCamelCase("camelCASE.fooURL", true));
+			CamelCaseUtil.normalizeCamelCase("camelCASE.fooURL", false));
 
 	}
 

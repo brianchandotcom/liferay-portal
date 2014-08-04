@@ -637,7 +637,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 			content = HtmlUtil.replaceNewLine(content);
 
 			if (Validator.isNull(content)) {
-				content = HtmlUtil.stripHtml(articleDisplay.getContent());
+				content = HtmlUtil.extractText(articleDisplay.getContent());
 			}
 		}
 		catch (Exception e) {

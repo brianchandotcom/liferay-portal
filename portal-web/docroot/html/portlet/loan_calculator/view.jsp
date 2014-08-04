@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,15 +17,12 @@
 <%@ include file="/html/portlet/loan_calculator/init.jsp" %>
 
 <%
-int loanAmount = ParamUtil.get(request, "loanAmount", 200000);
-double interest = ParamUtil.get(request, "interest", 7.00);
+String loanAmountString = ParamUtil.get(request, "loanAmount", "200000");
+double interestRate = ParamUtil.get(request, "interestRate", 7.00);
 int years = ParamUtil.get(request, "years", 30);
 int paymentsPerYear = ParamUtil.get(request, "paymentsPerYear", 12);
 
-double tempValue = Math.pow((1 + (interest / 100 / paymentsPerYear)), (years * paymentsPerYear));
-double amountPerPayment = (loanAmount * tempValue * (interest / 100 / paymentsPerYear)) / (tempValue - 1);
-double totalPaid = amountPerPayment * years * paymentsPerYear;
-double interestPaid = totalPaid - loanAmount;
+int loanAmount = 0;
 
 NumberFormat doubleFormat = NumberFormat.getNumberInstance(locale);
 
@@ -36,20 +33,31 @@ NumberFormat integerFormat = NumberFormat.getNumberInstance(locale);
 
 integerFormat.setMaximumFractionDigits(0);
 integerFormat.setMinimumFractionDigits(0);
+
+try {
+	loanAmount = GetterUtil.getInteger(integerFormat.parse(loanAmountString));
+} catch (Exception e) {
+	System.err.println("Caught Exception: " + e.getMessage());
+}
+
+double tempValue = Math.pow((1 + (interestRate / 100 / paymentsPerYear)), (years * paymentsPerYear));
+double amountPerPayment = (loanAmount * tempValue * (interestRate / 100 / paymentsPerYear)) / (tempValue - 1);
+double totalPaid = amountPerPayment * years * paymentsPerYear;
+double interestPaid = totalPaid - loanAmount;
 %>
 
-<portlet:actionURL var="viewLoanURL">
+<portlet:renderURL var="viewLoanURL">
 	<portlet:param name="struts_action" value="/loan_calculator/view" />
-</portlet:actionURL>
+</portlet:renderURL>
 
 <aui:form action="<%= viewLoanURL %>" id="fm" method="post" name="fm">
 	<aui:row>
 		<aui:col width="50">
 			<aui:fieldset>
 				<aui:field-wrapper>
-					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="loan-amount" value="<%= integerFormat.format(loanAmount) %>" />
+					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="loanAmount" value="<%= integerFormat.format(loanAmount) %>" />
 
-					<aui:input name="interest-rate" value="<%= doubleFormat.format(interest) %>" />
+					<aui:input name="interestRate" value="<%= doubleFormat.format(interestRate) %>" />
 
 					<aui:input name="years" value="<%= years %>" />
 
@@ -73,6 +81,7 @@ integerFormat.setMinimumFractionDigits(0);
 			</aui:fieldset>
 		</aui:col>
 	</aui:row>
+
 </aui:form>
 
 <aui:script use="aui-io-request,aui-parse-content">

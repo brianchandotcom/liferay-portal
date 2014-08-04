@@ -54,6 +54,10 @@ public class CamelCaseUtil {
 		return sb.toString();
 	}
 
+	public static String normalizeCamelCase(String s) {
+		return normalizeCamelCase(s, false);
+	}
+
 	public static String normalizeCamelCase(
 		String s, boolean normalizeInnerTerms) {
 

@@ -219,9 +219,13 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			List<Website> websites, ServiceContext serviceContext)
 		throws PortalException {
 
-		boolean indexingEnabled = serviceContext.isIndexingEnabled();
+		boolean indexingEnabled = true;
 
-		serviceContext.setIndexingEnabled(false);
+		if (serviceContext != null) {
+			indexingEnabled = serviceContext.isIndexingEnabled();
+
+			serviceContext.setIndexingEnabled(false);
+		}
 
 		try {
 			Organization organization = addOrganization(
@@ -257,7 +261,9 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			return organization;
 		}
 		finally {
-			serviceContext.setIndexingEnabled(indexingEnabled);
+			if (serviceContext != null) {
+				serviceContext.setIndexingEnabled(indexingEnabled);
+			}
 		}
 	}
 

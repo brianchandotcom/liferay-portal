@@ -565,7 +565,8 @@ public class FileEntryStagedModelDataHandler
 				"structure-fields");
 
 			String path = ExportImportPathUtil.getModelPath(
-				ddmStructure, String.valueOf(ddmStructure.getStructureId()));
+				ddmStructure,
+				String.valueOf(dlFileEntryMetadata.getDDMStorageId()));
 
 			structureFields.addAttribute("path", path);
 

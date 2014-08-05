@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
+import com.liferay.portal.kernel.lar.xstream.XStreamConverter;
+import com.liferay.portal.kernel.lar.xstream.XStreamConverterRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -52,6 +54,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.lar.xstream.ConverterAdaptor;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.ClassedModel;
@@ -2392,6 +2395,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		for (Map.Entry<Class<?>, String> alias : aliases.entrySet()) {
 			_xStream.alias(alias.getValue(), alias.getKey());
+		}
+
+		Set<XStreamConverter> xStreamConverters =
+			XStreamConverterRegistryUtil.getConverters();
+
+		for (XStreamConverter xStreamConverter : xStreamConverters) {
+			_xStream.registerConverter(
+				new ConverterAdaptor(xStreamConverter),
+				XStream.PRIORITY_VERY_HIGH);
 		}
 
 		_xStream.omitField(HashMap.class, "cache_bitmask");

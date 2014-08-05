@@ -507,6 +507,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['anim', 'liferay-dockbar', 'liferay-layout', 'transition']
+		requires: ['anim', 'aui-base', 'liferay-dockbar', 'liferay-layout', 'transition']
 	}
 );

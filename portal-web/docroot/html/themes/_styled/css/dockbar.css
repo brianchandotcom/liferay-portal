@@ -987,11 +987,11 @@ $editLayoutPanelWidth: 460px;
 		z-index: 1100;
 
 		.add-content-menu .content-link {
+			border-color: #488F06;
 			color: #488F06;
 
 			&:active, &:hover {
 				background-color: #488F06;
-				border-color: #488F06;
 				color: #F1FBD1;
 				text-decoration: none;
 			}

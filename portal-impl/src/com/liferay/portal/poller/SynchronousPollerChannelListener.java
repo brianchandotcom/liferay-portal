@@ -32,6 +32,11 @@ public class SynchronousPollerChannelListener implements ChannelListener {
 	public SynchronousPollerChannelListener() {
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, moved to {@link
+	 *             SynchronousPollerChannelListener#
+	 *             SynchronousPollerChannelListener()}
+	 */
 	@Deprecated
 	public SynchronousPollerChannelListener(
 		long companyId, long userId,
@@ -49,6 +54,11 @@ public class SynchronousPollerChannelListener implements ChannelListener {
 		this.notify();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             SynchronousPollerChannelListener#getNotificationEvents(long,
+	 *             long, JSONObject, long)}
+	 */
 	@Deprecated
 	public synchronized String getNotificationEvents(long timeout)
 		throws ChannelException {

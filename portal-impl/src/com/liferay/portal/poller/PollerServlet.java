@@ -109,10 +109,9 @@ public class PollerServlet extends HttpServlet {
 				companyId, userId, pollerResponseHeaderJSONObject,
 				PropsValues.POLLER_REQUEST_TIMEOUT);
 		}
-
 		finally {
 			ChannelHubManagerUtil.unregisterChannelListener(
-				companyId, userId, synchronousPollerChannelListener );
+				companyId, userId, synchronousPollerChannelListener);
 		}
 	}
 

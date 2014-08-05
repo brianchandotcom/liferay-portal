@@ -154,7 +154,7 @@ if (translating) {
 							url.setParameter('formDDMTemplateId', <%= formDDMTemplateId %>);
 							url.setParameter('recordId', <%= recordId %>);
 							url.setParameter('recordSetId', <%= recordSetId %>);
-							url.setParameter('redirect', '<%= redirect %>');
+							url.setParameter('redirect', '<%= HtmlUtil.escapeJS(redirect) %>');
 
 							window.location.href = url;
 						},

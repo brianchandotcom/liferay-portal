@@ -133,6 +133,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSIGNED_TO_ME_MENULIST_RESUBMIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Resubmit')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSIGNED_TO_ME_MENULIST_APPROVE</td>
 	<td>//a[@role='menuitem' and contains(.,'Approve')]</td>
 	<td></td>
@@ -201,6 +206,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DIALOG_BOX_UPDATE_DUE_DATE_DATE</td>
+	<td>//input[contains(@id,'kaleoformsportlet_dueDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIALOG_BOX_UPDATE_DUE_DATE_TIME</td>
+	<td>//input[contains(@id,'kaleoformsportlet_dueDateTime')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DIALOG_BOX_COMMENT_FIELD</td>
 	<td>//textarea[contains(@id,'kaleoformsportlet_comment')]</td>
 	<td></td>
@@ -244,6 +259,22 @@
 <tr>
 	<td>MY_PENDING_REQUESTS_TABLE_END_DATE</td>
 	<td>//tr[contains(.,'${key_kfProcessName}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_PENDING_REQUESTS_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_kfProcessName}')]/td[5]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MY_PENDING_REQUESTS_MENULIST-->
+<tr>
+	<td>MY_PENDING_REQUESTS_MENULIST_WITHDRAW_SUBMISSION</td>
+	<td>//a[@role='menuitem' and contains(.,'Withdraw Submission')]</td>
 	<td></td>
 </tr>
 <tr>

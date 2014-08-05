@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>PGKaleoformsInboxProcess</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGKaleoformsInboxProcess</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGKaleoformsInboxProcess</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DUE_DATE</td>
+	<td>//div[@class='lfr-asset-due-date']/div</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

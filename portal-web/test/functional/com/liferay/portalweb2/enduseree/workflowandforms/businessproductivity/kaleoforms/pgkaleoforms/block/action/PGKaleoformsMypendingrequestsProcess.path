@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WITHDRAW_SUBMISSION</td>
+	<td>//a/span[contains(.,'Withdraw Submission')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

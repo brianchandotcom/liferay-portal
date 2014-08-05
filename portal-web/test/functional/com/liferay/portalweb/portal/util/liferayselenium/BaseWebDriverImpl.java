@@ -219,7 +219,7 @@ public abstract class BaseWebDriverImpl
 				// LPS-42469
 
 				if (javaScriptErrorValue.contains(
-						"https://apis.google.com/_/+1/fastbutton")) {
+						"Permission denied to access property 'type'")) {
 
 					continue;
 				}

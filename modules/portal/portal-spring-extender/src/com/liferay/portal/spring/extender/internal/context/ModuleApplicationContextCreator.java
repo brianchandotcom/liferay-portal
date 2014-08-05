@@ -15,11 +15,15 @@
 package com.liferay.portal.spring.extender.internal.context;
 
 import com.liferay.portal.spring.extender.internal.blueprint.ModuleBeanFactoryPostProcessor;
+import com.liferay.portal.spring.extender.internal.bundle.CompositeResourceLoaderBundle;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Dictionary;
+import java.util.List;
 
 import org.eclipse.gemini.blueprint.context.DelegatedExecutionOsgiBundleApplicationContext;
 import org.eclipse.gemini.blueprint.context.support.OsgiBundleXmlApplicationContext;
@@ -53,31 +57,38 @@ public class ModuleApplicationContextCreator
 			return null;
 		}
 
-		String[] locations = ConfigUtils.getHeaderLocations(headers);
-
-		ApplicationContext applicationContext = null;
-
 		Bundle extenderBundle = _getExtenderBundle();
 
 		ClassLoader classLoader = new BundleResolverClassLoader(
 			bundle, extenderBundle);
 
+		Bundle compositeResourceLoaderBundle =
+			new CompositeResourceLoaderBundle(bundle, extenderBundle);
+
+		ServiceBuilderApplicationContext serviceBuilderApplicationContext =
+			new ServiceBuilderApplicationContext(
+				compositeResourceLoaderBundle, _buildLocations(headers));
+
+		serviceBuilderApplicationContext.setBundleContext(bundleContext);
+
+		serviceBuilderApplicationContext.addBeanFactoryPostProcessor(
+			new ModuleBeanFactoryPostProcessor(classLoader));
+
+		return serviceBuilderApplicationContext;
+	}
+
+	private String[] _buildLocations(Dictionary<String, String> headers) {
+		List<String> locations = new ArrayList<String>();
+
+		Collections.addAll(locations, ConfigUtils.getHeaderLocations(headers));
+
 		String liferayService = headers.get("Liferay-Service");
 
 		if (liferayService != null) {
-			applicationContext = _buildParentContext(
-				extenderBundle, classLoader);
+			locations.add(0, "META-INF/spring/parent/*.xml");
 		}
 
-		OsgiBundleXmlApplicationContext osgiBundleXmlApplicationContext =
-			new OsgiBundleXmlApplicationContext(locations, applicationContext);
-
-		osgiBundleXmlApplicationContext.setBundleContext(bundleContext);
-
-		osgiBundleXmlApplicationContext.addBeanFactoryPostProcessor(
-			new ModuleBeanFactoryPostProcessor(classLoader));
-
-		return osgiBundleXmlApplicationContext;
+		return locations.toArray(new String[locations.size()]);
 	}
 
 	private ApplicationContext _buildParentContext(

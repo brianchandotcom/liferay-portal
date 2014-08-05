@@ -4,7 +4,7 @@
 <project>
 	<property name="osgi.ide.dependencies" value="ant.jar,asm-debug-all.jar,bnd.jar,felix-fileinstall.jar,spring-beans.jar,spring-context.jar,spring-core.jar,spring-web.jar" />
 	<property name="plugin.full.version" value="7.0.0.1" />
-	<property name="plugin.name" value="com.liferay.portal.wab.extender" />
+	<property name="plugin.name" value="com.liferay.portal.wab.generator" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 

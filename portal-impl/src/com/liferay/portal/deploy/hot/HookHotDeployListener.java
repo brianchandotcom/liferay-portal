@@ -1688,8 +1688,8 @@ public class HookHotDeployListener
 					portletClassLoader, UserGroupMembershipPolicy.class,
 					userGroupMembershipPolicyClassName);
 
-			registerService(servletContextName,
-				userGroupMembershipPolicyClassName,
+			registerService(
+				servletContextName, userGroupMembershipPolicyClassName,
 				UserGroupMembershipPolicy.class, userGroupMembershipPolicy);
 		}
 

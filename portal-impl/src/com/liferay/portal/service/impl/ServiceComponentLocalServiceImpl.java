@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ServiceComponent;
 import com.liferay.portal.service.base.ServiceComponentLocalServiceBaseImpl;
+import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.tools.servicebuilder.Entity;
 import com.liferay.portal.util.PropsValues;
 
@@ -54,8 +55,6 @@ import java.security.PrivilegedExceptionAction;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -64,10 +63,11 @@ public class ServiceComponentLocalServiceImpl
 
 	@Override
 	public void destroyServiceComponent(
-		ServletContext servletContext, ClassLoader classLoader) {
+		ServiceComponentConfiguration serviceComponentConfiguration,
+		ClassLoader classLoader) {
 
 		try {
-			clearCacheRegistry(servletContext);
+			clearCacheRegistry(serviceComponentConfiguration);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -76,9 +76,9 @@ public class ServiceComponentLocalServiceImpl
 
 	@Override
 	public ServiceComponent initServiceComponent(
-			ServletContext servletContext, ClassLoader classLoader,
-			String buildNamespace, long buildNumber, long buildDate,
-			boolean buildAutoUpgrade)
+			ServiceComponentConfiguration serviceComponentConfiguration,
+			ClassLoader classLoader, String buildNamespace, long buildNumber,
+			long buildDate, boolean buildAutoUpgrade)
 		throws PortalException {
 
 		try {
@@ -147,23 +147,23 @@ public class ServiceComponentLocalServiceImpl
 
 			Element tablesSQLElement = dataElement.addElement("tables-sql");
 
-			String tablesSQL = HttpUtil.URLtoString(
-				getResource(servletContext, "sql/tables.sql"));
+			String tablesSQL = StringUtil.read(
+				serviceComponentConfiguration.sqlTables());
 
 			tablesSQLElement.addCDATA(tablesSQL);
 
 			Element sequencesSQLElement = dataElement.addElement(
 				"sequences-sql");
 
-			String sequencesSQL = HttpUtil.URLtoString(
-				getResource(servletContext, "sql/sequences.sql"));
+			String sequencesSQL = StringUtil.read(
+				serviceComponentConfiguration.sqlSequences());
 
 			sequencesSQLElement.addCDATA(sequencesSQL);
 
 			Element indexesSQLElement = dataElement.addElement("indexes-sql");
 
-			String indexesSQL = HttpUtil.URLtoString(
-				getResource(servletContext, "sql/indexes.sql"));
+			String indexesSQL = StringUtil.read(
+				serviceComponentConfiguration.sqlIndexes());
 
 			indexesSQLElement.addCDATA(indexesSQL);
 
@@ -275,11 +275,11 @@ public class ServiceComponentLocalServiceImpl
 
 	}
 
-	protected void clearCacheRegistry(ServletContext servletContext)
+	protected void clearCacheRegistry(
+			ServiceComponentConfiguration serviceComponentConfiguration)
 		throws DocumentException {
 
-		InputStream inputStream = getResourceAsStream(
-			servletContext, "classes/META-INF/portlet-hbm.xml");
+		InputStream inputStream = serviceComponentConfiguration.hibernate();
 
 		if (inputStream == null) {
 			return;
@@ -404,32 +404,6 @@ public class ServiceComponentLocalServiceImpl
 		}
 
 		return models;
-	}
-
-	protected URL getResource(ServletContext servletContext, String path)
-		throws MalformedURLException {
-
-		URL url = servletContext.getResource("/META-INF/" + path);
-
-		if (url == null) {
-			url = servletContext.getResource("/WEB-INF/" + path);
-		}
-
-		return url;
-	}
-
-	protected InputStream getResourceAsStream(
-		ServletContext servletContext, String path) {
-
-		InputStream inputStream = servletContext.getResourceAsStream(
-			"/META-INF/" + path);
-
-		if (inputStream == null) {
-			inputStream = servletContext.getResourceAsStream(
-				"/WEB-INF/" + path);
-		}
-
-		return inputStream;
 	}
 
 	protected UpgradeTableListener getUpgradeTableListener(

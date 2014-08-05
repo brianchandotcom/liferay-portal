@@ -172,18 +172,6 @@ public class PortletExporter {
 			return;
 		}
 
-		long lastPublishDate = GetterUtil.getLong(
-			jxPortletPreferences.getValue(
-				"last-publish-date", StringPool.BLANK));
-
-		Date startDate = portletDataContext.getStartDate();
-
-		if ((lastPublishDate > 0) && (startDate != null) &&
-			(lastPublishDate < startDate.getTime())) {
-
-			portletDataContext.setStartDate(new Date(lastPublishDate));
-		}
-
 		String data = null;
 
 		long groupId = portletDataContext.getGroupId();
@@ -204,7 +192,6 @@ public class PortletExporter {
 		}
 		finally {
 			portletDataContext.setGroupId(groupId);
-			portletDataContext.setStartDate(startDate);
 		}
 
 		if (Validator.isNull(data)) {

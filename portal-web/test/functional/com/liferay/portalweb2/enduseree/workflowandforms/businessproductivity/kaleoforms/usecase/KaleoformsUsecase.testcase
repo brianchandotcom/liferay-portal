@@ -1050,17 +1050,17 @@
 			<var name="fieldName" value="purchasePrice" />
 		</execute>
 
-		<var name="key_fieldName" value="quantity" />
-
-		<execute action="PGKaleoformsSubmitnew#assertElementNotPresent" locator-key1="NEW_PROCESS_FIELDS_TEXT_FIELD" />
+		<execute macro="KaleoFormsPortlet#assertCompleteFormFieldNotPresent">
+			<var name="fieldName" value="quantity" />
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DataDefinitionTemplate#deleteTemplateCP">
+		<execute macro="DDLTemplate#deleteTemplateCP">
 			<var name="dataDefinitionName" value="Inventory" />
-			<var name="dataDefinitionTemplateName" value="Task Form" />
+			<var name="ddlTemplateName" value="Task Form" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1309,9 +1309,9 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DataDefinitionTemplate#deleteTemplateCP">
+		<execute macro="DDLTemplate#deleteTemplateCP">
 			<var name="dataDefinitionName" value="Inventory" />
-			<var name="dataDefinitionTemplateName" value="Review" />
+			<var name="ddlTemplateName" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1692,9 +1692,9 @@
 			<var name="fieldName" value="purchasePrice" />
 		</execute>
 
-		<var name="key_fieldName" value="quantity" />
-
-		<execute action="PGKaleoformsSubmitnew#assertElementNotPresent" locator-key1="NEW_PROCESS_FIELDS_TEXT_FIELD" />
+		<execute macro="KaleoFormsPortlet#assertCompleteFormFieldNotPresent">
+			<var name="fieldName" value="quantity" />
+		</execute>
 
 		<execute macro="KaleoFormsPortlet#saveNewProcess" />
 
@@ -1737,10 +1737,10 @@
 			<var name="fieldName" value="Purchase Price" />
 		</execute>
 
-		<var name="key_ddlRecordFieldData" value="4.0" />
-		<var name="key_fieldName" value="quantity" />
-
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertElementNotPresent" locator-key1="CURRENT_ENTRY_FIELD" />
+		<execute macro="KaleoFormsPortlet#assertMyCompletedRequestsFieldNotPresent">
+			<var name="ddlRecordFieldData" value="4.0" />
+			<var name="fieldName" value="quantity" />
+		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>

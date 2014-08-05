@@ -19,6 +19,19 @@
 		<execute action="PGKaleoforms#pause" locator1="1000" />
 	</command>
 
+	<command name="assertCompleteFormFieldNotPresent">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsSubmitnew#assertElementNotPresent" locator-key1="NEW_PROCESS_FIELDS_TEXT_FIELD" />
+	</command>
+
+	<command name="assertMyCompletedRequestsFieldNotPresent">
+		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertElementNotPresent" locator-key1="CURRENT_ENTRY_FIELD" />\
+	</command>
+
 	<command name="assignProcessToMe">
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 

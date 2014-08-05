@@ -806,15 +806,18 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setScreenName(screenName);
 		user.setEmailAddress(emailAddress);
 		user.setFacebookId(facebookId);
-		user.setLdapServerId(-1);
+
+		Long ldapServerId = null;
 
 		if (serviceContext != null) {
-			Long ldapServerId = (Long)serviceContext.getAttribute(
-				"ldapServerId");
+			ldapServerId = (Long)serviceContext.getAttribute("ldapServerId");
+		}
 
-			if (ldapServerId != null) {
-				user.setLdapServerId(ldapServerId);
-			}
+		if (ldapServerId != null) {
+			user.setLdapServerId(ldapServerId);
+		}
+		else {
+			user.setLdapServerId(-1);
 		}
 
 		user.setOpenId(openId);

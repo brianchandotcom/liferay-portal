@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Portal HTTP Service
+Bundle-Name: Liferay Portal Wab Extender
 Bundle-Version: ${plugin.full.version}
 Export-Package:\
 	com.liferay.portal.http.service.ws.axis

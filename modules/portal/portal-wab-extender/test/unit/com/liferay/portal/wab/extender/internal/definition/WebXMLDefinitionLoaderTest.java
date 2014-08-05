@@ -104,10 +104,7 @@ public class WebXMLDefinitionLoaderTest {
 		Assert.assertEquals(numOfFilters, filterDefinitions.size());
 	}
 
-	private static final String[] _LISTENER_DEFAULT_CLASS_NAMES = {
-		"org.eclipse.jetty.servlet.listener.ELContextCleaner",
-		"org.eclipse.jetty.servlet.listener.IntrospectorCleaner"
-	};
+	private static final String[] _LISTENER_DEFAULT_CLASS_NAMES = {};
 
 	private static final String[] _SERVLET_DEFAULT_CLASSE_NAMES = {
 		"com.liferay.portal.wab.extender.internal.WabResourceServlet",

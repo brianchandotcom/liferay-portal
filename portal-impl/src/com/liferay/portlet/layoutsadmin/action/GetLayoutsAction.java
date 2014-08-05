@@ -53,7 +53,7 @@ public class GetLayoutsAction extends JSONAction {
 
 		long groupId = ParamUtil.getLong(request, "groupId");
 
-		return LayoutsTreeUtil.getLayoutsJSON(request, groupId);
+		return LayoutsTreeUtil.getAllLayoutsJSON(request, groupId);
 	}
 
 	protected String getLayoutsJSON(HttpServletRequest request)

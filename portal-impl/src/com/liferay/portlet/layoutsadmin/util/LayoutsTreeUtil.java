@@ -60,7 +60,7 @@ import javax.servlet.http.HttpSession;
  */
 public class LayoutsTreeUtil {
 
-	public static String getLayoutsJSON(
+	public static String getAllLayoutsJSON(
 			HttpServletRequest request, long groupId)
 		throws Exception {
 

@@ -421,6 +421,7 @@
 		<execute macro="SOUser#firstLoginPG" />
 
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_COUNT" />
+		<execute action="SOUserBar#pause" locator1="1000" />
 
 		<while>
 			<condition action="SOUserBar#isElementPresent" locator-key1="NOTIFICATION_MENU_IGNORE" />
@@ -428,6 +429,8 @@
 				<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_IGNORE" />
 			</then>
 		</while>
+
+		<execute action="SOUserBar#pause" locator1="1000" />
 
 		<while>
 			<condition action="SOUserBar#isElementPresent" locator-key1="NOTIFICATION_MENU_MARK_ALL_AS_READ" />

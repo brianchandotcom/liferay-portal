@@ -242,6 +242,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SCREENSHOTS-->
+<tr>
+	<td>SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_HIGH_PNG</td>
+	<td>so/screenshots/activities/activities_task_activity_priority_high.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_LOW_PNG</td>
+	<td>so/screenshots/activities/activities_task_activity_priority_low.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCREENSHOTS_ACTIVITIES_TASK_ACTIVITY_PRIORITY_NORMAL_PNG</td>
+	<td>so/screenshots/activities/activities_task_activity_priority_normal.png</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -304,6 +304,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EVENTS_DISPLAY_NO_EVENTS</td>
+	<td>//div[@class='portlet-body' and contains(.,'There are no more events today.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE</td>
 	<td>//div[@class='today-events']//tr[contains(.,'${key_eventTitle}')]//span[@class='event-name']/a</td>
 	<td></td>

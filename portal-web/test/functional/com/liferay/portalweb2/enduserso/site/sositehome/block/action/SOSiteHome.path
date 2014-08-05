@@ -104,6 +104,63 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--USER_HOME_SITE_NAVIGATION-->
+<tr>
+	<td>USER_HOME_SITE_NAVIGATION_DASHBOARD</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'Dashboard')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_HOME_SITE_NAVIGATION_CONTACTS_CENTER</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'Contacts Center')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_HOME_SITE_NAVIGATION_MICROBLOGS</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,' Microblogs')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_HOME_SITE_NAVIGATION_MESSAGES</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'Messages')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_HOME_SITE_NAVIGATION_MY_DOCUMENTS</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'My Documents')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_HOME_SITE_NAVIGATION_TASKS</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'Tasks')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_PROFILE_SITE_NAVIGATION-->
+<tr>
+	<td>USER_PROFILE_SITE_NAVIGATION_PROFILE</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'Profile')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_PROFILE_SITE_NAVIGATION_CONTACTS</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'Contacts')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_PROFILE_SITE_NAVIGATION_MICROBLOGS</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,' Microblogs')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ANNOUNCEMENTS-->
 <tr>
 	<td>ANNOUNCEMENTS_PORTLET_TITLE</td>
@@ -446,6 +503,11 @@
 <tr>
 	<td>EVENTS_DISPLAY_UPCOMING_EVENTS</td>
 	<td>//div[@class='upcoming-events']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_NO_EVENTS</td>
+	<td>//div[@class='portlet-body' and contains(.,'There are no more events today.')]</td>
 	<td></td>
 </tr>
 <tr>

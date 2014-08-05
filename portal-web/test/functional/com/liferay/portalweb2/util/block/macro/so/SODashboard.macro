@@ -484,7 +484,15 @@
 			</else>
 		</if>
 
-		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="RESOURCES_FIELD" />
+		<if>
+			<not>
+				<equals arg1="${invitedToEvent}" arg2="true"  />
+			</not>
+			<then>
+				<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="RESOURCES_FIELD" />
+			</then>
+		</if>
+
 		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="MAYBE_BUTTON" />
 		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="DECLINE_BUTTON" />
 	</command>

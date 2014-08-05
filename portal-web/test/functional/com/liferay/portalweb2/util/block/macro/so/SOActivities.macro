@@ -412,7 +412,7 @@
 		<var name="key_userName" value="${userName}" />
 
 		<if>
-			<condition action="SOActivities#isNotVisible" locator-key1="ACTIVITIES_COMMENT_CONTENT" />
+			<condition action="SOActivities#isElementNotPresent" locator-key1="ACTIVITIES_COMMENT_CONTENT" />
 			<then>
 				<if>
 					<equals arg1="${commentCount}" arg2="1" />
@@ -424,6 +424,20 @@
 					</else>
 				</if>
 			</then>
+			<elseif>
+				<condition action="SOActivities#isNotVisible" locator-key1="ACTIVITIES_COMMENT_CONTENT" />
+				<then>
+					<if>
+						<equals arg1="${commentCount}" arg2="1" />
+						<then>
+							<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+						</then>
+						<else>
+							<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+						</else>
+					</if>
+				</then>
+			</elseif>
 			<else>
 				<if>
 					<equals arg1="${commentCount}" arg2="1" />
@@ -1263,6 +1277,77 @@
 			<var name="action" value="${calendarAction}" />
 			<var name="row" value="10" />
 		</execute>
+	</command>
+
+	<command name="viewTasksActivityEntry">
+		<if>
+			<isset var="row" />
+			<then>
+				<var name="row" value="${row}" />
+			</then>
+			<else>
+				<var name="row" value="01" />
+			</else>
+		</if>
+
+		<var name="key_row" value="${row}" />
+		<var name="key_userName" value="${userName}" />
+
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_USER_PICTURE" />
+
+		<if>
+			<or>
+				<equals arg1="${dashboardView}" arg2="true" />
+				<equals arg1="${profileView}" arg2="true" />
+			</or>
+			<then>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName} in ${siteName}" />
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_USER" value1="${userName}" />
+			</else>
+		</if>
+
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_TIME_STAMP" />
+		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="${action}" />
+		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_TITLE" value1="${taskDescription}" />
+		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_CONTENT" value1="Assigned to: ${taskAssignee}" />
+
+		<if>
+			<equals arg1="${dueDate}" arg2="true" />
+			<then>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_CONTENT" value1="Due Date: 3/16/16" />
+			</then>
+			<elseif>
+				<equals arg1="${dueDateEdit}" arg2="true" />
+				<then>
+					<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_CONTENT" value1="Due Date: 4/17/17" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_CONTENT" value1="Due Date: None" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="commentCount" />
+			<then>
+				<if>
+					<equals arg1="${commentCount}" arg2="1" />
+					<then>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="1 Comment" />
+					</then>
+					<else>
+						<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT" value1="${commentCount} Comments" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_COMMENT" value1="Comment" />
+			</else>
+		</if>
+
+		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_COMMENT_FIELD" />
 	</command>
 
 	<command name="viewWikiActivityEntry">

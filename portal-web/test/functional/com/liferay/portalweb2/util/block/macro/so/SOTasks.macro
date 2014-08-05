@@ -155,7 +155,17 @@
 		<var name="key_taskDescription" value="${taskDescription}" />
 
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_DESCRIPTION" value1="${taskDescription}" />
-		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
+
+		<if>
+			<equals arg1="${taskAssignee}" arg2="Unassigned" />
+			<then>
+				<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_ASSIGNEE" value1="Unassigned" />
+			</then>
+			<else>
+				<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
+			</else>
+		</if>
+
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_REPORTER" value1="Created by ${taskReporter}" />
 		<execute action="SOTasksTask#selectFrame" value1="relative=top" />
 
@@ -690,7 +700,17 @@
 	<command name="viewTaskDetails">
 		<execute action="SOTasksTask#selectFrame" locator-key1="TASK_IFRAME" />
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_DESCRIPTION" value1="${taskDescription}" />
-		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
+
+		<if>
+			<equals arg1="${taskAssignee}" arg2="Unassigned" />
+			<then>
+				<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_ASSIGNEE" value1="Unassigned" />
+			</then>
+			<else>
+				<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_ASSIGNEE" value1="Assigned to ${taskAssignee}" />
+			</else>
+		</if>
+
 		<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_REPORTER" value1="Created by ${taskReporter}" />
 
 		<if>

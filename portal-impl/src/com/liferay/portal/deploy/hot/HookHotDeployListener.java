@@ -104,8 +104,6 @@ import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.ldap.AttributesTransformer;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.RoleMembershipPolicy;
-import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryImpl;
-import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryUtil;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryImpl;
@@ -1656,8 +1654,8 @@ public class HookHotDeployListener
 					roleMembershipPolicyClassName);
 
 			registerService(
-				servletContextName, roleMembershipPolicyClassName, 
-				RoleMembershipPolicy.class,	roleMembershipPolicy);
+				servletContextName, roleMembershipPolicyClassName,
+				RoleMembershipPolicy.class, roleMembershipPolicy);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.MEMBERSHIP_POLICY_SITES)) {

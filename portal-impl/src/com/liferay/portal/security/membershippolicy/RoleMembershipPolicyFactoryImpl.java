@@ -69,7 +69,7 @@ public class RoleMembershipPolicyFactoryImpl
 			RoleMembershipPolicy roleMembershipPolicy = registry.getService(
 				serviceReference);
 
-			if(PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY){
+			if (PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY) {
 				try {
 					roleMembershipPolicy.verifyPolicy();
 				}

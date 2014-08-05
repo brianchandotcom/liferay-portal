@@ -43,12 +43,12 @@ public abstract class BaseRoleMembershipPolicyTestCase
 	public static long[] getStandardRoleIds() {
 		return _standardRoleIds;
 	}
-	
+
 	@Before
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-		
+
 		Registry registry = RegistryUtil.getRegistry();
 
 		Map<String, Object> properties = new HashMap<String, Object>();
@@ -56,11 +56,10 @@ public abstract class BaseRoleMembershipPolicyTestCase
 		properties.put("service.ranking", 1);
 
 		ServiceRegistration<?> serviceRegistration = registry.registerService(
-			RoleMembershipPolicy.class,
-			new TestRoleMembershipPolicy(), properties);
+			RoleMembershipPolicy.class, new TestRoleMembershipPolicy(),
+			properties);
 
 		serviceRegistrations.add(serviceRegistration);
-
 	}
 
 	@After

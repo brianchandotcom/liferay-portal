@@ -19,10 +19,10 @@ package com.liferay.portal.kernel.lar.xstream;
  */
 public interface XStreamUnmarshallingContext {
 
-	public Object convertAnother(Object current, Class type);
+	public Object convertAnother(Object object, Class clazz);
 
 	public Object convertAnother(
-		Object current, Class type, XStreamConverter converter);
+		Object object, Class clazz, XStreamConverter xStreamConverter);
 
 	Object currentObject();
 

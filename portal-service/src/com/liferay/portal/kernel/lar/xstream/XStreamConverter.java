@@ -22,13 +22,13 @@ public interface XStreamConverter {
 	public boolean canConvert(Class clazz);
 
 	public void marshal(
-			Object model, XStreamHierarchicalStreamWriter writer,
-			XStreamMarshallingContext context)
+			Object object, XStreamHierarchicalStreamWriter writer,
+			XStreamMarshallingContext mashallingContext)
 		throws Exception;
 
 	public Object unmarshal(
 			XStreamHierarchicalStreamReader reader,
-			XStreamUnmarshallingContext context)
+			XStreamUnmarshallingContext unmarshallingContext)
 		throws Exception;
 
 }

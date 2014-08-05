@@ -33,15 +33,15 @@ public class XStreamMarshallingContextAdaptor
 		_marshallingContext = marshallingContext;
 	}
 
-	public void convertAnother(Object nextItem) {
-		_marshallingContext.convertAnother(nextItem);
+	public void convertAnother(Object object) {
+		_marshallingContext.convertAnother(object);
 	}
 
 	public void convertAnother(
-		Object nextItem, XStreamConverter xStreamConverter) {
+		Object object, XStreamConverter xStreamConverter) {
 
 		_marshallingContext.convertAnother(
-			nextItem, new ConverterAdaptor(xStreamConverter));
+			object, new ConverterAdaptor(xStreamConverter));
 	}
 
 	public Object get(Object key) {

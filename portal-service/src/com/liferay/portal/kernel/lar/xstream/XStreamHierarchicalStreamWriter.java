@@ -27,7 +27,7 @@ public interface XStreamHierarchicalStreamWriter {
 
 	public void flush();
 
-	public void setValue(String text);
+	public void setValue(String value);
 
 	public void startNode(String name);
 

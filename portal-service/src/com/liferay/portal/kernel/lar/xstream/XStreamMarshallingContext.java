@@ -21,10 +21,10 @@ import java.util.Iterator;
  */
 public interface XStreamMarshallingContext {
 
-	public void convertAnother(Object nextItem);
+	public void convertAnother(Object object);
 
 	public void convertAnother(
-		Object nextItem, XStreamConverter xStreamConverter);
+		Object object, XStreamConverter xStreamConverter);
 
 	public Object get(Object key);
 

@@ -38,8 +38,8 @@ class XStreamHierarchicalStreamWriterAdaptor
 		_hierarchicalStreamWriter.addAttribute(key, value);
 	}
 
-	public void setValue(String text) {
-		_hierarchicalStreamWriter.setValue(text);
+	public void setValue(String value) {
+		_hierarchicalStreamWriter.setValue(value);
 	}
 
 	public void endNode() {

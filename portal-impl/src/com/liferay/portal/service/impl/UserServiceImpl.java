@@ -649,7 +649,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			return user;
 		}
 		finally {
-			serviceContext.setIndexingEnabled(indexingEnabled);
+			if (serviceContext != null) {
+				serviceContext.setIndexingEnabled(indexingEnabled);
+			}
 		}
 	}
 

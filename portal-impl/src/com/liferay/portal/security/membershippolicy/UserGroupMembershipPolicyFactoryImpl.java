@@ -46,17 +46,17 @@ public class UserGroupMembershipPolicyFactoryImpl
 	}
 
 	private static UserGroupMembershipPolicyFactoryImpl
-	_instance = new UserGroupMembershipPolicyFactoryImpl();
+		_instance = new UserGroupMembershipPolicyFactoryImpl();
 
 	private ServiceTracker<?, UserGroupMembershipPolicy> _serviceTracker;
 
 	private class UserGroupMembershipPolicyTrackerCustomizer
-	implements ServiceTrackerCustomizer
-	<UserGroupMembershipPolicy, UserGroupMembershipPolicy> {
+		implements ServiceTrackerCustomizer
+			<UserGroupMembershipPolicy, UserGroupMembershipPolicy> {
 
 		@Override
 		public UserGroupMembershipPolicy addingService(
-		ServiceReference<UserGroupMembershipPolicy> serviceReference) {
+			ServiceReference<UserGroupMembershipPolicy> serviceReference) {
 
 			Registry registry = RegistryUtil.getRegistry();
 
@@ -77,18 +77,20 @@ public class UserGroupMembershipPolicyFactoryImpl
 
 		@Override
 		public void modifiedService(
-		ServiceReference<UserGroupMembershipPolicy> serviceReference,
-		UserGroupMembershipPolicy userGroupMembershipPolicy) {
+			ServiceReference<UserGroupMembershipPolicy> serviceReference,
+			UserGroupMembershipPolicy userGroupMembershipPolicy) {
 		}
 
 		@Override
 		public void removedService(
-		ServiceReference<UserGroupMembershipPolicy> serviceReference,
-		UserGroupMembershipPolicy userGroupMembershipPolicy) {
+			ServiceReference<UserGroupMembershipPolicy> serviceReference,
+			UserGroupMembershipPolicy userGroupMembershipPolicy) {
 
 			Registry registry = RegistryUtil.getRegistry();
 
 			registry.ungetService(serviceReference);
 		}
+
 	}
+
 }

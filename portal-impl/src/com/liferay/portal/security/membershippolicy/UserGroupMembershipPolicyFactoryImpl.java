@@ -15,6 +15,8 @@
 package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -45,6 +47,9 @@ public class UserGroupMembershipPolicyFactoryImpl
 		_serviceTracker.open();
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(
+		UserGroupMembershipPolicyFactoryImpl.class);
+
 	private static UserGroupMembershipPolicyFactoryImpl
 		_instance = new UserGroupMembershipPolicyFactoryImpl();
 
@@ -67,8 +72,8 @@ public class UserGroupMembershipPolicyFactoryImpl
 				try {
 					userGroupMembershipPolicy.verifyPolicy();
 				}
-				catch (PortalException e) {
-					e.printStackTrace();
+				catch (PortalException pe) {
+					_log.error(pe, pe);
 				}
 			}
 

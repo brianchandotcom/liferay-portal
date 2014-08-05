@@ -39,7 +39,8 @@ public class RoleMembershipPolicyFactoryImpl
 	private RoleMembershipPolicyFactoryImpl() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		_serviceTracker = registry.trackServices(RoleMembershipPolicy.class,
+		_serviceTracker = registry.trackServices(
+			RoleMembershipPolicy.class,
 			new RoleMembershipPolicyTrackerCustomizer());
 
 		_serviceTracker.open();
@@ -49,20 +50,20 @@ public class RoleMembershipPolicyFactoryImpl
 		new RoleMembershipPolicyFactoryImpl();
 
 	private ServiceTracker<?, RoleMembershipPolicy> _serviceTracker;
-	
+
 	private class RoleMembershipPolicyTrackerCustomizer
-	implements ServiceTrackerCustomizer
-		<RoleMembershipPolicy, RoleMembershipPolicy> {
+		implements ServiceTrackerCustomizer
+			<RoleMembershipPolicy, RoleMembershipPolicy> {
 
 		@Override
 		public RoleMembershipPolicy addingService(
 			ServiceReference<RoleMembershipPolicy> serviceReference) {
-	
+
 			Registry registry = RegistryUtil.getRegistry();
-	
+
 			RoleMembershipPolicy roleMembershipPolicy = registry.getService(
 				serviceReference);
-				
+
 			if(PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY){
 				try {
 					roleMembershipPolicy.verifyPolicy();
@@ -72,27 +73,26 @@ public class RoleMembershipPolicyFactoryImpl
 					e.printStackTrace();
 				}
 			}
-	
+
 			return roleMembershipPolicy;
 		}
-	
+
 		@Override
 		public void modifiedService(
 			ServiceReference<RoleMembershipPolicy> serviceReference,
 			RoleMembershipPolicy roleMembershipPolicy) {
 		}
-	
+
 		@Override
 		public void removedService(
 			ServiceReference<RoleMembershipPolicy> serviceReference,
 			RoleMembershipPolicy roleMembershipPolicy) {
-	
+
 			Registry registry = RegistryUtil.getRegistry();
-	
+
 			registry.ungetService(serviceReference);
-	
 		}
-	
+
 	}
 
 }

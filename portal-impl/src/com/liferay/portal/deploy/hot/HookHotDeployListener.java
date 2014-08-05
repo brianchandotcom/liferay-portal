@@ -1650,7 +1650,6 @@ public class HookHotDeployListener
 			String roleMembershipPolicyClassName = portalProperties.getProperty(
 				PropsKeys.MEMBERSHIP_POLICY_ROLES);
 
-
 			RoleMembershipPolicy roleMembershipPolicy =
 				(RoleMembershipPolicy)newInstance(
 					portletClassLoader, RoleMembershipPolicy.class,

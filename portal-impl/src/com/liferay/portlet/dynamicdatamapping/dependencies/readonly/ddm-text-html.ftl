@@ -12,6 +12,6 @@
 
 		${escape(fieldValue)}
 	</#if>
-	
+
 	${fieldStructure.children}
 </div>

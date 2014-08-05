@@ -16,6 +16,6 @@
 			<@liferay_ui.message key=escape("no") />
 		</#if>
 	</#if>
-	
+
 	${fieldStructure.children}
 </div>

@@ -123,7 +123,7 @@
 		</execute>
 
 		<execute macro="SitePage#editPG">
-			<var name="pageNameEdit" value="Site Page Edit" />
+			<var name="sitePageNameEdit" value="Site Page Edit" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -131,7 +131,8 @@
 		</execute>
 
 		<execute macro="Page#viewPG">
-			<var name="pageNameEdit" value="Site Page Edit" />
+			<var name="liferaySite" value="true" />
+			<var name="pageName" value="Site Page Edit" />
 		</execute>
 	</command>
 </definition>

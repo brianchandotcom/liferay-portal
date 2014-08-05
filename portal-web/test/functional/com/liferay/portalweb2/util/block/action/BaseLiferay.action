@@ -147,6 +147,12 @@
 		</default>
 	</command>
 
+	<command name="assertValue">
+		<default>
+			<execute function="AssertValue#assertValue" />
+		</default>
+	</command>
+
 	<command name="assertVisible">
 		<default>
 			<description message="Assert that the ${locator1} is visible." />

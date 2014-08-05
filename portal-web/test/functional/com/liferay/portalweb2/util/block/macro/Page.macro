@@ -666,9 +666,9 @@
 
 	<command name="viewPG">
 		<if>
-			<isset var="pageNameEdit" />
+			<equals arg1="${liferaySite}" arg2="true" />
 			<then>
-				<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${pageNameEdit}" />
+				<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${pageName}" />
 			</then>
 			<else>
 				<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />

@@ -57,16 +57,16 @@ import javax.servlet.http.HttpSession;
  * @author Eduardo Lundgren
  * @author Bruno Basto
  * @author Marcellus Tavares
+ * @author Zsolt Szabó
+ * @author Tibor Lipusz
  */
 public class LayoutsTreeUtil {
 
 	public static String getAllLayoutsJSON(
-			HttpServletRequest request, long groupId)
+			HttpServletRequest request, long groupId, String treeId)
 		throws Exception {
 
 		LayoutTreeNodes layoutTreeNodes = new LayoutTreeNodes();
-
-		String treeId = ParamUtil.getString(request, "treeId");
 
 		layoutTreeNodes.addAll(
 			_getLayoutTreeNodes(

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -1920,8 +1919,9 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public long getTimestamp() {
 		if (_timestamp == null) {
-			ServletContext servletContext = ServletContextPool.get(
-				getContextName());
+			PortletApp portletApp = getPortletApp();
+
+			ServletContext servletContext = portletApp.getServletContext();
 
 			_timestamp = ServletContextUtil.getLastModified(
 				servletContext, StringPool.SLASH, true);

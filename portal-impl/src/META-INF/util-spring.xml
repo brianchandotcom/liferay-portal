@@ -605,6 +605,7 @@
 	<bean id="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" />
 	<bean id="com.liferay.portal.security.membershippolicy.DummyOrganizationMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummyOrganizationMembershipPolicy" />
 	<bean id="com.liferay.portal.security.membershippolicy.DummySiteMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummySiteMembershipPolicy" />
+	<bean id="com.liferay.portal.security.membershippolicy.DummyUserGroupMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummyUserGroupMembershipPolicy" />
 	<bean id="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil">
 		<property name="organizationMembershipPolicyFactory">
 			<bean class="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryImpl" />

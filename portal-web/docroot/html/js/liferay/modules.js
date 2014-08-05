@@ -642,7 +642,7 @@
 						]
 					},
 					'liferay-panel-search': {
-						path: 'dockbar_add_application_search.js',
+						path: 'panel_search.js',
 						requires: [
 							'aui-base',
 							'liferay-search-filter'
@@ -720,7 +720,7 @@
 						]
 					},
 					'liferay-search-filter': {
-						path: 'dockbar_add_search.js',
+						path: 'search_filter.js',
 						requires: [
 							'aui-base',
 							'autocomplete-base',

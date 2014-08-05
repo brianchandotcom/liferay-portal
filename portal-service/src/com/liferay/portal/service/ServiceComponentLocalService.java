@@ -96,7 +96,7 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void destroyServiceComponent(
-		javax.servlet.ServletContext servletContext,
+		com.liferay.portal.service.configuration.ServiceComponentConfiguration serviceComponentConfiguration,
 		java.lang.ClassLoader classLoader);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
@@ -220,7 +220,7 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	public int getServiceComponentsCount();
 
 	public com.liferay.portal.model.ServiceComponent initServiceComponent(
-		javax.servlet.ServletContext servletContext,
+		com.liferay.portal.service.configuration.ServiceComponentConfiguration serviceComponentConfiguration,
 		java.lang.ClassLoader classLoader, java.lang.String buildNamespace,
 		long buildNumber, long buildDate, boolean buildAutoUpgrade)
 		throws com.liferay.portal.kernel.exception.PortalException;

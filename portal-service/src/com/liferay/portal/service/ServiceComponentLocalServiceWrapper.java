@@ -94,9 +94,9 @@ public class ServiceComponentLocalServiceWrapper
 
 	@Override
 	public void destroyServiceComponent(
-		javax.servlet.ServletContext servletContext,
+		com.liferay.portal.service.configuration.ServiceComponentConfiguration serviceComponentConfiguration,
 		java.lang.ClassLoader classLoader) {
-		_serviceComponentLocalService.destroyServiceComponent(servletContext,
+		_serviceComponentLocalService.destroyServiceComponent(serviceComponentConfiguration,
 			classLoader);
 	}
 
@@ -257,11 +257,11 @@ public class ServiceComponentLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.model.ServiceComponent initServiceComponent(
-		javax.servlet.ServletContext servletContext,
+		com.liferay.portal.service.configuration.ServiceComponentConfiguration serviceComponentConfiguration,
 		java.lang.ClassLoader classLoader, java.lang.String buildNamespace,
 		long buildNumber, long buildDate, boolean buildAutoUpgrade)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _serviceComponentLocalService.initServiceComponent(servletContext,
+		return _serviceComponentLocalService.initServiceComponent(serviceComponentConfiguration,
 			classLoader, buildNamespace, buildNumber, buildDate,
 			buildAutoUpgrade);
 	}

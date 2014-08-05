@@ -2820,6 +2820,26 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Updates the parent layout ID and priority of the layout in a shared
+	 * transaction.
+	 *
+	 * @param  plid the primary key of the layout
+	 * @param  parentPlid the primary key of the parent layout
+	 * @param  priority the layout's new priority
+	 * @return the layout matching the primary key
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public Layout updateParentLayoutIdAndPriority(
+			long plid, long parentPlid, int priority)
+		throws PortalException {
+
+		Layout layout = updateParentLayoutId(plid, parentPlid);
+
+		return updatePriority(layout, priority);
+	}
+
+	/**
 	 * Updates the priorities of the layouts.
 	 *
 	 * @param  groupId the primary key of the group

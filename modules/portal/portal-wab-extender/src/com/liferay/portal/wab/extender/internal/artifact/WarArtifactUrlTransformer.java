@@ -66,6 +66,6 @@ public class WarArtifactUrlTransformer implements ArtifactUrlTransformer {
 	}
 
 	private static Pattern _pattern = Pattern.compile(
-		"(.*?)-\\d+\\.\\d+\\.\\d+\\.\\d+");
+		"(.*?)(-\\d+\\.\\d+\\.\\d+\\.\\d+)?");
 
 }

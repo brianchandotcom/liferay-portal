@@ -239,8 +239,8 @@
 							'aui-io-request',
 							'event-mouseenter',
 							'liferay-dockbar',
-							'liferay-dockbar-add-base',
 							'liferay-dockbar-add-application-search',
+							'liferay-dockbar-add-base',
 							'liferay-portlet-base'
 						]
 					},
@@ -255,9 +255,11 @@
 					'liferay-dockbar-add-base': {
 						path: 'dockbar_add_base.js',
 						requires: [
+							'anim',
 							'aui-base',
 							'liferay-dockbar',
-							'liferay-layout'
+							'liferay-layout',
+							'transition'
 						]
 					},
 					'liferay-dockbar-add-content': {
@@ -785,8 +787,8 @@
 							'aui-surface-app',
 							'aui-surface-base',
 							'aui-surface-screen-html',
-							'liferay-portlet-url',
-							'json'
+							'json',
+							'liferay-portlet-url'
 						]
 					},
 					'liferay-surface-app': {

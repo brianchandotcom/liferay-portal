@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableListener;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,9 +45,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.lang.reflect.Field;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import java.security.PrivilegedExceptionAction;
 

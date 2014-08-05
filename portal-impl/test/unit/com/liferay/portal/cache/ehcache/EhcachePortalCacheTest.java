@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import java.io.Serializable;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import net.sf.ehcache.Cache;
@@ -242,6 +243,18 @@ public class EhcachePortalCacheTest {
 		Assert.assertSame(
 			_ehcachePortalCache,
 			portalCacheCacheEventListener.getPortalCache());
+	}
+
+	@Test
+	public void testGetKeys() {
+		_ehcachePortalCache.put(_KEY_2, _VALUE_2);
+
+		List<String> keys = _ehcachePortalCache.getKeys();
+
+		Assert.assertEquals(2, keys.size());
+
+		Assert.assertTrue(keys.contains(_KEY_1));
+		Assert.assertTrue(keys.contains(_KEY_2));
 	}
 
 	@Test

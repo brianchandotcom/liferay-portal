@@ -57,6 +57,8 @@ AUI.add(
 
 		var WIN = A.config.win;
 
+		var HTML5_UPLOAD = (WIN && WIN.File && WIN.FormData && WIN.XMLHttpRequest);
+
 		var DocumentLibrary = A.Component.create(
 			{
 				AUGMENTS: [Liferay.PortletBase],
@@ -198,11 +200,9 @@ AUI.add(
 						instance._toggleSyncNotification();
 						instance._toggleTrashAction();
 
-						var html5 = (WIN && WIN.File && WIN.FormData && WIN.XMLHttpRequest);
+						var hasPermission = (themeDisplay.isSignedIn() && instance.one('#addButtonContainer'));
 
-						var permission = (themeDisplay.isSignedIn() && instance.one('#addButtonContainer'));
-
-						if (html5 && permission && instance._entriesContainer.inDoc()) {
+						if (HTML5_UPLOAD && hasPermission && instance._entriesContainer.inDoc()) {
 							config.appViewEntryTemplates = instance.byId('appViewEntryTemplates');
 
 							A.getDoc().once('dragenter', instance._plugUpload, instance, config);
@@ -291,28 +291,6 @@ AUI.add(
 						}
 
 						return repositoryName;
-					},
-
-					_plugUpload: function(event, config) {
-						var instance = this;
-
-						instance.plug(
-							Liferay.DocumentLibraryUpload,
-							{
-								appViewEntryTemplates: config.appViewEntryTemplates,
-								appViewMove: instance._appViewMove,
-								columnNames: config.columnNames,
-								dimensions: config.folders.dimensions,
-								displayStyle: config.displayStyle,
-								entriesContainer: instance._entriesContainer,
-								folderId: instance._folderId,
-								listViewContainer: instance.byId('listViewContainer'),
-								maxFileSize: config.maxFileSize,
-								redirect: config.redirect,
-								uploadURL: config.uploadURL,
-								viewFileEntryURL: config.viewFileEntryURL
-							}
-						);
 					},
 
 					_onChangeSearchFolder: function(event) {
@@ -473,6 +451,28 @@ AUI.add(
 						);
 					},
 
+					_plugUpload: function(event, config) {
+						var instance = this;
+
+						instance.plug(
+							Liferay.DocumentLibraryUpload,
+							{
+								appViewEntryTemplates: config.appViewEntryTemplates,
+								appViewMove: instance._appViewMove,
+								columnNames: config.columnNames,
+								dimensions: config.folders.dimensions,
+								displayStyle: config.displayStyle,
+								entriesContainer: instance._entriesContainer,
+								folderId: instance._folderId,
+								listViewContainer: instance.byId('listViewContainer'),
+								maxFileSize: config.maxFileSize,
+								redirect: config.redirect,
+								uploadURL: config.uploadURL,
+								viewFileEntryURL: config.viewFileEntryURL
+							}
+						);
+					},
+
 					_searchFileEntry: function(searchData) {
 						var instance = this;
 
@@ -587,34 +587,6 @@ AUI.add(
 						}
 					},
 
-					_tuneStateChangeParams: function(requestParams) {
-						var instance = this;
-
-						var entriesContainer = instance._entriesContainer;
-
-						var namespacedShowRepositoryTabs = instance.ns(STR_SHOW_REPOSITORY_TABS);
-
-						if (AObject.owns(requestParams, namespacedShowRepositoryTabs) &&
-							!requestParams[namespacedShowRepositoryTabs] &&
-							!entriesContainer.one('ul.nav-tabs')) {
-
-							requestParams[namespacedShowRepositoryTabs] = true;
-
-							requestParams[instance.ns(SEARCH_TYPE)] = SEARCH_TYPE_SINGLE;
-						}
-
-						var namespacedShowSearchInfo = instance.ns(STR_SHOW_SEARCH_INFO);
-
-						if (AObject.owns(requestParams, namespacedShowSearchInfo) &&
-							!requestParams[namespacedShowSearchInfo] &&
-							!entriesContainer.one('.search-info')) {
-
-							requestParams[namespacedShowSearchInfo] = true;
-
-							requestParams[instance.ns(SEARCH_TYPE)] = SEARCH_TYPE_SINGLE;
-						}
-					},
-
 					_toggleSyncNotification: function() {
 						var instance = this;
 
@@ -643,6 +615,34 @@ AUI.add(
 						instance.one('#deleteAction').toggle(!trashEnabled);
 
 						instance.one('#moveToTrashAction').toggle(trashEnabled);
+					},
+
+					_tuneStateChangeParams: function(requestParams) {
+						var instance = this;
+
+						var entriesContainer = instance._entriesContainer;
+
+						var namespacedShowRepositoryTabs = instance.ns(STR_SHOW_REPOSITORY_TABS);
+
+						if (AObject.owns(requestParams, namespacedShowRepositoryTabs) &&
+							!requestParams[namespacedShowRepositoryTabs] &&
+							!entriesContainer.one('ul.nav-tabs')) {
+
+							requestParams[namespacedShowRepositoryTabs] = true;
+
+							requestParams[instance.ns(SEARCH_TYPE)] = SEARCH_TYPE_SINGLE;
+						}
+
+						var namespacedShowSearchInfo = instance.ns(STR_SHOW_SEARCH_INFO);
+
+						if (AObject.owns(requestParams, namespacedShowSearchInfo) &&
+							!requestParams[namespacedShowSearchInfo] &&
+							!entriesContainer.one('.search-info')) {
+
+							requestParams[namespacedShowSearchInfo] = true;
+
+							requestParams[instance.ns(SEARCH_TYPE)] = SEARCH_TYPE_SINGLE;
+						}
 					}
 				}
 			}

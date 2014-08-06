@@ -350,7 +350,9 @@ AUI.add(
 
 										docElement.addClass('upload-drop-intent');
 
-										docElement.toggleClass('upload-drop-active', (event.target.compareTo(entriesContainer) || entriesContainer.contains(target)));
+										var target = event.target;
+
+										docElement.toggleClass('upload-drop-active', (target.compareTo(entriesContainer) || entriesContainer.contains(target)));
 
 										removeCssClassTask();
 									}
@@ -775,16 +777,6 @@ AUI.add(
 						return folderEntry;
 					},
 
-					_getTargetFolderId: function(target) {
-						var instance = this;
-
-						var folderEntry = instance._getFolderEntryNode(target);
-
-						var dataFolder = folderEntry && folderEntry.one('[data-folder-id]');
-
-						return (dataFolder && Lang.toInt(dataFolder.attr('data-folder-id')) || instance.get(STR_FOLDER_ID));
-					},
-
 					_getMediaThumbnail: function(fileName) {
 						var instance = this;
 
@@ -839,6 +831,16 @@ AUI.add(
 						}
 
 						return navigationOverlays;
+					},
+
+					_getTargetFolderId: function(target) {
+						var instance = this;
+
+						var folderEntry = instance._getFolderEntryNode(target);
+
+						var dataFolder = folderEntry && folderEntry.one('[data-folder-id]');
+
+						return (dataFolder && Lang.toInt(dataFolder.attr('data-folder-id')) || instance.get(STR_FOLDER_ID));
 					},
 
 					_getUploader: function() {
@@ -1300,6 +1302,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'aui-data-set-deprecated', 'aui-parse-content', 'aui-overlay-manager-deprecated', 'aui-overlay-mask-deprecated', 'aui-progressbar', 'aui-template-deprecated', 'aui-tooltip', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-search-container', 'liferay-storage-formatter', 'querystring-parse-simple', 'uploader']
+		requires: ['aui-component', 'aui-data-set-deprecated', 'aui-overlay-manager-deprecated', 'aui-overlay-mask-deprecated', 'aui-parse-content', 'aui-progressbar', 'aui-template-deprecated', 'aui-tooltip', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-search-container', 'liferay-storage-formatter', 'querystring-parse-simple', 'uploader']
 	}
 );

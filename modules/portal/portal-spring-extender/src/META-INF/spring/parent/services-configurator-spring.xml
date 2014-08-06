@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd"
+>
+	<bean id="baseServicesConfiguratorListener" class="com.liferay.portal.spring.extender.internal.services.listener.ServicesConfiguratorListener" abstract="true">
+		<property name="servicesConfigurator" ref="com.liferay.portal.spring.extender.internal.services.ServicesConfigurator" />
+	</bean>
+	<bean id="com.liferay.portal.spring.extender.internal.services.listener.StartedServicesConfiguratorListener" class="com.liferay.portal.spring.extender.internal.services.listener.StartedServicesConfiguratorListener" parent="baseServicesConfiguratorListener" />
+	<bean id="com.liferay.portal.spring.extender.internal.services.listener.StoppedServicesConfiguratorListener" class="com.liferay.portal.spring.extender.internal.services.listener.StoppedServicesConfiguratorListener" parent="baseServicesConfiguratorListener" />
+	<bean id="com.liferay.portal.spring.extender.internal.services.ServicesConfigurator" class="com.liferay.portal.spring.extender.internal.services.impl.ServicesConfiguratorImpl">
+		<property name="serviceComponentLocalService" ref="serviceComponentLocalService" />
+	</bean>
+
+	<osgi:reference id="serviceComponentLocalService" availability="mandatory" interface="com.liferay.portal.service.ServiceComponentLocalService" filter="(original.bean=true)" />
+</beans>

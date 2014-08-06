@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_BODY</td>
+	<td>//body[contains(@class,'cke_editable')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_ATTACHMENTS_LINK</td>
 	<td>//a[contains(.,'Add Attachments')]</td>
 	<td></td>

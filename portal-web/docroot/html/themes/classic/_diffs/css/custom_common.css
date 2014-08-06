@@ -986,10 +986,9 @@ $dockbarOpenGradientStart: #0EA6F9;
 				border-bottom-width: 0;
 				border-right-color: #2C83CD;
 				border-top-width: 0;
-				color: #124E8D;
 
-				&:active, &:focus {
-					color: #124E8D;
+				&, &:active, &:focus {
+					color: #0A3765;
 				}
 
 				&:hover {

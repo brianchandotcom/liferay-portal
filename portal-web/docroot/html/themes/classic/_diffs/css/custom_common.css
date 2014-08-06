@@ -1225,25 +1225,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	.alloy-editor-toolbar {
+	.alloy-editor-toolbar, .alloy-editor-tooltip-link {
 		@include background-image(linear-gradient(#278FE2, #1B7BC8));
 		@include border-radius(3px);
 		@include opacity(0.95);
-
-		.alloy-editor-toolbar-content .alloy-editor-button {
-			@include box-shadow(none);
-			@include transition-property(color);
-
-			&:hover {
-				@include box-shadow(none);
-			}
-		}
 	}
 
-	.alloy-editor-tooltip-link {
-		@include background-image(linear-gradient(#278FE2, #1B7BC8));
-		@include border-radius(3px);
-		@include opacity(0.95);
+	.alloy-editor-toolbar .alloy-editor-toolbar-content .alloy-editor-button {
+		@include transition-property(color);
 	}
 
 	body.yui3-skin-sam .yui3-widget-mask {

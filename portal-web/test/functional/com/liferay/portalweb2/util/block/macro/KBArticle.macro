@@ -10,6 +10,18 @@
 		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="addCPWithTemplate">
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_BUTTON" value1="Add" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_MENULIST_TEMPLATE" value1="${kbTemplateTitle}" />
+
+		<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="TITLE_FIELD" value1="${kbArticleTitle}" />
+		<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="CONTENT_FIELD" value1="${kbArticleContent}" />
+		<execute action="CPKnowledgebaseadminAddarticle#addSelection" locator-key1="SECTIONS_SELECT" value1="${kbArticleSection}" />
+		<execute action="CPKnowledgebaseadminAddarticle#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addPGViaKBDisplay">
 		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ADD_ARTICLE_BUTTON" value1="Add Article" />
 
@@ -41,7 +53,8 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute action="CPKnowledgebaseadmin#check" locator-key1="ARTICLE_TABLE_CHECKBOX" />
-		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ACTIONS_MENULIST" value1="Actions" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPKnowledgebaseadmin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected articles?" />
 		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -69,7 +82,7 @@
 	<command name="editCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ARTICLE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ARTICLE_TABLE_ACTIONS" />
 		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ARTICLE_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPKnowledgebaseadminAddarticle#assertTextEquals" locator-key1="INFO_MESSAGE" value1="A new version will be created automatically if this content is modified." />
@@ -141,14 +154,15 @@
 
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Knowledge Base (Admin)" />
+			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
 		<if>
 			<condition action="CPKnowledgebaseadmin#isElementPresent" locator-key1="SELECT_ALL_CHECKBOX" />
 			<then>
 				<execute action="CPKnowledgebaseadmin#check" locator-key1="SELECT_ALL_CHECKBOX" />
-				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
+				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ACTIONS_MENULIST" value1="Actions" />
+				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 				<execute action="CPKnowledgebaseadmin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected articles?" />
 				<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 				<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No articles were found." />

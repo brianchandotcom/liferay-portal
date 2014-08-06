@@ -1,0 +1,88 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.spring.extender.internal.loader;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.net.URL;
+
+import org.osgi.framework.Bundle;
+
+/**
+ * @author Miguel Pastor
+ */
+public class ModuleResourceLoader implements ServiceComponentConfiguration {
+
+	public ModuleResourceLoader(Bundle bundle) {
+		_bundle = bundle;
+	}
+
+	@Override
+	public InputStream getHibernateInputStream() {
+		return _openInputStream("/META-INF/module-hbm.xml");
+	}
+
+	@Override
+	public InputStream getModelHintsExtInputStream() {
+		return _openInputStream("/META-INF/portlet-model-hints-ext.xml");
+	}
+
+	@Override
+	public InputStream getModelHintsInputStream() {
+		return _openInputStream("/META-INF/portlet-model-hints.xml");
+	}
+
+	@Override
+	public InputStream getSQLIndexesInputStream() {
+		return _openInputStream("/META-INF/sql/indexes.sql");
+	}
+
+	@Override
+	public InputStream getSQLSequencesInputStream() {
+		return _openInputStream("/META-INF/sql/sequences.sql");
+	}
+
+	@Override
+	public InputStream getSQLTablesInputStream() {
+		return _openInputStream("/META-INF/sql/tables.sql");
+	}
+
+	private InputStream _openInputStream(String location) {
+		URL url = _bundle.getResource(location);
+
+		InputStream inputStream = null;
+
+		try {
+			inputStream = url.openStream();
+		}
+		catch (IOException ioe) {
+			if (_log.isErrorEnabled()) {
+				_log.error("Unable to read file: " + location, ioe);
+			}
+		}
+
+		return inputStream;
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(ModuleResourceLoader.class);
+
+	private Bundle _bundle;
+
+}

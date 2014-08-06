@@ -1464,4 +1464,70 @@
 
 		<execute macro="DDLTemplate#saveFormTemplateCP" />
 	</command>
+
+	<command name="TemplateAddDeletedField" priority="4">
+		<description message="This is a use case for LPS-48743." />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Text Box" />
+			<var name="fieldName" value="Text_Box" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLTemplate#addFormTemplateCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+			<var name="ddlFormTemplateName" value="Form Template Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewCannotAddField">
+			<var name="field" value="Text Box" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#deleteField">
+			<var name="fieldFieldLabel" value="Text Box" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewCanAddField">
+			<var name="field" value="Text Box" />
+		</execute>
+
+		<execute macro="DDLTemplate#saveAndContinueFormTemplateCP" />
+
+		<execute macro="DynamicDataMapping#viewCanAddField">
+			<var name="field" value="Text Box" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Text Box" />
+			<var name="fieldName" value="Text_Box" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldFieldLabel" value="Text Box" />
+			<var name="fieldName" value="Text_Box" />
+		</execute>
+
+		<execute macro="DDLTemplate#saveFormTemplateCP" />
+	</command>
 </definition>

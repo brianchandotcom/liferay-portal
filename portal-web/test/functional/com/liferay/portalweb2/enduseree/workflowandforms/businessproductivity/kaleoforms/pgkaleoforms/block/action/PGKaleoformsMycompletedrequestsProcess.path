@@ -55,6 +55,32 @@
 	<td>//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(.,'Review')]/td[3]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIVITIES-->
+<tr>
+	<td>ACTIVITIES_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed')]/div[contains(.,'Activities')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVITIES_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded')]/div[contains(.,'Activities')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVITIES_COMMENT</td>
+	<td>//div[@class='task-activity-comment' and contains(.,'${key_comment}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -499,6 +499,15 @@
 		</if>
 	</command>
 
+	<command name="editGoogleAnalyticsIDCP">
+		<execute action="CPSitesettings#assertClick" locator-key1="MENU_ADVANCED_ANALYTICS" value1="Analytics" />
+
+		<execute action="CPSitesettingsAnalytics#type" locator-key1="GOOGLE_ANALYTICS_ID_FIELD" value1="${googleAnalyticsID}" />
+
+		<execute action="CPSitesettingsAnalytics#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitesettingsAnalytics#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="exportSite">
 		<var name="key_siteName" value="${siteName}" />
 

@@ -25,28 +25,13 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="EditWebForm" priority="5">
-		<var name="formDropdownTitleDefault" value="Rating" />
-		<var name="formDropdownTitleEdit" value="Rate Us!" />
-		<var name="formInformationDescriptionDefault" value="Your input is valuable to us. Please send us your suggestions." />
-		<var name="formInformationDescriptionEdit" value="Please let us know what you think!" />
-		<var name="formInformationTitleDefault" value="Suggestions" />
-		<var name="formInformationTitleEdit" value="Feed Back" />
-		<var name="formTextboxTitleDefault" value="Comments" />
-		<var name="formTextboxTitleEdit" value="Additional Comments" />
-		<var name="formTextTitleDefault" value="Name" />
-		<var name="formTextTitleEdit" value="Your Name" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
+	<command name="EditAndSendWebFormWithCheckbox" priority="4">
 		<execute macro="WebForm#viewPG">
-			<var name="formDropdownTitle" value="${formDropdownTitleDefault}" />
-			<var name="formInformationDescription" value="${formInformationDescriptionDefault}" />
-			<var name="formInformationTitle" value="${formInformationTitleDefault}" />
-			<var name="formTextboxTitle" value="${formTextboxTitleDefault}" />
-			<var name="formTextTitle" value="${formTextTitleDefault}" />
+			<var name="form1Title" value="Name" />
+			<var name="form2Title" value="Rating" />
+			<var name="form3Title" value="Comments" />
+			<var name="formInformationDescription" value="Your input is valuable to us. Please send us your suggestions." />
+			<var name="formInformationTitle" value="Suggestions" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -54,11 +39,12 @@
 		</execute>
 
 		<execute macro="WebFormPortlet#configureSetupFormFieldsPG">
-			<var name="formDropdownTitle" value="${formDropdownTitleEdit}" />
-			<var name="formInformationDescription" value="${formInformationDescriptionEdit}" />
-			<var name="formInformationTitle" value="${formInformationTitleEdit}" />
-			<var name="formTextboxTitle" value="${formTextboxTitleEdit}" />
-			<var name="formTextTitle" value="${formTextTitleEdit}" />
+			<var name="checkbox" value="true" />
+			<var name="form1Title" value="Your Name" />
+			<var name="form2Title" value="Rate Us!" />
+			<var name="form3Title" value="Additional Comments" />
+			<var name="formInformationDescription" value="Please let us know what you think!" />
+			<var name="formInformationTitle" value="Feed Back" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -66,23 +52,84 @@
 		</execute>
 
 		<execute macro="WebForm#viewPG">
-			<var name="formDropdownTitle" value="${formDropdownTitleEdit}" />
+			<var name="checkbox" value="true" />
+			<var name="form1Title" value="Your Name" />
+			<var name="form2Title" value="Rate Us!" />
+			<var name="form3Title" value="Additional Comments" />
+			<var name="formInformationDescription" value="Please let us know what you think!" />
+			<var name="formInformationTitle" value="Feed Back" />
+		</execute>
+
+		<execute macro="WebForm#sendPG">
+			<var name="checkbox" value="true" />
+			<var name="form1Title" value="Your Name" />
+			<var name="form1Value" value="New Name" />
+			<var name="form2Title" value="Rate Us!" />
+			<var name="form3Title" value="Additional Comments" />
+			<var name="form3Value" value="Page Objects + Hashi = Poshi" />
+			<var name="formInformationDescription" value="Please let us know what you think!" />
+			<var name="formInformationTitle" value="Feed Back" />
+		</execute>
+	</command>
+
+	<command name="EditWebForm" priority="5">
+		<var name="form1TitleDefault" value="Name" />
+		<var name="form1TitleEdit" value="Your Name" />
+		<var name="form2TitleDefault" value="Rating" />
+		<var name="form2TitleEdit" value="Rate Us!" />
+		<var name="form3TitleDefault" value="Comments" />
+		<var name="form3TitleEdit" value="Additional Comments" />
+		<var name="formInformationDescriptionDefault" value="Your input is valuable to us. Please send us your suggestions." />
+		<var name="formInformationDescriptionEdit" value="Please let us know what you think!" />
+		<var name="formInformationTitleDefault" value="Suggestions" />
+		<var name="formInformationTitleEdit" value="Feed Back" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebForm#viewPG">
+			<var name="form1Title" value="${form1TitleDefault}" />
+			<var name="form2Title" value="${form2TitleDefault}" />
+			<var name="form3Title" value="${form3TitleDefault}" />
+			<var name="formInformationDescription" value="${formInformationDescriptionDefault}" />
+			<var name="formInformationTitle" value="${formInformationTitleDefault}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebFormPortlet#configureSetupFormFieldsPG">
+			<var name="form1Title" value="${form1TitleEdit}" />
+			<var name="form2Title" value="${form2TitleEdit}" />
+			<var name="form3Title" value="${form3TitleEdit}" />
 			<var name="formInformationDescription" value="${formInformationDescriptionEdit}" />
 			<var name="formInformationTitle" value="${formInformationTitleEdit}" />
-			<var name="formTextboxTitle" value="${formTextboxTitleEdit}" />
-			<var name="formTextTitle" value="${formTextTitleEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebForm#viewPG">
+			<var name="form1Title" value="${form1TitleEdit}" />
+			<var name="form2Title" value="${form2TitleEdit}" />
+			<var name="form3Title" value="${form3TitleEdit}" />
+			<var name="formInformationDescription" value="${formInformationDescriptionEdit}" />
+			<var name="formInformationTitle" value="${formInformationTitleEdit}" />
 		</execute>
 	</command>
 
 	<command name="SendWebForm" priority="5">
-		<var name="formDropdownTitleDefault" value="Rating" />
-		<var name="formDropdownValue" value="Excellent" />
+		<var name="form1TitleDefault" value="Name" />
+		<var name="form1Value" value="Test Test" />
+		<var name="form2TitleDefault" value="Rating" />
+		<var name="form2Value" value="Excellent" />
+		<var name="form3TitleDefault" value="Comments" />
+		<var name="form3Value" value="Page Objects + Hashi = Poshi" />
 		<var name="formInformationDescriptionDefault" value="Your input is valuable to us. Please send us your suggestions." />
 		<var name="formInformationTitleDefault" value="Suggestions" />
-		<var name="formTextboxTitleDefault" value="Comments" />
-		<var name="formTextboxValue" value="Page Objects + Hashi = Poshi" />
-		<var name="formTextTitleDefault" value="Name" />
-		<var name="formTextValue" value="Test Test" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -95,14 +142,14 @@
 		</execute>
 
 		<execute macro="WebForm#sendPG">
-			<var name="formDropdownTitle" value="${formDropdownTitleDefault}" />
-			<var name="formDropdownValue" value="${formDropdownValue}" />
+			<var name="form1Title" value="${form1TitleDefault}" />
+			<var name="form1Value" value="${form1Value}" />
+			<var name="form2Title" value="${form2TitleDefault}" />
+			<var name="form2Value" value="${form2Value}" />
+			<var name="form3Title" value="${form3TitleDefault}" />
+			<var name="form3Value" value="${form3Value}" />
 			<var name="formInformationDescription" value="${formInformationDescriptionDefault}" />
 			<var name="formInformationTitle" value="${formInformationTitleDefault}" />
-			<var name="formTextboxTitle" value="${formTextboxTitleDefault}" />
-			<var name="formTextboxValue" value="${formTextboxValue}" />
-			<var name="formTextTitle" value="${formTextTitleDefault}" />
-			<var name="formTextValue" value="${formTextValue}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

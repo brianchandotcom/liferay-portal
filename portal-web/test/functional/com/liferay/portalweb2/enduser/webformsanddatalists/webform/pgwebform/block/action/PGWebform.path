@@ -61,33 +61,43 @@
 </tr>
 <!--FORM_FIELDS-->
 <tr>
-	<td>FORM_FIELDS_TEXT_HEADER</td>
-	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(.,'${key_formTextTitle}')]/label[contains(@for,'webformportlet')]</td>
+	<td>FORM_FIELDS_1_HEADER</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(.,'${key_form1Title}')]/label[contains(@for,'webformportlet')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_FIELDS_TEXT_FIELD</td>
-	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(.,'${key_formTextTitle}')]/input[@type='text']</td>
+	<td>FORM_FIELDS_1_FIELD</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(.,'${key_form1Title}')]/input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_FIELDS_DROPDOWN_HEADER</td>
-	<td>//div[contains(@class,'form-group') and contains(@class,'input-select-wrapper') and contains(.,'${key_formDropdownTitle}')]/label[contains(@for,'webformportlet')]</td>
+	<td>FORM_FIELDS_2_HEADER</td>
+	<td>//div[@class='form-group input-select-wrapper' and contains(.,'${key_form2Title}')]/label[contains(@for,'webformportlet')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_FIELDS_DROPDOWN_SELECT</td>
-	<td>//div[contains(@class,'form-group') and contains(@class,'input-select-wrapper') and contains(.,'${key_formDropdownTitle}')]/select</td>
+	<td>FORM_FIELDS_2_SELECT</td>
+	<td>//div[@class='form-group input-select-wrapper' and contains(.,'${key_form2Title}')]/select</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_FIELDS_TEXTBOX_HEADER</td>
-	<td>//div[contains(@class,'form-group') and contains(@class,'input-text-wrapper') and contains(.,'${key_formTextboxTitle}')]/label[contains(@for,'webformportlet')]</td>
+	<td>FORM_FIELDS_2_CHECKBOX</td>
+	<td>//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_FIELDS_TEXTBOX_FIELD</td>
-	<td>//div[contains(@class,'form-group') and contains(@class,'input-text-wrapper') and contains(.,'${key_formTextboxTitle}')]/textarea</td>
+	<td>FORM_FIELDS_2_CHECKBOX_NAME</td>
+	<td>//label[@class='checkbox' and contains(.,'${key_form2Title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELDS_3_HEADER</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_form3Title}')]/label[contains(@for,'webformportlet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELDS_3_FIELD</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_form3Title}')]/textarea</td>
 	<td></td>
 </tr>
 </tbody>

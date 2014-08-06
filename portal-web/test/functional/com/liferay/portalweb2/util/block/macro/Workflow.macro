@@ -275,6 +275,26 @@
 		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="deactivateUploadedWorkflowDefinition">
+		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ACTIONS_UPLOADED" value1="Actions" />
+		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_DEACTIVATE" value1="Deactivate" />
+		<execute action="CPPortalWorkflowconfiguration#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate this?" />
+		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="deleteWorkflowDefinition">
+		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ACTIONS_DEACTIVATED" value1="Actions" />
+		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPPortalWorkflowconfiguration#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="reactivateInactiveWorkflowDefinition">
+		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ACTIONS_DEACTIVATED" value1="Actions" />
+		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_ACTIVATE" value1="Activate" />
+		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="rejectTaskByActions">
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
 
@@ -474,6 +494,20 @@
 		</execute>
 	</command>
 
+	<command name="tearDownUploadedWorkflowDefinition">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<while>
+			<condition action="CPPortalWorkflowconfiguration#isElementPresent" locator-key1="DEFINITION_TABLE_ACTIONS_UPLOADED" />
+			<then>
+				<execute macro="Workflow#deactivateUploadedWorkflowDefinition" />
+				<execute macro="Workflow#deleteWorkflowDefinition" />
+			</then>
+		</while>
+	</command>
+
 	<command name="updateDueDateTaskByActions">
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
 
@@ -501,6 +535,16 @@
 		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" value1="${workflowDueDateFormatted} ${workflowDueDateTime}" />
 
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="uploadDefinition">
+		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="TOOLBAR_UPLOAD_DEFINITION" value1="Upload Definition" />
+
+		<execute action="CPPortalWorkflowconfigurationUploadDefinition#type" locator-key1="TITLE_FIELD" value1="${workflowDefinitionTitle}" />
+		<execute action="CPPortalWorkflowconfigurationUploadDefinition#uploadCommonFile" locator-key1="FILE_UPLOAD" value1="${workflowDefinitionFile}" />
+		<execute action="CPPortalWorkflowconfigurationUploadDefinition#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="viewAssignedToMyRolesTasksCP">
@@ -553,6 +597,14 @@
 		<execute action="CPMyworkflowtasksCompleted#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no completed tasks." />
 
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewDefinition">
+		<var name="key_workflowDefinitionName" value="${workflowDefinitionName}" />
+
+		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_NAME" value1="${workflowDefinitionName}" />
+		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
+		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_ACTIVE" value1="Yes" />
 	</command>
 
 	<command name="viewMySubmissionsCP">

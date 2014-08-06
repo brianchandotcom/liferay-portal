@@ -1858,7 +1858,6 @@
 	<portlet>
 		<portlet-name>175</portlet-name>
 		<icon>/html/icons/asset_publisher.png</icon>
-		<struts-path>related_assets</struts-path>
 		<parent-struts-path>asset_publisher</parent-struts-path>
 		<configuration-action-class>com.liferay.portlet.assetpublisher.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>

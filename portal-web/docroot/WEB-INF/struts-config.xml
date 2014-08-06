@@ -289,9 +289,7 @@
 			<forward name="portlet.asset_publisher.view" path="portlet.asset_publisher.view" />
 		</action>
 
-		<action path="/asset_publisher/view_content" type="com.liferay.portlet.assetpublisher.action.ViewContentAction">
-			<forward name="portlet.asset_publisher.view_content" path="portlet.asset_publisher.view_content" />
-		</action>
+		<action path="/asset_publisher/view_content" forward="portlet.asset_publisher.view_content" />
 
 		<!-- Asset Tag Admin -->
 
@@ -1685,10 +1683,6 @@
 
 		<action path="/related_assets/view" type="com.liferay.portlet.relatedassets.action.ViewAction">
 			<forward name="portlet.asset_publisher.view" path="portlet.asset_publisher.view" />
-		</action>
-
-		<action path="/related_assets/view_content" type="com.liferay.portlet.relatedassets.action.ViewContentAction">
-			<forward name="portlet.asset_publisher.view_content" path="portlet.asset_publisher.view_content" />
 		</action>
 
 		<!-- Requests -->

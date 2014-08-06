@@ -79,7 +79,8 @@ public class ServiceComponentLocalServiceImpl
 
 		try {
 			ModelHintsUtil.read(
-				classLoader, "META-INF/portlet-model-hints.xml");
+				classLoader,
+				serviceComponentConfiguration.getModelHintsInputStream());
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -87,7 +88,8 @@ public class ServiceComponentLocalServiceImpl
 
 		try {
 			ModelHintsUtil.read(
-				classLoader, "META-INF/portlet-model-hints-ext.xml");
+				classLoader,
+				serviceComponentConfiguration.getModelHintsExtInputStream());
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

@@ -17,6 +17,8 @@ package com.liferay.portal.model;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.io.InputStream;
+
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +55,9 @@ public interface ModelHints {
 	public boolean isCustomValidator(String validatorName);
 
 	public boolean isLocalized(String model, String field);
+
+	void read(ClassLoader classLoader, InputStream inputStream)
+		throws Exception;
 
 	public void read(ClassLoader classLoader, String source) throws Exception;
 

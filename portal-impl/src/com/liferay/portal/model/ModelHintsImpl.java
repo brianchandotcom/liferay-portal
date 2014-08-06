@@ -281,6 +281,13 @@ public class ModelHintsImpl implements ModelHints {
 	}
 
 	@Override
+	public void read(ClassLoader classLoader, InputStream inputStream)
+		throws Exception {
+
+		read(classLoader, null, inputStream);
+	}
+
+	@Override
 	public void read(ClassLoader classLoader, String source) throws Exception {
 		read(classLoader, source, classLoader.getResourceAsStream(source));
 	}

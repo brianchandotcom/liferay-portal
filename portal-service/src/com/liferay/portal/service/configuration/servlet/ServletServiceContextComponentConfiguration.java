@@ -34,13 +34,13 @@ public class ServletServiceContextComponentConfiguration
 	@Override
 	public InputStream getHibernateInputStream() {
 		return _servletContext.getResourceAsStream(
-			"classes/META-INF/portlet-hbm.xml");
+			"/WEB-INF/classes/META-INF/portlet-hbm.xml");
 	}
 
 	@Override
 	public InputStream getModelHintsInputStream() {
 		return _servletContext.getResourceAsStream(
-			"META-INF/portlet-model-hints.xml");
+			"/WEB-INF/classes/META-INF/portlet-model-hints.xml");
 	}
 
 	@Override

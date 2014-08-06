@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.io.InputStream;
+
 import java.util.List;
 import java.util.Map;
 
@@ -88,6 +90,12 @@ public class ModelHintsUtil {
 
 	public static boolean isLocalized(String model, String field) {
 		return getModelHints().isLocalized(model, field);
+	}
+
+	public static void read(ClassLoader classLoader, InputStream inputStream)
+		throws Exception {
+
+		getModelHints().read(classLoader, inputStream);
 	}
 
 	public static void read(ClassLoader classLoader, String source)

@@ -432,6 +432,39 @@
 		</execute>
 	</command>
 
+	<command name="EditSitePage" priority="4">
+		<execute macro="Page#gotoPagesCP" >
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="siteScopeSelected" value="Liferay" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP" >
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#editCP">
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePageNameEdit" value="Site Page Edit" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP" >
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#gotoCP">
+			<var name="sitePageName" value="Site Page Edit" />
+		</execute>
+
+		<execute macro="SitePage#viewCP">
+			<var name="sitePageName" value="Site Page Edit" />
+		</execute>
+	</command>
+
 	<command name="SaveEmbeddedPageType" priority="4">
 		<var name="siteName" value="Site Name" />
 		<var name="sitePageName" value="Site Page" />

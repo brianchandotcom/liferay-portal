@@ -265,6 +265,19 @@
 		<execute action="CPSitepages#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 	</command>
 
+	<command name="editCP">
+		<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_LINK_2" value1="${sitePageName}" />
+		<execute action="CPSitepages#type" locator-key1="DETAILS_NAME_FIELD" value1="${sitePageNameEdit}" />
+		<execute action="CPSitepages#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="editPG">
+		<execute action="DockbarEditpanel#click" locator-key1="EDIT" value1="Edit" />
+		<execute action="DockbarEditpanel#type" locator-key1="DETAILS_NAME_FIELD" value1="${sitePageNameEdit}" />
+		<execute action="DockbarEditpanel#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
 	<command name="editTemplatePagesCP">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
@@ -304,6 +317,12 @@
 				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_ARROW_1" />
 			</then>
 		</if>
+	</command>
+
+	<command name="gotoCP">
+		<var name="key_sitePageName" value="${sitePageName}" />
+
+		<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="${sitePageName}" />
 	</command>
 
 	<command name="pageLockCheckPG">
@@ -434,6 +453,13 @@
 				</while>
 			</else>
 		</if>
+	</command>
+
+	<command name="viewCP">
+		<var name="key_sitePageName" value="${sitePageName}" />
+
+		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="${sitePageName}" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="DETAILS_NAME_FIELD" value1="${sitePageName}" />
 	</command>
 
 	<command name="viewDefaultSiteTemplatePagesPG">

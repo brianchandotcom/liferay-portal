@@ -1,23 +1,8 @@
 <definition component-name="portal-wcm">
 	<property name="testray.main.component.name" value="WCM" />
 
-	<var name="pageName" value="Embedded Portlet Page" />
-	<var name="portletName" value="Web Content Display" />
-
 	<set-up>
 		<execute macro="User#firstLoginPG" />
-
-		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
-		</execute>
 	</set-up>
 
 	<tear-down>
@@ -35,8 +20,20 @@
 		<var name="webContentJavascript" value="true" />
 		<var name="webContentTitle" value="Embedded Portlets" />
 
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Embedded Portlet Page" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Embedded Portlet Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Embedded Portlet Page" />
 		</execute>
 
 		<execute macro="EmbeddedPortlets#viewDisabledPG" />
@@ -49,7 +46,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Embedded Portlet Page" />
 		</execute>
 
 		<execute macro="EmbeddedPortlets#viewPG">
@@ -68,7 +65,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Embedded Portlet Page" />
 		</execute>
 
 		<execute macro="EmbeddedPortlets#viewPG">
@@ -81,7 +78,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Embedded Portlet Page" />
 		</execute>
 
 		<execute macro="EmbeddedPortlets#viewPG">
@@ -94,11 +91,11 @@
 		</execute>
 
 		<execute macro="Portlet#deletePG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Embedded Portlet Page" />
 		</execute>
 
 		<execute macro="EmbeddedPortlets#removeReferencePG">
@@ -108,9 +105,34 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Embedded Portlet Page" />
 		</execute>
 
 		<execute macro="EmbeddedPortlets#viewDisabledPG" />
+	</command>
+
+	<command name="EditSitePage" priority="4">
+		<execute macro="Page#openURL" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Site Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page" />
+		</execute>
+
+		<execute macro="SitePage#editPG">
+			<var name="sitePageNameEdit" value="Site Page Edit" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Edit" />
+		</execute>
+
+		<execute macro="Page#viewPG">
+			<var name="liferaySite" value="true" />
+			<var name="pageName" value="Site Page Edit" />
+		</execute>
 	</command>
 </definition>

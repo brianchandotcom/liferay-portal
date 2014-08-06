@@ -208,12 +208,12 @@
 <!--SEARCH_RESULTS-->
 <tr>
 	<td>SEARCH_RESULTS_NONE</td>
-	<td>//div[@id='_15_searchResultsContainer']//div[contains(.,'No web content was found that matched the keywords: ${searchQuery}.')]</td>
+	<td>//div[@id='_15_entriesContainer']//div[contains(.,'No web content was found that matched the keywords: ${searchQuery}.')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_RESULTS_FILTER_REMOVE_BUTTON</td>
-	<td>//div[@id='_15_searchInfo']//a[contains(.,'Remove')]</td>
+	<td>//div[@id='_15_entriesContainer']//a[contains(.,'Remove')]</td>
 	<td></td>
 </tr>
 <tr>

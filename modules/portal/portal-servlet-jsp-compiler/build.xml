@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="osgi.runtime.dependencies" value="javax.el.jar,javax.servlet.jsp-api.jar,javax.servlet.jsp.jstl-api.jar,javax.servlet.jsp.jstl.jar,phidias.jar" />
+	<property name="osgi.runtime.dependencies" value="javax.el.jar,javax.servlet.jsp-api.jar,javax.servlet.jsp.jstl-api.jar,phidias.jar" />
 	<property name="plugin.full.version" value="1.0.0" />
 	<property name="plugin.name" value="com.liferay.portal.servlet.jsp.compiler" />
 	<property name="schemas.dir" value="src/javax/servlet/jsp/resources" />

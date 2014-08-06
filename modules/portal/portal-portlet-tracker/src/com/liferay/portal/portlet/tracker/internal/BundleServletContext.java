@@ -15,7 +15,6 @@
 package com.liferay.portal.portlet.tracker.internal;
 
 import com.liferay.portal.kernel.servlet.PluginContextListener;
-import com.liferay.portal.model.PortletApp;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,19 +26,17 @@ import java.util.Set;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 
-import org.osgi.service.http.context.ServletContextHelper;
-
 /**
  * @author Raymond Augé
  */
 public class BundleServletContext {
 
 	public BundleServletContext(
-		ServletContext servletContext,
-		ServletContextHelper servletContextHelper, ClassLoader classLoader) {
+		ServletContext servletContext, BundlePortletApp bundlePortletApp,
+		ClassLoader classLoader) {
 
 		_servletContext = servletContext;
-		_servletContextHelper = servletContextHelper;
+		_bundlePortletApp = bundlePortletApp;
 		_classLoader = classLoader;
 	}
 
@@ -56,12 +53,10 @@ public class BundleServletContext {
 	}
 
 	public RequestDispatcher getRequestDispatcher(String path) {
-		URL url = _servletContextHelper.getResource(path);
+		URL url = _bundlePortletApp.getResource(path);
 
 		if (url != null) {
-			PortletApp portletApp = (PortletApp)_servletContextHelper;
-
-			String portletAppContextPath = portletApp.getContextPath();
+			String portletAppContextPath = _bundlePortletApp.getContextPath();
 			String servletContextContextPath = _servletContext.getContextPath();
 
 			int index = servletContextContextPath.length();
@@ -73,7 +68,7 @@ public class BundleServletContext {
 	}
 
 	public URL getResource(String name) {
-		return _servletContextHelper.getResource(name);
+		return _bundlePortletApp.getResource(name);
 	}
 
 	public InputStream getResourceAsStream(String path) {
@@ -91,11 +86,15 @@ public class BundleServletContext {
 	}
 
 	public Set<String> getResourcePaths(String path) {
-		return _servletContextHelper.getResourcePaths(path);
+		return _bundlePortletApp.getResourcePaths(path);
 	}
 
+	public String getServletContextName() {
+		return _bundlePortletApp.getServletContextName();
+	}
+
+	private BundlePortletApp _bundlePortletApp;
 	private ClassLoader _classLoader;
 	private ServletContext _servletContext;
-	private ServletContextHelper _servletContextHelper;
 
 }

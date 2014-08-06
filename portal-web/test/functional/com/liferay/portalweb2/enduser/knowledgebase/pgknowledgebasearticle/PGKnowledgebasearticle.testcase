@@ -33,7 +33,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base (Display)" />
+			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

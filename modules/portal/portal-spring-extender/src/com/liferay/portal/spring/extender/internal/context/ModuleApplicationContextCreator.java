@@ -65,6 +65,7 @@ public class ModuleApplicationContextCreator
 				compositeResourceLoaderBundle, buildConfigLocations(headers));
 
 		serviceBuilderApplicationContext.setBundleContext(bundleContext);
+		serviceBuilderApplicationContext.setClassLoader(classLoader);
 
 		serviceBuilderApplicationContext.addBeanFactoryPostProcessor(
 			new ModuleBeanFactoryPostProcessor(classLoader));

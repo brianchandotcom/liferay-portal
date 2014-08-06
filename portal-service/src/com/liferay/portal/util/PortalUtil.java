@@ -1989,6 +1989,10 @@ public class PortalUtil {
 		return getPortal().getUserValue(userId, param, defaultValue);
 	}
 
+	public static String getValidPortalDomain(long companyId, String domain) {
+		return getPortal().getValidPortalDomain(companyId, domain);
+	}
+
 	public static long getValidUserId(long companyId, long userId)
 		throws PortalException {
 

@@ -46,7 +46,6 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
 		<%
 		PortalUtil.addPortletBreadcrumbEntry(request, themeDisplay.getScopeGroup().getDescriptiveName(), null);
-		PortalUtil.addPortletBreadcrumbEntry(request, "Web Content", liferayPortletResponse.createRenderURL().toString());
 		%>
 
 		<div id="<portlet:namespace />entries">

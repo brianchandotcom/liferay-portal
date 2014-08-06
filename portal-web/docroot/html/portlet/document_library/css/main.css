@@ -37,33 +37,42 @@
 		border-bottom-width: 0;
 	}
 
-	.document-container .search-info {
-		background-color: #D3E8F1;
-
-		@include hyphenation;
-
-		margin-bottom: 0.5em;
-		padding: 0.5em 0.75em;
-		padding-right: 30px;
-		position: relative;
-
-		.keywords {
-			float: none;
-			font-size: 1.4em;
-			font-weight: bold;
+	.document-container {
+		&:after {
+			clear: both;
+			content: '';
+			display: block;
+			height: 0;
 		}
 
-		.change-search-folder {
-			position: absolute;
-			right: 30px;
-			top: 0.3em;
-		}
+		.search-info {
+			background-color: #D3E8F1;
 
-		.close-search {
-			margin-top: -8px;
-			position: absolute;
-			right: 5px;
-			top: 50%;
+			@include hyphenation;
+
+			margin-bottom: 0.5em;
+			padding: 0.5em 0.75em;
+			padding-right: 30px;
+			position: relative;
+
+			.keywords {
+				float: none;
+				font-size: 1.4em;
+				font-weight: bold;
+			}
+
+			.change-search-folder {
+				position: absolute;
+				right: 30px;
+				top: 0.3em;
+			}
+
+			.close-search {
+				margin-top: -8px;
+				position: absolute;
+				right: 5px;
+				top: 50%;
+			}
 		}
 	}
 

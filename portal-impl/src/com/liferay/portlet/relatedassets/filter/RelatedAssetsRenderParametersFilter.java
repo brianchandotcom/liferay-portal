@@ -55,6 +55,7 @@ public class RelatedAssetsRenderParametersFilter implements RenderFilter {
 
 		if (request.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY) == null) {
 			clearDynamicServletRequestParameters(request);
+
 			clearRenderRequestParameters(renderRequest, request);
 		}
 

@@ -392,6 +392,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--MY_CONTACTS-->
+<tr>
+	<td>MY_CONTACTS_CONTACT_NAME</td>
+	<td>//div[@class='lfr-contact-name']/a[contains(.,'${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_CONTACTS_VIEW_ALL_LINK</td>
+	<td>//a[contains(.,'View all ${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

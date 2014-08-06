@@ -1,6 +1,11 @@
 AUI.add(
 	'liferay-ddm-repeatable-fields',
 	function(A) {
+
+		var CHECKBOX_TYPE = 'checkbox';
+
+		var INSTANCE_STR = '_INSTANCE_';
+
 		var Lang = A.Lang;
 
 		var SELECTOR_REPEAT_BUTTONS = '.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button';
@@ -22,6 +27,10 @@ AUI.add(
 						setter: A.one
 					},
 
+					definition: {
+						value: {}
+					},
+
 					doAsGroupId: {
 					},
 
@@ -41,16 +50,29 @@ AUI.add(
 					repeatable: {
 						validator: Lang.isBoolean,
 						value: false
+					},
+
+					values: {
+						value: {}
 					}
 				},
 
 				EXTENDS: A.Base,
 
+				fieldsLocalizationMap: {},
+
+				form: {},
+
 				NAME: 'liferay-ddm-repeatable-fields',
+
+				translationManager: {},
 
 				prototype: {
 					initializer: function() {
 						var instance = this;
+
+						instance.translationManager = Liferay.component(instance.get('portletNamespace') + 'translationManager');
+						instance.fieldsLocalizationMap = {};
 
 						instance.bindUI();
 						instance.syncUI();
@@ -63,18 +85,41 @@ AUI.add(
 
 						container.delegate('click', instance._onClickRepeatableButton, SELECTOR_REPEAT_BUTTONS, instance);
 
+						instance.form = container.ancestor('form');
+
+						instance.form.on('submit', instance._onSubmitForm, instance);
+
 						var hoverHandler = instance._onHoverRepeatableButton;
 
 						container.delegate('hover', hoverHandler, hoverHandler, SELECTOR_REPEAT_BUTTONS, instance);
+
+						var translationManager = instance.translationManager;
+
+						translationManager.on('editingLocaleChange', instance._onEditingLocaleChange, instance);
+						translationManager.on('deleteAvailableLocale', instance._onDeleteAvailableLocale, instance);
 					},
 
 					syncUI: function() {
 						var instance = this;
 
-						instance.syncFieldsTreeUI();
+						instance._syncRepeatableFields();
 					},
 
-					getField: function(fieldName, callback) {
+					_getDefinitionFieldNames: function(fields) {
+						var instance = this;
+
+						var fieldNames = [];
+
+						A.each(
+							fields,
+							function(field) {
+								fieldNames.push(field['name']);
+							}
+						);
+						return fieldNames;
+					},
+
+					_getField: function(fieldName, callback) {
 						var instance = this;
 
 						A.io.request(
@@ -104,7 +149,7 @@ AUI.add(
 						);
 					},
 
-					getFieldParentNode: function(fieldNode) {
+					_getFieldParentNode: function(fieldNode) {
 						var instance = this;
 
 						var parentNode = fieldNode.ancestor('.field-wrapper');
@@ -116,10 +161,57 @@ AUI.add(
 						return parentNode;
 					},
 
-					getFieldsList: function(fieldName, parentNode) {
+					_getFieldsDisplay: function(nodes, isNested) {
+						var instance = this;
+
+						var definitionFields = instance.get('definition').fields;
+
+						var definitionFieldNames = instance._getDefinitionFieldNames(definitionFields);
+
+						var fieldValues = [];
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						A.each(
+							nodes,
+							function(item) {
+								var fieldName = item.getData('fieldName');
+
+								var fieldNamespace = item.getData('fieldNamespace');
+
+								var instanceId = fieldNamespace.split(INSTANCE_STR)[1];
+
+								var isItemInStructure = definitionFieldNames.indexOf(fieldName) >= 0;
+
+								if (isItemInStructure || isNested) {
+
+									var field = {
+										instanceId: instanceId,
+										name: fieldName
+									};
+
+									var nestedFields = instance._getFieldsList(null, item, true);
+
+									if (nestedFields._nodes.length) {
+										field.nestedFieldValues = instance._getFieldsDisplay(nestedFields, true);
+									}
+
+									field.value = instance.fieldsLocalizationMap[instanceId];
+
+									fieldValues.push(field);
+								}
+							}
+						);
+
+						return fieldValues;
+					},
+
+					_getFieldsList: function(fieldName, parentNode, directChildren) {
 						var instance = this;
 
 						var container;
+
+						var selector = [' .field-wrapper'];
 
 						if (parentNode) {
 							container = parentNode;
@@ -128,9 +220,9 @@ AUI.add(
 							container = instance.get('container');
 						}
 
-						var selector = [''];
-
-						selector.push(' .field-wrapper');
+						if (directChildren) {
+							selector.unshift('>');
+						}
 
 						if (fieldName) {
 							selector.push('[data-fieldName="' + fieldName + '"]');
@@ -139,30 +231,171 @@ AUI.add(
 						return container.all(selector.join(''));
 					},
 
-					insertField: function(fieldNode) {
+					_getFieldValue: function(fieldNode) {
+						var value;
+
+						if (fieldNode.get('type') === CHECKBOX_TYPE) {
+							value = fieldNode.get('checked').toString();
+						}
+						else {
+							value = Lang.String.unescapeHTML(fieldNode.get('value'));
+						}
+
+						return value;
+					},
+
+					_insertField: function(fieldNode) {
 						var instance = this;
 
 						var fieldName = fieldNode.getData('fieldName');
 
-						instance.getField(
+						instance._getField(
 							fieldName,
 							function(newFieldHTML) {
 								fieldNode.insert(newFieldHTML, 'after');
 
-								instance.syncFieldsTreeUI();
+								instance._syncRepeatableFields();
 							}
 						);
 					},
 
-					removeField: function(fieldNode) {
+					_isFieldLocalizable: function(fieldName, definitionFields, isFieldLocalizable) {
+						var instance = this;
+
+						A.each(
+							definitionFields,
+							function(field) {
+								if (field['name'] === fieldName) {
+									isFieldLocalizable = field['localizable'];
+								}
+								else if (field['nestedFields']) {
+									isFieldLocalizable = instance._isFieldLocalizable(fieldName, field['nestedFields'], isFieldLocalizable);
+								}
+							}
+						);
+
+						return isFieldLocalizable;
+					},
+
+					_onClickRepeatableButton: function(event) {
+						var instance = this;
+
+						var currentTarget = event.currentTarget;
+
+						var fieldNode = currentTarget.ancestor('.field-wrapper');
+
+						if (currentTarget.hasClass('lfr-ddm-repeatable-add-button')) {
+							instance._insertField(fieldNode);
+						}
+						else if (currentTarget.hasClass('lfr-ddm-repeatable-delete-button')) {
+							instance._removeField(fieldNode);
+						}
+					},
+
+					_onDeleteAvailableLocale: function(event) {
+						var instance = this;
+
+						var map = instance.fieldsLocalizationMap;
+
+						for (var prop in map) {
+							if (map.hasOwnProperty(prop)) {
+								delete map[prop][event.locale];
+							}
+						}
+					},
+
+					_onEditingLocaleChange: function(event) {
+						var instance = this;
+
+						var defaultLocale = instance.translationManager.get('defaultLocale');
+
+						var editingLocale = instance.translationManager.get('editingLocale');
+
+						var locale = editingLocale || defaultLocale;
+
+						instance._registerFieldsLocalizationMap(locale);
+
+						instance._syncFieldsValues(event.newVal);
+					},
+
+					_onHoverRepeatableButton: function(event) {
+						var instance = this;
+
+						var fieldNode = event.currentTarget.ancestor('.field-wrapper');
+
+						fieldNode.toggleClass('lfr-ddm-repeatable-active', (event.phase === 'over'));
+					},
+
+					_onSubmitForm: function(event) {
+						var instance = this;
+
+						var defaultLocale = instance.translationManager.get('defaultLocale');
+
+						var editingLocale = instance.translationManager.get('editingLocale');
+
+						var locale = editingLocale || defaultLocale;
+
+						instance._registerFieldsLocalizationMap(locale);
+
+						instance._syncFieldsTreeUI();
+
+						submitForm(instance.form);
+					},
+
+					_registerFieldsLocalizationMap: function(locale) {
+						var instance = this;
+
+						var definitionFields = instance.get('definition').fields;
+
+						var fields = instance._getFieldsList(null, null, false);
+
+						var map = instance.fieldsLocalizationMap;
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						A.each(
+							fields,
+							function(field) {
+								var fieldName = field.getData('fieldName');
+
+								var fieldNamespace = field.getData('fieldNamespace');
+
+								var id = '#' + portletNamespace + fieldName + fieldNamespace;
+
+								var instanceId = fieldNamespace.split(INSTANCE_STR)[1];
+
+								var isFieldLocalizable;
+
+								var fieldNode = A.one(id);
+
+								var value;
+
+								if (fieldNode) {
+									value = instance._getFieldValue(fieldNode);
+
+									isFieldLocalizable = instance._isFieldLocalizable(fieldName, definitionFields);
+
+									if (isFieldLocalizable) {
+										map[instanceId] = map[instanceId] || {};
+										map[instanceId][locale] = value;
+									}
+									else {
+										map[instanceId] = value;
+									}
+								}
+							}
+						);
+					},
+
+					_removeField: function(fieldNode) {
 						var instance = this;
 
 						fieldNode.remove();
 
-						instance.syncFieldsTreeUI();
+						instance._syncRepeatableFields();
 					},
 
-					renderRepeatableUI: function(fieldNode) {
+					_renderRepeatableUI: function(fieldNode) {
 						var instance = this;
 
 						var fieldRepeatable = A.DataType.Boolean.parse(fieldNode.getData('repeatable'));
@@ -171,9 +404,9 @@ AUI.add(
 							if (!fieldNode.getData('rendered-toolbar')) {
 								var fieldName = fieldNode.getData('fieldName');
 
-								var parentNode = instance.getFieldParentNode(fieldNode);
+								var parentNode = instance._getFieldParentNode(fieldNode);
 
-								var fieldsList = instance.getFieldsList(fieldName, parentNode);
+								var fieldsList = instance._getFieldsList(fieldName, parentNode);
 
 								var html = TPL_ADD_REPEATABLE;
 
@@ -189,57 +422,81 @@ AUI.add(
 							}
 						}
 
-						instance.getFieldsList(null, fieldNode).each(
+						instance._getFieldsList(null, fieldNode).each(
 							function(item, index) {
-								instance.renderRepeatableUI(item);
+								instance._renderRepeatableUI(item);
 							}
 						);
 					},
 
-					syncFieldsTreeUI: function() {
+					_syncFieldsTreeUI: function() {
 						var instance = this;
 
-						var fieldsDisplay = [];
+						var availableLocales;
+
+						var defaultLocale;
+
+						var definition = instance.get('definition');
 
 						var fieldsDisplayInput = instance.get('fieldsDisplayInput');
 
-						instance.getFieldsList().each(
-							function(item, index) {
-								instance.renderRepeatableUI(item);
+						var jsonValue;
 
-								var fieldName = item.getData('fieldName');
-								var fieldNamespace = item.getData('fieldNamespace');
+						availableLocales = instance.translationManager.get('availableLocales');
+						defaultLocale = instance.translationManager.get('defaultLocale');
 
-								fieldsDisplay.push(fieldName + fieldNamespace);
+						jsonValue = {
+							availableLanguageIds: availableLocales,
+							defaultLanguageId: defaultLocale,
+							fieldValues: instance._getFieldsDisplay(instance._getFieldsList(null, null, true), false)
+						};
+
+						fieldsDisplayInput.val(jsonValue.fieldValues.join());
+					},
+
+					_syncFieldsValues: function(locale) {
+						var instance = this;
+
+						var fields = instance._getFieldsList(null, null, false);
+
+						var map = instance.fieldsLocalizationMap;
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						A.each(
+							fields,
+							function(field) {
+								var fieldName = field.getData('fieldName');
+
+								var fieldNamespace = field.getData('fieldNamespace');
+
+								var id = '#' + portletNamespace + fieldName + fieldNamespace;
+
+								var instanceId = fieldNamespace.split(INSTANCE_STR)[1];
+
+								var fieldMap = map[instanceId];
+
+								var fieldNode = A.one(id);
+
+								var value;
+
+								if (fieldNode && fieldMap) {
+									value = fieldMap[locale] || '';
+									fieldNode.set('value', value);
+								}
 							}
 						);
-
-						fieldsDisplayInput.val(fieldsDisplay.join());
 					},
 
-					_onClickRepeatableButton: function(event) {
+					_syncRepeatableFields: function() {
 						var instance = this;
 
-						var currentTarget = event.currentTarget;
-
-						var fieldNode = currentTarget.ancestor('.field-wrapper');
-
-						if (currentTarget.hasClass('lfr-ddm-repeatable-add-button')) {
-							instance.insertField(fieldNode);
-						}
-						else if (currentTarget.hasClass('lfr-ddm-repeatable-delete-button')) {
-							instance.removeField(fieldNode);
-						}
-					},
-
-					_onHoverRepeatableButton: function(event) {
-						var instance = this;
-
-						var fieldNode = event.currentTarget.ancestor('.field-wrapper');
-
-						fieldNode.toggleClass('lfr-ddm-repeatable-active', (event.phase === 'over'));
+						instance._getFieldsList().each(
+							function(item, index) {
+								instance._renderRepeatableUI(item);
+							}
+						);
 					}
-
 				}
 			}
 		);

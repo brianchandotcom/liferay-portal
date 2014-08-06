@@ -18,17 +18,14 @@ import com.liferay.portal.ccpp.PortalProfileFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
-import com.liferay.portal.kernel.portlet.LiferayPortletContext;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletSession;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.ProtectedPrincipal;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -80,7 +77,6 @@ import javax.portlet.PortletSession;
 import javax.portlet.WindowState;
 import javax.portlet.filter.PortletRequestWrapper;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -194,21 +190,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override
 	public String getContextPath() {
-		LiferayPortletContext liferayPortletContext =
-			(LiferayPortletContext)_portletContext;
-
-		ServletContext servletContext =
-			liferayPortletContext.getServletContext();
-
-		String servletContextName = servletContext.getServletContextName();
-
-		if (ServletContextPool.containsKey(servletContextName)) {
-			servletContext = ServletContextPool.get(servletContextName);
-
-			return ContextPathUtil.getContextPath(servletContext);
-		}
-
-		return StringPool.SLASH.concat(_portletContext.getPortletContextName());
+		return _portlet.getContextPath();
 	}
 
 	@Override

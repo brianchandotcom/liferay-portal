@@ -292,6 +292,43 @@
 		<execute action="PGOpensocialgadget#assertTextEquals" locator-key1="PORTLET_TITLE" value1="To-Do List" />
 	</command>
 
+	<command name="ViewGoogleAnalyticsIDNoXSS" priority="5">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#editGoogleAnalyticsIDCP">
+			<var name="googleAnalyticsID"><![CDATA[']);alert(/googleAnalyticsId/);//]]></var>
+		</execute>
+
+		<execute macro="Page#openURL" />
+		<execute action="Home#assertAlertNotPresent" />
+	</command>
+
+	<command name="ViewJSONWSNoXSS" priority="5">
+		<var name="url" value="http://localhost:8080/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E" />
+
+		<execute action="Home#open" locator1="${url}" />
+		<execute action="Home#assertAlertNotPresent" />
+	</command>
+
+	<command name="ViewLiferayPortletListNoXSS" priority="5">
+		<var name="url" value="http://localhost:8080/web/guest/home?p_p_id=86&amp;p_p_state=pop_up&amp;_86_portletResource=101_INSTANCE_S1GhHANAwleV;alert(1)//%22;alert(2)//%22;alert(3)//%E2%80%93%3E%3C/script%3E%22%3E%27%3E%3Cscript%3Ealert(4)%3C/script%3E&amp;_86_resourcePrimKey=asdfxxx&amp;_86_struts_action=%2Fportlet_configuration%2Fedit_configuration" />
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute action="Home#open" locator1="${url}" />
+		<execute action="Home#confirm" locator-key1="CONFIRMATION" value1="4" />
+
+		<execute action="Home#refresh" />
+		<execute action="Home#confirm" locator-key1="CONFIRMATION" value1="4" />
+
+		<execute macro="Page#openURL" />
+		<execute action="Home#assertAlertNotPresent" />
+	</command>
+
 	<command name="ViewLookAndFeelNoXSS" priority="4">
 		<var name="pageName"><![CDATA[<script>alert(123)</script>]]></var>
 

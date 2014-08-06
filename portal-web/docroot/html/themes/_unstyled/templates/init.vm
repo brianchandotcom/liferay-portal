@@ -131,7 +131,10 @@
 
 #if ($show_page_settings)
 	#set ($page_settings_text = $languageUtil.get($locale, "manage-pages"))
-	#set ($page_settings_url = $htmlUtil.escape($theme_display.getURLPageSettings().toString()))
+
+	#if ($theme_display.getURLPageSettings())
+		#set ($page_settings_url = $htmlUtil.escape($theme_display.getURLPageSettings().toString()))
+	#end
 #end
 
 #set ($show_sign_in = $theme_display.isShowSignInIcon())
@@ -195,7 +198,9 @@
 
 	#set ($typeSettingsProperties = $layout.getTypeSettingsProperties())
 
-	#set ($page_javascript = $typeSettingsProperties.getProperty("javascript"))
+	#if ($typeSettingsProperties)
+		#set ($page_javascript = $typeSettingsProperties.getProperty("javascript"))
+	#end
 
 	#set ($site_name = $htmlUtil.escape($page_group.getDescriptiveName()))
 

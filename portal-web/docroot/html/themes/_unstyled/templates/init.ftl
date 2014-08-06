@@ -390,6 +390,7 @@
 <#-- ---------- Date ---------- -->
 
 <#assign date = dateUtil />
+
 <#assign current_time = date.newDate() />
 <#assign the_year = current_time?date?string("yyyy") />
 

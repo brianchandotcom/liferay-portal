@@ -89,6 +89,10 @@ public class BundleServletContext {
 		return _bundlePortletApp.getResourcePaths(path);
 	}
 
+	public String getServletContextName() {
+		return _bundlePortletApp.getServletContextName();
+	}
+
 	private BundlePortletApp _bundlePortletApp;
 	private ClassLoader _classLoader;
 	private ServletContext _servletContext;

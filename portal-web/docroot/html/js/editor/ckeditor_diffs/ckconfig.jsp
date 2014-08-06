@@ -120,44 +120,48 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 	config.stylesCombo_stylesSet = 'liferayStyles';
 
 	config.toolbar_editInPlace = [
-		['Styles'],
 		['Bold', 'Italic', 'Underline', 'Strike'],
-		['Subscript', 'Superscript', 'SpecialChar'],
+		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+		['Styles'],
+		['Subscript', 'Superscript'],
 		['Undo', 'Redo'],
+		['SpecialChar'],
 		['SpellChecker', 'Scayt'],
-		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'], ['Source', 'RemoveFormat'],
+		['RemoveFormat'],
+		['Source'],
 		['A11YBtn']
 	];
 
 	config.toolbar_email = [
-		['FontSize', 'TextColor', 'BGColor', '-', 'Bold', 'Italic', 'Underline', 'Strike'],
+		['Bold', 'Italic', 'Underline', 'Strike'],
+		['Image', 'Link', 'Unlink'],
 		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+		['FontSize'],
+		['TextColor', 'BGColor'],
+		['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'],
 		['SpellChecker', 'Scayt'],
-		'/',
-		['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'SelectAll', 'RemoveFormat'],
+		['SelectAll', 'RemoveFormat'],
 		['Source'],
-		['Link', 'Unlink'],
-		['Image'],
 		['A11YBtn']
 	];
 
 	config.toolbar_liferay = [
 		['Bold', 'Italic', 'Underline', 'Strike'],
+		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+		['Image', 'Link', 'Unlink', 'Anchor'],
+		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
 
 		<c:if test="<%= inlineEdit %>">
 			['AjaxSave', '-', 'Restore'],
 		</c:if>
 
+		['Styles', 'FontSize'],
+		['Subscript', 'Superscript'],
+		['TextColor', 'BGColor'],
 		['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord' ],
-		['Styles', 'FontSize', '-', 'TextColor', 'BGColor'],
-		'/',
-		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
-		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-		['Image', 'Link', 'Unlink', 'Anchor'],
 		['Flash', <c:if test="<%= XugglerUtil.isEnabled() %>"> 'Audio', 'Video',</c:if> 'Table', '-', 'Smiley', 'SpecialChar'],
 		['Find', 'Replace', 'SpellChecker', 'Scayt'],
-		['SelectAll', 'RemoveFormat'],
-		['Subscript', 'Superscript']
+		['SelectAll', 'RemoveFormat']
 
 		<c:if test="<%= !inlineEdit %>">
 			,['Source']
@@ -167,18 +171,18 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 	];
 
 	config.toolbar_liferayArticle = [
-		['Styles', 'FontSize', '-', 'TextColor', 'BGColor'],
 		['Bold', 'Italic', 'Underline', 'Strike'],
-		['Subscript', 'Superscript'],
-		'/',
-		['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'SelectAll', 'RemoveFormat'],
-		['Find', 'Replace', 'SpellChecker', 'Scayt'],
-		['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+		['NumberedList','BulletedList','-','Outdent','Indent'],
+		['Image', 'Link', 'Unlink', 'Anchor'],
 		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-		'/',
+		['Styles', 'FontSize'],
+		['Subscript', 'Superscript'],
+		['TextColor', 'BGColor'],
+		['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'],
+		['Flash', <c:if test="<%= XugglerUtil.isEnabled() %>">'Audio', 'Video',</c:if> 'Table', '-', 'Smiley', 'SpecialChar', 'LiferayPageBreak', 'Blockquote'],
+		['Find', 'Replace', 'SpellChecker', 'Scayt'],
+		['SelectAll', 'RemoveFormat'],
 		['Source'],
-		['Link', 'Unlink', 'Anchor'],
-		['Image', 'Flash', <c:if test="<%= XugglerUtil.isEnabled() %>">'Audio', 'Video',</c:if> 'Table', '-', 'Smiley', 'SpecialChar', 'LiferayPageBreak'],
 		['A11YBtn']
 	];
 

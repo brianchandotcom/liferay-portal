@@ -68,11 +68,15 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 	].join(',');
 
 	config.toolbar_bbcode = [
-		['Bold', 'Italic', 'Underline', 'Strike', '-', 'Link', 'Unlink'],
-		['Image', 'Smiley', '-', 'TextColor', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
-		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'Blockquote', '-', 'Code'],
-		'/',
-		['Font', 'FontSize', '-', 'Format', '-', 'Undo', 'Redo', '-', 'Source'],
+		['Bold', 'Italic', 'Underline', 'Strike'],
+		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+		['Image', 'Link', 'Unlink'],
+		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+		['Font', 'FontSize', 'Format'],
+		['TextColor'],
+		['Undo', 'Redo'],
+		['Smiley', '-', 'Blockquote', '-', 'Code'],
+		['Source'],
 		['A11YBtn']
 	];
 

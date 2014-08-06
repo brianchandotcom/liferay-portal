@@ -110,23 +110,21 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 	config.resize_enabled = <%= resizable %>;
 
 	config.toolbar_creole = [
-		['Cut','Copy','Paste','PasteText','PasteFromWord'],
-		['Undo','Redo'],
-		['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
-		['Format'],
-
+		['Bold', 'Italic', 'Underline', 'Strike'],
+		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
 		<%
 		String linkButtonBar = "['Link', 'Unlink']";
 
 		if (wikiPageResourcePrimKey > 0) {
-			linkButtonBar = "['Link', 'Unlink', 'Image']";
+			linkButtonBar = "['Image', 'Link', 'Unlink']";
 		}
 		%>
-
 		<%= linkButtonBar %>,
-
+		['Format'],
+		['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'],
 		['Table', '-', 'HorizontalRule', 'SpecialChar' ],
-		['Find','Replace','-','SelectAll','RemoveFormat'],
+		['Find','Replace'],
+		['SelectAll','RemoveFormat'],
 		['Source'],
 		['A11YBtn']
 	];

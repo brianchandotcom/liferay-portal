@@ -129,7 +129,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 <aui:script use="liferay-journal-navigation">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL" />
 
-	new Liferay.Portlet.JournalNavigation(
+	var journalNavigation = new Liferay.Portlet.JournalNavigation(
 		{
 			advancedSearch: '<%= DisplayTerms.ADVANCED_SEARCH %>',
 			displayStyle: '<%= HtmlUtil.escapeJS(JournalUtil.getDisplayStyle(liferayPortletRequest, displayViews)) %>',
@@ -163,4 +163,14 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			}
 		}
 	);
+
+	var clearJournalNavigationHandles = function(event) {
+		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+			journalNavigation.destroy();
+
+			Liferay.detach('destroyPortlet', clearJournalNavigationHandles);
+		}
+	};
+
+	Liferay.on('destroyPortlet', clearJournalNavigationHandles);
 </aui:script>

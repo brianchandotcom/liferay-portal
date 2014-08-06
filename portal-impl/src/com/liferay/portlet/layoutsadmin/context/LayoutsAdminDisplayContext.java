@@ -29,7 +29,6 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
@@ -61,6 +60,8 @@ public class LayoutsAdminDisplayContext {
 
 		_request = request;
 		_liferayPortletResponse = liferayPortletResponse;
+
+		_groupDisplayContextHelper = new GroupDisplayContextHelper(request);
 
 		_tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
 
@@ -147,53 +148,15 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public Group getGroup() {
-		if (_group != null) {
-			return _group;
-		}
-
-		if (getStagingGroup() != null) {
-			_group = getStagingGroup();
-		}
-		else {
-			_group = getLiveGroup();
-		}
-
-		return _group;
+		return _groupDisplayContextHelper.getGroup();
 	}
 
 	public Long getGroupId() {
-		if (_groupId != null) {
-			return _groupId;
-		}
-
-		Group liveGroup = getLiveGroup();
-
-		_groupId = liveGroup.getGroupId();
-
-		Group group = getGroup();
-
-		if (group != null) {
-			_groupId = group.getGroupId();
-		}
-
-		return _groupId;
+		return _groupDisplayContextHelper.getGroupId();
 	}
 
 	public UnicodeProperties getGroupTypeSettings() {
-		if (_groupTypeSettings != null) {
-			return _groupTypeSettings;
-		}
-
-		Group group = getGroup();
-
-		if (group != null) {
-			_groupTypeSettings = group.getTypeSettingsProperties();
-		}
-		else {
-			_groupTypeSettings = new UnicodeProperties();
-		}
-
-		return _groupTypeSettings;
+		return _groupDisplayContextHelper.getGroupTypeSettings();
 	}
 
 	public List<LayoutDescription> getLayoutDescriptions() {
@@ -228,32 +191,11 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public Group getLiveGroup() {
-		if (_liveGroup != null) {
-			return _liveGroup;
-		}
-
-		Group selGroup = getSelGroup();
-
-		if (selGroup.isStagingGroup()) {
-			_liveGroup = selGroup.getLiveGroup();
-		}
-		else {
-			_liveGroup = selGroup;
-		}
-
-		return _liveGroup;
+		return _groupDisplayContextHelper.getLiveGroup();
 	}
 
 	public Long getLiveGroupId() {
-		if (_liveGroupId != null) {
-			return _liveGroupId;
-		}
-
-		Group liveGroup = getLiveGroup();
-
-		_liveGroupId = liveGroup.getGroupId();
-
-		return _liveGroupId;
+		return _groupDisplayContextHelper.getLiveGroupId();
 	}
 
 	public Organization getOrganization() {
@@ -351,21 +293,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public Group getSelGroup() {
-		if (_selGroup != null) {
-			return _selGroup;
-		}
-
-		_selGroup = (Group)_request.getAttribute(WebKeys.GROUP);
-
-		if (_selGroup != null) {
-			return _selGroup;
-		}
-
-		long groupId = ParamUtil.getLong(_request, "groupId");
-
-		_selGroup = GroupLocalServiceUtil.fetchGroup(groupId);
-
-		return _selGroup;
+		return _groupDisplayContextHelper.getSelGroup();
 	}
 
 	public Layout getSelLayout() {
@@ -417,43 +345,11 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public Group getStagingGroup() {
-		if (_stagingGroup != null) {
-			return _stagingGroup;
-		}
-
-		Group selGroup = getSelGroup();
-
-		if (selGroup.isStagingGroup()) {
-			_stagingGroup = selGroup;
-		}
-		else {
-			if (selGroup.isStaged()) {
-				if (selGroup.isStagedRemotely()) {
-					_stagingGroup = selGroup;
-				}
-				else {
-					_stagingGroup = selGroup.getStagingGroup();
-				}
-			}
-		}
-
-		return _stagingGroup;
+		return _groupDisplayContextHelper.getStagingGroup();
 	}
 
 	public Long getStagingGroupId() {
-		if (_stagingGroupId != null) {
-			return _stagingGroupId;
-		}
-
-		_stagingGroupId = 0L;
-
-		Group stagingGroup = getStagingGroup();
-
-		if (stagingGroup != null) {
-			_stagingGroupId = stagingGroup.getGroupId();
-		}
-
-		return _stagingGroupId;
+		return _groupDisplayContextHelper.getStagingGroupId();
 	}
 
 	public String getTabs1() {
@@ -554,27 +450,20 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private String _backURL;
-	private Group _group;
-	private Long _groupId;
-	private UnicodeProperties _groupTypeSettings;
+	private GroupDisplayContextHelper _groupDisplayContextHelper;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
 	private LiferayPortletResponse _liferayPortletResponse;
-	private Group _liveGroup;
-	private Long _liveGroupId;
 	private Organization _organization;
 	private String _pagesName;
 	private boolean _privateLayout;
 	private String _redirect;
 	private HttpServletRequest _request;
 	private String _rootNodeName;
-	private Group _selGroup;
 	private Layout _selLayout;
 	private LayoutSet _selLayoutSet;
 	private Long _selPlid;
 	private User _selUser;
-	private Group _stagingGroup;
-	private Long _stagingGroupId;
 	private String _tabs1;
 	private String _tabs1Names;
 	private UserGroup _userGroup;

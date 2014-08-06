@@ -264,11 +264,11 @@ public class StagingUtil {
 			locale, e, contextMap);
 	}
 
-	public static Group getLiveGroup(long groupId) throws PortalException {
+	public static Group getLiveGroup(long groupId) {
 		return getStaging().getLiveGroup(groupId);
 	}
 
-	public static long getLiveGroupId(long groupId) throws PortalException {
+	public static long getLiveGroupId(long groupId) {
 		return getStaging().getLiveGroupId(groupId);
 	}
 
@@ -325,6 +325,10 @@ public class StagingUtil {
 		PortalRuntimePermission.checkGetBeanProperty(StagingUtil.class);
 
 		return _staging;
+	}
+
+	public static Group getStagingGroup(long groupId) {
+		return getStaging().getStagingGroup(groupId);
 	}
 
 	public static Map<String, String[]> getStagingParameters() {

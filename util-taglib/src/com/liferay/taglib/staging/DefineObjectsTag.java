@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.staging;
 
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
@@ -52,34 +53,17 @@ public class DefineObjectsTag extends TagSupport {
 			return SKIP_BODY;
 		}
 
-		long liveGroupId = group.getGroupId();
-		long stagingGroupId = group.getGroupId();
-
-		Group liveGroup = group;
-		Group stagingGroup = group;
-
-		if (!group.isStagedRemotely()) {
-			if (group.isStagingGroup()) {
-				liveGroup = group.getLiveGroup();
-
-				liveGroupId = liveGroup.getGroupId();
-			}
-
-			if (group.hasStagingGroup()) {
-				stagingGroup = group.getStagingGroup();
-
-				stagingGroupId = stagingGroup.getGroupId();
-			}
-		}
+		Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
+		Group stagingGroup = StagingUtil.getStagingGroup(group.getGroupId());
 
 		pageContext.setAttribute("group", group);
-		pageContext.setAttribute("groupId", groupId);
+		pageContext.setAttribute("groupId", group.getGroupId());
 		pageContext.setAttribute("liveGroup", liveGroup);
-		pageContext.setAttribute("liveGroupId", liveGroupId);
+		pageContext.setAttribute("liveGroupId", liveGroup.getGroupId());
 		pageContext.setAttribute(
 			"privateLayout", ParamUtil.getBoolean(request, "privateLayout"));
 		pageContext.setAttribute("stagingGroup", stagingGroup);
-		pageContext.setAttribute("stagingGroupId", stagingGroupId);
+		pageContext.setAttribute("stagingGroupId", stagingGroup.getGroupId());
 
 		return SKIP_BODY;
 	}

@@ -899,32 +899,27 @@ public class StagingImpl implements Staging {
 	}
 
 	@Override
-	public Group getLiveGroup(long groupId) throws PortalException {
-		if (groupId == 0) {
+	public Group getLiveGroup(long groupId) {
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if (group == null) {
 			return null;
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		if (group.isLayout()) {
-			group = group.getParentGroup();
-		}
-
-		if (group.isStagingGroup()) {
+		if (!group.isStagedRemotely() && group.isStagingGroup()) {
 			return group.getLiveGroup();
 		}
-		else {
-			return group;
-		}
+
+		return group;
 	}
 
 	@Override
-	public long getLiveGroupId(long groupId) throws PortalException {
-		if (groupId == 0) {
+	public long getLiveGroupId(long groupId) {
+		Group group = getLiveGroup(groupId);
+
+		if (group == null) {
 			return groupId;
 		}
-
-		Group group = getLiveGroup(groupId);
 
 		return group.getGroupId();
 	}
@@ -1000,6 +995,23 @@ public class StagingImpl implements Staging {
 		}
 
 		return StagingConstants.STAGED_PORTLET.concat(portletId);
+	}
+
+	@Override
+	public Group getStagingGroup(long groupId) {
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if (group == null) {
+			return null;
+		}
+
+		Group stagingGroup = group;
+
+		if (!group.isStagedRemotely() && group.hasStagingGroup()) {
+			stagingGroup = group.getStagingGroup();
+		}
+
+		return stagingGroup;
 	}
 
 	@Override

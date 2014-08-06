@@ -64,6 +64,12 @@
 	<td>//li[contains(@data-text,'${key_recipientName}')]</td>
 	<td></td>
 </tr>
+<!--SCREENSHOTS-->
+<tr>
+	<td>SCREENSHOTS_MESSAGES_MESSAGE_TEXT_FIELDS_PNG</td>
+	<td>so/screenshots/messages/messages_message_text_fields.png</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

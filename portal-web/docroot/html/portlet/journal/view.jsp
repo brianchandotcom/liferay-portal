@@ -32,7 +32,7 @@ if ((folder == null) && (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDE
 	}
 }
 
-int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED);
+int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, WorkflowConstants.STATUS_ANY);
 
 boolean showSelectAll = false;
 

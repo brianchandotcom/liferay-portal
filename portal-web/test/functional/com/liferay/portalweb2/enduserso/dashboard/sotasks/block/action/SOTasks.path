@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ADD_TASK_BUTTON</td>
-	<td>//a[@class='add-task']</td>
+	<td>//a[contains(.,'Add Task')]/span</td>
 	<td></td>
 </tr>
 <tr>

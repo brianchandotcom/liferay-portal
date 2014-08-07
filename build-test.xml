@@ -2635,15 +2635,6 @@ plugins.includes=marketplace-portlet</echo>
 				</then>
 			</elseif>
 			<else>
-				<if>
-					<equals arg1="${liferay.portal.bundle}" arg2="6.1.20" />
-					<then>
-						<echo file="app.server.${user.name}.properties" append="true">
-							app.server.tomcat.version=7.0.27
-						</echo>
-					</then>
-				</if>
-
 				<mkdir dir="${app.server.parent.dir}" />
 
 				<tstamp>
@@ -2671,11 +2662,30 @@ plugins.includes=marketplace-portlet</echo>
 
 				<delete file="${tstamp.value}.zip" />
 
-				<chmod perm="a+x">
-					<fileset dir="${test.app.server.bin.dir}">
-						<include name="*.sh" />
-					</fileset>
-				</chmod>
+				<if>
+					<and>
+						<equals arg1="${liferay.portal.bundle}" arg2="6.1.20" />
+						<equals arg1="${app.server.type}" arg2="tomcat" />
+					</and>
+					<then>
+						<echo file="app.server.${user.name}.properties" append="true">
+							app.server.tomcat.version=7.0.27
+						</echo>
+
+						<chmod perm="a+x">
+							<fileset dir="${app.server.parent.dir}/tomcat-7.0.27/bin">
+								<include name="*.sh" />
+							</fileset>
+						</chmod>
+					</then>
+					<else>
+						<chmod perm="a+x">
+							<fileset dir="${test.app.server.bin.dir}">
+								<include name="*.sh" />
+							</fileset>
+						</chmod>
+					</else>
+				</if>
 
 				<if>
 					<equals arg1="${app.server.type}" arg2="jboss" />

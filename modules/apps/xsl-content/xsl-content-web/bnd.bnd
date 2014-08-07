@@ -1,0 +1,9 @@
+Import-Package:\
+	${jsp.imports},\
+	com.liferay.util.freemarker;resolution:=optional,\
+	*
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources,\
+	@../../../../util-taglib/util-taglib.jar,\
+	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld

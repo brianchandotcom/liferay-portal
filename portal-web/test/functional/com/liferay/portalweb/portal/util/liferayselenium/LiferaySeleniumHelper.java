@@ -52,6 +52,8 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.collections.iterators.ArrayIterator;
+
 import org.sikuli.api.robot.Key;
 import org.sikuli.script.Button;
 import org.sikuli.script.Location;
@@ -990,7 +992,26 @@ public class LiferaySeleniumHelper {
 
 		liferaySelenium.pause("1000");
 
-		_screen.type(value);
+		if (value.contains("${line.separator}")) {
+			String[] tokens = StringUtil.split(value, "${line.separator}");
+
+			ArrayIterator arrayIterator = new ArrayIterator(tokens);
+
+			while (arrayIterator.hasNext()) {
+				_screen.type((String)arrayIterator.next());
+
+				if (arrayIterator.hasNext()) {
+					_screen.type(Key.ENTER);
+				}
+			}
+
+			if (value.endsWith("${line.separator}")) {
+				_screen.type(Key.ENTER);
+			}
+		}
+		else {
+			_screen.type(value);
+		}
 	}
 
 	public static void sikuliUploadCommonFile(

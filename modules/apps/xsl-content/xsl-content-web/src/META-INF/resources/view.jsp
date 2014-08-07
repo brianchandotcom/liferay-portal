@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/xsl_content/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 try {
@@ -102,5 +102,5 @@ catch (Exception e) {
 %>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.xsl_content.view_jsp");
+private static Log _log = LogFactoryUtil.getLog("xsl_content.view_jsp");
 %>

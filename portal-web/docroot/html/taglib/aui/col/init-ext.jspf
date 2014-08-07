@@ -19,19 +19,50 @@ if (Validator.isNotNull(id)) {
 	id = portletResponse.getNamespace() + id;
 }
 
-if (width > 0) {
-	span = (int)Math.round(_COLUMNS * ((double)width / 100));
+StringBundler sb = new StringBundler();
+
+if (Validator.isNotNull(xs)) {
+	_getGridCssClasses(xs, "xs", sb);
 }
 
-if (offsetWidth > 0) {
-	offset = (int)Math.round(_COLUMNS * ((double)offsetWidth / 100));
+if (Validator.isNotNull(sm)) {
+	_getGridCssClasses(sm, "sm", sb);
 }
 
-if (offset > 0) {
-	cssClass += " aui-offset" + offset;
+if (Validator.isNotNull(md)) {
+	_getGridCssClasses(md, "md", sb);
+}
+
+if (Validator.isNotNull(lg)) {
+	_getGridCssClasses(lg, "lg", sb);
+}
+
+String gridCssClasses = sb.toString();
+
+if (gridCssClasses.equals(StringPool.BLANK)) {
+	if (width > 0) {
+		span = (int)Math.round(_COLUMNS * ((double)width / 100));
+	}
+
+	sb.append("col-md-");
+	sb.append(span);
+
+	gridCssClasses = sb.toString();
 }
 %>
 
 <%!
+private static void _getGridCssClasses(String size, String sizeType, StringBundler sb) {
+	String[] sizeProperties = StringUtil.split(size);
+
+	for (String property : sizeProperties) {
+		sb.append("col-");
+		sb.append(sizeType);
+		sb.append(StringPool.DASH);
+		sb.append(StringUtil.trim(property));
+		sb.append(StringPool.SPACE);
+	}
+}
+
 private static final int _COLUMNS = 12;
 %>

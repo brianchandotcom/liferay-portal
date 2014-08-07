@@ -237,19 +237,13 @@
 						path: 'dockbar_add_application.js',
 						requires: [
 							'aui-io-request',
+							'event-key',
 							'event-mouseenter',
 							'liferay-dockbar',
-							'liferay-dockbar-add-application-search',
 							'liferay-dockbar-add-base',
-							'liferay-portlet-base'
-						]
-					},
-					'liferay-dockbar-add-application-search': {
-						path: 'dockbar_add_application_search.js',
-						requires: [
-							'aui-base',
-							'liferay-dockbar',
-							'liferay-dockbar-add-search'
+							'liferay-panel-search',
+							'liferay-portlet-base',
+							'liferay-toggler-interaction'
 						]
 					},
 					'liferay-dockbar-add-base': {
@@ -286,12 +280,13 @@
 						requires: [
 							'aui-base',
 							'liferay-dockbar',
-							'liferay-dockbar-add-search'
+							'liferay-search-filter'
 						]
 					},
 					'liferay-dockbar-add-page': {
 						path: 'dockbar_add_page.js',
 						requires: [
+							'aui-loading-mask-deprecated',
 							'aui-parse-content',
 							'aui-toggler-delegate',
 							'liferay-dockbar',
@@ -306,16 +301,7 @@
 						requires: [
 							'aui-base',
 							'liferay-dockbar',
-							'liferay-dockbar-add-search'
-						]
-					},
-					'liferay-dockbar-add-search': {
-						path: 'dockbar_add_search.js',
-						requires: [
-							'aui-base',
-							'autocomplete-base',
-							'autocomplete-filters',
-							'liferay-dockbar'
+							'liferay-search-filter'
 						]
 					},
 					'liferay-dockbar-device-preview': {
@@ -658,6 +644,13 @@
 							'aui-pagination'
 						]
 					},
+					'liferay-panel-search': {
+						path: 'panel_search.js',
+						requires: [
+							'aui-base',
+							'liferay-search-filter'
+						]
+					},
 					'liferay-poller': {
 						path: 'poller.js',
 						requires: [
@@ -727,6 +720,14 @@
 							'aui-base',
 							'aui-datatable-core',
 							'event-mouseenter'
+						]
+					},
+					'liferay-search-filter': {
+						path: 'search_filter.js',
+						requires: [
+							'aui-base',
+							'autocomplete-base',
+							'autocomplete-filters'
 						]
 					},
 					'liferay-service-datasource': {

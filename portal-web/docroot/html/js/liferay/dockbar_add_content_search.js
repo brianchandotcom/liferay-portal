@@ -1,10 +1,6 @@
 AUI.add(
 	'liferay-dockbar-add-content-search',
 	function(A) {
-		var Dockbar = Liferay.Dockbar;
-
-		var AddSearch = Dockbar.AddSearch;
-
 		var AddContentSearch = function() {
 		};
 
@@ -12,7 +8,7 @@ AUI.add(
 			initializer: function(config) {
 				var instance = this;
 
-				var contentSearch = new AddSearch(
+				var contentSearch = new Liferay.SearchFilter(
 					{
 						inputNode: instance.get('inputNode')
 					}
@@ -41,10 +37,10 @@ AUI.add(
 			}
 		};
 
-		Dockbar.AddContentSearch = AddContentSearch;
+		Liferay.Dockbar.AddContentSearch = AddContentSearch;
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-dockbar', 'liferay-dockbar-add-search']
+		requires: ['aui-base', 'liferay-dockbar', 'liferay-search-filter']
 	}
 );

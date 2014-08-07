@@ -3,10 +3,6 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 
-		var Dockbar = Liferay.Dockbar;
-
-		var AddSearch = Dockbar.AddSearch;
-
 		var AddPageSearch = function() {
 		};
 
@@ -14,10 +10,9 @@ AUI.add(
 			initializer: function(config) {
 				var instance = this;
 
-				var pageSearch = new AddSearch(
+				var pageSearch = new Liferay.SearchFilter(
 					{
-						inputNode: instance.get('inputNode'),
-						source: instance.get('searchData')
+						inputNode: instance.get('inputNode')
 					}
 				);
 
@@ -74,10 +69,10 @@ AUI.add(
 			}
 		};
 
-		Dockbar.AddPageSearch = AddPageSearch;
+		Liferay.Dockbar.AddPageSearch = AddPageSearch;
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-dockbar', 'liferay-dockbar-add-search']
+		requires: ['aui-base', 'liferay-dockbar', 'liferay-search-filter']
 	}
 );

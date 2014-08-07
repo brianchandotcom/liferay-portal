@@ -43,22 +43,8 @@ AUI.add(
 						setter: A.one
 					},
 
-					nodes: {
-						getter: '_getNodes',
-						readOnly: true
-					},
-
 					nodeSelector: {
 						validator: Lang.isString
-					},
-
-					searchData: {
-						getter: '_getSearchData',
-						readOnly: true
-					},
-
-					searchDataLocator: {
-						value: 'data-search'
 					},
 
 					selected: {
@@ -73,32 +59,6 @@ AUI.add(
 				prototype: {
 					initializer: function(config) {
 						var instance = this;
-
-						var nodeList = instance.get('nodeList');
-
-						if (nodeList) {
-							var nodeSelector = instance.get('nodeSelector');
-
-							var nodes = nodeList.all(nodeSelector);
-
-							var searchDataLocator = instance.get('searchDataLocator');
-
-							var searchData = [];
-
-							nodes.each(
-								function(item, index) {
-									searchData.push(
-										{
-											node: item,
-											search: item.attr(searchDataLocator)
-										}
-									);
-								}
-							);
-
-							instance._nodes = nodes;
-							instance._searchData = searchData;
-						}
 
 						if (instance.get('selected')) {
 							var focusItem = instance.get('focusItem');
@@ -226,12 +186,6 @@ AUI.add(
 						);
 					},
 
-					_getNodes: function() {
-						var instance = this;
-
-						return instance._nodes;
-					},
-
 					_getPortletMetaData: function(portlet) {
 						var instance = this;
 
@@ -267,12 +221,6 @@ AUI.add(
 						}
 
 						return portletMetaData;
-					},
-
-					_getSearchData: function() {
-						var instance = this;
-
-						return instance._searchData;
 					},
 
 					_hideAddedMessage: function() {

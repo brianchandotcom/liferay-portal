@@ -26,7 +26,7 @@ AUI.add(
 
 		var AddApplication = A.Component.create(
 			{
-				AUGMENTS: [Dockbar.AddApplicationSearch, Liferay.PortletBase],
+				AUGMENTS: Liferay.PortletBase,
 
 				EXTENDS: Dockbar.AddBase,
 
@@ -41,7 +41,9 @@ AUI.add(
 						instance._addApplicationForm = instance.byId('addApplicationForm');
 						instance._entriesPanel = instance.byId('applicationList');
 
-						var togglerDelegate = Liferay.component(instance.ns('addApplicationPanelContainer'));
+						var togglerSelector = instance.ns('addApplicationPanelContainer');
+
+						var togglerDelegate = Liferay.component(togglerSelector);
 
 						if (togglerDelegate) {
 							togglerDelegate.plug(
@@ -52,6 +54,17 @@ AUI.add(
 								}
 							);
 						}
+
+						new Liferay.PanelSearch(
+							{
+								categorySelector: '.panel-page-category',
+								inputNode: instance.get('inputNode'),
+								nodeContainerSelector: '.lfr-content-item',
+								nodeList: config.nodeList,
+								nodeSelector: '.drag-content-item',
+								togglerId: togglerSelector
+							}
+						);
 
 						instance._bindUI();
 					},
@@ -97,6 +110,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['event-key', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-application-search', 'liferay-toggler-interaction']
+		requires: ['aui-io-request', 'event-key', 'event-mouseenter', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-panel-search', 'liferay-portlet-base', 'liferay-toggler-interaction']
 	}
 );

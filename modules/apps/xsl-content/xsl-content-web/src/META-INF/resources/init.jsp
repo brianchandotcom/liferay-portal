@@ -67,8 +67,8 @@ PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, life
 
 String currentURL = currentURLObj.toString();
 
-String xmlUrl = portletPreferences.getValue("xmlUrl", XSLContentUtil.DEFAULT_XML_URL);
-String xslUrl = portletPreferences.getValue("xslUrl", XSLContentUtil.DEFAULT_XSL_URL);
+String xmlUrl = portletPreferences.getValue("xmlUrl", "@portal_url@" + request.getContextPath() + XSLContentUtil.DEFAULT_XML_URL);
+String xslUrl = portletPreferences.getValue("xslUrl", "@portal_url@" + request.getContextPath() + XSLContentUtil.DEFAULT_XSL_URL);
 %>
 
 <%@ include file="/init-ext.jsp" %>

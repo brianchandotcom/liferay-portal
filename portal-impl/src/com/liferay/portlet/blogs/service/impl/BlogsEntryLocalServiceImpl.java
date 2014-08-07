@@ -51,6 +51,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
@@ -1074,6 +1075,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			smallImageBytes);
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
+
+		long oldCoverImageId = entry.getCoverImageId();
+
+		if ((oldCoverImageId != 0) && (oldCoverImageId != coverImageId)) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(oldCoverImageId);
+		}
 
 		String oldUrlTitle = entry.getUrlTitle();
 

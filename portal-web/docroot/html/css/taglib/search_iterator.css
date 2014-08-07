@@ -10,6 +10,21 @@
 			width: auto;
 		}
 	}
+
+	.searchcontainer-content {
+
+		td.valign-bottom {
+			vertical-align: bottom;
+		}
+
+		td.valign-middle {
+			vertical-align: middle;
+		}
+
+		td.valign-top {
+			vertical-align: top;
+		}
+	}
 }
 
 .touch .lfr-search-container {

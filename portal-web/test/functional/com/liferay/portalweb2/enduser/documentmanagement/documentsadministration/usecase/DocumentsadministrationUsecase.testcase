@@ -525,6 +525,56 @@
 		</execute>
 	</command>
 
+	<command name="ViewPortletAfterRenamingDocumentWithDuplicateTitlePG" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocument" value="Duplicate" />
+			<var name="dmDocumentDescription" value="DM Document 2 Description" />
+			<var name="dmDocumentFile" value="Document_2.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="DM Document 2 Title" />
+		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="PGDocumentsandmedia#pause" locator1="1000" />
+		<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Documents and Media is temporarily unavailable." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute action="PGDocumentsandmedia#pause" locator1="1000" />
+		<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Documents and Media is temporarily unavailable." />
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Document 2 Description" />
+			<var name="dmDocumentTitle" value="DM Document 2 Title" />
+		</execute>
+	</command>
+
 	<command name="ViewSingleDocumentSelectionDoesNotCheckAllFileSelectionCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />

@@ -93,7 +93,7 @@
 				</for>
 			</then>
 			<else>
-				<execute action="BasePortletExport#check" locator-key1="CONTENT_ALL_CONTENT_RADIO" />
+				<echo message="This else block is needed until LIFERAYQA-10632 is resolved." />
 			</else>
 		</if>
 
@@ -109,8 +109,20 @@
 				</for>
 			</then>
 			<else>
-				<execute action="BasePortletExport#check" locator-key1="CONTENT_ALL_CONTENT_RADIO" />
+				<echo message="This else block is needed until LIFERAYQA-10632 is resolved." />
 			</else>
+		</if>
+
+		<if>
+			<not>
+				<and>
+					<isset var="checkContentNameList" />
+					<isset var="uncheckContentNameList" />
+				</and>
+			</not>
+			<then>
+				<execute action="BasePortletExport#check" locator-key1="CONTENT_ALL_CONTENT_RADIO" />
+			</then>
 		</if>
 
 		<if>
@@ -147,6 +159,14 @@
 
 	<command name="configureExportTemplateCP">
 		<execute macro="LAR#configureExportSiteOptionsCmd" />
+	</command>
+
+	<command name="editExportTemplateCP">
+		<var name="key_exportTemplateName" value="${exportTemplateName}" />
+
+		<execute action="CPSitepagesExport#assertClick" locator-key1="EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
+		<execute action="CPSitepagesExport#type" locator-key1="EXPORT_TEMPLATES_NAME_FIELD" value1="${exportTemplateNameEdit}" />
+		<execute action="CPSitepagesExport#type" locator-key1="EXPORT_TEMPLATES_DESCRIPTION_FIELD" value1="${exportTemplateDescriptionEdit}" />
 	</command>
 
 	<command name="exportCmd">

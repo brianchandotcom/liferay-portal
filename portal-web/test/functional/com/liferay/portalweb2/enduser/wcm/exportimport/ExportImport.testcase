@@ -72,6 +72,147 @@
 		</execute>
 	</command>
 
+	<command name="EditExportTemplate" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="LAR#gotoExportTemplateCP" />
+
+		<execute macro="LAR#addExportTemplateCP">
+			<var name="exportTemplateDescription" value="Export Template Description" />
+			<var name="exportTemplateName" value="Export Template Name" />
+		</execute>
+
+		<execute macro="LAR#configureExportTemplateCP">
+			<var name="uncheckContentNameList" value="Blogs" />
+		</execute>
+
+		<execute macro="LAR#saveExportTemplateCP">
+			<var name="exportTemplateDescription" value="Export Template Description" />
+			<var name="exportTemplateName" value="Export Template Name" />
+		</execute>
+
+		<execute macro="LAR#exportExportTemplateCP">
+			<var name="exportTemplateDescription" value="Export Template Description" />
+			<var name="exportTemplateName" value="Export Template Name" />
+		</execute>
+
+		<var method="selenium#getText(&quot;//div[@id='_156_exportProcesses']//table//tr/td[5]/span/a/span&quot;)" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+
+		<echo message="import file name ${larFileName}" />
+
+		<execute action="CPSitepagesExport#click" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute action="CPSitepagesExport#downloadTempFile" />
+
+		<execute action="CPSitepagesExport#click" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute action="CPSitepagesExport#downloadTempFile" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#importSiteCP">
+			<var name="larFileName" value="${larFileName}" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="LAR#gotoExportTemplateCP" />
+
+		<execute macro="LAR#editExportTemplateCP">
+			<var name="exportTemplateDescriptionEdit" value="Export Template Description Edit" />
+			<var name="exportTemplateName" value="Export Template Name" />
+			<var name="exportTemplateNameEdit" value="Export Template Name Edit" />
+		</execute>
+
+		<execute macro="LAR#configureExportTemplateCP">
+			<var name="checkContentNameList" value="Blogs" />
+		</execute>
+
+		<execute macro="LAR#saveExportTemplateCP">
+			<var name="exportTemplateDescription" value="Export Template Description Edit" />
+			<var name="exportTemplateName" value="Export Template Name Edit" />
+		</execute>
+
+		<execute macro="LAR#exportExportTemplateCP">
+			<var name="exportTemplateDescription" value="Export Template Description Edit" />
+			<var name="exportTemplateName" value="Export Template Name Edit" />
+		</execute>
+
+		<execute action="CPSitepagesExport#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText(&quot;//div[@id='_156_exportProcesses']//table//tr/td[5]/span/a/span&quot;)" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+
+		<echo message="import file name ${larFileName}" />
+
+		<execute action="CPSitepagesExport#click" locator-key1="CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute action="CPSitepagesExport#downloadTempFile" />
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#importSiteCP">
+			<var name="larFileName" value="${larFileName}" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewCP">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+	</command>
+
 	<command name="ExportImportDMRootFolder" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
@@ -409,6 +550,10 @@
 		<execute macro="LAR#addExportTemplateCP">
 			<var name="exportTemplateDescription" value="Export Template Description" />
 			<var name="exportTemplateName" value="Export Template Name" />
+		</execute>
+
+		<execute macro="LAR#configureExportTemplateCP">
+			<var name="uncheckContentNameList" value="Blogs" />
 		</execute>
 
 		<execute macro="LAR#saveExportTemplateCP">

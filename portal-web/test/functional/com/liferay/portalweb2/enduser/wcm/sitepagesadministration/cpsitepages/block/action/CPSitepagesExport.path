@@ -163,7 +163,7 @@
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX</td>
-	<td>//ul[@class='portlet-list']/li/label[contains(.,'${key_contentName}')]/input[2]</td>
+	<td>//ul[@class='portlet-list']/li/label[contains(.,'${key_contentName}')]/input</td>
 	<td></td>
 </tr>
 <tr>

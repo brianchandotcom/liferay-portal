@@ -14,14 +14,12 @@
  */
 --%>
 
-<%@ page import="javax.servlet.jsp.tagext.BodyContent" %>
-
 <%
 String bodyContentString = StringPool.BLANK;
 
-BodyContent bodyContent = (BodyContent)request.getAttribute("aui:nav:bodyContent");
+Serializable bodyContent = (Serializable)request.getAttribute("aui:nav:bodyContent");
 
 if (bodyContent != null) {
-	bodyContentString = bodyContent.getString();
+	bodyContentString = String.valueOf(bodyContent);
 }
 %>

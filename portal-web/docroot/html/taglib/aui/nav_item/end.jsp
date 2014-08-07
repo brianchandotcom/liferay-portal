@@ -19,12 +19,12 @@
 <%@ page import="javax.servlet.jsp.tagext.BodyContent" %>
 
 <%
-BodyContent bodyContent = (BodyContent)request.getAttribute("aui:nav-item:bodyContent");
+Serializable bodyContent = (Serializable)request.getAttribute("aui:nav-item:bodyContent");
 
 String bodyContentString = StringPool.BLANK;
 
 if (bodyContent != null) {
-	bodyContentString = bodyContent.getString();
+	bodyContentString = String.valueOf(bodyContent);
 }
 
 if (Validator.isNull(title)) {

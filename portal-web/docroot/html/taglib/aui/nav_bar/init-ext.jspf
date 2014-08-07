@@ -19,10 +19,10 @@
 <%
 String bodyContentString = StringPool.BLANK;
 
-BodyContent bodyContent = (BodyContent)request.getAttribute("aui:nav-bar:bodyContent");
+Serializable bodyContent = (Serializable)request.getAttribute("aui:nav-bar:bodyContent");
 
 if (bodyContent != null) {
-	bodyContentString = bodyContent.getString();
+	bodyContentString = String.valueOf(bodyContent);
 }
 
 if ((portletResponse != null) && Validator.isNotNull(id)) {

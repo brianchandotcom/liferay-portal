@@ -1,0 +1,187 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+String currentImageURL = StringPool.BLANK;
+
+long coverImageId = 0;
+
+if ((entry != null) && (entry.getCoverImageId() != 0)) {
+	coverImageId = entry.getCoverImageId();
+
+	FileEntry coverImage = PortletFileRepositoryUtil.getPortletFileEntry(coverImageId);
+
+	currentImageURL = PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, coverImage, StringPool.BLANK);
+}
+%>
+
+<portlet:actionURL var="uploadImageURL">
+	<portlet:param name="struts_action" value="/blogs/edit_cover" />
+</portlet:actionURL>
+
+<aui:form action="<%= uploadImageURL %>" cssClass="cover-image-selector-form" enctype="multipart/form-data" method="post" name="imageSelectorFM" onSubmit="event.preventDefault();">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPLOAD_IMAGE %>" />
+	<aui:input name="fileEntryId" type="hidden" value="<%= entry != null ? entry.getCoverImageId() : 0 %>" />
+
+	<aui:fieldset cssClass="cover-image-selector">
+		<div class="cover-image-upload-wrapper" id="<portlet:namespace/>imageUploadWrapper">
+			<aui:a href="javascript:;" id="imageUploadLink"><liferay-ui:message key="upload" /></aui:a>
+			<aui:input id="imageUploadFile" label="" name="file" onChange='<%= renderResponse.getNamespace() + "uploadCoverImage();" %>' size="50" type="file" wrapperCssClass="hidden image-upload-file">
+				<aui:validator name="acceptFiles">
+					'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
+				</aui:validator>
+			</aui:input>
+		</div>
+
+		<div class="hide cover-image-preview-wrapper" id="<portlet:namespace/>imagePreviewWrapper">
+			<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="image-preview" />" id="<portlet:namespace/>imagePreview" src="<%= currentImageURL %>" />
+
+			<div class="cover-image-action-buttons">
+				<aui:button cssClass="change-image" name="change" type="submit" value="change-image" />
+
+				<aui:button cssClass="delete-image" name="cancel" value="cancel" />
+			</div>
+		</div>
+
+		<div class="hide cover-image-view-wrapper" id="<portlet:namespace/>imageViewWrapper">
+			<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="image-preview" />" id="<portlet:namespace/>imagePreview" onChange='<%= "showImageView();" %>' src="<%= currentImageURL %>" />
+
+			<div class="cover-image-action-buttons">
+				<aui:button cssClass="change-image" name="change" type="submit" value="change-image" />
+
+				<aui:button cssClass="delete-image" name="delete" value="delete" />
+			</div>
+		</div>
+	</aui:fieldset>
+</aui:form>
+
+<aui:script use="aui-io,io-upload-iframe,json-parse,dd-drag">
+	var imageUploadLink = A.one('#<portlet:namespace />imageUploadLink');
+	var imageUploadFile = A.one('#<portlet:namespace />imageUploadFile');
+
+	imageUploadLink.on(
+		'click',
+		function(event) {
+			imageUploadFile.simulate('click');
+		}
+	);
+
+	var form = A.one('#<portlet:namespace />imageSelectorFM');
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />uploadCoverImage',
+		function() {
+			A.io.request(
+				form.get('action'),
+				{
+					dataType: 'JSON',
+					form: {
+						id: form,
+						upload: true
+					},
+					on: {
+						complete: function(event, id, obj) {
+							var responseText = obj.responseText;
+
+							var responseData = A.JSON.parse(responseText);
+
+							if (responseData.success) {
+								document.<portlet:namespace />fm.<portlet:namespace />coverImageId.value = responseData.fileEntryId;
+
+								var fileEntryIdNode = A.one('#<portlet:namespace />fileEntryId');
+
+								fileEntryIdNode.val(responseData.fileEntryId);
+
+								var imagePreviewNode = A.one('#<portlet:namespace />imagePreview');
+
+								imagePreviewNode.attr('src', responseData.fileEntryURL);
+
+								showImagePreview();
+							}
+						}
+					}
+				}
+			);
+		}
+	);
+
+	var deleteImageButton = A.all('.delete-image');
+
+	deleteImageButton.on(
+		'click',
+		function(event) {
+			document.<portlet:namespace />fm.<portlet:namespace />coverImageId.value = 0;
+
+			showImageSelector();
+		}
+	);
+
+	var showImagePreview = function() {
+		var imagePreviewWrapper = A.one('#<portlet:namespace />imagePreviewWrapper');
+
+		imagePreviewWrapper.show();
+
+		var imageUploadWrapper = A.one('#<portlet:namespace />imageUploadWrapper');
+
+		imageUploadWrapper.hide();
+
+		var imageViewWrapper = A.one('#<portlet:namespace />imageViewWrapper');
+
+		imageViewWrapper.hide();
+	}
+
+	var showImageSelector = function() {
+		var imageUploadWrapper = A.one('#<portlet:namespace />imageUploadWrapper');
+
+		imageUploadWrapper.show();
+
+		var imagePreviewWrapper = A.one('#<portlet:namespace />imagePreviewWrapper');
+
+		imagePreviewWrapper.hide();
+
+		var imageViewWrapper = A.one('#<portlet:namespace />imageViewWrapper');
+
+		imageViewWrapper.hide();
+	};
+
+	var showImageView = function() {
+		var imageUploadWrapper = A.one('#<portlet:namespace />imageUploadWrapper');
+
+		imageUploadWrapper.hide();
+
+		var imageViewWrapper = A.one('#<portlet:namespace />imageViewWrapper');
+
+		imageViewWrapper.show();
+	};
+
+	var changeButton = A.all('.change-image');
+
+	changeButton.on(
+		'click',
+		function(event) {
+			imageUploadFile.simulate('click');
+		}
+	);
+
+	if (<%= coverImageId %> != 0) {
+		showImageView();
+	}
+
+	var dd = new A.DD.Drag({
+		node: '#<portlet:namespace />imagePreview'
+	});
+</aui:script>

@@ -2614,12 +2614,6 @@
 		<action path="/workflow_tasks/view" forward="portlet.workflow_tasks.view" />
 
 		<action path="/workflow_tasks/view_content" forward="portlet.asset_publisher.view_content" />
-
-		<!-- XSL Content -->
-
-		<action path="/xsl_content/view" type="com.liferay.portlet.xslcontent.action.ViewAction">
-			<forward name="portlet.xsl_content.view" path="portlet.xsl_content.view" />
-		</action>
 	</action-mappings>
 
 	<!-- Custom Request Processor -->

@@ -317,6 +317,8 @@
 
 		<!-- Blogs -->
 
+		<action path="/blogs/edit_cover" type="com.liferay.portlet.blogs.action.EditCoverAction" />
+
 		<action path="/blogs/edit_entry" type="com.liferay.portlet.blogs.action.EditEntryAction">
 			<forward name="portlet.blogs.edit_entry" path="portlet.blogs.edit_entry" />
 			<forward name="portlet.blogs.error" path="portlet.blogs.error" />
@@ -343,6 +345,8 @@
 
 		<!-- Blogs Admin -->
 
+		<action path="/blogs_admin/edit_cover" type="com.liferay.portlet.blogs.action.EditCoverAction" />
+
 		<action path="/blogs_admin/edit_entry" type="com.liferay.portlet.blogs.action.EditEntryAction">
 			<forward name="portlet.blogs.edit_entry" path="portlet.blogs.edit_entry" />
 			<forward name="portlet.blogs.error" path="portlet.blogs.error" />
@@ -362,6 +366,8 @@
 		</action>
 
 		<!-- Blogs Aggregator -->
+
+		<action path="/blogs_aggregator/edit_cover" type="com.liferay.portlet.blogs.action.EditCoverAction" />
 
 		<action path="/blogs_aggregator/edit_entry" type="com.liferay.portlet.blogs.action.EditEntryAction">
 			<forward name="portlet.blogs.edit_entry" path="portlet.blogs.edit_entry" />

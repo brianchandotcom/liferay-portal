@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
@@ -431,7 +432,8 @@ public class EditEntryAction extends PortletAction {
 
 		try {
 			BlogsEntryServiceUtil.updateEntry(
-				entryId, entry.getTitle(), entry.getDescription(), content,
+				entryId, entry.getTitle(), entry.getDescription(),
+				entry.getSubtitle(), content, entry.getCoverImageId(),
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, entry.getAllowPingbacks(),
 				entry.getAllowTrackbacks(), null, entry.getSmallImage(),
@@ -458,9 +460,7 @@ public class EditEntryAction extends PortletAction {
 		throws Exception {
 
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
-
 		String title = ParamUtil.getString(actionRequest, "title");
-		long coverImageId = ParamUtil.getLong(actionRequest, "coverImageId");
 		String subtitle = ParamUtil.getString(actionRequest, "subtitle");
 		String description = ParamUtil.getString(actionRequest, "description");
 		String content = ParamUtil.getString(actionRequest, "content");
@@ -525,6 +525,14 @@ public class EditEntryAction extends PortletAction {
 
 			entry = null;
 			oldUrlTitle = StringPool.BLANK;
+
+			long coverImageId = 0;
+
+			FileEntry coverImage = ActionUtil.saveCoverImage(actionRequest);
+
+			if (coverImage != null) {
+				coverImageId = coverImage.getFileEntryId();
+			}
 
 			if (entryId <= 0) {
 

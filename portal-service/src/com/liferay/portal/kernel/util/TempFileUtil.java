@@ -104,6 +104,21 @@ public class TempFileUtil {
 		return fileEntryNames;
 	}
 
+	public static String getUniqueTempFileName(
+		long groupId, long userId, String folderName) {
+
+		String uniqueTempFileName = StringUtil.randomString();
+
+		try {
+			getTempFile(groupId, userId, uniqueTempFileName, folderName);
+
+			return getUniqueTempFileName(groupId, userId, folderName);
+		}
+		catch (PortalException pe) {
+			return uniqueTempFileName;
+		}
+	}
+
 	protected static Folder addTempFolder(
 			long groupId, long userId, String tempFolderName)
 		throws PortalException {

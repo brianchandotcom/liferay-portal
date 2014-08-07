@@ -52,28 +52,18 @@ switchGroupURL = PortalUtil.resetPortletParameters(switchGroupURL, themeDisplay.
 		<liferay-ui:icon-menu cssClass="control-panel-site-selector" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" id="controlPanelSiteSelector" localizeMessage="<%= false %>" message="<%= HtmlUtil.escape(siteGroup.getDescriptiveName()) %>" showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
 
 			<%
-			String taglibOnClick = null;
+			Map<String, Object> data = new HashMap<String, Object>();
 
-			if (PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED) {
-				manageableSiteGroups.add(siteGroup);
-
-				taglibOnClick = portletDisplay.getNamespace() + "changeSiteLabel(this);";
-			}
+			data.put("navigation", Boolean.TRUE.toString());
 
 			for (Group manageableSiteGroup : manageableSiteGroups) {
-				String cssClass = "site-group";
-
-				if (PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED && (siteGroup.getGroupId() == manageableSiteGroup.getGroupId())) {
-					cssClass += " selected";
-				}
 			%>
 
 				<liferay-ui:icon
-					cssClass="<%= cssClass %>"
+					data="<%= data %>"
 					iconCssClass="<%= manageableSiteGroup.getIconCssClass() %>"
 					localizeMessage="<%= false %>"
 					message="<%= HtmlUtil.escape(manageableSiteGroup.getDescriptiveName(locale)) %>"
-					onClick="<%= taglibOnClick %>"
 					url='<%= HttpUtil.setParameter(switchGroupURL, "doAsGroupId", manageableSiteGroup.getGroupId()) %>'
 				/>
 
@@ -82,32 +72,5 @@ switchGroupURL = PortalUtil.resetPortletParameters(switchGroupURL, themeDisplay.
 			%>
 
 		</liferay-ui:icon-menu>
-
-		<c:if test="<%= PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED %>">
-			<aui:script>
-				Liferay.provide(
-					window,
-					'<portlet:namespace />changeSiteLabel',
-					function(target) {
-						var A = AUI();
-
-						var siteSelectorLabel = A.one('#<portlet:namespace/>controlPanelSiteSelector .lfr-icon-menu-text');
-
-						var newSite = A.one(target).ancestor('.site-group', false, '.lfr-menu-list');
-						var prevSite = A.one('.site-group.selected');
-
-						if (newSite && prevSite) {
-							newSite.addClass('selected');
-							prevSite.removeClass('selected');
-
-							var newSiteIconHtml = newSite.one('.taglib-text-icon').html();
-
-							siteSelectorLabel.html(newSiteIconHtml);
-						}
-					},
-					['aui-base']
-				);
-			</aui:script>
-		</c:if>
 	</c:otherwise>
 </c:choose>

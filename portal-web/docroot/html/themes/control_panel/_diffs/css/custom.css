@@ -901,10 +901,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		vertical-align: middle;
 	}
 
-	.site-group.selected {
-		display: none;
-	}
-
 	.lfr-ctrl-panel {
 		li.publish-link-container a:before {
 			padding-left: 0;

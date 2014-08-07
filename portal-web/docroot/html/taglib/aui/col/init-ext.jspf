@@ -39,7 +39,7 @@ if (Validator.isNotNull(lg)) {
 
 String gridCssClasses = sb.toString();
 
-if (gridCssClasses.equals(StringPool.BLANK)) {
+if (Validator.isNull(gridCssClasses)) {
 	if (width > 0) {
 		span = (int)Math.round(_COLUMNS * ((double)width / 100));
 	}

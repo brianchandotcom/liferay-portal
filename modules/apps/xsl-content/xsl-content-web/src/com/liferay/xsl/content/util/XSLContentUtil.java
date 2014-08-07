@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.xslcontent.util;
+package com.liferay.xsl.content.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -33,11 +33,9 @@ import javax.xml.transform.stream.StreamSource;
  */
 public class XSLContentUtil {
 
-	public static final String DEFAULT_XML_URL =
-		"@portal_url@/html/portlet/xsl_content/example.xml";
+	public static final String DEFAULT_XML_URL = "/example.xml";
 
-	public static final String DEFAULT_XSL_URL =
-		"@portal_url@/html/portlet/xsl_content/example.xsl";
+	public static final String DEFAULT_XSL_URL = "/example.xsl";
 
 	public static String transform(URL xmlUrl, URL xslUrl)
 		throws IOException, TransformerException {

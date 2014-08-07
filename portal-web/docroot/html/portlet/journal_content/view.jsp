@@ -23,10 +23,6 @@ JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribu
 boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT);
 
 boolean hasViewPermission = true;
-
-String title = StringPool.BLANK;
-boolean approved = false;
-boolean expired = true;
 %>
 
 <c:choose>
@@ -69,9 +65,9 @@ boolean expired = true;
 			<c:otherwise>
 
 				<%
-				title = article.getTitle(locale);
-				approved = article.isApproved();
-				expired = article.isExpired();
+				String title = article.getTitle(locale);
+				boolean approved = article.isApproved();
+				boolean expired = article.isExpired();
 
 				if (!expired) {
 					Date expirationDate = article.getExpirationDate();
@@ -269,12 +265,8 @@ boolean expired = true;
 <%
 JournalArticle latestArticle = null;
 
-try {
-	if (articleDisplay != null) {
-		latestArticle = JournalArticleLocalServiceUtil.getLatestArticle(articleDisplay.getGroupId(), articleDisplay.getArticleId(), WorkflowConstants.STATUS_ANY);
-	}
-}
-catch (NoSuchArticleException nsae) {
+if (articleDisplay != null) {
+	latestArticle = JournalArticleLocalServiceUtil.fetchLatestArticle(articleDisplay.getGroupId(), articleDisplay.getArticleId(), WorkflowConstants.STATUS_ANY);
 }
 
 DDMTemplate ddmTemplate = null;

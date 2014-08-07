@@ -222,6 +222,12 @@ AUI.add(
 						instance._documentLibraryContainer.purge(true);
 					},
 
+					getFolderId: function() {
+						var instance = this;
+
+						return instance._folderId;
+					},
+
 					_afterDataRequest: function(event) {
 						var instance = this;
 

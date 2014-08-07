@@ -14,21 +14,43 @@
 
 package com.liferay.portal.kernel.lar.xstream;
 
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+
+import java.util.List;
+
 /**
- * @author Daniel Kocsis
+ * @author Akos Thurzo
  */
-public interface XStreamConverter {
+public abstract class BaseXStreamConverter implements XStreamConverter {
 
-	public boolean canConvert(Class<?> clazz);
+	@Override
+	public abstract boolean canConvert(Class<?> clazz);
 
+	@Override
 	public void marshal(
 			Object object, XStreamHierarchicalStreamWriter writer,
 			XStreamMarshallingContext marshallingContext)
-		throws Exception;
+		throws Exception {
 
-	public Object unmarshal(
+		for (String field : getFields()) {
+			writer.startNode(field);
+
+			Object value = BeanPropertiesUtil.getObject(object, field);
+
+			if (value != null) {
+				marshallingContext.convertAnother(value);
+			}
+
+			writer.endNode();
+		}
+	}
+
+	@Override
+	public abstract Object unmarshal(
 			XStreamHierarchicalStreamReader reader,
 			XStreamUnmarshallingContext unmarshallingContext)
 		throws Exception;
+
+	protected abstract List<String> getFields();
 
 }

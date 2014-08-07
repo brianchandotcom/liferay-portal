@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
+import com.liferay.portal.kernel.lar.xstream.XStreamConverterRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -48,6 +49,9 @@ import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.lar.xstream.FileEntryConverter;
+import com.liferay.portlet.documentlibrary.lar.xstream.FileVersionConverter;
+import com.liferay.portlet.documentlibrary.lar.xstream.FolderConverter;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -124,6 +128,10 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		XStreamAliasRegistryUtil.register(RepositoryImpl.class, "Repository");
 		XStreamAliasRegistryUtil.register(
 			RepositoryEntryImpl.class, "RepositoryEntry");
+
+		XStreamConverterRegistryUtil.register(new FileEntryConverter());
+		XStreamConverterRegistryUtil.register(new FileVersionConverter());
+		XStreamConverterRegistryUtil.register(new FolderConverter());
 	}
 
 	@Override

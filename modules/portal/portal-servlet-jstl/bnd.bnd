@@ -1,0 +1,17 @@
+Bundle-DocURL: http://glassfish.org
+Bundle-License: http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html
+Bundle-Name: JavaServer Pages (TM) TagLib Implementation
+Bundle-SymbolicName: org.glassfish.web.javax.servlet.jsp.jstl
+Bundle-Vendor: GlassFish Community
+Bundle-Version: 1.2.3
+Export-Package: org.apache.taglibs.standard.*;version=1.2.3
+Extension-Name: javax.servlet.jsp.jstl
+Implementation-Vendor: Oracle Corporation
+Implementation-Version: 1.2.3
+Import-Package:\
+	!com.sun.*,\
+	org.apache.taglibs.standard.*;version=1.2.3,\
+	*
+Include-Resource: @lib/javax.servlet.jsp.jstl.jar
+Specification-Vendor: Oracle Corporation
+Specification-Version: 1.2

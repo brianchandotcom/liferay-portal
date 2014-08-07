@@ -126,6 +126,9 @@
 			</then>
 			<else>
 				<execute action="CPKaleoformsadmin#click" locator-key1="PROCESS_TABLE_ACTIONS_1" />
+			</then>
+			<else>
+				<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_WORKFLOW" value1="${workflowDefinition} (Version 1)" />
 			</else>
 		</if>
 
@@ -283,5 +286,47 @@
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_WORKFLOW" value1="${workflowDefinition} (Version 1)" />
 
 		<execute macro="KaleoFormsAdmin#next" />
+	</command>
+	
+	<command name="viewProcessNoRecords">
+		<var name="key_kfProcessName" value="${kfProcessName}" />
+
+		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_MENULIST_VIEW" value1="View" />
+
+		<execute action="CPKaleoformsadminViewProcessRecords#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No records were found." />
+	</command>
+
+	<command name="viewProcessRecordAuthor">
+		<var name="key_kfProcessName" value="${kfProcessName}" />
+
+		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_MENULIST_VIEW" value1="View" />
+
+		<var name="key_kfAuthor" value="${kfAuthor}" />
+
+		<execute action="CPKaleoformsadminViewProcessRecords#assertTextEquals" locator-key1="RECORD_TABLE_AUTHOR" value1="${kfAuthor}" />
+	</command>
+
+	<command name="viewProcessRecordEntry">
+		<var name="key_kfProcessName" value="${kfProcessName}" />
+
+		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_MENULIST_VIEW" value1="View" />
+
+		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
+
+		<execute action="CPKaleoformsadminViewProcessRecords#assertTextEquals" locator-key1="RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
+	</command>
+
+	<command name="viewProcessRecordStatus">
+		<var name="key_kfProcessName" value="${kfProcessName}" />
+
+		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_MENULIST_VIEW" value1="View" />
+
+		<var name="key_kfStatus" value="${kfStatus}" />
+
+		<execute action="CPKaleoformsadminViewProcessRecords#assertTextEquals" locator-key1="RECORD_TABLE_STATUS" value1="${kfStatus}" />
 	</command>
 </definition>

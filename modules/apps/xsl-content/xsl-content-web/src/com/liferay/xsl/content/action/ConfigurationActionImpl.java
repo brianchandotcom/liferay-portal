@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.xslcontent.action;
+package com.liferay.xsl.content.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;

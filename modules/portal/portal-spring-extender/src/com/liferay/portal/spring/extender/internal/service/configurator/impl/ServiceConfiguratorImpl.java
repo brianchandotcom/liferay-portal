@@ -176,7 +176,7 @@ public class ServiceConfiguratorImpl
 		for (String resourceActionsConfig : resourceActionsConfigs) {
 			try {
 				ResourceActionsUtil.read(
-					"", _classLoader, resourceActionsConfig);
+					null, _classLoader, resourceActionsConfig);
 			}
 			catch (Exception e) {
 				_log.error(

@@ -237,11 +237,13 @@
 						path: 'dockbar_add_application.js',
 						requires: [
 							'aui-io-request',
+							'event-key',
 							'event-mouseenter',
 							'liferay-dockbar',
 							'liferay-dockbar-add-base',
 							'liferay-panel-search',
-							'liferay-portlet-base'
+							'liferay-portlet-base',
+							'liferay-toggler-interaction'
 						]
 					},
 					'liferay-dockbar-add-base': {
@@ -284,6 +286,7 @@
 					'liferay-dockbar-add-page': {
 						path: 'dockbar_add_page.js',
 						requires: [
+							'aui-loading-mask-deprecated',
 							'aui-parse-content',
 							'aui-toggler-delegate',
 							'liferay-dockbar',

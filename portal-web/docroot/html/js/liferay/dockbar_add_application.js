@@ -110,6 +110,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['event-key', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-panel-search', 'liferay-toggler-interaction']
+		requires: ['aui-io-request', 'event-key', 'event-mouseenter', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-panel-search', 'liferay-portlet-base', 'liferay-toggler-interaction']
 	}
 );

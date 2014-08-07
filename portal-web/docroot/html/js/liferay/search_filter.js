@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var SearchImpl = A.Component.create (
+		var SearchImpl = A.Component.create(
 			{
 				AUGMENTS: [A.AutoCompleteBase],
 

@@ -254,23 +254,6 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			disableStaging(liveGroup, serviceContext);
 		}
 
-		UnicodeProperties typeSettingsProperties =
-			liveGroup.getTypeSettingsProperties();
-
-		typeSettingsProperties.setProperty(
-			"branchingPrivate", String.valueOf(branchingPrivate));
-		typeSettingsProperties.setProperty(
-			"branchingPublic", String.valueOf(branchingPublic));
-		typeSettingsProperties.setProperty("staged", Boolean.TRUE.toString());
-		typeSettingsProperties.setProperty(
-			"stagedRemotely", String.valueOf(false));
-
-		setCommonStagingOptions(
-			liveGroup, typeSettingsProperties, serviceContext);
-
-		groupLocalService.updateGroup(
-			liveGroup.getGroupId(), typeSettingsProperties.toString());
-
 		if (!liveGroup.hasStagingGroup()) {
 			serviceContext.setAttribute("staging", String.valueOf(true));
 
@@ -298,6 +281,23 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		checkDefaultLayoutSetBranches(
 			userId, liveGroup, branchingPublic, branchingPrivate, false,
 			serviceContext);
+
+		UnicodeProperties typeSettingsProperties =
+			liveGroup.getTypeSettingsProperties();
+
+		typeSettingsProperties.setProperty(
+			"branchingPrivate", String.valueOf(branchingPrivate));
+		typeSettingsProperties.setProperty(
+			"branchingPublic", String.valueOf(branchingPublic));
+		typeSettingsProperties.setProperty("staged", Boolean.TRUE.toString());
+		typeSettingsProperties.setProperty(
+			"stagedRemotely", String.valueOf(false));
+
+		setCommonStagingOptions(
+			liveGroup, typeSettingsProperties, serviceContext);
+
+		groupLocalService.updateGroup(
+			liveGroup.getGroupId(), typeSettingsProperties.toString());
 	}
 
 	@Override
@@ -346,6 +346,10 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			enableRemoteStaging(remoteURL, remoteGroupId);
 		}
 
+		checkDefaultLayoutSetBranches(
+			userId, liveGroup, branchingPublic, branchingPrivate, true,
+			serviceContext);
+
 		typeSettingsProperties.setProperty(
 			"branchingPrivate", String.valueOf(branchingPrivate));
 		typeSettingsProperties.setProperty(
@@ -370,10 +374,6 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			liveGroup.getGroupId(), typeSettingsProperties.toString());
 
 		updateStagedPortlets(remoteURL, remoteGroupId, typeSettingsProperties);
-
-		checkDefaultLayoutSetBranches(
-			userId, liveGroup, branchingPublic, branchingPrivate, true,
-			serviceContext);
 	}
 
 	@Override

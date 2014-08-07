@@ -14,6 +14,7 @@
 
 package com.liferay.xsl.content.action;
 
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 
@@ -21,10 +22,17 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Hugo Huijser
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=102"},
+	service = ConfigurationAction.class
+)
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 	@Override

@@ -41,12 +41,16 @@ public class BaseColTag extends com.liferay.taglib.util.IncludeTag {
 		return _id;
 	}
 
-	public int getOffset() {
-		return _offset;
+	public java.lang.String getLg() {
+		return _lg;
 	}
 
-	public int getOffsetWidth() {
-		return _offsetWidth;
+	public java.lang.String getMd() {
+		return _md;
+	}
+
+	public java.lang.String getSm() {
+		return _sm;
 	}
 
 	public int getSpan() {
@@ -55,6 +59,10 @@ public class BaseColTag extends com.liferay.taglib.util.IncludeTag {
 
 	public int getWidth() {
 		return _width;
+	}
+
+	public java.lang.String getXs() {
+		return _xs;
 	}
 
 	public void setCssClass(java.lang.String cssClass) {
@@ -69,16 +77,22 @@ public class BaseColTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("id", id);
 	}
 
-	public void setOffset(int offset) {
-		_offset = offset;
+	public void setLg(java.lang.String lg) {
+		_lg = lg;
 
-		setScopedAttribute("offset", offset);
+		setScopedAttribute("lg", lg);
 	}
 
-	public void setOffsetWidth(int offsetWidth) {
-		_offsetWidth = offsetWidth;
+	public void setMd(java.lang.String md) {
+		_md = md;
 
-		setScopedAttribute("offsetWidth", offsetWidth);
+		setScopedAttribute("md", md);
+	}
+
+	public void setSm(java.lang.String sm) {
+		_sm = sm;
+
+		setScopedAttribute("sm", sm);
 	}
 
 	public void setSpan(int span) {
@@ -93,14 +107,22 @@ public class BaseColTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("width", width);
 	}
 
+	public void setXs(java.lang.String xs) {
+		_xs = xs;
+
+		setScopedAttribute("xs", xs);
+	}
+
 	@Override
 	protected void cleanUp() {
 		_cssClass = null;
 		_id = null;
-		_offset = 0;
-		_offsetWidth = 0;
+		_lg = null;
+		_md = null;
+		_sm = null;
 		_span = 12;
 		_width = 0;
+		_xs = null;
 	}
 
 	@Override
@@ -117,10 +139,12 @@ public class BaseColTag extends com.liferay.taglib.util.IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "id", _id);
-		setNamespacedAttribute(request, "offset", _offset);
-		setNamespacedAttribute(request, "offsetWidth", _offsetWidth);
+		setNamespacedAttribute(request, "lg", _lg);
+		setNamespacedAttribute(request, "md", _md);
+		setNamespacedAttribute(request, "sm", _sm);
 		setNamespacedAttribute(request, "span", _span);
 		setNamespacedAttribute(request, "width", _width);
+		setNamespacedAttribute(request, "xs", _xs);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:col:";
@@ -133,9 +157,11 @@ public class BaseColTag extends com.liferay.taglib.util.IncludeTag {
 
 	private java.lang.String _cssClass = null;
 	private java.lang.String _id = null;
-	private int _offset = 0;
-	private int _offsetWidth = 0;
+	private java.lang.String _lg = null;
+	private java.lang.String _md = null;
+	private java.lang.String _sm = null;
 	private int _span = 12;
 	private int _width = 0;
+	private java.lang.String _xs = null;
 
 }

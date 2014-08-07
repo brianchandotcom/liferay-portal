@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.LocalRepositoryFactory;
-import com.liferay.portal.kernel.repository.RepositoryFactoryUtil;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayLocalRepository;
@@ -60,14 +59,9 @@ public class LocalRepositoryFactoryImpl
 		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);
 
-		BaseRepository baseRepository =
-			(BaseRepository)RepositoryFactoryUtil.create(repositoryId);
+		long classNameId = getRepositoryClassNameId(repositoryId);
 
-		LocalRepository localRepository = baseRepository.getLocalRepository();
-
-		return new CapabilityLocalRepository(
-			localRepository, getExternalSupportedCapabilities(),
-			getExternalExportedCapabilityClasses());
+		return createExternalRepository(repositoryId, classNameId);
 	}
 
 	@Override

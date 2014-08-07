@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>TASK_ASSIGNEE</td>
-	<td>//div[@class='task-data assignee']</td>
+	<td>//div[@class='task-data'][contains(.,'Assigned to')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TASK_REPORTER</td>
-	<td>//div[@class='task-data reporter']</td>
+	<td>//div[@class='task-data'][contains(.,'Created by')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -5,8 +5,6 @@ AUI.add(
 		var Lang = A.Lang;
 		var History = Liferay.HistoryManager;
 
-		var IE = A.UA.ie;
-
 		var CSS_SYNC_MESSAGE_HIDDEN = 'sync-message-hidden';
 
 		var DEFAULT_FOLDER_ID = 0;
@@ -59,9 +57,11 @@ AUI.add(
 
 		var WIN = A.config.win;
 
+		var HTML5_UPLOAD = (WIN && WIN.File && WIN.FormData && WIN.XMLHttpRequest);
+
 		var DocumentLibrary = A.Component.create(
 			{
-				AUGMENTS: [Liferay.PortletBase, Liferay.DocumentLibraryUpload, Liferay.StorageFormatter],
+				AUGMENTS: [Liferay.PortletBase],
 
 				EXTENDS: A.Base,
 
@@ -80,11 +80,9 @@ AUI.add(
 						instance._eventDataRetrieveSuccess = instance.ns('dataRetrieveSuccess');
 						instance._eventOpenDocument = instance.ns('openDocument');
 						instance._eventChangeSearchFolder = instance.ns('changeSearchFolder');
-
-						instance._entriesContainer = instance.byId('entriesContainer');
-
 						instance._eventPageLoaded = instance.ns('pageLoaded');
 
+						instance._entriesContainer = instance.byId('entriesContainer');
 						instance._keywordsNode = instance.byId(STR_KEYWORDS);
 
 						if (!config.syncMessageDisabled) {
@@ -168,7 +166,10 @@ AUI.add(
 
 						instance._appViewFolders = new Liferay.AppViewFolders(foldersConfig);
 
+						instance._folderId = foldersConfig.defaultParentFolderId;
+
 						var eventHandles = [
+							Liferay.after('liferay-app-view-folders:dataRequest', instance._afterDataRequest ,instance),
 							Liferay.on(instance._eventDataRetrieveSuccess, instance._onDataRetrieveSuccess, instance),
 							Liferay.on(instance._eventOpenDocument, instance._openDocument, instance),
 							Liferay.on(instance._eventPageLoaded, instance._onPageLoaded, instance),
@@ -183,7 +184,12 @@ AUI.add(
 
 						instance._repositoriesData = {};
 
-						eventHandles.push(Liferay.on(config.portletId + ':portletRefreshed', A.bind('destructor', instance)));
+						eventHandles.push(
+							Liferay.on(
+								config.portletId + ':portletRefreshed',
+								A.bind('destructor', instance)
+							)
+						);
 
 						var searchFormNode = instance.one('#fm1');
 
@@ -192,8 +198,15 @@ AUI.add(
 						}
 
 						instance._toggleSyncNotification();
-
 						instance._toggleTrashAction();
+
+						var hasPermission = (themeDisplay.isSignedIn() && instance.one('#addButtonContainer'));
+
+						if (HTML5_UPLOAD && hasPermission && instance._entriesContainer.inDoc()) {
+							config.appViewEntryTemplates = instance.byId('appViewEntryTemplates');
+
+							A.getDoc().once('dragenter', instance._plugUpload, instance, config);
+						}
 					},
 
 					destructor: function() {
@@ -207,6 +220,18 @@ AUI.add(
 						instance._appViewSelect.destroy();
 
 						instance._documentLibraryContainer.purge(true);
+					},
+
+					getFolderId: function() {
+						var instance = this;
+
+						return instance._folderId;
+					},
+
+					_afterDataRequest: function(event) {
+						var instance = this;
+
+						instance._folderId = event.requestParams[instance.ns('folderId')];
 					},
 
 					_afterStateChange: function(event) {
@@ -261,9 +286,7 @@ AUI.add(
 
 						var repositories = instance._config.repositories;
 
-						var length = repositories.length;
-
-						for (var i = 0; i < length; i++) {
+						for (var i = 0; i < repositories.length; i++) {
 							var repository = repositories[i];
 
 							if (repository.id == repositoryId) {
@@ -434,6 +457,28 @@ AUI.add(
 						);
 					},
 
+					_plugUpload: function(event, config) {
+						var instance = this;
+
+						instance.plug(
+							Liferay.DocumentLibraryUpload,
+							{
+								appViewEntryTemplates: config.appViewEntryTemplates,
+								appViewMove: instance._appViewMove,
+								columnNames: config.columnNames,
+								dimensions: config.folders.dimensions,
+								displayStyle: config.displayStyle,
+								entriesContainer: instance._entriesContainer,
+								folderId: instance._folderId,
+								listViewContainer: instance.byId('listViewContainer'),
+								maxFileSize: config.maxFileSize,
+								redirect: config.redirect,
+								uploadURL: config.uploadURL,
+								viewFileEntryURL: config.viewFileEntryURL
+							}
+						);
+					},
+
 					_searchFileEntry: function(searchData) {
 						var instance = this;
 
@@ -548,34 +593,6 @@ AUI.add(
 						}
 					},
 
-					_tuneStateChangeParams: function(requestParams) {
-						var instance = this;
-
-						var entriesContainer = instance._entriesContainer;
-
-						var namespacedShowRepositoryTabs = instance.ns(STR_SHOW_REPOSITORY_TABS);
-
-						if (AObject.owns(requestParams, namespacedShowRepositoryTabs) &&
-							!requestParams[namespacedShowRepositoryTabs] &&
-							!entriesContainer.one('ul.nav-tabs')) {
-
-							requestParams[namespacedShowRepositoryTabs] = true;
-
-							requestParams[instance.ns(SEARCH_TYPE)] = SEARCH_TYPE_SINGLE;
-						}
-
-						var namespacedShowSearchInfo = instance.ns(STR_SHOW_SEARCH_INFO);
-
-						if (AObject.owns(requestParams, namespacedShowSearchInfo) &&
-							!requestParams[namespacedShowSearchInfo] &&
-							!entriesContainer.one('.search-info')) {
-
-							requestParams[namespacedShowSearchInfo] = true;
-
-							requestParams[instance.ns(SEARCH_TYPE)] = SEARCH_TYPE_SINGLE;
-						}
-					},
-
 					_toggleSyncNotification: function() {
 						var instance = this;
 
@@ -604,6 +621,34 @@ AUI.add(
 						instance.one('#deleteAction').toggle(!trashEnabled);
 
 						instance.one('#moveToTrashAction').toggle(trashEnabled);
+					},
+
+					_tuneStateChangeParams: function(requestParams) {
+						var instance = this;
+
+						var entriesContainer = instance._entriesContainer;
+
+						var namespacedShowRepositoryTabs = instance.ns(STR_SHOW_REPOSITORY_TABS);
+
+						if (AObject.owns(requestParams, namespacedShowRepositoryTabs) &&
+							!requestParams[namespacedShowRepositoryTabs] &&
+							!entriesContainer.one('ul.nav-tabs')) {
+
+							requestParams[namespacedShowRepositoryTabs] = true;
+
+							requestParams[instance.ns(SEARCH_TYPE)] = SEARCH_TYPE_SINGLE;
+						}
+
+						var namespacedShowSearchInfo = instance.ns(STR_SHOW_SEARCH_INFO);
+
+						if (AObject.owns(requestParams, namespacedShowSearchInfo) &&
+							!requestParams[namespacedShowSearchInfo] &&
+							!entriesContainer.one('.search-info')) {
+
+							requestParams[namespacedShowSearchInfo] = true;
+
+							requestParams[instance.ns(SEARCH_TYPE)] = SEARCH_TYPE_SINGLE;
+						}
 					}
 				}
 			}
@@ -617,6 +662,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-loading-mask-deprecated', 'aui-parse-content', 'document-library-upload', 'event-simulate', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-history-manager', 'liferay-message', 'liferay-portlet-base', 'liferay-storage-formatter', 'querystring-parse-simple']
+		requires: ['aui-loading-mask-deprecated', 'document-library-upload', 'event-simulate', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-history-manager', 'liferay-message', 'liferay-portlet-base']
 	}
 );

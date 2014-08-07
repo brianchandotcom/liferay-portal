@@ -289,41 +289,28 @@
 	</command>
 	
 	<command name="viewProcessNoRecords">
-		<var name="key_kfProcessName" value="${kfProcessName}" />
-
-		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_MENULIST_VIEW" value1="View" />
+		<execute macro="KaleoFormsAdmin#viewProcessRecord">
+			<var name="kfProcessName" value="${kfProcessName}" />
+		</execute>
 
 		<execute action="CPKaleoformsadminViewProcessRecords#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No records were found." />
 	</command>
 
-	<command name="viewProcessRecordAuthor">
+	<command name="viewProcessRecord">
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
 		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_MENULIST_VIEW" value1="View" />
+	</command>
 
+	<command name="viewProcessRecordTable">
 		<var name="key_kfAuthor" value="${kfAuthor}" />
 
 		<execute action="CPKaleoformsadminViewProcessRecords#assertTextEquals" locator-key1="RECORD_TABLE_AUTHOR" value1="${kfAuthor}" />
-	</command>
-
-	<command name="viewProcessRecordEntry">
-		<var name="key_kfProcessName" value="${kfProcessName}" />
-
-		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_MENULIST_VIEW" value1="View" />
 
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 
 		<execute action="CPKaleoformsadminViewProcessRecords#assertTextEquals" locator-key1="RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
-	</command>
-
-	<command name="viewProcessRecordStatus">
-		<var name="key_kfProcessName" value="${kfProcessName}" />
-
-		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_MENULIST_VIEW" value1="View" />
 
 		<var name="key_kfStatus" value="${kfStatus}" />
 

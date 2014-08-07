@@ -21,6 +21,10 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#tearDownCP" />
+
+		<execute macro="DDLDataDefinition#tearDownCP">
+			<var name="dataDefinitionName" value="Process Fields Definition" />
+		</execute>
 	</tear-down>
 
 	<command name="AddProcessWithDataDefinitionFieldsDefinition" priority="5">

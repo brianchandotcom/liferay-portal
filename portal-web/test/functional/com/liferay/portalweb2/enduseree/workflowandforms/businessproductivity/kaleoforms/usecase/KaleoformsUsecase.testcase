@@ -2198,7 +2198,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#addFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="Process Fields Definition" />
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -2210,7 +2210,7 @@
 		<execute macro="KaleoFormsAdmin#saveFieldsDefinition" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="Process Fields Definition" />
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2284,27 +2284,14 @@
 			<var name="portletName" value="Kaleo Forms Admin" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#viewProcessRecordEntry">
+		<execute macro="KaleoFormsAdmin#viewProcessRecord">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
 			<var name="ddlRecordFieldData" value="Test Approved" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordStatus">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="kfStatus" value="Approved" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordAuthor">
 			<var name="kfAuthor" value="Test Test" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfStatus" value="Approved" />
 		</execute>
 	</command>
 
@@ -2323,7 +2310,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#addFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="Process Fields Definition" />
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -2335,7 +2322,7 @@
 		<execute macro="KaleoFormsAdmin#saveFieldsDefinition" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="Process Fields Definition" />
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2452,27 +2439,14 @@
 			<var name="portletName" value="Kaleo Forms Admin" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#viewProcessRecordEntry">
+		<execute macro="KaleoFormsAdmin#viewProcessRecord">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
 			<var name="ddlRecordFieldData" value="Test Approved" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordStatus">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="kfStatus" value="Approved" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordAuthor">
 			<var name="kfAuthor" value="userfn userln" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfStatus" value="Approved" />
 		</execute>
 	</command>
 
@@ -2491,7 +2465,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#addFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="Process Fields Definition" />
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -2503,7 +2477,7 @@
 		<execute macro="KaleoFormsAdmin#saveFieldsDefinition" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="Process Fields Definition" />
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2572,27 +2546,14 @@
 			<var name="portletName" value="Kaleo Forms Admin" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#viewProcessRecordEntry">
+		<execute macro="KaleoFormsAdmin#viewProcessRecord">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
 			<var name="ddlRecordFieldData" value="Test Assigned" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordStatus">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="kfStatus" value="Pending" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordAuthor">
 			<var name="kfAuthor" value="Test Test" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfStatus" value="Pending" />
 		</execute>
 	</command>
 
@@ -2611,7 +2572,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#addFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="Process Fields Definition" />
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -2623,7 +2584,7 @@
 		<execute macro="KaleoFormsAdmin#saveFieldsDefinition" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="Process Fields Definition" />
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2708,45 +2669,20 @@
 			<var name="portletName" value="Kaleo Forms Admin" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#viewProcessRecordEntry">
+		<execute macro="KaleoFormsAdmin#viewProcessRecord">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
 			<var name="ddlRecordFieldData" value="Test Submitted" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordEntry">
-			<var name="ddlRecordFieldData" value="Test Approved" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordStatus">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfAuthor" value="Test Test" />
 			<var name="kfStatus" value="Pending" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordStatus">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="kfStatus" value="Approved" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordAuthor">
+		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
+			<var name="ddlRecordFieldData" value="Test Approved" />
 			<var name="kfAuthor" value="Test Test" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfStatus" value="Approved" />
 		</execute>
 	</command>
 
@@ -2765,7 +2701,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#addFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="Process Fields Definition" />
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -2777,7 +2713,7 @@
 		<execute macro="KaleoFormsAdmin#saveFieldsDefinition" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="Process Fields Definition" />
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2851,27 +2787,14 @@
 			<var name="portletName" value="Kaleo Forms Admin" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#viewProcessRecordEntry">
+		<execute macro="KaleoFormsAdmin#viewProcessRecord">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
 			<var name="ddlRecordFieldData" value="Test Rejected" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordStatus">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="kfStatus" value="Pending" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordAuthor">
 			<var name="kfAuthor" value="Test Test" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfStatus" value="Pending" />
 		</execute>
 	</command>
 
@@ -2890,7 +2813,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#addFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="Process Fields Definition" />
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -2902,7 +2825,7 @@
 		<execute macro="KaleoFormsAdmin#saveFieldsDefinition" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="Process Fields Definition" />
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2962,27 +2885,14 @@
 			<var name="portletName" value="Kaleo Forms Admin" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#viewProcessRecordEntry">
+		<execute macro="KaleoFormsAdmin#viewProcessRecord">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
 			<var name="ddlRecordFieldData" value="Test Submitted" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordStatus">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="kfStatus" value="Pending" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewProcessRecordAuthor">
 			<var name="kfAuthor" value="Test Test" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="kfStatus" value="Pending" />
 		</execute>
 	</command>
 

@@ -1,5 +1,5 @@
 Import-Package:\
-	${jsp.imports},\
+	${bnd.jsp.support.imports},\
 	com.liferay.util.freemarker;resolution:=optional,\
 	*
 Include-Resource:\

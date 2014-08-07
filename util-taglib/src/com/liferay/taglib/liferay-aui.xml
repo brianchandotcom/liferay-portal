@@ -163,14 +163,19 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<name>offset</name>
-				<inputType>int</inputType>
-				<outputType>int</outputType>
+				<name>lg</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<name>offsetWidth</name>
-				<inputType>int</inputType>
-				<outputType>int</outputType>
+				<name>md</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>sm</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
 				<name>span</name>
@@ -182,6 +187,11 @@
 				<name>width</name>
 				<inputType>int</inputType>
 				<outputType>int</outputType>
+			</attribute>
+			<attribute>
+				<name>xs</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
 			</attribute>
 		</attributes>
 	</component>

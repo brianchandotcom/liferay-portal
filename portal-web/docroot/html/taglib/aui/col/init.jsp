@@ -21,10 +21,12 @@
 <%
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:col:cssClass"));
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:col:id"));
-int offset = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:col:offset")));
-int offsetWidth = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:col:offsetWidth")));
+java.lang.String lg = GetterUtil.getString((java.lang.String)request.getAttribute("aui:col:lg"));
+java.lang.String md = GetterUtil.getString((java.lang.String)request.getAttribute("aui:col:md"));
+java.lang.String sm = GetterUtil.getString((java.lang.String)request.getAttribute("aui:col:sm"));
 int span = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:col:span")), 12);
 int width = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:col:width")));
+java.lang.String xs = GetterUtil.getString((java.lang.String)request.getAttribute("aui:col:xs"));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:col:dynamicAttributes");
 Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:col:scopedAttributes");
 %>

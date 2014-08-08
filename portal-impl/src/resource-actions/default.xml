@@ -26,5 +26,4 @@
 	<resource file="resource-actions/softwarecatalog.xml" />
 	<resource file="resource-actions/wiki.xml" />
 	<resource file="resource-actions/workflow.xml" />
-	<resource file="resource-actions/xslcontent.xml" />
 </resource-action-mapping>

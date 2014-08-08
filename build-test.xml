@@ -2664,28 +2664,25 @@ plugins.includes=marketplace-portlet</echo>
 
 				<if>
 					<and>
-						<equals arg1="${liferay.portal.bundle}" arg2="6.1.20" />
 						<equals arg1="${app.server.type}" arg2="tomcat" />
+						<equals arg1="${liferay.portal.bundle}" arg2="6.1.20" />
 					</and>
 					<then>
 						<echo file="app.server.${user.name}.properties" append="true">
 							app.server.tomcat.version=7.0.27
 						</echo>
 
-						<chmod perm="a+x">
-							<fileset dir="${app.server.parent.dir}/tomcat-7.0.27/bin">
-								<include name="*.sh" />
-							</fileset>
-						</chmod>
+						<var name="test.app.server.bin.dir" unset="true" />
+
+						<var name="test.app.server.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.27/bin" />
 					</then>
-					<else>
-						<chmod perm="a+x">
-							<fileset dir="${test.app.server.bin.dir}">
-								<include name="*.sh" />
-							</fileset>
-						</chmod>
-					</else>
 				</if>
+
+				<chmod perm="a+x">
+					<fileset dir="${test.app.server.bin.dir}">
+						<include name="*.sh" />
+					</fileset>
+				</chmod>
 
 				<if>
 					<equals arg1="${app.server.type}" arg2="jboss" />

@@ -12,6 +12,14 @@
 
 		<execute macro="DDLTemplate#tearDownTemplateCP" />
 
+		<execute macro="DDLTemplate#tearDownTemplateCP">
+			<var name="dataDefinitionName" value="To Do" />
+		</execute>
+
+		<execute macro="DDLTemplate#tearDownTemplateCP">
+			<var name="dataDefinitionName" value="Inventory" />
+		</execute>
+
 		<execute macro="DDLDataDefinition#tearDownCP" />
 
 		<execute macro="DMDocument#tearDownCP" />
@@ -73,13 +81,12 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinition" value="${workflowDefinition}" />
-			<var name="workflowDefinitionTitle" value="${workflowDefinition}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="create" />
+			<var name="workflowTask" value="create" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -191,13 +198,12 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinition" value="${workflowDefinition}" />
-			<var name="workflowDefinitionTitle" value="${workflowDefinition}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="create" />
+			<var name="workflowTask" value="create" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -367,7 +373,6 @@
 
 		<execute macro="Workflow#viewDefinition">
 			<var name="workflowDefinitionName" value="Uploaded Definition" />
-			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -390,13 +395,12 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinition" value="Uploaded Definition" />
-			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="create" />
+			<var name="workflowTask" value="create" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -576,13 +580,12 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="create" />
+			<var name="workflowTask" value="create" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -680,14 +683,13 @@
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="kfPendingForm" value="true" />
 			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfPendingForm" value="true" />
-			<var name="workflowDefinitionTask" value="create" />
+			<var name="workflowTask" value="create" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -735,13 +737,12 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="create" />
+			<var name="workflowTask" value="create" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -779,13 +780,12 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="create" />
+			<var name="workflowTask" value="create" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -802,6 +802,15 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcess">
 			<var name="kfProcessName" value="Kaleo Forms Process Edited" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewProcessDetails">
+			<var name="kfProcessDescription" value="Kaleo Forms Process Description Edited" />
+			<var name="kfProcessName" value="Kaleo Forms Process Edited" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewProcessFieldsDefinition">
+			<var name="kfFieldsDefinitionName" value="Inventory" />
 		</execute>
 
 		<execute macro="Page#addPG">
@@ -928,13 +937,12 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="create" />
+			<var name="workflowTask" value="create" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -948,7 +956,7 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="review" />
+			<var name="workflowTask" value="review" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -1179,13 +1187,12 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="create" />
+			<var name="workflowTask" value="create" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -1199,7 +1206,7 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="review" />
+			<var name="workflowTask" value="review" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -1430,13 +1437,12 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="create" />
+			<var name="workflowTask" value="create" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -1570,13 +1576,12 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinition" value="Single Approver" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="create" />
+			<var name="workflowTask" value="create" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -1590,7 +1595,7 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="review" />
+			<var name="workflowTask" value="review" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -1801,13 +1806,12 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinition" value="${workflowDefinition}" />
-			<var name="workflowDefinitionTitle" value="${workflowDefinition}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="create" />
+			<var name="workflowTask" value="create" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -1933,13 +1937,12 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinition" value="${workflowDefinition}" />
-			<var name="workflowDefinitionTitle" value="${workflowDefinition}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="create" />
+			<var name="workflowTask" value="create" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -2095,13 +2098,12 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinition" value="${workflowDefinition}" />
-			<var name="workflowDefinitionTitle" value="${workflowDefinition}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="create" />
+			<var name="workflowTask" value="create" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -2231,13 +2233,12 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinition" value="${workflowDefinition}" />
-			<var name="workflowDefinitionTitle" value="${workflowDefinition}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="create" />
+			<var name="workflowTask" value="create" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
@@ -2338,13 +2339,12 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="workflowDefinition" value="${workflowDefinition}" />
-			<var name="workflowDefinitionTitle" value="${workflowDefinition}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="workflowDefinitionTask" value="create" />
+			<var name="workflowTask" value="create" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">

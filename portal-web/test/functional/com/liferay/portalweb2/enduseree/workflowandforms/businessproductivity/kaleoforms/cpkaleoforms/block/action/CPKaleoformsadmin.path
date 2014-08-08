@@ -55,6 +55,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--INFO_MESSAGE-->
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--PROCESS_TABLE-->
 <tr>
 	<td>PROCESS_TABLE_NAME</td>

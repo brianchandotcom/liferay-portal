@@ -203,8 +203,13 @@
 </tr>
 <!--FORMS_TABLE-->
 <tr>
-	<td>FORMS_TABLE_ASSIGN_FORM</td>
-	<td>//div[contains(@id,'kaleoformsportlet_taskForm')]//tr[contains(.,'${key_workflowDefinitionTask}')]/td[3]/a</td>
+	<td>FORMS_TABLE_FORM</td>
+	<td>//div[contains(@id,'kaleoformsportlet_taskForm')]//tr[contains(.,'${key_workflowTask}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORMS_TABLE_ASSIGN_FORM_BUTTON</td>
+	<td>//div[contains(@id,'kaleoformsportlet_taskForm')]//tr[contains(.,'${key_workflowTask}')]/td[3]/button</td>
 	<td></td>
 </tr>
 <tr>

@@ -101,15 +101,6 @@ public class ${entity.name}PersistenceTest {
 		TemplateManagerUtil.init();
 	}
 
-	@Before
-	public void setUp() {
-		_modelListeners = _persistence.getListeners();
-
-		for (ModelListener<${entity.name}> modelListener : _modelListeners) {
-			_persistence.unregisterListener(modelListener);
-		}
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		Iterator<${entity.name}> iterator = _${entity.varNames}.iterator();
@@ -118,10 +109,6 @@ public class ${entity.name}PersistenceTest {
 			_persistence.remove(iterator.next());
 
 			iterator.remove();
-		}
-
-		for (ModelListener<${entity.name}> modelListener : _modelListeners) {
-			_persistence.registerListener(modelListener);
 		}
 	}
 

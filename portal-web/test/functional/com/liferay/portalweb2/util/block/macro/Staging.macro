@@ -520,6 +520,20 @@
 		</if>
 
 		<if>
+			<isset var="contentDateRange" />
+			<then>
+				<execute action="StagingPublishtolivenow#click" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
+				<execute action="StagingPublishtolivenow#assertClick" locator-key1="CHOOSE_CONTENT_DATE_RANGE_SELECT_LINK" value1="Select" />
+
+				<var name="key_contentDateRange" value="${contentDateRange}" />
+
+				<execute action="StagingPublishtolivenow#click" locator-key1="DATE_RANGE_POPUP_RANGE_RADIO" />
+				<execute action="StagingPublishtolivenow#assertClick" locator-key1="DATE_RANGE_POPUP_OK_BUTTON" value1="OK" />
+				<execute action="StagingPublishtolivenow#assertTextEquals" locator-key1="CHOOSE_CONTENT_DATE_RANGE_STATUS" value1="${contentDateRange}" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${contentDeletion}" arg2="true" />
 			<then>
 				<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
@@ -547,30 +561,48 @@
 		</if>
 
 		<if>
-			<equals arg1="${uncheckContent}" arg2="true" />
+			<isset var="checkContentNameList" />
 			<then>
 				<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
 
-				<var name="key_contentName" value="${contentName}" />
+				<for list="${checkContentNameList}" param="contentName">
+					<var name="key_contentName" value="${contentName}" />
 
-				<execute action="StagingPublishtolivenow#uncheck" locator-key1="CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+					<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+				</for>
 			</then>
 			<else>
-				<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_ALL_CONTENT_RADIO" />
+				<echo message="This else block is needed until LIFERAYQA-10632 is resolved." />
 			</else>
 		</if>
 
 		<if>
-			<isset var="contentDateRange" />
+			<isset var="uncheckContentNameList" />
 			<then>
-				<execute action="StagingPublishtolivenow#click" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
-				<execute action="StagingPublishtolivenow#assertClick" locator-key1="CHOOSE_CONTENT_DATE_RANGE_SELECT_LINK" value1="Select" />
+				<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
 
-				<var name="key_contentDateRange" value="${contentDateRange}" />
+				<for list="${uncheckContentNameList}" param="contentName">
+					<var name="key_contentName" value="${contentName}" />
 
-				<execute action="StagingPublishtolivenow#click" locator-key1="DATE_RANGE_POPUP_RANGE_RADIO" />
-				<execute action="StagingPublishtolivenow#assertClick" locator-key1="DATE_RANGE_POPUP_OK_BUTTON" value1="OK" />
-				<execute action="StagingPublishtolivenow#assertTextEquals" locator-key1="CHOOSE_CONTENT_DATE_RANGE_STATUS" value1="${contentDateRange}" />
+					<execute action="StagingPublishtolivenow#uncheck" locator-key1="CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+				</for>
+			</then>
+			<else>
+				<echo message="This else block is needed until LIFERAYQA-10632 is resolved." />
+			</else>
+		</if>
+
+		<if>
+			<and>
+				<not>
+					<isset var="checkContentNameList" />
+				</not>
+				<not>
+					<isset var="uncheckContentNameList" />
+				</not>
+			</and>
+			<then>
+				<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_ALL_CONTENT_RADIO" />
 			</then>
 		</if>
 

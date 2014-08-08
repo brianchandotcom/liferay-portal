@@ -254,10 +254,6 @@
 			}
 		},
 
-		clamp: function(value, min, max) {
-			return Math.min(Math.max(value, min), max);
-		},
-
 		disableEsc: function() {
 			if ((document.all) && (event.keyCode == 27)) {
 				event.returnValue = false;

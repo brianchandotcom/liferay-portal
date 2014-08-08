@@ -11,17 +11,28 @@
 		}
 	}
 
-	.searchcontainer-content {
+	.table td {
+		&.align-center {
+			text-align: center;
+		}
 
-		td.valign-bottom {
+		&.align-left {
+			text-align: left;
+		}
+
+		&.align-right {
+			text-align: right;
+		}
+
+		&.valign-bottom {
 			vertical-align: bottom;
 		}
 
-		td.valign-middle {
+		&.valign-middle {
 			vertical-align: middle;
 		}
 
-		td.valign-top {
+		&.valign-top {
 			vertical-align: top;
 		}
 	}

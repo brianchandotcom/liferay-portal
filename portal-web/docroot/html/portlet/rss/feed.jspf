@@ -96,7 +96,7 @@ catch (Exception e) {
 
 			<c:if test="<%= (feedImage != null) && showFeedImage %>">
 				<div class="feed-image-<%= feedImageAlignment %>">
-					<aui:a href="<%= HtmlUtil.escape(feedImageLink) %>" target="_new" title="<%= feedImage.getTitle() %>"><img alt="<%= HtmlUtil.escapeAttribute(feedImage.getDescription()) %>" src="<%= HtmlUtil.escape(feedImageURL) %>" /></aui:a>
+					<aui:a href="<%= _escapeJavascriptLink(feedImageLink) %>" target="_new" title="<%= feedImage.getTitle() %>"><img alt="<%= HtmlUtil.escapeAttribute(feedImage.getDescription()) %>" src="<%= HtmlUtil.escape(feedImageURL) %>" /></aui:a>
 				</div>
 			</c:if>
 
@@ -226,3 +226,21 @@ catch (Exception e) {
 		</div>
 	</c:otherwise>
 </c:choose>
+
+<%!
+private String _escapeJavascriptLink(String link) {
+	if (Validator.isNull(link)) {
+		return StringPool.BLANK;
+	}
+
+	if (link.indexOf(StringPool.COLON) == 10) {
+		String protocol = StringUtil.toLowerCase(link.substring(0, 10));
+
+		if (protocol.equals("javascript")) {
+			link = StringUtil.replaceFirst(link, StringPool.COLON, "%3a");
+		}
+	}
+
+	return link;
+}
+%>

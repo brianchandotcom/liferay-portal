@@ -10,7 +10,9 @@
 		<execute action="MobiledockbarAddpanelcontent#assertClick" locator-key1="NAVIGATION_PAGE" value1="Page" />
 
 		<execute action="MobiledockbarAddpanelpage#type" locator-key1="NAME_FIELD" value1="${pageName}" />
+		<execute action="MobiledockbarAddpanelpage#pause" locator1="2000" />
 		<execute action="MobiledockbarAddpanelpage#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute action="MobiledockbarAddpanelpage#pause" locator1="2000" />
 	</command>
 
 	<command name="gotoCmdCP">
@@ -49,6 +51,24 @@
 			<var name="portletCategoryName" value="Content" />
 			<var name="portletName" value="${portletName}" />
 		</execute>
+	</command>
+
+	<command name="gotoCP">
+		<description message="Navigate to Control Panel > ${portletName}." />
+
+		<execute macro="Page#openURL" />
+
+		<execute action="Mobiledockbar#click" locator-key1="COG_ICON" />
+		<execute action="Mobiledockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
+
+		<if>
+			<isset var="portletName" />
+			<then>
+				<var name="key_portletName" value="${portletName}" />
+
+				<execute action="Home#click" locator-key1="CONTROL_PANEL_NAVIGATION" />
+			</then>
+		</if>
 	</command>
 
 	<command name="gotoPagesCP">

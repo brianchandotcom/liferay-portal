@@ -1,18 +1,15 @@
 <definition>
 	<command name="addCP">
-		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_ARTICLE_BUTTON" value1="Add Article" />
-
-		<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="TITLE_FIELD" value1="${kbArticleTitle}" />
-		<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="CONTENT_FIELD" value1="${kbArticleContent}" />
-		<execute action="CPKnowledgebaseadminAddarticle#addSelection" locator-key1="SECTIONS_SELECT" value1="${kbArticleSection}" />
-		<execute action="CPKnowledgebaseadminAddarticle#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-
-		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
-	<command name="addCPWithTemplate">
-		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_BUTTON" value1="Add" />
-		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_MENULIST_TEMPLATE" value1="${kbTemplateTitle}" />
+		<if>
+			<equals arg1="${kbTemplate}" arg2="true" />
+			<then>
+				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_BUTTON" value1="Add" />
+				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_MENULIST_TEMPLATE" value1="${kbTemplateTitle}" />
+			</then>
+			<else>
+				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_ARTICLE_BUTTON" value1="Add Article" />
+			</else>
+		</if>
 
 		<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="TITLE_FIELD" value1="${kbArticleTitle}" />
 		<execute action="CPKnowledgebaseadminAddarticle#type" locator-key1="CONTENT_FIELD" value1="${kbArticleContent}" />

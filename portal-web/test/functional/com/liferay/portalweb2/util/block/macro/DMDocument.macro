@@ -236,6 +236,13 @@
 				<execute action="PGDocumentsandmediaAdddocument#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Your request failed to complete." />
 				<execute action="PGDocumentsandmediaAdddocument#assertTextEquals" locator-key1="UNIQUE_DOCUMENT_ERROR_MESSAGE" value1="Please enter a unique document name." />
 			</then>
+			<elseif>
+				<equals arg1="${dmDocument}" arg2="Invalid" />
+				<then>
+					<execute action="PGDocumentsandmediaAdddocument#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+					<execute action="PGDocumentsandmediaAdddocument#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a file with a valid file name." />
+				</then>
+			</elseif>
 			<else>
 				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>

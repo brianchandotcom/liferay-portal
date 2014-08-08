@@ -720,6 +720,15 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void sendKeysAceEditor(String locator, String value) {
+		WebElement webElement = getWebElement(locator);
+
+		webElement.sendKeys(Keys.chord(Keys.CONTROL, Keys.END));
+
+		LiferaySeleniumHelper.typeAceEditor(this, locator, value);
+	}
+
+	@Override
 	public void sendLogger(String id, String status) {
 	}
 

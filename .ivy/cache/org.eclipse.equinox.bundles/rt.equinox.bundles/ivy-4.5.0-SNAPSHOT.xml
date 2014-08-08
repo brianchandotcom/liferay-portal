@@ -17,13 +17,13 @@
 		<m:properties__code.ignoredWarnings>-warn:-deprecation,unavoidableGenericProblems</m:properties__code.ignoredWarnings>
 		<m:properties__tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/equinox/rt.equinox.bundles.git</m:properties__tycho.scmUrl>
 		<m:properties__emf-repo.url>http://download.eclipse.org/modeling/emf/emf/updates/2.10milestones/base/S201405141158/</m:properties__emf-repo.url>
-		<m:properties__releaseNumberPlatform>4.5</m:properties__releaseNumberPlatform>
 		<m:properties__cbi-jdt-repo.url>https://repo.eclipse.org/content/repositories/eclipse-staging/</m:properties__cbi-jdt-repo.url>
 		<m:properties__releaseNumberSDK>4.5</m:properties__releaseNumberSDK>
+		<m:properties__releaseNumberPlatform>4.5</m:properties__releaseNumberPlatform>
 		<m:properties__buildId>${buildType}${buildTimestamp}</m:properties__buildId>
 		<m:properties__comparator.repo>http://download.eclipse.org/eclipse/updates/4.5-I-builds</m:properties__comparator.repo>
-		<m:properties__maven.build.timestamp.format>yyyyMMdd-HHmm</m:properties__maven.build.timestamp.format>
 		<m:properties__ecf-repo.url>http://download.eclipse.org/rt/ecf/3.8.1.rc3/site.p2/</m:properties__ecf-repo.url>
+		<m:properties__maven.build.timestamp.format>yyyyMMdd-HHmm</m:properties__maven.build.timestamp.format>
 		<m:maven.plugins>org.eclipse.tycho__tycho-maven-plugin__0.20.0|org.eclipse.cbi.maven.plugins__eclipse-cbi-plugin__1.0.5|org.eclipse.tycho__target-platform-configuration__null|org.eclipse.tycho__tycho-source-plugin__null|org.apache.maven.plugins__maven-resources-plugin__2.6|org.eclipse.tycho__tycho-maven-plugin__0.20.0|org.eclipse.cbi.maven.plugins__eclipse-cbi-plugin__1.0.5|org.eclipse.tycho__target-platform-configuration__null|org.eclipse.tycho__tycho-source-plugin__null|org.apache.maven.plugins__maven-resources-plugin__2.6</m:maven.plugins>
 		<m:properties__eclipserun-repo>http://download.eclipse.org/eclipse/updates/4.4/R-4.4-201406061215/</m:properties__eclipserun-repo>
 		<m:properties__defaultSigning-excludeInnerJars>false</m:properties__defaultSigning-excludeInnerJars>

@@ -31,8 +31,8 @@
 		<m:dependency.management__org.apache.solr__solr-uima__exclusion_56>org.eclipse.jetty__jetty-util</m:dependency.management__org.apache.solr__solr-uima__exclusion_56>
 		<m:dependency.management__org.apache.solr__solr-uima__exclusion_57>org.eclipse.jetty__jetty-webapp</m:dependency.management__org.apache.solr__solr-uima__exclusion_57>
 		<m:dependency.management__org.apache.solr__solr-uima__exclusion_54>org.eclipse.jetty__jetty-server</m:dependency.management__org.apache.solr__solr-uima__exclusion_54>
-		<m:dependency.management__org.apache.solr__solr-uima__exclusion_55>org.eclipse.jetty__jetty-servlet</m:dependency.management__org.apache.solr__solr-uima__exclusion_55>
 		<m:dependency.management__org.apache.avro__avro__version>1.7.5</m:dependency.management__org.apache.avro__avro__version>
+		<m:dependency.management__org.apache.solr__solr-uima__exclusion_55>org.eclipse.jetty__jetty-servlet</m:dependency.management__org.apache.solr__solr-uima__exclusion_55>
 		<m:dependency.management__org.apache.solr__solr-uima__exclusion_52>org.eclipse.jetty__jetty-jmx</m:dependency.management__org.apache.solr__solr-uima__exclusion_52>
 		<m:dependency.management__org.apache.solr__solr-uima__exclusion_53>org.eclipse.jetty__jetty-security</m:dependency.management__org.apache.solr__solr-uima__exclusion_53>
 		<m:dependency.management__org.apache.solr__solr-uima__exclusion_50>org.eclipse.jetty__jetty-http</m:dependency.management__org.apache.solr__solr-uima__exclusion_50>
@@ -1541,8 +1541,8 @@
 		<m:dependency.management__org.apache.tika__tika-parsers__exclusion_0>com.drewnoakes__metadata-extractor</m:dependency.management__org.apache.tika__tika-parsers__exclusion_0>
 		<m:dependency.management__org.apache.hadoop__hadoop-mapreduce-client-hs__exclusion_5>org.apache.hadoop__hadoop-mapreduce-client-app</m:dependency.management__org.apache.hadoop__hadoop-mapreduce-client-hs__exclusion_5>
 		<m:dependency.management__org.apache.hadoop__hadoop-mapreduce-client-hs__exclusion_6>org.apache.hadoop__hadoop-mapreduce-client-common</m:dependency.management__org.apache.hadoop__hadoop-mapreduce-client-hs__exclusion_6>
-		<m:dependency.management__org.apache.tika__tika-parsers__exclusion_2>com.googlecode.mp4parser__isoparser</m:dependency.management__org.apache.tika__tika-parsers__exclusion_2>
 		<m:dependency.management__org.apache.hadoop__hadoop-mapreduce-client-hs__exclusion_7>org.slf4j__slf4j-api</m:dependency.management__org.apache.hadoop__hadoop-mapreduce-client-hs__exclusion_7>
+		<m:dependency.management__org.apache.tika__tika-parsers__exclusion_2>com.googlecode.mp4parser__isoparser</m:dependency.management__org.apache.tika__tika-parsers__exclusion_2>
 		<m:dependency.management__org.apache.hadoop__hadoop-mapreduce-client-hs__exclusion_8>org.slf4j__slf4j-log4j12</m:dependency.management__org.apache.hadoop__hadoop-mapreduce-client-hs__exclusion_8>
 		<m:dependency.management__org.apache.tika__tika-parsers__exclusion_1>com.googlecode.juniversalchardet__juniversalchardet</m:dependency.management__org.apache.tika__tika-parsers__exclusion_1>
 		<m:dependency.management__rome__rome__version>0.9</m:dependency.management__rome__rome__version>
@@ -1689,8 +1689,8 @@
 		<m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_49>org.apache.httpcomponents__httpclient</m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_49>
 		<m:dependency.management__org.apache.hadoop__hadoop-yarn-common__exclusion_8>io.netty__netty</m:dependency.management__org.apache.hadoop__hadoop-yarn-common__exclusion_8>
 		<m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_48>org.apache.hadoop__hadoop-hdfs</m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_48>
-		<m:dependency.management__org.apache.hadoop__hadoop-yarn-common__exclusion_9>log4j__log4j</m:dependency.management__org.apache.hadoop__hadoop-yarn-common__exclusion_9>
 		<m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_47>org.apache.hadoop__hadoop-auth</m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_47>
+		<m:dependency.management__org.apache.hadoop__hadoop-yarn-common__exclusion_9>log4j__log4j</m:dependency.management__org.apache.hadoop__hadoop-yarn-common__exclusion_9>
 		<m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_46>org.apache.hadoop__hadoop-annotations</m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_46>
 		<m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_39>dom4j__dom4j</m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_39>
 		<m:dependency.management__org.apache.hadoop__hadoop-hdfs__exclusion_17>tomcat__jasper-runtime</m:dependency.management__org.apache.hadoop__hadoop-hdfs__exclusion_17>
@@ -2025,8 +2025,8 @@
 		<override org="org.eclipse.jetty" module="jetty-continuation" matcher="exact" rev="8.1.10.v20130312"/>
 		<override org="de.l3s.boilerpipe" module="boilerpipe" matcher="exact" rev="1.1.0"/>
 		<override org="org.kitesdk" module="kite-morphlines-json" matcher="exact" rev="0.12.1"/>
-		<override org="commons-cli" module="commons-cli" matcher="exact" rev="1.2"/>
 		<override org="org.noggit" module="noggit" matcher="exact" rev="0.5"/>
+		<override org="commons-cli" module="commons-cli" matcher="exact" rev="1.2"/>
 		<override org="com.sun.jersey" module="jersey-bundle" matcher="exact" rev="1.9"/>
 		<override org="org.kitesdk" module="kite-morphlines-saxon" matcher="exact" rev="0.12.1"/>
 		<override org="org.apache.poi" module="poi-ooxml-schemas" matcher="exact" rev="3.10-beta2"/>

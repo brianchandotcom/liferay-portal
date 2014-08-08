@@ -1785,7 +1785,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/fontbox.jar</file-name>
-		<version>1.8.2</version>
+		<version>1.8.6</version>
 		<project-name>PDFBox</project-name>
 		<project-url>http://pdfbox.apache.org</project-url>
 		<licenses>
@@ -2264,7 +2264,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/jempbox.jar</file-name>
-		<version>1.8.2</version>
+		<version>1.8.6</version>
 		<project-name>PDFBox</project-name>
 		<project-url>http://pdfbox.apache.org</project-url>
 		<licenses>
@@ -2928,7 +2928,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/pdfbox.jar</file-name>
-		<version>1.8.2</version>
+		<version>1.8.6</version>
 		<project-name>PDFBox</project-name>
 		<project-url>http://pdfbox.apache.org</project-url>
 		<licenses>

@@ -11,7 +11,7 @@
 		</case>
 
 		<case locator-key1="REORDER_ICON">
-			<execute function="Click#clickAtClickDockbar" />
+			<execute function="Click#waitForNavigationInteractionTouchScriptClickAt" />
 		</case>
 	</command>
 </definition>

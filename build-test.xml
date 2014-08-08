@@ -381,39 +381,28 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="start-additional-app-servers">
-		<sequential>
-			<if>
-				<isset property="app.server.bundle.count" />
-				<then>
-					<var name="bundle.count" value="1" />
-
-					<antelope:repeat count="${app.server.bundle.count}">
-						<start-app-server
-							app.server.bin.dir="${app.server.parent.dir}-${bundle.count}/${app.server.type}-${app.server.version}/bin"
-							app.server.http.url="http://localhost:${bundle.count}080/web/guest"
-							liferay.home="${app.server.parent.dir}-${bundle.count}"
-						/>
-
-						<math
-							datatype="int"
-							operand1="${bundle.count}"
-							operand2="1"
-							operation="+"
-							result="bundle.count"
-						/>
-					</antelope:repeat>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="start-app-server">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
-		<attribute default="${liferay.home}" name="liferay.home" />
-		<attribute default="http://localhost:8080/web/guest" name="app.server.http.url" />
 
 		<sequential>
+			<if>
+				<isset property="app.server.suffix" />
+				<then>
+					<var name="port.prefix" value="${app.server.suffix}" />
+
+					<antelope:stringutil property="test.app.server.bin.dir" string="@{app.server.bin.dir}">
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-${app.server.suffix}$2" />
+					</antelope:stringutil>
+
+					<var name="test.app.server.parent.dir" value="${app.server.parent.dir}-${app.server.suffix}" />
+				</then>
+				<else>
+					<var name="port.prefix" value="8" />
+					<var name="test.app.server.bin.dir" value="@{app.server.bin.dir}" />
+					<var name="test.app.server.parent.dir" value="${app.server.parent.dir}" />
+				</else>
+			</if>
+
 			<if>
 				<equals arg1="${app.server.type}" arg2="jboss" />
 				<then>
@@ -424,14 +413,14 @@
 			<if>
 				<equals arg1="${test.ant.launched.by.selenium}" arg2="true" />
 				<then>
-					<exec dir="${app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
+					<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
 						<arg line="${app.server.start.executable.arg.line}" />
 					</exec>
 				</then>
 				<else>
 					<parallel>
 						<daemons>
-							<exec dir="@{app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
+							<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
 								<arg line="${app.server.start.executable.arg.line}" />
 							</exec>
 						</daemons>
@@ -443,51 +432,30 @@
 				<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
 				<then>
 					<waitfor maxwait="5" maxwaitunit="minute">
-						<http url="http://localhost:8180/console" />
+						<http url="http://localhost:${port.prefix}180/console" />
 					</waitfor>
 				</then>
 				<elseif>
 					<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
 					<then>
 						<waitfor maxwait="1" maxwaitunit="minute">
-							<http url="http://localhost:8080" />
+							<http url="http://localhost:${port.prefix}080" />
 						</waitfor>
 					</then>
 				</elseif>
 				<else>
 					<waitfor maxwait="5" maxwaitunit="minute">
 						<and>
-							<available file="@{liferay.home}/logs" />
-							<http url="@{app.server.http.url}" />
+							<available file="${test.app.server.parent.dir}/logs" />
+							<http url="http://localhost:${port.prefix}080/web/guest" />
 						</and>
 					</waitfor>
 				</else>
 			</if>
-		</sequential>
-	</macrodef>
 
-	<macrodef name="stop-additional-app-servers">
-		<sequential>
-			<if>
-				<isset property="app.server.bundle.count" />
-				<then>
-					<var name="bundle.count" value="1" />
-
-					<antelope:repeat count="${app.server.bundle.count}">
-						<stop-app-server
-							app.server.bin.dir="${app.server.parent.dir}-${bundle.count}/${app.server.type}-${app.server.version}/bin"
-						/>
-
-						<math
-							datatype="int"
-							operand1="${bundle.count}"
-							operand2="1"
-							operation="+"
-							result="bundle.count"
-						/>
-					</antelope:repeat>
-				</then>
-			</if>
+			<var name="port.prefix" unset="true" />
+			<var name="test.app.server.bin.dir" unset="true" />
+			<var name="test.app.server.parent.dir" unset="true" />
 		</sequential>
 	</macrodef>
 
@@ -495,9 +463,23 @@
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
 
 		<sequential>
-			<exec dir="@{app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
+			<if>
+				<isset property="app.server.suffix" />
+				<then>
+					<antelope:stringutil property="test.app.server.bin.dir" string="@{app.server.bin.dir}">
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-${app.server.suffix}$2" />
+					</antelope:stringutil>
+				</then>
+				<else>
+					<var name="test.app.server.bin.dir" value="@{app.server.bin.dir}" />
+				</else>
+			</if>
+
+			<exec dir="${test.app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
 				<arg line="${app.server.stop.executable.arg.line}" />
 			</exec>
+
+			<var name="test.app.server.bin.dir" unset="true" />
 		</sequential>
 	</macrodef>
 
@@ -3323,7 +3305,24 @@ if (ppstate.equals("normal")) {
 				<if>
 					<equals arg1="${cluster.enabled}" arg2="true" />
 					<then>
-						<start-additional-app-servers />
+						<var name="bundle.count" value="1" />
+
+						<antelope:repeat count="${app.server.bundle.count}">
+							<var name="app.server.suffix" value="${bundle.count}" />
+
+							<start-app-server />
+
+							<math
+								datatype="int"
+								operand1="${bundle.count}"
+								operand2="1"
+								operation="+"
+								result="bundle.count"
+							/>
+						</antelope:repeat>
+
+						<var name="app.server.suffix" unset="true" />
+						<var name="bundle.count" unset="true" />
 					</then>
 				</if>
 
@@ -3421,7 +3420,24 @@ if (ppstate.equals("normal")) {
 		<if>
 			<equals arg1="${cluster.enabled}" arg2="true" />
 			<then>
-				<stop-additional-app-servers />
+				<var name="bundle.count" value="1" />
+
+				<antelope:repeat count="${app.server.bundle.count}">
+					<var name="app.server.suffix" value="${bundle.count}" />
+
+					<stop-app-server />
+
+					<math
+						datatype="int"
+						operand1="${bundle.count}"
+						operand2="1"
+						operation="+"
+						result="bundle.count"
+					/>
+				</antelope:repeat>
+
+				<var name="app.server.suffix" unset="true" />
+				<var name="bundle.count" unset="true" />
 			</then>
 		</if>
 

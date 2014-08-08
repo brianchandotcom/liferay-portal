@@ -423,9 +423,7 @@ AUI.add(
 				valueFn: function() {
 					var instance = this;
 
-					var label = instance.get('label');
-
-					var name = LiferayFormBuilderUtil.normalizeKey(label);
+					var name = LiferayFormBuilderUtil.normalizeKey(instance.get('label'));
 
 					while (UNIQUE_FIELD_NAMES_MAP.has(name)) {
 						name = A.FormBuilderField.buildFieldName(name);

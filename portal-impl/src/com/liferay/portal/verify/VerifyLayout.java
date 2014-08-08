@@ -14,19 +14,12 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutFriendlyURL;
-import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import java.util.List;
 
@@ -37,37 +30,10 @@ import java.util.List;
 public class VerifyLayout extends VerifyProcess {
 
 	protected void deleteOrphanedLayouts() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select plid from Layout where layoutPrototypeUuid != ''");
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long plid = rs.getLong("plid");
-
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-				LayoutPrototype layoutPrototype =
-					LayoutPrototypeLocalServiceUtil.
-						fetchLayoutPrototypeByUuidAndCompanyId(
-							layout.getLayoutPrototypeUuid(),
-							layout.getCompanyId());
-
-				if (layoutPrototype == null) {
-					LayoutLocalServiceUtil.deleteLayout(layout);
-				}
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
+		runSQL(
+			"delete from Layout where layoutPrototypeUuid != '' and " +
+				"layoutPrototypeUuid not in (select uuid_ from " +
+					"LayoutPrototype)");
 	}
 
 	@Override

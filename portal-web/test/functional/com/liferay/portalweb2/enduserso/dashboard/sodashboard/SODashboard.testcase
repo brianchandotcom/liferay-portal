@@ -91,7 +91,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute action="SODashboard#pause" value1="60000" />
+		<execute action="SODashboard#pause" locator1="70000" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 

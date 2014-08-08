@@ -6501,8 +6501,8 @@
 		<execute macro="SOSite#viewLocalizedPG">
 			<var name="activitiesPortletLocalized" value="活动" />
 			<var name="announcementsPortletLocalized" value="公告" />
-			<var name="blogsPageLocalized" value="�?�客" />
-			<var name="blogsPortletLocalized" value="�?�客" />
+			<var name="blogsPageLocalized" value="博客" />
+			<var name="blogsPortletLocalized" value="博客" />
 			<var name="bookmarksPortletLocalized" value="书签" />
 			<var name="breadcrumbPortletLocalized" value="路径导航" />
 			<var name="calendarPageLocalized" value="日历" />
@@ -6510,13 +6510,13 @@
 			<var name="documentsAndMediaPortletLocalized" value="文档媒体库" />
 			<var name="documentsPageLocalized" value="文档" />
 			<var name="eventsPortletLocalized" value="事件" />
-			<var name="forumsPageLocalized" value="论�?�" />
+			<var name="forumsPageLocalized" value="论坛" />
 			<var name="homePageLocalized" value="主页" />
-			<var name="inviteMembersPortletLocalized" value="邀请�?员" />
-			<var name="membersPageLocalized" value="�?员" />
-			<var name="membersPortletLocalized" value="�?员" />
-			<var name="messageBoardsPortletLocalized" value="留言�?�" />
-			<var name="recentBlogsPortletLocalized" value="最近�?�客" />
+			<var name="inviteMembersPortletLocalized" value="邀请成员" />
+			<var name="membersPageLocalized" value="成员" />
+			<var name="membersPortletLocalized" value="成员" />
+			<var name="messageBoardsPortletLocalized" value="留言板" />
+			<var name="recentBlogsPortletLocalized" value="最近博客" />
 			<var name="recentDownloadsPortletLocalized" value="最近下载" />
 			<var name="rssPortletLocalized" value="RSS" />
 			<var name="siteName" value="${siteName}" />

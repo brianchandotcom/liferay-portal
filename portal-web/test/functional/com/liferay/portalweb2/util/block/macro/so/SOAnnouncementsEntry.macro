@@ -371,6 +371,21 @@
 				<execute action="SODashboard#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
 			</then>
 		</while>
+
+		<execute action="SODashboard#assertClick" locator-key1="ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
+
+		<execute action="SODashboardManageAnnouncementsEntry#selectFrame" locator-key1="MANAGE_ENTRY_IFRAME" />
+		<execute action="SODashboardManageAnnouncementsEntry#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="General" />
+
+		<while>
+			<condition action="SODashboardManageAnnouncementsEntry#isElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" />
+			<then>
+				<execute action="SODashboardManageAnnouncementsEntry#assertClick" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
+				<execute action="SODashboardManageAnnouncementsEntry#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
+			</then>
+		</while>
+
+		<execute action="SODashboardManageAnnouncementsEntry#selectFrameTop" />
 	</command>
 
 	<command name="viewEmptyPG">

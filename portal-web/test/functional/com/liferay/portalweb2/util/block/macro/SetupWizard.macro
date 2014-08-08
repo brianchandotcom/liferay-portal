@@ -35,7 +35,12 @@
 		<execute action="SetupwizardFinishconfiguration#assertTextEquals" locator-key1="CONFIGURATION_SAVE_LOCATION" value1="portal-setup-wizard.properties" />
 		<execute action="SetupwizardFinishconfiguration#assertClick" locator-key1="GO_TO_MY_PORTAL_BUTTON" value1="Go to My Portal" />
 
-		<execute action="PGLoginTermsofservice#assertClick" locator-key1="I_AGREE_BUTTON" value1="I Agree" />
+		<if>
+			<condition action="PGLoginTermsofservice#isElementPresent" locator-key1="I_AGREE_BUTTON" value1="I Agree" />
+			<then>
+				<execute action="PGLoginTermsofservice#assertClick" locator-key1="I_AGREE_BUTTON" value1="I Agree" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${setupWizardAddSampleData}" arg2="false" />

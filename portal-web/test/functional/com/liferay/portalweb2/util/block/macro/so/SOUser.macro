@@ -38,14 +38,36 @@
 		<execute action="SOUserBar#selectFrame" value1="relative=top" />
 
 		<if>
-			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
-
+			<and>
+				<equals arg1="${fullDatabase}" arg2="true" />
+				<condition action="Setupwizard#isElementPresent" locator-key1="PORTAL_PORTAL_NAME_FIELD" />
+			</and>
 			<then>
-				<execute macro="User#logoutAndLoginPG">
-					<var name="userLoginEmailAddress" value="test@liferay.com" />
-					<var name="userLoginFullName" value="Test Test" />
+				<execute macro="SetupWizard#configureDefaultPG">
+					<var name="setupWizardAddSampleData" value="true" />
 				</execute>
 			</then>
+			<elseif>
+				<and>
+					<equals arg1="${fullDatabase}" arg2="true" />
+					<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
+				</and>
+				<then>
+					<execute macro="User#logoutAndLoginPG">
+						<var name="userLoginEmailAddress" value="test@liferay.com" />
+						<var name="userLoginFullName" value="Joe Bloggs" />
+					</execute>
+				</then>
+			</elseif>
+			<elseif>
+				<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
+				<then>
+					<execute macro="User#logoutAndLoginPG">
+						<var name="userLoginEmailAddress" value="test@liferay.com" />
+						<var name="userLoginFullName" value="Test Test" />
+					</execute>
+				</then>
+			</elseif>
 			<else>
 				<execute macro="User#loginPG">
 					<var name="password" value="test" />
@@ -61,10 +83,21 @@
 					<var name="portletName" value="Roles" />
 				</execute>
 
-				<execute macro="Role#assignRegRoleCP">
-					<var name="roleName" value="Social Office" />
-					<var name="userScreenName" value="test" />
-				</execute>
+				<if>
+					<equals arg1="${fullDatabase}" arg2="true" />
+					<then>
+						<execute macro="Role#assignRegRoleCP">
+							<var name="roleName" value="Social Office" />
+							<var name="userScreenName" value="joebloggs" />
+						</execute>
+					</then>
+					<else>
+						<execute macro="Role#assignRegRoleCP">
+							<var name="roleName" value="Social Office" />
+							<var name="userScreenName" value="test" />
+						</execute>
+					</else>
+				</if>
 
 				<execute macro="SOUserBar#gotoDashboardPG" />
 

@@ -155,6 +155,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTACTS_LIST_VIEW_MORE</td>
+	<td>//a[contains(.,'View More')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

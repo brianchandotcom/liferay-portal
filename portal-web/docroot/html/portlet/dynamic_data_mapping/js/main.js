@@ -224,6 +224,14 @@ AUI.add(
 						return window[instance.get('portletNamespace') + 'getContentValue']();
 					},
 
+					plotField: function(field, container) {
+						var instance = this;
+
+						LiferayFormBuilder.UNIQUE_FIELD_NAMES_MAP.put(field.get('name'), field);
+
+						return LiferayFormBuilder.superclass.plotField.apply(instance, arguments);
+					},
+
 					_afterEditingLocaleChange: function(event) {
 						var instance = this;
 

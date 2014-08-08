@@ -347,8 +347,7 @@
 
 		<execute macro="Staging#configurePublishToLive">
 			<var name="checkPageName" value="Staging Test Page" />
-			<var name="contentName" value="Blogs" />
-			<var name="uncheckContent" value="true" />
+			<var name="uncheckContentNameList" value="Blogs" />
 		</execute>
 
 		<execute macro="Staging#savePublishTemplate">
@@ -1158,7 +1157,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingDemoLocalLive1" priority="5">
+	<command known-issues="LPS-49227" name="StagingDemoLocalLive1" priority="5">
 		<var name="pageName" value="Staging Test Page" />
 		<var name="roleName" value="Staging Admin" />
 		<var name="siteName" value="${siteName}" />
@@ -1267,8 +1266,7 @@
 		</execute>
 
 		<execute macro="Staging#publishToLiveNow">
-			<var name="contentName" value="Documents and Media" />
-			<var name="uncheckContent" value="true" />
+			<var name="uncheckContentNameList" value="Documents and Media" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1287,6 +1285,7 @@
 		</execute>
 
 		<execute macro="Staging#publishToLiveNow">
+			<var name="checkContentNameList" value="Documents and Media" />
 			<var name="contentDateRange" value="All" />
 		</execute>
 
@@ -3786,9 +3785,8 @@
 		<execute macro="Staging#configurePublishToLive">
 			<var name="applicationName" value="Documents and Media" />
 			<var name="checkPageName" value="Test Page 1,Test Page 2" />
-			<var name="contentName" value="Blogs" />
 			<var name="uncheckApplication" value="true" />
-			<var name="uncheckContent" value="true" />
+			<var name="uncheckContentNameList" value="Blogs" />
 		</execute>
 
 		<execute macro="Staging#savePublishTemplate">

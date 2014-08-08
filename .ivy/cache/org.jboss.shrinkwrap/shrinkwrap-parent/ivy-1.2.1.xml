@@ -27,14 +27,14 @@
 		<m:properties__jdk.min.version>${maven.compiler.source}</m:properties__jdk.min.version>
 		<m:properties__version.idea.plugin>2.2</m:properties__version.idea.plugin>
 		<m:properties__version.apt.plugin>1.0-alpha-4</m:properties__version.apt.plugin>
-		<m:properties__version.javacc.plugin>2.6</m:properties__version.javacc.plugin>
 		<m:properties__version.clean.plugin>2.4.1</m:properties__version.clean.plugin>
+		<m:properties__version.javacc.plugin>2.6</m:properties__version.javacc.plugin>
 		<m:properties__version.buildnumber.plugin>1.0</m:properties__version.buildnumber.plugin>
 		<m:properties__maven.compiler.argument.target>${maven.compiler.target}</m:properties__maven.compiler.argument.target>
 		<m:properties__downloadSources>true</m:properties__downloadSources>
 		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>
-		<m:properties__version.war.plugin>2.1.1</m:properties__version.war.plugin>
 		<m:properties__useReleaseProfile>false</m:properties__useReleaseProfile>
+		<m:properties__version.war.plugin>2.1.1</m:properties__version.war.plugin>
 		<m:properties__version.site.plugin>3.0-beta-3</m:properties__version.site.plugin>
 		<m:properties__version.plugin.plugin>2.9</m:properties__version.plugin.plugin>
 		<m:properties__version.rar.plugin>2.2</m:properties__version.rar.plugin>

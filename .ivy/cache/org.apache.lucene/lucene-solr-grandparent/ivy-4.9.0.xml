@@ -1689,8 +1689,8 @@
 		<m:dependency.management__org.apache.hadoop__hadoop-yarn-common__exclusion_7>commons-io__commons-io</m:dependency.management__org.apache.hadoop__hadoop-yarn-common__exclusion_7>
 		<m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_48>org.apache.hadoop__hadoop-hdfs</m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_48>
 		<m:dependency.management__org.apache.hadoop__hadoop-yarn-common__exclusion_8>io.netty__netty</m:dependency.management__org.apache.hadoop__hadoop-yarn-common__exclusion_8>
-		<m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_47>org.apache.hadoop__hadoop-auth</m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_47>
 		<m:dependency.management__org.apache.hadoop__hadoop-yarn-common__exclusion_9>log4j__log4j</m:dependency.management__org.apache.hadoop__hadoop-yarn-common__exclusion_9>
+		<m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_47>org.apache.hadoop__hadoop-auth</m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_47>
 		<m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_46>org.apache.hadoop__hadoop-annotations</m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_46>
 		<m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_39>dom4j__dom4j</m:dependency.management__org.apache.solr__solr-morphlines-core__exclusion_39>
 		<m:dependency.management__org.apache.hadoop__hadoop-hdfs__exclusion_17>tomcat__jasper-runtime</m:dependency.management__org.apache.hadoop__hadoop-hdfs__exclusion_17>

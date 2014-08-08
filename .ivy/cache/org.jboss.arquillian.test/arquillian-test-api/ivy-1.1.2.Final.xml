@@ -57,8 +57,8 @@
 		<m:properties__version.pir.plugin>2.2</m:properties__version.pir.plugin>
 		<m:properties__version.gpg.plugin>1.4</m:properties__version.gpg.plugin>
 		<m:properties__targetJdk>${maven.compiler.target}</m:properties__targetJdk>
-		<m:dependency.management__javax.inject__javax.inject__scope>provided</m:dependency.management__javax.inject__javax.inject__scope>
 		<m:properties__version.testng_testng>5.14.6</m:properties__version.testng_testng>
+		<m:dependency.management__javax.inject__javax.inject__scope>provided</m:dependency.management__javax.inject__javax.inject__scope>
 		<m:properties__version.dependency.plugin>2.3</m:properties__version.dependency.plugin>
 		<m:properties__version.buildhelper.plugin>1.5</m:properties__version.buildhelper.plugin>
 		<m:properties__version.injection.plugin>1.0.2</m:properties__version.injection.plugin>

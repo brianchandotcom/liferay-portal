@@ -20,8 +20,8 @@
 		<m:properties__version.assembly.plugin>2.2.1</m:properties__version.assembly.plugin>
 		<m:properties__version.jdepend.plugin>2.0-beta-2</m:properties__version.jdepend.plugin>
 		<m:properties__version.taglist.plugin>2.4</m:properties__version.taglist.plugin>
-		<m:properties__version.pmd.plugin>2.5</m:properties__version.pmd.plugin>
 		<m:properties__version.compiler.plugin>2.3.2</m:properties__version.compiler.plugin>
+		<m:properties__version.pmd.plugin>2.5</m:properties__version.pmd.plugin>
 		<m:properties__version.javancss.plugin>2.0</m:properties__version.javancss.plugin>
 		<m:properties__version.bundle.plugin>2.3.5</m:properties__version.bundle.plugin>
 		<m:properties__jdk.min.version>${maven.compiler.source}</m:properties__jdk.min.version>

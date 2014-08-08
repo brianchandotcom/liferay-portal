@@ -19,8 +19,8 @@
 		<m:properties__version.assembly.plugin>2.2.1</m:properties__version.assembly.plugin>
 		<m:properties__version.jdepend.plugin>2.0-beta-2</m:properties__version.jdepend.plugin>
 		<m:properties__version.taglist.plugin>2.4</m:properties__version.taglist.plugin>
-		<m:properties__version.pmd.plugin>2.5</m:properties__version.pmd.plugin>
 		<m:properties__version.compiler.plugin>2.3.2</m:properties__version.compiler.plugin>
+		<m:properties__version.pmd.plugin>2.5</m:properties__version.pmd.plugin>
 		<m:properties__version.javancss.plugin>2.0</m:properties__version.javancss.plugin>
 		<m:properties__version.bundle.plugin>2.3.5</m:properties__version.bundle.plugin>
 		<m:properties__jdk.min.version>${maven.compiler.source}</m:properties__jdk.min.version>
@@ -32,8 +32,8 @@
 		<m:properties__maven.compiler.argument.target>${maven.compiler.target}</m:properties__maven.compiler.argument.target>
 		<m:properties__downloadSources>true</m:properties__downloadSources>
 		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>
-		<m:properties__version.war.plugin>2.1.1</m:properties__version.war.plugin>
 		<m:properties__useReleaseProfile>false</m:properties__useReleaseProfile>
+		<m:properties__version.war.plugin>2.1.1</m:properties__version.war.plugin>
 		<m:properties__version.site.plugin>3.0-beta-3</m:properties__version.site.plugin>
 		<m:properties__version.plugin.plugin>2.9</m:properties__version.plugin.plugin>
 		<m:properties__version.rar.plugin>2.2</m:properties__version.rar.plugin>

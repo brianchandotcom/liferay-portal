@@ -10,6 +10,19 @@ AUI.add(
 
 			blacklist: {},
 
+			clearCache: function() {
+				var instance = this;
+
+				if (instance.app) {
+					A.each(
+						instance.app.screens,
+						function(item, index) {
+							item.clearCache();
+						}
+					);
+				}
+			},
+
 			getAllowedPortletIds: function() {
 				var instance = this;
 

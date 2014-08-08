@@ -78,6 +78,13 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 
 	var layoutsTree = new TreeViewType(
 		{
+			after: {
+				'*:expandedChange': function() {
+					if (Liferay.Surface) {
+						Liferay.Surface.clearCache();
+					}
+				}
+			},
 			boundingBox: '#<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output',
 			incomplete: <%= incomplete %>,
 			layouts: <%= layoutsJSON %>,

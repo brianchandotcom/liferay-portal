@@ -11,28 +11,16 @@
 		}
 	}
 
-	.table td {
-		&.align-center {
-			text-align: center;
-		}
-
-		&.align-left {
-			text-align: left;
-		}
-
-		&.align-right {
-			text-align: right;
-		}
-
-		&.valign-bottom {
+	.table {
+		.text-valign-bottom {
 			vertical-align: bottom;
 		}
 
-		&.valign-middle {
+		.text-valign-middle {
 			vertical-align: middle;
 		}
 
-		&.valign-top {
+		.text-valign-top {
 			vertical-align: top;
 		}
 	}

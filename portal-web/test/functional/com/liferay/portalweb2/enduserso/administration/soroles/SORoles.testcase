@@ -24,6 +24,8 @@
 
 		<execute macro="PortalInstances#tearDownCP" />
 
+		<execute macro="SODashboard#tearDownSiteTemplateCP" />
+
 		<!--<execute macro="PortalSettings#tearDownCP" />-->
 	</tear-down>
 
@@ -2808,6 +2810,65 @@
 
 		<execute macro="SOUser#viewSORole">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+	</command>
+
+	<command name="UnassignSORoleWithDashboardTemplateContainingURLPage" priority="4">
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addSitePageViaSiteTemplateCP">
+			<var name="pageType" value="Link to URL" />
+			<var name="pageTypeDescription" value="URL Page Description" />
+			<var name="pageTypeURL" value="http://www.google.com" />
+			<var name="sitePageName" value="URL Page Name" />
+			<var name="siteTemplateName" value="Social Office User Home" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOConfigurations#assignUserRoleCP">
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOConfigurations#unassignUserRoleCP">
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="SOUser#viewNonSORole">
 			<var name="userName" value="${userName}" />
 		</execute>
 	</command>

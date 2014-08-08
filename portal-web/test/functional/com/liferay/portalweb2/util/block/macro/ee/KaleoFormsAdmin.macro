@@ -55,7 +55,7 @@
 		</if>
 
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELDS_DEFINITION_TABLE_NAME" value1="${kfFieldsDefinitionName}" />
-		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELDS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="FIELDS_DEFINITION_TABLE_ACTIONS" />
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELDS_DEFINITION_MENULIST_CHOOSE" value1="Choose" />
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_DEFINITION" value1="${kfFieldsDefinitionName}" />
 	</command>
@@ -64,7 +64,7 @@
 		<var name="key_kfFormName" value="${kfFormName}" />
 
 		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="FORM_TABLE_NAME" value1="${kfFormName}" />
-		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="FORM_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadminNewprocessSelectform#click" locator-key1="FORM_TABLE_ACTIONS" />
 		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="FORM_MENULIST_CHOOSE" value1="Choose" />
 	</command>
 
@@ -102,7 +102,7 @@
 			</else>
 		</if>
 
-		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="WORKFLOW_TABLE_ACTIONS" />
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_MENULIST_CHOOSE" value1="Choose" />
 
 		<if>
@@ -143,14 +143,14 @@
 	<command name="editFieldsDefinition">
 		<var name="key_kfFieldsDefinitionName" value="${kfFieldsDefinitionName}" />
 
-		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="FIELDS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="FIELDS_DEFINITION_TABLE_ACTIONS" />
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELDS_DEFINITION_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPKaleoformsadminNewprocessEditfieldsdefinition#type" locator-key1="NAME_FIELD" value1="${kfFieldsDefinitionNameEdit}" />
 	</command>
 
 	<command name="editForm">
-		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="FIELDS_DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="FIELDS_DEFINITION_TABLE_ACTIONS"/>
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELDS_DEFINITION_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPKaleoformsadminNewprocessSelectformNewform#selectFrame" locator-key1="FORM_IFRAME" />
@@ -162,7 +162,7 @@
 	<command name="editProcess">
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
-		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadmin#click" locator-key1="PROCESS_TABLE_ACTIONS" />
 		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_MENULIST_EDIT" value1="Edit" />
 	</command>
 
@@ -192,7 +192,7 @@
 	<command name="editWorkflow">
 		<var name="key_workflowDefinition" value="${workflowDefinition}" />
 
-		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="WORKFLOW_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="WORKFLOW_TABLE_ACTIONS" />
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_MENULIST_EDIT" value1="Edit" />
 		<execute action="CPKaleoformsadminNewprocessEditworkflow#type" locator-key1="TITLE_FIELD" value1="${workflowDefinitionTitleEdit}" />
 	</command>
@@ -241,7 +241,7 @@
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
 		<execute action="CPKaleoformsadmin#assertTextEquals" locator-key1="PROCESS_TABLE_NAME" value1="${kfProcessName}" />
-		<execute action="CPKaleoformsadmin#assertTextEquals" locator-key1="PROCESS_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadmin#assertElementPresent" locator-key1="PROCESS_TABLE_ACTIONS" />
 	</command>
 
 	<command name="viewProcessDetails">

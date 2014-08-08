@@ -833,14 +833,16 @@ public class JournalArticleLocalServiceImpl
 
 		// Small image
 
-		if (oldArticle.getSmallImage()) {
-			Image image = imageLocalService.getImage(
+		if (oldArticle.isSmallImage()) {
+			Image image = imageLocalService.fetchImage(
 				oldArticle.getSmallImageId());
 
-			byte[] smallImageBytes = image.getTextObj();
+			if (image != null) {
+				byte[] smallImageBytes = image.getTextObj();
 
-			imageLocalService.updateImage(
-				newArticle.getSmallImageId(), smallImageBytes);
+				imageLocalService.updateImage(
+					newArticle.getSmallImageId(), smallImageBytes);
+			}
 		}
 
 		// Asset

@@ -1,0 +1,54 @@
+<definition>
+	<command name="addCP">
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="NAVIGATION_TEMPLATES" value1="Templates" />
+
+		<execute action="CPKnowledgebaseadminTemplates#assertClick" locator-key1="ADD_TEMPLATE_BUTTON" value1="Add Template" />
+
+		<execute action="CPKnowledgebaseadminAddtemplate#type" locator-key1="TITLE_FIELD" value1="${kbTemplateTitle}" />
+		<execute action="CPKnowledgebaseadminAddtemplate#type" locator-key1="CONTENT_FIELD" value1="${kbTemplateContent}" />
+		<execute action="CPKnowledgebaseadminAddtemplate#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPKnowledgebaseadminTemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="gotoCP">
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="NAVIGATION_TEMPLATES" value1="Templates" />
+
+		<var name="key_kbTemplateTitle" value="${kbTemplateTitle}" />
+
+		<execute action="CPKnowledgebaseadminTemplates#click" locator-key1="TEMPLATE_TABLE_ACTIONS" />
+		<execute action="CPKnowledgebaseadminTemplates#assertClick" locator-key1="ACTIONS_MENULIST_VIEW" value1="View" />
+	</command>
+
+	<command name="tearDownCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="NAVIGATION_TEMPLATES" value1="Templates" />
+
+		<execute action="CPKnowledgebaseadminTemplates#check" locator-key1="TEMPLATE_TABLE_CHECKBOX_ALL" />
+		<execute action="CPKnowledgebaseadminTemplates#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
+		<execute action="CPKnowledgebaseadminTemplates#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected templates?" />
+		<execute action="CPKnowledgebaseadminTemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="viewCP">
+		<execute macro="KBTemplate#gotoCP">
+			<var name="key_kbTemplateTitle" value="${kbTemplateTitle}" />
+		</execute>
+
+		<execute action="CPKnowledgebaseadminTemplate#assertTextEquals" locator-key1="TEMPLATE_TITLE" value1="${kbTemplateTitle}" />
+		<execute action="CPKnowledgebaseadminTemplate#assertTextEquals" locator-key1="TEMPLATE_CONTENT" value1="${kbTemplateContent}" />
+	</command>
+
+	<command name="viewCPViaAddTemplate">
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_BUTTON" value1="Add" />
+		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_MENULIST_TEMPLATE" value1="${kbTemplateTitle}" />
+
+		<execute action="CPKnowledgebaseadminAddarticle#assertTextEquals" locator-key1="TITLE_FIELD" value1="" />
+
+		<execute action="CPKnowledgebaseadminAddarticle#selectFrame" locator-key1="CONTENT_FIELD" />
+		<execute action="CPKnowledgebaseadminAddarticle#assertTextEquals" locator-key1="CONTENT_BODY" value1="${kbTemplateContent}" />
+	</command>
+</definition>

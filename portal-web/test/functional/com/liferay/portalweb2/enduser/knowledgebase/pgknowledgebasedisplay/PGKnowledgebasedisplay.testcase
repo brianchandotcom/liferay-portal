@@ -3,7 +3,7 @@
 	<property name="testray.main.component.name" value="Knowledge Base" />
 
 	<var name="pageName" value="Knowledge Base Display Page" />
-	<var name="portletName" value="Knowledge Base (Display)" />
+	<var name="portletName" value="Knowledge Base Display" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

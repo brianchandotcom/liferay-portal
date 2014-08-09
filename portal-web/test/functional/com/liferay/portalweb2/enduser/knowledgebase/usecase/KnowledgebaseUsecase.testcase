@@ -16,7 +16,7 @@
 		<property name="portlet.properties.knowledge-base-portlet" value="admin.kb.article.sections=Application Server,Authentication,Content Management,Database,Development,Plugins,Portlets,Security,Server Configuration,User Interface$${line.separator}admin.kb.article.default.sections=" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Knowledge Base (Admin)" />
+			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
 		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_ARTICLE_BUTTON" value1="Add Article" />
@@ -35,7 +35,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Knowledge Base (Display)" />
+			<var name="portletName" value="Knowledge Base Display" />
 		</execute>
 
 		<execute macro="Page#addPG">

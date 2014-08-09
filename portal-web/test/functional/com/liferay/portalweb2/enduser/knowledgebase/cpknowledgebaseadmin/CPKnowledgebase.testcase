@@ -10,11 +10,13 @@
 		<execute macro="Page#tearDownPG" />
 
 		<execute macro="KBArticle#tearDownCP" />
+
+		<execute macro="KBTemplate#tearDownCP" />
 	</tear-down>
 
 	<command name="AddKBArticleViaKBAdmin" priority="5">
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Knowledge Base (Admin)" />
+			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
 		<execute macro="KBArticle#addCP">
@@ -24,7 +26,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Knowledge Base (Admin)" />
+			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
 		<execute macro="KBArticle#viewCP">
@@ -34,9 +36,61 @@
 		</execute>
 	</command>
 
+	<command name="AddKBArticleViaTemplateCP" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBTemplate#addCP">
+			<var name="kbTemplateContent" value="Knowledge Base Template Content" />
+			<var name="kbTemplateTitle" value="Knowledge Base Template Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleSection" value="Portlets" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="kbTemplateTitle" value="Knowledge Base Template Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#viewCP">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="kbAuthor" value="Test Test" />
+			<var name="kbPriority" value="1.0" />
+		</execute>
+	</command>
+
+	<command name="AddTemplateCP" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBTemplate#addCP">
+			<var name="kbTemplateContent" value="Knowledge Base Template Content" />
+			<var name="kbTemplateTitle" value="Knowledge Base Template Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBTemplate#viewCP">
+			<var name="kbTemplateContent" value="Knowledge Base Template Content" />
+			<var name="kbTemplateTitle" value="Knowledge Base Template Title" />
+		</execute>
+	</command>
+
 	<command name="DeleteKBArticleViaKBAdmin" priority="4">
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Knowledge Base (Admin)" />
+			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
 		<execute macro="KBArticle#addCP">
@@ -46,7 +100,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Knowledge Base (Admin)" />
+			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
 		<execute macro="KBArticle#deleteCP">
@@ -54,7 +108,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Knowledge Base (Admin)" />
+			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
 		<execute macro="KBArticle#viewDefaultCP" />
@@ -62,7 +116,7 @@
 
 	<command name="EditKBArticleViaKBAdmin" priority="5">
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Knowledge Base (Admin)" />
+			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
 		<execute macro="KBArticle#addCP">
@@ -72,7 +126,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Knowledge Base (Admin)" />
+			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
 		<execute macro="KBArticle#viewCP">
@@ -82,7 +136,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Knowledge Base (Admin)" />
+			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
 		<execute macro="KBArticle#editCP">
@@ -92,13 +146,33 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Knowledge Base (Admin)" />
+			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
 		<execute macro="KBArticle#viewCP">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title Edit" />
 			<var name="kbAuthor" value="Test Test" />
 			<var name="kbPriority" value="1.0" />
+		</execute>
+	</command>
+
+	<command name="ViewKBTemplateViaAddKBArticleCP" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBTemplate#addCP">
+			<var name="kbTemplateContent" value="Knowledge Base Template Content" />
+			<var name="kbTemplateTitle" value="Knowledge Base Template Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBTemplate#viewCPViaAddTemplate">
+			<var name="kbTemplateContent" value="Knowledge Base Template Content" />
+			<var name="kbTemplateTitle" value="Knowledge Base Template Title" />
 		</execute>
 	</command>
 </definition>

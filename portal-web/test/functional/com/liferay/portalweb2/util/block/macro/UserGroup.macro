@@ -345,7 +345,7 @@
 
 		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_TABLE_ACTIONS" />
 		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_EDIT" value1="Edit" />
-		<execute action="CPUsergroupsEditusergroup#assertClick" locator-key1="PUBLIC_PAGES_OPEN_PAGES" value1="Open Pages (Opens New Window)" />
+		<execute action="CPUsergroupsEditusergroup#assertClick" locator-key1="PUBLIC_PAGES_OPEN_PAGES" value1="Open Pages" />
 		<execute action="CPUsergroupsEditusergroup#selectWindow" locator1="home - Liferay" />
 
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />

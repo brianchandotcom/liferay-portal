@@ -1,7 +1,7 @@
 <definition>
 	<command name="addCP">
 		<if>
-			<equals arg1="${kbTemplate}" arg2="true" />
+			<isset var="kbTemplateTitle" />
 			<then>
 				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_BUTTON" value1="Add" />
 				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ADD_MENULIST_TEMPLATE" value1="${kbTemplateTitle}" />

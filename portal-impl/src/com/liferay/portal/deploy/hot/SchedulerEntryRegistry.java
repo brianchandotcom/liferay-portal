@@ -135,24 +135,24 @@ public class SchedulerEntryRegistry {
 				return;
 			}
 
-				String triggerValue = null;
+			String triggerValue = null;
 
-				if (!classloader.equals(ClassLoaderUtil.getPortalClassLoader())) {
-					triggerValue = getPluginPropertyValue(classloader, propertyKey);
-				}
-				else {
-					triggerValue = PrefsPropsUtil.getString(propertyKey);
-				}
+			if (!classloader.equals(ClassLoaderUtil.getPortalClassLoader())) {
+				triggerValue = getPluginPropertyValue(classloader, propertyKey);
+			}
+			else {
+				triggerValue = PrefsPropsUtil.getString(propertyKey);
+			}
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Scheduler property key " + propertyKey +
-							" has trigger value " + triggerValue);
-				}
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Scheduler property key " + propertyKey +
+						" has trigger value " + triggerValue);
+			}
 
-				if (Validator.isNotNull(triggerValue)) {
-					schedulerEntry.setTriggerValue(triggerValue);
-				}
+			if (Validator.isNotNull(triggerValue)) {
+				schedulerEntry.setTriggerValue(triggerValue);
+			}
 		}
 
 		private String getPluginPropertyValue(ClassLoader _classLoader, String propertyKey) {

@@ -1,4 +1,3 @@
-Bundle-Activator: ${classes;IMPLEMENTS;org.osgi.framework.BundleActivator}
 Bundle-Name: Liferay Portal Verify Extender
 Bundle-SymbolicName: com.liferay.portal.verify.extender
 Bundle-Version: 1.0.0

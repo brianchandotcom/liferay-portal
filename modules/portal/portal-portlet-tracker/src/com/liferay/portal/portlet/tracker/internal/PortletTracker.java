@@ -125,21 +125,27 @@ public class PortletTracker
 			portletName = clazz.getName();
 		}
 
-		try {
 			String portletId = JS.getSafeName(portletName);
 
 			if (portletId.length() > _PORTLET_ID_MAX_LENGTH) {
-				throw new IllegalArgumentException(
+				_log.error(
 					"Portlet id " + portletId + " has more than " +
 						_PORTLET_ID_MAX_LENGTH + " characters");
+
+				bundleContext.ungetService(serviceReference);
+
+				return null;
 			}
 
 			com.liferay.portal.model.Portlet portletModel =
 				_portletLocalService.getPortletById(portletId);
 
 			if (portletModel != null) {
-				throw new IllegalArgumentException(
-					"Portlet id " + portletId + " is already in use.");
+				_log.error("Portlet id " + portletId + " is already in use.");
+
+				bundleContext.ungetService(serviceReference);
+
+				return null;
 			}
 
 			if (_log.isInfoEnabled()) {
@@ -148,12 +154,6 @@ public class PortletTracker
 
 			return addingPortlet(
 				serviceReference, portlet, portletName, portletId);
-		}
-		catch (Throwable t) {
-			_log.error(t, t);
-		}
-
-		return null;
 	}
 
 	@Override
@@ -174,6 +174,10 @@ public class PortletTracker
 		portletModel.setReady(false);
 
 		clearServiceRegistrations(serviceReference.getBundle());
+
+		BundleContext bundleContext = _componentContext.getBundleContext();
+
+		bundleContext.ungetService(serviceReference);
 
 		_portletInstanceFactory.destroy(portletModel);
 
@@ -212,9 +216,8 @@ public class PortletTracker
 	}
 
 	protected com.liferay.portal.model.Portlet addingPortlet(
-			ServiceReference<Portlet> serviceReference, Portlet portlet,
-			String portletName, String portletId)
-		throws Exception {
+		ServiceReference<Portlet> serviceReference, Portlet portlet,
+		String portletName, String portletId) {
 
 		Bundle bundle = serviceReference.getBundle();
 
@@ -254,6 +257,7 @@ public class PortletTracker
 			bundlePortletApp.getServletContext());
 		portletBagFactory.setWARFile(true);
 
+		try {
 		portletBagFactory.create(portletModel);
 
 		checkWebResources(bundle, portletModel, serviceRegistrations);
@@ -271,6 +275,16 @@ public class PortletTracker
 		}
 
 		return portletModel;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			BundleContext bundleContext = _componentContext.getBundleContext();
+
+			bundleContext.ungetService(serviceReference);
+
+			return null;
+		}
 	}
 
 	protected com.liferay.portal.model.Portlet buildPortletModel(

@@ -151,7 +151,7 @@ public class SchedulerEntryRegistry {
 			}
 		}
 
-		protected String getPluginPropertyValue(ClassLoader _classLoader, String propertyKey) {
+		private String getPluginPropertyValue(ClassLoader _classLoader, String propertyKey) {
 			try {
 				Class<?> clazz = _classLoader.loadClass(PortletProps.class.getName());
 

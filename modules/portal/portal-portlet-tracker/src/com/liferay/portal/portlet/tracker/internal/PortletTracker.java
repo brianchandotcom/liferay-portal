@@ -125,35 +125,34 @@ public class PortletTracker
 			portletName = clazz.getName();
 		}
 
-			String portletId = JS.getSafeName(portletName);
+		String portletId = JS.getSafeName(portletName);
 
-			if (portletId.length() > _PORTLET_ID_MAX_LENGTH) {
-				_log.error(
-					"Portlet id " + portletId + " has more than " +
-						_PORTLET_ID_MAX_LENGTH + " characters");
+		if (portletId.length() > _PORTLET_ID_MAX_LENGTH) {
+			_log.error(
+				"Portlet id " + portletId + " has more than " +
+					_PORTLET_ID_MAX_LENGTH + " characters");
 
-				bundleContext.ungetService(serviceReference);
+			bundleContext.ungetService(serviceReference);
 
-				return null;
-			}
+			return null;
+		}
 
-			com.liferay.portal.model.Portlet portletModel =
-				_portletLocalService.getPortletById(portletId);
+		com.liferay.portal.model.Portlet portletModel =
+			_portletLocalService.getPortletById(portletId);
 
-			if (portletModel != null) {
-				_log.error("Portlet id " + portletId + " is already in use.");
+		if (portletModel != null) {
+			_log.error("Portlet id " + portletId + " is already in use.");
 
-				bundleContext.ungetService(serviceReference);
+			bundleContext.ungetService(serviceReference);
 
-				return null;
-			}
+			return null;
+		}
 
-			if (_log.isInfoEnabled()) {
-				_log.info("Adding " + serviceReference);
-			}
+		if (_log.isInfoEnabled()) {
+			_log.info("Adding " + serviceReference);
+		}
 
-			return addingPortlet(
-				serviceReference, portlet, portletName, portletId);
+		return addingPortlet(serviceReference, portlet, portletName, portletId);
 	}
 
 	@Override
@@ -258,23 +257,23 @@ public class PortletTracker
 		portletBagFactory.setWARFile(true);
 
 		try {
-		portletBagFactory.create(portletModel);
+			portletBagFactory.create(portletModel);
 
-		checkWebResources(bundle, portletModel, serviceRegistrations);
+			checkWebResources(bundle, portletModel, serviceRegistrations);
 
-		List<Company> companies = _companyLocalService.getCompanies();
+			List<Company> companies = _companyLocalService.getCompanies();
 
-		deployPortlet(serviceReference, portletModel, companies);
+			deployPortlet(serviceReference, portletModel, companies);
 
-		checkResources(serviceReference, portletModel, companies);
+			checkResources(serviceReference, portletModel, companies);
 
-		portletModel.setReady(true);
+			portletModel.setReady(true);
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Added " + serviceReference);
-		}
+			if (_log.isInfoEnabled()) {
+				_log.info("Added " + serviceReference);
+			}
 
-		return portletModel;
+			return portletModel;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

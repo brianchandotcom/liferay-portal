@@ -223,8 +223,6 @@ public class PortletBagFactory {
 
 		PortletBagPool.put(portlet.getRootPortletId(), portletBag);
 
-		initSchedulers(portlet);
-
 		try {
 			PortletInstanceFactoryUtil.create(portlet, _servletContext);
 		}
@@ -430,9 +428,6 @@ public class PortletBagFactory {
 				_log.warn(e.getMessage());
 			}
 		}
-	}
-
-	protected void initSchedulers(Portlet portlet) throws Exception {
 	}
 
 	protected void initUserNotificationDefinition(Portlet portlet)

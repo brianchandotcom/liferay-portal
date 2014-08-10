@@ -97,6 +97,30 @@ public class SchedulerEntryRegistry {
 			return null;
 		}
 
+		@Override
+		public void modifiedService(
+			ServiceReference<SchedulerEntry> serviceReference,
+			SchedulerEntry schedulerEntry) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<SchedulerEntry> serviceReference,
+			SchedulerEntry schedulerEntry) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			try {
+				SchedulerEngineHelperUtil.unschedule(
+					schedulerEntry, StorageType.MEMORY_CLUSTERED);
+			}
+			catch (SchedulerException e) {
+				_log.error(e, e);
+			}
+		}
+
 		private void addTrigger(
 			SchedulerEntry schedulerEntry,
 			ServiceReference<SchedulerEntry> serviceReference) {
@@ -125,28 +149,6 @@ public class SchedulerEntryRegistry {
 					schedulerEntry.setTriggerValue(triggerValue);
 				}
 			}
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<SchedulerEntry> serviceReference,
-			SchedulerEntry schedulerEntry) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			try {
-				SchedulerEngineHelperUtil.unschedule(
-					schedulerEntry, StorageType.MEMORY_CLUSTERED);
-			}
-			catch (SchedulerException e) {
-				_log.error(e, e);
-			}
-		} @Override
-		public void modifiedService(
-			ServiceReference<SchedulerEntry> serviceReference,
-			SchedulerEntry schedulerEntry) {
 		}
 
 		protected String getPluginPropertyValue(ClassLoader _classLoader, String propertyKey) {

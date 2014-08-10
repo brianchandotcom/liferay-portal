@@ -83,8 +83,6 @@ import org.apache.jasper.servlet.JspServlet;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
@@ -114,8 +112,18 @@ public class PortletTracker
 	public com.liferay.portal.model.Portlet addingService(
 		ServiceReference<Portlet> serviceReference) {
 
+		BundleContext bundleContext = _componentContext.getBundleContext();
+
+		Portlet portlet = bundleContext.getService(serviceReference);
+
 		String portletName = (String)serviceReference.getProperty(
 			"javax.portlet.name");
+
+		if (Validator.isNull(portletName)) {
+			Class<?> clazz = portlet.getClass();
+
+			portletName = clazz.getName();
+		}
 
 		try {
 			String portletId = JS.getSafeName(portletName);
@@ -137,10 +145,6 @@ public class PortletTracker
 			if (_log.isInfoEnabled()) {
 				_log.info("Adding " + serviceReference);
 			}
-
-			BundleContext bundleContext = _componentContext.getBundleContext();
-
-			Portlet portlet = bundleContext.getService(serviceReference);
 
 			return addingPortlet(
 				serviceReference, portlet, portletName, portletId);
@@ -196,21 +200,9 @@ public class PortletTracker
 
 		BundleContext bundleContext = _componentContext.getBundleContext();
 
-		Filter filter = null;
-
-		try {
-			filter = bundleContext.createFilter(
-				"(&(javax.portlet.name=*)(objectClass=" +
-					Portlet.class.getName() + "))");
-		}
-		catch (InvalidSyntaxException ise) {
-			throw new RuntimeException(
-				"Unable to activate Liferay Portal Portlet Tracker", ise);
-		}
-
 		_serviceTracker =
 			new ServiceTracker<Portlet, com.liferay.portal.model.Portlet>(
-				bundleContext, filter, this);
+				bundleContext, Portlet.class, this);
 
 		_serviceTracker.open();
 

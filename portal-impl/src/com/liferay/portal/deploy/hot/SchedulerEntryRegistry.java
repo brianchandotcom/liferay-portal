@@ -14,12 +14,18 @@
 
 package com.liferay.portal.deploy.hot;
 
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.scheduler.StorageTypeAware;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
@@ -75,12 +81,23 @@ public class SchedulerEntryRegistry {
 			SchedulerEntry schedulerEntry = registry.getService(
 				serviceReference);
 
+			StorageType storageType = StorageType.MEMORY_CLUSTERED;
+
+			if (schedulerEntry instanceof StorageTypeAware) {
+				StorageTypeAware storageTypeAware =
+					(StorageTypeAware)schedulerEntry;
+
+				storageType = storageTypeAware.getStorageType();
+			}
+
+			addTrigger(schedulerEntry, serviceReference);
+
 			String portletId = (String)serviceReference.getProperty(
 				"javax.portlet.name");
 
 			try {
 				SchedulerEngineHelperUtil.schedule(
-					schedulerEntry, StorageType.MEMORY_CLUSTERED, portletId, 0);
+					schedulerEntry, storageType, portletId, 0);
 
 				return schedulerEntry;
 			}
@@ -106,13 +123,66 @@ public class SchedulerEntryRegistry {
 
 			registry.ungetService(serviceReference);
 
+			StorageType storageType = StorageType.MEMORY_CLUSTERED;
+
+			if (schedulerEntry instanceof StorageTypeAware) {
+				StorageTypeAware storageTypeAware =
+					(StorageTypeAware)schedulerEntry;
+
+				storageType = storageTypeAware.getStorageType();
+			}
+
 			try {
 				SchedulerEngineHelperUtil.unschedule(
-					schedulerEntry, StorageType.MEMORY_CLUSTERED);
+					schedulerEntry, storageType);
 			}
 			catch (SchedulerException e) {
 				_log.error(e, e);
 			}
+		}
+
+		private void addTrigger(
+			SchedulerEntry schedulerEntry,
+			ServiceReference<SchedulerEntry> serviceReference) {
+
+			Class<?> clazz = schedulerEntry.getClass();
+
+			ClassLoader classloader = clazz.getClassLoader();
+
+			String propertyKey = schedulerEntry.getPropertyKey();
+
+			if (Validator.isNull(propertyKey)) {
+				return;
+			}
+
+			String triggerValue = null;
+
+			if (!classloader.equals(ClassLoaderUtil.getPortalClassLoader())) {
+				triggerValue = getPluginPropertyValue(classloader, propertyKey);
+			}
+			else {
+				triggerValue = PrefsPropsUtil.getString(propertyKey);
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Scheduler property key " + propertyKey +
+						" has trigger value " + triggerValue);
+			}
+
+			if (Validator.isNotNull(triggerValue)) {
+				schedulerEntry.setTriggerValue(triggerValue);
+			}
+		}
+
+		private String getPluginPropertyValue(
+			ClassLoader classLoader, String propertyKey) {
+
+			Configuration configuration =
+				ConfigurationFactoryUtil.getConfiguration(
+					classLoader, "portlet");
+
+			return configuration.get(propertyKey);
 		}
 
 	}

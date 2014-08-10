@@ -14,6 +14,8 @@
 
 package com.liferay.portal.deploy.hot;
 
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
@@ -30,7 +32,6 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.util.portlet.PortletProps;
 
 /**
  * @author Raymond Augé
@@ -156,16 +157,11 @@ public class SchedulerEntryRegistry {
 		}
 
 		private String getPluginPropertyValue(ClassLoader _classLoader, String propertyKey) {
-			try {
-				Class<?> clazz = _classLoader.loadClass(PortletProps.class.getName());
+			Configuration configuration =
+				ConfigurationFactoryUtil.getConfiguration(
+					_classLoader, "portlet");
 
-				java.lang.reflect.Method method = clazz.getMethod("get", String.class);
-
-				return (String)method.invoke(null, propertyKey);
-			}catch (Exception e) {
-			}
-
-			return null;
+			return configuration.get(propertyKey);
 		}
 
 	}

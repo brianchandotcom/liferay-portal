@@ -125,7 +125,9 @@ public class SchedulerEntryRegistry {
 			SchedulerEntry schedulerEntry,
 			ServiceReference<SchedulerEntry> serviceReference) {
 
-			ClassLoader classloader = schedulerEntry.getClass().getClassLoader();
+			Class<?> clazz = schedulerEntry.getClass();
+
+			ClassLoader classloader = clazz.getClassLoader();
 
 			String propertyKey = schedulerEntry.getPropertyKey();
 

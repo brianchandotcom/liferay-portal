@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.scheduler.StorageTypeAware;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.ClassLoaderUtil;
@@ -80,6 +81,15 @@ public class SchedulerEntryRegistry {
 			SchedulerEntry schedulerEntry = registry.getService(
 				serviceReference);
 
+			StorageType storageType = StorageType.MEMORY_CLUSTERED;
+
+			if (schedulerEntry instanceof StorageTypeAware) {
+				StorageTypeAware storageTypeAware =
+					(StorageTypeAware)schedulerEntry;
+
+				storageType = storageTypeAware.getStorageType();
+			}
+
 			addTrigger(schedulerEntry, serviceReference);
 
 			String portletId = (String)serviceReference.getProperty(
@@ -87,7 +97,7 @@ public class SchedulerEntryRegistry {
 
 			try {
 				SchedulerEngineHelperUtil.schedule(
-					schedulerEntry, StorageType.MEMORY_CLUSTERED, portletId, 0);
+					schedulerEntry, storageType, portletId, 0);
 
 				return schedulerEntry;
 			}
@@ -113,9 +123,18 @@ public class SchedulerEntryRegistry {
 
 			registry.ungetService(serviceReference);
 
+			StorageType storageType = StorageType.MEMORY_CLUSTERED;
+
+			if (schedulerEntry instanceof StorageTypeAware) {
+				StorageTypeAware storageTypeAware =
+					(StorageTypeAware)schedulerEntry;
+
+				storageType = storageTypeAware.getStorageType();
+			}
+
 			try {
 				SchedulerEngineHelperUtil.unschedule(
-					schedulerEntry, StorageType.MEMORY_CLUSTERED);
+					schedulerEntry, storageType);
 			}
 			catch (SchedulerException e) {
 				_log.error(e, e);

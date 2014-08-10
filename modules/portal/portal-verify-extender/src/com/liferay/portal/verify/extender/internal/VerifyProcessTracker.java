@@ -20,9 +20,11 @@ import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,6 +34,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Miguel Pastor
+ * @author Raymond Augé
  */
 @Component(
 	immediate = true,
@@ -78,6 +81,21 @@ public class VerifyProcessTracker {
 		}
 	}
 
+	public void execute(int index) throws VerifyException {
+		List<VerifyProcess> verifyProcesses = new ArrayList<VerifyProcess>(
+			_verifyProcesses.values());
+
+		try {
+			VerifyProcess verifyProcess = verifyProcesses.get(index - 1);
+
+			verifyProcess.verify();
+		}
+		catch (IndexOutOfBoundsException iobe) {
+			System.out.println(
+				"Unable to find a verify process with index " + index);
+		}
+	}
+
 	public void execute(String verifyProcessName) throws VerifyException {
 		VerifyProcess verifyProcess = _verifyProcesses.get(verifyProcessName);
 
@@ -93,12 +111,15 @@ public class VerifyProcessTracker {
 	}
 
 	public void list() {
+		int i = 1;
+
 		for (Map.Entry<String, VerifyProcess> entry :
 				_verifyProcesses.entrySet()) {
 
 			System.out.println(
-				"Verify process " + ClassUtil.getClassName(entry.getValue()) +
-					" is registered with the name " + entry.getKey());
+				String.format(
+					_FORMAT, i++, ClassUtil.getClassName(entry.getValue()),
+					entry.getKey()));
 		}
 	}
 
@@ -120,7 +141,10 @@ public class VerifyProcessTracker {
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyProcessTracker.class);
 
+	private static final String _FORMAT =
+		"[%1$5d] Verify process '%2$s' is registered with the name '%3$s'";
+
 	private ConcurrentMap<String, VerifyProcess> _verifyProcesses =
-		new ConcurrentHashMap<String, VerifyProcess>();
+		new ConcurrentSkipListMap<String, VerifyProcess>();
 
 }

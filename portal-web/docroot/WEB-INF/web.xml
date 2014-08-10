@@ -230,31 +230,6 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
-		<servlet-name>Portlet Bridge Servlet</servlet-name>
-		<servlet-class>org.portletbridge.portlet.PortletBridgeServlet</servlet-class>
-		<init-param>
-			<param-name>mementoSessionKey</param-name>
-			<param-value>mementoSessionKey</param-value>
-		</init-param>
-		<init-param>
-			<param-name>cssRegex</param-name>
-			<param-value>(?:url\((?:'|")?(.*?)(?:'|")?\))|(?:@import\s+[^url](?:'|")?(.*?)(?:'|")|;|\s+|$)</param-value>
-		</init-param>
-		<init-param>
-			<param-name>jsRegex</param-name>
-			<param-value>open\('([^']*)'|open\("([^\"]*)"</param-value>
-		</init-param>
-		<init-param>
-			<param-name>ignoreRequestHeaders</param-name>
-			<param-value>accept-encoding,connection,keep-alive</param-value>
-		</init-param>
-		<init-param>
-			<param-name>ignorePostToGetRequestHeaders</param-name>
-			<param-value>content-type,content-length</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet>
 		<servlet-name>Remoting Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.spring.servlet.RemotingServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
@@ -726,10 +701,6 @@
 	<servlet-mapping>
 		<servlet-name>Portal Delegator Servlet</servlet-name>
 		<url-pattern>/delegate/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Portlet Bridge Servlet</servlet-name>
-		<url-pattern>/pbhs/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Robots Servlet</servlet-name>

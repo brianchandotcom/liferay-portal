@@ -17,41 +17,49 @@ package com.liferay.portal.verify.extender.internal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Miguel Pastor
+ * @author Raymond Augé
  */
-public class VerifyProcessTracker
-	extends ServiceTracker<VerifyProcess, VerifyProcess> {
+@Component(
+	immediate = true,
+	property = {
+		"osgi.command.function=execute",
+		"osgi.command.function=list",
+		"osgi.command.scope=verify-extender"
+	},
+	service = {Object.class}
+)
+public class VerifyProcessTracker {
 
-	public VerifyProcessTracker(BundleContext bundleContext) {
-		super(bundleContext, VerifyProcess.class, null);
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(verify.process.name=*)",
+		unbind = "removedService",
+		updated = "modifiedService"
+	)
+	public void addingService(
+		VerifyProcess verifyProcess, Map<String, Object> properties) {
 
-		_bundleContext = bundleContext;
-	}
-
-	@Override
-	public VerifyProcess addingService(
-		ServiceReference<VerifyProcess> serviceReference) {
-
-		VerifyProcess verifyProcess = _bundleContext.getService(
-			serviceReference);
-
-		String verifyProcessName = getVerifyProcessName(serviceReference);
-
-		if (Validator.isNull(verifyProcessName)) {
-			return null;
-		}
+		String verifyProcessName = (String)properties.get(
+			"verify.process.name");
 
 		_verifyProcesses.put(verifyProcessName, verifyProcess);
 
@@ -71,8 +79,21 @@ public class VerifyProcessTracker
 						ClassUtil.getClassName(verifyProcess.getClass()),
 				ve);
 		}
+	}
 
-		return verifyProcess;
+	public void execute(int index) throws VerifyException {
+		List<VerifyProcess> verifyProcesses = new ArrayList<VerifyProcess>(
+			_verifyProcesses.values());
+
+		try {
+			VerifyProcess verifyProcess = verifyProcesses.get(index - 1);
+
+			verifyProcess.verify();
+		}
+		catch (IndexOutOfBoundsException iobe) {
+			System.out.println(
+				"Unable to find a verify process with index " + index);
+		}
 	}
 
 	public void execute(String verifyProcessName) throws VerifyException {
@@ -89,44 +110,41 @@ public class VerifyProcessTracker
 		verifyProcess.verify();
 	}
 
-	public String getVerifyProcessName(
-		ServiceReference<VerifyProcess> serviceReference) {
-
-		return (String)serviceReference.getProperty("verify.process.name");
-	}
-
 	public void list() {
+		int i = 1;
+
 		for (Map.Entry<String, VerifyProcess> entry :
 				_verifyProcesses.entrySet()) {
 
 			System.out.println(
-				"Verify process " + ClassUtil.getClassName(entry.getValue()) +
-					" is registered with the name " + entry.getKey());
+				String.format(
+					_FORMAT, i++, ClassUtil.getClassName(entry.getValue()),
+					entry.getKey()));
 		}
 	}
 
-	@Override
 	public void modifiedService(
-		ServiceReference<VerifyProcess> serviceReference,
-		VerifyProcess verifyProcess) {
+		VerifyProcess verifyProcess, Map<String, Object> properties) {
 
-		addingService(serviceReference);
+		removedService(verifyProcess, properties);
+		addingService(verifyProcess, properties);
 	}
 
-	@Override
 	public void removedService(
-		ServiceReference<VerifyProcess> serviceReference,
-		VerifyProcess verifyProcess) {
+		VerifyProcess verifyProcess, Map<String, Object> properties) {
 
-		String verifyProcessName = getVerifyProcessName(serviceReference);
+		String verifyProcessName = (String)properties.get(
+			"verify.process.name");
 
-		_verifyProcesses.remove(verifyProcessName);
+		_verifyProcesses.remove(verifyProcessName, verifyProcess);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyProcessTracker.class);
 
-	private BundleContext _bundleContext;
-	private Map<String, VerifyProcess> _verifyProcesses =
-		new ConcurrentHashMap<String, VerifyProcess>();
+	private static final String _FORMAT =
+		"[%1$5d] Verify process '%2$s' is registered with the name '%3$s'";
+
+	private ConcurrentMap<String, VerifyProcess> _verifyProcesses =
+		new ConcurrentSkipListMap<String, VerifyProcess>();
 
 }

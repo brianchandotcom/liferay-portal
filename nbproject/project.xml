@@ -487,8 +487,6 @@
 				<classpath mode="compile">lib/portal/poi.jar</classpath>
 				<classpath mode="compile">lib/portal/portal-client.jar</classpath>
 				<classpath mode="compile">lib/portal/portals-bridges.jar</classpath>
-				<classpath mode="compile">lib/portal/portletbridge-core.jar</classpath>
-				<classpath mode="compile">lib/portal/portletbridge-portlet.jar</classpath>
 				<classpath mode="compile">lib/portal/quartz.jar</classpath>
 				<classpath mode="compile">lib/portal/rdffilter.jar</classpath>
 				<classpath mode="compile">lib/portal/rhino.jar</classpath>

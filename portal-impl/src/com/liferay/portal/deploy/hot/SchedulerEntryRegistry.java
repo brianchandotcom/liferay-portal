@@ -131,7 +131,10 @@ public class SchedulerEntryRegistry {
 
 			String propertyKey = schedulerEntry.getPropertyKey();
 
-			if (Validator.isNotNull(propertyKey)) {
+			if (Validator.isNull(propertyKey)) {
+				return;
+			}
+
 				String triggerValue = null;
 
 				if (!classloader.equals(ClassLoaderUtil.getPortalClassLoader())) {
@@ -150,7 +153,6 @@ public class SchedulerEntryRegistry {
 				if (Validator.isNotNull(triggerValue)) {
 					schedulerEntry.setTriggerValue(triggerValue);
 				}
-			}
 		}
 
 		private String getPluginPropertyValue(ClassLoader _classLoader, String propertyKey) {

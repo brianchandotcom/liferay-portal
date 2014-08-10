@@ -156,10 +156,12 @@ public class SchedulerEntryRegistry {
 			}
 		}
 
-		private String getPluginPropertyValue(ClassLoader _classLoader, String propertyKey) {
+		private String getPluginPropertyValue(
+			ClassLoader classLoader, String propertyKey) {
+
 			Configuration configuration =
 				ConfigurationFactoryUtil.getConfiguration(
-					_classLoader, "portlet");
+					classLoader, "portlet");
 
 			return configuration.get(propertyKey);
 		}

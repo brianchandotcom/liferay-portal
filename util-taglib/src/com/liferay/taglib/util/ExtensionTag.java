@@ -14,7 +14,11 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.kernel.servlet.taglib.ViewExtension;
+import com.liferay.kernel.servlet.taglib.ViewExtensionUtil;
 import com.liferay.taglib.TagSupport;
+
+import java.util.List;
 
 import javax.servlet.jsp.JspException;
 
@@ -30,7 +34,14 @@ public class ExtensionTag extends TagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {
-		return super.doStartTag();
+		List<ViewExtension> viewExtensions =
+			ViewExtensionUtil.getViewExtensions(getExtensionId());
+
+		if (viewExtensions == null || viewExtensions.isEmpty()) {
+			return SKIP_BODY;
+		}
+
+		return EVAL_BODY_INCLUDE;
 	}
 
 	public String getExtensionId() {

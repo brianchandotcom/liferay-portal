@@ -18,13 +18,21 @@ import com.liferay.kernel.servlet.taglib.ViewExtension;
 import com.liferay.kernel.servlet.taglib.ViewExtensionUtil;
 import com.liferay.taglib.TagSupport;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 import javax.servlet.jsp.JspException;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Carlos Sierra Andrés
@@ -64,6 +72,38 @@ public class ExtensionTag extends TagSupport {
 		}
 
 		return (HttpServletRequest)request;
+	}
+
+	protected HttpServletResponse getResponse() throws IOException {
+		ServletResponse response = pageContext.getResponse();
+
+		if (!(response instanceof HttpServletResponse)) {
+			throw new IllegalStateException("This can only be used from HTTP");
+		}
+
+		HttpServletResponse httpServletResponse = (HttpServletResponse)response;
+
+		return new HttpServletResponseWrapper(httpServletResponse) {
+
+			@Override
+			public ServletOutputStream getOutputStream() throws IOException {
+				return new ServletOutputStream() {
+
+					@Override
+					public void write(int b) throws IOException {
+						JspWriter out = pageContext.getOut();
+
+						out.write(b);
+					}
+				};
+			}
+
+			@Override
+			public PrintWriter getWriter() throws IOException {
+				return new PrintWriter(pageContext.getOut(), true);
+			}
+
+		};
 	}
 
 	private String _extensionId;

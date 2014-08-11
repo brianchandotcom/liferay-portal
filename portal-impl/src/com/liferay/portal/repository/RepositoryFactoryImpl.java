@@ -32,8 +32,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -52,15 +50,20 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 			repositoryId, classNameId);
 
 		Map<Class<? extends Capability>, Capability> supportedCapabilities =
-			new HashMap<Class<? extends Capability>, Capability>(
-				getExternalSupportedCapabilities());
+			getExternalSupportedCapabilities();
 
 		Set<Class<? extends Capability>> exportedCapabilityClasses =
-			new HashSet<Class<? extends Capability>>(
-				getExternalExportedCapabilityClasses());
+			getExternalExportedCapabilityClasses();
 
-		_addCMISRepositoryHandlerCapability(
-			repository, supportedCapabilities, exportedCapabilityClasses);
+		CMISRepositoryHandler cmisRepositoryHandler = _getCMISRepositoryHandler(
+			repository);
+
+		if (cmisRepositoryHandler != null) {
+			supportedCapabilities.put(
+				CMISRepositoryHandler.class, cmisRepositoryHandler);
+
+			exportedCapabilityClasses.add(CMISRepositoryHandler.class);
+		}
 
 		return new CapabilityRepository(
 			repository, supportedCapabilities, exportedCapabilityClasses);
@@ -145,10 +148,8 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 		return repositoryLocalService.fetchRepository(repositoryId);
 	}
 
-	private void _addCMISRepositoryHandlerCapability(
-		Repository repository,
-		Map<Class<? extends Capability>, Capability> supportedCapabilities,
-		Set<Class<? extends Capability>> exportedCapabilityClasses) {
+	private CMISRepositoryHandler _getCMISRepositoryHandler(
+		Repository repository) {
 
 		if (repository instanceof BaseRepositoryProxyBean) {
 			BaseRepositoryProxyBean baseRepositoryProxyBean =
@@ -161,15 +162,11 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 			Object bean = classLoaderBeanHandler.getBean();
 
 			if (bean instanceof CMISRepositoryHandler) {
-				CMISRepositoryHandler cmisRepositoryHandler =
-					(CMISRepositoryHandler)bean;
-
-				supportedCapabilities.put(
-					CMISRepositoryHandler.class, cmisRepositoryHandler);
-
-				exportedCapabilityClasses.add(CMISRepositoryHandler.class);
+				return (CMISRepositoryHandler)bean;
 			}
 		}
+
+		return null;
 	}
 
 }

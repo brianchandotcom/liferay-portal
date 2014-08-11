@@ -29,6 +29,7 @@ import com.liferay.portlet.RenderResponseImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.portlet.Portlet;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -36,11 +37,45 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 import org.portletbridge.portlet.PortletBridgePortlet;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.struts-path=web_proxy",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.instanceable=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.css-class-wrapper=portlet-web-proxy",
+		"javax.portlet.display-name=Web Proxy",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.authenticatorClassName=org.portletbridge.portlet.DefaultBridgeAuthenticator",
+		"javax.portlet.init-param.config-template=/configuration.jsp",
+		"javax.portlet.init-param.cssRegex=(?:url\\((?:'|\")?(.*?)(?:'|\")?\\))|(?:@import\\s+[^url](?:'|\")?(.*?)(?:'|\")|;|\\s+|$)",
+		"javax.portlet.init-param.editStylesheet=classpath:/org/portletbridge/xsl/pages/edit.xsl",
+		"javax.portlet.init-param.errorStylesheet=classpath:/org/portletbridge/xsl/pages/error.xsl",
+		"javax.portlet.init-param.helpStylesheet=classpath:/org/portletbridge/xsl/pages/help.xsl",
+		"javax.portlet.init-param.idParamKey=id",
+		"javax.portlet.init-param.jsRegex=open\\('([^']*)'|open\\(\"([^\\\"]*)\"",
+		"javax.portlet.init-param.mementoSessionKey=mementoSessionKey",
+		"javax.portlet.init-param.parserClassName=org.cyberneko.html.parsers.SAXParser",
+		"javax.portlet.init-param.servletName=pbhs",
+		"javax.portlet.init-param.stylesheetUrl=classpath:/org/portletbridge/xsl/default.xsl",
+		"javax.portlet.name=66",
+		"javax.portlet.preferences=classpath:/META-INF/preferences/default-preferences.xml",
+		"javax.portlet.resource-bundle=org.portletbridge.portlet.PortletBridgePortlet",
+		"javax.portlet.security-role-ref=power-user",
+		"javax.portlet.security-role-ref=user",
+	},
+	service = Portlet.class
+)
 public class WebProxyPortlet extends PortletBridgePortlet {
 
 	@Override

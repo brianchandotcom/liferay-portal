@@ -388,6 +388,82 @@
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 	</command>
 
+	<command name="ExportImportSampleLARPortlet" priority="4">
+		<property name="portlet.plugins.includes" value="sample-lar-portlet" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Sample LAR" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="SampleLARPortlet#addSampleBooking" />
+
+		<var method="selenium#getText(&quot;//tbody[@class='table-data']/tr/td[2]&quot;)" name="bookingNumber" />
+
+		<echo message="Booking Number ${bookingNumber}" />
+
+		<execute macro="SampleLARPortlet#viewSampleBookingNumber">
+			<var name="${bookingNumber}" value="${bookingNumber}" />
+		</execute>
+
+		<execute macro="LAR#exportPortlet">
+			<var name="larFileName" value="SampleLARPortlet.lar" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Test Site Name" />
+			<var name="sitePageName" value="Test Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Site Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Sample LAR" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="SampleLARPortlet.lar" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Site Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SampleLARPortlet#viewSampleBookingNumber">
+			<var name="${bookingNumber}" value="${bookingNumber}" />
+		</execute>
+	</command>
+
 	<command name="ExportImportSiteWithChangedSiteDefaultLanguage" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />

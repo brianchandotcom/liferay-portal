@@ -515,7 +515,9 @@
 
 		<move file="${app.server.tcat.dir}/tomcat" tofile="${app.server.tcat.dir}/admin" />
 
-		<mkdir dir="${app.server.tcat.dir}/agent" />
+		<mkdir dir="${app.server.tcat.dir}/agent/temp" />
+
+		<mkdir dir="${app.server.tcat.dir}/admin/temp" />
 
 		<copy todir="${app.server.tcat.dir}/agent">
 			<fileset dir="${app.server.tcat.dir}/admin" />

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.webproxy;
+package com.liferay.web.proxy.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

@@ -58,7 +58,7 @@ public class LockBasedMVCCEhcachePortalCache
 			throw new NullPointerException("Value is null");
 		}
 
-		if ((timeToLive != DEFAULT_TIME_TO_LIVE) && (timeToLive < 0)) {
+		if (timeToLive < 0) {
 			throw new IllegalArgumentException("Time to live is negative");
 		}
 

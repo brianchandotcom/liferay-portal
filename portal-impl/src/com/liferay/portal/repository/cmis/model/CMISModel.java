@@ -154,6 +154,7 @@ public abstract class CMISModel {
 		_unsupportedActionKeys.add(ActionKeys.ADD_SHORTCUT);
 		_unsupportedActionKeys.add(ActionKeys.DELETE_DISCUSSION);
 		_unsupportedActionKeys.add(ActionKeys.PERMISSIONS);
+		_unsupportedActionKeys.add(ActionKeys.SUBSCRIBE);
 		_unsupportedActionKeys.add(ActionKeys.UPDATE_DISCUSSION);
 	}
 

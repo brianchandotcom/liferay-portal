@@ -25,7 +25,7 @@ import java.io.Serializable;
 /**
  * @author Shuyang Zhou
  */
-public class MVCCEhcachePortalCacheFactory {
+public class MVCCPortalCacheFactory {
 
 	public static <K extends Serializable>
 		PortalCache<K, ?> createMVCCEhcachePortalCache(

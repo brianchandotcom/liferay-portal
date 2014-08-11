@@ -1515,6 +1515,19 @@ create database lportal2 character set utf8;</echo>
 	</target>
 
 	<target name="merge-jenkins-test-results">
+		<if>
+			<isset property="jenkins.shared.results.dir"/>
+			<then>
+				<zip destfile="${env.JENKINS_HOME}/userContent/jobs/${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_NUMBER}.zip"
+					basedir="${jenkins.shared.results.dir}/${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_NUMBER}/"
+				/>
+
+				<unzip src="${env.JENKINS_HOME}/userContent/jobs/${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_NUMBER}.zip" dest="${env.JENKINS_HOME}/userContent/jobs/"/>
+
+				<delete file="${env.JENKINS_HOME}/userContent/jobs/${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_NUMBER}.zip" />
+			</then>
+		</if>
+		
 		<property name="jenkins.test.results.dir" value="${env.JENKINS_HOME}/userContent/jobs/${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results" />
 
 		<property name="jenkins.results.xml.suite.file" value="${jenkins.test.results.dir}/test-suite/TESTS-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}.xml" />

@@ -16,6 +16,8 @@ package com.liferay.taglib.util;
 
 import com.liferay.kernel.servlet.taglib.ViewExtension;
 import com.liferay.kernel.servlet.taglib.ViewExtensionUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.taglib.TagSupport;
 
 import java.io.IOException;
@@ -41,6 +43,20 @@ public class ExtensionTag extends TagSupport {
 
 	@Override
 	public int doEndTag() throws JspException {
+		List<ViewExtension> viewExtensions =
+			ViewExtensionUtil.getViewExtensions(getExtensionId());
+
+		if ((viewExtensions != null) && !viewExtensions.isEmpty()) {
+			for (ViewExtension viewExtension : viewExtensions) {
+				try {
+					viewExtension.render(getRequest(), getResponse());
+				}
+				catch (Exception e) {
+					_log.error(e.getLocalizedMessage(), e);
+				}
+			}
+		}
+
 		return super.doEndTag();
 	}
 
@@ -105,6 +121,8 @@ public class ExtensionTag extends TagSupport {
 
 		};
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(ExtensionTag.class);
 
 	private String _extensionId;
 

@@ -208,16 +208,6 @@ if (ddmFields != null) {
 				defaultLanguageId="<%= defaultLanguageId %>"
 				id="translationManager"
 			/>
-
-			<aui:script use="liferay-translation-manager">
-				var translationManager = Liferay.component('<portlet:namespace />translationManager');
-
-				translationManager.after(
-					{
-						editingLocaleChange: function() {}
-					}
-				);
-			</aui:script>
 		</div>
 
 		<div class="journal-article-general-fields">
@@ -285,15 +275,12 @@ if (ddmFields != null) {
 <aui:script use="liferay-journal-content">
 	var journalContent = new Liferay.Portlet.JournalContent(
 		{
-			changeDefaultLanguage: '#<portlet:namespace />changeDefaultLanguage',
 			'ddm.basePortletURL': '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 			'ddm.classNameId': '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 			'ddm.classPK': <%= ddmStructure.getPrimaryKey() %>,
 			'ddm.groupId': <%= groupId %>,
 			'ddm.refererPortletName': '<%= PortletKeys.JOURNAL_CONTENT %>',
 			'ddm.templateId': <%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : 0 %>,
-			defaultLanguage: '#<portlet:namespace />defaultLanguage',
-			defaultLanguageSelector: '#<portlet:namespace />defaultLanguageSelector',
 			editStructure: '#<portlet:namespace />editDDMStructure',
 			editTemplate: '#<portlet:namespace />editDDMTemplate',
 			namespace: '<portlet:namespace />',

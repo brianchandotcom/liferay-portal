@@ -59,6 +59,7 @@ import org.portletbridge.portlet.PortletBridgeServlet;
 @Component(
 	immediate = true,
 	property = {
+		"com.liferay.portlet.display-category=category.sample",
 		"com.liferay.portlet.struts-path=web_proxy",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.instanceable=true",

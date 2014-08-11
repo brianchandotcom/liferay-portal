@@ -20,7 +20,11 @@ import com.liferay.taglib.TagSupport;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.jsp.JspException;
+
+import javax.servlet.ServletRequest;
 
 /**
  * @author Carlos Sierra Andrés
@@ -50,6 +54,16 @@ public class ExtensionTag extends TagSupport {
 
 	public void setExtensionId(String extensionId) {
 		_extensionId = extensionId;
+	}
+
+	protected HttpServletRequest getRequest() {
+		ServletRequest request = pageContext.getRequest();
+
+		if (!(request instanceof HttpServletRequest)) {
+			throw new IllegalStateException("This can only be used from HTTP");
+		}
+
+		return (HttpServletRequest)request;
 	}
 
 	private String _extensionId;

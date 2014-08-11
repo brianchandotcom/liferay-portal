@@ -87,7 +87,15 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 
 	@Override
 	public boolean addAll(Collection<? extends S> services) {
-		throw new UnsupportedOperationException();
+		boolean changed = false;
+
+		for (S service : services) {
+			add(service);
+
+			changed = true;
+		}
+
+		return changed;
 	}
 
 	@Override

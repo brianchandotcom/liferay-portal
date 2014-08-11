@@ -24,10 +24,10 @@ import java.io.Serializable;
 /**
  * @author Shuyang Zhou
  */
-public class MVCCEhcachePortalCache<K extends Serializable, V extends MVCCModel>
+public class MVCCPortalCache<K extends Serializable, V extends MVCCModel>
 	extends PortalCacheWrapper<K, V> {
 
-	public MVCCEhcachePortalCache(LowLevelCache<K, V> lowLevelCache) {
+	public MVCCPortalCache(LowLevelCache<K, V> lowLevelCache) {
 		super(lowLevelCache);
 
 		_lowLevelCache = lowLevelCache;

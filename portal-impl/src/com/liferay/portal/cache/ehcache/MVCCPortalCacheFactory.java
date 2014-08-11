@@ -33,7 +33,7 @@ public class MVCCPortalCacheFactory {
 
 		if (portalCache instanceof LowLevelCache) {
 			if (PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
-				return new MVCCEhcachePortalCache<K, MVCCModel>(
+				return new MVCCPortalCache<K, MVCCModel>(
 					(LowLevelCache<K, MVCCModel>)portalCache);
 			}
 			else {
@@ -53,7 +53,7 @@ public class MVCCPortalCacheFactory {
 
 			if (nextPortalCache instanceof LowLevelCache) {
 				if (PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
-					nextPortalCache = new MVCCEhcachePortalCache<K, MVCCModel>(
+					nextPortalCache = new MVCCPortalCache<K, MVCCModel>(
 						(LowLevelCache<K, MVCCModel>)nextPortalCache);
 				}
 				else {

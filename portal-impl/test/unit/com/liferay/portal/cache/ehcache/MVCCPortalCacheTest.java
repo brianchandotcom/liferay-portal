@@ -42,7 +42,7 @@ import org.junit.runner.RunWith;
  * @author Tina Tian
  */
 @RunWith(AspectJMockingNewClassLoaderJUnitTestRunner.class)
-public class MVCCEhcachePortalCacheTest {
+public class MVCCPortalCacheTest {
 
 	@ClassRule
 	public static CodeCoverageAssertor codeCoverageAssertor =
@@ -53,7 +53,7 @@ public class MVCCEhcachePortalCacheTest {
 		_portalCache = new MemoryPortalCache<String, MVCCModel>(
 			_CACHE_NAME, 16);
 
-		_mvccEhcachePortalCache = new MVCCEhcachePortalCache<String, MVCCModel>(
+		_mvccPortalCache = new MVCCPortalCache<String, MVCCModel>(
 			(LowLevelCache<String, MVCCModel>)_portalCache);
 
 		_testCacheListener = new ThreadLocalAwareCacheListener();
@@ -65,16 +65,16 @@ public class MVCCEhcachePortalCacheTest {
 	@Test
 	public void testForHiddenBridge() {
 		@SuppressWarnings("rawtypes")
-		MVCCEhcachePortalCache mvccEhcachePortalCache =
-			new MVCCEhcachePortalCache(new MemoryPortalCache(_CACHE_NAME, 16));
+		MVCCPortalCache mvccPortalCache = new MVCCPortalCache(
+			new MemoryPortalCache(_CACHE_NAME, 16));
 
 		Serializable key = _KEY_1;
 		Object value = new MockMVCCModel(_VERSION_1);
 
-		mvccEhcachePortalCache.put(key, value);
-		mvccEhcachePortalCache.put(key, value, 10);
-		mvccEhcachePortalCache.putQuiet(key, value);
-		mvccEhcachePortalCache.putQuiet(key, value, 10);
+		mvccPortalCache.put(key, value);
+		mvccPortalCache.put(key, value, 10);
+		mvccPortalCache.putQuiet(key, value);
+		mvccPortalCache.putQuiet(key, value, 10);
 	}
 
 	@AdviseWith(adviceClasses = {MemoryPortalCacheAdvice.class})
@@ -89,8 +89,7 @@ public class MVCCEhcachePortalCacheTest {
 
 			@Override
 			public void run() {
-				_mvccEhcachePortalCache.put(
-					_KEY_1, new MockMVCCModel(_VERSION_1));
+				_mvccPortalCache.put(_KEY_1, new MockMVCCModel(_VERSION_1));
 			}
 
 		};
@@ -103,8 +102,7 @@ public class MVCCEhcachePortalCacheTest {
 
 			@Override
 			public void run() {
-				_mvccEhcachePortalCache.put(
-					_KEY_1, new MockMVCCModel(_VERSION_1));
+				_mvccPortalCache.put(_KEY_1, new MockMVCCModel(_VERSION_1));
 			}
 
 		};
@@ -118,7 +116,7 @@ public class MVCCEhcachePortalCacheTest {
 		thread1.join();
 		thread2.join();
 
-		_assertVersion(_VERSION_1, _mvccEhcachePortalCache.get(_KEY_1));
+		_assertVersion(_VERSION_1, _mvccPortalCache.get(_KEY_1));
 
 		_testCacheListener.assertPut(_KEY_1, new MockMVCCModel(_VERSION_1));
 		_testCacheListener.assertActionsCount(1);
@@ -132,8 +130,7 @@ public class MVCCEhcachePortalCacheTest {
 
 			@Override
 			public void run() {
-				_mvccEhcachePortalCache.put(
-					_KEY_1, new MockMVCCModel(_VERSION_2));
+				_mvccPortalCache.put(_KEY_1, new MockMVCCModel(_VERSION_2));
 			}
 
 		};
@@ -146,8 +143,7 @@ public class MVCCEhcachePortalCacheTest {
 
 			@Override
 			public void run() {
-				_mvccEhcachePortalCache.put(
-					_KEY_1, new MockMVCCModel(_VERSION_2));
+				_mvccPortalCache.put(_KEY_1, new MockMVCCModel(_VERSION_2));
 			}
 
 		};
@@ -161,7 +157,7 @@ public class MVCCEhcachePortalCacheTest {
 		thread1.join();
 		thread2.join();
 
-		_assertVersion(_VERSION_2, _mvccEhcachePortalCache.get(_KEY_1));
+		_assertVersion(_VERSION_2, _mvccPortalCache.get(_KEY_1));
 
 		_testCacheListener.assertUpdated(_KEY_1, new MockMVCCModel(_VERSION_2));
 		_testCacheListener.assertActionsCount(1);
@@ -172,12 +168,12 @@ public class MVCCEhcachePortalCacheTest {
 		MemoryPortalCacheAdvice.setException();
 
 		try {
-			_mvccEhcachePortalCache.put(_KEY_2, new MockMVCCModel(_VERSION_1));
+			_mvccPortalCache.put(_KEY_2, new MockMVCCModel(_VERSION_1));
 
 			Assert.fail();
 		}
 		catch (Exception e) {
-			Assert.assertNull(_mvccEhcachePortalCache.get(_KEY_2));
+			Assert.assertNull(_mvccPortalCache.get(_KEY_2));
 
 			_testCacheListener.assertActionsCount(0);
 		}
@@ -268,14 +264,13 @@ public class MVCCEhcachePortalCacheTest {
 		// Put 1
 
 		if (timeToLive) {
-			_mvccEhcachePortalCache.put(
-				_KEY_1, new MockMVCCModel(_VERSION_1), 10);
+			_mvccPortalCache.put(_KEY_1, new MockMVCCModel(_VERSION_1), 10);
 		}
 		else {
-			_mvccEhcachePortalCache.put(_KEY_1, new MockMVCCModel(_VERSION_1));
+			_mvccPortalCache.put(_KEY_1, new MockMVCCModel(_VERSION_1));
 		}
 
-		_assertVersion(_VERSION_1, _mvccEhcachePortalCache.get(_KEY_1));
+		_assertVersion(_VERSION_1, _mvccPortalCache.get(_KEY_1));
 
 		if (timeToLive) {
 			_testCacheListener.assertPut(
@@ -291,28 +286,26 @@ public class MVCCEhcachePortalCacheTest {
 		// Put 2
 
 		if (timeToLive) {
-			_mvccEhcachePortalCache.put(
-				_KEY_1, new MockMVCCModel(_VERSION_0), 10);
+			_mvccPortalCache.put(_KEY_1, new MockMVCCModel(_VERSION_0), 10);
 		}
 		else {
-			_mvccEhcachePortalCache.put(_KEY_1, new MockMVCCModel(_VERSION_0));
+			_mvccPortalCache.put(_KEY_1, new MockMVCCModel(_VERSION_0));
 		}
 
-		_assertVersion(_VERSION_1, _mvccEhcachePortalCache.get(_KEY_1));
+		_assertVersion(_VERSION_1, _mvccPortalCache.get(_KEY_1));
 
 		_testCacheListener.assertActionsCount(0);
 
 		// Put 3
 
 		if (timeToLive) {
-			_mvccEhcachePortalCache.put(
-				_KEY_1, new MockMVCCModel(_VERSION_2), 10);
+			_mvccPortalCache.put(_KEY_1, new MockMVCCModel(_VERSION_2), 10);
 		}
 		else {
-			_mvccEhcachePortalCache.put(_KEY_1, new MockMVCCModel(_VERSION_2));
+			_mvccPortalCache.put(_KEY_1, new MockMVCCModel(_VERSION_2));
 		}
 
-		_assertVersion(_VERSION_2, _mvccEhcachePortalCache.get(_KEY_1));
+		_assertVersion(_VERSION_2, _mvccPortalCache.get(_KEY_1));
 
 		if (timeToLive) {
 			_testCacheListener.assertUpdated(
@@ -329,15 +322,14 @@ public class MVCCEhcachePortalCacheTest {
 		// Putquiet
 
 		if (timeToLive) {
-			_mvccEhcachePortalCache.putQuiet(
+			_mvccPortalCache.putQuiet(
 				_KEY_2, new MockMVCCModel(_VERSION_1), 10);
 		}
 		else {
-			_mvccEhcachePortalCache.putQuiet(
-				_KEY_2, new MockMVCCModel(_VERSION_1));
+			_mvccPortalCache.putQuiet(_KEY_2, new MockMVCCModel(_VERSION_1));
 		}
 
-		_assertVersion(_VERSION_1, _mvccEhcachePortalCache.get(_KEY_2));
+		_assertVersion(_VERSION_1, _mvccPortalCache.get(_KEY_2));
 
 		_testCacheListener.assertActionsCount(0);
 	}
@@ -358,7 +350,7 @@ public class MVCCEhcachePortalCacheTest {
 
 	private static final long _VERSION_2 = 2;
 
-	private MVCCEhcachePortalCache<String, MVCCModel> _mvccEhcachePortalCache;
+	private MVCCPortalCache<String, MVCCModel> _mvccPortalCache;
 	private PortalCache<String, MVCCModel> _portalCache;
 	private TestCacheListener<String, MVCCModel> _testCacheListener;
 

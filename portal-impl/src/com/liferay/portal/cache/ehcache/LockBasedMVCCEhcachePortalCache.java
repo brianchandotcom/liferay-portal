@@ -27,7 +27,7 @@ import net.sf.ehcache.Element;
  */
 public class LockBasedMVCCEhcachePortalCache
 		<K extends Serializable, V extends MVCCModel>
-	extends MVCCEhcachePortalCache<K, V> {
+	extends MVCCPortalCache<K, V> {
 
 	public LockBasedMVCCEhcachePortalCache(LowLevelCache<K, V> lowLevelCache) {
 		super(lowLevelCache);

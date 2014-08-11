@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.StorageTypeAware;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
@@ -151,13 +151,16 @@ public class SchedulerEntryRegistry {
 				return;
 			}
 
-			Class<?> clazz = schedulerEntry.getClass();
-
-			ClassLoader classloader = clazz.getClassLoader();
+			long bundleId = GetterUtil.getLong(
+				serviceReference.getProperty("bundle.id"), -1);
 
 			String triggerValue = null;
 
-			if (!classloader.equals(ClassLoaderUtil.getPortalClassLoader())) {
+			if (bundleId != 0) {
+				Class<?> clazz = schedulerEntry.getClass();
+
+				ClassLoader classloader = clazz.getClassLoader();
+
 				triggerValue = getPluginPropertyValue(classloader, propertyKey);
 			}
 			else {

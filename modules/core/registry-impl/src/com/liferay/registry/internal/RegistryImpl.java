@@ -26,10 +26,12 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 
@@ -247,6 +249,8 @@ public class RegistryImpl implements Registry {
 	public <T> ServiceRegistration<T> registerService(
 		Class<T> clazz, T service, Map<String, Object> properties) {
 
+		properties = addBundleContextInfo(properties);
+
 		org.osgi.framework.ServiceRegistration<T> serviceRegistration =
 			_bundleContext.registerService(
 				clazz, service, new MapWrapper(properties));
@@ -266,6 +270,8 @@ public class RegistryImpl implements Registry {
 	public <T> ServiceRegistration<T> registerService(
 		String className, T service, Map<String, Object> properties) {
 
+		properties = addBundleContextInfo(properties);
+
 		org.osgi.framework.ServiceRegistration<?> serviceRegistration =
 			_bundleContext.registerService(
 				className, service, new MapWrapper(properties));
@@ -284,6 +290,8 @@ public class RegistryImpl implements Registry {
 	@SuppressWarnings("rawtypes")
 	public <T> ServiceRegistration<T> registerService(
 		String[] classNames, T service, Map<String, Object> properties) {
+
+		properties = addBundleContextInfo(properties);
 
 		org.osgi.framework.ServiceRegistration<?> serviceRegistration =
 			_bundleContext.registerService(
@@ -389,6 +397,22 @@ public class RegistryImpl implements Registry {
 
 		return _bundleContext.ungetService(
 			serviceReferenceWrapper.getServiceReference());
+	}
+
+	private Map<String, Object> addBundleContextInfo(
+		Map<String, Object> properties) {
+
+		Bundle bundle = _bundleContext.getBundle();
+
+		if (properties == null) {
+			properties = new HashMap<String, Object>();
+		}
+
+		properties.put("bundle.id", bundle.getBundleId());
+		properties.put("bundle.symbolic.name", bundle.getSymbolicName());
+		properties.put("bundle.version", bundle.getVersion());
+
+		return properties;
 	}
 
 	private final BundleContext _bundleContext;

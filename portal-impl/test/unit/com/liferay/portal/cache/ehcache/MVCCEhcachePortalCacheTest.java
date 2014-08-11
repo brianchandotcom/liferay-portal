@@ -277,7 +277,14 @@ public class MVCCEhcachePortalCacheTest {
 
 		_assertVersion(_VERSION_1, _mvccEhcachePortalCache.get(_KEY_1));
 
-		_testCacheListener.assertPut(_KEY_1, new MockMVCCModel(_VERSION_1));
+		if (timeToLive) {
+			_testCacheListener.assertPut(
+				_KEY_1, new MockMVCCModel(_VERSION_1), 10);
+		}
+		else {
+			_testCacheListener.assertPut(_KEY_1, new MockMVCCModel(_VERSION_1));
+		}
+
 		_testCacheListener.assertActionsCount(1);
 		_testCacheListener.reset();
 
@@ -307,7 +314,15 @@ public class MVCCEhcachePortalCacheTest {
 
 		_assertVersion(_VERSION_2, _mvccEhcachePortalCache.get(_KEY_1));
 
-		_testCacheListener.assertUpdated(_KEY_1, new MockMVCCModel(_VERSION_2));
+		if (timeToLive) {
+			_testCacheListener.assertUpdated(
+				_KEY_1, new MockMVCCModel(_VERSION_2), 10);
+		}
+		else {
+			_testCacheListener.assertUpdated(
+				_KEY_1, new MockMVCCModel(_VERSION_2));
+		}
+
 		_testCacheListener.assertActionsCount(1);
 		_testCacheListener.reset();
 
@@ -393,61 +408,61 @@ public class MVCCEhcachePortalCacheTest {
 		@Override
 		public void notifyEntryEvicted(
 			PortalCache<String, MVCCModel> portalCache, String key,
-			MVCCModel value) {
+			MVCCModel value, int timeToLive) {
 
 			if (!ClusterReplicationThreadLocal.isReplicate()) {
 				return;
 			}
 
-			super.notifyEntryEvicted(portalCache, key, value);
+			super.notifyEntryEvicted(portalCache, key, value, timeToLive);
 		}
 
 		@Override
 		public void notifyEntryExpired(
 			PortalCache<String, MVCCModel> portalCache, String key,
-			MVCCModel value) {
+			MVCCModel value, int timeToLive) {
 
 			if (!ClusterReplicationThreadLocal.isReplicate()) {
 				return;
 			}
 
-			super.notifyEntryExpired(portalCache, key, value);
+			super.notifyEntryExpired(portalCache, key, value, timeToLive);
 		}
 
 		@Override
 		public void notifyEntryPut(
 			PortalCache<String, MVCCModel> portalCache, String key,
-			MVCCModel value) {
+			MVCCModel value, int timeToLive) {
 
 			if (!ClusterReplicationThreadLocal.isReplicate()) {
 				return;
 			}
 
-			super.notifyEntryPut(portalCache, key, value);
+			super.notifyEntryPut(portalCache, key, value, timeToLive);
 		}
 
 		@Override
 		public void notifyEntryRemoved(
 			PortalCache<String, MVCCModel> portalCache, String key,
-			MVCCModel value) {
+			MVCCModel value, int timeToLive) {
 
 			if (!ClusterReplicationThreadLocal.isReplicate()) {
 				return;
 			}
 
-			super.notifyEntryRemoved(portalCache, key, value);
+			super.notifyEntryRemoved(portalCache, key, value, timeToLive);
 		}
 
 		@Override
 		public void notifyEntryUpdated(
 			PortalCache<String, MVCCModel> portalCache, String key,
-			MVCCModel value) {
+			MVCCModel value, int timeToLive) {
 
 			if (!ClusterReplicationThreadLocal.isReplicate()) {
 				return;
 			}
 
-			super.notifyEntryUpdated(portalCache, key, value);
+			super.notifyEntryUpdated(portalCache, key, value, timeToLive);
 		}
 
 		@Override

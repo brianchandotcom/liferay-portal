@@ -36,82 +36,105 @@ public class TestCacheListener<K extends Serializable, V>
 		Assert.assertEquals(count, _actions.size());
 	}
 
-	public void assertEvicted(K key, V value) {
-		_assertAction(ActionType.EVICT, key, value);
+	public void assertEvicted(K key, V value, int timeToLive) {
+		_assertAction(ActionType.EVICT, key, value, timeToLive);
 	}
 
-	public void assertExpired(K key, V value) {
-		_assertAction(ActionType.EXPIRE, key, value);
+	public void assertExpired(K key, V value, int timeToLive) {
+		_assertAction(ActionType.EXPIRE, key, value, timeToLive);
 	}
 
 	public void assertPut(K key, V value) {
-		_assertAction(ActionType.PUT, key, value);
+		_assertAction(
+			ActionType.PUT, key, value, PortalCache.DEFAULT_TIME_TO_LIVE);
+	}
+
+	public void assertPut(K key, V value, int timeToLive) {
+		_assertAction(ActionType.PUT, key, value, timeToLive);
 	}
 
 	public void assertRemoveAll() {
-		_assertAction(ActionType.REMOVE_ALL, null, null);
+		_assertAction(
+			ActionType.REMOVE_ALL, null, null,
+			PortalCache.DEFAULT_TIME_TO_LIVE);
 	}
 
 	public void assertRemoved(K key, V value) {
-		_assertAction(ActionType.REMOVE, key, value);
+		_assertAction(
+			ActionType.REMOVE, key, value, PortalCache.DEFAULT_TIME_TO_LIVE);
+	}
+
+	public void assertRemoved(K key, V value, int timeToLive) {
+		_assertAction(ActionType.REMOVE, key, value, timeToLive);
 	}
 
 	public void assertUpdated(K key, V value) {
-		_assertAction(ActionType.UPDATE, key, value);
+		_assertAction(
+			ActionType.UPDATE, key, value, PortalCache.DEFAULT_TIME_TO_LIVE);
+	}
+
+	public void assertUpdated(K key, V value, int timeToLive) {
+		_assertAction(ActionType.UPDATE, key, value, timeToLive);
 	}
 
 	@Override
 	public void notifyEntryEvicted(
-			PortalCache<K, V> portalCache, K key, V value)
+			PortalCache<K, V> portalCache, K key, V value, int timeToLive)
 		throws PortalCacheException {
 
-		_actions.add(new Action(ActionType.EVICT, key, value));
+		_actions.add(new Action(ActionType.EVICT, key, value, timeToLive));
 	}
 
 	@Override
 	public void notifyEntryExpired(
-			PortalCache<K, V> portalCache, K key, V value)
+			PortalCache<K, V> portalCache, K key, V value, int timeToLive)
 		throws PortalCacheException {
 
-		_actions.add(new Action(ActionType.EXPIRE, key, value));
+		_actions.add(new Action(ActionType.EXPIRE, key, value, timeToLive));
 	}
 
 	@Override
-	public void notifyEntryPut(PortalCache<K, V> portalCache, K key, V value)
+	public void notifyEntryPut(
+			PortalCache<K, V> portalCache, K key, V value, int timeToLive)
 		throws PortalCacheException {
 
-		_actions.add(new Action(ActionType.PUT, key, value));
+		_actions.add(new Action(ActionType.PUT, key, value, timeToLive));
 	}
 
 	@Override
 	public void notifyEntryRemoved(
-			PortalCache<K, V> portalCache, K key, V value)
+			PortalCache<K, V> portalCache, K key, V value, int timeToLive)
 		throws PortalCacheException {
 
-		_actions.add(new Action(ActionType.REMOVE, key, value));
+		_actions.add(new Action(ActionType.REMOVE, key, value, timeToLive));
 	}
 
 	@Override
 	public void notifyEntryUpdated(
-			PortalCache<K, V> portalCache, K key, V value)
+			PortalCache<K, V> portalCache, K key, V value, int timeToLive)
 		throws PortalCacheException {
 
-		_actions.add(new Action(ActionType.UPDATE, key, value));
+		_actions.add(new Action(ActionType.UPDATE, key, value, timeToLive));
 	}
 
 	@Override
 	public void notifyRemoveAll(PortalCache<K, V> portalCache)
 		throws PortalCacheException {
 
-		_actions.add(new Action(ActionType.REMOVE_ALL, null, null));
+		_actions.add(
+			new Action(
+				ActionType.REMOVE_ALL, null, null,
+				PortalCache.DEFAULT_TIME_TO_LIVE));
 	}
 
 	public void reset() {
 		_actions.clear();
 	}
 
-	private void _assertAction(ActionType actionType, K key, V value) {
-		Action action = new Action(actionType, key, value);
+	private void _assertAction(
+		ActionType actionType, K key, V value, int timeToLive) {
+
+		Action action = new Action(actionType, key, value, timeToLive);
 
 		Assert.assertTrue(_actions.contains(action));
 	}
@@ -120,7 +143,9 @@ public class TestCacheListener<K extends Serializable, V>
 
 	private static class Action {
 
-		public Action(ActionType actionType, Object key, Object value) {
+		public Action(
+			ActionType actionType, Object key, Object value, int timeToLive) {
+
 			_actionType = actionType;
 
 			if (key == null) {
@@ -133,6 +158,7 @@ public class TestCacheListener<K extends Serializable, V>
 
 			_key = key;
 			_value = value;
+			_timeToLive = timeToLive;
 		}
 
 		@Override
@@ -148,7 +174,8 @@ public class TestCacheListener<K extends Serializable, V>
 			Action action = (Action)object;
 
 			if (_actionType.equals(action._actionType) &&
-				_key.equals(action._key) && _value.equals(action._value)) {
+				_key.equals(action._key) && _value.equals(action._value) &&
+				(_timeToLive == action._timeToLive)) {
 
 				return true;
 			}
@@ -166,6 +193,10 @@ public class TestCacheListener<K extends Serializable, V>
 			return _key;
 		}
 
+		public int getTimeToLive() {
+			return _timeToLive;
+		}
+
 		@SuppressWarnings("unused")
 		public Object getValue() {
 			return _value;
@@ -177,13 +208,16 @@ public class TestCacheListener<K extends Serializable, V>
 
 			hash = HashUtil.hash(hash, _key);
 
-			return HashUtil.hash(hash, _value);
+			hash = HashUtil.hash(hash, _value);
+
+			return HashUtil.hash(hash, _timeToLive);
 		}
 
 		private static final Object _NULL_OBJECT = new Object();
 
 		private ActionType _actionType;
 		private Object _key;
+		private int _timeToLive;
 		private Object _value;
 
 	}

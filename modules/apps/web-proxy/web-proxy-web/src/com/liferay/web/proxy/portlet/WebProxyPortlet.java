@@ -80,7 +80,6 @@ import org.portletbridge.portlet.PortletBridgeServlet;
 		"javax.portlet.init-param.parserClassName=org.cyberneko.html.parsers.SAXParser",
 		"javax.portlet.init-param.servletName=pbhs",
 		"javax.portlet.init-param.stylesheetUrl=classpath:/org/portletbridge/xsl/default.xsl",
-		"javax.portlet.name=66",
 		"javax.portlet.preferences=classpath:/META-INF/preferences/default-preferences.xml",
 		"javax.portlet.resource-bundle=org.portletbridge.portlet.PortletBridgePortlet",
 		"javax.portlet.security-role-ref=power-user",

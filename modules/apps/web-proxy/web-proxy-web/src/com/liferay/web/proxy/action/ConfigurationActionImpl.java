@@ -30,7 +30,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=66"},
+	property = {
+		"javax.portlet.name=com_liferay_web_proxy_portlet_WebProxyPortlet"
+	},
 	service = ConfigurationAction.class
 )
 public class ConfigurationActionImpl extends DefaultConfigurationAction {

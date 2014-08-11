@@ -1060,12 +1060,8 @@ public class PortletTracker
 			List<Company> companies)
 		throws PortalException {
 
-		String categoryName = (String)serviceReference.getProperty(
-			"com.liferay.portal.portlet.display.category");
-
-		if (categoryName == null) {
-			categoryName = "category.undefined";
-		}
+		String categoryName = GetterUtil.getString(
+			get(serviceReference, "display-category"), "category.undefined");
 
 		for (Company company : companies) {
 			com.liferay.portal.model.Portlet companyPortletModel =

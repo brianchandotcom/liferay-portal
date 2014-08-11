@@ -3239,7 +3239,10 @@ if (ppstate.equals("normal")) {
 		</if>
 
 		<if>
-			<isset property="env.JENKINS_HOME" />
+			<and>
+				<isset property="env.JENKINS_HOME" />
+				<isset property="jenkins.shared.results.dir"/>
+			</and>
 			<then>
 				<antelope:stringutil property="job.name" string="${env.JOB_NAME}">
 					<antelope:replace regex="," replacement="_" />
@@ -3251,7 +3254,7 @@ if (ppstate.equals("normal")) {
 						<equals arg1="${test.save.screenshot}" arg2="true" />
 					</and>
 					<then>
-						<copy todir="${job.name}/builds/${env.BUILD_NUMBER}/screenshots">
+						<copy todir="${jenkins.shared.results.dir}/${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_NUMBER}/${job.name}/builds/${env.BUILD_NUMBER}/screenshots">
 							<fileset
 								dir="portal-web/test-results/functional/screenshots"
 							/>
@@ -3267,7 +3270,7 @@ if (ppstate.equals("normal")) {
 					<then>
 						<copy
 							file="portal-web/test-results/functional/report.html"
-							tofile="${job.name}/builds/${env.BUILD_NUMBER}/report.html"
+							tofile="${jenkins.shared.results.dir}/${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_NUMBER}/${job.name}/builds/${env.BUILD_NUMBER}/report.html"
 						/>
 					</then>
 				</if>
@@ -3294,7 +3297,7 @@ if (ppstate.equals("normal")) {
 
 						<copy
 							file="${jenkins.results.xml.file}"
-							tofile="${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml"
+							tofile="${jenkins.shared.results.dir}/${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_NUMBER}/${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml"
 						/>
 					</then>
 				</if>

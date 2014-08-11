@@ -33,4 +33,14 @@ public class ExtensionTag extends TagSupport {
 		return super.doStartTag();
 	}
 
+	public String getExtensionId() {
+		return _extensionId;
+	}
+
+	public void setExtensionId(String extensionId) {
+		_extensionId = extensionId;
+	}
+
+	private String _extensionId;
+
 }

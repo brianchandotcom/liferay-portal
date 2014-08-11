@@ -690,6 +690,20 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
+		// LPS-49228
+
+		if (line.matches(
+				".*The web application \\[/sharepoint-hook\\] created a " +
+					"ThreadLocal with key of type.*")) {
+
+			if (line.contains(
+					"[org.apache.axis.utils.XMLUtils." +
+						"ThreadLocalDocumentBuilder]")) {
+
+				return true;
+			}
+		}
+
 		// LPS-49229
 
 		if (line.matches(

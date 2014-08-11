@@ -62,8 +62,9 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	public void notifyElementEvicted(Ehcache ehcache, Element element) {
 		K key = (K)element.getObjectKey();
 		V value = (V)element.getObjectValue();
+		int timeToLive = element.getTimeToLive();
 
-		_cacheListener.notifyEntryEvicted(_portalCache, key, value);
+		_cacheListener.notifyEntryEvicted(_portalCache, key, value, timeToLive);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Evicted " + key + " from " + ehcache.getName());
@@ -74,8 +75,9 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	public void notifyElementExpired(Ehcache ehcache, Element element) {
 		K key = (K)element.getObjectKey();
 		V value = (V)element.getObjectValue();
+		int timeToLive = element.getTimeToLive();
 
-		_cacheListener.notifyEntryExpired(_portalCache, key, value);
+		_cacheListener.notifyEntryExpired(_portalCache, key, value, timeToLive);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Expired " + key + " from " + ehcache.getName());
@@ -88,8 +90,9 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 
 		K key = (K)element.getObjectKey();
 		V value = (V)element.getObjectValue();
+		int timeToLive = element.getTimeToLive();
 
-		_cacheListener.notifyEntryPut(_portalCache, key, value);
+		_cacheListener.notifyEntryPut(_portalCache, key, value, timeToLive);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Inserted " + key + " into " + ehcache.getName());
@@ -102,8 +105,9 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 
 		K key = (K)element.getObjectKey();
 		V value = (V)element.getObjectValue();
+		int timeToLive = element.getTimeToLive();
 
-		_cacheListener.notifyEntryRemoved(_portalCache, key, value);
+		_cacheListener.notifyEntryRemoved(_portalCache, key, value, timeToLive);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Removed " + key + " from " + ehcache.getName());
@@ -116,8 +120,9 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 
 		K key = (K)element.getObjectKey();
 		V value = (V)element.getObjectValue();
+		int timeToLive = element.getTimeToLive();
 
-		_cacheListener.notifyEntryUpdated(_portalCache, key, value);
+		_cacheListener.notifyEntryUpdated(_portalCache, key, value, timeToLive);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Updated " + key + " in " + ehcache.getName());

@@ -999,7 +999,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				@Override
 				public void onSynchronize(
 					Map<? extends Serializable, ? extends Serializable> map,
-					Serializable key, Serializable value) {
+					Serializable key, Serializable value, int timeToLive) {
 
 					if (!(value instanceof UserCacheModel)) {
 						return;

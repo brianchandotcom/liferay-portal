@@ -106,7 +106,7 @@ public class MemoryPortalCache<K extends Serializable, V>
 		V oldValue = _concurrentMap.put(key, value);
 
 		if (!quiet) {
-			notifyPutEvents(key, value, oldValue != null);
+			notifyPutEvents(key, value, timeToLive, oldValue != null);
 		}
 	}
 
@@ -115,7 +115,7 @@ public class MemoryPortalCache<K extends Serializable, V>
 		V oldValue = _concurrentMap.putIfAbsent(key, value);
 
 		if (oldValue == null) {
-			notifyPutEvents(key, value, false);
+			notifyPutEvents(key, value, timeToLive, false);
 		}
 
 		return oldValue;
@@ -127,7 +127,8 @@ public class MemoryPortalCache<K extends Serializable, V>
 
 		if (value != null) {
 			for (CacheListener<K, V> cacheListener : _cacheListeners) {
-				cacheListener.notifyEntryRemoved(this, key, value);
+				cacheListener.notifyEntryRemoved(
+					this, key, value, DEFAULT_TIME_TO_LIVE);
 			}
 		}
 	}
@@ -138,7 +139,8 @@ public class MemoryPortalCache<K extends Serializable, V>
 
 		if (removed) {
 			for (CacheListener<K, V> cacheListener : _cacheListeners) {
-				cacheListener.notifyEntryRemoved(this, key, value);
+				cacheListener.notifyEntryRemoved(
+					this, key, value, DEFAULT_TIME_TO_LIVE);
 			}
 		}
 
@@ -150,7 +152,7 @@ public class MemoryPortalCache<K extends Serializable, V>
 		V oldValue = _concurrentMap.replace(key, value);
 
 		if (oldValue != null) {
-			notifyPutEvents(key, value, true);
+			notifyPutEvents(key, value, timeToLive, true);
 		}
 
 		return oldValue;
@@ -161,21 +163,23 @@ public class MemoryPortalCache<K extends Serializable, V>
 		boolean replaced = _concurrentMap.replace(key, oldValue, newValue);
 
 		if (replaced) {
-			notifyPutEvents(key, newValue, true);
+			notifyPutEvents(key, newValue, timeToLive, true);
 		}
 
 		return replaced;
 	}
 
-	protected void notifyPutEvents(K key, V value, boolean updated) {
+	protected void notifyPutEvents(
+		K key, V value, int timeToLive, boolean updated) {
+
 		if (updated) {
 			for (CacheListener<K, V> cacheListener : _cacheListeners) {
-				cacheListener.notifyEntryUpdated(this, key, value);
+				cacheListener.notifyEntryUpdated(this, key, value, timeToLive);
 			}
 		}
 		else {
 			for (CacheListener<K, V> cacheListener : _cacheListeners) {
-				cacheListener.notifyEntryPut(this, key, value);
+				cacheListener.notifyEntryPut(this, key, value, timeToLive);
 			}
 		}
 	}

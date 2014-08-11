@@ -998,7 +998,7 @@ public class LanguageImpl implements Language, Serializable {
 				@Override
 				public void onSynchronize(
 					Map<? extends Long, ? extends Serializable> map, Long key,
-					Serializable value) {
+					Serializable value, int timeToLive) {
 
 					_instances.remove(key);
 				}

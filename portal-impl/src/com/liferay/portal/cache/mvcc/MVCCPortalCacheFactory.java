@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache;
+package com.liferay.portal.cache.mvcc;
 
+import com.liferay.portal.cache.ehcache.LockBasedMVCCEhcachePortalCache;
 import com.liferay.portal.kernel.cache.LowLevelCache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheWrapper;

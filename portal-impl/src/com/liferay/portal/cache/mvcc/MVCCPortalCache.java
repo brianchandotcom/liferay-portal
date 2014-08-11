@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache;
+package com.liferay.portal.cache.mvcc;
 
 import com.liferay.portal.cache.cluster.ClusterReplicationThreadLocal;
 import com.liferay.portal.kernel.cache.LowLevelCache;

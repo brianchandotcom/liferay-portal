@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.ehcache;
 
+import com.liferay.portal.cache.mvcc.MVCCPortalCache;
 import com.liferay.portal.kernel.cache.LowLevelCache;
 import com.liferay.portal.model.MVCCModel;
 

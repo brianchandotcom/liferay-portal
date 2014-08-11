@@ -2,7 +2,7 @@
 
 <root>
 	<structure>
-		<name><![CDATA[Contract]]></name>
+		<name><![CDATA[contract]]></name>
 		<dynamic-structure>true</dynamic-structure>
 		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
 			<dynamic-element dataType="date" fieldNamespace="ddm" indexType="keyword" name="ddm-date18949" readOnly="false" required="false" showLabel="true" type="ddm-date" width="small">
@@ -92,7 +92,7 @@
 		</root>
 	</structure>
 	<structure>
-		<name><![CDATA[Image Gallery Image]]></name>
+		<name><![CDATA[image-gallery-image]]></name>
 		<dynamic-structure>true</dynamic-structure>
 		<root available-locales="en_US" default-locale="en_US" />
 	</structure>
@@ -191,7 +191,7 @@
 		</root>
 	</structure>
 	<structure>
-		<name><![CDATA[Marketing Banner]]></name>
+		<name><![CDATA[marketing-banner]]></name>
 		<dynamic-structure>true</dynamic-structure>
 		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
 			<dynamic-element dataType="string" indexType="keyword" name="radio5547" readOnly="false" required="false" showLabel="true" type="radio">
@@ -348,7 +348,7 @@
 		</root>
 	</structure>
 	<structure>
-		<name><![CDATA[Online Training]]></name>
+		<name><![CDATA[online-training]]></name>
 		<dynamic-structure>true</dynamic-structure>
 		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
 			<dynamic-element dataType="string" indexType="keyword" name="text2082" readOnly="false" required="false" showLabel="true" type="text" width="small">
@@ -368,7 +368,7 @@
 		</root>
 	</structure>
 	<structure>
-		<name><![CDATA[Sales Presentation]]></name>
+		<name><![CDATA[sales-presentation]]></name>
 		<dynamic-structure>true</dynamic-structure>
 		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
 			<dynamic-element dataType="string" indexType="keyword" multiple="false" name="select2890" readOnly="false" required="false" showLabel="true" type="select">

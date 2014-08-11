@@ -205,6 +205,8 @@ if (summary != null) {
 							assetCategoryLocale = summary.getLocale();
 						}
 
+						Map<Long, List<AssetCategory>> assetVocabularyIdsToCategoryIdsMap = new HashMap<Long, List<AssetCategory>>();
+
 						for (int i = 0; i < assetCategoryIds.length; i++) {
 							long assetCategoryId = GetterUtil.getLong(assetCategoryIds[i]);
 
@@ -216,29 +218,44 @@ if (summary != null) {
 							catch (NoSuchCategoryException nsce) {
 							}
 
-							if (assetCategory == null) {
-								continue;
+							long assetVocabularyId = assetCategory.getVocabularyId();
+
+							if (assetVocabularyIdsToCategoryIdsMap.containsKey(assetVocabularyId)) {
+								List<AssetCategory> assetCategories = assetVocabularyIdsToCategoryIdsMap.get(assetVocabularyId);
+								assetCategories.add(assetCategory);
 							}
+							else {
+								ArrayList assetCategoryList = new ArrayList<AssetCategory>();
+								assetCategoryList.add(assetCategory);
+								assetVocabularyIdsToCategoryIdsMap.put(assetVocabularyId, assetCategoryList);
+							}
+						}
 
-							AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetCategory.getVocabularyId());
+						for (long assetVocabularyId: assetVocabularyIdsToCategoryIdsMap.keySet()) {
+							AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetVocabularyId);
+							%>
 
-							PortletURL categoryURL = PortletURLUtil.clone(portletURL, renderResponse);
+							<div class="taglib-asset-categories-summary">
+								<%= HtmlUtil.escape(assetVocabulary.getTitle(assetCategoryLocale)) %>:
 
-							categoryURL.setParameter(Field.ASSET_CATEGORY_IDS, String.valueOf(assetCategory.getCategoryId()));
-						%>
+							<%
+							List<AssetCategory> assetCategories = assetVocabularyIdsToCategoryIdsMap.get(assetVocabularyId);
+							for (AssetCategory assetCategory: assetCategories) {
 
-							<c:if test="<%= i == 0 %>">
-								<div class="taglib-asset-categories-summary">
-									<%= HtmlUtil.escape(assetVocabulary.getTitle(assetCategoryLocale)) %>:
-							</c:if>
+									PortletURL categoryURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-							<a class="asset-category" href="<%= categoryURL.toString() %>">
-								<%= _buildAssetCategoryPath(assetCategory, assetCategoryLocale) %>
-							</a>
+									categoryURL.setParameter(Field.ASSET_CATEGORY_IDS, String.valueOf(assetCategory.getCategoryId()));
+							%>
 
-							<c:if test="<%= (i + 1) == assetCategoryIds.length %>">
-								</div>
-							</c:if>
+									<a class="asset-category" href="<%= categoryURL.toString() %>">
+										<%= _buildAssetCategoryPath(assetCategory, assetCategoryLocale) %>
+									</a>
+
+							<%
+							}
+							%>
+
+							</div>
 
 						<%
 						}

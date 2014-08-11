@@ -14,6 +14,7 @@
 
 package com.liferay.web.proxy.action;
 
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -22,9 +23,16 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=66"},
+	service = ConfigurationAction.class
+)
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 	@Override

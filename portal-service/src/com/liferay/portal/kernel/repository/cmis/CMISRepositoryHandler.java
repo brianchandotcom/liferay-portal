@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.BaseRepositoryImpl;
 import com.liferay.portal.kernel.repository.RepositoryException;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -44,7 +45,8 @@ import java.util.Map;
 /**
  * @author Alexander Chow
  */
-public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
+public abstract class CMISRepositoryHandler extends BaseRepositoryImpl
+	implements Capability {
 
 	@Override
 	public FileEntry addFileEntry(

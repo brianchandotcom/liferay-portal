@@ -14,11 +14,16 @@
 
 package com.liferay.portal.repository;
 
+import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
+import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
@@ -26,6 +31,11 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Adolfo Pérez
@@ -41,9 +51,19 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 		Repository repository = createExternalRepositoryImpl(
 			repositoryId, classNameId);
 
+		Map<Class<? extends Capability>, Capability> supportedCapabilities =
+			new HashMap<Class<? extends Capability>, Capability>(
+				getExternalSupportedCapabilities());
+
+		Set<Class<? extends Capability>> exportedCapabilityClasses =
+			new HashSet<Class<? extends Capability>>(
+				getExternalExportedCapabilityClasses());
+
+		_addCMISRepositoryHandlerCapability(
+			repository, supportedCapabilities, exportedCapabilityClasses);
+
 		return new CapabilityRepository(
-			repository, getExternalSupportedCapabilities(),
-			getExternalExportedCapabilityClasses());
+			repository, supportedCapabilities, exportedCapabilityClasses);
 	}
 
 	@Override
@@ -54,11 +74,9 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);
 
-		Repository repository = create(repositoryId);
+		long classNameId = getRepositoryClassNameId(repositoryId);
 
-		return new CapabilityRepository(
-			repository, getExternalSupportedCapabilities(),
-			getExternalExportedCapabilityClasses());
+		return createExternalRepository(repositoryId, classNameId);
 	}
 
 	@Override
@@ -125,6 +143,33 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 			getRepositoryLocalService();
 
 		return repositoryLocalService.fetchRepository(repositoryId);
+	}
+
+	private void _addCMISRepositoryHandlerCapability(
+		Repository repository,
+		Map<Class<? extends Capability>, Capability> supportedCapabilities,
+		Set<Class<? extends Capability>> exportedCapabilityClasses) {
+
+		if (repository instanceof BaseRepositoryProxyBean) {
+			BaseRepositoryProxyBean baseRepositoryProxyBean =
+				(BaseRepositoryProxyBean)repository;
+
+			ClassLoaderBeanHandler classLoaderBeanHandler =
+				(ClassLoaderBeanHandler)ProxyUtil.getInvocationHandler(
+					baseRepositoryProxyBean.getProxyBean());
+
+			Object bean = classLoaderBeanHandler.getBean();
+
+			if (bean instanceof CMISRepositoryHandler) {
+				CMISRepositoryHandler cmisRepositoryHandler =
+					(CMISRepositoryHandler)bean;
+
+				supportedCapabilities.put(
+					CMISRepositoryHandler.class, cmisRepositoryHandler);
+
+				exportedCapabilityClasses.add(CMISRepositoryHandler.class);
+			}
+		}
 	}
 
 }

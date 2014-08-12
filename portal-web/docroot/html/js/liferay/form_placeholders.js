@@ -93,7 +93,7 @@ AUI.add(
 
 						placeholder.attr(STR_DATA_TYPE_PASSWORD_PLACEHOLDER, true);
 
-						field.placeAfter(placeholder);
+						field.placeBefore(placeholder);
 
 						field.hide();
 					},
@@ -122,7 +122,7 @@ AUI.add(
 								if (currentTarget.hasAttribute(STR_DATA_TYPE_PASSWORD_PLACEHOLDER)) {
 									currentTarget.hide();
 
-									var passwordField = currentTarget.previous();
+									var passwordField = currentTarget.next();
 
 									passwordField.show();
 
@@ -140,7 +140,7 @@ AUI.add(
 								if (!value) {
 									currentTarget.hide();
 
-									currentTarget.next().show();
+									currentTarget.previous().show();
 								}
 							}
 						}

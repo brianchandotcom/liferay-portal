@@ -667,8 +667,17 @@
 		<var name="key_workflowDefinitionName" value="${workflowDefinitionName}" />
 
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_NAME" value1="${workflowDefinitionName}" />
-		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
-		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_VERSION" value1="${workflowDefinitionVersionNumber}" />
+
+		<if>
+			<isset var="${workflowDefinitionTitle}" />
+			<then>
+				<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
+			</then>
+			<else>
+				<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_TITLE" value1="${workflowDefinitionName}" />
+			</else>
+		</if>
+
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_ACTIVE" value1="Yes" />
 	</command>
 

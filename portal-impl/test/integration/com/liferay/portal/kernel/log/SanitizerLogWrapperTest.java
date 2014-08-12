@@ -116,6 +116,93 @@ public class SanitizerLogWrapperTest {
 	}
 
 	@Test
+	public void testAllowCRLFCharacters() {
+		Exception exception = new NullPointerException();
+		String warningPrefix =
+			"SanitizerLogWrapper warning: Following message contains CRLF " +
+				"characters\n";
+
+		char[] _expectedMessageCharsWithCRLF =
+			new char[_expectedMessageChars.length];
+
+		System.arraycopy(
+			_expectedMessageChars, 0, _expectedMessageCharsWithCRLF, 0,
+			_expectedMessageCharsWithCRLF.length);
+
+		_expectedMessageCharsWithCRLF[CharPool.NEW_LINE] = CharPool.NEW_LINE;
+		_expectedMessageCharsWithCRLF[CharPool.RETURN] = CharPool.RETURN;
+
+		Log _allowCRLFLog = SanitizerLogWrapper.allowCRLF(_log);
+
+		try {
+			_allowCRLFLog.debug(_message);
+			_allowCRLFLog.debug(_message, exception);
+			_allowCRLFLog.error(_message);
+			_allowCRLFLog.error(_message, exception);
+			_allowCRLFLog.fatal(_message);
+			_allowCRLFLog.fatal(_message, exception);
+			_allowCRLFLog.info(_message);
+			_allowCRLFLog.info(_message, exception);
+			_allowCRLFLog.trace(_message);
+			_allowCRLFLog.trace(_message, exception);
+			_allowCRLFLog.warn(_message);
+			_allowCRLFLog.warn(_message, exception);
+
+			List<LoggingEvent> loggingEvents =
+				_captureAppender.getLoggingEvents();
+
+			Assert.assertNotNull(loggingEvents);
+			Assert.assertEquals(12, loggingEvents.size());
+
+			for (LoggingEvent loggingEvent : loggingEvents) {
+				String message = loggingEvent.getRenderedMessage();
+
+				Assert.assertTrue(message.startsWith(warningPrefix));
+
+				char[] sanitizedMessageChars =
+					new char[message.length() - warningPrefix.length()];
+
+				message.getChars(
+					warningPrefix.length(), message.length(),
+					sanitizedMessageChars, 0);
+
+				Assert.assertArrayEquals(
+					_expectedMessageCharsWithCRLF, sanitizedMessageChars);
+			}
+
+			loggingEvents.clear();
+
+			_log.debug(_message);
+			_log.debug(_message, exception);
+			_log.error(_message);
+			_log.error(_message, exception);
+			_log.fatal(_message);
+			_log.fatal(_message, exception);
+			_log.info(_message);
+			_log.info(_message, exception);
+			_log.trace(_message);
+			_log.trace(_message, exception);
+			_log.warn(_message);
+			_log.warn(_message, exception);
+
+			Assert.assertNotNull(loggingEvents);
+			Assert.assertEquals(12, loggingEvents.size());
+
+			for (LoggingEvent loggingEvent : loggingEvents) {
+				String message = loggingEvent.getRenderedMessage();
+
+				char[] sanitizedMessageChars = message.toCharArray();
+
+				Assert.assertArrayEquals(
+					_expectedMessageChars, sanitizedMessageChars);
+			}
+		}
+		finally {
+			_captureAppender.close();
+		}
+	}
+
+	@Test
 	public void testInvalidCharactersInExceptionMessage() {
 		Exception exception = new Exception(
 			new RuntimeException(new NullPointerException(_message)));

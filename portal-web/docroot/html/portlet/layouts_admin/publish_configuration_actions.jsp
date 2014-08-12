@@ -28,29 +28,6 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)row.getObject();
 %>
 
-<portlet:renderURL var="publishRedirectURL">
-	<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH_TO_LIVE %>" />
-	<portlet:param name="tabs2" value="current-and-previous" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
-	<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
-	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-</portlet:renderURL>
-
-<portlet:actionURL var="publishByExportImportConfigurationURL">
-	<portlet:param name="struts_action" value="/layouts_admin/edit_publish_configuration" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
-	<portlet:param name="redirect" value="<%= publishRedirectURL %>" />
-	<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
-</portlet:actionURL>
-
-<liferay-ui:icon
-	iconCssClass="icon-share-alt"
-	message='<%= localPublishing ? "publish-to-live" : "publish-to-remote" %>'
-	url="<%= publishByExportImportConfigurationURL %>"
-/>
-
 <portlet:renderURL var="deleteRedirectURL">
 	<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
@@ -68,6 +45,30 @@ ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration
 	<portlet:param name="redirect" value="<%= deleteRedirectURL %>" />
 	<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 </portlet:actionURL>
+
+<portlet:renderURL var="publishRedirectURL">
+	<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH_TO_LIVE %>" />
+	<portlet:param name="tabs2" value="current-and-previous" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
+	<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
+	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+</portlet:renderURL>
+
+<portlet:renderURL var="publishByExportImportConfigurationURL">
+	<portlet:param name="struts_action" value="/layouts_admin/confirmation" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
+	<portlet:param name="redirect" value="<%= publishRedirectURL %>" />
+	<portlet:param name="backURL" value="<%= deleteRedirectURL %>" />
+	<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
+</portlet:renderURL>
+
+<liferay-ui:icon
+	iconCssClass="icon-share-alt"
+	message='<%= localPublishing ? "publish-to-live" : "publish-to-remote" %>'
+	url="<%= publishByExportImportConfigurationURL %>"
+/>
 
 <liferay-ui:icon-delete
 	trash="<%= TrashUtil.isTrashEnabled(groupId) %>"

@@ -14,8 +14,11 @@
 
 package com.liferay.taglib.staging;
 
+import com.liferay.portal.kernel.util.DateRange;
+import com.liferay.portal.model.Portlet;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +26,11 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Levente Hudák
  */
-public class ContentTag extends IncludeTag {
+public class PortletListTag extends IncludeTag {
+
+	public void setDateRange(DateRange dateRange) {
+		_dateRange = dateRange;
+	}
 
 	public void setDisableInputs(boolean disableInputs) {
 		_disableInputs = disableInputs;
@@ -33,14 +40,20 @@ public class ContentTag extends IncludeTag {
 		_parameterMap = parameterMap;
 	}
 
+	public void setPortlets(List<Portlet> portlets) {
+		_portlets = portlets;
+	}
+
 	public void setType(String type) {
 		_type = type;
 	}
 
 	@Override
 	protected void cleanUp() {
+		_dateRange = null;
 		_disableInputs = false;
 		_parameterMap = null;
+		_portlets = null;
 		_type = null;
 	}
 
@@ -52,19 +65,23 @@ public class ContentTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-staging:content:disableInputs", _disableInputs);
+			"liferay-staging:portlet-list:dateRange", _dateRange);
 		request.setAttribute(
-			"liferay-staging:content:parameterMap", _parameterMap);
+			"liferay-staging:portlet-list:disableInputs", _disableInputs);
 		request.setAttribute(
-			"liferay-staging:content:renderRequest",
-			pageContext.getAttribute("renderRequest"));
-		request.setAttribute("liferay-staging:content:type", _type);
+			"liferay-staging:portlet-list:parameterMap", _parameterMap);
+		request.setAttribute(
+			"liferay-staging:portlet-list:portlets", _portlets);
+		request.setAttribute("liferay-staging:portlet-list:type", _type);
 	}
 
-	private static final String _PAGE = "/html/taglib/staging/content/page.jsp";
+	private static final String _PAGE =
+		"/html/taglib/staging/portlet_list/page.jsp";
 
+	private DateRange _dateRange;
 	private boolean _disableInputs = false;
 	private Map<String, String[]> _parameterMap;
+	private List<Portlet> _portlets;
 	private String _type;
 
 }

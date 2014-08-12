@@ -17,18 +17,13 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.lar.ExportImportDateUtil" %><%@
-page import="com.liferay.portal.kernel.lar.ManifestSummary" %><%@
-page import="com.liferay.portal.kernel.lar.PortletDataContext" %><%@
-page import="com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.lar.PortletDataHandlerBoolean" %><%@
-page import="com.liferay.portal.kernel.lar.PortletDataHandlerControl" %><%@
-page import="com.liferay.portal.kernel.lar.PortletDataHandlerKeys" %><%@
 page import="com.liferay.portal.kernel.util.DateRange" %><%@
 page import="com.liferay.portal.lar.LayoutExporter" %>
 
 <liferay-staging:defineObjects />
 
 <%
+boolean disableInputs = GetterUtil.getBoolean(request.getAttribute("liferay-staging:content:disableInputs"));
 PortletRequest renderRequest = (PortletRequest)request.getAttribute("liferay-staging:content:renderRequest");
 Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("liferay-staging:content:parameterMap"), Collections.emptyMap());
 String type = GetterUtil.getString(request.getAttribute("liferay-staging:content:type"));
@@ -45,16 +40,5 @@ else {
 Date startDate = dateRange.getStartDate();
 Date endDate = dateRange.getEndDate();
 
-PortletDataContext portletDataContext = null;
-
-if (type.equals(Constants.EXPORT)) {
-	portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), liveGroupId, startDate, endDate);
-}
-else {
-	portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), stagingGroupId, startDate, endDate);
-}
-
 List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId(), false);
-
-ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 %>

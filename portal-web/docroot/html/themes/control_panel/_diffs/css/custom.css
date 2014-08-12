@@ -539,6 +539,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 
 			.panel-group {
+				border-left: 1px solid #D3D3D3;
 				border-right-width: 0;
 				margin-bottom: 0;
 
@@ -583,6 +584,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 				.toggler-header {
 					border: solid #D3D3D3;
 					border-width: 0 0 1px;
+				}
+
+				.panel-toggle i {
+					display: inline-block;
+					text-align: center;
+					width: 1em;
 				}
 			}
 		}
@@ -688,7 +695,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 			.control-panel-tools {
 				cursor: pointer;
-				padding: 12px 0 13px;
+				padding: 14px;
 
 				&:hover {
 					background-color: #DDD;
@@ -1081,6 +1088,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.panel-page-menu {
+			padding-left: 15px;
+			
 			.minimize-panels a {
 				display: block;
 				opacity: 1;

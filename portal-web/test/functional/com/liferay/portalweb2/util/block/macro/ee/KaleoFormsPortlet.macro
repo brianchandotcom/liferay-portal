@@ -95,6 +95,7 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute action="PGKaleoformsSubmitnew#type" locator-key1="NEW_PROCESS_FIELDS_DATE_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="PGKaleoformsSubmitnew#click" locator-key1="NEW_PROCESS_FIELDS_DATE_FIELD" />
 	</command>
 
 	<command name="populateFieldDocumentsAndMedia">

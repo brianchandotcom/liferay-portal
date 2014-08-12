@@ -1,0 +1,14 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>nekohtml</groupId>
+  <artifactId>nekohtml</artifactId>
+  <name>Neko HTML</name>
+  <version>0.9.5</version>
+  <dependencies>
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xerces</artifactId>
+      <version>2.4.0</version>
+    </dependency>
+  </dependencies>
+</project>

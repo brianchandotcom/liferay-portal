@@ -158,7 +158,7 @@ public class Log4jLogImpl implements Log {
 		_logger.log(_logWrapperClassName, Level.WARN, null, t);
 	}
 
-	private Logger _logger;
+	private final Logger _logger;
 	private String _logWrapperClassName = LogWrapper.class.getName();
 
 }

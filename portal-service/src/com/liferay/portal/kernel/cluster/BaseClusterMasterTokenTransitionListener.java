@@ -51,7 +51,7 @@ public abstract class BaseClusterMasterTokenTransitionListener
 
 	protected abstract void doMasterTokenReleased() throws Exception;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseClusterMasterTokenTransitionListener.class);
 
 }

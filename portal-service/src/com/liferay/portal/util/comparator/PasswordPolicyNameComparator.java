@@ -74,6 +74,6 @@ public class PasswordPolicyNameComparator
 		return _ascending;
 	}
 
-	private boolean _ascending;
+	private final boolean _ascending;
 
 }

@@ -90,6 +90,6 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 		return DoPrivilegedUtil.wrap(portletConfig);
 	}
 
-	private Map<String, Map<String, PortletConfig>> _pool;
+	private final Map<String, Map<String, PortletConfig>> _pool;
 
 }

@@ -397,6 +397,6 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 		return new FileEntryWrapper(_fileEntry.toUnescapedModel());
 	}
 
-	private FileEntry _fileEntry;
+	private final FileEntry _fileEntry;
 
 }

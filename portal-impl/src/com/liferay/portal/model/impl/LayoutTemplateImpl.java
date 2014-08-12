@@ -342,11 +342,11 @@ public class LayoutTemplateImpl
 		_wapTemplatePath = wapTemplatePath;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LayoutTemplateImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(LayoutTemplateImpl.class);
 
 	private List<String> _columns = new ArrayList<String>();
 	private String _content;
-	private String _layoutTemplateId;
+	private final String _layoutTemplateId;
 	private String _name;
 	private transient ServletContext _servletContext;
 	private String _servletContextName = StringPool.BLANK;

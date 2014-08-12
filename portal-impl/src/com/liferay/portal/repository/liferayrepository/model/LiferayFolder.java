@@ -411,7 +411,7 @@ public class LiferayFolder extends LiferayModel implements Folder {
 		}
 	}
 
-	private DLFolder _dlFolder;
-	private boolean _escapedModel;
+	private final DLFolder _dlFolder;
+	private final boolean _escapedModel;
 
 }

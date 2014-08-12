@@ -32,6 +32,6 @@ public class StringResourceRetriever implements ResourceRetriever {
 		return _inputStream;
 	}
 
-	private InputStream _inputStream;
+	private final InputStream _inputStream;
 
 }

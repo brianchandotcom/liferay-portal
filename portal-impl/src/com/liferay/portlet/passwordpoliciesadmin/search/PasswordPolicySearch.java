@@ -110,6 +110,6 @@ public class PasswordPolicySearch extends SearchContainer<PasswordPolicy> {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PasswordPolicySearch.class);
+	private static final Log _log = LogFactoryUtil.getLog(PasswordPolicySearch.class);
 
 }

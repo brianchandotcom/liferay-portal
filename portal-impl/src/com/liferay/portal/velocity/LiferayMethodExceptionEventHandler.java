@@ -82,7 +82,7 @@ public class LiferayMethodExceptionEventHandler
 				proxyInterfaceClassNames, StringPool.COMMA_AND_SPACE);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayMethodExceptionEventHandler.class);
 
 }

@@ -120,6 +120,6 @@ public class PortletServlet extends HttpServlet {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortletServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(PortletServlet.class);
 
 }

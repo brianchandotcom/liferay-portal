@@ -383,7 +383,7 @@ public class DDMXMLImpl implements DDMXML {
 
 	private static final String _XML_INDENT = "  ";
 
-	private static Log _log = LogFactoryUtil.getLog(DDMXMLImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(DDMXMLImpl.class);
 
 	private XMLSchema _xmlSchema;
 

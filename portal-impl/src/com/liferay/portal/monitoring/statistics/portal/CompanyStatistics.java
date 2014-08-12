@@ -118,11 +118,11 @@ public class CompanyStatistics
 		_requestStatistics.reset();
 	}
 
-	private long _companyId;
+	private final long _companyId;
 	private long _maxTime;
 	private long _minTime;
-	private RequestStatistics _requestStatistics;
-	private long _startTime = System.currentTimeMillis();
-	private String _webId;
+	private final RequestStatistics _requestStatistics;
+	private final long _startTime = System.currentTimeMillis();
+	private final String _webId;
 
 }

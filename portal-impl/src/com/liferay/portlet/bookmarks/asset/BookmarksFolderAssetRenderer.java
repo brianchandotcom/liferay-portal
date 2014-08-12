@@ -242,6 +242,6 @@ public class BookmarksFolderAssetRenderer
 		}
 	}
 
-	private BookmarksFolder _folder;
+	private final BookmarksFolder _folder;
 
 }

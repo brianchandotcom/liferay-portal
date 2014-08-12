@@ -43,6 +43,6 @@ public class CompareVersionsException extends PortalException {
 		return _version;
 	}
 
-	private double _version;
+	private final double _version;
 
 }

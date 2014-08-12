@@ -132,12 +132,12 @@ public class MBean implements Serializable {
 		return _loaded;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MBean.class);
+	private static final Log _log = LogFactoryUtil.getLog(MBean.class);
 
-	private String _domainName;
-	private boolean _loaded;
-	private MBeanInfo _mBeanInfo;
-	private String _mBeanName;
+	private final String _domainName;
+	private final boolean _loaded;
+	private final MBeanInfo _mBeanInfo;
+	private final String _mBeanName;
 	private ObjectName _objectName;
 	private List<String> _path;
 

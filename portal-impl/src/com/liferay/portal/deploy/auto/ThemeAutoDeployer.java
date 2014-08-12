@@ -72,6 +72,6 @@ public class ThemeAutoDeployer extends ThemeDeployer implements AutoDeployer {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ThemeAutoDeployer.class);
+	private static final Log _log = LogFactoryUtil.getLog(ThemeAutoDeployer.class);
 
 }

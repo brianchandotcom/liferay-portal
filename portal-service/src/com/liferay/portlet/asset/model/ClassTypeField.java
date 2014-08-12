@@ -44,9 +44,9 @@ public class ClassTypeField {
 		return _type;
 	}
 
-	private long _classTypeId;
-	private String _label;
-	private String _name;
-	private String _type;
+	private final long _classTypeId;
+	private final String _label;
+	private final String _name;
+	private final String _type;
 
 }

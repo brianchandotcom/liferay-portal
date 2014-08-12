@@ -3948,12 +3948,12 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * Log instance for this class.
 	 */
-	private static Log _log = LogFactoryUtil.getLog(PortletImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(PortletImpl.class);
 
 	/**
 	 * Map of the ready states of all portlets keyed by their root portlet ID.
 	 */
-	private static Map<String, Boolean> _readyMap =
+	private static final Map<String, Boolean> _readyMap =
 		new ConcurrentHashMap<String, Boolean>();
 
 	/**
@@ -4288,25 +4288,25 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * The supported processing events of the portlet.
 	 */
-	private Set<QName> _processingEvents = new HashSet<QName>();
+	private final Set<QName> _processingEvents = new HashSet<QName>();
 
 	/**
 	 * Map of the supported processing events of the portlet keyed by the QName.
 	 */
-	private Map<String, QName> _processingEventsByQName =
+	private final Map<String, QName> _processingEventsByQName =
 		new HashMap<String, QName>();
 
 	/**
 	 * The supported public render parameters of the portlet.
 	 */
-	private Set<PublicRenderParameter> _publicRenderParameters =
+	private final Set<PublicRenderParameter> _publicRenderParameters =
 		new HashSet<PublicRenderParameter>();
 
 	/**
 	 * Map of the supported public render parameters of the portlet keyed by the
 	 * identifier.
 	 */
-	private Map<String, PublicRenderParameter>
+	private final Map<String, PublicRenderParameter>
 		_publicRenderParametersByIdentifier =
 			new HashMap<String, PublicRenderParameter>();
 
@@ -4314,14 +4314,14 @@ public class PortletImpl extends PortletBaseImpl {
 	 * Map of the supported public render parameters of the portlet keyed by the
 	 * QName.
 	 */
-	private Map<String, PublicRenderParameter>
+	private final Map<String, PublicRenderParameter>
 		_publicRenderParametersByQName =
 			new HashMap<String, PublicRenderParameter>();
 
 	/**
 	 * The supported publishing events of the portlet.
 	 */
-	private Set<QName> _publishingEvents = new HashSet<QName>();
+	private final Set<QName> _publishingEvents = new HashSet<QName>();
 
 	/**
 	 * <code>True</code> if the portlet supports remoting.
@@ -4367,12 +4367,12 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * The root portlet of this portlet instance.
 	 */
-	private Portlet _rootPortlet = this;
+	private final Portlet _rootPortlet = this;
 
 	/**
 	 * The scheduler entries of the portlet.
 	 */
-	private List<SchedulerEntry> _schedulerEntries;
+	private final List<SchedulerEntry> _schedulerEntries;
 
 	/**
 	 * <code>True</code> if the portlet supports scoping of data.

@@ -51,7 +51,7 @@ public class ModuleFrameworkServletAdapter extends HttpServlet {
 		httpServlet.service(request, response);
 	}
 
-	private List<HttpServlet> _servlets = ServiceTrackerCollections.list(
+	private final List<HttpServlet> _servlets = ServiceTrackerCollections.list(
 		HttpServlet.class,
 		"(&(bean.id=" + HttpServlet.class.getName() + ")(original.bean=*))");
 

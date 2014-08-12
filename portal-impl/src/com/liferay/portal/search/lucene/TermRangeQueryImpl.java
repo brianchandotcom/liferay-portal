@@ -70,6 +70,6 @@ public class TermRangeQueryImpl extends BaseQueryImpl
 		return _termRangeQuery.toString();
 	}
 
-	private org.apache.lucene.search.TermRangeQuery _termRangeQuery;
+	private final org.apache.lucene.search.TermRangeQuery _termRangeQuery;
 
 }

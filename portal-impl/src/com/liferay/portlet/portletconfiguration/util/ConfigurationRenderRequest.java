@@ -37,6 +37,6 @@ public class ConfigurationRenderRequest
 		return _portletPreferences;
 	}
 
-	private PortletPreferences _portletPreferences;
+	private final PortletPreferences _portletPreferences;
 
 }

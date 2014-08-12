@@ -158,7 +158,7 @@ public class LiferayIntegrationJUnitTestRunner
 		}
 	}
 
-	private TestRule _testRule = new TestRule() {
+	private final TestRule _testRule = new TestRule() {
 
 		@Override
 		public Statement apply(Statement statement, Description description) {

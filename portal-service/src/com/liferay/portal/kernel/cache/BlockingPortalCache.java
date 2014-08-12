@@ -133,7 +133,7 @@ public class BlockingPortalCache<K extends Serializable, V>
 		_competeLatchMap.remove(key);
 	}
 
-	private static ThreadLocal<CompeteLatch> _competeLatch =
+	private static final ThreadLocal<CompeteLatch> _competeLatch =
 		new ThreadLocal<CompeteLatch>();
 
 	private final ConcurrentMap<K, CompeteLatch> _competeLatchMap =

@@ -156,10 +156,7 @@ public class LayoutSetStagingHandler
 			new LayoutSetStagingHandler(_layoutSet.toEscapedModel()));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		LayoutSetStagingHandler.class);
-
-	private static Set<String> _layoutSetBranchMethodNames =
+	private static final Set<String> _layoutSetBranchMethodNames =
 		new HashSet<String>();
 
 	static {
@@ -199,7 +196,10 @@ public class LayoutSetStagingHandler
 		_layoutSetBranchMethodNames.add("setWapThemeId");
 	}
 
-	private LayoutSet _layoutSet;
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutSetStagingHandler.class);
+
+	private final LayoutSet _layoutSet;
 	private LayoutSetBranch _layoutSetBranch;
 
 }

@@ -1333,7 +1333,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 	protected Map<Long, Boolean> companyAdmins = new HashMap<Long, Boolean>();
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AdvancedPermissionChecker.class);
 
 }

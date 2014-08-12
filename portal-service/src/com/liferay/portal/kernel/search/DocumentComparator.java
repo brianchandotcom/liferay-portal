@@ -81,9 +81,9 @@ public class DocumentComparator implements Comparator<Document> {
 		return 0;
 	}
 
-	private boolean _ascending;
-	private boolean _caseSensitive;
-	private List<DocumentComparatorOrderBy> _columns =
+	private final boolean _ascending;
+	private final boolean _caseSensitive;
+	private final List<DocumentComparatorOrderBy> _columns =
 		new ArrayList<DocumentComparatorOrderBy>();
 
 }

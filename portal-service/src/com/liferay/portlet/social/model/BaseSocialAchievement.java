@@ -235,7 +235,7 @@ public class BaseSocialAchievement implements SocialAchievement {
 	private static final char[] _NAME_SUPPORTED_CHARS =
 		"abcdefghijklmnopqrstuvwxyz123456789_-.".toCharArray();
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSocialAchievement.class);
 
 	private int _counterIncrement = 1;

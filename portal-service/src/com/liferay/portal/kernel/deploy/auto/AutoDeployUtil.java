@@ -66,8 +66,8 @@ public class AutoDeployUtil {
 		}
 	}
 
-	private static AutoDeployUtil _instance = new AutoDeployUtil();
+	private static final AutoDeployUtil _instance = new AutoDeployUtil();
 
-	private Map<String, AutoDeployDir> _autoDeployDirs;
+	private final Map<String, AutoDeployDir> _autoDeployDirs;
 
 }

@@ -80,11 +80,11 @@ public class HttpPrincipal implements Serializable {
 		_password = password;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(HttpPrincipal.class);
+	private static final Log _log = LogFactoryUtil.getLog(HttpPrincipal.class);
 
 	private long _companyId;
-	private String _login;
+	private final String _login;
 	private String _password;
-	private String _url;
+	private final String _url;
 
 }

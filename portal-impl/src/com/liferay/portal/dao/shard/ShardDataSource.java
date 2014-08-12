@@ -98,6 +98,6 @@ public class ShardDataSource implements DataSource {
 		return ShardUtil.getDataSource();
 	}
 
-	private static ShardDataSource _instance = new ShardDataSource();
+	private static final ShardDataSource _instance = new ShardDataSource();
 
 }

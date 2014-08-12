@@ -223,8 +223,8 @@ public class EntriesChecker extends RowChecker {
 		return sb.toString();
 	}
 
-	private boolean _documentLibraryDisplayPortlet;
-	private LiferayPortletResponse _liferayPortletResponse;
-	private PermissionChecker _permissionChecker;
+	private final boolean _documentLibraryDisplayPortlet;
+	private final LiferayPortletResponse _liferayPortletResponse;
+	private final PermissionChecker _permissionChecker;
 
 }

@@ -53,6 +53,6 @@ public class ProjectionListImpl
 		return _projectionList;
 	}
 
-	private org.hibernate.criterion.ProjectionList _projectionList;
+	private final org.hibernate.criterion.ProjectionList _projectionList;
 
 }

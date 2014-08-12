@@ -112,12 +112,12 @@ public class SoftReferencePool<V, P> {
 		}
 	}
 
-	private int _maxIdleSize;
-	private PoolAction<V, P> _poolAction;
-	private ReferenceQueue<V> _referenceQueue = new ReferenceQueue<V>();
-	private Queue<SoftReference<? extends V>> _softReferences =
+	private final int _maxIdleSize;
+	private final PoolAction<V, P> _poolAction;
+	private final ReferenceQueue<V> _referenceQueue = new ReferenceQueue<V>();
+	private final Queue<SoftReference<? extends V>> _softReferences =
 		new ConcurrentLinkedQueue<SoftReference<? extends V>>();
-	private boolean _useWeakCounter;
-	private AtomicInteger _weakCounter;
+	private final boolean _useWeakCounter;
+	private final AtomicInteger _weakCounter;
 
 }

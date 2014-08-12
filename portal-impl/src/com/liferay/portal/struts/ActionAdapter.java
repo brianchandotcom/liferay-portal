@@ -68,6 +68,6 @@ public class ActionAdapter extends Action {
 	}
 
 	private Action _originalAction;
-	private StrutsAction _strutsAction;
+	private final StrutsAction _strutsAction;
 
 }

@@ -73,8 +73,8 @@ public class PortalLoginModule implements LoginModule {
 	private static final String _CLASS_NAME =
 		"com.liferay.portal.security.jaas.PortalLoginModule";
 
-	private static Log _log = LogFactoryUtil.getLog(PortalLoginModule.class);
+	private static final Log _log = LogFactoryUtil.getLog(PortalLoginModule.class);
 
-	private LoginModule _loginModule;
+	private final LoginModule _loginModule;
 
 }

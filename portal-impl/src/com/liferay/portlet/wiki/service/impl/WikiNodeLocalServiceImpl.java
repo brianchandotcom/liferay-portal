@@ -587,10 +587,10 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		validate(0, groupId, name);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		WikiNodeLocalServiceImpl.class);
 
-	private Map<String, WikiImporter> _wikiImporters =
+	private final Map<String, WikiImporter> _wikiImporters =
 		new HashMap<String, WikiImporter>();
 
 }

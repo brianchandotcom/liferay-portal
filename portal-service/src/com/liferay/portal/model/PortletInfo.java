@@ -50,9 +50,9 @@ public class PortletInfo implements Serializable {
 		return _title;
 	}
 
-	private String _description;
-	private String _keywords;
-	private String _shortTitle;
-	private String _title;
+	private final String _description;
+	private final String _keywords;
+	private final String _shortTitle;
+	private final String _title;
 
 }

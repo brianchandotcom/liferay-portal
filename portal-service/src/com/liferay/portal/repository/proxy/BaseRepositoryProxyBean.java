@@ -796,6 +796,6 @@ public class BaseRepositoryProxyBean
 		return _baseRepository.verifyInheritableLock(folderId, lockUuid);
 	}
 
-	private BaseRepository _baseRepository;
+	private final BaseRepository _baseRepository;
 
 }

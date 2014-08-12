@@ -113,7 +113,7 @@ public class LanguageFilter extends BasePortalFilter {
 		return LanguageUtil.process(resourceBundle, locale, content);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LanguageFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(LanguageFilter.class);
 
 	private PortletConfig _portletConfig;
 

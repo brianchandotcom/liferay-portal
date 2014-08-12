@@ -145,6 +145,6 @@ public class SharedSessionAttributeListener
 		_sessionIds.remove(session.getId());
 	}
 
-	private Set<String> _sessionIds;
+	private final Set<String> _sessionIds;
 
 }

@@ -56,7 +56,7 @@ public class PACLDataSource extends DataSourceWrapper {
 			new ConnectionPrivilegedAction(connection, paclPolicy));
 	}
 
-	private DataSource _dataSource;
+	private final DataSource _dataSource;
 
 	private class ConnectionPrivilegedAction
 		implements PrivilegedAction<Connection> {

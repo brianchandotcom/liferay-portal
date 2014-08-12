@@ -137,6 +137,6 @@ public class VerifyOracle extends VerifyProcess {
 		75, 100, 150, 200, 255, 500, 1000, 1024, 2000, 4000
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(VerifyOracle.class);
+	private static final Log _log = LogFactoryUtil.getLog(VerifyOracle.class);
 
 }

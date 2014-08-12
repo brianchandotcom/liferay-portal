@@ -85,8 +85,8 @@ public class FormTag extends BaseFormTag {
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private List<String> _checkboxNames = new ArrayList<String>();
-	private Map<String, List<ValidatorTag>> _validatorTagsMap =
+	private final List<String> _checkboxNames = new ArrayList<String>();
+	private final Map<String, List<ValidatorTag>> _validatorTagsMap =
 		new HashMap<String, List<ValidatorTag>>();
 
 }

@@ -194,7 +194,7 @@ public class NetlogonConnection {
 		return hmact64.digest();
 	}
 
-	private static int _negotiateFlags;
+	private static final int _negotiateFlags;
 
 	private byte[] _clientCredential;
 	private DcerpcHandle _dcerpcHandle;

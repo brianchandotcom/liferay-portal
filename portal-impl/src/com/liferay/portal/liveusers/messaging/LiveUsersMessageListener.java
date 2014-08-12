@@ -106,12 +106,11 @@ public class LiveUsersMessageListener extends BaseMessageListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		LiveUsersMessageListener.class);
-
-	private static MethodHandler _getLocalClusterUsersMethodHandler =
+	private static final MethodHandler _getLocalClusterUsersMethodHandler =
 		new MethodHandler(
 			new MethodKey(LiveUsers.class, "getLocalClusterUsers"));
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiveUsersMessageListener.class);
 
 	private class LiveUsersClusterResponseCallback
 		extends BaseClusterResponseCallback {

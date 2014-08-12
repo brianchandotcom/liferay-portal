@@ -345,6 +345,6 @@ public class JournalRSSUtil {
 		return null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(JournalRSSUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(JournalRSSUtil.class);
 
 }

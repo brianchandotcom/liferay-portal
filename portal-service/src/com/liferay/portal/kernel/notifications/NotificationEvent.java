@@ -170,9 +170,9 @@ public class NotificationEvent implements Serializable {
 	private long _deliverBy;
 	private boolean _deliveryRequired;
 	private int _deliveryType;
-	private JSONObject _payloadJSONObject;
+	private final JSONObject _payloadJSONObject;
 	private long _timestamp;
-	private String _type;
+	private final String _type;
 	private String _uuid;
 
 }

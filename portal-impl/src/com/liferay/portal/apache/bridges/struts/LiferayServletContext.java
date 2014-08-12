@@ -348,6 +348,6 @@ public class LiferayServletContext implements ServletContext {
 		return _servletContext.toString();
 	}
 
-	private ServletContext _servletContext;
+	private final ServletContext _servletContext;
 
 }

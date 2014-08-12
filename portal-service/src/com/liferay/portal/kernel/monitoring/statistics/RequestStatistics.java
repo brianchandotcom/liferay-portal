@@ -90,9 +90,9 @@ public class RequestStatistics implements Statistics {
 	}
 
 	private String _description;
-	private CountStatistics _errorStatistics;
-	private String _name;
-	private AverageStatistics _successStatistics;
-	private CountStatistics _timeoutStatistics;
+	private final CountStatistics _errorStatistics;
+	private final String _name;
+	private final AverageStatistics _successStatistics;
+	private final CountStatistics _timeoutStatistics;
 
 }

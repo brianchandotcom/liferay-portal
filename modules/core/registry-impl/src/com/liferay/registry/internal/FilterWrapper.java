@@ -79,6 +79,6 @@ public class FilterWrapper implements Filter {
 		return _filter.toString();
 	}
 
-	private org.osgi.framework.Filter _filter;
+	private final org.osgi.framework.Filter _filter;
 
 }

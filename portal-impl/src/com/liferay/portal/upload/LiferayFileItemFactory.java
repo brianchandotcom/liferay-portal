@@ -40,6 +40,6 @@ public class LiferayFileItemFactory extends DiskFileItemFactory {
 			_tempDir);
 	}
 
-	private File _tempDir;
+	private final File _tempDir;
 
 }

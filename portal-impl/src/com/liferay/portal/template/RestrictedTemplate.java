@@ -69,7 +69,7 @@ public class RestrictedTemplate implements Template {
 		_template.put(key, value);
 	}
 
-	private Set<String> _restrictedVariables;
-	private Template _template;
+	private final Set<String> _restrictedVariables;
+	private final Template _template;
 
 }

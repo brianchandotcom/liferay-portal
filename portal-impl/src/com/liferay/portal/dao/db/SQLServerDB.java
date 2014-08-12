@@ -223,6 +223,6 @@ public class SQLServerDB extends BaseDB {
 
 	private static final boolean _SUPPORTS_ALTER_COLUMN_TYPE = false;
 
-	private static SQLServerDB _instance = new SQLServerDB();
+	private static final SQLServerDB _instance = new SQLServerDB();
 
 }

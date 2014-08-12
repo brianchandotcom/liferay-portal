@@ -73,10 +73,10 @@ public class InitialThreadLocal<T> extends CentralizedThreadLocal<T> {
 
 	private static final String _METHOD_CLONE = "clone";
 
-	private static Log _log = LogFactoryUtil.getLog(InitialThreadLocal.class);
+	private static final Log _log = LogFactoryUtil.getLog(InitialThreadLocal.class);
 
-	private Method _cloneMethod;
-	private T _initialValue;
-	private String _name;
+	private final Method _cloneMethod;
+	private final T _initialValue;
+	private final String _name;
 
 }

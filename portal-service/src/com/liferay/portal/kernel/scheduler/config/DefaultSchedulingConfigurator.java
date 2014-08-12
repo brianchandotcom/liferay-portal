@@ -41,7 +41,7 @@ public class DefaultSchedulingConfigurator
 			PortalLifecycle.METHOD_INIT);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultSchedulingConfigurator.class);
 
 	private class SchedulingConfiguratorLifecycle extends BasePortalLifecycle {

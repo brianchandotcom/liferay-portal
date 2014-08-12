@@ -105,6 +105,6 @@ public class OAuthManagerImpl implements OAuthManager {
 		}
 	}
 
-	private OAuthService _oAuthService;
+	private final OAuthService _oAuthService;
 
 }

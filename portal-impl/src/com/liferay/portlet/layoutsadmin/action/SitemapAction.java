@@ -129,6 +129,6 @@ public class SitemapAction extends Action {
 		return null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SitemapAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(SitemapAction.class);
 
 }

@@ -90,6 +90,6 @@ public class ExportImportConfigurationTrashRenderer extends BaseTrashRenderer {
 		return "/html/portlet/layouts_admin/view_configuration.jsp";
 	}
 
-	private ExportImportConfiguration _exportImportConfiguration;
+	private final ExportImportConfiguration _exportImportConfiguration;
 
 }

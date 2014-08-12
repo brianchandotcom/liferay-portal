@@ -391,17 +391,17 @@ public class RepositoryLocalServiceImpl
 		return dlFolder.getFolderId();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		RepositoryLocalServiceImpl.class);
 
-	private Map<Long, LocalRepository> _localRepositoriesByRepositoryEntryId =
+	private final Map<Long, LocalRepository> _localRepositoriesByRepositoryEntryId =
 		new ConcurrentHashMap<Long, LocalRepository>();
-	private Map<Long, LocalRepository> _localRepositoriesByRepositoryId =
+	private final Map<Long, LocalRepository> _localRepositoriesByRepositoryId =
 		new ConcurrentHashMap<Long, LocalRepository>();
-	private Map<Long, com.liferay.portal.kernel.repository.Repository>
+	private final Map<Long, com.liferay.portal.kernel.repository.Repository>
 		_repositoriesByEntryId = new ConcurrentHashMap
 			<Long, com.liferay.portal.kernel.repository.Repository>();
-	private Map<Long, com.liferay.portal.kernel.repository.Repository>
+	private final Map<Long, com.liferay.portal.kernel.repository.Repository>
 		_repositoriesByRepositoryId = new ConcurrentHashMap
 			<Long, com.liferay.portal.kernel.repository.Repository>();
 

@@ -43,6 +43,6 @@ public class LikeKeywordAnalyzer extends Analyzer {
 		return _analyzer.tokenStream(token, reader);
 	}
 
-	private Analyzer _analyzer;
+	private final Analyzer _analyzer;
 
 }

@@ -82,7 +82,7 @@ public class ImageImpl extends ImageBaseImpl {
 
 	private static final long _DEFAULT_REPOSITORY_ID = 0;
 
-	private static Log _log = LogFactoryUtil.getLog(ImageImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(ImageImpl.class);
 
 	private byte[] _textObj;
 

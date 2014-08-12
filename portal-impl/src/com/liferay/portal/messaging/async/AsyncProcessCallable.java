@@ -83,6 +83,6 @@ public class AsyncProcessCallable
 	}
 
 	private MethodHandler _methodHandler;
-	private MethodInvocation _methodInvocation;
+	private final MethodInvocation _methodInvocation;
 
 }

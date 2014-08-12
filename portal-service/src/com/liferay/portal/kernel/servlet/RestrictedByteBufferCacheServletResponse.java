@@ -154,9 +154,9 @@ public class RestrictedByteBufferCacheServletResponse
 		}
 	}
 
-	private static ByteBuffer _emptyByteBuffer = ByteBuffer.allocate(0);
+	private static final ByteBuffer _emptyByteBuffer = ByteBuffer.allocate(0);
 
-	private int _cacheCapacity;
+	private final int _cacheCapacity;
 	private PrintWriter _printWriter;
 	private RestrictedByteArrayCacheOutputStream
 		_restrictedByteArrayCacheOutputStream;

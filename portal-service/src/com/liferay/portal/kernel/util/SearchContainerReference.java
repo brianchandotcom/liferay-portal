@@ -57,9 +57,9 @@ public class SearchContainerReference {
 		_searchContainers.put(var, searchContainer);
 	}
 
-	private String _namespace;
-	private HttpServletRequest _request;
-	private Map<String, SearchContainer<?>> _searchContainers =
+	private final String _namespace;
+	private final HttpServletRequest _request;
+	private final Map<String, SearchContainer<?>> _searchContainers =
 		new HashMap<String, SearchContainer<?>>();
 
 }

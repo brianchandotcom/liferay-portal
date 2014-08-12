@@ -133,9 +133,9 @@ public abstract class CMISModel {
 		return user;
 	}
 
-	private static Map<String, Action> _mappedActionKeys =
+	private static final Map<String, Action> _mappedActionKeys =
 		new HashMap<String, Action>();
-	private static Set<String> _unsupportedActionKeys = new HashSet<String>();
+	private static final Set<String> _unsupportedActionKeys = new HashSet<String>();
 
 	private Folder _parentFolder;
 

@@ -146,8 +146,8 @@ public class SocketChecker extends BaseChecker {
 		initHostsAndPorts("*:" + listenPart, SOCKET_PERMISSION_LISTEN);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SocketChecker.class);
+	private static final Log _log = LogFactoryUtil.getLog(SocketChecker.class);
 
-	private Permissions _permissions = new Permissions();
+	private final Permissions _permissions = new Permissions();
 
 }

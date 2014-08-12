@@ -96,7 +96,7 @@ public class ThemeModificationActionHandler implements ActionHandler {
 		_themeLocalService = themeLocalService;
 	}
 
-	private static Collection<String> _propertyNames;
+	private static final Collection<String> _propertyNames;
 
 	@BeanReference(type = ThemeLocalService.class)
 	private ThemeLocalService _themeLocalService;

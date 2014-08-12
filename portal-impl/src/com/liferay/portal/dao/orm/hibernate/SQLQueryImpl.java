@@ -416,8 +416,8 @@ public class SQLQueryImpl implements SQLQuery {
 		}
 	}
 
-	private String[] _names;
-	private org.hibernate.SQLQuery _sqlQuery;
-	private boolean _strictName;
+	private final String[] _names;
+	private final org.hibernate.SQLQuery _sqlQuery;
+	private final boolean _strictName;
 
 }

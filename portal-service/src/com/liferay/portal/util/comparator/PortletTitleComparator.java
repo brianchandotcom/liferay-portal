@@ -61,7 +61,7 @@ public class PortletTitleComparator
 		return portletTitle1.compareTo(portletTitle2);
 	}
 
-	private Locale _locale;
-	private ServletContext _servletContext;
+	private final Locale _locale;
+	private final ServletContext _servletContext;
 
 }

@@ -322,6 +322,6 @@ public class BookmarksUtil {
 		return orderByComparator;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BookmarksUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(BookmarksUtil.class);
 
 }

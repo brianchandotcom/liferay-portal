@@ -160,10 +160,10 @@ public class EhcachePortalCacheClusterReplicator implements CacheEventListener {
 	private static final String _REPLICATE_UPDATES_VIA_COPY =
 		"replicateUpdatesViaCopy";
 
-	private boolean _replicatePuts = true;
-	private boolean _replicatePutsViaCopy;
-	private boolean _replicateRemovals = true;
-	private boolean _replicateUpdates = true;
-	private boolean _replicateUpdatesViaCopy;
+	private final boolean _replicatePuts = true;
+	private final boolean _replicatePutsViaCopy;
+	private final boolean _replicateRemovals = true;
+	private final boolean _replicateUpdates = true;
+	private final boolean _replicateUpdatesViaCopy;
 
 }

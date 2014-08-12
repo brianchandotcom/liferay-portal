@@ -83,6 +83,6 @@ public class RoleTypeComparator extends OrderByComparator<Role> {
 		return _ascending;
 	}
 
-	private boolean _ascending;
+	private final boolean _ascending;
 
 }

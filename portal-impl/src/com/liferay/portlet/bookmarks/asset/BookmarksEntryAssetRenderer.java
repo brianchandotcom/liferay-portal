@@ -216,6 +216,6 @@ public class BookmarksEntryAssetRenderer
 		}
 	}
 
-	private BookmarksEntry _entry;
+	private final BookmarksEntry _entry;
 
 }

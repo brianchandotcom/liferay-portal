@@ -89,13 +89,13 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 		return _treeWalker;
 	}
 
-	private MBCategory _category;
-	private MBMessage _message;
-	private MBThread _nextThread;
-	private MBMessage _parentMessage;
-	private MBThread _previousThread;
-	private MBThread _thread;
-	private String _threadView;
-	private MBTreeWalker _treeWalker;
+	private final MBCategory _category;
+	private final MBMessage _message;
+	private final MBThread _nextThread;
+	private final MBMessage _parentMessage;
+	private final MBThread _previousThread;
+	private final MBThread _thread;
+	private final String _threadView;
+	private final MBTreeWalker _treeWalker;
 
 }

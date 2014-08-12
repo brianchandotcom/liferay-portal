@@ -50,6 +50,6 @@ public class CatalinaCometRequest extends BaseCometRequest {
 		return _request.getParameterNames();
 	}
 
-	private HttpServletRequest _request;
+	private final HttpServletRequest _request;
 
 }

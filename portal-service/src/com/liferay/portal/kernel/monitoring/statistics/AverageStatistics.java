@@ -76,6 +76,6 @@ public class AverageStatistics extends BaseStatistics {
 	}
 
 	private long _averageTime;
-	private CountStatistics _countStatistics;
+	private final CountStatistics _countStatistics;
 
 }

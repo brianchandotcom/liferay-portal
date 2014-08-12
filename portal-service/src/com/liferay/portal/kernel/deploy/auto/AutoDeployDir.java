@@ -277,15 +277,15 @@ public class AutoDeployDir {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AutoDeployDir.class);
+	private static final Log _log = LogFactoryUtil.getLog(AutoDeployDir.class);
 
 	private static AutoDeployScanner _autoDeployScanner;
 
-	private List<AutoDeployListener> _autoDeployListeners;
-	private Map<String, Long> _blacklistFileTimestamps;
-	private File _deployDir;
-	private File _destDir;
-	private long _interval;
-	private String _name;
+	private final List<AutoDeployListener> _autoDeployListeners;
+	private final Map<String, Long> _blacklistFileTimestamps;
+	private final File _deployDir;
+	private final File _destDir;
+	private final long _interval;
+	private final String _name;
 
 }

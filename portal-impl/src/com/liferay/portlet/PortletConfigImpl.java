@@ -228,11 +228,11 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 		return javaxQNames;
 	}
 
-	private boolean _copyRequestParameters;
-	private Portlet _portlet;
-	private PortletApp _portletApp;
-	private PortletContext _portletContext;
-	private String _portletName;
-	private Map<String, ResourceBundle> _resourceBundles;
+	private final boolean _copyRequestParameters;
+	private final Portlet _portlet;
+	private final PortletApp _portletApp;
+	private final PortletContext _portletContext;
+	private final String _portletName;
+	private final Map<String, ResourceBundle> _resourceBundles;
 
 }

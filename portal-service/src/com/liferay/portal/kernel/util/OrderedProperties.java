@@ -52,6 +52,6 @@ public class OrderedProperties extends Properties {
 		return super.remove(key);
 	}
 
-	private Vector<String> _names;
+	private final Vector<String> _names;
 
 }

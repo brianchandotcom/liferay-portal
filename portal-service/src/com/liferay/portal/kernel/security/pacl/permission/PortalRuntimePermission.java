@@ -203,9 +203,9 @@ public class PortalRuntimePermission extends BasicPermission {
 		_subject = nameParts[2];
 	}
 
-	private static PACL _pacl = new NoPACL();
+	private static final PACL _pacl = new NoPACL();
 
-	private String _property;
+	private final String _property;
 	private String _servletContextName;
 	private String _shortName;
 	private String _subject;

@@ -48,6 +48,6 @@ public class MissingReferenceException extends PortalException {
 		return _missingReferences;
 	}
 
-	private MissingReferences _missingReferences;
+	private final MissingReferences _missingReferences;
 
 }

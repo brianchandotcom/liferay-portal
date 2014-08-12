@@ -89,7 +89,7 @@ public class PortalCacheConfiguratorImpl implements PortalCacheConfigurator {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalCacheConfiguratorImpl.class);
 
 	@BeanReference(

@@ -177,12 +177,12 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 		return themeDisplay.getPathThemeImages() + "/common/history.png";
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DDLRecordAssetRenderer.class);
 
-	private DDMStructure _ddmStructure;
-	private DDLRecord _record;
-	private DDLRecordSet _recordSet;
-	private DDLRecordVersion _recordVersion;
+	private final DDMStructure _ddmStructure;
+	private final DDLRecord _record;
+	private final DDLRecordSet _recordSet;
+	private final DDLRecordVersion _recordVersion;
 
 }

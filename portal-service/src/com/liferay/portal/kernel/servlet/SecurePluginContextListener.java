@@ -380,7 +380,7 @@ public class SecurePluginContextListener
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SecurePluginContextListener.class);
 
 	private List<HttpSessionActivationListener> _httpSessionActivationListeners;

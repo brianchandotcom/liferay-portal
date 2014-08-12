@@ -38,6 +38,6 @@ public class PortletServletSession extends HttpSessionWrapper {
 		_portletRequestImpl.invalidateSession();
 	}
 
-	private PortletRequestImpl _portletRequestImpl;
+	private final PortletRequestImpl _portletRequestImpl;
 
 }

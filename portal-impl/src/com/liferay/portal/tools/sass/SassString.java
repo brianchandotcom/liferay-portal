@@ -51,7 +51,7 @@ public class SassString implements SassFragment {
 		return _rtlContent;
 	}
 
-	private String _ltrContent;
-	private String _rtlContent;
+	private final String _ltrContent;
+	private final String _rtlContent;
 
 }

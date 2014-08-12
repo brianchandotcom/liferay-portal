@@ -76,7 +76,7 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 			CompilerOptions.Reach.LOCAL_ONLY);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		GoogleJavaScriptMinifier.class);
 
 	private class LogErrorManager extends BasicErrorManager {

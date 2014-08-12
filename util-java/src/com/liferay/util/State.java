@@ -85,7 +85,7 @@ public class State {
 		return hashCode.toHashCode();
 	}
 
-	private String _id;
-	private String _name;
+	private final String _id;
+	private final String _name;
 
 }

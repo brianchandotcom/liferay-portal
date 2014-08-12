@@ -70,6 +70,6 @@ public class OrderDateComparator extends OrderByComparator<ShoppingOrder> {
 		return _ascending;
 	}
 
-	private boolean _ascending;
+	private final boolean _ascending;
 
 }

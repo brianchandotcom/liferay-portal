@@ -57,6 +57,6 @@ public class DelegatingBackgroundTaskExecutor
 		return _backgroundTaskExecutor;
 	}
 
-	private BackgroundTaskExecutor _backgroundTaskExecutor;
+	private final BackgroundTaskExecutor _backgroundTaskExecutor;
 
 }

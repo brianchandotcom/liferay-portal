@@ -83,11 +83,11 @@ public class PollerHeader implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private long _browserKey;
-	private long _companyId;
-	private Map<String, Boolean> _portletIdsMap;
-	private boolean _startPolling;
-	private long _timestamp = System.currentTimeMillis();
-	private long _userId;
+	private final long _browserKey;
+	private final long _companyId;
+	private final Map<String, Boolean> _portletIdsMap;
+	private final boolean _startPolling;
+	private final long _timestamp = System.currentTimeMillis();
+	private final long _userId;
 
 }

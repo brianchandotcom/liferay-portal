@@ -529,18 +529,17 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			TemplateContextHelper.class, new DoTemplateContextHelperPACL());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		PortalSecurityManagerImpl.class.getName());
-
-	private static ThreadLocal<ClassLoader> _checkMemberAccessClassLoader =
+	private static final ThreadLocal<ClassLoader> _checkMemberAccessClassLoader =
 		new AutoResetThreadLocal<ClassLoader>(
 			PortalSecurityManagerImpl.class +
 				"._checkMembersAccessClassLoader");
-	private static RuntimePermission _checkMemberAccessPermission =
+	private static final RuntimePermission _checkMemberAccessPermission =
 		new RuntimePermission("accessDeclaredMembers");
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalSecurityManagerImpl.class.getName());
 
 	private SecurityManager _originalSecurityManager;
-	private PortalPolicy _portalPolicy;
+	private final PortalPolicy _portalPolicy;
 
 	private static class DoBeanLocatorImplPACL implements BeanLocatorImpl.PACL {
 

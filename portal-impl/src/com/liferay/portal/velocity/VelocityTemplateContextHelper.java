@@ -165,7 +165,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		VelocityTemplateContextHelper.class);
 
 }

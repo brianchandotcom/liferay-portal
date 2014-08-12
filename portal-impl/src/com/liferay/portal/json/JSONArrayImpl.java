@@ -221,7 +221,7 @@ public class JSONArrayImpl implements JSONArray {
 
 	private static final String _NULL_JSON = "[]";
 
-	private static Log _log = LogFactoryUtil.getLog(JSONArrayImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(JSONArrayImpl.class);
 
 	private org.json.JSONArray _jsonArray;
 

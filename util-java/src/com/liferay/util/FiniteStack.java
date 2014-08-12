@@ -40,6 +40,6 @@ public class FiniteStack<E> extends Stack<E> {
 		return item;
 	}
 
-	private int _maxSize;
+	private final int _maxSize;
 
 }

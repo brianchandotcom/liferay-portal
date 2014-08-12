@@ -87,7 +87,7 @@ public class UpgradeOptimizedConnectionHandler implements InvocationHandler {
 			new UpgradeOptimizedPreparedStatementHandler(preparedStatement));
 	}
 
-	private Connection _connection;
-	private boolean _useUpgradeOptimizedPreparedStatementHandler;
+	private final Connection _connection;
+	private final boolean _useUpgradeOptimizedPreparedStatementHandler;
 
 }

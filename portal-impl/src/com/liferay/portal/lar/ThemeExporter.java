@@ -121,8 +121,7 @@ public class ThemeExporter {
 	private ThemeExporter() {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ThemeExporter.class);
-
-	private static ThemeExporter _instance = new ThemeExporter();
+	private static final ThemeExporter _instance = new ThemeExporter();
+	private static final Log _log = LogFactoryUtil.getLog(ThemeExporter.class);
 
 }

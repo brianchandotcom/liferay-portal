@@ -56,6 +56,6 @@ public class CollectionNode extends ASTNode {
 		return _astNodes.size();
 	}
 
-	private List<ASTNode> _astNodes = new ArrayList<ASTNode>();
+	private final List<ASTNode> _astNodes = new ArrayList<ASTNode>();
 
 }

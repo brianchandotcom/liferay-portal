@@ -48,7 +48,7 @@ public class ChannelLoginPostAction extends Action {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ChannelLoginPostAction.class);
 
 }

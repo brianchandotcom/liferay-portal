@@ -40,7 +40,7 @@ public class DirectTagMatcher extends CallbackMatcher {
 
 	private static final String _REGEX = "\\[\\[([^\\]]+)\\]\\]";
 
-	private Callback _callBack = new Callback() {
+	private final Callback _callBack = new Callback() {
 
 		@Override
 		public String foundMatch(MatchResult matchResult) {
@@ -75,6 +75,6 @@ public class DirectTagMatcher extends CallbackMatcher {
 
 	};
 
-	private WikiPage _page;
+	private final WikiPage _page;
 
 }

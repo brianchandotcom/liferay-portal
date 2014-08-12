@@ -175,6 +175,6 @@ public class SybaseDB extends BaseDB {
 		" text", " varchar", "  identity(1,1)", "go"
 	};
 
-	private static SybaseDB _instance = new SybaseDB();
+	private static final SybaseDB _instance = new SybaseDB();
 
 }

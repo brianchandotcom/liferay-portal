@@ -401,8 +401,8 @@ public class BufferCacheServletResponse extends MetaInfoCacheServletResponse {
 		}
 	}
 
-	private static ByteBuffer _emptyByteBuffer = ByteBuffer.allocate(0);
-	private static CharBuffer _emptyCharBuffer = CharBuffer.allocate(0);
+	private static final ByteBuffer _emptyByteBuffer = ByteBuffer.allocate(0);
+	private static final CharBuffer _emptyCharBuffer = CharBuffer.allocate(0);
 
 	private ByteBuffer _byteBuffer;
 	private CharBuffer _charBuffer;

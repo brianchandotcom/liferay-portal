@@ -154,12 +154,12 @@ public class OutputStreamWriter extends Writer {
 
 	private static final int _DEFAULT_OUTPUT_BUFFER_SIZE = 8192;
 
-	private boolean _autoFlush;
-	private CharsetEncoder _charsetEncoder;
-	private String _charsetName;
-	private char[] _inputArray = new char[1];
-	private CharBuffer _inputCharBuffer = CharBuffer.wrap(_inputArray);
-	private ByteBuffer _outputByteBuffer;
-	private OutputStream _outputStream;
+	private final boolean _autoFlush;
+	private final CharsetEncoder _charsetEncoder;
+	private final String _charsetName;
+	private final char[] _inputArray = new char[1];
+	private final CharBuffer _inputCharBuffer = CharBuffer.wrap(_inputArray);
+	private final ByteBuffer _outputByteBuffer;
+	private final OutputStream _outputStream;
 
 }

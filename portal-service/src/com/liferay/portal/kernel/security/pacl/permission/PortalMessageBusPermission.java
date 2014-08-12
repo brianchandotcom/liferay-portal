@@ -52,9 +52,9 @@ public class PortalMessageBusPermission extends BasicPermission {
 
 	}
 
-	private static PACL _pacl = new NoPACL();
+	private static final PACL _pacl = new NoPACL();
 
-	private String _destinationName;
+	private final String _destinationName;
 
 	private static class NoPACL implements PACL {
 

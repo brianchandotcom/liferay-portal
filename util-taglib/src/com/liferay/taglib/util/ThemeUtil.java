@@ -505,6 +505,6 @@ public class ThemeUtil {
 		themeDisplay.setTilesSelectable(tilesSelectable);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ThemeUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(ThemeUtil.class);
 
 }

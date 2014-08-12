@@ -79,6 +79,6 @@ public class PKParser {
 		}
 	}
 
-	private Map<String, String> _fields = new HashMap<String, String>();
+	private final Map<String, String> _fields = new HashMap<String, String>();
 
 }

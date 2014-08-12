@@ -58,7 +58,7 @@ public class ProtectedActionRequest extends ActionRequestWrapper {
 		}
 	}
 
-	private String _remoteUser;
-	private Principal _userPrincipal;
+	private final String _remoteUser;
+	private final Principal _userPrincipal;
 
 }

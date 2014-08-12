@@ -742,17 +742,17 @@ public class UserAttributes {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UserAttributes.class);
+	private static final Log _log = LogFactoryUtil.getLog(UserAttributes.class);
 
-	private Address _businessAddress;
-	private Phone _businessFaxPhone;
-	private Phone _businessPhone;
-	private Calendar _calendar = new GregorianCalendar();
-	private Phone _mobilePhone;
-	private Phone _pagerPhone;
-	private Address _personalAddress;
-	private Phone _personalFaxPhone;
-	private Phone _personalPhone;
-	private User _user;
+	private final Address _businessAddress;
+	private final Phone _businessFaxPhone;
+	private final Phone _businessPhone;
+	private final Calendar _calendar = new GregorianCalendar();
+	private final Phone _mobilePhone;
+	private final Phone _pagerPhone;
+	private final Address _personalAddress;
+	private final Phone _personalFaxPhone;
+	private final Phone _personalPhone;
+	private final User _user;
 
 }

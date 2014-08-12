@@ -2848,18 +2848,6 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>lib/portal/nekohtml.jar</file-name>
-		<version>1.9.14</version>
-		<project-name>CyberNeko HTML Parser</project-name>
-		<project-url>http://sourceforge.net/projects/nekohtml</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
-				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>lib/portal/netcdf.jar</file-name>
 		<version>4.2</version>
 		<project-name>NetCDF</project-name>
@@ -3006,32 +2994,6 @@
 				<license-name>PHP License 2.02</license-name>
 				<license-url>http://www.php.net/license/2_02.txt</license-url>
 				<copyright-notice>Copyright (c) 1999-2002 The PHP Group. All rights reserved.</copyright-notice>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>lib/portal/portletbridge-core.jar</file-name>
-		<version>1.1.2</version>
-		<project-name>PortletBridge</project-name>
-		<project-url>http://www.portletbridge.org</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
-				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-				<copyright-notice>Copyright (c) 2001-2004 The Apache Software Foundation.</copyright-notice>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>lib/portal/portletbridge-portlet.jar</file-name>
-		<version>1.1.2</version>
-		<project-name>PortletBridge</project-name>
-		<project-url>http://www.portletbridge.org</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
-				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-				<copyright-notice>Copyright (c) 2001-2004 The Apache Software Foundation.</copyright-notice>
 			</license>
 		</licenses>
 	</library>

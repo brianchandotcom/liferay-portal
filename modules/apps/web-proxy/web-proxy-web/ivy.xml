@@ -10,8 +10,12 @@
 	</info>
 
 	<dependencies defaultconf="default">
-		<dependency name="javax.servlet.jsp.jstl" org="org.glassfish.web" rev="1.2.3" />
+		<dependency name="javax.servlet.jsp.jstl" org="org.glassfish.web" rev="1.2.3"/>
+		<dependency name="nekohtml" org="nekohtml" rev="0.9.5" />
+		<dependency name="org.eclipse.equinox.http.servlet" org="org.eclipse.equinox" rev="latest.integration" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
+		<dependency name="org.portletbridge.core" org="com.liferay" rev="1.1.2"/>
+		<dependency name="org.portletbridge.portlet" org="com.liferay" rev="1.1.2"/>
 	</dependencies>
 </ivy-module>

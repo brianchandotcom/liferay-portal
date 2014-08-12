@@ -7,5 +7,8 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
-	@../../../../util-taglib/util-taglib.jar,\
-	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld
+	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
+	@lib/nekohtml.jar,\
+	@lib/org.portletbridge.core.jar,\
+	@lib/org.portletbridge.portlet.jar,\
+	@../../../../util-taglib/util-taglib.jar

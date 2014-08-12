@@ -13,6 +13,9 @@
  */
 
 package com.liferay.portal.tools.sourceformatter.dependencies;
+
+import java.util.List;
+
 /**
  * @author Hugo Huijser
  */
@@ -53,11 +56,11 @@ public class IncorrectWhitespace {
 
 		for(int i = 1;i < 10 ; i++) {
 			String [] stringArray = new String[]{
-				"test1", "test2", "test3", "test4"};
+				"test1", "test2", "test3", "test4"
 			};
 		}
 
-		List <String> list;
+		List <String> list = null;
 
 		for (String s: list) {
 			String s2 = (String) s1;

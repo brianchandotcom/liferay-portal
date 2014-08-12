@@ -45,11 +45,15 @@ public class SQLQueryImpl implements SQLQuery {
 		_sqlQuery = sqlQuery;
 		_strictName = strictName;
 
-		if (!_strictName) {
-			_names = sqlQuery.getNamedParameters();
+		String[] names = null;
 
-			Arrays.sort(_names);
+		if (!_strictName) {
+			names = sqlQuery.getNamedParameters();
+
+			Arrays.sort(names);
 		}
+
+		_names = names;
 	}
 
 	@Override

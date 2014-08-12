@@ -207,14 +207,18 @@ public class ShardAdvice {
 	private ShardSessionFactoryTargetSource _shardSessionFactoryTargetSource;
 
 	static {
+		ShardSelector shardSelector = null;
+
 		try {
 			Class<?> clazz = Class.forName(PropsValues.SHARD_SELECTOR);
 
-			_shardSelector = (ShardSelector)clazz.newInstance();
+			shardSelector = (ShardSelector)clazz.newInstance();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_shardSelector = shardSelector;
 	}
 
 }

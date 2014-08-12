@@ -138,7 +138,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 	private static final String _LANGUAGE = "groovy";
 
 	private volatile GroovyShell _groovyShell = new GroovyShell();
-	private final volatile Map<ClassLoader, GroovyShell> _groovyShells =
+	private final Map<ClassLoader, GroovyShell> _groovyShells =
 		new WeakHashMap<ClassLoader, GroovyShell>();
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private PortalCache<String, Script> _portalCache =

@@ -52,10 +52,11 @@ import javax.servlet.ServletContext;
 public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 	public ThemeImpl() {
+		this(null);
 	}
 
 	public ThemeImpl(String themeId) {
-		_themeId = themeId;
+		this(themeId, null);
 	}
 
 	public ThemeImpl(String themeId, String name) {

@@ -30,8 +30,10 @@ import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsUtil;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -558,6 +560,9 @@ public class ImageToolImpl implements ImageTool {
 		int scaledHeight = Math.max(1, (int)(factor * imageHeight));
 		int scaledWidth = Math.max(1, (int)(factor * imageWidth));
 
+		// See the following link for reference on how resize should be done.
+		// http://www.oracle.com/technetwork/java/index-137037.html
+
 		BufferedImage originalBufferedImage = getBufferedImage(renderedImage);
 
 		int type = originalBufferedImage.getType();
@@ -568,39 +573,25 @@ public class ImageToolImpl implements ImageTool {
 
 		BufferedImage scaledBufferedImage = null;
 
+		Graphics2D originalGraphics = originalBufferedImage.createGraphics();
+
 		if ((type == BufferedImage.TYPE_BYTE_BINARY) ||
 			(type == BufferedImage.TYPE_BYTE_INDEXED)) {
 
 			IndexColorModel originalIndexColorModel =
 				(IndexColorModel)originalBufferedImage.getColorModel();
 
-			BufferedImage tempBufferedImage = new BufferedImage(
-				1, 1, type, originalIndexColorModel);
+			if (originalIndexColorModel.hasAlpha()) {
+				originalGraphics.setComposite(AlphaComposite.Src);
+			}
 
-			int bits = originalIndexColorModel.getPixelSize();
-			int size = originalIndexColorModel.getMapSize();
+			GraphicsConfiguration originalGraphicsConfiguration =
+				originalGraphics.getDeviceConfiguration();
 
-			byte[] reds = new byte[size];
-
-			originalIndexColorModel.getReds(reds);
-
-			byte[] greens = new byte[size];
-
-			originalIndexColorModel.getGreens(greens);
-
-			byte[] blues = new byte[size];
-
-			originalIndexColorModel.getBlues(blues);
-
-			WritableRaster tempWritableRaster = tempBufferedImage.getRaster();
-
-			int pixel = tempWritableRaster.getSample(0, 0, 0);
-
-			IndexColorModel scaledIndexColorModel = new IndexColorModel(
-				bits, size, reds, greens, blues, pixel);
-
-			scaledBufferedImage = new BufferedImage(
-				scaledWidth, scaledHeight, type, scaledIndexColorModel);
+			scaledBufferedImage =
+				originalGraphicsConfiguration.createCompatibleImage(
+					scaledWidth, scaledHeight,
+					originalBufferedImage.getTransparency());
 		}
 		else {
 			scaledBufferedImage = new BufferedImage(
@@ -613,6 +604,8 @@ public class ImageToolImpl implements ImageTool {
 			scaledWidth, scaledHeight, java.awt.Image.SCALE_SMOOTH);
 
 		scaledGraphics.drawImage(scaledImage, 0, 0, null);
+
+		originalGraphics.dispose();
 
 		return scaledBufferedImage;
 	}

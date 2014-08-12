@@ -99,9 +99,9 @@ public class BlogsEntryServiceHttp {
 	public static com.liferay.portlet.blogs.model.BlogsEntry addEntry(
 		HttpPrincipal httpPrincipal, java.lang.String title,
 		java.lang.String subtitle, java.lang.String description,
-		java.lang.String content, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		boolean allowPingbacks, boolean allowTrackbacks,
+		java.lang.String content, long coverImageId, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, boolean allowPingbacks, boolean allowTrackbacks,
 		java.lang.String[] trackbacks, boolean smallImage,
 		java.lang.String smallImageURL, java.lang.String smallImageFileName,
 		java.io.InputStream smallImageInputStream,
@@ -112,11 +112,11 @@ public class BlogsEntryServiceHttp {
 					"addEntry", _addEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, title,
-					subtitle, description, content, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, allowPingbacks, allowTrackbacks,
-					trackbacks, smallImage, smallImageURL, smallImageFileName,
-					smallImageInputStream, serviceContext);
+					subtitle, description, content, coverImageId,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, allowPingbacks,
+					allowTrackbacks, trackbacks, smallImage, smallImageURL,
+					smallImageFileName, smallImageInputStream, serviceContext);
 
 			Object returnObj = null;
 
@@ -766,9 +766,9 @@ public class BlogsEntryServiceHttp {
 	public static com.liferay.portlet.blogs.model.BlogsEntry updateEntry(
 		HttpPrincipal httpPrincipal, long entryId, java.lang.String title,
 		java.lang.String subtitle, java.lang.String description,
-		java.lang.String content, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		boolean allowPingbacks, boolean allowTrackbacks,
+		java.lang.String content, long coverImageId, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, boolean allowPingbacks, boolean allowTrackbacks,
 		java.lang.String[] trackbacks, boolean smallImage,
 		java.lang.String smallImageURL, java.lang.String smallImageFileName,
 		java.io.InputStream smallImageInputStream,
@@ -779,11 +779,11 @@ public class BlogsEntryServiceHttp {
 					"updateEntry", _updateEntryParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
-					title, subtitle, description, content, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, allowPingbacks, allowTrackbacks,
-					trackbacks, smallImage, smallImageURL, smallImageFileName,
-					smallImageInputStream, serviceContext);
+					title, subtitle, description, content, coverImageId,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, allowPingbacks,
+					allowTrackbacks, trackbacks, smallImage, smallImageURL,
+					smallImageFileName, smallImageInputStream, serviceContext);
 
 			Object returnObj = null;
 
@@ -818,10 +818,11 @@ public class BlogsEntryServiceHttp {
 		};
 	private static final Class<?>[] _addEntryParameterTypes1 = new Class[] {
 			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, int.class, int.class,
-			int.class, int.class, int.class, boolean.class, boolean.class,
-			java.lang.String[].class, boolean.class, java.lang.String.class,
-			java.lang.String.class, java.io.InputStream.class,
+			java.lang.String.class, java.lang.String.class, long.class,
+			int.class, int.class, int.class, int.class, int.class, boolean.class,
+			boolean.class, java.lang.String[].class, boolean.class,
+			java.lang.String.class, java.lang.String.class,
+			java.io.InputStream.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteEntryParameterTypes2 = new Class[] {
@@ -900,10 +901,11 @@ public class BlogsEntryServiceHttp {
 		};
 	private static final Class<?>[] _updateEntryParameterTypes22 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, int.class, int.class,
-			int.class, int.class, int.class, boolean.class, boolean.class,
-			java.lang.String[].class, boolean.class, java.lang.String.class,
-			java.lang.String.class, java.io.InputStream.class,
+			java.lang.String.class, java.lang.String.class, long.class,
+			int.class, int.class, int.class, int.class, int.class, boolean.class,
+			boolean.class, java.lang.String[].class, boolean.class,
+			java.lang.String.class, java.lang.String.class,
+			java.io.InputStream.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 }

@@ -22,6 +22,34 @@
 		display: block;
 	}
 
+	.cover-image-selector {
+		border: dashed 1px #8D8D8D;
+
+		.cover-image-upload-wrapper {
+			height: 400px;
+			padding: 20px 0;
+			text-align: center;
+		}
+
+		.cover-image-upload-file {
+			visibility: hidden;
+			position: absolute;
+		}
+
+		.cover-image-preview-wrapper, .cover-image-view-wrapper {
+			height: 400px;
+			overflow: hidden;
+			position: relative;
+			width: 100%;
+
+			.cover-image-action-buttons {
+				bottom: 20px;
+				position: absolute;
+				right: 30px;
+			}
+		}
+	}
+
 	.entry-author {
 		border-right: 1px solid #999;
 		color: #999;
@@ -34,6 +62,10 @@
 
 	.entry-body {
 		margin-bottom: 10px;
+	}
+
+	.entry-content {
+		overflow: hidden;
 	}
 
 	.entry-date {

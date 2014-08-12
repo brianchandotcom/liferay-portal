@@ -45,7 +45,6 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -81,15 +80,6 @@ public class BlogsEntryPersistenceTest {
 		TemplateManagerUtil.init();
 	}
 
-	@Before
-	public void setUp() {
-		_modelListeners = _persistence.getListeners();
-
-		for (ModelListener<BlogsEntry> modelListener : _modelListeners) {
-			_persistence.unregisterListener(modelListener);
-		}
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		Iterator<BlogsEntry> iterator = _blogsEntries.iterator();
@@ -98,10 +88,6 @@ public class BlogsEntryPersistenceTest {
 			_persistence.remove(iterator.next());
 
 			iterator.remove();
-		}
-
-		for (ModelListener<BlogsEntry> modelListener : _modelListeners) {
-			_persistence.registerListener(modelListener);
 		}
 	}
 
@@ -162,6 +148,8 @@ public class BlogsEntryPersistenceTest {
 
 		newBlogsEntry.setContent(RandomTestUtil.randomString());
 
+		newBlogsEntry.setCoverImageId(RandomTestUtil.nextLong());
+
 		newBlogsEntry.setDisplayDate(RandomTestUtil.nextDate());
 
 		newBlogsEntry.setAllowPingbacks(RandomTestUtil.randomBoolean());
@@ -216,6 +204,8 @@ public class BlogsEntryPersistenceTest {
 			newBlogsEntry.getDescription());
 		Assert.assertEquals(existingBlogsEntry.getContent(),
 			newBlogsEntry.getContent());
+		Assert.assertEquals(existingBlogsEntry.getCoverImageId(),
+			newBlogsEntry.getCoverImageId());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingBlogsEntry.getDisplayDate()),
 			Time.getShortTimestamp(newBlogsEntry.getDisplayDate()));
@@ -623,10 +613,11 @@ public class BlogsEntryPersistenceTest {
 			"entryId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"title", true, "subtitle", true, "urlTitle", true, "description",
-			true, "content", true, "displayDate", true, "allowPingbacks", true,
-			"allowTrackbacks", true, "trackbacks", true, "smallImage", true,
-			"smallImageId", true, "smallImageURL", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			true, "content", true, "coverImageId", true, "displayDate", true,
+			"allowPingbacks", true, "allowTrackbacks", true, "trackbacks",
+			true, "smallImage", true, "smallImageId", true, "smallImageURL",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -876,6 +867,8 @@ public class BlogsEntryPersistenceTest {
 		blogsEntry.setDescription(RandomTestUtil.randomString());
 
 		blogsEntry.setContent(RandomTestUtil.randomString());
+
+		blogsEntry.setCoverImageId(RandomTestUtil.nextLong());
 
 		blogsEntry.setDisplayDate(RandomTestUtil.nextDate());
 

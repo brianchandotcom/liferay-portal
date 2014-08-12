@@ -44,7 +44,6 @@ import com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -80,15 +79,6 @@ public class BlogsStatsUserPersistenceTest {
 		TemplateManagerUtil.init();
 	}
 
-	@Before
-	public void setUp() {
-		_modelListeners = _persistence.getListeners();
-
-		for (ModelListener<BlogsStatsUser> modelListener : _modelListeners) {
-			_persistence.unregisterListener(modelListener);
-		}
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		Iterator<BlogsStatsUser> iterator = _blogsStatsUsers.iterator();
@@ -97,10 +87,6 @@ public class BlogsStatsUserPersistenceTest {
 			_persistence.remove(iterator.next());
 
 			iterator.remove();
-		}
-
-		for (ModelListener<BlogsStatsUser> modelListener : _modelListeners) {
-			_persistence.registerListener(modelListener);
 		}
 	}
 

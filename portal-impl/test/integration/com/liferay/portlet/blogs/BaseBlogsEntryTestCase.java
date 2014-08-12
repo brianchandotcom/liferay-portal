@@ -71,7 +71,7 @@ public class BaseBlogsEntryTestCase {
 		InputStream smallImageInputStream = null;
 
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			getUserId(), title, description, subtitle, content,
+			getUserId(), title, description, subtitle, content, 0,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 			smallImage, smallImageURL, smallImageFileName,

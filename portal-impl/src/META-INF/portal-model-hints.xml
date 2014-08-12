@@ -1404,6 +1404,7 @@
 			<hint-collection name="CLOB" />
 			<sanitize content-type="text/html" modes="ALL" />
 		</field>
+		<field name="coverImageId" type="long" />
 		<field name="displayDate" type="Date" />
 		<field name="allowPingbacks" type="boolean" />
 		<field name="allowTrackbacks" type="boolean" />

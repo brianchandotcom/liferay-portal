@@ -44,6 +44,7 @@ public class BlogsEntrySoap implements Serializable {
 		soapModel.setUrlTitle(model.getUrlTitle());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setContent(model.getContent());
+		soapModel.setCoverImageId(model.getCoverImageId());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setAllowPingbacks(model.getAllowPingbacks());
 		soapModel.setAllowTrackbacks(model.getAllowTrackbacks());
@@ -211,6 +212,14 @@ public class BlogsEntrySoap implements Serializable {
 		_content = content;
 	}
 
+	public long getCoverImageId() {
+		return _coverImageId;
+	}
+
+	public void setCoverImageId(long coverImageId) {
+		_coverImageId = coverImageId;
+	}
+
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -324,6 +333,7 @@ public class BlogsEntrySoap implements Serializable {
 	private String _urlTitle;
 	private String _description;
 	private String _content;
+	private long _coverImageId;
 	private Date _displayDate;
 	private boolean _allowPingbacks;
 	private boolean _allowTrackbacks;

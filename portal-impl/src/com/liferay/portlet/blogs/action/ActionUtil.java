@@ -14,17 +14,33 @@
 
 package com.liferay.portlet.blogs.action;
 
+import com.liferay.portal.kernel.image.ImageBag;
+import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
+import java.awt.image.RenderedImage;
+
+import java.io.File;
+import java.io.InputStream;
+
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,6 +100,81 @@ public class ActionUtil {
 			portletRequest);
 
 		getEntry(request);
+	}
+
+	public static FileEntry saveCoverImage(ActionRequest actionRequest)
+		throws Exception {
+
+		long coverImageId = ParamUtil.getLong(actionRequest, "coverImageId");
+
+		if (coverImageId == 0) {
+			return null;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			com.liferay.portal.kernel.util.WebKeys.THEME_DISPLAY);
+
+		int xPos = ParamUtil.getInteger(actionRequest, "xPos");
+		int yPos = ParamUtil.getInteger(actionRequest, "yPos");
+		int width = ParamUtil.getInteger(actionRequest, "width");
+		int height = ParamUtil.getInteger(actionRequest, "height");
+
+		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			coverImageId);
+
+		if ((xPos > 0) || (yPos > 0) || (width > 0) || (height > 0)) {
+			ImageBag imageBag = ImageToolUtil.read(
+				fileEntry.getContentStream());
+
+			RenderedImage renderedImage = imageBag.getRenderedImage();
+
+			renderedImage = ImageToolUtil.crop(
+				renderedImage, height, width, xPos, yPos);
+
+			byte[] bytes = ImageToolUtil.getBytes(
+				renderedImage, imageBag.getType());
+
+			File file = FileUtil.createTempFile(bytes);
+
+			FileEntry resizedFileEntry =
+				PortletFileRepositoryUtil.addPortletFileEntry(
+					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+					"", 0, PortletKeys.BLOGS,
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, file,
+					fileEntry.getTitle() + "_resized",
+					MimeTypesUtil.getContentType(fileEntry.getTitle()), true);
+
+			TempFileUtil.deleteTempFile(coverImageId);
+
+			return resizedFileEntry;
+		}
+
+		return fileEntry;
+	}
+
+	public static FileEntry uploadCoverImage(
+			ActionRequest actionRequest, Class clazz)
+		throws Exception {
+
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String fileName = uploadPortletRequest.getFileName("file");
+		InputStream inputStream = uploadPortletRequest.getFileAsStream("file");
+
+		String tempImageFolderName = clazz.getName();
+
+		String uniqueTempFileName = TempFileUtil.getUniqueTempFileName(
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			tempImageFolderName);
+
+		return TempFileUtil.addTempFile(
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			uniqueTempFileName, tempImageFolderName, inputStream,
+			MimeTypesUtil.getContentType(fileName));
 	}
 
 }

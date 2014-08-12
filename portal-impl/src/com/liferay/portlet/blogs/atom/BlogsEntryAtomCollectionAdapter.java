@@ -193,7 +193,7 @@ public class BlogsEntryAtomCollectionAdapter
 		serviceContext.setScopeGroupId(groupId);
 
 		return BlogsEntryServiceUtil.addEntry(
-			title, StringPool.BLANK, summary, content, displayDateMonth,
+			title, StringPool.BLANK, summary, content, 0, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			allowPingbacks, allowTrackbacks, trackbacks, false, null, null,
 			null, serviceContext);

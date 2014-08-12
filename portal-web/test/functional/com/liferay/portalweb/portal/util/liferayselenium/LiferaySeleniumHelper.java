@@ -699,7 +699,7 @@ public class LiferaySeleniumHelper {
 			if (line.contains(
 					"[com.google.javascript.jscomp.Tracer." +
 						"ThreadTrace]")) {
-				
+
 				return true;
 			}
 		}

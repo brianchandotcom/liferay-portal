@@ -36,17 +36,6 @@ public class CollectionNode extends ASTNode {
 		this(astNodes, 0);
 	}
 
-	public CollectionNode(List<ASTNode> astNodes, int token) {
-		super(token);
-
-		if (astNodes != null) {
-			_astNodes = astNodes;
-		}
-		else {
-			_astNodes = new ArrayList<ASTNode>();
-		}
-	}
-
 	@Override
 	public void accept(ASTVisitor astVisitor) {
 		astVisitor.visit(this);
@@ -66,6 +55,17 @@ public class CollectionNode extends ASTNode {
 
 	public int size() {
 		return _astNodes.size();
+	}
+
+	protected CollectionNode(List<ASTNode> astNodes, int token) {
+		super(token);
+
+		if (astNodes != null) {
+			_astNodes = astNodes;
+		}
+		else {
+			_astNodes = new ArrayList<ASTNode>();
+		}
 	}
 
 	private final List<ASTNode> _astNodes;

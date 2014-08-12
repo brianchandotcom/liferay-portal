@@ -23,12 +23,6 @@ public abstract class TextNode extends BaseParentableNode {
 		this(astNode, 0, null);
 	}
 
-	public TextNode(ASTNode astNode, int tokenType, String content) {
-		super((CollectionNode)astNode, tokenType);
-
-		_content = content;
-	}
-
 	public TextNode(int tokenType) {
 		this(null, tokenType, null);
 	}
@@ -48,6 +42,12 @@ public abstract class TextNode extends BaseParentableNode {
 		else {
 			return false;
 		}
+	}
+
+	protected TextNode(ASTNode astNode, int tokenType, String content) {
+		super((CollectionNode)astNode, tokenType);
+
+		_content = content;
 	}
 
 	private final String _content;

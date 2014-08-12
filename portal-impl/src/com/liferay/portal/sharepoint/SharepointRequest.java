@@ -39,22 +39,6 @@ import javax.servlet.http.HttpServletResponse;
 public class SharepointRequest {
 
 	public SharepointRequest(
-			HttpServletRequest request, HttpServletResponse response,
-			String rootPath, User user)
-		throws SharepointException {
-
-		_rootPath = rootPath;
-
-		_request = request;
-		_response = response;
-		_user = user;
-
-		_params.putAll(request.getParameterMap());
-
-		addParams();
-	}
-
-	public SharepointRequest(
 			HttpServletRequest request, HttpServletResponse response, User user)
 		throws SharepointException {
 
@@ -169,6 +153,22 @@ public class SharepointRequest {
 		catch (Exception e) {
 			throw new SharepointException(e);
 		}
+	}
+
+	private SharepointRequest(
+			HttpServletRequest request, HttpServletResponse response,
+			String rootPath, User user)
+		throws SharepointException {
+
+		_rootPath = rootPath;
+
+		_request = request;
+		_response = response;
+		_user = user;
+
+		_params.putAll(request.getParameterMap());
+
+		addParams();
 	}
 
 	private byte[] _bytes;

@@ -31,33 +31,32 @@ public class ClassVisibilityChecker {
 	public static final String ALL_CLASSES = "all_classes";
 
 	public ClassVisibilityChecker(Set<String> allowedClasses) {
-		boolean allowAll = false;
-		boolean denyAll = false;
-
 		if ((allowedClasses != null) && allowedClasses.contains(ALL_CLASSES)) {
-			allowAll = true;
+			_allowAll = true;
+		}
+		else {
+			_allowAll = false;
 		}
 
 		if (_forbiddenClasses.contains(ALL_CLASSES)) {
-			denyAll = true;
+			_denyAll = true;
+		}
+		else {
+			_denyAll = false;
 		}
 
-		_allowAll = allowAll;
-		_denyAll = denyAll;
-
-		Set<Pattern> allowedPatterns = null;
-
 		if (!_allowAll && !_denyAll) {
-			allowedPatterns = new HashSet<Pattern>();
+			_allowedPatterns = new HashSet<Pattern>();
 
 			for (String allowedClass : allowedClasses) {
 				Pattern allowedPattern = Pattern.compile(allowedClass);
 
-				allowedPatterns.add(allowedPattern);
+				_allowedPatterns.add(allowedPattern);
 			}
 		}
-
-		_allowedPatterns = allowedPatterns;
+		else {
+			_allowedPatterns = null;
+		}
 	}
 
 	public boolean isVisible(String className) {

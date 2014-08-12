@@ -116,7 +116,16 @@ public class LayoutStagedModelDataHandler
 	public Layout fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return null;
+		List<Layout> layouts =
+			LayoutLocalServiceUtil.getLayoutsByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<Layout>());
+
+		if (ListUtil.isEmpty(layouts)) {
+			return null;
+		}
+
+		return layouts.get(0);
 	}
 
 	@Override
@@ -815,15 +824,8 @@ public class LayoutStagedModelDataHandler
 			}
 
 			if (layout == null) {
-				List<Layout> layouts =
-					LayoutLocalServiceUtil.getLayoutsByUuidAndCompanyId(
-						uuid, originalGroup.getCompanyId(), QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS,
-						new StagedModelModifiedDateComparator<Layout>());
-
-				if (ListUtil.isNotEmpty(layouts)) {
-					layout = layouts.get(0);
-				}
+				layout = fetchStagedModelByUuidAndCompanyId(
+					uuid, originalGroup.getCompanyId());
 			}
 
 			return layout;

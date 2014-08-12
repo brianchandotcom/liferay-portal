@@ -512,9 +512,9 @@ public class ImageToolImpl implements ImageTool {
 		int scaledHeight = (int)(factor * imageHeight);
 		int scaledWidth = width;
 
-		BufferedImage bufferedImage = getBufferedImage(renderedImage);
+		BufferedImage originalBufferedImage = getBufferedImage(renderedImage);
 
-		int type = bufferedImage.getType();
+		int type = originalBufferedImage.getType();
 
 		if (type == 0) {
 			type = BufferedImage.TYPE_INT_ARGB;
@@ -523,12 +523,12 @@ public class ImageToolImpl implements ImageTool {
 		BufferedImage scaledBufferedImage = new BufferedImage(
 			scaledWidth, scaledHeight, type);
 
-		Graphics graphics = scaledBufferedImage.getGraphics();
+		Graphics scaledGraphics = scaledBufferedImage.getGraphics();
 
-		java.awt.Image scaledImage = bufferedImage.getScaledInstance(
+		java.awt.Image scaledImage = originalBufferedImage.getScaledInstance(
 			scaledWidth, scaledHeight, java.awt.Image.SCALE_SMOOTH);
 
-		graphics.drawImage(scaledImage, 0, 0, null);
+		scaledGraphics.drawImage(scaledImage, 0, 0, null);
 
 		return scaledBufferedImage;
 	}
@@ -558,9 +558,9 @@ public class ImageToolImpl implements ImageTool {
 		int scaledHeight = Math.max(1, (int)(factor * imageHeight));
 		int scaledWidth = Math.max(1, (int)(factor * imageWidth));
 
-		BufferedImage bufferedImage = getBufferedImage(renderedImage);
+		BufferedImage originalBufferedImage = getBufferedImage(renderedImage);
 
-		int type = bufferedImage.getType();
+		int type = originalBufferedImage.getType();
 
 		if (type == 0) {
 			type = BufferedImage.TYPE_INT_ARGB;
@@ -571,30 +571,30 @@ public class ImageToolImpl implements ImageTool {
 		if ((type == BufferedImage.TYPE_BYTE_BINARY) ||
 			(type == BufferedImage.TYPE_BYTE_INDEXED)) {
 
-			IndexColorModel indexColorModel =
-				(IndexColorModel)bufferedImage.getColorModel();
+			IndexColorModel originalIndexColorModel =
+				(IndexColorModel)originalBufferedImage.getColorModel();
 
 			BufferedImage tempBufferedImage = new BufferedImage(
-				1, 1, type, indexColorModel);
+				1, 1, type, originalIndexColorModel);
 
-			int bits = indexColorModel.getPixelSize();
-			int size = indexColorModel.getMapSize();
+			int bits = originalIndexColorModel.getPixelSize();
+			int size = originalIndexColorModel.getMapSize();
 
 			byte[] reds = new byte[size];
 
-			indexColorModel.getReds(reds);
+			originalIndexColorModel.getReds(reds);
 
 			byte[] greens = new byte[size];
 
-			indexColorModel.getGreens(greens);
+			originalIndexColorModel.getGreens(greens);
 
 			byte[] blues = new byte[size];
 
-			indexColorModel.getBlues(blues);
+			originalIndexColorModel.getBlues(blues);
 
-			WritableRaster writableRaster = tempBufferedImage.getRaster();
+			WritableRaster tempWritableRaster = tempBufferedImage.getRaster();
 
-			int pixel = writableRaster.getSample(0, 0, 0);
+			int pixel = tempWritableRaster.getSample(0, 0, 0);
 
 			IndexColorModel scaledIndexColorModel = new IndexColorModel(
 				bits, size, reds, greens, blues, pixel);
@@ -607,12 +607,12 @@ public class ImageToolImpl implements ImageTool {
 				scaledWidth, scaledHeight, type);
 		}
 
-		Graphics graphics = scaledBufferedImage.getGraphics();
+		Graphics scaledGraphics = scaledBufferedImage.getGraphics();
 
-		java.awt.Image scaledImage = bufferedImage.getScaledInstance(
+		java.awt.Image scaledImage = originalBufferedImage.getScaledInstance(
 			scaledWidth, scaledHeight, java.awt.Image.SCALE_SMOOTH);
 
-		graphics.drawImage(scaledImage, 0, 0, null);
+		scaledGraphics.drawImage(scaledImage, 0, 0, null);
 
 		return scaledBufferedImage;
 	}

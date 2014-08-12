@@ -104,8 +104,9 @@ public class BeanReferenceRefreshUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BeanReferenceRefreshUtil.class);
 	private static final PACL _pacl = new NoPACL();
-	private static final Map<Object, List<RefreshPoint>> _registeredRefreshPoints =
-		new IdentityHashMap<Object, List<RefreshPoint>>();
+	private static final Map<Object, List<RefreshPoint>>
+		_registeredRefreshPoints =
+			new IdentityHashMap<Object, List<RefreshPoint>>();
 
 	private static class NoPACL implements PACL {
 

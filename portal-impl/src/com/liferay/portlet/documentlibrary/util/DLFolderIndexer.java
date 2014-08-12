@@ -240,6 +240,7 @@ public class DLFolderIndexer extends BaseIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(DLFolderIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLFolderIndexer.class);
 
 }

@@ -429,7 +429,8 @@ public class EntityCacheImpl
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(EntityCacheImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		EntityCacheImpl.class);
 
 	private MultiVMPool _multiVMPool;
 	private final ConcurrentMap<String, PortalCache<Serializable, Serializable>>

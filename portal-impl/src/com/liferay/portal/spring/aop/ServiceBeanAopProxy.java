@@ -248,7 +248,8 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 			methodInterceptorsBag.getMergedMethodInterceptors());
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ServiceBeanAopProxy.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServiceBeanAopProxy.class);
 	private static final PACL _pacl = new NoPACL();
 
 	private final AdvisedSupport _advisedSupport;

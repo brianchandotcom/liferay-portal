@@ -116,7 +116,8 @@ public class TestPropsValues {
 		return _userId;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(TestPropsValues.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		TestPropsValues.class);
 
 	private static long _companyId;
 	private static long _groupId;

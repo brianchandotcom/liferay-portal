@@ -173,7 +173,8 @@ public class ProcessExecutor {
 		return _executorService;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ProcessExecutor.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ProcessExecutor.class);
 	private static final Set<Process> _managedProcesses =
 		new ConcurrentHashSet<Process>();
 

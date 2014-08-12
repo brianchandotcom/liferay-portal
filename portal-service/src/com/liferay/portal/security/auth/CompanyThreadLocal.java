@@ -82,6 +82,7 @@ public class CompanyThreadLocal {
 	private static final ThreadLocal<Boolean> _deleteInProcess =
 		new AutoResetThreadLocal<Boolean>(
 			CompanyThreadLocal.class + "._deleteInProcess", false);
-	private static final Log _log = LogFactoryUtil.getLog(CompanyThreadLocal.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CompanyThreadLocal.class);
 
 }

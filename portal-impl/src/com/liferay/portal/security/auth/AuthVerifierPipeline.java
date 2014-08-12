@@ -290,8 +290,10 @@ public class AuthVerifierPipeline {
 		return _createGuestVerificationResult(accessControlContext);
 	}
 
-	private static final AuthVerifierPipeline _instance = new AuthVerifierPipeline();
-	private static final Log _log = LogFactoryUtil.getLog(AuthVerifierPipeline.class);
+	private static final AuthVerifierPipeline _instance =
+		new AuthVerifierPipeline();
+	private static final Log _log = LogFactoryUtil.getLog(
+		AuthVerifierPipeline.class);
 
 	private final List<AuthVerifierConfiguration> _authVerifierConfigurations =
 		new CopyOnWriteArrayList<AuthVerifierConfiguration>();

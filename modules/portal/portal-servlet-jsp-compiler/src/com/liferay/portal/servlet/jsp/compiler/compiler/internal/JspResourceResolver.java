@@ -142,7 +142,8 @@ public class JspResourceResolver implements ResourceResolver {
 		return resources;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(JspResourceResolver.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		JspResourceResolver.class);
 
 	private final JspResourceCache _jspResourceCache;
 

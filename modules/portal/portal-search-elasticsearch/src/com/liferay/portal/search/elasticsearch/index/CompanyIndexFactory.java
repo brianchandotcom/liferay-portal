@@ -126,7 +126,8 @@ public class CompanyIndexFactory implements IndexFactory {
 		return indicesExistsResponse.isExists();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(CompanyIndexFactory.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CompanyIndexFactory.class);
 
 	private String _indexConfigFileName;
 	private Map<String, String> _typeMappings = new HashMap<String, String>();

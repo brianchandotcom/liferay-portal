@@ -320,10 +320,12 @@ public class AggregateClassLoader extends ClassLoader {
 	private static final Method _getResourceMethod;
 	private static final Method _getResourcesMethod;
 	private static final Method _loadClassMethod;
-	private static final Log _log = LogFactoryUtil.getLog(AggregateClassLoader.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		AggregateClassLoader.class);
 
-	private final List<EqualityWeakReference<ClassLoader>> _classLoaderReferences =
-		new ArrayList<EqualityWeakReference<ClassLoader>>();
+	private final List<EqualityWeakReference<ClassLoader>>
+		_classLoaderReferences =
+			new ArrayList<EqualityWeakReference<ClassLoader>>();
 	private final WeakReference<ClassLoader> _parentClassLoaderReference;
 
 	static {

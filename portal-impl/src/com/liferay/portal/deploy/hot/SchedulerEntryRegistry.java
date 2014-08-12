@@ -69,7 +69,8 @@ public class SchedulerEntryRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerEntryRegistry.class);
 
-	private final ServiceTracker<SchedulerEntry, SchedulerEntry> _serviceTracker;
+	private final ServiceTracker<SchedulerEntry, SchedulerEntry>
+		_serviceTracker;
 
 	private class SchedulerEntryServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<SchedulerEntry, SchedulerEntry> {

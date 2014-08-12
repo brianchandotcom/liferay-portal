@@ -316,7 +316,8 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 		Hook.class, "deleteEmailAddress", long.class, long.class);
 	private static final MethodKey _deleteUserMethodKey = new MethodKey(
 		Hook.class, "deleteUser", long.class, long.class);
-	private static final Log _log = LogFactoryUtil.getLog(MailServiceImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		MailServiceImpl.class);
 	private static final MethodKey _updateBlockedMethodKey = new MethodKey(
 		Hook.class, "updateBlocked", long.class, long.class, List.class);
 	private static final MethodKey _updateEmailAddressMethodKey = new MethodKey(

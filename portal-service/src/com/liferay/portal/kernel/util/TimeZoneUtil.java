@@ -87,6 +87,7 @@ public class TimeZoneUtil {
 	}
 
 	private TimeZone _timeZone;
-	private final Map<String, TimeZone> _timeZones = new HashMap<String, TimeZone>();
+	private final Map<String, TimeZone> _timeZones =
+		new HashMap<String, TimeZone>();
 
 }

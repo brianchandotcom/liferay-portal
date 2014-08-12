@@ -97,9 +97,11 @@ public class CMISRepositoryUtil {
 	private static final MethodKey _createSessionMethodKey = new MethodKey(
 		ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME),
 		"createSession", Map.class);
-	private static final MethodKey _getTypeSettingsValueMethodKey = new MethodKey(
-		ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME),
-		"getTypeSettingsValue", UnicodeProperties.class, String.class);
-	private static final Log _log = LogFactoryUtil.getLog(CMISRepositoryUtil.class);
+	private static final MethodKey _getTypeSettingsValueMethodKey =
+		new MethodKey(
+			ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME),
+			"getTypeSettingsValue", UnicodeProperties.class, String.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CMISRepositoryUtil.class);
 
 }

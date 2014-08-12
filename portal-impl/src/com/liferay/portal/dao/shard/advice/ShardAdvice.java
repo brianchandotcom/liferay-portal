@@ -196,7 +196,8 @@ public class ShardAdvice {
 
 	private static final ThreadLocal<Stack<String>> _companyServiceStack =
 		new ThreadLocal<Stack<String>>();
-	private static final ThreadLocal<Object> _globalCall = new ThreadLocal<Object>();
+	private static final ThreadLocal<Object> _globalCall =
+		new ThreadLocal<Object>();
 	private static final Log _log = LogFactoryUtil.getLog(ShardAdvice.class);
 	private static final ThreadLocal<String> _shardName =
 		new InitialThreadLocal<String>(

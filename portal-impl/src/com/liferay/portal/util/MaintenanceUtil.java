@@ -120,7 +120,8 @@ public class MaintenanceUtil {
 	}
 
 	private static final MaintenanceUtil _instance = new MaintenanceUtil();
-	private static final Log _log = LogFactoryUtil.getLog(MaintenanceUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		MaintenanceUtil.class);
 
 	private String _className;
 	private boolean _maintaining = false;

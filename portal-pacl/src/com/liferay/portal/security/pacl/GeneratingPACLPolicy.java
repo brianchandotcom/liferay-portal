@@ -182,7 +182,8 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(GeneratingPACLPolicy.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		GeneratingPACLPolicy.class);
 
 	private final Map<String, Set<String>> _properties =
 		new ConcurrentSkipListMap<String, Set<String>>();

@@ -103,11 +103,13 @@ public class ModelListenerRegistrationUtil {
 	private static final ModelListenerRegistrationUtil _instance =
 		new ModelListenerRegistrationUtil();
 
-	private final ConcurrentMap<Class<?>, List<ModelListener<?>>> _modelListeners =
-		new ConcurrentHashMap<Class<?>, List<ModelListener<?>>>();
+	private final ConcurrentMap<Class<?>, List<ModelListener<?>>>
+		_modelListeners =
+			new ConcurrentHashMap<Class<?>, List<ModelListener<?>>>();
 	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =
 		new ConcurrentHashMap<String, ServiceRegistration<?>>();
-	private final ServiceTracker<ModelListener<?>, ModelListener<?>> _serviceTracker;
+	private final ServiceTracker<ModelListener<?>, ModelListener<?>>
+		_serviceTracker;
 
 	private class ModelListenerTrackerCustomizer
 		implements

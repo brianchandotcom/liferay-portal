@@ -438,5 +438,5 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 		_dlFileEntryMetadata.resetOriginalValues();
 	}
 
-	private DLFileEntryMetadata _dlFileEntryMetadata;
+	private final DLFileEntryMetadata _dlFileEntryMetadata;
 }

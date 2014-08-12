@@ -89,9 +89,9 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.shopping.model.ShoppingCart"),
 			true);
-	public static long GROUPID_COLUMN_BITMASK = 1L;
-	public static long USERID_COLUMN_BITMASK = 2L;
-	public static long CARTID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 1L;
+	public static final long USERID_COLUMN_BITMASK = 2L;
+	public static final long CARTID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.shopping.model.ShoppingCart"));
 
@@ -654,8 +654,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = ShoppingCart.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = ShoppingCart.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			ShoppingCart.class
 		};
 	private long _cartId;

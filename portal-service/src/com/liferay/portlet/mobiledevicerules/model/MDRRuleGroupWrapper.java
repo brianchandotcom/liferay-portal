@@ -797,5 +797,5 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 		_mdrRuleGroup.resetOriginalValues();
 	}
 
-	private MDRRuleGroup _mdrRuleGroup;
+	private final MDRRuleGroup _mdrRuleGroup;
 }

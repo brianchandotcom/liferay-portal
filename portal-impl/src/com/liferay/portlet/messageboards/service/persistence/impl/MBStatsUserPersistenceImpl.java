@@ -2516,8 +2516,8 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No MBStatsUser exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBStatsUser exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(MBStatsUserPersistenceImpl.class);
-	private static MBStatsUser _nullMBStatsUser = new MBStatsUserImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(MBStatsUserPersistenceImpl.class);
+	private static final MBStatsUser _nullMBStatsUser = new MBStatsUserImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2529,7 +2529,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 			}
 		};
 
-	private static CacheModel<MBStatsUser> _nullMBStatsUserCacheModel = new CacheModel<MBStatsUser>() {
+	private static final CacheModel<MBStatsUser> _nullMBStatsUserCacheModel = new CacheModel<MBStatsUser>() {
 			@Override
 			public MBStatsUser toEntityModel() {
 				return _nullMBStatsUser;

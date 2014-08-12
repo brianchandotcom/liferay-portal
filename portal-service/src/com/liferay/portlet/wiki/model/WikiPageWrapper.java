@@ -1226,5 +1226,5 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		_wikiPage.resetOriginalValues();
 	}
 
-	private WikiPage _wikiPage;
+	private final WikiPage _wikiPage;
 }

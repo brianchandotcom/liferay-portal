@@ -282,5 +282,5 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 		_counter.resetOriginalValues();
 	}
 
-	private Counter _counter;
+	private final Counter _counter;
 }

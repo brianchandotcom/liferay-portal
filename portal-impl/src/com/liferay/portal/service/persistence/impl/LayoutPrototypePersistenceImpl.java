@@ -4471,11 +4471,11 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No LayoutPrototype exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LayoutPrototype exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(LayoutPrototypePersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(LayoutPrototypePersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "settings", "active"
 			});
-	private static LayoutPrototype _nullLayoutPrototype = new LayoutPrototypeImpl() {
+	private static final LayoutPrototype _nullLayoutPrototype = new LayoutPrototypeImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -4487,7 +4487,8 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 			}
 		};
 
-	private static CacheModel<LayoutPrototype> _nullLayoutPrototypeCacheModel = new NullCacheModel();
+	private static final CacheModel<LayoutPrototype> _nullLayoutPrototypeCacheModel =
+		new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<LayoutPrototype>,
 		MVCCModel {

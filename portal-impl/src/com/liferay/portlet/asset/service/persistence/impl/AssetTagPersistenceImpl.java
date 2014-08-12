@@ -2173,8 +2173,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AssetTag exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetTag exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(AssetTagPersistenceImpl.class);
-	private static AssetTag _nullAssetTag = new AssetTagImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(AssetTagPersistenceImpl.class);
+	private static final AssetTag _nullAssetTag = new AssetTagImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2186,7 +2186,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 			}
 		};
 
-	private static CacheModel<AssetTag> _nullAssetTagCacheModel = new CacheModel<AssetTag>() {
+	private static final CacheModel<AssetTag> _nullAssetTagCacheModel = new CacheModel<AssetTag>() {
 			@Override
 			public AssetTag toEntityModel() {
 				return _nullAssetTag;

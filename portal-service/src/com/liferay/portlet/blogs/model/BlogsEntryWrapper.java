@@ -1125,5 +1125,5 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 		_blogsEntry.resetOriginalValues();
 	}
 
-	private BlogsEntry _blogsEntry;
+	private final BlogsEntry _blogsEntry;
 }

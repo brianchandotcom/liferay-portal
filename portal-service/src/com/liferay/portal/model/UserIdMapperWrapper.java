@@ -410,5 +410,5 @@ public class UserIdMapperWrapper implements UserIdMapper,
 		_userIdMapper.resetOriginalValues();
 	}
 
-	private UserIdMapper _userIdMapper;
+	private final UserIdMapper _userIdMapper;
 }

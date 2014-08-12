@@ -943,5 +943,5 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 		_assetVocabulary.resetOriginalValues();
 	}
 
-	private AssetVocabulary _assetVocabulary;
+	private final AssetVocabulary _assetVocabulary;
 }

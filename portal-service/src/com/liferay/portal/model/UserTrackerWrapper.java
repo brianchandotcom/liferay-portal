@@ -517,5 +517,5 @@ public class UserTrackerWrapper implements UserTracker,
 		_userTracker.resetOriginalValues();
 	}
 
-	private UserTracker _userTracker;
+	private final UserTracker _userTracker;
 }

@@ -358,5 +358,5 @@ public class ExpandoTableWrapper implements ExpandoTable,
 		_expandoTable.resetOriginalValues();
 	}
 
-	private ExpandoTable _expandoTable;
+	private final ExpandoTable _expandoTable;
 }

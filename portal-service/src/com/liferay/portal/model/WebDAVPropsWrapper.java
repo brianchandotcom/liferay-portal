@@ -496,5 +496,5 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 		_webDAVProps.resetOriginalValues();
 	}
 
-	private WebDAVProps _webDAVProps;
+	private final WebDAVProps _webDAVProps;
 }

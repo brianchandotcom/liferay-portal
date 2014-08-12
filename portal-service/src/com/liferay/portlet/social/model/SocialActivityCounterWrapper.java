@@ -613,5 +613,5 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 		_socialActivityCounter.resetOriginalValues();
 	}
 
-	private SocialActivityCounter _socialActivityCounter;
+	private final SocialActivityCounter _socialActivityCounter;
 }

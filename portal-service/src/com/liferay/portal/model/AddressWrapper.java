@@ -844,5 +844,5 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 		_address.resetOriginalValues();
 	}
 
-	private Address _address;
+	private final Address _address;
 }

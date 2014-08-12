@@ -78,10 +78,10 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.wiki.model.WikiPageResource"),
 			true);
-	public static long NODEID_COLUMN_BITMASK = 1L;
-	public static long TITLE_COLUMN_BITMASK = 2L;
-	public static long UUID_COLUMN_BITMASK = 4L;
-	public static long RESOURCEPRIMKEY_COLUMN_BITMASK = 8L;
+	public static final long NODEID_COLUMN_BITMASK = 1L;
+	public static final long TITLE_COLUMN_BITMASK = 2L;
+	public static final long UUID_COLUMN_BITMASK = 4L;
+	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.wiki.model.WikiPageResource"));
 
@@ -422,8 +422,8 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = WikiPageResource.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = WikiPageResource.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			WikiPageResource.class
 		};
 	private String _uuid;

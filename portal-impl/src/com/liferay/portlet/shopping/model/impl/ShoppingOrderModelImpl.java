@@ -135,12 +135,12 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.shopping.model.ShoppingOrder"),
 			true);
-	public static long GROUPID_COLUMN_BITMASK = 1L;
-	public static long NUMBER_COLUMN_BITMASK = 2L;
-	public static long PPPAYMENTSTATUS_COLUMN_BITMASK = 4L;
-	public static long PPTXNID_COLUMN_BITMASK = 8L;
-	public static long USERID_COLUMN_BITMASK = 16L;
-	public static long CREATEDATE_COLUMN_BITMASK = 32L;
+	public static final long GROUPID_COLUMN_BITMASK = 1L;
+	public static final long NUMBER_COLUMN_BITMASK = 2L;
+	public static final long PPPAYMENTSTATUS_COLUMN_BITMASK = 4L;
+	public static final long PPTXNID_COLUMN_BITMASK = 8L;
+	public static final long USERID_COLUMN_BITMASK = 16L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -2276,8 +2276,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = ShoppingOrder.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = ShoppingOrder.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			ShoppingOrder.class
 		};
 	private long _orderId;

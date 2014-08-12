@@ -561,5 +561,5 @@ public class PortletItemWrapper implements PortletItem,
 		_portletItem.resetOriginalValues();
 	}
 
-	private PortletItem _portletItem;
+	private final PortletItem _portletItem;
 }

@@ -492,5 +492,5 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 		_assetLink.resetOriginalValues();
 	}
 
-	private AssetLink _assetLink;
+	private final AssetLink _assetLink;
 }

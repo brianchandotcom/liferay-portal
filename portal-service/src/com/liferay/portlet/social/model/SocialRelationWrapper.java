@@ -420,5 +420,5 @@ public class SocialRelationWrapper implements SocialRelation,
 		_socialRelation.resetOriginalValues();
 	}
 
-	private SocialRelation _socialRelation;
+	private final SocialRelation _socialRelation;
 }

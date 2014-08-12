@@ -407,5 +407,5 @@ public class ServiceComponentWrapper implements ServiceComponent,
 		_serviceComponent.resetOriginalValues();
 	}
 
-	private ServiceComponent _serviceComponent;
+	private final ServiceComponent _serviceComponent;
 }

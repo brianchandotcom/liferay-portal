@@ -78,10 +78,10 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.journal.model.JournalArticleResource"),
 			true);
-	public static long ARTICLEID_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long UUID_COLUMN_BITMASK = 4L;
-	public static long RESOURCEPRIMKEY_COLUMN_BITMASK = 8L;
+	public static final long ARTICLEID_COLUMN_BITMASK = 1L;
+	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long UUID_COLUMN_BITMASK = 4L;
+	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.journal.model.JournalArticleResource"));
 
@@ -422,8 +422,8 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = JournalArticleResource.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = JournalArticleResource.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			JournalArticleResource.class
 		};
 	private String _uuid;

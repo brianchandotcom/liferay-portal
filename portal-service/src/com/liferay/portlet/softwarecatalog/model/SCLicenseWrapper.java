@@ -421,5 +421,5 @@ public class SCLicenseWrapper implements SCLicense, ModelWrapper<SCLicense> {
 		_scLicense.resetOriginalValues();
 	}
 
-	private SCLicense _scLicense;
+	private final SCLicense _scLicense;
 }

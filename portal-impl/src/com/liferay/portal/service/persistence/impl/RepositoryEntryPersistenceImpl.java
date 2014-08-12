@@ -2983,11 +2983,11 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No RepositoryEntry exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No RepositoryEntry exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(RepositoryEntryPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(RepositoryEntryPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static RepositoryEntry _nullRepositoryEntry = new RepositoryEntryImpl() {
+	private static final RepositoryEntry _nullRepositoryEntry = new RepositoryEntryImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2999,7 +2999,8 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 			}
 		};
 
-	private static CacheModel<RepositoryEntry> _nullRepositoryEntryCacheModel = new NullCacheModel();
+	private static final CacheModel<RepositoryEntry> _nullRepositoryEntryCacheModel =
+		new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<RepositoryEntry>,
 		MVCCModel {

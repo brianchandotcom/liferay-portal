@@ -1976,5 +1976,5 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 		_layoutRevision.resetOriginalValues();
 	}
 
-	private LayoutRevision _layoutRevision;
+	private final LayoutRevision _layoutRevision;
 }

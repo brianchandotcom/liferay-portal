@@ -1240,11 +1240,11 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ListType exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ListType exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(ListTypePersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(ListTypePersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"type"
 			});
-	private static ListType _nullListType = new ListTypeImpl() {
+	private static final ListType _nullListType = new ListTypeImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -1256,7 +1256,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 			}
 		};
 
-	private static CacheModel<ListType> _nullListTypeCacheModel = new NullCacheModel();
+	private static final CacheModel<ListType> _nullListTypeCacheModel = new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<ListType>,
 		MVCCModel {

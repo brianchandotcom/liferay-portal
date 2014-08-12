@@ -761,5 +761,5 @@ public class ExpandoValueWrapper implements ExpandoValue,
 		_expandoValue.resetOriginalValues();
 	}
 
-	private ExpandoValue _expandoValue;
+	private final ExpandoValue _expandoValue;
 }

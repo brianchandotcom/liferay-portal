@@ -1392,5 +1392,5 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 		_assetEntry.resetOriginalValues();
 	}
 
-	private AssetEntry _assetEntry;
+	private final AssetEntry _assetEntry;
 }

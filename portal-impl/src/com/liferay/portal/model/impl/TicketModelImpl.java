@@ -86,8 +86,8 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.Ticket"),
 			true);
-	public static long KEY_COLUMN_BITMASK = 1L;
-	public static long TICKETID_COLUMN_BITMASK = 2L;
+	public static final long KEY_COLUMN_BITMASK = 1L;
+	public static final long TICKETID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Ticket"));
 
@@ -600,8 +600,10 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = Ticket.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] { Ticket.class };
+	private static final ClassLoader _classLoader = Ticket.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
+			Ticket.class
+		};
 	private long _mvccVersion;
 	private long _ticketId;
 	private long _companyId;

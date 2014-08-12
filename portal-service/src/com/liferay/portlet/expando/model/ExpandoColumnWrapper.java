@@ -440,5 +440,5 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 		_expandoColumn.resetOriginalValues();
 	}
 
-	private ExpandoColumn _expandoColumn;
+	private final ExpandoColumn _expandoColumn;
 }

@@ -524,5 +524,5 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 		_team.resetOriginalValues();
 	}
 
-	private Team _team;
+	private final Team _team;
 }

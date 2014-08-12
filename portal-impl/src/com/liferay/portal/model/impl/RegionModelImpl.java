@@ -84,10 +84,10 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.Region"),
 			true);
-	public static long ACTIVE_COLUMN_BITMASK = 1L;
-	public static long COUNTRYID_COLUMN_BITMASK = 2L;
-	public static long REGIONCODE_COLUMN_BITMASK = 4L;
-	public static long NAME_COLUMN_BITMASK = 8L;
+	public static final long ACTIVE_COLUMN_BITMASK = 1L;
+	public static final long COUNTRYID_COLUMN_BITMASK = 2L;
+	public static final long REGIONCODE_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -541,8 +541,10 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = Region.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] { Region.class };
+	private static final ClassLoader _classLoader = Region.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
+			Region.class
+		};
 	private long _mvccVersion;
 	private long _regionId;
 	private long _countryId;

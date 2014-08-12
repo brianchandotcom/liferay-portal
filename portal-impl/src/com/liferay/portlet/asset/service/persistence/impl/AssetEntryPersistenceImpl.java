@@ -4991,8 +4991,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AssetEntry exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetEntry exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(AssetEntryPersistenceImpl.class);
-	private static AssetEntry _nullAssetEntry = new AssetEntryImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(AssetEntryPersistenceImpl.class);
+	private static final AssetEntry _nullAssetEntry = new AssetEntryImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -5004,7 +5004,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			}
 		};
 
-	private static CacheModel<AssetEntry> _nullAssetEntryCacheModel = new CacheModel<AssetEntry>() {
+	private static final CacheModel<AssetEntry> _nullAssetEntryCacheModel = new CacheModel<AssetEntry>() {
 			@Override
 			public AssetEntry toEntityModel() {
 				return _nullAssetEntry;

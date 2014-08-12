@@ -2414,11 +2414,11 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No JournalArticleResource exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No JournalArticleResource exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(JournalArticleResourcePersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(JournalArticleResourcePersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static JournalArticleResource _nullJournalArticleResource = new JournalArticleResourceImpl() {
+	private static final JournalArticleResource _nullJournalArticleResource = new JournalArticleResourceImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2430,7 +2430,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 			}
 		};
 
-	private static CacheModel<JournalArticleResource> _nullJournalArticleResourceCacheModel =
+	private static final CacheModel<JournalArticleResource> _nullJournalArticleResourceCacheModel =
 		new CacheModel<JournalArticleResource>() {
 			@Override
 			public JournalArticleResource toEntityModel() {

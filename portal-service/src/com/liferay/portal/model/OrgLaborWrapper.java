@@ -719,5 +719,5 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 		_orgLabor.resetOriginalValues();
 	}
 
-	private OrgLabor _orgLabor;
+	private final OrgLabor _orgLabor;
 }

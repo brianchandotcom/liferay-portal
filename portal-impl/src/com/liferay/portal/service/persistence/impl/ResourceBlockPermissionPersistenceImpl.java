@@ -2037,8 +2037,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ResourceBlockPermission exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ResourceBlockPermission exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(ResourceBlockPermissionPersistenceImpl.class);
-	private static ResourceBlockPermission _nullResourceBlockPermission = new ResourceBlockPermissionImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(ResourceBlockPermissionPersistenceImpl.class);
+	private static final ResourceBlockPermission _nullResourceBlockPermission = new ResourceBlockPermissionImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2050,7 +2050,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 			}
 		};
 
-	private static CacheModel<ResourceBlockPermission> _nullResourceBlockPermissionCacheModel =
+	private static final CacheModel<ResourceBlockPermission> _nullResourceBlockPermissionCacheModel =
 		new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<ResourceBlockPermission>,

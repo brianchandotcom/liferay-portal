@@ -707,5 +707,5 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 		_account.resetOriginalValues();
 	}
 
-	private Account _account;
+	private final Account _account;
 }

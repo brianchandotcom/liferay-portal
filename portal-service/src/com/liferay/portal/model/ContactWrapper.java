@@ -1201,5 +1201,5 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 		_contact.resetOriginalValues();
 	}
 
-	private Contact _contact;
+	private final Contact _contact;
 }

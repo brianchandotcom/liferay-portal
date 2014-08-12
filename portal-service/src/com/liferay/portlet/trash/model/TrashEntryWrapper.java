@@ -604,5 +604,5 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 		_trashEntry.resetOriginalValues();
 	}
 
-	private TrashEntry _trashEntry;
+	private final TrashEntry _trashEntry;
 }

@@ -1005,8 +1005,8 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No PortalPreferences exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PortalPreferences exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(PortalPreferencesPersistenceImpl.class);
-	private static PortalPreferences _nullPortalPreferences = new PortalPreferencesImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(PortalPreferencesPersistenceImpl.class);
+	private static final PortalPreferences _nullPortalPreferences = new PortalPreferencesImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -1018,7 +1018,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 			}
 		};
 
-	private static CacheModel<PortalPreferences> _nullPortalPreferencesCacheModel =
+	private static final CacheModel<PortalPreferences> _nullPortalPreferencesCacheModel =
 		new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<PortalPreferences>,

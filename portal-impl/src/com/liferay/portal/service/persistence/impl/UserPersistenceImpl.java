@@ -9322,11 +9322,11 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No User exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No User exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(UserPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(UserPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "password"
 			});
-	private static User _nullUser = new UserImpl() {
+	private static final User _nullUser = new UserImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -9338,7 +9338,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			}
 		};
 
-	private static CacheModel<User> _nullUserCacheModel = new NullCacheModel();
+	private static final CacheModel<User> _nullUserCacheModel = new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<User>, MVCCModel {
 		@Override

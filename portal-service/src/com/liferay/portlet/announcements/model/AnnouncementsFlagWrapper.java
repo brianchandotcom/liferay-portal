@@ -387,5 +387,5 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 		_announcementsFlag.resetOriginalValues();
 	}
 
-	private AnnouncementsFlag _announcementsFlag;
+	private final AnnouncementsFlag _announcementsFlag;
 }

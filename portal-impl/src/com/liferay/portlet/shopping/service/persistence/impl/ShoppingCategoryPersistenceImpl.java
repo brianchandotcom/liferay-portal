@@ -2508,8 +2508,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ShoppingCategory exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ShoppingCategory exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(ShoppingCategoryPersistenceImpl.class);
-	private static ShoppingCategory _nullShoppingCategory = new ShoppingCategoryImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(ShoppingCategoryPersistenceImpl.class);
+	private static final ShoppingCategory _nullShoppingCategory = new ShoppingCategoryImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2521,7 +2521,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			}
 		};
 
-	private static CacheModel<ShoppingCategory> _nullShoppingCategoryCacheModel = new CacheModel<ShoppingCategory>() {
+	private static final CacheModel<ShoppingCategory> _nullShoppingCategoryCacheModel =
+		new CacheModel<ShoppingCategory>() {
 			@Override
 			public ShoppingCategory toEntityModel() {
 				return _nullShoppingCategory;

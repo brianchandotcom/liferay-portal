@@ -637,5 +637,5 @@ public class EmailAddressWrapper implements EmailAddress,
 		_emailAddress.resetOriginalValues();
 	}
 
-	private EmailAddress _emailAddress;
+	private final EmailAddress _emailAddress;
 }

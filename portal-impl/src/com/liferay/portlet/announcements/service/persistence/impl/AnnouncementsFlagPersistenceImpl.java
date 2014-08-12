@@ -1532,8 +1532,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AnnouncementsFlag exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AnnouncementsFlag exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(AnnouncementsFlagPersistenceImpl.class);
-	private static AnnouncementsFlag _nullAnnouncementsFlag = new AnnouncementsFlagImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(AnnouncementsFlagPersistenceImpl.class);
+	private static final AnnouncementsFlag _nullAnnouncementsFlag = new AnnouncementsFlagImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -1545,7 +1545,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			}
 		};
 
-	private static CacheModel<AnnouncementsFlag> _nullAnnouncementsFlagCacheModel =
+	private static final CacheModel<AnnouncementsFlag> _nullAnnouncementsFlagCacheModel =
 		new CacheModel<AnnouncementsFlag>() {
 			@Override
 			public AnnouncementsFlag toEntityModel() {

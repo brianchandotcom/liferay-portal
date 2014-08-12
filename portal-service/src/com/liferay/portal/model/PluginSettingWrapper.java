@@ -477,5 +477,5 @@ public class PluginSettingWrapper implements PluginSetting,
 		_pluginSetting.resetOriginalValues();
 	}
 
-	private PluginSetting _pluginSetting;
+	private final PluginSetting _pluginSetting;
 }

@@ -376,5 +376,5 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 		_shoppingItemField.resetOriginalValues();
 	}
 
-	private ShoppingItemField _shoppingItemField;
+	private final ShoppingItemField _shoppingItemField;
 }

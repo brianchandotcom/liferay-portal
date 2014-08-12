@@ -565,5 +565,5 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 		_workflowInstanceLink.resetOriginalValues();
 	}
 
-	private WorkflowInstanceLink _workflowInstanceLink;
+	private final WorkflowInstanceLink _workflowInstanceLink;
 }

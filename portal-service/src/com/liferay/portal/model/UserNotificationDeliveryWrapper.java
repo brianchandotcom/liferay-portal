@@ -521,5 +521,5 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 		_userNotificationDelivery.resetOriginalValues();
 	}
 
-	private UserNotificationDelivery _userNotificationDelivery;
+	private final UserNotificationDelivery _userNotificationDelivery;
 }

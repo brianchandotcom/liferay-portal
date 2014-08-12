@@ -517,5 +517,5 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 		_blogsStatsUser.resetOriginalValues();
 	}
 
-	private BlogsStatsUser _blogsStatsUser;
+	private final BlogsStatsUser _blogsStatsUser;
 }

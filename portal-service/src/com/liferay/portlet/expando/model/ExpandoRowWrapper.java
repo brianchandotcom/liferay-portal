@@ -365,5 +365,5 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 		_expandoRow.resetOriginalValues();
 	}
 
-	private ExpandoRow _expandoRow;
+	private final ExpandoRow _expandoRow;
 }

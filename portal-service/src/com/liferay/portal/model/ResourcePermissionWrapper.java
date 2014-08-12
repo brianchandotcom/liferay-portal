@@ -478,5 +478,5 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 		_resourcePermission.resetOriginalValues();
 	}
 
-	private ResourcePermission _resourcePermission;
+	private final ResourcePermission _resourcePermission;
 }

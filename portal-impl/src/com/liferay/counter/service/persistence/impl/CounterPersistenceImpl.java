@@ -690,8 +690,8 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	private static final String _ORDER_BY_ENTITY_ALIAS = "counter.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Counter exists with the primary key ";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(CounterPersistenceImpl.class);
-	private static Counter _nullCounter = new CounterImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(CounterPersistenceImpl.class);
+	private static final Counter _nullCounter = new CounterImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -703,7 +703,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 			}
 		};
 
-	private static CacheModel<Counter> _nullCounterCacheModel = new CacheModel<Counter>() {
+	private static final CacheModel<Counter> _nullCounterCacheModel = new CacheModel<Counter>() {
 			@Override
 			public Counter toEntityModel() {
 				return _nullCounter;

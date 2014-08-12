@@ -89,9 +89,9 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.announcements.model.AnnouncementsDelivery"),
 			true);
-	public static long TYPE_COLUMN_BITMASK = 1L;
-	public static long USERID_COLUMN_BITMASK = 2L;
-	public static long DELIVERYID_COLUMN_BITMASK = 4L;
+	public static final long TYPE_COLUMN_BITMASK = 1L;
+	public static final long USERID_COLUMN_BITMASK = 2L;
+	public static final long DELIVERYID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -575,8 +575,8 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = AnnouncementsDelivery.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = AnnouncementsDelivery.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			AnnouncementsDelivery.class
 		};
 	private long _deliveryId;

@@ -958,8 +958,8 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No BrowserTracker exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No BrowserTracker exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(BrowserTrackerPersistenceImpl.class);
-	private static BrowserTracker _nullBrowserTracker = new BrowserTrackerImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(BrowserTrackerPersistenceImpl.class);
+	private static final BrowserTracker _nullBrowserTracker = new BrowserTrackerImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -971,7 +971,8 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 			}
 		};
 
-	private static CacheModel<BrowserTracker> _nullBrowserTrackerCacheModel = new NullCacheModel();
+	private static final CacheModel<BrowserTracker> _nullBrowserTrackerCacheModel =
+		new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<BrowserTracker>,
 		MVCCModel {

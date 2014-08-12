@@ -2713,8 +2713,8 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SocialActivityLimit exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SocialActivityLimit exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(SocialActivityLimitPersistenceImpl.class);
-	private static SocialActivityLimit _nullSocialActivityLimit = new SocialActivityLimitImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(SocialActivityLimitPersistenceImpl.class);
+	private static final SocialActivityLimit _nullSocialActivityLimit = new SocialActivityLimitImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2726,7 +2726,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 			}
 		};
 
-	private static CacheModel<SocialActivityLimit> _nullSocialActivityLimitCacheModel =
+	private static final CacheModel<SocialActivityLimit> _nullSocialActivityLimitCacheModel =
 		new CacheModel<SocialActivityLimit>() {
 			@Override
 			public SocialActivityLimit toEntityModel() {

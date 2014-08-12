@@ -736,5 +736,5 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 		_backgroundTask.resetOriginalValues();
 	}
 
-	private BackgroundTask _backgroundTask;
+	private final BackgroundTask _backgroundTask;
 }

@@ -3010,8 +3010,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Subscription exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Subscription exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(SubscriptionPersistenceImpl.class);
-	private static Subscription _nullSubscription = new SubscriptionImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(SubscriptionPersistenceImpl.class);
+	private static final Subscription _nullSubscription = new SubscriptionImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -3023,7 +3023,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			}
 		};
 
-	private static CacheModel<Subscription> _nullSubscriptionCacheModel = new NullCacheModel();
+	private static final CacheModel<Subscription> _nullSubscriptionCacheModel = new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<Subscription>,
 		MVCCModel {

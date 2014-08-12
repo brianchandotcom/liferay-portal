@@ -1222,11 +1222,11 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No UserTrackerPath exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserTrackerPath exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(UserTrackerPathPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(UserTrackerPathPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"path"
 			});
-	private static UserTrackerPath _nullUserTrackerPath = new UserTrackerPathImpl() {
+	private static final UserTrackerPath _nullUserTrackerPath = new UserTrackerPathImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -1238,7 +1238,8 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 			}
 		};
 
-	private static CacheModel<UserTrackerPath> _nullUserTrackerPathCacheModel = new NullCacheModel();
+	private static final CacheModel<UserTrackerPath> _nullUserTrackerPathCacheModel =
+		new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<UserTrackerPath>,
 		MVCCModel {

@@ -330,5 +330,5 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 		_listType.resetOriginalValues();
 	}
 
-	private ListType _listType;
+	private final ListType _listType;
 }

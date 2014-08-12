@@ -568,5 +568,5 @@ public class MembershipRequestWrapper implements MembershipRequest,
 		_membershipRequest.resetOriginalValues();
 	}
 
-	private MembershipRequest _membershipRequest;
+	private final MembershipRequest _membershipRequest;
 }

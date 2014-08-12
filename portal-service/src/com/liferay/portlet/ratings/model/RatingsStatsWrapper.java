@@ -407,5 +407,5 @@ public class RatingsStatsWrapper implements RatingsStats,
 		_ratingsStats.resetOriginalValues();
 	}
 
-	private RatingsStats _ratingsStats;
+	private final RatingsStats _ratingsStats;
 }

@@ -109,11 +109,11 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.wiki.model.WikiNode"),
 			true);
-	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long NAME_COLUMN_BITMASK = 4L;
-	public static long STATUS_COLUMN_BITMASK = 8L;
-	public static long UUID_COLUMN_BITMASK = 16L;
+	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long STATUS_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -1176,8 +1176,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = WikiNode.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = WikiNode.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			WikiNode.class
 		};
 	private String _uuid;

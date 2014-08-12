@@ -2682,8 +2682,8 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No LayoutBranch exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LayoutBranch exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(LayoutBranchPersistenceImpl.class);
-	private static LayoutBranch _nullLayoutBranch = new LayoutBranchImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(LayoutBranchPersistenceImpl.class);
+	private static final LayoutBranch _nullLayoutBranch = new LayoutBranchImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2695,7 +2695,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 			}
 		};
 
-	private static CacheModel<LayoutBranch> _nullLayoutBranchCacheModel = new NullCacheModel();
+	private static final CacheModel<LayoutBranch> _nullLayoutBranchCacheModel = new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<LayoutBranch>,
 		MVCCModel {

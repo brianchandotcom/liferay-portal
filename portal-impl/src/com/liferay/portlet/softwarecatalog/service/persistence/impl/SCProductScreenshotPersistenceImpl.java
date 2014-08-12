@@ -2036,8 +2036,8 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SCProductScreenshot exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SCProductScreenshot exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(SCProductScreenshotPersistenceImpl.class);
-	private static SCProductScreenshot _nullSCProductScreenshot = new SCProductScreenshotImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(SCProductScreenshotPersistenceImpl.class);
+	private static final SCProductScreenshot _nullSCProductScreenshot = new SCProductScreenshotImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2049,7 +2049,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 			}
 		};
 
-	private static CacheModel<SCProductScreenshot> _nullSCProductScreenshotCacheModel =
+	private static final CacheModel<SCProductScreenshot> _nullSCProductScreenshotCacheModel =
 		new CacheModel<SCProductScreenshot>() {
 			@Override
 			public SCProductScreenshot toEntityModel() {

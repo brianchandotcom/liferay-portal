@@ -323,5 +323,5 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 		_className.resetOriginalValues();
 	}
 
-	private ClassName _className;
+	private final ClassName _className;
 }

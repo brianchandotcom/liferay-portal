@@ -518,5 +518,5 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 		_mbBan.resetOriginalValues();
 	}
 
-	private MBBan _mbBan;
+	private final MBBan _mbBan;
 }

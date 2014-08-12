@@ -378,5 +378,5 @@ public class ClusterGroupWrapper implements ClusterGroup,
 		_clusterGroup.resetOriginalValues();
 	}
 
-	private ClusterGroup _clusterGroup;
+	private final ClusterGroup _clusterGroup;
 }

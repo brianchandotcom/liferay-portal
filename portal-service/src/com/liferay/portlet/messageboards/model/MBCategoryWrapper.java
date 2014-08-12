@@ -1012,5 +1012,5 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 		_mbCategory.resetOriginalValues();
 	}
 
-	private MBCategory _mbCategory;
+	private final MBCategory _mbCategory;
 }

@@ -3556,5 +3556,5 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 		_portlet.resetOriginalValues();
 	}
 
-	private Portlet _portlet;
+	private final Portlet _portlet;
 }

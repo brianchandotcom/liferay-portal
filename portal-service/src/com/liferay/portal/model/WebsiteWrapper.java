@@ -636,5 +636,5 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 		_website.resetOriginalValues();
 	}
 
-	private Website _website;
+	private final Website _website;
 }

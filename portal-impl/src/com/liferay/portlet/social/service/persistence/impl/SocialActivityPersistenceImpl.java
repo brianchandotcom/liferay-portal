@@ -6844,11 +6844,11 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SocialActivity exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SocialActivity exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(SocialActivityPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(SocialActivityPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"type"
 			});
-	private static SocialActivity _nullSocialActivity = new SocialActivityImpl() {
+	private static final SocialActivity _nullSocialActivity = new SocialActivityImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -6860,7 +6860,8 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 			}
 		};
 
-	private static CacheModel<SocialActivity> _nullSocialActivityCacheModel = new CacheModel<SocialActivity>() {
+	private static final CacheModel<SocialActivity> _nullSocialActivityCacheModel =
+		new CacheModel<SocialActivity>() {
 			@Override
 			public SocialActivity toEntityModel() {
 				return _nullSocialActivity;

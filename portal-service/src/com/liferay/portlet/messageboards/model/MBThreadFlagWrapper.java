@@ -500,5 +500,5 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 		_mbThreadFlag.resetOriginalValues();
 	}
 
-	private MBThreadFlag _mbThreadFlag;
+	private final MBThreadFlag _mbThreadFlag;
 }

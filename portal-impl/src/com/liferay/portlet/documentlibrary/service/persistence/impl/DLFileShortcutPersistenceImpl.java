@@ -6632,11 +6632,11 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLFileShortcut exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFileShortcut exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(DLFileShortcutPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(DLFileShortcutPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "active"
 			});
-	private static DLFileShortcut _nullDLFileShortcut = new DLFileShortcutImpl() {
+	private static final DLFileShortcut _nullDLFileShortcut = new DLFileShortcutImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -6648,7 +6648,8 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 			}
 		};
 
-	private static CacheModel<DLFileShortcut> _nullDLFileShortcutCacheModel = new CacheModel<DLFileShortcut>() {
+	private static final CacheModel<DLFileShortcut> _nullDLFileShortcutCacheModel =
+		new CacheModel<DLFileShortcut>() {
 			@Override
 			public DLFileShortcut toEntityModel() {
 				return _nullDLFileShortcut;

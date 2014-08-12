@@ -1292,5 +1292,5 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 		_passwordPolicy.resetOriginalValues();
 	}
 
-	private PasswordPolicy _passwordPolicy;
+	private final PasswordPolicy _passwordPolicy;
 }

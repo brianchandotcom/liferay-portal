@@ -4563,11 +4563,11 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Website exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Website exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(WebsitePersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(WebsitePersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "primary"
 			});
-	private static Website _nullWebsite = new WebsiteImpl() {
+	private static final Website _nullWebsite = new WebsiteImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -4579,7 +4579,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			}
 		};
 
-	private static CacheModel<Website> _nullWebsiteCacheModel = new NullCacheModel();
+	private static final CacheModel<Website> _nullWebsiteCacheModel = new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<Website>,
 		MVCCModel {

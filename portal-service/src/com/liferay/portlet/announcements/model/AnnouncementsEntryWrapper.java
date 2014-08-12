@@ -748,5 +748,5 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 		_announcementsEntry.resetOriginalValues();
 	}
 
-	private AnnouncementsEntry _announcementsEntry;
+	private final AnnouncementsEntry _announcementsEntry;
 }

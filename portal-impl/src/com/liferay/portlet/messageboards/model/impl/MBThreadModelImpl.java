@@ -116,14 +116,14 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.messageboards.model.MBThread"),
 			true);
-	public static long CATEGORYID_COLUMN_BITMASK = 1L;
-	public static long COMPANYID_COLUMN_BITMASK = 2L;
-	public static long GROUPID_COLUMN_BITMASK = 4L;
-	public static long LASTPOSTDATE_COLUMN_BITMASK = 8L;
-	public static long PRIORITY_COLUMN_BITMASK = 16L;
-	public static long ROOTMESSAGEID_COLUMN_BITMASK = 32L;
-	public static long STATUS_COLUMN_BITMASK = 64L;
-	public static long UUID_COLUMN_BITMASK = 128L;
+	public static final long CATEGORYID_COLUMN_BITMASK = 1L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long LASTPOSTDATE_COLUMN_BITMASK = 8L;
+	public static final long PRIORITY_COLUMN_BITMASK = 16L;
+	public static final long ROOTMESSAGEID_COLUMN_BITMASK = 32L;
+	public static final long STATUS_COLUMN_BITMASK = 64L;
+	public static final long UUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -1436,8 +1436,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = MBThread.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = MBThread.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			MBThread.class
 		};
 	private String _uuid;

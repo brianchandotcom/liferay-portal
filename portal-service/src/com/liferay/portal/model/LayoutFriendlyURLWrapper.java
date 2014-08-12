@@ -618,5 +618,5 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 		_layoutFriendlyURL.resetOriginalValues();
 	}
 
-	private LayoutFriendlyURL _layoutFriendlyURL;
+	private final LayoutFriendlyURL _layoutFriendlyURL;
 }

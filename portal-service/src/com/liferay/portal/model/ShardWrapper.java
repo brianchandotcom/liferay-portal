@@ -377,5 +377,5 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 		_shard.resetOriginalValues();
 	}
 
-	private Shard _shard;
+	private final Shard _shard;
 }

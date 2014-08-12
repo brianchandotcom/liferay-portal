@@ -2012,11 +2012,11 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Country exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Country exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(CountryPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(CountryPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"number", "idd", "active"
 			});
-	private static Country _nullCountry = new CountryImpl() {
+	private static final Country _nullCountry = new CountryImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2028,7 +2028,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 			}
 		};
 
-	private static CacheModel<Country> _nullCountryCacheModel = new NullCacheModel();
+	private static final CacheModel<Country> _nullCountryCacheModel = new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<Country>,
 		MVCCModel {

@@ -704,5 +704,5 @@ public class PollsChoiceWrapper implements PollsChoice,
 		_pollsChoice.resetOriginalValues();
 	}
 
-	private PollsChoice _pollsChoice;
+	private final PollsChoice _pollsChoice;
 }

@@ -1601,11 +1601,11 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No PluginSetting exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PluginSetting exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(PluginSettingPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(PluginSettingPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"active"
 			});
-	private static PluginSetting _nullPluginSetting = new PluginSettingImpl() {
+	private static final PluginSetting _nullPluginSetting = new PluginSettingImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -1617,7 +1617,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 			}
 		};
 
-	private static CacheModel<PluginSetting> _nullPluginSettingCacheModel = new NullCacheModel();
+	private static final CacheModel<PluginSetting> _nullPluginSettingCacheModel = new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<PluginSetting>,
 		MVCCModel {

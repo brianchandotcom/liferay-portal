@@ -924,5 +924,5 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 		_ddlRecordSet.resetOriginalValues();
 	}
 
-	private DDLRecordSet _ddlRecordSet;
+	private final DDLRecordSet _ddlRecordSet;
 }

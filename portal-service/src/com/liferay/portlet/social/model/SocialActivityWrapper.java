@@ -699,5 +699,5 @@ public class SocialActivityWrapper implements SocialActivity,
 		_socialActivity.resetOriginalValues();
 	}
 
-	private SocialActivity _socialActivity;
+	private final SocialActivity _socialActivity;
 }

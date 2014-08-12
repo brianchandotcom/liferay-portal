@@ -394,5 +394,5 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 		_region.resetOriginalValues();
 	}
 
-	private Region _region;
+	private final Region _region;
 }

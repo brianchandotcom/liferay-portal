@@ -3859,11 +3859,11 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No MBBan exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBBan exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(MBBanPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(MBBanPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static MBBan _nullMBBan = new MBBanImpl() {
+	private static final MBBan _nullMBBan = new MBBanImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -3875,7 +3875,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			}
 		};
 
-	private static CacheModel<MBBan> _nullMBBanCacheModel = new CacheModel<MBBan>() {
+	private static final CacheModel<MBBan> _nullMBBanCacheModel = new CacheModel<MBBan>() {
 			@Override
 			public MBBan toEntityModel() {
 				return _nullMBBan;

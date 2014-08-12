@@ -81,12 +81,12 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.journal.model.JournalContentSearch"),
 			true);
-	public static long ARTICLEID_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long LAYOUTID_COLUMN_BITMASK = 4L;
-	public static long PORTLETID_COLUMN_BITMASK = 8L;
-	public static long PRIVATELAYOUT_COLUMN_BITMASK = 16L;
-	public static long CONTENTSEARCHID_COLUMN_BITMASK = 32L;
+	public static final long ARTICLEID_COLUMN_BITMASK = 1L;
+	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long LAYOUTID_COLUMN_BITMASK = 4L;
+	public static final long PORTLETID_COLUMN_BITMASK = 8L;
+	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 16L;
+	public static final long CONTENTSEARCHID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.journal.model.JournalContentSearch"));
 
@@ -544,8 +544,8 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = JournalContentSearch.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = JournalContentSearch.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			JournalContentSearch.class
 		};
 	private long _contentSearchId;

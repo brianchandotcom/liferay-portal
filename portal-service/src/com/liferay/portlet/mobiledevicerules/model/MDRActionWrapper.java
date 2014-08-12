@@ -952,5 +952,5 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 		_mdrAction.resetOriginalValues();
 	}
 
-	private MDRAction _mdrAction;
+	private final MDRAction _mdrAction;
 }

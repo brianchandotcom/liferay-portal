@@ -375,5 +375,5 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 		_userGroupRole.resetOriginalValues();
 	}
 
-	private UserGroupRole _userGroupRole;
+	private final UserGroupRole _userGroupRole;
 }

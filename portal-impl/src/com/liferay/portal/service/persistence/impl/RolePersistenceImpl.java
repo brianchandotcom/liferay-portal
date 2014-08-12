@@ -9669,11 +9669,11 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Role exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Role exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(RolePersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(RolePersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "type"
 			});
-	private static Role _nullRole = new RoleImpl() {
+	private static final Role _nullRole = new RoleImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -9685,7 +9685,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		};
 
-	private static CacheModel<Role> _nullRoleCacheModel = new NullCacheModel();
+	private static final CacheModel<Role> _nullRoleCacheModel = new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<Role>, MVCCModel {
 		@Override

@@ -5609,11 +5609,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No LayoutFriendlyURL exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LayoutFriendlyURL exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(LayoutFriendlyURLPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(LayoutFriendlyURLPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static LayoutFriendlyURL _nullLayoutFriendlyURL = new LayoutFriendlyURLImpl() {
+	private static final LayoutFriendlyURL _nullLayoutFriendlyURL = new LayoutFriendlyURLImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -5625,7 +5625,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			}
 		};
 
-	private static CacheModel<LayoutFriendlyURL> _nullLayoutFriendlyURLCacheModel =
+	private static final CacheModel<LayoutFriendlyURL> _nullLayoutFriendlyURLCacheModel =
 		new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<LayoutFriendlyURL>,

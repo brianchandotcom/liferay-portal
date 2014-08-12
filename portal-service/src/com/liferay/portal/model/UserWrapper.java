@@ -2049,5 +2049,5 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		_user.resetOriginalValues();
 	}
 
-	private User _user;
+	private final User _user;
 }

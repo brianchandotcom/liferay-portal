@@ -917,5 +917,5 @@ public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 		_calEvent.resetOriginalValues();
 	}
 
-	private CalEvent _calEvent;
+	private final CalEvent _calEvent;
 }

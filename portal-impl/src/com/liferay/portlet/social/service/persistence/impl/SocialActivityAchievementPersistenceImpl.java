@@ -3862,8 +3862,9 @@ public class SocialActivityAchievementPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SocialActivityAchievement exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SocialActivityAchievement exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(SocialActivityAchievementPersistenceImpl.class);
-	private static SocialActivityAchievement _nullSocialActivityAchievement = new SocialActivityAchievementImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(SocialActivityAchievementPersistenceImpl.class);
+	private static final SocialActivityAchievement _nullSocialActivityAchievement =
+		new SocialActivityAchievementImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -3875,7 +3876,7 @@ public class SocialActivityAchievementPersistenceImpl
 			}
 		};
 
-	private static CacheModel<SocialActivityAchievement> _nullSocialActivityAchievementCacheModel =
+	private static final CacheModel<SocialActivityAchievement> _nullSocialActivityAchievementCacheModel =
 		new CacheModel<SocialActivityAchievement>() {
 			@Override
 			public SocialActivityAchievement toEntityModel() {

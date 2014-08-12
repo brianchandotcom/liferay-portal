@@ -579,5 +579,5 @@ public class ShoppingCartWrapper implements ShoppingCart,
 		_shoppingCart.resetOriginalValues();
 	}
 
-	private ShoppingCart _shoppingCart;
+	private final ShoppingCart _shoppingCart;
 }

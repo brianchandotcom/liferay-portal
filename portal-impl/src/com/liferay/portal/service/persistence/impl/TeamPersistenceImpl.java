@@ -2413,8 +2413,8 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Team exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Team exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(TeamPersistenceImpl.class);
-	private static Team _nullTeam = new TeamImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(TeamPersistenceImpl.class);
+	private static final Team _nullTeam = new TeamImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2426,7 +2426,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			}
 		};
 
-	private static CacheModel<Team> _nullTeamCacheModel = new NullCacheModel();
+	private static final CacheModel<Team> _nullTeamCacheModel = new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<Team>, MVCCModel {
 		@Override

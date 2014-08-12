@@ -508,5 +508,5 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 		_release.resetOriginalValues();
 	}
 
-	private Release _release;
+	private final Release _release;
 }

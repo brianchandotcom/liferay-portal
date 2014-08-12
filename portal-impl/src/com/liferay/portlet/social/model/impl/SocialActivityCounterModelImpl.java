@@ -89,14 +89,14 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.social.model.SocialActivityCounter"),
 			true);
-	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
-	public static long CLASSPK_COLUMN_BITMASK = 2L;
-	public static long ENDPERIOD_COLUMN_BITMASK = 4L;
-	public static long GROUPID_COLUMN_BITMASK = 8L;
-	public static long NAME_COLUMN_BITMASK = 16L;
-	public static long OWNERTYPE_COLUMN_BITMASK = 32L;
-	public static long STARTPERIOD_COLUMN_BITMASK = 64L;
-	public static long ACTIVITYCOUNTERID_COLUMN_BITMASK = 128L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+	public static final long ENDPERIOD_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long NAME_COLUMN_BITMASK = 16L;
+	public static final long OWNERTYPE_COLUMN_BITMASK = 32L;
+	public static final long STARTPERIOD_COLUMN_BITMASK = 64L;
+	public static final long ACTIVITYCOUNTERID_COLUMN_BITMASK = 128L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.social.model.SocialActivityCounter"));
 
@@ -755,8 +755,8 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = SocialActivityCounter.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = SocialActivityCounter.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			SocialActivityCounter.class
 		};
 	private long _activityCounterId;

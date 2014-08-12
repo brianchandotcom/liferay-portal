@@ -86,12 +86,12 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.expando.model.ExpandoValue"),
 			true);
-	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
-	public static long CLASSPK_COLUMN_BITMASK = 2L;
-	public static long COLUMNID_COLUMN_BITMASK = 4L;
-	public static long DATA_COLUMN_BITMASK = 8L;
-	public static long ROWID_COLUMN_BITMASK = 16L;
-	public static long TABLEID_COLUMN_BITMASK = 32L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+	public static final long COLUMNID_COLUMN_BITMASK = 4L;
+	public static final long DATA_COLUMN_BITMASK = 8L;
+	public static final long ROWID_COLUMN_BITMASK = 16L;
+	public static final long TABLEID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -674,8 +674,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = ExpandoValue.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = ExpandoValue.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			ExpandoValue.class
 		};
 	private long _valueId;

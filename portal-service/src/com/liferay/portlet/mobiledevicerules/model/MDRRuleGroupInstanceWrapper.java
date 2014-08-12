@@ -609,5 +609,5 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 		_mdrRuleGroupInstance.resetOriginalValues();
 	}
 
-	private MDRRuleGroupInstance _mdrRuleGroupInstance;
+	private final MDRRuleGroupInstance _mdrRuleGroupInstance;
 }

@@ -985,5 +985,5 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 		_bookmarksEntry.resetOriginalValues();
 	}
 
-	private BookmarksEntry _bookmarksEntry;
+	private final BookmarksEntry _bookmarksEntry;
 }

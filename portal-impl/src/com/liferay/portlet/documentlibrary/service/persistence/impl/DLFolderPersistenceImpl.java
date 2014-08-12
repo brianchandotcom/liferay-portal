@@ -9996,11 +9996,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLFolder exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFolder exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(DLFolderPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(DLFolderPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "hidden"
 			});
-	private static DLFolder _nullDLFolder = new DLFolderImpl() {
+	private static final DLFolder _nullDLFolder = new DLFolderImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -10012,7 +10012,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 			}
 		};
 
-	private static CacheModel<DLFolder> _nullDLFolderCacheModel = new CacheModel<DLFolder>() {
+	private static final CacheModel<DLFolder> _nullDLFolderCacheModel = new CacheModel<DLFolder>() {
 			@Override
 			public DLFolder toEntityModel() {
 				return _nullDLFolder;

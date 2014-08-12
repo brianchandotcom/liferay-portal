@@ -6488,8 +6488,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No LayoutRevision exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LayoutRevision exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(LayoutRevisionPersistenceImpl.class);
-	private static LayoutRevision _nullLayoutRevision = new LayoutRevisionImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(LayoutRevisionPersistenceImpl.class);
+	private static final LayoutRevision _nullLayoutRevision = new LayoutRevisionImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -6501,7 +6501,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			}
 		};
 
-	private static CacheModel<LayoutRevision> _nullLayoutRevisionCacheModel = new NullCacheModel();
+	private static final CacheModel<LayoutRevision> _nullLayoutRevisionCacheModel =
+		new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<LayoutRevision>,
 		MVCCModel {

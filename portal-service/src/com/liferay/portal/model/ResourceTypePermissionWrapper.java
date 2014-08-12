@@ -431,5 +431,5 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 		_resourceTypePermission.resetOriginalValues();
 	}
 
-	private ResourceTypePermission _resourceTypePermission;
+	private final ResourceTypePermission _resourceTypePermission;
 }

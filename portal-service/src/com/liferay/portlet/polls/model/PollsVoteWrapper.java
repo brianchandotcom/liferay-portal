@@ -558,5 +558,5 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 		_pollsVote.resetOriginalValues();
 	}
 
-	private PollsVote _pollsVote;
+	private final PollsVote _pollsVote;
 }

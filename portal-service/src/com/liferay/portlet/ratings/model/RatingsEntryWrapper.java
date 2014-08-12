@@ -542,5 +542,5 @@ public class RatingsEntryWrapper implements RatingsEntry,
 		_ratingsEntry.resetOriginalValues();
 	}
 
-	private RatingsEntry _ratingsEntry;
+	private final RatingsEntry _ratingsEntry;
 }

@@ -955,5 +955,5 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 		_role.resetOriginalValues();
 	}
 
-	private Role _role;
+	private final Role _role;
 }

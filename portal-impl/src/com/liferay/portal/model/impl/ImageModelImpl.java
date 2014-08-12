@@ -85,8 +85,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.Image"),
 			true);
-	public static long SIZE_COLUMN_BITMASK = 1L;
-	public static long IMAGEID_COLUMN_BITMASK = 2L;
+	public static final long SIZE_COLUMN_BITMASK = 1L;
+	public static final long IMAGEID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -539,8 +539,10 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = Image.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] { Image.class };
+	private static final ClassLoader _classLoader = Image.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
+			Image.class
+		};
 	private long _mvccVersion;
 	private long _imageId;
 	private Date _modifiedDate;

@@ -417,5 +417,5 @@ public class ResourceBlockWrapper implements ResourceBlock,
 		_resourceBlock.resetOriginalValues();
 	}
 
-	private ResourceBlock _resourceBlock;
+	private final ResourceBlock _resourceBlock;
 }

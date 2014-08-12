@@ -988,8 +988,8 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No RatingsStats exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No RatingsStats exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(RatingsStatsPersistenceImpl.class);
-	private static RatingsStats _nullRatingsStats = new RatingsStatsImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(RatingsStatsPersistenceImpl.class);
+	private static final RatingsStats _nullRatingsStats = new RatingsStatsImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -1001,7 +1001,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 			}
 		};
 
-	private static CacheModel<RatingsStats> _nullRatingsStatsCacheModel = new CacheModel<RatingsStats>() {
+	private static final CacheModel<RatingsStats> _nullRatingsStatsCacheModel = new CacheModel<RatingsStats>() {
 			@Override
 			public RatingsStats toEntityModel() {
 				return _nullRatingsStats;

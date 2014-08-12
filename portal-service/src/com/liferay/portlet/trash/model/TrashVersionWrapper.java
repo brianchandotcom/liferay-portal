@@ -429,5 +429,5 @@ public class TrashVersionWrapper implements TrashVersion,
 		_trashVersion.resetOriginalValues();
 	}
 
-	private TrashVersion _trashVersion;
+	private final TrashVersion _trashVersion;
 }

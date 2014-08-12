@@ -696,8 +696,8 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 	private static final String _ORDER_BY_ENTITY_ALIAS = "clusterGroup.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ClusterGroup exists with the primary key ";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(ClusterGroupPersistenceImpl.class);
-	private static ClusterGroup _nullClusterGroup = new ClusterGroupImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(ClusterGroupPersistenceImpl.class);
+	private static final ClusterGroup _nullClusterGroup = new ClusterGroupImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -709,7 +709,7 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 			}
 		};
 
-	private static CacheModel<ClusterGroup> _nullClusterGroupCacheModel = new NullCacheModel();
+	private static final CacheModel<ClusterGroup> _nullClusterGroupCacheModel = new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<ClusterGroup>,
 		MVCCModel {

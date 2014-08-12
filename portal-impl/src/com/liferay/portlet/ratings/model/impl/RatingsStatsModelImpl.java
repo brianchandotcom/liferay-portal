@@ -82,9 +82,9 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.ratings.model.RatingsStats"),
 			true);
-	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
-	public static long CLASSPK_COLUMN_BITMASK = 2L;
-	public static long STATSID_COLUMN_BITMASK = 4L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+	public static final long STATSID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.ratings.model.RatingsStats"));
 
@@ -469,8 +469,8 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = RatingsStats.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = RatingsStats.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			RatingsStats.class
 		};
 	private long _statsId;

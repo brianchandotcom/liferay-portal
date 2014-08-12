@@ -876,5 +876,5 @@ public class OrganizationWrapper implements Organization,
 		_organization.resetOriginalValues();
 	}
 
-	private Organization _organization;
+	private final Organization _organization;
 }

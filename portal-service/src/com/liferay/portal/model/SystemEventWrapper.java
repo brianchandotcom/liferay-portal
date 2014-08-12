@@ -679,5 +679,5 @@ public class SystemEventWrapper implements SystemEvent,
 		_systemEvent.resetOriginalValues();
 	}
 
-	private SystemEvent _systemEvent;
+	private final SystemEvent _systemEvent;
 }

@@ -364,5 +364,5 @@ public class ResourceActionWrapper implements ResourceAction,
 		_resourceAction.resetOriginalValues();
 	}
 
-	private ResourceAction _resourceAction;
+	private final ResourceAction _resourceAction;
 }

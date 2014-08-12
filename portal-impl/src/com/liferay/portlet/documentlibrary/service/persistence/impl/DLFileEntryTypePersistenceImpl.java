@@ -4357,11 +4357,11 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLFileEntryType exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFileEntryType exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(DLFileEntryTypePersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(DLFileEntryTypePersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static DLFileEntryType _nullDLFileEntryType = new DLFileEntryTypeImpl() {
+	private static final DLFileEntryType _nullDLFileEntryType = new DLFileEntryTypeImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -4373,7 +4373,8 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			}
 		};
 
-	private static CacheModel<DLFileEntryType> _nullDLFileEntryTypeCacheModel = new CacheModel<DLFileEntryType>() {
+	private static final CacheModel<DLFileEntryType> _nullDLFileEntryTypeCacheModel =
+		new CacheModel<DLFileEntryType>() {
 			@Override
 			public DLFileEntryType toEntityModel() {
 				return _nullDLFileEntryType;

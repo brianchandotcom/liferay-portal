@@ -930,5 +930,5 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 		_dlFileShortcut.resetOriginalValues();
 	}
 
-	private DLFileShortcut _dlFileShortcut;
+	private final DLFileShortcut _dlFileShortcut;
 }

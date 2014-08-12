@@ -99,13 +99,13 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.BackgroundTask"),
 			true);
-	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long COMPLETED_COLUMN_BITMASK = 2L;
-	public static long GROUPID_COLUMN_BITMASK = 4L;
-	public static long NAME_COLUMN_BITMASK = 8L;
-	public static long STATUS_COLUMN_BITMASK = 16L;
-	public static long TASKEXECUTORCLASSNAME_COLUMN_BITMASK = 32L;
-	public static long CREATEDATE_COLUMN_BITMASK = 64L;
+	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long COMPLETED_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 8L;
+	public static final long STATUS_COLUMN_BITMASK = 16L;
+	public static final long TASKEXECUTORCLASSNAME_COLUMN_BITMASK = 32L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -969,8 +969,8 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = BackgroundTask.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = BackgroundTask.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			BackgroundTask.class
 		};
 	private long _mvccVersion;

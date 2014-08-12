@@ -1130,5 +1130,5 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		_mbThread.resetOriginalValues();
 	}
 
-	private MBThread _mbThread;
+	private final MBThread _mbThread;
 }

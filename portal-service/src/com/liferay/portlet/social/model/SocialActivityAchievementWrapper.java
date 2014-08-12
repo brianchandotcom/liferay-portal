@@ -453,5 +453,5 @@ public class SocialActivityAchievementWrapper
 		_socialActivityAchievement.resetOriginalValues();
 	}
 
-	private SocialActivityAchievement _socialActivityAchievement;
+	private final SocialActivityAchievement _socialActivityAchievement;
 }

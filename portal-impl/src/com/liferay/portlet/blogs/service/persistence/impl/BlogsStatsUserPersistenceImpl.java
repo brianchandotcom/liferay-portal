@@ -3576,8 +3576,8 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No BlogsStatsUser exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No BlogsStatsUser exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(BlogsStatsUserPersistenceImpl.class);
-	private static BlogsStatsUser _nullBlogsStatsUser = new BlogsStatsUserImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(BlogsStatsUserPersistenceImpl.class);
+	private static final BlogsStatsUser _nullBlogsStatsUser = new BlogsStatsUserImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -3589,7 +3589,8 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 			}
 		};
 
-	private static CacheModel<BlogsStatsUser> _nullBlogsStatsUserCacheModel = new CacheModel<BlogsStatsUser>() {
+	private static final CacheModel<BlogsStatsUser> _nullBlogsStatsUserCacheModel =
+		new CacheModel<BlogsStatsUser>() {
 			@Override
 			public BlogsStatsUser toEntityModel() {
 				return _nullBlogsStatsUser;

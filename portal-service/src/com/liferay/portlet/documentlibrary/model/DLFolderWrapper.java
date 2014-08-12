@@ -1168,5 +1168,5 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		_dlFolder.resetOriginalValues();
 	}
 
-	private DLFolder _dlFolder;
+	private final DLFolder _dlFolder;
 }

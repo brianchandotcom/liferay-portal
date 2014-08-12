@@ -1254,5 +1254,5 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		_mbMessage.resetOriginalValues();
 	}
 
-	private MBMessage _mbMessage;
+	private final MBMessage _mbMessage;
 }

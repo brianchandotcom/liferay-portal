@@ -117,19 +117,19 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.wiki.model.WikiPage"),
 			true);
-	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long FORMAT_COLUMN_BITMASK = 2L;
-	public static long GROUPID_COLUMN_BITMASK = 4L;
-	public static long HEAD_COLUMN_BITMASK = 8L;
-	public static long NODEID_COLUMN_BITMASK = 16L;
-	public static long PARENTTITLE_COLUMN_BITMASK = 32L;
-	public static long REDIRECTTITLE_COLUMN_BITMASK = 64L;
-	public static long RESOURCEPRIMKEY_COLUMN_BITMASK = 128L;
-	public static long STATUS_COLUMN_BITMASK = 256L;
-	public static long TITLE_COLUMN_BITMASK = 512L;
-	public static long USERID_COLUMN_BITMASK = 1024L;
-	public static long UUID_COLUMN_BITMASK = 2048L;
-	public static long VERSION_COLUMN_BITMASK = 4096L;
+	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long FORMAT_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long HEAD_COLUMN_BITMASK = 8L;
+	public static final long NODEID_COLUMN_BITMASK = 16L;
+	public static final long PARENTTITLE_COLUMN_BITMASK = 32L;
+	public static final long REDIRECTTITLE_COLUMN_BITMASK = 64L;
+	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 128L;
+	public static final long STATUS_COLUMN_BITMASK = 256L;
+	public static final long TITLE_COLUMN_BITMASK = 512L;
+	public static final long USERID_COLUMN_BITMASK = 1024L;
+	public static final long UUID_COLUMN_BITMASK = 2048L;
+	public static final long VERSION_COLUMN_BITMASK = 4096L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -1614,8 +1614,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = WikiPage.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = WikiPage.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			WikiPage.class
 		};
 	private String _uuid;

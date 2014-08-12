@@ -1216,11 +1216,11 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ShoppingItemField exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ShoppingItemField exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(ShoppingItemFieldPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(ShoppingItemFieldPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"values"
 			});
-	private static ShoppingItemField _nullShoppingItemField = new ShoppingItemFieldImpl() {
+	private static final ShoppingItemField _nullShoppingItemField = new ShoppingItemFieldImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -1232,7 +1232,7 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 			}
 		};
 
-	private static CacheModel<ShoppingItemField> _nullShoppingItemFieldCacheModel =
+	private static final CacheModel<ShoppingItemField> _nullShoppingItemFieldCacheModel =
 		new CacheModel<ShoppingItemField>() {
 			@Override
 			public ShoppingItemField toEntityModel() {

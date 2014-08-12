@@ -3434,11 +3434,12 @@ public class ExportImportConfigurationPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ExportImportConfiguration exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ExportImportConfiguration exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(ExportImportConfigurationPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(ExportImportConfigurationPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"type", "settings"
 			});
-	private static ExportImportConfiguration _nullExportImportConfiguration = new ExportImportConfigurationImpl() {
+	private static final ExportImportConfiguration _nullExportImportConfiguration =
+		new ExportImportConfigurationImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -3450,7 +3451,7 @@ public class ExportImportConfigurationPersistenceImpl
 			}
 		};
 
-	private static CacheModel<ExportImportConfiguration> _nullExportImportConfigurationCacheModel =
+	private static final CacheModel<ExportImportConfiguration> _nullExportImportConfigurationCacheModel =
 		new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<ExportImportConfiguration>,

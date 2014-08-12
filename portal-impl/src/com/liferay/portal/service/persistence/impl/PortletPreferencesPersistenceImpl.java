@@ -5162,8 +5162,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No PortletPreferences exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PortletPreferences exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(PortletPreferencesPersistenceImpl.class);
-	private static PortletPreferences _nullPortletPreferences = new PortletPreferencesImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(PortletPreferencesPersistenceImpl.class);
+	private static final PortletPreferences _nullPortletPreferences = new PortletPreferencesImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -5175,7 +5175,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			}
 		};
 
-	private static CacheModel<PortletPreferences> _nullPortletPreferencesCacheModel =
+	private static final CacheModel<PortletPreferences> _nullPortletPreferencesCacheModel =
 		new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<PortletPreferences>,

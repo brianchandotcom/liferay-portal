@@ -436,5 +436,5 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 		_socialActivitySetting.resetOriginalValues();
 	}
 
-	private SocialActivitySetting _socialActivitySetting;
+	private final SocialActivitySetting _socialActivitySetting;
 }

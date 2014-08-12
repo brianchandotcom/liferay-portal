@@ -763,5 +763,5 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 		_shoppingCoupon.resetOriginalValues();
 	}
 
-	private ShoppingCoupon _shoppingCoupon;
+	private final ShoppingCoupon _shoppingCoupon;
 }

@@ -522,5 +522,5 @@ public class ShoppingItemPriceWrapper implements ShoppingItemPrice,
 		_shoppingItemPrice.resetOriginalValues();
 	}
 
-	private ShoppingItemPrice _shoppingItemPrice;
+	private final ShoppingItemPrice _shoppingItemPrice;
 }

@@ -368,5 +368,5 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 		_resourceBlockPermission.resetOriginalValues();
 	}
 
-	private ResourceBlockPermission _resourceBlockPermission;
+	private final ResourceBlockPermission _resourceBlockPermission;
 }

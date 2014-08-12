@@ -773,5 +773,5 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 		_ddlRecordVersion.resetOriginalValues();
 	}
 
-	private DDLRecordVersion _ddlRecordVersion;
+	private final DDLRecordVersion _ddlRecordVersion;
 }

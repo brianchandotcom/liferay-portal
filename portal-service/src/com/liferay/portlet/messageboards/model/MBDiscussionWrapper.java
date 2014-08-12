@@ -569,5 +569,5 @@ public class MBDiscussionWrapper implements MBDiscussion,
 		_mbDiscussion.resetOriginalValues();
 	}
 
-	private MBDiscussion _mbDiscussion;
+	private final MBDiscussion _mbDiscussion;
 }

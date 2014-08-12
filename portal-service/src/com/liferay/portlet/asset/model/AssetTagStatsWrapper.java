@@ -353,5 +353,5 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 		_assetTagStats.resetOriginalValues();
 	}
 
-	private AssetTagStats _assetTagStats;
+	private final AssetTagStats _assetTagStats;
 }

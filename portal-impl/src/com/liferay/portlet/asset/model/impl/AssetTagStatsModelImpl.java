@@ -80,9 +80,9 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.asset.model.AssetTagStats"),
 			true);
-	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
-	public static long TAGID_COLUMN_BITMASK = 2L;
-	public static long ASSETCOUNT_COLUMN_BITMASK = 4L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static final long TAGID_COLUMN_BITMASK = 2L;
+	public static final long ASSETCOUNT_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.asset.model.AssetTagStats"));
 
@@ -425,8 +425,8 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = AssetTagStats.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = AssetTagStats.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			AssetTagStats.class
 		};
 	private long _tagStatsId;

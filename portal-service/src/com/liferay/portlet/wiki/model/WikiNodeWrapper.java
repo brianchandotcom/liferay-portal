@@ -896,5 +896,5 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 		_wikiNode.resetOriginalValues();
 	}
 
-	private WikiNode _wikiNode;
+	private final WikiNode _wikiNode;
 }

@@ -505,5 +505,5 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 		_country.resetOriginalValues();
 	}
 
-	private Country _country;
+	private final Country _country;
 }

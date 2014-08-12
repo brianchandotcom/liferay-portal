@@ -339,5 +339,5 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 		_wikiPageResource.resetOriginalValues();
 	}
 
-	private WikiPageResource _wikiPageResource;
+	private final WikiPageResource _wikiPageResource;
 }

@@ -971,5 +971,5 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 		_bookmarksFolder.resetOriginalValues();
 	}
 
-	private BookmarksFolder _bookmarksFolder;
+	private final BookmarksFolder _bookmarksFolder;
 }

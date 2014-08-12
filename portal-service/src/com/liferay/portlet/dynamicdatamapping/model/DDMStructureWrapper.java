@@ -1143,5 +1143,5 @@ public class DDMStructureWrapper implements DDMStructure,
 		_ddmStructure.resetOriginalValues();
 	}
 
-	private DDMStructure _ddmStructure;
+	private final DDMStructure _ddmStructure;
 }

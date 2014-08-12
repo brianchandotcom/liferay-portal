@@ -2645,11 +2645,11 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No MDRRule exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MDRRule exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(MDRRulePersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(MDRRulePersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "type"
 			});
-	private static MDRRule _nullMDRRule = new MDRRuleImpl() {
+	private static final MDRRule _nullMDRRule = new MDRRuleImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2661,7 +2661,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 			}
 		};
 
-	private static CacheModel<MDRRule> _nullMDRRuleCacheModel = new CacheModel<MDRRule>() {
+	private static final CacheModel<MDRRule> _nullMDRRuleCacheModel = new CacheModel<MDRRule>() {
 			@Override
 			public MDRRule toEntityModel() {
 				return _nullMDRRule;

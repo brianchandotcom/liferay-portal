@@ -883,5 +883,5 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 		_mdrRule.resetOriginalValues();
 	}
 
-	private MDRRule _mdrRule;
+	private final MDRRule _mdrRule;
 }

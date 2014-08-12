@@ -796,5 +796,5 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		_layoutSet.resetOriginalValues();
 	}
 
-	private LayoutSet _layoutSet;
+	private final LayoutSet _layoutSet;
 }

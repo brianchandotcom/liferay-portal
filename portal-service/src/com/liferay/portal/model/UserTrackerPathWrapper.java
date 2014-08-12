@@ -366,5 +366,5 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 		_userTrackerPath.resetOriginalValues();
 	}
 
-	private UserTrackerPath _userTrackerPath;
+	private final UserTrackerPath _userTrackerPath;
 }

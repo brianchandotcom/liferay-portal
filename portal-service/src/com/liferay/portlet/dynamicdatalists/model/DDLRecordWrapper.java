@@ -730,5 +730,5 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 		_ddlRecord.resetOriginalValues();
 	}
 
-	private DDLRecord _ddlRecord;
+	private final DDLRecord _ddlRecord;
 }

@@ -684,5 +684,5 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 		_company.resetOriginalValues();
 	}
 
-	private Company _company;
+	private final Company _company;
 }

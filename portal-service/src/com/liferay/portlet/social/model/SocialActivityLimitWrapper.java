@@ -525,5 +525,5 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 		_socialActivityLimit.resetOriginalValues();
 	}
 
-	private SocialActivityLimit _socialActivityLimit;
+	private final SocialActivityLimit _socialActivityLimit;
 }

@@ -2063,11 +2063,11 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No LayoutSet exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LayoutSet exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(LayoutSetPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(LayoutSetPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"settings"
 			});
-	private static LayoutSet _nullLayoutSet = new LayoutSetImpl() {
+	private static final LayoutSet _nullLayoutSet = new LayoutSetImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2079,7 +2079,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 			}
 		};
 
-	private static CacheModel<LayoutSet> _nullLayoutSetCacheModel = new NullCacheModel();
+	private static final CacheModel<LayoutSet> _nullLayoutSetCacheModel = new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<LayoutSet>,
 		MVCCModel {

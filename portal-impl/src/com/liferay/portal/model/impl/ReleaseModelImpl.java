@@ -84,8 +84,8 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.Release"),
 			true);
-	public static long SERVLETCONTEXTNAME_COLUMN_BITMASK = 1L;
-	public static long RELEASEID_COLUMN_BITMASK = 2L;
+	public static final long SERVLETCONTEXTNAME_COLUMN_BITMASK = 1L;
+	public static final long RELEASEID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Release"));
 
@@ -582,8 +582,8 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = Release.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = Release.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			Release.class
 		};
 	private long _mvccVersion;

@@ -427,5 +427,5 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 		_image.resetOriginalValues();
 	}
 
-	private Image _image;
+	private final Image _image;
 }

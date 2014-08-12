@@ -365,5 +365,5 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 		_portalPreferences.resetOriginalValues();
 	}
 
-	private PortalPreferences _portalPreferences;
+	private final PortalPreferences _portalPreferences;
 }

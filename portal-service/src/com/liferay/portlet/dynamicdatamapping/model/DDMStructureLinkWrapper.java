@@ -360,5 +360,5 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 		_ddmStructureLink.resetOriginalValues();
 	}
 
-	private DDMStructureLink _ddmStructureLink;
+	private final DDMStructureLink _ddmStructureLink;
 }

@@ -596,5 +596,5 @@ public class SCProductVersionWrapper implements SCProductVersion,
 		_scProductVersion.resetOriginalValues();
 	}
 
-	private SCProductVersion _scProductVersion;
+	private final SCProductVersion _scProductVersion;
 }

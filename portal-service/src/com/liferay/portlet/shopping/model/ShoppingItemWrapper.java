@@ -1282,5 +1282,5 @@ public class ShoppingItemWrapper implements ShoppingItem,
 		_shoppingItem.resetOriginalValues();
 	}
 
-	private ShoppingItem _shoppingItem;
+	private final ShoppingItem _shoppingItem;
 }

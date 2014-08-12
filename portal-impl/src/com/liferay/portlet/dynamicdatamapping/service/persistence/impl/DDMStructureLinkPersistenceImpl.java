@@ -1975,8 +1975,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DDMStructureLink exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DDMStructureLink exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(DDMStructureLinkPersistenceImpl.class);
-	private static DDMStructureLink _nullDDMStructureLink = new DDMStructureLinkImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(DDMStructureLinkPersistenceImpl.class);
+	private static final DDMStructureLink _nullDDMStructureLink = new DDMStructureLinkImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -1988,7 +1988,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			}
 		};
 
-	private static CacheModel<DDMStructureLink> _nullDDMStructureLinkCacheModel = new CacheModel<DDMStructureLink>() {
+	private static final CacheModel<DDMStructureLink> _nullDDMStructureLinkCacheModel =
+		new CacheModel<DDMStructureLink>() {
 			@Override
 			public DDMStructureLink toEntityModel() {
 				return _nullDDMStructureLink;

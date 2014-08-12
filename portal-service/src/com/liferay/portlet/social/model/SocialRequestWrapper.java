@@ -636,5 +636,5 @@ public class SocialRequestWrapper implements SocialRequest,
 		_socialRequest.resetOriginalValues();
 	}
 
-	private SocialRequest _socialRequest;
+	private final SocialRequest _socialRequest;
 }

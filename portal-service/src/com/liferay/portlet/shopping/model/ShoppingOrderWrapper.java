@@ -1680,5 +1680,5 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 		_shoppingOrder.resetOriginalValues();
 	}
 
-	private ShoppingOrder _shoppingOrder;
+	private final ShoppingOrder _shoppingOrder;
 }

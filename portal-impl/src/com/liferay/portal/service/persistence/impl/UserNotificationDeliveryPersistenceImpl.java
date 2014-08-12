@@ -1652,8 +1652,8 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No UserNotificationDelivery exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserNotificationDelivery exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(UserNotificationDeliveryPersistenceImpl.class);
-	private static UserNotificationDelivery _nullUserNotificationDelivery = new UserNotificationDeliveryImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(UserNotificationDeliveryPersistenceImpl.class);
+	private static final UserNotificationDelivery _nullUserNotificationDelivery = new UserNotificationDeliveryImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -1665,7 +1665,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 			}
 		};
 
-	private static CacheModel<UserNotificationDelivery> _nullUserNotificationDeliveryCacheModel =
+	private static final CacheModel<UserNotificationDelivery> _nullUserNotificationDeliveryCacheModel =
 		new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<UserNotificationDelivery>,

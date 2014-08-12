@@ -534,5 +534,5 @@ public class SubscriptionWrapper implements Subscription,
 		_subscription.resetOriginalValues();
 	}
 
-	private Subscription _subscription;
+	private final Subscription _subscription;
 }

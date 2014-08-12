@@ -363,5 +363,5 @@ public class VirtualHostWrapper implements VirtualHost,
 		_virtualHost.resetOriginalValues();
 	}
 
-	private VirtualHost _virtualHost;
+	private final VirtualHost _virtualHost;
 }

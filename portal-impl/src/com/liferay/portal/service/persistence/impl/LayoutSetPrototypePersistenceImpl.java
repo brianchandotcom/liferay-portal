@@ -4491,11 +4491,11 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No LayoutSetPrototype exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LayoutSetPrototype exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(LayoutSetPrototypePersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(LayoutSetPrototypePersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "settings", "active"
 			});
-	private static LayoutSetPrototype _nullLayoutSetPrototype = new LayoutSetPrototypeImpl() {
+	private static final LayoutSetPrototype _nullLayoutSetPrototype = new LayoutSetPrototypeImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -4507,7 +4507,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			}
 		};
 
-	private static CacheModel<LayoutSetPrototype> _nullLayoutSetPrototypeCacheModel =
+	private static final CacheModel<LayoutSetPrototype> _nullLayoutSetPrototypeCacheModel =
 		new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<LayoutSetPrototype>,

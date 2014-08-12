@@ -2070,5 +2070,5 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		_layout.resetOriginalValues();
 	}
 
-	private Layout _layout;
+	private final Layout _layout;
 }

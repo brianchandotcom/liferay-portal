@@ -1518,11 +1518,11 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Portlet exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Portlet exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(PortletPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(PortletPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"id", "active"
 			});
-	private static Portlet _nullPortlet = new PortletImpl() {
+	private static final Portlet _nullPortlet = new PortletImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -1534,7 +1534,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 			}
 		};
 
-	private static CacheModel<Portlet> _nullPortletCacheModel = new NullCacheModel();
+	private static final CacheModel<Portlet> _nullPortletCacheModel = new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<Portlet>,
 		MVCCModel {

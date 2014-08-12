@@ -518,5 +518,5 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 		_ticket.resetOriginalValues();
 	}
 
-	private Ticket _ticket;
+	private final Ticket _ticket;
 }

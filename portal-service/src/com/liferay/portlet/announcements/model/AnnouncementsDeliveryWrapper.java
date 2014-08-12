@@ -471,5 +471,5 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 		_announcementsDelivery.resetOriginalValues();
 	}
 
-	private AnnouncementsDelivery _announcementsDelivery;
+	private final AnnouncementsDelivery _announcementsDelivery;
 }

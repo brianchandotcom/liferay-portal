@@ -862,5 +862,5 @@ public class ExportImportConfigurationWrapper
 		_exportImportConfiguration.resetOriginalValues();
 	}
 
-	private ExportImportConfiguration _exportImportConfiguration;
+	private final ExportImportConfiguration _exportImportConfiguration;
 }

@@ -96,10 +96,10 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.LayoutSet"),
 			true);
-	public static long GROUPID_COLUMN_BITMASK = 1L;
-	public static long LAYOUTSETPROTOTYPEUUID_COLUMN_BITMASK = 2L;
-	public static long PRIVATELAYOUT_COLUMN_BITMASK = 4L;
-	public static long LAYOUTSETID_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 1L;
+	public static final long LAYOUTSETPROTOTYPEUUID_COLUMN_BITMASK = 2L;
+	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 4L;
+	public static final long LAYOUTSETID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -951,8 +951,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = LayoutSet.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = LayoutSet.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			LayoutSet.class
 		};
 	private long _mvccVersion;

@@ -624,5 +624,5 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 		_userGroup.resetOriginalValues();
 	}
 
-	private UserGroup _userGroup;
+	private final UserGroup _userGroup;
 }

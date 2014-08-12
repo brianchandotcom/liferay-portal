@@ -4169,11 +4169,11 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No PasswordPolicy exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PasswordPolicy exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(PasswordPolicyPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(PasswordPolicyPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static PasswordPolicy _nullPasswordPolicy = new PasswordPolicyImpl() {
+	private static final PasswordPolicy _nullPasswordPolicy = new PasswordPolicyImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -4185,7 +4185,8 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 			}
 		};
 
-	private static CacheModel<PasswordPolicy> _nullPasswordPolicyCacheModel = new NullCacheModel();
+	private static final CacheModel<PasswordPolicy> _nullPasswordPolicyCacheModel =
+		new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<PasswordPolicy>,
 		MVCCModel {

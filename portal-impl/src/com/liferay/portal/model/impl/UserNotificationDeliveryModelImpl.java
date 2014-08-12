@@ -87,12 +87,12 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.UserNotificationDelivery"),
 			true);
-	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
-	public static long DELIVERYTYPE_COLUMN_BITMASK = 2L;
-	public static long NOTIFICATIONTYPE_COLUMN_BITMASK = 4L;
-	public static long PORTLETID_COLUMN_BITMASK = 8L;
-	public static long USERID_COLUMN_BITMASK = 16L;
-	public static long USERNOTIFICATIONDELIVERYID_COLUMN_BITMASK = 32L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static final long DELIVERYTYPE_COLUMN_BITMASK = 2L;
+	public static final long NOTIFICATIONTYPE_COLUMN_BITMASK = 4L;
+	public static final long PORTLETID_COLUMN_BITMASK = 8L;
+	public static final long USERID_COLUMN_BITMASK = 16L;
+	public static final long USERNOTIFICATIONDELIVERYID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.UserNotificationDelivery"));
 
@@ -633,8 +633,8 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = UserNotificationDelivery.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = UserNotificationDelivery.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			UserNotificationDelivery.class
 		};
 	private long _mvccVersion;

@@ -696,5 +696,5 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 		_ddmContent.resetOriginalValues();
 	}
 
-	private DDMContent _ddmContent;
+	private final DDMContent _ddmContent;
 }

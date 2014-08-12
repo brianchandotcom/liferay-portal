@@ -663,5 +663,5 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 		_phone.resetOriginalValues();
 	}
 
-	private Phone _phone;
+	private final Phone _phone;
 }

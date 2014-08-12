@@ -1151,5 +1151,5 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		_ddmTemplate.resetOriginalValues();
 	}
 
-	private DDMTemplate _ddmTemplate;
+	private final DDMTemplate _ddmTemplate;
 }

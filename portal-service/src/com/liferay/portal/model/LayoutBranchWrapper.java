@@ -555,5 +555,5 @@ public class LayoutBranchWrapper implements LayoutBranch,
 		_layoutBranch.resetOriginalValues();
 	}
 
-	private LayoutBranch _layoutBranch;
+	private final LayoutBranch _layoutBranch;
 }

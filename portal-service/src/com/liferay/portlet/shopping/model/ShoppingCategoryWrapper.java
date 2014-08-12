@@ -527,5 +527,5 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 		_shoppingCategory.resetOriginalValues();
 	}
 
-	private ShoppingCategory _shoppingCategory;
+	private final ShoppingCategory _shoppingCategory;
 }

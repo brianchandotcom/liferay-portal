@@ -83,9 +83,9 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.messageboards.model.MBStatsUser"),
 			true);
-	public static long GROUPID_COLUMN_BITMASK = 1L;
-	public static long MESSAGECOUNT_COLUMN_BITMASK = 2L;
-	public static long USERID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 1L;
+	public static final long MESSAGECOUNT_COLUMN_BITMASK = 2L;
+	public static final long USERID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.messageboards.model.MBStatsUser"));
 
@@ -487,8 +487,8 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		return sb.toString();
 	}
 
-	private static ClassLoader _classLoader = MBStatsUser.class.getClassLoader();
-	private static Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static final ClassLoader _classLoader = MBStatsUser.class.getClassLoader();
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			MBStatsUser.class
 		};
 	private long _statsUserId;

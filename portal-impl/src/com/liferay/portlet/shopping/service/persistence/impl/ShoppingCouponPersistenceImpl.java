@@ -1511,11 +1511,11 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ShoppingCoupon exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ShoppingCoupon exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(ShoppingCouponPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(ShoppingCouponPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"code", "active"
 			});
-	private static ShoppingCoupon _nullShoppingCoupon = new ShoppingCouponImpl() {
+	private static final ShoppingCoupon _nullShoppingCoupon = new ShoppingCouponImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -1527,7 +1527,8 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			}
 		};
 
-	private static CacheModel<ShoppingCoupon> _nullShoppingCouponCacheModel = new CacheModel<ShoppingCoupon>() {
+	private static final CacheModel<ShoppingCoupon> _nullShoppingCouponCacheModel =
+		new CacheModel<ShoppingCoupon>() {
 			@Override
 			public ShoppingCoupon toEntityModel() {
 				return _nullShoppingCoupon;

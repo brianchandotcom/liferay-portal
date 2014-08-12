@@ -340,5 +340,5 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 		_journalArticleResource.resetOriginalValues();
 	}
 
-	private JournalArticleResource _journalArticleResource;
+	private final JournalArticleResource _journalArticleResource;
 }

@@ -597,5 +597,5 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 		_lock.resetOriginalValues();
 	}
 
-	private Lock _lock;
+	private final Lock _lock;
 }

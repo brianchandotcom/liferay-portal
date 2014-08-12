@@ -1773,5 +1773,5 @@ public class JournalArticleWrapper implements JournalArticle,
 		_journalArticle.resetOriginalValues();
 	}
 
-	private JournalArticle _journalArticle;
+	private final JournalArticle _journalArticle;
 }

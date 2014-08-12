@@ -7866,8 +7866,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No BackgroundTask exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No BackgroundTask exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static Log _log = LogFactoryUtil.getLog(BackgroundTaskPersistenceImpl.class);
-	private static BackgroundTask _nullBackgroundTask = new BackgroundTaskImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(BackgroundTaskPersistenceImpl.class);
+	private static final BackgroundTask _nullBackgroundTask = new BackgroundTaskImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -7879,7 +7879,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			}
 		};
 
-	private static CacheModel<BackgroundTask> _nullBackgroundTaskCacheModel = new NullCacheModel();
+	private static final CacheModel<BackgroundTask> _nullBackgroundTaskCacheModel =
+		new NullCacheModel();
 
 	private static class NullCacheModel implements CacheModel<BackgroundTask>,
 		MVCCModel {

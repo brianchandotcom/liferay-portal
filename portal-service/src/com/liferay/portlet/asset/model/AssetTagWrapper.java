@@ -492,5 +492,5 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 		_assetTag.resetOriginalValues();
 	}
 
-	private AssetTag _assetTag;
+	private final AssetTag _assetTag;
 }

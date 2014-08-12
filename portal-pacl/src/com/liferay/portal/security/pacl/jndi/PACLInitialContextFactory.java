@@ -43,6 +43,9 @@ public class PACLInitialContextFactory implements InitialContextFactory {
 		if (environment != null) {
 			_environment = new Hashtable<Object, Object>(environment);
 		}
+		else {
+			_environment = null;
+		}
 	}
 
 	@Override

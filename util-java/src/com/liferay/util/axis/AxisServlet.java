@@ -323,13 +323,17 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 	}
 
 	static {
+		Field cacheField = null;
+
 		try {
-			_cacheField = ReflectionUtil.getDeclaredField(
+			cacheField = ReflectionUtil.getDeclaredField(
 				MethodCache.class, "cache");
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_cacheField = cacheField;
 	}
 
 }

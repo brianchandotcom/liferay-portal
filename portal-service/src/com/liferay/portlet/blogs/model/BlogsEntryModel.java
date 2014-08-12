@@ -289,6 +289,20 @@ public interface BlogsEntryModel extends BaseModel<BlogsEntry>,
 	public void setContent(String content);
 
 	/**
+	 * Returns the cover image ID of this blogs entry.
+	 *
+	 * @return the cover image ID of this blogs entry
+	 */
+	public long getCoverImageId();
+
+	/**
+	 * Sets the cover image ID of this blogs entry.
+	 *
+	 * @param coverImageId the cover image ID of this blogs entry
+	 */
+	public void setCoverImageId(long coverImageId);
+
+	/**
 	 * Returns the display date of this blogs entry.
 	 *
 	 * @return the display date of this blogs entry

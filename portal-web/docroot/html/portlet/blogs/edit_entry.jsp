@@ -45,6 +45,42 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	/>
 </c:if>
 
+<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />
+<liferay-ui:error exception="<%= EntryTitleException.class %>" message="please-enter-a-valid-title" />
+
+<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
+	<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= FileSizeException.class %>">
+
+	<%
+		long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+
+		if (fileMaxSize == 0) {
+			fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+		}
+	%>
+
+	<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
+<liferay-ui:asset-categories-error />
+
+<liferay-ui:asset-tags-error />
+
+<aui:model-context bean="<%= entry %>" model="<%= BlogsEntry.class %>" />
+
+<c:if test="<%= (entry == null) || !entry.isApproved() %>">
+	<div class="save-status" id="<portlet:namespace />saveStatus"></div>
+</c:if>
+
+<c:if test="<%= entry != null %>">
+	<aui:workflow-status id="<%= String.valueOf(entry.getEntryId()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
+</c:if>
+
+<%@ include file="/html/portlet/blogs/cover_image_uploader.jspf" %>
+
 <portlet:actionURL var="editEntryURL">
 	<portlet:param name="struts_action" value="/blogs/edit_entry" />
 </portlet:actionURL>
@@ -58,40 +94,11 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
 	<aui:input name="preview" type="hidden" value="<%= false %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
-
-	<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />
-	<liferay-ui:error exception="<%= EntryTitleException.class %>" message="please-enter-a-valid-title" />
-
-	<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
-		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
-	</liferay-ui:error>
-
-	<liferay-ui:error exception="<%= FileSizeException.class %>">
-
-		<%
-		long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
-
-		if (fileMaxSize == 0) {
-			fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
-		}
-		%>
-
-		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
-	</liferay-ui:error>
-
-	<liferay-ui:asset-categories-error />
-
-	<liferay-ui:asset-tags-error />
-
-	<aui:model-context bean="<%= entry %>" model="<%= BlogsEntry.class %>" />
-
-	<c:if test="<%= (entry == null) || !entry.isApproved() %>">
-		<div class="save-status" id="<portlet:namespace />saveStatus"></div>
-	</c:if>
-
-	<c:if test="<%= entry != null %>">
-		<aui:workflow-status id="<%= String.valueOf(entry.getEntryId()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
-	</c:if>
+	<aui:input name="coverImageId" type="hidden" value="<%= entry != null ? entry.getCoverImageId() : 0 %>" />
+	<aui:input name="xPos" type="hidden" />
+	<aui:input name="yPos" type="hidden" />
+	<aui:input name="width" type="hidden" />
+	<aui:input name="height" type="hidden" />
 
 	<aui:fieldset>
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="title" />
@@ -323,6 +330,29 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		submitForm(document.<portlet:namespace />fm);
 	}
 
+	function <portlet:namespace />cropImage() {
+		var A = AUI();
+
+		var imagePreviewWrapper = document.querySelector('#<portlet:namespace />imagePreviewWrapper');
+
+		var imagePreviewWrapperWidth = A.DOM.region(imagePreviewWrapper).width;
+		var imagePreviewWrapperHeight = A.DOM.region(imagePreviewWrapper).height;
+		var imagePreviewWrapperX = A.DOM.region(imagePreviewWrapper).left;
+		var imagePreviewWrapperY = A.DOM.region(imagePreviewWrapper).top;
+
+		var imagePreview = document.querySelector('#<portlet:namespace />imagePreview');
+
+		var imagePreviewWidth = A.DOM.region(imagePreview).width;
+		var imagePreviewHeight = A.DOM.region(imagePreview).height;
+		var imagePreviewX = A.DOM.region(imagePreview).left;
+		var imagePreviewY = A.DOM.region(imagePreview).top;
+
+		document.<portlet:namespace />fm.<portlet:namespace />xPos.value = imagePreviewWrapperX - imagePreviewX;
+		document.<portlet:namespace />fm.<portlet:namespace />yPos.value = imagePreviewWrapperY - imagePreviewY;
+		document.<portlet:namespace />fm.<portlet:namespace />width.value = imagePreviewWrapperWidth;
+		document.<portlet:namespace />fm.<portlet:namespace />height.value = imagePreviewWrapperHeight;
+	}
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />saveEntry',
@@ -337,6 +367,8 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 			var saveStatus = A.one('#<portlet:namespace />saveStatus');
 			var saveText = '<%= UnicodeLanguageUtil.format(request, ((entry != null) && entry.isPending()) ? "entry-saved-at-x" : "draft-saved-at-x", "[TIME]", false) %>';
+
+			<portlet:namespace />cropImage();
 
 			if (draft && ajax) {
 				if ((title == '') || (content == '')) {

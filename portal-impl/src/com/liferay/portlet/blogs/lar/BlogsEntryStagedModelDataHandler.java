@@ -194,9 +194,10 @@ public class BlogsEntryStagedModelDataHandler
 					importedEntry = BlogsEntryLocalServiceUtil.addEntry(
 						userId, entry.getTitle(), entry.getSubtitle(),
 						entry.getDescription(), entry.getContent(),
-						displayDateMonth, displayDateDay, displayDateYear,
-						displayDateHour, displayDateMinute, allowPingbacks,
-						allowTrackbacks, trackbacks, entry.isSmallImage(),
+						entry.getCoverImageId(), displayDateMonth,
+						displayDateDay, displayDateYear, displayDateHour,
+						displayDateMinute, allowPingbacks, allowTrackbacks,
+						trackbacks, entry.isSmallImage(),
 						entry.getSmallImageURL(), smallImageFileName,
 						smallImageInputStream, serviceContext);
 				}
@@ -204,23 +205,23 @@ public class BlogsEntryStagedModelDataHandler
 					importedEntry = BlogsEntryLocalServiceUtil.updateEntry(
 						userId, existingEntry.getEntryId(), entry.getTitle(),
 						entry.getSubtitle(), entry.getDescription(),
-						entry.getContent(), displayDateMonth, displayDateDay,
-						displayDateYear, displayDateHour, displayDateMinute,
-						allowPingbacks, allowTrackbacks, trackbacks,
-						entry.isSmallImage(), entry.getSmallImageURL(),
-						smallImageFileName, smallImageInputStream,
-						serviceContext);
+						entry.getContent(), entry.getCoverImageId(),
+						displayDateMonth, displayDateDay, displayDateYear,
+						displayDateHour, displayDateMinute, allowPingbacks,
+						allowTrackbacks, trackbacks, entry.isSmallImage(),
+						entry.getSmallImageURL(), smallImageFileName,
+						smallImageInputStream, serviceContext);
 				}
 			}
 			else {
 				importedEntry = BlogsEntryLocalServiceUtil.addEntry(
 					userId, entry.getTitle(), entry.getSubtitle(),
 					entry.getDescription(), entry.getContent(),
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, allowPingbacks,
-					allowTrackbacks, trackbacks, entry.isSmallImage(),
-					entry.getSmallImageURL(), smallImageFileName,
-					smallImageInputStream, serviceContext);
+					entry.getCoverImageId(), displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					allowPingbacks, allowTrackbacks, trackbacks,
+					entry.isSmallImage(), entry.getSmallImageURL(),
+					smallImageFileName, smallImageInputStream, serviceContext);
 			}
 
 			portletDataContext.importClassedModel(entry, importedEntry);

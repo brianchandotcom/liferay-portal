@@ -28,6 +28,7 @@
 		<column name="urlTitle" type="String" />
 		<column name="description" type="String" />
 		<column name="content" type="String" />
+		<column name="coverImageId" type="long" />
 		<column name="displayDate" type="Date" />
 		<column name="allowPingbacks" type="boolean" />
 		<column name="allowTrackbacks" type="boolean" />

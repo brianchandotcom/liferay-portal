@@ -18136,6 +18136,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		blogsEntryImpl.setUrlTitle(blogsEntry.getUrlTitle());
 		blogsEntryImpl.setDescription(blogsEntry.getDescription());
 		blogsEntryImpl.setContent(blogsEntry.getContent());
+		blogsEntryImpl.setCoverImageId(blogsEntry.getCoverImageId());
 		blogsEntryImpl.setDisplayDate(blogsEntry.getDisplayDate());
 		blogsEntryImpl.setAllowPingbacks(blogsEntry.isAllowPingbacks());
 		blogsEntryImpl.setAllowTrackbacks(blogsEntry.isAllowTrackbacks());

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.model.Repository;
@@ -102,6 +103,27 @@ public class TempFileUtil {
 		}
 
 		return fileEntryNames;
+	}
+
+	public static String getUniqueTempFileName(
+		long groupId, long userId, String folderName) {
+
+		String uniqueTempFileName = null;
+
+		try {
+			for (int i = 0; i < 256; i++) {
+				uniqueTempFileName = StringUtil.randomString();
+
+				getTempFile(groupId, userId, uniqueTempFileName, folderName);
+			}
+
+			throw new SystemException(
+				"Unable to generate a unique temporal file name after " +
+					"several attempts");
+		}
+		catch (PortalException pe) {
+			return uniqueTempFileName;
+		}
 	}
 
 	protected static Folder addTempFolder(

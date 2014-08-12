@@ -45,6 +45,19 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
 				</portlet:renderURL>
 
+				<%
+				long coverImageId = entry.getCoverImageId();
+
+				if (coverImageId != 0) {
+					FileEntry coverImage = PortletFileRepositoryUtil.getPortletFileEntry(coverImageId);
+				%>
+
+					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-preview-cover-image" src="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, coverImage, StringPool.BLANK) %>" />
+
+				<%
+				}
+				%>
+
 				<c:if test='<%= !strutsAction.equals("/blogs/view_entry") %>'>
 					<div class="entry-title">
 						<h2><aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a></h2>

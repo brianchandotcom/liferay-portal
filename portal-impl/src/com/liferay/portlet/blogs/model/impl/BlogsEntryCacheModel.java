@@ -38,7 +38,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -66,6 +66,8 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		sb.append(description);
 		sb.append(", content=");
 		sb.append(content);
+		sb.append(", coverImageId=");
+		sb.append(coverImageId);
 		sb.append(", displayDate=");
 		sb.append(displayDate);
 		sb.append(", allowPingbacks=");
@@ -165,6 +167,8 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 			blogsEntryImpl.setContent(content);
 		}
 
+		blogsEntryImpl.setCoverImageId(coverImageId);
+
 		if (displayDate == Long.MIN_VALUE) {
 			blogsEntryImpl.setDisplayDate(null);
 		}
@@ -229,6 +233,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		urlTitle = objectInput.readUTF();
 		description = objectInput.readUTF();
 		content = objectInput.readUTF();
+		coverImageId = objectInput.readLong();
 		displayDate = objectInput.readLong();
 		allowPingbacks = objectInput.readBoolean();
 		allowTrackbacks = objectInput.readBoolean();
@@ -302,6 +307,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 			objectOutput.writeUTF(content);
 		}
 
+		objectOutput.writeLong(coverImageId);
 		objectOutput.writeLong(displayDate);
 		objectOutput.writeBoolean(allowPingbacks);
 		objectOutput.writeBoolean(allowTrackbacks);
@@ -349,6 +355,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 	public String urlTitle;
 	public String description;
 	public String content;
+	public long coverImageId;
 	public long displayDate;
 	public boolean allowPingbacks;
 	public boolean allowTrackbacks;

@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UserResolver {
 
 	public UserResolver(HttpServletRequest request) throws PortalException {
-		_companyId = ParamUtil.getLong(request, "companyId");
+		long companyId = ParamUtil.getLong(request, "companyId");
 
 		String remoteUser = request.getRemoteUser();
 
@@ -40,24 +40,29 @@ public class UserResolver {
 			remoteUser = null;
 		}
 
+		User user = null;
+
 		if (remoteUser != null) {
 			PrincipalThreadLocal.setName(remoteUser);
 
-			_user = UserLocalServiceUtil.getUserById(userId);
+			user = UserLocalServiceUtil.getUserById(userId);
 
-			if (_companyId == 0) {
-				_companyId = _user.getCompanyId();
+			if (companyId == 0) {
+				companyId = user.getCompanyId();
 			}
 		}
 		else {
-			if (_companyId == 0) {
-				_companyId = PortalInstances.getCompanyId(request);
+			if (companyId == 0) {
+				companyId = PortalInstances.getCompanyId(request);
 			}
 
-			if (_companyId != 0) {
-				_user = UserLocalServiceUtil.getDefaultUser(_companyId);
+			if (companyId != 0) {
+				user = UserLocalServiceUtil.getDefaultUser(companyId);
 			}
 		}
+
+		_companyId = companyId;
+		_user = user;
 	}
 
 	public long getCompanyId() {

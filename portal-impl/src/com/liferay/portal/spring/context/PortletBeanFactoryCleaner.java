@@ -137,13 +137,17 @@ public class PortletBeanFactoryCleaner implements BeanFactoryAware {
 	private static final Field _shadowMatchCacheField;
 
 	static {
+		Field shadowMatchCacheField = null;
+
 		try {
-			_shadowMatchCacheField = ReflectionUtil.getDeclaredField(
+			shadowMatchCacheField = ReflectionUtil.getDeclaredField(
 				AspectJExpressionPointcut.class, "shadowMatchCache");
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_shadowMatchCacheField = shadowMatchCacheField;
 	}
 
 	private static BeanFactory _beanFactory;

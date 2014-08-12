@@ -50,7 +50,7 @@ import java.util.Map;
 public class LiferayFileEntry extends LiferayModel implements FileEntry {
 
 	public LiferayFileEntry(DLFileEntry dlFileEntry) {
-		_dlFileEntry = dlFileEntry;
+		this(dlFileEntry, false);
 	}
 
 	public LiferayFileEntry(DLFileEntry fileEntry, boolean escapedModel) {

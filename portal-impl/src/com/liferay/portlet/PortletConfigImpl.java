@@ -51,13 +51,15 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 	public PortletConfigImpl(Portlet portlet, PortletContext portletContext) {
 		_portletApp = portlet.getPortletApp();
 		_portlet = portlet;
-		_portletName = portlet.getRootPortletId();
+		String portletName = portlet.getRootPortletId();
 
-		int pos = _portletName.indexOf(PortletConstants.WAR_SEPARATOR);
+		int pos = portletName.indexOf(PortletConstants.WAR_SEPARATOR);
 
 		if (pos != -1) {
-			_portletName = _portletName.substring(0, pos);
+			portletName = portletName.substring(0, pos);
 		}
+
+		_portletName = portletName;
 
 		_portletContext = portletContext;
 		_resourceBundles = new ConcurrentHashMap<String, ResourceBundle>();

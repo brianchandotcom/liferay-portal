@@ -41,10 +41,11 @@ public class SharedSessionAttributeListener
 
 	public SharedSessionAttributeListener() {
 		if (ServletVersionDetector.is2_5()) {
-			return;
+			_sessionIds = null;
 		}
-
-		_sessionIds = new ConcurrentHashSet<String>();
+		else {
+			_sessionIds = new ConcurrentHashSet<String>();
+		}
 	}
 
 	@Override

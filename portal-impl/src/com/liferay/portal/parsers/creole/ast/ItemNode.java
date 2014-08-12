@@ -20,14 +20,21 @@ package com.liferay.portal.parsers.creole.ast;
 public abstract class ItemNode extends BaseParentableNode {
 
 	public ItemNode(int tokenType) {
-		super(tokenType);
+		this(0, tokenType, null, null);
 	}
 
 	public ItemNode(
 		int level, BaseParentableNode baseParentableNode,
 		CollectionNode collectionNode) {
 
-		super(collectionNode);
+		this(level, 0, baseParentableNode, collectionNode);
+	}
+
+	public ItemNode(
+		int level, int tokenType, BaseParentableNode baseParentableNode,
+		CollectionNode collectionNode) {
+
+		super(collectionNode, tokenType);
 
 		_level = level;
 		_baseParentableNode = baseParentableNode;

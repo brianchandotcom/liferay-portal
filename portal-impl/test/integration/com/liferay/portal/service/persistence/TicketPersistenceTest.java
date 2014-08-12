@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Ticket;
 import com.liferay.portal.model.impl.TicketModelImpl;
 import com.liferay.portal.service.TicketLocalServiceUtil;
@@ -456,6 +455,5 @@ public class TicketPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(TicketPersistenceTest.class);
 	private List<Ticket> _tickets = new ArrayList<Ticket>();
-	private ModelListener<Ticket>[] _modelListeners;
 	private TicketPersistence _persistence = TicketUtil.getPersistence();
 }

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ClassName;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -417,6 +416,5 @@ public class ClassNamePersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ClassNamePersistenceTest.class);
 	private List<ClassName> _classNames = new ArrayList<ClassName>();
-	private ModelListener<ClassName>[] _modelListeners;
 	private ClassNamePersistence _persistence = ClassNameUtil.getPersistence();
 }

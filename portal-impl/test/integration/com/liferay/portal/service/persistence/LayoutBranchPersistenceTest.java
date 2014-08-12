@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutBranch;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutBranchModelImpl;
 import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -514,6 +513,5 @@ public class LayoutBranchPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutBranchPersistenceTest.class);
 	private List<LayoutBranch> _layoutBranchs = new ArrayList<LayoutBranch>();
-	private ModelListener<LayoutBranch>[] _modelListeners;
 	private LayoutBranchPersistence _persistence = LayoutBranchUtil.getPersistence();
 }

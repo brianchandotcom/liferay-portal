@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PasswordPolicyRel;
 import com.liferay.portal.model.impl.PasswordPolicyRelModelImpl;
 import com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil;
@@ -444,6 +443,5 @@ public class PasswordPolicyRelPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(PasswordPolicyRelPersistenceTest.class);
 	private List<PasswordPolicyRel> _passwordPolicyRels = new ArrayList<PasswordPolicyRel>();
-	private ModelListener<PasswordPolicyRel>[] _modelListeners;
 	private PasswordPolicyRelPersistence _persistence = PasswordPolicyRelUtil.getPersistence();
 }

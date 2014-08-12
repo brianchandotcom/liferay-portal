@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LockModelImpl;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -507,6 +506,5 @@ public class LockPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(LockPersistenceTest.class);
 	private List<Lock> _locks = new ArrayList<Lock>();
-	private ModelListener<Lock>[] _modelListeners;
 	private LockPersistence _persistence = LockUtil.getPersistence();
 }

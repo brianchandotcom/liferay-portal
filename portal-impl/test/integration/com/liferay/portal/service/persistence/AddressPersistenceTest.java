@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Address;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
@@ -596,6 +595,5 @@ public class AddressPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(AddressPersistenceTest.class);
 	private List<Address> _addresses = new ArrayList<Address>();
-	private ModelListener<Address>[] _modelListeners;
 	private AddressPersistence _persistence = AddressUtil.getPersistence();
 }

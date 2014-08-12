@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.CompanyModelImpl;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -505,6 +504,5 @@ public class CompanyPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(CompanyPersistenceTest.class);
 	private List<Company> _companies = new ArrayList<Company>();
-	private ModelListener<Company>[] _modelListeners;
 	private CompanyPersistence _persistence = CompanyUtil.getPersistence();
 }

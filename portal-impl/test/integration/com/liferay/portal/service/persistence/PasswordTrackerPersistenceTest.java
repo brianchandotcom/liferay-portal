@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PasswordTracker;
 import com.liferay.portal.service.PasswordTrackerLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -412,6 +411,5 @@ public class PasswordTrackerPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(PasswordTrackerPersistenceTest.class);
 	private List<PasswordTracker> _passwordTrackers = new ArrayList<PasswordTracker>();
-	private ModelListener<PasswordTracker>[] _modelListeners;
 	private PasswordTrackerPersistence _persistence = PasswordTrackerUtil.getPersistence();
 }

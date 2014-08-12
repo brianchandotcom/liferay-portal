@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.service.WebsiteLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -537,6 +536,5 @@ public class WebsitePersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(WebsitePersistenceTest.class);
 	private List<Website> _websites = new ArrayList<Website>();
-	private ModelListener<Website>[] _modelListeners;
 	private WebsitePersistence _persistence = WebsiteUtil.getPersistence();
 }

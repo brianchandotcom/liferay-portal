@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Shard;
 import com.liferay.portal.model.impl.ShardModelImpl;
 import com.liferay.portal.service.ShardLocalServiceUtil;
@@ -440,6 +439,5 @@ public class ShardPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ShardPersistenceTest.class);
 	private List<Shard> _shards = new ArrayList<Shard>();
-	private ModelListener<Shard>[] _modelListeners;
 	private ShardPersistence _persistence = ShardUtil.getPersistence();
 }

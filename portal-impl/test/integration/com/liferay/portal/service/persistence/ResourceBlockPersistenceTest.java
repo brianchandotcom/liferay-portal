@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.impl.ResourceBlockModelImpl;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
@@ -483,6 +482,5 @@ public class ResourceBlockPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ResourceBlockPersistenceTest.class);
 	private List<ResourceBlock> _resourceBlocks = new ArrayList<ResourceBlock>();
-	private ModelListener<ResourceBlock>[] _modelListeners;
 	private ResourceBlockPersistence _persistence = ResourceBlockUtil.getPersistence();
 }

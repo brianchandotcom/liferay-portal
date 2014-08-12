@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
@@ -641,6 +640,5 @@ public class SocialRequestPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(SocialRequestPersistenceTest.class);
 	private List<SocialRequest> _socialRequests = new ArrayList<SocialRequest>();
-	private ModelListener<SocialRequest>[] _modelListeners;
 	private SocialRequestPersistence _persistence = SocialRequestUtil.getPersistence();
 }

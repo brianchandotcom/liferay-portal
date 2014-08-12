@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Country;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.CountryModelImpl;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
@@ -468,6 +467,5 @@ public class CountryPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(CountryPersistenceTest.class);
 	private List<Country> _countries = new ArrayList<Country>();
-	private ModelListener<Country>[] _modelListeners;
 	private CountryPersistence _persistence = CountryUtil.getPersistence();
 }

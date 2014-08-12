@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Account;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.AccountLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
@@ -467,6 +466,5 @@ public class AccountPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(AccountPersistenceTest.class);
 	private List<Account> _accounts = new ArrayList<Account>();
-	private ModelListener<Account>[] _modelListeners;
 	private AccountPersistence _persistence = AccountUtil.getPersistence();
 }

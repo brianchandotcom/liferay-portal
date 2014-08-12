@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutModelImpl;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -808,6 +807,5 @@ public class LayoutPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutPersistenceTest.class);
 	private List<Layout> _layouts = new ArrayList<Layout>();
-	private ModelListener<Layout>[] _modelListeners;
 	private LayoutPersistence _persistence = LayoutUtil.getPersistence();
 }

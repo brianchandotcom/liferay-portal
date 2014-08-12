@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserIdMapper;
 import com.liferay.portal.model.impl.UserIdMapperModelImpl;
 import com.liferay.portal.service.UserIdMapperLocalServiceUtil;
@@ -474,6 +473,5 @@ public class UserIdMapperPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(UserIdMapperPersistenceTest.class);
 	private List<UserIdMapper> _userIdMappers = new ArrayList<UserIdMapper>();
-	private ModelListener<UserIdMapper>[] _modelListeners;
 	private UserIdMapperPersistence _persistence = UserIdMapperUtil.getPersistence();
 }

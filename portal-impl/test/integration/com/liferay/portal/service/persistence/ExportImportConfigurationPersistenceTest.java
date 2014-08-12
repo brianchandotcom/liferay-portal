@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.ExportImportConfiguration;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
@@ -550,6 +549,5 @@ public class ExportImportConfigurationPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ExportImportConfigurationPersistenceTest.class);
 	private List<ExportImportConfiguration> _exportImportConfigurations = new ArrayList<ExportImportConfiguration>();
-	private ModelListener<ExportImportConfiguration>[] _modelListeners;
 	private ExportImportConfigurationPersistence _persistence = ExportImportConfigurationUtil.getPersistence();
 }

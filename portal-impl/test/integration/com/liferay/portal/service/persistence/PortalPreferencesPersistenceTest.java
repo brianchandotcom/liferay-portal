@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PortalPreferences;
 import com.liferay.portal.model.impl.PortalPreferencesModelImpl;
 import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
@@ -432,6 +431,5 @@ public class PortalPreferencesPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(PortalPreferencesPersistenceTest.class);
 	private List<PortalPreferences> _portalPreferenceses = new ArrayList<PortalPreferences>();
-	private ModelListener<PortalPreferences>[] _modelListeners;
 	private PortalPreferencesPersistence _persistence = PortalPreferencesUtil.getPersistence();
 }

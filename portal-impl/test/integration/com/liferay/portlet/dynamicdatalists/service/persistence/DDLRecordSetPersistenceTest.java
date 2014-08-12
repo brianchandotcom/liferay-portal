@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
@@ -566,6 +565,5 @@ public class DDLRecordSetPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(DDLRecordSetPersistenceTest.class);
 	private List<DDLRecordSet> _ddlRecordSets = new ArrayList<DDLRecordSet>();
-	private ModelListener<DDLRecordSet>[] _modelListeners;
 	private DDLRecordSetPersistence _persistence = DDLRecordSetUtil.getPersistence();
 }

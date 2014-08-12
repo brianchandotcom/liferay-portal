@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.model.impl.WorkflowDefinitionLinkModelImpl;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
@@ -546,6 +545,5 @@ public class WorkflowDefinitionLinkPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(WorkflowDefinitionLinkPersistenceTest.class);
 	private List<WorkflowDefinitionLink> _workflowDefinitionLinks = new ArrayList<WorkflowDefinitionLink>();
-	private ModelListener<WorkflowDefinitionLink>[] _modelListeners;
 	private WorkflowDefinitionLinkPersistence _persistence = WorkflowDefinitionLinkUtil.getPersistence();
 }

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.model.impl.ResourceTypePermissionModelImpl;
 import com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil;
@@ -494,6 +493,5 @@ public class ResourceTypePermissionPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ResourceTypePermissionPersistenceTest.class);
 	private List<ResourceTypePermission> _resourceTypePermissions = new ArrayList<ResourceTypePermission>();
-	private ModelListener<ResourceTypePermission>[] _modelListeners;
 	private ResourceTypePermissionPersistence _persistence = ResourceTypePermissionUtil.getPersistence();
 }

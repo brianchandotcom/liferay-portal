@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.model.impl.ResourceBlockPermissionModelImpl;
 import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
@@ -470,6 +469,5 @@ public class ResourceBlockPermissionPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ResourceBlockPermissionPersistenceTest.class);
 	private List<ResourceBlockPermission> _resourceBlockPermissions = new ArrayList<ResourceBlockPermission>();
-	private ModelListener<ResourceBlockPermission>[] _modelListeners;
 	private ResourceBlockPermissionPersistence _persistence = ResourceBlockPermissionUtil.getPersistence();
 }

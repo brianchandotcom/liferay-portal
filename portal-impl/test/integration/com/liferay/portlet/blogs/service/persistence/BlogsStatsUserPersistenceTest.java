@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
@@ -521,6 +520,5 @@ public class BlogsStatsUserPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(BlogsStatsUserPersistenceTest.class);
 	private List<BlogsStatsUser> _blogsStatsUsers = new ArrayList<BlogsStatsUser>();
-	private ModelListener<BlogsStatsUser>[] _modelListeners;
 	private BlogsStatsUserPersistence _persistence = BlogsStatsUserUtil.getPersistence();
 }

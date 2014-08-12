@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.UserModelImpl;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -892,6 +891,5 @@ public class UserPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(UserPersistenceTest.class);
 	private List<User> _users = new ArrayList<User>();
-	private ModelListener<User>[] _modelListeners;
 	private UserPersistence _persistence = UserUtil.getPersistence();
 }

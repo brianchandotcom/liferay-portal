@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
@@ -538,6 +537,5 @@ public class MDRActionPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(MDRActionPersistenceTest.class);
 	private List<MDRAction> _mdrActions = new ArrayList<MDRAction>();
-	private ModelListener<MDRAction>[] _modelListeners;
 	private MDRActionPersistence _persistence = MDRActionUtil.getPersistence();
 }

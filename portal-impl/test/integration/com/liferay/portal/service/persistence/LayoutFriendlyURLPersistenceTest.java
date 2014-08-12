@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutFriendlyURL;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -635,6 +634,5 @@ public class LayoutFriendlyURLPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutFriendlyURLPersistenceTest.class);
 	private List<LayoutFriendlyURL> _layoutFriendlyURLs = new ArrayList<LayoutFriendlyURL>();
-	private ModelListener<LayoutFriendlyURL>[] _modelListeners;
 	private LayoutFriendlyURLPersistence _persistence = LayoutFriendlyURLUtil.getPersistence();
 }

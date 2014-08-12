@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ServiceComponent;
 import com.liferay.portal.model.impl.ServiceComponentModelImpl;
 import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
@@ -456,6 +455,5 @@ public class ServiceComponentPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ServiceComponentPersistenceTest.class);
 	private List<ServiceComponent> _serviceComponents = new ArrayList<ServiceComponent>();
-	private ModelListener<ServiceComponent>[] _modelListeners;
 	private ServiceComponentPersistence _persistence = ServiceComponentUtil.getPersistence();
 }

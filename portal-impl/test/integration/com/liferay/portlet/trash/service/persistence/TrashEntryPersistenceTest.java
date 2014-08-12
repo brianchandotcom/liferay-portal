@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
@@ -519,6 +518,5 @@ public class TrashEntryPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(TrashEntryPersistenceTest.class);
 	private List<TrashEntry> _trashEntries = new ArrayList<TrashEntry>();
-	private ModelListener<TrashEntry>[] _modelListeners;
 	private TrashEntryPersistence _persistence = TrashEntryUtil.getPersistence();
 }

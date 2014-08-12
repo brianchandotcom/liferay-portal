@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Contact;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.ContactLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
@@ -609,6 +608,5 @@ public class ContactPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ContactPersistenceTest.class);
 	private List<Contact> _contacts = new ArrayList<Contact>();
-	private ModelListener<Contact>[] _modelListeners;
 	private ContactPersistence _persistence = ContactUtil.getPersistence();
 }

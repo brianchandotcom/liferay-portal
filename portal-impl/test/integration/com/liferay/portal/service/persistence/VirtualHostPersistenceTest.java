@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.model.impl.VirtualHostModelImpl;
 import com.liferay.portal.service.VirtualHostLocalServiceUtil;
@@ -451,6 +450,5 @@ public class VirtualHostPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(VirtualHostPersistenceTest.class);
 	private List<VirtualHost> _virtualHosts = new ArrayList<VirtualHost>();
-	private ModelListener<VirtualHost>[] _modelListeners;
 	private VirtualHostPersistence _persistence = VirtualHostUtil.getPersistence();
 }

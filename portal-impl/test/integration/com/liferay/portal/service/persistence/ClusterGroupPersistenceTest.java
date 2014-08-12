@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.ClusterGroup;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.ClusterGroupLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
@@ -398,6 +397,5 @@ public class ClusterGroupPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ClusterGroupPersistenceTest.class);
 	private List<ClusterGroup> _clusterGroups = new ArrayList<ClusterGroup>();
-	private ModelListener<ClusterGroup>[] _modelListeners;
 	private ClusterGroupPersistence _persistence = ClusterGroupUtil.getPersistence();
 }

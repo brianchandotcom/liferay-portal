@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.LayoutPrototype;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
@@ -500,6 +499,5 @@ public class LayoutPrototypePersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutPrototypePersistenceTest.class);
 	private List<LayoutPrototype> _layoutPrototypes = new ArrayList<LayoutPrototype>();
-	private ModelListener<LayoutPrototype>[] _modelListeners;
 	private LayoutPrototypePersistence _persistence = LayoutPrototypeUtil.getPersistence();
 }

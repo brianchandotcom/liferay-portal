@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.OrgGroupRole;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
@@ -379,6 +378,5 @@ public class OrgGroupRolePersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(OrgGroupRolePersistenceTest.class);
 	private List<OrgGroupRole> _orgGroupRoles = new ArrayList<OrgGroupRole>();
-	private ModelListener<OrgGroupRole>[] _modelListeners;
 	private OrgGroupRolePersistence _persistence = OrgGroupRoleUtil.getPersistence();
 }

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.ListType;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
@@ -376,6 +375,5 @@ public class ListTypePersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ListTypePersistenceTest.class);
 	private List<ListType> _listTypes = new ArrayList<ListType>();
-	private ModelListener<ListType>[] _modelListeners;
 	private ListTypePersistence _persistence = ListTypeUtil.getPersistence();
 }

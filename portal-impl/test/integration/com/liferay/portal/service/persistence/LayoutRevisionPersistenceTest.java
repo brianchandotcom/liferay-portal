@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.LayoutRevision;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutRevisionModelImpl;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -729,6 +728,5 @@ public class LayoutRevisionPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutRevisionPersistenceTest.class);
 	private List<LayoutRevision> _layoutRevisions = new ArrayList<LayoutRevision>();
-	private ModelListener<LayoutRevision>[] _modelListeners;
 	private LayoutRevisionPersistence _persistence = LayoutRevisionUtil.getPersistence();
 }

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.EmailAddress;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.EmailAddressLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
@@ -546,6 +545,5 @@ public class EmailAddressPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(EmailAddressPersistenceTest.class);
 	private List<EmailAddress> _emailAddresses = new ArrayList<EmailAddress>();
-	private ModelListener<EmailAddress>[] _modelListeners;
 	private EmailAddressPersistence _persistence = EmailAddressUtil.getPersistence();
 }

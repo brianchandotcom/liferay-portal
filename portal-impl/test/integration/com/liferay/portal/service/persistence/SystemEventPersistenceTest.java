@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -515,6 +514,5 @@ public class SystemEventPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(SystemEventPersistenceTest.class);
 	private List<SystemEvent> _systemEvents = new ArrayList<SystemEvent>();
-	private ModelListener<SystemEvent>[] _modelListeners;
 	private SystemEventPersistence _persistence = SystemEventUtil.getPersistence();
 }

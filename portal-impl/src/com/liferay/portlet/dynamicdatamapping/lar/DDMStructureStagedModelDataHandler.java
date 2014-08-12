@@ -14,13 +14,16 @@
 
 package com.liferay.portlet.dynamicdatamapping.lar;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
@@ -32,6 +35,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,11 +52,36 @@ public class DDMStructureStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		DDMStructure ddmStructure = fetchExistingStagedModel(uuid, groupId);
+		DDMStructure ddmStructure = fetchStagedModelByUuidAndGroupId(
+			uuid, groupId);
 
 		if (ddmStructure != null) {
 			DDMStructureLocalServiceUtil.deleteStructure(ddmStructure);
 		}
+	}
+
+	@Override
+	public DDMStructure fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		List<DDMStructure> structures =
+			DDMStructureLocalServiceUtil.getDDMStructuresByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<DDMStructure>());
+
+		if (ListUtil.isEmpty(structures)) {
+			return null;
+		}
+
+		return structures.get(0);
+	}
+
+	@Override
+	public DDMStructure fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override
@@ -207,14 +236,6 @@ public class DDMStructureStagedModelDataHandler
 	}
 
 	@Override
-	protected DDMStructure doFetchExistingStagedModel(
-		String uuid, long groupId) {
-
-		return DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
-			uuid, groupId);
-	}
-
-	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, DDMStructure structure)
 		throws Exception {
@@ -299,7 +320,7 @@ public class DDMStructureStagedModelDataHandler
 		DDMStructure existingStructure = null;
 
 		if (!preloaded) {
-			existingStructure = fetchExistingStagedModel(uuid, groupId);
+			existingStructure = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 		}
 		else {
 			existingStructure = DDMStructureLocalServiceUtil.fetchStructure(

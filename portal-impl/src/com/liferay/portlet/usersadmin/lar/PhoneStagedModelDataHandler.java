@@ -40,12 +40,20 @@ public class PhoneStagedModelDataHandler
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		Phone phone = PhoneLocalServiceUtil.fetchPhoneByUuidAndCompanyId(
+		Phone phone = fetchStagedModelByUuidAndCompanyId(
 			uuid, group.getCompanyId());
 
 		if (phone != null) {
 			PhoneLocalServiceUtil.deletePhone(phone);
 		}
+	}
+
+	@Override
+	public Phone fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return PhoneLocalServiceUtil.fetchPhoneByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	@Override
@@ -74,9 +82,8 @@ public class PhoneStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			phone);
 
-		Phone existingPhone =
-			PhoneLocalServiceUtil.fetchPhoneByUuidAndCompanyId(
-				phone.getUuid(), portletDataContext.getCompanyId());
+		Phone existingPhone = fetchStagedModelByUuidAndCompanyId(
+			phone.getUuid(), portletDataContext.getCompanyId());
 
 		Phone importedPhone = null;
 

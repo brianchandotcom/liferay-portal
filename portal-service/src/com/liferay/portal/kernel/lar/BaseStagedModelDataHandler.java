@@ -106,11 +106,11 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	}
 
 	@Override
-	public T fetchExistingStagedModel(String uuid, long groupId) {
+	public T fetchMissingReference(String uuid, long groupId) {
 
-		// Try to fetch the existing staged model from the actual group
+		// Try to fetch the existing staged model from the importing group
 
-		T existingStagedModel = doFetchExistingStagedModel(uuid, groupId);
+		T existingStagedModel = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (existingStagedModel != null) {
 			return existingStagedModel;
@@ -120,15 +120,25 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			// Try to fetch the existing staged model from the parent sites
 
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+			Group originalGroup = GroupLocalServiceUtil.getGroup(groupId);
 
-			while ((group = group.getParentGroup()) != null) {
-				existingStagedModel = doFetchExistingStagedModel(
+			Group group = originalGroup.getParentGroup();
+
+			while (group != null) {
+				existingStagedModel = fetchStagedModelByUuidAndGroupId(
 					uuid, group.getGroupId());
 
 				if (existingStagedModel != null) {
 					break;
 				}
+
+				group = group.getParentGroup();
+			}
+
+			if (existingStagedModel == null) {
+				existingStagedModel =
+					fetchStagedModelByUuidAndCompanyId(
+						uuid, originalGroup.getCompanyId());
 			}
 
 			return existingStagedModel;
@@ -138,11 +148,22 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				_log.debug(e, e);
 			}
 			else if (_log.isWarnEnabled()) {
-				_log.warn("Unable to fetch staged model from group " + groupId);
+				_log.warn(
+					"Unable to fetch missing reference staged model from " +
+						"group " + groupId);
 			}
 
 			return null;
 		}
+	}
+
+	@Override
+	public abstract T fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	@Override
+	public T fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
+		return null;
 	}
 
 	@Override
@@ -316,8 +337,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
 
 		try {
-			return validateMissingReference(
-				uuid, portletDataContext.getCompanyId(), liveGroupId);
+			return validateMissingReference(uuid, liveGroupId);
 		}
 		catch (Exception e) {
 			return false;
@@ -333,10 +353,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	protected abstract void doExportStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws Exception;
-
-	protected T doFetchExistingStagedModel(String uuid, long groupId) {
-		return null;
-	}
 
 	protected void doImportMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,
@@ -581,10 +597,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			portletDataContext, referenceElement);
 	}
 
-	protected boolean validateMissingReference(
-		String uuid, long companyId, long groupId) {
-
-		T existingStagedModel = fetchExistingStagedModel(uuid, groupId);
+	protected boolean validateMissingReference(String uuid, long groupId) {
+		T existingStagedModel = fetchMissingReference(uuid, groupId);
 
 		if (existingStagedModel == null) {
 			return false;

@@ -14,12 +14,15 @@
 
 package com.liferay.portlet.bookmarks.lar;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -27,6 +30,7 @@ import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,11 +48,37 @@ public class BookmarksFolderStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		BookmarksFolder folder = fetchExistingStagedModel(uuid, groupId);
+		BookmarksFolder folder = fetchStagedModelByUuidAndGroupId(
+			uuid, groupId);
 
 		if (folder != null) {
 			BookmarksFolderLocalServiceUtil.deleteFolder(folder);
 		}
+	}
+
+	@Override
+	public BookmarksFolder fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		List<BookmarksFolder> folders =
+			BookmarksFolderLocalServiceUtil.
+				getBookmarksFoldersByUuidAndCompanyId(
+					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					new StagedModelModifiedDateComparator<BookmarksFolder>());
+
+		if (ListUtil.isEmpty(folders)) {
+			return null;
+		}
+
+		return folders.get(0);
+	}
+
+	@Override
+	public BookmarksFolder fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return BookmarksFolderLocalServiceUtil.
+			fetchBookmarksFolderByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
@@ -81,14 +111,6 @@ public class BookmarksFolderStagedModelDataHandler
 	}
 
 	@Override
-	protected BookmarksFolder doFetchExistingStagedModel(
-		String uuid, long groupId) {
-
-		return BookmarksFolderLocalServiceUtil.
-			fetchBookmarksFolderByUuidAndGroupId(uuid, groupId);
-	}
-
-	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, BookmarksFolder folder)
 		throws Exception {
@@ -116,7 +138,7 @@ public class BookmarksFolderStagedModelDataHandler
 		BookmarksFolder importedFolder = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			BookmarksFolder existingFolder = fetchExistingStagedModel(
+			BookmarksFolder existingFolder = fetchStagedModelByUuidAndGroupId(
 				folder.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingFolder == null) {
@@ -149,7 +171,7 @@ public class BookmarksFolderStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(folder.getUserUuid());
 
-		BookmarksFolder existingFolder = fetchExistingStagedModel(
+		BookmarksFolder existingFolder = fetchStagedModelByUuidAndGroupId(
 			folder.getUuid(), portletDataContext.getScopeGroupId());
 
 		if ((existingFolder == null) || !existingFolder.isInTrash()) {

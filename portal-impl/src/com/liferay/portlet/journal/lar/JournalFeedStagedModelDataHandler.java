@@ -14,14 +14,17 @@
 
 package com.liferay.portlet.journal.lar;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelper;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -41,6 +44,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,11 +60,35 @@ public class JournalFeedStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		JournalFeed feed = fetchExistingStagedModel(uuid, groupId);
+		JournalFeed feed = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (feed != null) {
 			JournalFeedLocalServiceUtil.deleteFeed(feed);
 		}
+	}
+
+	@Override
+	public JournalFeed fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		List<JournalFeed> feeds =
+			JournalFeedLocalServiceUtil.getJournalFeedsByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<JournalFeed>());
+
+		if (ListUtil.isEmpty(feeds)) {
+			return null;
+		}
+
+		return feeds.get(0);
+	}
+
+	@Override
+	public JournalFeed fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return JournalFeedLocalServiceUtil.fetchJournalFeedByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override
@@ -158,14 +186,6 @@ public class JournalFeedStagedModelDataHandler
 	}
 
 	@Override
-	protected JournalFeed doFetchExistingStagedModel(
-		String uuid, long groupId) {
-
-		return JournalFeedLocalServiceUtil.fetchJournalFeedByUuidAndGroupId(
-			uuid, groupId);
-	}
-
-	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, JournalFeed feed)
 		throws Exception {
@@ -253,7 +273,7 @@ public class JournalFeedStagedModelDataHandler
 
 		try {
 			if (portletDataContext.isDataStrategyMirror()) {
-				JournalFeed existingFeed = fetchExistingStagedModel(
+				JournalFeed existingFeed = fetchStagedModelByUuidAndGroupId(
 					feed.getUuid(), portletDataContext.getScopeGroupId());
 
 				if (existingFeed == null) {

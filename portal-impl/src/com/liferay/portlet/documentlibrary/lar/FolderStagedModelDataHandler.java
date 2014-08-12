@@ -14,18 +14,21 @@
 
 package com.liferay.portlet.documentlibrary.lar;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -66,11 +69,32 @@ public class FolderStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		Folder folder = fetchExistingStagedModel(uuid, groupId);
+		Folder folder = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (folder != null) {
 			DLAppLocalServiceUtil.deleteFolder(folder.getFolderId());
 		}
+	}
+
+	@Override
+	public Folder fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		List<DLFolder> folders =
+			DLFolderLocalServiceUtil.getDLFoldersByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<DLFolder>());
+
+		if (ListUtil.isEmpty(folders)) {
+			return null;
+		}
+
+		return new LiferayFolder(folders.get(0));
+	}
+
+	@Override
+	public Folder fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
+		return FolderUtil.fetchByUUID_R(uuid, groupId);
 	}
 
 	@Override
@@ -126,17 +150,12 @@ public class FolderStagedModelDataHandler
 	}
 
 	@Override
-	protected Folder doFetchExistingStagedModel(String uuid, long groupId) {
-		return FolderUtil.fetchByUUID_R(uuid, groupId);
-	}
-
-	@Override
 	protected void doImportMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,
 			long folderId)
 		throws Exception {
 
-		Folder existingFolder = fetchExistingStagedModel(uuid, groupId);
+		Folder existingFolder = fetchMissingReference(uuid, groupId);
 
 		Map<Long, Long> folderIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -195,7 +214,7 @@ public class FolderStagedModelDataHandler
 		Folder importedFolder = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			Folder existingFolder = fetchExistingStagedModel(
+			Folder existingFolder = fetchStagedModelByUuidAndGroupId(
 				folder.getUuid(), portletDataContext.getScopeGroupId());
 
 			if (existingFolder == null) {
@@ -251,7 +270,7 @@ public class FolderStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(folder.getUserUuid());
 
-		Folder existingFolder = fetchExistingStagedModel(
+		Folder existingFolder = fetchStagedModelByUuidAndGroupId(
 			folder.getUuid(), portletDataContext.getScopeGroupId());
 
 		if ((existingFolder == null) ||

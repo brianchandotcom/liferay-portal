@@ -40,11 +40,18 @@ public class EmailAddressStagedModelDataHandler
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		EmailAddress emailAddress =
-			EmailAddressLocalServiceUtil.fetchEmailAddressByUuidAndCompanyId(
-				uuid, group.getCompanyId());
+		EmailAddress emailAddress = fetchStagedModelByUuidAndCompanyId(
+			uuid, group.getCompanyId());
 
 		EmailAddressLocalServiceUtil.deleteEmailAddress(emailAddress);
+	}
+
+	@Override
+	public EmailAddress fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return EmailAddressLocalServiceUtil.fetchEmailAddressByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	@Override
@@ -75,9 +82,8 @@ public class EmailAddressStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			emailAddress);
 
-		EmailAddress existingEmailAddress =
-			EmailAddressLocalServiceUtil.fetchEmailAddressByUuidAndCompanyId(
-				emailAddress.getUuid(), portletDataContext.getCompanyId());
+		EmailAddress existingEmailAddress = fetchStagedModelByUuidAndCompanyId(
+			emailAddress.getUuid(), portletDataContext.getCompanyId());
 
 		EmailAddress importedEmailAddress = null;
 

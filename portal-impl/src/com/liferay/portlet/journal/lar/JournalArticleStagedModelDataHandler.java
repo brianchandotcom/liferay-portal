@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.journal.lar;
 
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -27,6 +30,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -77,7 +81,8 @@ public class JournalArticleStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		JournalArticle article = fetchExistingStagedModel(uuid, groupId);
+		JournalArticle article = fetchStagedModelByUuidAndGroupId(
+			uuid, groupId);
 
 		if (article == null) {
 			return;
@@ -86,10 +91,9 @@ public class JournalArticleStagedModelDataHandler
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
 			extraData);
 
-		if (Validator.isNull(extraData) ||
-			extraDataJSONObject.getBoolean("inTrash")) {
-		}
-		else {
+		if (Validator.isNotNull(extraData) &&
+			!extraDataJSONObject.getBoolean("inTrash")) {
+
 			double version = extraDataJSONObject.getDouble("version");
 
 			article = JournalArticleLocalServiceUtil.getArticle(
@@ -97,6 +101,48 @@ public class JournalArticleStagedModelDataHandler
 		}
 
 		JournalArticleLocalServiceUtil.deleteArticle(article);
+	}
+
+	@Override
+	public JournalArticle fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		DynamicQuery dynamicQuery =
+			JournalArticleResourceLocalServiceUtil.dynamicQuery();
+
+		Property uuidProperty = PropertyFactoryUtil.forName("uuid");
+
+		dynamicQuery.add(uuidProperty.eq(uuid));
+
+		List<JournalArticleResource> resources =
+			JournalArticleResourceLocalServiceUtil.dynamicQuery(dynamicQuery);
+
+		if (ListUtil.isEmpty(resources)) {
+			return null;
+		}
+
+		JournalArticleResource existingArticleResource = resources.get(0);
+
+		return JournalArticleLocalServiceUtil.fetchLatestArticle(
+			existingArticleResource.getResourcePrimKey(),
+			WorkflowConstants.STATUS_ANY, false);
+	}
+
+	@Override
+	public JournalArticle fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		JournalArticleResource existingArticleResource =
+			JournalArticleResourceLocalServiceUtil.fetchArticleResource(
+				uuid, groupId);
+
+		if (existingArticleResource == null) {
+			return null;
+		}
+
+		return JournalArticleLocalServiceUtil.fetchLatestArticle(
+			existingArticleResource.getResourcePrimKey(),
+			WorkflowConstants.STATUS_ANY, false);
 	}
 
 	@Override
@@ -346,23 +392,6 @@ public class JournalArticleStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			articleElement, ExportImportPathUtil.getModelPath(article),
 			article);
-	}
-
-	@Override
-	protected JournalArticle doFetchExistingStagedModel(
-		String uuid, long groupId) {
-
-		JournalArticleResource existingArticleResource =
-			JournalArticleResourceLocalServiceUtil.fetchArticleResource(
-				uuid, groupId);
-
-		if (existingArticleResource == null) {
-			return null;
-		}
-
-		return JournalArticleLocalServiceUtil.fetchLatestArticle(
-			existingArticleResource.getResourcePrimKey(),
-			WorkflowConstants.STATUS_ANY, false);
 	}
 
 	@Override
@@ -789,7 +818,8 @@ public class JournalArticleStagedModelDataHandler
 		String newArticleId, double version, boolean preloaded) {
 
 		if (!preloaded) {
-			return fetchExistingStagedModel(articleResourceUuid, groupId);
+			return fetchStagedModelByUuidAndGroupId(
+				articleResourceUuid, groupId);
 		}
 
 		JournalArticleResource existingArticleResource =

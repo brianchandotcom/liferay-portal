@@ -14,63 +14,21 @@
 
 package com.liferay.portlet.journal.util.comparator;
 
-import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class ArticleModifiedDateComparator
-	extends OrderByComparator<JournalArticle> {
-
-	public static final String ORDER_BY_ASC = "modifiedDate ASC";
-
-	public static final String ORDER_BY_DESC = "modifiedDate DESC";
-
-	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
+	extends StagedModelModifiedDateComparator<JournalArticle> {
 
 	public ArticleModifiedDateComparator() {
 		this(false);
 	}
 
 	public ArticleModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
+		super(ascending);
 	}
-
-	@Override
-	public int compare(JournalArticle article1, JournalArticle article2) {
-		int value = DateUtil.compareTo(
-			article1.getModifiedDate(), article2.getModifiedDate());
-
-		if (_ascending) {
-			return value;
-		}
-		else {
-			return -value;
-		}
-	}
-
-	@Override
-	public String getOrderBy() {
-		if (_ascending) {
-			return ORDER_BY_ASC;
-		}
-		else {
-			return ORDER_BY_DESC;
-		}
-	}
-
-	@Override
-	public String[] getOrderByFields() {
-		return ORDER_BY_FIELDS;
-	}
-
-	@Override
-	public boolean isAscending() {
-		return _ascending;
-	}
-
-	private boolean _ascending;
 
 }

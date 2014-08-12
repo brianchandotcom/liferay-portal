@@ -14,9 +14,12 @@
 
 package com.liferay.portlet.layoutsadmin.lar;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
@@ -24,6 +27,7 @@ import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,11 +43,36 @@ public class LayoutFriendlyURLStagedModelDataHandler
 	public void deleteStagedModel(
 		String uuid, long groupId, String className, String extraData) {
 
-		LayoutFriendlyURL layoutFriendlyURL = fetchExistingStagedModel(
+		LayoutFriendlyURL layoutFriendlyURL = fetchStagedModelByUuidAndGroupId(
 			uuid, groupId);
 
 		LayoutFriendlyURLLocalServiceUtil.deleteLayoutFriendlyURL(
 			layoutFriendlyURL);
+	}
+
+	@Override
+	public LayoutFriendlyURL fetchStagedModelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		List<LayoutFriendlyURL> friendlyURLs =
+			LayoutFriendlyURLLocalServiceUtil.
+				getLayoutFriendlyURLsByUuidAndCompanyId(
+					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					new StagedModelModifiedDateComparator<LayoutFriendlyURL>());
+
+		if (ListUtil.isEmpty(friendlyURLs)) {
+			return null;
+		}
+
+		return friendlyURLs.get(0);
+	}
+
+	@Override
+	public LayoutFriendlyURL fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return LayoutFriendlyURLLocalServiceUtil.
+			fetchLayoutFriendlyURLByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
@@ -64,14 +93,6 @@ public class LayoutFriendlyURLStagedModelDataHandler
 			layoutFriendlyURLElement,
 			ExportImportPathUtil.getModelPath(layoutFriendlyURL),
 			layoutFriendlyURL);
-	}
-
-	@Override
-	protected LayoutFriendlyURL doFetchExistingStagedModel(
-		String uuid, long groupId) {
-
-		return LayoutFriendlyURLLocalServiceUtil.
-			fetchLayoutFriendlyURLByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
@@ -146,8 +167,10 @@ public class LayoutFriendlyURLStagedModelDataHandler
 		PortletDataContext portletDataContext,
 		LayoutFriendlyURL layoutFriendlyURL, long plid) {
 
-		LayoutFriendlyURL existingLayoutFriendlyURL = fetchExistingStagedModel(
-			layoutFriendlyURL.getUuid(), portletDataContext.getScopeGroupId());
+		LayoutFriendlyURL existingLayoutFriendlyURL =
+			fetchStagedModelByUuidAndGroupId(
+				layoutFriendlyURL.getUuid(),
+				portletDataContext.getScopeGroupId());
 
 		if (existingLayoutFriendlyURL == null) {
 			existingLayoutFriendlyURL =

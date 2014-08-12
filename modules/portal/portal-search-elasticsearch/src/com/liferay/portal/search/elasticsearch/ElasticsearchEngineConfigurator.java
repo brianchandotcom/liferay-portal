@@ -33,12 +33,12 @@ public class ElasticsearchEngineConfigurator
 
 	@Override
 	public void destroy() {
-		super.destroy();
-
 		ElasticsearchConnection elasticsearchConnection =
 			_elasticsearchConnectionManager.getElasticsearchConnection();
 
 		elasticsearchConnection.close();
+
+		super.destroy();
 	}
 
 	public void setElasticsearchConnectionManager(

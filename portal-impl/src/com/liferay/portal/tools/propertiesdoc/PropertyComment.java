@@ -28,13 +28,17 @@ public class PropertyComment {
 
 		String[] lines = comment.split(StringPool.NEW_LINE);
 
+		boolean preformatted = false;
+
 		for (String line : lines) {
 			if (line.startsWith(PropertiesDocBuilder.INDENT)) {
-				_preformatted = true;
+				preformatted = true;
 
-				return;
+				break;
 			}
 		}
+
+		_preformatted = preformatted;
 	}
 
 	public String getComment() {

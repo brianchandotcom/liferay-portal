@@ -22,16 +22,26 @@ import java.util.List;
 public abstract class BaseParentableNode extends ASTNode {
 
 	public BaseParentableNode() {
+		this(null, 0);
 	}
 
 	public BaseParentableNode(CollectionNode collectionNode) {
+		this(collectionNode, 0);
+	}
+
+	public BaseParentableNode(CollectionNode collectionNode, int tokenType) {
+		super(tokenType);
+
 		if (collectionNode != null) {
 			_collectionNode = collectionNode;
+		}
+		else {
+			_collectionNode = new CollectionNode();
 		}
 	}
 
 	public BaseParentableNode(int tokenType) {
-		super(tokenType);
+		this(null, tokenType);
 	}
 
 	public void addChildASTNode(ASTNode astNode) {
@@ -50,6 +60,6 @@ public abstract class BaseParentableNode extends ASTNode {
 		return _collectionNode.size();
 	}
 
-	private final CollectionNode _collectionNode = new CollectionNode();
+	private final CollectionNode _collectionNode;
 
 }

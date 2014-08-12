@@ -134,7 +134,7 @@ public class Entity {
 		_sessionFactory = GetterUtil.getString(
 			sessionFactory, DEFAULT_SESSION_FACTORY);
 		_txManager = GetterUtil.getString(txManager, DEFAULT_TX_MANAGER);
-		_cacheEnabled = cacheEnabled;
+		boolean tempCacheEnabled = cacheEnabled;
 		_dynamicUpdateEnabled = dynamicUpdateEnabled;
 		_jsonEnabled = jsonEnabled;
 		_mvccEnabled = mvccEnabled;
@@ -169,22 +169,27 @@ public class Entity {
 		if ((_blobList != null) && !_blobList.isEmpty()) {
 			for (EntityColumn col : _blobList) {
 				if (!col.isLazy()) {
-					_cacheEnabled = false;
+					tempCacheEnabled = false;
 
 					break;
 				}
 			}
 		}
+
+		boolean containerModel = false;
 
 		if ((_columnList != null) && !_columnList.isEmpty()) {
 			for (EntityColumn col : _columnList) {
 				if (col.isContainerModel() || col.isParentContainerModel()) {
-					_containerModel = true;
+					containerModel = true;
 
 					break;
 				}
 			}
 		}
+
+		_cacheEnabled = tempCacheEnabled;
+		_containerModel = containerModel;
 	}
 
 	public void addReference(Entity reference) {

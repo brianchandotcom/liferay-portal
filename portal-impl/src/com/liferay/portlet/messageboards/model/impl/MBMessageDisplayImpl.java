@@ -43,6 +43,9 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 			_treeWalker = new MBTreeWalkerImpl(
 				message, status, messageLocalService);
 		}
+		else {
+			_treeWalker = null;
+		}
 
 		_previousThread = previousThread;
 		_nextThread = nextThread;

@@ -129,17 +129,21 @@ public class QueryTranslatorImpl implements QueryTranslator {
 
 	private static final Log _log = LogFactoryUtil.getLog(QueryTranslatorImpl.class);
 
-	private static final Field _textField = null;
+	private static final Field _textField;
 
 	static {
-		try {
-			_textField = Term.class.getDeclaredField("text");
+		Field textField = null;
 
-			_textField.setAccessible(true);
+		try {
+			textField = Term.class.getDeclaredField("text");
+
+			textField.setAccessible(true);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_textField = textField;
 	}
 
 }

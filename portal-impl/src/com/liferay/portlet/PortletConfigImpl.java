@@ -51,6 +51,7 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 	public PortletConfigImpl(Portlet portlet, PortletContext portletContext) {
 		_portletApp = portlet.getPortletApp();
 		_portlet = portlet;
+
 		String portletName = portlet.getRootPortletId();
 
 		int pos = portletName.indexOf(PortletConstants.WAR_SEPARATOR);

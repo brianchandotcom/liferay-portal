@@ -26,8 +26,6 @@ public class StrictPortletPreferencesImpl
 	implements Cloneable, Serializable {
 
 	public StrictPortletPreferencesImpl() {
-		super();
-
 		_companyId = 0;
 	}
 

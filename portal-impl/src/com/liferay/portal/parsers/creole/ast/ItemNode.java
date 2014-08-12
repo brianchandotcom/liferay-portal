@@ -30,16 +30,6 @@ public abstract class ItemNode extends BaseParentableNode {
 		this(level, 0, baseParentableNode, collectionNode);
 	}
 
-	public ItemNode(
-		int level, int tokenType, BaseParentableNode baseParentableNode,
-		CollectionNode collectionNode) {
-
-		super(collectionNode, tokenType);
-
-		_level = level;
-		_baseParentableNode = baseParentableNode;
-	}
-
 	public BaseParentableNode getBaseParentableNode() {
 		return _baseParentableNode;
 	}
@@ -49,6 +39,16 @@ public abstract class ItemNode extends BaseParentableNode {
 	}
 
 	public void setBaseParentableNode(BaseParentableNode baseParentableNode) {
+		_baseParentableNode = baseParentableNode;
+	}
+
+	protected ItemNode(
+		int level, int tokenType, BaseParentableNode baseParentableNode,
+		CollectionNode collectionNode) {
+
+		super(collectionNode, tokenType);
+
+		_level = level;
 		_baseParentableNode = baseParentableNode;
 	}
 

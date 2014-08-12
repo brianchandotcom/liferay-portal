@@ -588,22 +588,6 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	@Override
-	public void renamePage(
-			long nodeId, String title, String newTitle,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		WikiPagePermission.check(
-			getPermissionChecker(), nodeId, title, ActionKeys.DELETE);
-
-		WikiNodePermission.check(
-			getPermissionChecker(), nodeId, ActionKeys.ADD_PAGE);
-
-		wikiPageLocalService.renamePage(
-			getUserId(), nodeId, title, newTitle, serviceContext);
-	}
-
-	@Override
 	public FileEntry movePageAttachmentToTrash(
 			long nodeId, String title, String fileName)
 		throws PortalException {
@@ -634,6 +618,22 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 		return wikiPageLocalService.movePageToTrash(
 			getUserId(), nodeId, title, version);
+	}
+
+	@Override
+	public void renamePage(
+			long nodeId, String title, String newTitle,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		WikiPagePermission.check(
+			getPermissionChecker(), nodeId, title, ActionKeys.DELETE);
+
+		WikiNodePermission.check(
+			getPermissionChecker(), nodeId, ActionKeys.ADD_PAGE);
+
+		wikiPageLocalService.renamePage(
+			getUserId(), nodeId, title, newTitle, serviceContext);
 	}
 
 	@Override

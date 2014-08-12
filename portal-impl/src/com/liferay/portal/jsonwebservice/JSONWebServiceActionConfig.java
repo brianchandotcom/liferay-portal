@@ -37,11 +37,18 @@ public class JSONWebServiceActionConfig
 		String contextName, String contextPath, Class<?> actionClass,
 		Method actionMethod, String path, String method) {
 
+		this(
+			contextName, contextPath, null, actionClass, actionMethod, path,
+			method);
+	}
+
+	public JSONWebServiceActionConfig(
+		String contextName, String contextPath, Object actionObject,
+		Class<?> actionClass, Method actionMethod, String path, String method) {
+
 		_contextName = GetterUtil.getString(contextName);
 		_contextPath = GetterUtil.getString(contextPath);
 		_actionClass = actionClass;
-		_actionMethod = actionMethod;
-		_path = path;
 		_method = method;
 
 		Deprecated depreacted = actionMethod.getAnnotation(Deprecated.class);
@@ -49,23 +56,32 @@ public class JSONWebServiceActionConfig
 		if (depreacted != null) {
 			_deprecated = true;
 		}
+		else {
+			_deprecated = false;
+		}
 
 		if (Validator.isNotNull(_contextName)) {
-			path = _path.substring(1);
+			path = path.substring(1);
 
-			_path = StringPool.SLASH.concat(_contextName).concat(
+			path = StringPool.SLASH.concat(_contextName).concat(
 				StringPool.PERIOD).concat(path);
 		}
+
+		_path = path;
 
 		_methodParameters =
 			MethodParametersResolverUtil.resolveMethodParameters(actionMethod);
 
+		Method realActionMethod = null;
+
 		try {
-			_realActionMethod = _actionClass.getDeclaredMethod(
+			realActionMethod = _actionClass.getDeclaredMethod(
 				actionMethod.getName(), actionMethod.getParameterTypes());
 		}
 		catch (NoSuchMethodException nsme) {
 		}
+
+		_realActionMethod = realActionMethod;
 
 		StringBundler sb = new StringBundler(_methodParameters.length * 2 + 4);
 
@@ -79,27 +95,28 @@ public class JSONWebServiceActionConfig
 		}
 
 		_signature = sb.toString();
-	}
-
-	public JSONWebServiceActionConfig(
-		String contextName, String contextPath, Object actionObject,
-		Class<?> actionClass, Method actionMethod, String path, String method) {
-
-		this(contextName, contextPath, actionClass, actionMethod, path, method);
 
 		_actionObject = actionObject;
 
-		try {
-			Class<?> actionObjectClass = actionObject.getClass();
+		Method newActionMethod = actionMethod;
 
-			Method actionObjectClassActionMethod = actionObjectClass.getMethod(
-				actionMethod.getName(), actionMethod.getParameterTypes());
+		if (actionObject != null) {
+			try {
+				Class<?> actionObjectClass = actionObject.getClass();
 
-			_actionMethod = actionObjectClassActionMethod;
+				Method actionObjectClassActionMethod =
+					actionObjectClass.getMethod(
+						actionMethod.getName(),
+						actionMethod.getParameterTypes());
+
+				newActionMethod = actionObjectClassActionMethod;
+			}
+			catch (NoSuchMethodException nsme) {
+				throw new IllegalArgumentException(nsme);
+			}
 		}
-		catch (NoSuchMethodException nsme) {
-			throw new IllegalArgumentException(nsme);
-		}
+
+		_actionMethod = newActionMethod;
 	}
 
 	@Override

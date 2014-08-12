@@ -145,12 +145,12 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 	private LayoutLocalService _layoutLocalService;
 
 	static {
-		_propertyNames = new ArrayList<String>(2);
+		Collection<String> propertyNames = new ArrayList<String>(2);
 
-		_propertyNames.add("groupId");
-		_propertyNames.add("plid");
+		propertyNames.add("groupId");
+		propertyNames.add("plid");
 
-		_propertyNames = Collections.unmodifiableCollection(_propertyNames);
+		_propertyNames = Collections.unmodifiableCollection(propertyNames);
 	}
 
 }

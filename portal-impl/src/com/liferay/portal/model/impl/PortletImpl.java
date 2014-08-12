@@ -96,6 +96,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * Constructs a portlet with no parameters.
 	 */
 	public PortletImpl() {
+		this(0, null);
 	}
 
 	/**
@@ -127,6 +128,7 @@ public class PortletImpl extends PortletBaseImpl {
 		_footerPortletJavaScript = new ArrayList<String>();
 		_unlinkedRoles = new HashSet<String>();
 		_roleMappers = new LinkedHashMap<String, String>();
+		_rootPortlet = this;
 		_initParams = new HashMap<String, String>();
 		_portletModes = new HashMap<String, Set<String>>();
 		_windowStates = new HashMap<String, Set<String>>();
@@ -290,6 +292,9 @@ public class PortletImpl extends PortletBaseImpl {
 		_resourceBundle = resourceBundle;
 		_portletInfo = portletInfo;
 		_portletFilters = portletFilters;
+		_processingEvents = new HashSet<QName>();
+		_publishingEvents = new HashSet<QName>();
+		_publicRenderParameters = new HashSet<PublicRenderParameter>();
 		setProcessingEvents(processingEvents);
 		setPublishingEvents(publishingEvents);
 		setPublicRenderParameters(publicRenderParameters);
@@ -4288,7 +4293,7 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * The supported processing events of the portlet.
 	 */
-	private final Set<QName> _processingEvents = new HashSet<QName>();
+	private final Set<QName> _processingEvents;
 
 	/**
 	 * Map of the supported processing events of the portlet keyed by the QName.
@@ -4299,8 +4304,7 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * The supported public render parameters of the portlet.
 	 */
-	private final Set<PublicRenderParameter> _publicRenderParameters =
-		new HashSet<PublicRenderParameter>();
+	private final Set<PublicRenderParameter> _publicRenderParameters;
 
 	/**
 	 * Map of the supported public render parameters of the portlet keyed by the
@@ -4321,7 +4325,7 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * The supported publishing events of the portlet.
 	 */
-	private final Set<QName> _publishingEvents = new HashSet<QName>();
+	private final Set<QName> _publishingEvents;
 
 	/**
 	 * <code>True</code> if the portlet supports remoting.
@@ -4367,7 +4371,7 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * The root portlet of this portlet instance.
 	 */
-	private final Portlet _rootPortlet = this;
+	private final Portlet _rootPortlet;
 
 	/**
 	 * The scheduler entries of the portlet.

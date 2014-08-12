@@ -33,6 +33,7 @@ public class AsyncProcessCallable
 	implements Externalizable, ProcessCallable<Serializable> {
 
 	public AsyncProcessCallable() {
+		this(null);
 	}
 
 	public AsyncProcessCallable(MethodInvocation methodInvocation) {

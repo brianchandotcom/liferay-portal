@@ -578,6 +578,14 @@ public class LiferaySeleniumHelper {
 				return true;
 			}
 
+			if (line.contains("[org.elasticsearch.common.inject]")) {
+    			return true;
+   			}
+
+			if (line.contains("[org.elasticsearch.index.mapper]")) {
+			    return true;
+			}
+
 			if (line.contains(
 					"[org.python.google.common.base.internal.Finalizer]")) {
 

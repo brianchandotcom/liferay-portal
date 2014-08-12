@@ -36,6 +36,9 @@ public class ProtectedActionRequest extends ActionRequestWrapper {
 		if (remoteUser != null) {
 			_userPrincipal = new ProtectedPrincipal(remoteUser);
 		}
+		else {
+			_userPrincipal = null;
+		}
 	}
 
 	@Override

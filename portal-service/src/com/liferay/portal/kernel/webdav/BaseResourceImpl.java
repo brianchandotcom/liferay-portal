@@ -60,13 +60,11 @@ public class BaseResourceImpl implements Resource {
 		String parentPath, String name, String displayName, Date createDate,
 		Date modifiedDate, long size) {
 
-		_href = parentPath;
-
 		if (Validator.isNotNull(name)) {
-			_href += StringPool.SLASH + name;
+			parentPath += StringPool.SLASH + name;
 		}
 
-		_href = HttpUtil.encodePath(_href);
+		_href = HttpUtil.encodePath(parentPath);
 
 		_displayName = displayName;
 

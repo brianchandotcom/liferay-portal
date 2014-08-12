@@ -44,6 +44,9 @@ public class UpgradeOptimizedConnectionHandler implements InvocationHandler {
 		if (productName.equals("Microsoft SQL Server")) {
 			_useUpgradeOptimizedPreparedStatementHandler = true;
 		}
+		else {
+			_useUpgradeOptimizedPreparedStatementHandler = false;
+		}
 	}
 
 	@Override

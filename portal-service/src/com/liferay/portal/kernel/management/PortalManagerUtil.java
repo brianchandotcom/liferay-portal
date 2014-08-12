@@ -105,13 +105,17 @@ public class PortalManagerUtil {
 	private static PortalManager _portalManager;
 
 	static {
+		Method manageMethod = null;
+
 		try {
-			_manageMethod = PortalManagerUtil.class.getDeclaredMethod(
+			manageMethod = PortalManagerUtil.class.getDeclaredMethod(
 				"manage", ManageAction.class);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_manageMethod = manageMethod;
 	}
 
 }

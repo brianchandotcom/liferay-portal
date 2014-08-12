@@ -59,6 +59,9 @@ public class ThemeDisplayModel {
 		if (portletDisplay != null) {
 			_portletDisplayModel = new PortletDisplayModel(portletDisplay);
 		}
+		else {
+			_portletDisplayModel = null;
+		}
 	}
 
 	public String getCdnHost() {

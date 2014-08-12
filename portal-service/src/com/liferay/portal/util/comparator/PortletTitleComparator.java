@@ -32,7 +32,7 @@ public class PortletTitleComparator
 	implements Comparator<Portlet>, Serializable {
 
 	public PortletTitleComparator(Locale locale) {
-		_locale = locale;
+		this(null, locale);
 	}
 
 	public PortletTitleComparator(

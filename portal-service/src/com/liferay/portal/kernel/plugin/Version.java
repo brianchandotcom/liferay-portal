@@ -290,6 +290,9 @@ public class Version implements Comparable<Version>, Serializable {
 		if (st.hasMoreTokens()) {
 			_buildNumber = st.nextToken();
 		}
+		else {
+			_buildNumber = null;
+		}
 	}
 
 	private static boolean _contains(

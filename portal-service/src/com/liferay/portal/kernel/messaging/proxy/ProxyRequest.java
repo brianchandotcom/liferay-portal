@@ -43,6 +43,7 @@ public class ProxyRequest implements Externalizable {
 	 * not use this for any other purpose.
 	 */
 	public ProxyRequest() {
+		_local = false;
 	}
 
 	public ProxyRequest(Method method, Object[] arguments) throws Exception {

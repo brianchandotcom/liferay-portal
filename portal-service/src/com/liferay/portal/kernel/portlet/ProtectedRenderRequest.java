@@ -36,6 +36,9 @@ public class ProtectedRenderRequest extends RenderRequestWrapper {
 		if (remoteUser != null) {
 			_userPrincipal = new ProtectedPrincipal(remoteUser);
 		}
+		else {
+			_userPrincipal = null;
+		}
 	}
 
 	@Override

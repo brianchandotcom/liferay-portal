@@ -29,6 +29,8 @@ public class GroupParentException extends PortalException {
 
 	public GroupParentException() {
 		super();
+
+		_type = 0;
 	}
 
 	public GroupParentException(int type) {
@@ -37,14 +39,20 @@ public class GroupParentException extends PortalException {
 
 	public GroupParentException(String msg) {
 		super(msg);
+
+		_type = 0;
 	}
 
 	public GroupParentException(String msg, Throwable cause) {
 		super(msg, cause);
+
+		_type = 0;
 	}
 
 	public GroupParentException(Throwable cause) {
 		super(cause);
+
+		_type = 0;
 	}
 
 	public int getType() {

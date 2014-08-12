@@ -374,6 +374,12 @@
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_INFO_MESSAGE" value1="There are no tasks." />
 	</command>
 
+	<command name="viewPG">
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="TITLE" value1="Kaleo Forms" />
+		<execute action="PGKaleoforms#assertElementPresent" locator-key1="OPTIONS_ICON" />
+		<execute action="PGKaleoforms#assertTextEquals" locator-key1="INBOX" value1="Inbox" />
+	</command>
+
 	<command name="viewProcessDueDate">
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
@@ -410,11 +416,5 @@
 		<execute action="PGKaleoforms#assertElementNotPresent" locator-key1="MY_PENDING_REQUESTS_TABLE_LAST_ACTIVITY_DATE" />
 		<execute action="PGKaleoforms#assertElementNotPresent" locator-key1="MY_PENDING_REQUESTS_TABLE_END_DATE" />
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_PENDING_REQUESTS_INFO_MESSAGE" value1="There are no pending publications requested by me." />
-	</command>
-
-	<command name="viewPG">
-		<execute action="PGKaleoforms#assertTextEquals" locator-key1="TITLE" value1="Kaleo Forms" />
-		<execute action="PGKaleoforms#assertElementPresent" locator-key1="OPTIONS_ICON" />
-		<execute action="PGKaleoforms#assertTextEquals" locator-key1="INBOX" value1="Inbox" />
 	</command>
 </definition>

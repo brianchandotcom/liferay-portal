@@ -560,6 +560,38 @@ public class ImageToolImpl implements ImageTool {
 		int scaledHeight = Math.max(1, (int)(factor * imageHeight));
 		int scaledWidth = Math.max(1, (int)(factor * imageWidth));
 
+		return doScale(renderedImage, scaledHeight, scaledWidth);
+	}
+
+	@Override
+	public void write(
+			RenderedImage renderedImage, String contentType, OutputStream os)
+		throws IOException {
+
+		if (contentType.contains(TYPE_BMP)) {
+			ImageIO.write(renderedImage, "bmp", os);
+		}
+		else if (contentType.contains(TYPE_GIF)) {
+			encodeGIF(renderedImage, os);
+		}
+		else if (contentType.contains(TYPE_JPEG) ||
+				 contentType.contains("jpeg")) {
+
+			ImageIO.write(renderedImage, "jpeg", os);
+		}
+		else if (contentType.contains(TYPE_PNG)) {
+			ImageIO.write(renderedImage, TYPE_PNG, os);
+		}
+		else if (contentType.contains(TYPE_TIFF) ||
+				 contentType.contains("tif")) {
+
+			ImageIO.write(renderedImage, "tiff", os);
+		}
+	}
+
+	protected RenderedImage doScale(
+		RenderedImage renderedImage, int scaledHeight, int scaledWidth) {
+
 		// See the following link for reference on how resize should be done.
 		// http://www.oracle.com/technetwork/java/index-137037.html
 
@@ -591,32 +623,6 @@ public class ImageToolImpl implements ImageTool {
 		originalGraphics.dispose();
 
 		return scaledBufferedImage;
-	}
-
-	@Override
-	public void write(
-			RenderedImage renderedImage, String contentType, OutputStream os)
-		throws IOException {
-
-		if (contentType.contains(TYPE_BMP)) {
-			ImageIO.write(renderedImage, "bmp", os);
-		}
-		else if (contentType.contains(TYPE_GIF)) {
-			encodeGIF(renderedImage, os);
-		}
-		else if (contentType.contains(TYPE_JPEG) ||
-				 contentType.contains("jpeg")) {
-
-			ImageIO.write(renderedImage, "jpeg", os);
-		}
-		else if (contentType.contains(TYPE_PNG)) {
-			ImageIO.write(renderedImage, TYPE_PNG, os);
-		}
-		else if (contentType.contains(TYPE_TIFF) ||
-				 contentType.contains("tif")) {
-
-			ImageIO.write(renderedImage, "tiff", os);
-		}
 	}
 
 	protected ImageMagick getImageMagick() {

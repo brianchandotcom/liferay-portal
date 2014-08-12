@@ -65,6 +65,9 @@ public class EntriesChecker extends RowChecker {
 		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
 			_documentLibraryDisplayPortlet = true;
 		}
+		else {
+			_documentLibraryDisplayPortlet = false;
+		}
 	}
 
 	@Override

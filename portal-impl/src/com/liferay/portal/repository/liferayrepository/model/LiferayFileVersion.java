@@ -40,7 +40,7 @@ import java.util.Map;
 public class LiferayFileVersion extends LiferayModel implements FileVersion {
 
 	public LiferayFileVersion(DLFileVersion dlFileVersion) {
-		_dlFileVersion = dlFileVersion;
+		this(dlFileVersion, false);
 	}
 
 	public LiferayFileVersion(

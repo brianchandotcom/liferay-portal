@@ -41,6 +41,9 @@ public class PKUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 		if (_trackValues) {
 			_valueMapper = ValueMapperFactoryUtil.getValueMapper();
 		}
+		else {
+			_valueMapper = null;
+		}
 	}
 
 	@Override

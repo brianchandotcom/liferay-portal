@@ -48,10 +48,12 @@ import javax.portlet.PortletRequest;
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 	public ConfigurationActionImpl() {
+		Method doProcessActionMethod = null;
+
 		try {
 			Class<?> clazz = getClass();
 
-			_doProcessActionMethod = clazz.getDeclaredMethod(
+			doProcessActionMethod = clazz.getDeclaredMethod(
 				"doProcessAction",
 				new Class<?>[] {
 					PortletConfig.class, ActionRequest.class,
@@ -61,6 +63,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_doProcessActionMethod = doProcessActionMethod;
 	}
 
 	@Override

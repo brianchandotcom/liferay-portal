@@ -42,20 +42,6 @@ import jcifs.util.MD4;
  */
 public class NetlogonConnection {
 
-	public NetlogonConnection() {
-		if (_negotiateFlags == 0) {
-			String negotiateFlags = PropsValues.NTLM_AUTH_NEGOTIATE_FLAGS;
-
-			if (negotiateFlags.startsWith("0x")) {
-				_negotiateFlags = Integer.valueOf(
-					negotiateFlags.substring(2), 16);
-			}
-			else {
-				_negotiateFlags = 0x600FFFFF;
-			}
-		}
-	}
-
 	public NetlogonAuthenticator computeNetlogonAuthenticator() {
 		int timestamp = (int)System.currentTimeMillis();
 
@@ -199,5 +185,16 @@ public class NetlogonConnection {
 	private byte[] _clientCredential;
 	private DcerpcHandle _dcerpcHandle;
 	private byte[] _sessionKey;
+
+	static {
+		String negotiateFlags = PropsValues.NTLM_AUTH_NEGOTIATE_FLAGS;
+
+		if (negotiateFlags.startsWith("0x")) {
+			_negotiateFlags = Integer.valueOf(negotiateFlags.substring(2), 16);
+		}
+		else {
+			_negotiateFlags = 0x600FFFFF;
+		}
+	}
 
 }

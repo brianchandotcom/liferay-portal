@@ -39,8 +39,11 @@ import javax.servlet.http.HttpServletResponse;
 public class SharepointRequest {
 
 	public SharepointRequest(
-			HttpServletRequest request, HttpServletResponse response, User user)
+			HttpServletRequest request, HttpServletResponse response,
+			String rootPath, User user)
 		throws SharepointException {
+
+		_rootPath = rootPath;
 
 		_request = request;
 		_response = response;
@@ -51,8 +54,15 @@ public class SharepointRequest {
 		addParams();
 	}
 
-	public SharepointRequest(String rootPath) {
-		_rootPath = rootPath;
+	public SharepointRequest(
+			HttpServletRequest request, HttpServletResponse response, User user)
+		throws SharepointException {
+
+		this(request, response, StringPool.BLANK, user);
+	}
+
+	public SharepointRequest(String rootPath) throws SharepointException {
+		this(null, null, rootPath, null);
 	}
 
 	public void addParam(String key, String value) {

@@ -44,8 +44,10 @@ public class SharedSessionWrapper implements HttpSession {
 				_log.warn("Wrapped portal session is null");
 			}
 		}
+		else {
+			_portalSession = portalSession;
+		}
 
-		_portalSession = portalSession;
 		_portletSession = portletSession;
 	}
 

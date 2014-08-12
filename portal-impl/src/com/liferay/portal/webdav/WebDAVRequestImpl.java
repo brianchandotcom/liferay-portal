@@ -16,7 +16,6 @@ package com.liferay.portal.webdav;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
@@ -53,6 +52,9 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 			pathInfo = strippedPathInfo;
 
 			_manualCheckInRequired = true;
+		}
+		else {
+			_manualCheckInRequired = false;
 		}
 
 		_path = WebDAVUtil.stripOfficeExtension(pathInfo);
@@ -159,7 +161,7 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 	private final long _groupId;
 	private final String _lockUuid;
 	private final boolean _manualCheckInRequired;
-	private final String _path = StringPool.BLANK;
+	private final String _path;
 	private final PermissionChecker _permissionChecker;
 	private final HttpServletRequest _request;
 	private final HttpServletResponse _response;

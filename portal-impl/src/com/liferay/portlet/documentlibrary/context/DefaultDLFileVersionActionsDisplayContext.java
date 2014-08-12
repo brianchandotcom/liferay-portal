@@ -63,15 +63,17 @@ public class DefaultDLFileVersionActionsDisplayContext
 			new DLFileEntryActionsDisplayContextHelper(
 				themeDisplay.getPermissionChecker(), fileEntry, fileVersion);
 
-		_fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
+		long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
-		if ((_fileEntryTypeId == -1) && (fileEntry != null) &&
+		if ((fileEntryTypeId == -1) && (fileEntry != null) &&
 			(fileEntry.getModel() instanceof DLFileEntry)) {
 
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-			_fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
+			fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
 		}
+
+		_fileEntryTypeId = fileEntryTypeId;
 
 		_folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 		_portletDisplay = themeDisplay.getPortletDisplay();

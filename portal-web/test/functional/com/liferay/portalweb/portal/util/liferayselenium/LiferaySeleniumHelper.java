@@ -697,8 +697,7 @@ public class LiferaySeleniumHelper {
 					"of type.*")) {
 
 			if (line.contains(
-					"[com.google.javascript.jscomp.Tracer." +
-						"ThreadTrace]")) {
+					"[com.google.javascript.jscomp.Tracer.ThreadTrace]")) {
 
 				return true;
 			}

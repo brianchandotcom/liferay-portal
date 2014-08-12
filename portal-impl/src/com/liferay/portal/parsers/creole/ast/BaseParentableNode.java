@@ -29,17 +29,6 @@ public abstract class BaseParentableNode extends ASTNode {
 		this(collectionNode, 0);
 	}
 
-	public BaseParentableNode(CollectionNode collectionNode, int tokenType) {
-		super(tokenType);
-
-		if (collectionNode != null) {
-			_collectionNode = collectionNode;
-		}
-		else {
-			_collectionNode = new CollectionNode();
-		}
-	}
-
 	public BaseParentableNode(int tokenType) {
 		this(null, tokenType);
 	}
@@ -58,6 +47,17 @@ public abstract class BaseParentableNode extends ASTNode {
 
 	public int getChildASTNodesCount() {
 		return _collectionNode.size();
+	}
+
+	protected BaseParentableNode(CollectionNode collectionNode, int tokenType) {
+		super(tokenType);
+
+		if (collectionNode != null) {
+			_collectionNode = collectionNode;
+		}
+		else {
+			_collectionNode = new CollectionNode();
+		}
 	}
 
 	private final CollectionNode _collectionNode;

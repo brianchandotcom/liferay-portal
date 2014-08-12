@@ -134,7 +134,6 @@ public class Entity {
 		_sessionFactory = GetterUtil.getString(
 			sessionFactory, DEFAULT_SESSION_FACTORY);
 		_txManager = GetterUtil.getString(txManager, DEFAULT_TX_MANAGER);
-		boolean tempCacheEnabled = cacheEnabled;
 		_dynamicUpdateEnabled = dynamicUpdateEnabled;
 		_jsonEnabled = jsonEnabled;
 		_mvccEnabled = mvccEnabled;
@@ -169,12 +168,14 @@ public class Entity {
 		if ((_blobList != null) && !_blobList.isEmpty()) {
 			for (EntityColumn col : _blobList) {
 				if (!col.isLazy()) {
-					tempCacheEnabled = false;
+					cacheEnabled = false;
 
 					break;
 				}
 			}
 		}
+
+		_cacheEnabled = cacheEnabled;
 
 		boolean containerModel = false;
 
@@ -188,7 +189,6 @@ public class Entity {
 			}
 		}
 
-		_cacheEnabled = tempCacheEnabled;
 		_containerModel = containerModel;
 	}
 

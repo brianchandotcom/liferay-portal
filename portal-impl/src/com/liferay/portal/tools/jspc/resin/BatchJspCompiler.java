@@ -40,14 +40,10 @@ public class BatchJspCompiler {
 	}
 
 	public BatchJspCompiler(String appDir, String classDir) {
-
-		String tempAppDir = null;
-		String tempClassDir = null;
+		_appDir = appDir;
+		_classDir = classDir;
 
 		try {
-			tempAppDir = appDir;
-			tempClassDir = classDir;
-
 			DirectoryScanner ds = new DirectoryScanner();
 
 			ds.setBasedir(appDir);
@@ -64,9 +60,6 @@ public class BatchJspCompiler {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		_appDir = tempAppDir;
-		_classDir = tempClassDir;
 	}
 
 	private void _compile(String[] fileNames) throws Exception {

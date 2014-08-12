@@ -574,8 +574,21 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			node.getGroupId(), getUserId(), tempFolderName);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #renamePage(long, String,
+	 *             String, ServiceContext)}
+	 **/
 	@Override
 	public void movePage(
+			long nodeId, String title, String newTitle,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		renamePage(nodeId, title, newTitle, serviceContext);
+	}
+
+	@Override
+	public void renamePage(
 			long nodeId, String title, String newTitle,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -586,7 +599,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		WikiNodePermission.check(
 			getPermissionChecker(), nodeId, ActionKeys.ADD_PAGE);
 
-		wikiPageLocalService.movePage(
+		wikiPageLocalService.renamePage(
 			getUserId(), nodeId, title, newTitle, serviceContext);
 	}
 

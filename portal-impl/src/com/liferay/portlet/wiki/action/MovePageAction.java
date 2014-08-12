@@ -145,7 +145,7 @@ public class MovePageAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			WikiPage.class.getName(), actionRequest);
 
-		WikiPageServiceUtil.movePage(nodeId, title, newTitle, serviceContext);
+		WikiPageServiceUtil.renamePage(nodeId, title, newTitle, serviceContext);
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

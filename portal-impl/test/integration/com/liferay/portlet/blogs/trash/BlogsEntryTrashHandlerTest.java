@@ -202,9 +202,9 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), title, subtitle, description, content,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			smallImage, smallImageURL, smallImageFileName,
+			0, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, allowPingbacks, allowTrackbacks,
+			trackbacks, smallImage, smallImageURL, smallImageFileName,
 			smallImageInputStream, serviceContext);
 
 		if (approved) {

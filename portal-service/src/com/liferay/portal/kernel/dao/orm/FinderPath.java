@@ -69,6 +69,9 @@ public class FinderPath {
 		if (cacheKeyGenerator.isCallingGetCacheKeyThreadSafe()) {
 			_cacheKeyGenerator = cacheKeyGenerator;
 		}
+		else {
+			_cacheKeyGenerator = null;
+		}
 
 		_initCacheKeyPrefix(methodName, params);
 		_initLocalCacheKeyPrefix();

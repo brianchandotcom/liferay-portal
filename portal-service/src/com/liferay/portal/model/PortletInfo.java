@@ -23,6 +23,7 @@ import java.io.Serializable;
 public class PortletInfo implements Serializable {
 
 	public PortletInfo() {
+		this(null, null, null, null);
 	}
 
 	public PortletInfo(

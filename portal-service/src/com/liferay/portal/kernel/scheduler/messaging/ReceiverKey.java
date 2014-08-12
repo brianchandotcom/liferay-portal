@@ -29,6 +29,8 @@ public class ReceiverKey implements Serializable {
 	 * not use this for any other purpose.
 	 */
 	public ReceiverKey() {
+		_jobName = null;
+		_groupName = null;
 	}
 
 	public ReceiverKey(String jobName, String groupName) {

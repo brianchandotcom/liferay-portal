@@ -28,7 +28,6 @@ import com.liferay.portal.model.User;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -263,52 +262,68 @@ public class UserAttributes {
 	public UserAttributes(User user) {
 		_user = user;
 
-		try {
-			List<Address> addresses = user.getAddresses();
+		Address businessAddress = null;
+		Address personalAddress = null;
 
-			for (Address address : addresses) {
+		Phone businessPhone = null;
+		Phone businessFaxPhone = null;
+		Phone mobilePhone = null;
+		Phone pagerPhone = null;
+		Phone personalPhone = null;
+		Phone personalFaxPhone = null;
+
+		try {
+			for (Address address : user.getAddresses()) {
 				ListType listType = address.getType();
 
 				String listTypeName = listType.getName();
 
 				if (listTypeName.equals("business")) {
-					_businessAddress = address;
+					businessAddress = address;
 				}
 				else if (listTypeName.equals("personal")) {
-					_personalAddress = address;
+					personalAddress = address;
 				}
 			}
 
-			List<Phone> phones = user.getPhones();
-
-			for (Phone phone : phones) {
+			for (Phone phone : user.getPhones()) {
 				ListType listType = phone.getType();
 
 				String listTypeName = listType.getName();
 
 				if (listTypeName.equals("business")) {
-					_businessPhone = phone;
+					businessPhone = phone;
 				}
 				else if (listTypeName.equals("business-fax")) {
-					_businessFaxPhone = phone;
+					businessFaxPhone = phone;
 				}
 				else if (listTypeName.equals("mobile-phone")) {
-					_mobilePhone = phone;
+					mobilePhone = phone;
 				}
 				else if (listTypeName.equals("pager")) {
-					_pagerPhone = phone;
+					pagerPhone = phone;
 				}
 				else if (listTypeName.equals("personal")) {
-					_personalPhone = phone;
+					personalPhone = phone;
 				}
 				else if (listTypeName.equals("personal-fax")) {
-					_personalFaxPhone = phone;
+					personalFaxPhone = phone;
 				}
 			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_businessAddress = businessAddress;
+		_personalAddress = personalAddress;
+
+		_businessPhone = businessPhone;
+		_businessFaxPhone = businessFaxPhone;
+		_mobilePhone = mobilePhone;
+		_pagerPhone = pagerPhone;
+		_personalPhone = personalPhone;
+		_personalFaxPhone = personalFaxPhone;
 	}
 
 	public String getValue(String name) throws PortalException {

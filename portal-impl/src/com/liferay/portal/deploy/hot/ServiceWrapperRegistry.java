@@ -54,7 +54,8 @@ public class ServiceWrapperRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceWrapperRegistry.class);
 
-	private final ServiceTracker<ServiceWrapper<?>, ServiceBag<?>> _serviceTracker;
+	private final ServiceTracker<ServiceWrapper<?>, ServiceBag<?>>
+		_serviceTracker;
 
 	private class ServiceWrapperServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<ServiceWrapper<?>, ServiceBag<?>> {

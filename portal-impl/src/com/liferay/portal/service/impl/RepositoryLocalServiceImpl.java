@@ -394,8 +394,9 @@ public class RepositoryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		RepositoryLocalServiceImpl.class);
 
-	private final Map<Long, LocalRepository> _localRepositoriesByRepositoryEntryId =
-		new ConcurrentHashMap<Long, LocalRepository>();
+	private final Map<Long, LocalRepository>
+		_localRepositoriesByRepositoryEntryId =
+			new ConcurrentHashMap<Long, LocalRepository>();
 	private final Map<Long, LocalRepository> _localRepositoriesByRepositoryId =
 		new ConcurrentHashMap<Long, LocalRepository>();
 	private final Map<Long, com.liferay.portal.kernel.repository.Repository>

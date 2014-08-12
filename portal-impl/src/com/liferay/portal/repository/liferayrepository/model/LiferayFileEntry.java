@@ -572,7 +572,8 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(LiferayFileEntry.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiferayFileEntry.class);
 
 	private final DLFileEntry _dlFileEntry;
 	private DLFileVersion _dlFileVersion;

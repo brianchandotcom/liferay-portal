@@ -78,7 +78,8 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 	private final ConcurrentHashMap<K, ServiceTrackerBucket<S, R>>
 		_serviceTrackerBuckets =
 			new ConcurrentHashMap<K, ServiceTrackerBucket<S, R>>();
-	private final ServiceTrackerBucketFactory<S, R> _serviceTrackerMapBucketFactory;
+	private final ServiceTrackerBucketFactory<S, R>
+		_serviceTrackerMapBucketFactory;
 
 	private class ServiceReferenceServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<S, ServiceReference<S>> {

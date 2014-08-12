@@ -216,7 +216,8 @@ public class UpgradePermission extends UpgradeProcess {
 		ResourceConstants.SCOPE_GROUP_TEMPLATE
 	};
 
-	private static final Log _log = LogFactoryUtil.getLog(UpgradePermission.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradePermission.class);
 
 	private class UpgradePermissionedModel implements PermissionedModel {
 

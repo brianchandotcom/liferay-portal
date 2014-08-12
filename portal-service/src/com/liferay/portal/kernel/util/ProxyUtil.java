@@ -118,7 +118,7 @@ public class ProxyUtil {
 	}
 
 	private static final Class<?>[] _argumentsClazz = {InvocationHandler.class};
-	private static ConcurrentMap
+	private static final ReferenceQueue<ClassLoader>
 		<ClassLoader, ConcurrentMap<LookupKey, Class<?>>> _classReferences =
 			new ConcurrentReferenceKeyHashMap
 				<ClassLoader, ConcurrentMap<LookupKey, Class<?>>>(

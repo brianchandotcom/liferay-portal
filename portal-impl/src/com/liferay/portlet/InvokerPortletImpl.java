@@ -752,7 +752,8 @@ public class InvokerPortletImpl implements InvokerPortlet {
 		setPortletFilters();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(InvokerPortletImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		InvokerPortletImpl.class);
 
 	private List<ActionFilter> _actionFilters;
 	private boolean _checkAuthToken;

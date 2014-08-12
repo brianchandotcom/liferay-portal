@@ -304,7 +304,8 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		LiferayEhcacheRegionFactory.class);
 
 	private MBeanRegisteringPortalLifecycle _mBeanRegisteringPortalLifecycle;
-	private final PortalCacheManager<Serializable, Serializable> _portalCacheManager;
+	private final PortalCacheManager<Serializable, Serializable>
+		_portalCacheManager;
 	private boolean _usingDefault;
 
 	private class HibernatePortalCacheManager

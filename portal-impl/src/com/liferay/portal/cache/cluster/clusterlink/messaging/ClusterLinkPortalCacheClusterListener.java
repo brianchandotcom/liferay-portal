@@ -132,6 +132,7 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 
 	private final PortalCacheManager<Serializable, Serializable>
 		_hibernateCacheManager;
-	private final PortalCacheManager<Serializable, Serializable> _portalCacheManager;
+	private final PortalCacheManager<Serializable, Serializable>
+		_portalCacheManager;
 
 }

@@ -58,9 +58,10 @@ public class PrincipalThreadLocal {
 		_password.set(password);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(PrincipalThreadLocal.class);
-	private static final ThreadLocal<String> _name = new AutoResetThreadLocal<String>(
-		PrincipalThreadLocal.class + "._name");
+	private static final Log _log = LogFactoryUtil.getLog(
+		PrincipalThreadLocal.class);
+	private static final ThreadLocal<String> _name =
+		new AutoResetThreadLocal<String>(PrincipalThreadLocal.class + "._name");
 	private static final ThreadLocal<String> _password =
 		new AutoResetThreadLocal<String>(
 			PrincipalThreadLocal.class + "._password");

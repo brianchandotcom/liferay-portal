@@ -154,9 +154,11 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		}
 	}
 
+	@Override
 	public abstract T fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId);
 
+	@Override
 	public T fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
 		return null;
 	}

@@ -122,7 +122,7 @@ public class ActionUtil {
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			coverImageId);
 
-		if (xPos > 0 || yPos > 0 || width > 0 || height > 0) {
+		if ((xPos > 0) || (yPos > 0) || (width > 0) || (height > 0)) {
 			ImageBag imageBag = ImageToolUtil.read(
 				fileEntry.getContentStream());
 

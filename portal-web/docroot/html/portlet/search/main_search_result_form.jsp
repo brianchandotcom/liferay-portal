@@ -220,47 +220,46 @@ if (summary != null) {
 
 							long assetVocabularyId = assetCategory.getVocabularyId();
 
-							if (assetVocabularyIdsToCategoryIdsMap.containsKey(assetVocabularyId)) {
-								List<AssetCategory> assetCategories = assetVocabularyIdsToCategoryIdsMap.get(assetVocabularyId);
-								assetCategories.add(assetCategory);
+							List<AssetCategory> assetCategories = assetVocabularyIdsToCategoryIdsMap.get(assetVocabularyId);
+
+							if (assetCategories == null) {
+								assetCategories = new ArrayList<AssetCategory>();
+
+								assetVocabularyIdsToCategoryIdsMap.put(assetVocabularyId, assetCategories);
 							}
-							else {
-								ArrayList assetCategoryList = new ArrayList<AssetCategory>();
-								assetCategoryList.add(assetCategory);
-								assetVocabularyIdsToCategoryIdsMap.put(assetVocabularyId, assetCategoryList);
-							}
+
+							assetCategories.add(assetCategory);
 						}
+						%>
 
-						for (long assetVocabularyId: assetVocabularyIdsToCategoryIdsMap.keySet()) {
-							AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetVocabularyId);
-							%>
-
-							<div class="taglib-asset-categories-summary">
-								<%= HtmlUtil.escape(assetVocabulary.getTitle(assetCategoryLocale)) %>:
+						<div class="taglib-asset-categories-summary">
 
 							<%
-							List<AssetCategory> assetCategories = assetVocabularyIdsToCategoryIdsMap.get(assetVocabularyId);
-							for (AssetCategory assetCategory: assetCategories) {
+							for (long assetVocabularyId: assetVocabularyIdsToCategoryIdsMap.keySet()) {
+								AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetVocabularyId);
+							%>
 
+								<%= HtmlUtil.escape(assetVocabulary.getTitle(assetCategoryLocale)) %>:
+
+								<%
+								List<AssetCategory> assetCategories = assetVocabularyIdsToCategoryIdsMap.get(assetVocabularyId);
+
+								for (AssetCategory assetCategory: assetCategories) {
 									PortletURL categoryURL = PortletURLUtil.clone(portletURL, renderResponse);
 
 									categoryURL.setParameter(Field.ASSET_CATEGORY_IDS, String.valueOf(assetCategory.getCategoryId()));
-							%>
+								%>
 
 									<a class="asset-category" href="<%= categoryURL.toString() %>">
 										<%= _buildAssetCategoryPath(assetCategory, assetCategoryLocale) %>
 									</a>
 
 							<%
+								}
 							}
 							%>
 
-							</div>
-
-						<%
-						}
-						%>
-
+						</div>
 					</div>
 				</c:if>
 			</div>

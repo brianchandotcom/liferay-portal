@@ -33,6 +33,8 @@ import org.apache.poi.ss.usermodel.Row;
 public class XLSTextStripper {
 
 	public XLSTextStripper(InputStream is) {
+		String text = null;
+
 		try {
 			StringBundler sb = new StringBundler();
 
@@ -80,11 +82,13 @@ public class XLSTextStripper {
 				}
 			}
 
-			_text = sb.toString();
+			text = sb.toString();
 		}
 		catch (Exception e) {
 			_log.error(e.getMessage());
 		}
+
+		_text = text;
 	}
 
 	public String getText() {

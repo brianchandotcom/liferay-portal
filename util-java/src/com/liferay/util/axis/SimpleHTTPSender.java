@@ -49,6 +49,9 @@ public class SimpleHTTPSender extends HTTPSender {
 		if (Validator.isNotNull(regexp)) {
 			_pattern = Pattern.compile(regexp);
 		}
+		else {
+			_pattern = null;
+		}
 	}
 
 	@Override

@@ -345,8 +345,8 @@
 
 				result = {};
 
-				var isGetterString = Lang.isString(attributeGetter);
 				var isGetterFn = Lang.isFunction(attributeGetter);
+				var isGetterString = Lang.isString(attributeGetter);
 
 				var attrs = el.attributes;
 				var length = attrs.length;

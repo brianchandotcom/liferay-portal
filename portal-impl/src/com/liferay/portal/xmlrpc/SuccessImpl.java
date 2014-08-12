@@ -55,6 +55,6 @@ public class SuccessImpl implements Success {
 		return sb.toString();
 	}
 
-	private String _description;
+	private final String _description;
 
 }

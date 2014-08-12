@@ -503,7 +503,7 @@ public abstract class BaseRepositoryImpl
 
 	private long _companyId;
 	private long _groupId;
-	private LocalRepository _localRepository = new DefaultLocalRepositoryImpl(
+	private final LocalRepository _localRepository = new DefaultLocalRepositoryImpl(
 		this);
 	private long _repositoryId;
 	private UnicodeProperties _typeSettingsProperties;

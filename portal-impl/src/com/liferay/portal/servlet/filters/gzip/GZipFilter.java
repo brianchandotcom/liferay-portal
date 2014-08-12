@@ -128,8 +128,8 @@ public class GZipFilter extends BasePortalFilter {
 
 	private static final String _COMPRESS = "compress";
 
-	private static Log _log = LogFactoryUtil.getLog(GZipFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(GZipFilter.class);
 
-	private boolean _filterEnabled;
+	private final boolean _filterEnabled;
 
 }

@@ -463,6 +463,6 @@ public class DBUpgrader {
 	private static final String _DELETE_TEMP_IMAGES_2 =
 		"delete from JournalArticleImage where tempImage = TRUE";
 
-	private static Log _log = LogFactoryUtil.getLog(DBUpgrader.class);
+	private static final Log _log = LogFactoryUtil.getLog(DBUpgrader.class);
 
 }

@@ -92,6 +92,6 @@ public class MessageDatagramReceiveHandler
 		}
 	}
 
-	private MessageBus _messageBus;
+	private final MessageBus _messageBus;
 
 }

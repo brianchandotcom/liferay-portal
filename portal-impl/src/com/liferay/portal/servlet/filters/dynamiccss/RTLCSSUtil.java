@@ -81,10 +81,10 @@ public class RTLCSSUtil {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RTLCSSUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(RTLCSSUtil.class);
+	private static final Pattern[] _patterns = PatternFactory.compile(
+		PropsValues.RTL_CSS_EXCLUDED_PATHS_REGEXP);
 
 	private static String _jsScript;
-	private static Pattern[] _patterns = PatternFactory.compile(
-		PropsValues.RTL_CSS_EXCLUDED_PATHS_REGEXP);
 
 }

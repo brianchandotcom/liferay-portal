@@ -104,6 +104,6 @@ public class RepositoryModelNameComparator<T> extends OrderByComparator<T> {
 		}
 	}
 
-	private boolean _ascending;
+	private final boolean _ascending;
 
 }

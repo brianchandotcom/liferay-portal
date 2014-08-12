@@ -43,6 +43,6 @@ public class ClassLoaderObjectInputStream extends ObjectInputStream {
 		return ClassResolverUtil.resolve(name, _classLoader);
 	}
 
-	private ClassLoader _classLoader;
+	private final ClassLoader _classLoader;
 
 }

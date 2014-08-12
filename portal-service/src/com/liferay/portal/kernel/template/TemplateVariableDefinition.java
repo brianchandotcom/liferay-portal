@@ -128,14 +128,14 @@ public class TemplateVariableDefinition {
 		return _repeatable;
 	}
 
-	private String _accessor;
-	private Class<?> _clazz;
-	private String _dataType;
-	private String _help;
-	private TemplateVariableDefinition _itemTemplateVariableDefinition;
-	private String _label;
-	private String _name;
-	private boolean _repeatable;
+	private final String _accessor;
+	private final Class<?> _clazz;
+	private final String _dataType;
+	private final String _help;
+	private final TemplateVariableDefinition _itemTemplateVariableDefinition;
+	private final String _label;
+	private final String _name;
+	private final boolean _repeatable;
 	private TemplateVariableCodeHandler _templateVariableCodeHandler;
 
 }

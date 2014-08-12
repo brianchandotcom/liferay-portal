@@ -89,7 +89,7 @@ public class IdentifiableBeanInvokerUtil {
 		}
 	}
 
-	private static MethodKey _invokeMethodKey = new MethodKey(
+	private static final MethodKey _invokeMethodKey = new MethodKey(
 		IdentifiableBeanInvokerUtil.class, "_invoke", MethodHandler.class,
 		String.class, String.class, String.class);
 

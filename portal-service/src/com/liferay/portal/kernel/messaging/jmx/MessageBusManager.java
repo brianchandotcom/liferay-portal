@@ -46,6 +46,6 @@ public class MessageBusManager implements MessageBusManagerMBean {
 	private static final String _OBJECT_NAME =
 		"Liferay:product=Portal,type=MessageBusManager,host=localhost";
 
-	private MessageBus _messageBus;
+	private final MessageBus _messageBus;
 
 }

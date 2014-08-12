@@ -70,7 +70,7 @@ public class ReceiverKey implements Serializable {
 		return _jobName.hashCode() + (_groupName.hashCode() * 11);
 	}
 
-	private String _groupName;
-	private String _jobName;
+	private final String _groupName;
+	private final String _jobName;
 
 }

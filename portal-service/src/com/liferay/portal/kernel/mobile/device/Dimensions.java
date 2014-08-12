@@ -51,7 +51,7 @@ public class Dimensions implements Serializable {
 		return sb.toString();
 	}
 
-	private float _height;
-	private float _width;
+	private final float _height;
+	private final float _width;
 
 }

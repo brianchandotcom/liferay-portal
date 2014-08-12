@@ -77,8 +77,8 @@ public class Domain implements Serializable {
 		return _loaded;
 	}
 
-	private String _domainName;
-	private boolean _loaded;
-	private List<MBean> _mBeans;
+	private final String _domainName;
+	private final boolean _loaded;
+	private final List<MBean> _mBeans;
 
 }

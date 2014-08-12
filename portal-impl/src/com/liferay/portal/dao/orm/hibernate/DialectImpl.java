@@ -34,6 +34,6 @@ public class DialectImpl implements Dialect {
 		return _dialect.supportsLimit();
 	}
 
-	private org.hibernate.dialect.Dialect _dialect;
+	private final org.hibernate.dialect.Dialect _dialect;
 
 }

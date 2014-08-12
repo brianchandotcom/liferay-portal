@@ -108,6 +108,6 @@ public class RepositoryModelModifiedDateComparator<T>
 		}
 	}
 
-	private boolean _ascending;
+	private final boolean _ascending;
 
 }

@@ -337,6 +337,6 @@ public class FileVersionWrapper
 		return new FileVersionWrapper(_fileVersion.toUnescapedModel());
 	}
 
-	private FileVersion _fileVersion;
+	private final FileVersion _fileVersion;
 
 }

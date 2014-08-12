@@ -69,6 +69,6 @@ public class FallbackSettings extends BaseSettings {
 		return null;
 	}
 
-	private FallbackKeys _fallbackKeys;
+	private final FallbackKeys _fallbackKeys;
 
 }

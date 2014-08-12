@@ -65,6 +65,6 @@ public class HotDeployMessageListener extends BaseMessageListener {
 	protected void onUndeploy(Message message) throws Exception {
 	}
 
-	private Set<String> _servletContextNames;
+	private final Set<String> _servletContextNames;
 
 }

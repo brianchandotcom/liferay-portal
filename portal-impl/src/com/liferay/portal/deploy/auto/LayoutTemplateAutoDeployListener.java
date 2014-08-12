@@ -64,9 +64,9 @@ public class LayoutTemplateAutoDeployListener extends BaseAutoDeployListener {
 		return code;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutTemplateAutoDeployListener.class);
 
-	private AutoDeployer _autoDeployer;
+	private final AutoDeployer _autoDeployer;
 
 }

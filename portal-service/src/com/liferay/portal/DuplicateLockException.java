@@ -30,6 +30,6 @@ public class DuplicateLockException extends PortalException {
 		return _lock;
 	}
 
-	private Lock _lock;
+	private final Lock _lock;
 
 }

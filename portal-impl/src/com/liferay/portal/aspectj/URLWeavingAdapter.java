@@ -151,7 +151,7 @@ public class URLWeavingAdapter extends WeavingAdaptor {
 		}
 	}
 
-	private Map<String, byte[]> _generatedClasses =
+	private final Map<String, byte[]> _generatedClasses =
 		new HashMap<String, byte[]>();
 
 	private class RecordGeneratedClassHandler implements GeneratedClassHandler {

@@ -359,8 +359,8 @@ public class QueryImpl implements Query {
 		}
 	}
 
-	private String[] _names;
-	private org.hibernate.Query _query;
-	private boolean _strictName;
+	private final String[] _names;
+	private final org.hibernate.Query _query;
+	private final boolean _strictName;
 
 }

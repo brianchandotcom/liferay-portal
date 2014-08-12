@@ -275,7 +275,7 @@ public class JSONWebServiceRegistrator {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceRegistrator.class);
 
 	private final JSONWebServiceMappingResolver _jsonWebServiceMappingResolver;

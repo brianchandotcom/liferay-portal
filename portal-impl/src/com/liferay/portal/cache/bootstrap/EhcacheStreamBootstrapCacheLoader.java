@@ -153,19 +153,19 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		EhcacheStreamBootstrapCacheLoader.class);
-
-	private static Map<String, List<String>> _deferredEhcaches =
+	private static final Map<String, List<String>> _deferredEhcaches =
 		new HashMap<String, List<String>>();
-	private static ThreadLocal<Boolean> _skipBootstrapThreadLocal =
+	private static final Log _log = LogFactoryUtil.getLog(
+		EhcacheStreamBootstrapCacheLoader.class);
+	private static final ThreadLocal<Boolean> _skipBootstrapThreadLocal =
 		new InitialThreadLocal<Boolean>(
 			EhcacheStreamBootstrapCacheLoader.class +
 				"._skipBootstrapThreadLocal",
 			false);
+
 	private static boolean _started;
 
-	private boolean _bootstrapAsynchronously = true;
+	private final boolean _bootstrapAsynchronously = true;
 
 	private class EhcacheStreamClientThread extends Thread {
 

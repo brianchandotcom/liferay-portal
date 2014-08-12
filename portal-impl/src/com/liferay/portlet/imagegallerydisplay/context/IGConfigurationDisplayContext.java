@@ -89,7 +89,7 @@ public class IGConfigurationDisplayContext {
 
 	private List<KeyValuePair> _availableMimeTypes;
 	private List<KeyValuePair> _currentMimeTypes;
-	private DLPortletInstanceSettings _dlPortletInstanceSettings;
-	private ThemeDisplay _themeDisplay;
+	private final DLPortletInstanceSettings _dlPortletInstanceSettings;
+	private final ThemeDisplay _themeDisplay;
 
 }

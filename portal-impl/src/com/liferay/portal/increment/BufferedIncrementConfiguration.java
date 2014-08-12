@@ -123,7 +123,7 @@ public class BufferedIncrementConfiguration {
 		return _standbyEnabled;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BufferedIncrementConfiguration.class);
 
 	private final boolean _enabled;

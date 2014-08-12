@@ -42,7 +42,7 @@ public class FallbackKeys {
 		return fallbackKeysArray;
 	}
 
-	private Map<String, String[]> _fallbackKeysMap =
+	private final Map<String, String[]> _fallbackKeysMap =
 		new HashMap<String, String[]>();
 
 }

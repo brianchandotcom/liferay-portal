@@ -70,11 +70,11 @@ public class ClassVisibilityChecker {
 		return false;
 	}
 
-	private static Set<String> _forbiddenClasses = new HashSet<String>(
+	private static final Set<String> _forbiddenClasses = new HashSet<String>(
 		Arrays.asList(PropsValues.SCRIPTING_FORBIDDEN_CLASSES));
 
-	private boolean _allowAll;
-	private Set<Pattern> _allowedPatterns;
-	private boolean _denyAll;
+	private final boolean _allowAll;
+	private final Set<Pattern> _allowedPatterns;
+	private final boolean _denyAll;
 
 }

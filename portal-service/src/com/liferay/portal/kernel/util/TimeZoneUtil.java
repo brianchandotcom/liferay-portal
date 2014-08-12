@@ -80,13 +80,13 @@ public class TimeZoneUtil {
 		}
 	}
 
-	private static TimeZoneUtil _instance = new TimeZoneUtil();
+	private static final TimeZoneUtil _instance = new TimeZoneUtil();
 
 	static {
 		GMT = getTimeZone("GMT");
 	}
 
 	private TimeZone _timeZone;
-	private Map<String, TimeZone> _timeZones = new HashMap<String, TimeZone>();
+	private final Map<String, TimeZone> _timeZones = new HashMap<String, TimeZone>();
 
 }

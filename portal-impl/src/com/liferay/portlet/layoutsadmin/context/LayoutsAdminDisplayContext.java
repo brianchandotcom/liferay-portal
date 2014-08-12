@@ -450,21 +450,21 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private String _backURL;
-	private GroupDisplayContextHelper _groupDisplayContextHelper;
+	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
-	private LiferayPortletResponse _liferayPortletResponse;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private Organization _organization;
 	private String _pagesName;
-	private boolean _privateLayout;
+	private final boolean _privateLayout;
 	private String _redirect;
-	private HttpServletRequest _request;
+	private final HttpServletRequest _request;
 	private String _rootNodeName;
 	private Layout _selLayout;
 	private LayoutSet _selLayoutSet;
 	private Long _selPlid;
 	private User _selUser;
-	private String _tabs1;
+	private final String _tabs1;
 	private String _tabs1Names;
 	private UserGroup _userGroup;
 

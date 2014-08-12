@@ -48,6 +48,6 @@ public class ReadOnlyBeanHandler implements InvocationHandler {
 		}
 	}
 
-	private Object _bean;
+	private final Object _bean;
 
 }

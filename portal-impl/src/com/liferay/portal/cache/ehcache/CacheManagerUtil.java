@@ -82,8 +82,8 @@ public class CacheManagerUtil {
 		return cacheManager;
 	}
 
-	private static Field _statisticsExecutorField;
-	private static Field _workQueueField;
+	private static final Field _statisticsExecutorField;
+	private static final Field _workQueueField;
 
 	static {
 		try {

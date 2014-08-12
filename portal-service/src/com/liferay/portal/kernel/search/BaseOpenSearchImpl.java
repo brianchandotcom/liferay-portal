@@ -536,7 +536,7 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 		return portletURL;
 	}
 
-	private boolean _enabled = GetterUtil.getBoolean(
+	private final boolean _enabled = GetterUtil.getBoolean(
 		PropsUtil.get(getClass().getName()), true);
 
 }

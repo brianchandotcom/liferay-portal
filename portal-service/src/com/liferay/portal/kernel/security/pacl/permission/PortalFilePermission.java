@@ -53,7 +53,7 @@ public class PortalFilePermission {
 
 	}
 
-	private static PACL _pacl = new NoPACL();
+	private static final PACL _pacl = new NoPACL();
 
 	private static class NoPACL implements PACL {
 

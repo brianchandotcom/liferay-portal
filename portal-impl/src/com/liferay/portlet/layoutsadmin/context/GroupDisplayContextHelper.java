@@ -167,7 +167,7 @@ public class GroupDisplayContextHelper {
 	private UnicodeProperties _groupTypeSettings;
 	private Group _liveGroup;
 	private Long _liveGroupId;
-	private HttpServletRequest _request;
+	private final HttpServletRequest _request;
 	private Group _selGroup;
 	private Group _stagingGroup;
 	private Long _stagingGroupId;

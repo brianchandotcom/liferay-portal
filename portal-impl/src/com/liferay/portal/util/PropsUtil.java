@@ -338,11 +338,11 @@ public class PropsUtil {
 		_getConfiguration().set(key, value);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PropsUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(PropsUtil.class);
 
 	private static PropsUtil _instance = new PropsUtil();
 
-	private Configuration _configuration;
+	private final Configuration _configuration;
 	private Map<Long, Configuration> _configurations;
 
 }

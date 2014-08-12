@@ -70,7 +70,7 @@ public class LastSessionRecorderUtil {
 		_lastSessionThreadLocal.set(session);
 	}
 
-	private static ThreadLocal<Session> _lastSessionThreadLocal =
+	private static final ThreadLocal<Session> _lastSessionThreadLocal =
 		new AutoResetThreadLocal<Session>(
 			LastSessionRecorderUtil.class.getName() +
 				"._lastSessionThreadLocal");

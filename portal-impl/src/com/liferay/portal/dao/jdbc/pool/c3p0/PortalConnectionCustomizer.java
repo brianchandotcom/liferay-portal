@@ -65,7 +65,7 @@ public class PortalConnectionCustomizer implements ConnectionCustomizer {
 		Connection connection, String parentDataSourceIdentityToken) {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalConnectionCustomizer.class);
 
 }

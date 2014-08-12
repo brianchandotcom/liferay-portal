@@ -68,7 +68,7 @@ public class UserResolver {
 		return _user;
 	}
 
-	private long _companyId;
-	private User _user;
+	private final long _companyId;
+	private final User _user;
 
 }

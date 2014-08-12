@@ -392,6 +392,6 @@ public class PropertiesDocBuilder {
 
 	protected static final String INDENT = StringPool.FOUR_SPACES;
 
-	private static FileImpl _fileUtil = FileImpl.getInstance();
+	private static final FileImpl _fileUtil = FileImpl.getInstance();
 
 }

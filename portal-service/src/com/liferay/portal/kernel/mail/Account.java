@@ -161,8 +161,8 @@ public abstract class Account implements Serializable {
 	private String _host;
 	private String _password;
 	private int _port;
-	private String _protocol;
-	private boolean _secure;
+	private final String _protocol;
+	private final boolean _secure;
 	private String _user;
 
 }

@@ -122,11 +122,11 @@ public class PortletDataHandlerControl {
 		_namespace = namespace;
 	}
 
-	private String _className;
-	private String _controlLabel;
-	private String _controlName;
-	private boolean _disabled;
+	private final String _className;
+	private final String _controlLabel;
+	private final String _controlName;
+	private final boolean _disabled;
 	private String _namespace;
-	private String _referrerClassName;
+	private final String _referrerClassName;
 
 }

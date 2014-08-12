@@ -134,8 +134,7 @@ public class ModuleFrameworkUtilAdapter {
 		_moduleFramework.updateBundle(bundleId, inputStream);
 	}
 
-	private static ModuleFramework _moduleFramework;
-	private static ModuleFrameworkAdapterHelper _moduleFrameworkAdapterHelper =
+	private static final ModuleFrameworkAdapterHelper _moduleFrameworkAdapterHelper =
 		new ModuleFrameworkAdapterHelper(
 			"com.liferay.portal.bootstrap.ModuleFrameworkUtil");
 
@@ -144,5 +143,7 @@ public class ModuleFrameworkUtilAdapter {
 			(ModuleFramework)_moduleFrameworkAdapterHelper.execute(
 				"getModuleFramework");
 	}
+
+	private static ModuleFramework _moduleFramework;
 
 }

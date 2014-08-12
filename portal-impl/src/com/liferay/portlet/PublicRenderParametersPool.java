@@ -86,7 +86,7 @@ public class PublicRenderParametersPool {
 	private static final String _PUBLIC_RENDER_PARAMETERS =
 		"PUBLIC_RENDER_PARAMETERS";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PublicRenderParametersPool.class);
 
 }

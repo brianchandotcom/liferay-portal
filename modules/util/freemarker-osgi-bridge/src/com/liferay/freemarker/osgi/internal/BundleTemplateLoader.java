@@ -72,7 +72,7 @@ public class BundleTemplateLoader implements TemplateLoader {
 		return new InputStreamReader(bundleTemplateSource.getInputStream());
 	}
 
-	private Bundle _bundle;
+	private final Bundle _bundle;
 
 	private class BundleTemplateSource {
 

@@ -46,6 +46,6 @@ public class DestinationManager implements DestinationManagerMBean {
 	private static final String _OBJECT_NAME_PREFIX =
 		"Liferay:product=Portal,type=MessagingDestination,name=";
 
-	private Destination _destination;
+	private final Destination _destination;
 
 }

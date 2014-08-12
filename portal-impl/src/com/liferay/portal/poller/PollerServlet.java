@@ -115,6 +115,6 @@ public class PollerServlet extends HttpServlet {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PollerServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(PollerServlet.class);
 
 }

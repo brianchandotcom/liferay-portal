@@ -104,7 +104,7 @@ public class ShutdownUtil {
 		_message = message;
 	}
 
-	private static ShutdownUtil _instance = new ShutdownUtil();
+	private static final ShutdownUtil _instance = new ShutdownUtil();
 
 	private Date _date;
 	private String _message;

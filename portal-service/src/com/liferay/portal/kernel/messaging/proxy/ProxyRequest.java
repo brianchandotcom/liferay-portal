@@ -156,12 +156,12 @@ public class ProxyRequest implements Externalizable {
 		objectOutput.writeBoolean(_synchronous);
 	}
 
-	private static Map<Method, boolean[]> _localAndSynchronousMap =
+	private static final Map<Method, boolean[]> _localAndSynchronousMap =
 		new ConcurrentHashMap<Method, boolean[]>();
 
 	private Object[] _arguments;
 	private boolean _hasReturnValue;
-	private boolean _local;
+	private final boolean _local;
 	private Method _method;
 	private boolean _synchronous;
 

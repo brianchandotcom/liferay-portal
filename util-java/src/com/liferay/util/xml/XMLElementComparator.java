@@ -41,6 +41,6 @@ public class XMLElementComparator extends ElementComparator {
 		}
 	}
 
-	private XMLDescriptor _descriptor;
+	private final XMLDescriptor _descriptor;
 
 }

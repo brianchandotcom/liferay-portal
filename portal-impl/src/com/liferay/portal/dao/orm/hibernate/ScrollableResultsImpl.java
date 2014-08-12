@@ -98,6 +98,6 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		}
 	}
 
-	private org.hibernate.ScrollableResults _scrollableResults;
+	private final org.hibernate.ScrollableResults _scrollableResults;
 
 }

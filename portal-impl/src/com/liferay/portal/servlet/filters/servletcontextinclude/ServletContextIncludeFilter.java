@@ -157,7 +157,7 @@ public class ServletContextIncludeFilter extends BasePortalFilter {
 		requestDispatcher.include(request, response);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ServletContextIncludeFilter.class);
 
 }

@@ -42,7 +42,7 @@ public class PortletURLMatcher extends CallbackMatcher {
 
 	private static final String _TITLE_PLACEHOLDER = "__TITLE_PLACEHOLDER__";
 
-	private Callback _callBack = new Callback() {
+	private final Callback _callBack = new Callback() {
 
 		@Override
 		public String foundMatch(MatchResult matchResult) {
@@ -59,6 +59,6 @@ public class PortletURLMatcher extends CallbackMatcher {
 
 	};
 
-	private PortletURL _portletURL;
+	private final PortletURL _portletURL;
 
 }

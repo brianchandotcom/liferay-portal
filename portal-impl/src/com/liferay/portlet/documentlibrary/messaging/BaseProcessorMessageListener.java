@@ -49,7 +49,7 @@ public abstract class BaseProcessorMessageListener extends BaseMessageListener {
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseProcessorMessageListener.class);
 
 }

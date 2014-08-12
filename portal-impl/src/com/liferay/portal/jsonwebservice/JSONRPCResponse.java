@@ -114,9 +114,9 @@ public class JSONRPCResponse implements JSONSerializable {
 
 	}
 
-	private Error _error;
-	private Integer _id;
-	private String _jsonrpc;
-	private Object _result;
+	private final Error _error;
+	private final Integer _id;
+	private final String _jsonrpc;
+	private final Object _result;
 
 }

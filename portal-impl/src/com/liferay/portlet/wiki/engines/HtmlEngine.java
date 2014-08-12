@@ -159,9 +159,9 @@ public class HtmlEngine implements WikiEngine {
 		return links;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(HtmlEngine.class);
+	private static final Log _log = LogFactoryUtil.getLog(HtmlEngine.class);
 
-	private String _friendlyURLMapping;
-	private Router _router;
+	private final String _friendlyURLMapping;
+	private final Router _router;
 
 }

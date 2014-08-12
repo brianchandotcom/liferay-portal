@@ -57,7 +57,7 @@ public class DirectRequestDispatcher implements RequestDispatcher {
 		_servlet.service(servletRequest, servletResponse);
 	}
 
-	private String _queryString;
-	private Servlet _servlet;
+	private final String _queryString;
+	private final Servlet _servlet;
 
 }

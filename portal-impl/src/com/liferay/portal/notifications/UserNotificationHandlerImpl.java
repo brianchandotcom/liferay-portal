@@ -67,6 +67,6 @@ public class UserNotificationHandlerImpl implements UserNotificationHandler {
 		return _userNotificationHandler.isOpenDialog();
 	}
 
-	private UserNotificationHandler _userNotificationHandler;
+	private final UserNotificationHandler _userNotificationHandler;
 
 }

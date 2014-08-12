@@ -101,6 +101,6 @@ public class EditSessionAction extends PortletAction {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(EditSessionAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(EditSessionAction.class);
 
 }

@@ -32,6 +32,6 @@ public class SessionCreateAction extends SessionAction {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SessionCreateAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(SessionCreateAction.class);
 
 }

@@ -118,7 +118,7 @@ public class WabURLConnection extends URLConnection {
 		}
 	}
 
-	private BundleContext _bundleContext;
-	private ClassLoader _classLoader;
+	private final BundleContext _bundleContext;
+	private final ClassLoader _classLoader;
 
 }

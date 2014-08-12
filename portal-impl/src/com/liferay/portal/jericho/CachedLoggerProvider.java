@@ -61,8 +61,8 @@ public class CachedLoggerProvider implements LoggerProvider {
 		return logger;
 	}
 
-	private LoggerProvider _loggerProvider;
-	private Map<String, Logger> _loggers =
+	private final LoggerProvider _loggerProvider;
+	private final Map<String, Logger> _loggers =
 		new ConcurrentHashMap<String, Logger>();
 
 }

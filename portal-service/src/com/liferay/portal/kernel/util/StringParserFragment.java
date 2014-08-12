@@ -87,11 +87,11 @@ public class StringParserFragment {
 		return matcher.matches();
 	}
 
-	private static Pattern _defaultPattern = Pattern.compile("[^/\\.]+");
+	private static final Pattern _defaultPattern = Pattern.compile("[^/\\.]+");
 
-	private String _name;
-	private Pattern _pattern;
-	private boolean _raw;
-	private String _token;
+	private final String _name;
+	private final Pattern _pattern;
+	private final boolean _raw;
+	private final String _token;
 
 }

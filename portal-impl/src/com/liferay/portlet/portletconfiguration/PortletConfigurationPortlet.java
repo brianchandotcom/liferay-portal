@@ -118,10 +118,10 @@ public class PortletConfigurationPortlet extends StrutsPortlet {
 		super.serveResource(resourceRequest, resourceResponse);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletConfigurationPortlet.class);
 
-	private ThreadLocal<PortletRequest> _portletRequestThreadLocal =
+	private final ThreadLocal<PortletRequest> _portletRequestThreadLocal =
 		new AutoResetThreadLocal<PortletRequest>("_portletRequestThreadLocal");
 
 	private class PortletConfigurationPortletPortletConfig

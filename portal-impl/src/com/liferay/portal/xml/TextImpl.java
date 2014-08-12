@@ -62,6 +62,6 @@ public class TextImpl extends NodeImpl implements Text {
 		return _text.toString();
 	}
 
-	private org.dom4j.Text _text;
+	private final org.dom4j.Text _text;
 
 }

@@ -135,7 +135,7 @@ public abstract class BaseUpgradeTableImpl extends Table {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BaseUpgradeTableImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(BaseUpgradeTableImpl.class);
 
 	private boolean _allowUniqueIndexes;
 	private boolean _calledUpdateTable;

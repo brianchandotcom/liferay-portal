@@ -152,8 +152,8 @@ public class SimpleHTTPSender extends HTTPSender {
 		outputStream.flush();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SimpleHTTPSender.class);
+	private static final Log _log = LogFactoryUtil.getLog(SimpleHTTPSender.class);
 
-	private Pattern _pattern;
+	private final Pattern _pattern;
 
 }

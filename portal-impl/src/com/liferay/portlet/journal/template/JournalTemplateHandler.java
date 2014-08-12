@@ -101,7 +101,7 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 		return utilTemplateVariableGroup;
 	}
 
-	private TemplateVariableCodeHandler _templateVariableCodeHandler =
+	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
 		new DDMTemplateVariableCodeHandler(
 			"com/liferay/portlet/journal/dependencies/template/");
 

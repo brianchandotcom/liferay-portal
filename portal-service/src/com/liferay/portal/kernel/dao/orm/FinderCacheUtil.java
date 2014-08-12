@@ -109,7 +109,7 @@ public class FinderCacheUtil {
 		_finderCache = finderCache;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(FinderCacheUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(FinderCacheUtil.class);
 
 	private static FinderCache _finderCache;
 

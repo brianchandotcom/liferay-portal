@@ -82,7 +82,7 @@ public class DummyIndexSearcher implements IndexSearcher {
 		return hits;
 	}
 
-	private static Map<String, List<String>> _spellCheckResults =
+	private static final Map<String, List<String>> _spellCheckResults =
 		Collections.emptyMap();
 
 }

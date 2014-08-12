@@ -217,7 +217,7 @@ public class RepositoryStagedModelDataHandler
 			portletDataContext, repository, RepositoryEntry.class);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		RepositoryStagedModelDataHandler.class);
 
 }

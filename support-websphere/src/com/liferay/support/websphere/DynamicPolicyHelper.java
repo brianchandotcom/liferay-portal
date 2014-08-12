@@ -86,7 +86,7 @@ public class DynamicPolicyHelper {
 		DynamicPolicyFactory.setInstance(dynamicPolicy);
 	}
 
-	private static DynamicPolicyHelper _instance = new DynamicPolicyHelper();
+	private static final DynamicPolicyHelper _instance = new DynamicPolicyHelper();
 
 	static {
 		_instance._start();

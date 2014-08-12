@@ -185,8 +185,7 @@ public class ProcessExecutor {
 				processCallableNoticeableFuture,
 			final Process process) {
 
-		final DefaultNoticeableFuture<T> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<T>();
+	private static class ProcessExecutionFutureResult<T> implements Future<T> {
 
 		defaultNoticeableFuture.addFutureListener(
 			new FutureListener<T>() {

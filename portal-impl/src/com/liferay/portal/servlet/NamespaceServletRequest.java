@@ -166,7 +166,7 @@ public class NamespaceServletRequest extends DynamicServletRequest {
 		return false;
 	}
 
-	private String _attrNamespace;
-	private String _paramNamespace;
+	private final String _attrNamespace;
+	private final String _paramNamespace;
 
 }

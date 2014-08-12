@@ -51,7 +51,7 @@ public abstract class BaseServiceConfiguratorListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseServiceConfiguratorListener.class);
 
 	private ServiceConfigurator _serviceConfigurator;

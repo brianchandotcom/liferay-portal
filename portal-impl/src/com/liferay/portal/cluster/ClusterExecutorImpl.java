@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.ClusterResponseCallback;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
-import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -594,11 +593,11 @@ public class ClusterExecutorImpl
 	private static final String _DEFAULT_CLUSTER_NAME =
 		"LIFERAY-CONTROL-CHANNEL";
 
-	private static Log _log = LogFactoryUtil.getLog(ClusterExecutorImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(ClusterExecutorImpl.class);
 
-	private CopyOnWriteArrayList<ClusterEventListener> _clusterEventListeners =
+	private final CopyOnWriteArrayList<ClusterEventListener> _clusterEventListeners =
 		new CopyOnWriteArrayList<ClusterEventListener>();
-	private Map<String, Address> _clusterNodeAddresses =
+	private final Map<String, Address> _clusterNodeAddresses =
 		new ConcurrentHashMap<String, Address>();
 	private JChannel _controlJChannel;
 	private ExecutorService _executorService;

@@ -61,6 +61,6 @@ public enum ReportFormat {
 		_value = value;
 	}
 
-	private String _value;
+	private final String _value;
 
 }

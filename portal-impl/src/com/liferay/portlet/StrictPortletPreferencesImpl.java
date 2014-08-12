@@ -64,6 +64,6 @@ public class StrictPortletPreferencesImpl
 		return super.equals(obj);
 	}
 
-	private long _companyId;
+	private final long _companyId;
 
 }

@@ -58,6 +58,6 @@ public class EnvironmentClassLoader
 	private static final boolean _SECURITY_ENABLED =
 		(System.getSecurityManager() != null);
 
-	private String _id;
+	private final String _id;
 
 }

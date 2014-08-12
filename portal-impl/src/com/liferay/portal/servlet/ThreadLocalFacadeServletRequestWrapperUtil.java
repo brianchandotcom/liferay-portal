@@ -87,6 +87,6 @@ public class ThreadLocalFacadeServletRequestWrapperUtil {
 		_stopperClassNames.addAll(stopperClassNames);
 	}
 
-	private static Set<String> _stopperClassNames = new HashSet<String>();
+	private static final Set<String> _stopperClassNames = new HashSet<String>();
 
 }

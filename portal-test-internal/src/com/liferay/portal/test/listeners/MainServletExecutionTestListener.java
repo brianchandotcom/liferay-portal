@@ -88,7 +88,7 @@ public class MainServletExecutionTestListener
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		MainServletExecutionTestListener.class);
 
 	private static MainServlet _mainServlet;

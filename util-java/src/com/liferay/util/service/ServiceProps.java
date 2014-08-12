@@ -67,8 +67,8 @@ public class ServiceProps {
 			PortletClassLoaderUtil.getClassLoader(), "service");
 	}
 
-	private static ServiceProps _instance = new ServiceProps();
+	private static final ServiceProps _instance = new ServiceProps();
 
-	private Configuration _configuration;
+	private final Configuration _configuration;
 
 }

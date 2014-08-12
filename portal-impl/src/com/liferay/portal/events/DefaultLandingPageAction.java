@@ -106,7 +106,7 @@ public class DefaultLandingPageAction extends Action {
 		session.setAttribute(WebKeys.LAST_PATH, lastPath);*/
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultLandingPageAction.class);
 
 }

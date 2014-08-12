@@ -114,7 +114,7 @@ public class PythonExecutor extends BaseScriptingExecutor {
 	private static final String _LANGUAGE = "python";
 
 	private volatile boolean _initialized;
-	private PortalCache<String, PyCode> _portalCache =
+	private final PortalCache<String, PyCode> _portalCache =
 		SingleVMPoolUtil.getCache(_CACHE_NAME);
 
 }

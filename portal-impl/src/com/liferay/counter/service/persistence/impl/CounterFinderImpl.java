@@ -426,9 +426,9 @@ public class CounterFinderImpl
 	private static final String _SQL_UPDATE_NAME_BY_NAME =
 		"update Counter set name = ? where name = ?";
 
-	private Map<String, CounterRegister> _counterRegisterMap =
+	private final Map<String, CounterRegister> _counterRegisterMap =
 		new ConcurrentHashMap<String, CounterRegister>();
-	private Map<String, Integer> _rangeSizeMap =
+	private final Map<String, Integer> _rangeSizeMap =
 		new ConcurrentHashMap<String, Integer>();
 
 }

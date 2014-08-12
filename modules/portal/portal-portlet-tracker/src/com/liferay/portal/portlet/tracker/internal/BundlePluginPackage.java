@@ -256,9 +256,9 @@ public class BundlePluginPackage implements PluginPackage {
 	public void setTypes(List<String> types) {
 	}
 
-	private Bundle _bundle;
-	private Dictionary<String, String> _headers;
-	private PortletApp _portletApp;
-	private Version _version;
+	private final Bundle _bundle;
+	private final Dictionary<String, String> _headers;
+	private final PortletApp _portletApp;
+	private final Version _version;
 
 }

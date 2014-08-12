@@ -49,10 +49,10 @@ public class PhoneNumberFormatUtil {
 		_serviceTracker.open();
 	}
 
-	private static PhoneNumberFormatUtil _instance =
+	private static final PhoneNumberFormatUtil _instance =
 		new PhoneNumberFormatUtil();
 
-	private ServiceTracker<PhoneNumberFormat, PhoneNumberFormat>
+	private final ServiceTracker<PhoneNumberFormat, PhoneNumberFormat>
 		_serviceTracker;
 
 }

@@ -411,10 +411,8 @@ public class EntityCacheImpl
 	private static final String _GROUP_KEY_PREFIX = CACHE_NAME.concat(
 		StringPool.PERIOD);
 
-	private static Log _log = LogFactoryUtil.getLog(EntityCacheImpl.class);
-
-	private static ThreadLocal<LRUMap> _localCache;
-	private static boolean _localCacheAvailable;
+	private static final ThreadLocal<LRUMap> _localCache;
+	private static final boolean _localCacheAvailable;
 
 	static {
 		if (PropsValues.VALUE_OBJECT_ENTITY_THREAD_LOCAL_CACHE_MAX_SIZE > 0) {
@@ -427,8 +425,10 @@ public class EntityCacheImpl
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(EntityCacheImpl.class);
+
 	private MultiVMPool _multiVMPool;
-	private ConcurrentMap<String, PortalCache<Serializable, Serializable>>
+	private final ConcurrentMap<String, PortalCache<Serializable, Serializable>>
 		_portalCaches =
 			new ConcurrentHashMap
 				<String, PortalCache<Serializable, Serializable>>();

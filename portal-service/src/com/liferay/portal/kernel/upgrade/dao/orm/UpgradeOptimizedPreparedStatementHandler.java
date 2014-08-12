@@ -66,6 +66,6 @@ public class UpgradeOptimizedPreparedStatementHandler
 			new UpgradeOptimizedResultSetHandler(resultSet));
 	}
 
-	private PreparedStatement _preparedStatement;
+	private final PreparedStatement _preparedStatement;
 
 }

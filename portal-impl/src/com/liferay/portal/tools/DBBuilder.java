@@ -136,7 +136,7 @@ public class DBBuilder {
 		}
 	}
 
-	private String _databaseName;
-	private String[] _databaseTypes;
+	private final String _databaseName;
+	private final String[] _databaseTypes;
 
 }

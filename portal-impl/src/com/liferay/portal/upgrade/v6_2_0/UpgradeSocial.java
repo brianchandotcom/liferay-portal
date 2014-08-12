@@ -300,6 +300,6 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
 
 }

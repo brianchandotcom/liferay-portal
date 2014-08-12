@@ -23,7 +23,7 @@ public class LinkbackConsumerUtil {
 		return _linkbackConsumer;
 	}
 
-	private static LinkbackConsumer _linkbackConsumer =
+	private static final LinkbackConsumer _linkbackConsumer =
 		new LinkbackConsumerImpl();
 
 }

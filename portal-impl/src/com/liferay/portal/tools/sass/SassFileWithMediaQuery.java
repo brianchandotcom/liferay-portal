@@ -58,7 +58,7 @@ public class SassFileWithMediaQuery implements SassFragment {
 
 	private static final String _CSS_MEDIA_QUERY = "@media";
 
-	private String _mediaQuery;
-	private SassFile _sassFile;
+	private final String _mediaQuery;
+	private final SassFile _sassFile;
 
 }

@@ -156,10 +156,9 @@ public class CustomSQLUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CustomSQLUtil.class);
+	private static final CustomSQLUtil _instance = new CustomSQLUtil();
+	private static final Log _log = LogFactoryUtil.getLog(CustomSQLUtil.class);
 
-	private static CustomSQLUtil _instance = new CustomSQLUtil();
-
-	private CustomSQL _customSQL;
+	private final CustomSQL _customSQL;
 
 }

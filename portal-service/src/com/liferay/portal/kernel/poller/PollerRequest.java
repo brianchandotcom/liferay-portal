@@ -144,10 +144,10 @@ public class PollerRequest implements Serializable {
 		return sb.toString();
 	}
 
-	private String _chunkId;
-	private Map<String, String> _parameterMap = Collections.emptyMap();
-	private PollerHeader _pollerHeader;
-	private String _portletId;
-	private boolean _receiveRequest;
+	private final String _chunkId;
+	private final Map<String, String> _parameterMap = Collections.emptyMap();
+	private final PollerHeader _pollerHeader;
+	private final String _portletId;
+	private final boolean _receiveRequest;
 
 }

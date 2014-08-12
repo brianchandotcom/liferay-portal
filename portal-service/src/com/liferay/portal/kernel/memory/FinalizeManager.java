@@ -20,6 +20,7 @@ import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Shuyang Zhou
@@ -139,8 +140,8 @@ public class FinalizeManager {
 		}
 	}
 
-	private static final Map<Reference<?>, FinalizeAction> _finalizeActions =
-		new ConcurrentIdentityHashMap<Reference<?>, FinalizeAction>();
+	private static final Map<Reference<?>, FinalizeAction> _referenceActionMap =
+		new ConcurrentHashMap<Reference<?>, FinalizeAction>();
 	private static final ReferenceQueue<Object> _referenceQueue =
 		new ReferenceQueue<Object>();
 

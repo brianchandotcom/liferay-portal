@@ -52,9 +52,7 @@ public class FIFOUtil {
 		return _fifoSupported;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(FIFOUtil.class);
-
-	private static boolean _fifoSupported;
+	private static final boolean _fifoSupported;
 
 	static {
 		try {
@@ -83,5 +81,7 @@ public class FIFOUtil {
 			_fifoSupported = false;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(FIFOUtil.class);
 
 }

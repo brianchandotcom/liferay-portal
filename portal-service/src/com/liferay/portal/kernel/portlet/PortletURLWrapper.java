@@ -114,6 +114,6 @@ public class PortletURLWrapper implements PortletURL {
 		_portletURL.write(writer, escapeXML);
 	}
 
-	private PortletURL _portletURL;
+	private final PortletURL _portletURL;
 
 }

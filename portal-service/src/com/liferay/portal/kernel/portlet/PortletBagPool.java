@@ -71,8 +71,8 @@ public class PortletBagPool {
 		_portletBagPool.clear();
 	}
 
-	private static PortletBagPool _instance = new PortletBagPool();
+	private static final PortletBagPool _instance = new PortletBagPool();
 
-	private Map<String, PortletBag> _portletBagPool;
+	private final Map<String, PortletBag> _portletBagPool;
 
 }

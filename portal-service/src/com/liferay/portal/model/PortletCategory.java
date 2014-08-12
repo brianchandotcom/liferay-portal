@@ -181,10 +181,10 @@ public class PortletCategory implements Serializable {
 
 	private static final String _DELIMITER = StringPool.DOUBLE_SLASH;
 
-	private String _name;
+	private final String _name;
 	private PortletCategory _parentPortletCategory;
 	private String _path;
-	private Map<String, PortletCategory> _portletCategories;
+	private final Map<String, PortletCategory> _portletCategories;
 	private Set<String> _portletIds;
 
 }

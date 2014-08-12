@@ -44,7 +44,7 @@ public abstract class BaseAsyncDatagramReceiveHandler
 			RegistrationReference registrationReference, Datagram datagram)
 		throws Exception;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAsyncDatagramReceiveHandler.class);
 
 	private final Executor _executor;

@@ -45,9 +45,9 @@ public class DirectURLMatcher extends CallbackMatcher {
 		"<a href=\"[^\"]*?Special:Edit[^\"]*?topic=[^\"]*?\".*?title=\"" +
 			"([^\"]*?)\".*?>(.*?)</a>";
 
-	private String _attachmentURLPrefix;
+	private final String _attachmentURLPrefix;
 
-	private Callback _callBack = new Callback() {
+	private final Callback _callBack = new Callback() {
 
 		@Override
 		public String foundMatch(MatchResult matchResult) {
@@ -87,6 +87,6 @@ public class DirectURLMatcher extends CallbackMatcher {
 
 	};
 
-	private WikiPage _page;
+	private final WikiPage _page;
 
 }

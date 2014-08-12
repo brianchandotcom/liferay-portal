@@ -57,12 +57,11 @@ public class ClearTimerThreadUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ClearTimerThreadUtil.class);
-
-	private static Method _clearMethod;
-	private static boolean _initialized;
-	private static Field _newTasksMayBeScheduledField;
-	private static Field _queueField;
+	private static final Method _clearMethod;
+	private static final boolean _initialized;
+	private static final Log _log = LogFactoryUtil.getLog(ClearTimerThreadUtil.class);
+	private static final Field _newTasksMayBeScheduledField;
+	private static final Field _queueField;
 
 	static {
 		try {

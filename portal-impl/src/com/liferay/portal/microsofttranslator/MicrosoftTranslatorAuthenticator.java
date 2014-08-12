@@ -128,7 +128,7 @@ public class MicrosoftTranslatorAuthenticator {
 	private static final String _URL =
 		"https://datamarket.accesscontrol.windows.net/v2/OAuth2-13";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		MicrosoftTranslatorAuthenticator.class);
 
 	private String _accessToken;

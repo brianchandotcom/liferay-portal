@@ -42,12 +42,12 @@ public class LockListenerRegistryUtil {
 		_serviceTracker.open();
 	}
 
-	private static LockListenerRegistryUtil _instance =
+	private static final LockListenerRegistryUtil _instance =
 		new LockListenerRegistryUtil();
 
-	private Map<String, LockListener> _lockListeners =
+	private final Map<String, LockListener> _lockListeners =
 		new HashMap<String, LockListener>();
-	private ServiceTracker<?, LockListener> _serviceTracker;
+	private final ServiceTracker<?, LockListener> _serviceTracker;
 
 	private class LockListenerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<LockListener, LockListener> {

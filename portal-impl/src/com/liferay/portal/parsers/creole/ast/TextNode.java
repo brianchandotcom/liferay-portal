@@ -44,6 +44,6 @@ public abstract class TextNode extends BaseParentableNode {
 		}
 	}
 
-	private String _content;
+	private final String _content;
 
 }

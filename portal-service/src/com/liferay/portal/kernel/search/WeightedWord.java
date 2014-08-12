@@ -49,6 +49,6 @@ public class WeightedWord implements Comparable<WeightedWord> {
 	}
 
 	private float _weight;
-	private String _word;
+	private final String _word;
 
 }

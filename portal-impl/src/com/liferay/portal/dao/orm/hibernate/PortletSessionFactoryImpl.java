@@ -178,11 +178,11 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 		return DoPrivilegedUtil.wrapWhenActive(super.wrapSession(session));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletSessionFactoryImpl.class);
 
 	private DataSource _dataSource;
-	private Map<DataSource, SessionFactory> _sessionFactories =
+	private final Map<DataSource, SessionFactory> _sessionFactories =
 		new HashMap<DataSource, SessionFactory>();
 
 }

@@ -37,11 +37,11 @@ public class PluginContextLifecycleThreadLocal {
 		_initializing.set(initializing);
 	}
 
-	private static ThreadLocal<Boolean> _destroying =
+	private static final ThreadLocal<Boolean> _destroying =
 		new InitialThreadLocal<Boolean>(
 			PluginContextLifecycleThreadLocal.class + "._destroying",
 			Boolean.FALSE);
-	private static ThreadLocal<Boolean> _initializing =
+	private static final ThreadLocal<Boolean> _initializing =
 		new InitialThreadLocal<Boolean>(
 			PluginContextLifecycleThreadLocal.class + "._initializing",
 			Boolean.FALSE);

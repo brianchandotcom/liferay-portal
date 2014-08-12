@@ -45,6 +45,6 @@ public class CurrentUserIdStrategy implements UserIdStrategy {
 		}
 	}
 
-	private User _user;
+	private final User _user;
 
 }

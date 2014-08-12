@@ -42,8 +42,8 @@ public class FixedIssuesUtils {
 			GetterUtil.getString(System.getProperty("fixed.issues")));
 	}
 
-	private static FixedIssuesUtils _instance = new FixedIssuesUtils();
+	private static final FixedIssuesUtils _instance = new FixedIssuesUtils();
 
-	private String[] _fixedIssues;
+	private final String[] _fixedIssues;
 
 }

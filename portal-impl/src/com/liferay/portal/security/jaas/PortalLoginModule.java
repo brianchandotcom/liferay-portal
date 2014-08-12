@@ -110,8 +110,8 @@ public class PortalLoginModule implements LoginModule {
 		return _loginModule.logout();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortalLoginModule.class);
+	private static final Log _log = LogFactoryUtil.getLog(PortalLoginModule.class);
 
-	private LoginModule _loginModule;
+	private final LoginModule _loginModule;
 
 }

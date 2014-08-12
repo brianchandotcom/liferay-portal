@@ -78,12 +78,12 @@ public class NoKnownDevices implements KnownDevices {
 		_pointingMethods = Collections.unmodifiableSet(_pointingMethods);
 	}
 
-	private static NoKnownDevices _instance = new NoKnownDevices();
+	private static final NoKnownDevices _instance = new NoKnownDevices();
 
-	private Set<VersionableName> _brands = new HashSet<VersionableName>();
-	private Set<VersionableName> _browsers = new HashSet<VersionableName>();
-	private Set<VersionableName> _operatingSystems =
+	private final Set<VersionableName> _brands = new HashSet<VersionableName>();
+	private final Set<VersionableName> _browsers = new HashSet<VersionableName>();
+	private final Set<VersionableName> _operatingSystems =
 		new HashSet<VersionableName>();
-	private Set<String> _pointingMethods = new HashSet<String>();
+	private final Set<String> _pointingMethods = new HashSet<String>();
 
 }

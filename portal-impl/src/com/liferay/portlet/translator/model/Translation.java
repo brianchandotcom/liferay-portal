@@ -76,9 +76,9 @@ public class Translation implements Serializable {
 		}
 	}
 
-	private String _fromLanguageId;
+	private final String _fromLanguageId;
 	private String _fromText;
-	private String _toLanguageId;
+	private final String _toLanguageId;
 	private String _toText;
 
 }

@@ -629,6 +629,6 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 	protected boolean calledGetWriter;
 
 	private boolean _committed;
-	private MetaData _metaData = new MetaData();
+	private final MetaData _metaData = new MetaData();
 
 }

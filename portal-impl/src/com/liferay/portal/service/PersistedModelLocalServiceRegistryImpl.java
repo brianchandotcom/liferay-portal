@@ -78,10 +78,10 @@ public class PersistedModelLocalServiceRegistryImpl
 		_persistedModelLocalServices.remove(className);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PersistedModelLocalServiceRegistryImpl.class);
 
-	private Map<String, PersistedModelLocalService>
+	private final Map<String, PersistedModelLocalService>
 		_persistedModelLocalServices =
 			new ConcurrentHashMap<String, PersistedModelLocalService>();
 

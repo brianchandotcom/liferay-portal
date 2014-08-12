@@ -193,7 +193,7 @@ public class MailMessage implements Serializable {
 	private String _body;
 	private InternetAddress[] _bulkAddresses;
 	private InternetAddress[] _cc;
-	private List<FileAttachment> _fileAttachments =
+	private final List<FileAttachment> _fileAttachments =
 		new ArrayList<FileAttachment>();
 	private InternetAddress _from;
 	private boolean _htmlFormat;

@@ -64,10 +64,10 @@ public class Conversion {
 		_toValue = toValue;
 	}
 
-	private int _fromId;
+	private final int _fromId;
 	private double _fromValue;
-	private int _toId;
+	private final int _toId;
 	private double _toValue;
-	private int _type;
+	private final int _type;
 
 }

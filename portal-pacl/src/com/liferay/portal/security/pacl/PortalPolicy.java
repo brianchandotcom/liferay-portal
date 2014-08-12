@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.pacl;
 
-import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
-import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
@@ -265,7 +263,7 @@ public class PortalPolicy extends Policy {
 		}
 	}
 
-	private static ThreadLocal<Boolean> _started = new ThreadLocal<Boolean>() {
+	private static final ThreadLocal<Boolean> _started = new ThreadLocal<Boolean>() {
 
 		@Override
 		protected Boolean initialValue() {

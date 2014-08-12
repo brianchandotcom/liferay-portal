@@ -34,7 +34,7 @@ public class EntityOrder {
 		return _asc;
 	}
 
-	private boolean _asc;
-	private List<EntityColumn> _columns;
+	private final boolean _asc;
+	private final List<EntityColumn> _columns;
 
 }

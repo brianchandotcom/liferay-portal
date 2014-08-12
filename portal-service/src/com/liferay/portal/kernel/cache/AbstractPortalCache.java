@@ -56,7 +56,7 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 			throw new NullPointerException("Value is null");
 		}
 
-		if ((timeToLive != DEFAULT_TIME_TO_LIVE) && (timeToLive < 0)) {
+		if (timeToLive < 0) {
 			throw new IllegalArgumentException("Time to live is negative");
 		}
 
@@ -110,7 +110,7 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 			throw new NullPointerException("Value is null");
 		}
 
-		if ((timeToLive != DEFAULT_TIME_TO_LIVE) && (timeToLive < 0)) {
+		if (timeToLive < 0) {
 			throw new IllegalArgumentException("Time to live is negative");
 		}
 
@@ -136,7 +136,7 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 			throw new NullPointerException("New value is null");
 		}
 
-		if ((timeToLive != DEFAULT_TIME_TO_LIVE) && (timeToLive < 0)) {
+		if (timeToLive < 0) {
 			throw new IllegalArgumentException("Time to live is negative");
 		}
 
@@ -168,7 +168,7 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 			throw new NullPointerException("Value is null");
 		}
 
-		if ((timeToLive != DEFAULT_TIME_TO_LIVE) && (timeToLive < 0)) {
+		if (timeToLive < 0) {
 			throw new IllegalArgumentException("Time to live is negative");
 		}
 

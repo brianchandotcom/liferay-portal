@@ -39,7 +39,7 @@ public class TemplateResourceCacheListener
 	@Override
 	public void notifyEntryEvicted(
 			PortalCache<String, TemplateResource> portalCache, String key,
-			TemplateResource templateResource)
+			TemplateResource templateResource, int timeToLive)
 		throws PortalCacheException {
 
 		if (templateResource != null) {
@@ -50,7 +50,7 @@ public class TemplateResourceCacheListener
 	@Override
 	public void notifyEntryExpired(
 			PortalCache<String, TemplateResource> portalCache, String key,
-			TemplateResource templateResource)
+			TemplateResource templateResource, int timeToLive)
 		throws PortalCacheException {
 
 		if (templateResource != null) {
@@ -61,14 +61,14 @@ public class TemplateResourceCacheListener
 	@Override
 	public void notifyEntryPut(
 			PortalCache<String, TemplateResource> portalCache, String key,
-			TemplateResource templateResource)
+			TemplateResource templateResource, int timeToLive)
 		throws PortalCacheException {
 	}
 
 	@Override
 	public void notifyEntryRemoved(
 			PortalCache<String, TemplateResource> portalCache, String key,
-			TemplateResource templateResource)
+			TemplateResource templateResource, int timeToLive)
 		throws PortalCacheException {
 
 		if (templateResource != null) {
@@ -79,7 +79,7 @@ public class TemplateResourceCacheListener
 	@Override
 	public void notifyEntryUpdated(
 			PortalCache<String, TemplateResource> portalCache, String key,
-			TemplateResource templateResource)
+			TemplateResource templateResource, int timeToLive)
 		throws PortalCacheException {
 
 		if (templateResource != null) {

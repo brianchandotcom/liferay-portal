@@ -98,7 +98,8 @@ public class LockProtectedAction<T> {
 		return null;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(LockProtectedAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LockProtectedAction.class);
 
 	private final String _className;
 	private final String _lockKey;

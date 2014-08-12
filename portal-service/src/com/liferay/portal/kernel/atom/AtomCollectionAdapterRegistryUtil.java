@@ -126,13 +126,15 @@ public class AtomCollectionAdapterRegistryUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AtomCollectionAdapterRegistryUtil.class);
 
-	private final Map<String, AtomCollectionAdapter<?>> _atomCollectionAdapters =
-		new ConcurrentHashMap<String, AtomCollectionAdapter<?>>();
+	private final Map<String, AtomCollectionAdapter<?>>
+		_atomCollectionAdapters =
+			new ConcurrentHashMap<String, AtomCollectionAdapter<?>>();
 	private final ServiceRegistrationMap<AtomCollectionAdapter<?>>
 		_serviceRegistrations =
 			new ServiceRegistrationMap<AtomCollectionAdapter<?>>();
-	private final ServiceTracker<AtomCollectionAdapter<?>, AtomCollectionAdapter<?>>
-		_serviceTracker;
+	private final
+		ServiceTracker<AtomCollectionAdapter<?>, AtomCollectionAdapter<?>>
+			_serviceTracker;
 
 	private class AtomCollectionAdapterServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

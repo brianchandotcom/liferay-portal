@@ -261,7 +261,8 @@ public class LanguageResources {
 	private static final Locale _blankLocale = new Locale(StringPool.BLANK);
 	private static final Map<Locale, Map<String, String>> _languageMaps =
 		new ConcurrentHashMap<Locale, Map<String, String>>(64);
-	private static final Log _log = LogFactoryUtil.getLog(LanguageResources.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LanguageResources.class);
 	private static final Locale _nullLocale = new Locale(StringPool.BLANK);
 	private static final Map<Locale, Locale> _superLocales =
 		new ConcurrentHashMap<Locale, Locale>();

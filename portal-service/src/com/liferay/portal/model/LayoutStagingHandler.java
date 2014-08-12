@@ -358,7 +358,8 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 		_layoutRevisionMethodNames.add("setWapThemeId");
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(LayoutStagingHandler.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutStagingHandler.class);
 
 	private final Layout _layout;
 	private LayoutRevision _layoutRevision;

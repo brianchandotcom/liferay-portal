@@ -72,9 +72,10 @@ public class AccessControlUtil {
 		_accessControl = accessControl;
 	}
 
-	private static final ThreadLocal<AccessControlContext> _accessControlContext =
-		new AutoResetThreadLocal<AccessControlContext>(
-			AccessControlUtil.class + "._accessControlContext");
+	private static final ThreadLocal<AccessControlContext>
+		_accessControlContext =
+			new AutoResetThreadLocal<AccessControlContext>(
+				AccessControlUtil.class + "._accessControlContext");
 
 	private static AccessControl _accessControl;
 

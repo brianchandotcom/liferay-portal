@@ -75,7 +75,8 @@ public class PortalSessionContext {
 		return _sessionPool.values();
 	}
 
-	private static final PortalSessionContext _instance = new PortalSessionContext();
+	private static final PortalSessionContext _instance =
+		new PortalSessionContext();
 
 	private final Map<String, HttpSession> _sessionPool;
 

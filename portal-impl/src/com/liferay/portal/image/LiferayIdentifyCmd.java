@@ -58,7 +58,9 @@ public class LiferayIdentifyCmd extends IdentifyCmd {
 		return getProcessTask(arguments);
 	}
 
-	private static final LiferayIdentifyCmd _instance = new LiferayIdentifyCmd();
-	private static final Log _log = LogFactoryUtil.getLog(LiferayIdentifyCmd.class);
+	private static final LiferayIdentifyCmd _instance =
+		new LiferayIdentifyCmd();
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiferayIdentifyCmd.class);
 
 }

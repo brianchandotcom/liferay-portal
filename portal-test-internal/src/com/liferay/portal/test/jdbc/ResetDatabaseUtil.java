@@ -271,7 +271,8 @@ public class ResetDatabaseUtil {
 	private static final ConcurrentMap<String, Table> _cachedTables =
 		new ConcurrentHashMap<String, Table>();
 	private static final JSqlParser _jSqlParser = new CCJSqlParserManager();
-	private static final Log _log = LogFactoryUtil.getLog(ResetDatabaseUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ResetDatabaseUtil.class);
 	private static final ConcurrentMap<String, Table> _modifiedTables =
 		new ConcurrentHashMap<String, Table>();
 	private static final Set<Table> _tables = new ConcurrentHashSet<Table>();

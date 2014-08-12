@@ -151,7 +151,8 @@ public class HotDeployEvent {
 	private static final Log _log = LogFactoryUtil.getLog(HotDeployEvent.class);
 
 	private final ClassLoader _contextClassLoader;
-	private final Set<String> _dependentServletContextNames = new TreeSet<String>();
+	private final Set<String> _dependentServletContextNames =
+		new TreeSet<String>();
 	private PluginPackage _pluginPackage;
 	private final Queue<PortalLifecycle> _portalLifecycles =
 		new ConcurrentLinkedQueue<PortalLifecycle>();

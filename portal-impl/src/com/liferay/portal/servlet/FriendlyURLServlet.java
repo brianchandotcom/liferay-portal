@@ -368,7 +368,8 @@ public class FriendlyURLServlet extends HttpServlet {
 		return locale;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(FriendlyURLServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		FriendlyURLServlet.class);
 
 	private String _friendlyURLPathPrefix;
 	private boolean _private;

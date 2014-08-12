@@ -643,6 +643,7 @@ public class SAXReaderImpl implements SAXReader {
 	private static final SAXReaderImpl _instance = new SAXReaderImpl();
 	private static final Log _log = LogFactoryUtil.getLog(SAXReaderImpl.class);
 
-	private final DocumentFactory _documentFactory = DocumentFactory.getInstance();
+	private final DocumentFactory _documentFactory =
+		DocumentFactory.getInstance();
 
 }

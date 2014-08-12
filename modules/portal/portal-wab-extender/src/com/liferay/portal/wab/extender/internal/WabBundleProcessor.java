@@ -287,7 +287,8 @@ public class WabBundleProcessor {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(WabBundleProcessor.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WabBundleProcessor.class);
 
 	private final Bundle _bundle;
 	private final ClassLoader _bundleClassLoader;

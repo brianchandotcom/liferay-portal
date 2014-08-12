@@ -171,7 +171,8 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 		return false;
 	}
 
-	private static final DecimalFormat _decimalFormatter = new DecimalFormat("00");
+	private static final DecimalFormat _decimalFormatter = new DecimalFormat(
+		"00");
 	private static final Log _log = LogFactoryUtil.getLog(
 		XugglerRawMetadataProcessor.class);
 

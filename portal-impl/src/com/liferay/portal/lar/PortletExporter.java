@@ -1213,7 +1213,8 @@ public class PortletExporter {
 	}
 
 	private static final PortletExporter _instance = new PortletExporter();
-	private static final Log _log = LogFactoryUtil.getLog(PortletExporter.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletExporter.class);
 
 	private final DeletionSystemEventExporter _deletionSystemEventExporter =
 		DeletionSystemEventExporter.getInstance();

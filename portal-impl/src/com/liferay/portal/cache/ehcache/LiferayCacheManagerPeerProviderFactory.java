@@ -114,6 +114,7 @@ public class LiferayCacheManagerPeerProviderFactory
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayCacheManagerPeerProviderFactory.class);
 
-	private final CacheManagerPeerProviderFactory _cacheManagerPeerProviderFactory;
+	private final CacheManagerPeerProviderFactory
+		_cacheManagerPeerProviderFactory;
 
 }

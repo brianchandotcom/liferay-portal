@@ -54,6 +54,6 @@ public class ListMBeansAction extends BaseJMXManageAction<Set<MBean>> {
 		}
 	}
 
-	private String _domainName;
+	private final String _domainName;
 
 }

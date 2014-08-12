@@ -121,6 +121,6 @@ public class Reflection extends SecurityManager {
 
 	private static final Reflection _instance = new Reflection();
 
-	private boolean _useOldReflection = true;
+	private final boolean _useOldReflection = true;
 
 }

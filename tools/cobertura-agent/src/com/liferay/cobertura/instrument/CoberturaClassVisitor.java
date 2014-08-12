@@ -81,7 +81,7 @@ public class CoberturaClassVisitor extends ClassVisitor {
 		_classData.setSourceFileName(source);
 	}
 
-	private ClassData _classData;
+	private final ClassData _classData;
 	private boolean _instrument;
 
 }

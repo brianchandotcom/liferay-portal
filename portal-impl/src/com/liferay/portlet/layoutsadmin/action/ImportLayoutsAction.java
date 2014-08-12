@@ -434,6 +434,6 @@ public class ImportLayoutsAction extends PortletAction {
 			inputStream);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ImportLayoutsAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(ImportLayoutsAction.class);
 
 }

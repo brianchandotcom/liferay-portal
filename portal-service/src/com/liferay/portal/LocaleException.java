@@ -79,6 +79,6 @@ public class LocaleException extends PortalException {
 
 	private Locale[] _sourceAvailableLocales;
 	private Locale[] _targetAvailableLocales;
-	private int _type;
+	private final int _type;
 
 }

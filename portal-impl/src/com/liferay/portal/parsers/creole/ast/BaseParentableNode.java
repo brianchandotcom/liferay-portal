@@ -50,6 +50,6 @@ public abstract class BaseParentableNode extends ASTNode {
 		return _collectionNode.size();
 	}
 
-	private CollectionNode _collectionNode = new CollectionNode();
+	private final CollectionNode _collectionNode = new CollectionNode();
 
 }

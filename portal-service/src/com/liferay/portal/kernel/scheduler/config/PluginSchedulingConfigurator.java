@@ -79,7 +79,7 @@ public class PluginSchedulingConfigurator
 		schedulerEntries.clear();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PluginSchedulingConfigurator.class);
 
 }

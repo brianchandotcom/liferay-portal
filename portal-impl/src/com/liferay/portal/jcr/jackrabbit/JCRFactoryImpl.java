@@ -167,9 +167,9 @@ public class JCRFactoryImpl implements JCRFactory {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(JCRFactoryImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(JCRFactoryImpl.class);
 
 	private boolean _initialized;
-	private TransientRepository _transientRepository;
+	private final TransientRepository _transientRepository;
 
 }

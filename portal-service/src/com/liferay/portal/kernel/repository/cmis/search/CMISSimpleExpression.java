@@ -46,8 +46,8 @@ public class CMISSimpleExpression implements CMISCriterion {
 		return sb.toString();
 	}
 
-	private CMISSimpleExpressionOperator _cmisSimpleExpressionOperator;
-	private String _field;
-	private String _value;
+	private final CMISSimpleExpressionOperator _cmisSimpleExpressionOperator;
+	private final String _field;
+	private final String _value;
 
 }

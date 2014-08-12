@@ -155,8 +155,8 @@ public class TemplateVariableGroup {
 
 	private boolean _autocompleteEnabled = true;
 	private String _label;
-	private String[] _restrictedVariables;
-	private Collection<TemplateVariableDefinition>
+	private final String[] _restrictedVariables;
+	private final Collection<TemplateVariableDefinition>
 		_templateVariableDefinitions =
 			new LinkedHashSet<TemplateVariableDefinition>();
 

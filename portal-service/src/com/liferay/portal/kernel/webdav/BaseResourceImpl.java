@@ -168,20 +168,20 @@ public class BaseResourceImpl implements Resource {
 		_primaryKey = primaryKey;
 	}
 
-	private static Format _createDateFormatter =
+	private static final Format _createDateFormatter =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'", LocaleUtil.US, TimeZoneUtil.GMT);
-	private static Format _modifiedDateFormatter =
+	private static final Format _modifiedDateFormatter =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"EEE, dd MMM yyyy HH:mm:ss zzz", LocaleUtil.US, TimeZoneUtil.GMT);
 
 	private String _className;
-	private Date _createDate;
-	private String _displayName;
-	private String _href;
+	private final Date _createDate;
+	private final String _displayName;
+	private final String _href;
 	private Object _model;
-	private Date _modifiedDate;
+	private final Date _modifiedDate;
 	private long _primaryKey = -1;
-	private long _size;
+	private final long _size;
 
 }

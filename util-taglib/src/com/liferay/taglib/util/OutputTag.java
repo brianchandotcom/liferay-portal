@@ -105,6 +105,6 @@ public class OutputTag extends PositionTagSupport {
 
 	private boolean _output;
 	private String _outputKey;
-	private String _webKey;
+	private final String _webKey;
 
 }

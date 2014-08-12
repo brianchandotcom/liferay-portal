@@ -48,6 +48,6 @@ public class UserTrackerModifiedDateComparator
 		}
 	}
 
-	private boolean _ascending;
+	private final boolean _ascending;
 
 }

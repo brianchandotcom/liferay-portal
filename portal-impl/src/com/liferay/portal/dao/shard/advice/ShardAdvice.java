@@ -194,15 +194,14 @@ public class ShardAdvice {
 		return shardName;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ShardAdvice.class);
-
-	private static ThreadLocal<Stack<String>> _companyServiceStack =
+	private static final ThreadLocal<Stack<String>> _companyServiceStack =
 		new ThreadLocal<Stack<String>>();
-	private static ThreadLocal<Object> _globalCall = new ThreadLocal<Object>();
-	private static ThreadLocal<String> _shardName =
+	private static final ThreadLocal<Object> _globalCall = new ThreadLocal<Object>();
+	private static final Log _log = LogFactoryUtil.getLog(ShardAdvice.class);
+	private static final ThreadLocal<String> _shardName =
 		new InitialThreadLocal<String>(
 			ShardAdvice.class + "._shardName", PropsValues.SHARD_DEFAULT_NAME);
-	private static ShardSelector _shardSelector;
+	private static final ShardSelector _shardSelector;
 
 	private ShardDataSourceTargetSource _shardDataSourceTargetSource;
 	private ShardSessionFactoryTargetSource _shardSessionFactoryTargetSource;

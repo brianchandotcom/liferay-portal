@@ -176,7 +176,7 @@ public class SynchronousDestinationExecutionTestListener
 
 	}
 
-	private static TransactionAttribute _transactionAttribute;
+	private static final TransactionAttribute _transactionAttribute;
 
 	static {
 		TransactionAttribute.Builder builder =

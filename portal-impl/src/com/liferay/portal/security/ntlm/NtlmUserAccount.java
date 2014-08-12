@@ -29,6 +29,6 @@ public class NtlmUserAccount implements Serializable {
 		return _userName;
 	}
 
-	private String _userName;
+	private final String _userName;
 
 }

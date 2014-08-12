@@ -156,12 +156,12 @@ public class PACLInitialContextFactory implements InitialContextFactory {
 		return new PACLContext(context, paclPolicy);
 	}
 
-	private Hashtable<?, ?> _environment;
-	private InitialContextFactoryBuilder _initialContextFactoryBuilder;
+	private final Hashtable<?, ?> _environment;
+	private final InitialContextFactoryBuilder _initialContextFactoryBuilder;
 
 	// This must not be static because of LPS-33404
 
-	private Log _log = LogFactoryUtil.getLog(
+	private final Log _log = LogFactoryUtil.getLog(
 		PACLInitialContextFactory.class.getName());
 
 }

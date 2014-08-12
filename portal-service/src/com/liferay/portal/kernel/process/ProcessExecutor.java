@@ -173,11 +173,11 @@ public class ProcessExecutor {
 		return _executorService;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ProcessExecutor.class);
+	private static final Log _log = LogFactoryUtil.getLog(ProcessExecutor.class);
+	private static final Set<Process> _managedProcesses =
+		new ConcurrentHashSet<Process>();
 
 	private static volatile ExecutorService _executorService;
-	private static Set<Process> _managedProcesses =
-		new ConcurrentHashSet<Process>();
 
 	private static class ProcessExecutionFutureResult<T> implements Future<T> {
 

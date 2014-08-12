@@ -169,20 +169,20 @@ public class ProxyUtil {
 		}
 	}
 
-	private static Class<?>[] _argumentsClazz = {InvocationHandler.class};
-	private static ReferenceQueue<ClassLoader> _classLoaderReferenceQueue =
+	private static final Class<?>[] _argumentsClazz = {InvocationHandler.class};
+	private static final ReferenceQueue<ClassLoader> _classLoaderReferenceQueue =
 		new ReferenceQueue<ClassLoader>();
-	private static ConcurrentMap
+	private static final ConcurrentMap
 		<EqualityWeakReference<ClassLoader>,
 			ConcurrentMap<LookupKey, Reference<Class<?>>>> _classReferences =
 				new ConcurrentHashMap<EqualityWeakReference<ClassLoader>,
 					ConcurrentMap<LookupKey, Reference<Class<?>>>>();
-	private static ConcurrentMap
+	private static final ConcurrentMap
 		<EqualityWeakReference<Class<?>>, Constructor<?>> _constructors =
 			new ConcurrentHashMap
 				<EqualityWeakReference<Class<?>>, Constructor<?>>();
-	private static Field _invocationHandlerField;
-	private static ReferenceQueue<Class<?>> _proxyClassReferenceQueue =
+	private static final Field _invocationHandlerField;
+	private static final ReferenceQueue<Class<?>> _proxyClassReferenceQueue =
 		new ReferenceQueue<Class<?>>();
 
 	private static class LookupKey {

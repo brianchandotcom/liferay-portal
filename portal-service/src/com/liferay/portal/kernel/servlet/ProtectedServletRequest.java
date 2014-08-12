@@ -94,7 +94,7 @@ public class ProtectedServletRequest extends HttpServletRequestWrapper {
 	}
 
 	private String _authType;
-	private String _remoteUser;
-	private Principal _userPrincipal;
+	private final String _remoteUser;
+	private final Principal _userPrincipal;
 
 }

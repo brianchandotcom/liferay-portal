@@ -38,6 +38,6 @@ public class AuthPublicPathRegistry {
 		}
 	}
 
-	private static Set<String> _paths = new HashSet<String>();
+	private static final Set<String> _paths = new HashSet<String>();
 
 }

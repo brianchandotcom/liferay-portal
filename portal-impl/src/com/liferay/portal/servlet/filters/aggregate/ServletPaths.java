@@ -130,9 +130,9 @@ public class ServletPaths {
 		return path;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ServletPaths.class);
+	private static final Log _log = LogFactoryUtil.getLog(ServletPaths.class);
 
-	private String _resourcePath;
-	private ServletContext _servletContext;
+	private final String _resourcePath;
+	private final ServletContext _servletContext;
 
 }

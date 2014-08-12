@@ -120,7 +120,7 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 		return _printWriter;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PipingServletResponse.class);
 
 	private PrintWriter _printWriter;

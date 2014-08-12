@@ -66,8 +66,8 @@ public class SandboxDeployUtil {
 		}
 	}
 
-	private static SandboxDeployUtil _instance = new SandboxDeployUtil();
+	private static final SandboxDeployUtil _instance = new SandboxDeployUtil();
 
-	private Map<String, SandboxDeployDir> _sandboxDeployDirs;
+	private final Map<String, SandboxDeployDir> _sandboxDeployDirs;
 
 }

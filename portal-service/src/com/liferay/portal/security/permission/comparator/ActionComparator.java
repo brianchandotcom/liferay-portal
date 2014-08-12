@@ -38,6 +38,6 @@ public class ActionComparator implements Comparator<String>, Serializable {
 		return action1.compareTo(action2);
 	}
 
-	private Locale _locale;
+	private final Locale _locale;
 
 }

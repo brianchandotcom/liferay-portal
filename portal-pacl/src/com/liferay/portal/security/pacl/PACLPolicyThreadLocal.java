@@ -27,7 +27,7 @@ public class PACLPolicyThreadLocal {
 		_paclPolicy.set(paclPolicy);
 	}
 
-	private static ThreadLocal<PACLPolicy> _paclPolicy =
+	private static final ThreadLocal<PACLPolicy> _paclPolicy =
 		new ThreadLocal<PACLPolicy>();
 
 }

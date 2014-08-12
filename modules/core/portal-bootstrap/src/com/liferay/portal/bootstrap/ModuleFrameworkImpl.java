@@ -1275,11 +1275,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		frameworkWiring.refreshBundles(refreshBundles, frameworkListener);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ModuleFrameworkImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(ModuleFrameworkImpl.class);
 
-	private Pattern _bundleSymbolicNamePattern = Pattern.compile(
+	private final Pattern _bundleSymbolicNamePattern = Pattern.compile(
 		"(" + Verifier.SYMBOLICNAME.pattern() + ")(-[0-9])?.*\\.jar");
-	private Lock _extraPackageLock = new ReentrantLock();
+	private final Lock _extraPackageLock = new ReentrantLock();
 	private Map<String, List<URL>> _extraPackageMap;
 	private List<URL> _extraPackageURLs;
 	private Framework _framework;

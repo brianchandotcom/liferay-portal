@@ -176,14 +176,14 @@ public class FinderPath {
 
 	private static final String _PARAMS_SEPARATOR = "_P_";
 
-	private CacheKeyGenerator _cacheKeyGenerator;
-	private String _cacheKeyGeneratorCacheName;
+	private final CacheKeyGenerator _cacheKeyGenerator;
+	private final String _cacheKeyGeneratorCacheName;
 	private String _cacheKeyPrefix;
-	private String _cacheName;
-	private long _columnBitmask;
-	private boolean _entityCacheEnabled;
-	private boolean _finderCacheEnabled;
+	private final String _cacheName;
+	private final long _columnBitmask;
+	private final boolean _entityCacheEnabled;
+	private final boolean _finderCacheEnabled;
 	private String _localCacheKeyPrefix;
-	private Class<?> _resultClass;
+	private final Class<?> _resultClass;
 
 }

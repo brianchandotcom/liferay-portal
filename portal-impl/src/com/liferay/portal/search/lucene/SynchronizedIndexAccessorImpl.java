@@ -188,8 +188,8 @@ public class SynchronizedIndexAccessorImpl implements IndexAccessor {
 		}
 	}
 
-	private IndexAccessor _indexAccessor;
-	private Lock _readLock;
-	private Lock _writeLock;
+	private final IndexAccessor _indexAccessor;
+	private final Lock _readLock;
+	private final Lock _writeLock;
 
 }

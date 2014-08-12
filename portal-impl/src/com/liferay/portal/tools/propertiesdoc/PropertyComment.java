@@ -45,7 +45,7 @@ public class PropertyComment {
 		return _preformatted;
 	}
 
-	private String _comment;
-	private boolean _preformatted;
+	private final String _comment;
+	private final boolean _preformatted;
 
 }

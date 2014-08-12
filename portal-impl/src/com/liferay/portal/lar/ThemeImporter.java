@@ -80,8 +80,7 @@ public class ThemeImporter {
 	private ThemeImporter() {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ThemeImporter.class);
-
-	private static ThemeImporter _instance = new ThemeImporter();
+	private static final ThemeImporter _instance = new ThemeImporter();
+	private static final Log _log = LogFactoryUtil.getLog(ThemeImporter.class);
 
 }

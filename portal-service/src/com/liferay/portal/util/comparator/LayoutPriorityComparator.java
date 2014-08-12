@@ -115,8 +115,8 @@ public class LayoutPriorityComparator extends OrderByComparator<Layout> {
 		return _ascending;
 	}
 
-	private boolean _ascending;
-	private Layout _layout;
-	private boolean _lessThan;
+	private final boolean _ascending;
+	private final Layout _layout;
+	private final boolean _lessThan;
 
 }

@@ -123,8 +123,8 @@ public class DDMStructureClassType implements ClassType {
 		"radio", "select", "text"
 	};
 
-	private long _classTypeId;
-	private String _classTypeName;
-	private String _languageId;
+	private final long _classTypeId;
+	private final String _classTypeName;
+	private final String _languageId;
 
 }

@@ -141,7 +141,7 @@ public class JSONWebServiceServlet extends JSONServlet {
 		return jsonWebServiceServiceAction;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceServlet.class);
 
 }

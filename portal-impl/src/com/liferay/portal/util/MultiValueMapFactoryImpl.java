@@ -50,7 +50,7 @@ public class MultiValueMapFactoryImpl implements MultiValueMapFactory {
 		return getMultiValueMap(type);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		MultiValueMapFactoryImpl.class);
 
 }

@@ -174,7 +174,7 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalExecutorManagerImpl.class);
 
 	private PortalExecutorFactory _portalExecutorFactory;

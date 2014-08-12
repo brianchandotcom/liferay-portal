@@ -57,6 +57,6 @@ public class AntivirusScannerWrapper implements AntivirusScanner {
 	}
 
 	private AntivirusScanner _antivirusScanner;
-	private AntivirusScanner _originalAntivirusScanner;
+	private final AntivirusScanner _originalAntivirusScanner;
 
 }

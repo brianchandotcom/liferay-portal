@@ -36,7 +36,7 @@ public class WorkflowTaskAssignee implements Serializable {
 		return _assigneeClassPK;
 	}
 
-	private String _assigneeClassName;
-	private long _assigneeClassPK;
+	private final String _assigneeClassName;
+	private final long _assigneeClassPK;
 
 }

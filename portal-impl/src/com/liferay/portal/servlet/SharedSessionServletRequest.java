@@ -88,6 +88,6 @@ public class SharedSessionServletRequest extends HttpServletRequestWrapper {
 	}
 
 	private HttpSession _portalSession;
-	private boolean _shared;
+	private final boolean _shared;
 
 }

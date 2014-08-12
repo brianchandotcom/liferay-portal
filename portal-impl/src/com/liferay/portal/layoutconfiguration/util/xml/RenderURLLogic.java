@@ -47,6 +47,6 @@ public class RenderURLLogic extends ActionURLLogic {
 		return OPEN_TAG;
 	}
 
-	private String _lifecycle = PortletRequest.RENDER_PHASE;
+	private final String _lifecycle = PortletRequest.RENDER_PHASE;
 
 }

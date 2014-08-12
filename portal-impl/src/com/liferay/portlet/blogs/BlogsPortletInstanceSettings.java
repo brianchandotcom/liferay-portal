@@ -182,6 +182,6 @@ public class BlogsPortletInstanceSettings {
 			PortletKeys.BLOGS_ADMIN, _getFallbackKeys(), _MULTI_VALUED_KEYS);
 	}
 
-	private TypedSettings _typedSettings;
+	private final TypedSettings _typedSettings;
 
 }

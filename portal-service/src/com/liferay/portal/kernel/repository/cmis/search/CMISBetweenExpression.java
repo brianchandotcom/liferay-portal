@@ -61,10 +61,10 @@ public class CMISBetweenExpression implements CMISCriterion {
 		return sb.toString();
 	}
 
-	private String _field;
-	private boolean _includesLower;
-	private boolean _includesUpper;
-	private String _lowerTerm;
-	private String _upperTerm;
+	private final String _field;
+	private final boolean _includesLower;
+	private final boolean _includesUpper;
+	private final String _lowerTerm;
+	private final String _upperTerm;
 
 }

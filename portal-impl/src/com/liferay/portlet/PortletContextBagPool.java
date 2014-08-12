@@ -59,9 +59,9 @@ public class PortletContextBagPool {
 		return _portletContextBagPool.remove(servletContextName);
 	}
 
-	private static PortletContextBagPool _instance =
+	private static final PortletContextBagPool _instance =
 		new PortletContextBagPool();
 
-	private Map<String, PortletContextBag> _portletContextBagPool;
+	private final Map<String, PortletContextBag> _portletContextBagPool;
 
 }

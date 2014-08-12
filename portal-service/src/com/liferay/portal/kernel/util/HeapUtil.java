@@ -151,10 +151,9 @@ public class HeapUtil {
 		return pid;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(HeapUtil.class);
-
-	private static int _processId;
-	private static boolean _supported;
+	private static final Log _log = LogFactoryUtil.getLog(HeapUtil.class);
+	private static final int _processId;
+	private static final boolean _supported;
 
 	static {
 		int processId = -1;

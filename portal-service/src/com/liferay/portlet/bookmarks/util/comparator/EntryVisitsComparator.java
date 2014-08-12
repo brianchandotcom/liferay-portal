@@ -75,6 +75,6 @@ public class EntryVisitsComparator extends OrderByComparator<BookmarksEntry> {
 		return _ascending;
 	}
 
-	private boolean _ascending;
+	private final boolean _ascending;
 
 }

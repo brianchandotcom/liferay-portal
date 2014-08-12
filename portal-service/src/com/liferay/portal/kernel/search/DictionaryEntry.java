@@ -41,7 +41,7 @@ public class DictionaryEntry {
 		return _word;
 	}
 
-	private float _weight;
-	private String _word;
+	private final float _weight;
+	private final String _word;
 
 }

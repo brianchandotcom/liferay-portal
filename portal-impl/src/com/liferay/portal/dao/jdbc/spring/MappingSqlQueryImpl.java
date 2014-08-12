@@ -51,6 +51,6 @@ public class MappingSqlQueryImpl<T>
 		return _rowMapper.mapRow(rs, rowNumber);
 	}
 
-	private RowMapper<T> _rowMapper;
+	private final RowMapper<T> _rowMapper;
 
 }

@@ -196,8 +196,8 @@ public class DLFileEntryActionsDisplayContextHelper {
 	private Boolean _checkedOut;
 	private Boolean _dlFileEntry;
 	private Boolean _draft;
-	private FileEntry _fileEntry;
-	private FileVersion _fileVersion;
+	private final FileEntry _fileEntry;
+	private final FileVersion _fileVersion;
 	private Boolean _hasDeletePermission;
 	private Boolean _hasLock;
 	private Boolean _hasOverrideCheckoutPermission;
@@ -206,7 +206,7 @@ public class DLFileEntryActionsDisplayContextHelper {
 	private Boolean _hasViewPermission;
 	private Boolean _officeDoc;
 	private Boolean _pending;
-	private PermissionChecker _permissionChecker;
+	private final PermissionChecker _permissionChecker;
 	private Boolean _supportsLocking;
 
 }

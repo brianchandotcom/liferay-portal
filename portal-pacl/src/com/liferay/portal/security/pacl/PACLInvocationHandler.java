@@ -88,7 +88,7 @@ public class PACLInvocationHandler implements InvocationHandler {
 	@SuppressWarnings("unused")
 	private AdvisedSupport _advisedSupport;
 
-	private InvocationHandler _invocationHandler;
+	private final InvocationHandler _invocationHandler;
 
 	private class InvokePrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Object> {
@@ -114,7 +114,7 @@ public class PACLInvocationHandler implements InvocationHandler {
 		}
 
 		private Object[] _arguments;
-		private InvocationHandler _invocationHandler;
+		private final InvocationHandler _invocationHandler;
 		private Method _method;
 		private Object _proxy;
 

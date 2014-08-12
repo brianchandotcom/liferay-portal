@@ -66,6 +66,6 @@ public class PortletDataHandlerChoice extends PortletDataHandlerControl {
 	};
 
 	private String[] _choices;
-	private int _defaultChoice;
+	private final int _defaultChoice;
 
 }

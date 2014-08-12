@@ -767,35 +767,35 @@ public class PortletRequestModel implements Serializable {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortletRequestModel.class);
+	private static final Log _log = LogFactoryUtil.getLog(PortletRequestModel.class);
 
-	private String _actionURL;
+	private final String _actionURL;
 	private Map<String, Object> _applicationScopeSessionAttributes;
 	private Map<String, Object> _attributes;
-	private String _authType;
-	private String _containerNamespace;
-	private String _contentType;
-	private String _contextPath;
-	private String _lifecycle;
-	private Locale _locale;
-	private Map<String, String[]> _parameters;
-	private PortletMode _portletMode;
-	private String _portletNamespace;
+	private final String _authType;
+	private final String _containerNamespace;
+	private final String _contentType;
+	private final String _contextPath;
+	private final String _lifecycle;
+	private final Locale _locale;
+	private final Map<String, String[]> _parameters;
+	private final PortletMode _portletMode;
+	private final String _portletNamespace;
 	private Map<String, Object> _portletScopeSessioAttributes;
-	private String _portletSessionId;
-	private String _remoteUser;
-	private String _renderURL;
-	private String _renderURLExclusive;
-	private String _renderURLMaximized;
-	private String _renderURLMinimized;
-	private String _renderURLNormal;
-	private String _renderURLPopUp;
-	private String _resourceURL;
-	private String _scheme;
-	private boolean _secure;
-	private String _serverName;
-	private int _serverPort;
-	private ThemeDisplayModel _themeDisplayModel;
-	private WindowState _windowState;
+	private final String _portletSessionId;
+	private final String _remoteUser;
+	private final String _renderURL;
+	private final String _renderURLExclusive;
+	private final String _renderURLMaximized;
+	private final String _renderURLMinimized;
+	private final String _renderURLNormal;
+	private final String _renderURLPopUp;
+	private final String _resourceURL;
+	private final String _scheme;
+	private final boolean _secure;
+	private final String _serverName;
+	private final int _serverPort;
+	private final ThemeDisplayModel _themeDisplayModel;
+	private final WindowState _windowState;
 
 }

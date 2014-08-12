@@ -47,7 +47,7 @@ public class ClassLoaderResourceParser extends URLResourceParser {
 		return classLoader.getResource(templateId);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ClassLoaderResourceParser.class);
 
 }

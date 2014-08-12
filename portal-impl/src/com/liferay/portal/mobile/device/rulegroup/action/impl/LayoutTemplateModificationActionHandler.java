@@ -73,7 +73,7 @@ public class LayoutTemplateModificationActionHandler implements ActionHandler {
 		return getHandlerType();
 	}
 
-	private static Collection<String> _propertyNames;
+	private static final Collection<String> _propertyNames;
 
 	static {
 		_propertyNames = new ArrayList<String>(1);

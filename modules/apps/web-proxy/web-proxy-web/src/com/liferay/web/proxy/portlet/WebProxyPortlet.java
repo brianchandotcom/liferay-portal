@@ -230,7 +230,8 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 		WebProxyUpgrade webProxyUpgrade) {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WebProxyPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WebProxyPortlet.class);
 
 	private ComponentContext _componentContext;
 	private boolean _enabled;

@@ -100,9 +100,8 @@ public class PortalManagerUtil {
 		_portalManager = portalManager;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortalManagerUtil.class);
-
-	private static Method _manageMethod;
+	private static final Log _log = LogFactoryUtil.getLog(PortalManagerUtil.class);
+	private static final Method _manageMethod;
 	private static PortalManager _portalManager;
 
 	static {

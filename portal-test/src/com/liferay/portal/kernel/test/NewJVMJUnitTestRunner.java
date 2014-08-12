@@ -168,7 +168,7 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 	private static final String _JPDA_OPTIONS =
 		"-agentlib:jdwp=transport=dt_socket,address=8001,server=y,suspend=y";
 
-	private String _classPath;
+	private final String _classPath;
 
 	private static class TestProcessCallable
 		implements ProcessCallable<Serializable> {

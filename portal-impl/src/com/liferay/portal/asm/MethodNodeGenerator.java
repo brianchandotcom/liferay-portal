@@ -129,6 +129,6 @@ public class MethodNodeGenerator extends GeneratorAdapter {
 		return methodNode;
 	}
 
-	private MethodNode _methodNode;
+	private final MethodNode _methodNode;
 
 }

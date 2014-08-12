@@ -147,6 +147,6 @@ public class XMLMergerRunner {
 
 	private static final String _AUTO_DESCRIPTOR = "auto";
 
-	private String _descriptorClassName = _AUTO_DESCRIPTOR;
+	private final String _descriptorClassName = _AUTO_DESCRIPTOR;
 
 }

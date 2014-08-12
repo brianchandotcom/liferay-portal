@@ -68,10 +68,10 @@ public class PollerCometDelayedJobImpl
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PollerCometDelayedJobImpl.class);
 
-	private List<PollerCometDelayedTask> _pollerCometDelayedTasks =
+	private final List<PollerCometDelayedTask> _pollerCometDelayedTasks =
 		new LinkedList<PollerCometDelayedTask>();
 	private Timer _timer;
 

@@ -63,7 +63,7 @@ public class Filter {
 		return _variables;
 	}
 
-	private String[] _selectors;
-	private Map<String, String> _variables;
+	private final String[] _selectors;
+	private final Map<String, String> _variables;
 
 }

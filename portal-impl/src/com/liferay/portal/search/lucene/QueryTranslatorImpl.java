@@ -127,9 +127,9 @@ public class QueryTranslatorImpl implements QueryTranslator {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(QueryTranslatorImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(QueryTranslatorImpl.class);
 
-	private static Field _textField = null;
+	private static final Field _textField = null;
 
 	static {
 		try {

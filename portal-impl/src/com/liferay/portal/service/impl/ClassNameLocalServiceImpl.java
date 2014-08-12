@@ -168,8 +168,8 @@ public class ClassNameLocalServiceImpl
 		_classNames.clear();
 	}
 
-	private static Map<String, ClassName> _classNames =
+	private static final Map<String, ClassName> _classNames =
 		new ConcurrentHashMap<String, ClassName>();
-	private static ClassName _nullClassName = new ClassNameImpl();
+	private static final ClassName _nullClassName = new ClassNameImpl();
 
 }

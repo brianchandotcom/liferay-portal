@@ -220,16 +220,16 @@ public class JSONWebServiceActionConfig
 		return sb.toString();
 	}
 
-	private Class<?> _actionClass;
-	private Method _actionMethod;
-	private Object _actionObject;
-	private String _contextName;
-	private String _contextPath;
-	private boolean _deprecated;
-	private String _method;
-	private MethodParameter[] _methodParameters;
-	private String _path;
-	private Method _realActionMethod;
-	private String _signature;
+	private final Class<?> _actionClass;
+	private final Method _actionMethod;
+	private final Object _actionObject;
+	private final String _contextName;
+	private final String _contextPath;
+	private final boolean _deprecated;
+	private final String _method;
+	private final MethodParameter[] _methodParameters;
+	private final String _path;
+	private final Method _realActionMethod;
+	private final String _signature;
 
 }

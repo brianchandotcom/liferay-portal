@@ -205,15 +205,15 @@ public class JSONIncludesManagerImpl implements JSONIncludesManager {
 
 	private static final String _EXCLUDE_ALL = "*";
 
-	private Map<Class<?>, String[]> _excludesMap =
+	private final Map<Class<?>, String[]> _excludesMap =
 		new HashMap<Class<?>, String[]>();
-	private String[] _excludesTypeNames = {
+	private final String[] _excludesTypeNames = {
 		ExpandoBridge.class.getName(), InputStream.class.getName(), "javax.",
 		LiferayPortletRequest.class.getName(),
 		LiferayPortletResponse.class.getName(), OutputStream.class.getName(),
 		PortletDisplay.class.getName(), PortletURL.class.getName()
 	};
-	private Map<Class<?>, String[]> _includesMap =
+	private final Map<Class<?>, String[]> _includesMap =
 		new HashMap<Class<?>, String[]>();
 
 }

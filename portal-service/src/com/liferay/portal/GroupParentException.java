@@ -51,6 +51,6 @@ public class GroupParentException extends PortalException {
 		return _type;
 	}
 
-	private int _type;
+	private final int _type;
 
 }

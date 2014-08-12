@@ -37,7 +37,7 @@ public class ThreadDumper implements Runnable {
 		_executed = true;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ThreadDumper.class);
+	private static final Log _log = LogFactoryUtil.getLog(ThreadDumper.class);
 
 	private boolean _executed;
 

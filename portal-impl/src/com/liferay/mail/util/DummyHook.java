@@ -94,6 +94,6 @@ public class DummyHook implements Hook {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DummyHook.class);
+	private static final Log _log = LogFactoryUtil.getLog(DummyHook.class);
 
 }

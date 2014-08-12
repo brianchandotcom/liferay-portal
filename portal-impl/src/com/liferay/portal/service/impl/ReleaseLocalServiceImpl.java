@@ -364,7 +364,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 	private static final String _TEST_DATABASE_STRING_CASE_SENSITIVITY =
 		"select count(*) from Release_ where releaseId = ? and testString = ?";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ReleaseLocalServiceImpl.class);
 
 }

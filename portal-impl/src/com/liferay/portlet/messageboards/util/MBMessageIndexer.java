@@ -482,6 +482,6 @@ public class MBMessageIndexer extends BaseIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MBMessageIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(MBMessageIndexer.class);
 
 }

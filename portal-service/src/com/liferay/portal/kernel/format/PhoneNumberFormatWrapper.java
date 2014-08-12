@@ -49,7 +49,7 @@ public class PhoneNumberFormatWrapper implements PhoneNumberFormat {
 		return _phoneNumberFormat.validate(phoneNumber);
 	}
 
-	private PhoneNumberFormat _originalPhoneNumberFormat;
+	private final PhoneNumberFormat _originalPhoneNumberFormat;
 	private PhoneNumberFormat _phoneNumberFormat;
 
 }

@@ -140,6 +140,6 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 	private static final String _TAGLIB_PATH =
 		"/html/taglib/ui/captcha/recaptcha.jsp";
 
-	private static Log _log = LogFactoryUtil.getLog(ReCaptchaImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(ReCaptchaImpl.class);
 
 }

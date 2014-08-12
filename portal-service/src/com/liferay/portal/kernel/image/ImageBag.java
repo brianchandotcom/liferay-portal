@@ -34,7 +34,7 @@ public class ImageBag {
 		return _type;
 	}
 
-	private RenderedImage _renderedImage;
-	private String _type;
+	private final RenderedImage _renderedImage;
+	private final String _type;
 
 }

@@ -34,7 +34,7 @@ public class WorkflowThreadLocal {
 		_enabled.set(enabled);
 	}
 
-	private static ThreadLocal<Boolean> _enabled =
+	private static final ThreadLocal<Boolean> _enabled =
 		new AutoResetThreadLocal<Boolean>(
 			WorkflowThreadLocal.class + "._enabled", true);
 

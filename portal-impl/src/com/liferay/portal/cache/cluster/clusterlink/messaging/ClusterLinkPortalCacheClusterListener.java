@@ -127,11 +127,11 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 	private static final String _MULTI_VM_PORTAL_CACHE_MANAGER_BEAN_NAME =
 		"com.liferay.portal.kernel.cache.MultiVMPortalCacheManager";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterLinkPortalCacheClusterListener.class);
 
-	private PortalCacheManager<Serializable, Serializable>
+	private final PortalCacheManager<Serializable, Serializable>
 		_hibernateCacheManager;
-	private PortalCacheManager<Serializable, Serializable> _portalCacheManager;
+	private final PortalCacheManager<Serializable, Serializable> _portalCacheManager;
 
 }

@@ -56,8 +56,8 @@ public class RulesResourceRetriever implements Serializable {
 		return _rulesLanguage;
 	}
 
-	private Set<ResourceRetriever> _resourceRetrievers =
+	private final Set<ResourceRetriever> _resourceRetrievers =
 		new HashSet<ResourceRetriever>();
-	private String _rulesLanguage;
+	private final String _rulesLanguage;
 
 }

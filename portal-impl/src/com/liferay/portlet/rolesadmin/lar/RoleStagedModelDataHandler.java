@@ -341,10 +341,10 @@ public class RoleStagedModelDataHandler
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		RoleStagedModelDataHandler.class);
 
-	private PermissionConversionFilter _permissionConversionFilter =
+	private final PermissionConversionFilter _permissionConversionFilter =
 		new ImportExportPermissionConversionFilter();
 
 }

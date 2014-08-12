@@ -31,7 +31,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -83,6 +85,35 @@ public class UpgradeProcessUtil {
 
 	public static boolean isCreateIGImageDocumentType() {
 		return _createIGImageDocumentType;
+	}
+
+	public static List<UpgradeProcess> loadFromClassLoader(
+		ClassLoader classLoader, String[] upgradeProcessClassNames) {
+
+		List<UpgradeProcess> upgradeProcesses = new ArrayList<UpgradeProcess>();
+
+		for (String upgradeProcessClassName : upgradeProcessClassNames) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Initializing upgrade " + upgradeProcessClassName);
+			}
+
+			UpgradeProcess upgradeProcess = null;
+
+			try {
+				Class<?> clazz = classLoader.loadClass(upgradeProcessClassName);
+
+				upgradeProcess = (UpgradeProcess)clazz.newInstance();
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				continue;
+			}
+
+			upgradeProcesses.add(upgradeProcess);
+		}
+
+		return upgradeProcesses;
 	}
 
 	public static void setCreateIGImageDocumentType(

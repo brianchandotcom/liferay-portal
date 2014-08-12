@@ -29,6 +29,8 @@ import javax.servlet.ServletContext;
 public class DynamicFilterConfig implements FilterConfig {
 
 	public DynamicFilterConfig(FilterConfig filterConfig) {
+		this(null, null);
+
 		Enumeration<String> enu = filterConfig.getInitParameterNames();
 
 		while (enu.hasMoreElements()) {

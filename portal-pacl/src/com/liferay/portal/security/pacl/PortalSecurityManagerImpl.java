@@ -144,6 +144,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		initClasses();
 
+		PortalPolicy portalPolicy = null;
+
 		try {
 			Policy policy = null;
 
@@ -151,11 +153,11 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				policy = Policy.getPolicy();
 			}
 
-			_portalPolicy = new PortalPolicy(policy);
+			portalPolicy = new PortalPolicy(policy);
 
-			Policy.setPolicy(_portalPolicy);
+			Policy.setPolicy(portalPolicy);
 
-			_portalPolicy.refresh();
+			portalPolicy.refresh();
 		}
 		catch (Exception e) {
 			if (_log.isInfoEnabled()) {
@@ -168,8 +170,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			if (_log.isWarnEnabled()) {
 				_log.warn(e, e);
 			}
-
-			return;
 		}
 
 		try {
@@ -210,6 +210,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		if (ServerDetector.isWebSphere()) {
 			addWebSphereHook();
 		}
+
+		_portalPolicy = portalPolicy;
 	}
 
 	@Override

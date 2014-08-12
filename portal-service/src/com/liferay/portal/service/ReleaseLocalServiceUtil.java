@@ -279,6 +279,24 @@ public class ReleaseLocalServiceUtil {
 				   .updateRelease(releaseId, buildNumber, buildDate, verified);
 	}
 
+	public static void updateRelease(java.lang.String servletContextName,
+		java.util.List<com.liferay.portal.kernel.upgrade.UpgradeProcess> upgradeProcesses,
+		int buildNumber, int previousBuildNumber, boolean indexOnUpgrade)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.updateRelease(servletContextName, upgradeProcesses, buildNumber,
+			previousBuildNumber, indexOnUpgrade);
+	}
+
+	public static void updateRelease(java.lang.String servletContextName,
+		java.util.List<com.liferay.portal.kernel.upgrade.UpgradeProcess> upgradeProcesses,
+		java.util.Properties unfilteredPortalProperties)
+		throws java.lang.Exception {
+		getService()
+			.updateRelease(servletContextName, upgradeProcesses,
+			unfilteredPortalProperties);
+	}
+
 	public static ReleaseLocalService getService() {
 		if (_service == null) {
 			_service = (ReleaseLocalService)PortalBeanLocatorUtil.locate(ReleaseLocalService.class.getName());

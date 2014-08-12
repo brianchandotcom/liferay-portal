@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -32,6 +33,8 @@ import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcessUtil;
 
 import java.sql.Connection;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -145,9 +148,13 @@ public class StartupHelper {
 				}
 			}
 
+			List<UpgradeProcess> upgradeProcesses =
+				UpgradeProcessUtil.loadFromClassLoader(
+					ClassLoaderUtil.getPortalClassLoader(),
+					upgradeProcessClassNames);
+
 			_upgraded = UpgradeProcessUtil.upgradeProcess(
-				buildNumber, upgradeProcessClassNames,
-				ClassLoaderUtil.getPortalClassLoader());
+				buildNumber, upgradeProcesses);
 		}
 		finally {
 			_upgrading = false;

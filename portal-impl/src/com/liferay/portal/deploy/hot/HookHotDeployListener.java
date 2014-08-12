@@ -59,7 +59,7 @@ import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterConfig;
 import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.struts.StrutsPortletAction;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -82,7 +82,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.model.Release;
 import com.liferay.portal.repository.util.ExternalRepositoryFactory;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
@@ -1831,8 +1830,16 @@ public class HookHotDeployListener
 			unfilteredPortalProperties.containsKey(
 				PropsKeys.UPGRADE_PROCESSES)) {
 
-			updateRelease(
-				servletContextName, portletClassLoader,
+			String[] upgradeProcessClassNames = StringUtil.split(
+				unfilteredPortalProperties.getProperty(
+					PropsKeys.UPGRADE_PROCESSES));
+
+			List<UpgradeProcess> upgradeProcesses =
+				UpgradeProcessUtil.loadFromClassLoader(
+					portletClassLoader, upgradeProcessClassNames);
+
+			ReleaseLocalServiceUtil.updateRelease(
+				servletContextName, upgradeProcesses,
 				unfilteredPortalProperties);
 		}
 	}
@@ -2362,67 +2369,6 @@ public class HookHotDeployListener
 				}
 			}
 		}
-	}
-
-	protected void updateRelease(
-			String servletContextName, ClassLoader portletClassLoader,
-			Properties unfilteredPortalProperties)
-		throws Exception {
-
-		int buildNumber = GetterUtil.getInteger(
-			unfilteredPortalProperties.getProperty(
-				PropsKeys.RELEASE_INFO_BUILD_NUMBER));
-
-		if (buildNumber <= 0) {
-			_log.error(
-				"Skipping upgrade processes for " + servletContextName +
-					" because \"release.info.build.number\" is not specified");
-
-			return;
-		}
-
-		Release release = ReleaseLocalServiceUtil.fetchRelease(
-			servletContextName);
-
-		if (release == null) {
-			int previousBuildNumber = GetterUtil.getInteger(
-				unfilteredPortalProperties.getProperty(
-					PropsKeys.RELEASE_INFO_PREVIOUS_BUILD_NUMBER),
-				buildNumber);
-
-			release = ReleaseLocalServiceUtil.addRelease(
-				servletContextName, previousBuildNumber);
-		}
-
-		if (buildNumber == release.getBuildNumber()) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Skipping upgrade processes for " + servletContextName +
-						" because it is already up to date");
-			}
-		}
-		else if (buildNumber < release.getBuildNumber()) {
-			throw new UpgradeException(
-				"Skipping upgrade processes for " + servletContextName +
-					" because you are trying to upgrade with an older version");
-		}
-		else {
-			String[] upgradeProcessClassNames = StringUtil.split(
-				unfilteredPortalProperties.getProperty(
-					PropsKeys.UPGRADE_PROCESSES));
-
-			boolean indexOnUpgrade = GetterUtil.getBoolean(
-				unfilteredPortalProperties.getProperty(
-					PropsKeys.INDEX_ON_UPGRADE),
-				PropsValues.INDEX_ON_UPGRADE);
-
-			UpgradeProcessUtil.upgradeProcess(
-				release.getBuildNumber(), upgradeProcessClassNames,
-				portletClassLoader, indexOnUpgrade);
-		}
-
-		ReleaseLocalServiceUtil.updateRelease(
-			release.getReleaseId(), buildNumber, null, true);
 	}
 
 	private static final String[] _PROPS_KEYS_EVENTS = {

@@ -1723,10 +1723,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = <#if pluginName != "">GetterUtil.getBoolean(PropsUtil.get(PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE))<#else>com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE</#if>;
 
-	private static Log _log = LogFactoryUtil.getLog(${entity.name}PersistenceImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(${entity.name}PersistenceImpl.class);
 
 	<#if entity.badNamedColumnsList?size != 0>
-		private static Set<String> _badColumnNames = SetUtil.fromArray(
+		private static final Set<String> _badColumnNames = SetUtil.fromArray(
 			new String[] {
 				<#list entity.badNamedColumnsList as column>
 					"${column.name}"
@@ -1738,7 +1738,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			});
 	</#if>
 
-	private static ${entity.name} _null${entity.name} = new ${entity.name}Impl() {
+	private static final ${entity.name} _null${entity.name} = new ${entity.name}Impl() {
 
 		@Override
 		public Object clone() {
@@ -1752,7 +1752,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 	};
 
-	private static CacheModel<${entity.name}> _null${entity.name}CacheModel =
+	private static final CacheModel<${entity.name}> _null${entity.name}CacheModel =
 
 	<#if entity.isMvccEnabled()>
 		new NullCacheModel();

@@ -1118,7 +1118,7 @@
 			)
 
 			if (selectClassName) {
-				form.all(selectClassName).toggleClass('info', A.one(allBox).get(STR_CHECKED));
+				form.all(selectClassName).toggleClass('info', allBoxChecked);
 			}
 		},
 		['aui-base']

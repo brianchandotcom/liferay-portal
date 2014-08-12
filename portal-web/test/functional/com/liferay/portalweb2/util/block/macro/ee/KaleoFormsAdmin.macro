@@ -126,9 +126,6 @@
 			</then>
 			<else>
 				<execute action="CPKaleoformsadmin#click" locator-key1="PROCESS_TABLE_ACTIONS_1" />
-			</then>
-			<else>
-				<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_WORKFLOW" value1="${workflowDefinition} (Version 1)" />
 			</else>
 		</if>
 
@@ -282,12 +279,6 @@
 		<execute action="CPKaleoformsadminNewprocessSelectform#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no results." />
 	</command>
 
-	<command name="viewProcessWorkflow">
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_WORKFLOW" value1="${workflowDefinition} (Version 1)" />
-
-		<execute macro="KaleoFormsAdmin#next" />
-	</command>
-	
 	<command name="viewProcessNoRecords">
 		<execute macro="KaleoFormsAdmin#viewProcessRecord">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -315,5 +306,11 @@
 		<var name="key_kfStatus" value="${kfStatus}" />
 
 		<execute action="CPKaleoformsadminViewProcessRecords#assertTextEquals" locator-key1="RECORD_TABLE_STATUS" value1="${kfStatus}" />
+	</command>
+
+	<command name="viewProcessWorkflow">
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_WORKFLOW" value1="${workflowDefinition} (Version 1)" />
+
+		<execute macro="KaleoFormsAdmin#next" />
 	</command>
 </definition>

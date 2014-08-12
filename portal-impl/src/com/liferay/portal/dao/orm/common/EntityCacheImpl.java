@@ -423,6 +423,10 @@ public class EntityCacheImpl
 						VALUE_OBJECT_ENTITY_THREAD_LOCAL_CACHE_MAX_SIZE));
 			_localCacheAvailable = true;
 		}
+		else {
+			_localCache = null;
+			_localCacheAvailable = false;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(EntityCacheImpl.class);

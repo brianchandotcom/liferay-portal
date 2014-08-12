@@ -85,6 +85,9 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 			_bootstrapAsynchronously = GetterUtil.getBoolean(
 				properties.getProperty("bootstrapAsynchronously"));
 		}
+		else {
+			_bootstrapAsynchronously = true;
+		}
 	}
 
 	@Override
@@ -165,7 +168,7 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 
 	private static boolean _started;
 
-	private final boolean _bootstrapAsynchronously = true;
+	private final boolean _bootstrapAsynchronously;
 
 	private class EhcacheStreamClientThread extends Thread {
 

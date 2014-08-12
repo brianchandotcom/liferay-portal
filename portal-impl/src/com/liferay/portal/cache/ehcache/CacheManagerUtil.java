@@ -94,6 +94,9 @@ public class CacheManagerUtil {
 				_workQueueField = ReflectionUtil.getDeclaredField(
 					ThreadPoolExecutor.class, "workQueue");
 			}
+			else {
+				_workQueueField = null;
+			}
 		}
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);

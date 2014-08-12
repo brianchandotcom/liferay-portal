@@ -33,10 +33,11 @@ import java.util.Properties;
 public class ColorSchemeImpl implements ColorScheme {
 
 	public ColorSchemeImpl() {
+		this(null, null, null);
 	}
 
 	public ColorSchemeImpl(String colorSchemeId) {
-		_colorSchemeId = colorSchemeId;
+		this(colorSchemeId, null, null);
 	}
 
 	public ColorSchemeImpl(String colorSchemeId, String name, String cssClass) {

@@ -41,6 +41,8 @@ public class SchedulerEntryRegistry {
 
 	public SchedulerEntryRegistry() {
 		if (!PropsValues.SCHEDULER_ENABLED) {
+			_serviceTracker = null;
+
 			return;
 		}
 

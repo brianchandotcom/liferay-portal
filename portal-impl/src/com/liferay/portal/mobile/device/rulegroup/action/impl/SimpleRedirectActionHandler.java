@@ -58,11 +58,11 @@ public class SimpleRedirectActionHandler extends BaseRedirectActionHandler {
 	private static final Collection<String> _propertyNames;
 
 	static {
-		_propertyNames = new ArrayList<String>(1);
+		Collection<String> propertyNames = new ArrayList<String>(1);
 
-		_propertyNames.add("url");
+		propertyNames.add("url");
 
-		_propertyNames = Collections.unmodifiableCollection(_propertyNames);
+		_propertyNames = Collections.unmodifiableCollection(propertyNames);
 	}
 
 }

@@ -102,12 +102,12 @@ public class ThemeModificationActionHandler implements ActionHandler {
 	private ThemeLocalService _themeLocalService;
 
 	static {
-		_propertyNames = new ArrayList<String>(2);
+		Collection<String> propertyNames = new ArrayList<String>(2);
 
-		_propertyNames.add("colorSchemeId");
-		_propertyNames.add("themeId");
+		propertyNames.add("colorSchemeId");
+		propertyNames.add("themeId");
 
-		_propertyNames = Collections.unmodifiableCollection(_propertyNames);
+		_propertyNames = Collections.unmodifiableCollection(propertyNames);
 	}
 
 }

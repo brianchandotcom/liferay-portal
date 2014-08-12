@@ -353,6 +353,10 @@ public class FinderCacheImpl
 						VALUE_OBJECT_FINDER_THREAD_LOCAL_CACHE_MAX_SIZE));
 			_localCacheAvailable = true;
 		}
+		else {
+			_localCache = null;
+			_localCacheAvailable = false;
+		}
 	}
 
 	private MultiVMPool _multiVMPool;

@@ -304,24 +304,5 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 		['aui-base']
 	);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveLdap',
-		function() {
-			var A = AUI();
-
-			var ldapServerIds = [];
-
-			A.all('.ldap-servers .table-data tr').each(
-				function(item, index, collection) {
-					ldapServerIds.push(item.getAttribute('data-ldapServerId'));
-				}
-			);
-
-			document.<portlet:namespace />fm['<portlet:namespace />settings--ldap.server.ids--'].value = ldapServerIds.join(',');
-		},
-		['aui-base']
-	);
-
 	Liferay.Util.toggleBoxes('<portlet:namespace />ldapImportEnabled', '<portlet:namespace />importEnabledSettings');
 </aui:script>

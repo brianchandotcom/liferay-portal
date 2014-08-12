@@ -71,16 +71,43 @@ request.setAttribute("websites.classPK", company.getAccountId());
 		document.<portlet:namespace />fm.method = 'post';
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.UPDATE %>';
 
-		if (typeof saveLdap === 'function') {
-			<portlet:namespace />saveLdap();
-		}
-
-		if (typeof saveLocales === 'function') {
-			<portlet:namespace />saveLocales();
-		}
+		<portlet:namespace />saveLdap();
+		<portlet:namespace />saveLocales();
 
 		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/portal_settings/edit_company" /></portlet:actionURL>');
 	}
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />saveLdap',
+		function() {
+			var A = AUI();
+
+			var ldapServerIds = [];
+
+			A.all('.ldap-servers .table-data tr').each(
+				function(item, index, collection) {
+					ldapServerIds.push(item.getAttribute('data-ldapServerId'));
+				}
+			);
+
+			var ldapServerId = document.<portlet:namespace />fm['<portlet:namespace />settings--ldap.server.ids--'];
+
+			if (ldapServerId) {
+				ldapServerId.value = ldapServerIds.join(',');
+			}
+		},
+		['aui-base']
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />saveLocales',
+		function() {
+			document.<portlet:namespace />fm.<portlet:namespace /><%= PropsKeys.LOCALES %>.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentLanguageIds);
+		},
+		['liferay-util-list-fields']
+	);
 </aui:script>
 
 <%!

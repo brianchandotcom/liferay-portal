@@ -47,6 +47,9 @@ public class ProtectedServletRequest extends HttpServletRequestWrapper {
 		if (remoteUser != null) {
 			_userPrincipal = new ProtectedPrincipal(remoteUser);
 		}
+		else {
+			_userPrincipal = null;
+		}
 
 		_authType = authType;
 	}

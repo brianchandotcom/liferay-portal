@@ -81,6 +81,11 @@ public class SearchContainer<R> {
 	public static final int MAX_DELTA = 200;
 
 	public SearchContainer() {
+		_portletRequest = null;
+		_displayTerms = null;
+		_searchTerms = null;
+
+		_curParam = DEFAULT_CUR_PARAM;
 	}
 
 	public SearchContainer(
@@ -521,7 +526,7 @@ public class SearchContainer<R> {
 
 	private String _className;
 	private int _cur;
-	private final String _curParam = DEFAULT_CUR_PARAM;
+	private final String _curParam;
 	private int _delta = DEFAULT_DELTA;
 	private boolean _deltaConfigurable = DEFAULT_DELTA_CONFIGURABLE;
 	private String _deltaParam = DEFAULT_DELTA_PARAM;

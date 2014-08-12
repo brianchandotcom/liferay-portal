@@ -46,6 +46,9 @@ public class SoftReferencePool<V, P> {
 		if (_useWeakCounter) {
 			_weakCounter = new AtomicInteger();
 		}
+		else {
+			_weakCounter = null;
+		}
 	}
 
 	public V borrowObject(P parameter) {

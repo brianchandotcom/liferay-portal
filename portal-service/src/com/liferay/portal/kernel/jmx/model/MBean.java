@@ -53,6 +53,8 @@ public class MBean implements Serializable {
 	public MBean(String domainName, String mBeanName) {
 		_domainName = domainName;
 		_mBeanName = mBeanName;
+		_mBeanInfo = null;
+		_loaded = false;
 	}
 
 	@Override

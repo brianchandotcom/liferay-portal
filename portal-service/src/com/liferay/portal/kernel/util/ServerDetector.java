@@ -353,7 +353,7 @@ public class ServerDetector {
 	private boolean _oc4j;
 	private boolean _resin;
 	private String _serverId;
-	private final boolean _supportsComet;
+	private final boolean _supportsComet = false;
 	private boolean _supportsHotDeploy;
 	private boolean _tomcat;
 	private boolean _webLogic;

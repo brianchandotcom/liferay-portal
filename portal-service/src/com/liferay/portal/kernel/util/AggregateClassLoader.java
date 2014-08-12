@@ -327,14 +327,19 @@ public class AggregateClassLoader extends ClassLoader {
 	private final WeakReference<ClassLoader> _parentClassLoaderReference;
 
 	static {
+		Method findClassMethod = null;
+		Method getResourceMethod = null;
+		Method getResourcesMethod = null;
+		Method loadClassMethod = null;
+
 		try {
-			_findClassMethod = ReflectionUtil.getDeclaredMethod(
+			findClassMethod = ReflectionUtil.getDeclaredMethod(
 				ClassLoader.class, "findClass", String.class);
-			_getResourceMethod = ReflectionUtil.getDeclaredMethod(
+			getResourceMethod = ReflectionUtil.getDeclaredMethod(
 				ClassLoader.class, "getResource", String.class);
-			_getResourcesMethod = ReflectionUtil.getDeclaredMethod(
+			getResourcesMethod = ReflectionUtil.getDeclaredMethod(
 				ClassLoader.class, "getResources", String.class);
-			_loadClassMethod = ReflectionUtil.getDeclaredMethod(
+			loadClassMethod = ReflectionUtil.getDeclaredMethod(
 				ClassLoader.class, "loadClass", String.class, boolean.class);
 		}
 		catch (Exception e) {
@@ -342,6 +347,11 @@ public class AggregateClassLoader extends ClassLoader {
 				_log.error("Unable to locate required methods", e);
 			}
 		}
+
+		_findClassMethod = findClassMethod;
+		_getResourceMethod = getResourceMethod;
+		_getResourcesMethod = getResourcesMethod;
+		_loadClassMethod = loadClassMethod;
 	}
 
 }

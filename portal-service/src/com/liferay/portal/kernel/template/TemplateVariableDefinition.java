@@ -35,23 +35,18 @@ public class TemplateVariableDefinition {
 		String accessor, String help, boolean repeatable,
 		TemplateVariableCodeHandler templateVariableCodeHandler) {
 
-		_label = label;
-		_clazz = clazz;
-		_dataType = dataType;
-		_name = name;
-		_accessor = accessor;
-		_help = help;
-		_repeatable = repeatable;
-		_templateVariableCodeHandler = templateVariableCodeHandler;
+		this(
+			label, clazz, dataType, name, accessor, help, repeatable,
+			templateVariableCodeHandler, null);
 	}
 
 	public TemplateVariableDefinition(
 		String label, Class<?> clazz, String name,
 		TemplateVariableDefinition itemTemplateVariableDefinition) {
 
-		this(label, clazz, name, StringPool.BLANK);
-
-		_itemTemplateVariableDefinition = itemTemplateVariableDefinition;
+		this(
+			label, clazz, StringPool.BLANK, name, StringPool.BLANK,
+			label.concat("-help"), false, null, itemTemplateVariableDefinition);
 	}
 
 	@Override
@@ -126,6 +121,23 @@ public class TemplateVariableDefinition {
 
 	public boolean isRepeatable() {
 		return _repeatable;
+	}
+
+	protected TemplateVariableDefinition(
+		String label, Class<?> clazz, String dataType, String name,
+		String accessor, String help, boolean repeatable,
+		TemplateVariableCodeHandler templateVariableCodeHandler,
+		TemplateVariableDefinition itemTemplateVariableDefinition) {
+
+		_label = label;
+		_clazz = clazz;
+		_dataType = dataType;
+		_name = name;
+		_accessor = accessor;
+		_help = help;
+		_repeatable = repeatable;
+		_templateVariableCodeHandler = templateVariableCodeHandler;
+		_itemTemplateVariableDefinition = itemTemplateVariableDefinition;
 	}
 
 	private final String _accessor;

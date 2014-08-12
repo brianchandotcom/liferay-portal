@@ -107,12 +107,14 @@ public class TempFileUtil {
 	public static String getUniqueTempFileName(
 		long groupId, long userId, String folderName) {
 
-		String uniqueTempFileName = StringUtil.randomString();
+		String uniqueTempFileName = null;
 
 		try {
-			getTempFile(groupId, userId, uniqueTempFileName, folderName);
+			while (true) {
+				uniqueTempFileName = StringUtil.randomString();
 
-			return getUniqueTempFileName(groupId, userId, folderName);
+				getTempFile(groupId, userId, uniqueTempFileName, folderName);
+			}
 		}
 		catch (PortalException pe) {
 			return uniqueTempFileName;

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.impl.PortletModelImpl;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -443,6 +442,5 @@ public class PortletPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(PortletPersistenceTest.class);
 	private List<Portlet> _portlets = new ArrayList<Portlet>();
-	private ModelListener<Portlet>[] _modelListeners;
 	private PortletPersistence _persistence = PortletUtil.getPersistence();
 }

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.impl.OrganizationModelImpl;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
@@ -613,6 +612,5 @@ public class OrganizationPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(OrganizationPersistenceTest.class);
 	private List<Organization> _organizations = new ArrayList<Organization>();
-	private ModelListener<Organization>[] _modelListeners;
 	private OrganizationPersistence _persistence = OrganizationUtil.getPersistence();
 }

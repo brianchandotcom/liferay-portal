@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -458,6 +457,5 @@ public class WorkflowInstanceLinkPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(WorkflowInstanceLinkPersistenceTest.class);
 	private List<WorkflowInstanceLink> _workflowInstanceLinks = new ArrayList<WorkflowInstanceLink>();
-	private ModelListener<WorkflowInstanceLink>[] _modelListeners;
 	private WorkflowInstanceLinkPersistence _persistence = WorkflowInstanceLinkUtil.getPersistence();
 }

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.impl.PasswordPolicyModelImpl;
 import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
@@ -687,6 +686,5 @@ public class PasswordPolicyPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(PasswordPolicyPersistenceTest.class);
 	private List<PasswordPolicy> _passwordPolicies = new ArrayList<PasswordPolicy>();
-	private ModelListener<PasswordPolicy>[] _modelListeners;
 	private PasswordPolicyPersistence _persistence = PasswordPolicyUtil.getPersistence();
 }

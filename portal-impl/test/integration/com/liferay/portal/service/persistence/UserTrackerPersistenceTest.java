@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserTracker;
 import com.liferay.portal.service.UserTrackerLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -464,6 +463,5 @@ public class UserTrackerPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(UserTrackerPersistenceTest.class);
 	private List<UserTracker> _userTrackers = new ArrayList<UserTracker>();
-	private ModelListener<UserTracker>[] _modelListeners;
 	private UserTrackerPersistence _persistence = UserTrackerUtil.getPersistence();
 }

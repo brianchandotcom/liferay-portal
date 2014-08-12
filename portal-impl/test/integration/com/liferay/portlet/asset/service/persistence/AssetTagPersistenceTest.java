@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
@@ -482,6 +481,5 @@ public class AssetTagPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(AssetTagPersistenceTest.class);
 	private List<AssetTag> _assetTags = new ArrayList<AssetTag>();
-	private ModelListener<AssetTag>[] _modelListeners;
 	private AssetTagPersistence _persistence = AssetTagUtil.getPersistence();
 }

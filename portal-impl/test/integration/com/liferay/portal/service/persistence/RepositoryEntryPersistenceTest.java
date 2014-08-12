@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.impl.RepositoryEntryModelImpl;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
@@ -544,6 +543,5 @@ public class RepositoryEntryPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(RepositoryEntryPersistenceTest.class);
 	private List<RepositoryEntry> _repositoryEntries = new ArrayList<RepositoryEntry>();
-	private ModelListener<RepositoryEntry>[] _modelListeners;
 	private RepositoryEntryPersistence _persistence = RepositoryEntryUtil.getPersistence();
 }

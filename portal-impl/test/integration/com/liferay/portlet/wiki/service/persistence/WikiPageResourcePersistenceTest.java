@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
@@ -443,6 +442,5 @@ public class WikiPageResourcePersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(WikiPageResourcePersistenceTest.class);
 	private List<WikiPageResource> _wikiPageResources = new ArrayList<WikiPageResource>();
-	private ModelListener<WikiPageResource>[] _modelListeners;
 	private WikiPageResourcePersistence _persistence = WikiPageResourceUtil.getPersistence();
 }

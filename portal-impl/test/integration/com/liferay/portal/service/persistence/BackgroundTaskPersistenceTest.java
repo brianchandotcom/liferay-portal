@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.BackgroundTask;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
@@ -670,6 +669,5 @@ public class BackgroundTaskPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(BackgroundTaskPersistenceTest.class);
 	private List<BackgroundTask> _backgroundTasks = new ArrayList<BackgroundTask>();
-	private ModelListener<BackgroundTask>[] _modelListeners;
 	private BackgroundTaskPersistence _persistence = BackgroundTaskUtil.getPersistence();
 }

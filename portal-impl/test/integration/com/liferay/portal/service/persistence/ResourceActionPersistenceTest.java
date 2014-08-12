@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.impl.ResourceActionModelImpl;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
@@ -450,6 +449,5 @@ public class ResourceActionPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ResourceActionPersistenceTest.class);
 	private List<ResourceAction> _resourceActions = new ArrayList<ResourceAction>();
-	private ModelListener<ResourceAction>[] _modelListeners;
 	private ResourceActionPersistence _persistence = ResourceActionUtil.getPersistence();
 }

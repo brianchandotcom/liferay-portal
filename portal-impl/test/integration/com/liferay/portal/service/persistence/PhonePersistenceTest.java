@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.service.PhoneLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -537,6 +536,5 @@ public class PhonePersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(PhonePersistenceTest.class);
 	private List<Phone> _phones = new ArrayList<Phone>();
-	private ModelListener<Phone>[] _modelListeners;
 	private PhonePersistence _persistence = PhoneUtil.getPersistence();
 }

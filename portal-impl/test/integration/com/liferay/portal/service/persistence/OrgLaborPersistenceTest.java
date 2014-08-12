@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.service.OrgLaborLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -488,6 +487,5 @@ public class OrgLaborPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(OrgLaborPersistenceTest.class);
 	private List<OrgLabor> _orgLabors = new ArrayList<OrgLabor>();
-	private ModelListener<OrgLabor>[] _modelListeners;
 	private OrgLaborPersistence _persistence = OrgLaborUtil.getPersistence();
 }

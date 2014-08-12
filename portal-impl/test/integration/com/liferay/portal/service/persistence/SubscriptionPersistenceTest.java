@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.impl.SubscriptionModelImpl;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
@@ -521,6 +520,5 @@ public class SubscriptionPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(SubscriptionPersistenceTest.class);
 	private List<Subscription> _subscriptions = new ArrayList<Subscription>();
-	private ModelListener<Subscription>[] _modelListeners;
 	private SubscriptionPersistence _persistence = SubscriptionUtil.getPersistence();
 }

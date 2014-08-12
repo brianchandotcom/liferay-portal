@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
@@ -520,6 +519,5 @@ public class AssetLinkPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(AssetLinkPersistenceTest.class);
 	private List<AssetLink> _assetLinks = new ArrayList<AssetLink>();
-	private ModelListener<AssetLink>[] _modelListeners;
 	private AssetLinkPersistence _persistence = AssetLinkUtil.getPersistence();
 }

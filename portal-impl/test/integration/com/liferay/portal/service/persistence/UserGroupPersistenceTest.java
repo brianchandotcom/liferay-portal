@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.UserGroupModelImpl;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
@@ -531,6 +530,5 @@ public class UserGroupPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(UserGroupPersistenceTest.class);
 	private List<UserGroup> _userGroups = new ArrayList<UserGroup>();
-	private ModelListener<UserGroup>[] _modelListeners;
 	private UserGroupPersistence _persistence = UserGroupUtil.getPersistence();
 }

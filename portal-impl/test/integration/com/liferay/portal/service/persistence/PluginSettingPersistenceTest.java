@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PluginSetting;
 import com.liferay.portal.model.impl.PluginSettingModelImpl;
 import com.liferay.portal.service.PluginSettingLocalServiceUtil;
@@ -463,6 +462,5 @@ public class PluginSettingPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(PluginSettingPersistenceTest.class);
 	private List<PluginSetting> _pluginSettings = new ArrayList<PluginSetting>();
-	private ModelListener<PluginSetting>[] _modelListeners;
 	private PluginSettingPersistence _persistence = PluginSettingUtil.getPersistence();
 }

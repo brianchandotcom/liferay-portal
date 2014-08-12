@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -621,6 +620,5 @@ public class UserNotificationEventPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(UserNotificationEventPersistenceTest.class);
 	private List<UserNotificationEvent> _userNotificationEvents = new ArrayList<UserNotificationEvent>();
-	private ModelListener<UserNotificationEvent>[] _modelListeners;
 	private UserNotificationEventPersistence _persistence = UserNotificationEventUtil.getPersistence();
 }

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
@@ -471,6 +470,5 @@ public class ExpandoColumnPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ExpandoColumnPersistenceTest.class);
 	private List<ExpandoColumn> _expandoColumns = new ArrayList<ExpandoColumn>();
-	private ModelListener<ExpandoColumn>[] _modelListeners;
 	private ExpandoColumnPersistence _persistence = ExpandoColumnUtil.getPersistence();
 }

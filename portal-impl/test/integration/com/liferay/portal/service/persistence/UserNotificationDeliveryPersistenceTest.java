@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl;
 import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
@@ -496,6 +495,5 @@ public class UserNotificationDeliveryPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(UserNotificationDeliveryPersistenceTest.class);
 	private List<UserNotificationDelivery> _userNotificationDeliveries = new ArrayList<UserNotificationDelivery>();
-	private ModelListener<UserNotificationDelivery>[] _modelListeners;
 	private UserNotificationDeliveryPersistence _persistence = UserNotificationDeliveryUtil.getPersistence();
 }

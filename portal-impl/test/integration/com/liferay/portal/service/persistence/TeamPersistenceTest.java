@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.impl.TeamModelImpl;
 import com.liferay.portal.service.TeamLocalServiceUtil;
@@ -477,6 +476,5 @@ public class TeamPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(TeamPersistenceTest.class);
 	private List<Team> _teams = new ArrayList<Team>();
-	private ModelListener<Team>[] _modelListeners;
 	private TeamPersistence _persistence = TeamUtil.getPersistence();
 }

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
@@ -466,6 +465,5 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(AnnouncementsDeliveryPersistenceTest.class);
 	private List<AnnouncementsDelivery> _announcementsDeliveries = new ArrayList<AnnouncementsDelivery>();
-	private ModelListener<AnnouncementsDelivery>[] _modelListeners;
 	private AnnouncementsDeliveryPersistence _persistence = AnnouncementsDeliveryUtil.getPersistence();
 }

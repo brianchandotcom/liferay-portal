@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
@@ -520,6 +519,5 @@ public class MDRRuleGroupPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(MDRRuleGroupPersistenceTest.class);
 	private List<MDRRuleGroup> _mdrRuleGroups = new ArrayList<MDRRuleGroup>();
-	private ModelListener<MDRRuleGroup>[] _modelListeners;
 	private MDRRuleGroupPersistence _persistence = MDRRuleGroupUtil.getPersistence();
 }

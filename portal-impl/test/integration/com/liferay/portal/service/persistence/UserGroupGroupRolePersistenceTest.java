@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserGroupGroupRole;
 import com.liferay.portal.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -443,6 +442,5 @@ public class UserGroupGroupRolePersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(UserGroupGroupRolePersistenceTest.class);
 	private List<UserGroupGroupRole> _userGroupGroupRoles = new ArrayList<UserGroupGroupRole>();
-	private ModelListener<UserGroupGroupRole>[] _modelListeners;
 	private UserGroupGroupRolePersistence _persistence = UserGroupGroupRoleUtil.getPersistence();
 }

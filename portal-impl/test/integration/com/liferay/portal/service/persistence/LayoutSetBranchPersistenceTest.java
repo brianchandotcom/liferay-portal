@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutSetBranch;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutSetBranchModelImpl;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -595,6 +594,5 @@ public class LayoutSetBranchPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutSetBranchPersistenceTest.class);
 	private List<LayoutSetBranch> _layoutSetBranchs = new ArrayList<LayoutSetBranch>();
-	private ModelListener<LayoutSetBranch>[] _modelListeners;
 	private LayoutSetBranchPersistence _persistence = LayoutSetBranchUtil.getPersistence();
 }

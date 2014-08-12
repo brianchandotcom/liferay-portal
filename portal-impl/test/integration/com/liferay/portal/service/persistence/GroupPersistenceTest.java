@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.GroupModelImpl;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -768,6 +767,5 @@ public class GroupPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(GroupPersistenceTest.class);
 	private List<Group> _groups = new ArrayList<Group>();
-	private ModelListener<Group>[] _modelListeners;
 	private GroupPersistence _persistence = GroupUtil.getPersistence();
 }

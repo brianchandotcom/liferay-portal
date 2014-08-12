@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
@@ -441,6 +440,5 @@ public class ShoppingItemPricePersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ShoppingItemPricePersistenceTest.class);
 	private List<ShoppingItemPrice> _shoppingItemPrices = new ArrayList<ShoppingItemPrice>();
-	private ModelListener<ShoppingItemPrice>[] _modelListeners;
 	private ShoppingItemPricePersistence _persistence = ShoppingItemPriceUtil.getPersistence();
 }

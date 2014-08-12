@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutSetModelImpl;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
@@ -533,6 +532,5 @@ public class LayoutSetPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutSetPersistenceTest.class);
 	private List<LayoutSet> _layoutSets = new ArrayList<LayoutSet>();
-	private ModelListener<LayoutSet>[] _modelListeners;
 	private LayoutSetPersistence _persistence = LayoutSetUtil.getPersistence();
 }

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
@@ -446,6 +445,5 @@ public class AnnouncementsFlagPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(AnnouncementsFlagPersistenceTest.class);
 	private List<AnnouncementsFlag> _announcementsFlags = new ArrayList<AnnouncementsFlag>();
-	private ModelListener<AnnouncementsFlag>[] _modelListeners;
 	private AnnouncementsFlagPersistence _persistence = AnnouncementsFlagUtil.getPersistence();
 }

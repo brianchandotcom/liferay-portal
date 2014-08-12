@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
@@ -553,6 +552,5 @@ public class PortletPreferencesPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(PortletPreferencesPersistenceTest.class);
 	private List<PortletPreferences> _portletPreferenceses = new ArrayList<PortletPreferences>();
-	private ModelListener<PortletPreferences>[] _modelListeners;
 	private PortletPreferencesPersistence _persistence = PortletPreferencesUtil.getPersistence();
 }

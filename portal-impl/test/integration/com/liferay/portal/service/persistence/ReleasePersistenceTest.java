@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Release;
 import com.liferay.portal.model.impl.ReleaseModelImpl;
 import com.liferay.portal.service.ReleaseLocalServiceUtil;
@@ -462,6 +461,5 @@ public class ReleasePersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ReleasePersistenceTest.class);
 	private List<Release> _releases = new ArrayList<Release>();
-	private ModelListener<Release>[] _modelListeners;
 	private ReleasePersistence _persistence = ReleaseUtil.getPersistence();
 }

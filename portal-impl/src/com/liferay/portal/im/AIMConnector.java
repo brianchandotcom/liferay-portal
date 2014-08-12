@@ -89,6 +89,6 @@ public class AIMConnector {
 	private static final Log _log = LogFactoryUtil.getLog(AIMConnector.class);
 
 	private AIMSession _aim;
-	private final Oscar _oscar;
+	private final Oscar _oscar = null;
 
 }

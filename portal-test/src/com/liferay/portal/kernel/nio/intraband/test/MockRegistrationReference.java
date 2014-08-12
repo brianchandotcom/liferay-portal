@@ -30,15 +30,6 @@ public class MockRegistrationReference implements RegistrationReference {
 	}
 
 	public MockRegistrationReference(
-		Intraband intraband, ScatteringByteChannel scatteringByteChannel,
-		GatheringByteChannel gatherByteChannel) {
-
-		_intraband = intraband;
-		_gatheringByteChannel = gatherByteChannel;
-		_scatteringByteChannel = scatteringByteChannel;
-	}
-
-	public MockRegistrationReference(
 		ScatteringByteChannel scatteringByteChannel,
 		GatheringByteChannel gatheringByteChannel) {
 
@@ -66,6 +57,15 @@ public class MockRegistrationReference implements RegistrationReference {
 	@Override
 	public boolean isValid() {
 		return !_cancelled;
+	}
+
+	private MockRegistrationReference(
+		Intraband intraband, ScatteringByteChannel scatteringByteChannel,
+		GatheringByteChannel gatherByteChannel) {
+
+		_intraband = intraband;
+		_gatheringByteChannel = gatherByteChannel;
+		_scatteringByteChannel = scatteringByteChannel;
 	}
 
 	private boolean _cancelled;

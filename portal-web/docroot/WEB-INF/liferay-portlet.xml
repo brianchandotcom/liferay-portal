@@ -681,18 +681,6 @@
 		<css-class-wrapper>portlet-recent-documents</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>66</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<struts-path>web_proxy</struts-path>
-		<configuration-action-class>com.liferay.portlet.webproxy.action.ConfigurationActionImpl</configuration-action-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<instanceable>true</instanceable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-web-proxy</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>67</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>amazon_rankings</struts-path>

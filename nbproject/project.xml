@@ -474,7 +474,6 @@
 				<classpath mode="compile">lib/portal/mime4j-dom.jar</classpath>
 				<classpath mode="compile">lib/portal/mimepull.jar</classpath>
 				<classpath mode="compile">lib/portal/msnm.jar</classpath>
-				<classpath mode="compile">lib/portal/nekohtml.jar</classpath>
 				<classpath mode="compile">lib/portal/netcdf.jar</classpath>
 				<classpath mode="compile">lib/portal/odmg.jar</classpath>
 				<classpath mode="compile">lib/portal/openid4java.jar</classpath>
@@ -487,8 +486,6 @@
 				<classpath mode="compile">lib/portal/poi.jar</classpath>
 				<classpath mode="compile">lib/portal/portal-client.jar</classpath>
 				<classpath mode="compile">lib/portal/portals-bridges.jar</classpath>
-				<classpath mode="compile">lib/portal/portletbridge-core.jar</classpath>
-				<classpath mode="compile">lib/portal/portletbridge-portlet.jar</classpath>
 				<classpath mode="compile">lib/portal/quartz.jar</classpath>
 				<classpath mode="compile">lib/portal/rdffilter.jar</classpath>
 				<classpath mode="compile">lib/portal/rhino.jar</classpath>

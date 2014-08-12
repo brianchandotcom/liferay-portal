@@ -1,0 +1,12 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>xerces</groupId>
+  <artifactId>xerces</artifactId>
+  <version>2.4.0</version>
+  <distributionManagement>
+    <relocation>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+    </relocation>
+  </distributionManagement>
+</project>

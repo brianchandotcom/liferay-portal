@@ -615,6 +615,13 @@ public class LayoutServiceUtil {
 			incomplete, start, end);
 	}
 
+	public static int getLayoutsCount(long groupId, boolean privateLayout,
+		long parentLayoutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLayoutsCount(groupId, privateLayout, parentLayoutId);
+	}
+
 	public static java.lang.String[] getTempFileEntryNames(long groupId,
 		java.lang.String tempFolderName)
 		throws com.liferay.portal.kernel.exception.PortalException {

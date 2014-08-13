@@ -67,7 +67,7 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 	<%
 	long[] openNodes = StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId), 0L);
 
-	JSONObject layoutsJSON = JSONFactoryUtil.createJSONObject(LayoutsTreeUtil.getLayoutsJSON(request, groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true));
+	JSONObject layoutsJSON = JSONFactoryUtil.createJSONObject(LayoutsTreeUtil.getLayoutsJSON(request, groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true, treeId));
 	%>
 
 	var TreeViewType = Liferay.LayoutsTree;
@@ -78,6 +78,13 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 
 	var layoutsTree = new TreeViewType(
 		{
+			after: {
+				'*:expandedChange': function() {
+					if (Liferay.Surface) {
+						Liferay.Surface.clearCache();
+					}
+				}
+			},
 			boundingBox: '#<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output',
 			incomplete: <%= incomplete %>,
 			layouts: <%= layoutsJSON %>,

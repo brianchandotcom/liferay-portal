@@ -883,10 +883,17 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			boolean incomplete, int start, int end)
 		throws PortalException {
 
-		List<Layout> layouts = layoutLocalService.getLayouts(
-			groupId, privateLayout, parentLayoutId, incomplete, start, end);
+		return layoutPersistence.filterFindByG_P_P(
+			groupId, privateLayout, parentLayoutId, start, end);
+	}
 
-		return filterLayouts(layouts);
+	@Override
+	public int getLayoutsCount(
+			long groupId, boolean privateLayout, long parentLayoutId)
+		throws PortalException {
+
+		return layoutPersistence.filterCountByG_P_P(
+			groupId, privateLayout, parentLayoutId);
 	}
 
 	@Override

@@ -57,11 +57,13 @@ import javax.servlet.http.HttpSession;
  * @author Eduardo Lundgren
  * @author Bruno Basto
  * @author Marcellus Tavares
+ * @author Zsolt Szabó
+ * @author Tibor Lipusz
  */
 public class LayoutsTreeUtil {
 
-	public static String getLayoutsJSON(
-			HttpServletRequest request, long groupId)
+	public static String getAllLayoutsJSON(
+			HttpServletRequest request, long groupId, String treeId)
 		throws Exception {
 
 		LayoutTreeNodes layoutTreeNodes = new LayoutTreeNodes();
@@ -69,32 +71,34 @@ public class LayoutsTreeUtil {
 		layoutTreeNodes.addAll(
 			_getLayoutTreeNodes(
 				request, groupId, true,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false, null));
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false, null, treeId));
 		layoutTreeNodes.addAll(
 			_getLayoutTreeNodes(
 				request, groupId, false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false, null));
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false, null, treeId));
 
 		return _toJSON(request, groupId, layoutTreeNodes);
 	}
 
 	public static String getLayoutsJSON(
 			HttpServletRequest request, long groupId, boolean privateLayout,
-			long parentLayoutId, boolean incomplete)
+			long parentLayoutId, boolean incomplete, String treeId)
 		throws Exception {
 
 		return getLayoutsJSON(
-			request, groupId, privateLayout, parentLayoutId, null, incomplete);
+			request, groupId, privateLayout, parentLayoutId, null, incomplete,
+			treeId);
 	}
 
 	public static String getLayoutsJSON(
 			HttpServletRequest request, long groupId, boolean privateLayout,
-			long parentLayoutId, long[] expandedLayoutIds, boolean incomplete)
+			long parentLayoutId, long[] expandedLayoutIds, boolean incomplete,
+			String treeId)
 		throws Exception {
 
 		LayoutTreeNodes layoutTreeNodes = _getLayoutTreeNodes(
 			request, groupId, privateLayout, parentLayoutId, incomplete,
-			expandedLayoutIds);
+			expandedLayoutIds, treeId);
 
 		return _toJSON(request, groupId, layoutTreeNodes);
 	}
@@ -120,7 +124,8 @@ public class LayoutsTreeUtil {
 
 	private static LayoutTreeNodes _getLayoutTreeNodes(
 			HttpServletRequest request, long groupId, boolean privateLayout,
-			long parentLayoutId, boolean incomplete, long[] expandedLayoutIds)
+			long parentLayoutId, boolean incomplete, long[] expandedLayoutIds,
+			String treeId)
 		throws Exception {
 
 		List<LayoutTreeNode> layoutTreeNodes = new ArrayList<LayoutTreeNode>();
@@ -132,14 +137,16 @@ public class LayoutsTreeUtil {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (Layout layout :
-				_paginateLayouts(request, parentLayoutId, layouts)) {
+				_paginateLayouts(
+					request, groupId, privateLayout, parentLayoutId, layouts,
+					treeId)) {
 
 			LayoutTreeNode layoutTreeNode = new LayoutTreeNode(layout);
 
+			LayoutTreeNodes childLayoutTreeNodes = null;
+
 			if (_isExpandableLayout(
 					request, ancestorLayouts, expandedLayoutIds, layout)) {
-
-				LayoutTreeNodes childLayoutTreeNodes = null;
 
 				if (layout instanceof VirtualLayout) {
 					VirtualLayout virtualLayout = (VirtualLayout)layout;
@@ -148,16 +155,24 @@ public class LayoutsTreeUtil {
 						request, virtualLayout.getSourceGroupId(),
 						virtualLayout.isPrivateLayout(),
 						virtualLayout.getLayoutId(), incomplete,
-						expandedLayoutIds);
+						expandedLayoutIds, treeId);
 				}
 				else {
 					childLayoutTreeNodes = _getLayoutTreeNodes(
 						request, groupId, layout.isPrivateLayout(),
-						layout.getLayoutId(), incomplete, expandedLayoutIds);
+						layout.getLayoutId(), incomplete, expandedLayoutIds,
+						treeId);
 				}
-
-				layoutTreeNode.setChildLayoutTreeNodes(childLayoutTreeNodes);
 			}
+			else {
+				int childLayoutsCount = LayoutServiceUtil.getLayoutsCount(
+					groupId, privateLayout, layout.getLayoutId());
+
+				childLayoutTreeNodes = new LayoutTreeNodes(
+					new ArrayList<LayoutTreeNode>(), childLayoutsCount);
+			}
+
+			layoutTreeNode.setChildLayoutTreeNodes(childLayoutTreeNodes);
 
 			layoutTreeNodes.add(layoutTreeNode);
 		}
@@ -166,29 +181,17 @@ public class LayoutsTreeUtil {
 	}
 
 	private static int _getLoadedLayoutsCount(
-			HttpServletRequest request, long layoutId)
+			HttpSession session, long groupId, boolean privateLayout,
+			long layoutId, String treeId)
 		throws Exception {
-
-		HttpSession session = request.getSession();
 
 		StringBundler sb = new StringBundler(7);
 
-		String treeId = ParamUtil.getString(request, "treeId");
-
 		sb.append(treeId);
-
 		sb.append(StringPool.COLON);
-
-		long groupId = ParamUtil.getLong(request, "groupId");
-
 		sb.append(groupId);
-
 		sb.append(StringPool.COLON);
-
-		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-
 		sb.append(privateLayout);
-
 		sb.append(StringPool.COLON);
 		sb.append("Pagination");
 
@@ -230,8 +233,8 @@ public class LayoutsTreeUtil {
 	}
 
 	private static List<Layout> _paginateLayouts(
-			HttpServletRequest request, long parentLayoutId,
-			List<Layout> layouts)
+			HttpServletRequest request, long groupId, boolean privateLayout,
+			long parentLayoutId, List<Layout> layouts, String treeId)
 		throws Exception {
 
 		if (!_isPaginationEnabled(request)) {
@@ -246,8 +249,10 @@ public class LayoutsTreeUtil {
 			request, "end",
 			start + PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN);
 
+		HttpSession session = request.getSession();
+
 		int loadedLayoutsCount = _getLoadedLayoutsCount(
-			request, parentLayoutId);
+			session, groupId, privateLayout, parentLayoutId, treeId);
 
 		if (loadedLayoutsCount > end) {
 			end = loadedLayoutsCount;

@@ -10,6 +10,19 @@ AUI.add(
 
 			blacklist: {},
 
+			clearCache: function() {
+				var instance = this;
+
+				if (instance.app) {
+					A.each(
+						instance.app.screens,
+						function(item, index) {
+							item.clearCache();
+						}
+					);
+				}
+			},
+
 			getAllowedPortletIds: function() {
 				var instance = this;
 
@@ -47,13 +60,13 @@ AUI.add(
 				var instance = this;
 
 				if (!themeDisplay.isControlPanel()) {
-					var isFriendlyURLMaximized = (url.indexOf('/maximized') > -1);
+					var friendlyURLMaximized = (url.indexOf('/maximized') > -1);
 
-					if (themeDisplay.isStateMaximized() && !isFriendlyURLMaximized) {
+					if (themeDisplay.isStateMaximized() && !friendlyURLMaximized) {
 						return null;
 					}
 
-					if (!themeDisplay.isStateMaximized() && isFriendlyURLMaximized) {
+					if (!themeDisplay.isStateMaximized() && friendlyURLMaximized) {
 						return null;
 					}
 				}
@@ -332,6 +345,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-surface-app', 'aui-surface-base', 'aui-surface-screen-html', 'liferay-portlet-url', 'json']
+		requires: ['aui-surface-app', 'aui-surface-base', 'aui-surface-screen-html', 'json', 'liferay-portlet-url']
 	}
 );

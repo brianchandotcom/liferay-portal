@@ -611,6 +611,14 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	@Override
+	public int getLayoutsCount(long groupId, boolean privateLayout,
+		long parentLayoutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutService.getLayoutsCount(groupId, privateLayout,
+			parentLayoutId);
+	}
+
+	@Override
 	public java.lang.String[] getTempFileEntryNames(long groupId,
 		java.lang.String tempFolderName)
 		throws com.liferay.portal.kernel.exception.PortalException {

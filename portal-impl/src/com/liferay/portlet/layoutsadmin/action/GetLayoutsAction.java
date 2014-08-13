@@ -27,6 +27,8 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Eduardo Lundgren
+ * @author Zsolt Szabó
+ * @author Tibor Lipusz
  */
 public class GetLayoutsAction extends JSONAction {
 
@@ -38,34 +40,30 @@ public class GetLayoutsAction extends JSONAction {
 
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
+		long groupId = ParamUtil.getLong(request, "groupId");
+		String treeId = ParamUtil.getString(request, "treeId");
+
 		if (cmd.equals("get")) {
-			return getLayoutsJSON(request);
+			return getLayoutsJSON(request, groupId, treeId);
 		}
 		else if (cmd.equals("getAll")) {
-			return getAllLayoutsJSON(request);
+			return LayoutsTreeUtil.getAllLayoutsJSON(request, groupId, treeId);
 		}
 
 		return null;
 	}
 
-	protected String getAllLayoutsJSON(HttpServletRequest request)
+	protected String getLayoutsJSON(
+			HttpServletRequest request, long groupId, String treeId)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(request, "groupId");
-
-		return LayoutsTreeUtil.getLayoutsJSON(request, groupId);
-	}
-
-	protected String getLayoutsJSON(HttpServletRequest request)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(request, "groupId");
 		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 		long parentLayoutId = ParamUtil.getLong(request, "parentLayoutId");
 		boolean incomplete = ParamUtil.getBoolean(request, "incomplete", true);
 
 		return LayoutsTreeUtil.getLayoutsJSON(
-			request, groupId, privateLayout, parentLayoutId, incomplete);
+			request, groupId, privateLayout, parentLayoutId, incomplete,
+			treeId);
 	}
 
 }

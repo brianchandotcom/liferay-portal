@@ -43,21 +43,21 @@ import javax.servlet.http.HttpServletRequest;
 public class NavItem implements Serializable {
 
 	/**
-	 * Creates a single level of navigation items from the list of given
-	 * layouts. Navigation items for nested layouts are only created when they
+	 * Creates a single level of navigation items from the layouts.
+	 * Navigation items for nested layouts are only created when they
 	 * are accessed.
 	 *
 	 * <p>
-	 * The layout list contains all layouts passed as parameters, so no
-	 * permission checks are performed. However, children of these navigation
-	 * items honor permissions.
+	 * No permission checks are performed in this method. Permissions of
+	 * child layouts are honored when accessing them via {@link #getChildren()}.
 	 * </p>
 	 *
 	 * @param  request the currently served {@link HttpServletRequest}
-	 * @param  layouts the list of layouts
+	 * @param  layouts the layouts from which to create the navigation items
 	 * @param  template the template to add navigation items to
-	 * @return a single level of navigation items from the list of given
-	 *         layouts, or <code>null</code> if no layouts could be found
+	 * @return a single level of navigation items from the layouts,
+	 *         or <code>null</code> if the collection of layouts was
+	 *         <code>null</code>.
 	 */
 	public static List<NavItem> fromLayouts(
 		HttpServletRequest request, List<Layout> layouts, Template template) {
@@ -86,11 +86,11 @@ public class NavItem implements Serializable {
 	}
 
 	/**
-	 * Returns all child layouts that the current user has permission to access
-	 * from the navigation items.
+	 * Returns all of child layouts that the current user has permission to access
+	 * from this navigation item's layout.
 	 *
 	 * @return the list of all child layouts that the current user has
-	 *         permission to access from the navigation items
+	 *         permission to access from this navigation item's layout
 	 * @throws Exception if an exception occurred
 	 */
 	public List<NavItem> getChildren() throws Exception {
@@ -114,9 +114,9 @@ public class NavItem implements Serializable {
 	}
 
 	/**
-	 * Returns the navigation item's layout ID.
+	 * Returns the ID of the navigation item's layout.
 	 *
-	 * @return the navigation item's layout ID
+	 * @return the ID of the navigation item's layout
 	 */
 	public long getLayoutId() {
 		return _layout.getLayoutId();
@@ -203,9 +203,11 @@ public class NavItem implements Serializable {
 	}
 
 	/**
-	 * Returns the HTML-escaped URL of the navigation item's layout.
+	 * Returns the URL of the navigation item's layout, in a format that makes it
+	 * safe to use the URL as an HREF attribute value
 	 *
-	 * @return the HTML-escaped URL of the navigation item's layout
+	 * @return the URL of the navigation item's layout, in a format that makes it
+	 * safe to use the URL as an HREF attribute value
 	 * @throws Exception if an exception occurred
 	 */
 	public String getURL() throws Exception {

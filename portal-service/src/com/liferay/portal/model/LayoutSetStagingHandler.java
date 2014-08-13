@@ -14,6 +14,7 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.NoSuchLayoutSetBranchException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -145,6 +146,16 @@ public class LayoutSetStagingHandler
 			layoutSetBranch =
 				LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
 					layoutSetBranchId);
+		}
+
+		if (layoutSetBranch == null) {
+			try {
+				layoutSetBranch =
+					LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(
+						layoutSet.getGroupId(), layoutSet.isPrivateLayout());
+			}
+			catch (NoSuchLayoutSetBranchException nslsbe) {
+			}
 		}
 
 		return layoutSetBranch;

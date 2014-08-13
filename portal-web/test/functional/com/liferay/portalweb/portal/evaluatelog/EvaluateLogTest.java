@@ -38,6 +38,8 @@ public class EvaluateLogTest extends BaseTestCase {
 	}
 
 	private boolean evaluateLog() throws Exception {
+		LiferaySeleniumHelper.assertLiferayErrors();
+
 		String xml = FileUtil.read("log");
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(

@@ -130,7 +130,7 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 	<c:if test="<%= ldapServerIds.length > 0 %>">
 		<br /><br />
 
-		<div class="searchcontainer-content ldap-servers">
+		<div class="ldap-servers searchcontainer-content">
 			<table class="table table-bordered table-hover table-striped">
 			<thead class="table-columns">
 			<tr>
@@ -300,25 +300,6 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 					<portlet:namespace />changePriority(ldapServer, swapLdapServer);
 				}
 			}
-		},
-		['aui-base']
-	);
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveLdap',
-		function() {
-			var A = AUI();
-
-			var ldapServerIds = [];
-
-			A.all('.ldap-servers .table-data tr').each(
-				function(item, index, collection) {
-					ldapServerIds.push(item.getAttribute('data-ldapServerId'));
-				}
-			);
-
-			document.<portlet:namespace />fm['<portlet:namespace />settings--ldap.server.ids--'].value = ldapServerIds.join(',');
 		},
 		['aui-base']
 	);

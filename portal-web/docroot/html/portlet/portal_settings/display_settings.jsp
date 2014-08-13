@@ -204,14 +204,3 @@
 		</c:if>
 	</aui:select>
 </aui:fieldset>
-
-<aui:script use="liferay-util-list-fields">
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveLocales',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= PropsKeys.LOCALES %>.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentLanguageIds);
-		},
-		['liferay-util-list-fields']
-	);
-</aui:script>

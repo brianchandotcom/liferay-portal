@@ -18,13 +18,6 @@
 
 		<execute action="PGKaleoforms#assertClick" locator-key1="DIALOG_BOX_OK_BUTTON" value1="OK" />
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGKaleoforms#pause" locator1="1000" />
-		<execute action="PGKaleoforms#assertClick" locator-key1="MY_COMPLETED_REQUESTS" value1="My Completed Requests" />
-		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_TABLE_NAME" value1="${kfProcessName}" />
-		<execute action="PGKaleoforms#assertTextEquals" locator-key1="MY_COMPLETED_REQUESTS_TABLE_STATUS" value1="Approved" />
-		<execute action="PGKaleoforms#assertElementPresent" locator-key1="MY_COMPLETED_REQUESTS_TABLE_LAST_ACTIVITY_DATE" />
-		<execute action="PGKaleoforms#assertElementPresent" locator-key1="MY_COMPLETED_REQUESTS_TABLE_END_DATE" />
-		<execute action="PGKaleoforms#pause" locator1="1000" />
 	</command>
 
 	<command name="assertCompleteFormFieldNotPresent">

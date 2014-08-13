@@ -1,23 +1,4 @@
-<definition component-name="portal-staging" extends="PGStaging" 
-	ignore-commands="ActivateDeactivateRemoteStaging,
-	ActivateDeactivateStagingLocalLiveDM,
-	ActivateRemoteStaging,
-	ActivateStaging,
-	AddDMDocumentStagingLocalLive,
-	AddEventRepeatDaily,
-	AddPageVariation,
-	AddSitePagesVariation,
-	AssertEditWebContentStaging,
-	AssertExportApplications,
-	AssertNoEditLink,
-	BlogsOrganizationWorkflowStaging,
-	DeactivateStaging,
-	DeleteDMDocument, 
-	LayoutScope, 
-	StagingPublishPortlet, 
-	PublishWCViaRemoteStaging, 
-	PublishWCWithPagesVariationViaRemoteStaging">
-
+<definition component-name="portal-staging" extends="PGStaging" ignore-commands="ActivateDeactivateRemoteStaging,ActivateDeactivateStagingLocalLiveDM,ActivateRemoteStaging,ActivateStaging,AddDMDocumentStagingLocalLive,AddEventRepeatDaily,AddPageVariation,AddSitePagesVariation,AssertEditWebContentStaging,AssertExportApplications,AssertNoEditLink,BlogsOrganizationWorkflowStaging,DeactivateStaging,DeleteDMDocument,LayoutScope,StagingPublishPortlet,PublishWCViaRemoteStaging,PublishWCWithPagesVariationViaRemoteStaging">
 	<property name="testray.main.component.name" value="WCM" />
 
 	<var name="siteName" value="Site Name" />

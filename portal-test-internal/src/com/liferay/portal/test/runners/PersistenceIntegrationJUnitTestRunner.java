@@ -13,12 +13,6 @@
  */
 package com.liferay.portal.test.runners;
 
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.test.jdbc.ResetDatabaseUtilDataSource;
-import com.liferay.portal.util.InitUtil;
-import com.liferay.portal.util.PropsUtil;
-
 import java.util.List;
 
 import org.junit.runners.model.InitializationError;
@@ -36,20 +30,10 @@ public class PersistenceIntegrationJUnitTestRunner
 	}
 
 	@Override
-	public void initApplicationContext() {
-		System.setProperty("catalina.base", ".");
-
-		ResetDatabaseUtilDataSource.initialize();
-
-		List<String> configLocations = ListUtil.fromArray(
-			PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
-
+	protected List<String> processConfigurations(List<String> configLocations) {
 		configLocations.remove("META-INF/model-listener-spring.xml");
 
-		InitUtil.initWithSpringAndModuleFramework(
-			false, configLocations, false);
-
-		afterApplicationContextInit();
+		return configLocations;
 	}
 
 }

@@ -141,10 +141,10 @@
 		</if>
 
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_COUNT" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SENDER" value1="${senderName}" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="would like to add you as a connection." />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_CONFIRM" value1="Confirm" />
-		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_CONFIRM" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_REQUEST_ENTRY_SENDER" value1="${senderName}" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_REQUEST_ENTRY_CONTENT" value1="would like to add you as a connection." />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_REQUEST_CONFIRM" value1="Confirm" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_REQUEST_CONFIRM" />
 
 		<if>
 			<or>
@@ -343,10 +343,10 @@
 		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SENDER" value1="${senderName}" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="would like to add you as a connection." />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_IGNORE" value1="Ignore" />
-		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_IGNORE" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_REQUEST_ENTRY_SENDER" value1="${senderName}" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_REQUEST_ENTRY_CONTENT" value1="would like to add you as a connection." />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_REQUEST_IGNORE" value1="Ignore" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_REQUEST_IGNORE" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />

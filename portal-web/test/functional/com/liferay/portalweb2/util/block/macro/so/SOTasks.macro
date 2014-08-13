@@ -573,8 +573,8 @@
 		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="${taskAssignee} resolved the task." />
-		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" value1="${taskDescription}" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${taskAssignee} resolved the task." />
+		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${taskDescription}" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 	</command>
 
@@ -825,9 +825,9 @@
 		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="${taskReporter} assigned you a task." />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" value1="${taskDescription}" />
-		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="${taskReporter} assigned you a task." />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${taskReporter} assigned you a task." />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${taskDescription}" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${taskReporter} assigned you a task." />
 
 		<var name="key_taskDescription" value="${taskDescription}" />
 

@@ -60,13 +60,13 @@ AUI.add(
 				var instance = this;
 
 				if (!themeDisplay.isControlPanel()) {
-					var isFriendlyURLMaximized = (url.indexOf('/maximized') > -1);
+					var friendlyURLMaximized = (url.indexOf('/maximized') > -1);
 
-					if (themeDisplay.isStateMaximized() && !isFriendlyURLMaximized) {
+					if (themeDisplay.isStateMaximized() && !friendlyURLMaximized) {
 						return null;
 					}
 
-					if (!themeDisplay.isStateMaximized() && isFriendlyURLMaximized) {
+					if (!themeDisplay.isStateMaximized() && friendlyURLMaximized) {
 						return null;
 					}
 				}
@@ -345,6 +345,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-surface-app', 'aui-surface-base', 'aui-surface-screen-html', 'liferay-portlet-url', 'json']
+		requires: ['aui-surface-app', 'aui-surface-base', 'aui-surface-screen-html', 'json', 'liferay-portlet-url']
 	}
 );

@@ -107,12 +107,6 @@
 				</then>
 			</if>
 
-			<loadresource property="patching.tool.version">
-				<url url="${test.fix.pack.base.url}patching-tool/LATEST.txt" />
-			</loadresource>
-
-			<property name="test.build.patching.tool.zip.url" value="${test.fix.pack.base.url}patching-tool/patching-tool-${patching.tool.version}.zip" />
-
 			<if>
 				<and>
 					<equals arg1="${app.server.type}" arg2="tomcat" />
@@ -128,6 +122,12 @@
 					<property name="app.server.dir" refid="app.server.dir" />
 
 					<delete dir="${app.server.dir}/patching-tool" />
+
+					<loadresource property="patching.tool.version">
+						<url url="${test.fix.pack.base.url}patching-tool/LATEST.txt" />
+					</loadresource>
+
+					<property name="test.build.patching.tool.zip.url" value="${test.fix.pack.base.url}patching-tool/patching-tool-${patching.tool.version}.zip" />
 
 					<get
 						dest="${basedir}"

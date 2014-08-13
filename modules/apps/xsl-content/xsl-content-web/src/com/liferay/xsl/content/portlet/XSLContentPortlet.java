@@ -15,10 +15,12 @@
 package com.liferay.xsl.content.portlet;
 
 import com.liferay.util.bridges.mvc.MVCPortlet;
+import com.liferay.xsl.content.upgrade.XSLContentUpgrade;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
@@ -47,4 +49,15 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class XSLContentPortlet extends MVCPortlet {
+
+	/**
+	 * Force the upgrade to execute before the portlet is ever registered so
+	 * that there's no race condition between the portlet tracker creating a new
+	 * portlet references in the DB and the upgrade changing old values to new
+	 * values.
+	 */
+	@Reference(unbind = "-")
+	private void setXSLContentUpgrade(XSLContentUpgrade xslContentUpgrade) {
+	}
+
 }

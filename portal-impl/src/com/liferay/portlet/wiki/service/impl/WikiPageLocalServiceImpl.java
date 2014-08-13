@@ -2325,13 +2325,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			wikiPagePersistence.update(childPage);
 
-			WikiPageResource childPageResource =
-				wikiPageResourcePersistence.findByPrimaryKey(
-					childPage.getResourcePrimKey());
+			if (childPage.isHead()) {
+				WikiPageResource childPageResource =
+					wikiPageResourcePersistence.findByPrimaryKey(
+						childPage.getResourcePrimKey());
 
-			childPageResource.setNodeId(nodeId);
+				childPageResource.setNodeId(nodeId);
 
-			wikiPageResourcePersistence.update(childPageResource);
+				wikiPageResourcePersistence.update(childPageResource);
+			}
 		}
 
 		// Redirect pages
@@ -2344,13 +2346,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			wikiPagePersistence.update(redirectPage);
 
-			WikiPageResource redirectPageResource =
-				wikiPageResourcePersistence.findByPrimaryKey(
-					redirectPage.getResourcePrimKey());
+			if (redirectPage.isHead()) {
+				WikiPageResource redirectPageResource =
+					wikiPageResourcePersistence.findByPrimaryKey(
+						redirectPage.getResourcePrimKey());
 
-			redirectPageResource.setNodeId(nodeId);
+				redirectPageResource.setNodeId(nodeId);
 
-			wikiPageResourcePersistence.update(redirectPageResource);
+				wikiPageResourcePersistence.update(redirectPageResource);
+			}
 		}
 
 		// Asset

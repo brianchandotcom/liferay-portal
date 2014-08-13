@@ -655,6 +655,11 @@ public class PortletTracker
 		String portletInfoTitle = GetterUtil.getString(
 			serviceReference.getProperty("javax.portlet.info.title"),
 			portletModel.getPortletId());
+
+		String portletDisplayName = GetterUtil.getString(
+			serviceReference.getProperty("javax.portlet.display-name"),
+			portletInfoTitle);
+
 		String portletInfoShortTitle = GetterUtil.getString(
 			serviceReference.getProperty("javax.portlet.info.short-title"),
 			portletModel.getPortletId());
@@ -666,7 +671,7 @@ public class PortletTracker
 			portletModel.getPortletId());
 
 		PortletInfo portletInfo = new PortletInfo(
-			portletInfoTitle, portletInfoShortTitle, portletInfoKeyWords,
+			portletDisplayName, portletInfoShortTitle, portletInfoKeyWords,
 			portletDescription);
 
 		portletModel.setPortletInfo(portletInfo);

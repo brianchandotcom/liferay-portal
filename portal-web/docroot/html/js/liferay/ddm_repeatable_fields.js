@@ -451,7 +451,7 @@ AUI.add(
 							fieldValues: instance._getFieldsDisplay(instance._getFieldsList(null, null, true), false)
 						};
 
-						fieldsDisplayInput.val(jsonValue.fieldValues.join());
+						fieldsDisplayInput.set('value', JSON.stringify(jsonValue.fieldValues));
 					},
 
 					_syncFieldsValues: function(locale) {

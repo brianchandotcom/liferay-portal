@@ -22,6 +22,8 @@ import com.liferay.xsl.content.portlet.XSLContentPortlet;
 
 import java.util.Collections;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,18 +36,15 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class XSLContentUpgrade {
 
-	@Reference
+	@Reference(unbind = "-")
 	private void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
 	}
 
-	@SuppressWarnings("unused")
-	private void unsetReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = null;
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	private void setServletContext(ServletContext servletContext) {
 	}
 
 	@Activate

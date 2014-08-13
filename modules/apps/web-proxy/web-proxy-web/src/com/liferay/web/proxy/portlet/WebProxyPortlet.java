@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.struts.StrutsUtil;
 import com.liferay.portlet.RenderResponseImpl;
-import com.liferay.web.proxy.upgrade.WebProxyVerifyPortletIdUpgrade;
+import com.liferay.web.proxy.upgrade.WebProxyUpgrade;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -231,7 +231,7 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 	 */
 	@Reference(unbind = "-")
 	private void setWebProxyVerifyPortletIdUpgrade(
-		WebProxyVerifyPortletIdUpgrade webProxyVerifyPortletIdUpgrade) {
+		WebProxyUpgrade webProxyUpgrade) {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WebProxyPortlet.class);

@@ -34,18 +34,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class XSLContentUpgrade {
 
-	@Reference
+	@Reference(unbind = "-")
 	private void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
-	}
-
-	@SuppressWarnings("unused")
-	private void unsetReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = null;
 	}
 
 	@Activate

@@ -45,7 +45,7 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
 	<liferay-ui:tabs
-		names="rename,change-parent"
+		names="rename,change-parent,change-node"
 		refresh="<%= false %>"
 	>
 
@@ -62,142 +62,13 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 		%>
 
 		<liferay-ui:section>
-			<div class="alert alert-info">
-				<liferay-ui:message key="use-the-form-below-to-rename-a-page,-moving-all-of-its-history-to-the-new-name" />
-			</div>
-
-			<aui:fieldset>
-				<aui:input name="currentTitle" type="resource" value="<%= wikiPage.getTitle() %>" />
-
-				<aui:input name="newTitle" value="<%= newTitle %>" />
-
-				<c:if test="<%= pending %>">
-					<div class="alert alert-info">
-						<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-					</div>
-				</c:if>
-
-				<aui:button-row>
-					<aui:button disabled="<%= pending %>" onClick='<%= renderResponse.getNamespace() + "renamePage();" %>' value='<%= hasWorkflowDefinitionLink ? "submit-for-publication" : "rename" %>' />
-
-					<aui:button href="<%= redirect %>" type="cancel" />
-				</aui:button-row>
-			</aui:fieldset>
+			<%@ include file="/html/portlet/wiki/rename_page.jspf" %>
 		</liferay-ui:section>
 		<liferay-ui:section>
-			<div class="alert alert-info">
-				<liferay-ui:message key="use-the-form-below-to-move-a-page-and-all-of-its-history-to-be-the-child-of-a-new-parent-page" />
-			</div>
-
-			<%
-			String parentText = StringPool.BLANK;
-
-			WikiPage parentPage = wikiPage.getViewableParentPage();
-
-			if (parentPage == null) {
-				parentText = StringPool.OPEN_PARENTHESIS + LanguageUtil.get(request, "none") + StringPool.CLOSE_PARENTHESIS;
-			}
-			else {
-				parentText = parentPage.getTitle();
-
-				parentPage = parentPage.getViewableParentPage();
-
-				while (parentPage != null) {
-					parentText = parentPage.getTitle() + " &raquo; " + parentText;
-
-					parentPage = parentPage.getViewableParentPage();
-				}
-			}
-
-			List<WikiPage> childPages = WikiPageLocalServiceUtil.getChildren(node.getNodeId(), true, StringPool.BLANK);
-
-			childPages = ListUtil.sort(childPages);
-
-			childPages.remove(wikiPage);
-			%>
-
-			<aui:fieldset>
-				<aui:input name="currentParent" type="resource" value="<%= parentText %>" />
-
-				<%
-				boolean newParentAvailable = true;
-
-				if (childPages.isEmpty()) {
-					newParentAvailable = false;
-				%>
-
-					<aui:select disabled="<%= true %>" label="new-parent" name="newParentTitle">
-						<aui:option label="not-available" value="" />
-					</aui:select>
-
-				<%
-				}
-				else {
-				%>
-
-					<aui:select label="new-parent" name="newParentTitle">
-						<aui:option label="none" selected="<%= Validator.isNull(wikiPage.getParentTitle()) %>" value="" />
-
-						<%
-						for (WikiPage childPage : childPages) {
-							if (Validator.isNull(childPage.getRedirectTitle())) {
-								request.setAttribute(WebKeys.WIKI_TREE_WALKER_PARENT, childPage);
-								request.setAttribute(WebKeys.WIKI_TREE_WALKER_PAGE, wikiPage);
-								request.setAttribute(WebKeys.WIKI_TREE_WALKER_DEPTH, 1);
-						%>
-
-								<liferay-util:include page="/html/portlet/wiki/page_tree.jsp" />
-
-						<%
-							}
-						}
-						%>
-
-					</aui:select>
-
-				<%
-				}
-				%>
-
-				<c:if test="<%= pending %>">
-					<div class="alert alert-info">
-						<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-					</div>
-				</c:if>
-
-				<aui:button-row>
-					<c:choose>
-						<c:when test="<%= hasWorkflowDefinitionLink %>">
-							<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' value="submit-for-publication" />
-						</c:when>
-						<c:otherwise>
-							<aui:button disabled="<%= !newParentAvailable %>" type="submit" value="change-parent" />
-						</c:otherwise>
-					</c:choose>
-
-					<aui:button href="<%= redirect %>" type="cancel" />
-				</aui:button-row>
-			</aui:fieldset>
+			<%@ include file="/html/portlet/wiki/change_page_parent.jspf" %>
+		</liferay-ui:section>
+		<liferay-ui:section>
+			<%@ include file="/html/portlet/wiki/change_page_node.jspf" %>
 		</liferay-ui:section>
 	</liferay-ui:tabs>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />changeParent() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.CHANGE_PARENT %>';
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
-	function <portlet:namespace />publishPage() {
-		document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = '<%= WorkflowConstants.ACTION_PUBLISH %>';
-
-		<portlet:namespace />changeParent();
-	}
-
-	function <portlet:namespace />renamePage() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.RENAME %>';
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-</aui:script>

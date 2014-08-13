@@ -43,7 +43,6 @@ import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -430,38 +429,125 @@ public class UserFinderImpl
 		try {
 			session = openSession();
 
-			Set<Long> userIds = new HashSet<Long>();
+			String sql = CustomSQLUtil.get(FIND_BY_C_FN_MN_LN_SN_EA_S);
 
-			userIds.addAll(
-				countByC_FN_MN_LN_SN_EA_S(
-					session, companyId, firstNames, middleNames, lastNames,
-					screenNames, emailAddresses, status, params1, andOperator));
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "lower(User_.firstName)", StringPool.LIKE, false,
+				firstNames);
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "lower(User_.middleName)", StringPool.LIKE, false,
+				middleNames);
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "lower(User_.lastName)", StringPool.LIKE, false,
+				lastNames);
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "lower(User_.screenName)", StringPool.LIKE, false,
+				screenNames);
+			sql = CustomSQLUtil.replaceKeywords(
+				sql, "lower(User_.emailAddress)", StringPool.LIKE, true,
+				emailAddresses);
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
+			}
+
+			StringBundler sb = new StringBundler(12);
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(replaceJoinAndWhere(sql, params1));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			if (params2 != null) {
-				userIds.addAll(
-					countByC_FN_MN_LN_SN_EA_S(
-						session, companyId, firstNames, middleNames, lastNames,
-						screenNames, emailAddresses, status, params2,
-						andOperator));
+				sb.append(" UNION (");
+				sb.append(replaceJoinAndWhere(sql, params2));
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
 			if (params3 != null) {
-				userIds.addAll(
-					countByC_FN_MN_LN_SN_EA_S(
-						session, companyId, firstNames, middleNames, lastNames,
-						screenNames, emailAddresses, status, params3,
-						andOperator));
+				sb.append(" UNION (");
+				sb.append(replaceJoinAndWhere(sql, params3));
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
 			if (params4 != null) {
-				userIds.addAll(
-					countByC_FN_MN_LN_SN_EA_S(
-						session, companyId, firstNames, middleNames, lastNames,
-						screenNames, emailAddresses, status, params4,
-						andOperator));
+				sb.append(" UNION (");
+				sb.append(replaceJoinAndWhere(sql, params4));
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
-			return userIds.size();
+			sql = sb.toString();
+
+			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar("userId", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			setJoin(qPos, params1);
+
+			qPos.add(companyId);
+			qPos.add(false);
+			qPos.add(firstNames, 2);
+			qPos.add(middleNames, 2);
+			qPos.add(lastNames, 2);
+			qPos.add(screenNames, 2);
+			qPos.add(emailAddresses, 2);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+
+			if (params2 != null) {
+				setJoin(qPos, params2);
+
+				qPos.add(companyId);
+				qPos.add(false);
+				qPos.add(firstNames, 2);
+				qPos.add(middleNames, 2);
+				qPos.add(lastNames, 2);
+				qPos.add(screenNames, 2);
+				qPos.add(emailAddresses, 2);
+
+				if (status != WorkflowConstants.STATUS_ANY) {
+					qPos.add(status);
+				}
+			}
+
+			if (params3 != null) {
+				setJoin(qPos, params3);
+
+				qPos.add(companyId);
+				qPos.add(false);
+				qPos.add(firstNames, 2);
+				qPos.add(middleNames, 2);
+				qPos.add(lastNames, 2);
+				qPos.add(screenNames, 2);
+				qPos.add(emailAddresses, 2);
+
+				if (status != WorkflowConstants.STATUS_ANY) {
+					qPos.add(status);
+				}
+			}
+
+			if (params4 != null) {
+				setJoin(qPos, params4);
+
+				qPos.add(companyId);
+				qPos.add(false);
+				qPos.add(firstNames, 2);
+				qPos.add(middleNames, 2);
+				qPos.add(lastNames, 2);
+				qPos.add(screenNames, 2);
+				qPos.add(emailAddresses, 2);
+
+				if (status != WorkflowConstants.STATUS_ANY) {
+					qPos.add(status);
+				}
+			}
+
+			return q.list(true).size();
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -970,58 +1056,6 @@ public class UserFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	protected List<Long> countByC_FN_MN_LN_SN_EA_S(
-		Session session, long companyId, String[] firstNames,
-		String[] middleNames, String[] lastNames, String[] screenNames,
-		String[] emailAddresses, int status,
-		LinkedHashMap<String, Object> params, boolean andOperator) {
-
-		String sql = CustomSQLUtil.get(FIND_BY_C_FN_MN_LN_SN_EA_S);
-
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.firstName)", StringPool.LIKE, false, firstNames);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.middleName)", StringPool.LIKE, false,
-			middleNames);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.lastName)", StringPool.LIKE, false, lastNames);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.screenName)", StringPool.LIKE, false,
-			screenNames);
-		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(User_.emailAddress)", StringPool.LIKE, true,
-			emailAddresses);
-
-		if (status == WorkflowConstants.STATUS_ANY) {
-			sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
-		}
-
-		sql = replaceJoinAndWhere(sql, params);
-		sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
-
-		SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-		q.addScalar("userId", Type.LONG);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		setJoin(qPos, params);
-
-		qPos.add(companyId);
-		qPos.add(false);
-		qPos.add(firstNames, 2);
-		qPos.add(middleNames, 2);
-		qPos.add(lastNames, 2);
-		qPos.add(screenNames, 2);
-		qPos.add(emailAddresses, 2);
-
-		if (status != WorkflowConstants.STATUS_ANY) {
-			qPos.add(status);
-		}
-
-		return q.list(true);
 	}
 
 	protected String getJoin(LinkedHashMap<String, Object> params) {

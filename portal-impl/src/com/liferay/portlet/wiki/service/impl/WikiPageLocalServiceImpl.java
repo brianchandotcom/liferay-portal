@@ -2315,6 +2315,44 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		wikiPageResourcePersistence.update(pageResource);
 
+		// Child pages
+
+		List<WikiPage> childPages = wikiPagePersistence.findByN_P(
+			oldNodeId, title);
+
+		for (WikiPage childPage : childPages) {
+			childPage.setNodeId(nodeId);
+
+			wikiPagePersistence.update(childPage);
+
+			WikiPageResource childPageResource =
+				wikiPageResourcePersistence.findByPrimaryKey(
+					childPage.getResourcePrimKey());
+
+			childPageResource.setNodeId(nodeId);
+
+			wikiPageResourcePersistence.update(childPageResource);
+		}
+
+		// Redirect pages
+
+		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
+			nodeId, title);
+
+		for (WikiPage redirectPage : redirectPages) {
+			redirectPage.setNodeId(nodeId);
+
+			wikiPagePersistence.update(redirectPage);
+
+			WikiPageResource redirectPageResource =
+				wikiPageResourcePersistence.findByPrimaryKey(
+					redirectPage.getResourcePrimKey());
+
+			redirectPageResource.setNodeId(nodeId);
+
+			wikiPageResourcePersistence.update(redirectPageResource);
+		}
+
 		// Asset
 
 		updateAsset(

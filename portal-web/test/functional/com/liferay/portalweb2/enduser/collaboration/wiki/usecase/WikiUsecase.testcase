@@ -33,6 +33,8 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
+		<execute macro="WikiPage#gotoAllPagesPG" />
+
 		<execute macro="WikiPage#addPG">
 			<var name="viewCKEditorResizer" value="true" />
 			<var name="viewFormat" value="true" />

@@ -637,6 +637,10 @@
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 		</execute>
 
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
 		<execute macro="WikiPage#viewCommentPG">
 			<var name="commentBody" value="${commentContent}" />
 			<var name="wikiPageTitle" value="FrontPage" />
@@ -1726,6 +1730,10 @@
 
 		<execute macro="WikiPage#viewFrontPagePG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
 		<execute macro="WikiPage#viewCommentPG">
@@ -3810,6 +3818,10 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
 		<execute macro="WikiPage#addChildPagePG">
 			<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
 			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
@@ -3821,6 +3833,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="WikiPage#gotoAllPagesPG" />
+
 		<execute macro="WikiPage#addPG">
 			<var name="wikiPageContent" value="${wikiPage2Content}" />
 			<var name="wikiPageTitle" value="${wikiPage2Title}" />
@@ -3829,6 +3843,10 @@
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
 		<execute macro="WikiPage#moveWikiPagePG">
@@ -3881,6 +3899,10 @@
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
 		<execute macro="WikiPage#moveWikiPagePG">
@@ -3953,6 +3975,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="WikiPage#gotoAllPagesPG" />
+
 		<execute macro="WikiPage#addPG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -3963,9 +3987,15 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="WikiPage#gotoAllPagesPG" />
+
 		<execute macro="WikiPage#addPG">
 			<var name="wikiPageContent" value="${wikiParentPageContent}" />
 			<var name="wikiPageTitle" value="${wikiParentPageTitle}" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
 		<execute macro="WikiPage#moveWikiPagePG">
@@ -4009,6 +4039,10 @@
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
 		<execute macro="WikiPage#moveWikiPagePG">
@@ -4923,6 +4957,10 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
 		<execute macro="WikiPage#addChildPagePG">
 			<var name="wikiChildPageContent" value="${wikiChildPageContent1}" />
 			<var name="wikiChildPageTitle" value="${wikiChildPageTitle1}" />
@@ -4932,6 +4970,10 @@
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
 		<execute macro="WikiPage#addChildPagePG">
@@ -4945,6 +4987,10 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
 		<execute macro="WikiPage#addChildPagePG">
 			<var name="wikiChildPageContent" value="${wikiChildPageContent3}" />
 			<var name="wikiChildPageTitle" value="${wikiChildPageTitle3}" />
@@ -4954,6 +5000,10 @@
 		<execute macro="Page#gotoPG">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
 		<execute macro="WikiPage#removeViewPermissionPG">

@@ -53,6 +53,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="WikiPage#gotoAllPagesPG" />
+
 		<execute macro="WikiPage#addPG">
 			<var name="wikiPageContent" value="Wiki Page Content" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -79,6 +81,10 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
 		<execute macro="WikiPage#viewAttachmentPG">
 			<var name="attachmentFileName" value="Document_1.jpg" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -89,6 +95,10 @@
 			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
 		<execute macro="WikiPage#viewAttachmentPG">

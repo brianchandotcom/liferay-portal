@@ -102,6 +102,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="WikiPage#gotoAllPagesPG" />
+
 		<execute macro="WikiPage#addPageWithWorkflowPG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />

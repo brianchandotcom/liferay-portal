@@ -5,10 +5,6 @@
 		<var name="key_attachmentFileName" value="${attachmentFileName}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<execute action="PGWiki#assertClick" locator-key1="DETAILS_BUTTON" value1="Details" />
 
 		<execute action="PGWikiWikipageDetails#assertClick" locator-key1="NAVIGATION_ATTACHMENTS" value1="Attachments" />
@@ -25,10 +21,6 @@
 	</command>
 
 	<command name="addChildPagePG">
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<execute action="PGWiki#assertClick" locator-key1="ADD_CHILD_PAGE" value1="Add Child Page" />
 
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
@@ -118,10 +110,6 @@
 	</command>
 
 	<command name="addFrontPageChildPageFormatHTML">
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<execute action="PGWiki#assertClick" locator-key1="ADD_CHILD_PAGE" value1="Add Child Page" />
 
 		<execute action="PGWikiAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiChildPageTitle}" />
@@ -141,10 +129,6 @@
 	</command>
 
 	<command name="addFrontPageChildPageFormatHTMLViaWD">
-		<execute macro="WikiPage#gotoPGViaWD">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<execute action="PGWikidisplay#assertClick" locator-key1="ADD_CHILD_PAGE" value1="Add Child Page" />
 
 		<execute action="PGWikidisplayAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiChildPageTitle}" />
@@ -164,10 +148,6 @@
 	</command>
 
 	<command name="addFrontPageChildPageInvalidTitle">
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<execute action="PGWiki#assertClick" locator-key1="ADD_CHILD_PAGE" value1="Add Child Page" />
 
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
@@ -184,10 +164,6 @@
 	</command>
 
 	<command name="addFrontPageChildPageInvalidTitleViaWD">
-		<execute macro="WikiPage#gotoPGViaWD">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<execute action="PGWikidisplay#assertClick" locator-key1="ADD_CHILD_PAGE" value1="Add Child Page" />
 
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
@@ -341,8 +317,6 @@
 	</command>
 
 	<command name="addPagePGViaWD">
-		<execute macro="WikiPage#gotoAllPagesPGViaWD" />
-
 		<execute action="PGWikidisplayAllpages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 
 		<execute action="PGWikidisplayAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiPageTitle}" />
@@ -358,8 +332,6 @@
 	</command>
 
 	<command name="addPageWithWorkflowPG">
-		<execute macro="WikiPage#gotoAllPagesPG" />
-
 		<execute action="PGWikiAllpages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 
 		<execute action="PGWikiAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiPageTitle}" />
@@ -380,8 +352,6 @@
 	</command>
 
 	<command name="addPageWithWorkflowPGViaWD">
-		<execute macro="WikiPage#gotoAllPagesPGViaWD" />
-
 		<execute action="PGWikidisplayAllpages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 
 		<execute action="PGWikidisplayAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiPageTitle}" />
@@ -428,13 +398,11 @@
 	</command>
 
 	<command name="addPG">
-		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<execute macro="WikiPage#gotoAllPagesPG" />
-
 		<execute action="PGWikiAllpages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 
 		<execute action="PGWikiAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiPageTitle}" />
+
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<if>
 			<equals arg1="${viewFormat}" arg2="true" />
@@ -534,10 +502,6 @@
 	</command>
 
 	<command name="changeParentWikipagetoWikipagePG">
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPage2Title}" />
-		</execute>
-
 		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPage2Title}" />
 		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPage2Content}" />
 		<execute action="PGWikiWikipage#assertClick" locator-key1="WIKI_PAGE_ACTIONS_DETAILS" value1="Details" />
@@ -555,10 +519,6 @@
 	</command>
 
 	<command name="compareVersionsCP">
-		<execute macro="WikiNode#gotoCP">
-			<var name="wikiPageTitle" value="${wikiNodeName}" />
-		</execute>
-
 		<execute action="CPWikiAllpages#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
@@ -588,10 +548,6 @@
 
 	<command name="compareVersionsPG">
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
-
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
 
 		<execute action="PGWikiWikipage#assertClick" locator-key1="WIKI_PAGE_ACTIONS_DETAILS" value1="Details" />
 		<execute action="PGWikiWikipageDetails#assertClick" locator-key1="NAVIGATION_HISTORY" value1="History" />
@@ -656,8 +612,6 @@
 	</command>
 
 	<command name="copyPG">
-		<execute macro="WikiPage#gotoAllPagesPG" />
-
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="PGWikiAllpages#click" locator-key1="WIKI_PAGE_TABLE_ACTIONS" />
@@ -707,10 +661,6 @@
 	</command>
 
 	<command name="deleteCommentPG">
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
 
 		<var name="key_commentBody" value="${commentBody}" />
@@ -731,10 +681,6 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="WikiNode#gotoCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
-		</execute>
-
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="CPWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
@@ -744,8 +690,6 @@
 	</command>
 
 	<command name="deleteFrontPagePGViaWD">
-		<execute macro="WikiPage#gotoAllPagesPGViaWD" />
-
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="PGWikidisplayAllpages#click" locator-key1="WIKI_PAGE_TABLE_ACTIONS" />
@@ -757,8 +701,6 @@
 	</command>
 
 	<command name="deletePG">
-		<execute macro="WikiPage#gotoAllPagesPG" />
-
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="PGWikiAllpages#click" locator-key1="WIKI_PAGE_TABLE_ACTIONS" />
@@ -780,10 +722,6 @@
 	</command>
 
 	<command name="editCommentPG">
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
 
 		<var name="key_commentBody" value="${commentBody}" />
@@ -809,10 +747,6 @@
 	</command>
 
 	<command name="editPageCP">
-		<execute macro="WikiNode#gotoCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
-		</execute>
-
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="CPWikiAllpages#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
@@ -826,8 +760,6 @@
 	</command>
 
 	<command name="editPagePG">
-		<execute macro="WikiPage#gotoAllPagesPG" />
-
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="PGWikiAllpages#click" locator-key1="WIKI_PAGE_TABLE_ACTIONS" />
@@ -888,7 +820,7 @@
 				<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ORPHAN_PAGES" value1="Orphan Pages" />
 			</then>
 			<else>
-				<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+				<execute macro="WikiPage#gotoAllPagesPG" />
 			</else>
 		</if>
 
@@ -902,7 +834,7 @@
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-	 	<execute action="PGWikidisplayAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
+		<execute action="PGWikidisplayAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
 	</command>
 
 	<command name="linkOrphanPageHtmlPG">
@@ -1001,10 +933,6 @@
 	</command>
 
 	<command name="linkPG">
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPage1Title}" />
-		</execute>
-
 		<var name="key_wikiPageTitle" value="${wikiPage2Title}" />
 
 		<execute action="PGWikiWikipage#assertTextNotPresent" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPage2Title}" />
@@ -1028,10 +956,6 @@
 	</command>
 
 	<command name="moveToRecycleBinCP">
-		<execute macro="WikiNode#gotoCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
-		</execute>
-
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="CPWikiAllpages#click" locator-key1="WIKI_PAGE_TABLE_ACTIONS" />
@@ -1040,10 +964,6 @@
 	</command>
 
 	<command name="moveWikiPagePG">
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPageTitle}" />
@@ -1070,10 +990,6 @@
 	</command>
 
 	<command name="rate4StarsPG">
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="PGWiki#click" locator-key1="YOUR_RATING_STAR_EMPTY_4" />
@@ -1081,10 +997,6 @@
 	</command>
 
 	<command name="removeRedirectWikiPagePG">
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<var name="key_wikiPageTitle" value="${wikiPageTitleRename}" />
 
 		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPageTitleRename}" />
@@ -1107,10 +1019,6 @@
 		<var name="key_roleName" value="${key_roleName?lowercase()}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<execute action="PGWiki#assertClick" locator-key1="DETAILS_BUTTON" value1="Details" />
 
 		<execute action="PGWikiWikipageDetails#assertClick" locator-key1="PERMISSIONS_LINK" value1="Permissions" />
@@ -1124,10 +1032,6 @@
 	</command>
 
 	<command name="renameWikiPagePG">
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPageTitle}" />
@@ -1147,10 +1051,6 @@
 	</command>
 
 	<command name="revertChangeParentWikipagetoWikipagePG">
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPage2Title}" />
-		</execute>
-
 		<var name="key_wikiPageTitle" value="${wikiPage2Title}" />
 
 		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPage2Title}" />
@@ -1184,10 +1084,6 @@
 	</command>
 
 	<command name="revertEditPG">
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPageTitle}" />
@@ -1253,10 +1149,6 @@
 	</command>
 
 	<command name="subscribeToPagePG">
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPageTitle}" />
@@ -1306,10 +1198,6 @@
 		<var name="key_attachmentFileName" value="${attachmentFileName}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<if>
 			<isset var="numberOfAttachments" />
 			<then>
@@ -1357,10 +1245,6 @@
 	</command>
 
 	<command name="viewCKEditorResizer">
-		<execute macro="WikiPage#gotoPageEditPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<if>
 			<equals arg1="${changeWikiFormat}" arg2="true" />
 			<then>
@@ -1376,10 +1260,6 @@
 	<command name="viewCommentPG">
 		<var name="key_commentBody" value="${commentBody}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
-
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
 
 		<execute action="PGWiki#assertTextEquals" locator-key1="COMMENTS_BODY" value1="${commentBody}" />
 	</command>
@@ -1437,10 +1317,6 @@
 	</command>
 
 	<command name="viewFrontPageCP">
-		<execute macro="WikiNode#gotoCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
-		</execute>
-
 		<execute action="CPWikiAllpages#assertClick" locator-key1="NAVIGATION_FRONTPAGE" value1="FrontPage" />
 
 		<execute action="CPWikiFrontpage#assertTextEquals" locator-key1="PORLET_BODY_TITLE_HEADER" value1="${wikiNodeName}" />
@@ -1467,10 +1343,6 @@
 	</command>
 
 	<command name="viewFrontPageDefaultCP">
-		<execute macro="WikiNode#gotoCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
-		</execute>
-
 		<execute action="CPWikiAllpages#assertClick" locator-key1="NAVIGATION_FRONTPAGE" value1="FrontPage" />
 
 		<execute action="CPWikiFrontpage#assertTextEquals" locator-key1="INFO_MESSAGE" value1="This page is empty. Edit it to add some text." />
@@ -1487,8 +1359,6 @@
 	</command>
 
 	<command name="viewNoChildPagePG">
-		<execute macro="WikiPage#gotoAllPagesPG" />
-
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
@@ -1508,8 +1378,6 @@
 	</command>
 
 	<command name="viewNoPagePG">
-		<execute macro="WikiPage#gotoAllPagesPG" />
-
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="PGWikiAllpages#assertElementNotPresent" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
@@ -1653,10 +1521,6 @@
 	</command>
 
 	<command name="viewRate4StarsPG">
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
-
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="PGWiki#assertElementPresent" locator-key1="YOUR_RATING_STAR_1" />
@@ -1703,10 +1567,6 @@
 	<command name="viewTagPG">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 		<var name="tagName" value="${tagName?lowercase()}" />
-
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-		</execute>
 
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TAG" value1="${tagName}" />
 	</command>

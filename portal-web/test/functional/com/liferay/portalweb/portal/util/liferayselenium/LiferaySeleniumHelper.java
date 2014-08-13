@@ -221,8 +221,6 @@ public class LiferaySeleniumHelper {
 					continue;
 				}
 
-				FileUtil.write(fileName, "");
-
 				Element throwableElement = eventElement.element("throwable");
 
 				if (throwableElement != null) {

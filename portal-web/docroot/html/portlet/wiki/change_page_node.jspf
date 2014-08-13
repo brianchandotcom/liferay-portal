@@ -49,7 +49,9 @@
 						WikiNode wikiNode = (WikiNode)pageContext.getAttribute("wikiNode");
 						%>
 
-						<aui:option label="<%= wikiNode.getName() %>" selected="<%= wikiNode.getName().equals(wikiPageNode.getName()) %>" value="<%= wikiNode.getNodeId() %>" />
+						<c:if test="<%= !wikiNode.getName().equals(wikiPageNode.getName()) %>">
+							<aui:option label="<%= wikiNode.getName() %>" value="<%= wikiNode.getNodeId() %>" />
+						</c:if>
 					</c:forEach>
 				</aui:select>
 			</c:otherwise>

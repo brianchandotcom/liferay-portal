@@ -207,6 +207,13 @@ public class InitUtil {
 	public synchronized static void initWithSpringAndModuleFramework(
 		boolean force, List<String> extraConfigLocations) {
 
+		initWithSpringAndModuleFramework(force, extraConfigLocations, true);
+	}
+
+	public synchronized static void initWithSpringAndModuleFramework(
+		boolean force, List<String> extraConfigLocations,
+		boolean loadFromProperties) {
+
 		if (force) {
 			_initialized = false;
 		}
@@ -230,7 +237,13 @@ public class InitUtil {
 
 			ModuleFrameworkUtilAdapter.startFramework();
 
-			SpringUtil.loadContext(extraConfigLocations);
+			if (loadFromProperties) {
+				SpringUtil.loadContext(extraConfigLocations);
+			}
+			else {
+				SpringUtil.loadContext(extraConfigLocations.toArray(
+					new String[extraConfigLocations.size()]));
+			}
 
 			BeanLocatorImpl beanLocatorImpl =
 				(BeanLocatorImpl)PortalBeanLocatorUtil.getBeanLocator();

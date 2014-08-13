@@ -282,10 +282,38 @@ public class SeleniumBuilder {
 					_seleniumBuilderFileUtil.getAllChildElements(
 						extendsRootElement, "command");
 
+				String[] ignoreCommandNames;
+
+				String ignoreCommands = rootElement.attributeValue(
+					"ignore-commands");
+
+				if (ignoreCommands != null) {
+					ignoreCommands = ignoreCommands.replaceAll("\\s+","");
+
+					ignoreCommandNames = StringUtil.split(ignoreCommands, ",");
+				}
+
 				for (Element commandElement : commandElements) {
+					String commmandName = commandElement.attributeValue("name");
+
+					boolean ignorableCommandNameFound = false;
+
+					if (ignoreCommands != null) {
+						for (String ignoreCommandName : ignoreCommandNames) {
+							if (ignoreCommandName.equals(commmandName)) {
+								ignorableCommandNameFound = true;
+
+								break;
+							}
+						}
+					}
+
+					if (ignorableCommandNameFound) {
+						continue;
+					}
+
 					String testCaseMethodName =
-						testCaseName + "TestCase#test" +
-							commandElement.attributeValue("name");
+						testCaseName + "TestCase#test" + commmandName;
 
 					compontentTestCaseMethodNames.add(testCaseMethodName);
 

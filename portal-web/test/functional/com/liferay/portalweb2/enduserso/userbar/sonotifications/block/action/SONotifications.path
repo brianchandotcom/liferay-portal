@@ -25,17 +25,17 @@
 </tr>
 <tr>
 	<td>NOTIFICATIONS_NONE_MESSAGE</td>
-	<td>//li[@class='message']/a[contains(.,'You do not have any notifications.')]</td>
+	<td>//div[@class='message'][contains(.,'You do not have any notifications.')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATIONS_ENTRY</td>
-	<td>//li[@class='user-notification unread']//div[@class='title']</td>
+	<td>//li[contains(@class,'user-notification')]//div[@class='title']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATIONS_ENTRY_INCREMENT</td>
-	<td>xPath=(//li[@class='user-notification unread']//div[@class='title'])[${key_row}]</td>
+	<td>xPath=(//li[contains(@class,'user-notification')]//div[@class='title'])[${key_row}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -135,48 +135,68 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATION_MENU_NONE_MESSAGE</td>
-	<td>//div[contains(@class,'user-notification')]//li[@class='message']/a</td>
+	<td>NOTIFICATION_MENU_NOTIFICATION_NONE_MESSAGE</td>
+	<td>//div[@class='non-actionable']//div[contains(@class,'user-notification')]//div[@class='message']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATION_MENU_ENTRY</td>
-	<td>//div[contains(@class,'user-notification')]</td>
+	<td>NOTIFICATION_MENU_NOTIFICATION_ENTRY</td>
+	<td>//div[@class='non-actionable']//li[contains(@class,'user-notification')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATION_MENU_ENTRY_SENDER</td>
-	<td>//div[contains(@class,'user-notification')]//div[@class='title']//a</td>
+	<td>NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT</td>
+	<td>//div[@class='non-actionable']//li[contains(@class,'user-notification')]//div[@class='title']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATION_MENU_ENTRY_CONTENT</td>
-	<td>//div[contains(@class,'user-notification')]//div[@class='title']</td>
+	<td>NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT</td>
+	<td>//div[@class='non-actionable']//li[contains(@class,'user-notification')]//div[@class='body']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATION_MENU_ENTRY_SUBCONTENT</td>
-	<td>//div[contains(@class,'user-notification')]//div[@class='body']/div[@class='body']</td>
+	<td>NOTIFICATION_MENU_MARK_AS_READ_NOTIFICATIONS_LINK</td>
+	<td>//div[@class='non-actionable']//a[contains(.,'Mark as Read')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATION_MENU_CONFIRM</td>
-	<td>//a[contains(text(),'Confirm')]</td>
+	<td>NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK</td>
+	<td>//div[@class='non-actionable']//a[contains(.,'Notifications')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATION_MENU_IGNORE</td>
-	<td>//a[contains(text(),'Ignore')]</td>
+	<td>NOTIFICATION_MENU_REQUEST_NONE_MESSAGE</td>
+	<td>//div[@class='actionable']//div[contains(@class,'user-notification')]//div[@class='message']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATION_MENU_VIEW_ALL</td>
-	<td>//a[contains(text(),'View All Notifications')]</td>
+	<td>NOTIFICATION_MENU_REQUEST_ENTRY</td>
+	<td>//div[@class='actionable']//li[contains(@class,'user-notification')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATION_MENU_MARK_ALL_AS_READ</td>
-	<td>//a[@class='mark-all-as-read']</td>
+	<td>NOTIFICATION_MENU_REQUEST_ENTRY_SENDER</td>
+	<td>//div[@class='actionable']//div[contains(@class,'user-notification')]//div[@class='title']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_MENU_REQUEST_ENTRY_CONTENT</td>
+	<td>//div[@class='actionable']//div[contains(@class,'user-notification')]//div[@class='title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_MENU_REQUEST_CONFIRM</td>
+	<td>//div[@class='actionable']//a[contains(text(),'Confirm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_MENU_REQUEST_IGNORE</td>
+	<td>//div[@class='actionable']//a[contains(text(),'Ignore')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_MENU_VIEW_REQUESTS_LINK</td>
+	<td>//div[@class='actionable']//a[contains(.,'Requests')]</td>
 	<td></td>
 </tr>
 <tr>

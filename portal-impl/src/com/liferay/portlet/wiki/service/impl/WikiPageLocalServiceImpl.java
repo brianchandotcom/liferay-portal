@@ -409,6 +409,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		if (nodeId == newNodeId) {
+			return;
+		}
+
 		WikiPage oldPage = getPage(nodeId, title);
 
 		serviceContext.setCommand(Constants.MOVE);

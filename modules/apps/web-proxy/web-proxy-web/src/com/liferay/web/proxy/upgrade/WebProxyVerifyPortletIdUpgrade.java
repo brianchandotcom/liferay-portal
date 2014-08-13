@@ -56,18 +56,11 @@ public class WebProxyVerifyPortletIdUpgrade {
 			false);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	private void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
-	}
-
-	@SuppressWarnings("unused")
-	private void unsetReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = null;
 	}
 
 	private ReleaseLocalService _releaseLocalService;

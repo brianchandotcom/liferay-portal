@@ -79,7 +79,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 			<aui:nav-bar-search>
 				<div class="form-search">
-					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords1" name="<%= searchTerms.NAME %>" />
+					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= searchTerms.NAME %>" />
 				</div>
 			</aui:nav-bar-search>
 		</aui:nav-bar>

@@ -1447,6 +1447,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			long userId, long nodeId, String title, String newTitle,
 			boolean strict, ServiceContext serviceContext)
 		throws PortalException {
+
+		renamePage(userId, nodeId, title, newTitle, strict, serviceContext);
 	}
 
 	/**

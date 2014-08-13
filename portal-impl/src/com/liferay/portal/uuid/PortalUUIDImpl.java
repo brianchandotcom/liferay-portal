@@ -14,6 +14,7 @@
 
 package com.liferay.portal.uuid;
 
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,7 +36,10 @@ public class PortalUUIDImpl implements PortalUUID {
 
 	@Override
 	public String generate() {
-		return UUID.randomUUID().toString();
+		UUID uuid = new UUID(
+			SecureRandomUtil.nextLong(), SecureRandomUtil.nextLong());
+
+		return uuid.toString();
 	}
 
 	@Override

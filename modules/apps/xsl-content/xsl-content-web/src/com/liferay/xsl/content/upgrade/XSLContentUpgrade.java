@@ -29,7 +29,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(
-	immediate = true
+	immediate = true,
+	service = XSLContentUpgrade.class
 )
 public class XSLContentUpgrade {
 

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.struts.StrutsUtil;
 import com.liferay.portlet.RenderResponseImpl;
+import com.liferay.web.proxy.upgrade.WebProxyVerifyPortletIdUpgrade;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -48,6 +49,7 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 import org.portletbridge.portlet.PortletBridgePortlet;
@@ -221,6 +223,17 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 					"JDK's endorsed directory");
 
 		writer.close();
+	}
+
+	/**
+	 * Force the upgrade to execute before the portlet is ever registered so
+	 * that there's no race condition between the portlet tracker creating a new
+	 * portlet references in the DB and the upgrade changing old values to new
+	 * values.
+	 */
+	@Reference(unbind = "-")
+	private void setWebProxyVerifyPortletIdUpgrade(
+		WebProxyVerifyPortletIdUpgrade webProxyVerifyPortletIdUpgrade) {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(WebProxyPortlet.class);

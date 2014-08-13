@@ -23,6 +23,12 @@
 
 			@include respond-to(phone) {
 				min-height: 100px;
+
+				.form-builder-field .btn {
+					display: inline;
+					margin-top: 0;
+					width: auto;
+				}
 			}
 		}
 	}

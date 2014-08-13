@@ -290,7 +290,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 				}
 			%>
 
-				<td class="table-cell <%= columnClassName %> text-<%= entry.getAlign() %> text-valign-<%= entry.getValign() %>" colspan="<%= entry.getColspan() %>">
+				<td class="table-cell <%= columnClassName %> text-<%= entry.getAlign() %> text-<%= entry.getValign() %>" colspan="<%= entry.getColspan() %>">
 
 					<%
 					entry.print(pageContext);

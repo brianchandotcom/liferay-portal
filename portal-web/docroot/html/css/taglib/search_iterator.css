@@ -12,15 +12,15 @@
 	}
 
 	.table {
-		.text-valign-bottom {
+		.text-bottom {
 			vertical-align: bottom;
 		}
 
-		.text-valign-middle {
+		.text-middle {
 			vertical-align: middle;
 		}
 
-		.text-valign-top {
+		.text-top {
 			vertical-align: top;
 		}
 	}

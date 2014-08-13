@@ -41,7 +41,7 @@ import org.springframework.context.support.AbstractApplicationContext;
 public class SpringUtil {
 
 	public static void loadContext() {
-		_loadContext(PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
+		loadContext(PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
 	}
 
 	public static void loadContext(List<String> extraConfigLocations) {
@@ -52,11 +52,11 @@ public class SpringUtil {
 			configLocations.addAll(extraConfigLocations);
 		}
 
-		_loadContext(
+		loadContext(
 			configLocations.toArray(new String[configLocations.size()]));
 	}
 
-	private static void _loadContext(String[] configLocations) {
+	public static void loadContext(String[] configLocations) {
 		AbstractApplicationContext applicationContext =
 			new ArrayApplicationContext(configLocations);
 

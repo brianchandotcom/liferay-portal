@@ -10,6 +10,20 @@
 			width: auto;
 		}
 	}
+
+	.table {
+		.text-bottom {
+			vertical-align: bottom;
+		}
+
+		.text-middle {
+			vertical-align: middle;
+		}
+
+		.text-top {
+			vertical-align: top;
+		}
+	}
 }
 
 .touch .lfr-search-container {

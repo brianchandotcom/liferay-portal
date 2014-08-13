@@ -19,8 +19,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIGURATION_IFRAME</td>
-	<td>//iframe[contains(@id,'configurationIframeDialog_iframe')]</td>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGKnowledgebasearticleConfiguration</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>

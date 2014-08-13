@@ -1,0 +1,22 @@
+<definition>
+	<command name="addPG">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_NAVIGATION" value1="${kbArticleTitle}" />
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_SUGGESTIONS" value1="Do you have any suggestions?" />
+		<execute action="PGKnowledgebasedisplay#type" locator-key1="SUGGESTION_BODY" value1="${kbSuggestionBody}" />
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="SUGGESTION_SUBMIT_BUTTON" value1="Submit" />
+		<execute action="PGKnowledgebasedisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Feedback saved successfully." />
+	</command>
+
+	<command name="viewNewPG">
+		<execute action="PGKnowledgebasedisplay#click" locator-key1="ARTICLE_SUGGESTIONS_VIEW" />
+		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="SUGGESTION_NAVIGATION_NEW" value1="New" />
+
+		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
+
+		<execute action="PGKnowledgebasedisplayNewsuggestion#assertTextEquals" locator-key1="USER_NAME" value1="${userName}" />
+		<execute action="PGKnowledgebasedisplayNewsuggestion#assertTextEquals" locator-key1="BODY" value1="${kbSuggestionBody}" />
+		<execute action="PGKnowledgebasedisplayNewsuggestion#assertTextEquals" locator-key1="STATUS" value1="New" />
+	</command>
+</definition>

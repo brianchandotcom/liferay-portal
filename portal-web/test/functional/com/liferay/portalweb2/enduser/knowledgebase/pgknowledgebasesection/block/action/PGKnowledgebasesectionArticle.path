@@ -19,8 +19,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>PGKnowledgebasearticle</td>
+	<td>ARTICLE_TITLE</td>
+	<td>//div[@class='portlet-body']//h1[@class='kb-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_CONTENT</td>
+	<td>//div[@class='portlet-body']//div[@class='kb-article-body']</td>
 	<td></td>
 </tr>
 </tbody>

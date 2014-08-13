@@ -29,13 +29,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_ARTICLE_BUTTON</td>
-	<td>//a[contains(.,'Add Article')]</td>
+	<td>ARTICLE_NAVIGATION</td>
+	<td>//div[@class='kbarticle-navigation']/ul[contains(.,'${key_kbArticleTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_BUTTON</td>
-	<td>//a[contains(.,'Permissions')]</td>
+	<td>CONFIRMATION</td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -43,50 +43,147 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ARTICLE_TABLE-->
+<!--ARTICLE-->
 <tr>
-	<td>ARTICLE_TABLE_PRIORITY</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[1]/a</td>
+	<td>ARTICLE_TITLE</td>
+	<td>//div[@class='kb-article-container']//h1[@class='kb-title']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ARTICLE_TABLE_TITLE</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[2]/a</td>
+	<td>ARTICLE_CONTENT</td>
+	<td>//div[@class='kb-article-container']//div[@class='kb-article-body']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ARTICLE_TABLE_TITLE_GENERIC</td>
-	<td>//tr[1]/td[2]/a</td>
+	<td>ARTICLE_VOTES</td>
+	<td>//div[@class='kb-article-container']//div[contains(@class,'ratings')]//div[@class='rating-label']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ARTICLE_TABLE_AUTHOR</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[3]/a</td>
+	<td>ARTICLE_VOTE_UP</td>
+	<td>//div[@class='kb-article-container']//div[contains(@class,'ratings')]//a[contains(@class,'thumbs-up')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ARTICLE_TABLE_CREATE_DATE</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[4]/a</td>
+	<td>ARTICLE_VOTE_DOWN</td>
+	<td>//div[@class='kb-article-container']//div[contains(@class,'ratings')]//a[contains(@class,'thumbs-down')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ARTICLE_TABLE_MODIFIED_DATE</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[5]/a</td>
+	<td>ARTICLE_SUGGESTIONS</td>
+	<td>//div[@class='kb-article-container']//div/a[contains(.,'Do you have any suggestions?')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ARTICLE_TABLE_STATUS</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[6]/a</td>
+	<td>ARTICLE_SUGGESTIONS_VIEW</td>
+	<td>//div[@class='kb-article-container']//div[@class='kb-article-feedback-actions']/a[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ARTICLE_TABLE_VIEWS</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[7]/a</td>
+	<td>ARTICLE_RSS</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'RSS')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ARTICLE_TABLE_ACTIONS_BUTTON</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[8]/div/a[@title='Actions']</td>
+	<td>ARTICLE_SUBSCRIBE</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_UNSUBSCRIBE</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_HISTORY</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'History')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_PRINT</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Print')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_ACTIONS_BUTTON</td>
+	<td>//div[@class='kb-article-container']//div//span[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_PREVIOUS</td>
+	<td>//div[@class='kb-article-container']//div/span[@class='kb-article-previous']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_NEXT</td>
+	<td>//div[@class='kb-article-container']//div/span[@class='kb-article-next']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIONS_MENULIST-->
+<tr>
+	<td>ACTIONS_MENULIST_ADD_CHILD_ARTICLE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//a[contains(.,'Add Child Article')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_EDIT</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_PERMISSIONS</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_MOVE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//a[contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_DELETE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//a[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SUGGESTION-->
+<tr>
+	<td>SUGGESTION_BODY</td>
+	<td>//textarea[contains(@id,'_knowledgebaseportlet_content') and contains(@class,'lfr-textarea')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_SUBMIT_BUTTON</td>
+	<td>//button[contains(.,'Submit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_SUBMIT_CANCEL</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_NAVIGATION_NEW</td>
+	<td>//ul[contains(@class,'lfr-nav') and contains(@class,'nav')]//a[contains(.,'New')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_NAVIGATION_IN_PROGRESS</td>
+	<td>//ul[contains(@class,'lfr-nav') and contains(@class,'nav')]//a[contains(.,'New')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_NAVIGATION_RESOLVED</td>
+	<td>//ul[contains(@class,'lfr-nav') and contains(@class,'nav')]//a[contains(.,'New')]</td>
 	<td></td>
 </tr>
 </tbody>

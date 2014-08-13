@@ -136,6 +136,13 @@ public class WikiPageLocalServiceUtil {
 		return getService().addWikiPage(wikiPage);
 	}
 
+	public static void changeNode(long userId, long nodeId,
+		java.lang.String title, long newNodeId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().changeNode(userId, nodeId, title, newNodeId, serviceContext);
+	}
+
 	public static com.liferay.portlet.wiki.model.WikiPage changeParent(
 		long userId, long nodeId, java.lang.String title,
 		java.lang.String newParentTitle,
@@ -746,6 +753,11 @@ public class WikiPageLocalServiceUtil {
 		getService().moveDependentToTrash(page, trashEntryId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #renamePage(
+	long, long, String, String, ServiceContext)}
+	*/
+	@Deprecated
 	public static void movePage(long userId, long nodeId,
 		java.lang.String title, java.lang.String newTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -753,6 +765,10 @@ public class WikiPageLocalServiceUtil {
 		getService().movePage(userId, nodeId, title, newTitle, serviceContext);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, long,
+	String, String, boolean, ServiceContext)}
+	*/
 	public static void movePage(long userId, long nodeId,
 		java.lang.String title, java.lang.String newTitle, boolean strict,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -795,6 +811,21 @@ public class WikiPageLocalServiceUtil {
 		long userId, com.liferay.portlet.wiki.model.WikiPage page)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().movePageToTrash(userId, page);
+	}
+
+	public static void renamePage(long userId, long nodeId,
+		java.lang.String title, java.lang.String newTitle,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().renamePage(userId, nodeId, title, newTitle, serviceContext);
+	}
+
+	public static void renamePage(long userId, long nodeId,
+		java.lang.String title, java.lang.String newTitle, boolean strict,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.renamePage(userId, nodeId, title, newTitle, strict, serviceContext);
 	}
 
 	public static void restoreDependentFromTrash(

@@ -46,7 +46,6 @@ import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -82,15 +81,6 @@ public class WikiPagePersistenceTest {
 		TemplateManagerUtil.init();
 	}
 
-	@Before
-	public void setUp() {
-		_modelListeners = _persistence.getListeners();
-
-		for (ModelListener<WikiPage> modelListener : _modelListeners) {
-			_persistence.unregisterListener(modelListener);
-		}
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		Iterator<WikiPage> iterator = _wikiPages.iterator();
@@ -99,10 +89,6 @@ public class WikiPagePersistenceTest {
 			_persistence.remove(iterator.next());
 
 			iterator.remove();
-		}
-
-		for (ModelListener<WikiPage> modelListener : _modelListeners) {
-			_persistence.registerListener(modelListener);
 		}
 	}
 

@@ -30,9 +30,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(
-	immediate = true, service = WebProxyVerifyPortletIdUpgrade.class
+	immediate = true, service = WebProxyUpgrade.class
 )
-public class WebProxyVerifyPortletIdUpgrade {
+public class WebProxyUpgrade {
 
 	@Reference(unbind = "-")
 	private void setReleaseLocalService(

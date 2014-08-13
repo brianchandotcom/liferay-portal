@@ -271,18 +271,6 @@ public class SeleniumBuilder {
 					componentName);
 			}
 
-			String ignoreCommandsList = rootElement.attributeValue(
-				"ignore-commands");
-
-			String[] ignoreCommands = new String[] {ignoreCommandsList};
-
-			if (ignoreCommandsList != null) {
-				if (ignoreCommandsList.contains(",")) {
-					ignoreCommands = ignoreCommandsList.replaceAll(
-						"\\s+","").split(",");
-				}
-			}
-
 			String extendsTestCaseName = rootElement.attributeValue("extends");
 
 			if (extendsTestCaseName != null) {
@@ -294,27 +282,43 @@ public class SeleniumBuilder {
 					_seleniumBuilderFileUtil.getAllChildElements(
 						extendsRootElement, "command");
 
+				String[] ignoreCommandNames = null;
+
+				String ignoreCommands = rootElement.attributeValue(
+					"ignore-commands");
+
+				if (ignoreCommands != null) {
+					ignoreCommands = StringUtil.replace(
+						ignoreCommands, " ", "");
+					ignoreCommands = StringUtil.replace(
+						ignoreCommands, "\n", "");
+					ignoreCommands = StringUtil.replace(
+						ignoreCommands, "\t", "");
+
+					ignoreCommandNames = StringUtil.split(ignoreCommands, ",");
+				}
+
 				for (Element commandElement : commandElements) {
-					Boolean breakOut = false;
+					String commmandName = commandElement.attributeValue("name");
 
-					if (ignoreCommandsList != null) {
-						for (String ignoreCommand : ignoreCommands) {
-							if (commandElement.attributeValue(
-									"name").equals(ignoreCommand)) {
+					boolean ignorableCommandNameFound = false;
 
-								breakOut = true;
+					if (ignoreCommands != null) {
+						for (String ignoreCommandName : ignoreCommandNames) {
+							if (ignoreCommandName.equals(commmandName)) {
+								ignorableCommandNameFound = true;
+
 								break;
 							}
 						}
 					}
 
-					if (breakOut) {
+					if (ignorableCommandNameFound) {
 						continue;
 					}
 
 					String testCaseMethodName =
-						testCaseName + "TestCase#test" +
-							commandElement.attributeValue("name");
+						testCaseName + "TestCase#test" + commmandName;
 
 					compontentTestCaseMethodNames.add(testCaseMethodName);
 

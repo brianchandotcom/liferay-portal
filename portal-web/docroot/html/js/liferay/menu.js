@@ -343,7 +343,7 @@ AUI.add(
 								modal: true,
 								width: '90%'
 							}
-						);
+						).align();
 					}
 					else {
 						var align = overlay.get('align');

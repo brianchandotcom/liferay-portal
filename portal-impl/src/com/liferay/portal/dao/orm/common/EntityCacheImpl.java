@@ -14,7 +14,7 @@
 
 package com.liferay.portal.dao.orm.common;
 
-import com.liferay.portal.cache.ehcache.MVCCEhcachePortalCacheFactory;
+import com.liferay.portal.cache.mvcc.MVCCPortalCacheFactory;
 import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -379,8 +379,8 @@ public class EntityCacheImpl
 
 				portalCache =
 					(PortalCache<Serializable, Serializable>)
-						MVCCEhcachePortalCacheFactory.
-							createMVCCEhcachePortalCache(portalCache);
+						MVCCPortalCacheFactory.createMVCCEhcachePortalCache(
+							portalCache);
 			}
 
 			PortalCache<Serializable, Serializable> previousPortalCache =

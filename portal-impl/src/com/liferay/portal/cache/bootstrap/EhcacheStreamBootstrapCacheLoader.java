@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache;
+package com.liferay.portal.cache.bootstrap;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -65,7 +65,7 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 					continue;
 				}
 
-				EhcacheStreamBootstrapHelpUtil.loadCachesFromCluster(
+				StreamBootstrapHelpUtil.loadCachesFromCluster(
 					cacheManagerName,
 					cacheNames.toArray(new String[cacheNames.size()]));
 			}
@@ -125,7 +125,7 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 		CacheManager cacheManager = ehcache.getCacheManager();
 
 		try {
-			EhcacheStreamBootstrapHelpUtil.loadCachesFromCluster(
+			StreamBootstrapHelpUtil.loadCachesFromCluster(
 				cacheManager.getName(), ehcache.getName());
 		}
 		catch (Exception e) {

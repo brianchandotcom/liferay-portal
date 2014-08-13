@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache;
+package com.liferay.portal.cache.mvcc;
 
+import com.liferay.portal.cache.ehcache.LockBasedMVCCEhcachePortalCache;
+import com.liferay.portal.kernel.cache.LowLevelCache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheWrapper;
 import com.liferay.portal.model.MVCCModel;
@@ -24,20 +26,20 @@ import java.io.Serializable;
 /**
  * @author Shuyang Zhou
  */
-public class MVCCEhcachePortalCacheFactory {
+public class MVCCPortalCacheFactory {
 
 	public static <K extends Serializable>
 		PortalCache<K, ?> createMVCCEhcachePortalCache(
 			PortalCache<K, ?> portalCache) {
 
-		if (portalCache instanceof EhcachePortalCache) {
+		if (portalCache instanceof LowLevelCache) {
 			if (PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
-				return new MVCCEhcachePortalCache<K, MVCCModel>(
-					(EhcachePortalCache<K, MVCCModel>)portalCache);
+				return new MVCCPortalCache<K, MVCCModel>(
+					(LowLevelCache<K, MVCCModel>)portalCache);
 			}
 			else {
 				return new LockBasedMVCCEhcachePortalCache<K, MVCCModel>(
-					(EhcachePortalCache<K, MVCCModel>)portalCache);
+					(LowLevelCache<K, MVCCModel>)portalCache);
 			}
 		}
 
@@ -50,15 +52,15 @@ public class MVCCEhcachePortalCacheFactory {
 			PortalCache<K, MVCCModel> nextPortalCache =
 				portalCacheWrapper.getWrappedPortalCache();
 
-			if (nextPortalCache instanceof EhcachePortalCache) {
+			if (nextPortalCache instanceof LowLevelCache) {
 				if (PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
-					nextPortalCache = new MVCCEhcachePortalCache<K, MVCCModel>(
-						(EhcachePortalCache<K, MVCCModel>)nextPortalCache);
+					nextPortalCache = new MVCCPortalCache<K, MVCCModel>(
+						(LowLevelCache<K, MVCCModel>)nextPortalCache);
 				}
 				else {
 					nextPortalCache =
 						new LockBasedMVCCEhcachePortalCache<K, MVCCModel>(
-							(EhcachePortalCache<K, MVCCModel>)nextPortalCache);
+							(LowLevelCache<K, MVCCModel>)nextPortalCache);
 				}
 
 				portalCacheWrapper.setPortalCache(nextPortalCache);

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.cache.ehcache;
 
+import com.liferay.portal.cache.mvcc.MVCCPortalCache;
+import com.liferay.portal.kernel.cache.LowLevelCache;
 import com.liferay.portal.model.MVCCModel;
 
 import java.io.Serializable;
@@ -26,12 +28,18 @@ import net.sf.ehcache.Element;
  */
 public class LockBasedMVCCEhcachePortalCache
 		<K extends Serializable, V extends MVCCModel>
-	extends MVCCEhcachePortalCache<K, V> {
+	extends MVCCPortalCache<K, V> {
 
-	public LockBasedMVCCEhcachePortalCache(
-		EhcachePortalCache<K, V> ehcachePortalCache) {
+	public LockBasedMVCCEhcachePortalCache(LowLevelCache<K, V> lowLevelCache) {
+		super(lowLevelCache);
 
-		super(ehcachePortalCache);
+		if (!(lowLevelCache instanceof EhcachePortalCache)) {
+			throw new IllegalArgumentException(
+				"LowLevelCache is not a EhcachePortalCache");
+		}
+
+		EhcachePortalCache<?, ?> ehcachePortalCache =
+			(EhcachePortalCache<?, ?>)lowLevelCache;
 
 		_ehcache = ehcachePortalCache.ehcache;
 	}

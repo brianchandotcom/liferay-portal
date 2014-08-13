@@ -2318,44 +2318,18 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Child pages
 
 		List<WikiPage> childPages = wikiPagePersistence.findByN_P(
-			oldNodeId, title);
+			nodeId, title);
 
-		for (WikiPage childPage : childPages) {
-			childPage.setNodeId(nodeId);
-
-			wikiPagePersistence.update(childPage);
-
-			if (childPage.isHead()) {
-				WikiPageResource childPageResource =
-					wikiPageResourcePersistence.findByPrimaryKey(
-						childPage.getResourcePrimKey());
-
-				childPageResource.setNodeId(nodeId);
-
-				wikiPageResourcePersistence.update(childPageResource);
-			}
-		}
+		_updateDependentPages(
+			childPages, newNodeId, StringPool.BLANK, StringPool.BLANK);
 
 		// Redirect pages
 
 		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
 			nodeId, title);
 
-		for (WikiPage redirectPage : redirectPages) {
-			redirectPage.setNodeId(nodeId);
-
-			wikiPagePersistence.update(redirectPage);
-
-			if (redirectPage.isHead()) {
-				WikiPageResource redirectPageResource =
-					wikiPageResourcePersistence.findByPrimaryKey(
-						redirectPage.getResourcePrimKey());
-
-				redirectPageResource.setNodeId(nodeId);
-
-				wikiPageResourcePersistence.update(redirectPageResource);
-			}
-		}
+		_updateDependentPages(
+			redirectPages, newNodeId, StringPool.BLANK, StringPool.BLANK);
 
 		// Asset
 
@@ -2439,22 +2413,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		List<WikiPage> childPages = wikiPagePersistence.findByN_P(
 			nodeId, title);
 
-		for (WikiPage childPage : childPages) {
-			childPage.setParentTitle(newTitle);
-
-			wikiPagePersistence.update(childPage);
-		}
+		_updateDependentPages(
+			childPages, page.getNodeId(), newTitle, StringPool.BLANK);
 
 		// Redirect pages
 
 		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
 			nodeId, title);
 
-		for (WikiPage redirectPage : redirectPages) {
-			redirectPage.setRedirectTitle(newTitle);
-
-			wikiPagePersistence.update(redirectPage);
-		}
+		_updateDependentPages(
+			redirectPages, page.getNodeId(), StringPool.BLANK, newTitle);
 
 		// Asset
 
@@ -3137,6 +3105,34 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		validateTitle(title);
 
 		validate(nodeId, content, format);
+	}
+
+	private void _updateDependentPages(
+			List<WikiPage> pages, long nodeId, String parentTitle,
+			String redirectTitle)
+		throws PortalException {
+
+		for (WikiPage page : pages) {
+			page.setNodeId(nodeId);
+			page.setParentTitle(
+				Validator.isNull(parentTitle) ?
+					page.getParentTitle() : parentTitle);
+			page.setRedirectTitle(
+				Validator.isNull(redirectTitle) ?
+					page.getRedirectTitle() : redirectTitle);
+
+			wikiPagePersistence.update(page);
+
+			if (page.isHead()) {
+				WikiPageResource pageResource =
+					wikiPageResourcePersistence.findByPrimaryKey(
+						page.getResourcePrimKey());
+
+				pageResource.setNodeId(nodeId);
+
+				wikiPageResourcePersistence.update(pageResource);
+			}
+		}
 	}
 
 }

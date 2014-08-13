@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.impl.PortletAppImpl;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portal.util.HttpImpl;
@@ -381,6 +382,16 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 
 		portlet.setPortletName(contextName);
 
+		PortletAppImpl portletApp = new PortletAppImpl(contextName);
+
+		ServletContext servletContext = new MockServletContext();
+
+		portletApp.setServletContext(servletContext);
+
+		portlet.setPortletApp(portletApp);
+
+		ServletContextPool.put(contextName, servletContext);
+
 		doReturn(
 			contextName
 		).when(
@@ -399,12 +410,11 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 	protected void setPortletTimestamp(
 		String servletContextName, long timestamp) {
 
-		ServletContext servletContext = new MockServletContext();
+		ServletContext servletContext = ServletContextPool.get(
+			servletContextName);
 
 		servletContext.setAttribute(
 			ServletContextUtil.class.getName() + "./", timestamp);
-
-		ServletContextPool.put(servletContextName, servletContext);
 	}
 
 	private <T> List<T> toList(T... t) {

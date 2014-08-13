@@ -84,7 +84,7 @@ import org.portletbridge.portlet.PortletBridgeServlet;
 		"javax.portlet.init-param.servletName=pbhs",
 		"javax.portlet.init-param.stylesheetUrl=classpath:/org/portletbridge/xsl/default.xsl",
 		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",
-		"javax.portlet.resource-bundle=org.portletbridge.portlet.PortletBridgePortlet",
+		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class

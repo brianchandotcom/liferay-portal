@@ -43,7 +43,7 @@ import java.io.IOException;
  * <p>
  * Each {@link Group} in Liferay can have a public and a private layout set. This
  * keeps information common to all layouts (pages) in the layout set.
- * <p>
+ * </p>
  *
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
@@ -54,7 +54,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	/**
-	 * Returns the current layout set's color scheme.
+	 * Returns the layout set's color scheme.
 	 *
 	 * <p>
 	 * Just like themes, color schemes can be configured on the layout set
@@ -62,7 +62,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	 * level.
 	 * </p>
 	 *
-	 * @return the current layout set's color scheme
+	 * @return the layout set's color scheme
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -72,9 +72,9 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	/**
-	 * Returns the current layout set's group.
+	 * Returns the layout set's group.
 	 *
-	 * @return the current layout set's group
+	 * @return the layout set's group
 	 * @throws PortalException if a group with the primary key could not be
 	 *         found
 	 * @throws SystemException if a system exception occurred
@@ -85,15 +85,15 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	/**
-	 * Returns the current layout set prototype's ID, or <code>0</code> if there
-	 * is no layout set prototype.
+	 * Returns the layout set prototype's ID, or <code>0</code> if it has no layout
+	 * set prototype.
 	 *
 	 * <p>
 	 * Prototype is Liferay's technical name for a site template.
 	 * </p>
 	 *
-	 * @return the current layout set prototype's ID, or <code>0</code> if there
-	 *         is no layout set prototype
+	 * @return the layout set prototype's ID, or <code>0</code> if it has no layout
+	 *         set prototype
 	 * @throws PortalException if a matching layout set prototype could not be
 	 *         found
 	 * @throws SystemException if a system exception occurred
@@ -212,15 +212,15 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	/**
-	 * Returns the current layout set's virtual host name.
+	 * Returns the name of the layout set's virtual host.
 	 *
 	 * <p>
-	 * When accessing a layout set with the virtual host name, the URL elements
+	 * When accessing a layout set that has a the virtual host, the URL elements
 	 * "/web/sitename" or "/group/sitename" can be omitted.
 	 * </p>
 	 *
-	 * @return the current layout set's virtual host name, or an empty string if
-	 *         the layout set's virtual host name could not be found
+	 * @return the layout set's virtual host name, or an empty string if the layout
+	 *         set has no virtual host configured
 	 */
 	@Override
 	public String getVirtualHostname() {
@@ -291,8 +291,9 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	/**
-	 * Sets the layout set's virtual host name.
-	 * 
+	 * Sets the name of the layout set's virtual host.
+	 *
+     * @param virtualHostname the name of the layout set's virtual host
 	 * @see #getVirtualHostname()
 	 */
 	@Override

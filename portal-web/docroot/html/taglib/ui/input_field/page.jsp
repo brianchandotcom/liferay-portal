@@ -43,7 +43,7 @@ if (hints != null) {
 	type = GetterUtil.getString(hints.get("type"), type);
 }
 
-if (type.equals("String")) {
+if (type.equals("String") || type.equals("int")) {
 	cssClass += " form-control";
 }
 %>

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -51,13 +52,23 @@ public class LayoutSetPrototypeLayoutModelListener
 	}
 
 	protected void updateLayoutSetPrototype(Layout layout, Date modifiedDate) {
+		if (layout == null) {
+			return;
+		}
+
+		Group group;
+
 		try {
-			Group group = layout.getGroup();
+			 group = layout.getGroup();
 
 			if (!group.isLayoutSetPrototype()) {
 				return;
 			}
-
+		}
+		catch (PortalException pe) {
+			return;
+		}
+		try {
 			LayoutSetPrototype layoutSetPrototype =
 				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
 					group.getClassPK());

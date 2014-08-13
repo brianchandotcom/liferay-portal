@@ -210,12 +210,10 @@ if (summary != null) {
 						for (int i = 0; i < assetCategoryIds.length; i++) {
 							long assetCategoryId = GetterUtil.getLong(assetCategoryIds[i]);
 
-							AssetCategory assetCategory = null;
+							AssetCategory assetCategory = AssetCategoryLocalServiceUtil.fetchCategory(assetCategoryId);
 
-							try {
-								assetCategory = AssetCategoryLocalServiceUtil.getCategory(assetCategoryId);
-							}
-							catch (NoSuchCategoryException nsce) {
+							if (assetCategory == null) {
+								continue;
 							}
 
 							long assetVocabularyId = assetCategory.getVocabularyId();
@@ -235,16 +233,18 @@ if (summary != null) {
 						<div class="taglib-asset-categories-summary">
 
 							<%
-							for (long assetVocabularyId: assetVocabularyIdsToCategoryIdsMap.keySet()) {
+							for (Map.Entry<Long, List<AssetCategory>> entry : assetVocabularyIdsToCategoryIdsMap.entrySet()) {
+								long assetVocabularyId = entry.getKey();
+
 								AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetVocabularyId);
 							%>
 
 								<%= HtmlUtil.escape(assetVocabulary.getTitle(assetCategoryLocale)) %>:
 
 								<%
-								List<AssetCategory> assetCategories = assetVocabularyIdsToCategoryIdsMap.get(assetVocabularyId);
+								List<AssetCategory> assetCategories = entry.getValue();
 
-								for (AssetCategory assetCategory: assetCategories) {
+								for (AssetCategory assetCategory : assetCategories) {
 									PortletURL categoryURL = PortletURLUtil.clone(portletURL, renderResponse);
 
 									categoryURL.setParameter(Field.ASSET_CATEGORY_IDS, String.valueOf(assetCategory.getCategoryId()));

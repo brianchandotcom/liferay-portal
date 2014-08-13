@@ -3770,6 +3770,10 @@
 			<var name="workflowTask" value="update" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Kaleo Forms Page" />
+		</execute>
+
 		<execute macro="KaleoFormsPortlet#assignProcessToMe">
 			<var name="comment" value="Assign process to Test Test again." />
 			<var name="kfProcessName" value="${kfProcessName}" />

@@ -159,6 +159,22 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	@Override
+	public void changeNode(
+			long nodeId, String title, long newNodeId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		WikiPagePermission.check(
+			getPermissionChecker(), nodeId, title, ActionKeys.DELETE);
+
+		WikiNodePermission.check(
+			getPermissionChecker(), newNodeId, ActionKeys.ADD_PAGE);
+
+		wikiPageLocalService.changeNode(
+			getUserId(), nodeId, title, newNodeId, serviceContext);
+	}
+
+	@Override
 	public void changeParent(
 			long nodeId, String title, String newParentTitle,
 			ServiceContext serviceContext)

@@ -256,7 +256,7 @@
 					)
 				)
 			ORDER BY
-				name ASC
+				DLFileEntryType.name ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileRankFinder.findByStaleRanks">

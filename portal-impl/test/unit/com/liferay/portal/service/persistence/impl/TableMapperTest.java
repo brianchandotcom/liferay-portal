@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.BaseModelListener;
+import com.liferay.portal.model.ModelListener;
 
 import java.io.Serializable;
 
@@ -1464,9 +1465,27 @@ public class TableMapperTest {
 				new GetPrimaryKeyObjInvocationHandler(primaryKey));
 		}
 
+		@Override
+		public ModelListener<T>[] getListeners() {
+			return listeners.toArray(new ModelListener[listeners.size()]);
+		}
+
+		@Override
+		public void registerListener(ModelListener<T> listener) {
+			listeners.add(listener);
+		}
+
 		public void setNoSuchModelException(boolean noSuchModelException) {
 			_noSuchModelException = noSuchModelException;
 		}
+
+		@Override
+		public void unregisterListener(ModelListener<T> listener) {
+			listeners.remove(listener);
+		}
+
+		protected List<ModelListener<T>> listeners =
+			new ArrayList<ModelListener<T>>();
 
 		private boolean _noSuchModelException;
 

@@ -130,7 +130,7 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 	<c:if test="<%= ldapServerIds.length > 0 %>">
 		<br /><br />
 
-		<div class="searchcontainer-content ldap-servers">
+		<div class="ldap-servers searchcontainer-content">
 			<table class="table table-bordered table-hover table-striped">
 			<thead class="table-columns">
 			<tr>

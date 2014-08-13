@@ -4,8 +4,6 @@
 	<import file="build-test.xml" />
 
 	<target name="run-resin">
-		<antcall target="clean-up-logs" />
-
 		<antcall target="run-simple-server" />
 
 		<antcall target="copy-log-file" />

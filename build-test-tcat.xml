@@ -65,13 +65,7 @@ plugins.includes=marketplace-portlet</echo>
 	</target>
 
 	<target name="run-tcat">
-		<antcall target="clean-up-logs" />
-
-		<record action="start" name="log" />
-
 		<antcall target="run-simple-server" />
-
-		<record action="stop" name="log" />
 
 		<antcall target="evaluate-logs" />
 	</target>

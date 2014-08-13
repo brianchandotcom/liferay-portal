@@ -268,10 +268,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		&.has-alerts{
-			.portlet-dockbar {
-				position: relative;
-			}
+		&.has-alerts .portlet-dockbar {
+			position: relative;
 		}
 	}
 

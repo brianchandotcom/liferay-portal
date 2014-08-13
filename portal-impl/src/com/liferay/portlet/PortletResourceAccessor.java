@@ -111,8 +111,9 @@ public interface PortletResourceAccessor
 		implements PortletResourceAccessor {
 
 		@Override
+		@SuppressWarnings("unchecked")
 		public Class<List<String>> getAttributeClass() {
-			throw new UnsupportedOperationException();
+			return (Class)List.class;
 		}
 
 		@Override
@@ -131,8 +132,9 @@ public interface PortletResourceAccessor
 		implements PortletResourceAccessor {
 
 		@Override
+		@SuppressWarnings("unchecked")
 		public Class<List<String>> getAttributeClass() {
-			throw new UnsupportedOperationException();
+			return (Class)List.class;
 		}
 
 		@Override

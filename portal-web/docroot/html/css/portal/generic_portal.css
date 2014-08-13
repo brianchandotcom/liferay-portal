@@ -123,6 +123,11 @@ img.icon {
 			}
 		}
 	}
+
+	&.lfr-shutdown-message.popup-alert-warning {
+		margin: 0;
+		position: relative;
+	}
 }
 
 .lfr-token-list {

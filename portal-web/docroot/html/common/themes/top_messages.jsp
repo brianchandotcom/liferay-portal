@@ -23,7 +23,7 @@ if ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 3) && !user.isDefaultUser(
 %>
 
 <c:if test="<%= ShutdownUtil.isInProcess() %>">
-	<div class="alert alert-block" id="lfrShutdownMessage">
+	<div class="alert alert-block alert-danger lfr-shutdown-message popup-alert-warning" id="lfrShutdownMessage">
 		<span class="notice-label"><liferay-ui:message key="maintenance-alert" /></span> <span class="notice-date"><%= FastDateFormatFactoryUtil.getTime(locale).format(Time.getDate(CalendarFactoryUtil.getCalendar(timeZone))) %> <%= timeZone.getDisplayName(false, TimeZone.SHORT, locale) %></span>
 		<span class="notice-message"><%= LanguageUtil.format(request, "the-portal-will-shutdown-for-maintenance-in-x-minutes", String.valueOf((ShutdownUtil.getInProcess() / Time.MINUTE) + 1), false) %></span>
 

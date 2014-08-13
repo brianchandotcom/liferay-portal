@@ -2247,7 +2247,7 @@
 
 		<execute action="SOUserBar#assertAlertNotPresent" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" />
 		<execute action="SOUserBar#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">
@@ -2288,7 +2288,7 @@
 
 		<execute action="SOUserBar#assertAlertNotPresent" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" />
 		<execute action="SOUserBar#assertAlertNotPresent" />
 
 		<execute macro="Page#gotoPG">

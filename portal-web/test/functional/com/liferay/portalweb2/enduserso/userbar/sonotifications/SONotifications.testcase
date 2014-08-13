@@ -257,17 +257,11 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_COUNT" />
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_MARK_ALL_AS_READ" />
-
 		<execute macro="SOContactsCenter#confirmRequestToConnect">
 			<var name="numberOfNotifications" value="12" />
 			<var name="senderName" value="${userName6}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
-
-		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_COUNT" />
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_MARK_ALL_AS_READ" />
 
 		<execute macro="SOContactsCenter#confirmRequestToConnect">
 			<var name="numberOfConnections" value="2" />
@@ -276,36 +270,28 @@
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SOUserBar#markAllNotificationsAsRead">
+		<execute macro="SOUserBar#markNotificationsAsRead">
 			<var name="numberOfNonActionableNotifications" value="6" />
-			<var name="numberOfNonActionableNotificationsDisplayed" value="1" />
 			<var name="numberOfNotifications" value="10" />
 		</execute>
 
 		<execute macro="SOContactsCenter#confirmRequestToConnect">
 			<var name="numberOfConnections" value="3" />
-			<var name="numberOfNotifications" value="9" />
+			<var name="numberOfNotifications" value="7" />
 			<var name="senderName" value="${userName4}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SOUserBar#markAllNotificationsAsRead">
-			<var name="numberOfNonActionableNotifications" value="5" />
-			<var name="numberOfNonActionableNotificationsDisplayed" value="2" />
-			<var name="numberOfNotifications" value="8" />
+		<execute macro="SOUserBar#markNotificationsAsRead">
+			<var name="numberOfNonActionableNotifications" value="3" />
+			<var name="numberOfNotifications" value="6" />
 		</execute>
 
 		<execute macro="SOContactsCenter#confirmRequestToConnect">
 			<var name="numberOfConnections" value="4" />
-			<var name="numberOfNotifications" value="6" />
+			<var name="numberOfNotifications" value="3" />
 			<var name="senderName" value="${userName3}" />
 			<var name="userName" value="${adminName}" />
-		</execute>
-
-		<execute macro="SOUserBar#markAllNotificationsAsRead">
-			<var name="numberOfNonActionableNotifications" value="3" />
-			<var name="numberOfNonActionableNotificationsDisplayed" value="3" />
-			<var name="numberOfNotifications" value="5" />
 		</execute>
 
 		<execute macro="SOContactsCenter#confirmRequestToConnect">
@@ -607,16 +593,20 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SOUserBar#markAllNotificationsAsRead">
+		<execute macro="SOUserBar#markNotificationsAsRead">
 			<var name="numberOfNotifications" value="12" />
 		</execute>
 
-		<execute macro="SOUserBar#markAllNotificationsAsRead">
-			<var name="numberOfNotifications" value="7" />
+		<execute macro="SOUserBar#markNotificationsAsRead">
+			<var name="numberOfNotifications" value="9" />
 		</execute>
 
-		<execute macro="SOUserBar#markAllNotificationsAsRead">
-			<var name="numberOfNotifications" value="2" />
+		<execute macro="SOUserBar#markNotificationsAsRead">
+			<var name="numberOfNotifications" value="6" />
+		</execute>
+
+		<execute macro="SOUserBar#markNotificationsAsRead">
+			<var name="numberOfNotifications" value="3" />
 		</execute>
 	</command>
 
@@ -671,7 +661,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SOUserBar#markAllNotificationsAsRead" />
+		<execute macro="SOUserBar#markNotificationsAsRead" />
 	</command>
 
 	<command name="MarkAsReadReplyMessageNotification" priority="5">
@@ -713,7 +703,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="SOUserBar#markAllNotificationsAsRead" />
+		<execute macro="SOUserBar#markNotificationsAsRead" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -736,7 +726,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SOUserBar#markAllNotificationsAsRead" />
+		<execute macro="SOUserBar#markNotificationsAsRead" />
 	</command>
 
 	<command name="MarkAsReadSOAnnouncementsEntryNotificationSOUser" priority="5">
@@ -774,7 +764,7 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute macro="SOUserBar#markAllNotificationsAsRead" />
+		<execute macro="SOUserBar#markNotificationsAsRead" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -783,7 +773,7 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute macro="SOUserBar#markAllNotificationsAsRead" />
+		<execute macro="SOUserBar#markNotificationsAsRead" />
 	</command>
 
 	<command name="MarkAsReadSOSiteAnnouncementsEntryNotificationSOUser" priority="5">
@@ -844,14 +834,14 @@
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
 
-		<execute macro="SOUserBar#markAllNotificationsAsRead" />
+		<execute macro="SOUserBar#markNotificationsAsRead" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="SOUserBar#markAllNotificationsAsRead" />
+		<execute macro="SOUserBar#markNotificationsAsRead" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
@@ -866,7 +856,7 @@
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${entryAuthor} sent a new announcement." />
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" value1="${entryTitle}" />
+		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
 	</command>
 
 	<command name="MarkAsReadTaskAssignedToConnectionNotification" priority="5">
@@ -915,7 +905,7 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute macro="SOUserBar#markAllNotificationsAsRead" />
+		<execute macro="SOUserBar#markNotificationsAsRead" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -934,7 +924,7 @@
 			<var name="userLoginFullName" value="${adminName}" />
 		</execute>
 
-		<execute macro="SOUserBar#markAllNotificationsAsRead" />
+		<execute macro="SOUserBar#markNotificationsAsRead" />
 	</command>
 
 	<command name="ViewConnectionRequestNotificationNoMarkAsReadOption" priority="4">
@@ -977,7 +967,7 @@
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_MARK_ALL_AS_READ" />
+		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_MARK_AS_READ_NOTIFICATIONS_LINK" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -1230,7 +1220,7 @@
 		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="12" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_VIEW_ALL" value1="View All" />
+		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK" value1="Notifications (6)" />
 
 		<var name="key_row" value="1" />
 
@@ -1238,59 +1228,54 @@
 
 		<var name="key_row" value="2" />
 
-		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} would like to add you as a connection." />
-
-		<var name="key_row" value="3" />
-
 		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} sent you a message." />
 
-		<var name="key_row" value="4" />
-
-		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} would like to add you as a connection." />
-
-		<var name="key_row" value="5" />
+		<var name="key_row" value="3" />
 
 		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} sent you a message." />
 
-		<var name="key_row" value="6" />
-
-		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} would like to add you as a connection." />
-
-		<var name="key_row" value="7" />
+		<var name="key_row" value="4" />
 
 		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName3} sent you a message." />
 
-		<var name="key_row" value="8" />
-
-		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName3} would like to add you as a connection." />
-
-		<var name="key_row" value="9" />
+		<var name="key_row" value="5" />
 
 		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName2} sent you a message." />
 
-		<var name="key_row" value="10" />
-
-		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName2} would like to add you as a connection." />
-
-		<var name="key_row" value="11" />
-
-		<execute action="SONotifications#assertElementNotPresent" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" />
-
-		<execute action="SONotifications#assertTextEquals" locator-key1="SEARCH_RESULTS" value1="Showing 1 - 10 of 12 results." />
-		<execute action="SONotifications#click" locator-key1="NEXT_BUTTON" />
-		<execute action="SONotifications#assertTextEquals" locator-key1="SEARCH_RESULTS" value1="Showing 11 - 12 of 12 results." />
-
-		<var name="key_row" value="1" />
+		<var name="key_row" value="6" />
 
 		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName} sent you a message." />
 
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="12" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_VIEW_REQUESTS_LINK" value1="Requests (6)" />
+
+		<var name="key_row" value="1" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} would like to add you as a connection." />
+
 		<var name="key_row" value="2" />
 
-		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName} would like to add you as a connection." />
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} would like to add you as a connection." />
 
 		<var name="key_row" value="3" />
 
-		<execute action="SONotifications#assertElementNotPresent" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" />
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} would like to add you as a connection." />
+
+		<var name="key_row" value="4" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName3} would like to add you as a connection." />
+
+		<var name="key_row" value="5" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName2} would like to add you as a connection." />
+
+		<var name="key_row" value="6" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName} would like to add you as a connection." />
 	</command>
 
 	<command name="ViewMemberInviteNotificationNoMarkAsReadOption" priority="4">
@@ -1342,7 +1327,7 @@
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_MARK_ALL_AS_READ" />
+		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_MARK_AS_READ_NOTIFICATIONS_LINK" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -1927,6 +1912,358 @@
 		</execute>
 	</command>
 
+	<command name="ViewMultipleNotifications" priority="5">
+		<var name="messageBody" value="Message Body" />
+		<var name="messageSubject" value="Message Subject" />
+		<var name="microblogsEntryCommentContent1" value="Microblogs Post Comment1" />
+		<var name="microblogsEntryCommentContent2" value="Microblogs Post Comment2" />
+		<var name="microblogsEntryCommentContent3" value="Microblogs Post Comment3" />
+		<var name="microblogsEntryCommentContent4" value="Microblogs Post Comment4" />
+		<var name="microblogsEntryCommentContent5" value="Microblogs Post Comment5" />
+		<var name="microblogsEntryCommentContent6" value="Microblogs Post Comment6" />
+		<var name="microblogsEntryContent" value="Microblogs Post" />
+		<var name="soPage" value="true" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
+		<var name="userEmailAddress3" value="socialoffice03@liferay.com" />
+		<var name="userEmailAddress4" value="socialoffice04@liferay.com" />
+		<var name="userEmailAddress5" value="socialoffice05@liferay.com" />
+		<var name="userEmailAddress6" value="socialoffice06@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userFirstName2" value="Social02" />
+		<var name="userFirstName3" value="Social03" />
+		<var name="userFirstName4" value="Social04" />
+		<var name="userFirstName5" value="Social05" />
+		<var name="userFirstName6" value="Social06" />
+		<var name="userLastName" value="User01" />
+		<var name="userLastName2" value="User02" />
+		<var name="userLastName3" value="User03" />
+		<var name="userLastName4" value="User04" />
+		<var name="userLastName5" value="User05" />
+		<var name="userLastName6" value="User06" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userListName2" value="User02, Social02" />
+		<var name="userListName3" value="User03, Social03" />
+		<var name="userListName4" value="User04, Social04" />
+		<var name="userListName5" value="User05, Social05" />
+		<var name="userListName6" value="User06, Social06" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userMiddleName2" value="Office02" />
+		<var name="userMiddleName3" value="Office03" />
+		<var name="userMiddleName4" value="Office04" />
+		<var name="userMiddleName5" value="Office05" />
+		<var name="userMiddleName6" value="Office06" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userName2" value="Social02 Office02 User02" />
+		<var name="userName3" value="Social03 Office03 User03" />
+		<var name="userName4" value="Social04 Office04 User04" />
+		<var name="userName5" value="Social05 Office05 User05" />
+		<var name="userName6" value="Social06 Office06 User06" />
+		<var name="userScreenName" value="socialoffice01" />
+		<var name="userScreenName2" value="socialoffice02" />
+		<var name="userScreenName3" value="socialoffice03" />
+		<var name="userScreenName4" value="socialoffice04" />
+		<var name="userScreenName5" value="socialoffice05" />
+		<var name="userScreenName6" value="socialoffice06" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userFirstName" value="${userFirstName2}" />
+			<var name="userLastName" value="${userLastName2}" />
+			<var name="userMiddleName" value="${userMiddleName2}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userFirstName" value="${userFirstName3}" />
+			<var name="userLastName" value="${userLastName3}" />
+			<var name="userMiddleName" value="${userMiddleName3}" />
+			<var name="userScreenName" value="${userScreenName3}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress4}" />
+			<var name="userFirstName" value="${userFirstName4}" />
+			<var name="userLastName" value="${userLastName4}" />
+			<var name="userMiddleName" value="${userMiddleName4}" />
+			<var name="userScreenName" value="${userScreenName4}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress5}" />
+			<var name="userFirstName" value="${userFirstName5}" />
+			<var name="userLastName" value="${userLastName5}" />
+			<var name="userMiddleName" value="${userMiddleName5}" />
+			<var name="userScreenName" value="${userScreenName5}" />
+		</execute>
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="userEmailAddress" value="${userEmailAddress6}" />
+			<var name="userFirstName" value="${userFirstName6}" />
+			<var name="userLastName" value="${userLastName6}" />
+			<var name="userMiddleName" value="${userMiddleName6}" />
+			<var name="userScreenName" value="${userScreenName6}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Microblogs" />
+			<var name="soDashboard" value="true" />
+		</execute>
+
+		<execute macro="SOMicroblogs#addMicroblogsEntry">
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+			<var name="microblogsEntryViewableBy" value="Everyone" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<var name="profileScreenName" value="${adminScreenName}" />
+
+		<execute action="SOProfile#open" locator-key1="PROFILE_URL" />
+
+		<execute action="SOProfile#click" locator-key1="NAVIGATION_MICROBLOGS" />
+
+		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
+			<var name="microblogsEntryAuthorName" value="${adminName}" />
+			<var name="microblogsEntryCharacterCountdown" value="126" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent1}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
+			<var name="userLoginFullName" value="${userName2}" />
+		</execute>
+
+		<var name="profileScreenName" value="${adminScreenName}" />
+
+		<execute action="SOProfile#open" locator-key1="PROFILE_URL" />
+
+		<execute action="SOProfile#click" locator-key1="NAVIGATION_MICROBLOGS" />
+
+		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
+			<var name="commentCount" value="1" />
+			<var name="microblogsEntryAuthorName" value="${adminName}" />
+			<var name="microblogsEntryCharacterCountdown" value="126" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent2}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress3}" />
+			<var name="userLoginFullName" value="${userName3}" />
+		</execute>
+
+		<var name="profileScreenName" value="${adminScreenName}" />
+
+		<execute action="SOProfile#open" locator-key1="PROFILE_URL" />
+
+		<execute action="SOProfile#click" locator-key1="NAVIGATION_MICROBLOGS" />
+
+		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
+			<var name="commentCount" value="2" />
+			<var name="microblogsEntryAuthorName" value="${adminName}" />
+			<var name="microblogsEntryCharacterCountdown" value="126" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent3}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress4}" />
+			<var name="userLoginFullName" value="${userName4}" />
+		</execute>
+
+		<var name="profileScreenName" value="${adminScreenName}" />
+
+		<execute action="SOProfile#open" locator-key1="PROFILE_URL" />
+
+		<execute action="SOProfile#click" locator-key1="NAVIGATION_MICROBLOGS" />
+
+		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
+			<var name="commentCount" value="3" />
+			<var name="microblogsEntryAuthorName" value="${adminName}" />
+			<var name="microblogsEntryCharacterCountdown" value="126" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent4}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress5}" />
+			<var name="userLoginFullName" value="${userName5}" />
+		</execute>
+
+		<var name="profileScreenName" value="${adminScreenName}" />
+
+		<execute action="SOProfile#open" locator-key1="PROFILE_URL" />
+
+		<execute action="SOProfile#click" locator-key1="NAVIGATION_MICROBLOGS" />
+
+		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
+			<var name="commentCount" value="4" />
+			<var name="microblogsEntryAuthorName" value="${adminName}" />
+			<var name="microblogsEntryCharacterCountdown" value="126" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent5}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress6}" />
+			<var name="userLoginFullName" value="${userName6}" />
+		</execute>
+
+		<var name="profileScreenName" value="${adminScreenName}" />
+
+		<execute action="SOProfile#open" locator-key1="PROFILE_URL" />
+
+		<execute action="SOProfile#click" locator-key1="NAVIGATION_MICROBLOGS" />
+
+		<execute macro="SOMicroblogs#addMicroblogsEntryComment">
+			<var name="commentCount" value="5" />
+			<var name="microblogsEntryAuthorName" value="${adminName}" />
+			<var name="microblogsEntryCharacterCountdown" value="126" />
+			<var name="microblogsEntryCommentContent" value="${microblogsEntryCommentContent6}" />
+			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#sendMessage">
+			<var name="messageBody" value="${messageBody}" />
+			<var name="messageSubject" value="${messageSubject}" />
+			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userListName" value="${adminListName}" />
+			<var name="userName" value="${adminName}" />
+			<var name="userScreenName" value="${adminScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="12" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK" value1="Notifications (12)" />
+
+		<var name="key_row" value="1" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} sent you a message." />
+
+		<var name="key_row" value="2" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} commented on your post." />
+
+		<var name="key_row" value="3" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} sent you a message." />
+
+		<var name="key_row" value="4" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} commented on your post." />
+
+		<var name="key_row" value="5" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} sent you a message." />
+
+		<var name="key_row" value="6" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} commented on your post." />
+
+		<var name="key_row" value="7" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName3} sent you a message." />
+
+		<var name="key_row" value="8" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName3} commented on your post." />
+
+		<var name="key_row" value="9" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName2} sent you a message." />
+
+		<var name="key_row" value="10" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName2} commented on your post." />
+
+		<var name="key_row" value="11" />
+
+		<execute action="SONotifications#assertElementNotPresent" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="SEARCH_RESULTS" value1="Showing 1 - 10 of 12 results." />
+		<execute action="SONotifications#click" locator-key1="NEXT_BUTTON" />
+		<execute action="SONotifications#assertTextEquals" locator-key1="SEARCH_RESULTS" value1="Showing 11 - 12 of 12 results." />
+
+		<var name="key_row" value="1" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName} sent you a message." />
+
+		<var name="key_row" value="2" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName} commented on your post." />
+
+		<var name="key_row" value="3" />
+
+		<execute action="SONotifications#assertElementNotPresent" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" />
+	</command>
+
 	<command name="ViewReplyMessageAttachmentNotification" priority="5">
 		<var name="messageAttachmentFile" value="Document_1.jpg" />
 		<var name="messageBody" value="Message Body" />
@@ -2321,7 +2658,7 @@
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${entryAuthor} sent a new announcement." />
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" value1="${entryTitle}" />
+		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
@@ -2622,7 +2959,7 @@
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${entryAuthor} sent a new announcement." />
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" value1="${entryTitle}" />
+		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
 	</command>
 
 	<command name="ViewSOSiteAnnouncementsEntrySOUserNotification" priority="5">

@@ -2386,8 +2386,8 @@
 		<execute action="SOMicroblogs#assertTextNotPresent" value1="${microblogsEntryCommentContent}" />
 
 		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" />
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" />
+		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" />
+		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${microblogsEntryCommentAuthorName} commented on your post." />
 		<execute action="SOUserBar#assertTextNotPresent" value1="${microblogsEntryCommentContent}" />
 

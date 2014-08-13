@@ -965,8 +965,13 @@ public class PortletTracker
 
 		bundlePortletApp.setServletContext(servletContext);
 
-		serviceRegistrations._configuration =
-			ConfigurationFactoryUtil.getConfiguration(classLoader, "portlet");
+		try {
+			serviceRegistrations._configuration =
+				ConfigurationFactoryUtil.getConfiguration(
+					classLoader, "portlet");
+		}
+		catch (Exception e) {
+		}
 
 		readResourceActions(
 			serviceRegistrations._configuration,
@@ -1109,6 +1114,10 @@ public class PortletTracker
 	protected void readResourceActions(
 		Configuration configuration, String servletContextName,
 		ClassLoader classLoader) {
+
+		if (configuration == null) {
+			return;
+		}
 
 		Properties properties = configuration.getProperties();
 

@@ -241,8 +241,9 @@ public class InitUtil {
 				SpringUtil.loadContext(extraConfigLocations);
 			}
 			else {
-				SpringUtil.loadContext(extraConfigLocations.toArray(
-					new String[extraConfigLocations.size()]));
+				SpringUtil.loadContext(
+					extraConfigLocations.toArray(
+						new String[extraConfigLocations.size()]));
 			}
 
 			BeanLocatorImpl beanLocatorImpl =

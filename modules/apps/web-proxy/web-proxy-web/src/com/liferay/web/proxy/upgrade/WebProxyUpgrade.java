@@ -22,6 +22,8 @@ import com.liferay.web.proxy.portlet.WebProxyPortlet;
 
 import java.util.Collections;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,6 +41,10 @@ public class WebProxyUpgrade {
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	private void setServletContext(ServletContext servletContext) {
 	}
 
 	@Activate

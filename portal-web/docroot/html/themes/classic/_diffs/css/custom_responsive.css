@@ -132,8 +132,8 @@
 									.nav-item-icon {
 										font-size: 22px;
 										margin-top: 0;
+										min-width: 1em;
 										vertical-align: middle;
-										width: 1em;
 									}
 
 									.nav-item-label {

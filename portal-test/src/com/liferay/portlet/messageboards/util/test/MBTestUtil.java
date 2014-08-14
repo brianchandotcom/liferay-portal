@@ -316,6 +316,15 @@ public class MBTestUtil {
 	public static MBMessage updateMessage(MBMessage message, boolean approved)
 		throws Exception {
 
+		return updateMessage(
+			message, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(50), approved);
+	}
+
+	public static MBMessage updateMessage(
+			MBMessage message, String subject, String body, boolean approved)
+		throws Exception {
+
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
 		try {
@@ -330,9 +339,8 @@ public class MBTestUtil {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			message = MBMessageLocalServiceUtil.updateMessage(
-				TestPropsValues.getUserId(), message.getMessageId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(50),
-				Collections.<ObjectValuePair<String, InputStream>>emptyList(),
+				TestPropsValues.getUserId(), message.getMessageId(), subject,
+				body, Collections.<ObjectValuePair<String, InputStream>>emptyList(),
 				Collections.<String>emptyList(), message.getPriority(),
 				message.isAllowPingbacks(), serviceContext);
 

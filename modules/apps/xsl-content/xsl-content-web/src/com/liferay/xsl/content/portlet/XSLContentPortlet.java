@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 public class XSLContentPortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
-	private void setXSLContentUpgrade(XSLContentUpgrade xslContentUpgrade) {
+	protected void setXSLContentUpgrade(XSLContentUpgrade xslContentUpgrade) {
 	}
 
 }

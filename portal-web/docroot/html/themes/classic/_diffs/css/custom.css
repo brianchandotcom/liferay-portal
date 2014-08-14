@@ -393,6 +393,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 			right: -9px;
 			top: -1px;
 			z-index: 300;
+
+			@include respond-to(phone, tablet) {
+				right: 0;
+			}
 		}
 
 		.lfr-nav-item .lfr-nav-child-toggle {

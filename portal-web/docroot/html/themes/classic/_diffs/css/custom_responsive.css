@@ -26,10 +26,6 @@
 
 		#navigation.open {
 			background: #009AE5;
-
-			.lfr-nav-sortable .delete-tab {
-				right: 0;
-			}
 		}
 
 		.dockbar {

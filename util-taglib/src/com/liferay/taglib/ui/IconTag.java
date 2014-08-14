@@ -399,7 +399,11 @@ public class IconTag extends IncludeTag {
 		String onClick = StringPool.BLANK;
 
 		if (Validator.isNotNull(_onClick)) {
-			onClick = _onClick + StringPool.SEMICOLON;
+			onClick = _onClick;
+
+			if (!onClick.endsWith(StringPool.SEMICOLON)) {
+				onClick = onClick + StringPool.SEMICOLON;
+			}
 		}
 
 		if (isForcePost()) {

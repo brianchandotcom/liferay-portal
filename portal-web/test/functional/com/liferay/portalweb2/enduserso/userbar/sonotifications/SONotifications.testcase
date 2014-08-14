@@ -967,7 +967,7 @@
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_MARK_AS_READ_NOTIFICATIONS_LINK" />
+		<execute action="SOUserBar#assertNotVisible" locator-key1="NOTIFICATION_MENU_MARK_AS_READ_NOTIFICATIONS_LINK" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
@@ -1327,7 +1327,7 @@
 		</execute>
 
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertElementNotPresent" locator-key1="NOTIFICATION_MENU_MARK_AS_READ_NOTIFICATIONS_LINK" />
+		<execute action="SOUserBar#assertNotVisible" locator-key1="NOTIFICATION_MENU_MARK_AS_READ_NOTIFICATIONS_LINK" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 

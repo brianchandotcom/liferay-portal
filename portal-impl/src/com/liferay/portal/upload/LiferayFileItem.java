@@ -128,7 +128,8 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 		File tempFile = new File(_repository, tempFileName);
 
 		FinalizeManager.register(
-			tempFile, new DeleteFileFinalizeAction(tempFile.getAbsolutePath()));
+			tempFile, new DeleteFileFinalizeAction(tempFile.getAbsolutePath()),
+			FinalizeManager.PHANTOM_REFERENCE_FACTORY);
 
 		return tempFile;
 	}

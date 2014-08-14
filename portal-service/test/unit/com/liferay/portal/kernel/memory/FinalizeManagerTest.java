@@ -55,7 +55,9 @@ public class FinalizeManagerTest {
 
 		MarkFinalizeAction markFinalizeAction = new MarkFinalizeAction();
 
-		FinalizeManager.register(testObject, markFinalizeAction);
+		FinalizeManager.register(
+			testObject, markFinalizeAction,
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 		Assert.assertFalse(markFinalizeAction.isMarked());
 
@@ -63,7 +65,9 @@ public class FinalizeManagerTest {
 
 		GCUtil.gc();
 
-		FinalizeManager.register(new Object(), markFinalizeAction);
+		FinalizeManager.register(
+			new Object(), markFinalizeAction,
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 		Assert.assertTrue(markFinalizeAction.isMarked());
 	}
@@ -76,7 +80,9 @@ public class FinalizeManagerTest {
 
 		MarkFinalizeAction markFinalizeAction = new MarkFinalizeAction();
 
-		FinalizeManager.register(testObject, markFinalizeAction);
+		FinalizeManager.register(
+			testObject, markFinalizeAction,
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 		Assert.assertFalse(markFinalizeAction.isMarked());
 

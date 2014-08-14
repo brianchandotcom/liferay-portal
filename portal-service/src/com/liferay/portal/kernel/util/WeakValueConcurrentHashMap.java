@@ -198,7 +198,8 @@ public class WeakValueConcurrentHashMap<K, V>
 
 	protected Reference<V> wrapValue(Object key, Object value) {
 		return FinalizeManager.register(
-			(V)value, new RemoveEntryFinalizeAction((K)key));
+			(V)value, new RemoveEntryFinalizeAction((K)key),
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	}
 
 	private transient Set<Map.Entry<K, V>> _entrySet;

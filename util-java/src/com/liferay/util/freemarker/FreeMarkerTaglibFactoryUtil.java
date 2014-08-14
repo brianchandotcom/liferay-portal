@@ -97,7 +97,7 @@ public class FreeMarkerTaglibFactoryUtil implements CacheRegistryItem {
 							CacheRegistryUtil.unregister(name);
 						}
 
-					});
+					}, FinalizeManager.PHANTOM_REFERENCE_FACTORY);
 			}
 		}
 

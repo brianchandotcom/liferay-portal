@@ -75,7 +75,9 @@ public class JCRFactoryUtil {
 			new Class<?>[] {Map.class, Session.class},
 			jcrSessionInvocationHandler);
 
-		FinalizeManager.register(sessionProxy, jcrSessionInvocationHandler);
+		FinalizeManager.register(
+			sessionProxy, jcrSessionInvocationHandler,
+			FinalizeManager.PHANTOM_REFERENCE_FACTORY);
 
 		session = (Session)sessionProxy;
 

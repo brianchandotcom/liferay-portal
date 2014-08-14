@@ -54,7 +54,9 @@ public class WeakValueConcurrentHashMapTest {
 		GCUtil.gc();
 
 		if (!FinalizeManager.THREAD_ENABLED) {
-			FinalizeManager.register(new Object(), new DummyFinalizeAction());
+			FinalizeManager.register(
+				new Object(), new DummyFinalizeAction(),
+				FinalizeManager.WEAK_REFERENCE_FACTORY);
 		}
 
 		Assert.assertFalse(map.containsKey(testKey));

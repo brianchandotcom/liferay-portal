@@ -29,6 +29,8 @@ String value = (String)request.getAttribute("liferay-ui:input-time-zone:value");
 NumberFormat numberFormat = NumberFormat.getInstance(locale);
 
 numberFormat.setMinimumIntegerDigits(2);
+
+cssClass += " form-control";
 %>
 
 <select class="<%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= name %>" name="<%= name %>">

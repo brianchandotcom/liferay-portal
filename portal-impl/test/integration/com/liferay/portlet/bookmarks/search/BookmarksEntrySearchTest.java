@@ -157,7 +157,7 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 
 	@Override
 	protected String getSearchKeywords() {
-		return "Test";
+		return "Entry";
 	}
 
 	@Override
@@ -188,7 +188,7 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 
 		entry.setName(keywords);
 
-		return BookmarksTestUtil.updateEntry(entry);
+		return BookmarksTestUtil.updateEntry(entry, keywords);
 	}
 
 }

@@ -182,6 +182,15 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 			<br /><br />
 
+			<liferay-ui:error exception="<%= DuplicateItemFieldNameException.class %>">
+
+				 <%
+				DuplicateItemFieldNameException difne = (DuplicateItemFieldNameException)errorException;
+				%>
+
+				<liferay-ui:message key='<%= LanguageUtil.format(request, "field-names-must-be-unique-the-following-fields-are-duplicated-x", difne.getMessage(), false) %>' />
+			</liferay-ui:error>
+
 			<table class="lfr-table">
 
 			<%

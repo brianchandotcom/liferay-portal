@@ -28,7 +28,7 @@
 
 	<command name="tearDownUserDeliveries">
 		<var name="actionList" value="adds,updates" />
-		<var name="contentList" value="Wiki,Message Boards,Comments,Documents and Media,Bookmarks,Journal,Blogs" />
+		<var name="contentList" value="Wiki,Message Boards,Comments,Documents and Media,Bookmarks,Web Content,Blogs" />
 		<var name="notificationList" value="Email,Website" />
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />

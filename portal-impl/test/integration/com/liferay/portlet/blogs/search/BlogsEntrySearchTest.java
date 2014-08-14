@@ -156,7 +156,7 @@ public class BlogsEntrySearchTest extends BaseSearchTestCase {
 
 		entry.setTitle(keywords);
 
-		return BlogsTestUtil.updateEntry(entry, true);
+		return BlogsTestUtil.updateEntry(entry, keywords, true);
 	}
 
 }

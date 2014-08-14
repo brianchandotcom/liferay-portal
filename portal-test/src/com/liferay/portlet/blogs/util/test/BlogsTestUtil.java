@@ -190,6 +190,13 @@ public class BlogsTestUtil {
 	public static BlogsEntry updateEntry(BlogsEntry entry, boolean approved)
 		throws Exception {
 
+		return updateEntry(entry, RandomTestUtil.randomString(), approved);
+	}
+
+	public static BlogsEntry updateEntry(
+			BlogsEntry entry, String title, boolean approved)
+		throws Exception {
+
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
 		try {
@@ -204,11 +211,11 @@ public class BlogsTestUtil {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			entry = BlogsEntryLocalServiceUtil.updateEntry(
-				entry.getUserId(), entry.getEntryId(),
-				RandomTestUtil.randomString(), entry.getDescription(),
-				entry.getContent(), 1, 1, 2012, 12, 00, true, true,
-				new String[0], entry.getSmallImage(), entry.getSmallImageURL(),
-				StringPool.BLANK, null, serviceContext);
+				entry.getUserId(), entry.getEntryId(), title,
+				entry.getDescription(), entry.getContent(), 1, 1, 2012, 12, 00,
+				true, true, new String[0], entry.getSmallImage(),
+				entry.getSmallImageURL(), StringPool.BLANK, null,
+				serviceContext);
 
 			if (approved) {
 				return updateStatus(entry, serviceContext);

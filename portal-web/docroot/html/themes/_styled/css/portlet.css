@@ -186,24 +186,25 @@ body.portlet {
 }
 
 .portlet-borderless-bar {
-	background-color: transparent;
+	background-color: #333;
 	font-size: 10px;
 
 	@include opacity(0.3);
 
-	height: 0;
+	height: auto;
+	overflow: auto;
 	padding: 0;
-	position: absolute;
+	position: static;
 	right: 0;
 	top: 0;
 	width: 100%;
 	z-index: 200;
 
-	@include respond-to(phone, tablet) {
-		background-color: #333;
-		height: auto;
-		overflow: auto;
-		position: static;
+	@include respond-to(desktop) {
+		background-color: transparent;
+		height: 0;
+		overflow: visible;
+		position: absolute;
 	}
 
 	a {
@@ -226,11 +227,11 @@ body.portlet {
 	}
 
 	.portlet-actions, .portlet-title-default {
-		background-color: #333;
+		background-color: transparent;
 		min-height: 20px;
 
-		@include respond-to(phone, tablet) {
-			background-color: transparent;
+		@include respond-to(desktop) {
+			background-color: #333;
 		}
 	}
 
@@ -299,9 +300,9 @@ body.portlet {
 	}
 }
 
-@include respond-to(phone, tablet) {
+@include respond-to(desktop) {
 	.portlet-borderless-container .portlet-title-default {
-		float: left;
+		float: right;
 	}
 }
 
@@ -310,19 +311,19 @@ body.portlet {
 
 	@include ellipsis;
 
-	float: right;
+	float: left;
 	font-weight: bold;
 	height: 0;
 	line-height: 19px;
-	max-width: 50%;
+	max-width: 74%;
 	overflow: hidden;
-	padding: 0 10px;
+	padding-right: 5px;
+	padding-top: 1px;
 	text-transform: uppercase;
 
-	@include respond-to(phone, tablet) {
-		max-width: 74%;
-		padding-right: 5px;
-		padding-top: 1px;
+	@include respond-to(desktop) {
+		max-width: 50%;
+		padding: 0 10px;
 	}
 }
 
@@ -332,14 +333,14 @@ body.portlet {
 	}
 
 	.portlet-title-default {
-		background: url(../images/portlet/draggable_borderless.png) no-repeat 0 50% #333;
+		background: url(../images/portlet/draggable_borderless.png) no-repeat 5px 3px transparent;
 		cursor: move;
-		padding-left: 20px;
+		padding-left: 25px;
 
-		@include respond-to(phone, tablet) {
-			background-color: transparent;
-			background-position: 5px 3px;
-			padding-left: 25px;
+		@include respond-to(desktop) {
+			background-color: #333;
+			background-position: 0 50%;
+			padding-left: 20px;
 		}
 	}
 }

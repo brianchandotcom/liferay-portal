@@ -701,23 +701,25 @@ $dockbarOpenGradientStart: #0EA6F9;
 	.portlet-borderless-bar {
 		@extend %portlet-action-bar-custom;
 
-		@include respond-to(phone, tablet) {
-			margin-bottom: 10px;
+		margin-bottom: 10px;
+
+		@include respond-to(desktop) {
+			margin-bottom: 0;
 		}
 
 		.portlet-actions {
-			@include box-shadow(inset 2px 1px 2px #000);
+			@include box-shadow(none);
 
-			@include respond-to(phone, tablet) {
-				@include box-shadow(none);
+			@include respond-to(desktop) {
+				@include box-shadow(inset 2px 1px 2px #000);
 			}
 		}
 
 		.portlet-title-default {
-			@include box-shadow(inset -2px 1px 2px #000);
+			@include box-shadow(none);
 
-			@include respond-to(phone, tablet) {
-				@include box-shadow(none);
+			@include respond-to(desktop) {
+				@include box-shadow(inset -2px 1px 2px #000);
 			}
 		}
 	}

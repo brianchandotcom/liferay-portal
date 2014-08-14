@@ -26,42 +26,35 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Iván Zaera
  */
-public class DLFileEntryActionsDisplayContext {
+public class DefaultDLFileEntryActionsDisplayContext
+	extends BaseDLFileEntryActionsDisplayContext
+	implements DLFileEntryActionsDisplayContext {
 
-	public DLFileEntryActionsDisplayContext(
-			HttpServletRequest request,
-			DLPortletInstanceSettings dlPortletInstanceSettings,
-			FileEntry fileEntry)
-		throws PortalException {
+	public static final UUID ID = UUID.fromString(
+		"85F6C50E-3893-4E32-9D63-208528A503FA");
 
-		this(
-			request, dlPortletInstanceSettings, fileEntry,
-			fileEntry.getFileVersion());
-	}
-
-	public DLFileEntryActionsDisplayContext(
-		HttpServletRequest request,
-		DLPortletInstanceSettings dlPortletInstanceSettings,
+	public DefaultDLFileEntryActionsDisplayContext(
+		HttpServletRequest request, HttpServletResponse response,
 		FileEntry fileEntry, FileVersion fileVersion) {
 
-		_request = request;
+		super(ID, null, request, response, fileEntry, fileVersion);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_companyId = themeDisplay.getCompanyId();
-		_dlActionsDisplayContext = new DLActionsDisplayContext(
-			request, dlPortletInstanceSettings);
 		_dlFileEntryActionsDisplayContextHelper =
 			new DLFileEntryActionsDisplayContextHelper(
 				themeDisplay.getPermissionChecker(), fileEntry, fileVersion);
@@ -81,10 +74,7 @@ public class DLFileEntryActionsDisplayContext {
 		_scopeGroupId = themeDisplay.getScopeGroupId();
 	}
 
-	public DLActionsDisplayContext getDLActionsDisplayContext() {
-		return _dlActionsDisplayContext;
-	}
-
+	@Override
 	public String getPublishButtonLabel() {
 		String publishButtonLabel = "publish";
 
@@ -99,6 +89,7 @@ public class DLFileEntryActionsDisplayContext {
 		return publishButtonLabel;
 	}
 
+	@Override
 	public String getSaveButtonLabel() {
 		String saveButtonLabel = "save";
 
@@ -115,6 +106,7 @@ public class DLFileEntryActionsDisplayContext {
 		return saveButtonLabel;
 	}
 
+	@Override
 	public boolean isAssetMetadataVisible() {
 		String portletId = _portletDisplay.getId();
 
@@ -129,13 +121,15 @@ public class DLFileEntryActionsDisplayContext {
 			return true;
 		}
 
-		return ParamUtil.getBoolean(_request, "showAssetMetadata");
+		return ParamUtil.getBoolean(request, "showAssetMetadata");
 	}
 
+	@Override
 	public boolean isCancelCheckoutDocumentButtonDisabled() {
 		return false;
 	}
 
+	@Override
 	public boolean isCancelCheckoutDocumentButtonVisible()
 		throws PortalException {
 
@@ -150,10 +144,12 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
+	@Override
 	public boolean isCheckinButtonDisabled() {
 		return false;
 	}
 
+	@Override
 	public boolean isCheckinButtonVisible() throws PortalException {
 		if (_dlFileEntryActionsDisplayContextHelper.hasUpdatePermission() &&
 			_dlFileEntryActionsDisplayContextHelper.isLockedByMe() &&
@@ -165,6 +161,7 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
+	@Override
 	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
 		if (_dlFileEntryActionsDisplayContextHelper.hasUpdatePermission() &&
 			!_dlFileEntryActionsDisplayContextHelper.isCheckedOut() &&
@@ -176,10 +173,12 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
+	@Override
 	public boolean isCheckoutDocumentDisabled() {
 		return false;
 	}
 
+	@Override
 	public boolean isDeleteButtonVisible() throws PortalException {
 		if (_isFileEntryDeletable() && !_isFileEntryTrashable()) {
 			return true;
@@ -188,10 +187,12 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
+	@Override
 	public boolean isDownloadButtonVisible() throws PortalException {
 		return _dlFileEntryActionsDisplayContextHelper.hasViewPermission();
 	}
 
+	@Override
 	public boolean isEditButtonVisible() throws PortalException {
 		if (_dlFileEntryActionsDisplayContextHelper.hasUpdatePermission() &&
 			!_isFileEntryCheckedOutByOther()) {
@@ -202,6 +203,7 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
+	@Override
 	public boolean isMoveButtonVisible() throws PortalException {
 		if (_dlFileEntryActionsDisplayContextHelper.hasUpdatePermission() &&
 			!_isFileEntryCheckedOutByOther()) {
@@ -212,6 +214,7 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
+	@Override
 	public boolean isMoveToTheRecycleBinButtonVisible() throws PortalException {
 		if (!isDeleteButtonVisible() && _isFileEntryDeletable()) {
 			return true;
@@ -220,6 +223,7 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
+	@Override
 	public boolean isOpenInMsOfficeButtonVisible() throws PortalException {
 		if (_dlFileEntryActionsDisplayContextHelper.hasViewPermission() &&
 			_dlFileEntryActionsDisplayContextHelper.isOfficeDoc() &&
@@ -231,11 +235,13 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
+	@Override
 	public boolean isPermissionsButtonVisible() throws PortalException {
 		return
 			_dlFileEntryActionsDisplayContextHelper.hasPermissionsPermission();
 	}
 
+	@Override
 	public boolean isPublishButtonDisabled() {
 		if ((_dlFileEntryActionsDisplayContextHelper.isCheckedOut() &&
 			 !_dlFileEntryActionsDisplayContextHelper.isLockedByMe()) ||
@@ -248,10 +254,12 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
+	@Override
 	public boolean isPublishButtonVisible() {
 		return true;
 	}
 
+	@Override
 	public boolean isSaveButtonDisabled() {
 		if (_dlFileEntryActionsDisplayContextHelper.isCheckedOut() &&
 			!_dlFileEntryActionsDisplayContextHelper.isLockedByMe()) {
@@ -262,14 +270,17 @@ public class DLFileEntryActionsDisplayContext {
 		return false;
 	}
 
+	@Override
 	public boolean isSaveButtonVisible() {
 		return _isDLFileEntryDraftsEnabled();
 	}
 
+	@Override
 	public boolean isViewButtonVisible() throws PortalException {
 		return _dlFileEntryActionsDisplayContextHelper.hasViewPermission();
 	}
 
+	@Override
 	public boolean isViewOriginalFileButtonVisible() throws PortalException {
 		return _dlFileEntryActionsDisplayContextHelper.hasViewPermission();
 	}
@@ -333,7 +344,7 @@ public class DLFileEntryActionsDisplayContext {
 
 	private boolean _isIEOnWin32() {
 		if (_ieOnWin32 == null) {
-			_ieOnWin32 = BrowserSnifferUtil.isIeOnWin32(_request);
+			_ieOnWin32 = BrowserSnifferUtil.isIeOnWin32(request);
 		}
 
 		return _ieOnWin32;
@@ -352,14 +363,12 @@ public class DLFileEntryActionsDisplayContext {
 	}
 
 	private long _companyId;
-	private DLActionsDisplayContext _dlActionsDisplayContext;
 	private DLFileEntryActionsDisplayContextHelper
 		_dlFileEntryActionsDisplayContextHelper;
 	private long _fileEntryTypeId;
 	private long _folderId;
 	private Boolean _ieOnWin32;
 	private PortletDisplay _portletDisplay;
-	private HttpServletRequest _request;
 	private long _scopeGroupId;
 	private Boolean _trashEnabled;
 

@@ -22,6 +22,7 @@ page import="com.liferay.portlet.documentlibrary.DLSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLActionsDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLFileEntryActionsDisplayContext" %><%@
+page import="com.liferay.portlet.documentlibrary.context.DLFileEntryActionsDisplayContextUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileShortcut" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission" %><%@

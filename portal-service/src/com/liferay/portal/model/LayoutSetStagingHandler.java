@@ -135,16 +135,16 @@ public class LayoutSetStagingHandler
 
 		LayoutSetBranch layoutSetBranch = null;
 
-		if (serviceContext.isSignedIn()) {
+		if (layoutSetBranchId > 0) {
+			layoutSetBranch =
+				LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
+					layoutSetBranchId);
+		}
+		else if (serviceContext.isSignedIn()) {
 			layoutSetBranch =
 				LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(
 					serviceContext.getUserId(), layoutSet.getGroupId(),
 					layoutSet.isPrivateLayout(), layoutSet.getLayoutSetId(),
-					layoutSetBranchId);
-		}
-		else if (layoutSetBranchId > 0) {
-			layoutSetBranch =
-				LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
 					layoutSetBranchId);
 		}
 

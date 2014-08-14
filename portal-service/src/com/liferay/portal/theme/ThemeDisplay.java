@@ -371,7 +371,7 @@ public class ThemeDisplay
 	 * Returns the site's page.
 	 *
 	 * <p>
-	 * Layout is Liferay's technical name for a page
+	 * Layout is Liferay's technical name for a page.
 	 * </p>
 	 *
 	 * @return the site's page
@@ -384,7 +384,7 @@ public class ThemeDisplay
 	 * Returns the site's top-level pages.
 	 *
 	 * <p>
-	 * Layout is Liferay's technical name for a page
+	 * Layout is Liferay's technical name for a page.
 	 * </p>
 	 *
 	 * @return the site's top-level pages

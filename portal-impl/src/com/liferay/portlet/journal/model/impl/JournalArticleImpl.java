@@ -75,8 +75,8 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getContentByLocale(String,
-	 *             String}
+	 * @deprecated As of 7.0.0, replaced by {@link #getContentByLocale(Document,
+	 *             String)}
 	 */
 	@Deprecated
 	public static String getContentByLocale(

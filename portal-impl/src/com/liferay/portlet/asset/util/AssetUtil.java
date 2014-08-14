@@ -421,7 +421,7 @@ public class AssetUtil {
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getAddPortletURL(LiferayPortletRequest,
 	 *             LiferayPortletResponse, long, String, long, long[], String[],
-	 *             String))}
+	 *             String)}
 	 */
 	@Deprecated
 	public static PortletURL getAddPortletURL(

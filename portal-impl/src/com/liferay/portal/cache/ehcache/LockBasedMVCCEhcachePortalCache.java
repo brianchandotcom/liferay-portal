@@ -72,7 +72,7 @@ public class LockBasedMVCCEhcachePortalCache
 
 		Element newElement = new Element(key, value);
 
-		if (timeToLive >= 0) {
+		if (timeToLive > 0) {
 			newElement.setTimeToLive(timeToLive);
 		}
 

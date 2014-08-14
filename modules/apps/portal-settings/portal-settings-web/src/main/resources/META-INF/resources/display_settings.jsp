@@ -109,7 +109,7 @@
 
 <h4><liferay-ui:message key="logo" /></h4>
 
-<aui:fieldset>
+<aui:fieldset cssClass="select-logo-container">
 	<aui:input label="allow-site-administrators-to-use-their-own-logo" name='<%= "settings--" + PropsKeys.COMPANY_SECURITY_SITE_LOGO + "--" %>' type="checkbox" value="<%= company.isSiteLogo() %>" />
 
 	<liferay-ui:logo-selector

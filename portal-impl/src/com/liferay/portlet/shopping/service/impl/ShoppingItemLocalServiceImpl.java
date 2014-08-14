@@ -849,9 +849,8 @@ public class ShoppingItemLocalServiceImpl
 				throw new DuplicateFieldNameException(
 					shoppingItemField.getName());
 			}
-			else {
-				fieldNames.add(shoppingItemField.getName());
-			}
+
+			fieldNames.add(shoppingItemField.getName());
 		}
 
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(

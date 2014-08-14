@@ -823,11 +823,16 @@
 	<bean id="com.liferay.portlet.assetpublisher.util.AssetPublisherUtil" class="com.liferay.portlet.assetpublisher.util.AssetPublisherUtil">
 		<property name="assetPublisher" ref="com.liferay.portlet.assetpublisher.util.AssetPublisher" />
 	</bean>
+	<bean id="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" class="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" />
+	<bean id="com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission" class="com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission" />
+	<bean id="com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission" class="com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission" />
 	<bean id="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil" class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil">
 		<property name="antivirusScanner">
 			<bean class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" />
+	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" />
 	<bean id="com.liferay.portlet.documentlibrary.store.DLStore" class="com.liferay.portlet.documentlibrary.store.DLStoreImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.store.Store" class="com.liferay.portlet.documentlibrary.store.SafeFileNameStoreWrapper">
 		<constructor-arg>
@@ -1015,6 +1020,8 @@
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.journal.service.permission.JournalArticlePermission" class="com.liferay.portlet.journal.service.permission.JournalArticlePermission" />
+	<bean id="com.liferay.portlet.journal.service.permission.JournalFeedPermission" class="com.liferay.portlet.journal.service.permission.JournalFeedPermission" />
 	<bean id="com.liferay.portlet.journal.util.JournalConverter" class="com.liferay.portlet.journal.util.JournalConverterImpl" />
 	<bean id="com.liferay.portlet.journal.util.JournalConverterUtil" class="com.liferay.portlet.journal.util.JournalConverterUtil">
 		<property name="journalConverter" ref="com.liferay.portlet.journal.util.JournalConverter" />
@@ -1028,6 +1035,8 @@
 			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" class="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" />
+	<bean id="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" class="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" />
 	<bean id="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil" class="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil">
 		<property name="MDRPermission">
 			<bean class="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionImpl" />
@@ -1047,6 +1056,7 @@
 	<bean id="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdminUtil" class="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdminUtil">
 		<property name="passwordPoliciesAdmin" ref="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdmin" />
 	</bean>
+	<bean id="com.liferay.portlet.polls.service.permission.PollsQuestionPermission" class="com.liferay.portlet.polls.service.permission.PollsQuestionPermission" />
 	<bean id="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate" class="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateImpl" />
 	<bean id="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil" class="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil">
 		<property name="portletDisplayTemplate" ref="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate" />
@@ -1055,6 +1065,8 @@
 	<bean id="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" class="com.liferay.portlet.rolesadmin.util.RolesAdminUtil">
 		<property name="rolesAdmin" ref="com.liferay.portlet.rolesadmin.util.RolesAdmin" />
 	</bean>
+	<bean id="com.liferay.portlet.shopping.service.permission.ShoppingCategoryPermission" class="com.liferay.portlet.shopping.service.permission.ShoppingCategoryPermission" />
+	<bean id="com.liferay.portlet.shopping.service.permission.ShoppingItemPermission" class="com.liferay.portlet.shopping.service.permission.ShoppingItemPermission" />
 	<bean id="com.liferay.portlet.sites.util.Sites" class="com.liferay.portlet.sites.util.SitesImpl" />
 	<bean id="com.liferay.portlet.sites.util.SitesUtil" class="com.liferay.portlet.sites.util.SitesUtil">
 		<property name="sites" ref="com.liferay.portlet.sites.util.Sites" />
@@ -1078,6 +1090,8 @@
 	<bean id="com.liferay.portlet.social.util.SocialConfigurationUtil" class="com.liferay.portlet.social.util.SocialConfigurationUtil">
 		<property name="socialConfiguration" ref="com.liferay.portlet.social.util.SocialConfiguration" />
 	</bean>
+	<bean id="com.liferay.portlet.softwarecatalog.service.permission.SCFrameworkVersionPermission" class="com.liferay.portlet.softwarecatalog.service.permission.SCFrameworkVersionPermission" />
+	<bean id="com.liferay.portlet.softwarecatalog.service.permission.SCProductEntryPermission" class="com.liferay.portlet.softwarecatalog.service.permission.SCProductEntryPermission" />
 	<bean id="com.liferay.portlet.trash.util.Trash" class="com.liferay.portlet.trash.util.TrashImpl" />
 	<bean id="com.liferay.portlet.trash.util.TrashUtil" class="com.liferay.portlet.trash.util.TrashUtil">
 		<property name="trash" ref="com.liferay.portlet.trash.util.Trash" />
@@ -1086,57 +1100,6 @@
 	<bean id="com.liferay.portlet.usersadmin.util.UsersAdminUtil" class="com.liferay.portlet.usersadmin.util.UsersAdminUtil">
 		<property name="usersAdmin" ref="com.liferay.portlet.usersadmin.util.UsersAdmin" />
 	</bean>
-	<util:map id="baseModelPermissionCheckers" key-type="java.lang.String" value-type="com.liferay.portal.security.permission.BaseModelPermissionChecker">
-		<entry key="com.liferay.portlet.blogs.model.BlogsEntry">
-			<bean class="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" />
-		</entry>
-		<entry key="com.liferay.portlet.bookmarks.model.BookmarksEntry">
-			<bean class="com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission" />
-		</entry>
-		<entry key="com.liferay.portlet.bookmarks.model.BookmarksFolder">
-			<bean class="com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission" />
-		</entry>
-		<entry key="com.liferay.portlet.documentlibrary.model.DLFileEntry">
-			<bean class="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" />
-		</entry>
-		<entry key="com.liferay.portlet.documentlibrary.model.DLFolder">
-			<bean class="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" />
-		</entry>
-		<entry key="com.liferay.portal.model.Group" value-ref="com.liferay.portal.service.permission.GroupPermissionImpl" />
-		<entry key="com.liferay.portlet.journal.model.JournalArticle">
-			<bean class="com.liferay.portlet.journal.service.permission.JournalArticlePermission" />
-		</entry>
-		<entry key="com.liferay.portlet.journal.model.JournalFeed">
-			<bean class="com.liferay.portlet.journal.service.permission.JournalFeedPermission" />
-		</entry>
-		<entry key="com.liferay.portal.model.Layout" value-ref="com.liferay.portal.service.permission.LayoutPermissionImpl" />
-		<entry key="com.liferay.portlet.messageboards.model.MBCategory">
-			<bean class="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" />
-		</entry>
-		<entry key="com.liferay.portlet.messageboards.model.MBMessage">
-			<bean class="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" />
-		</entry>
-		<entry key="com.liferay.portlet.polls.model.PollsQuestion">
-			<bean class="com.liferay.portlet.polls.service.permission.PollsQuestionPermission" />
-		</entry>
-		<entry key="com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion">
-			<bean class="com.liferay.portlet.softwarecatalog.service.permission.SCFrameworkVersionPermission" />
-		</entry>
-		<entry key="com.liferay.portlet.softwarecatalog.model.SCProductEntry">
-			<bean class="com.liferay.portlet.softwarecatalog.service.permission.SCProductEntryPermission" />
-		</entry>
-		<entry key="com.liferay.portlet.shopping.model.ShoppingCategory">
-			<bean class="com.liferay.portlet.shopping.service.permission.ShoppingCategoryPermission" />
-		</entry>
-		<entry key="com.liferay.portlet.shopping.model.ShoppingItem">
-			<bean class="com.liferay.portlet.shopping.service.permission.ShoppingItemPermission" />
-		</entry>
-		<entry key="com.liferay.portal.model.User" value-ref="com.liferay.portal.service.permission.UserPermissionImpl" />
-		<entry key="com.liferay.portlet.wiki.model.WikiNode">
-			<bean class="com.liferay.portlet.wiki.service.permission.WikiNodePermission" />
-		</entry>
-		<entry key="com.liferay.portlet.wiki.model.WikiPage">
-			<bean class="com.liferay.portlet.wiki.service.permission.WikiPagePermission" />
-		</entry>
-	</util:map>
+	<bean id="com.liferay.portlet.wiki.service.permission.WikiNodePermission" class="com.liferay.portlet.wiki.service.permission.WikiNodePermission" />
+	<bean id="com.liferay.portlet.wiki.service.permission.WikiPagePermission" class="com.liferay.portlet.wiki.service.permission.WikiPagePermission" />
 </beans>

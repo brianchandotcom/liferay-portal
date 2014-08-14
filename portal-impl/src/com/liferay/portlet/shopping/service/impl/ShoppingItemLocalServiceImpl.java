@@ -32,6 +32,7 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.amazonrankings.model.AmazonRankings;
 import com.liferay.portlet.amazonrankings.util.AmazonRankingsUtil;
 import com.liferay.portlet.shopping.AmazonException;
+import com.liferay.portlet.shopping.DuplicateFieldNameException;
 import com.liferay.portlet.shopping.DuplicateItemSKUException;
 import com.liferay.portlet.shopping.ItemLargeImageNameException;
 import com.liferay.portlet.shopping.ItemLargeImageSizeException;
@@ -113,7 +114,7 @@ public class ShoppingItemLocalServiceImpl
 			user.getCompanyId(), 0, sku, name, smallImage, smallImageURL,
 			smallImageFile, smallImageBytes, mediumImage, mediumImageURL,
 			mediumImageFile, mediumImageBytes, largeImage, largeImageURL,
-			largeImageFile, largeImageBytes);
+			largeImageFile, largeImageBytes, itemFields);
 
 		long itemId = counterLocalService.increment();
 
@@ -491,7 +492,7 @@ public class ShoppingItemLocalServiceImpl
 			user.getCompanyId(), itemId, sku, name, smallImage, smallImageURL,
 			smallImageFile, smallImageBytes, mediumImage, mediumImageURL,
 			mediumImageFile, mediumImageBytes, largeImage, largeImageURL,
-			largeImageFile, largeImageBytes);
+			largeImageFile, largeImageBytes, itemFields);
 
 		item.setModifiedDate(new Date());
 		item.setCategoryId(categoryId);
@@ -815,7 +816,8 @@ public class ShoppingItemLocalServiceImpl
 			boolean smallImage, String smallImageURL, File smallImageFile,
 			byte[] smallImageBytes, boolean mediumImage, String mediumImageURL,
 			File mediumImageFile, byte[] mediumImageBytes, boolean largeImage,
-			String largeImageURL, File largeImageFile, byte[] largeImageBytes)
+			String largeImageURL, File largeImageFile, byte[] largeImageBytes,
+			List<ShoppingItemField> itemFields)
 		throws PortalException {
 
 		if (Validator.isNull(sku)) {
@@ -838,6 +840,17 @@ public class ShoppingItemLocalServiceImpl
 
 		if (Validator.isNull(name)) {
 			throw new ItemNameException();
+		}
+
+		List<String> fieldNames = new ArrayList<String>();
+
+		for (ShoppingItemField shoppingItemField : itemFields) {
+			if (fieldNames.contains(shoppingItemField.getName())) {
+				throw new DuplicateFieldNameException(
+					shoppingItemField.getName());
+			}
+
+			fieldNames.add(shoppingItemField.getName());
 		}
 
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(

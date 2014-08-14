@@ -212,7 +212,7 @@ public class WeakValueConcurrentHashMap<K, V>
 		}
 
 		@Override
-		public void doFinalize() {
+		public void doFinalize(Reference<?> reference) {
 			remove(_key);
 		}
 

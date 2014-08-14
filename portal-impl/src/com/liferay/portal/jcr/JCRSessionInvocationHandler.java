@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.memory.FinalizeAction;
 
+import java.lang.ref.Reference;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -45,7 +46,7 @@ public class JCRSessionInvocationHandler
 	}
 
 	@Override
-	public void doFinalize() {
+	public void doFinalize(Reference<?> reference) {
 		for (Entry<String, Binary> entry : _binaries.entrySet()) {
 			Binary binary = entry.getValue();
 

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
 import com.liferay.portal.kernel.util.ThreadUtil;
 
+import java.lang.ref.Reference;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -139,7 +141,7 @@ public class FinalizeManagerTest {
 	private class MarkFinalizeAction implements FinalizeAction {
 
 		@Override
-		public void doFinalize() {
+		public void doFinalize(Reference<?> reference) {
 			_marked = true;
 		}
 

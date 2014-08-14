@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.memory;
 
 import java.io.File;
 
+import java.lang.ref.Reference;
+
 /**
  * @author Shuyang Zhou
  */
@@ -26,7 +28,7 @@ public class DeleteFileFinalizeAction implements FinalizeAction {
 	}
 
 	@Override
-	public void doFinalize() {
+	public void doFinalize(Reference<?> reference) {
 		File file = new File(_fileName);
 
 		file.delete();

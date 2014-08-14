@@ -27,6 +27,8 @@ import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 
+import java.lang.ref.Reference;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -91,7 +93,7 @@ public class FreeMarkerTaglibFactoryUtil implements CacheRegistryItem {
 					new FinalizeAction() {
 
 						@Override
-						public void doFinalize() {
+						public void doFinalize(Reference<?> reference) {
 							CacheRegistryUtil.unregister(name);
 						}
 

@@ -431,6 +431,14 @@ body:first-of-type {
 			@extend %portlet-action-bar-fx-text;
 
 			@extend %portlet-action-bar-fx-hover-text;
+
+			@include border-bottom-left-radius(20px);
+			@include border-top-left-radius(20px);
+		}
+
+		.portlet-title-default {
+			@include border-bottom-right-radius(20px);
+			@include border-top-right-radius(20px);
 		}
 	}
 

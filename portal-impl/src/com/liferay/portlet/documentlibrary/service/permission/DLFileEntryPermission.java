@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -36,6 +37,11 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @author Charles May
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileEntry"
+	}
+)
 public class DLFileEntryPermission implements BaseModelPermissionChecker {
 
 	public static void check(

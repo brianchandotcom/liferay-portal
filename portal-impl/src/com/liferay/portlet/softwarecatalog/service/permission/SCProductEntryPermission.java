@@ -15,6 +15,7 @@
 package com.liferay.portlet.softwarecatalog.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -25,6 +26,12 @@ import com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalServiceUti
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=" +
+			"com.liferay.portlet.softwarecatalog.model.SCProductEntry"
+	}
+)
 public class SCProductEntryPermission implements BaseModelPermissionChecker {
 
 	public static void check(

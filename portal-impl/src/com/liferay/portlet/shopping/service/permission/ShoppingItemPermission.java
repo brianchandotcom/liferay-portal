@@ -15,6 +15,7 @@
 package com.liferay.portlet.shopping.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
@@ -28,6 +29,11 @@ import com.liferay.portlet.shopping.service.ShoppingItemLocalServiceUtil;
 /**
  * @author Brian Wing Shun Chan
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.shopping.model.ShoppingItem"
+	}
+)
 public class ShoppingItemPermission implements BaseModelPermissionChecker {
 
 	public static void check(

@@ -30,8 +30,10 @@ import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsUtil;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -512,25 +514,7 @@ public class ImageToolImpl implements ImageTool {
 		int scaledHeight = (int)(factor * imageHeight);
 		int scaledWidth = width;
 
-		BufferedImage bufferedImage = getBufferedImage(renderedImage);
-
-		int type = bufferedImage.getType();
-
-		if (type == 0) {
-			type = BufferedImage.TYPE_INT_ARGB;
-		}
-
-		BufferedImage scaledBufferedImage = new BufferedImage(
-			scaledWidth, scaledHeight, type);
-
-		Graphics graphics = scaledBufferedImage.getGraphics();
-
-		java.awt.Image scaledImage = bufferedImage.getScaledInstance(
-			scaledWidth, scaledHeight, java.awt.Image.SCALE_SMOOTH);
-
-		graphics.drawImage(scaledImage, 0, 0, null);
-
-		return scaledBufferedImage;
+		return doScale(renderedImage, scaledHeight, scaledWidth);
 	}
 
 	@Override
@@ -558,63 +542,7 @@ public class ImageToolImpl implements ImageTool {
 		int scaledHeight = Math.max(1, (int)(factor * imageHeight));
 		int scaledWidth = Math.max(1, (int)(factor * imageWidth));
 
-		BufferedImage bufferedImage = getBufferedImage(renderedImage);
-
-		int type = bufferedImage.getType();
-
-		if (type == 0) {
-			type = BufferedImage.TYPE_INT_ARGB;
-		}
-
-		BufferedImage scaledBufferedImage = null;
-
-		if ((type == BufferedImage.TYPE_BYTE_BINARY) ||
-			(type == BufferedImage.TYPE_BYTE_INDEXED)) {
-
-			IndexColorModel indexColorModel =
-				(IndexColorModel)bufferedImage.getColorModel();
-
-			BufferedImage tempBufferedImage = new BufferedImage(
-				1, 1, type, indexColorModel);
-
-			int bits = indexColorModel.getPixelSize();
-			int size = indexColorModel.getMapSize();
-
-			byte[] reds = new byte[size];
-
-			indexColorModel.getReds(reds);
-
-			byte[] greens = new byte[size];
-
-			indexColorModel.getGreens(greens);
-
-			byte[] blues = new byte[size];
-
-			indexColorModel.getBlues(blues);
-
-			WritableRaster writableRaster = tempBufferedImage.getRaster();
-
-			int pixel = writableRaster.getSample(0, 0, 0);
-
-			IndexColorModel scaledIndexColorModel = new IndexColorModel(
-				bits, size, reds, greens, blues, pixel);
-
-			scaledBufferedImage = new BufferedImage(
-				scaledWidth, scaledHeight, type, scaledIndexColorModel);
-		}
-		else {
-			scaledBufferedImage = new BufferedImage(
-				scaledWidth, scaledHeight, type);
-		}
-
-		Graphics graphics = scaledBufferedImage.getGraphics();
-
-		java.awt.Image scaledImage = bufferedImage.getScaledInstance(
-			scaledWidth, scaledHeight, java.awt.Image.SCALE_SMOOTH);
-
-		graphics.drawImage(scaledImage, 0, 0, null);
-
-		return scaledBufferedImage;
+		return doScale(renderedImage, scaledHeight, scaledWidth);
 	}
 
 	@Override
@@ -641,6 +569,42 @@ public class ImageToolImpl implements ImageTool {
 
 			ImageIO.write(renderedImage, "tiff", os);
 		}
+	}
+
+	protected RenderedImage doScale(
+		RenderedImage renderedImage, int scaledHeight, int scaledWidth) {
+
+		// See the following link for reference on how resize should be done.
+		// http://www.oracle.com/technetwork/java/index-137037.html
+
+		BufferedImage originalBufferedImage = getBufferedImage(renderedImage);
+
+		ColorModel originalColorModel = originalBufferedImage.getColorModel();
+
+		Graphics2D originalGraphics = originalBufferedImage.createGraphics();
+
+		if (originalColorModel.hasAlpha()) {
+			originalGraphics.setComposite(AlphaComposite.Src);
+		}
+
+		GraphicsConfiguration originalGraphicsConfiguration =
+			originalGraphics.getDeviceConfiguration();
+
+		BufferedImage scaledBufferedImage =
+			originalGraphicsConfiguration.createCompatibleImage(
+				scaledWidth, scaledHeight,
+				originalBufferedImage.getTransparency());
+
+		Graphics scaledGraphics = scaledBufferedImage.getGraphics();
+
+		java.awt.Image scaledImage = originalBufferedImage.getScaledInstance(
+			scaledWidth, scaledHeight, java.awt.Image.SCALE_SMOOTH);
+
+		scaledGraphics.drawImage(scaledImage, 0, 0, null);
+
+		originalGraphics.dispose();
+
+		return scaledBufferedImage;
 	}
 
 	protected ImageMagick getImageMagick() {

@@ -61,6 +61,12 @@ public class AssetVocabularySearchTest extends BaseSearchTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testSearchBaseModelWithTrash() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testSearchByDDMStructureField() throws Exception {
 	}
 

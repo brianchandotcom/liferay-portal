@@ -157,6 +157,12 @@ public class BookmarksTestUtil {
 	public static BookmarksEntry updateEntry(BookmarksEntry entry)
 		throws Exception {
 
+		return updateEntry(entry, RandomTestUtil.randomString());
+	}
+
+	public static BookmarksEntry updateEntry(BookmarksEntry entry, String name)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(entry.getGroupId());
 
@@ -165,8 +171,8 @@ public class BookmarksTestUtil {
 
 		return BookmarksEntryLocalServiceUtil.updateEntry(
 			TestPropsValues.getUserId(), entry.getEntryId(), entry.getGroupId(),
-			entry.getFolderId(), RandomTestUtil.randomString(), entry.getUrl(),
-			entry.getDescription(), serviceContext);
+			entry.getFolderId(), name, entry.getUrl(), entry.getDescription(),
+			serviceContext);
 	}
 
 }

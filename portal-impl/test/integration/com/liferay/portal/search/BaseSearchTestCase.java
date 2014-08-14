@@ -419,10 +419,8 @@ public abstract class BaseSearchTestCase {
 		int initialBaseModelsSearchCount = searchBaseModelsCount(
 			getBaseModelClass(), group.getGroupId(), searchContext);
 
-		String keywords = RandomTestUtil.randomString();
-
 		baseModel = addBaseModel(
-			parentBaseModel, true, keywords, serviceContext);
+			parentBaseModel, true, getSearchKeywords(), serviceContext);
 
 		Assert.assertEquals(
 			initialBaseModelsSearchCount + 1,
@@ -430,8 +428,6 @@ public abstract class BaseSearchTestCase {
 				getBaseModelClass(), group.getGroupId(), searchContext));
 
 		deleteBaseModel(baseModel);
-
-		searchContext.setKeywords(keywords);
 
 		Assert.assertEquals(
 			initialBaseModelsSearchCount,
@@ -452,10 +448,8 @@ public abstract class BaseSearchTestCase {
 		int initialBaseModelsSearchCount = searchBaseModelsCount(
 			getBaseModelClass(), group.getGroupId(), searchContext);
 
-		String keywords = RandomTestUtil.randomString();
-
 		baseModel = addBaseModel(
-			parentBaseModel, true, keywords, serviceContext);
+			parentBaseModel, true, getSearchKeywords(), serviceContext);
 
 		Assert.assertEquals(
 			initialBaseModelsSearchCount + 1,
@@ -464,7 +458,7 @@ public abstract class BaseSearchTestCase {
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
-		searchContext.setKeywords(keywords);
+		searchContext.setKeywords(getSearchKeywords());
 
 		Assert.assertEquals(
 			initialBaseModelsSearchCount,
@@ -482,13 +476,13 @@ public abstract class BaseSearchTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
+		searchContext.setKeywords(getSearchKeywords());
+
 		int initialBaseModelsSearchCount = searchBaseModelsCount(
 			getBaseModelClass(), group.getGroupId(), searchContext);
 
-		String keywords = RandomTestUtil.randomString();
-
 		baseModel = addBaseModel(
-			parentBaseModel, true, keywords, serviceContext);
+			parentBaseModel, true, getSearchKeywords(), serviceContext);
 
 		Assert.assertEquals(
 			initialBaseModelsSearchCount + 1,
@@ -497,9 +491,7 @@ public abstract class BaseSearchTestCase {
 
 		String updatedKeywords = RandomTestUtil.randomString();
 
-		updateBaseModel(baseModel, updatedKeywords, serviceContext);
-
-		searchContext.setKeywords(keywords);
+		baseModel = updateBaseModel(baseModel, updatedKeywords, serviceContext);
 
 		Assert.assertEquals(
 			initialBaseModelsSearchCount,

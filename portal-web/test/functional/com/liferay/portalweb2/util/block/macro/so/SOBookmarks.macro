@@ -5,6 +5,19 @@
 		<execute action="SOSiteHomeBookmarksAdd#type" locator-key1="NAME_FIELD" value1="${bookmarksEntryName}" />
 		<execute action="SOSiteHomeBookmarksAdd#type" locator-key1="URL_FIELD" value1="${bookmarksEntryUrl}" />
 		<execute action="SOSiteHomeBookmarksAdd#type" locator-key1="DESCRIPTION_FIELD" value1="${bookmarksEntryDescription}" />
+
+		<if>
+			<equals arg1="${addTag}" arg2="true" />
+			<then>
+				<execute action="SOSiteHomeBookmarksAdd#type" locator-key1="TAGS_FIELD" value1="${tagName}" />
+				<execute action="SOSiteHomeBookmarksAdd#assertClick" locator-key1="ADD_TAGS_BUTTON" value1="Add" />
+
+				<var name="key_tagName" value="${tagName}" />
+
+				<execute action="SOSiteHomeBookmarksAdd#assertTextEquals" locator-key1="TAG" value1="${tagName}" />
+			</then>
+		</if>
+
 		<execute action="SOSiteHomeBookmarksAdd#click" locator-key1="SAVE_BUTTON"  />
 
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />

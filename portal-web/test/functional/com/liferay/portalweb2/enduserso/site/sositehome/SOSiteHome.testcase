@@ -147,6 +147,57 @@
 		</execute>
 	</command>
 
+	<command name="AddBookmarksEntryTag" priority="3">
+		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
+		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
+		<var name="bookmarksEntryUrl" value="http://www.google.com" />
+		<var name="tagName" value="tag" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOBookmarks#addBookmarksEntry">
+			<var name="addTag" value="true" />
+			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}" />
+			<var name="bookmarksEntryName" value="${bookmarksEntryName}" />
+			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl}" />
+			<var name="tagName" value="${tagName}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOBookmarks#viewBookmarksEntry">
+			<var name="bookmarksEntryDescription" value="${bookmarksEntryDescription}" />
+			<var name="bookmarksEntryName" value="${bookmarksEntryName}" />
+			<var name="bookmarksEntryUrl" value="${bookmarksEntryUrl}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_bookmarksEntryName" value="${bookmarksEntryName}" />
+
+		<execute action="SOSiteHome#assertClick" locator-key1="BOOKMARKS_ENTRY_ACTIONS" value1="Actions" />
+		<execute action="SOSiteHome#assertClick" locator-key1="ACTIONS_MENULIST_EDIT" value1="Edit" />
+
+		<var name="key_tagName" value="${tagName}" />
+
+		<execute action="SOSiteHomeBookmarksAdd#assertTextEquals" locator-key1="TAG" value1="${tagName}" />
+	</command>
+
 	<command name="AddRssFeed" priority="5">
 		<var name="entriesPerFeed" value="3" />
 		<var name="expandedEntriesPerFeed" value="1" />
@@ -1156,6 +1207,78 @@
 		</execute>
 	</command>
 
+	<command name="EditDefaultRssFeed" priority="4">
+		<var name="entriesPerFeedEdit" value="5" />
+		<var name="expandedEntriesPerFeedEdit" value="5" />
+		<var name="feedTitleEdit" value="The Guardian" />
+		<var name="feedUrlEdit" value="http://feeds.theguardian.com/theguardian/technology/rss" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userLastName" value="User01" />
+		<var name="userListName" value="User01, Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userName" value="Social01 Office01 User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SORss#editRssFeed">
+			<var name="entriesPerFeed" value="${entriesPerFeedEdit}" />
+			<var name="expandedEntriesPerFeed" value="${expandedEntriesPerFeedEdit}" />
+			<var name="feedRow" value="1" />
+			<var name="feedTitle" value="${feedTitleEdit}" />
+			<var name="feedUrl" value="${feedUrlEdit}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SORss#viewRssFeed">
+			<var name="entriesPerFeed" value="${entriesPerFeedEdit}" />
+			<var name="expandedEntriesPerFeed" value="${expandedEntriesPerFeedEdit}" />
+			<var name="feedTitle" value="${feedTitleEdit}" />
+			<var name="feedUrl" value="${feedUrlEdit}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userName}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SORss#viewRssFeed">
+			<var name="entriesPerFeed" value="${entriesPerFeedEdit}" />
+			<var name="expandedEntriesPerFeed" value="${expandedEntriesPerFeedEdit}" />
+			<var name="feedTitle" value="${feedTitleEdit}" />
+			<var name="feedUrl" value="${feedUrlEdit}" />
+		</execute>
+	</command>
+
 	<command name="EditRssFeed" priority="4">
 		<var name="entriesPerFeed" value="3" />
 		<var name="entriesPerFeedEdit" value="2" />
@@ -1417,6 +1540,32 @@
 			<var name="entryTitle" value="${entryTitleEdit}" />
 			<var name="entryURL" value="${entryURL}" />
 		</execute>
+	</command>
+
+	<command name="EditWelcomeContent" priority="3">
+		<var name="welcomeContent" value="Welcome Content" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOWelcome#editContent">
+			<var name="welcomeContent" value="${welcomeContent}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="WELCOME_PORTLET_CONTENT" value1="${welcomeContent}" />
 	</command>
 
 	<command name="ImportLARRssFeed" priority="4">
@@ -3095,6 +3244,183 @@
 		</execute>
 	</command>
 
+	<command name="ViewEvent6DaysIntoFutureEventsDisplay" priority="3">
+		<var name="eventTitle1" value="Calendar Event1 Title" />
+		<var name="eventTitle2" value="Calendar Event2 Title" />
+		<var name="eventTitle3" value="Calendar Event3 Title" />
+		<var name="eventTitle4" value="Calendar Event4 Title" />
+		<var name="eventTitle5" value="Calendar Event5 Title" />
+		<var name="eventTitle6" value="Calendar Event6 Title" />
+		<var name="eventTitle7" value="Calendar Event7 Title" />
+		<var name="eventType" value="Regular" />
+		<var name="pageName" value="Calendar Page" />
+		<var name="portletName" value="Calendar" />
+		<var name="soPage" value="true" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#addRepeatingEventsPG">
+			<var name="eventTitle" value="${eventTitle1}" />
+			<var name="numberOfRepeats" value="7" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#editFutureEventPG">
+			<var name="daysIntoFuture" value="1" />
+			<var name="eventTitle" value="${eventTitle2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#editFutureEventPG">
+			<var name="daysIntoFuture" value="2" />
+			<var name="eventTitle" value="${eventTitle3}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#editFutureEventPG">
+			<var name="daysIntoFuture" value="3" />
+			<var name="eventTitle" value="${eventTitle4}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#editFutureEventPG">
+			<var name="daysIntoFuture" value="4" />
+			<var name="eventTitle" value="${eventTitle5}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#editFutureEventPG">
+			<var name="daysIntoFuture" value="5" />
+			<var name="eventTitle" value="${eventTitle6}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#editFutureEventPG">
+			<var name="daysIntoFuture" value="6" />
+			<var name="eventTitle" value="${eventTitle7}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOCalendarEvent#deleteFutureEventPG">
+			<var name="daysIntoFuture" value="0" />
+			<var name="eventTitle" value="${eventTitle1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+			<var name="eventTitle" value="${eventTitle2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+			<var name="eventTitle" value="${eventTitle3}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+			<var name="eventTitle" value="${eventTitle4}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+			<var name="eventTitle" value="${eventTitle5}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+			<var name="eventTitle" value="${eventTitle6}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
+		<execute action="SOSiteHome#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
+		<execute action="SOSiteHome#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
+		<execute action="SOSiteHome#assertTextNotPresent" value1="${eventTitle6}" />
+
+		<execute macro="SOEvents#configureEventsPortletDisplayDays">
+			<var name="maxDisplayDays" value="5" />
+		</execute>
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
+		<execute action="SOSiteHome#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
+		<execute action="SOSiteHome#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
+		<execute action="SOSiteHome#assertTextNotPresent" value1="${eventTitle6}" />
+	</command>
+
 	<command name="ViewEventsPaginationEventsDisplay" priority="4">
 		<var name="eventTitle1" value="Calendar Event1 Title" />
 		<var name="eventTitle10" value="Calendar Event10 Title" />
@@ -3634,6 +3960,73 @@
 		<var name="key_eventTitle" value="${eventTitle10}" />
 
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle10}" />
+	</command>
+
+	<command name="ViewRecentDownloads" priority="3">
+		<var name="dmDocumentDescription" value="DM Folder Document Description" />
+		<var name="dmDocumentFile" value="Document_1.doc" />
+		<var name="dmDocumentTitle" value="DM Folder Document Title" />
+		<var name="dmDocumentUploader" value="Test Test" />
+		<var name="dmDocumentVersionNumber" value="1.0" />
+		<var name="dmFolderDescription" value="DM Folder Document Description" />
+		<var name="dmFolderName" value="DM Folder Name" />
+		<var name="soPage" value="true" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="${dmFolderDescription}" />
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#downloadPG">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="RECENT_DOWNLOADS_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
 	<command name="ViewSOAnnouncementEntries" priority="4">

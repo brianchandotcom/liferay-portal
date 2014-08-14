@@ -290,6 +290,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WELCOME_PORTLET_CONTENT</td>
+	<td>//div[contains(@class,'wysiwyg-portlet')]//div[contains(@class,'portlet-body')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WELCOME_OPTIONS</td>
 	<td>//header[contains(.,'Welcome')]//menu//a</td>
 	<td></td>
@@ -472,6 +477,11 @@
 <tr>
 	<td>RECENT_DOWNLOADS_PORTLET_TITLE</td>
 	<td>//header[contains(.,'Recent Downloads')]//h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECENT_DOWNLOADS_DOCUMENT_TITLE</td>
+	<td>//div[contains(@class,'portlet-body')]//td[contains(.,'${key_dmDocumentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

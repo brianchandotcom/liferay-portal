@@ -21,8 +21,33 @@
 
 		<execute action="SOSiteHomeRssConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="SOSiteHomeRssConfiguration#click" locator-key1="FEEDS_ADD_ROW_BUTTON" />
-		<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD" value1="${feedTitle}" />
-		<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD" value1="${feedUrl}" />
+
+		<if>
+			<equals arg1="${feedRow}" arg2="1" />
+			<then>
+				<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_1" value1="${feedTitle}" />
+				<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD_1" value1="${feedUrl}" />
+			</then>
+			<elseif>
+				<equals arg1="${feedRow}" arg2="2" />
+				<then>
+					<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_2" value1="${feedTitle}" />
+					<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD_2" value1="${feedUrl}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${feedRow}" arg2="3" />
+				<then>
+					<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_3" value1="${feedTitle}" />
+					<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD_3" value1="${feedUrl}" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_2" value1="${feedTitle}" />
+				<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD_2" value1="${feedUrl}" />
+			</else>
+		</if>
+
 		<execute action="SOSiteHomeRssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_TITLE_CHECKBOX" />
 		<execute action="SOSiteHomeRssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_PUBLISHED_DATE_CHECKBOX" />
 		<execute action="SOSiteHomeRssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION_CHECKBOX" />
@@ -56,7 +81,29 @@
 		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
 
 		<execute action="SOSiteHomeRssConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="SOSiteHomeRssConfiguration#click" locator-key1="FEEDS_DELETE_ROW_BUTTON" />
+
+		<if>
+			<equals arg1="${feedRow}" arg2="1" />
+			<then>
+				<execute action="SOSiteHomeRssConfiguration#click" locator-key1="FEEDS_DELETE_ROW_BUTTON_1" />
+			</then>
+			<elseif>
+				<equals arg1="${feedRow}" arg2="2" />
+				<then>
+					<execute action="SOSiteHomeRssConfiguration#click" locator-key1="FEEDS_DELETE_ROW_BUTTON_2" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${feedRow}" arg2="3" />
+				<then>
+					<execute action="SOSiteHomeRssConfiguration#click" locator-key1="FEEDS_DELETE_ROW_BUTTON_3" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="SOSiteHomeRssConfiguration#click" locator-key1="FEEDS_DELETE_ROW_BUTTON_2" />
+			</else>
+		</if>
+
 		<execute action="SOSiteHomeRssConfiguration#click" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="SOSiteHomeRssConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute action="SOSiteHomeRssConfiguration#selectFrameTop" />
@@ -83,8 +130,33 @@
 		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
 
 		<execute action="SOSiteHomeRssConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD" value1="${feedTitle}" />
-		<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD" value1="${feedUrl}" />
+
+		<if>
+			<equals arg1="${feedRow}" arg2="1" />
+			<then>
+				<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_1" value1="${feedTitle}" />
+				<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD_1" value1="${feedUrl}" />
+			</then>
+			<elseif>
+				<equals arg1="${feedRow}" arg2="2" />
+				<then>
+					<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_2" value1="${feedTitle}" />
+					<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD_2" value1="${feedUrl}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${feedRow}" arg2="3" />
+				<then>
+					<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_3" value1="${feedTitle}" />
+					<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD_3" value1="${feedUrl}" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_2" value1="${feedTitle}" />
+				<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD_2" value1="${feedUrl}" />
+			</else>
+		</if>
+
 		<execute action="SOSiteHomeRssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_TITLE_CHECKBOX" />
 		<execute action="SOSiteHomeRssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_PUBLISHED_DATE_CHECKBOX" />
 		<execute action="SOSiteHomeRssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION_CHECKBOX" />

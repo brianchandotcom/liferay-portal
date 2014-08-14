@@ -173,12 +173,12 @@
 
 		<execute macro="Notifications#viewNewContent">
 			<var name="assetType" value="Message Boards Message" />
-			<var name="contentBody" value="MB Thread Message..." />
+			<var name="contentBody" value="MB Thread Message Subject" />
 			<var name="user" value="Test Test" />
 		</execute>
 
 		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="MB Thread Message..." />
+			<var name="contentBody" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
@@ -246,19 +246,19 @@
 		</execute>
 
 		<execute macro="Notifications#viewCountAlert">
-			<var name="notificationCount" value="1" />
+			<var name="notificationCount" value="2" />
 		</execute>
 
 		<execute macro="Notifications#gotoDockbar" />
 
 		<execute macro="Notifications#viewUpdatedContent">
 			<var name="assetType" value="Message Boards Message" />
-			<var name="contentBody" value="MB Thread Message..." />
+			<var name="contentBody" value="MB Thread Message Subject Edit" />
 			<var name="user" value="Test Test" />
 		</execute>
 
 		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="MB Thread Message..." />
+			<var name="contentBody" value="MB Thread Message Subject Edit" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
@@ -267,7 +267,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewCount">
-			<var name="notificationCount" value="0" />
+			<var name="notificationCount" value="1" />
 		</execute>
 	</command>
 </definition>

@@ -53,6 +53,8 @@
 
 		<execute macro="Notifications#markAllAsRead">
 			<var name="notificationCount" value="3" />
+			<var name="notificationCount1" value="${notificationCount}" />
+			<var name="notificationCount2" value="${notificationCount}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -212,12 +214,12 @@
 
 		<execute macro="Notifications#viewUpdatedContent">
 			<var name="assetType" value="Blogs Entry" />
-			<var name="contentBody" value="Blogs Entry Title..." />
+			<var name="contentBody" value="Blogs Entry Title Edit" />
 			<var name="user" value="Test Test" />
 		</execute>
 
 		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="Blogs Entry Title..." />
+			<var name="contentBody" value="Blogs Entry Title Edit" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">

@@ -125,7 +125,11 @@ if (Validator.isNotNull(exception)) {
 			if (value instanceof Exception) {
 				Exception e = (Exception)value;
 
-				_log.error(e, e);
+				_log.error(e.getMessage());
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
 			}
 		}
 		%>

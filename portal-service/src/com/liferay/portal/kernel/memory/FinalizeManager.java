@@ -25,13 +25,53 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class FinalizeManager {
 
+	public static final ReferenceFactory PHANTOM_REFERENCE_FACTORY =
+		new ReferenceFactory() {
+
+			@Override
+			public <T> Reference<T> createReference(
+				T realReference, ReferenceQueue<? super T> referenceQueue) {
+
+				return new EqualityPhantomReference<T>(
+					realReference, referenceQueue);
+			}
+
+		};
+
+	public static final ReferenceFactory SOFT_REFERENCE_FACTORY =
+		new ReferenceFactory() {
+
+			@Override
+			public <T> Reference<T> createReference(
+				T realReference, ReferenceQueue<? super T> referenceQueue) {
+
+				return new EqualitySoftReference<T>(
+					realReference, referenceQueue);
+			}
+
+		};
+
 	public static final boolean THREAD_ENABLED = Boolean.getBoolean(
 		FinalizeManager.class.getName() + ".thread.enabled");
 
-	public static <T> Reference<T> register(
-		T realReference, FinalizeAction finalizeAction) {
+	public static final ReferenceFactory WEAK_REFERENCE_FACTORY =
+		new ReferenceFactory() {
 
-		Reference<T> reference = new EqualityWeakReference<T>(
+			@Override
+			public <T> Reference<T> createReference(
+				T realReference, ReferenceQueue<? super T> referenceQueue) {
+
+				return new EqualityWeakReference<T>(
+					realReference, referenceQueue);
+			}
+
+		};
+
+	public static <T> Reference<T> register(
+		T realReference, FinalizeAction finalizeAction,
+		ReferenceFactory referenceFactory) {
+
+		Reference<T> reference = referenceFactory.createReference(
 			realReference, _referenceQueue);
 
 		_referenceActionMap.put(reference, finalizeAction);
@@ -43,20 +83,37 @@ public class FinalizeManager {
 		return reference;
 	}
 
+	public interface ReferenceFactory {
+
+		public <T> Reference<T> createReference(
+			T realReference, ReferenceQueue<? super T> referenceQueue);
+
+	}
+
+	private static void _finalizeReference(
+		Reference<? extends Object> reference) {
+
+		FinalizeAction finalizeAction = _referenceActionMap.remove(reference);
+
+		try {
+			finalizeAction.doFinalize(reference);
+		}
+		finally {
+			reference.clear();
+		}
+	}
+
 	private static void _pollingCleanup() {
 		Reference<? extends Object> reference = null;
 
 		while ((reference = _referenceQueue.poll()) != null) {
-			FinalizeAction finalizeAction = _referenceActionMap.remove(
-				reference);
-
-			finalizeAction.doFinalize(reference);
+			_finalizeReference(reference);
 		}
 	}
 
-	private static Map<Reference<?>, FinalizeAction> _referenceActionMap =
+	private static final Map<Reference<?>, FinalizeAction> _referenceActionMap =
 		new ConcurrentHashMap<Reference<?>, FinalizeAction>();
-	private static ReferenceQueue<Object> _referenceQueue =
+	private static final ReferenceQueue<Object> _referenceQueue =
 		new ReferenceQueue<Object>();
 
 	private static class FinalizeThread extends Thread {
@@ -69,13 +126,7 @@ public class FinalizeManager {
 		public void run() {
 			while (true) {
 				try {
-					Reference<? extends Object> reference =
-						_referenceQueue.remove();
-
-					FinalizeAction finalizeAction = _referenceActionMap.remove(
-						reference);
-
-					finalizeAction.doFinalize(reference);
+					_finalizeReference(_referenceQueue.remove());
 				}
 				catch (InterruptedException ie) {
 				}

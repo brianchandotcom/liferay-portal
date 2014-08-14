@@ -599,6 +599,7 @@ AUI.add(
 					}
 					else {
 						instance._closeActiveMenu();
+
 						return;
 					}
 				}

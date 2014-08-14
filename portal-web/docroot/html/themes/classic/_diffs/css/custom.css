@@ -704,6 +704,22 @@ $dockbarOpenGradientStart: #0EA6F9;
 		@include respond-to(phone, tablet) {
 			margin-bottom: 10px;
 		}
+
+		.portlet-actions {
+			@include box-shadow(inset 2px 1px 2px #000);
+
+			@include respond-to(phone, tablet) {
+				@include box-shadow(none);
+			}
+		}
+
+		.portlet-title-default {
+			@include box-shadow(inset -2px 1px 2px #000);
+
+			@include respond-to(phone, tablet) {
+				@include box-shadow(none);
+			}
+		}
 	}
 
 	.portlet-content, .portlet-minimized .portlet-content-container {

@@ -8,7 +8,7 @@
 }
 
 body.portlet {
-	border: none;
+	border-width: 0;
 }
 
 .portlet-topper {
@@ -73,9 +73,11 @@ body.portlet {
 
 .portlet-title-text {
 	display: inline-block;
+
+	@include ellipsis;
+
 	max-width: 95%;
 	overflow: hidden;
-	text-overflow: ellipsis;
 	vertical-align: top;
 	white-space: nowrap;
 }
@@ -103,7 +105,8 @@ body.portlet {
 %portlet-action-bar {
 	background: #333;
 	color: #FFF;
-	text-shadow: -1px -1px #000;
+
+	@include text-shadow(-1px -1px #000);
 
 	a {
 		color: #3AF;
@@ -183,54 +186,52 @@ body.portlet {
 }
 
 .portlet-borderless-bar {
+	background-color: transparent;
 	font-size: 10px;
 
 	@include opacity(0.3);
 
-	padding: 2px 5px 1px;
+	height: 0;
+	padding: 0;
 	position: absolute;
 	right: 0;
 	top: 0;
-
+	width: 100%;
 	z-index: 200;
 
 	@include respond-to(phone, tablet) {
+		background-color: #333;
+		height: auto;
+		overflow: auto;
 		position: static;
 	}
 
 	a {
 		background: url() no-repeat 0 50%;
 		display: inline-block;
-		height: 16px;
+		height: 20px;
 		margin-left: 5px;
 		text-indent: -9999px;
-		vertical-align: middle;
 		width: 16px;
 	}
 
 	.portlet-actions {
-		display: none;
-		float: left;
-		margin-right: 10px;
+		float: right;
 		overflow: hidden;
+		padding: 0 5px;
 
-		@include respond-to(phone, tablet) {
-			float: right;
-			margin-right: 0;
-
-			.portlet-action, .portlet-options {
-				display: inline-block;
-			}
-
-			.portlet-close a {
-				margin-top: -3px;
-			}
+		.portlet-action, .portlet-options {
+			display: inline-block;
 		}
 	}
 
 	.portlet-actions, .portlet-title-default {
+		background-color: #333;
 		min-height: 20px;
-		vertical-align: top;
+
+		@include respond-to(phone, tablet) {
+			background-color: transparent;
+		}
 	}
 
 	.portlet-action-separator {
@@ -244,8 +245,13 @@ body.portlet {
 		width: auto;
 	}
 
-	.portlet-close a {
-		background-image: url(../images/portlet/close_borderless.png);
+	.portlet-close {
+		display: inline-block;
+		vertical-align: middle;
+
+		a {
+			background-image: url(../images/portlet/close_borderless.png);
+		}
 	}
 
 	.portlet-options li.lfr-trigger strong a {
@@ -295,21 +301,28 @@ body.portlet {
 
 @include respond-to(phone, tablet) {
 	.portlet-borderless-container .portlet-title-default {
-		float: none;
+		float: left;
 	}
 }
 
 .portlet-title-default {
-	display: inline-block;
+	display: block;
+
+	@include ellipsis;
+
 	float: right;
 	font-weight: bold;
+	height: 0;
+	line-height: 19px;
+	max-width: 50%;
+	overflow: hidden;
+	padding: 0 10px;
 	text-transform: uppercase;
 
 	@include respond-to(phone, tablet) {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		width: 74%;
+		max-width: 74%;
+		padding-right: 5px;
+		padding-top: 1px;
 	}
 }
 
@@ -319,9 +332,15 @@ body.portlet {
 	}
 
 	.portlet-title-default {
-		background: url(../images/portlet/draggable_borderless.png) no-repeat 0 50%;
+		background: url(../images/portlet/draggable_borderless.png) no-repeat 0 50% #333;
 		cursor: move;
 		padding-left: 20px;
+
+		@include respond-to(phone, tablet) {
+			background-color: transparent;
+			background-position: 5px 3px;
+			padding-left: 25px;
+		}
 	}
 }
 
@@ -581,7 +600,7 @@ body.portlet {
 .restricted {
 	&, & td {
 		background: #FDD;
-		border: none;
+		border-width: 0;
 	}
 
 	* {
@@ -665,15 +684,15 @@ body.portlet {
 .taglib-calendar {
 	tr {
 		&.portlet-section-header th, & td {
-			border: none;
+			border-width: 0;
 		}
 
 		td {
 			a {
 				background-color: #F0F5F7;
 				border: 1px solid #FFF;
-				border-bottom: none;
-				border-left: none;
+				border-bottom-width: 0;
+				border-left-width: 0;
 				display: block;
 				height: 15px;
 				padding: 5px 0;
@@ -734,7 +753,7 @@ body.portlet {
 	}
 
 	.taglib-calendar tr td.first a {
-		border-right: none;
+		border-right-width: 0;
 	}
 }
 

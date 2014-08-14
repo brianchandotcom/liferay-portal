@@ -43,7 +43,7 @@ public class XSLContentUpgrade {
 		_releaseLocalService = releaseLocalService;
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
+	@Reference(target = "(original.bean=true)", unbind = "-")
 	protected void setServletContext(ServletContext servletContext) {
 	}
 

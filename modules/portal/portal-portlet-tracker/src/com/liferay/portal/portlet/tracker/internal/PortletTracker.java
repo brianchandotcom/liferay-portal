@@ -1183,7 +1183,7 @@ public class PortletTracker
 	}
 
 	@Reference(
-		target = "(original.bean=*)"
+		target = "(original.bean=true)"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

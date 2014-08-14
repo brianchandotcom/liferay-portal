@@ -232,6 +232,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="WikiPage#gotoAllPagesPG" />
+
 		<execute macro="WikiPage#deletePG">
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>

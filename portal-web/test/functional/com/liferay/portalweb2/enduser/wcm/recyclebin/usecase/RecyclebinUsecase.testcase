@@ -930,6 +930,10 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WikiNode#gotoCP">
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+		</execute>
+
 		<execute macro="WikiPage#deleteCP">
 			<var name="assetType" value="Wiki Page" />
 			<var name="wikiNodeName" value="Wiki Node Name" />

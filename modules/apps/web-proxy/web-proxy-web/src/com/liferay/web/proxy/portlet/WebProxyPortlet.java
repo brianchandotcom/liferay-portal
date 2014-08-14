@@ -226,7 +226,7 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 	}
 
 	@Reference(unbind = "-")
-	private void setWebProxyVerifyPortletIdUpgrade(
+	protected void setWebProxyVerifyPortletIdUpgrade(
 		WebProxyUpgrade webProxyUpgrade) {
 	}
 

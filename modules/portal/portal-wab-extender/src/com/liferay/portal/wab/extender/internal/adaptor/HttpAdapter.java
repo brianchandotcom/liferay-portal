@@ -118,7 +118,7 @@ public class HttpAdapter {
 	}
 
 	@Reference(target = "(original.bean=true)")
-	private void getServletContext(ServletContext servletContext) {
+	protected void getServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
 

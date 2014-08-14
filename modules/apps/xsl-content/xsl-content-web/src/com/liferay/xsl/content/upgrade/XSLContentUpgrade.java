@@ -37,14 +37,14 @@ import org.osgi.service.component.annotations.Reference;
 public class XSLContentUpgrade {
 
 	@Reference(unbind = "-")
-	private void setReleaseLocalService(
+	protected void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
 	}
 
 	@Reference(target = "(original.bean=*)", unbind = "-")
-	private void setServletContext(ServletContext servletContext) {
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	@Activate

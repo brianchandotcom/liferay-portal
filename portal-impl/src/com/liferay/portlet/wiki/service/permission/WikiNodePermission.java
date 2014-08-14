@@ -15,6 +15,7 @@
 package com.liferay.portlet.wiki.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
@@ -26,6 +27,9 @@ import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 /**
  * @author Brian Wing Shun Chan
  */
+@OSGiBeanProperties(
+	property = {"model.class.name=com.liferay.portlet.wiki.model.WikiNode"}
+)
 public class WikiNodePermission implements BaseModelPermissionChecker {
 
 	public static void check(

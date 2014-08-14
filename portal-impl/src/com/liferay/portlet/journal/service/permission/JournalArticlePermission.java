@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -34,6 +35,11 @@ import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.journal.model.JournalArticle"
+	}
+)
 public class JournalArticlePermission implements BaseModelPermissionChecker {
 
 	public static void check(

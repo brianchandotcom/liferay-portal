@@ -15,6 +15,7 @@
 package com.liferay.portlet.polls.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
@@ -26,6 +27,11 @@ import com.liferay.portlet.polls.service.PollsQuestionLocalServiceUtil;
 /**
  * @author Brian Wing Shun Chan
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.polls.model.PollsQuestion"
+	}
+)
 public class PollsQuestionPermission implements BaseModelPermissionChecker {
 
 	public static void check(

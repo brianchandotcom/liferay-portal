@@ -15,6 +15,7 @@
 package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -45,6 +46,9 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
+@OSGiBeanProperties(
+	property = {"model.class.name=com.liferay.portal.model.Layout"}
+)
 public class LayoutPermissionImpl
 	implements BaseModelPermissionChecker, LayoutPermission {
 

@@ -60,6 +60,12 @@ public class AssetCategorySearchTest extends BaseSearchTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testSearchBaseModelWithTrash() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testSearchByDDMStructureField() throws Exception {
 	}
 
@@ -174,7 +180,7 @@ public class AssetCategorySearchTest extends BaseSearchTestCase {
 
 		AssetCategory category = (AssetCategory)baseModel;
 
-		category.setName(keywords);
+		category.setTitle(keywords);
 
 		return AssetCategoryLocalServiceUtil.updateAssetCategory(category);
 	}

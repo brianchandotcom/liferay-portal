@@ -448,10 +448,8 @@ public abstract class BaseSearchTestCase {
 		int initialBaseModelsSearchCount = searchBaseModelsCount(
 			getBaseModelClass(), group.getGroupId(), searchContext);
 
-		String keywords = RandomTestUtil.randomString();
-
 		baseModel = addBaseModel(
-			parentBaseModel, true, keywords, serviceContext);
+			parentBaseModel, true, getSearchKeywords(), serviceContext);
 
 		Assert.assertEquals(
 			initialBaseModelsSearchCount + 1,
@@ -460,7 +458,7 @@ public abstract class BaseSearchTestCase {
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
-		searchContext.setKeywords(keywords);
+		searchContext.setKeywords(getSearchKeywords());
 
 		Assert.assertEquals(
 			initialBaseModelsSearchCount,

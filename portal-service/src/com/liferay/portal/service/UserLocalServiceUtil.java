@@ -407,7 +407,7 @@ public class UserLocalServiceUtil {
 	* @param headerMap the header map from the authentication request
 	* @param parameterMap the parameter map from the authentication request
 	* @param resultsMap the map of authentication results (may be nil). After
-	a succesful authentication the user's primary key will be placed
+	a successful authentication the user's primary key will be placed
 	under the key <code>userId</code>.
 	* @return the authentication status. This can be {@link
 	com.liferay.portal.security.auth.Authenticator#FAILURE}
@@ -441,7 +441,7 @@ public class UserLocalServiceUtil {
 	* @param headerMap the header map from the authentication request
 	* @param parameterMap the parameter map from the authentication request
 	* @param resultsMap the map of authentication results (may be nil). After
-	a succesful authentication the user's primary key will be placed
+	a successful authentication the user's primary key will be placed
 	under the key <code>userId</code>.
 	* @return the authentication status. This can be {@link
 	com.liferay.portal.security.auth.Authenticator#FAILURE}
@@ -475,7 +475,7 @@ public class UserLocalServiceUtil {
 	* @param headerMap the header map from the authentication request
 	* @param parameterMap the parameter map from the authentication request
 	* @param resultsMap the map of authentication results (may be nil). After
-	a succesful authentication the user's primary key will be placed
+	a successful authentication the user's primary key will be placed
 	under the key <code>userId</code>.
 	* @return the authentication status. This can be {@link
 	com.liferay.portal.security.auth.Authenticator#FAILURE}
@@ -529,13 +529,8 @@ public class UserLocalServiceUtil {
 	* @param login either the user's email address, screen name, or primary
 	key depending on the value of <code>authType</code>
 	* @param password the user's password
-	* @return the authentication status. This can be {@link
-	com.liferay.portal.security.auth.Authenticator#FAILURE}
-	indicating that the user's credentials are invalid, {@link
-	com.liferay.portal.security.auth.Authenticator#SUCCESS}
-	indicating a successful login, or {@link
-	com.liferay.portal.security.auth.Authenticator#DNE} indicating
-	that a user with that login does not exist.
+	* @return the user's primary key if authentication is successful;
+	<code>0</code> otherwise
 	* @throws PortalException if a portal exception occurred
 	*/
 	public static long authenticateForBasic(long companyId,
@@ -559,7 +554,7 @@ public class UserLocalServiceUtil {
 	* @param method the request method
 	* @param uri the request URI
 	* @param response the authentication response hash
-	* @return the user's primary key if authentication is succesful;
+	* @return the user's primary key if authentication is successful;
 	<code>0</code> otherwise
 	* @throws PortalException if a portal exception occurred
 	*/

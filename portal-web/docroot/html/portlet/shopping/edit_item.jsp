@@ -178,7 +178,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 			<br /><br />
 
-			<liferay-ui:error exception="<%= DupilcateFieldNameException.class %>" message="field-names-must-be-unique" />
+			<liferay-ui:error exception="<%= DuplicateFieldNameException.class %>" message="field-names-must-be-unique" />
 
 			<table class="lfr-table">
 

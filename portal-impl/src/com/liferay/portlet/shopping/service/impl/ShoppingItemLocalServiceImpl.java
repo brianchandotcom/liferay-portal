@@ -32,7 +32,7 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.amazonrankings.model.AmazonRankings;
 import com.liferay.portlet.amazonrankings.util.AmazonRankingsUtil;
 import com.liferay.portlet.shopping.AmazonException;
-import com.liferay.portlet.shopping.DupilcateFieldNameException;
+import com.liferay.portlet.shopping.DuplicateFieldNameException;
 import com.liferay.portlet.shopping.DuplicateItemSKUException;
 import com.liferay.portlet.shopping.ItemLargeImageNameException;
 import com.liferay.portlet.shopping.ItemLargeImageSizeException;
@@ -846,7 +846,7 @@ public class ShoppingItemLocalServiceImpl
 
 		for (ShoppingItemField shoppingItemField : itemFields) {
 			if (fieldNames.contains(shoppingItemField.getName())) {
-				throw new DupilcateFieldNameException(
+				throw new DuplicateFieldNameException(
 					shoppingItemField.getName());
 			}
 			else {

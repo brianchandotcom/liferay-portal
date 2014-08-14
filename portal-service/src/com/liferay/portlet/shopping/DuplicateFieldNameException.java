@@ -19,21 +19,21 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DupilcateFieldNameException extends PortalException {
+public class DuplicateFieldNameException extends PortalException {
 
-	public DupilcateFieldNameException() {
+	public DuplicateFieldNameException() {
 		super();
 	}
 
-	public DupilcateFieldNameException(String msg) {
+	public DuplicateFieldNameException(String msg) {
 		super(msg);
 	}
 
-	public DupilcateFieldNameException(String msg, Throwable cause) {
+	public DuplicateFieldNameException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public DupilcateFieldNameException(Throwable cause) {
+	public DuplicateFieldNameException(Throwable cause) {
 		super(cause);
 	}
 

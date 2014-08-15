@@ -67,4 +67,5 @@ public class MobileDriverWrapper
 	}
 
 	private MobileDriver _mobileDriver;
+
 }

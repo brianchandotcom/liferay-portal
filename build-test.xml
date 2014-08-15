@@ -630,6 +630,34 @@
 			<exec dir="${test.app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
 				<arg line="${app.server.stop.executable.arg.line}" />
 			</exec>
+
+			<if>
+				<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
+				<then>
+					<waitfor maxwait="1" maxwaitunit="minute">
+						<not>
+							<http url="http://localhost:${test.app.server.leading.port.number}180/console" />
+						</not>
+					</waitfor>
+				</then>
+				<elseif>
+					<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
+					<then>
+						<waitfor maxwait="1" maxwaitunit="minute">
+							<not>
+								<http url="http://localhost:${test.app.server.leading.port.number}080" />
+							</not>
+						</waitfor>
+					</then>
+				</elseif>
+				<else>
+					<waitfor maxwait="1" maxwaitunit="minute">
+						<not>
+							<http url="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
+						</not>
+					</waitfor>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 

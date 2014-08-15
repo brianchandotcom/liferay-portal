@@ -33,7 +33,16 @@ public class FinalizeManager {
 				T realReference, ReferenceQueue<? super T> referenceQueue) {
 
 				return new EqualityPhantomReference<T>(
-					realReference, referenceQueue);
+					realReference, referenceQueue) {
+
+						@Override
+						public void clear() {
+							_referenceActionMap.remove(this);
+
+							super.clear();
+						}
+
+					};
 			}
 
 		};
@@ -46,7 +55,16 @@ public class FinalizeManager {
 				T realReference, ReferenceQueue<? super T> referenceQueue) {
 
 				return new EqualitySoftReference<T>(
-					realReference, referenceQueue);
+					realReference, referenceQueue) {
+
+						@Override
+						public void clear() {
+							_referenceActionMap.remove(this);
+
+							super.clear();
+						}
+
+					};
 			}
 
 		};
@@ -62,7 +80,16 @@ public class FinalizeManager {
 				T realReference, ReferenceQueue<? super T> referenceQueue) {
 
 				return new EqualityWeakReference<T>(
-					realReference, referenceQueue);
+					realReference, referenceQueue) {
+
+						@Override
+						public void clear() {
+							_referenceActionMap.remove(this);
+
+							super.clear();
+						}
+
+					};
 			}
 
 		};
@@ -95,11 +122,13 @@ public class FinalizeManager {
 
 		FinalizeAction finalizeAction = _referenceActionMap.remove(reference);
 
-		try {
-			finalizeAction.doFinalize(reference);
-		}
-		finally {
-			reference.clear();
+		if (finalizeAction != null) {
+			try {
+				finalizeAction.doFinalize(reference);
+			}
+			finally {
+				reference.clear();
+			}
 		}
 	}
 

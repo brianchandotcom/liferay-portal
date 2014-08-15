@@ -51,7 +51,9 @@
 		<property name="typeMappings">
 			<map>
 				<entry key="_default_" value="/META-INF/mappings/default-type-mappings.json" />
+				<entry key="KeywordQueryDocumentType" value="/META-INF/mappings/keyword-query-type-mappings.json" />
 				<entry key="LiferayDocumentType" value="/META-INF/mappings/liferay-type-mappings.json" />
+				<entry key="SpellCheckDocumentType" value="/META-INF/mappings/spellcheck-type-mappings.json" />
 			</map>
 		</property>
 	</bean>

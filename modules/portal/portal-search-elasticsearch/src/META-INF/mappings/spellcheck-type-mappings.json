@@ -1,0 +1,34 @@
+{
+	"SpellCheckDocumentType": {
+		"properties": {
+			"priority": {
+				"index": "not_analyzed",
+				"type": "float"
+			}
+		},
+		"dynamic_templates": [
+			{
+				"template_": {
+					"match": "*",
+					"match_mapping_type": "string",
+					"mapping": {
+						"index": "not_analyzed",
+						"index_options": "docs",
+						"omit_norms": "yes",
+						"type": "string"
+					}
+				}
+			},
+			{
+				"template_spellCheckWord": {
+					"match": "spellCheckWord_*",
+					"match_mapping_type": "string",
+					"mapping": {
+						"index": "analyzed",
+						"type": "string"
+					}
+				}
+			}
+		]
+	}
+}

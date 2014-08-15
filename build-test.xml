@@ -535,31 +535,6 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="stop-additional-app-servers">
-		<sequential>
-			<if>
-				<isset property="app.server.bundle.count" />
-				<then>
-					<var name="bundle.count" value="1" />
-
-					<antelope:repeat count="${app.server.bundle.count}">
-						<stop-app-server
-							app.server.bin.dir="${app.server.parent.dir}-${bundle.count}/${app.server.type}-${app.server.version}/bin"
-						/>
-
-						<math
-							datatype="int"
-							operand1="${bundle.count}"
-							operand2="1"
-							operation="+"
-							result="bundle.count"
-						/>
-					</antelope:repeat>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="stop-app-server">
 		<attribute default="0" name="app.server.bundle.number" />
 
@@ -3550,7 +3525,23 @@ if (ppstate.equals("normal")) {
 		<if>
 			<equals arg1="${cluster.enabled}" arg2="true" />
 			<then>
-				<stop-additional-app-servers />
+				<var name="bundle.count" value="1" />
+
+				<antelope:repeat count="${app.server.bundle.count}">
+					<var name="app.server.bundle.number" value="${bundle.count}" />
+
+					<stop-app-server />
+
+					<math
+						datatype="int"
+						operand1="${bundle.count}"
+						operand2="1"
+						operation="+"
+						result="bundle.count"
+					/>
+				</antelope:repeat>
+
+				<var name="app.server.bundle.number" unset="true" />
 			</then>
 		</if>
 

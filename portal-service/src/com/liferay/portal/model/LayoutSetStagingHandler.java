@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.NoSuchLayoutSetBranchException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -133,32 +132,20 @@ public class LayoutSetStagingHandler
 		long layoutSetBranchId = ParamUtil.getLong(
 			serviceContext, "layoutSetBranchId");
 
-		LayoutSetBranch layoutSetBranch = null;
-
 		if (layoutSetBranchId > 0) {
-			layoutSetBranch =
-				LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
-					layoutSetBranchId);
-		}
-		else if (serviceContext.isSignedIn()) {
-			layoutSetBranch =
-				LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(
-					serviceContext.getUserId(), layoutSet.getGroupId(),
-					layoutSet.isPrivateLayout(), layoutSet.getLayoutSetId(),
-					layoutSetBranchId);
+			return LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
+				layoutSetBranchId);
 		}
 
-		if (layoutSetBranch == null) {
-			try {
-				layoutSetBranch =
-					LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(
-						layoutSet.getGroupId(), layoutSet.isPrivateLayout());
-			}
-			catch (NoSuchLayoutSetBranchException nslsbe) {
-			}
+		if (serviceContext.isSignedIn()) {
+			return LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(
+				serviceContext.getUserId(), layoutSet.getGroupId(),
+				layoutSet.isPrivateLayout(), layoutSet.getLayoutSetId(),
+				layoutSetBranchId);
 		}
 
-		return layoutSetBranch;
+		return LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(
+			layoutSet.getGroupId(), layoutSet.isPrivateLayout());
 	}
 
 	private Object _toEscapedModel() {

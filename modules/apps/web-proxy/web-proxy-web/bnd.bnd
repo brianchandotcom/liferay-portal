@@ -8,7 +8,7 @@ Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
 	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
-	@lib/nekohtml.jar,\
 	@lib/org.portletbridge.core.jar,\
 	@lib/org.portletbridge.portlet.jar,\
+	@../../../../lib/portal/nekohtml.jar,\
 	@../../../../util-taglib/util-taglib.jar

@@ -2848,6 +2848,18 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>lib/portal/nekohtml.jar</file-name>
+		<version>1.9.14</version>
+		<project-name>CyberNeko HTML Parser</project-name>
+		<project-url>http://sourceforge.net/projects/nekohtml</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>lib/portal/netcdf.jar</file-name>
 		<version>4.2</version>
 		<project-name>NetCDF</project-name>

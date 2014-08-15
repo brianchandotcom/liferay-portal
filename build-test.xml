@@ -475,29 +475,59 @@
 	</macrodef>
 
 	<macrodef name="start-app-server">
-		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
-		<attribute default="${liferay.home}" name="liferay.home" />
-		<attribute default="http://localhost:8080/web/guest" name="app.server.http.url" />
+		<attribute default="0" name="app.server.bundle.number" />
 
 		<sequential>
 			<if>
+				<equals arg1="${tcat.enabled}" arg2="true" />
+				<then>
+					<start-app-server-cmd
+						app.server.bin.dir="${app.server.tcat.admin.bin.dir}"
+						app.server.bundle.number="@{app.server.bundle.number}"
+					/>
+
+					<start-app-server-cmd
+						app.server.bin.dir="${app.server.tcat.agent.bin.dir}"
+						app.server.bundle.number="@{app.server.bundle.number}"
+					/>
+				</then>
+				<else>
+					<start-app-server-cmd
+						app.server.bundle.number="@{app.server.bundle.number}"
+					/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="start-app-server-cmd">
+		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
+		<attribute default="0" name="app.server.bundle.number" />
+
+		<sequential>
+			<set-app-server-properties
+				app.server.bin.dir="@{app.server.bin.dir}"
+				app.server.bundle.number="@{app.server.bundle.number}"
+			/>
+
+			<if>
 				<equals arg1="${app.server.type}" arg2="jboss" />
 				<then>
-					<echo file="${app.server.deploy.dir}/ROOT.war.dodeploy"></echo>
+					<echo file="${test.app.server.deploy.dir}/ROOT.war.dodeploy"></echo>
 				</then>
 			</if>
 
 			<if>
 				<equals arg1="${test.ant.launched.by.selenium}" arg2="true" />
 				<then>
-					<exec dir="${app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
+					<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
 						<arg line="${app.server.start.executable.arg.line}" />
 					</exec>
 				</then>
 				<else>
 					<parallel>
 						<daemons>
-							<exec dir="@{app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
+							<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
 								<arg line="${app.server.start.executable.arg.line}" />
 							</exec>
 						</daemons>
@@ -509,22 +539,22 @@
 				<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
 				<then>
 					<waitfor maxwait="5" maxwaitunit="minute">
-						<http url="http://localhost:8180/console" />
+						<http url="http://localhost:${test.app.server.leading.port.number}180/console" />
 					</waitfor>
 				</then>
 				<elseif>
 					<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
 					<then>
 						<waitfor maxwait="1" maxwaitunit="minute">
-							<http url="http://localhost:8080" />
+							<http url="http://localhost:${test.app.server.leading.port.number}080" />
 						</waitfor>
 					</then>
 				</elseif>
 				<else>
 					<waitfor maxwait="5" maxwaitunit="minute">
 						<and>
-							<available file="@{liferay.home}/logs" />
-							<http url="@{app.server.http.url}" />
+							<available file="${test.app.server.parent.dir}/logs" />
+							<http url="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
 						</and>
 					</waitfor>
 				</else>
@@ -3376,27 +3406,20 @@ if (ppstate.equals("normal")) {
 
 		<antcall target="copy-sikuli-temp-files" />
 
+		<start-app-server />
+
 		<if>
-			<equals arg1="${tcat.enabled}" arg2="true" />
+			<equals arg1="${cluster.enabled}" arg2="true" />
 			<then>
-				<start-app-server
-					app.server.bin.dir="${app.server.tcat.admin.bin.dir}"
-				/>
-
-				<start-app-server
-					app.server.bin.dir="${app.server.tcat.agent.bin.dir}"
-				/>
+				<start-additional-app-servers />
 			</then>
-			<else>
-				<start-app-server />
+		</if>
 
-				<if>
-					<equals arg1="${cluster.enabled}" arg2="true" />
-					<then>
-						<start-additional-app-servers />
-					</then>
-				</if>
-
+		<if>
+			<not>
+				<equals arg1="${tcat.enabled}" arg2="true" />
+			</not>
+			<then>
 				<for param="log.file">
 					<path>
 						<fileset dir="${liferay.home}/logs">
@@ -3453,7 +3476,7 @@ if (ppstate.equals("normal")) {
 						}
 					]]>
 				</script>
-			</else>
+			</then>
 		</if>
 
 		<if>

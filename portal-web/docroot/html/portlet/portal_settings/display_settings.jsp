@@ -18,7 +18,7 @@
 
 <liferay-ui:error-marker key="errorSection" value="displaySettings" />
 
-<h3><liferay-ui:message key="display-settings" /><h3>
+<h3><liferay-ui:message key="display-settings" /></h3>
 
 <h4><liferay-ui:message key="language-and-time-zone" /></h4>
 

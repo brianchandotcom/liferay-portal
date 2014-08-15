@@ -13,7 +13,6 @@
 			},
 			"createDate": {
 				"index": "not_analyzed",
-				"store": "yes",
 				"type": "string"
 			},
 			"companyId": {
@@ -33,7 +32,6 @@
 			},
 			"expirationDate": {
 				"index": "not_analyzed",
-				"store": "yes",
 				"type": "string"
 			},
 			"groupId": {
@@ -43,7 +41,6 @@
 			},
 			"modified": {
 				"index": "not_analyzed",
-				"store": "yes",
 				"type": "string"
 			},
 			"portletId": {
@@ -53,17 +50,14 @@
 			},
 			"publishDate": {
 				"index": "not_analyzed",
-				"store": "yes",
 				"type": "string"
 			},
 			"removedDate": {
 				"index": "not_analyzed",
-				"store": "yes",
 				"type": "string"
 			},
 			"removedByUser": {
 				"index": "not_analyzed",
-				"store": "yes",
 				"type": "string"
 			},
 			"rootEntryClassName": {
@@ -83,27 +77,27 @@
 			},
 			"status": {
 				"index": "not_analyzed",
-				"store": "yes",
 				"type": "string"
 			},
 			"type": {
+				"index": "not_analyzed",
+				"type": "string"
+			},
+			"uid": {
 				"index": "not_analyzed",
 				"store": "yes",
 				"type": "string"
 			},
 			"userId": {
 				"index": "not_analyzed",
-				"store": "yes",
 				"type": "string"
 			},
 			"userName": {
 				"index": "not_analyzed",
-				"store": "yes",
 				"type": "string"
 			},
 			"visible": {
 				"index": "not_analyzed",
-				"store": "yes",
 				"type": "string"
 			}
 		},
@@ -114,7 +108,6 @@
 					"match_mapping_type": "string",
 					"mapping": {
 						"index": "not_analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -125,7 +118,6 @@
 					"match_mapping_type": "string",
 					"mapping": {
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -136,7 +128,6 @@
 					"match_mapping_type": "string",
 					"mapping": {
 						"index": "not_analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -148,7 +139,6 @@
 					"mapping": {
 						"analyzer": "arabic",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -160,7 +150,6 @@
 					"mapping": {
 						"analyzer": "bulgarian",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -173,7 +162,6 @@
 					"mapping": {
 						"analyzer": "catalan",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -185,7 +173,6 @@
 					"mapping": {
 						"analyzer": "czech",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -197,7 +184,6 @@
 					"mapping": {
 						"analyzer": "danish",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -209,7 +195,6 @@
 					"mapping": {
 						"analyzer": "german",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -221,7 +206,6 @@
 					"mapping": {
 						"analyzer": "greek",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -234,7 +218,6 @@
 					"mapping": {
 						"analyzer": "english",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -247,7 +230,6 @@
 					"mapping": {
 						"analyzer": "spanish",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -259,7 +241,6 @@
 					"mapping": {
 						"analyzer": "basque",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -271,7 +252,6 @@
 					"mapping": {
 						"analyzer": "persian",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -283,7 +263,6 @@
 					"mapping": {
 						"analyzer": "finnish",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -296,7 +275,6 @@
 					"mapping": {
 						"analyzer": "french",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -308,7 +286,6 @@
 					"mapping": {
 						"analyzer": "hindi",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -320,7 +297,6 @@
 					"mapping": {
 						"analyzer": "hungarian",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -332,7 +308,6 @@
 					"mapping": {
 						"analyzer": "armenian",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -344,7 +319,6 @@
 					"mapping": {
 						"analyzer": "indonesian",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -356,7 +330,6 @@
 					"mapping": {
 						"analyzer": "italian",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -368,7 +341,6 @@
 					"mapping": {
 						"analyzer": "cjk",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -380,7 +352,6 @@
 					"mapping": {
 						"analyzer": "cjk",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -392,7 +363,6 @@
 					"mapping": {
 						"analyzer": "dutch",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -404,7 +374,6 @@
 					"mapping": {
 						"analyzer": "norwegian",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -416,7 +385,6 @@
 					"mapping": {
 						"analyzer": "brazilian",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -428,7 +396,6 @@
 					"mapping": {
 						"analyzer": "portuguese",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -440,7 +407,6 @@
 					"mapping": {
 						"analyzer": "romanian",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -452,7 +418,6 @@
 					"mapping": {
 						"analyzer": "russian",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -464,7 +429,6 @@
 					"mapping": {
 						"analyzer": "swedish",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -476,7 +440,6 @@
 					"mapping": {
 						"analyzer": "thai",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -488,7 +451,6 @@
 					"mapping": {
 						"analyzer": "turkish",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -501,7 +463,6 @@
 					"mapping": {
 						"analyzer": "chinese",
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}
@@ -512,7 +473,6 @@
 					"match_mapping_type": "string",
 					"mapping": {
 						"index": "analyzed",
-						"store": "yes",
 						"type": "string"
 					}
 				}

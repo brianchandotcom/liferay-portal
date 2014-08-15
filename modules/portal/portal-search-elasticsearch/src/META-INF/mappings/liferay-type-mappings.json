@@ -45,11 +45,6 @@
 				"index": "not_analyzed",
 				"store": "yes",
 				"type": "string"
-			},
-			"uid": {
-				"index": "not_analyzed",
-				"store": "yes",
-				"type": "string"
 			}
 		}
 	}

@@ -200,36 +200,42 @@
 			<if>
 				<isset property="app.server.bundle.count" />
 				<then>
-					<var name="bundle.count" value="1" />
+					<var name="app.server.bundle.number" value="1" />
 
 					<antelope:repeat count="${app.server.bundle.count}">
+						<set-app-server-properties
+							app.server.bundle.number="${app.server.bundle.number}"
+						/>
+
 						<replaceregexp
-							file="${app.server.parent.dir}-${bundle.count}/tomcat-${app.server.tomcat.version}/conf/server.xml"
+							file="${test.app.server.dir}/conf/server.xml"
 							flags="g"
 							match="=&quot;8(\d\d\d)&quot;"
-							replace="=&quot;${bundle.count}\1&quot;"
+							replace="=&quot;${test.app.server.leading.port.number}\1&quot;"
 						/>
 
 						<replace
-							file="${app.server.parent.dir}-${bundle.count}/tomcat-${app.server.tomcat.version}/conf/server.xml"
+							file="${test.app.server.dir}/conf/server.xml"
 							token="&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;"
-							value="&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;${bundle.count}&quot;&gt;"
+							value="&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;${test.app.server.leading.port.number}&quot;&gt;"
 						/>
 
 						<replace
-							file="${app.server.parent.dir}-${bundle.count}/tomcat-${app.server.tomcat.version}/webapps/ROOT/WEB-INF/classes/portal-ext.properties"
+							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
 							token="liferay.home=${liferay.home}"
-							value="liferay.home=${app.server.parent.dir}-${bundle.count}"
+							value="liferay.home=${test.app.server.parent.dir}"
 						/>
 
 						<math
 							datatype="int"
-							operand1="${bundle.count}"
+							operand1="${app.server.bundle.number}"
 							operand2="1"
 							operation="+"
-							result="bundle.count"
+							result="app.server.bundle.number"
 						/>
 					</antelope:repeat>
+
+					<var name="app.server.bundle.number" unset="true" />
 				</then>
 			</if>
 		</sequential>

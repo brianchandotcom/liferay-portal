@@ -59,7 +59,7 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 
 					text = text.replace(' ', '-');
 
-					printer.print("<a name=\"" + text + "\" />");
+					printer.print("<a id=\"" + text + "\"></a>");
 				}
 			}
 		}
@@ -97,7 +97,7 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 
 		visitChildren(picWithCaptionNode);
 
-		printer.print("</p></p>");
+		printer.print("</p>");
 	}
 
 	protected void print(SidebarNode sidebarNode) {

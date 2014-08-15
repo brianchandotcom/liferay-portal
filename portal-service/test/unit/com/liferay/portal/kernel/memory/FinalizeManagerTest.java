@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.ThreadUtil;
 
 import java.lang.ref.Reference;
 import java.lang.reflect.InvocationTargetException;
 
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -85,6 +87,43 @@ public class FinalizeManagerTest {
 	@Test
 	public void testConstructor() {
 		new FinalizeManager();
+	}
+
+	@Test
+	public void testManuelClear() throws Exception {
+		System.setProperty(_THREAD_ENABLED_KEY, StringPool.FALSE);
+
+		Object object = new Object();
+
+		MarkFinalizeAction markFinalizeAction = new MarkFinalizeAction();
+
+		Reference<Object> reference = FinalizeManager.register(
+			object, markFinalizeAction, FinalizeManager.WEAK_REFERENCE_FACTORY);
+
+		Map<Reference<?>, FinalizeAction> finalizeActions =
+			(Map<Reference<?>, FinalizeAction>)ReflectionTestUtil.getFieldValue(
+				FinalizeManager.class, "_finalizeActions");
+
+		Assert.assertEquals(markFinalizeAction, finalizeActions.get(reference));
+
+		reference.clear();
+
+		Assert.assertNull(finalizeActions.get(reference));
+
+		object = null;
+
+		GCUtil.gc();
+
+		ReflectionTestUtil.invoke(
+			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
+
+		Assert.assertFalse(markFinalizeAction.isMarked());
+
+		ReflectionTestUtil.invoke(
+			FinalizeManager.class, "_finalizeReference",
+			new Class<?>[] {Reference.class}, reference);
+
+		Assert.assertFalse(markFinalizeAction.isMarked());
 	}
 
 	@Test

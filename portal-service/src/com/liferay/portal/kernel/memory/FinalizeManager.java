@@ -33,7 +33,16 @@ public class FinalizeManager {
 				T reference, ReferenceQueue<? super T> referenceQueue) {
 
 				return new EqualityPhantomReference<T>(
-					reference, referenceQueue);
+					reference, referenceQueue) {
+
+						@Override
+						public void clear() {
+							_finalizeActions.remove(this);
+
+							super.clear();
+						}
+
+					};
 			}
 
 		};
@@ -45,7 +54,16 @@ public class FinalizeManager {
 			public <T> Reference<T> createReference(
 				T reference, ReferenceQueue<? super T> referenceQueue) {
 
-				return new EqualitySoftReference<T>(reference, referenceQueue);
+				return new EqualitySoftReference<T>(reference, referenceQueue) {
+
+					@Override
+					public void clear() {
+						_finalizeActions.remove(this);
+
+						super.clear();
+					}
+
+				};
 			}
 
 		};
@@ -58,10 +76,18 @@ public class FinalizeManager {
 
 			@Override
 			public <T> Reference<T> createReference(
-				T realReference, ReferenceQueue<? super T> referenceQueue) {
+				T reference, ReferenceQueue<? super T> referenceQueue) {
 
-				return new EqualityWeakReference<T>(
-					realReference, referenceQueue);
+				return new EqualityWeakReference<T>(reference, referenceQueue) {
+
+					@Override
+					public void clear() {
+						_finalizeActions.remove(this);
+
+						super.clear();
+					}
+
+				};
 			}
 
 		};
@@ -94,11 +120,13 @@ public class FinalizeManager {
 
 		FinalizeAction finalizeAction = _finalizeActions.remove(reference);
 
-		try {
-			finalizeAction.doFinalize(reference);
-		}
-		finally {
-			reference.clear();
+		if (finalizeAction != null) {
+			try {
+				finalizeAction.doFinalize(reference);
+			}
+			finally {
+				reference.clear();
+			}
 		}
 	}
 

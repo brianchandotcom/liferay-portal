@@ -476,7 +476,6 @@
 		</execute>
 
 		<execute macro="WebContent#viewWithWorkflowCP">
-			<var name="webContentContent"><![CDATA[<script>alert("web content article")</script>]]></var>
 			<var name="webContentTitle" value="WC WebContent Title" />
 			<var name="workflowStatus" value="Pending" />
 			<var name="workflowTask" value="Review" />

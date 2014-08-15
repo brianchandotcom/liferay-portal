@@ -439,9 +439,9 @@
 				</if>
 			</then>
 			<else>
-				<var name="key_pageName" value="${pageName}" />
-
-				<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
+				<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}">
+					<var name="key_pageName" value="${pageName}" />
+				</execute>
 			</else>
 		</if>
 	</command>

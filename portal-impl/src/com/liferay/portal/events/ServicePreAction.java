@@ -1639,11 +1639,9 @@ public class ServicePreAction extends Action {
 					layout = null;
 				}
 			}
-
-			return new Object[] {layout, layouts};
 		}
 
-		if (signedIn) {
+		if ((layout == null) && signedIn) {
 
 			// Check the user's personal layouts
 

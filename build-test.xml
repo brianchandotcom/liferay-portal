@@ -588,14 +588,46 @@
 	</macrodef>
 
 	<macrodef name="stop-app-server">
-		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
+		<attribute default="0" name="app.server.bundle.number" />
 
 		<sequential>
+			<if>
+				<equals arg1="${tcat.enabled}" arg2="true" />
+				<then>
+					<stop-app-server-cmd
+						app.server.bin.dir="${app.server.tcat.admin.bin.dir}"
+						app.server.bundle.number="@{app.server.bundle.number}"
+					/>
+
+					<stop-app-server-cmd
+						app.server.bin.dir="${app.server.tcat.agent.bin.dir}"
+						app.server.bundle.number="@{app.server.bundle.number}"
+					/>
+				</then>
+				<else>
+					<stop-app-server-cmd
+						app.server.bundle.number="@{app.server.bundle.number}"
+					/>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-app-server-cmd">
+		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
+		<attribute default="0" name="app.server.bundle.number" />
+
+		<sequential>
+			<set-app-server-properties
+				app.server.bin.dir="@{app.server.bin.dir}"
+				app.server.bundle.number="@{app.server.bundle.number}"
+			/>
+
 			<antcall target="clean-up-logs" />
 
 			<record action="start" name="log" />
 
-			<exec dir="@{app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
+			<exec dir="${test.app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
 				<arg line="${app.server.stop.executable.arg.line}" />
 			</exec>
 		</sequential>
@@ -3495,21 +3527,7 @@ if (ppstate.equals("normal")) {
 
 		<antcall target="run-selenium-test" />
 
-		<if>
-			<equals arg1="${tcat.enabled}" arg2="true" />
-			<then>
-				<stop-app-server
-					app.server.bin.dir="${app.server.tcat.admin.bin.dir}"
-				/>
-
-				<stop-app-server
-					app.server.bin.dir="${app.server.tcat.agent.bin.dir}"
-				/>
-			</then>
-			<else>
-				<stop-app-server />
-			</else>
-		</if>
+		<stop-app-server />
 
 		<if>
 			<equals arg1="${cluster.enabled}" arg2="true" />

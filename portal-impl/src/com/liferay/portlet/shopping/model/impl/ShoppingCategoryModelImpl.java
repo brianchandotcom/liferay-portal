@@ -416,7 +416,15 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	public void setName(String name) {
 		_columnBitmask = -1L;
 
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@JSON
@@ -557,6 +565,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		shoppingCategoryModelImpl._originalParentCategoryId = shoppingCategoryModelImpl._parentCategoryId;
 
 		shoppingCategoryModelImpl._setOriginalParentCategoryId = false;
+
+		shoppingCategoryModelImpl._originalName = shoppingCategoryModelImpl._name;
 
 		shoppingCategoryModelImpl._columnBitmask = 0;
 	}
@@ -720,6 +730,7 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	private long _originalParentCategoryId;
 	private boolean _setOriginalParentCategoryId;
 	private String _name;
+	private String _originalName;
 	private String _description;
 	private long _columnBitmask;
 	private ShoppingCategory _escapedModel;

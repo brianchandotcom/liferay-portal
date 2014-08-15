@@ -103,7 +103,7 @@
 						%>
 
 						<li class="my-sites-menu public-site">
-							<a href="<%= myProfileURL.toString() %>">
+							<a href="<%= HtmlUtil.escapeHREF(myProfileURL.toString()) %>">
 								<span class="site-name"><liferay-ui:message key="my-profile" /></span>
 
 								<span class="badge site-type"><liferay-ui:message key="public" /></span>
@@ -124,7 +124,7 @@
 						%>
 
 						<li class="my-sites-menu private-site">
-							<a href="<%= myDashboardURL %>">
+							<a href="<%= HtmlUtil.escapeHREF(myDashboardURL.toString()) %>">
 								<span class="site-name"><liferay-ui:message key="my-dashboard" /></span>
 
 								<span class="badge site-type"><liferay-ui:message key="private" /></span>

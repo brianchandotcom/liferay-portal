@@ -15,6 +15,7 @@
 package com.liferay.taglib.portletext;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.taglib.FileAvailabilityUtil;
@@ -51,7 +52,7 @@ public class IconExportImportTag extends IconTag {
 		sb.append("_', '");
 		sb.append(portletDisplay.getId());
 		sb.append("', '");
-		sb.append(portletDisplay.getURLExportImport());
+		sb.append(HtmlUtil.escapeJS(portletDisplay.getURLExportImport()));
 		sb.append("', '");
 		sb.append(portletDisplay.getNamespace());
 		sb.append("', '");

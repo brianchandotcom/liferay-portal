@@ -14,11 +14,13 @@
 
 package com.liferay.portal.kernel.memory;
 
+import java.lang.ref.Reference;
+
 /**
  * @author Shuyang Zhou
  */
 public interface FinalizeAction {
 
-	public void doFinalize();
+	public void doFinalize(Reference<?> reference);
 
 }

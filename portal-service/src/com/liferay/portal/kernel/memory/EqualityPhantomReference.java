@@ -14,26 +14,27 @@
 
 package com.liferay.portal.kernel.memory;
 
-import java.io.File;
-
-import java.lang.ref.Reference;
+import java.lang.ref.PhantomReference;
+import java.lang.ref.ReferenceQueue;
 
 /**
  * @author Shuyang Zhou
  */
-public class DeleteFileFinalizeAction implements FinalizeAction {
+public class EqualityPhantomReference<T> extends PhantomReference<T> {
 
-	public DeleteFileFinalizeAction(String fileName) {
-		_fileName = fileName;
+	public EqualityPhantomReference(
+		T referent, ReferenceQueue<? super T> referenceQueue) {
+
+		super(referent, referenceQueue);
+
+		_hashCode = referent.hashCode();
 	}
 
 	@Override
-	public void doFinalize(Reference<?> reference) {
-		File file = new File(_fileName);
-
-		file.delete();
+	public int hashCode() {
+		return _hashCode;
 	}
 
-	private final String _fileName;
+	private final int _hashCode;
 
 }

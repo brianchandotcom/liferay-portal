@@ -15,7 +15,11 @@
 package com.liferay.portal.kernel.test;
 
 import java.lang.ref.ReferenceQueue;
+import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Assert;
 
@@ -23,6 +27,29 @@ import org.junit.Assert;
  * @author Shuyang Zhou
  */
 public class GCUtil {
+
+	public static void fullGC() throws InterruptedException {
+		ReferenceQueue<Object> referenceQueue = new ReferenceQueue<Object>();
+
+		SoftReference<Object> softReference = new SoftReference<Object>(
+			new Object(), referenceQueue);
+
+		List<byte[]> list = new ArrayList<byte[]>();
+
+		while (true) {
+			try {
+				list.add(new byte[100 * 1024 * 1024]);
+			}
+			catch (OutOfMemoryError oome) {
+				list.clear();
+
+				break;
+			}
+		}
+
+		Assert.assertNull(softReference.get());
+		Assert.assertSame(softReference, referenceQueue.remove());
+	}
 
 	public static void gc() throws InterruptedException {
 		ReferenceQueue<Object> referenceQueue = new ReferenceQueue<Object>();

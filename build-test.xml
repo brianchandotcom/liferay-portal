@@ -1049,8 +1049,9 @@ create database lportal2 character set utf8;</echo>
 	</target>
 
 	<target name="clean-up-logs">
-		<delete file="log" />
-		<delete file="portal-web/test-ant-scripts/log" />
+		<delete failonerror="false" file="log" />
+
+		<delete failonerror="false" file="portal-web/test-ant-scripts/log" />
 	</target>
 
 	<target name="clean-up-sikuli-temp-files">

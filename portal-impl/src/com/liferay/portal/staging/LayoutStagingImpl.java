@@ -26,6 +26,7 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetStagingHandler;
 import com.liferay.portal.model.LayoutStagingHandler;
+import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 
 import java.lang.reflect.InvocationHandler;
 
@@ -132,15 +133,23 @@ public class LayoutStagingImpl implements LayoutStaging {
 				typeSettingsProperties.getProperty("branchingPublic"));
 		}
 
-		if (branchingEnabled && group.isStaged()) {
-			if (!isStagingGroup && !group.isStagedRemotely()) {
-				return false;
-			}
+		if ((!isStagingGroup && !group.isStagedRemotely()) ||
+			!branchingEnabled || !group.isStaged()) {
+
+			return false;
+		}
+
+		Group stagingGroup = group.getStagingGroup();
+
+		try {
+			LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(
+				stagingGroup.getGroupId(), privateLayout);
 
 			return true;
 		}
-
-		return false;
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 }

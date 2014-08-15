@@ -447,33 +447,6 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="start-additional-app-servers">
-		<sequential>
-			<if>
-				<isset property="app.server.bundle.count" />
-				<then>
-					<var name="bundle.count" value="1" />
-
-					<antelope:repeat count="${app.server.bundle.count}">
-						<start-app-server
-							app.server.bin.dir="${app.server.parent.dir}-${bundle.count}/${app.server.type}-${app.server.version}/bin"
-							app.server.http.url="http://localhost:${bundle.count}080/web/guest"
-							liferay.home="${app.server.parent.dir}-${bundle.count}"
-						/>
-
-						<math
-							datatype="int"
-							operand1="${bundle.count}"
-							operand2="1"
-							operation="+"
-							result="bundle.count"
-						/>
-					</antelope:repeat>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="start-app-server">
 		<attribute default="0" name="app.server.bundle.number" />
 
@@ -3472,7 +3445,23 @@ if (ppstate.equals("normal")) {
 		<if>
 			<equals arg1="${cluster.enabled}" arg2="true" />
 			<then>
-				<start-additional-app-servers />
+				<var name="app.server.bundle.number" value="1" />
+
+				<antelope:repeat count="${app.server.bundle.count}">
+					<start-app-server
+						app.server.bundle.number="${app.server.bundle.number}"
+					/>
+
+					<math
+						datatype="int"
+						operand1="${app.server.bundle.number}"
+						operand2="1"
+						operation="+"
+						result="app.server.bundle.number"
+					/>
+				</antelope:repeat>
+
+				<var name="app.server.bundle.number" unset="true" />
 			</then>
 		</if>
 

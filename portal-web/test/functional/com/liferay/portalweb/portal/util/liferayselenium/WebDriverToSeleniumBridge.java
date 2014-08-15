@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.BaseTestCase;
@@ -33,6 +32,8 @@ import java.awt.event.KeyEvent;
 
 import java.io.StringReader;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1665,54 +1666,41 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void typeKeys(String locator, String value) {
-		typeKeys(locator, value, false);
-	}
-
-	public void typeKeys(String locator, String value, boolean typeAceEditor) {
 		WebElement webElement = getWebElement(locator);
 
 		if (!webElement.isEnabled()) {
 			return;
 		}
 
-		StringBundler sb = new StringBundler();
+		if (value.contains("line-number=")) {
+			value = value.replaceAll("line-number=\"\\d+\"", "");
+		}
 
-		sb.append(".*[");
+		if (value.contains("$")) {
+			value = value.replaceAll("\\$", "");
+		}
 
+		List<Integer> list = _getIndexOfSpecialChars(value);
+		int i = 0;
 		Set<String> keysSpecialCharsSet = _keysSpecialChars.keySet();
+		String c = "";
 
-		for (String specialChar : keysSpecialCharsSet) {
-			sb.append("\\");
-			sb.append(specialChar);
-		}
+		for (int item : list) {
+			webElement.sendKeys(value.substring(i, item));
 
-		sb.append("]*.*");
+			c = String.valueOf(value.charAt(item));
 
-		if (value.matches(sb.toString()) || typeAceEditor) {
-			char[] chars = value.toCharArray();
-
-			for (char c : chars) {
-				String s = String.valueOf(c);
-
-				if (keysSpecialCharsSet.contains(s)) {
-					webElement.sendKeys(Keys.SHIFT, _keysSpecialChars.get(s));
-				}
-				else {
-					webElement.sendKeys(s);
-				}
-
-				if (typeAceEditor) {
-					if (s.equals("(") || s.equals("\"")) {
-						keyPress(locator, "\\46");
-					}
-
-					keyPress(locator, "\\27");
-				}
+			if (c.equals("-")) {
+				webElement.sendKeys(Keys.SUBTRACT);
 			}
+			else if (keysSpecialCharsSet.contains(c)) {
+				webElement.sendKeys(Keys.SHIFT, _keysSpecialChars.get(c));
+			}
+
+			i = item + 1;
 		}
-		else {
-			webElement.sendKeys(value);
-		}
+
+		webElement.sendKeys(value.substring(i, value.length()));
 	}
 
 	@Override
@@ -2033,6 +2021,35 @@ public class WebDriverToSeleniumBridge
 	}
 
 	protected String defaultWindowHandle;
+
+	private List<Integer> _getIndexOfSpecialChars(String value) {
+		List<Integer> list = new ArrayList<Integer>();
+		int index = 0;
+
+		while (value.contains("-")) {
+			index = value.indexOf("-");
+
+			list.add(index);
+
+			value = value.replaceFirst("-", " ");
+		}
+
+		Set<String> keysSpecialCharsSet = _keysSpecialChars.keySet();
+
+		for (String specialChar : keysSpecialCharsSet) {
+			while (value.contains(specialChar)) {
+				index = value.indexOf(specialChar);
+
+				list.add(index);
+
+				value = value.replaceFirst(specialChar, " ");
+			}
+		}
+
+		Collections.sort(list);
+
+		return list;
+	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		WebDriverToSeleniumBridge.class);

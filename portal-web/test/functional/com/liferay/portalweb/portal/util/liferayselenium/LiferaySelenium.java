@@ -265,7 +265,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public void typeFrame(String locator, String value);
 
-	public void typeKeys(String locator, String value, boolean typeAceEditor);
+	public void typeKeys(String locator, String value);
 
 	public void typeScreen(String value);
 

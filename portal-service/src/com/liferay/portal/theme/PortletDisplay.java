@@ -275,7 +275,7 @@ public class PortletDisplay implements Serializable {
 		sb.append("_\', \'");
 		sb.append(_id);
 		sb.append("\', \'");
-		sb.append(_urlConfiguration);
+		sb.append(HtmlUtil.escapeJS(_urlConfiguration));
 		sb.append(" \', \'");
 		sb.append(_namespace);
 		sb.append(" \', \'");

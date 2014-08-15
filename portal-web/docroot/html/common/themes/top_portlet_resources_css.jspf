@@ -28,7 +28,7 @@
 	for (String url : urls) {
 	%>
 
-		<link href="<%= url %>" rel="stylesheet" type="text/css" />
+		<link href="<%= HtmlUtil.escapeAttribute(url) %>" rel="stylesheet" type="text/css" />
 
 	<%
 	}

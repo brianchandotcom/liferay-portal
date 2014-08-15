@@ -28,7 +28,7 @@
 	for (String url : urls) {
 	%>
 
-		<script src="<%= url %>" type="text/javascript"></script>
+		<script src="<%= HtmlUtil.escapeAttribute(url) %>" type="text/javascript"></script>
 
 	<%
 	}

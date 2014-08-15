@@ -31,5 +31,5 @@ String url = (String)request.getAttribute("liferay-ui:rss:url");
 />
 
 <liferay-util:html-top>
-	<link href="<%= HtmlUtil.escape(url) %>" rel="alternate" title="RSS" type="application/rss+xml" />
+	<link href="<%= HtmlUtil.escapeAttribute(url) %>" rel="alternate" title="RSS" type="application/rss+xml" />
 </liferay-util:html-top>

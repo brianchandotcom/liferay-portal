@@ -54,7 +54,7 @@ if (!host.equals(privateLayoutSet.getVirtualHostname())) {
 <br /><br />
 
 <aui:fieldset label="public-pages">
-	<%= LanguageUtil.format(request, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + publicSitemapUrl + "\">", "</a>"}, false) %>
+	<%= LanguageUtil.format(request, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + HtmlUtil.escapeAttribute(publicSitemapUrl) + "\">", "</a>"}, false) %>
 
 	<ul>
 		<li>
@@ -67,7 +67,7 @@ if (!host.equals(privateLayoutSet.getVirtualHostname())) {
 </aui:fieldset>
 
 <aui:fieldset label="private-pages">
-	<%= LanguageUtil.format(request, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + privateSitemapUrl + "\">", "</a>"}, false) %>
+	<%= LanguageUtil.format(request, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + HtmlUtil.escapeAttribute(privateSitemapUrl) + "\">", "</a>"}, false) %>
 
 	<ul>
 		<li>

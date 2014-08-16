@@ -144,10 +144,6 @@
 	</command>
 
 	<command name="subscribePG">
-		<execute macro="BlogsEntry#gotoPG">
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
 		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_SUBSCRIBE_COMMENTS" value1="Subscribe to Comments" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
 	</command>

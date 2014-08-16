@@ -6,7 +6,7 @@
 	<command name="markAllAsRead">
 		<var name="key_notificationCount" value="${notificationCount}" />
 
-		<execute action="PGNotificationsdockbar#assertClick" locator-key1="MARK_ALL_AS_READ" value1="Mark All as Read (${notificationCount})" />
+		<execute action="PGNotificationsdockbar#assertClick" locator-key1="MARK_ALL_AS_READ" value1="Mark All as Read (${notificationCount1} of ${notificationCount2})" />
 	</command>
 
 	<command name="navigateToContent">

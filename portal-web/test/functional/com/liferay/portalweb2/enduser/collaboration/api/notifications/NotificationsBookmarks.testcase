@@ -65,7 +65,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewCountAlert">
 			<var name="notificationCount" value="1" />
 		</execute>
 
@@ -81,14 +81,13 @@
 			<var name="contentBody" value="Bookmark Name" />
 		</execute>
 
-		<execute macro="Bookmark#gotoPG">
+		<execute macro="Bookmark#viewPG">
 			<var name="bookmarkName" value="Bookmark Name" />
 			<var name="bookmarkURL" value="http://www.liferay.com" />
 		</execute>
 
-		<execute macro="Bookmark#viewPG">
-			<var name="bookmarkName" value="Bookmark Name" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
 		</execute>
 	</command>
 
@@ -143,7 +142,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Notifications#viewCount">
+		<execute macro="Notifications#viewCountAlert">
 			<var name="notificationCount" value="1" />
 		</execute>
 
@@ -159,14 +158,13 @@
 			<var name="contentBody" value="Bookmark Name Edit" />
 		</execute>
 
-		<execute macro="Bookmark#gotoPG">
-			<var name="bookmarkName" value="Test Bookmark Name" />
-			<var name="bookmarkURL" value="http://www.liferay.com" />
-		</execute>
-
 		<execute macro="Bookmark#viewPG">
 			<var name="bookmarkName" value="Bookmark Name Edit" />
 			<var name="bookmarkURL" value="http://www.liferay.com" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
 		</execute>
 	</command>
 </definition>

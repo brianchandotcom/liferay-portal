@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//input[@id='_33_title']</td>
+	<td>//input[contains(@id,'title')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -50,17 +50,17 @@
 </tr>
 <tr>
 	<td>CONTENT_FIELD</td>
-	<td>//div[@id='cke_1_contents']/iframe</td>
+	<td>//div[contains(@id,'cke') and contains(@id,'contents')]/iframe</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SAVE_AS_DRAFT_BUTTON</td>
-	<td>//button[@id='_33_saveButton' and contains(.,'Save as Draft ')]</td>
+	<td>//button[contains(@id,'saveButton') and contains(.,'Save as Draft')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLISH_BUTTON</td>
-	<td>//button[@id='_33_publishButton']</td>
+	<td>//button[contains(@id,'publishButton')]</td>
 	<td></td>
 </tr>
 <tr>

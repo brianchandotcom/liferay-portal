@@ -212,12 +212,12 @@
 
 		<execute macro="Notifications#viewUpdatedContent">
 			<var name="assetType" value="Document" />
-			<var name="contentBody" value="DM Document Title..." />
+			<var name="contentBody" value="DM Document Title Edit" />
 			<var name="user" value="Test Test" />
 		</execute>
 
 		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="DM Document Title..." />
+			<var name="contentBody" value="DM Document Title Edit" />
 		</execute>
 
 		<execute macro="DMDocument#viewDocumentTitleCmdPG">

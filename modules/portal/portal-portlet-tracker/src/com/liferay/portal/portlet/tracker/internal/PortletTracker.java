@@ -124,7 +124,8 @@ public class PortletTracker
 			portletName = clazz.getName();
 		}
 
-		String portletId = StringUtil.replace(portletName, ".", "_");
+		String portletId = StringUtil.replace(
+			portletName, new String[] {".", "$"}, new String[] {"_", "_"});
 
 		if (portletId.length() > _PORTLET_ID_MAX_LENGTH) {
 			_log.error(

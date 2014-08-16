@@ -25,7 +25,7 @@
 		</execute>
 	</command>
 
-	<command name="addPGViaDDLDisplay">
+	<command name="addViaDDLDisplayPG">
 		<execute macro="DDLDataDefinition#addCmd">
 			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
@@ -35,7 +35,7 @@
 	<command name="copyCP">
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<var name="key_dataDefinitionName" value="${ddlDataDefinitionName}" />
+		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
 		<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_ACTIONS" />
@@ -66,7 +66,7 @@
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME_2" />
 
-		<var name="key_dataDefinitionName" value="${ddlDataDefinitionCopyName}" />
+		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionCopyName}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="DATA_DEFINITION_TABLE_NAME" value1="${ddlDataDefinitionCopyName}" />
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
@@ -146,7 +146,7 @@
 		<execute macro="DDLDataDefinition#saveCmd" />
 	</command>
 
-	<command name="savePGViaDDLDisplay">
+	<command name="saveViaDDLDisplayPG">
 		<execute macro="DDLDataDefinition#saveCmd" />
 	</command>
 
@@ -168,7 +168,7 @@
 		</execute>
 	</command>
 
-	<command name="selectPGViaDDLDisplay">
+	<command name="selectViaDDLDisplayPG">
 		<execute macro="DDLDataDefinition#selectCmd">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
@@ -305,7 +305,7 @@
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
 
-		<var name="key_dataDefinitionName" value="${ddlDataDefinitionName}" />
+		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_NAME" value1="${ddlDataDefinitionName}" />
 

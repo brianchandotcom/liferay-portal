@@ -97,7 +97,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="List Name" />
 			<var name="ddlRecordFieldData" value="Text" />
 			<var name="fieldFieldLabel" value="Text" />

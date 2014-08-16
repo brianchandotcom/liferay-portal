@@ -59,21 +59,21 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#viewPGViaDDLDisplay">
+		<execute macro="DDLList#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 	</command>
@@ -106,21 +106,21 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -131,9 +131,9 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
@@ -167,15 +167,15 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
@@ -221,15 +221,15 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
@@ -289,7 +289,7 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#deletePGViaDDLDisplay">
+		<execute macro="DDLList#deleteViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 	</command>
@@ -322,21 +322,21 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -347,9 +347,9 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#deletePGViaDDLDisplay" />
+		<execute macro="DDLRecord#deleteViaDDLDisplayPG" />
 	</command>
 
 	<command name="EditList" priority="5">
@@ -382,22 +382,22 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListDescription" value="${ddlListDescription}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#editPGViaDDLDisplay">
+		<execute macro="DDLList#editViaDDLDisplayPG">
 			<var name="ddlListDescriptionEdit" value="${ddlListDescriptionEdit}" />
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlListNameEdit" value="${ddlListNameEdit}" />
@@ -407,7 +407,7 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#viewPGViaDDLDisplay">
+		<execute macro="DDLList#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListNameEdit}" />
 		</execute>
 	</command>
@@ -441,17 +441,17 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -462,7 +462,7 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
@@ -478,9 +478,9 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${recordFieldDataEdit}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
@@ -516,17 +516,17 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -537,7 +537,7 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
@@ -553,9 +553,9 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${recordFieldDataEdit}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
@@ -603,11 +603,11 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#selectPGViaDDLDisplay">
+		<execute macro="DDLList#selectViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLList#viewPGViaDDLDisplay">
+		<execute macro="DDLList#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 	</command>
@@ -618,29 +618,29 @@
 		<var name="ddlList1Name" value="List 1 Name" />
 		<var name="ddlList2Name" value="List 2 Name" />
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlList1Name}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinition1Name}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinition1Name}" />
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlList2Name}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinition2Name}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
-		<execute macro="DDLList#selectPGViaDDLDisplay">
+		<execute macro="DDLList#selectViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlList2Name}" />
 		</execute>
 
@@ -684,21 +684,21 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -710,9 +710,9 @@
 			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="true" />
 			<var name="field" value="${field}" />
@@ -723,7 +723,7 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -741,9 +741,9 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="field" value="${field}" />
@@ -795,21 +795,21 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -821,9 +821,9 @@
 			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${fieldPredefinedValueFormatted}" />
 			<var name="field" value="${field}" />
@@ -834,7 +834,7 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -852,9 +852,9 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldDataFormatted}" />
@@ -898,21 +898,21 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -924,9 +924,9 @@
 			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${fieldPredefinedValue}" />
 			<var name="field" value="${field}" />
@@ -937,7 +937,7 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -955,9 +955,9 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="field" value="${field}" />
@@ -997,22 +997,22 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListDescription" value="${ddlListDescription}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -1023,7 +1023,7 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
 		<execute macro="User#logoutPG" />
 
@@ -1031,7 +1031,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
@@ -1075,21 +1075,21 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -1101,9 +1101,9 @@
 			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${fieldPredefinedValue}" />
 			<var name="field" value="${field}" />
@@ -1114,7 +1114,7 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -1132,9 +1132,9 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="field" value="${field}" />
@@ -1232,11 +1232,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#selectPGViaDDLDisplay">
+		<execute macro="DDLList#selectViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLTemplate#selectDisplayTemplatePGViaDDLDisplay">
+		<execute macro="DDLTemplate#selectDisplayTemplateViaDDLDisplayPG">
 			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
 		</execute>
 
@@ -1338,11 +1338,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#selectPGViaDDLDisplay">
+		<execute macro="DDLList#selectViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLTemplate#selectDisplayTemplatePGViaDDLDisplay">
+		<execute macro="DDLTemplate#selectDisplayTemplateViaDDLDisplayPG">
 			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
 		</execute>
 
@@ -1466,11 +1466,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#selectPGViaDDLDisplay">
+		<execute macro="DDLList#selectViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLTemplate#selectDisplayTemplatePGViaDDLDisplay">
+		<execute macro="DDLTemplate#selectDisplayTemplateViaDDLDisplayPG">
 			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
 		</execute>
 
@@ -1518,21 +1518,21 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -1544,9 +1544,9 @@
 			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${fieldPredefinedValue}" />
 			<var name="field" value="${field}" />
@@ -1557,7 +1557,7 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -1575,9 +1575,9 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="field" value="${field}" />
@@ -1621,21 +1621,21 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -1647,9 +1647,9 @@
 			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${fieldPredefinedValue}" />
 			<var name="field" value="${field}" />
@@ -1660,7 +1660,7 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -1678,9 +1678,9 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="field" value="${field}" />
@@ -1724,21 +1724,21 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#selectPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -1750,9 +1750,9 @@
 			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${fieldPredefinedValue}" />
 			<var name="field" value="${field}" />
@@ -1763,7 +1763,7 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
@@ -1781,9 +1781,9 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#viewPGViaDDLDisplay">
+		<execute macro="DDLRecord#viewViaDDLDisplayPG">
 			<var name="ddlListName" value="${ddlListName}" />
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="field" value="${field}" />

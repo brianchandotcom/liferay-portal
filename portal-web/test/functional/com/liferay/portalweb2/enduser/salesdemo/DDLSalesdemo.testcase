@@ -37,12 +37,12 @@
 			<var name="pageName" value="Company Picnic" />
 		</execute>
 
-		<execute macro="DDLList#addPGViaDDLDisplay">
+		<execute macro="DDLList#addViaDDLDisplayPG">
 			<var name="ddlListDescription" value="Sign up list for our company picnic." />
 			<var name="ddlListName" value="Potluck Sign Up List" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#addPGViaDDLDisplay">
+		<execute macro="DDLDataDefinition#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionDescription" value="List for Potlucks" />
 			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
@@ -79,9 +79,9 @@
 			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
 
-		<execute macro="DDLList#savePGViaDDLDisplay" />
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
 
@@ -103,9 +103,9 @@
 			<var name="fieldName" value="What_are_you_bringing" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute macro="DDLRecord#addPGViaDDLDisplay">
+		<execute macro="DDLRecord#addViaDDLDisplayPG">
 			<var name="ddlDataDefinitionName" value="Potluck Items" />
 		</execute>
 
@@ -127,7 +127,7 @@
 			<var name="fieldName" value="What_are_you_bringing" />
 		</execute>
 
-		<execute macro="DDLRecord#publishPGViaDDLDisplay" />
+		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[1]" value1="First Name" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator1="//thead[@class='table-columns']/tr/th[2]" value1="Last Name" />

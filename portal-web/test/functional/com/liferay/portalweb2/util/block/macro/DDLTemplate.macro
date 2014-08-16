@@ -59,7 +59,7 @@
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 
-	<command name="addFormTemplatePGViaDDLDisplay">
+	<command name="addFormTemplateViaDDLDisplayPG">
 		<execute action="PGDynamicdatalists#click" locator-key1="TOOLBAR_ADD_FORM_TEMPLATE" />
 
 		<execute action="PGDynamicdatalistsAddformtemplate#type" locator-key1="NAME_FIELD" value1="${ddlFormTemplateName}" />
@@ -74,7 +74,7 @@
 		<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 
-		<var name="key_dataDefinitionTemplateName" value="${ddlTemplateName}" />
+		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#click" locator-key1="TEMPLATE_TABLE_ACTIONS" />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_MENULIST_COPY" value1="Copy" />
@@ -84,7 +84,7 @@
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesCopy#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog." />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesCopy#assertClick" locator-key1="CLOSE_BUTTON" value1="Close" />
 
-		<var name="key_dataDefinitionTemplateName" value="${dataDefinitionTemplateCopyName}" />
+		<var name="key_ddlTemplateName" value="${dataDefinitionTemplateCopyName}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertTextEquals" locator-key1="TEMPLATE_TABLE_NAME" value1="${dataDefinitionTemplateCopyName}" />
 
@@ -135,7 +135,7 @@
 		<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 
-		<var name="key_dataDefinitionTemplateName" value="${ddlDisplayTemplateName}" />
+		<var name="key_ddlTemplateName" value="${ddlDisplayTemplateName}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#click" locator-key1="TEMPLATE_TABLE_ACTIONS" />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_MENULIST_EDIT" value1="Edit" />
@@ -201,7 +201,7 @@
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
 
-		<var name="key_dataDefinitionName" value="${ddlDataDefinitionName}" />
+		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_ACTIONS" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
@@ -227,11 +227,11 @@
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 
-	<command name="saveFormTemplatePGViaDDLDisplay">
+	<command name="saveFormTemplateViaDDLDisplayPG">
 		<execute action="PGDynamicdatalistsAddformtemplate#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 	</command>
 
-	<command name="selectDisplayTemplatePGViaDDLDisplay">
+	<command name="selectDisplayTemplateViaDDLDisplayPG">
 		<execute action="PGDynamicdatalistsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 		<execute action="PGDynamicdatalistsConfiguration#select" locator-key1="TEMPLATES_DISPLAY_TEMPLATE_SELECT" value1="${ddlDisplayTemplateName}" />
 		<execute action="PGDynamicdatalistsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
@@ -259,7 +259,7 @@
 			</then>
 		</if>
 
-		<var name="key_dataDefinitionName" value="${ddlDataDefinitionName}" />
+		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
 		<if>
 			<condition action="CPDynamicdatalistsDatadefinitions#isElementPresent" locator-key1="DATA_DEFINITION_TABLE_ACTIONS" />
@@ -294,7 +294,7 @@
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<var name="key_dataDefinitionTemplateName" value="${ddlTemplateName}" />
+		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_TABLE_NAME" value1="${ddlTemplateName}" />
 
@@ -309,7 +309,7 @@
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<var name="key_dataDefinitionTemplateName" value="${ddlTemplateName}" />
+		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_TABLE_NAME" value1="${ddlTemplateName}" />
 
@@ -324,7 +324,7 @@
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<var name="key_dataDefinitionTemplateName" value="${ddlTemplateName}" />
+		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertTextPresent" locator-key1="TEMPLATE_TABLE_NAME" value1="${ddlTemplateName}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertElementNotPresent" locator-key1="TEMPLATE_TABLE_DUPLICATE_TEMPLATE_NAME" />
@@ -335,7 +335,7 @@
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<var name="key_dataDefinitionTemplateName" value="${ddlTemplateName}" />
+		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertElementNotPresent" locator-key1="TEMPLATE_TABLE_NAME" />
 

@@ -67,12 +67,12 @@
 <!--LIST_TABLE-->
 <tr>
 	<td>LIST_TABLE_NAME</td>
-	<td>xpath=(//div[@id='_167_ddlRecordSetsSearchContainer']//tr[contains(.,'${key_listName}')]/td[2]/a)[1]</td>
+	<td>xpath=(//div[@id='_167_ddlRecordSetsSearchContainer']//tr[contains(.,'${key_ddlListName}')]/td[2]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_TABLE_ACTIONS</td>
-	<td>xpath=(//div[@id='_167_ddlRecordSetsSearchContainer']//tr[contains(.,'${key_listName}')]/td[5]/div/a)[1]</td>
+	<td>xpath=(//div[@id='_167_ddlRecordSetsSearchContainer']//tr[contains(.,'${key_ddlListName}')]/td[5]/div/a)[1]</td>
 	<td></td>
 </tr>
 <tr>

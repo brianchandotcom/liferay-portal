@@ -117,12 +117,12 @@
 </tr>
 <tr>
 	<td>DATA_DEFINITION_TABLE_NAME</td>
-	<td>//div[@id='_166_ddmStructuresSearchContainer']//tr[contains(.,'${key_dataDefinitionName}')]/td[3]/a[1]</td>
+	<td>//div[@id='_166_ddmStructuresSearchContainer']//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[3]/a[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_DEFINITION_TABLE_ACTIONS</td>
-	<td>xpath=(//tr[contains(.,'${key_dataDefinitionName}')]/td[7]/div/a[contains(@id,'_166_ddmStructuresSearchContainer')])[1]</td>
+	<td>xpath=(//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[7]/div/a[contains(@id,'_166_ddmStructuresSearchContainer')])[1]</td>
 	<td></td>
 </tr>
 <tr>

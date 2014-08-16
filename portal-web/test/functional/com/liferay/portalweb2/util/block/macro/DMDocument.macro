@@ -1011,7 +1011,7 @@
 		<if>
 			<equals arg1="${field}" arg2="Link to Page" />
 			<then>
-				<var name="key_recordFieldData" value="${dmDocumentTypeFieldData}" />
+				<var name="key_ddlRecordFieldData" value="${dmDocumentTypeFieldData}" />
 
 				<execute action="PGDocumentsandmediaAdddocumenttype#click" locator-key1="LINK_TO_PAGE_SELECT" />
 				<execute action="PGDocumentsandmediaAdddocumenttype#doubleClick" locator-key1="LINK_TO_PAGE_SELECT_OPTION" />
@@ -1028,7 +1028,7 @@
 		<if>
 			<equals arg1="${field}" arg2="Radio" />
 			<then>
-				<var name="key_recordFieldData" value="${dmDocumentTypeFieldData}" />
+				<var name="key_ddlRecordFieldData" value="${dmDocumentTypeFieldData}" />
 
 				<execute action="PGDocumentsandmediaAdddocumenttype#assertTextEquals" locator-key1="RADIO_OPTION_LABEL" value1="${dmDocumentTypeFieldData}" />
 				<execute action="PGDocumentsandmediaAdddocumenttype#click" locator-key1="RADIO_OPTION_RADIO" />

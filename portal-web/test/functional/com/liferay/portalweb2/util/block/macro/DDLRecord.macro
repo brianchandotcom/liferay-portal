@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<var name="key_listName" value="${ddlListName}" />
+		<var name="key_ddlListName" value="${ddlListName}" />
 
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="LIST_TABLE_NAME" value1="${ddlListName}" />
 
@@ -8,7 +8,7 @@
 		<execute action="CPDynamicdatalistsList#assertClick" locator-key1="ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinitionName}" />
 	</command>
 
-	<command name="addPGViaDDLDisplay">
+	<command name="addViaDDLDisplayPG">
 		<execute action="PGDynamicdatalists#click" locator-key1="ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinitionName}" />
 	</command>
 
@@ -25,7 +25,7 @@
 		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No" />
 	</command>
 
-	<command name="deletePGViaDDLDisplay">
+	<command name="deleteViaDDLDisplayPG">
 		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
 		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_DELETE" value1="Delete" />
 		<execute action="PGDynamicdatalists#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -151,8 +151,8 @@
 	</command>
 
 	<command name="populateFieldLinkToPage">
+		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldName" value="${fieldName}" />
-		<var name="key_recordFieldData" value="${ddlRecordFieldData}" />
 
 		<execute action="CPDynamicdatalistsListAddrecord#select" locator-key1="LINK_TO_PAGE_SELECT" value1="regexp:–\s+${ddlRecordFieldData}" />
 	</command>
@@ -164,8 +164,8 @@
 	</command>
 
 	<command name="populateFieldRadio">
+		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldName" value="${fieldName}" />
-		<var name="key_recordFieldData" value="${ddlRecordFieldData}" />
 
 		<execute action="CPDynamicdatalistsListAddrecord#assertTextEquals" locator-key1="RADIO_OPTION_LABEL" value1="${ddlRecordFieldData}" />
 		<execute action="CPDynamicdatalistsListAddrecord#click" locator-key1="RADIO_OPTION_RADIO" />
@@ -231,7 +231,7 @@
 		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="publishPGViaDDLDisplay">
+	<command name="publishViaDDLDisplayPG">
 		<if>
 			<isset var="workflowDefinition" />
 			<then>
@@ -388,7 +388,7 @@
 		<if>
 			<equals arg1="${field}" arg2="Radio" />
 			<then>
-				<var name="key_recordFieldData" value="${fieldPredefinedValue}" />
+				<var name="key_ddlRecordFieldData" value="${fieldPredefinedValue}" />
 
 				<execute action="CPDynamicdatalistsListAddrecord#assertChecked" locator-key1="RADIO_OPTION_RADIO" />
 			</then>
@@ -431,7 +431,7 @@
 			<then>
 				<execute action="CPDynamicdatalistsList#assertClick" locator-key1="RECORD_TABLE_COLUMN_ONE_PREVIEW_1" value1="(Preview)" />
 
-				<var name="key_recordFieldData" value="${ddlRecordFieldData}" />
+				<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 
 				<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="RECORD_TABLE_PREVIEW" value1="${ddlRecordFieldData}" />
 				<execute action="CPDynamicdatalistsList#click" locator-key1="RECORD_TABLE_PREVIEW_CLOSE" />
@@ -480,7 +480,7 @@
 		</if>
 	</command>
 
-	<command name="viewPGViaDDLDisplay">
+	<command name="viewViaDDLDisplayPG">
 		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="HEADER_TITLE" value1="${ddlListName}" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />

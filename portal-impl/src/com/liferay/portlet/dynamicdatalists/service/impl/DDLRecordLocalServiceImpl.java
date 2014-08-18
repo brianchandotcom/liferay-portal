@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -380,6 +381,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		Fields fields = StorageEngineUtil.getFields(
 			recordVersion.getDDMStorageId());
 
+		serviceContext.setCommand(Constants.REVERT);
+
 		ddlRecordLocalService.updateRecord(
 			userId, recordId, true, recordVersion.getDisplayIndex(), fields,
 			false, serviceContext);
@@ -533,10 +536,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				recordVersion.getStatus(), serviceContext);
 		}
 
-		if (!majorVersion &&
-			isKeepRecordVersionLabel(
-				record.getRecordVersion(), recordVersion,
-				serviceContext.getWorkflowAction())) {
+		if (isKeepRecordVersionLabel(
+				record.getRecordVersion(), recordVersion, serviceContext)) {
 
 			ddlRecordVersionPersistence.remove(recordVersion);
 
@@ -694,14 +695,20 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
 	 * @see com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl#isKeepFileVersionLabel(
-	 *      DLFileEntry, DLFileVersion, DLFileVersion, int)
+	 *      DLFileEntry, DLFileVersion, DLFileVersion, ServiceContext)
 	 */
 	protected boolean isKeepRecordVersionLabel(
 			DDLRecordVersion lastRecordVersion,
-			DDLRecordVersion latestRecordVersion, int workflowContext)
+			DDLRecordVersion latestRecordVersion, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (workflowContext == WorkflowConstants.ACTION_SAVE_DRAFT) {
+		if (serviceContext.isCommandRevert()) {
+			return false;
+		}
+
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) {
+
 			return false;
 		}
 

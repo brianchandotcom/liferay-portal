@@ -61,6 +61,10 @@
 		return Math.min(Math.max(value, min), max);
 	};
 
+	Util.isEditorPresent = function(editorImpl) {
+		return Liferay.EDITORS && Liferay.EDITORS[editorImpl];
+	};
+
 	Util.uncamelize = function(value, separator) {
 		separator = separator || ' ';
 

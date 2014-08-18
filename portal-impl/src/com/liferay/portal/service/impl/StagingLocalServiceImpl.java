@@ -254,28 +254,12 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			disableStaging(liveGroup, serviceContext);
 		}
 
-		if (!liveGroup.hasStagingGroup()) {
+		boolean hasStagingGroup = liveGroup.hasStagingGroup();
+
+		if (!hasStagingGroup) {
 			serviceContext.setAttribute("staging", String.valueOf(true));
 
-			Group stagingGroup = addStagingGroup(
-				userId, liveGroup, serviceContext);
-
-			Map<String, String[]> parameterMap =
-				StagingUtil.getStagingParameters();
-
-			if (liveGroup.hasPrivateLayouts()) {
-				StagingUtil.publishLayouts(
-					userId, liveGroup.getGroupId(), stagingGroup.getGroupId(),
-					true, parameterMap, null, null);
-			}
-
-			if (liveGroup.hasPublicLayouts() ||
-				!liveGroup.hasPrivateLayouts()) {
-
-				StagingUtil.publishLayouts(
-					userId, liveGroup.getGroupId(), stagingGroup.getGroupId(),
-					false, parameterMap, null, null);
-			}
+			addStagingGroup(userId, liveGroup, serviceContext);
 		}
 
 		checkDefaultLayoutSetBranches(
@@ -298,6 +282,27 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		groupLocalService.updateGroup(
 			liveGroup.getGroupId(), typeSettingsProperties.toString());
+
+		if (!hasStagingGroup) {
+			Group stagingGroup = liveGroup.getStagingGroup();
+
+			Map<String, String[]> parameterMap =
+				StagingUtil.getStagingParameters();
+
+			if (liveGroup.hasPrivateLayouts()) {
+				StagingUtil.publishLayouts(
+					userId, liveGroup.getGroupId(), stagingGroup.getGroupId(),
+					true, parameterMap, null, null);
+			}
+
+			if (liveGroup.hasPublicLayouts() ||
+				!liveGroup.hasPrivateLayouts()) {
+
+				StagingUtil.publishLayouts(
+					userId, liveGroup.getGroupId(), stagingGroup.getGroupId(),
+					false, parameterMap, null, null);
+			}
+		}
 	}
 
 	@Override

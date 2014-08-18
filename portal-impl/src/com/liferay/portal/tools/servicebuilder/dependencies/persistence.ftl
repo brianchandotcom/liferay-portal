@@ -24,10 +24,7 @@ import java.util.Date;
  * @generated
  */
 
-<#if pluginName == "">
-	@ProviderType
-</#if>
-
+@ProviderType
 public interface ${entity.name}Persistence extends BasePersistence<${entity.name}> {
 
 	/*

@@ -1,5 +1,7 @@
 package ${packagePath}.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import ${packagePath}.model.${entity.name};
 
 import com.liferay.portal.kernel.util.StringBundler;
@@ -22,6 +24,7 @@ import java.util.Map;
  * @see ${entity.name}
  * @generated
  */
+@ProviderType
 public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Externalizable
 	<#if entity.isMvccEnabled()>
 		, MVCCModel

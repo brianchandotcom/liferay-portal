@@ -12,6 +12,8 @@
 
 package ${packagePath}.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 <#assign noSuchEntity = serviceBuilder.getNoSuchEntityException(entity)>
 
 import ${packagePath}.${noSuchEntity}Exception;
@@ -104,6 +106,7 @@ import java.util.Set;
  * @see ${entity.name}Util
  * @generated
  */
+@ProviderType
 public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.name}> implements ${entity.name}Persistence {
 
 	/*

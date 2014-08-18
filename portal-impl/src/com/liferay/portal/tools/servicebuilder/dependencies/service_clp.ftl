@@ -1,5 +1,7 @@
 package ${packagePath}.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.service.Invokable${sessionTypeName}Service;
 
 /**
@@ -14,6 +16,7 @@ import com.liferay.portal.service.Invokable${sessionTypeName}Service;
 	@Deprecated
 </#if>
 
+@ProviderType
 public class ${entity.name}${sessionTypeName}ServiceClp implements ${entity.name}${sessionTypeName}Service {
 
 	public ${entity.name}${sessionTypeName}ServiceClp(Invokable${sessionTypeName}Service invokable${sessionTypeName}Service) {

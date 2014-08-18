@@ -53,10 +53,7 @@ import org.osgi.util.tracker.ServiceTracker;
 	@Deprecated
 </#if>
 
-<#if pluginName == "">
-	@ProviderType
-</#if>
-
+@ProviderType
 public class ${entity.name}${sessionTypeName}ServiceUtil {
 
 	/*

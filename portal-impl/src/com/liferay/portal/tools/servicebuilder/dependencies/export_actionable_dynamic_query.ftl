@@ -1,5 +1,7 @@
 package ${packagePath}.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import ${packagePath}.model.${entity.name};
 import ${packagePath}.service.${entity.name}LocalServiceUtil;
 
@@ -24,6 +26,7 @@ import com.liferay.portal.util.PortalUtil;
  * @generated
  */
 @Deprecated
+@ProviderType
 public class ${entity.name}ExportActionableDynamicQuery extends ${entity.name}ActionableDynamicQuery {
 
 	public ${entity.name}ExportActionableDynamicQuery(PortletDataContext portletDataContext) {

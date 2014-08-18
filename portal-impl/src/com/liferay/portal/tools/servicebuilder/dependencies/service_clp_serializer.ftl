@@ -1,5 +1,7 @@
 package ${packagePath}.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 <#assign entitiesHaveColumns = false>
 
 <#list entities as entity>
@@ -31,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@ProviderType
 public class ClpSerializer {
 
 	public static String getServletContextName() {

@@ -1,5 +1,7 @@
 package ${packagePath}.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import ${packagePath}.model.${entity.name};
 
 <#if entity.hasLocalService() && entity.hasColumns()>
@@ -26,6 +28,7 @@ import ${packagePath}.model.${entity.name};
  * @see ${packagePath}.model.${entity.name}
  * @generated
  */
+@ProviderType
 public abstract class ${entity.name}BaseImpl extends ${entity.name}ModelImpl implements ${entity.name} {
 
 	/*

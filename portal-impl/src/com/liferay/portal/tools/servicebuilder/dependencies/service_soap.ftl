@@ -67,10 +67,7 @@ import java.util.Map;
 	@Deprecated
 </#if>
 
-<#if pluginName == "">
-	@ProviderType
-</#if>
-
+@ProviderType
 public class ${entity.name}ServiceSoap {
 
 	<#assign hasMethods = false>

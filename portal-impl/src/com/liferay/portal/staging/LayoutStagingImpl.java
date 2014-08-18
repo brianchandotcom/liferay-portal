@@ -14,6 +14,7 @@
 
 package com.liferay.portal.staging;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.staging.LayoutStaging;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -147,7 +148,7 @@ public class LayoutStagingImpl implements LayoutStaging {
 
 			return true;
 		}
-		catch (Exception e) {
+		catch (PortalException pe) {
 			return false;
 		}
 	}

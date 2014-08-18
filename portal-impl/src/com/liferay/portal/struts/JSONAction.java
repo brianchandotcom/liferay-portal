@@ -68,7 +68,6 @@ public abstract class JSONAction extends Action {
 		}
 
 		String callback = ParamUtil.getString(request, "callback");
-		String instance = ParamUtil.getString(request, "inst");
 
 		String json = null;
 
@@ -79,9 +78,6 @@ public abstract class JSONAction extends Action {
 
 			if (Validator.isNotNull(callback)) {
 				json = callback + "(" + json + ");";
-			}
-			else if (Validator.isNotNull(instance)) {
-				json = "var " + instance + "=" + json + ";";
 			}
 		}
 		catch (SecurityException se) {

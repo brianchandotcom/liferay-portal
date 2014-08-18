@@ -180,10 +180,10 @@ public class FriendlyURLServlet extends HttpServlet {
 	protected String getPathInfo(HttpServletRequest request) {
 		String requestURI = request.getRequestURI();
 
-		int semicolonPos = requestURI.indexOf(CharPool.SEMICOLON);
+		int pos = requestURI.indexOf(CharPool.SEMICOLON);
 
-		if (semicolonPos != -1) {
-			requestURI = requestURI.substring(0, semicolonPos);
+		if (pos != -1) {
+			requestURI = requestURI.substring(0, pos);
 		}
 
 		return requestURI.substring(_friendlyURLPathPrefix.length());

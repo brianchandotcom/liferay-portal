@@ -52,7 +52,7 @@
 		<execute macro="DMRepository#addCP">
 			<var name="dmRepositoryLibraryName" value="Documents" />
 			<var name="dmRepositoryName" value="${dmRepositoryName}" />
-			<var name="dmRepositorySiteURL" value="http://cloud-10-0-13-47" />
+			<var name="dmRepositorySiteURL" value="http://cloud-10-0-15-1" />
 			<var name="dmRepositoryType" value="Sharepoint" />
 		</execute>
 

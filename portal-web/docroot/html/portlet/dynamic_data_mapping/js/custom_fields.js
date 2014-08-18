@@ -11,13 +11,14 @@ AUI.add(
 		var Lang = A.Lang;
 
 		var booleanParse = A.DataType.Boolean.parse;
-		var camelize = Liferay.Util.camelize;
+
+		var camelize = Lang.String.camelize;
 		var instanceOf = A.instanceOf;
 		var isObject = Lang.isObject;
 		var isUndefined = Lang.isUndefined;
 		var isNull = Lang.isNull;
 		var isValue = Lang.isValue;
-		var trim = A.Lang.trim;
+		var trim = Lang.trim;
 
 		var STR_BLANK = '';
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.lucene;
+package com.liferay.portal.search;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -53,7 +53,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class LuceneIndexSearcherTest {
+public class SearchPaginationTest {
 
 	@Before
 	public void setUp() throws Exception {

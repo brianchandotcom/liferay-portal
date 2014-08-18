@@ -133,8 +133,8 @@ public class LayoutStagingImpl implements LayoutStaging {
 				typeSettingsProperties.getProperty("branchingPublic"));
 		}
 
-		if ((!isStagingGroup && !group.isStagedRemotely()) ||
-			!branchingEnabled || !group.isStaged()) {
+		if (!branchingEnabled || !group.isStaged() ||
+			(!group.isStagedRemotely() && !isStagingGroup)) {
 
 			return false;
 		}

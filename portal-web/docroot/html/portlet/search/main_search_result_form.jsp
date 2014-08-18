@@ -216,14 +216,12 @@ if (summary != null) {
 								continue;
 							}
 
-							long assetVocabularyId = assetCategory.getVocabularyId();
-
-							List<AssetCategory> assetCategories = assetVocabularyIdsToCategoryIdsMap.get(assetVocabularyId);
+							List<AssetCategory> assetCategories = assetVocabularyIdsToCategoryIdsMap.get(assetCategory.getVocabularyId());
 
 							if (assetCategories == null) {
 								assetCategories = new ArrayList<AssetCategory>();
 
-								assetVocabularyIdsToCategoryIdsMap.put(assetVocabularyId, assetCategories);
+								assetVocabularyIdsToCategoryIdsMap.put(assetCategory.getVocabularyId(), assetCategories);
 							}
 
 							assetCategories.add(assetCategory);

@@ -39,14 +39,13 @@ import javax.servlet.http.HttpServletResponse;
  * @author Iván Zaera
  */
 public class DefaultDLFileEntryActionsDisplayContext
-	extends BaseDLFileEntryActionsDisplayContext
 	implements DLFileEntryActionsDisplayContext {
 
 	public DefaultDLFileEntryActionsDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		FileEntry fileEntry, FileVersion fileVersion) {
 
-		super(_UUID, null, request, response, fileEntry, fileVersion);
+		_request = request;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -104,6 +103,11 @@ public class DefaultDLFileEntryActionsDisplayContext
 	}
 
 	@Override
+	public UUID getUuid() {
+		return _UUID;
+	}
+
+	@Override
 	public boolean isAssetMetadataVisible() {
 		String portletId = _portletDisplay.getId();
 
@@ -118,7 +122,7 @@ public class DefaultDLFileEntryActionsDisplayContext
 			return true;
 		}
 
-		return ParamUtil.getBoolean(request, "showAssetMetadata");
+		return ParamUtil.getBoolean(_request, "showAssetMetadata");
 	}
 
 	@Override
@@ -341,7 +345,7 @@ public class DefaultDLFileEntryActionsDisplayContext
 
 	private boolean _isIEOnWin32() {
 		if (_ieOnWin32 == null) {
-			_ieOnWin32 = BrowserSnifferUtil.isIeOnWin32(request);
+			_ieOnWin32 = BrowserSnifferUtil.isIeOnWin32(_request);
 		}
 
 		return _ieOnWin32;
@@ -369,6 +373,7 @@ public class DefaultDLFileEntryActionsDisplayContext
 	private long _folderId;
 	private Boolean _ieOnWin32;
 	private PortletDisplay _portletDisplay;
+	private HttpServletRequest _request;
 	private long _scopeGroupId;
 	private Boolean _trashEnabled;
 

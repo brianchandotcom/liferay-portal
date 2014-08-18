@@ -39,9 +39,11 @@ public class DLFileEntryActionsDisplayContextUtil {
 			new DefaultDLFileEntryActionsDisplayContext(
 				request, response, fileEntry, fileVersion);
 
-		dlFileEntryActionsDisplayContext = _chainDLFileEntryDisplayContexts(
-			request, response, fileEntry, fileVersion,
-			dlFileEntryActionsDisplayContext);
+		if (fileEntry != null) {
+			dlFileEntryActionsDisplayContext = _chainDLFileEntryDisplayContexts(
+				request, response, fileEntry, fileVersion,
+				dlFileEntryActionsDisplayContext);
+		}
 
 		return dlFileEntryActionsDisplayContext;
 	}

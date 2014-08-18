@@ -154,6 +154,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		addHighlightedField(
 			searchRequestBuilder, queryConfig, Field.DESCRIPTION);
 		addHighlightedField(searchRequestBuilder, queryConfig, Field.TITLE);
+
+		searchRequestBuilder.setHighlighterRequireFieldMatch(true);
 	}
 
 	protected void addPagination(

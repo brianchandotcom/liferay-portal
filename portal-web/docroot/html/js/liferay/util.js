@@ -600,10 +600,6 @@
 			return (Math.ceil(Math.random() * (new Date()).getTime()));
 		},
 
-		randomMinMax: function(min, max) {
-			return (Math.round(Math.random() * (max - min))) + min;
-		},
-
 		selectAndCopy: function(el) {
 			el.focus();
 			el.select();

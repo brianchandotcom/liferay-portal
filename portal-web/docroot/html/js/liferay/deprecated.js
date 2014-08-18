@@ -65,6 +65,10 @@
 		return Liferay.EDITORS && Liferay.EDITORS[editorImpl];
 	};
 
+	Util.randomMinMax = function(min, max) {
+		return (Math.round(Math.random() * (max - min))) + min;
+	};
+
 	Util.uncamelize = function(value, separator) {
 		separator = separator || ' ';
 

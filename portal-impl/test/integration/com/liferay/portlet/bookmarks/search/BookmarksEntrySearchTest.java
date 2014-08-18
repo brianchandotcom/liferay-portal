@@ -161,6 +161,11 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
+		BookmarksEntryServiceUtil.moveEntryToTrash(primaryKey);
+	}
+
+	@Override
 	protected void moveParentBaseModelToTrash(long primaryKey)
 		throws Exception {
 

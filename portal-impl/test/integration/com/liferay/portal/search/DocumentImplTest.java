@@ -240,6 +240,8 @@ public class DocumentImplTest {
 		searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
 		searchContext.setKeywords(keywords);
 		searchContext.setGroupIds(new long[] {});
+		searchContext.getQueryConfig().setSelectedFieldNames(
+			getSelectedFields());
 
 		return searchContext;
 	}
@@ -247,7 +249,7 @@ public class DocumentImplTest {
 	protected void checkSearchContext(SearchContext searchContext)
 		throws Exception {
 
-		Hits results = _indexer.search(searchContext, Field.ANY);
+		Hits results = _indexer.search(searchContext, getSelectedFields());
 
 		for (Document document : results.getDocs()) {
 			String screenName = document.get("screenName");
@@ -295,6 +297,8 @@ public class DocumentImplTest {
 			SearchContext searchContext, Sort sort, String[] screenNames)
 		throws Exception {
 
+		searchContext.getQueryConfig().setSelectedFieldNames(
+			getSelectedFields());
 		searchContext.setSorts(sort);
 
 		Query query = _indexer.getFullQuery(searchContext);
@@ -369,6 +373,14 @@ public class DocumentImplTest {
 		}
 
 		return list.toArray(new Long[list.size()]);
+	}
+
+	protected String[] getSelectedFields() {
+		return new String[] {
+			_FIELD_DOUBLE, _FIELD_DOUBLE_ARRAY, _FIELD_FLOAT,
+			_FIELD_FLOAT_ARRAY, _FIELD_INTEGER, _FIELD_INTEGER_ARRAY,
+			_FIELD_LONG, _FIELD_LONG_ARRAY, "screenName"
+		};
 	}
 
 	protected void populateNumberArrays(

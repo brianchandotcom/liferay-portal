@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 
@@ -33,6 +35,7 @@ import java.util.Date;
  * @see DLFileRank
  * @generated
  */
+@ProviderType
 public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 	Externalizable {
 	@Override

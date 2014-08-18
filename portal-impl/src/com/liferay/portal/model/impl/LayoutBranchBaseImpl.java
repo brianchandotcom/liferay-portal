@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
  * @see com.liferay.portal.model.LayoutBranch
  * @generated
  */
+@ProviderType
 public abstract class LayoutBranchBaseImpl extends LayoutBranchModelImpl
 	implements LayoutBranch {
 	/*

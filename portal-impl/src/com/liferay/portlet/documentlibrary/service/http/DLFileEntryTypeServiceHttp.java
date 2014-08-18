@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
  * @see com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil
  * @generated
  */
+@ProviderType
 public class DLFileEntryTypeServiceHttp {
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType addFileEntryType(
 		HttpPrincipal httpPrincipal, long groupId,

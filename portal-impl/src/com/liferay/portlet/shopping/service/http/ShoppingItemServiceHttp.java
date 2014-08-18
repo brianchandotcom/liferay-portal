@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.shopping.service.ShoppingItemServiceUtil;
  * @see com.liferay.portlet.shopping.service.ShoppingItemServiceUtil
  * @generated
  */
+@ProviderType
 public class ShoppingItemServiceHttp {
 	public static void addBookItems(HttpPrincipal httpPrincipal, long groupId,
 		long categoryId, java.lang.String[] isbns)

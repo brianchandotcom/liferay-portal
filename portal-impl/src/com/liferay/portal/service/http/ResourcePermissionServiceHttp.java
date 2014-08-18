@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -49,6 +51,7 @@ import com.liferay.portal.service.ResourcePermissionServiceUtil;
  * @see com.liferay.portal.service.ResourcePermissionServiceUtil
  * @generated
  */
+@ProviderType
 public class ResourcePermissionServiceHttp {
 	public static void addResourcePermission(HttpPrincipal httpPrincipal,
 		long groupId, long companyId, java.lang.String name, int scope,

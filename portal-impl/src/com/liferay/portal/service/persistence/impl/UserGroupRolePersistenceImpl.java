@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.NoSuchUserGroupRoleException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -56,6 +58,7 @@ import java.util.Set;
  * @see UserGroupRoleUtil
  * @generated
  */
+@ProviderType
 public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupRole>
 	implements UserGroupRolePersistence {
 	/*

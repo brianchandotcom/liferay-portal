@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@ProviderType
 public class DDMContentSoap implements Serializable {
 	public static DDMContentSoap toSoapModel(DDMContent model) {
 		DDMContentSoap soapModel = new DDMContentSoap();

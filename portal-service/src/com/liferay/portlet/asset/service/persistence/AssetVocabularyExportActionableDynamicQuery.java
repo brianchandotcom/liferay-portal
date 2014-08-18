@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
@@ -31,6 +33,7 @@ import com.liferay.portlet.asset.model.AssetVocabulary;
  * @generated
  */
 @Deprecated
+@ProviderType
 public class AssetVocabularyExportActionableDynamicQuery
 	extends AssetVocabularyActionableDynamicQuery {
 	public AssetVocabularyExportActionableDynamicQuery(

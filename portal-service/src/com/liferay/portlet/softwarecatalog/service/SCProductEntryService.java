@@ -36,9 +36,9 @@ import com.liferay.portal.service.BaseService;
  * @see com.liferay.portlet.softwarecatalog.service.impl.SCProductEntryServiceImpl
  * @generated
  */
-@ProviderType
 @AccessControlled
 @JSONWebService
+@ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface SCProductEntryService extends BaseService {

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.announcements.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 
@@ -33,6 +35,7 @@ import java.util.Date;
  * @see AnnouncementsFlag
  * @generated
  */
+@ProviderType
 public class AnnouncementsFlagCacheModel implements CacheModel<AnnouncementsFlag>,
 	Externalizable {
 	@Override

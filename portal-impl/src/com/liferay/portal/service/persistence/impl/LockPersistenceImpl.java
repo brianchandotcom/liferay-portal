@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -63,6 +65,7 @@ import java.util.Set;
  * @see LockUtil
  * @generated
  */
+@ProviderType
 public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	implements LockPersistence {
 	/*

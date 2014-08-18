@@ -35,9 +35,9 @@ import com.liferay.portal.service.BaseService;
  * @see com.liferay.portlet.social.service.impl.SocialRequestServiceImpl
  * @generated
  */
-@ProviderType
 @AccessControlled
 @JSONWebService
+@ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface SocialRequestService extends BaseService {

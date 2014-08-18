@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.ServiceComponent;
 import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
  * @see com.liferay.portal.model.ServiceComponent
  * @generated
  */
+@ProviderType
 public abstract class ServiceComponentBaseImpl extends ServiceComponentModelImpl
 	implements ServiceComponent {
 	/*

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.wiki.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.wiki.service.WikiNodeServiceUtil;
  * @see com.liferay.portlet.wiki.service.WikiNodeServiceUtil
  * @generated
  */
+@ProviderType
 public class WikiNodeServiceHttp {
 	public static com.liferay.portlet.wiki.model.WikiNode addNode(
 		HttpPrincipal httpPrincipal, java.lang.String name,

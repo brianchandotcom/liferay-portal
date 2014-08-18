@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@ProviderType
 public class ShoppingItemPriceSoap implements Serializable {
 	public static ShoppingItemPriceSoap toSoapModel(ShoppingItemPrice model) {
 		ShoppingItemPriceSoap soapModel = new ShoppingItemPriceSoap();

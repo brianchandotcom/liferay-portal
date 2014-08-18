@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -34,6 +36,7 @@ import java.util.Date;
  * @see JournalFolder
  * @generated
  */
+@ProviderType
 public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 	Externalizable {
 	@Override

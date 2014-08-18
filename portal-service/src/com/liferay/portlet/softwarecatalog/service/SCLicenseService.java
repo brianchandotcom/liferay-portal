@@ -36,9 +36,9 @@ import com.liferay.portal.service.BaseService;
  * @see com.liferay.portlet.softwarecatalog.service.impl.SCLicenseServiceImpl
  * @generated
  */
-@ProviderType
 @AccessControlled
 @JSONWebService
+@ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface SCLicenseService extends BaseService {

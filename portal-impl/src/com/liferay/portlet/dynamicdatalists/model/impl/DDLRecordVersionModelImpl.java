@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -53,6 +55,7 @@ import java.util.Map;
  * @see com.liferay.portlet.dynamicdatalists.model.DDLRecordVersionModel
  * @generated
  */
+@ProviderType
 public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	implements DDLRecordVersionModel {
 	/*

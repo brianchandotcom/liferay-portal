@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.softwarecatalog.service.SCLicenseServiceUtil;
  * @see com.liferay.portlet.softwarecatalog.service.SCLicenseServiceUtil
  * @generated
  */
+@ProviderType
 public class SCLicenseServiceHttp {
 	public static com.liferay.portlet.softwarecatalog.model.SCLicense addLicense(
 		HttpPrincipal httpPrincipal, java.lang.String name,

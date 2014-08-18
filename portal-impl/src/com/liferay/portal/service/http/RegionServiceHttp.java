@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -49,6 +51,7 @@ import com.liferay.portal.service.RegionServiceUtil;
  * @see com.liferay.portal.service.RegionServiceUtil
  * @generated
  */
+@ProviderType
 public class RegionServiceHttp {
 	public static com.liferay.portal.model.Region addRegion(
 		HttpPrincipal httpPrincipal, long countryId,

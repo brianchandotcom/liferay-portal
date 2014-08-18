@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
  * @see com.liferay.portal.model.LayoutFriendlyURL
  * @generated
  */
+@ProviderType
 public abstract class LayoutFriendlyURLBaseImpl
 	extends LayoutFriendlyURLModelImpl implements LayoutFriendlyURL {
 	/*

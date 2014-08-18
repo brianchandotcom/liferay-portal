@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -50,6 +52,7 @@ import java.util.Map;
  * @see com.liferay.portlet.dynamicdatamapping.model.DDMStructureLinkModel
  * @generated
  */
+@ProviderType
 public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 	implements DDMStructureLinkModel {
 	/*

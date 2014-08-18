@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.dynamicdatalists.service.DDLRecordServiceUtil;
  * @see com.liferay.portlet.dynamicdatalists.service.DDLRecordServiceUtil
  * @generated
  */
+@ProviderType
 public class DDLRecordServiceHttp {
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord addRecord(
 		HttpPrincipal httpPrincipal, long groupId, long recordSetId,

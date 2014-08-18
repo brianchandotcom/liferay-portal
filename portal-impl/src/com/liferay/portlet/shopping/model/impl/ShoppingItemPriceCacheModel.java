@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 
@@ -31,6 +33,7 @@ import java.io.ObjectOutput;
  * @see ShoppingItemPrice
  * @generated
  */
+@ProviderType
 public class ShoppingItemPriceCacheModel implements CacheModel<ShoppingItemPrice>,
 	Externalizable {
 	@Override

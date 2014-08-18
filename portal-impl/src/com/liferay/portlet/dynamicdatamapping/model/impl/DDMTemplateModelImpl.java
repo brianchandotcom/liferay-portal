@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,6 +68,7 @@ import java.util.TreeSet;
  * @generated
  */
 @JSON(strict = true)
+@ProviderType
 public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	implements DDMTemplateModel {
 	/*

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
  * @see com.liferay.portlet.messageboards.model.MBThread
  * @generated
  */
+@ProviderType
 public abstract class MBThreadBaseImpl extends MBThreadModelImpl
 	implements MBThread {
 	/*

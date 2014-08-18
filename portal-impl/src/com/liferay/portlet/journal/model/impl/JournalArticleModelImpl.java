@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
@@ -74,6 +76,7 @@ import java.util.TreeSet;
  * @generated
  */
 @JSON(strict = true)
+@ProviderType
 public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	implements JournalArticleModel {
 	/*

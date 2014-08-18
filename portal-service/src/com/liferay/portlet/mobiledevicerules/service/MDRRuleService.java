@@ -37,9 +37,9 @@ import com.liferay.portal.service.BaseService;
  * @see com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleServiceImpl
  * @generated
  */
-@ProviderType
 @AccessControlled
 @JSONWebService
+@ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface MDRRuleService extends BaseService {

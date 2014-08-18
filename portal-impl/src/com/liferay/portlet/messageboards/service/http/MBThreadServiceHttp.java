@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
  * @see com.liferay.portlet.messageboards.service.MBThreadServiceUtil
  * @generated
  */
+@ProviderType
 public class MBThreadServiceHttp {
 	public static void deleteThread(HttpPrincipal httpPrincipal, long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException {

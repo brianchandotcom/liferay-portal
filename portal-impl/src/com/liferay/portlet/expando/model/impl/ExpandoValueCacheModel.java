@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.expando.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -32,6 +34,7 @@ import java.io.ObjectOutput;
  * @see ExpandoValue
  * @generated
  */
+@ProviderType
 public class ExpandoValueCacheModel implements CacheModel<ExpandoValue>,
 	Externalizable {
 	@Override

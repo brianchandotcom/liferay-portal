@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.expando.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.expando.service.ExpandoValueServiceUtil;
  * @see com.liferay.portlet.expando.service.ExpandoValueServiceUtil
  * @generated
  */
+@ProviderType
 public class ExpandoValueServiceHttp {
 	public static com.liferay.portlet.expando.model.ExpandoValue addValue(
 		HttpPrincipal httpPrincipal, long companyId,

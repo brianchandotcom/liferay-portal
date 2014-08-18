@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.ListType;
 
 /**
@@ -28,6 +30,7 @@ import com.liferay.portal.model.ListType;
  * @see com.liferay.portal.model.ListType
  * @generated
  */
+@ProviderType
 public abstract class ListTypeBaseImpl extends ListTypeModelImpl
 	implements ListType {
 	/*

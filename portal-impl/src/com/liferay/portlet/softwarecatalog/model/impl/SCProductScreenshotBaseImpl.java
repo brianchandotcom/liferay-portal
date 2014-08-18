@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
 import com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalServi
  * @see com.liferay.portlet.softwarecatalog.model.SCProductScreenshot
  * @generated
  */
+@ProviderType
 public abstract class SCProductScreenshotBaseImpl
 	extends SCProductScreenshotModelImpl implements SCProductScreenshot {
 	/*

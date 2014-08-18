@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.portlet.dynamicdatamapping.service.http.DDMStructureServiceSoap
  * @generated
  */
+@ProviderType
 public class DDMStructureSoap implements Serializable {
 	public static DDMStructureSoap toSoapModel(DDMStructure model) {
 		DDMStructureSoap soapModel = new DDMStructureSoap();

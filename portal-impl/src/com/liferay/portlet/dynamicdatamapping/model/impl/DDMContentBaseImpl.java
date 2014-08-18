@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
 import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil
  * @see com.liferay.portlet.dynamicdatamapping.model.DDMContent
  * @generated
  */
+@ProviderType
 public abstract class DDMContentBaseImpl extends DDMContentModelImpl
 	implements DDMContent {
 	/*

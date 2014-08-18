@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
  * @see com.liferay.portal.model.PasswordPolicy
  * @generated
  */
+@ProviderType
 public abstract class PasswordPolicyBaseImpl extends PasswordPolicyModelImpl
 	implements PasswordPolicy {
 	/*

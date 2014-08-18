@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.expando.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -65,6 +67,7 @@ import java.util.Set;
  * @see ExpandoColumnUtil
  * @generated
  */
+@ProviderType
 public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoColumn>
 	implements ExpandoColumnPersistence {
 	/*

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -60,6 +62,7 @@ import java.util.Set;
  * @see AssetTagPropertyUtil
  * @generated
  */
+@ProviderType
 public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTagProperty>
 	implements AssetTagPropertyPersistence {
 	/*

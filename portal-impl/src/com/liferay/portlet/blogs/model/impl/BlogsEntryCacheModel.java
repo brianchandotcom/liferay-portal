@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.blogs.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -34,6 +36,7 @@ import java.util.Date;
  * @see BlogsEntry
  * @generated
  */
+@ProviderType
 public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 	Externalizable {
 	@Override

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.wiki.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.portlet.wiki.service.http.WikiPageServiceSoap
  * @generated
  */
+@ProviderType
 public class WikiPageSoap implements Serializable {
 	public static WikiPageSoap toSoapModel(WikiPage model) {
 		WikiPageSoap soapModel = new WikiPageSoap();

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
  * @see com.liferay.portlet.dynamicdatalists.model.DDLRecord
  * @generated
  */
+@ProviderType
 public abstract class DDLRecordBaseImpl extends DDLRecordModelImpl
 	implements DDLRecord {
 	/*

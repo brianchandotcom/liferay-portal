@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -63,6 +65,7 @@ import java.util.Set;
  * @see LayoutUtil
  * @generated
  */
+@ProviderType
 public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	implements LayoutPersistence {
 	/*

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -61,6 +63,7 @@ import javax.sql.DataSource;
  * @see com.liferay.portlet.social.service.SocialActivityLimitLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class SocialActivityLimitLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements SocialActivityLimitLocalService,
 		IdentifiableBean {

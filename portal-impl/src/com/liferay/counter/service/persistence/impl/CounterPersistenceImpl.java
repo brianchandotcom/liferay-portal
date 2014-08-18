@@ -14,6 +14,8 @@
 
 package com.liferay.counter.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.counter.NoSuchCounterException;
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.model.impl.CounterImpl;
@@ -57,6 +59,7 @@ import java.util.Set;
  * @see CounterUtil
  * @generated
  */
+@ProviderType
 public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	implements CounterPersistence {
 	/*

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.portal.service.http.RoleServiceSoap
  * @generated
  */
+@ProviderType
 public class RoleSoap implements Serializable {
 	public static RoleSoap toSoapModel(Role model) {
 		RoleSoap soapModel = new RoleSoap();

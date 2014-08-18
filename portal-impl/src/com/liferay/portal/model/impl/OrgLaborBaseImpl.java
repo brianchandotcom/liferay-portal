@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.service.OrgLaborLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.OrgLaborLocalServiceUtil;
  * @see com.liferay.portal.model.OrgLabor
  * @generated
  */
+@ProviderType
 public abstract class OrgLaborBaseImpl extends OrgLaborModelImpl
 	implements OrgLabor {
 	/*

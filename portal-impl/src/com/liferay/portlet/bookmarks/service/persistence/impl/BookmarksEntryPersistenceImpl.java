@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.bookmarks.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -64,6 +66,7 @@ import java.util.Set;
  * @see BookmarksEntryUtil
  * @generated
  */
+@ProviderType
 public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<BookmarksEntry>
 	implements BookmarksEntryPersistence {
 	/*

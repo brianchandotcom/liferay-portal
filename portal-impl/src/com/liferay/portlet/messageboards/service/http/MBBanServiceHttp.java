@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.messageboards.service.MBBanServiceUtil;
  * @see com.liferay.portlet.messageboards.service.MBBanServiceUtil
  * @generated
  */
+@ProviderType
 public class MBBanServiceHttp {
 	public static com.liferay.portlet.messageboards.model.MBBan addBan(
 		HttpPrincipal httpPrincipal, long banUserId,

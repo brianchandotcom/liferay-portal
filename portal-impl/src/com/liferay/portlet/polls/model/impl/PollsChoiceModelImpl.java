@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.polls.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,6 +68,7 @@ import java.util.TreeSet;
  * @generated
  */
 @JSON(strict = true)
+@ProviderType
 public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	implements PollsChoiceModel {
 	/*

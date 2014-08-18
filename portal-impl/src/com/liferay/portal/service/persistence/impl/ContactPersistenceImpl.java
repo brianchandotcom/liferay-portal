@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.NoSuchContactException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -57,6 +59,7 @@ import java.util.Set;
  * @see ContactUtil
  * @generated
  */
+@ProviderType
 public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	implements ContactPersistence {
 	/*

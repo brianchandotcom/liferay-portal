@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -34,6 +36,7 @@ import java.util.Date;
  * @see Phone
  * @generated
  */
+@ProviderType
 public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 	MVCCModel {
 	@Override

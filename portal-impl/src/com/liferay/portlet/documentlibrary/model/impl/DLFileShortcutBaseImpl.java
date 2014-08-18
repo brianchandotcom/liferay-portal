@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUti
  * @see com.liferay.portlet.documentlibrary.model.DLFileShortcut
  * @generated
  */
+@ProviderType
 public abstract class DLFileShortcutBaseImpl extends DLFileShortcutModelImpl
 	implements DLFileShortcut {
 	/*

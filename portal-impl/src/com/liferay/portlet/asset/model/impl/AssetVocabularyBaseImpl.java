@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
  * @see com.liferay.portlet.asset.model.AssetVocabulary
  * @generated
  */
+@ProviderType
 public abstract class AssetVocabularyBaseImpl extends AssetVocabularyModelImpl
 	implements AssetVocabulary {
 	/*

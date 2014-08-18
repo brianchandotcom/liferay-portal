@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.Region;
 
 /**
@@ -28,6 +30,7 @@ import com.liferay.portal.model.Region;
  * @see com.liferay.portal.model.Region
  * @generated
  */
+@ProviderType
 public abstract class RegionBaseImpl extends RegionModelImpl implements Region {
 	/*
 	 * NOTE FOR DEVELOPERS:

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.polls.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -63,6 +65,7 @@ import java.util.Set;
  * @see PollsQuestionUtil
  * @generated
  */
+@ProviderType
 public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuestion>
 	implements PollsQuestionPersistence {
 	/*

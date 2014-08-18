@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.NoSuchUserGroupException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -66,6 +68,7 @@ import java.util.Set;
  * @see UserGroupUtil
  * @generated
  */
+@ProviderType
 public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	implements UserGroupPersistence {
 	/*

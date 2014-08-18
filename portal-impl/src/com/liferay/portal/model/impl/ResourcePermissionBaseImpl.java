@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
  * @see com.liferay.portal.model.ResourcePermission
  * @generated
  */
+@ProviderType
 public abstract class ResourcePermissionBaseImpl
 	extends ResourcePermissionModelImpl implements ResourcePermission {
 	/*

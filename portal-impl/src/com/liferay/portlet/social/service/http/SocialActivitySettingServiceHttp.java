@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.social.service.SocialActivitySettingServiceUtil;
  * @see com.liferay.portlet.social.service.SocialActivitySettingServiceUtil
  * @generated
  */
+@ProviderType
 public class SocialActivitySettingServiceHttp {
 	public static com.liferay.portlet.social.model.SocialActivityDefinition getActivityDefinition(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String className,

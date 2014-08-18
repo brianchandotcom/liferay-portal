@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
  * @see com.liferay.portlet.asset.model.AssetCategory
  * @generated
  */
+@ProviderType
 public abstract class AssetCategoryBaseImpl extends AssetCategoryModelImpl
 	implements AssetCategory {
 	/*

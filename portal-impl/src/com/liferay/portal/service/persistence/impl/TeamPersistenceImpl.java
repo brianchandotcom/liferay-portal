@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.NoSuchTeamException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -64,6 +66,7 @@ import java.util.Set;
  * @see TeamUtil
  * @generated
  */
+@ProviderType
 public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	implements TeamPersistence {
 	/*

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -34,6 +36,7 @@ import java.util.Date;
  * @see AssetEntry
  * @generated
  */
+@ProviderType
 public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 	Externalizable {
 	@Override

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.Ticket;
 import com.liferay.portal.service.TicketLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.TicketLocalServiceUtil;
  * @see com.liferay.portal.model.Ticket
  * @generated
  */
+@ProviderType
 public abstract class TicketBaseImpl extends TicketModelImpl implements Ticket {
 	/*
 	 * NOTE FOR DEVELOPERS:

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.portlet.shopping.service.http.ShoppingOrderServiceSoap
  * @generated
  */
+@ProviderType
 public class ShoppingOrderSoap implements Serializable {
 	public static ShoppingOrderSoap toSoapModel(ShoppingOrder model) {
 		ShoppingOrderSoap soapModel = new ShoppingOrderSoap();

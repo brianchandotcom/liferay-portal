@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -49,6 +51,7 @@ import com.liferay.portal.service.TeamServiceUtil;
  * @see com.liferay.portal.service.TeamServiceUtil
  * @generated
  */
+@ProviderType
 public class TeamServiceHttp {
 	public static com.liferay.portal.model.Team addTeam(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String name,

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.social.model.SocialActivityLimit;
 import com.liferay.portlet.social.service.SocialActivityLimitLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.social.service.SocialActivityLimitLocalServiceUtil;
  * @see com.liferay.portlet.social.model.SocialActivityLimit
  * @generated
  */
+@ProviderType
 public abstract class SocialActivityLimitBaseImpl
 	extends SocialActivityLimitModelImpl implements SocialActivityLimit {
 	/*

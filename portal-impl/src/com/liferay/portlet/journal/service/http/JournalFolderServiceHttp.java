@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
  * @see com.liferay.portlet.journal.service.JournalFolderServiceUtil
  * @generated
  */
+@ProviderType
 public class JournalFolderServiceHttp {
 	public static com.liferay.portlet.journal.model.JournalFolder addFolder(
 		HttpPrincipal httpPrincipal, long groupId, long parentFolderId,

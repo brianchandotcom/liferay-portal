@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -69,6 +71,7 @@ import java.util.Set;
  * @see AssetEntryUtil
  * @generated
  */
+@ProviderType
 public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	implements AssetEntryPersistence {
 	/*

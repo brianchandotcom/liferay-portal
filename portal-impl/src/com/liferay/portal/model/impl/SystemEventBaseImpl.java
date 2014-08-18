@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.service.SystemEventLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.SystemEventLocalServiceUtil;
  * @see com.liferay.portal.model.SystemEvent
  * @generated
  */
+@ProviderType
 public abstract class SystemEventBaseImpl extends SystemEventModelImpl
 	implements SystemEvent {
 	/*

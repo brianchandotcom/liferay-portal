@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -32,6 +34,7 @@ import java.io.ObjectOutput;
  * @see DDMStorageLink
  * @generated
  */
+@ProviderType
 public class DDMStorageLinkCacheModel implements CacheModel<DDMStorageLink>,
 	Externalizable {
 	@Override

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.portlet.softwarecatalog.service.http.SCFrameworkVersionServiceSoap
  * @generated
  */
+@ProviderType
 public class SCFrameworkVersionSoap implements Serializable {
 	public static SCFrameworkVersionSoap toSoapModel(SCFrameworkVersion model) {
 		SCFrameworkVersionSoap soapModel = new SCFrameworkVersionSoap();

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.expando.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ import java.util.List;
  * @see com.liferay.portlet.expando.service.http.ExpandoValueServiceSoap
  * @generated
  */
+@ProviderType
 public class ExpandoValueSoap implements Serializable {
 	public static ExpandoValueSoap toSoapModel(ExpandoValue model) {
 		ExpandoValueSoap soapModel = new ExpandoValueSoap();

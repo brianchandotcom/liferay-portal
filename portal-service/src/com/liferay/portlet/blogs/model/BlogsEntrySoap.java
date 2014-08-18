@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.blogs.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.portlet.blogs.service.http.BlogsEntryServiceSoap
  * @generated
  */
+@ProviderType
 public class BlogsEntrySoap implements Serializable {
 	public static BlogsEntrySoap toSoapModel(BlogsEntry model) {
 		BlogsEntrySoap soapModel = new BlogsEntrySoap();

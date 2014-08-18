@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.announcements.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.announcements.service.AnnouncementsDeliveryServiceUti
  * @see com.liferay.portlet.announcements.service.AnnouncementsDeliveryServiceUtil
  * @generated
  */
+@ProviderType
 public class AnnouncementsDeliveryServiceHttp {
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery updateDelivery(
 		HttpPrincipal httpPrincipal, long userId, java.lang.String type,

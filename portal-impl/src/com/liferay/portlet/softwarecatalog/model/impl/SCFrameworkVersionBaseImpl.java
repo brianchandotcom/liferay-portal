@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion;
 import com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionLocalServic
  * @see com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion
  * @generated
  */
+@ProviderType
 public abstract class SCFrameworkVersionBaseImpl
 	extends SCFrameworkVersionModelImpl implements SCFrameworkVersion {
 	/*

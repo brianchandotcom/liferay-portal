@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.NoSuchCompanyException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -60,6 +62,7 @@ import java.util.Set;
  * @see CompanyUtil
  * @generated
  */
+@ProviderType
 public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	implements CompanyPersistence {
 	/*

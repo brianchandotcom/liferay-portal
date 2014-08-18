@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil;
  * @see com.liferay.portlet.mobiledevicerules.model.MDRAction
  * @generated
  */
+@ProviderType
 public abstract class MDRActionBaseImpl extends MDRActionModelImpl
 	implements MDRAction {
 	/*

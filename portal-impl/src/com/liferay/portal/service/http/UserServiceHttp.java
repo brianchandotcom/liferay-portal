@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -49,6 +51,7 @@ import com.liferay.portal.service.UserServiceUtil;
  * @see com.liferay.portal.service.UserServiceUtil
  * @generated
  */
+@ProviderType
 public class UserServiceHttp {
 	public static void addGroupUsers(HttpPrincipal httpPrincipal, long groupId,
 		long[] userIds, com.liferay.portal.service.ServiceContext serviceContext)

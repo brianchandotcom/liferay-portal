@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService
  * @see com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink
  * @generated
  */
+@ProviderType
 public abstract class DDMStorageLinkBaseImpl extends DDMStorageLinkModelImpl
 	implements DDMStorageLink {
 	/*

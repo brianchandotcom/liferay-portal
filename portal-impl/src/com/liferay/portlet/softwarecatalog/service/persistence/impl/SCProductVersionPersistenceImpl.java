@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -65,6 +67,7 @@ import java.util.Set;
  * @see SCProductVersionUtil
  * @generated
  */
+@ProviderType
 public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProductVersion>
 	implements SCProductVersionPersistence {
 	/*

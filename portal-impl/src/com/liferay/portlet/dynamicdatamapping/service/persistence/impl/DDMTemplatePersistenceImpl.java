@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -65,6 +67,7 @@ import java.util.Set;
  * @see DDMTemplateUtil
  * @generated
  */
+@ProviderType
 public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	implements DDMTemplatePersistence {
 	/*

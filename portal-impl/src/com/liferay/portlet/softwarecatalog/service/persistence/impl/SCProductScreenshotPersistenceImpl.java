@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -59,6 +61,7 @@ import java.util.Set;
  * @see SCProductScreenshotUtil
  * @generated
  */
+@ProviderType
 public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCProductScreenshot>
 	implements SCProductScreenshotPersistence {
 	/*

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -68,6 +70,7 @@ import java.util.Set;
  * @see DLFolderUtil
  * @generated
  */
+@ProviderType
 public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	implements DLFolderPersistence {
 	/*

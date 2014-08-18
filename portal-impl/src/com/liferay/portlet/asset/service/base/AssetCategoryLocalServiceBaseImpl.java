@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -75,6 +77,7 @@ import javax.sql.DataSource;
  * @see com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class AssetCategoryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements AssetCategoryLocalService,
 		IdentifiableBean {

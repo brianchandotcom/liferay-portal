@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -49,6 +51,7 @@ import com.liferay.portal.service.ExportImportConfigurationServiceUtil;
  * @see com.liferay.portal.service.ExportImportConfigurationServiceUtil
  * @generated
  */
+@ProviderType
 public class ExportImportConfigurationServiceHttp {
 	public static void deleteExportImportConfiguration(
 		HttpPrincipal httpPrincipal, long exportImportConfigurationId)

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
  * @see com.liferay.portlet.mobiledevicerules.model.MDRRule
  * @generated
  */
+@ProviderType
 public abstract class MDRRuleBaseImpl extends MDRRuleModelImpl
 	implements MDRRule {
 	/*

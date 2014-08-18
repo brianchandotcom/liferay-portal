@@ -1871,30 +1871,6 @@
 		['aui-base']
 	);
 
-	/**
-	 * OPTIONS
-	 *
-	 * Required
-	 * uri {string}: The url to open that sets the editor.
-	 */
-
-	Liferay.provide(
-		Util,
-		'switchEditor',
-		function(options) {
-			var uri = options.uri;
-
-			var windowName = Liferay.Util.getWindowName();
-
-			var dialog = Liferay.Util.getWindow(windowName);
-
-			if (dialog) {
-				dialog.iframe.set('uri', uri);
-			}
-		},
-		['aui-io']
-	);
-
 	Liferay.provide(
 		Util,
 		'toggleBoxes',

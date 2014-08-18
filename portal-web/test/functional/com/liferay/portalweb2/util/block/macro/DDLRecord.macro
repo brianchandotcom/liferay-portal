@@ -43,7 +43,12 @@
 		<execute action="CPDynamicdatalistsList#assertClick" locator-key1="RECORD_MENULIST_EDIT" value1="Edit" />
 	</command>
 
-	<command name="editCPViaRecordView">
+	<command name="editPG">
+		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
+		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_EDIT" value1="Edit" />
+	</command>
+
+	<command name="editViaRecordViewCP">
 		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlListName}" />
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
 		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${ddlListName}" />
@@ -55,12 +60,7 @@
 		<execute action="CPDynamicdatalistsListRecord#assertClick" locator-key1="EDIT_BUTTON" value1="Edit" />
 	</command>
 
-	<command name="editPG">
-		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
-		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_EDIT" value1="Edit" />
-	</command>
-
-	<command name="editPGViaRecordView">
+	<command name="editViaRecordViewPG">
 		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
 		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_VIEW" value1="View" />
 

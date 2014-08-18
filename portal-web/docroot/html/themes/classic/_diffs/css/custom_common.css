@@ -1164,14 +1164,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		@include box-shadow(none);
 	}
 
-	.portlet-options {
-		&, &.open {
-			.dropdown-toggle {
-				@include box-shadow(none);
-			}
-		}
-	}
-
 	.table {
 		@include border-radius(5px);
 	}

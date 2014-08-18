@@ -43,7 +43,7 @@
 						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 					/>
 
-					<aui:nav-item data-url="<%= HtmlUtil.escapeAttribute(permissionsURL) %>" iconCssClass="icon-lock" id="tagsPermissionsButton" label="permissions" />
+					<aui:nav-item href="<%= permissionsURL %>" iconCssClass="icon-lock" id="tagsPermissionsButton" label="permissions" useDialog="<%= true %>" />
 				</c:if>
 
 				<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="tagsActionsButton" label="actions">

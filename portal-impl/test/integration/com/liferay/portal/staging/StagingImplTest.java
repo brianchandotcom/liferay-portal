@@ -135,11 +135,13 @@ public class StagingImplTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		Map<String, String[]> parameters = StagingUtil.getStagingParameters();
+		Map<String, String[]> stagingParameters =
+			StagingUtil.getStagingParameters();
 
-		for (String parameterName : parameters.keySet()) {
+		for (String stagingParameterName : stagingParameters.keySet()) {
 			serviceContext.setAttribute(
-				parameterName, parameters.get(parameterName)[0]);
+				stagingParameterName,
+				stagingParameters.get(stagingParameterName)[0]);
 		}
 
 		if (branching) {

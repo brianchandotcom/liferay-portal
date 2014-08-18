@@ -220,11 +220,11 @@ if (summary != null) {
 
 							if (assetCategories == null) {
 								assetCategories = new ArrayList<AssetCategory>();
-
-								assetVocabularyIdsToCategoryIdsMap.put(assetCategory.getVocabularyId(), assetCategories);
 							}
 
 							assetCategories.add(assetCategory);
+
+							assetVocabularyIdsToCategoryIdsMap.put(assetCategory.getVocabularyId(), assetCategories);
 						}
 						%>
 

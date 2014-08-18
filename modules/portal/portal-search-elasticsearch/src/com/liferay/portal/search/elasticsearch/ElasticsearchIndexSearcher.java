@@ -15,6 +15,7 @@
 package com.liferay.portal.search.elasticsearch;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexSearcher;
@@ -82,41 +83,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		stopWatch.start();
 
-		Client client = _elasticsearchConnectionManager.getClient();
+		SearchResponse searchResponse = doSearch(searchContext, query);
 
-		SearchRequestBuilder searchRequestBuilder = client.prepareSearch(
-			String.valueOf(searchContext.getCompanyId()));
-
-		addFacets(searchRequestBuilder, searchContext);
-		addHighlights(searchRequestBuilder, query.getQueryConfig());
-		addPagination(
-			searchRequestBuilder, searchContext.getStart(),
-			searchContext.getEnd());
-		addSelectedFields(searchRequestBuilder, query.getQueryConfig());
-		addSort(searchRequestBuilder, searchContext.getSorts());
-
-		QueryBuilder queryBuilder = QueryBuilders.queryString(query.toString());
-
-		searchRequestBuilder.setQuery(queryBuilder);
-
-		searchRequestBuilder.setTypes(DocumentTypes.LIFERAY);
-
-		SearchRequest searchRequest = searchRequestBuilder.request();
-
-		ActionFuture<SearchResponse> future = client.search(searchRequest);
-
-		SearchResponse searchResponse = future.actionGet();
-
-		updateFacetCollectors(searchContext, searchResponse);
-
-		Hits hits = processSearchHits(
-			searchResponse.getHits(), query.getQueryConfig());
-
-		hits.setQuery(query);
-
-		TimeValue timeValue = searchResponse.getTook();
-
-		hits.setSearchTime((float)timeValue.getSecondsFrac());
+		Hits hits = processSearchResponse(searchResponse, searchContext, query);
 
 		hits.setStart(stopWatch.getStartTime());
 
@@ -124,9 +93,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			stopWatch.stop();
 
 			_log.info(
-				"Searching " + queryBuilder.toString() + " took " +
-					stopWatch.getTime() + " ms with the search engine using " +
-						hits.getSearchTime() + " s");
+				"Searching " + query.toString() + " took " +
+					stopWatch.getTime() + " ms");
 		}
 
 		return hits;
@@ -338,6 +306,43 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
+	protected SearchResponse doSearch(
+		SearchContext searchContext, Query query) {
+
+		Client client = _elasticsearchConnectionManager.getClient();
+
+		SearchRequestBuilder searchRequestBuilder = client.prepareSearch(
+			String.valueOf(searchContext.getCompanyId()));
+
+		addFacets(searchRequestBuilder, searchContext);
+		addHighlights(searchRequestBuilder, query.getQueryConfig());
+		addPagination(
+			searchRequestBuilder, searchContext.getStart(),
+			searchContext.getEnd());
+		addSelectedFields(searchRequestBuilder, query.getQueryConfig());
+		addSort(searchRequestBuilder, searchContext.getSorts());
+
+		QueryBuilder queryBuilder = QueryBuilders.queryString(query.toString());
+
+		searchRequestBuilder.setQuery(queryBuilder);
+
+		searchRequestBuilder.setTypes(DocumentTypes.LIFERAY);
+
+		SearchRequest searchRequest = searchRequestBuilder.request();
+
+		ActionFuture<SearchResponse> future = client.search(searchRequest);
+
+		SearchResponse searchResponse = future.actionGet();
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Searching " + queryBuilder.toString() + "." +
+					"The search engine used " + searchResponse.getTook());
+		}
+
+		return searchResponse;
+	}
+
 	protected Document processSearchHit(SearchHit hit) {
 		Document document = new DocumentImpl();
 
@@ -361,14 +366,37 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		return document;
 	}
 
-	protected Hits processSearchHits(
-		SearchHits searchHits, QueryConfig queryConfig) {
+	protected Hits processSearchResponse(
+		SearchResponse searchResponse, SearchContext searchContext,
+		Query query) {
+
+		long total = searchResponse.getHits().getTotalHits();
+		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+			searchContext.getStart(), searchContext.getEnd(), (int)total);
+
+		int start = startAndEnd[0];
+		int end = startAndEnd[1];
+
+		if ((searchContext.getStart() != QueryUtil.ALL_POS) &&
+			(searchContext.getEnd() != QueryUtil.ALL_POS) &&
+			((start != searchContext.getStart()) ||
+			 (end != searchContext.getEnd()))) {
+
+			searchContext.setStart(start);
+			searchContext.setEnd(end);
+
+			searchResponse = doSearch(searchContext, query);
+		}
 
 		Hits hits = new HitsImpl();
+
+		SearchHits searchHits = searchResponse.getHits();
 
 		List<Document> documents = new ArrayList<Document>();
 		Set<String> queryTerms = new HashSet<String>();
 		List<Float> scores = new ArrayList<Float>();
+
+		updateFacetCollectors(searchContext, searchResponse);
 
 		if (searchHits.totalHits() > 0) {
 			SearchHit[] searchHitsArray = searchHits.getHits();
@@ -380,7 +408,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 				scores.add(searchHit.getScore());
 
-				addSnippets(searchHit, document, queryConfig, queryTerms);
+				addSnippets(
+					searchHit, document, searchContext.getQueryConfig(),
+					queryTerms);
 			}
 		}
 
@@ -388,6 +418,10 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		hits.setLength((int)searchHits.getTotalHits());
 		hits.setQueryTerms(queryTerms.toArray(new String[queryTerms.size()]));
 		hits.setScores(scores.toArray(new Float[scores.size()]));
+
+		hits.setQuery(query);
+		TimeValue timeValue = searchResponse.getTook();
+		hits.setSearchTime((float)timeValue.getSecondsFrac());
 
 		return hits;
 	}

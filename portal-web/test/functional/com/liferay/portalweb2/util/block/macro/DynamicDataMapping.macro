@@ -392,7 +392,7 @@
 			<isset var="fieldReadOnly" />
 			<then>
 				<execute macro="DynamicDataMapping#viewFieldReadOnlyCmd">
-					<var name="dataDefinitionFormTemplateMode" value="${dataDefinitionFormTemplateMode}" />
+					<var name="ddlFormTemplateMode" value="${ddlFormTemplateMode}" />
 					<var name="fieldReadOnly" value="${fieldReadOnly}" />
 				</execute>
 			</then>
@@ -556,12 +556,12 @@
 
 	<command name="viewFieldReadOnlyCmd">
 		<if>
-			<equals arg1="${dataDefinitionFormTemplateMode}" arg2="Create" />
+			<equals arg1="${ddlFormTemplateMode}" arg2="Create" />
 			<then>
 				<execute action="Dynamicdatamapping#assertElementNotPresent" locator-key1="SETTINGS_READ_ONLY" />
 			</then>
 			<elseif>
-				<equals arg1="${dataDefinitionFormTemplateMode}" arg2="Edit" />
+				<equals arg1="${ddlFormTemplateMode}" arg2="Edit" />
 				<then>
 					<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_READ_ONLY" value1="${fieldReadOnly}" />
 				</then>

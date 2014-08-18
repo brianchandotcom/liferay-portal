@@ -543,7 +543,7 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DDLRecord#editPGViaRecordView">
+		<execute macro="DDLRecord#editViaRecordViewPG">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 

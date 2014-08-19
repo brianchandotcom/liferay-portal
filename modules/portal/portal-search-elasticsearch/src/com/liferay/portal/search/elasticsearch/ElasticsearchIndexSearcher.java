@@ -64,7 +64,8 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHitField;
 import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.facet.Facets;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.highlight.HighlightField;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.ScoreSortBuilder;
@@ -434,20 +435,25 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	protected void updateFacetCollectors(
 		SearchContext searchContext, SearchResponse searchResponse) {
 
+		Aggregations aggregations = searchResponse.getAggregations();
+
+		if (aggregations == null) {
+			return;
+		}
+
 		Map<String, Facet> facetsMap = searchContext.getFacets();
+
+		Map<String, Aggregation> aggregationsMap = aggregations.getAsMap();
 
 		for (Facet facet : facetsMap.values()) {
 			if (facet.isStatic()) {
 				continue;
 			}
 
-			Facets facets = searchResponse.getFacets();
-
-			org.elasticsearch.search.facet.Facet elasticsearchFacet =
-				facets.facet(facet.getFieldName());
+			Aggregation aggregation = aggregationsMap.get(facet.getFieldName());
 
 			FacetCollector facetCollector =
-				new ElasticsearchFacetFieldCollector(elasticsearchFacet);
+				new ElasticsearchFacetFieldCollector(aggregation);
 
 			facet.setFacetCollector(facetCollector);
 		}

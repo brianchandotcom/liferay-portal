@@ -97,7 +97,7 @@ AUI.add(
 				'<h4>{[ this.strings.uploadsCompleteText ]}</h4>',
 			'</div>',
 
-			'<div class="pending-files-info alert alert-block hide">{[ this.strings.pendingFileText ]}</div>',
+			'<div class="pending-files-info alert alert-warning hide">{[ this.strings.pendingFileText ]}</div>',
 
 			'<div class="hide float-container manage-upload-target" id="{$ns}manageUploadTarget">',
 				'<tpl if="multipleFiles">',

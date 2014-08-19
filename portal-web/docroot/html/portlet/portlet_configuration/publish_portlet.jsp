@@ -342,7 +342,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 																						<aui:input data-name='<%= LanguageUtil.get(locale, "delete-portlet-data") %>' label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
 
 																						<div id="<portlet:namespace />showDeleteContentWarning">
-																							<div class="alert alert-block">
+																							<div class="alert alert-warning">
 																								<liferay-ui:message key="delete-content-before-importing-warning" />
 
 																								<liferay-ui:message key="delete-content-before-importing-suggestion" />

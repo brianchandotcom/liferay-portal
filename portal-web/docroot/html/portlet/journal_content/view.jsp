@@ -216,7 +216,7 @@ boolean hasViewPermission = true;
 								if (expired) {
 								%>
 
-									<div class="alert alert-block">
+									<div class="alert alert-warning">
 										<%= LanguageUtil.format(request, "x-is-expired", HtmlUtil.escape(title)) %>
 									</div>
 
@@ -236,14 +236,14 @@ boolean hasViewPermission = true;
 												<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
 											</liferay-portlet:renderURL>
 
-											<div class="alert alert-block">
+											<div class="alert alert-warning">
 												<a href="<%= editURL %>">
 													<%= LanguageUtil.format(request, "x-is-not-approved", HtmlUtil.escape(title)) %>
 												</a>
 											</div>
 										</c:when>
 										<c:otherwise>
-											<div class="alert alert-block">
+											<div class="alert alert-warning">
 												<%= LanguageUtil.format(request, "x-is-not-approved", HtmlUtil.escape(title)) %>
 											</div>
 										</c:otherwise>

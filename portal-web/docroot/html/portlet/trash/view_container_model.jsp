@@ -48,7 +48,7 @@ containerURL.setParameter("containerModelClassName", trashHandler.getContainerMo
 TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler.getContainerModelClassName(classPK), containerModelId, containerURL);
 %>
 
-<div class="alert alert-block">
+<div class="alert alert-warning">
 	<liferay-ui:message arguments="<%= new Object[] {LanguageUtil.get(request, trashHandler.getContainerModelName()), HtmlUtil.escape(trashRenderer.getTitle(locale))} %>" key="the-original-x-does-not-exist-anymore" translateArguments="<%= false %>" />
 </div>
 

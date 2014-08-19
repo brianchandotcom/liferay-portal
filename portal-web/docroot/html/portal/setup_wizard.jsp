@@ -406,7 +406,7 @@
 						</c:when>
 						<c:otherwise>
 							<p>
-								<div class="alert alert-block">
+								<div class="alert alert-warning">
 
 									<%
 									String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + "</span>";

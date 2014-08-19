@@ -268,7 +268,7 @@ h3 {
 	padding: 3px;
 }
 
-.alert.alert-block .lfr-inline-code {
+.alert.alert-warning .lfr-inline-code {
 	background-color: #EEB;
 	color: #333;
 }

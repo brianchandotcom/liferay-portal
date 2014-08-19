@@ -93,7 +93,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 
 	<%@ include file="/html/portlet/layouts_admin/error_remote_export_exception.jspf" %>
 
-	<div class="alert alert-block">
+	<div class="alert alert-warning">
 		<liferay-ui:message key="the-staging-environment-is-activated-changes-have-to-be-published-to-make-them-available-to-end-users" />
 	</div>
 </c:if>

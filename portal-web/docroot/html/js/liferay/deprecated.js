@@ -69,6 +69,40 @@
 		return (Math.round(Math.random() * (max - min))) + min;
 	};
 
+	Util.textareaTabs = function(event) {
+		var el = event.currentTarget.getDOM();
+		var pressedKey = event.keyCode;
+
+		if (event.isKey('TAB')) {
+			event.halt();
+
+			var oldscroll = el.scrollTop;
+
+			if (el.setSelectionRange) {
+				var caretPos = el.selectionStart + 1;
+				var elValue = el.value;
+
+				el.value = elValue.substring(0, el.selectionStart) + '\t' + elValue.substring(el.selectionEnd, elValue.length);
+
+				setTimeout(
+					function() {
+						el.focus();
+						el.setSelectionRange(caretPos, caretPos);
+					},
+					0
+				);
+
+			}
+			else {
+				document.selection.createRange().text = '\t';
+			}
+
+			el.scrollTop = oldscroll;
+
+			return false;
+		}
+	};
+
 	Util.uncamelize = function(value, separator) {
 		separator = separator || ' ';
 
@@ -77,6 +111,36 @@
 
 		return value;
 	};
+
+	Liferay.provide(
+		Util,
+		'disableTextareaTabs',
+		function(textarea) {
+			textarea = A.one(textarea);
+
+			if (textarea && textarea.attr('textareatabs') != 'enabled') {
+				textarea.attr('textareatabs', 'disabled');
+
+				textarea.detach('keydown', Util.textareaTabs);
+			}
+		},
+		['aui-base']
+	);
+
+	Liferay.provide(
+		Util,
+		'enableTextareaTabs',
+		function(textarea) {
+			textarea = A.one(textarea);
+
+			if (textarea && textarea.attr('textareatabs') != 'enabled') {
+				textarea.attr('textareatabs', 'disabled');
+
+				textarea.on('keydown', Util.textareaTabs);
+			}
+		},
+		['aui-base']
+	);
 
 	Liferay.provide(
 		Util,

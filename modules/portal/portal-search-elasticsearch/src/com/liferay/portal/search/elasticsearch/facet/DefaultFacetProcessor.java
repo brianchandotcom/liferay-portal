@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.search.facet.terms.TermsFacetBuilder;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
 
 /**
  * @author Michael C. Han
@@ -34,11 +34,11 @@ public class DefaultFacetProcessor implements FacetProcessor {
 
 		String fieldName = facetConfiguration.getFieldName();
 
-		TermsFacetBuilder termsFacetBuilder = new TermsFacetBuilder(fieldName);
+		TermsBuilder termsBuilder = new TermsBuilder(fieldName);
 
-		termsFacetBuilder.field(fieldName);
+		termsBuilder.field(fieldName);
 
-		searchRequestBuilder.addFacet(termsFacetBuilder);
+		searchRequestBuilder.addAggregation(termsBuilder);
 	}
 
 }

@@ -63,7 +63,7 @@ public class FacetSearchTest {
 
 	@Before
 	public void setUp() throws Exception {
-		int initialUsersCount;
+		int initialUsersCount = 0;
 
 		do {
 			_randomLastName = RandomTestUtil.randomString(10);
@@ -76,30 +76,30 @@ public class FacetSearchTest {
 
 		calendar.add(Calendar.HOUR, -4);
 
-		createUsersWithSpecifiedModifiedDate(
+		addUsers(
 			_USER_COUNT_LAST_24_HRS, calendar.getTime());
 
 		calendar.add(Calendar.DATE, -3);
 
-		createUsersWithSpecifiedModifiedDate(
+		addUsers(
 			_USER_COUNT_LAST_WEEK, calendar.getTime());
 
 		calendar.add(Calendar.MONTH, -1);
 		calendar.add(Calendar.DATE, 7);
 
-		createUsersWithSpecifiedModifiedDate(
+		addUsers(
 			_USER_COUNT_LAST_MONTH, calendar.getTime());
 
 		calendar.add(Calendar.MONTH, 2);
 		calendar.add(Calendar.YEAR, -1);
 
-		createUsersWithSpecifiedModifiedDate(
+		addUsers(
 			_USER_COUNT_LAST_YEAR, calendar.getTime());
 
 		calendar.add(Calendar.MONTH, 5);
 		calendar.add(Calendar.YEAR, -2);
 
-		createUsersWithSpecifiedModifiedDate(
+		addUsers(
 			_USER_COUNT_LAST_TWO_YEAR, calendar.getTime());
 
 		_dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
@@ -118,6 +118,7 @@ public class FacetSearchTest {
 	@Test
 	public void testSearchLastMonth() throws Exception {
 		Calendar calendar = Calendar.getInstance();
+
 		Date endDate = CalendarUtil.getLTDate(calendar);
 
 		calendar.add(Calendar.MONTH, -1);
@@ -131,10 +132,12 @@ public class FacetSearchTest {
 	@Test
 	public void testSearchLastTwoYears() throws Exception {
 		Calendar calendar = Calendar.getInstance();
+
 		Date endDate = CalendarUtil.getLTDate(calendar);
 
 		calendar.set(Calendar.MONTH, 1);
 		calendar.set(Calendar.DATE, 1);
+
 		calendar.add(Calendar.YEAR, -2);
 
 		searchCount(
@@ -147,6 +150,7 @@ public class FacetSearchTest {
 	@Test
 	public void testSearchLastWeek() throws Exception {
 		Calendar calendar = Calendar.getInstance();
+
 		Date endDate = CalendarUtil.getLTDate(calendar);
 
 		calendar.add(Calendar.WEEK_OF_YEAR, -1);
@@ -159,6 +163,7 @@ public class FacetSearchTest {
 	@Test
 	public void testSearchLastYear() throws Exception {
 		Calendar calendar = Calendar.getInstance();
+
 		Date endDate = CalendarUtil.getLTDate(calendar);
 
 		calendar.add(Calendar.YEAR, -1);
@@ -169,15 +174,12 @@ public class FacetSearchTest {
 				_USER_COUNT_LAST_MONTH + _USER_COUNT_LAST_YEAR);
 	}
 
-	protected void createUsersWithSpecifiedModifiedDate(
-			int count, Date modifiedDate)
-		throws Exception {
-
+	protected void addUsers(int count, Date modifiedDate) throws Exception {
 		for (int i = 0; i < count; i ++) {
 			User user = UserTestUtil.addUser(
 				RandomTestUtil.randomString(), false,
 				RandomTestUtil.randomString(), _randomLastName,
-				new long[]{TestPropsValues.getGroupId()});
+				new long[] {TestPropsValues.getGroupId()});
 
 			user.setModifiedDate(modifiedDate);
 
@@ -194,7 +196,8 @@ public class FacetSearchTest {
 
 		if (startDate != null && endDate != null) {
 			searchContext.setAttribute(
-				"modified", "[" + _dateFormat.format(startDate) + " TO " +
+				"modified",
+				"[" + _dateFormat.format(startDate) + " TO " +
 					_dateFormat.format(endDate) + "]");
 		}
 

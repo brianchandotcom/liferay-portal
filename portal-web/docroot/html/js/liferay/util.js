@@ -44,8 +44,6 @@
 
 	var STR_RIGHT_SQUARE_BRACKET = ']';
 
-	var REGEX_HTML_ESCAPE = new RegExp(STR_LEFT_SQUARE_BRACKET + htmlUnescapedValues.join('') + STR_RIGHT_SQUARE_BRACKET, 'g');
-
 	var REGEX_HTML_UNESCAPE = new RegExp(htmlEscapedValues.join('|'), 'gi');
 
 	var SRC_HIDE_LINK = {
@@ -59,8 +57,6 @@
 	};
 
 	var Util = {
-		MAP_HTML_CHARS_ESCAPED: MAP_HTML_CHARS_ESCAPED,
-
 		submitCountdown: 0,
 
 		addInputCancel: function() {

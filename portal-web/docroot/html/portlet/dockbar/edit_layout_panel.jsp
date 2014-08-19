@@ -44,7 +44,7 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 			</aui:script>
 		</c:when>
 		<c:otherwise>
-			<aui:button cssClass="close pull-right" name="closePanelEdit" value="&times;" />
+			<aui:button cssClass="close" name="closePanelEdit" value="&times;" />
 
 			<h1><liferay-ui:message key="edit-page" /></h1>
 

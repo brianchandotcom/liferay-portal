@@ -42,6 +42,8 @@
 
 	var REGEX_HTML_ESCAPE = new RegExp(STR_LEFT_SQUARE_BRACKET + htmlUnescapedValues.join('') + STR_RIGHT_SQUARE_BRACKET, 'g');
 
+	var REGEX_HTML_UNESCAPE = new RegExp(htmlEscapedValues.join('|'), 'gi');
+
 	Util.MAP_HTML_CHARS_ESCAPED = MAP_HTML_CHARS_ESCAPED;
 
 	Util.actsAsAspect = function(object) {
@@ -183,6 +185,31 @@
 		return value;
 	};
 
+	Util.unescapeHTML = function(str, entities) {
+		var regex = REGEX_HTML_UNESCAPE;
+
+		var entitiesMap = MAP_HTML_CHARS_UNESCAPED;
+
+		if (entities) {
+			var entitiesValues = [];
+
+			entitiesMap = {};
+
+			AObject.each(
+				entities,
+				function(item, index) {
+					entitiesMap[item] = index;
+
+					entitiesValues.push(item);
+				}
+			);
+
+			regex = new RegExp(entitiesValues.join('|'), 'gi');
+		}
+
+		return str.replace(regex, A.bind('_unescapeHTML', Util, entitiesMap));
+	};
+
 	Util._escapeHTML = function(preventDoubleEscape, entities, entitiesValues, match) {
 		var result;
 
@@ -210,6 +237,10 @@
 		}
 
 		return result;
+	};
+
+	Util._unescapeHTML = function(entities, match) {
+		return entities[match];
 	};
 
 	Liferay.provide(

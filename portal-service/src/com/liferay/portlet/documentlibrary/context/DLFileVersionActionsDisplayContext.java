@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Iván Zaera
  */
-public interface DLFileEntryActionsDisplayContext extends DLDisplayContext {
+public interface DLFileVersionActionsDisplayContext extends DLDisplayContext {
 
 	public String getPublishButtonLabel() throws PortalException;
 

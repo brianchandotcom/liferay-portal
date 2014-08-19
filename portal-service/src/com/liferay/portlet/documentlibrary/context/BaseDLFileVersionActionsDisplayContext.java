@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.util.UUID;
@@ -26,18 +25,17 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public class BaseDLFileEntryActionsDisplayContext
-	extends BaseDLDisplayContext<DLFileEntryActionsDisplayContext>
-	implements DLFileEntryActionsDisplayContext {
+public class BaseDLFileVersionActionsDisplayContext
+	extends BaseDLDisplayContext<DLFileVersionActionsDisplayContext>
+	implements DLFileVersionActionsDisplayContext {
 
-	public BaseDLFileEntryActionsDisplayContext(
-		UUID uuid, DLFileEntryActionsDisplayContext parentDLDisplayContext,
+	public BaseDLFileVersionActionsDisplayContext(
+		UUID uuid, DLFileVersionActionsDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry, FileVersion fileVersion) {
+		FileVersion fileVersion) {
 
 		super(uuid, parentDLDisplayContext, request, response);
 
-		this.fileEntry = fileEntry;
 		this.fileVersion = fileVersion;
 	}
 
@@ -155,7 +153,6 @@ public class BaseDLFileEntryActionsDisplayContext
 		return parentDLDisplayContext.isViewOriginalFileButtonVisible();
 	}
 
-	protected FileEntry fileEntry;
 	protected FileVersion fileVersion;
 
 }

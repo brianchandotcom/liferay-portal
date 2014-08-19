@@ -16,7 +16,7 @@
 
 <c:choose>
 	<c:when test="<%= (fileShortcut == null) %>">
-		<c:if test="<%= dlFileEntryActionsDisplayContext.isDownloadButtonVisible() %>">
+		<c:if test="<%= dlFileVersionActionsDisplayContext.isDownloadButtonVisible() %>">
 			<liferay-ui:icon
 				iconCssClass="icon-download"
 				message='<%= LanguageUtil.get(request, "download") + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'

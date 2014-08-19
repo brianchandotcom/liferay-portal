@@ -14,7 +14,7 @@
  */
 --%>
 
-<c:if test="<%= dlFileEntryActionsDisplayContext.isOpenInMsOfficeButtonVisible() %>">
+<c:if test="<%= dlFileVersionActionsDisplayContext.isOpenInMsOfficeButtonVisible() %>">
 
 	<%
 	String webDavURL = DLUtil.getWebDavURL(themeDisplay, fileEntry.getFolder(), fileEntry, PropsValues.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED, true);

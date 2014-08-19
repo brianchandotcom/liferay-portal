@@ -19,10 +19,12 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.Writer;
+
 import java.util.Map;
 
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
@@ -50,7 +52,7 @@ public class TextSearchEntry extends SearchEntry {
 		return _name;
 	}
 
-	public String getName(PageContext pageContext) {
+	public String getName(HttpServletRequest request) {
 		return getName();
 	}
 
@@ -63,15 +65,13 @@ public class TextSearchEntry extends SearchEntry {
 	}
 
 	@Override
-	public void print(Object object) throws Exception {
-		if (!(object instanceof PageContext)) {
-			return;
-		}
-
-		PageContext pageContext = (PageContext)object;
+	public void print(
+			Writer writer, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception {
 
 		if (_href == null) {
-			pageContext.getOut().print(getName(pageContext));
+			writer.write(getName(request));
 		}
 		else {
 			StringBundler sb = new StringBundler();
@@ -115,12 +115,10 @@ public class TextSearchEntry extends SearchEntry {
 			}
 
 			sb.append(">");
-			sb.append(getName(pageContext));
+			sb.append(getName(request));
 			sb.append("</a>");
 
-			JspWriter jspWriter = pageContext.getOut();
-
-			jspWriter.print(sb.toString());
+			writer.write(sb.toString());
 		}
 	}
 

@@ -18,11 +18,12 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
+import java.io.Writer;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -55,12 +56,10 @@ public class JSPSearchEntry extends SearchEntry {
 	}
 
 	@Override
-	public void print(Object object) throws Exception {
-		if (!(object instanceof PageContext)) {
-			return;
-		}
-
-		PageContext pageContext = (PageContext)object;
+	public void print(
+			Writer writer, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception {
 
 		if (_servletContext != null) {
 			RequestDispatcher requestDispatcher =
@@ -68,10 +67,13 @@ public class JSPSearchEntry extends SearchEntry {
 					_servletContext, _path);
 
 			requestDispatcher.include(
-				_request, new PipingServletResponse(pageContext));
+				_request, new PipingServletResponse(response, writer));
 		}
 		else {
-			pageContext.include(_path);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(
+				_path);
+
+			requestDispatcher.include(request, response);
 		}
 	}
 

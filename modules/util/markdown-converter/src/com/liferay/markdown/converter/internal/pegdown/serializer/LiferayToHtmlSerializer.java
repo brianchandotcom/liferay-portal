@@ -23,6 +23,7 @@ import org.pegdown.LinkRenderer;
 import org.pegdown.ToHtmlSerializer;
 import org.pegdown.ast.HeaderNode;
 import org.pegdown.ast.Node;
+import org.pegdown.ast.ParaNode;
 import org.pegdown.ast.SuperNode;
 import org.pegdown.ast.TextNode;
 
@@ -67,6 +68,35 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 		super.visit(node);
 	}
 
+	@Override
+    public void visit(ParaNode node) {
+		List<Node> childNodes = node.getChildren();
+
+		boolean printParagraphTag = true;
+
+		for (Node childNode : childNodes) {
+			List<Node> grandchildNodes = childNode.getChildren();
+
+			for (Node grandchildNode : grandchildNodes) {
+
+				if (grandchildNode instanceof TextNode) {
+					TextNode textNode = (TextNode)grandchildNode;
+
+					String text = textNode.getText();
+
+					if (text.equals("+$$$") || text.equals("$$$")) {
+						visitChildren(node);
+						printParagraphTag = false;
+					}
+				}
+			}
+		}
+
+		if (printParagraphTag) {
+			printTag(node, "p");
+		}
+    }
+
 	public void visit(PicWithCaptionNode picWithCaptionNode) {
 		print(picWithCaptionNode);
 	}
@@ -88,6 +118,26 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 		}
 	}
 
+	@Override
+	public void visit(TextNode node) {
+		String text = node.getText();
+		
+		if (text.equals("+$$$")) {
+			printer.print("<div class=\"sidebar\">");
+			printer.print("<div class=\"sidebar-image\"></div>");
+			printer.print("<div class=\"sidebar-text\">");
+		}
+		else if (text.equals("$$$")) {
+			printer.print("</div></div>");
+		}
+		else if (abbreviations.isEmpty()) {
+			printer.print(text);
+		}
+		else {
+			printWithAbbreviations(text);
+		}
+	}
+
 	protected void print(PicWithCaptionNode picWithCaptionNode) {
 		printer.print("<p><img src=\"");
 		printer.print(picWithCaptionNode.getSrc());
@@ -104,9 +154,9 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 		String alt = sidebarNode.getAlt();
 
 		if (alt.equalsIgnoreCase("note")) {
-			printer.print("<div class=\"sidebar\">");
+			printer.print("<div class=\"sidebar-note\">");
 			printer.print("<div class=\"sidebar-note-image\"></div>");
-			printer.print("<div class=\"sidebar-note-paragraph\">");
+			printer.print("<div class=\"sidebar-note-text\">");
 
 			visitChildren(sidebarNode);
 
@@ -114,9 +164,9 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 			printer.print("</div>");
 		}
 		else if (alt.equalsIgnoreCase("tip")) {
-			printer.print("<div class=\"sidebar\">");
+			printer.print("<div class=\"sidebar-tip\">");
 			printer.print("<div class=\"sidebar-tip-image\"></div>");
-			printer.print("<div class=\"sidebar-tip-paragraph\">");
+			printer.print("<div class=\"sidebar-tip-text\">");
 
 			visitChildren(sidebarNode);
 
@@ -124,9 +174,9 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 			printer.print("</div>");
 		}
 		else if (alt.equalsIgnoreCase("warning")) {
-			printer.print("<div class=\"sidebar\">");
+			printer.print("<div class=\"sidebar-warning\">");
 			printer.print("<div class=\"sidebar-warning-image\"></div>");
-			printer.print("<div class=\"sidebar-warning-paragraph\">");
+			printer.print("<div class=\"sidebar-warning-text\">");
 
 			visitChildren(sidebarNode);
 

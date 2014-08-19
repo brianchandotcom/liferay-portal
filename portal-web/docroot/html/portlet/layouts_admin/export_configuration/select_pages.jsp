@@ -31,10 +31,13 @@ long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
+String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
+String selectedLayoutsJSON = ExportImportHelperUtil.getSelectedLayoutsJSON(groupId, privateLayout, selectedLayoutIds);
+
 Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("select_pages.jsp-parameterMap"), Collections.emptyMap());
 %>
 
-<aui:input name="layoutIds" type="hidden" />
+<aui:input name="layoutIds" type="hidden" value="<%= selectedLayoutsJSON %>" />
 
 <span class="selected-labels" id="<portlet:namespace />selectedPages"></span>
 
@@ -50,7 +53,6 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 
 			<%
 			String treeId = ParamUtil.getString(request, "treeId");
-			String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 			%>
 
 			<liferay-ui:layouts-tree

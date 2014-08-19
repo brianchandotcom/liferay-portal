@@ -1164,30 +1164,6 @@ AUI.add(
 								selectedPages.push(Liferay.Language.get('all-pages'));
 							}
 							else {
-								var layoutIds = [];
-
-								treeView.eachChildren(
-									function(item, index, collection) {
-										if (item.isChecked()) {
-											var match = REGEX_LAYOUT_ID.exec(item.get('id'));
-
-											if (match) {
-												layoutIds.push(
-													{
-														includeChildren: !item.hasChildNodes(),
-														plid: match[1]
-													}
-												);
-											}
-										}
-									},
-									true
-								);
-
-								if (layoutIdsInput) {
-									layoutIdsInput.val(A.JSON.stringify(layoutIds));
-								}
-
 								selectedPages.push(Liferay.Language.get('selected-pages'));
 							}
 						}

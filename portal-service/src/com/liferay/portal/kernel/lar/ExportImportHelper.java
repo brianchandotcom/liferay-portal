@@ -209,6 +209,9 @@ public interface ExportImportHelper {
 			final StagedModelType stagedModelType)
 		throws PortalException;
 
+	public String getSelectedLayoutsJSON(
+		long groupId, boolean privateLayout, String selectedNodes);
+
 	public FileEntry getTempFileEntry(
 			long groupId, long userId, String folderName)
 		throws PortalException;

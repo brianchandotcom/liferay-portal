@@ -58,9 +58,11 @@ public class NGramHolder {
 		return _nGramStarts;
 	}
 
-	private Map<String, String> _nGramEnds = new HashMap<String, String>();
-	private Map<String, List<String>> _nGrams =
+	private final Map<String, String> _nGramEnds =
+		new HashMap<String, String>();
+	private final Map<String, List<String>> _nGrams =
 		new HashMap<String, List<String>>();
-	private Map<String, String> _nGramStarts = new HashMap<String, String>();
+	private final Map<String, String> _nGramStarts =
+		new HashMap<String, String>();
 
 }

@@ -182,7 +182,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		return template;
 	}
 
-	private PortalCache<TemplateResource, Object> _portalCache;
+	private final PortalCache<TemplateResource, Object> _portalCache;
 
 	private class LiferayTemplate extends Template {
 

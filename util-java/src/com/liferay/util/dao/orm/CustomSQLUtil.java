@@ -148,18 +148,21 @@ public class CustomSQLUtil {
 	}
 
 	private CustomSQLUtil() {
+		CustomSQL customSQL = null;
+
 		try {
-			_customSQL = new CustomSQL();
+			customSQL = new CustomSQL();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_customSQL = customSQL;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CustomSQLUtil.class);
+	private static final CustomSQLUtil _instance = new CustomSQLUtil();
+	private static final Log _log = LogFactoryUtil.getLog(CustomSQLUtil.class);
 
-	private static CustomSQLUtil _instance = new CustomSQLUtil();
-
-	private CustomSQL _customSQL;
+	private final CustomSQL _customSQL;
 
 }

@@ -42,7 +42,7 @@ public class ListServiceTrackerBucketFactory<S>
 		return new ListServiceTrackerBucket();
 	}
 
-	private Comparator<ServiceReference<S>> _comparator;
+	private final Comparator<ServiceReference<S>> _comparator;
 
 	private class ListServiceTrackerBucket
 		implements ServiceTrackerBucket<S, List<S>> {

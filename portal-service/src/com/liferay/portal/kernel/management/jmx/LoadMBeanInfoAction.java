@@ -46,6 +46,6 @@ public class LoadMBeanInfoAction extends BaseJMXManageAction<MBean> {
 		}
 	}
 
-	private MBean _mBean;
+	private final MBean _mBean;
 
 }

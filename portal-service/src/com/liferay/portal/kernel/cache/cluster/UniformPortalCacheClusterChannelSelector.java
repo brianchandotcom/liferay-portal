@@ -39,6 +39,6 @@ public class UniformPortalCacheClusterChannelSelector
 		return portalCacheClusterChannels.get((int)(count % size));
 	}
 
-	private AtomicLong _eventCounter = new AtomicLong(0);
+	private final AtomicLong _eventCounter = new AtomicLong(0);
 
 }

@@ -44,6 +44,6 @@ public class TimeZoneComparator implements Comparator<TimeZone> {
 		return value;
 	}
 
-	private Locale _locale;
+	private final Locale _locale;
 
 }

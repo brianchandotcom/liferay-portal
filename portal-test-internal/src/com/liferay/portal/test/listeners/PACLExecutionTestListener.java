@@ -152,7 +152,7 @@ public class PACLExecutionTestListener extends AbstractExecutionTestListener {
 		}
 	}
 
-	private static Map<Class<?>, HotDeployEvent> _hotDeployEvents =
+	private static final Map<Class<?>, HotDeployEvent> _hotDeployEvents =
 		new HashMap<Class<?>, HotDeployEvent>();
 
 	private static class PACLResourceLoader implements ResourceLoader {

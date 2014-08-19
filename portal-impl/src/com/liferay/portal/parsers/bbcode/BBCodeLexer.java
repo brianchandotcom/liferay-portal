@@ -40,11 +40,11 @@ public class BBCodeLexer {
 			_matcher.start(), _matcher.end());
 	}
 
-	private static Pattern _pattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"(?:\\[((?:[a-z]|\\*){1,16})(?:[=\\s]([^\\x00-\\x1F'\\(\\)<>\\[\\]]" +
 			"{1,2083}))?\\])|(?:\\[\\/([a-z]{1,16})\\])",
 		Pattern.CASE_INSENSITIVE);
 
-	private Matcher _matcher;
+	private final Matcher _matcher;
 
 }

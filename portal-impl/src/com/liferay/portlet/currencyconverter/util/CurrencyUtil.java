@@ -223,11 +223,10 @@ public class CurrencyUtil {
 		_currencyIds.add("ZWD");
 	}
 
-	private static CurrencyUtil _instance = new CurrencyUtil();
-
-	private static Map<String, Map<String, String>> _symbolsPool =
+	private static final CurrencyUtil _instance = new CurrencyUtil();
+	private static final Map<String, Map<String, String>> _symbolsPool =
 		new ConcurrentHashMap<String, Map<String, String>>();
 
-	private Set<String> _currencyIds;
+	private final Set<String> _currencyIds;
 
 }

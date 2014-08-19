@@ -134,10 +134,9 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 		return null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SiteRedirectActionHandler.class);
-
-	private static Collection<String> _propertyNames;
+	private static final Collection<String> _propertyNames;
 
 	@BeanReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
@@ -146,12 +145,12 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 	private LayoutLocalService _layoutLocalService;
 
 	static {
-		_propertyNames = new ArrayList<String>(2);
+		Collection<String> propertyNames = new ArrayList<String>(2);
 
-		_propertyNames.add("groupId");
-		_propertyNames.add("plid");
+		propertyNames.add("groupId");
+		propertyNames.add("plid");
 
-		_propertyNames = Collections.unmodifiableCollection(_propertyNames);
+		_propertyNames = Collections.unmodifiableCollection(propertyNames);
 	}
 
 }

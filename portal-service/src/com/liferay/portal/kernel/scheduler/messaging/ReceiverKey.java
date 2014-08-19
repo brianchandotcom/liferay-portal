@@ -29,6 +29,8 @@ public class ReceiverKey implements Serializable {
 	 * not use this for any other purpose.
 	 */
 	public ReceiverKey() {
+		_jobName = null;
+		_groupName = null;
 	}
 
 	public ReceiverKey(String jobName, String groupName) {
@@ -70,7 +72,7 @@ public class ReceiverKey implements Serializable {
 		return _jobName.hashCode() + (_groupName.hashCode() * 11);
 	}
 
-	private String _groupName;
-	private String _jobName;
+	private final String _groupName;
+	private final String _jobName;
 
 }

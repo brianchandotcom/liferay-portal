@@ -53,6 +53,6 @@ public class TermQueryImpl extends BaseQueryImpl implements TermQuery {
 		return _termQuery.toString();
 	}
 
-	private org.apache.lucene.search.TermQuery _termQuery;
+	private final org.apache.lucene.search.TermQuery _termQuery;
 
 }

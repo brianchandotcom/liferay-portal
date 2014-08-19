@@ -168,12 +168,12 @@ public class SocialInteractionsConfiguration {
 
 	}
 
-	private SocialInteractionsConfiguration
+	private final SocialInteractionsConfiguration
 		_defaultSocialInteractionsConfiguration;
-	private boolean _socialInteractionSocialRelationTypesEnabled;
-	private boolean _socialInteractionsSitesEnabled;
-	private String _socialInteractionsSocialRelationTypes;
-	private int[] _socialInteractionsSocialRelationTypesArray;
-	private SocialInteractionsType _socialInteractionsType;
+	private final boolean _socialInteractionSocialRelationTypesEnabled;
+	private final boolean _socialInteractionsSitesEnabled;
+	private final String _socialInteractionsSocialRelationTypes;
+	private final int[] _socialInteractionsSocialRelationTypesArray;
+	private final SocialInteractionsType _socialInteractionsType;
 
 }

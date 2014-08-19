@@ -228,6 +228,7 @@ public class LDAPSettingsUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LDAPSettingsUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LDAPSettingsUtil.class);
 
 }

@@ -109,7 +109,7 @@ public class ShoppingCartItemImpl implements ShoppingCartItem {
 		return hashCode.toHashCode();
 	}
 
-	private String _fields;
-	private ShoppingItem _item;
+	private final String _fields;
+	private final ShoppingItem _item;
 
 }

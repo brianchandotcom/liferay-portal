@@ -455,7 +455,7 @@ public class RepositorySearchQueryBuilderImpl
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		RepositorySearchQueryBuilderImpl.class);
 
 	private Analyzer _analyzer;

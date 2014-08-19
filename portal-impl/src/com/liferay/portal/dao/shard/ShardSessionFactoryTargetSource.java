@@ -98,10 +98,10 @@ public class ShardSessionFactoryTargetSource
 		_shardDataSourceTargetSource = shardDataSourceTargetSource;
 	}
 
-	private static Map<String, SessionFactory> _sessionFactories =
+	private static final Map<String, SessionFactory> _sessionFactories =
 		new HashMap<String, SessionFactory>();
 
-	private static ThreadLocal<SessionFactory> _sessionFactory =
+	private static final ThreadLocal<SessionFactory> _sessionFactory =
 		new CentralizedThreadLocal<SessionFactory>(false) {
 
 		@Override

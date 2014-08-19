@@ -80,7 +80,7 @@ public class IPGeocoderConfigurationCommand {
 		configuration.update(properties);
 	}
 
-	private static Logger _logger = Logger.getLogger(
+	private static final Logger _logger = Logger.getLogger(
 		IPGeocoderConfigurationCommand.class);
 
 	private ConfigurationAdmin _configurationAdmin;

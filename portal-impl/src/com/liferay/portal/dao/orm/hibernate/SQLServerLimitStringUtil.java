@@ -171,9 +171,9 @@ public class SQLServerLimitStringUtil {
 		};
 	}
 
-	private static Pattern _qualifiedColumnPattern = Pattern.compile(
+	private static final Pattern _qualifiedColumnPattern = Pattern.compile(
 		"\\w+\\.([\\w\\*]+)");
-	private static Pattern _selectPattern = Pattern.compile(
+	private static final Pattern _selectPattern = Pattern.compile(
 		"SELECT ", Pattern.CASE_INSENSITIVE);
 
 }

@@ -56,6 +56,7 @@ public abstract class BaseFieldRenderer implements FieldRenderer {
 			Field field, Locale locale, int valueIndex)
 		throws Exception;
 
-	private static Log _log = LogFactoryUtil.getLog(BaseFieldRenderer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseFieldRenderer.class);
 
 }

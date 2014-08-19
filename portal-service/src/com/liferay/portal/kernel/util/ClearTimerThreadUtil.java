@@ -57,36 +57,44 @@ public class ClearTimerThreadUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ClearTimerThreadUtil.class);
-
-	private static Method _clearMethod;
-	private static boolean _initialized;
-	private static Field _newTasksMayBeScheduledField;
-	private static Field _queueField;
+	private static final Method _clearMethod;
+	private static final boolean _initialized;
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClearTimerThreadUtil.class);
+	private static final Field _newTasksMayBeScheduledField;
+	private static final Field _queueField;
 
 	static {
+		Field newTasksMayBeScheduledField = null;
+		Field queueField = null;
+		Method clearMethod = null;
+		boolean initialized = false;
+
 		try {
 			Class<?> timeThreadClass = Class.forName("java.util.TimerThread");
 
-			_newTasksMayBeScheduledField = ReflectionUtil.getDeclaredField(
+			newTasksMayBeScheduledField = ReflectionUtil.getDeclaredField(
 				timeThreadClass, "newTasksMayBeScheduled");
-			_queueField = ReflectionUtil.getDeclaredField(
+			queueField = ReflectionUtil.getDeclaredField(
 				timeThreadClass, "queue");
 
 			Class<?> taskQueueClass = Class.forName("java.util.TaskQueue");
 
-			_clearMethod = ReflectionUtil.getDeclaredMethod(
+			clearMethod = ReflectionUtil.getDeclaredMethod(
 				taskQueueClass, "clear");
 
-			_initialized = true;
+			initialized = true;
 		}
 		catch (Throwable t) {
-			_initialized = false;
-
 			if (_log.isWarnEnabled()) {
 				_log.warn("Failed to initialize ClearTimerThreadUtil");
 			}
 		}
+
+		_newTasksMayBeScheduledField = newTasksMayBeScheduledField;
+		_queueField = queueField;
+		_clearMethod = clearMethod;
+		_initialized = initialized;
 	}
 
 }

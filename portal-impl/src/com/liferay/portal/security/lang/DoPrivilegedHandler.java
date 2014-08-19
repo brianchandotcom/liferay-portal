@@ -147,7 +147,7 @@ public class DoPrivilegedHandler
 
 	private static final String _BEAN_NAME_SUFFIX_PERSISTENCE = "Persistence";
 
-	private Object _bean;
+	private final Object _bean;
 	private boolean _hasNotPrivilegedMethods = false;
 	private List<MethodKey> _notPrivilegedMethods;
 
@@ -168,7 +168,7 @@ public class DoPrivilegedHandler
 		}
 
 		private Object[] _arguments;
-		private Object _bean;
+		private final Object _bean;
 		private Method _method;
 
 	}

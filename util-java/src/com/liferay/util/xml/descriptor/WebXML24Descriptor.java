@@ -116,7 +116,7 @@ public class WebXML24Descriptor extends SimpleXMLDescriptor {
 		"session-config", "welcome-file-list", "jsp-config", "login-config"
 	};
 
-	private Map<String, String[]> _orderedChildren =
+	private final Map<String, String[]> _orderedChildren =
 		new HashMap<String, String[]>();
 
 }

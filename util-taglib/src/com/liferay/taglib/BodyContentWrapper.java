@@ -248,7 +248,7 @@ public class BodyContentWrapper extends BodyContent
 		_bodyContent.writeOut(writer);
 	}
 
-	private BodyContent _bodyContent;
-	private UnsyncStringWriter _unsyncStringWriter;
+	private final BodyContent _bodyContent;
+	private final UnsyncStringWriter _unsyncStringWriter;
 
 }

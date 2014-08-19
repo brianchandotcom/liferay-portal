@@ -39,8 +39,8 @@ public class TransactionStatus {
 		return _rollbackOnly;
 	}
 
-	private boolean _completed;
-	private boolean _newTransaction;
-	private boolean _rollbackOnly;
+	private final boolean _completed;
+	private final boolean _newTransaction;
+	private final boolean _rollbackOnly;
 
 }

@@ -38,7 +38,7 @@ public class ObjectServiceTrackerBucketFactory<S>
 		return new SingleBucket();
 	}
 
-	private Comparator<ServiceReference<S>> _comparator;
+	private final Comparator<ServiceReference<S>> _comparator;
 
 	private class SingleBucket implements ServiceTrackerBucket<S, S> {
 

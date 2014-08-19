@@ -61,11 +61,13 @@ public class RegexTransformerUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RegexTransformerUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		RegexTransformerUtil.class);
 
-	private static RegexTransformerUtil _instance = new RegexTransformerUtil();
+	private static final RegexTransformerUtil _instance =
+		new RegexTransformerUtil();
 
-	private List<Pattern> _patterns;
-	private List<String> _replacements;
+	private final List<Pattern> _patterns;
+	private final List<String> _replacements;
 
 }

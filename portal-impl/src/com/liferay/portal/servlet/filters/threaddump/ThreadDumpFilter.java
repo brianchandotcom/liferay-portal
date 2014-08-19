@@ -56,8 +56,8 @@ public class ThreadDumpFilter
 
 	private static final int _MAX_THREAD_DUMPERS = 5;
 
-	private static ScheduledExecutorService _scheduledExecutorService =
+	private static final ScheduledExecutorService _scheduledExecutorService =
 		Executors.newScheduledThreadPool(_MAX_THREAD_DUMPERS);
-	private static ThreadDumper _threadDumper = new ThreadDumper();
+	private static final ThreadDumper _threadDumper = new ThreadDumper();
 
 }

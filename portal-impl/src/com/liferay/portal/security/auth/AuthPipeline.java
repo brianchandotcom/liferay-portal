@@ -349,21 +349,22 @@ public class AuthPipeline {
 		}
 	}
 
-	private static AuthPipeline _instance = new AuthPipeline();
+	private static final AuthPipeline _instance = new AuthPipeline();
 
-	private Map<String, Authenticator[]> _authenticators =
+	private final Map<String, Authenticator[]> _authenticators =
 		new HashMap<String, Authenticator[]>();
-	private Map<Authenticator, ServiceRegistration<Authenticator>>
+	private final Map<Authenticator, ServiceRegistration<Authenticator>>
 		_authenticatorServiceRegistrations =
 			new ServiceRegistrationMap<Authenticator>();
-	private ServiceTracker<Authenticator, Authenticator>
+	private final ServiceTracker<Authenticator, Authenticator>
 		_authenticatorServiceTracker;
-	private Map<String, AuthFailure[]> _authFailures =
+	private final Map<String, AuthFailure[]> _authFailures =
 		new HashMap<String, AuthFailure[]>();
-	private Map<AuthFailure, ServiceRegistration<AuthFailure>>
+	private final Map<AuthFailure, ServiceRegistration<AuthFailure>>
 		_authFailureServiceRegistrations =
 			new ServiceRegistrationMap<AuthFailure>();
-	private ServiceTracker<AuthFailure, AuthFailure> _authFailureServiceTracker;
+	private final ServiceTracker<AuthFailure, AuthFailure>
+		_authFailureServiceTracker;
 
 	private class AuthenticatorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Authenticator, Authenticator> {

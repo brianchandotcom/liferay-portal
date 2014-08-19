@@ -34,6 +34,6 @@ public class InterBaseDB extends FirebirdDB {
 		return "interbase";
 	}
 
-	private static InterBaseDB _instance = new InterBaseDB();
+	private static final InterBaseDB _instance = new InterBaseDB();
 
 }

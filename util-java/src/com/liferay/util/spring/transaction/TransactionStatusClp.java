@@ -188,10 +188,11 @@ public class TransactionStatusClp implements TransactionStatus {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(TransactionStatusClp.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		TransactionStatusClp.class);
 
 	private static Map<String, Method> _remoteMethods;
 
-	private Object _remoteTransactionStatus;
+	private final Object _remoteTransactionStatus;
 
 }

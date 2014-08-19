@@ -205,6 +205,7 @@ public class GetArticlesAction extends Action {
 		return DDMXMLUtil.formatXML(resultsDoc).getBytes(StringPool.UTF8);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(GetArticlesAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		GetArticlesAction.class);
 
 }

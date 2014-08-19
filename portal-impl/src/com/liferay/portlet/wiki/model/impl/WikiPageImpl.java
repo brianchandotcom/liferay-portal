@@ -334,7 +334,7 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		_attachmentsFolderId = attachmentsFolderId;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WikiPageImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(WikiPageImpl.class);
 
 	private long _attachmentsFolderId;
 

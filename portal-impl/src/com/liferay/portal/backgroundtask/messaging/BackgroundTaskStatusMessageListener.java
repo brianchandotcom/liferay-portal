@@ -63,11 +63,11 @@ public class BackgroundTaskStatusMessageListener extends BaseMessageListener {
 			backgroundTaskStatus, message);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BackgroundTaskStatusMessageListener.class);
 
-	private long _backgroundTaskId;
-	private BackgroundTaskStatusMessageTranslator
+	private final long _backgroundTaskId;
+	private final BackgroundTaskStatusMessageTranslator
 		_backgroundTaskStatusMessageTranslator;
 
 }

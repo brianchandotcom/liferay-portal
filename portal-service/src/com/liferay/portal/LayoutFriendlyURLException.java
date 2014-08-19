@@ -77,6 +77,6 @@ public class LayoutFriendlyURLException extends PortalException {
 	private String _duplicateClassName;
 	private long _duplicateClassPK;
 	private String _keywordConflict;
-	private int _type;
+	private final int _type;
 
 }

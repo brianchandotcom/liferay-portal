@@ -190,18 +190,20 @@ public class SPIRegistryImpl implements SPIRegistry {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SPIRegistryImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SPIRegistryImpl.class);
 
 	private SPI _errorSPI;
-	private Set<String> _excludedPortletIds = new ConcurrentHashSet<String>();
-	private Lock _lock = new ReentrantLock();
-	private Map<SPI, String[]> _portletIds =
+	private final Set<String> _excludedPortletIds =
+		new ConcurrentHashSet<String>();
+	private final Lock _lock = new ReentrantLock();
+	private final Map<SPI, String[]> _portletIds =
 		new ConcurrentHashMap<SPI, String[]>();
-	private Map<String, SPI> _portletSPIs =
+	private final Map<String, SPI> _portletSPIs =
 		new ConcurrentHashMap<String, SPI>();
-	private Map<SPI, String[]> _servletContextNames =
+	private final Map<SPI, String[]> _servletContextNames =
 		new ConcurrentHashMap<SPI, String[]>();
-	private Map<String, SPI> _servletContextSPIs =
+	private final Map<String, SPI> _servletContextSPIs =
 		new ConcurrentHashMap<String, SPI>();
 	private SPIRegistryValidator _spiRegistryValidator;
 

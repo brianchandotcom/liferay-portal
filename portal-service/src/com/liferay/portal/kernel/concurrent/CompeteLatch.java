@@ -112,7 +112,7 @@ public class CompeteLatch {
 		return _sync._isLocked();
 	}
 
-	private Sync _sync = new Sync();
+	private final Sync _sync = new Sync();
 
 	private class Sync extends AbstractQueuedSynchronizer {
 

@@ -114,7 +114,7 @@ public class FreeMarkerTaglibFactoryUtil implements CacheRegistryItem {
 
 	private final String _contextPath;
 	private final String _registryName;
-	private Map<String, TemplateModel> _templateModels =
+	private final Map<String, TemplateModel> _templateModels =
 		new ConcurrentHashMap<String, TemplateModel>();
 
 	private static class TaglibFactoryCacheWrapper

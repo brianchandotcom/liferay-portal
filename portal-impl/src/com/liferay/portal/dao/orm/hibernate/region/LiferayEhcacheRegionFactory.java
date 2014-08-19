@@ -300,11 +300,12 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 	private static final String _DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE =
 		"/ehcache/hibernate-clustered.xml";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayEhcacheRegionFactory.class);
 
 	private MBeanRegisteringPortalLifecycle _mBeanRegisteringPortalLifecycle;
-	private PortalCacheManager<Serializable, Serializable> _portalCacheManager;
+	private final PortalCacheManager<Serializable, Serializable>
+		_portalCacheManager;
 	private boolean _usingDefault;
 
 	private class HibernatePortalCacheManager

@@ -69,6 +69,6 @@ public class PortalPermissionCollection extends LenientPermissionCollection {
 			_paclPolicy.toString());
 	}
 
-	private PACLPolicy _paclPolicy;
+	private final PACLPolicy _paclPolicy;
 
 }

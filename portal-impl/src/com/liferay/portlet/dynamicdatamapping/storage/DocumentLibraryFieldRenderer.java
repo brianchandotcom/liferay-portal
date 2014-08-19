@@ -102,7 +102,7 @@ public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 		return StringPool.BLANK;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentLibraryFieldRenderer.class);
 
 }

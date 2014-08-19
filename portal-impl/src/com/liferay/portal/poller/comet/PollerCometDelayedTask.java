@@ -79,10 +79,10 @@ public class PollerCometDelayedTask {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PollerCometDelayedTask.class);
 
-	private CometSession _cometSession;
-	private JSONObject _pollerResponseHeaderJSONObject;
+	private final CometSession _cometSession;
+	private final JSONObject _pollerResponseHeaderJSONObject;
 
 }

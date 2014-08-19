@@ -582,10 +582,11 @@ public abstract class BaseSocialActivityInterpreter
 		return buildLink(link, title);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSocialActivityInterpreter.class);
 
-	private SocialActivityFeedEntry _deprecatedMarkerSocialActivityFeedEntry =
-		new SocialActivityFeedEntry(StringPool.BLANK, StringPool.BLANK);
+	private final SocialActivityFeedEntry
+		_deprecatedMarkerSocialActivityFeedEntry = new SocialActivityFeedEntry(
+			StringPool.BLANK, StringPool.BLANK);
 
 }

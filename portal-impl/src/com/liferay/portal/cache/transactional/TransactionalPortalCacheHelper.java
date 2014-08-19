@@ -192,11 +192,11 @@ public class TransactionalPortalCacheHelper {
 		portalCacheMaps.add(new PortalCacheMap());
 	}
 
-	private static ValueEntry _NULL_HOLDER_VALUE_ENTRY = new ValueEntry(
+	private static final ValueEntry _NULL_HOLDER_VALUE_ENTRY = new ValueEntry(
 		TransactionalPortalCache.NULL_HOLDER, PortalCache.DEFAULT_TIME_TO_LIVE,
 		false);
 
-	private static ThreadLocal<List<PortalCacheMap>>
+	private static final ThreadLocal<List<PortalCacheMap>>
 		_portalCacheMapsThreadLocal =
 			new InitialThreadLocal<List<PortalCacheMap>>(
 				TransactionalPortalCacheHelper.class.getName() +

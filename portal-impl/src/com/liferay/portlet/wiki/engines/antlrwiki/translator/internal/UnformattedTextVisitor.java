@@ -92,6 +92,6 @@ public abstract class UnformattedTextVisitor extends BaseASTVisitor {
 		_sb.append(text);
 	}
 
-	private StringBundler _sb = new StringBundler();
+	private final StringBundler _sb = new StringBundler();
 
 }

@@ -112,7 +112,7 @@ public class ComboServletStaticURLGenerator {
 		_visitedURLs = visitedURLs;
 	}
 
-	private static PortletNameComparator _portletNameComparator =
+	private static final PortletNameComparator _portletNameComparator =
 		new PortletNameComparator();
 
 	private PortletResourceAccessor[] _portletResourceAccessors;

@@ -82,6 +82,6 @@ public class ErrorSPI implements SPI {
 	public void stop() {
 	}
 
-	private static SPIAgent _spiAgent = new ErrorSPIAgent();
+	private static final SPIAgent _spiAgent = new ErrorSPIAgent();
 
 }

@@ -94,7 +94,7 @@ public class CompanyTestUtil {
 		CompanyThreadLocal.setCompanyId(companyId);
 	}
 
-	private static Accessor<Locale, String> _accessor =
+	private static final Accessor<Locale, String> _accessor =
 		new Accessor<Locale, String>() {
 
 			@Override

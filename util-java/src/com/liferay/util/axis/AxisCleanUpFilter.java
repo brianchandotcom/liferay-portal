@@ -63,18 +63,23 @@ public class AxisCleanUpFilter extends BaseFilter {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AxisCleanUpFilter.class);
+	private static final Field _cacheField;
 
-	private static Field _cacheField;
+	private static final Log _log = LogFactoryUtil.getLog(
+		AxisCleanUpFilter.class);
 
 	static {
+		Field cacheField = null;
+
 		try {
-			_cacheField = ReflectionUtil.getDeclaredField(
+			cacheField = ReflectionUtil.getDeclaredField(
 				MethodCache.class, "cache");
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_cacheField = cacheField;
 	}
 
 }

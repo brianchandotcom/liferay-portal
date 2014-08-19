@@ -128,6 +128,6 @@ public abstract class BaseRegionWrapper implements CacheRegistryItem, Region {
 		return _ehcacheDataRegion;
 	}
 
-	private EhcacheDataRegion _ehcacheDataRegion;
+	private final EhcacheDataRegion _ehcacheDataRegion;
 
 }

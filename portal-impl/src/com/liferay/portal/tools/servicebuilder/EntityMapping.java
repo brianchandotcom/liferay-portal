@@ -39,7 +39,7 @@ public class EntityMapping {
 		return _table;
 	}
 
-	private String[] _entities = new String[2];
-	private String _table;
+	private final String[] _entities = new String[2];
+	private final String _table;
 
 }

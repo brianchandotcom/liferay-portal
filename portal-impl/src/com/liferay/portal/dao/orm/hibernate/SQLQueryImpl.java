@@ -45,11 +45,15 @@ public class SQLQueryImpl implements SQLQuery {
 		_sqlQuery = sqlQuery;
 		_strictName = strictName;
 
-		if (!_strictName) {
-			_names = sqlQuery.getNamedParameters();
+		String[] names = null;
 
-			Arrays.sort(_names);
+		if (!_strictName) {
+			names = sqlQuery.getNamedParameters();
+
+			Arrays.sort(names);
 		}
+
+		_names = names;
 	}
 
 	@Override
@@ -416,8 +420,8 @@ public class SQLQueryImpl implements SQLQuery {
 		}
 	}
 
-	private String[] _names;
-	private org.hibernate.SQLQuery _sqlQuery;
-	private boolean _strictName;
+	private final String[] _names;
+	private final org.hibernate.SQLQuery _sqlQuery;
+	private final boolean _strictName;
 
 }

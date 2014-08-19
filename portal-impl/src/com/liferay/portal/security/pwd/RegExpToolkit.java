@@ -59,10 +59,10 @@ public class RegExpToolkit extends BasicToolkit {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RegExpToolkit.class);
+	private static final Log _log = LogFactoryUtil.getLog(RegExpToolkit.class);
 
-	private String _charset;
-	private int _length;
-	private String _pattern;
+	private final String _charset;
+	private final int _length;
+	private final String _pattern;
 
 }

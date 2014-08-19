@@ -145,7 +145,7 @@ public class TransactionManagerClp implements PlatformTransactionManager {
 		return transactionStatusClp.getRemoteTransactionStatus();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		TransactionManagerClp.class);
 
 	private SimplePojoClp<TransactionDefinition> _transactionDefinitionClp;

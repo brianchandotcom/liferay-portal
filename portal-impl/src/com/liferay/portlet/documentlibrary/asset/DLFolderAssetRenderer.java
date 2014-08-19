@@ -284,6 +284,6 @@ public class DLFolderAssetRenderer
 		}
 	}
 
-	private Folder _folder;
+	private final Folder _folder;
 
 }

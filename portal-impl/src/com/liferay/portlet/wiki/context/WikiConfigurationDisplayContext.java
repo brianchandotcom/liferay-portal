@@ -86,8 +86,8 @@ public class WikiConfigurationDisplayContext {
 
 	private List<String> _allNodeNames;
 	private List<WikiNode> _allNodes;
-	private long _scopeGroupId;
+	private final long _scopeGroupId;
 	private String[] _visibleNodeNames;
-	private WikiPortletInstanceSettings _wikiPortletInstanceSettings;
+	private final WikiPortletInstanceSettings _wikiPortletInstanceSettings;
 
 }

@@ -34,6 +34,6 @@ public class BundlePortletBagFactory extends PortletBagFactory {
 		return _portlet;
 	}
 
-	private Portlet _portlet;
+	private final Portlet _portlet;
 
 }

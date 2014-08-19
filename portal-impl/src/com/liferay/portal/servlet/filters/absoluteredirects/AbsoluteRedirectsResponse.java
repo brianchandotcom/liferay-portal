@@ -46,6 +46,6 @@ public class AbsoluteRedirectsResponse extends HttpServletResponseWrapper {
 		super.sendRedirect(redirect);
 	}
 
-	private HttpServletRequest _request;
+	private final HttpServletRequest _request;
 
 }

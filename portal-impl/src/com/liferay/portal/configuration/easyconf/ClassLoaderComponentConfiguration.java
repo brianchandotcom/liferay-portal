@@ -136,26 +136,30 @@ public class ClassLoaderComponentConfiguration extends ComponentConfiguration {
 		return _properties;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Constructor<ComponentProperties> _constructor;
+
+	private static final Log _log = LogFactoryUtil.getLog(
 		ClassLoaderComponentConfiguration.class);
 
-	private static Constructor<ComponentProperties> _constructor;
-
 	static {
+		Constructor<ComponentProperties> constructor = null;
+
 		try {
-			_constructor = ComponentProperties.class.getDeclaredConstructor(
+			constructor = ComponentProperties.class.getDeclaredConstructor(
 				AggregatedProperties.class);
 
-			_constructor.setAccessible(true);
+			constructor.setAccessible(true);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_constructor = constructor;
 	}
 
-	private ClassLoader _classLoader;
-	private String _companyId;
-	private String _componentName;
+	private final ClassLoader _classLoader;
+	private final String _companyId;
+	private final String _componentName;
 	private ComponentProperties _properties;
 
 }

@@ -40,11 +40,11 @@ public class LDAPUserTransactionThreadLocal {
 		_originatesFromLDAP.set(originatesFromLDAP);
 	}
 
-	private static ThreadLocal<String> _originalEmailAddress =
+	private static final ThreadLocal<String> _originalEmailAddress =
 		new AutoResetThreadLocal<String>(
 			LDAPUserTransactionThreadLocal.class + "._originalEmailAddress",
 			StringPool.BLANK);
-	private static ThreadLocal<Boolean> _originatesFromLDAP =
+	private static final ThreadLocal<Boolean> _originatesFromLDAP =
 		new InitialThreadLocal<Boolean>(
 			LDAPUserTransactionThreadLocal.class + "._originatesFromLDAP",
 			false);

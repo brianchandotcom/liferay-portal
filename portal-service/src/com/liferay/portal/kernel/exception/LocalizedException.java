@@ -31,7 +31,7 @@ public class LocalizedException extends PortalException {
 		return _localizedExceptionsMap;
 	}
 
-	private Map<Locale, Exception> _localizedExceptionsMap =
+	private final Map<Locale, Exception> _localizedExceptionsMap =
 		new HashMap<Locale, Exception>();
 
 }

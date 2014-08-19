@@ -45,6 +45,7 @@ public class ServletRequestUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ServletRequestUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServletRequestUtil.class);
 
 }

@@ -73,8 +73,8 @@ public class SimplePojoClp<T> {
 		return remoteInstance;
 	}
 
-	private Class<? extends T> _localImplementationClass;
-	private ClassLoader _remoteClassLoader;
-	private Class<?> _remoteImplementationClass;
+	private final Class<? extends T> _localImplementationClass;
+	private final ClassLoader _remoteClassLoader;
+	private final Class<?> _remoteImplementationClass;
 
 }

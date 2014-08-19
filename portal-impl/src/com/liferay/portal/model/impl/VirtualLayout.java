@@ -187,9 +187,9 @@ public class VirtualLayout extends LayoutWrapper {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(VirtualLayout.class);
+	private static final Log _log = LogFactoryUtil.getLog(VirtualLayout.class);
 
-	private Layout _sourceLayout;
-	private Group _targetGroup;
+	private final Layout _sourceLayout;
+	private final Group _targetGroup;
 
 }

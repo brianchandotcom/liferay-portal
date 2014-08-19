@@ -168,9 +168,10 @@ public class PortletQNameImpl implements PortletQName {
 
 	private static final String _KEY_SEPARATOR = "_KEY_";
 
-	private static Log _log = LogFactoryUtil.getLog(PortletQNameImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletQNameImpl.class);
 
-	private Map<String, String> _identifiers;
-	private Map<String, QName> _qNames;
+	private final Map<String, String> _identifiers;
+	private final Map<String, QName> _qNames;
 
 }

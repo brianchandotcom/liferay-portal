@@ -180,7 +180,8 @@ public class IPGeocoderImpl implements IPGeocoder {
 		bufferedInputStream.close();
 	}
 
-	private static Logger _logger = Logger.getLogger(IPGeocoderImpl.class);
+	private static final Logger _logger = Logger.getLogger(
+		IPGeocoderImpl.class);
 
 	private static LookupService _lookupService;
 

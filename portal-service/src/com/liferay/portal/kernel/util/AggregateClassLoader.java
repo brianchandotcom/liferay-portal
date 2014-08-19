@@ -316,26 +316,32 @@ public class AggregateClassLoader extends ClassLoader {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AggregateClassLoader.class);
+	private static final Method _findClassMethod;
+	private static final Method _getResourceMethod;
+	private static final Method _getResourcesMethod;
+	private static final Method _loadClassMethod;
+	private static final Log _log = LogFactoryUtil.getLog(
+		AggregateClassLoader.class);
 
-	private static Method _findClassMethod;
-	private static Method _getResourceMethod;
-	private static Method _getResourcesMethod;
-	private static Method _loadClassMethod;
-
-	private List<EqualityWeakReference<ClassLoader>> _classLoaderReferences =
-		new ArrayList<EqualityWeakReference<ClassLoader>>();
-	private WeakReference<ClassLoader> _parentClassLoaderReference;
+	private final List<EqualityWeakReference<ClassLoader>>
+		_classLoaderReferences =
+			new ArrayList<EqualityWeakReference<ClassLoader>>();
+	private final WeakReference<ClassLoader> _parentClassLoaderReference;
 
 	static {
+		Method findClassMethod = null;
+		Method getResourceMethod = null;
+		Method getResourcesMethod = null;
+		Method loadClassMethod = null;
+
 		try {
-			_findClassMethod = ReflectionUtil.getDeclaredMethod(
+			findClassMethod = ReflectionUtil.getDeclaredMethod(
 				ClassLoader.class, "findClass", String.class);
-			_getResourceMethod = ReflectionUtil.getDeclaredMethod(
+			getResourceMethod = ReflectionUtil.getDeclaredMethod(
 				ClassLoader.class, "getResource", String.class);
-			_getResourcesMethod = ReflectionUtil.getDeclaredMethod(
+			getResourcesMethod = ReflectionUtil.getDeclaredMethod(
 				ClassLoader.class, "getResources", String.class);
-			_loadClassMethod = ReflectionUtil.getDeclaredMethod(
+			loadClassMethod = ReflectionUtil.getDeclaredMethod(
 				ClassLoader.class, "loadClass", String.class, boolean.class);
 		}
 		catch (Exception e) {
@@ -343,6 +349,11 @@ public class AggregateClassLoader extends ClassLoader {
 				_log.error("Unable to locate required methods", e);
 			}
 		}
+
+		_findClassMethod = findClassMethod;
+		_getResourceMethod = getResourceMethod;
+		_getResourcesMethod = getResourcesMethod;
+		_loadClassMethod = loadClassMethod;
 	}
 
 }

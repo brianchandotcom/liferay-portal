@@ -90,7 +90,8 @@ public class ShoppingItemImpl extends ShoppingItemBaseImpl {
 		super.setFieldsQuantities(StringUtil.merge(fieldsQuantitiesArray));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ShoppingItemImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ShoppingItemImpl.class);
 
 	private String[] _fieldsQuantitiesArray;
 

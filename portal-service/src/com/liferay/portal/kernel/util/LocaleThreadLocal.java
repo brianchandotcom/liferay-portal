@@ -45,13 +45,13 @@ public class LocaleThreadLocal {
 		_themeDisplayLocale.set(locale);
 	}
 
-	private static ThreadLocal<Locale> _defaultLocale =
+	private static final ThreadLocal<Locale> _defaultLocale =
 		new AutoResetThreadLocal<Locale>(
 			LocaleThreadLocal.class + "._defaultLocale");
-	private static ThreadLocal<Locale> _siteDefaultLocale =
+	private static final ThreadLocal<Locale> _siteDefaultLocale =
 		new AutoResetThreadLocal<Locale>(
 			LocaleThreadLocal.class + "._siteDefaultLocale");
-	private static ThreadLocal<Locale> _themeDisplayLocale =
+	private static final ThreadLocal<Locale> _themeDisplayLocale =
 		new AutoResetThreadLocal<Locale>(
 			LocaleThreadLocal.class + "._themeDisplayLocale");
 

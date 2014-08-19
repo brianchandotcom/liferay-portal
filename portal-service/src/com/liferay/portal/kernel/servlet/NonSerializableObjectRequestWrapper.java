@@ -103,7 +103,7 @@ public class NonSerializableObjectRequestWrapper
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.WEBLOGIC_REQUEST_WRAP_NON_SERIALIZABLE));
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		NonSerializableObjectRequestWrapper.class);
 
 }

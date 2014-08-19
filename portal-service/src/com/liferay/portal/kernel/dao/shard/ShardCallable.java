@@ -39,6 +39,6 @@ public abstract class ShardCallable<V> implements Callable<V> {
 
 	protected abstract V doCall() throws Exception;
 
-	private long _companyId;
+	private final long _companyId;
 
 }

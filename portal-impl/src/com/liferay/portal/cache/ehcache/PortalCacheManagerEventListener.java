@@ -82,6 +82,6 @@ public class PortalCacheManagerEventListener
 		_cacheManagerListener.notifyCacheRemoved(name);
 	}
 
-	private CacheManagerListener _cacheManagerListener;
+	private final CacheManagerListener _cacheManagerListener;
 
 }

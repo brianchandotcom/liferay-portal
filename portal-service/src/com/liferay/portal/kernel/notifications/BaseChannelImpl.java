@@ -120,13 +120,14 @@ public abstract class BaseChannelImpl implements Channel {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BaseChannelImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseChannelImpl.class);
 
-	private List<ChannelListener> _channelListeners =
+	private final List<ChannelListener> _channelListeners =
 		new CopyOnWriteArrayList<ChannelListener>();
 	private long _cleanUpInterval;
-	private long _companyId;
-	private AtomicLong _nextCleanUpTime = new AtomicLong();
-	private long _userId;
+	private final long _companyId;
+	private final AtomicLong _nextCleanUpTime = new AtomicLong();
+	private final long _userId;
 
 }

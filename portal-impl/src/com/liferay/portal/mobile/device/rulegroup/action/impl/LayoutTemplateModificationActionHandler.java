@@ -73,14 +73,14 @@ public class LayoutTemplateModificationActionHandler implements ActionHandler {
 		return getHandlerType();
 	}
 
-	private static Collection<String> _propertyNames;
+	private static final Collection<String> _propertyNames;
 
 	static {
-		_propertyNames = new ArrayList<String>(1);
+		Collection<String> propertyNames = new ArrayList<String>(1);
 
-		_propertyNames.add("layoutTemplateId");
+		propertyNames.add("layoutTemplateId");
 
-		_propertyNames = Collections.unmodifiableCollection(_propertyNames);
+		_propertyNames = Collections.unmodifiableCollection(propertyNames);
 	}
 
 }

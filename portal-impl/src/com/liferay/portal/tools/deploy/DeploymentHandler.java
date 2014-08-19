@@ -36,6 +36,8 @@ public class DeploymentHandler {
 	public DeploymentHandler(
 		String dmId, String dmUser, String dmPassword, String dfClassName) {
 
+		DeploymentManager deploymentManager = null;
+
 		try {
 			ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
@@ -50,12 +52,14 @@ public class DeploymentHandler {
 			deploymentFactoryManager.registerDeploymentFactory(
 				deploymentFactory);
 
-			_deploymentManager = deploymentFactoryManager.getDeploymentManager(
+			deploymentManager = deploymentFactoryManager.getDeploymentManager(
 				dmId, dmUser, dmPassword);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_deploymentManager = deploymentManager;
 	}
 
 	public void deploy(File warDir, String warContext) throws Exception {
@@ -123,9 +127,10 @@ public class DeploymentHandler {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DeploymentHandler.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeploymentHandler.class);
 
-	private DeploymentManager _deploymentManager;
+	private final DeploymentManager _deploymentManager;
 	private boolean _error;
 	private boolean _started;
 

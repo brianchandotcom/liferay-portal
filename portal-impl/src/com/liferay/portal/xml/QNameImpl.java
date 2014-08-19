@@ -92,6 +92,6 @@ public class QNameImpl implements QName {
 		return _qName.toString();
 	}
 
-	private org.dom4j.QName _qName;
+	private final org.dom4j.QName _qName;
 
 }

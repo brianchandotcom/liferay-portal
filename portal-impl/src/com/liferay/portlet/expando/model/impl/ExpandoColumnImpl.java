@@ -167,7 +167,8 @@ public class ExpandoColumnImpl extends ExpandoColumnBaseImpl {
 		super.setTypeSettings(_typeSettingsProperties.toString());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ExpandoColumnImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExpandoColumnImpl.class);
 
 	private UnicodeProperties _typeSettingsProperties;
 

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class BBCodeToken {
 
 	public BBCodeToken(String endTag) {
-		_endTag = endTag;
+		this(null, null, endTag, 0, 0);
 	}
 
 	public BBCodeToken(
@@ -60,9 +60,9 @@ public class BBCodeToken {
 	}
 
 	private String _attribute;
-	private int _end;
-	private String _endTag;
-	private int _start;
-	private String _startTag;
+	private final int _end;
+	private final String _endTag;
+	private final int _start;
+	private final String _startTag;
 
 }

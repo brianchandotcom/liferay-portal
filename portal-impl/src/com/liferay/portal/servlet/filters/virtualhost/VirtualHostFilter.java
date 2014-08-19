@@ -349,7 +349,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 	private static final String _PUBLIC_GROUP_SERVLET_MAPPING_SLASH =
 		_PUBLIC_GROUP_SERVLET_MAPPING + StringPool.SLASH;
 
-	private static Log _log = LogFactoryUtil.getLog(VirtualHostFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		VirtualHostFilter.class);
 
 	private ServletContext _servletContext;
 

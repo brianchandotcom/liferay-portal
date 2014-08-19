@@ -87,8 +87,9 @@ public class ModuleResourceLoader implements ServiceComponentConfiguration {
 		return inputStream;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ModuleResourceLoader.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ModuleResourceLoader.class);
 
-	private Bundle _bundle;
+	private final Bundle _bundle;
 
 }

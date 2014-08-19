@@ -76,6 +76,6 @@ public class ThumbnailBuilder {
 		}
 	}
 
-	private static ImageTool _imageToolUtil = ImageToolImpl.getInstance();
+	private static final ImageTool _imageToolUtil = ImageToolImpl.getInstance();
 
 }

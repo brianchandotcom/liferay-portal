@@ -31,6 +31,6 @@ public class AlwaysCurrentUserIdStrategy implements UserIdStrategy {
 		return _user.getUserId();
 	}
 
-	private User _user;
+	private final User _user;
 
 }

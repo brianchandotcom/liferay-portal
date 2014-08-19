@@ -60,7 +60,7 @@ public class BCryptPasswordEncryptor
 
 	private static final int _ROUNDS = 10;
 
-	private static Pattern _pattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"^BCrypt/([0-9]+)$", Pattern.CASE_INSENSITIVE);
 
 }

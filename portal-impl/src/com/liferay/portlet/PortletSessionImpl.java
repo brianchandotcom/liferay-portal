@@ -257,8 +257,8 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		return _portletScope.concat(StringPool.QUESTION).concat(name);
 	}
 
-	private PortletContext _portletContext;
-	private String _portletScope;
+	private final PortletContext _portletContext;
+	private final String _portletScope;
 	private HttpSession _session;
 
 }

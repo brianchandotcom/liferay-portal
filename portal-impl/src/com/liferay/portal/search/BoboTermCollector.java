@@ -37,6 +37,6 @@ public class BoboTermCollector implements TermCollector {
 		return _browseFacet.getValue();
 	}
 
-	private BrowseFacet _browseFacet;
+	private final BrowseFacet _browseFacet;
 
 }

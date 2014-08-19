@@ -210,6 +210,6 @@ public class CompositeResourceLoaderBundle implements Bundle {
 		throw new UnsupportedOperationException();
 	}
 
-	private Bundle[] _bundles;
+	private final Bundle[] _bundles;
 
 }

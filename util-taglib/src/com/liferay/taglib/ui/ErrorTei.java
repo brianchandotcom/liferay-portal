@@ -28,7 +28,7 @@ public class ErrorTei extends TagExtraInfo {
 		return _variableInfo;
 	}
 
-	private static VariableInfo[] _variableInfo = new VariableInfo[] {
+	private static final VariableInfo[] _variableInfo = new VariableInfo[] {
 		new VariableInfo(
 			"errorException", Object.class.getName(), true, VariableInfo.NESTED)
 	};

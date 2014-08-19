@@ -66,7 +66,7 @@ public class PortletClassLoaderUtil {
 		_servletContextName.set(servletContextName);
 	}
 
-	private static ThreadLocal<String> _servletContextName =
+	private static final ThreadLocal<String> _servletContextName =
 		new AutoResetThreadLocal<String>(
 			PortletClassLoaderUtil.class + "._servletContextName");
 

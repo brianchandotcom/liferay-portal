@@ -48,6 +48,6 @@ public final class NonSerializableObjectHandler implements Serializable {
 		return _value;
 	}
 
-	private transient Object _value;
+	private final transient Object _value;
 
 }

@@ -49,8 +49,8 @@ public class FieldConditionImpl implements FieldCondition {
 
 	private static final boolean _JUNCTION = false;
 
-	private ComparisonOperator _comparisonOperator;
-	private String _name;
-	private Object _value;
+	private final ComparisonOperator _comparisonOperator;
+	private final String _name;
+	private final Object _value;
 
 }

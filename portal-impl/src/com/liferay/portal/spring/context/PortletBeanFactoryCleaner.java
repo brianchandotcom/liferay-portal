@@ -127,24 +127,29 @@ public class PortletBeanFactoryCleaner implements BeanFactoryAware {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Set<AspectJExpressionPointcut>
+		_aspectJExpressionPointcuts = new HashSet<AspectJExpressionPointcut>();
+	private static final Set<BeanFactoryAware> _beanFactoryAwares =
+		new HashSet<BeanFactoryAware>();
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletBeanFactoryCleaner.class);
 
-	private static Set<AspectJExpressionPointcut> _aspectJExpressionPointcuts =
-		new HashSet<AspectJExpressionPointcut>();
-	private static BeanFactory _beanFactory;
-	private static Set<BeanFactoryAware> _beanFactoryAwares =
-		new HashSet<BeanFactoryAware>();
-	private static Field _shadowMatchCacheField;
+	private static final Field _shadowMatchCacheField;
 
 	static {
+		Field shadowMatchCacheField = null;
+
 		try {
-			_shadowMatchCacheField = ReflectionUtil.getDeclaredField(
+			shadowMatchCacheField = ReflectionUtil.getDeclaredField(
 				AspectJExpressionPointcut.class, "shadowMatchCache");
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_shadowMatchCacheField = shadowMatchCacheField;
 	}
+
+	private static BeanFactory _beanFactory;
 
 }

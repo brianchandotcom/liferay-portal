@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CANCEL_BUTTON</td>
 	<td>//a[contains(.,'Cancel')]</td>
 	<td></td>
@@ -177,7 +182,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_TABLE_ACTIONS</td>
-	<td>xpath=(//div[contains(@id,'kaleoformsportlet_workflowDefinitions')]//tr[contains(.,'${key_workflowDefinition}')]/td[4]/div/a[@title='Actions'])[1]</td>
+	<td>xpath=(//div[contains(@id,'kaleoformsportlet_workflowDefinitions')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[4]/div/a[@title='Actions'])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -202,6 +207,11 @@
 	<td></td>
 </tr>
 <!--FORMS_TABLE-->
+<tr>
+	<td>FORMS_TABLE_TASK</td>
+	<td>//div[contains(@id,'kaleoformsportlet_taskForm')]//tr[contains(.,'${key_workflowTask}')]/td[1]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>FORMS_TABLE_FORM</td>
 	<td>//div[contains(@id,'kaleoformsportlet_taskForm')]//tr[contains(.,'${key_workflowTask}')]/td[2]</td>

@@ -93,7 +93,7 @@
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_ACTIONS</td>
-	<td>//div[@id='_151_workflowDefinitionsSearchContainer']//tr[contains(.,'${key_workflowDefinitionName}')]/td[5]/div/a</td>
+	<td>//div[@id='_151_workflowDefinitionsSearchContainer']//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[5]/div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -115,6 +115,11 @@
 <tr>
 	<td>DEFINITION_MENULIST_ADD_NEW_FILE</td>
 	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Add New File')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITION_MENULIST_EDIT</td>
+	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>

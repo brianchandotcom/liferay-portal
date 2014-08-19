@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_TAB</td>
 	<td>//ul[@role='tablist']/li/a[contains(.,'View')]</td>
 	<td></td>

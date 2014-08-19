@@ -1,0 +1,7 @@
+<definition>
+	<command name="assertElementNotPresent">
+		<case locator-key1="VIEW_FORM_NODE">
+			<execute function="AssertElementNotPresent#assertElementNotPresent" ignore-javascript-error="u is null" />
+		</case>
+	</command>
+</definition>

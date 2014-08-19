@@ -295,6 +295,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			if (portalSource &&
 				mainReleaseVersion.equals(MAIN_RELEASE_LATEST_VERSION) &&
 				fileName.endsWith("/init.jsp") &&
+				!fileName.startsWith("modules/") &&
 				!fileName.endsWith("/common/init.jsp")) {
 
 				addImportCounts(content);
@@ -936,6 +937,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected boolean hasUnusedVariable(String fileName, String line) {
+		if (fileName.startsWith("modules/")) {
+			return false;
+		}
+
 		if (line.contains(": ")) {
 			return false;
 		}

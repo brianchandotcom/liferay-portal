@@ -4,7 +4,6 @@
 	var Lang = A.Lang;
 
 	var AArray = A.Array;
-	var AObject = A.Object;
 	var AString = A.Lang.String;
 	var Browser = Liferay.Browser;
 
@@ -15,36 +14,7 @@
 
 	var EVENT_CLICK = 'click';
 
-	var htmlEscapedValues = [];
-	var htmlUnescapedValues = [];
-
-	var MAP_HTML_CHARS_ESCAPED = {
-		'&': '&amp;',
-		'<': '&lt;',
-		'>': '&gt;',
-		'"': '&#034;',
-		'\'': '&#039;',
-		'/': '&#047;',
-		'`': '&#096;'
-	};
-
-	var MAP_HTML_CHARS_UNESCAPED = {};
-
-	AObject.each(
-		MAP_HTML_CHARS_ESCAPED,
-		function(item, index) {
-			MAP_HTML_CHARS_UNESCAPED[item] = index;
-
-			htmlEscapedValues.push(item);
-			htmlUnescapedValues.push(index);
-		}
-	);
-
-	var STR_LEFT_SQUARE_BRACKET = '[';
-
 	var STR_RIGHT_SQUARE_BRACKET = ']';
-
-	var REGEX_HTML_UNESCAPE = new RegExp(htmlEscapedValues.join('|'), 'gi');
 
 	var SRC_HIDE_LINK = {
 		src: 'hideLink'
@@ -666,31 +636,6 @@
 			return parseInt(value, 10) || 0;
 		},
 
-		unescapeHTML: function(str, entities) {
-			var regex = REGEX_HTML_UNESCAPE;
-
-			var entitiesMap = MAP_HTML_CHARS_UNESCAPED;
-
-			if (entities) {
-				var entitiesValues = [];
-
-				entitiesMap = {};
-
-				AObject.each(
-					entities,
-					function(item, index) {
-						entitiesMap[item] = index;
-
-						entitiesValues.push(item);
-					}
-				);
-
-				regex = new RegExp(entitiesValues.join('|'), 'gi');
-			}
-
-			return str.replace(regex, A.bind('_unescapeHTML', Util, entitiesMap));
-		},
-
 		_defaultPreviewArticleFn: function(event) {
 			var instance = this;
 
@@ -826,11 +771,7 @@
 
 				return value;
 			}
-		),
-
-		_unescapeHTML: function(entities, match) {
-			return entities[match];
-		}
+		)
 	};
 
 	Liferay.provide(

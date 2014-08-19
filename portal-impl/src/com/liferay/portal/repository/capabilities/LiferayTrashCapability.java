@@ -14,13 +14,20 @@
 
 package com.liferay.portal.repository.capabilities;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.Accessor;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -31,7 +38,9 @@ import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 
 import java.util.List;
@@ -68,6 +77,41 @@ public class LiferayTrashCapability implements TrashCapability {
 		deleteTrashEntry(folder);
 
 		DLFolderLocalServiceUtil.deleteFolder(folder.getFolderId(), false);
+	}
+
+	@Override
+	public void deleteTrashEntries(long repositoryId) throws PortalException {
+		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
+			repositoryId);
+
+		if (repository == null) {
+			deleteRepositoryTrashEntries(
+				repositoryId, DLFileEntry.class.getName());
+
+			deleteRepositoryTrashEntries(
+				repositoryId, DLFolder.class.getName());
+		}
+		else {
+			QueryDefinition<Object> queryDefinition =
+				new QueryDefinition<Object>();
+
+			queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+			List<Object> entries =
+				DLFolderLocalServiceUtil.
+					getFoldersAndFileEntriesAndFileShortcuts(
+						repository.getGroupId(), repository.getDlFolderId(),
+						null, true, queryDefinition);
+
+			for (Object entry : entries) {
+				if (entry instanceof DLFileEntry) {
+					deleteTrashEntry(new LiferayFileEntry((DLFileEntry)entry));
+				}
+				else if (entry instanceof DLFolder) {
+					deleteTrashEntry(new LiferayFolder((DLFolder)entry));
+				}
+			}
+		}
 	}
 
 	@Override
@@ -154,5 +198,38 @@ public class LiferayTrashCapability implements TrashCapability {
 
 		DLAppHelperLocalServiceUtil.restoreFolderFromTrash(userId, folder);
 	}
+
+	protected void deleteRepositoryTrashEntries(
+			long repositoryId, String className)
+		throws PortalException {
+
+		List<TrashEntry> trashEntries = TrashEntryLocalServiceUtil.getEntries(
+			repositoryId, className);
+
+		long[] entryIds = StringUtil.split(
+			ListUtil.toString(trashEntries, _TRASH_ENTRY_ID_ACCESSOR), 0L);
+
+		TrashEntryServiceUtil.deleteEntries(entryIds);
+	}
+
+	private static final Accessor<TrashEntry, Long> _TRASH_ENTRY_ID_ACCESSOR =
+		new Accessor<TrashEntry, Long>() {
+
+			@Override
+			public Long get(TrashEntry trashEntry) {
+				return trashEntry.getEntryId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<TrashEntry> getTypeClass() {
+				return TrashEntry.class;
+			}
+
+		};
 
 }

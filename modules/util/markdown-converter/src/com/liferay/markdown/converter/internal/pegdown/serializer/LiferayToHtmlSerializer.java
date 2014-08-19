@@ -71,18 +71,19 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 	@Override
     public void visit(ParaNode node) {
 		List<Node> childNodes = node.getChildren();
-		
+
 		boolean print = true;
-		
+
 		for (Node childNode : childNodes) {
 			List<Node> grandchildNodes = childNode.getChildren();
-			
-			for (Node grandchildNode : grandchildNodes) {	
+
+			for (Node grandchildNode : grandchildNodes) {
+
 				if (grandchildNode instanceof TextNode) {
 					TextNode textNode = (TextNode)grandchildNode;
-					
+
 					String text = textNode.getText();
-					
+
 					if (text.equals("+$$$") || text.equals("$$$")) {
 						visitChildren(node);
 						print = false;
@@ -90,7 +91,7 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 				}
 			}
 		}
-		
+
 		if (print) {
 			printTag(node, "p");
 		}

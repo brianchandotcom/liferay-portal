@@ -1,0 +1,398 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.search;
+
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.search.FacetedSearcher;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
+import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.ScopeFacet;
+import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.search.facet.config.FacetConfigurationUtil;
+import com.liferay.portal.kernel.search.facet.util.FacetFactoryUtil;
+import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.CalendarUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.test.Sync;
+import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
+import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.test.RandomTestUtil;
+import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portal.util.test.UserTestUtil;
+
+import java.text.Format;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Michael C. Han
+ */
+@ExecutionTestListeners(
+	listeners = {
+		MainServletExecutionTestListener.class,
+		SynchronousDestinationExecutionTestListener.class
+	})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Sync
+public class FacetSearchTest {
+
+	@Before
+	public void setUp() throws Exception {
+		int initialUsersCount;
+
+		do {
+			_randomLastName = RandomTestUtil.randomString(10);
+
+			initialUsersCount = searchCount(null, null, -1);
+		}
+		while (initialUsersCount > 0);
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.add(Calendar.HOUR, -4);
+
+		createUsersWithSpecifiedModifiedDate(
+			_USER_COUNT_LAST_24_HRS, calendar.getTime());
+
+		calendar.add(Calendar.DATE, -3);
+
+		createUsersWithSpecifiedModifiedDate(
+			_USER_COUNT_LAST_WEEK, calendar.getTime());
+
+		calendar.add(Calendar.MONTH, -1);
+		calendar.add(Calendar.DATE, 7);
+
+		createUsersWithSpecifiedModifiedDate(
+			_USER_COUNT_LAST_MONTH, calendar.getTime());
+
+		calendar.add(Calendar.MONTH, 2);
+		calendar.add(Calendar.YEAR, -1);
+
+		createUsersWithSpecifiedModifiedDate(
+			_USER_COUNT_LAST_YEAR, calendar.getTime());
+
+		calendar.add(Calendar.MONTH, 5);
+		calendar.add(Calendar.YEAR, -2);
+
+		createUsersWithSpecifiedModifiedDate(
+			_USER_COUNT_LAST_TWO_YEAR, calendar.getTime());
+
+		_dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			_INDEX_DATE_FORMAT_PATTERN);
+	}
+
+	@Test
+	public void testSearchLast24Hrs() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+
+		searchCount(
+			CalendarUtil.getGTDate(calendar), CalendarUtil.getLTDate(calendar),
+			_USER_COUNT_LAST_24_HRS);
+	}
+
+	@Test
+	public void testSearchLastMonth() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		Date endDate = CalendarUtil.getLTDate(calendar);
+
+		calendar.add(Calendar.MONTH, -1);
+
+		searchCount(
+			CalendarUtil.getGTDate(calendar), endDate,
+			_USER_COUNT_LAST_24_HRS + _USER_COUNT_LAST_WEEK +
+				_USER_COUNT_LAST_MONTH);
+	}
+
+	@Test
+	public void testSearchLastTwoYears() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		Date endDate = CalendarUtil.getLTDate(calendar);
+
+		calendar.set(Calendar.MONTH, 1);
+		calendar.set(Calendar.DATE, 1);
+		calendar.add(Calendar.YEAR, -2);
+
+		searchCount(
+			CalendarUtil.getGTDate(calendar), endDate,
+			_USER_COUNT_LAST_24_HRS + _USER_COUNT_LAST_WEEK +
+				_USER_COUNT_LAST_MONTH + _USER_COUNT_LAST_YEAR +
+				_USER_COUNT_LAST_TWO_YEAR);
+	}
+
+	@Test
+	public void testSearchLastWeek() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		Date endDate = CalendarUtil.getLTDate(calendar);
+
+		calendar.add(Calendar.WEEK_OF_YEAR, -1);
+
+		searchCount(
+			CalendarUtil.getGTDate(calendar), endDate,
+			_USER_COUNT_LAST_24_HRS + _USER_COUNT_LAST_WEEK);
+	}
+
+	@Test
+	public void testSearchLastYear() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		Date endDate = CalendarUtil.getLTDate(calendar);
+
+		calendar.add(Calendar.YEAR, -1);
+
+		searchCount(
+			CalendarUtil.getGTDate(calendar), endDate,
+			_USER_COUNT_LAST_24_HRS + _USER_COUNT_LAST_WEEK +
+				_USER_COUNT_LAST_MONTH + _USER_COUNT_LAST_YEAR);
+	}
+
+	protected void createUsersWithSpecifiedModifiedDate(
+			int count, Date modifiedDate)
+		throws Exception {
+
+		for (int i = 0; i < count; i ++) {
+			User user = UserTestUtil.addUser(
+				RandomTestUtil.randomString(), false,
+				RandomTestUtil.randomString(), _randomLastName,
+				new long[]{TestPropsValues.getGroupId()});
+
+			user.setModifiedDate(modifiedDate);
+
+			UserLocalServiceUtil.updateUser(user);
+		}
+	}
+
+	protected int searchCount(Date startDate, Date endDate, int expectedCount)
+		throws Exception {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAttribute("entryClassName", User.class.getName());
+
+		if (startDate != null && endDate != null) {
+			searchContext.setAttribute(
+				"modified", "[" + _dateFormat.format(startDate) + " TO " +
+					_dateFormat.format(endDate) + "]");
+		}
+
+		searchContext.setCompanyId(TestPropsValues.getCompanyId());
+		searchContext.setEnd(QueryUtil.ALL_POS);
+		searchContext.setKeywords(_randomLastName);
+		searchContext.setStart(QueryUtil.ALL_POS);
+
+		Facet assetEntriesFacet = new AssetEntriesFacet(searchContext);
+
+		assetEntriesFacet.setStatic(true);
+
+		searchContext.addFacet(assetEntriesFacet);
+
+		Facet scopeFacet = new ScopeFacet(searchContext);
+
+		scopeFacet.setStatic(true);
+
+		searchContext.addFacet(scopeFacet);
+
+		List<FacetConfiguration> facetConfigurations =
+			FacetConfigurationUtil.load(_FACET_CONFIGURATIONS);
+
+		for (FacetConfiguration facetConfiguration : facetConfigurations) {
+			Facet facet = FacetFactoryUtil.create(
+				searchContext, facetConfiguration);
+
+			if (facet == null) {
+				continue;
+			}
+
+			searchContext.addFacet(facet);
+		}
+
+		Indexer indexer = FacetedSearcher.getInstance();
+
+		Hits hits = indexer.search(searchContext);
+
+		if (expectedCount > 0) {
+			Assert.assertEquals(expectedCount, hits.getLength());
+		}
+
+		return hits.getLength();
+	}
+
+	private static final String _FACET_CONFIGURATIONS = "{\n" +
+		"facets: [\n" +
+		"{\n" +
+		"className: 'com.liferay.portal.kernel.search.facet.ScopeFacet',\n" +
+		"data: {\n" +
+		"frequencyThreshold: 1,\n" +
+		"maxTerms: 10,\n" +
+		"showAssetCount: true\n" +
+		"},\n" +
+		"displayStyle: 'scopes',\n" +
+		"fieldName: 'groupId',\n" +
+		"label: 'site',\n" +
+		"order: 'OrderHitsDesc',\n" +
+		"static: false,\n" +
+		"weight: 1.6\n" +
+		"},\n" +
+		"{\n" +
+		"className: " +
+		"'com.liferay.portal.kernel.search.facet.AssetEntriesFacet',\n" +
+		"data: {\n" +
+		"frequencyThreshold: 1,\n" +
+		"values: [\n" +
+		"'com.liferay.portal.model.User',\n" +
+		"'com.liferay.portlet.bookmarks.model.BookmarksEntry',\n" +
+		"'com.liferay.portlet.bookmarks.model.BookmarksFolder',\n" +
+		"'com.liferay.portlet.blogs.model.BlogsEntry',\n" +
+		"'com.liferay.portlet.documentlibrary.model.DLFileEntry',\n" +
+		"'com.liferay.portlet.documentlibrary.model.DLFolder',\n" +
+		"'com.liferay.portlet.journal.model.JournalArticle',\n" +
+		"'com.liferay.portlet.journal.model.JournalFolder',\n" +
+		"'com.liferay.portlet.messageboards.model.MBMessage',\n" +
+		"'com.liferay.portlet.wiki.model.WikiPage'\n" +
+		"]\n" +
+		"},\n" +
+		"displayStyle: 'asset_entries',\n" +
+		"fieldName: 'entryClassName',\n" +
+		"label: 'asset-type',\n" +
+		"order: 'OrderHitsDesc',\n" +
+		"static: false,\n" +
+		"weight: 1.5\n" +
+		"},\n" +
+		"{\n" +
+		"className: " +
+		"'com.liferay.portal.kernel.search.facet.MultiValueFacet',\n" +
+		"data: {\n" +
+		"displayStyle: 'list',\n" +
+		"frequencyThreshold: 1,\n" +
+		"maxTerms: 10,\n" +
+		"showAssetCount: true\n" +
+		"},\n" +
+		"displayStyle: 'asset_tags',\n" +
+		"fieldName: 'assetTagNames',\n" +
+		"label: 'tag',\n" +
+		"order: 'OrderHitsDesc',\n" +
+		"static: false,\n" +
+		"weight: 1.4\n" +
+		"},\n" +
+		"{\n" +
+		"className: " +
+		"'com.liferay.portal.kernel.search.facet.MultiValueFacet',\n" +
+		"data: {\n" +
+		"displayStyle: 'list',\n" +
+		"frequencyThreshold: 1,\n" +
+		"maxTerms: 10,\n" +
+		"showAssetCount: true\n" +
+		"},\n" +
+		"displayStyle: 'asset_categories',\n" +
+		"fieldName: 'assetCategoryIds',\n" +
+		"label: 'category',\n" +
+		"order: 'OrderHitsDesc',\n" +
+		"static: false,\n" +
+		"weight: 1.3\n" +
+		"},\n" +
+		"{\n" +
+		"className: " +
+		"'com.liferay.portal.kernel.search.facet.MultiValueFacet',\n" +
+		"data: {\n" +
+		"frequencyThreshold: 1,\n" +
+		"maxTerms: 10,\n" +
+		"showAssetCount: true\n" +
+		"},\n" +
+		"displayStyle: 'folders',\n" +
+		"fieldName: 'folderId',\n" +
+		"label: 'folder',\n" +
+		"order: 'OrderHitsDesc',\n" +
+		"static: false,\n" +
+		"weight: 1.2\n" +
+		"},\n" +
+		"{\n" +
+		"className: " +
+		"'com.liferay.portal.kernel.search.facet.MultiValueFacet',\n" +
+		"data: {\n" +
+		"frequencyThreshold: 1,\n" +
+		"maxTerms: 10,\n" +
+		"showAssetCount: true\n" +
+		"},\n" +
+		"displayStyle: 'users',\n" +
+		"fieldName: 'userName',\n" +
+		"label: 'user',\n" +
+		"order: 'OrderHitsDesc',\n" +
+		"static: false,\n" +
+		"weight: 1.1\n" +
+		"},\n" +
+		"{\n" +
+		"className: 'com.liferay.portal.kernel.search.facet.ModifiedFacet',\n" +
+		"data: {\n" +
+		"frequencyThreshold: 0,\n" +
+		"ranges: [\n" +
+		"{\n" +
+		"label:'past-hour',\n" +
+		"range:'[past-hour TO *]'\n" +
+		"},\n" +
+		"{\n" +
+		"label:'past-24-hours',\n" +
+		"range:'[past-24-hours TO *]'\n" +
+		"},\n" +
+		"{\n" +
+		"label:'past-week',\n" +
+		"range:'[past-week TO *]'\n" +
+		"},\n" +
+		"{\n" +
+		"label:'past-month',\n" +
+		"range:'[past-month TO *]'\n" +
+		"},\n" +
+		"{\n" +
+		"label:'past-year',\n" +
+		"range:'[past-year TO *]'\n" +
+		"}\n" +
+		"]\n" +
+		"},\n" +
+		"displayStyle: 'modified',\n" +
+		"fieldName: 'modified',\n" +
+		"label: 'modified',\n" +
+		"order: 'OrderHitsDesc',\n" +
+		"static: false,\n" +
+		"weight: 1.0\n" +
+		"}\n" +
+		"]\n" +
+		"}";
+
+	private static final String _INDEX_DATE_FORMAT_PATTERN = "yyyyMMddHHmmss";
+
+	private static final int _USER_COUNT_LAST_24_HRS = 10;
+
+	private static final int _USER_COUNT_LAST_MONTH = 10;
+
+	private static final int _USER_COUNT_LAST_TWO_YEAR = 10;
+
+	private static final int _USER_COUNT_LAST_WEEK = 10;
+
+	private static final int _USER_COUNT_LAST_YEAR = 10;
+
+	private Format _dateFormat;
+	private String _randomLastName;
+
+}

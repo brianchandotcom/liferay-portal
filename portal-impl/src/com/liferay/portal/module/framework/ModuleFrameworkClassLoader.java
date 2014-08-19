@@ -29,6 +29,10 @@ import java.util.List;
  */
 public class ModuleFrameworkClassLoader extends URLClassLoader {
 
+	static {
+		ClassLoader.registerAsParallelCapable();
+	}
+
 	public ModuleFrameworkClassLoader(URL[] urls, ClassLoader parent) {
 		super(urls, parent);
 
@@ -100,35 +104,39 @@ public class ModuleFrameworkClassLoader extends URLClassLoader {
 	}
 
 	@Override
-	protected synchronized Class<?> loadClass(String name, boolean resolve)
+	protected Class<?> loadClass(String name, boolean resolve)
 		throws ClassNotFoundException {
 
-		Class<?> clazz = findLoadedClass(name);
+		Object lock = getClassLoadingLock(name);
 
-		if (clazz == null) {
-			if (_systemClassLoader != null) {
-				try {
-					clazz = _systemClassLoader.loadClass(name);
-				}
-				catch (ClassNotFoundException cnfe) {
-				}
-			}
+		synchronized (lock) {
+			Class<?> clazz = findLoadedClass(name);
 
 			if (clazz == null) {
-				try {
-					clazz = findClass(name);
+				if (_systemClassLoader != null) {
+					try {
+						clazz = _systemClassLoader.loadClass(name);
+					}
+					catch (ClassNotFoundException cnfe) {
+					}
 				}
-				catch (ClassNotFoundException cnfe) {
-					clazz = super.loadClass(name, resolve);
+
+				if (clazz == null) {
+					try {
+						clazz = findClass(name);
+					}
+					catch (ClassNotFoundException cnfe) {
+						clazz = super.loadClass(name, resolve);
+					}
 				}
 			}
-		}
 
-		if (resolve) {
-			resolveClass(clazz);
-		}
+			if (resolve) {
+				resolveClass(clazz);
+			}
 
-		return clazz;
+			return clazz;
+		}
 	}
 
 	private List<URL> _buildURLs(Enumeration<URL> url) {

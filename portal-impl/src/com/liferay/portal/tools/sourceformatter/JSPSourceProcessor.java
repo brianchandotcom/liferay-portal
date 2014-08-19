@@ -937,6 +937,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected boolean hasUnusedVariable(String fileName, String line) {
+		if (fileName.startsWith("modules/")) {
+			return false;
+		}
+
 		if (line.contains(": ")) {
 			return false;
 		}

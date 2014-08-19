@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.bean;
 
+import aQute.bnd.annotation.ProviderType;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface BeanProperties {
 
 	public void copyProperties(Object source, Object target);

@@ -7,6 +7,7 @@
 					"match_mapping_type": "string",
 					"mapping": {
 						"index": "not_analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -17,6 +18,7 @@
 					"match_mapping_type": "string",
 					"mapping": {
 						"index": "not_analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -28,6 +30,7 @@
 					"mapping": {
 						"analyzer": "arabic",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -39,6 +42,7 @@
 					"mapping": {
 						"analyzer": "bulgarian",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -51,6 +55,7 @@
 					"mapping": {
 						"analyzer": "catalan",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -62,6 +67,7 @@
 					"mapping": {
 						"analyzer": "czech",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -73,6 +79,7 @@
 					"mapping": {
 						"analyzer": "danish",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -84,6 +91,7 @@
 					"mapping": {
 						"analyzer": "german",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -95,6 +103,7 @@
 					"mapping": {
 						"analyzer": "greek",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -107,6 +116,7 @@
 					"mapping": {
 						"analyzer": "english",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -119,6 +129,7 @@
 					"mapping": {
 						"analyzer": "spanish",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -130,6 +141,7 @@
 					"mapping": {
 						"analyzer": "basque",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -141,6 +153,7 @@
 					"mapping": {
 						"analyzer": "persian",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -152,6 +165,7 @@
 					"mapping": {
 						"analyzer": "finnish",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -164,6 +178,7 @@
 					"mapping": {
 						"analyzer": "french",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -175,6 +190,7 @@
 					"mapping": {
 						"analyzer": "hindi",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -186,6 +202,7 @@
 					"mapping": {
 						"analyzer": "hungarian",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -197,6 +214,7 @@
 					"mapping": {
 						"analyzer": "armenian",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -208,6 +226,7 @@
 					"mapping": {
 						"analyzer": "indonesian",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -219,6 +238,7 @@
 					"mapping": {
 						"analyzer": "italian",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -230,6 +250,7 @@
 					"mapping": {
 						"analyzer": "cjk",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -241,6 +262,7 @@
 					"mapping": {
 						"analyzer": "cjk",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -252,6 +274,7 @@
 					"mapping": {
 						"analyzer": "dutch",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -263,6 +286,7 @@
 					"mapping": {
 						"analyzer": "norwegian",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -274,6 +298,7 @@
 					"mapping": {
 						"analyzer": "brazilian",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -285,6 +310,7 @@
 					"mapping": {
 						"analyzer": "portuguese",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -296,6 +322,7 @@
 					"mapping": {
 						"analyzer": "romanian",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -307,6 +334,7 @@
 					"mapping": {
 						"analyzer": "russian",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -318,6 +346,7 @@
 					"mapping": {
 						"analyzer": "swedish",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -329,6 +358,7 @@
 					"mapping": {
 						"analyzer": "thai",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -340,6 +370,7 @@
 					"mapping": {
 						"analyzer": "turkish",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -352,6 +383,7 @@
 					"mapping": {
 						"analyzer": "chinese",
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}
@@ -362,6 +394,7 @@
 					"match_mapping_type": "string",
 					"mapping": {
 						"index": "analyzed",
+						"store": "true",
 						"type": "string"
 					}
 				}

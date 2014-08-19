@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var LString = Lang.String;
+
 		var AObject = A.Object;
 
 		var BOUNDING_BOX = 'boundingBox';
@@ -260,7 +262,7 @@ AUI.add(
 									},
 									checked: checked,
 									id: treeId,
-									label: Liferay.Util.escapeHTML(item.titleCurrentValue),
+									label: LString.escapeHTML(item.titleCurrentValue),
 									leaf: !item.hasChildren,
 									paginator: instance._getPaginatorConfig(item),
 									type: type
@@ -661,7 +663,7 @@ AUI.add(
 						var instance = this;
 
 						var popup = instance._popup;
-						var vocabularyTitle = Liferay.Util.escapeHTML(item.titleCurrentValue);
+						var vocabularyTitle = LString.escapeHTML(item.titleCurrentValue);
 						var vocabularyId = item.vocabularyId;
 
 						if (item.groupId == themeDisplay.getCompanyGroupId()) {

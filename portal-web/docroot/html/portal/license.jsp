@@ -487,6 +487,8 @@ dateFormatDateTime.setTimeZone(timeZone);
 					function(message) {
 						var A = AUI();
 
+						var LString = A.Lang.String;
+
 						A.one('#node_<%= clusterNode.getClusterNodeId() %>_register').attr('disabled', false);
 
 						if (!message) {
@@ -512,8 +514,8 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 							addColumn(row, productEntryName);
 							addColumn(row, getLicenseState(message[i].licenseState));
-							addColumn(row, Liferay.Util.escapeHTML(message[i].owner));
-							addColumn(row, Liferay.Util.escapeHTML(message[i].description));
+							addColumn(row, LString.escapeHTML(message[i].owner));
+							addColumn(row, LString.escapeHTML(message[i].description));
 							addColumn(row, message[i].type);
 							addColumn(row, new Date(Number(message[i].startDate)).toLocaleDateString());
 							addColumn(row, new Date(Number(message[i].expirationDate)).toLocaleDateString());

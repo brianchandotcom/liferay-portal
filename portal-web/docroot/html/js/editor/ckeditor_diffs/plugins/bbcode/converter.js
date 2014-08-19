@@ -1,6 +1,5 @@
 ;(function() {
 	var BBCodeUtil = Liferay.BBCodeUtil;
-	var Util = Liferay.Util;
 	var CKTools = CKEDITOR.tools;
 
 	var Parser = Liferay.BBCodeParser;
@@ -195,7 +194,7 @@
 			return result;
 		},
 
-		_escapeHTML: Util.escapeHTML,
+		_escapeHTML: A.Lang.String.escapeHTML,
 
 		_extractData: function(toTagName, consume) {
 			var instance = this;

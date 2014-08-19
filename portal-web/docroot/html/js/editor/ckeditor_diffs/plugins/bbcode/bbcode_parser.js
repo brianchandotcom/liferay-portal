@@ -1,10 +1,10 @@
 ;(function() {
 	var A = AUI();
 
-	var LiferayUtil = Liferay.Util;
+	var LString = A.Lang.String;
 
 	var entities = A.merge(
-		LiferayUtil.MAP_HTML_CHARS_ESCAPED,
+		Liferay.Util.MAP_HTML_CHARS_ESCAPED,
 		{
 			'[': '&#91;',
 			']': '&#93;',
@@ -15,8 +15,8 @@
 
 	var BBCodeUtil = Liferay.namespace('BBCodeUtil');
 
-	BBCodeUtil.escape = A.rbind('escapeHTML', LiferayUtil, true, entities);
-	BBCodeUtil.unescape = A.rbind('unescapeHTML', LiferayUtil, entities);
+	BBCodeUtil.escape = A.rbind('escapeHTML', LString, true, entities);
+	BBCodeUtil.unescape = A.rbind('unescapeHTML', LString, entities);
 }());;(function() {
 	var REGEX_BBCODE = /(?:\[((?:[a-z]|\*){1,16})(?:[=\s]([^\x00-\x1F'\(\)<>\[\]]{1,2083}))?\])|(?:\[\/([a-z]{1,16})\])/ig;
 
@@ -272,7 +272,6 @@
 	Liferay.BBCodeParser = Parser;
 })();;(function() {
 	var BBCodeUtil = Liferay.BBCodeUtil;
-	var Util = Liferay.Util;
 	var CKTools = CKEDITOR.tools;
 
 	var Parser = Liferay.BBCodeParser;
@@ -467,7 +466,7 @@
 			return result;
 		},
 
-		_escapeHTML: Util.escapeHTML,
+		_escapeHTML: A.Lang.String.escapeHTML,
 
 		_extractData: function(toTagName, consume) {
 			var instance = this;

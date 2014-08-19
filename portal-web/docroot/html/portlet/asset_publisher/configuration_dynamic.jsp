@@ -793,7 +793,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 		var ddmStructureFieldMessage = A.one('#<portlet:namespace />' + className + 'ddmStructureFieldMessage');
 
-		ddmStructureFieldMessage.html(Liferay.Util.escapeHTML(message));
+		ddmStructureFieldMessage.html(A.Lang.String.escapeHTML(message));
 	}
 </aui:script>
 

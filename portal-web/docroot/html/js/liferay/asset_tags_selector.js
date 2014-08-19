@@ -5,6 +5,8 @@ AUI.add(
 
 		var AArray = A.Array;
 
+		var LString = Lang.String;
+
 		var NAME = 'tagselector';
 
 		var CSS_INPUT_NODE = 'lfr-tag-selector-input';
@@ -213,7 +215,7 @@ AUI.add(
 					_addEntries: function() {
 						var instance = this;
 
-						var text = Liferay.Util.escapeHTML(instance.inputNode.val());
+						var text = LString.escapeHTML(instance.inputNode.val());
 
 						if (text) {
 							if (text.indexOf(',') > -1) {
@@ -546,8 +548,8 @@ AUI.add(
 							context = String(context);
 						}
 
-						context = Lang.String.stripTags(context);
-						context = Liferay.Util.escapeHTML(context);
+						context = LString.stripTags(context);
+						context = LString.escapeHTML(context);
 
 						var query = Lang.sub(TPL_SUGGESTIONS_QUERY, [context]);
 

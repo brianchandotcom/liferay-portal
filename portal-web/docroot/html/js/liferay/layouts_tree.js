@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var Util = Liferay.Util;
+		var LString = Lang.String;
 
 		var NODE_ID_TPL = '{treeId}_layoutId_{layoutId}_plid_{plid}_groupId_{groupId}';
 
@@ -168,13 +168,13 @@ AUI.add(
 					}
 				);
 
-				data.id = data.url ? Util.escapeHTML(instance._treeId + '_layout_' + data.url.substring(1)) : STR_EMPTY;
+				data.id = data.url ? LString.escapeHTML(instance._treeId + '_layout_' + data.url.substring(1)) : STR_EMPTY;
 
 				data.title = data.title ? data.title : STR_EMPTY;
 
-				data.url = data.url ? Util.escapeHTML(data.url) : STR_EMPTY;
+				data.url = data.url ? LString.escapeHTML(data.url) : STR_EMPTY;
 
-				data.uuid = data.uuid ? Util.escapeHTML(data.uuid) : STR_EMPTY;
+				data.uuid = data.uuid ? LString.escapeHTML(data.uuid) : STR_EMPTY;
 
 				return A.Lang.sub(NODE_LINK_TPL, data);
 			},
@@ -252,14 +252,14 @@ AUI.add(
 
 				var cssClass = STR_EMPTY;
 				var title = STR_EMPTY;
-				var name = Util.escapeHTML(node.name);
+				var name = LString.escapeHTML(node.name);
 
 				if (node.layoutRevisionId) {
 					if (!node.layoutRevisionHead) {
 						title =  Liferay.Language.get('there-is-not-a-version-of-this-page-marked-as-ready-for-publication');
 					}
 					else if (node.layoutBranchName) {
-						node.layoutBranchName = Util.escapeHTML(node.layoutBranchName);
+						node.layoutBranchName = LString.escapeHTML(node.layoutBranchName);
 
 						name += Lang.sub(' <span class="layout-branch-name" title="' + Liferay.Language.get('this-is-the-page-variation-that-is-marked-as-ready-for-publication') + '">[{layoutBranchName}]</span>', node);
 					}
@@ -302,7 +302,7 @@ AUI.add(
 
 				var rootLabel = instance._createNodeLink(
 					{
-						label: Liferay.Util.escapeHTML(rootConfig.label),
+						label: LString.escapeHTML(rootConfig.label),
 						plid: rootConfig.defaultParentLayoutId
 					}
 				);

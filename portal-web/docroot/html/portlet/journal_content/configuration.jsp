@@ -286,7 +286,7 @@ catch (NoSuchArticleException nsae) {
 
 			var displayArticleId = A.one('.displaying-article-id');
 
-			displayArticleId.html(Liferay.Util.escapeHTML(articleTitle) + ' (<%= UnicodeLanguageUtil.get(request, "modified") %>)');
+			displayArticleId.html(A.Lang.String.escapeHTML(articleTitle) + ' (<%= UnicodeLanguageUtil.get(request, "modified") %>)');
 
 			displayArticleId.addClass('modified');
 		},

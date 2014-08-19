@@ -757,6 +757,13 @@
 		<execute action="PGWikidisplay#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
 	</command>
 
+	<command name="gotoChildPagePG">
+		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_CHILD_PAGE_HEADER" value1="Children Pages" />
+		<execute action="PGWiki#assertClick" locator-key1="WIKI_PAGE_CHILD_PAGE_TITLE" value1="${wikiChildPageTitle}" />
+	</command>
+
 	<command name="gotoCP">
 		<if>
 			<equals arg1="${isOrphanPage}" arg2="true" />
@@ -1204,10 +1211,6 @@
 	</command>
 
 	<command name="viewChildPagePG">
-		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
-
-		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_CHILD_PAGE_HEADER" value1="Children Pages" />
-		<execute action="PGWiki#assertClick" locator-key1="WIKI_PAGE_CHILD_PAGE_TITLE" value1="${wikiChildPageTitle}" />
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_TITLE" value1="${wikiChildPageTitle}" />
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiChildPageContent}" />
 	</command>

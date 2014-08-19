@@ -124,6 +124,12 @@
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="assertNodeNotPresent">
+		<var name="key_nodeNodeLabel" value="${nodeNodeLabel}" />
+
+		<execute action="Kaleodesigner#assertElementNotPresent" locator-key1="VIEW_FORM_NODE" value1="${nodeLabel}" />
+	</command>
+
 	<command name="assignToMeTaskByActions">
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
 
@@ -282,11 +288,49 @@
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="deactivateWorkflowDefinition">
+		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ACTIONS_UPLOADED" value1="Actions" />
+		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_DEACTIVATE" value1="Deactivate" />
+		<execute action="CPPortalWorkflowconfiguration#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate this?" />
+		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="deleteWorkflowDefinition">
 		<execute action="CPPortalWorkflowconfiguration#click" locator-key1="DEFINITION_TABLE_ACTIONS_DEACTIVATED" />
 		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPPortalWorkflowconfiguration#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="editWorkflowDefinitionDeleteNode">
+		<var name="key_nodeNodeLabel" value="${nodeNodeLabel}" />
+
+		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_FORM_NODE" value1="${nodeNodeLabel}" />
+		<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_NODE_DELETE_ICON" />
+		<execute action="Kaleodesigner#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected node(s)?" />
+		<execute action="Kaleodesigner#pause" locator1="1000" />
+
+		<execute macro="Workflow#assertNodeNotPresent">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+	</command>
+
+	<command name="editWorkflowDefinitionTitleViaWorkflowCP">
+		<execute action="CPPortalWorkflowconfigurationEditworkflow#type" locator-key1="TITLE_FIELD" value1="${workflowDefinitionTitle}" />
+	</command>
+
+	<command name="editWorkflowDefinitionViaWorkflowCP">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_EDIT" value1="Edit" />
+		<execute action="CPPortalWorkflowconfigurationEditworkflow#selectFrame" locator-key1="IFRAME" />
+	</command>
+
+	<command name="publishWorkflowDefinitionViaWorkflowCP">
+		<execute action="CPPortalWorkflowconfigurationAddworkflow#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="CPPortalWorkflowconfigurationAddworkflow#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPPortalWorkflowconfigurationAddworkflow#selectFrameTop" locator-key1="IFRAME" value1="relative=top" />
 	</command>
 
 	<command name="reactivateInactiveWorkflowDefinition">
@@ -508,6 +552,26 @@
 		</while>
 	</command>
 
+	<command name="tearDownWorkflowDefinition">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<while>
+			<condition action="CPPortalWorkflowconfiguration#isElementPresent" locator-key1="DEFINITION_TABLE_ACTIONS" />
+			<then>
+				<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ACTIONS" value1="Actions" />
+				<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_DEACTIVATE" value1="Deactivate" />
+				<execute action="CPPortalWorkflowconfiguration#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate this?" />
+				<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+				<execute macro="Workflow#deleteWorkflowDefinition" />
+			</then>
+		</while>
+	</command>
+
 	<command name="updateDueDateTaskByActions">
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
 
@@ -604,6 +668,7 @@
 
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_NAME" value1="${workflowDefinitionName}" />
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
+		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_VERSION" value1="${workflowDefinitionVersionNumber}" />
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_ACTIVE" value1="Yes" />
 	</command>
 

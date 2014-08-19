@@ -782,11 +782,11 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Returns <code>true</code> if this service context contains an update
+	 * Returns <code>true</code> if this service context contains a revert
 	 * command (i.e. has command value {@link
 	 * com.liferay.portal.kernel.util.Constants#REVERT})
 	 *
-	 * @return <code>true</code> if this service context contains an update
+	 * @return <code>true</code> if this service context contains a revert
 	 *         command; <code>false</code> otherwise
 	 */
 	public boolean isCommandRevert() {

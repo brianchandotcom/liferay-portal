@@ -14,11 +14,12 @@
 
 package com.liferay.portal.kernel.memory;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentIdentityHashMap;
+
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Shuyang Zhou
@@ -139,7 +140,7 @@ public class FinalizeManager {
 	}
 
 	private static final Map<Reference<?>, FinalizeAction> _finalizeActions =
-		new ConcurrentHashMap<Reference<?>, FinalizeAction>();
+		new ConcurrentIdentityHashMap<Reference<?>, FinalizeAction>();
 	private static final ReferenceQueue<Object> _referenceQueue =
 		new ReferenceQueue<Object>();
 

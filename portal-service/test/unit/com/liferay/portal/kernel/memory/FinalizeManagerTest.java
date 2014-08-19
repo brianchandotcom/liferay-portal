@@ -127,6 +127,59 @@ public class FinalizeManagerTest {
 	}
 
 	@Test
+	public void testRegisterationIdentity() throws Exception {
+		System.setProperty(_THREAD_ENABLED_KEY, StringPool.FALSE);
+
+		String testString = new String("testString");
+
+		MarkFinalizeAction markFinalizeAction = new MarkFinalizeAction();
+
+		Reference<?> reference = FinalizeManager.register(
+			testString, markFinalizeAction,
+			FinalizeManager.SOFT_REFERENCE_FACTORY);
+
+		Map<Reference<?>, FinalizeAction> finalizeActions =
+			(Map<Reference<?>, FinalizeAction>)ReflectionTestUtil.getFieldValue(
+				FinalizeManager.class, "_finalizeActions");
+
+		Assert.assertEquals(1, finalizeActions.size());
+		Assert.assertTrue(finalizeActions.containsKey(reference));
+
+		Reference<?> reference2 = FinalizeManager.register(
+			testString, markFinalizeAction,
+			FinalizeManager.SOFT_REFERENCE_FACTORY);
+
+		Assert.assertEquals(reference, reference2);
+		Assert.assertNotSame(reference, reference2);
+
+		Assert.assertEquals(2, finalizeActions.size());
+		Assert.assertTrue(finalizeActions.containsKey(reference));
+		Assert.assertTrue(finalizeActions.containsKey(reference2));
+
+		reference2.clear();
+
+		Assert.assertEquals(1, finalizeActions.size());
+		Assert.assertTrue(finalizeActions.containsKey(reference));
+
+		reference2 = FinalizeManager.register(
+			new String(testString), markFinalizeAction,
+			FinalizeManager.SOFT_REFERENCE_FACTORY);
+
+		Assert.assertEquals(2, finalizeActions.size());
+		Assert.assertTrue(finalizeActions.containsKey(reference));
+		Assert.assertTrue(finalizeActions.containsKey(reference2));
+
+		reference2.clear();
+
+		Assert.assertEquals(1, finalizeActions.size());
+		Assert.assertTrue(finalizeActions.containsKey(reference));
+
+		reference.clear();
+
+		Assert.assertTrue(finalizeActions.isEmpty());
+	}
+
+	@Test
 	public void testRegisterPhantomWithoutThread() throws Exception {
 		doTestRegister(false, ReferenceType.PHANTOM);
 	}

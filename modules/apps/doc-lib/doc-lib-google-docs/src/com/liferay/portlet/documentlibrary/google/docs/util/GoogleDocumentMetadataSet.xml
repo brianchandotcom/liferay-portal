@@ -1,0 +1,38 @@
+<?xml version ="1.0" encoding ="UTF-8"?>
+<root available-locales ="en_US" default-locale ="en_US">
+<dynamic-element dataType ="string" fieldNamespace ="" indexType ="keyword" localizable ="true" multiple ="false" name ="ID" readOnly ="false" repeatable ="false" required ="false" showLabel ="true" type ="text">
+	  <meta-data locale ="en_US">
+		 <entry name ="predefinedValue" />
+		 <entry name ="label">ID</entry>
+		 <entry name ="tip" />
+	  </meta-data>
+</dynamic-element>
+<dynamic-element dataType ="string" fieldNamespace ="" indexType ="keyword" localizable ="true" multiple ="false" name ="Title" readOnly ="false" repeatable ="false" required ="false" showLabel ="true" type ="text">
+	  <meta-data locale ="en_US">
+		 <entry name ="predefinedValue" />
+		 <entry name ="label">Title</entry>
+		 <entry name ="tip" />
+	  </meta-data>
+</dynamic-element>
+<dynamic-element dataType ="string" fieldNamespace ="" indexType ="keyword" localizable ="true" multiple ="false" name ="Icon" readOnly ="false" repeatable ="false" required ="false" showLabel ="true" type ="text">
+	  <meta-data locale ="en_US">
+		 <entry name ="predefinedValue" />
+		 <entry name ="label">Icon</entry>
+		 <entry name ="tip" />
+	  </meta-data>
+</dynamic-element>
+<dynamic-element dataType ="string" fieldNamespace ="" indexType ="keyword" localizable ="true" multiple ="false" name ="Embed_URL" readOnly ="false" repeatable ="false" required ="false" showLabel ="true" type ="text">
+	  <meta-data locale ="en_US">
+		 <entry name ="predefinedValue" />
+		 <entry name ="label">Embed URL</entry>
+		 <entry name ="tip" />
+	  </meta-data>
+</dynamic-element>
+<dynamic-element dataType ="string" fieldNamespace ="" indexType ="keyword" localizable ="true" multiple ="false" name ="Edit_URL" readOnly ="false" repeatable ="false" required ="false" showLabel ="true" type ="text">
+	  <meta-data locale ="en_US">
+		 <entry name ="predefinedValue" />
+		 <entry name ="label">Edit URL</entry>
+		 <entry name ="tip" />
+	  </meta-data>
+</dynamic-element>
+</root>

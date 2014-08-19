@@ -1593,7 +1593,55 @@ public class ServicePreAction extends Action {
 		Layout layout = null;
 		List<Layout> layouts = null;
 
-		if (signedIn) {
+		// Check the virtual host
+
+		LayoutSet layoutSet = (LayoutSet)request.getAttribute(
+			WebKeys.VIRTUAL_HOST_LAYOUT_SET);
+
+		if (layoutSet != null) {
+			layouts = LayoutLocalServiceUtil.getLayouts(
+				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			Group group = null;
+
+			if (!layouts.isEmpty()) {
+				layout = layouts.get(0);
+
+				group = layout.getGroup();
+			}
+
+			if ((layout != null) && layout.isPrivateLayout()) {
+				layouts = LayoutLocalServiceUtil.getLayouts(
+					group.getGroupId(), false,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+				if (!layouts.isEmpty()) {
+					layout = layouts.get(0);
+				}
+				else {
+					group = null;
+					layout = null;
+				}
+			}
+
+			if ((group != null) && group.isStagingGroup()) {
+				Group liveGroup = group.getLiveGroup();
+
+				layouts = LayoutLocalServiceUtil.getLayouts(
+					liveGroup.getGroupId(), false,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+				if (!layouts.isEmpty()) {
+					layout = layouts.get(0);
+				}
+				else {
+					layout = null;
+				}
+			}
+		}
+
+		if ((layout == null) && signedIn) {
 
 			// Check the user's personal layouts
 
@@ -1640,56 +1688,6 @@ public class ServicePreAction extends Action {
 						layout = layouts.get(0);
 
 						break;
-					}
-				}
-			}
-		}
-		else {
-
-			// Check the virtual host
-
-			LayoutSet layoutSet = (LayoutSet)request.getAttribute(
-				WebKeys.VIRTUAL_HOST_LAYOUT_SET);
-
-			if (layoutSet != null) {
-				layouts = LayoutLocalServiceUtil.getLayouts(
-					layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-				Group group = null;
-
-				if (!layouts.isEmpty()) {
-					layout = layouts.get(0);
-
-					group = layout.getGroup();
-				}
-
-				if ((layout != null) && layout.isPrivateLayout()) {
-					layouts = LayoutLocalServiceUtil.getLayouts(
-						group.getGroupId(), false,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-					if (!layouts.isEmpty()) {
-						layout = layouts.get(0);
-					}
-					else {
-						group = null;
-						layout = null;
-					}
-				}
-
-				if ((group != null) && group.isStagingGroup()) {
-					Group liveGroup = group.getLiveGroup();
-
-					layouts = LayoutLocalServiceUtil.getLayouts(
-						liveGroup.getGroupId(), false,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-					if (!layouts.isEmpty()) {
-						layout = layouts.get(0);
-					}
-					else {
-						layout = null;
 					}
 				}
 			}

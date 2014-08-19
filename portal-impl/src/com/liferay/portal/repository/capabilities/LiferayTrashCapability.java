@@ -105,10 +105,10 @@ public class LiferayTrashCapability implements TrashCapability {
 
 			for (Object entry : entries) {
 				if (entry instanceof DLFileEntry) {
-					deleteTrashEntry(new LiferayFileEntry((DLFileEntry)entry));
+					deleteTrashEntry((DLFileEntry)entry);
 				}
 				else if (entry instanceof DLFolder) {
-					deleteTrashEntry(new LiferayFolder((DLFolder)entry));
+					deleteTrashEntry((DLFolder)entry);
 				}
 			}
 		}

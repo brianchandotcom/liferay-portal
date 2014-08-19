@@ -23,6 +23,7 @@ import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectio
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.util.LogUtil;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
@@ -37,10 +38,14 @@ import org.elasticsearch.action.admin.cluster.snapshots.delete.DeleteSnapshotReq
 import org.elasticsearch.action.admin.cluster.snapshots.delete.DeleteSnapshotResponse;
 import org.elasticsearch.action.admin.cluster.snapshots.restore.RestoreSnapshotRequestBuilder;
 import org.elasticsearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
+import org.elasticsearch.action.admin.indices.close.CloseIndexRequestBuilder;
+import org.elasticsearch.action.admin.indices.close.CloseIndexResponse;
 import org.elasticsearch.client.ClusterAdminClient;
+import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.cluster.metadata.RepositoryMetaData;
 import org.elasticsearch.common.collect.ImmutableList;
 import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.repositories.RepositoryMissingException;
 
 /**
  * @author Michael C. Han
@@ -142,6 +147,24 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	public synchronized void restore(long companyId, String backupName)
 		throws SearchException {
 
+		IndicesAdminClient indicesAdminClient =
+			_elasticsearchConnectionManager.getAdminClient().indices();
+
+		CloseIndexRequestBuilder closeIndexRequestBuilder =
+			indicesAdminClient.prepareClose(String.valueOf(companyId));
+
+		try {
+			Future<CloseIndexResponse> future =
+				closeIndexRequestBuilder.execute();
+
+			CloseIndexResponse closeIndexResponse = future.get();
+
+			LogUtil.logActionResponse(_log, closeIndexResponse);
+		}
+		catch (Exception e) {
+			throw new SearchException(e);
+		}
+
 		ClusterAdminClient clusterAdminClient =
 			_elasticsearchConnectionManager.getClusterAdminClient();
 
@@ -187,17 +210,30 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		GetRepositoriesRequestBuilder getRepositoriesRequestBuilder =
 			clusterAdminClient.prepareGetRepositories(_BACKUP_REPOSITORY_NAME);
 
-		Future<GetRepositoriesResponse> getRepositoriesResponseFuture =
-			getRepositoriesRequestBuilder.execute();
+		try {
+			Future<GetRepositoriesResponse> getRepositoriesResponseFuture =
+				getRepositoriesRequestBuilder.execute();
 
-		GetRepositoriesResponse getRepositoriesResponse =
-			getRepositoriesResponseFuture.get();
+			GetRepositoriesResponse getRepositoriesResponse =
+				getRepositoriesResponseFuture.get();
 
-		ImmutableList<RepositoryMetaData> repositoryMetaDatas =
-			getRepositoriesResponse.repositories();
+			ImmutableList<RepositoryMetaData> repositoryMetaDatas =
+				getRepositoriesResponse.repositories();
 
-		if (!repositoryMetaDatas.isEmpty()) {
-			return;
+			if (!repositoryMetaDatas.isEmpty()) {
+				return;
+			}
+		}
+		catch (ExecutionException e) {
+			if (e.getCause() instanceof RepositoryMissingException) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Repository not found, creating new repository", e);
+				}
+			}
+			else {
+				throw e;
+			}
 		}
 
 		PutRepositoryRequestBuilder putRepositoryRequestBuilder =

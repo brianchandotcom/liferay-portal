@@ -1499,10 +1499,6 @@
 
 		<action path="/news/view" forward="portlet.news.view" />
 
-		<!-- Our Activities -->
-
-		<action path="/our_activities/view" forward="portlet.our_activities.view" />
-
 		<!-- Page Comments -->
 
 		<action path="/page_comments/edit_page_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">

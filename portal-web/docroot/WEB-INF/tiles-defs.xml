@@ -1114,14 +1114,6 @@
 		<put name="portlet_content" value="/portlet/news/view.jsp" />
 	</definition>
 
-	<!-- Our Activities -->
-
-	<definition name="portlet.our_activities" extends="portlet" />
-
-	<definition name="portlet.our_activities.view" extends="portlet.our_activities">
-		<put name="portlet_content" value="/portlet/our_activities/view.jsp" />
-	</definition>
-
 	<!-- Page Comments -->
 
 	<definition name="portlet.page_comments" extends="portlet" />

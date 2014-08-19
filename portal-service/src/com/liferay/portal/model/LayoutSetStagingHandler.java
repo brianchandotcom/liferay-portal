@@ -132,22 +132,20 @@ public class LayoutSetStagingHandler
 		long layoutSetBranchId = ParamUtil.getLong(
 			serviceContext, "layoutSetBranchId");
 
-		LayoutSetBranch layoutSetBranch = null;
+		if (layoutSetBranchId > 0) {
+			return LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
+				layoutSetBranchId);
+		}
 
 		if (serviceContext.isSignedIn()) {
-			layoutSetBranch =
-				LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(
-					serviceContext.getUserId(), layoutSet.getGroupId(),
-					layoutSet.isPrivateLayout(), layoutSet.getLayoutSetId(),
-					layoutSetBranchId);
-		}
-		else if (layoutSetBranchId > 0) {
-			layoutSetBranch =
-				LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
-					layoutSetBranchId);
+			return LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(
+				serviceContext.getUserId(), layoutSet.getGroupId(),
+				layoutSet.isPrivateLayout(), layoutSet.getLayoutSetId(),
+				layoutSetBranchId);
 		}
 
-		return layoutSetBranch;
+		return LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(
+			layoutSet.getGroupId(), layoutSet.isPrivateLayout());
 	}
 
 	private Object _toEscapedModel() {

@@ -150,7 +150,7 @@
 	</command>
 
 	<command name="editForm">
-		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="FIELDS_DEFINITION_TABLE_ACTIONS"/>
+		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="FIELDS_DEFINITION_TABLE_ACTIONS" />
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELDS_DEFINITION_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPKaleoformsadminNewprocessSelectformNewform#selectFrame" locator-key1="FORM_IFRAME" />

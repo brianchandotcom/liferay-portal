@@ -44,7 +44,7 @@ if (Validator.isNotNull(curTagsParam)) {
 <div class="lfr-tags-selector-content" id="<%= namespace + id %>assetTagsSelector">
 	<aui:input name="<%= hiddenInput %>" type="hidden" />
 
-	<input class="lfr-tag-selector-input" id="<%= id %>assetTagNames" maxlength="75" size="15" title="<liferay-ui:message key="add-tags" />" type="text" />
+	<input class="lfr-tag-selector-input" id="<%= id %>assetTagNames" maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" size="15" title="<liferay-ui:message key="add-tags" />" type="text" />
 </div>
 
 <aui:script use="liferay-asset-tags-selector">

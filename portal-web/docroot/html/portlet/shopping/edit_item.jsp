@@ -215,7 +215,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 				<tr>
 					<td>
-						<aui:input cssClass="lfr-input-text-container" label="name" name='<%= "fieldName" + i %>' style="width: 100px;" type="text" value="<%= fieldName %>" />
+						<aui:input cssClass="lfr-input-text-container" label="name" maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name='<%= "fieldName" + i %>' style="width: 100px;" type="text" value="<%= fieldName %>" />
 					</td>
 					<td>
 						<aui:input cssClass="lfr-input-text-container" label="values" name='<%= "fieldValues" + i %>' style="width: 100px;" type="text" value='<%= StringUtil.merge(fieldValues, ", ") %>' />

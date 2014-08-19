@@ -145,7 +145,7 @@ else {
 			</div>
 		</c:if>
 
-		<aui:input label="answer" maxlength="75" name="reminderQueryAnswer" size="50" value="<%= selUser.getReminderQueryAnswer() %>" />
+		<aui:input label="answer" maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="reminderQueryAnswer" size="50" value="<%= selUser.getReminderQueryAnswer() %>" />
 	</aui:fieldset>
 
 	<aui:script use="aui-base">

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -59,6 +61,7 @@ import java.util.Set;
  * @see JournalContentSearchUtil
  * @generated
  */
+@ProviderType
 public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<JournalContentSearch>
 	implements JournalContentSearchPersistence {
 	/*

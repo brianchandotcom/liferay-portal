@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -67,6 +69,7 @@ import java.util.Set;
  * @see RoleUtil
  * @generated
  */
+@ProviderType
 public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	implements RolePersistence {
 	/*

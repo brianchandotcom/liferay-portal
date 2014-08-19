@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.service.persistence.UserGroupRolePK;
 
 import java.io.Serializable;
@@ -28,6 +30,7 @@ import java.util.List;
  * @see com.liferay.portal.service.http.UserGroupRoleServiceSoap
  * @generated
  */
+@ProviderType
 public class UserGroupRoleSoap implements Serializable {
 	public static UserGroupRoleSoap toSoapModel(UserGroupRole model) {
 		UserGroupRoleSoap soapModel = new UserGroupRoleSoap();

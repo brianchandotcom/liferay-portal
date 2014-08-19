@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.trash.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
  * @see com.liferay.portlet.trash.service.TrashEntryServiceUtil
  * @generated
  */
+@ProviderType
 public class TrashEntryServiceHttp {
 	public static void deleteEntries(HttpPrincipal httpPrincipal, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {

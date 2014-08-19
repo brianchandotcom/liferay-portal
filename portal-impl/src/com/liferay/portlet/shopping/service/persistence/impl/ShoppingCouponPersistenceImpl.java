@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -60,6 +62,7 @@ import java.util.Set;
  * @see ShoppingCouponUtil
  * @generated
  */
+@ProviderType
 public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingCoupon>
 	implements ShoppingCouponPersistence {
 	/*

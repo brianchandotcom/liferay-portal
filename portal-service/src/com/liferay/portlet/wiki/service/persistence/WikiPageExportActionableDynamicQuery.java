@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.wiki.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -37,6 +39,7 @@ import com.liferay.portlet.wiki.model.WikiPage;
  * @generated
  */
 @Deprecated
+@ProviderType
 public class WikiPageExportActionableDynamicQuery
 	extends WikiPageActionableDynamicQuery {
 	public WikiPageExportActionableDynamicQuery(

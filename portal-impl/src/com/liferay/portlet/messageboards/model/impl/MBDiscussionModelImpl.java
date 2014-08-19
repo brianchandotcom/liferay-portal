@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.StagedModelType;
@@ -55,6 +57,7 @@ import java.util.Map;
  * @see com.liferay.portlet.messageboards.model.MBDiscussionModel
  * @generated
  */
+@ProviderType
 public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	implements MBDiscussionModel {
 	/*

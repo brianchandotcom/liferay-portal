@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.softwarecatalog.model.SCLicense;
 import com.liferay.portlet.softwarecatalog.service.SCLicenseLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.softwarecatalog.service.SCLicenseLocalServiceUtil;
  * @see com.liferay.portlet.softwarecatalog.model.SCLicense
  * @generated
  */
+@ProviderType
 public abstract class SCLicenseBaseImpl extends SCLicenseModelImpl
 	implements SCLicense {
 	/*

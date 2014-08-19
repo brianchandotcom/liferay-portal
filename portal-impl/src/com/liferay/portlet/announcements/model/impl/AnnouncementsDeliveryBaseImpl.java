@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.announcements.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServi
  * @see com.liferay.portlet.announcements.model.AnnouncementsDelivery
  * @generated
  */
+@ProviderType
 public abstract class AnnouncementsDeliveryBaseImpl
 	extends AnnouncementsDeliveryModelImpl implements AnnouncementsDelivery {
 	/*

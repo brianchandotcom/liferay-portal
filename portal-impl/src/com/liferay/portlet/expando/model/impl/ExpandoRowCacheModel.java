@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.expando.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 
@@ -33,6 +35,7 @@ import java.util.Date;
  * @see ExpandoRow
  * @generated
  */
+@ProviderType
 public class ExpandoRowCacheModel implements CacheModel<ExpandoRow>,
 	Externalizable {
 	@Override

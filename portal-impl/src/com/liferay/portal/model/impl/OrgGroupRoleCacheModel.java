@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MVCCModel;
@@ -31,6 +33,7 @@ import java.io.ObjectOutput;
  * @see OrgGroupRole
  * @generated
  */
+@ProviderType
 public class OrgGroupRoleCacheModel implements CacheModel<OrgGroupRole>,
 	Externalizable, MVCCModel {
 	@Override

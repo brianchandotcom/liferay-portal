@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BackgroundTask;
@@ -34,6 +36,7 @@ import java.util.Date;
  * @see BackgroundTask
  * @generated
  */
+@ProviderType
 public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 	Externalizable, MVCCModel {
 	@Override

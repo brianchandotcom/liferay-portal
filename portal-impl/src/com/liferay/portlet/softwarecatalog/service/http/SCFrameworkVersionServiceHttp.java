@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionServiceUtil
  * @see com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionServiceUtil
  * @generated
  */
+@ProviderType
 public class SCFrameworkVersionServiceHttp {
 	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion addFrameworkVersion(
 		HttpPrincipal httpPrincipal, java.lang.String name,

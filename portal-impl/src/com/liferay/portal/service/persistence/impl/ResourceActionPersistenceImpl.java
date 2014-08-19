@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.NoSuchResourceActionException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -58,6 +60,7 @@ import java.util.Set;
  * @see ResourceActionUtil
  * @generated
  */
+@ProviderType
 public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceAction>
 	implements ResourceActionPersistence {
 	/*

@@ -1,5 +1,7 @@
 package ${packagePath}.service.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 import ${packagePath}.service.base.${entity.name}${sessionTypeName}ServiceBaseImpl;
 
@@ -34,6 +36,8 @@ import ${packagePath}.service.base.${entity.name}${sessionTypeName}ServiceBaseIm
  * @see ${packagePath}.service.${entity.name}ServiceUtil
  */
 </#if>
+
+@ProviderType
 public class ${entity.name}${sessionTypeName}ServiceImpl extends ${entity.name}${sessionTypeName}ServiceBaseImpl {
 
 	/*

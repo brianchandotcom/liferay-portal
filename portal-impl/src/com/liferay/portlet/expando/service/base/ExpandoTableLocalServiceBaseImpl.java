@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.expando.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -63,6 +65,7 @@ import javax.sql.DataSource;
  * @see com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class ExpandoTableLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements ExpandoTableLocalService,
 		IdentifiableBean {

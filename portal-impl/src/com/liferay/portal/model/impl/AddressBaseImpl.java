@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.Address;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.AddressLocalServiceUtil;
  * @see com.liferay.portal.model.Address
  * @generated
  */
+@ProviderType
 public abstract class AddressBaseImpl extends AddressModelImpl
 	implements Address {
 	/*

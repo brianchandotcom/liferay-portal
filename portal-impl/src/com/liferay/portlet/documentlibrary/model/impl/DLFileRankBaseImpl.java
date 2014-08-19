@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil;
  * @see com.liferay.portlet.documentlibrary.model.DLFileRank
  * @generated
  */
+@ProviderType
 public abstract class DLFileRankBaseImpl extends DLFileRankModelImpl
 	implements DLFileRank {
 	/*

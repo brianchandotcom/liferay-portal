@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -35,6 +37,7 @@ import com.liferay.portlet.messageboards.model.MBCategory;
  * @generated
  */
 @Deprecated
+@ProviderType
 public class MBCategoryExportActionableDynamicQuery
 	extends MBCategoryActionableDynamicQuery {
 	public MBCategoryExportActionableDynamicQuery(

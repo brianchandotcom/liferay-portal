@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.calendar.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
@@ -31,6 +33,7 @@ import com.liferay.portlet.calendar.model.CalEvent;
  * @generated
  */
 @Deprecated
+@ProviderType
 public class CalEventExportActionableDynamicQuery
 	extends CalEventActionableDynamicQuery {
 	public CalEventExportActionableDynamicQuery(

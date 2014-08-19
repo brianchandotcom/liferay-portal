@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -50,6 +52,7 @@ import java.util.Map;
  * @see com.liferay.portal.model.UserNotificationEventModel
  * @generated
  */
+@ProviderType
 public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificationEvent>
 	implements UserNotificationEventModel {
 	/*

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
  * @see com.liferay.portlet.asset.service.AssetEntryServiceUtil
  * @generated
  */
+@ProviderType
 public class AssetEntryServiceHttp {
 	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getCompanyEntries(
 		HttpPrincipal httpPrincipal, long companyId, int start, int end) {

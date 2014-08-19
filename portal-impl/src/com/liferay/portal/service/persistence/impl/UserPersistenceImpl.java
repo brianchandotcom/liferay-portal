@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -70,6 +72,7 @@ import java.util.Set;
  * @see UserUtil
  * @generated
  */
+@ProviderType
 public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	implements UserPersistence {
 	/*

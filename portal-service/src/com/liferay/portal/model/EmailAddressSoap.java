@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.portal.service.http.EmailAddressServiceSoap
  * @generated
  */
+@ProviderType
 public class EmailAddressSoap implements Serializable {
 	public static EmailAddressSoap toSoapModel(EmailAddress model) {
 		EmailAddressSoap soapModel = new EmailAddressSoap();

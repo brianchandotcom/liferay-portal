@@ -55,15 +55,12 @@ import ${import};
 	@Deprecated
 </#if>
 
-<#if pluginName == "">
-	@ProviderType
-</#if>
-
 <#if entity.hasRemoteService() && sessionTypeName != "Local">
 	@AccessControlled
 	@JSONWebService
 </#if>
 
+@ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor = {PortalException.class, SystemException.class})
 public interface ${entity.name}${sessionTypeName}Service
 	extends Base${sessionTypeName}Service

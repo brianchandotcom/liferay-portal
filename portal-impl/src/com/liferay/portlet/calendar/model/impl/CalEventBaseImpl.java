@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.calendar.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
  * @see com.liferay.portlet.calendar.model.CalEvent
  * @generated
  */
+@ProviderType
 public abstract class CalEventBaseImpl extends CalEventModelImpl
 	implements CalEvent {
 	/*

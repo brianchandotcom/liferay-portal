@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.asset.model.AssetTagProperty;
 import com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil;
  * @see com.liferay.portlet.asset.model.AssetTagProperty
  * @generated
  */
+@ProviderType
 public abstract class AssetTagPropertyBaseImpl extends AssetTagPropertyModelImpl
 	implements AssetTagProperty {
 	/*

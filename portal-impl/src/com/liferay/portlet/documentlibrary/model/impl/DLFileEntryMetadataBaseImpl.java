@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServi
  * @see com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata
  * @generated
  */
+@ProviderType
 public abstract class DLFileEntryMetadataBaseImpl
 	extends DLFileEntryMetadataModelImpl implements DLFileEntryMetadata {
 	/*

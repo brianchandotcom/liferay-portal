@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.wiki.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
  * @see com.liferay.portlet.wiki.model.WikiNode
  * @generated
  */
+@ProviderType
 public abstract class WikiNodeBaseImpl extends WikiNodeModelImpl
 	implements WikiNode {
 	/*

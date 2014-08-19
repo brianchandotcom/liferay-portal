@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.NoSuchOrgLaborException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -57,6 +59,7 @@ import java.util.Set;
  * @see OrgLaborUtil
  * @generated
  */
+@ProviderType
 public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	implements OrgLaborPersistence {
 	/*

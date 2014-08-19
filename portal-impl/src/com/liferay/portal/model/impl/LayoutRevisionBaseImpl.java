@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
  * @see com.liferay.portal.model.LayoutRevision
  * @generated
  */
+@ProviderType
 public abstract class LayoutRevisionBaseImpl extends LayoutRevisionModelImpl
 	implements LayoutRevision {
 	/*

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -53,6 +55,7 @@ import java.util.Map;
  * @see com.liferay.portlet.social.model.SocialActivityLimitModel
  * @generated
  */
+@ProviderType
 public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLimit>
 	implements SocialActivityLimitModel {
 	/*

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -51,6 +53,7 @@ import java.util.Map;
  * @see com.liferay.portlet.documentlibrary.model.DLContentModel
  * @generated
  */
+@ProviderType
 public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	implements DLContentModel {
 	/*

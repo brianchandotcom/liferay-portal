@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.service.ContactLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.ContactLocalServiceUtil;
  * @see com.liferay.portal.model.Contact
  * @generated
  */
+@ProviderType
 public abstract class ContactBaseImpl extends ContactModelImpl
 	implements Contact {
 	/*

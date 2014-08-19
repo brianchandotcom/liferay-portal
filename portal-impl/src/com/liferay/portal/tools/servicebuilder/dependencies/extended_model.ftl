@@ -19,10 +19,7 @@ import com.liferay.portal.model.TreeModel;
  * @generated
  */
 
-<#if pluginName == "">
-	@ProviderType
-</#if>
-
+@ProviderType
 public interface ${entity.name} extends
 	${entity.name}Model
 

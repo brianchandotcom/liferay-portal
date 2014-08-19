@@ -190,6 +190,18 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		return _layoutSet.compareTo(layoutSet);
 	}
 
+	/**
+	* Returns the layout set's color scheme.
+	*
+	* <p>
+	* Just like themes, color schemes can be configured on the layout set
+	* level. The layout set's color scheme can be overridden on the layout
+	* level.
+	* </p>
+	*
+	* @return the layout set's color scheme
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public com.liferay.portal.model.ColorScheme getColorScheme() {
 		return _layoutSet.getColorScheme();
@@ -240,6 +252,14 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		return _layoutSet.getExpandoBridge();
 	}
 
+	/**
+	* Returns the layout set's group.
+	*
+	* @return the layout set's group
+	* @throws PortalException if a group with the primary key could not be
+	found
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public com.liferay.portal.model.Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -266,6 +286,20 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		return _layoutSet.getLayoutSetId();
 	}
 
+	/**
+	* Returns the layout set prototype's ID, or <code>0</code> if it has no layout
+	* set prototype.
+	*
+	* <p>
+	* Prototype is Liferay's technical name for a site template.
+	* </p>
+	*
+	* @return the layout set prototype's ID, or <code>0</code> if it has no layout
+	set prototype
+	* @throws PortalException if a matching layout set prototype could not be
+	found
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public long getLayoutSetPrototypeId()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -408,6 +442,17 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		return _layoutSet.getThemeSetting(key, device);
 	}
 
+	/**
+	* Returns the name of the layout set's virtual host.
+	*
+	* <p>
+	* When accessing a layout set that has a the virtual host, the URL elements
+	* "/web/sitename" or "/group/sitename" can be omitted.
+	* </p>
+	*
+	* @return the layout set's virtual host name, or an empty string if the layout
+	set has no virtual host configured
+	*/
 	@Override
 	public java.lang.String getVirtualHostname() {
 		return _layoutSet.getVirtualHostname();
@@ -699,6 +744,12 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		_layoutSet.setThemeId(themeId);
 	}
 
+	/**
+	* Sets the name of the layout set's virtual host.
+	*
+	* @param virtualHostname the name of the layout set's virtual host
+	* @see #getVirtualHostname()
+	*/
 	@Override
 	public void setVirtualHostname(java.lang.String virtualHostname) {
 		_layoutSet.setVirtualHostname(virtualHostname);

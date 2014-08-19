@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
@@ -30,6 +32,7 @@ import com.liferay.portal.util.PortalUtil;
  * @generated
  */
 @Deprecated
+@ProviderType
 public class LayoutPrototypeExportActionableDynamicQuery
 	extends LayoutPrototypeActionableDynamicQuery {
 	public LayoutPrototypeExportActionableDynamicQuery(

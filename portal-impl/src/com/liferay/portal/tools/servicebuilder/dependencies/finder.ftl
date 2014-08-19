@@ -2,10 +2,7 @@ package ${packagePath}.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-<#if pluginName == "">
-	@ProviderType
-</#if>
-
+@ProviderType
 public interface ${entity.name}Finder {
 
 	<#list methods as method>

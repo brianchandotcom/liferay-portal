@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.NoSuchRegionException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -59,6 +61,7 @@ import java.util.Set;
  * @see RegionUtil
  * @generated
  */
+@ProviderType
 public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	implements RegionPersistence {
 	/*

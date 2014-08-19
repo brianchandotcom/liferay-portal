@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.shopping.model.ShoppingItemPrice;
 import com.liferay.portlet.shopping.service.ShoppingItemPriceLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.shopping.service.ShoppingItemPriceLocalServiceUtil;
  * @see com.liferay.portlet.shopping.model.ShoppingItemPrice
  * @generated
  */
+@ProviderType
 public abstract class ShoppingItemPriceBaseImpl
 	extends ShoppingItemPriceModelImpl implements ShoppingItemPrice {
 	/*

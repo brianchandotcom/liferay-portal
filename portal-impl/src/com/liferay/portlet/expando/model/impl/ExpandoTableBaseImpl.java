@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.expando.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
  * @see com.liferay.portlet.expando.model.ExpandoTable
  * @generated
  */
+@ProviderType
 public abstract class ExpandoTableBaseImpl extends ExpandoTableModelImpl
 	implements ExpandoTable {
 	/*

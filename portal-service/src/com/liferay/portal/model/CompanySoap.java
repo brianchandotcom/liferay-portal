@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ import java.util.List;
  * @see com.liferay.portal.service.http.CompanyServiceSoap
  * @generated
  */
+@ProviderType
 public class CompanySoap implements Serializable {
 	public static CompanySoap toSoapModel(Company model) {
 		CompanySoap soapModel = new CompanySoap();

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.StagedModelType;
@@ -53,6 +55,7 @@ import java.util.Map;
  * @see com.liferay.portal.model.RepositoryEntryModel
  * @generated
  */
+@ProviderType
 public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	implements RepositoryEntryModel {
 	/*

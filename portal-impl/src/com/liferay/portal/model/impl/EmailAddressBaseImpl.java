@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.service.EmailAddressLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.EmailAddressLocalServiceUtil;
  * @see com.liferay.portal.model.EmailAddress
  * @generated
  */
+@ProviderType
 public abstract class EmailAddressBaseImpl extends EmailAddressModelImpl
 	implements EmailAddress {
 	/*

@@ -14,12 +14,15 @@
 
 package com.liferay.portlet.asset.util.comparator;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portlet.asset.model.AssetTag;
 
 /**
  * @author Miguel Pastor
  */
+@ProviderType
 public class AssetTagCountComparator extends OrderByComparator<AssetTag> {
 
 	public static final String ORDER_BY_ASC = "AssetTag.assetCount ASC";

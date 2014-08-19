@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
  * @see com.liferay.portal.model.Portlet
  * @generated
  */
+@ProviderType
 public abstract class PortletBaseImpl extends PortletModelImpl
 	implements Portlet {
 	/*

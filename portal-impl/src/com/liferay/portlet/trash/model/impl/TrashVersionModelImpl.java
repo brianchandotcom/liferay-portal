@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.trash.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -50,6 +52,7 @@ import java.util.Map;
  * @see com.liferay.portlet.trash.model.TrashVersionModel
  * @generated
  */
+@ProviderType
 public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 	implements TrashVersionModel {
 	/*

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -72,6 +74,7 @@ import java.util.Set;
  * @see MBMessageUtil
  * @generated
  */
+@ProviderType
 public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	implements MBMessagePersistence {
 	/*

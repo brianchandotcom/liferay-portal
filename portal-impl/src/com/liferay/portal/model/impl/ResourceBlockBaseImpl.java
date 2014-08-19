@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
  * @see com.liferay.portal.model.ResourceBlock
  * @generated
  */
+@ProviderType
 public abstract class ResourceBlockBaseImpl extends ResourceBlockModelImpl
 	implements ResourceBlock {
 	/*

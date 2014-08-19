@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -86,6 +88,7 @@ import javax.sql.DataSource;
  * @see com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class MBCategoryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements MBCategoryLocalService,
 		IdentifiableBean {

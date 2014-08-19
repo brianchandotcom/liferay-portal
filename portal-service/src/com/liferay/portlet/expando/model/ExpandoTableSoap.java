@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.expando.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@ProviderType
 public class ExpandoTableSoap implements Serializable {
 	public static ExpandoTableSoap toSoapModel(ExpandoTable model) {
 		ExpandoTableSoap soapModel = new ExpandoTableSoap();

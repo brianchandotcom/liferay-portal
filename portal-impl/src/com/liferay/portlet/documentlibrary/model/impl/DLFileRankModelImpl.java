@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -53,6 +55,7 @@ import java.util.Map;
  * @see com.liferay.portlet.documentlibrary.model.DLFileRankModel
  * @generated
  */
+@ProviderType
 public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	implements DLFileRankModel {
 	/*

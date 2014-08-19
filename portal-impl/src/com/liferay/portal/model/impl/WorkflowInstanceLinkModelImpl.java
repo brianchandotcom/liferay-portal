@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -54,6 +56,7 @@ import java.util.Map;
  * @see com.liferay.portal.model.WorkflowInstanceLinkModel
  * @generated
  */
+@ProviderType
 public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanceLink>
 	implements WorkflowInstanceLinkModel {
 	/*

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
  * @see com.liferay.portal.model.RepositoryEntry
  * @generated
  */
+@ProviderType
 public abstract class RepositoryEntryBaseImpl extends RepositoryEntryModelImpl
 	implements RepositoryEntry {
 	/*

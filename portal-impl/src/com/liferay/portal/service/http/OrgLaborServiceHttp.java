@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -49,6 +51,7 @@ import com.liferay.portal.service.OrgLaborServiceUtil;
  * @see com.liferay.portal.service.OrgLaborServiceUtil
  * @generated
  */
+@ProviderType
 public class OrgLaborServiceHttp {
 	public static com.liferay.portal.model.OrgLabor addOrgLabor(
 		HttpPrincipal httpPrincipal, long organizationId, int typeId,

@@ -1,5 +1,7 @@
 package ${packagePath}.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import ${packagePath}.service.ClpSerializer;
 
 <#if entity.hasLocalService() && entity.hasColumns()>
@@ -52,6 +54,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+@ProviderType
 public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements ${entity.name} {
 
 	public ${entity.name}Clp() {

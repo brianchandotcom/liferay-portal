@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.NoSuchResourceBlockException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -58,6 +60,7 @@ import java.util.Set;
  * @see ResourceBlockUtil
  * @generated
  */
+@ProviderType
 public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBlock>
 	implements ResourceBlockPersistence {
 	/*

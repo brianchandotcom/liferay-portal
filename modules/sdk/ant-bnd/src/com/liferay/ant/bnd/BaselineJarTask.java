@@ -30,8 +30,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -156,6 +161,8 @@ public class BaselineJarTask extends BaseBndTask {
 						continue;
 					}
 				}
+
+				generateMissingPackageInfo(info, warnings);
 
 				if (((_reportLevelIsStandard || _reportOnlyDirtyPackages) &&
 					 warnings.equals("-")) ||
@@ -412,6 +419,46 @@ public class BaselineJarTask extends BaseBndTask {
 			}
 
 			doDiff(curDiff, sb);
+		}
+	}
+
+	protected void generateMissingPackageInfo(Info info, String warnings) {
+		String sourceDirProperty = project.getProperty("plugin.source.dir");
+
+		if (sourceDirProperty == null) {
+			return;
+		}
+
+		File sourceDir = new File(project.getBaseDir(), sourceDirProperty);
+
+		if (!sourceDir.exists()) {
+			return;
+		}
+
+		File packageDir = new File(
+			sourceDir, info.packageName.replace('.', File.separatorChar));
+
+		if (!packageDir.exists()) {
+			return;
+		}
+
+		File packageInfoFile = new File(packageDir, "packageinfo");
+
+		if (packageInfoFile.exists()) {
+			return;
+		}
+
+		java.nio.file.Path path = packageInfoFile.toPath();
+
+		try {
+			Files.write(
+				path,
+				Collections.singletonList("version " + info.suggestedVersion),
+				StandardCharsets.UTF_8, StandardOpenOption.CREATE,
+				StandardOpenOption.TRUNCATE_EXISTING);
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
 		}
 	}
 

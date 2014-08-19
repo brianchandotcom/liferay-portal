@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -75,6 +77,7 @@ import java.util.Set;
  * @see AssetCategoryUtil
  * @generated
  */
+@ProviderType
 public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCategory>
 	implements AssetCategoryPersistence {
 	/*

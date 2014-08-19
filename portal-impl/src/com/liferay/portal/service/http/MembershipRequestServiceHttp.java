@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -49,6 +51,7 @@ import com.liferay.portal.service.MembershipRequestServiceUtil;
  * @see com.liferay.portal.service.MembershipRequestServiceUtil
  * @generated
  */
+@ProviderType
 public class MembershipRequestServiceHttp {
 	public static com.liferay.portal.model.MembershipRequest addMembershipRequest(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String comments,

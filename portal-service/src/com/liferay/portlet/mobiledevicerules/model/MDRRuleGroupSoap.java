@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.portlet.mobiledevicerules.service.http.MDRRuleGroupServiceSoap
  * @generated
  */
+@ProviderType
 public class MDRRuleGroupSoap implements Serializable {
 	public static MDRRuleGroupSoap toSoapModel(MDRRuleGroup model) {
 		MDRRuleGroupSoap soapModel = new MDRRuleGroupSoap();

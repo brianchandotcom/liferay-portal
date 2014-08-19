@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -49,6 +51,7 @@ import com.liferay.portal.service.LayoutRevisionServiceUtil;
  * @see com.liferay.portal.service.LayoutRevisionServiceUtil
  * @generated
  */
+@ProviderType
 public class LayoutRevisionServiceHttp {
 	public static com.liferay.portal.model.LayoutRevision addLayoutRevision(
 		HttpPrincipal httpPrincipal, long userId, long layoutSetBranchId,

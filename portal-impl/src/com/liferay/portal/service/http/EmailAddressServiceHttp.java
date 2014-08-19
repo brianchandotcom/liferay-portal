@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -49,6 +51,7 @@ import com.liferay.portal.service.EmailAddressServiceUtil;
  * @see com.liferay.portal.service.EmailAddressServiceUtil
  * @generated
  */
+@ProviderType
 public class EmailAddressServiceHttp {
 	public static com.liferay.portal.model.EmailAddress addEmailAddress(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,

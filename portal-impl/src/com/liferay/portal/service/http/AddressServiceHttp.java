@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -49,6 +51,7 @@ import com.liferay.portal.service.AddressServiceUtil;
  * @see com.liferay.portal.service.AddressServiceUtil
  * @generated
  */
+@ProviderType
 public class AddressServiceHttp {
 	public static com.liferay.portal.model.Address addAddress(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,

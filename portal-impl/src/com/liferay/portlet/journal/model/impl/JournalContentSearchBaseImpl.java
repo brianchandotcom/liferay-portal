@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.journal.model.JournalContentSearch;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
  * @see com.liferay.portlet.journal.model.JournalContentSearch
  * @generated
  */
+@ProviderType
 public abstract class JournalContentSearchBaseImpl
 	extends JournalContentSearchModelImpl implements JournalContentSearch {
 	/*

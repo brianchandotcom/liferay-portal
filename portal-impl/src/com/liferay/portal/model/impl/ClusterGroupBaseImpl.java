@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.ClusterGroup;
 import com.liferay.portal.service.ClusterGroupLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.ClusterGroupLocalServiceUtil;
  * @see com.liferay.portal.model.ClusterGroup
  * @generated
  */
+@ProviderType
 public abstract class ClusterGroupBaseImpl extends ClusterGroupModelImpl
 	implements ClusterGroup {
 	/*

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.trash.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@ProviderType
 public class TrashVersionSoap implements Serializable {
 	public static TrashVersionSoap toSoapModel(TrashVersion model) {
 		TrashVersionSoap soapModel = new TrashVersionSoap();

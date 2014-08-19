@@ -19,10 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 	@Deprecated
 </#if>
 
-<#if pluginName == "">
-	@ProviderType
-</#if>
-
+@ProviderType
 public class ${entity.name}${sessionTypeName}ServiceWrapper implements ${entity.name}${sessionTypeName}Service, ServiceWrapper<${entity.name}${sessionTypeName}Service> {
 
 	public ${entity.name}${sessionTypeName}ServiceWrapper(${entity.name}${sessionTypeName}Service ${entity.varName}${sessionTypeName}Service) {

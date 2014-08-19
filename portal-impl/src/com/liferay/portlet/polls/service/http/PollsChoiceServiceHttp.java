@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.polls.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * Provides the HTTP utility for the
  * {@link com.liferay.portlet.polls.service.PollsChoiceServiceUtil} service utility. The
@@ -42,5 +44,6 @@ package com.liferay.portlet.polls.service.http;
  * @see com.liferay.portlet.polls.service.PollsChoiceServiceUtil
  * @generated
  */
+@ProviderType
 public class PollsChoiceServiceHttp {
 }

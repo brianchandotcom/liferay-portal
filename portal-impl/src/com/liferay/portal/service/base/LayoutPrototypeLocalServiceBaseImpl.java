@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -70,6 +72,7 @@ import javax.sql.DataSource;
  * @see com.liferay.portal.service.LayoutPrototypeLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class LayoutPrototypeLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements LayoutPrototypeLocalService,
 		IdentifiableBean {

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -49,6 +51,7 @@ import com.liferay.portal.service.WebsiteServiceUtil;
  * @see com.liferay.portal.service.WebsiteServiceUtil
  * @generated
  */
+@ProviderType
 public class WebsiteServiceHttp {
 	public static com.liferay.portal.model.Website addWebsite(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.NoSuchWebsiteException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -60,6 +62,7 @@ import java.util.Set;
  * @see WebsiteUtil
  * @generated
  */
+@ProviderType
 public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	implements WebsitePersistence {
 	/*

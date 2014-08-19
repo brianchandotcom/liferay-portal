@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.announcements.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.announcements.model.AnnouncementsFlag;
 import com.liferay.portlet.announcements.service.AnnouncementsFlagLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.announcements.service.AnnouncementsFlagLocalServiceUt
  * @see com.liferay.portlet.announcements.model.AnnouncementsFlag
  * @generated
  */
+@ProviderType
 public abstract class AnnouncementsFlagBaseImpl
 	extends AnnouncementsFlagModelImpl implements AnnouncementsFlag {
 	/*

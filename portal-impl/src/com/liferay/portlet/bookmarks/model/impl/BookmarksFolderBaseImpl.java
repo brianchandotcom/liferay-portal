@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.bookmarks.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -36,6 +38,7 @@ import java.util.List;
  * @see com.liferay.portlet.bookmarks.model.BookmarksFolder
  * @generated
  */
+@ProviderType
 public abstract class BookmarksFolderBaseImpl extends BookmarksFolderModelImpl
 	implements BookmarksFolder {
 	/*

@@ -14,6 +14,8 @@
 
 package com.liferay.counter.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.service.CounterLocalService;
 import com.liferay.counter.service.persistence.CounterFinder;
@@ -59,6 +61,7 @@ import javax.sql.DataSource;
  * @see com.liferay.counter.service.CounterLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	implements CounterLocalService, IdentifiableBean {
 	/*

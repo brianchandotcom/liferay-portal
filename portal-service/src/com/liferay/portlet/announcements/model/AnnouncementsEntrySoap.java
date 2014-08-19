@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.announcements.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.portlet.announcements.service.http.AnnouncementsEntryServiceSoap
  * @generated
  */
+@ProviderType
 public class AnnouncementsEntrySoap implements Serializable {
 	public static AnnouncementsEntrySoap toSoapModel(AnnouncementsEntry model) {
 		AnnouncementsEntrySoap soapModel = new AnnouncementsEntrySoap();

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.portlet.dynamicdatalists.service.http.DDLRecordSetServiceSoap
  * @generated
  */
+@ProviderType
 public class DDLRecordSetSoap implements Serializable {
 	public static DDLRecordSetSoap toSoapModel(DDLRecordSet model) {
 		DDLRecordSetSoap soapModel = new DDLRecordSetSoap();

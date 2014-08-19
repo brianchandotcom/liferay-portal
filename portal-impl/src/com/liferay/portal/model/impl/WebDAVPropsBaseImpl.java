@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.WebDAVProps;
 import com.liferay.portal.service.WebDAVPropsLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.WebDAVPropsLocalServiceUtil;
  * @see com.liferay.portal.model.WebDAVProps
  * @generated
  */
+@ProviderType
 public abstract class WebDAVPropsBaseImpl extends WebDAVPropsModelImpl
 	implements WebDAVProps {
 	/*

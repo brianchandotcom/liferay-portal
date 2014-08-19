@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 import com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalServiceUti
  * @see com.liferay.portlet.softwarecatalog.model.SCProductEntry
  * @generated
  */
+@ProviderType
 public abstract class SCProductEntryBaseImpl extends SCProductEntryModelImpl
 	implements SCProductEntry {
 	/*

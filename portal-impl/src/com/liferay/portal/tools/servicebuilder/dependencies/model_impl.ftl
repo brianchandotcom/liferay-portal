@@ -10,6 +10,8 @@
 
 package ${packagePath}.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 <#if entity.hasCompoundPK()>
 	import ${packagePath}.service.persistence.${entity.name}PK;
 </#if>
@@ -90,6 +92,7 @@ import java.util.TreeSet;
 	@JSON(strict = true)
 </#if>
 
+@ProviderType
 public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> implements ${entity.name}Model {
 
 	/*

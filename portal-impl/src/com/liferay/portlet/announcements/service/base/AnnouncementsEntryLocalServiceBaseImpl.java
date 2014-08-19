@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.announcements.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -81,6 +83,7 @@ import javax.sql.DataSource;
  * @see com.liferay.portlet.announcements.service.AnnouncementsEntryLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements AnnouncementsEntryLocalService,
 		IdentifiableBean {

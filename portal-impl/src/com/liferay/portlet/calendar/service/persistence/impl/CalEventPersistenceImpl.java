@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.calendar.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -72,6 +74,7 @@ import java.util.Set;
  * @see CalEventUtil
  * @generated
  */
+@ProviderType
 public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	implements CalEventPersistence {
 	/*

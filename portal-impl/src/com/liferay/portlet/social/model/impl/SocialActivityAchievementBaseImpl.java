@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.social.model.SocialActivityAchievement;
 import com.liferay.portlet.social.service.SocialActivityAchievementLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.social.service.SocialActivityAchievementLocalServiceU
  * @see com.liferay.portlet.social.model.SocialActivityAchievement
  * @generated
  */
+@ProviderType
 public abstract class SocialActivityAchievementBaseImpl
 	extends SocialActivityAchievementModelImpl
 	implements SocialActivityAchievement {

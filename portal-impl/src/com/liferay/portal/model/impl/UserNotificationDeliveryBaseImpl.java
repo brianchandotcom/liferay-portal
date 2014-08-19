@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
  * @see com.liferay.portal.model.UserNotificationDelivery
  * @generated
  */
+@ProviderType
 public abstract class UserNotificationDeliveryBaseImpl
 	extends UserNotificationDeliveryModelImpl
 	implements UserNotificationDelivery {

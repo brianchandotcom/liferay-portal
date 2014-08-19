@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.messageboards.model.MBStatsUser;
 import com.liferay.portlet.messageboards.service.MBStatsUserLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.messageboards.service.MBStatsUserLocalServiceUtil;
  * @see com.liferay.portlet.messageboards.model.MBStatsUser
  * @generated
  */
+@ProviderType
 public abstract class MBStatsUserBaseImpl extends MBStatsUserModelImpl
 	implements MBStatsUser {
 	/*

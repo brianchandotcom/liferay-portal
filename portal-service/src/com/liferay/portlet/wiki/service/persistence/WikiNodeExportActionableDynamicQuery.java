@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.wiki.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -35,6 +37,7 @@ import com.liferay.portlet.wiki.model.WikiNode;
  * @generated
  */
 @Deprecated
+@ProviderType
 public class WikiNodeExportActionableDynamicQuery
 	extends WikiNodeActionableDynamicQuery {
 	public WikiNodeExportActionableDynamicQuery(

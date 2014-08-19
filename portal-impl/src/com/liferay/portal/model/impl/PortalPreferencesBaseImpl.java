@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.PortalPreferences;
 import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
  * @see com.liferay.portal.model.PortalPreferences
  * @generated
  */
+@ProviderType
 public abstract class PortalPreferencesBaseImpl
 	extends PortalPreferencesModelImpl implements PortalPreferences {
 	/*

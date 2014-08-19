@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServi
  * @see com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink
  * @generated
  */
+@ProviderType
 public abstract class DDMStructureLinkBaseImpl extends DDMStructureLinkModelImpl
 	implements DDMStructureLink {
 	/*

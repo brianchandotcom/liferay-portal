@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.Release;
 import com.liferay.portal.service.ReleaseLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.ReleaseLocalServiceUtil;
  * @see com.liferay.portal.model.Release
  * @generated
  */
+@ProviderType
 public abstract class ReleaseBaseImpl extends ReleaseModelImpl
 	implements Release {
 	/*

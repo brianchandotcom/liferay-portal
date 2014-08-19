@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.portal.service.http.LayoutSetPrototypeServiceSoap
  * @generated
  */
+@ProviderType
 public class LayoutSetPrototypeSoap implements Serializable {
 	public static LayoutSetPrototypeSoap toSoapModel(LayoutSetPrototype model) {
 		LayoutSetPrototypeSoap soapModel = new LayoutSetPrototypeSoap();

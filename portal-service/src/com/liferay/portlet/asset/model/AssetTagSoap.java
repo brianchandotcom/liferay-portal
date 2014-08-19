@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.portlet.asset.service.http.AssetTagServiceSoap
  * @generated
  */
+@ProviderType
 public class AssetTagSoap implements Serializable {
 	public static AssetTagSoap toSoapModel(AssetTag model) {
 		AssetTagSoap soapModel = new AssetTagSoap();

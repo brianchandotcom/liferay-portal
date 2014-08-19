@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
  * @see com.liferay.portal.model.UserGroupRole
  * @generated
  */
+@ProviderType
 public abstract class UserGroupRoleBaseImpl extends UserGroupRoleModelImpl
 	implements UserGroupRole {
 	/*

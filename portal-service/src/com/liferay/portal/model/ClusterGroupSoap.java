@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @generated
  */
+@ProviderType
 public class ClusterGroupSoap implements Serializable {
 	public static ClusterGroupSoap toSoapModel(ClusterGroup model) {
 		ClusterGroupSoap soapModel = new ClusterGroupSoap();

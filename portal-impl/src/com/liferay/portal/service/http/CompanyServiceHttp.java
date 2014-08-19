@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -49,6 +51,7 @@ import com.liferay.portal.service.CompanyServiceUtil;
  * @see com.liferay.portal.service.CompanyServiceUtil
  * @generated
  */
+@ProviderType
 public class CompanyServiceHttp {
 	public static com.liferay.portal.model.Company addCompany(
 		HttpPrincipal httpPrincipal, java.lang.String webId,

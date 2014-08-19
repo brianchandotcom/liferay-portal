@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
  * @see com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil
  * @generated
  */
+@ProviderType
 public class DDMTemplateServiceHttp {
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,

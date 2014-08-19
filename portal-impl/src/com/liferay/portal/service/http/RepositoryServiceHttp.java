@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -49,6 +51,7 @@ import com.liferay.portal.service.RepositoryServiceUtil;
  * @see com.liferay.portal.service.RepositoryServiceUtil
  * @generated
  */
+@ProviderType
 public class RepositoryServiceHttp {
 	public static com.liferay.portal.model.Repository addRepository(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,

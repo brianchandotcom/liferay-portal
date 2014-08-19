@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
  * @see com.liferay.portal.model.WorkflowDefinitionLink
  * @generated
  */
+@ProviderType
 public abstract class WorkflowDefinitionLinkBaseImpl
 	extends WorkflowDefinitionLinkModelImpl implements WorkflowDefinitionLink {
 	/*

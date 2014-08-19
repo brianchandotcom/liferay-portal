@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.Team;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.TeamLocalServiceUtil;
  * @see com.liferay.portal.model.Team
  * @generated
  */
+@ProviderType
 public abstract class TeamBaseImpl extends TeamModelImpl implements Team {
 	/*
 	 * NOTE FOR DEVELOPERS:

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -52,6 +54,7 @@ import java.util.Map;
  * @see com.liferay.portlet.asset.model.AssetLinkModel
  * @generated
  */
+@ProviderType
 public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	implements AssetLinkModel {
 	/*

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.softwarecatalog.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -70,6 +72,7 @@ import javax.sql.DataSource;
  * @see com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class SCProductEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements SCProductEntryLocalService,
 		IdentifiableBean {

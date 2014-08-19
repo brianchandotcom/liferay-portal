@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.NoSuchExportImportConfigurationException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -58,6 +60,7 @@ import java.util.Set;
  * @see ExportImportConfigurationUtil
  * @generated
  */
+@ProviderType
 public class ExportImportConfigurationPersistenceImpl
 	extends BasePersistenceImpl<ExportImportConfiguration>
 	implements ExportImportConfigurationPersistence {

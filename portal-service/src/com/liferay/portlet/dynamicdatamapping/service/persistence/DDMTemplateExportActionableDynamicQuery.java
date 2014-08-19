@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -33,6 +35,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
  * @generated
  */
 @Deprecated
+@ProviderType
 public class DDMTemplateExportActionableDynamicQuery
 	extends DDMTemplateActionableDynamicQuery {
 	public DDMTemplateExportActionableDynamicQuery(

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.ratings.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.ratings.service.RatingsEntryServiceUtil;
  * @see com.liferay.portlet.ratings.service.RatingsEntryServiceUtil
  * @generated
  */
+@ProviderType
 public class RatingsEntryServiceHttp {
 	public static void deleteEntry(HttpPrincipal httpPrincipal,
 		java.lang.String className, long classPK)

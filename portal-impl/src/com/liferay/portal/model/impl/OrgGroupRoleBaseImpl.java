@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.OrgGroupRole;
 
 /**
@@ -28,6 +30,7 @@ import com.liferay.portal.model.OrgGroupRole;
  * @see com.liferay.portal.model.OrgGroupRole
  * @generated
  */
+@ProviderType
 public abstract class OrgGroupRoleBaseImpl extends OrgGroupRoleModelImpl
 	implements OrgGroupRole {
 	/*

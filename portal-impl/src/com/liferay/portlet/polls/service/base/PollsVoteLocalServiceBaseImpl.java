@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.polls.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -67,6 +69,7 @@ import javax.sql.DataSource;
  * @see com.liferay.portlet.polls.service.PollsVoteLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class PollsVoteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	implements PollsVoteLocalService, IdentifiableBean {
 	/*

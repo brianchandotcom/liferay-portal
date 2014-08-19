@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
  * @see com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil
  * @generated
  */
+@ProviderType
 public class DDMStructureServiceHttp {
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
 		HttpPrincipal httpPrincipal, long userId, long groupId,

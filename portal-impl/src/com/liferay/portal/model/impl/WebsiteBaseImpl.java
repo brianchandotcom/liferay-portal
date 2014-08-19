@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.Website;
 import com.liferay.portal.service.WebsiteLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.WebsiteLocalServiceUtil;
  * @see com.liferay.portal.model.Website
  * @generated
  */
+@ProviderType
 public abstract class WebsiteBaseImpl extends WebsiteModelImpl
 	implements Website {
 	/*

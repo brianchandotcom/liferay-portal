@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ import java.util.List;
  * @see com.liferay.portal.service.http.PluginSettingServiceSoap
  * @generated
  */
+@ProviderType
 public class PluginSettingSoap implements Serializable {
 	public static PluginSettingSoap toSoapModel(PluginSetting model) {
 		PluginSettingSoap soapModel = new PluginSettingSoap();

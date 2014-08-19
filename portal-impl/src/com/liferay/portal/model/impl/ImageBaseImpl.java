@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.ImageLocalServiceUtil;
  * @see com.liferay.portal.model.Image
  * @generated
  */
+@ProviderType
 public abstract class ImageBaseImpl extends ImageModelImpl implements Image {
 	/*
 	 * NOTE FOR DEVELOPERS:

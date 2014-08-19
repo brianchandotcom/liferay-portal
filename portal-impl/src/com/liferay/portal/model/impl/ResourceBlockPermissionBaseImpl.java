@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
 
@@ -29,6 +31,7 @@ import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
  * @see com.liferay.portal.model.ResourceBlockPermission
  * @generated
  */
+@ProviderType
 public abstract class ResourceBlockPermissionBaseImpl
 	extends ResourceBlockPermissionModelImpl implements ResourceBlockPermission {
 	/*

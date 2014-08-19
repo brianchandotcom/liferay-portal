@@ -35,9 +35,9 @@ import com.liferay.portal.service.BaseService;
  * @see com.liferay.portlet.flags.service.impl.FlagsEntryServiceImpl
  * @generated
  */
-@ProviderType
 @AccessControlled
 @JSONWebService
+@ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface FlagsEntryService extends BaseService {

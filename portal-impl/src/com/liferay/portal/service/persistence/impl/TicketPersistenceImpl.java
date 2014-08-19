@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.NoSuchTicketException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -60,6 +62,7 @@ import java.util.Set;
  * @see TicketUtil
  * @generated
  */
+@ProviderType
 public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	implements TicketPersistence {
 	/*

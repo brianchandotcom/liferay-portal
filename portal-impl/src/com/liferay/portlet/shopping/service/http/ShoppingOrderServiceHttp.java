@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,6 +53,7 @@ import com.liferay.portlet.shopping.service.ShoppingOrderServiceUtil;
  * @see com.liferay.portlet.shopping.service.ShoppingOrderServiceUtil
  * @generated
  */
+@ProviderType
 public class ShoppingOrderServiceHttp {
 	public static void completeOrder(HttpPrincipal httpPrincipal, long groupId,
 		java.lang.String number, java.lang.String ppTxnId,

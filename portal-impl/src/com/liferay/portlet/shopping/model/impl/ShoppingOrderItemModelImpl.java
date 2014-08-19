@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.shopping.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -49,6 +51,7 @@ import java.util.Map;
  * @see com.liferay.portlet.shopping.model.ShoppingOrderItemModel
  * @generated
  */
+@ProviderType
 public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 	implements ShoppingOrderItemModel {
 	/*

@@ -30,11 +30,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * @see ${entity.name}PersistenceImpl
  * @generated
  */
-
-<#if pluginName == "">
-	@ProviderType
-</#if>
-
+@ProviderType
 public class ${entity.name}Util {
 
 	/*

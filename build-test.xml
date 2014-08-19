@@ -2391,6 +2391,15 @@ tck.url=true</echo>
 	</target>
 
 	<target name="prepare-so-plugins">
+		<if>
+			<equals arg1="${liferay.portal.bundle}" arg2="6.1.20" />
+			<then>
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties" append="true">
+
+app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
+			</then>
+		</if>
+
 		<property file="${lp.plugins.dir}/portlets/so-portlet/docroot/WEB-INF/liferay-releng.properties" />
 
 		<property name="plugins.includes" value="so-portlet,${dependent-apps}" />

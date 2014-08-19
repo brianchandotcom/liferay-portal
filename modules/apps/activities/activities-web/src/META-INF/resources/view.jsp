@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/activities/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);

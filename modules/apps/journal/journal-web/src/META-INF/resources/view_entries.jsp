@@ -168,11 +168,11 @@ int total = 0;
 	<c:otherwise>
 
 		<%
-		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, status);
+		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, themeDisplay.getUserId(), folderId, status);
 
 		articleSearchContainer.setTotal(total);
 
-		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, folderId, status, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
+		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, themeDisplay.getUserId(), folderId, status, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
 		%>
 
 	</c:otherwise>

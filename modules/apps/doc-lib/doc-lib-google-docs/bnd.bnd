@@ -1,0 +1,5 @@
+Bundle-Name: Google Docs Support for Document Library
+Bundle-SymbolicName: com.liferay.portlet.documentlibrary.google.docs
+Bundle-Version: 1.0.0
+Include-Resource: classes
+Private-Package: *

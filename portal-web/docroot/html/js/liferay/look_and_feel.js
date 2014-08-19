@@ -583,8 +583,6 @@ AUI.add(
 
 				customPortletNote.html(portletInfoText);
 
-				Liferay.Util.enableTextareaTabs(customCSS.getDOM());
-
 				refreshText = Liferay.Language.get('update-the-styles-on-this-page');
 
 				var refreshLink = A.Node.create('<a href="javascript:;">' + refreshText + '</a>');

@@ -6,6 +6,48 @@
 	</set-up>
 
 	<command name="UsingMethods" priority="5">
+		<var method="MathUtil#sum(&quot;1&quot;, &quot;2&quot;)" name="sum" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${sum}" />
+			<var name="expected" value="3" />
+		</execute>
+
+		<var method="MathUtil#sum(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;)" name="sum" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${sum}" />
+			<var name="expected" value="6" />
+		</execute>
+
+		<var method="MathUtil#difference(&quot;3&quot;, &quot;2&quot;)" name="difference" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${difference}" />
+			<var name="expected" value="1" />
+		</execute>
+
+		<var method="MathUtil#product(&quot;4&quot;, &quot;2&quot;)" name="product" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${product}" />
+			<var name="expected" value="8" />
+		</execute>
+
+		<var method="MathUtil#product(&quot;2&quot;, &quot;3&quot;, &quot;4&quot;)" name="product" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${product}" />
+			<var name="expected" value="24" />
+		</execute>
+
+		<var method="MathUtil#quotient(&quot;6&quot;, &quot;2&quot;)" name="quotient" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${quotient}" />
+			<var name="expected" value="3" />
+		</execute>
+
 		<var method="selenium#getLocation()" name="url" />
 
 		<execute macro="TestUtils#assertEquals">

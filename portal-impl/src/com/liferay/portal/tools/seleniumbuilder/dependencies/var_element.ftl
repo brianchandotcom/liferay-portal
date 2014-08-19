@@ -71,7 +71,9 @@
 		</#if>
 	</#list>
 
-	<#assign integerMethodNames = ["count", "startsWithWeight"]>
+	<#assign integerMethodNames = [
+		"count", "difference", "product", "quotient","startsWithWeight", "sum"
+	]>
 
 	<#list integerMethodNames as integerMethodName>
 		<#if "${methodName}" == "${integerMethodName}">
@@ -87,7 +89,9 @@
 
 	<#assign methodParameters  = method?substring(y + 1, z)>
 
-	<#if "${method}"?starts_with("StringUtil")>
+	<#if "${method}"?starts_with("MathUtil")>
+		<#assign objectName = "MathUtil">
+	<#elseif "${method}"?starts_with("StringUtil")>
 		<#assign objectName = "StringUtil">
 	<#else>
 		<#assign objectName = "${selenium}">
@@ -96,11 +100,19 @@
 	${objectName}.${methodName}(
 		<#if "${methodParameters}" != "">
 			<#list methodParameters?split(",") as methodParameter>
+				<#if "${method}"?starts_with("MathUtil")>
+					Integer.parseInt(
+				</#if>
+
 				<#assign parameter = methodParameter?replace("\"", "")>
 
 				<#assign parameter = parameter?trim>
 
 				RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeHtml(parameter)}", ${variableContext})
+
+				<#if "${method}"?starts_with("MathUtil")>
+					)
+				</#if>
 
 				<#if methodParameter_has_next>
 					,

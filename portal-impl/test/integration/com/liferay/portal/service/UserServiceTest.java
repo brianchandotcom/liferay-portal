@@ -66,156 +66,153 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class UserServiceTest {
 
-	@RunWith(Enclosed.class)
-	public static class WhenSendPasswordEmail {
+	@ExecutionTestListeners(
+		listeners = {
+			MainServletExecutionTestListener.class,
+			ResetDatabaseExecutionTestListener.class,
+			SynchronousMailExecutionTestListener.class
+		})
+	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+	@Sync
+	public static class WhenSendAPasswordEmail {
 
-		@ExecutionTestListeners(
-			listeners = {
-				MainServletExecutionTestListener.class,
-				ResetDatabaseExecutionTestListener.class,
-				SynchronousMailExecutionTestListener.class
-			})
-		@RunWith(LiferayIntegrationJUnitTestRunner.class)
-		@Sync
-		public static class WithResetLink {
-
-			@Before
-			public void setUp() throws Exception {
-				_user = UserTestUtil.addUser();
-
-				PortletPreferences portletPreferences =
-					PrefsPropsUtil.getPreferences(_user.getCompanyId(), false);
-
-				portletPreferences.setValue(
-					PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
-					Boolean.FALSE.toString());
-
-				portletPreferences.setValue(
-					PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
-					Boolean.TRUE.toString());
-
-				portletPreferences.store();
-			}
-
-			@Test
-			public void shouldSendResetLinkEmailByEmailAddress()
-				throws Exception {
-
-				int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-				boolean isPasswordSent =
-					UserServiceUtil.sendPasswordByEmailAddress(
-						_user.getCompanyId(), _user.getEmailAddress());
-
-				Assert.assertFalse(isPasswordSent);
-				Assert.assertEquals(
-					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			}
-
-			@Test
-			public void shouldSendResetLinkEmailByScreenName()
-				throws Exception {
-
-				int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-				boolean isPasswordSent =
-					UserServiceUtil.sendPasswordByScreenName(
-						_user.getCompanyId(), _user.getScreenName());
-
-				Assert.assertFalse(isPasswordSent);
-				Assert.assertEquals(
-					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			}
-
-			@Test
-			public void shouldSendResetLinkEmailByUserId() throws Exception {
-				boolean isPasswordSent =
-					UserServiceUtil.sendPasswordByUserId(_user.getUserId());
-
-				int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-				Assert.assertFalse(isPasswordSent);
-				Assert.assertEquals(
-					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			}
-
-			private User _user;
-
+		@Before
+		public void setUp() throws Exception {
+			_user = UserTestUtil.addUser();
 		}
 
-		@ExecutionTestListeners(
-			listeners = {
-				MainServletExecutionTestListener.class,
-				ResetDatabaseExecutionTestListener.class,
-				SynchronousMailExecutionTestListener.class
-			})
-		@RunWith(LiferayIntegrationJUnitTestRunner.class)
-		@Sync
-		public static class WithNewPassword {
+		@Test
+		public void shouldSendResetLinkEmailByEmailAddress()
+			throws Exception {
 
-			@Before
-			public void setUp() throws Exception {
-				_user = UserTestUtil.addUser();
+			givenAUserWhoseCompanySendResetPasswordLink(_user);
 
-				PortletPreferences portletPreferences =
-					PrefsPropsUtil.getPreferences(_user.getCompanyId(), false);
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
-				portletPreferences.setValue(
-					PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
-					Boolean.TRUE.toString());
+			boolean isPasswordSent =
+				UserServiceUtil.sendPasswordByEmailAddress(
+					_user.getCompanyId(), _user.getEmailAddress());
 
-				portletPreferences.setValue(
-					PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
-					Boolean.FALSE.toString());
-
-				portletPreferences.store();
-			}
-
-			@Test
-			public void shouldSendNewPasswordEmailByEmailAddress()
-				throws Exception {
-
-				int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-				boolean isPasswordSent =
-					UserServiceUtil.sendPasswordByEmailAddress(
-						_user.getCompanyId(), _user.getEmailAddress());
-
-				Assert.assertTrue(isPasswordSent);
-				Assert.assertEquals(
-					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			}
-
-			@Test
-			public void shouldSendNewPasswordEmailByScreenName()
-				throws Exception {
-
-				int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-				boolean isPasswordSent =
-					UserServiceUtil.sendPasswordByScreenName(
-						_user.getCompanyId(), _user.getScreenName());
-
-				Assert.assertTrue(isPasswordSent);
-				Assert.assertEquals(
-					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			}
-
-			@Test
-			public void shouldSendNewPasswordEmailByUserId() throws Exception {
-				int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-				boolean isPasswordSent =
-					UserServiceUtil.sendPasswordByUserId(_user.getUserId());
-
-				Assert.assertTrue(isPasswordSent);
-				Assert.assertEquals(
-					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			}
-
-			private User _user;
-
+			Assert.assertFalse(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 		}
+
+		@Test
+		public void shouldSendResetLinkEmailByScreenName()
+			throws Exception {
+
+			givenAUserWhoseCompanySendResetPasswordLink(_user);
+
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			boolean isPasswordSent =
+				UserServiceUtil.sendPasswordByScreenName(
+					_user.getCompanyId(), _user.getScreenName());
+
+			Assert.assertFalse(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+		}
+
+		@Test
+		public void shouldSendResetLinkEmailByUserId() throws Exception {
+			givenAUserWhoseCompanySendResetPasswordLink(_user);
+
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			boolean isPasswordSent =
+				UserServiceUtil.sendPasswordByUserId(_user.getUserId());
+
+			Assert.assertFalse(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+		}
+
+		@Test
+		public void shouldSendNewPasswordEmailByEmailAddress()
+			throws Exception {
+
+			givenAUserWhoseCompanySendNewPassword(_user);
+
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			boolean isPasswordSent =
+				UserServiceUtil.sendPasswordByEmailAddress(
+					_user.getCompanyId(), _user.getEmailAddress());
+
+			Assert.assertTrue(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+		}
+
+		@Test
+		public void shouldSendNewPasswordEmailByScreenName()
+			throws Exception {
+
+			givenAUserWhoseCompanySendNewPassword(_user);
+
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			boolean isPasswordSent =
+				UserServiceUtil.sendPasswordByScreenName(
+					_user.getCompanyId(), _user.getScreenName());
+
+			Assert.assertTrue(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+		}
+
+		@Test
+		public void shouldSendNewPasswordEmailByUserId() throws Exception {
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			givenAUserWhoseCompanySendNewPassword(_user);
+
+			boolean isPasswordSent =
+				UserServiceUtil.sendPasswordByUserId(_user.getUserId());
+
+			Assert.assertTrue(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+		}
+
+		protected static void givenAUserWhoseCompanySendNewPassword(User user)
+			throws Exception {
+
+			PortletPreferences portletPreferences =
+				PrefsPropsUtil.getPreferences(user.getCompanyId(), false);
+
+			portletPreferences.setValue(
+				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
+				Boolean.TRUE.toString());
+
+			portletPreferences.setValue(
+				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
+				Boolean.FALSE.toString());
+
+			portletPreferences.store();
+		}
+
+		protected static void givenAUserWhoseCompanySendResetPasswordLink(
+				User user)
+			throws Exception {
+
+			PortletPreferences portletPreferences =
+				PrefsPropsUtil.getPreferences(user.getCompanyId(), false);
+
+			portletPreferences.setValue(
+				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
+				Boolean.FALSE.toString());
+
+			portletPreferences.setValue(
+				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
+				Boolean.TRUE.toString());
+
+			portletPreferences.store();
+		}
+
+		private User _user;
 
 	}
 

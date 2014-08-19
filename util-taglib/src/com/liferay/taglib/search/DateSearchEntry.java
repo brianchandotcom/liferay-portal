@@ -28,7 +28,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Julio Camarero
@@ -40,9 +39,9 @@ public class DateSearchEntry extends TextSearchEntry {
 	}
 
 	@Override
-	public String getName(PageContext pageContext) {
+	public String getName(HttpServletRequest request) {
 		if (_date != null) {
-			Object[] localeAndTimeZone = getLocaleAndTimeZone(pageContext);
+			Object[] localeAndTimeZone = getLocaleAndTimeZone(request);
 
 			Locale locale = (Locale)localeAndTimeZone[0];
 
@@ -88,13 +87,10 @@ public class DateSearchEntry extends TextSearchEntry {
 		_date = date;
 	}
 
-	protected Object[] getLocaleAndTimeZone(PageContext pageContext) {
+	protected Object[] getLocaleAndTimeZone(HttpServletRequest request) {
 		if ((_locale != null) && (_timeZone != null)) {
 			return new Object[] {_locale, _timeZone};
 		}
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

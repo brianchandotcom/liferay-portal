@@ -18,13 +18,14 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
+import java.io.Writer;
+
 import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
@@ -61,20 +62,14 @@ public class UserSearchEntry extends TextSearchEntry {
 	}
 
 	@Override
-	public void print(Object object) throws Exception {
-		if (!(object instanceof PageContext)) {
-			return;
-		}
+	public void print(
+			Writer writer, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception {
 
-		PageContext pageContext = (PageContext)object;
-
-		if (_request == null) {
-			_request = (HttpServletRequest)pageContext.getRequest();
-		}
-
-		_request.setAttribute(
+		request.setAttribute(
 			"liferay-ui:search-container-column-user:date", _date);
-		_request.setAttribute(
+		request.setAttribute(
 			"liferay-ui:search-container-column-user:userId", _userId);
 
 		if (_servletContext != null) {
@@ -83,10 +78,13 @@ public class UserSearchEntry extends TextSearchEntry {
 					_servletContext, _PAGE);
 
 			requestDispatcher.include(
-				_request, new PipingServletResponse(pageContext));
+				request, new PipingServletResponse(response, writer));
 		}
 		else {
-			pageContext.include(_PAGE);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(
+				_PAGE);
+
+			requestDispatcher.include(request, response);
 		}
 	}
 

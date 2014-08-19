@@ -16,6 +16,11 @@ package com.liferay.portal.kernel.dao.search;
 
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.io.Writer;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Raymond Augé
  */
@@ -39,7 +44,10 @@ public interface SearchEntry {
 
 	public String getValign();
 
-	public void print(Object object) throws Exception;
+	public void print(
+			Writer writer, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception;
 
 	public void setAlign(String align);
 

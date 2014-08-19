@@ -14,6 +14,11 @@
 
 package com.liferay.taglib.search;
 
+import java.io.Writer;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -46,7 +51,10 @@ public abstract class SearchEntry
 	}
 
 	@Override
-	public abstract void print(Object object) throws Exception;
+	public abstract void print(
+			Writer writer, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception;
 
 	@Override
 	public void setAlign(String align) {

@@ -293,7 +293,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 				<td class="table-cell <%= columnClassName %> text-<%= entry.getAlign() %> text-<%= entry.getValign() %>" colspan="<%= entry.getColspan() %>">
 
 					<%
-					entry.print(pageContext);
+					entry.print(pageContext.getOut(), request, response);
 					%>
 
 				</td>

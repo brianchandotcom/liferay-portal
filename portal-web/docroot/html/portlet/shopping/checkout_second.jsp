@@ -328,7 +328,14 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 		</table>
 	</div>
 
+	<portlet:actionURL var="checkoutURL">
+		<portlet:param name="struts_action" value="/shopping/checkout" />
+		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECKOUT %>" />
+	</portlet:actionURL>
+
 	<aui:button-row>
 		<aui:button type="submit" value='<%= shoppingSettings.usePayPal() ? "continue" : "finished" %>' />
+
+		<aui:button href="<%= checkoutURL.toString() %>" value="back" />
 	</aui:button-row>
 </aui:form>

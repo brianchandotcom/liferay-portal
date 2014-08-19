@@ -768,6 +768,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 				.panel-toggle {
 					color: #999;
+					padding-left: 8px;
 
 					&:after, &:before {
 						float: right;

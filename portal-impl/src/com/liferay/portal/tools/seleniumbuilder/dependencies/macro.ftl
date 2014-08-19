@@ -1,5 +1,6 @@
 package ${seleniumBuilderContext.getMacroPackageName(macroName)};
 
+import com.liferay.portal.kernel.util.MathUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;

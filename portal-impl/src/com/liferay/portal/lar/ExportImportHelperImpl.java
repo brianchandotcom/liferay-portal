@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -614,24 +615,17 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	public String getSelectedLayoutsJSON(
 		long groupId, boolean privateLayout, String selectedNodes) {
 
-		long[] nodeList = StringUtil.split(selectedNodes, 0L);
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<Layout> layoutList = LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-		for (Layout layout : layoutList) {
-			createLayoutsJSON(layout, jsonArray, nodeList);
+		for (Layout layout : layouts) {
+			createLayoutsJSON(
+				layout, jsonArray, StringUtil.split(selectedNodes, 0L));
 		}
 
-		String selectedLayoutsJSON = StringPool.BLANK;
-
-		if (jsonArray.length() > 0) {
-			selectedLayoutsJSON = jsonArray.toString();
-		}
-
-		return selectedLayoutsJSON;
+		return jsonArray.toString();
 	}
 
 	@Override
@@ -1757,53 +1751,47 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	protected boolean createLayoutsJSON(
-		Layout layout, JSONArray parentJSONArray, long[] layoutIds) {
+		Layout layout, JSONArray layoutsJSONArray, long[] layoutIds) {
 
-		boolean checked = true;
+		List<Layout> childLayouts = layout.getChildren();
+		JSONArray childLayoutsJSONArray = null;
 
-		JSONArray childrenJSONArray = null;
+		boolean includeChildren = true;
 
-		List<Layout> children = layout.getChildren();
+		if (!ListUtil.isEmpty(childLayouts)) {
+			childLayoutsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		if (children.size() > 0) {
-			childrenJSONArray = JSONFactoryUtil.createJSONArray();
-
-			for (Layout childLayout : layout.getChildren()) {
+			for (Layout childLayout : childLayouts) {
 				if (!createLayoutsJSON(
-						childLayout, childrenJSONArray, layoutIds)) {
+						childLayout, childLayoutsJSONArray, layoutIds)) {
 
-					checked = false;
+					includeChildren = false;
 				}
 			}
 		}
 
-		JSONObject layoutJSON = null;
+		boolean checked = ArrayUtil.contains(layoutIds, layout.getLayoutId());
 
-		if (!checked && (childrenJSONArray != null)) {
-			for (int i = 0; i < childrenJSONArray.length(); i++) {
-				parentJSONArray.put(childrenJSONArray.getJSONObject(i));
+		if (checked) {
+			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
+
+			layoutJSONObject.put("includeChildren", includeChildren);
+			layoutJSONObject.put("plid", layout.getPlid());
+
+			layoutsJSONArray.put(layoutJSONObject);
+		}
+
+		if (checked && includeChildren) {
+			return true;
+		}
+
+		if (childLayoutsJSONArray != null) {
+			for (int i = 0; i < childLayoutsJSONArray.length(); i++) {
+				layoutsJSONArray.put(childLayoutsJSONArray.getJSONObject(i));
 			}
 		}
 
-		if (ArrayUtil.contains(layoutIds, layout.getLayoutId())) {
-			layoutJSON = JSONFactoryUtil.createJSONObject();
-
-			boolean includeChildren = true;
-
-			if (!checked) {
-				includeChildren = false;
-			}
-
-			layoutJSON.put("includeChildren", includeChildren);
-			layoutJSON.put("plid", layout.getPlid());
-
-			parentJSONArray.put(layoutJSON);
-		}
-		else {
-			checked = false;
-		}
-
-		return checked;
+		return false;
 	}
 
 	protected void deleteTimestampParameters(StringBuilder sb, int beginPos) {

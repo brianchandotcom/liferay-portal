@@ -276,21 +276,21 @@
 	</command>
 
 	<command name="deactivateUploadedWorkflowDefinition">
-		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ACTIONS_UPLOADED" value1="Actions" />
+		<execute action="CPPortalWorkflowconfiguration#click" locator-key1="DEFINITION_TABLE_ACTIONS_UPLOADED" />
 		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_DEACTIVATE" value1="Deactivate" />
 		<execute action="CPPortalWorkflowconfiguration#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate this?" />
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deleteWorkflowDefinition">
-		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ACTIONS_DEACTIVATED" value1="Actions" />
+		<execute action="CPPortalWorkflowconfiguration#click" locator-key1="DEFINITION_TABLE_ACTIONS_DEACTIVATED" />
 		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPPortalWorkflowconfiguration#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="reactivateInactiveWorkflowDefinition">
-		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ACTIONS_DEACTIVATED" value1="Actions" />
+		<execute action="CPPortalWorkflowconfiguration#click" locator-key1="DEFINITION_TABLE_ACTIONS_DEACTIVATED" />
 		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_ACTIVATE" value1="Activate" />
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>

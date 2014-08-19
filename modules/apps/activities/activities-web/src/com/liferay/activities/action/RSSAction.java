@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.activities.action;
+package com.liferay.activities.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.GetterUtil;

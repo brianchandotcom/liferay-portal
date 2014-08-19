@@ -14,6 +14,9 @@
 
 package com.liferay.portal.lar;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.MissingReference;
@@ -413,6 +416,105 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			content, privateLayout, privateLayout.getGroupId());
 		assertLinksToLayouts(content, publicLayout, 0);
 		assertLinksToLayouts(content, publicLayout, publicLayout.getGroupId());
+	}
+
+	@Test
+	public void testGetSelectedLayoutsJSONSelectAllLayouts() throws Exception {
+		Layout rootLayout = LayoutTestUtil.addLayout(
+			_stagingGroup.getGroupId(), "Root Layout");
+		Layout childLayout = LayoutTestUtil.addLayout(
+			_stagingGroup.getGroupId(), "Child Layout", rootLayout.getPlid());
+
+		long[] selectedLayoutIds = new long[] {
+			rootLayout.getLayoutId(), childLayout.getLayoutId()};
+
+		String selectedLayoutsJSON =
+			ExportImportHelperUtil.getSelectedLayoutsJSON(
+				_stagingGroup.getGroupId(), false,
+				StringUtil.merge(selectedLayoutIds));
+
+		JSONArray selectedLayoutsJSONArray = JSONFactoryUtil.createJSONArray(
+			selectedLayoutsJSON);
+
+		Assert.assertEquals(1, selectedLayoutsJSONArray.length());
+
+		JSONObject layoutJSONObject = selectedLayoutsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			rootLayout.getPlid(), layoutJSONObject.getLong("plid"));
+		Assert.assertTrue(layoutJSONObject.getBoolean("includeChildren"));
+	}
+
+	@Test
+	public void testGetSelectedLayoutsJSONSelectChildLayout() throws Exception {
+		Layout rootLayout = LayoutTestUtil.addLayout(
+			_stagingGroup.getGroupId(), "Root Layout");
+		Layout childLayout = LayoutTestUtil.addLayout(
+			_stagingGroup.getGroupId(), "Child Layout", rootLayout.getPlid());
+
+		long[] selectedLayoutIds = new long[] {childLayout.getLayoutId()};
+
+		String selectedLayoutsJSON =
+			ExportImportHelperUtil.getSelectedLayoutsJSON(
+				_stagingGroup.getGroupId(), false,
+				StringUtil.merge(selectedLayoutIds));
+
+		JSONArray selectedLayoutsJSONArray = JSONFactoryUtil.createJSONArray(
+			selectedLayoutsJSON);
+
+		Assert.assertEquals(1, selectedLayoutsJSONArray.length());
+
+		JSONObject layoutJSONObject = selectedLayoutsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			childLayout.getPlid(), layoutJSONObject.getLong("plid"));
+		Assert.assertTrue(layoutJSONObject.getBoolean("includeChildren"));
+	}
+
+	@Test
+	public void testGetSelectedLayoutsJSONSelectNoLayouts() throws Exception {
+		Layout rootLayout = LayoutTestUtil.addLayout(
+			_stagingGroup.getGroupId(), "Root Layout");
+		LayoutTestUtil.addLayout(
+			_stagingGroup.getGroupId(), "Child Layout", rootLayout.getPlid());
+
+		String selectedLayoutsJSON =
+			ExportImportHelperUtil.getSelectedLayoutsJSON(
+				_stagingGroup.getGroupId(), false,
+				StringUtil.merge(new long[0]));
+
+		JSONArray selectedLayoutsJSONArray = JSONFactoryUtil.createJSONArray(
+			selectedLayoutsJSON);
+
+		Assert.assertEquals(0, selectedLayoutsJSONArray.length());
+	}
+
+	@Test
+	public void testGetSelectedLayoutsJSONSelectParentLayout()
+		throws Exception {
+
+		Layout rootLayout = LayoutTestUtil.addLayout(
+			_stagingGroup.getGroupId(), "Root Layout");
+		LayoutTestUtil.addLayout(
+			_stagingGroup.getGroupId(), "Child Layout", rootLayout.getPlid());
+
+		long[] selectedLayoutIds = new long[] {rootLayout.getLayoutId()};
+
+		String selectedLayoutsJSON =
+			ExportImportHelperUtil.getSelectedLayoutsJSON(
+				_stagingGroup.getGroupId(), false,
+				StringUtil.merge(selectedLayoutIds));
+
+		JSONArray selectedLayoutsJSONArray = JSONFactoryUtil.createJSONArray(
+			selectedLayoutsJSON);
+
+		Assert.assertEquals(1, selectedLayoutsJSONArray.length());
+
+		JSONObject layoutJSONObject = selectedLayoutsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			rootLayout.getPlid(), layoutJSONObject.getLong("plid"));
+		Assert.assertFalse(layoutJSONObject.getBoolean("includeChildren"));
 	}
 
 	@Test

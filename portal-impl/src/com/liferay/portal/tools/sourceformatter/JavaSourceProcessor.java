@@ -24,14 +24,17 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
+
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.ClassLibrary;
 import com.thoughtworks.qdox.model.JavaField;
 import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaSource;
 import com.thoughtworks.qdox.parser.ParseException;
+
 import java.io.File;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -791,7 +794,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String checkFinalableFields(
-			String absolutePath, String packagePath, String className,
+			String fileName, String packagePath, String className,
 			String content)
 		throws IOException {
 
@@ -802,12 +805,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(classLibrary);
 
 		try {
-			javaDocBuilder.addSource(new UnsyncStringReader(
-				sanitizeContent(content)));
+			javaDocBuilder.addSource(
+				new UnsyncStringReader(sanitizeContent(content)));
 		}
 		catch (ParseException pe) {
 			System.err.println(
-				"Unable to parse " + absolutePath + ", " + pe.getMessage());
+				"Unable to parse " + fileName + StringPool.COMMA_AND_SPACE +
+					pe.getMessage());
 
 			return content;
 		}
@@ -894,7 +898,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		String newContent = checkFinalableFields(
-			absolutePath, packagePath, className, content);
+			fileName, packagePath, className, content);
 
 		if (newContent.contains("$\n */")) {
 			processErrorMessage(fileName, "*: " + fileName);

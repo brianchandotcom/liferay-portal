@@ -101,7 +101,7 @@ public class UserServiceTest {
 			public void shouldSendResetLinkEmailByEmailAddress()
 				throws Exception {
 
-				int beforeInboxSize = MailServiceTestUtil.getInboxSize();
+				int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
 				boolean isPasswordReset =
 					UserServiceUtil.sendPasswordByEmailAddress(
@@ -109,14 +109,14 @@ public class UserServiceTest {
 
 				Assert.assertFalse(isPasswordReset);
 				Assert.assertEquals(
-					beforeInboxSize + 1, MailServiceTestUtil.getInboxSize());
+					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 			}
 
 			@Test
 			public void shouldSendResetLinkEmailByScreenName()
 				throws Exception {
 
-				int beforeInboxSize = MailServiceTestUtil.getInboxSize();
+				int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
 				boolean isPasswordReset =
 					UserServiceUtil.sendPasswordByScreenName(
@@ -124,7 +124,7 @@ public class UserServiceTest {
 
 				Assert.assertFalse(isPasswordReset);
 				Assert.assertEquals(
-					beforeInboxSize + 1, MailServiceTestUtil.getInboxSize());
+					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 			}
 
 			@Test
@@ -132,11 +132,11 @@ public class UserServiceTest {
 				boolean isPasswordReset =
 					UserServiceUtil.sendPasswordByUserId(_user.getUserId());
 
-				int beforeInboxSize = MailServiceTestUtil.getInboxSize();
+				int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
 				Assert.assertFalse(isPasswordReset);
 				Assert.assertEquals(
-					beforeInboxSize + 1, MailServiceTestUtil.getInboxSize());
+					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 			}
 
 			private User _user;
@@ -175,42 +175,42 @@ public class UserServiceTest {
 			public void shouldSendNewPasswordEmailByEmailAddress()
 				throws Exception {
 
-				int beforeInboxSize = MailServiceTestUtil.getInboxSize();
+				int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
-				boolean isPasswordReset =
+				boolean isPasswordSent =
 					UserServiceUtil.sendPasswordByEmailAddress(
 						_user.getCompanyId(), _user.getEmailAddress());
 
-				Assert.assertTrue(isPasswordReset);
+				Assert.assertTrue(isPasswordSent);
 				Assert.assertEquals(
-					beforeInboxSize + 1, MailServiceTestUtil.getInboxSize());
+					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 			}
 
 			@Test
 			public void shouldSendNewPasswordEmailByScreenName()
 				throws Exception {
 
-				int beforeInboxSize = MailServiceTestUtil.getInboxSize();
+				int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
-				boolean isPasswordReset =
+				boolean isPasswordSent =
 					UserServiceUtil.sendPasswordByScreenName(
 						_user.getCompanyId(), _user.getScreenName());
 
-				Assert.assertTrue(isPasswordReset);
+				Assert.assertTrue(isPasswordSent);
 				Assert.assertEquals(
-					beforeInboxSize + 1, MailServiceTestUtil.getInboxSize());
+					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 			}
 
 			@Test
 			public void shouldSendNewPasswordEmailByUserId() throws Exception {
-				int beforeInboxSize = MailServiceTestUtil.getInboxSize();
+				int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
-				boolean isPasswordReset =
+				boolean isPasswordSent =
 					UserServiceUtil.sendPasswordByUserId(_user.getUserId());
 
-				Assert.assertTrue(isPasswordReset);
+				Assert.assertTrue(isPasswordSent);
 				Assert.assertEquals(
-					beforeInboxSize + 1, MailServiceTestUtil.getInboxSize());
+					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 			}
 
 			private User _user;

@@ -368,6 +368,10 @@ if (hints != null) {
 
 			cssClass += " form-control";
 
+			if (editor) {
+				cssClass += " lfr-input-editor";
+			}
+
 			boolean localized = ModelHintsUtil.isLocalized(model, field);
 
 			Locale[] availableLocales = null;

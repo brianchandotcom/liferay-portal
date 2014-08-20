@@ -281,6 +281,50 @@ public class MVCPortlet extends LiferayPortlet {
 		return super.callActionMethod(actionRequest, actionResponse);
 	}
 
+	@Override
+	protected boolean callResourceMethod(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortletException {
+
+		try {
+			checkPermissions(resourceRequest);
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+
+		String actionName = ParamUtil.getString(
+			resourceRequest, ActionRequest.ACTION_NAME);
+
+		if (!actionName.contains(StringPool.COMMA)) {
+			ActionCommand actionCommand = _actionCommandCache.getActionCommand(
+				actionName);
+
+			if (actionCommand != ActionCommandCache.EMPTY) {
+				return actionCommand.processCommand(
+					resourceRequest, resourceResponse);
+			}
+		}
+		else {
+			List<ActionCommand> actionCommands =
+				_actionCommandCache.getActionCommandChain(actionName);
+
+			if (!actionCommands.isEmpty()) {
+				for (ActionCommand actionCommand : actionCommands) {
+					if (!actionCommand.processCommand(
+							resourceRequest, resourceResponse)) {
+
+						return false;
+					}
+				}
+
+				return true;
+			}
+		}
+
+		return super.callResourceMethod(resourceRequest, resourceResponse);
+	}
+
 	protected void checkPath(String path) throws PortletException {
 		if (Validator.isNotNull(path) &&
 			(!path.startsWith(templatePath) ||

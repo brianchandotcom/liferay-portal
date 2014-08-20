@@ -441,9 +441,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			return;
 		}
 
-		Map<String, Facet> facetsMap = searchContext.getFacets();
-
 		Map<String, Aggregation> aggregationsMap = aggregations.getAsMap();
+
+		Map<String, Facet> facetsMap = searchContext.getFacets();
 
 		for (Facet facet : facetsMap.values()) {
 			if (facet.isStatic()) {

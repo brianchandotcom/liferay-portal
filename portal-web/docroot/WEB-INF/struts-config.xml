@@ -198,10 +198,6 @@
 			<forward name="portlet.announcements.view" path="portlet.announcements.view" />
 		</action>
 
-		<!-- Amazon Rankings -->
-
-		<action path="/amazon_rankings/view" forward="portlet.amazon_rankings.view" />
-
 		<!-- Announcements -->
 
 		<action path="/announcements/edit_entry" type="com.liferay.portlet.announcements.action.EditEntryAction">

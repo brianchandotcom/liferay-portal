@@ -1176,12 +1176,6 @@
 	<command name="CompleteProcessWithEditedSingleApproverWorkflow" priority="5">
 		<var name="kfFieldsDefinitionName" value="Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
-
-<!--
-		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
-		<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
--->
-
 		<var name="pageName" value="Kaleo Forms" />
 		<var name="workflowDefinition" value="Single Approver" />
 

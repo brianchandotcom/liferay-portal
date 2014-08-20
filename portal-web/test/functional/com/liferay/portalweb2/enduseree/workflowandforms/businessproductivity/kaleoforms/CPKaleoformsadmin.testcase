@@ -1011,18 +1011,6 @@
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_MENULIST_CHOOSE" value1="Choose" />
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_WORKFLOW" value1="Uploaded Definition (Version 2)" />
 
-<!--
-		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
-			<var name="workflowDefinitionTitleEdit" value="New Uploaded Definition Edit" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
-			<var name="workflowDefinitionTitleEdit" value="New Uploaded Definition Edit" />
-		</execute>
--->
-
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">

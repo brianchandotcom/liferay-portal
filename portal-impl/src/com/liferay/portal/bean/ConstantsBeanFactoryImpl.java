@@ -15,17 +15,16 @@
 package com.liferay.portal.bean;
 
 import com.liferay.portal.kernel.bean.ConstantsBeanFactory;
-import com.liferay.portal.kernel.memory.EqualityWeakReference;
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.lang.ref.Reference;
-import java.lang.ref.ReferenceQueue;
-import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.objectweb.asm.ClassWriter;
@@ -40,34 +39,12 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 
 	@Override
 	public Object getConstantsBean(Class<?> constantsClass) {
-		Reference<?> constantsBeanReference = constantsBeans.get(
-			new EqualityWeakReference<Class<?>>(constantsClass));
-
-		Object constantsBean = null;
-
-		if (constantsBeanReference != null) {
-			constantsBean = constantsBeanReference.get();
-		}
+		Object constantsBean = constantsBeans.get(constantsClass);
 
 		if (constantsBean == null) {
 			constantsBean = createConstantsBean(constantsClass);
 
-			constantsBeans.put(
-				new EqualityWeakReference<Class<?>>(
-					constantsClass, constantsClassReferenceQueue),
-				new WeakReference<Object>(constantsBean));
-		}
-
-		while (true) {
-			EqualityWeakReference<Class<?>> staleConstantsClassReference =
-				(EqualityWeakReference<Class<?>>)
-					constantsClassReferenceQueue.poll();
-
-			if (staleConstantsClassReference == null) {
-				break;
-			}
-
-			constantsBeans.remove(staleConstantsClassReference);
+			constantsBeans.put(constantsClass, constantsBean);
 		}
 
 		return constantsBean;
@@ -170,12 +147,10 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 		return className.replace('.', '/');
 	}
 
-	protected static ConcurrentMap
-		<EqualityWeakReference<Class<?>>, Reference<?>>
-			constantsBeans =
-				new ConcurrentHashMap
-					<EqualityWeakReference<Class<?>>, Reference<?>>();
-	protected static ReferenceQueue<Class<?>> constantsClassReferenceQueue =
-		new ReferenceQueue<Class<?>>();
+	protected static ConcurrentMap<Class<?>, Object> constantsBeans =
+		new ConcurrentReferenceKeyHashMap<Class<?>, Object>(
+			new ConcurrentReferenceValueHashMap<Reference<Class<?>>, Object>(
+				FinalizeManager.WEAK_REFERENCE_FACTORY),
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.resiliency.spi.provider;
 
+import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.nio.intraband.blocking.ExecutorIntraband;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
@@ -42,8 +43,6 @@ import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunn
 import java.io.File;
 import java.io.Serializable;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
 
 import org.aspectj.lang.annotation.Around;
@@ -180,10 +179,6 @@ public class BaseSPIProviderTest {
 	@Aspect
 	public static class ProcessExecutorAdvice {
 
-		public static FutureTask<SPI> getFutureTask() {
-			return _futureTask;
-		}
-
 		public static void setInterrupt(boolean interrupt) {
 			_interrupt = interrupt;
 		}
@@ -239,21 +234,14 @@ public class BaseSPIProviderTest {
 				throw new ProcessException("ProcessException");
 			}
 
-			_futureTask = new FutureTask<SPI>(
-				new Callable<SPI>() {
+			DefaultNoticeableFuture<SPI> defaultNoticeableFuture =
+				new DefaultNoticeableFuture<SPI>();
 
-					@Override
-					public SPI call() throws Exception {
-						return mockSPI;
-					}
+			defaultNoticeableFuture.set(mockSPI);
 
-				}
-			);
-
-			return _futureTask;
+			return defaultNoticeableFuture;
 		}
 
-		private static FutureTask<SPI> _futureTask;
 		private static boolean _interrupt;
 		private static boolean _registerBack;
 		private static boolean _throwException;

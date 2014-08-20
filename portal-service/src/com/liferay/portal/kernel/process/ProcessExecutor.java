@@ -14,7 +14,13 @@
 
 package com.liferay.portal.kernel.process;
 
+import com.liferay.portal.kernel.concurrent.AbortPolicy;
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
+import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
+import com.liferay.portal.kernel.concurrent.FutureListener;
+import com.liferay.portal.kernel.concurrent.NoticeableFuture;
+import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
+import com.liferay.portal.kernel.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -39,19 +45,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * @author Shuyang Zhou
  */
 public class ProcessExecutor {
 
-	public static <T extends Serializable> Future<T> execute(
+	public static <T extends Serializable> NoticeableFuture<T> execute(
 			ProcessConfig processConfig,
 			ProcessCallable<? extends Serializable> processCallable)
 		throws ProcessException {
@@ -88,14 +91,14 @@ public class ProcessExecutor {
 				objectOutputStream.close();
 			}
 
-			ExecutorService executorService = _getExecutorService();
+			ThreadPoolExecutor threadPoolExecutor = _getThreadPoolExecutor();
 
 			SubprocessReactor subprocessReactor = new SubprocessReactor(
 				process);
 
 			try {
-				Future<ProcessCallable<? extends Serializable>>
-					futureResponseProcessCallable = executorService.submit(
+				NoticeableFuture<ProcessCallable<? extends Serializable>>
+					processCallableNoticeableFuture = threadPoolExecutor.submit(
 						subprocessReactor);
 
 				// Consider the newly created process as a managed process only
@@ -103,8 +106,8 @@ public class ProcessExecutor {
 
 				_managedProcesses.add(process);
 
-				return new ProcessExecutionFutureResult<T>(
-					futureResponseProcessCallable, process);
+				return _wrapNoticeableFuture(
+					processCallableNoticeableFuture, process);
 			}
 			catch (RejectedExecutionException ree) {
 				process.destroy();
@@ -119,13 +122,13 @@ public class ProcessExecutor {
 	}
 
 	public void destroy() {
-		if (_executorService == null) {
+		if (_threadPoolExecutor == null) {
 			return;
 		}
 
 		synchronized (ProcessExecutor.class) {
-			if (_executorService != null) {
-				_executorService.shutdownNow();
+			if (_threadPoolExecutor != null) {
+				_threadPoolExecutor.shutdownNow();
 
 				// At this point, the thread pool will no longer take in any
 				// more subprocess reactors, so we know the list of managed
@@ -151,104 +154,96 @@ public class ProcessExecutor {
 
 				_managedProcesses.clear();
 
-				_executorService = null;
+				_threadPoolExecutor = null;
 			}
 		}
 	}
 
-	private static ExecutorService _getExecutorService() {
-		if (_executorService != null) {
-			return _executorService;
+	private static ThreadPoolExecutor _getThreadPoolExecutor() {
+		if (_threadPoolExecutor != null) {
+			return _threadPoolExecutor;
 		}
 
 		synchronized (ProcessExecutor.class) {
-			if (_executorService == null) {
-				_executorService = Executors.newCachedThreadPool(
+			if (_threadPoolExecutor == null) {
+				_threadPoolExecutor = new ThreadPoolExecutor(
+					0, Integer.MAX_VALUE, 60, TimeUnit.SECONDS, true,
+					Integer.MAX_VALUE, new AbortPolicy(),
 					new NamedThreadFactory(
 						ProcessExecutor.class.getName(), Thread.MIN_PRIORITY,
-						PortalClassLoaderUtil.getClassLoader()));
+						PortalClassLoaderUtil.getClassLoader()),
+					new ThreadPoolHandlerAdapter());
 			}
 		}
 
-		return _executorService;
+		return _threadPoolExecutor;
+	}
+
+	private static <T extends Serializable> NoticeableFuture<T>
+		_wrapNoticeableFuture(
+			final NoticeableFuture<ProcessCallable<? extends Serializable>>
+				processCallableNoticeableFuture,
+			final Process process) {
+
+		final DefaultNoticeableFuture<T> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<T>();
+
+		defaultNoticeableFuture.addFutureListener(
+			new FutureListener<T>() {
+
+				@Override
+				public void complete(Future<T> future) {
+					if (future.isCancelled()) {
+						processCallableNoticeableFuture.cancel(true);
+
+						process.destroy();
+					}
+				}
+
+			});
+
+		processCallableNoticeableFuture.addFutureListener(
+			new FutureListener<ProcessCallable<? extends Serializable>>() {
+
+				@Override
+				public void complete(
+					Future<ProcessCallable<? extends Serializable>> future) {
+
+					try {
+						ProcessCallable<?> processCallable = future.get();
+
+						if (processCallable instanceof
+								ReturnProcessCallable<?>) {
+
+							defaultNoticeableFuture.set(
+								(T)processCallable.call());
+						}
+
+						ExceptionProcessCallable exceptionProcessCallable =
+							(ExceptionProcessCallable)processCallable;
+
+						defaultNoticeableFuture.setException(
+							exceptionProcessCallable.call());
+					}
+					catch (Throwable t) {
+						if (t instanceof ExecutionException) {
+							t = t.getCause();
+						}
+
+						defaultNoticeableFuture.setException(t);
+					}
+				}
+
+			});
+
+		return defaultNoticeableFuture;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ProcessExecutor.class);
 
-	private static volatile ExecutorService _executorService;
 	private static Set<Process> _managedProcesses =
 		new ConcurrentHashSet<Process>();
-
-	private static class ProcessExecutionFutureResult<T> implements Future<T> {
-
-		public ProcessExecutionFutureResult(
-			Future<ProcessCallable<? extends Serializable>> future,
-			Process process) {
-
-			_future = future;
-			_process = process;
-		}
-
-		@Override
-		public boolean cancel(boolean mayInterruptIfRunning) {
-			if (_future.isCancelled() || _future.isDone()) {
-				return false;
-			}
-
-			_future.cancel(true);
-			_process.destroy();
-
-			return true;
-		}
-
-		@Override
-		public T get() throws ExecutionException, InterruptedException {
-			ProcessCallable<?> processCallable = _future.get();
-
-			return get(processCallable);
-		}
-
-		@Override
-		public T get(long timeout, TimeUnit timeUnit)
-			throws ExecutionException, InterruptedException, TimeoutException {
-
-			ProcessCallable<?> processCallable = _future.get(timeout, timeUnit);
-
-			return get(processCallable);
-		}
-
-		@Override
-		public boolean isCancelled() {
-			return _future.isCancelled();
-		}
-
-		@Override
-		public boolean isDone() {
-			return _future.isDone();
-		}
-
-		private T get(ProcessCallable<?> processCallable)
-			throws ExecutionException {
-
-			try {
-				if (processCallable instanceof ReturnProcessCallable<?>) {
-					return (T)processCallable.call();
-				}
-
-				ExceptionProcessCallable exceptionProcessCallable =
-					(ExceptionProcessCallable)processCallable;
-
-				throw exceptionProcessCallable.call();
-			}
-			catch (ProcessException pe) {
-				throw new ExecutionException(pe);
-			}
-		}
-
-		private final Future<ProcessCallable<?>> _future;
-		private final Process _process;
-
-	}
+	private static volatile ThreadPoolExecutor _threadPoolExecutor;
 
 	private static class SubprocessReactor
 		implements Callable<ProcessCallable<? extends Serializable>> {

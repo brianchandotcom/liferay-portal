@@ -4487,7 +4487,7 @@ public class JournalArticleLocalServiceImpl
 			article.setResourcePrimKey(latestArticle.getResourcePrimKey());
 			article.setGroupId(latestArticle.getGroupId());
 			article.setCompanyId(latestArticle.getCompanyId());
-			article.setCreateDate(serviceContext.getModifiedDate(now));
+			article.setCreateDate(latestArticle.getCreateDate());
 			article.setClassNameId(latestArticle.getClassNameId());
 			article.setClassPK(latestArticle.getClassPK());
 			article.setArticleId(articleId);
@@ -4732,7 +4732,7 @@ public class JournalArticleLocalServiceImpl
 			article.setCompanyId(oldArticle.getCompanyId());
 			article.setUserId(oldArticle.getUserId());
 			article.setUserName(user.getFullName());
-			article.setCreateDate(new Date());
+			article.setCreateDate(oldArticle.getCreateDate());
 			article.setModifiedDate(new Date());
 			article.setClassNameId(oldArticle.getClassNameId());
 			article.setClassPK(oldArticle.getClassPK());

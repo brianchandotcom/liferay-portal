@@ -292,9 +292,8 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 	private static final String _COMPILE_MODE_JIT = "jit";
 
-	private static final Field _globalRuntimeField;
 	private static final Log _log = LogFactoryUtil.getLog(RubyExecutor.class);
-
+	private static final Field _globalRuntimeField;
 	private static final ThreadFactory _threadFactory =
 		new NamedThreadFactory(
 			RubyExecutor.class.getName(), Thread.NORM_PRIORITY,

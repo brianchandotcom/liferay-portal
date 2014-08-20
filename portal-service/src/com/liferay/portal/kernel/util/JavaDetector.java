@@ -168,7 +168,6 @@ public class JavaDetector {
 	private static final String _JAVA_VERSION_JDK_7 = "1.7.";
 
 	private static final Log _log = LogFactoryUtil.getLog(JavaDetector.class);
-
 	private static final JavaDetector _instance = new JavaDetector();
 
 	private final boolean _64bit;

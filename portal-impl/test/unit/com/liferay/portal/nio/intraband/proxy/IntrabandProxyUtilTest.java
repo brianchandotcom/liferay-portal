@@ -2727,10 +2727,10 @@ public class IntrabandProxyUtilTest {
 	private static class TestValidateClass {
 
 		@SuppressWarnings("unused")
-		private static Log _log;
+		private static String[] PROXY_METHOD_SIGNATURES;
 
 		@SuppressWarnings("unused")
-		private static String[] PROXY_METHOD_SIGNATURES;
+		private static Log _log;
 
 		@SuppressWarnings("unused")
 		private static String _proxyMethodsMapping;

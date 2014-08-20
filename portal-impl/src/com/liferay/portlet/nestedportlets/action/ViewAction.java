@@ -189,9 +189,9 @@ public class ViewAction extends PortletAction {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(ViewAction.class);
 	private static final Pattern _columnIdPattern = Pattern.compile(
 		"([<].*?id=[\"'])([^ ]*?)([\"'].*?[>])", Pattern.DOTALL);
-	private static final Log _log = LogFactoryUtil.getLog(ViewAction.class);
 	private static final Pattern _processColumnPattern = Pattern.compile(
 		"(processColumn[(]\")(.*?)(\"(?:, *\"(?:.*?)\")?[)])", Pattern.DOTALL);
 

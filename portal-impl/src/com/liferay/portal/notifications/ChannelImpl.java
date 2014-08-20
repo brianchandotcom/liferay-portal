@@ -640,9 +640,9 @@ public class ChannelImpl extends BaseChannelImpl {
 		return _unconfirmedNotificationEvents;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(ChannelImpl.class);
 	private static final Comparator<NotificationEvent> _comparator =
 		new NotificationEventComparator();
-	private static final Log _log = LogFactoryUtil.getLog(ChannelImpl.class);
 
 	private TreeSet<NotificationEvent> _notificationEvents;
 	private final ReentrantLock _reentrantLock = new ReentrantLock();

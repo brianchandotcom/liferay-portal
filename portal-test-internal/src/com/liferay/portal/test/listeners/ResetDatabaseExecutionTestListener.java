@@ -271,10 +271,10 @@ public class ResetDatabaseExecutionTestListener
 		}
 	}
 
-	private static final Map<Long, String> _initializedIndexNames =
-		new HashMap<Long, String>();
 	private static final Log _log = LogFactoryUtil.getLog(
 		ResetDatabaseExecutionTestListener.class);
+	private static final Map<Long, String> _initializedIndexNames =
+		new HashMap<Long, String>();
 
 	private static String _initializedDLFileSystemStoreDirName;
 	private static String _initializedDLJCRStoreDirName;

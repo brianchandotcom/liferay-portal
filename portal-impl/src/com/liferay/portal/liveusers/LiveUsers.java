@@ -546,8 +546,8 @@ public class LiveUsers {
 		return liveUsers;
 	}
 
-	private static final LiveUsers _instance = new LiveUsers();
 	private static final Log _log = LogFactoryUtil.getLog(LiveUsers.class);
+	private static final LiveUsers _instance = new LiveUsers();
 
 	// PLACEHOLDER 26
 

@@ -432,8 +432,8 @@ public class OpenSSOUtil {
 
 	private static final String _VALIDATE_TOKEN = "/identity/isTokenValid";
 
-	private static final OpenSSOUtil _instance = new OpenSSOUtil();
 	private static final Log _log = LogFactoryUtil.getLog(OpenSSOUtil.class);
+	private static final OpenSSOUtil _instance = new OpenSSOUtil();
 
 	private final Map<String, String[]> _cookieNamesMap =
 		new ConcurrentHashMap<String, String[]>();

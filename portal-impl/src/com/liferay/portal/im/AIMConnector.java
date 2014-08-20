@@ -85,8 +85,8 @@ public class AIMConnector {
 		}
 	}
 
-	private static final AIMConnector _instance = new AIMConnector();
 	private static final Log _log = LogFactoryUtil.getLog(AIMConnector.class);
+	private static final AIMConnector _instance = new AIMConnector();
 
 	private AIMSession _aim;
 	private final Oscar _oscar = null;

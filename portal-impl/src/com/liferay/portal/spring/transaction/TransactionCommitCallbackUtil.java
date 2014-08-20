@@ -115,6 +115,9 @@ public class TransactionCommitCallbackUtil {
 		callbackListList.add(Collections.<Callable<?>>emptyList());
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		TransactionCommitCallbackUtil.class);
+
 	private static final ThreadLocal<List<List<Callable<?>>>>
 		_callbackListListThreadLocal =
 			new AutoResetThreadLocal<List<List<Callable<?>>>>(
@@ -127,8 +130,5 @@ public class TransactionCommitCallbackUtil {
 				}
 
 			};
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		TransactionCommitCallbackUtil.class);
 
 }

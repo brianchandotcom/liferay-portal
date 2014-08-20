@@ -261,8 +261,8 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 
 	private static final String _HTML_TOP_WRAPPER = "<html><body>";
 
-	private static final Field _cacheField;
 	private static final Log _log = LogFactoryUtil.getLog(AxisServlet.class);
+	private static final Field _cacheField;
 
 	private String _correctLongArray;
 	private String _correctOrderByComparator;

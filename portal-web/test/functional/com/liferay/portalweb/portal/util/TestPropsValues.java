@@ -40,11 +40,23 @@ public class TestPropsValues
 	public static final String EMAIL_ADDRESS_2 = TestPropsUtil.get(
 		"email.address.2");
 
+	public static final String EMAIL_ADDRESS_3 = TestPropsUtil.get(
+		"email.address.3");
+
+	public static final String EMAIL_ADDRESS_4 = TestPropsUtil.get(
+		"email.address.4");
+
 	public static final String EMAIL_PASSWORD_1 = TestPropsUtil.get(
 		"email.password.1");
 
 	public static final String EMAIL_PASSWORD_2 = TestPropsUtil.get(
 		"email.password.2");
+
+	public static final String EMAIL_PASSWORD_3 = TestPropsUtil.get(
+		"email.password.3");
+
+	public static final String EMAIL_PASSWORD_4 = TestPropsUtil.get(
+		"email.password.4");
 
 	public static final String[] FIXED_ISSUES = StringUtil.split(
 		TestPropsUtil.get("fixed.issues"));

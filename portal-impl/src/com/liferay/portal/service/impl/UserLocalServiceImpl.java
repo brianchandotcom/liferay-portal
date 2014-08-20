@@ -3714,24 +3714,28 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Map<Locale, String> localizedBodyMap = null;
 
 		String prefix = null;
+		String subjectProperty = null;
+		String bodyProperty = null;
 
 		if (company.isSendPasswordResetLink()) {
 			prefix = "adminEmailPasswordReset";
+			subjectProperty = PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT;
+			bodyProperty = PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY;
 		}
 		else {
 			prefix = "adminEmailPasswordSent";
+			subjectProperty = PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT;
+			bodyProperty = PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_BODY;
 		}
 
 		if (Validator.isNull(subject)) {
 			localizedSubjectMap = LocalizationUtil.getLocalizationMap(
-				companyPortletPreferences, prefix + "Subject",
-				PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT);
+				companyPortletPreferences, prefix + "Subject", subjectProperty);
 		}
 
 		if (Validator.isNull(body)) {
 			localizedBodyMap = LocalizationUtil.getLocalizationMap(
-				companyPortletPreferences, prefix + "Body",
-				PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY);
+				companyPortletPreferences, prefix + "Body", bodyProperty);
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();

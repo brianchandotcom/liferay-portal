@@ -1,7 +1,7 @@
 <#include "../init.ftl">
 
-<#if fieldValue?? && fieldValue != "">
-	<div class="field-wrapper-content lfr-forms-field-wrapper">
+<div class="field-wrapper-content lfr-forms-field-wrapper">
+	<#if fieldValue?? && fieldValue != "">
 		<#if !disabled>
 			<@aui.input name=namespacedFieldName type="hidden" value=fieldValue />
 		</#if>
@@ -10,8 +10,8 @@
 			<@liferay_ui.message key=escape(label) />
 		</label>
 
-		${fieldValue}
+		${escape(fieldValue)}
+	</#if>
 
-		${fieldStructure.children}
-	</div>
-</#if>
+	${fieldStructure.children}
+</div>

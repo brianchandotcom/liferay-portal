@@ -369,7 +369,7 @@ public class DefaultDLFileEntryActionsDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"85F6C50E-3893-4E32-9D63-208528A503FA");
 
-	private final DLActionsDisplayContext _dlActionsDisplayContext;
+	private final long _companyId;
 	private final DLFileEntryActionsDisplayContextHelper
 		_dlFileEntryActionsDisplayContextHelper;
 	private final long _fileEntryTypeId;

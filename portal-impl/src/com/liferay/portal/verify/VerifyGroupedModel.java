@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * @author Shinn Lok
  */
-public class VerifyGroupId extends VerifyProcess {
+public class VerifyGroupedModel extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
@@ -151,7 +151,7 @@ public class VerifyGroupId extends VerifyProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(VerifyGroupId.class);
+	private static Log _log = LogFactoryUtil.getLog(VerifyGroupedModel.class);
 
 	private ServiceTrackerList<VerifiableGroupedModel>
 		_verifiableGroupedModels = ServiceTrackerCollections.list(

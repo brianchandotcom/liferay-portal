@@ -29,7 +29,7 @@ public class VerifyGroupIdTest extends BaseVerifyTestCase {
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return new VerifyGroupId();
+		return new VerifyGroupedModel();
 	}
 
 }

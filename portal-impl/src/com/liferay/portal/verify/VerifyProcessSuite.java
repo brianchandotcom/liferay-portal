@@ -41,7 +41,7 @@ public class VerifyProcessSuite extends VerifyProcess {
 		verify(new VerifyCalendar());
 		verify(new VerifyDocumentLibrary());
 		verify(new VerifyDynamicDataMapping());
-		verify(new VerifyGroupId());
+		verify(new VerifyGroupedModel());
 		verify(new VerifyJournal());
 		verify(new VerifyLayout());
 		verify(new VerifyMessageBoards());

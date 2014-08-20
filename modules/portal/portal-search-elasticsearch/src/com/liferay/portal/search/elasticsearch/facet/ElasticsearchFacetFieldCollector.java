@@ -26,9 +26,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.elasticsearch.common.text.Text;
-import org.elasticsearch.search.facet.Facet;
-import org.elasticsearch.search.facet.range.RangeFacet;
-import org.elasticsearch.search.facet.terms.TermsFacet;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.bucket.range.Range;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 
 /**
  * @author Michael C. Han
@@ -109,9 +109,9 @@ public class ElasticsearchFacetFieldCollector implements FacetCollector {
 
 	private static final String _TO_STRING = " TO ";
 
+	private Aggregation _aggregation;
 	private final Map<String, Integer> _counts =
 		new ConcurrentHashMap<String, Integer>();
-	private Facet _facet;
 	private List<TermCollector> _termCollectors;
 
 }

@@ -810,6 +810,10 @@
 	<bean id="com.liferay.portal.verify.model.audited.RepositoryEntryVerifiableAuditedModel" class="com.liferay.portal.verify.model.audited.RepositoryEntryVerifiableAuditedModel" />
 	<bean id="com.liferay.portal.verify.model.audited.RoleVerifiableAuditedModel" class="com.liferay.portal.verify.model.audited.RoleVerifiableAuditedModel" />
 	<bean id="com.liferay.portal.verify.model.audited.UserGroupVerifiableAuditedModel" class="com.liferay.portal.verify.model.audited.UserGroupVerifiableAuditedModel" />
+	<bean id="com.liferay.portal.verify.model.grouped.MBDiscussionVerifiableGroupedModel" class="com.liferay.portal.verify.model.grouped.MBDiscussionVerifiableGroupedModel" />
+	<bean id="com.liferay.portal.verify.model.grouped.MBThreadFlagVerifiableGroupedModel" class="com.liferay.portal.verify.model.grouped.MBThreadFlagVerifiableGroupedModel" />
+	<bean id="com.liferay.portal.verify.model.grouped.PollsChoiceVerifiableGroupedModel" class="com.liferay.portal.verify.model.grouped.PollsChoiceVerifiableGroupedModel" />
+	<bean id="com.liferay.portal.verify.model.grouped.PollsVoteVerifiableGroupedModel" class="com.liferay.portal.verify.model.grouped.PollsVoteVerifiableGroupedModel" />
 	<bean id="com.liferay.portal.verify.model.resourced.AnnouncementsEntryVerifiableResourcedModel" class="com.liferay.portal.verify.model.resourced.AnnouncementsEntryVerifiableResourcedModel" />
 	<bean id="com.liferay.portal.verify.model.resourced.AssetCategoryVerifiableResourcedModel" class="com.liferay.portal.verify.model.resourced.AssetCategoryVerifiableResourcedModel" />
 	<bean id="com.liferay.portal.verify.model.resourced.AssetTagVerifiableResourcedModel" class="com.liferay.portal.verify.model.resourced.AssetTagVerifiableResourcedModel" />

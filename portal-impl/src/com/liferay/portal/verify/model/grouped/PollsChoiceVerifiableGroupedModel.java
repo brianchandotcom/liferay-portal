@@ -12,24 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.verify;
-
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
-
-import org.junit.runner.RunWith;
+package com.liferay.portal.verify.model.grouped;
 
 /**
- * @author Manuel de la Peña
+ * @author Miguel Pastor
  */
-@ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class VerifyGroupIdTest extends BaseVerifyTestCase {
+public class PollsChoiceVerifiableGroupedModel
+	implements VerifiableGroupedModel {
 
 	@Override
-	protected VerifyProcess getVerifyProcess() {
-		return new VerifyGroupedModel();
+	public String getPrimaryKeyColumnName() {
+		return "choiceId";
+	}
+
+	@Override
+	public String getRelatedModelName() {
+		return "PollsQuestion";
+	}
+
+	@Override
+	public String getRelatedPKColumnName() {
+		return "questionId";
+	}
+
+	@Override
+	public String getTableName() {
+		return "PollsChoice";
 	}
 
 }

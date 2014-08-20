@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.verify.model.grouped.VerifiableGroupedModel;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,30 +36,37 @@ public class VerifyGroupId extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		List<String> pendingModels = new ArrayList<String>();
+		List<String> unverifiableTableName = new ArrayList<String>();
 
-		for (String[] model : _MODELS) {
-			pendingModels.add(model[0]);
+		for (VerifiableGroupedModel verifiableGroupedModel :
+				_verifiableGroupedModels) {
+
+			unverifiableTableName.add(verifiableGroupedModel.getTableName());
 		}
 
-		while (!pendingModels.isEmpty()) {
-			int count = pendingModels.size();
+		while (!unverifiableTableName.isEmpty()) {
+			int count = unverifiableTableName.size();
 
-			for (String[] model : _MODELS) {
-				if (pendingModels.contains(model[2]) ||
-					!pendingModels.contains(model[0])) {
+			for (VerifiableGroupedModel verifiableGroupedModel :
+					_verifiableGroupedModels) {
+
+				if (unverifiableTableName.contains(
+						verifiableGroupedModel.getRelatedModelName()) ||
+					!unverifiableTableName.contains(
+						verifiableGroupedModel.getTableName())) {
 
 					continue;
 				}
 
-				verifyModel(model[0], model[1], model[2], model[3]);
+				verifyModel(verifiableGroupedModel);
 
-				pendingModels.remove(model[0]);
+				unverifiableTableName.remove(
+					verifiableGroupedModel.getTableName());
 			}
 
-			if (pendingModels.size() == count) {
+			if (unverifiableTableName.size() == count) {
 				throw new VerifyException(
-					"Circular dependency detected " + pendingModels);
+					"Circular dependency detected " + unverifiableTableName);
 			}
 		}
 	}
@@ -96,9 +106,7 @@ public class VerifyGroupId extends VerifyProcess {
 		}
 	}
 
-	protected void verifyModel(
-			String modelName, String pkColumnName, String relatedModelName,
-			String relatedPKColumnName)
+	protected void verifyModel(VerifiableGroupedModel verifiableGroupedModel)
 		throws Exception {
 
 		Connection con = null;
@@ -108,9 +116,15 @@ public class VerifyGroupId extends VerifyProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
+			String tableName = verifiableGroupedModel.getTableName();
+			String pkColumnName =
+				verifiableGroupedModel.getPrimaryKeyColumnName();
+			String relatedPKColumnName =
+				verifiableGroupedModel.getRelatedPKColumnName();
+
 			ps = con.prepareStatement(
 				"select " + pkColumnName + StringPool.COMMA_AND_SPACE +
-					relatedPKColumnName + " from " + modelName + " where " +
+					relatedPKColumnName + " from " + tableName + " where " +
 						"groupId is null");
 
 			rs = ps.executeQuery();
@@ -120,14 +134,15 @@ public class VerifyGroupId extends VerifyProcess {
 				long relatedPrimKey = rs.getLong(relatedPKColumnName);
 
 				long groupId = getGroupId(
-					relatedModelName, relatedPKColumnName, relatedPrimKey);
+					verifiableGroupedModel.getRelatedModelName(),
+					relatedPKColumnName, relatedPrimKey);
 
 				if (groupId <= 0) {
 					continue;
 				}
 
 				runSQL(
-					"update " + modelName + " set groupId = " + groupId +
+					"update " + tableName + " set groupId = " + groupId +
 						" where " + pkColumnName + " = " + primKey);
 			}
 		}
@@ -136,8 +151,10 @@ public class VerifyGroupId extends VerifyProcess {
 		}
 	}
 
-	private static final String[][] _MODELS = new String[][] {};
-
 	private static Log _log = LogFactoryUtil.getLog(VerifyGroupId.class);
+
+	private ServiceTrackerList<VerifiableGroupedModel>
+		_verifiableGroupedModels = ServiceTrackerCollections.list(
+			VerifiableGroupedModel.class);
 
 }

@@ -262,16 +262,6 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
-		<portlet-name>23</portlet-name>
-		<icon>/html/icons/dictionary.png</icon>
-		<struts-path>dictionary</struts-path>
-		<remoteable>true</remoteable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-dictionary</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>25</portlet-name>
 		<icon>/html/icons/polls.png</icon>
 		<struts-path>polls</struts-path>

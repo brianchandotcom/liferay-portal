@@ -248,30 +248,6 @@
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
 	</portlet>
 	<portlet>
-		<portlet-name>23</portlet-name>
-		<display-name>Dictionary</display-name>
-		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/dictionary/</value>
-		</init-param>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/portlet/dictionary/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>25</portlet-name>
 		<display-name>Polls</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

@@ -181,6 +181,10 @@ public class JSONIncludesManagerImpl implements JSONIncludesManager {
 		for (Method method : methods) {
 			String name = _getPropertyName(method);
 
+			if (name == null) {
+				continue;
+			}
+
 			if (!include) {
 				Class<?> propertyType = method.getReturnType();
 
@@ -192,10 +196,8 @@ public class JSONIncludesManagerImpl implements JSONIncludesManager {
 			JSON json = method.getAnnotation(JSON.class);
 
 			if ((json != null) && (json.include() == include)) {
-				if (name != null) {
-					if (!list.contains(name)) {
-						list.add(name);
-					}
+				if (!list.contains(name)) {
+					list.add(name);
 				}
 			}
 		}

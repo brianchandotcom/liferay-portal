@@ -14,10 +14,9 @@
 
 package com.liferay.document.library.google.docs.context;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portlet.documentlibrary.context.BaseDLFileEntryActionsDisplayContext;
-import com.liferay.portlet.documentlibrary.context.DLFileEntryActionsDisplayContext;
+import com.liferay.portlet.documentlibrary.context.BaseDLFileVersionActionsDisplayContext;
+import com.liferay.portlet.documentlibrary.context.DLFileVersionActionsDisplayContext;
 
 import java.util.UUID;
 
@@ -27,17 +26,15 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public class GoogleDocsDLFileEntryActionsDisplayContext
-	extends BaseDLFileEntryActionsDisplayContext {
+public class GoogleDocsDLFileVersionActionsDisplayContext
+	extends BaseDLFileVersionActionsDisplayContext {
 
-	public GoogleDocsDLFileEntryActionsDisplayContext(
-		DLFileEntryActionsDisplayContext parentDLDisplayContext,
+	public GoogleDocsDLFileVersionActionsDisplayContext(
+		DLFileVersionActionsDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry, FileVersion fileVersion) {
+		FileVersion fileVersion) {
 
-		super(
-			_UUID, parentDLDisplayContext, request, response, fileEntry,
-			fileVersion);
+		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
 	}
 
 	private static final UUID _UUID = UUID.fromString(

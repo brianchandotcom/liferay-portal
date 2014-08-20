@@ -38,12 +38,13 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public class DefaultDLFileEntryActionsDisplayContext
-	implements DLFileEntryActionsDisplayContext {
+public class DefaultDLFileVersionActionsDisplayContext
+	implements DLFileVersionActionsDisplayContext {
 
-	public DefaultDLFileEntryActionsDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry, FileVersion fileVersion) {
+	public DefaultDLFileVersionActionsDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion)
+		throws PortalException {
 
 		_request = request;
 
@@ -51,6 +52,13 @@ public class DefaultDLFileEntryActionsDisplayContext
 			WebKeys.THEME_DISPLAY);
 
 		_companyId = themeDisplay.getCompanyId();
+
+		FileEntry fileEntry = null;
+
+		if (fileVersion != null) {
+			fileEntry = fileVersion.getFileEntry();
+		}
+
 		_dlFileEntryActionsDisplayContextHelper =
 			new DLFileEntryActionsDisplayContextHelper(
 				themeDisplay.getPermissionChecker(), fileEntry, fileVersion);

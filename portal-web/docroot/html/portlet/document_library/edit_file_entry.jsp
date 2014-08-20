@@ -112,7 +112,7 @@ if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 	saveAsDraft = true;
 }
 
-DLFileEntryActionsDisplayContext dlFileEntryActionsDisplayContext = DLFileEntryActionsDisplayContextUtil.getDLFileEntryActionsDisplayContext(request, response, fileEntry, fileVersion);
+DLFileVersionActionsDisplayContext dlFileVersionActionsDisplayContext = DLFileVersionActionsDisplayContextUtil.getDLFileVersionActionsDisplayContext(request, response, fileVersion);
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">
@@ -452,24 +452,24 @@ DLFileEntryActionsDisplayContext dlFileEntryActionsDisplayContext = DLFileEntryA
 		</c:if>
 
 		<aui:button-row>
-			<c:if test="<%= dlFileEntryActionsDisplayContext.isSaveButtonVisible() %>">
-				<aui:button disabled="<%= dlFileEntryActionsDisplayContext.isSaveButtonDisabled() %>" name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveFileEntry(true);" %>' value="<%= dlFileEntryActionsDisplayContext.getSaveButtonLabel() %>" />
+			<c:if test="<%= dlFileVersionActionsDisplayContext.isSaveButtonVisible() %>">
+				<aui:button disabled="<%= dlFileVersionActionsDisplayContext.isSaveButtonDisabled() %>" name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveFileEntry(true);" %>' value="<%= dlFileVersionActionsDisplayContext.getSaveButtonLabel() %>" />
 			</c:if>
 
-			<c:if test="<%= dlFileEntryActionsDisplayContext.isPublishButtonVisible() %>">
-				<aui:button disabled="<%= dlFileEntryActionsDisplayContext.isPublishButtonDisabled() %>" name="publishButton" type="submit" value="<%= dlFileEntryActionsDisplayContext.getPublishButtonLabel() %>" />
+			<c:if test="<%= dlFileVersionActionsDisplayContext.isPublishButtonVisible() %>">
+				<aui:button disabled="<%= dlFileVersionActionsDisplayContext.isPublishButtonDisabled() %>" name="publishButton" type="submit" value="<%= dlFileVersionActionsDisplayContext.getPublishButtonLabel() %>" />
 			</c:if>
 
-			<c:if test="<%= dlFileEntryActionsDisplayContext.isCheckoutDocumentButtonVisible() %>">
-				<aui:button disabled="<%= dlFileEntryActionsDisplayContext.isCheckoutDocumentDisabled() %>" onClick='<%= renderResponse.getNamespace() + "checkOut();" %>' value="checkout[document]" />
+			<c:if test="<%= dlFileVersionActionsDisplayContext.isCheckoutDocumentButtonVisible() %>">
+				<aui:button disabled="<%= dlFileVersionActionsDisplayContext.isCheckoutDocumentDisabled() %>" onClick='<%= renderResponse.getNamespace() + "checkOut();" %>' value="checkout[document]" />
 			</c:if>
 
-			<c:if test="<%= dlFileEntryActionsDisplayContext.isCheckinButtonVisible() %>">
-				<aui:button disabled="<%= dlFileEntryActionsDisplayContext.isCheckinButtonDisabled() %>" onClick='<%= renderResponse.getNamespace() + "checkIn();" %>' value="save-and-checkin" />
+			<c:if test="<%= dlFileVersionActionsDisplayContext.isCheckinButtonVisible() %>">
+				<aui:button disabled="<%= dlFileVersionActionsDisplayContext.isCheckinButtonDisabled() %>" onClick='<%= renderResponse.getNamespace() + "checkIn();" %>' value="save-and-checkin" />
 			</c:if>
 
-			<c:if test="<%= dlFileEntryActionsDisplayContext.isCancelCheckoutDocumentButtonVisible() %>">
-				<aui:button disabled="<%= dlFileEntryActionsDisplayContext.isCancelCheckoutDocumentButtonDisabled() %>" onClick='<%= renderResponse.getNamespace() + "cancelCheckOut();" %>' value="cancel-checkout[document]" />
+			<c:if test="<%= dlFileVersionActionsDisplayContext.isCancelCheckoutDocumentButtonVisible() %>">
+				<aui:button disabled="<%= dlFileVersionActionsDisplayContext.isCancelCheckoutDocumentButtonDisabled() %>" onClick='<%= renderResponse.getNamespace() + "cancelCheckOut();" %>' value="cancel-checkout[document]" />
 			</c:if>
 
 			<aui:button href="<%= redirect %>" type="cancel" />

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-activities",
-		"com.liferay.portlet.display-category=category.social",		
+		"com.liferay.portlet.display-category=category.social",
 		"com.liferay.portlet.friendly-url-mapping=activities",
 		"com.liferay.portlet.friendly-url-routes=com/liferay/portlet/activities/activities-friendly-url-routes.xml",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
@@ -45,11 +45,11 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user"
-	}, 
+	},
 	service = Portlet.class
 )
 public class ActivitiesPortlet extends MVCPortlet {
-	
+
 	/**
 	 * Force upgrades to register before the portlet is registered to prevent
 	 * race conditions.

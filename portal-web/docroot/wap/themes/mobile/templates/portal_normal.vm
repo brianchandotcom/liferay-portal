@@ -6,7 +6,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-	<title>$the_title - $company_name</title>
+	#if ($site_name == $company_name)
+		<title>$the_title - $company_name</title>
+	#else
+		<title>$the_title - $site_name - $company_name</title>
+	#end
 </head>
 
 <body>

@@ -5,7 +5,11 @@
 <html class="$root_css_class" dir="#language ("lang.dir")" lang="$w3c_language_id">
 
 <head>
-	<title>$the_title - $company_name</title>
+	#if ($site_name == $company_name)
+		<title>$the_title - $company_name</title>
+	#else
+		<title>$the_title - $site_name - $company_name</title>
+	#end
 
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 

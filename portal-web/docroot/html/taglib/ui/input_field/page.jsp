@@ -347,7 +347,6 @@ if (hints != null) {
 
 			boolean checkTab = false;
 			String displayHeight = ModelHintsConstants.TEXT_DISPLAY_HEIGHT;
-			String displayWidth = ModelHintsConstants.TEXT_DISPLAY_WIDTH;
 			boolean editor = false;
 			String maxLength = ModelHintsConstants.TEXT_MAX_LENGTH;
 			boolean secret = false;
@@ -357,7 +356,6 @@ if (hints != null) {
 				autoSize = GetterUtil.getBoolean(hints.get("autoSize"), autoSize);
 				checkTab = GetterUtil.getBoolean(hints.get("check-tab"), checkTab);
 				displayHeight = GetterUtil.getString(hints.get("display-height"), displayHeight);
-				displayWidth = GetterUtil.getString(hints.get("display-width"), displayWidth);
 				editor = GetterUtil.getBoolean(hints.get("editor"), editor);
 				maxLength = GetterUtil.getString(hints.get("max-length"), maxLength);
 				secret = GetterUtil.getBoolean(hints.get("secret"), secret);
@@ -369,32 +367,6 @@ if (hints != null) {
 			}
 
 			cssClass += " form-control";
-
-			if (Validator.isDigit(displayWidth)) {
-				int displayWidthInt = GetterUtil.getInteger(displayWidth);
-
-				if (displayWidthInt <= 60) {
-					cssClass += " input-mini";
-				}
-				else if ((displayWidthInt > 60) && (displayWidthInt <= 90)) {
-					cssClass += " input-small";
-				}
-				else if ((displayWidthInt > 90) && (displayWidthInt <= 150)) {
-					cssClass += " input-medium";
-				}
-				else if ((displayWidthInt > 210) && (displayWidthInt <= 270)) {
-					cssClass += " input-xlarge";
-				}
-				else if (displayWidthInt > 270) {
-					cssClass += " input-xxlarge";
-				}
-				else if (editor) {
-					cssClass += " lfr-input-editor";
-				}
-				else {
-					cssClass += " input-large";
-				}
-			}
 
 			boolean localized = ModelHintsUtil.isLocalized(model, field);
 

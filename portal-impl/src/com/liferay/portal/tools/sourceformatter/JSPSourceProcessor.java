@@ -106,10 +106,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					"Invalid include " + includeFileName);
 			}
 
-			String docrootPath = fileName.substring(
-				0, fileName.indexOf("docroot") + 7);
-
-			includeFileName = docrootPath + includeFileName;
+			includeFileName = buildFullPathIncludeFileName(
+				fileName, includeFileName);
 
 			if ((includeFileName.endsWith("jsp") ||
 				 includeFileName.endsWith("jspf")) &&
@@ -130,12 +128,45 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		for (Map.Entry<String, String> entry : _jspContents.entrySet()) {
 			String referenceFileName = entry.getKey();
-			String content = entry.getValue();
 
-			if (content.contains("<%@ include file=\"" + fileName) &&
-				!includeFileNames.contains(referenceFileName)) {
+			if (includeFileNames.contains(referenceFileName)) {
+				continue;
+			}
 
-				includeFileNames.add(referenceFileName);
+			String sharedPath = fileName.substring(
+				0, StringUtil.startsWithWeight(referenceFileName, fileName));
+
+			if (Validator.isNull(sharedPath) ||
+				!sharedPath.contains(StringPool.SLASH)) {
+
+				continue;
+			}
+
+			if (!sharedPath.endsWith(StringPool.SLASH)) {
+				sharedPath = sharedPath.substring(
+					0, sharedPath.lastIndexOf(CharPool.SLASH) + 1);
+			}
+
+			String content = null;
+
+			for (int x = -1;;) {
+				x = sharedPath.indexOf(CharPool.SLASH, x + 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				if (content == null) {
+					content = entry.getValue();
+				}
+
+				if (content.contains(
+						"<%@ include file=\"" + fileName.substring(x))) {
+
+					includeFileNames.add(referenceFileName);
+
+					break;
+				}
 			}
 		}
 	}
@@ -169,6 +200,40 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				unneededImports.add(importLine);
 			}
+		}
+	}
+
+	protected String buildFullPathIncludeFileName(
+		String fileName, String includeFileName) {
+
+		String topLevelDirName = null;
+
+		int x = includeFileName.indexOf(CharPool.SLASH, 1);
+
+		if (x != -1) {
+			topLevelDirName = includeFileName.substring(1, x);
+		}
+
+		while (true) {
+			int y = fileName.lastIndexOf(CharPool.SLASH);
+
+			if (y == -1) {
+				return StringPool.BLANK;
+			}
+
+			if (Validator.isNull(topLevelDirName) ||
+				fileName.equals(topLevelDirName) ||
+				fileName.endsWith(StringPool.SLASH + topLevelDirName)) {
+
+				String fullPathIncludeFileName =
+					fileName.substring(0, y) + includeFileName;
+
+				if (_jspContents.containsKey(fullPathIncludeFileName)) {
+					return fullPathIncludeFileName;
+				}
+			}
+
+			fileName = fileName.substring(0, y);
 		}
 	}
 
@@ -990,11 +1055,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		addJSPIncludeFileNames(fileName, includeFileNames);
 
-		String docrootPath = fileName.substring(
-			0, fileName.indexOf("docroot") + 7);
-
-		fileName = fileName.replaceFirst(docrootPath, StringPool.BLANK);
-
 		if (fileName.endsWith("init.jsp") || fileName.endsWith("init.jspf") ||
 			fileName.contains("init-ext.jsp")) {
 
@@ -1056,10 +1116,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		String includeFileName = content.substring(y + 1, z);
 
-		String docrootPath = fileName.substring(
-			0, fileName.indexOf("docroot") + 7);
-
-		includeFileName = docrootPath + includeFileName;
+		includeFileName = buildFullPathIncludeFileName(
+			fileName, includeFileName);
 
 		return isJSPDuplicateImport(includeFileName, importLine, true);
 	}
@@ -1119,9 +1177,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		fileName = fileName.replace(
 			CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
 
-		if (!fileName.contains("docroot") ||
-			fileName.endsWith("init-ext.jsp")) {
-
+		if (fileName.endsWith("init-ext.jsp")) {
 			return content;
 		}
 

@@ -17,4 +17,5 @@
 	<bean id="com.liferay.portal.spring.extender.internal.service.configurator.listener.StartedServiceConfiguratorListener" class="com.liferay.portal.spring.extender.internal.service.configurator.listener.StartedServiceConfiguratorListener" parent="com.liferay.portal.spring.extender.internal.service.configurator.listener.BaseServiceConfiguratorListener" />
 	<bean id="com.liferay.portal.spring.extender.internal.service.configurator.listener.StoppedServiceConfiguratorListener" class="com.liferay.portal.spring.extender.internal.service.configurator.listener.StoppedServiceConfiguratorListener" parent="com.liferay.portal.spring.extender.internal.service.configurator.listener.BaseServiceConfiguratorListener" />
 	<osgi:reference id="com.liferay.portal.service.ServiceComponentLocalService" availability="mandatory" filter="(original.bean=true)" interface="com.liferay.portal.service.ServiceComponentLocalService" />
+	<osgi:reference id="portal.servlet.context.service" availability="mandatory" filter="(original.bean=true)" interface="javax.servlet.ServletContext" />
 </beans>

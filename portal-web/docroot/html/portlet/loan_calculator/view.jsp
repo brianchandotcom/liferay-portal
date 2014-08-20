@@ -64,7 +64,6 @@ double interestPaid = totalPaid - loanAmount;
 					<aui:button-row>
 						<aui:button type="submit" value="calculate" />
 					</aui:button-row>
-
 				</aui:field-wrapper>
 			</aui:fieldset>
 		</aui:col>
@@ -72,16 +71,15 @@ double interestPaid = totalPaid - loanAmount;
 		<aui:col width="50">
 			<aui:fieldset>
 				<aui:field-wrapper>
-					<aui:input disabled="<%= true %>" name="monthly-payment" value="<%= integerFormat.format(amountPerPayment) %>" />
+					<aui:input disabled="<%= true %>" name="monthlyPayment" value="<%= integerFormat.format(amountPerPayment) %>" />
 
-					<aui:input disabled="<%= true %>" name="interest-paid" value="<%= integerFormat.format(interestPaid) %>" />
+					<aui:input disabled="<%= true %>" name="interestPaid" value="<%= integerFormat.format(interestPaid) %>" />
 
-					<aui:input disabled="<%= true %>" name="total-paid" value="<%= integerFormat.format(totalPaid) %>" />
+					<aui:input disabled="<%= true %>" name="totalPaid" value="<%= integerFormat.format(totalPaid) %>" />
 				</aui:field-wrapper>
 			</aui:fieldset>
 		</aui:col>
 	</aui:row>
-
 </aui:form>
 
 <aui:script use="aui-io-request,aui-parse-content">

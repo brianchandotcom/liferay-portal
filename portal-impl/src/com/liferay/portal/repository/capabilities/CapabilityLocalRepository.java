@@ -83,7 +83,16 @@ public class CapabilityLocalRepository
 
 	@Override
 	public void deleteAll() throws PortalException {
-		getRepository().deleteAll();
+		LocalRepository repository = getRepository();
+
+		if (isCapabilityProvided(TrashCapability.class)) {
+			TrashCapability trashCapability = getCapability(
+				TrashCapability.class);
+
+			trashCapability.deleteTrashEntries(getRepositoryId());
+		}
+
+		repository.deleteAll();
 	}
 
 	@Override

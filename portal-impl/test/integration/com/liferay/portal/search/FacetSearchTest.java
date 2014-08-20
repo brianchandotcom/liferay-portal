@@ -15,6 +15,7 @@
 package com.liferay.portal.search;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.FacetedSearcher;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.search.facet.util.FacetFactoryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.Sync;
@@ -40,10 +42,12 @@ import com.liferay.portal.util.test.UserTestUtil;
 
 import java.text.Format;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,7 +67,12 @@ public class FacetSearchTest {
 
 	@Before
 	public void setUp() throws Exception {
-		int initialUsersCount = 0;
+		int initialUsersCount;
+
+		_facetConfiguration = StringUtil.read(
+			getClass().getClassLoader(),
+			"com/liferay/portal/search/dependencies/facet-configurations.json",
+			true);
 
 		do {
 			_randomLastName = RandomTestUtil.randomString(10);
@@ -74,36 +83,38 @@ public class FacetSearchTest {
 
 		Calendar calendar = Calendar.getInstance();
 
-		calendar.add(Calendar.HOUR, -4);
+		calendar.add(Calendar.MINUTE, -1);
 
-		addUsers(
-			_USER_COUNT_LAST_24_HRS, calendar.getTime());
+		addUsers(_USER_COUNT_LAST_24_HRS, calendar.getTime());
 
 		calendar.add(Calendar.DATE, -3);
 
-		addUsers(
-			_USER_COUNT_LAST_WEEK, calendar.getTime());
+		addUsers(_USER_COUNT_LAST_WEEK, calendar.getTime());
 
 		calendar.add(Calendar.MONTH, -1);
 		calendar.add(Calendar.DATE, 7);
 
-		addUsers(
-			_USER_COUNT_LAST_MONTH, calendar.getTime());
+		addUsers(_USER_COUNT_LAST_MONTH, calendar.getTime());
 
 		calendar.add(Calendar.MONTH, 2);
 		calendar.add(Calendar.YEAR, -1);
 
-		addUsers(
-			_USER_COUNT_LAST_YEAR, calendar.getTime());
+		addUsers(_USER_COUNT_LAST_YEAR, calendar.getTime());
 
 		calendar.add(Calendar.MONTH, 5);
 		calendar.add(Calendar.YEAR, -2);
 
-		addUsers(
-			_USER_COUNT_LAST_TWO_YEAR, calendar.getTime());
+		addUsers(_USER_COUNT_LAST_TWO_YEAR, calendar.getTime());
 
 		_dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			_INDEX_DATE_FORMAT_PATTERN);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		for (User user : _users) {
+			UserLocalServiceUtil.deleteUser(user);
+		}
 	}
 
 	@Test
@@ -174,32 +185,40 @@ public class FacetSearchTest {
 				_USER_COUNT_LAST_MONTH + _USER_COUNT_LAST_YEAR);
 	}
 
+	@Test
+	public void testSearchUserSummaryFields() throws Exception {
+		SearchContext searchContext = createSearchContext();
+
+		searchContext.setAttribute("entryClassName", User.class.getName());
+
+		Indexer indexer = FacetedSearcher.getInstance();
+
+		Hits hits = indexer.search(searchContext);
+
+		for (Document doc : hits.getDocs()) {
+			Assert.assertNotNull(doc.get("firstName"));
+			Assert.assertNotNull(doc.get("middleName"));
+			Assert.assertNotNull(doc.get("lastName"));
+		}
+	}
+
 	protected void addUsers(int count, Date modifiedDate) throws Exception {
 		for (int i = 0; i < count; i ++) {
 			User user = UserTestUtil.addUser(
 				RandomTestUtil.randomString(), false,
 				RandomTestUtil.randomString(), _randomLastName,
-				new long[] {TestPropsValues.getGroupId()});
+				new long[]{TestPropsValues.getGroupId()});
 
 			user.setModifiedDate(modifiedDate);
 
-			UserLocalServiceUtil.updateUser(user);
+			user = UserLocalServiceUtil.updateUser(user);
+
+			_users.add(user);
 		}
 	}
 
-	protected int searchCount(Date startDate, Date endDate, int expectedCount)
-		throws Exception {
-
+	protected SearchContext createSearchContext() throws Exception {
 		SearchContext searchContext = new SearchContext();
-
-		searchContext.setAttribute("entryClassName", User.class.getName());
-
-		if (startDate != null && endDate != null) {
-			searchContext.setAttribute(
-				"modified",
-				"[" + _dateFormat.format(startDate) + " TO " +
-					_dateFormat.format(endDate) + "]");
-		}
 
 		searchContext.setCompanyId(TestPropsValues.getCompanyId());
 		searchContext.setEnd(QueryUtil.ALL_POS);
@@ -219,7 +238,7 @@ public class FacetSearchTest {
 		searchContext.addFacet(scopeFacet);
 
 		List<FacetConfiguration> facetConfigurations =
-			FacetConfigurationUtil.load(_FACET_CONFIGURATIONS);
+			FacetConfigurationUtil.load(_facetConfiguration);
 
 		for (FacetConfiguration facetConfiguration : facetConfigurations) {
 			Facet facet = FacetFactoryUtil.create(
@@ -230,6 +249,22 @@ public class FacetSearchTest {
 			}
 
 			searchContext.addFacet(facet);
+		}
+
+		return searchContext;
+	}
+
+	protected int searchCount(Date startDate, Date endDate, int expectedCount)
+		throws Exception {
+
+		SearchContext searchContext = createSearchContext();
+
+		searchContext.setAttribute("entryClassName", User.class.getName());
+
+		if ((startDate != null) && (endDate != null)) {
+			searchContext.setAttribute(
+				"modified", "[" + _dateFormat.format(startDate) + " TO " +
+					_dateFormat.format(endDate) + "]");
 		}
 
 		Indexer indexer = FacetedSearcher.getInstance();
@@ -243,159 +278,21 @@ public class FacetSearchTest {
 		return hits.getLength();
 	}
 
-	private static final String _FACET_CONFIGURATIONS = "{\n" +
-		"facets: [\n" +
-		"{\n" +
-		"className: 'com.liferay.portal.kernel.search.facet.ScopeFacet',\n" +
-		"data: {\n" +
-		"frequencyThreshold: 1,\n" +
-		"maxTerms: 10,\n" +
-		"showAssetCount: true\n" +
-		"},\n" +
-		"displayStyle: 'scopes',\n" +
-		"fieldName: 'groupId',\n" +
-		"label: 'site',\n" +
-		"order: 'OrderHitsDesc',\n" +
-		"static: false,\n" +
-		"weight: 1.6\n" +
-		"},\n" +
-		"{\n" +
-		"className: " +
-		"'com.liferay.portal.kernel.search.facet.AssetEntriesFacet',\n" +
-		"data: {\n" +
-		"frequencyThreshold: 1,\n" +
-		"values: [\n" +
-		"'com.liferay.portal.model.User',\n" +
-		"'com.liferay.portlet.bookmarks.model.BookmarksEntry',\n" +
-		"'com.liferay.portlet.bookmarks.model.BookmarksFolder',\n" +
-		"'com.liferay.portlet.blogs.model.BlogsEntry',\n" +
-		"'com.liferay.portlet.documentlibrary.model.DLFileEntry',\n" +
-		"'com.liferay.portlet.documentlibrary.model.DLFolder',\n" +
-		"'com.liferay.portlet.journal.model.JournalArticle',\n" +
-		"'com.liferay.portlet.journal.model.JournalFolder',\n" +
-		"'com.liferay.portlet.messageboards.model.MBMessage',\n" +
-		"'com.liferay.portlet.wiki.model.WikiPage'\n" +
-		"]\n" +
-		"},\n" +
-		"displayStyle: 'asset_entries',\n" +
-		"fieldName: 'entryClassName',\n" +
-		"label: 'asset-type',\n" +
-		"order: 'OrderHitsDesc',\n" +
-		"static: false,\n" +
-		"weight: 1.5\n" +
-		"},\n" +
-		"{\n" +
-		"className: " +
-		"'com.liferay.portal.kernel.search.facet.MultiValueFacet',\n" +
-		"data: {\n" +
-		"displayStyle: 'list',\n" +
-		"frequencyThreshold: 1,\n" +
-		"maxTerms: 10,\n" +
-		"showAssetCount: true\n" +
-		"},\n" +
-		"displayStyle: 'asset_tags',\n" +
-		"fieldName: 'assetTagNames',\n" +
-		"label: 'tag',\n" +
-		"order: 'OrderHitsDesc',\n" +
-		"static: false,\n" +
-		"weight: 1.4\n" +
-		"},\n" +
-		"{\n" +
-		"className: " +
-		"'com.liferay.portal.kernel.search.facet.MultiValueFacet',\n" +
-		"data: {\n" +
-		"displayStyle: 'list',\n" +
-		"frequencyThreshold: 1,\n" +
-		"maxTerms: 10,\n" +
-		"showAssetCount: true\n" +
-		"},\n" +
-		"displayStyle: 'asset_categories',\n" +
-		"fieldName: 'assetCategoryIds',\n" +
-		"label: 'category',\n" +
-		"order: 'OrderHitsDesc',\n" +
-		"static: false,\n" +
-		"weight: 1.3\n" +
-		"},\n" +
-		"{\n" +
-		"className: " +
-		"'com.liferay.portal.kernel.search.facet.MultiValueFacet',\n" +
-		"data: {\n" +
-		"frequencyThreshold: 1,\n" +
-		"maxTerms: 10,\n" +
-		"showAssetCount: true\n" +
-		"},\n" +
-		"displayStyle: 'folders',\n" +
-		"fieldName: 'folderId',\n" +
-		"label: 'folder',\n" +
-		"order: 'OrderHitsDesc',\n" +
-		"static: false,\n" +
-		"weight: 1.2\n" +
-		"},\n" +
-		"{\n" +
-		"className: " +
-		"'com.liferay.portal.kernel.search.facet.MultiValueFacet',\n" +
-		"data: {\n" +
-		"frequencyThreshold: 1,\n" +
-		"maxTerms: 10,\n" +
-		"showAssetCount: true\n" +
-		"},\n" +
-		"displayStyle: 'users',\n" +
-		"fieldName: 'userName',\n" +
-		"label: 'user',\n" +
-		"order: 'OrderHitsDesc',\n" +
-		"static: false,\n" +
-		"weight: 1.1\n" +
-		"},\n" +
-		"{\n" +
-		"className: 'com.liferay.portal.kernel.search.facet.ModifiedFacet',\n" +
-		"data: {\n" +
-		"frequencyThreshold: 0,\n" +
-		"ranges: [\n" +
-		"{\n" +
-		"label:'past-hour',\n" +
-		"range:'[past-hour TO *]'\n" +
-		"},\n" +
-		"{\n" +
-		"label:'past-24-hours',\n" +
-		"range:'[past-24-hours TO *]'\n" +
-		"},\n" +
-		"{\n" +
-		"label:'past-week',\n" +
-		"range:'[past-week TO *]'\n" +
-		"},\n" +
-		"{\n" +
-		"label:'past-month',\n" +
-		"range:'[past-month TO *]'\n" +
-		"},\n" +
-		"{\n" +
-		"label:'past-year',\n" +
-		"range:'[past-year TO *]'\n" +
-		"}\n" +
-		"]\n" +
-		"},\n" +
-		"displayStyle: 'modified',\n" +
-		"fieldName: 'modified',\n" +
-		"label: 'modified',\n" +
-		"order: 'OrderHitsDesc',\n" +
-		"static: false,\n" +
-		"weight: 1.0\n" +
-		"}\n" +
-		"]\n" +
-		"}";
-
 	private static final String _INDEX_DATE_FORMAT_PATTERN = "yyyyMMddHHmmss";
 
-	private static final int _USER_COUNT_LAST_24_HRS = 10;
+	private static final int _USER_COUNT_LAST_24_HRS = 2;
 
-	private static final int _USER_COUNT_LAST_MONTH = 10;
+	private static final int _USER_COUNT_LAST_MONTH = 2;
 
-	private static final int _USER_COUNT_LAST_TWO_YEAR = 10;
+	private static final int _USER_COUNT_LAST_TWO_YEAR = 2;
 
-	private static final int _USER_COUNT_LAST_WEEK = 10;
+	private static final int _USER_COUNT_LAST_WEEK = 2;
 
-	private static final int _USER_COUNT_LAST_YEAR = 10;
+	private static final int _USER_COUNT_LAST_YEAR = 2;
 
 	private Format _dateFormat;
+	private String _facetConfiguration;
 	private String _randomLastName;
+	private List<User> _users = new ArrayList<User>();
 
 }

@@ -86,8 +86,7 @@ public abstract class BaseModelUserNotificationHandler
 			getBodyTemplate(), new String[] {"[$BODY$]", "[$TITLE$]"},
 			new String[] {
 				HtmlUtil.escape(
-					StringUtil.shorten(jsonObject.getString("entryTitle"), 30),
-					50),
+					StringUtil.shorten(jsonObject.getString("entryTitle"), 70)),
 				getTitle(jsonObject, assetRenderer, serviceContext)
 			});
 	}

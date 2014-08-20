@@ -37,7 +37,9 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 		String name1 = javaTerm1.getName();
 		String name2 = javaTerm2.getName();
 
-		if (type1 == JavaClass.TYPE_VARIABLE_PRIVATE_STATIC) {
+		if ((type1 == JavaClass.TYPE_VARIABLE_PRIVATE_STATIC) ||
+			(type1 == JavaClass.TYPE_VARIABLE_PRIVATE_STATIC_FINAL)) {
+
 			if (name2.equals("_log") || name2.equals("_logger")) {
 				return 1;
 			}

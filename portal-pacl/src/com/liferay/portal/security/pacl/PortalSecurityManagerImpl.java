@@ -22,6 +22,9 @@ import com.liferay.portal.freemarker.FreeMarkerTemplate;
 import com.liferay.portal.freemarker.LiferayTemplateCache;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.concurrent.ConcurrentIdentityHashMap;
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -379,6 +382,9 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initClass(ActivePACLPolicy.class);
 		initClass(BaseTemplateManager.class);
 		initClass(CentralizedThreadLocal.class);
+		initClass(ConcurrentIdentityHashMap.class);
+		initClass(ConcurrentReferenceKeyHashMap.class);
+		initClass(ConcurrentReferenceValueHashMap.class);
 		initClass(
 			com.liferay.portal.kernel.security.pacl.permission.
 				CheckMemberAccessPermission.class);

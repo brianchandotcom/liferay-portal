@@ -31,6 +31,6 @@ public class ClassLoaderSource implements Source {
 		return _classLoader.getResourceAsStream(name);
 	}
 
-	private ClassLoader _classLoader;
+	private final ClassLoader _classLoader;
 
 }

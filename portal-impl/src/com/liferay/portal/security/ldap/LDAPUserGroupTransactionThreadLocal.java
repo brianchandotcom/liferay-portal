@@ -29,7 +29,7 @@ public class LDAPUserGroupTransactionThreadLocal {
 		_originatesFromLDAP.set(originatesFromLDAP);
 	}
 
-	private static ThreadLocal<Boolean> _originatesFromLDAP =
+	private static final ThreadLocal<Boolean> _originatesFromLDAP =
 		new InitialThreadLocal<Boolean>(
 			LDAPUserGroupTransactionThreadLocal.class + "._originatesFromLDAP",
 			false);

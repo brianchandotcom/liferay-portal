@@ -78,6 +78,6 @@ public class StructureIdComparator extends OrderByComparator<DDMStructure> {
 		return _ascending;
 	}
 
-	private boolean _ascending;
+	private final boolean _ascending;
 
 }

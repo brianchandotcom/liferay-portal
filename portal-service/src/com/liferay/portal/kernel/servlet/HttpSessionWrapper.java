@@ -137,6 +137,6 @@ public class HttpSessionWrapper implements HttpSession {
 		_session.setMaxInactiveInterval(interval);
 	}
 
-	private HttpSession _session;
+	private final HttpSession _session;
 
 }

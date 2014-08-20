@@ -177,6 +177,6 @@ public class OpenSSOFilter extends BasePortalFilter {
 
 	private static final String _SUBJECT_ID_KEY = "open.sso.subject.id";
 
-	private static Log _log = LogFactoryUtil.getLog(OpenSSOFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(OpenSSOFilter.class);
 
 }

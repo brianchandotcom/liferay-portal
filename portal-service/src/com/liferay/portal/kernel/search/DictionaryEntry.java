@@ -31,6 +31,9 @@ public class DictionaryEntry {
 		if (values.length == 2) {
 			_weight = GetterUtil.getFloat(values[1]);
 		}
+		else {
+			_weight = 0;
+		}
 	}
 
 	public float getWeight() {
@@ -41,7 +44,7 @@ public class DictionaryEntry {
 		return _word;
 	}
 
-	private float _weight;
-	private String _word;
+	private final float _weight;
+	private final String _word;
 
 }

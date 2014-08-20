@@ -55,6 +55,7 @@ public class RuleGroupChecker extends RowChecker {
 		return super.isDisabled(obj);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RuleGroupChecker.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		RuleGroupChecker.class);
 
 }

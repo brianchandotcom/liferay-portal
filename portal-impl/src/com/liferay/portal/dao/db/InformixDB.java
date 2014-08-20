@@ -189,6 +189,6 @@ public class InformixDB extends BaseDB {
 		" int8", " lvarchar", " text", " varchar", "", "commit"
 	};
 
-	private static InformixDB _instance = new InformixDB();
+	private static final InformixDB _instance = new InformixDB();
 
 }

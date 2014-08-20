@@ -98,7 +98,7 @@ public class JSONServlet extends HttpServlet {
 		return jsonAction;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(JSONServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(JSONServlet.class);
 
 	private JSONAction _jsonAction;
 	private ClassLoader _pluginClassLoader;

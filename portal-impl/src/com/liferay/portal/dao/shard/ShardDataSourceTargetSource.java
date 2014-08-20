@@ -90,12 +90,10 @@ public class ShardDataSourceTargetSource implements TargetSource {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ShardDataSourceTargetSource.class);
 
-	private static String[] _availableShardNames;
-
-	private static ThreadLocal<DataSource> _dataSource =
+	private static final ThreadLocal<DataSource> _dataSource =
 		new CentralizedThreadLocal<DataSource>(false) {
 
 		@Override
@@ -105,6 +103,7 @@ public class ShardDataSourceTargetSource implements TargetSource {
 
 	};
 
+	private static String[] _availableShardNames;
 	private static Map<String, DataSource> _dataSources;
 
 }

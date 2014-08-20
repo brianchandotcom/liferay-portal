@@ -166,10 +166,10 @@ public class PortalBeanObjectFactory extends BeanObjectFactory {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalBeanObjectFactory.class);
 
-	private Map<Class<?>, Map<String, Field>> _declaredFields =
+	private final Map<Class<?>, Map<String, Field>> _declaredFields =
 		new ConcurrentHashMap<Class<?>, Map<String, Field>>();
 	private boolean _safeMode;
 

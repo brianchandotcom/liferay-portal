@@ -65,6 +65,6 @@ public class BaseDDMStructureClassTypeReader implements ClassTypeReader {
 			LocaleUtil.toLanguageId(locale));
 	}
 
-	private String _className;
+	private final String _className;
 
 }

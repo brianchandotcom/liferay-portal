@@ -232,11 +232,11 @@ public class CompanyStatistics
 		}
 	}
 
-	private long _companyId;
+	private final long _companyId;
 	private long _maxTime;
 	private long _minTime;
-	private Map<String, PortletStatistics> _portletStatisticsByPortletId =
+	private final Map<String, PortletStatistics> _portletStatisticsByPortletId =
 		new ConcurrentHashMap<String, PortletStatistics>();
-	private String _webId;
+	private final String _webId;
 
 }

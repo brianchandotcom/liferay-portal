@@ -37,9 +37,9 @@ public class ScreenNameValidatorFactory {
 		_serviceTracker.open();
 	}
 
-	private static ScreenNameValidatorFactory _instance =
+	private static final ScreenNameValidatorFactory _instance =
 		new ScreenNameValidatorFactory();
 
-	private ServiceTracker<?, ScreenNameValidator> _serviceTracker;
+	private final ServiceTracker<?, ScreenNameValidator> _serviceTracker;
 
 }

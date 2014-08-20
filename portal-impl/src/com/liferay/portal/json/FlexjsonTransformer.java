@@ -32,6 +32,6 @@ public class FlexjsonTransformer implements Transformer {
 		_jsonTransformer.transform(object);
 	}
 
-	private JSONTransformer _jsonTransformer;
+	private final JSONTransformer _jsonTransformer;
 
 }

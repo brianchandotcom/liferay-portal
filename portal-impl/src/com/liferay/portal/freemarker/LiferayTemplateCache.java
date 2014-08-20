@@ -164,9 +164,9 @@ public class LiferayTemplateCache extends TemplateCache {
 		return template;
 	}
 
-	private Configuration _configuration;
-	private Method _normalizeNameMethod;
-	private PortalCache<TemplateResource, Object> _portalCache;
+	private final Configuration _configuration;
+	private final Method _normalizeNameMethod;
+	private final PortalCache<TemplateResource, Object> _portalCache;
 
 	private class TemplatePrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Template> {

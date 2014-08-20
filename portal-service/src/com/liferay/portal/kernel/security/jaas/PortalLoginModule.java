@@ -31,15 +31,19 @@ import javax.security.auth.spi.LoginModule;
 public class PortalLoginModule implements LoginModule {
 
 	public PortalLoginModule() {
+		LoginModule loginModule = null;
+
 		try {
 			Class<?> clazz = Class.forName(
 				_CLASS_NAME, true, PortalClassLoaderUtil.getClassLoader());
 
-			_loginModule = (LoginModule)clazz.newInstance();
+			loginModule = (LoginModule)clazz.newInstance();
 		}
 		catch (Exception e) {
 			_log.error(e);
 		}
+
+		_loginModule = loginModule;
 	}
 
 	@Override
@@ -73,8 +77,9 @@ public class PortalLoginModule implements LoginModule {
 	private static final String _CLASS_NAME =
 		"com.liferay.portal.security.jaas.PortalLoginModule";
 
-	private static Log _log = LogFactoryUtil.getLog(PortalLoginModule.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalLoginModule.class);
 
-	private LoginModule _loginModule;
+	private final LoginModule _loginModule;
 
 }

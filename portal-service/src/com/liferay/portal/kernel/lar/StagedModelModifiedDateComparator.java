@@ -71,6 +71,6 @@ public class StagedModelModifiedDateComparator<T extends StagedModel>
 		return _ascending;
 	}
 
-	private boolean _ascending;
+	private final boolean _ascending;
 
 }

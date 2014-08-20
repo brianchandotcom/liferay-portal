@@ -57,7 +57,7 @@ public class StringComparator implements Comparator<String>, Serializable {
 		}
 	}
 
-	private boolean _ascending;
-	private boolean _caseSensitive;
+	private final boolean _ascending;
+	private final boolean _caseSensitive;
 
 }

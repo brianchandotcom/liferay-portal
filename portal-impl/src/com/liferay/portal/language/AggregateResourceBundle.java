@@ -85,6 +85,6 @@ public class AggregateResourceBundle extends ResourceBundle {
 	}
 
 	private Set<String> _keys;
-	private ResourceBundle[] _resourceBundles;
+	private final ResourceBundle[] _resourceBundles;
 
 }

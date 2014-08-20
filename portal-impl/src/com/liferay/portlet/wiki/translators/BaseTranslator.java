@@ -129,7 +129,7 @@ public abstract class BaseTranslator {
 		return content;
 	}
 
-	private Map<String, String> _protectedMap =
+	private final Map<String, String> _protectedMap =
 		new LinkedHashMap<String, String>();
 
 }

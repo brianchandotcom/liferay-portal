@@ -40,6 +40,6 @@ public class ServiceBuilderApplicationContext
 		return new OsgiBundleResourcePatternResolver(_bundle);
 	}
 
-	private Bundle _bundle;
+	private final Bundle _bundle;
 
 }

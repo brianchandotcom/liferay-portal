@@ -74,6 +74,7 @@ public class OpenServiceMethodImpl extends BaseMethodImpl {
 
 	private static final String _METHOD_NAME = "open service";
 
-	private List<ResponseElement> _elements = new ArrayList<ResponseElement>();
+	private final List<ResponseElement> _elements =
+		new ArrayList<ResponseElement>();
 
 }

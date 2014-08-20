@@ -129,7 +129,7 @@ public class MBThreadTrashRenderer extends BaseTrashRenderer {
 		return "/html/portlet/message_boards/view_thread_tree.jsp";
 	}
 
-	private MBMessage _rootMessage;
-	private MBThread _thread;
+	private final MBMessage _rootMessage;
+	private final MBThread _thread;
 
 }

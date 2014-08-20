@@ -57,8 +57,8 @@ public class EscapableObject<T> implements Serializable {
 		return String.valueOf(t);
 	}
 
-	private boolean _escape;
+	private final boolean _escape;
 	private String _escapedValue;
-	private T _originalValue;
+	private final T _originalValue;
 
 }

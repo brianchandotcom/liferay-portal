@@ -37,8 +37,8 @@ public class BBCodeItem {
 		return _value;
 	}
 
-	private String _attribute;
-	private int _type;
-	private String _value;
+	private final String _attribute;
+	private final int _type;
+	private final String _value;
 
 }

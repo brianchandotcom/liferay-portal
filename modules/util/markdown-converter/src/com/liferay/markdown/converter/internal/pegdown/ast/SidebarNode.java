@@ -69,7 +69,7 @@ public class SidebarNode extends SuperNode {
 		return "";
 	}
 
-	private String _alt;
-	private String _src;
+	private final String _alt;
+	private final String _src;
 
 }

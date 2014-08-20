@@ -118,9 +118,9 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Map<DataKey, StringBundler> _dataMap =
+	private final Map<DataKey, StringBundler> _dataMap =
 		new HashMap<DataKey, StringBundler>();
-	private Set<String> _outputKeys = new HashSet<String>();
+	private final Set<String> _outputKeys = new HashSet<String>();
 
 	private class DataKey implements Serializable {
 

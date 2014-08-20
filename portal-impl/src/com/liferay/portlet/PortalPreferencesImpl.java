@@ -240,7 +240,7 @@ public class PortalPreferencesImpl
 
 	private static final String _RANDOM_KEY = "r";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalPreferencesImpl.class);
 
 	private boolean _signedIn;

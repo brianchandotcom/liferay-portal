@@ -151,6 +151,6 @@ public class VerifyGroupId extends VerifyProcess {
 		}
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(VerifyGroupId.class);
+	private static final Log _log = LogFactoryUtil.getLog(VerifyGroupId.class);
 
 }

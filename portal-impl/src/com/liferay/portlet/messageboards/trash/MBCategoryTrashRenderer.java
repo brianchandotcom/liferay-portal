@@ -83,6 +83,6 @@ public class MBCategoryTrashRenderer extends BaseTrashRenderer {
 		return TYPE;
 	}
 
-	private MBCategory _category;
+	private final MBCategory _category;
 
 }

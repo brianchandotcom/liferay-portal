@@ -29,6 +29,6 @@ public class ServiceUnavailableException extends RuntimeException {
 		return _clazz;
 	}
 
-	private Class<?> _clazz;
+	private final Class<?> _clazz;
 
 }

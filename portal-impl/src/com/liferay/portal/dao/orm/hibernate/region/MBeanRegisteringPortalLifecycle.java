@@ -50,7 +50,7 @@ public class MBeanRegisteringPortalLifecycle extends BasePortalLifecycle {
 	private static final String _MBEAN_SERVER_BEAN_NAME =
 		"registryAwareMBeanServer";
 
-	private CacheManager _cacheManager;
+	private final CacheManager _cacheManager;
 	private ManagementService _managementService;
 
 }

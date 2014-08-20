@@ -603,6 +603,6 @@ public abstract class BaseStore implements Store {
 		deleteFile(companyId, repositoryId, fileName, fromVersionLabel);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BaseStore.class);
+	private static final Log _log = LogFactoryUtil.getLog(BaseStore.class);
 
 }

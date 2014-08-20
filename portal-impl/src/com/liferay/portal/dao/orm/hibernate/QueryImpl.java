@@ -45,11 +45,15 @@ public class QueryImpl implements Query {
 		_query = query;
 		_strictName = strictName;
 
-		if (!_strictName) {
-			_names = query.getNamedParameters();
+		String[] names = null;
 
-			Arrays.sort(_names);
+		if (!_strictName) {
+			names = query.getNamedParameters();
+
+			Arrays.sort(names);
 		}
+
+		_names = names;
 	}
 
 	@NotPrivileged
@@ -359,8 +363,8 @@ public class QueryImpl implements Query {
 		}
 	}
 
-	private String[] _names;
-	private org.hibernate.Query _query;
-	private boolean _strictName;
+	private final String[] _names;
+	private final org.hibernate.Query _query;
+	private final boolean _strictName;
 
 }

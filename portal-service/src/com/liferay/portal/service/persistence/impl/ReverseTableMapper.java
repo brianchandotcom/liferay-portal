@@ -99,6 +99,6 @@ public class ReverseTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 		return _tableMapper.matches(rightColumnName, leftColumnName);
 	}
 
-	private TableMapper<R, L> _tableMapper;
+	private final TableMapper<R, L> _tableMapper;
 
 }

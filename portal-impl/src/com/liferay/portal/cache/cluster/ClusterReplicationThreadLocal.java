@@ -29,7 +29,7 @@ public class ClusterReplicationThreadLocal {
 		_replicateThreadLocal.set(replicate);
 	}
 
-	private static ThreadLocal<Boolean> _replicateThreadLocal =
+	private static final ThreadLocal<Boolean> _replicateThreadLocal =
 		new InitialThreadLocal<Boolean>(
 			ClusterReplicationThreadLocal.class + "._replicateThreadLocal",
 			Boolean.TRUE);

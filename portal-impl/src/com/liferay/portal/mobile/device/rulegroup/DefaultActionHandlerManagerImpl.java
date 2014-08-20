@@ -102,10 +102,10 @@ public class DefaultActionHandlerManagerImpl implements ActionHandlerManager {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultActionHandlerManagerImpl.class);
 
-	private Map<String, ActionHandler> _deviceActionHandlers =
+	private final Map<String, ActionHandler> _deviceActionHandlers =
 		new HashMap<String, ActionHandler>();
 
 }

@@ -64,8 +64,8 @@ public class PwdToolkitUtil {
 		_serviceTracker.open();
 	}
 
-	private static PwdToolkitUtil _instance = new PwdToolkitUtil();
+	private static final PwdToolkitUtil _instance = new PwdToolkitUtil();
 
-	private ServiceTracker<Toolkit, Toolkit> _serviceTracker;
+	private final ServiceTracker<Toolkit, Toolkit> _serviceTracker;
 
 }

@@ -54,6 +54,6 @@ public class ValueMapperWrapper implements ValueMapper {
 		return _valueMapper.size();
 	}
 
-	private ValueMapper _valueMapper;
+	private final ValueMapper _valueMapper;
 
 }

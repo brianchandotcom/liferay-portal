@@ -182,6 +182,6 @@ public abstract class RepositoryModelProxyBean {
 		return objectProxyBeans;
 	}
 
-	private ClassLoader _classLoader;
+	private final ClassLoader _classLoader;
 
 }

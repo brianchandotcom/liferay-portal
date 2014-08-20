@@ -58,7 +58,7 @@ public class DefaultDeviceRecognitionProvider
 		DeviceCapabilityFilter deviceCapabilityFilter) {
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultDeviceRecognitionProvider.class);
 
 }

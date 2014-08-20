@@ -28,6 +28,6 @@ public class DuplicateEntryException extends RestoreEntryException {
 		return _type;
 	}
 
-	private int _type = RestoreEntryException.DUPLICATE;
+	private final int _type = RestoreEntryException.DUPLICATE;
 
 }

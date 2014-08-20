@@ -109,6 +109,6 @@ public abstract class BaseFacet implements Facet {
 	private FacetCollector _facetCollector;
 	private FacetConfiguration _facetConfiguration = new FacetConfiguration();
 	private FacetValueValidator _facetValueValidator;
-	private SearchContext _searchContext;
+	private final SearchContext _searchContext;
 
 }

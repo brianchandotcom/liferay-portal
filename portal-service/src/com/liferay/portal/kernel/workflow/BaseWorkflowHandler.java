@@ -308,6 +308,7 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 
 	private static final boolean _VISIBLE = true;
 
-	private static Log _log = LogFactoryUtil.getLog(BaseWorkflowHandler.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseWorkflowHandler.class);
 
 }

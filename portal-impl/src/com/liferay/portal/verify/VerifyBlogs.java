@@ -67,6 +67,6 @@ public class VerifyBlogs extends VerifyProcess {
 				WorkflowConstants.STATUS_APPROVED + " where status is null");
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(VerifyBlogs.class);
+	private static final Log _log = LogFactoryUtil.getLog(VerifyBlogs.class);
 
 }

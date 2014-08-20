@@ -153,6 +153,6 @@ public class ModuleFrameworkClassLoader extends URLClassLoader {
 		return urls;
 	}
 
-	private ClassLoader _systemClassLoader;
+	private final ClassLoader _systemClassLoader = null;
 
 }

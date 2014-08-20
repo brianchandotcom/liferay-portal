@@ -36,7 +36,7 @@ public class CacheKVP implements Serializable {
 		return _primaryKeyObj;
 	}
 
-	private Class<?> _modelClass;
-	private Serializable _primaryKeyObj;
+	private final Class<?> _modelClass;
+	private final Serializable _primaryKeyObj;
 
 }

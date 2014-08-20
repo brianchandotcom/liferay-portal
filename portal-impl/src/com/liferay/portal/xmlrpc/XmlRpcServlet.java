@@ -124,6 +124,6 @@ public class XmlRpcServlet extends HttpServlet {
 		return method.execute(companyId);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(XmlRpcServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(XmlRpcServlet.class);
 
 }

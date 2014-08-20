@@ -117,8 +117,8 @@ public class CMISRepositoryUtil {
 		return value;
 	}
 
-	private static OperationContext _operationContext;
-	private static SessionFactory _sessionFactory =
+	private static final OperationContext _operationContext;
+	private static final SessionFactory _sessionFactory =
 		SessionFactoryImpl.newInstance();
 
 	static {

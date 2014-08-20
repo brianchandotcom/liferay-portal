@@ -374,6 +374,6 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		"<request><parameters><parameter><name>rss</name><value>true</value>" +
 			"</parameter></parameters></request>";
 
-	private static Log _log = LogFactoryUtil.getLog(RSSAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(RSSAction.class);
 
 }

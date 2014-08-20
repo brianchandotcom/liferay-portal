@@ -130,7 +130,8 @@ public class SecurityManagerUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SecurityManagerUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SecurityManagerUtil.class);
 
 	private static PortalSecurityManager _portalSecurityManager;
 	private static PortalSecurityManagerStrategy _portalSecurityManagerStrategy;

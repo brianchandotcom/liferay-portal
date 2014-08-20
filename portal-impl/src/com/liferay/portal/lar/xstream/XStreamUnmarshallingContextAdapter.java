@@ -59,6 +59,6 @@ public class XStreamUnmarshallingContextAdapter
 		return _unmarshallingContext.getRequiredType();
 	}
 
-	private UnmarshallingContext _unmarshallingContext;
+	private final UnmarshallingContext _unmarshallingContext;
 
 }

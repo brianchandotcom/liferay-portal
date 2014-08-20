@@ -90,8 +90,8 @@ public class LiferayDataHandler extends DummyDataHandler {
 		return 0;
 	}
 
-	private Namespace _fileNamespace = Namespace.DEFAULT_NAMESPACES.get(
+	private final Namespace _fileNamespace = Namespace.DEFAULT_NAMESPACES.get(
 		Namespace.FILE_ID);
-	private Pattern _pattern = Pattern.compile("Special:Node:(\\d+)");
+	private final Pattern _pattern = Pattern.compile("Special:Node:(\\d+)");
 
 }

@@ -66,6 +66,6 @@ public class MessageCreateDateComparator extends OrderByComparator<MBMessage> {
 		return _ascending;
 	}
 
-	private boolean _ascending;
+	private final boolean _ascending;
 
 }

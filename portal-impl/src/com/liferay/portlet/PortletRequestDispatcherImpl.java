@@ -337,13 +337,13 @@ public class PortletRequestDispatcherImpl
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletRequestDispatcherImpl.class);
 
-	private LiferayPortletContext _liferayPortletContext;
-	private boolean _named;
-	private String _path;
-	private Portlet _portlet;
-	private RequestDispatcher _requestDispatcher;
+	private final LiferayPortletContext _liferayPortletContext;
+	private final boolean _named;
+	private final String _path;
+	private final Portlet _portlet;
+	private final RequestDispatcher _requestDispatcher;
 
 }

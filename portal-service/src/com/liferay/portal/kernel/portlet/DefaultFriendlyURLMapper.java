@@ -352,7 +352,7 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 	protected Set<String> defaultIgnoredParameters;
 	protected Map<String, String> defaultReservedParameters;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultFriendlyURLMapper.class);
 
 }

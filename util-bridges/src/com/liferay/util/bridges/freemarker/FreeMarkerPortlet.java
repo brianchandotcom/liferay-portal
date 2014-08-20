@@ -146,7 +146,8 @@ public class FreeMarkerPortlet extends MVCPortlet {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(FreeMarkerPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		FreeMarkerPortlet.class);
 
 	private TemplateTaglibSupportProvider _templateTaglibSupportProvider;
 

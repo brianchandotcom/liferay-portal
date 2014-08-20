@@ -32,7 +32,7 @@ public class ElementIdentifier {
 		return _identifierName;
 	}
 
-	private String _elementName;
-	private String _identifierName;
+	private final String _elementName;
+	private final String _identifierName;
 
 }

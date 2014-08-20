@@ -71,8 +71,8 @@ public class InvokerFilterConfig implements FilterConfig {
 		return _servletContext;
 	}
 
-	private String _filterName;
-	private Map<String, String> _initParameterMap;
-	private ServletContext _servletContext;
+	private final String _filterName;
+	private final Map<String, String> _initParameterMap;
+	private final ServletContext _servletContext;
 
 }

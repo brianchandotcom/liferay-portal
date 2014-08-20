@@ -87,7 +87,7 @@ public class CacheControlImpl implements CacheControl {
 
 	private String _eTag;
 	private int _expirationTime;
-	private MimeResponseImpl _mimeResponseImpl;
+	private final MimeResponseImpl _mimeResponseImpl;
 	private boolean _publicScope;
 	private boolean _useCachedContent;
 

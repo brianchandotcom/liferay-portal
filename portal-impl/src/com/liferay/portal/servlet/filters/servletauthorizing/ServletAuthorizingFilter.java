@@ -127,7 +127,7 @@ public class ServletAuthorizingFilter extends BasePortalFilter {
 			ServletAuthorizingFilter.class, request, response, filterChain);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ServletAuthorizingFilter.class);
 
 }

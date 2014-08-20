@@ -50,6 +50,6 @@ public abstract class BaseCapabilityRepository<T>
 
 	protected abstract long getRepositoryId();
 
-	private T _repository;
+	private final T _repository;
 
 }

@@ -72,7 +72,7 @@ public class PACLStatementHandler implements InvocationHandler {
 		}
 	}
 
-	private PACLPolicy _paclPolicy;
-	private Statement _statement;
+	private final PACLPolicy _paclPolicy;
+	private final Statement _statement;
 
 }

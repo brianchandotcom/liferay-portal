@@ -67,7 +67,7 @@ public class PortalSessionActivationListener
 	public void sessionWillPassivate(HttpSessionEvent httpSessionEvent) {
 	}
 
-	private static PortalSessionActivationListener _instance =
+	private static final PortalSessionActivationListener _instance =
 		new PortalSessionActivationListener();
 
 }

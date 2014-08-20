@@ -1813,11 +1813,11 @@ public abstract class BaseIndexer implements Indexer {
 		_stagingAware = stagingAware;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 
 	private String[] _defaultSelectedFieldNames;
 	private String[] _defaultSelectedLocalizedFieldNames;
-	private Document _document = new DocumentImpl();
+	private final Document _document = new DocumentImpl();
 	private boolean _filterSearch;
 	private boolean _indexerEnabled = true;
 	private IndexerPostProcessor[] _indexerPostProcessors =

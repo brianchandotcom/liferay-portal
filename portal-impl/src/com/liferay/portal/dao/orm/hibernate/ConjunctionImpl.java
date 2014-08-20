@@ -42,6 +42,6 @@ public class ConjunctionImpl extends CriterionImpl implements Conjunction {
 		return _conjunction;
 	}
 
-	private org.hibernate.criterion.Conjunction _conjunction;
+	private final org.hibernate.criterion.Conjunction _conjunction;
 
 }

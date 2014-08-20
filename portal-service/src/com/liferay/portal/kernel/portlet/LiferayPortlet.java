@@ -422,9 +422,9 @@ public class LiferayPortlet extends GenericPortlet {
 
 	private static final boolean _PROCESS_PORTLET_REQUEST = true;
 
-	private static Log _log = LogFactoryUtil.getLog(LiferayPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(LiferayPortlet.class);
 
-	private Map<String, Method> _actionMethods =
+	private final Map<String, Method> _actionMethods =
 		new ConcurrentHashMap<String, Method>();
 
 }

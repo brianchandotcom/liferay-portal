@@ -83,7 +83,7 @@ public abstract class ConvertProcess {
 
 	protected abstract void doConvert() throws Exception;
 
-	private static Log _log = LogFactoryUtil.getLog(ConvertProcess.class);
+	private static final Log _log = LogFactoryUtil.getLog(ConvertProcess.class);
 
 	private String[] _paramValues = null;
 

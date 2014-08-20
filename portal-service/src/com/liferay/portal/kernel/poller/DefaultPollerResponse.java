@@ -136,7 +136,7 @@ public class DefaultPollerResponse implements PollerResponse {
 
 	private String _chunkId;
 	private volatile boolean _closed;
-	private Map<String, Object> _parameterMap =
+	private final Map<String, Object> _parameterMap =
 		new ConcurrentHashMap<String, Object>();
 	private PollerHeader _pollerHeader;
 	private String _portletId;

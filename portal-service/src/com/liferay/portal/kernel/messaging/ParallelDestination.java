@@ -86,6 +86,7 @@ public class ParallelDestination extends BaseAsyncDestination {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ParallelDestination.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ParallelDestination.class);
 
 }

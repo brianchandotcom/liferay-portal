@@ -139,12 +139,12 @@ public class ModuleId implements Serializable {
 		_type = type;
 	}
 
-	private static Map<String, ModuleId> _moduleIds =
+	private static final Map<String, ModuleId> _moduleIds =
 		new ConcurrentHashMap<String, ModuleId>();
 
-	private String _artifactId;
-	private String _groupId;
-	private Version _pluginVersion;
-	private String _type;
+	private final String _artifactId;
+	private final String _groupId;
+	private final Version _pluginVersion;
+	private final String _type;
 
 }

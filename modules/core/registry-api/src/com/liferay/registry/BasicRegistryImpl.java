@@ -432,10 +432,10 @@ public class BasicRegistryImpl implements Registry {
 		}
 	}
 
-	private AtomicLong _serviceIdCounter = new AtomicLong();
-	private Map<ServiceReference<?>, Object> _services =
+	private final AtomicLong _serviceIdCounter = new AtomicLong();
+	private final Map<ServiceReference<?>, Object> _services =
 		new ConcurrentSkipListMap<ServiceReference<?>, Object>();
-	private Map<ServiceTracker<?, ?>, Filter> _serviceTrackers =
+	private final Map<ServiceTracker<?, ?>, Filter> _serviceTrackers =
 		new ConcurrentHashMap<ServiceTracker<?, ?>, Filter>();
 
 	private class BasicFilter implements Filter {

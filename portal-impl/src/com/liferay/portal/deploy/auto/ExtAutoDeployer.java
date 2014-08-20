@@ -66,6 +66,7 @@ public class ExtAutoDeployer extends ExtDeployer implements AutoDeployer {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ExtAutoDeployer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExtAutoDeployer.class);
 
 }

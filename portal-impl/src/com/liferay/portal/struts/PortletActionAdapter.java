@@ -122,6 +122,6 @@ public class PortletActionAdapter extends PortletAction {
 	}
 
 	private PortletAction _originalPortletAction;
-	private StrutsPortletAction _strutsPortletAction;
+	private final StrutsPortletAction _strutsPortletAction;
 
 }

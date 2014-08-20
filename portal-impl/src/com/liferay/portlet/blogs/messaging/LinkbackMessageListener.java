@@ -33,7 +33,7 @@ public class LinkbackMessageListener extends BaseMessageListener {
 		LinkbackProducerUtil.sendQueuedPingbacks();
 	}
 
-	private LinkbackConsumer _linkbackConsumer =
+	private final LinkbackConsumer _linkbackConsumer =
 		LinkbackConsumerUtil.getLinkbackConsumer();
 
 }

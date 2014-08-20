@@ -326,10 +326,10 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		"javax.servlet.ServletException"
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(JspCompiler.class);
+	private static final Log _log = LogFactoryUtil.getLog(JspCompiler.class);
 
 	private Bundle _bundle;
 	private List<File> _classPath;
-	private Lock _lock = new ReentrantLock();
+	private final Lock _lock = new ReentrantLock();
 
 }

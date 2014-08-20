@@ -126,7 +126,7 @@ public class UnmodifiableJSONObjectImpl extends JSONObjectImpl {
 		return null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UnmodifiableJSONObjectImpl.class);
 
 }

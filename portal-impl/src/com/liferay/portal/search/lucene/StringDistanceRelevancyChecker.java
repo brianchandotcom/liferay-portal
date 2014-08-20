@@ -48,8 +48,8 @@ public class StringDistanceRelevancyChecker implements RelevancyChecker {
 		return true;
 	}
 
-	private float _scoresThreshold;
-	private StringDistance _stringDistance;
-	private String _word;
+	private final float _scoresThreshold;
+	private final StringDistance _stringDistance;
+	private final String _word;
 
 }

@@ -71,8 +71,8 @@ public class UnmodifiableMapDictionary <K, V> extends Dictionary<K, V> {
 		return _map.size();
 	}
 
-	private Enumeration<V> _elements;
-	private Enumeration<K> _keys;
-	private Map<K, V> _map;
+	private final Enumeration<V> _elements;
+	private final Enumeration<K> _keys;
+	private final Map<K, V> _map;
 
 }

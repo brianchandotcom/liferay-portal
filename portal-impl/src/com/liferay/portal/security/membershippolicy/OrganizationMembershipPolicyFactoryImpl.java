@@ -40,9 +40,10 @@ public class OrganizationMembershipPolicyFactoryImpl
 		_serviceTracker.open();
 	}
 
-	private static OrganizationMembershipPolicyFactoryImpl _instance =
+	private static final OrganizationMembershipPolicyFactoryImpl _instance =
 		new OrganizationMembershipPolicyFactoryImpl();
 
-	private ServiceTracker<?, OrganizationMembershipPolicy> _serviceTracker;
+	private final ServiceTracker<?, OrganizationMembershipPolicy>
+		_serviceTracker;
 
 }

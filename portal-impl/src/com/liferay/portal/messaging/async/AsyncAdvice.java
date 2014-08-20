@@ -109,9 +109,9 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 		_destinationNames = destinationNames;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AsyncAdvice.class);
+	private static final Log _log = LogFactoryUtil.getLog(AsyncAdvice.class);
 
-	private static Async _nullAsync =
+	private static final Async _nullAsync =
 		new Async() {
 
 			@Override

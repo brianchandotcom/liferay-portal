@@ -1224,81 +1224,84 @@ public class SeleniumBuilderContext {
 		}
 	}
 
-	private static Pattern _pattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"public [a-z]* [A-Za-z0-9_]*\\(.*?\\)");
 
-	private Map<String, String> _actionClassNames =
+	private final Map<String, String> _actionClassNames =
 		new HashMap<String, String>();
-	private Map<String, String> _actionFileNames =
+	private final Map<String, String> _actionFileNames =
 		new HashMap<String, String>();
-	private Map<String, String> _actionJavaFileNames =
+	private final Map<String, String> _actionJavaFileNames =
 		new HashMap<String, String>();
-	private Set<String> _actionNames = new HashSet<String>();
-	private Map<String, String> _actionPackageNames =
+	private final Set<String> _actionNames = new HashSet<String>();
+	private final Map<String, String> _actionPackageNames =
 		new HashMap<String, String>();
-	private Map<String, Element> _actionRootElements =
+	private final Map<String, Element> _actionRootElements =
 		new HashMap<String, Element>();
-	private Map<String, String> _actionSimpleClassNames =
+	private final Map<String, String> _actionSimpleClassNames =
 		new HashMap<String, String>();
-	private Map<String, String> _functionClassNames =
+	private final Map<String, String> _functionClassNames =
 		new HashMap<String, String>();
-	private Map<String, String> _functionFileNames =
+	private final Map<String, String> _functionFileNames =
 		new HashMap<String, String>();
-	private Map<String, String> _functionJavaFileNames =
+	private final Map<String, String> _functionJavaFileNames =
 		new HashMap<String, String>();
-	private Map<String, Integer> _functionLocatorCounts =
+	private final Map<String, Integer> _functionLocatorCounts =
 		new HashMap<String, Integer>();
-	private Set<String> _functionNames = new HashSet<String>();
-	private Map<String, String> _functionPackageNames =
+	private final Set<String> _functionNames = new HashSet<String>();
+	private final Map<String, String> _functionPackageNames =
 		new HashMap<String, String>();
-	private Map<String, String> _functionReturnTypes =
+	private final Map<String, String> _functionReturnTypes =
 		new HashMap<String, String>();
-	private Map<String, Element> _functionRootElements =
+	private final Map<String, Element> _functionRootElements =
 		new HashMap<String, Element>();
-	private Map<String, String> _functionSimpleClassNames =
+	private final Map<String, String> _functionSimpleClassNames =
 		new HashMap<String, String>();
-	private Map<String, String> _macroClassNames =
+	private final Map<String, String> _macroClassNames =
 		new HashMap<String, String>();
-	private Map<String, String> _macroFileNames = new HashMap<String, String>();
-	private Map<String, String> _macroJavaFileNames =
+	private final Map<String, String> _macroFileNames =
 		new HashMap<String, String>();
-	private Set<String> _macroNames = new HashSet<String>();
-	private Map<String, String> _macroPackageNames =
+	private final Map<String, String> _macroJavaFileNames =
 		new HashMap<String, String>();
-	private Map<String, Element> _macroRootElements =
+	private final Set<String> _macroNames = new HashSet<String>();
+	private final Map<String, String> _macroPackageNames =
+		new HashMap<String, String>();
+	private final Map<String, Element> _macroRootElements =
 		new HashMap<String, Element>();
-	private Map<String, String> _macroSimpleClassNames =
+	private final Map<String, String> _macroSimpleClassNames =
 		new HashMap<String, String>();
-	private Map<String, String> _pathClassNames = new HashMap<String, String>();
-	private Map<String, String> _pathFileNames = new HashMap<String, String>();
-	private Map<String, String> _pathJavaFileNames =
+	private final Map<String, String> _pathClassNames =
 		new HashMap<String, String>();
-	private Set<String> _pathNames = new HashSet<String>();
-	private Map<String, String> _pathPackageNames =
+	private final Map<String, String> _pathFileNames =
 		new HashMap<String, String>();
-	private Map<String, Element> _pathRootElements =
+	private final Map<String, String> _pathJavaFileNames =
+		new HashMap<String, String>();
+	private final Set<String> _pathNames = new HashSet<String>();
+	private final Map<String, String> _pathPackageNames =
+		new HashMap<String, String>();
+	private final Map<String, Element> _pathRootElements =
 		new HashMap<String, Element>();
-	private Map<String, String> _pathSimpleClassNames =
+	private final Map<String, String> _pathSimpleClassNames =
 		new HashMap<String, String>();
-	private SeleniumBuilderFileUtil _seleniumBuilderFileUtil;
-	private Map<String, Integer> _seleniumParameterCounts =
+	private final SeleniumBuilderFileUtil _seleniumBuilderFileUtil;
+	private final Map<String, Integer> _seleniumParameterCounts =
 		new HashMap<String, Integer>();
-	private Map<String, String> _testCaseClassNames =
+	private final Map<String, String> _testCaseClassNames =
 		new HashMap<String, String>();
-	private Map<String, Set<String>> _testCaseCommandNames =
+	private final Map<String, Set<String>> _testCaseCommandNames =
 		new HashMap<String, Set<String>>();
-	private Map<String, String> _testCaseFileNames =
+	private final Map<String, String> _testCaseFileNames =
 		new HashMap<String, String>();
-	private Map<String, String> _testCaseHTMLFileNames =
+	private final Map<String, String> _testCaseHTMLFileNames =
 		new HashMap<String, String>();
-	private Map<String, String> _testCaseJavaFileNames =
+	private final Map<String, String> _testCaseJavaFileNames =
 		new HashMap<String, String>();
-	private Set<String> _testCaseNames = new HashSet<String>();
-	private Map<String, String> _testCasePackageNames =
+	private final Set<String> _testCaseNames = new HashSet<String>();
+	private final Map<String, String> _testCasePackageNames =
 		new HashMap<String, String>();
-	private Map<String, Element> _testCaseRootElements =
+	private final Map<String, Element> _testCaseRootElements =
 		new HashMap<String, Element>();
-	private Map<String, String> _testCaseSimpleClassNames =
+	private final Map<String, String> _testCaseSimpleClassNames =
 		new HashMap<String, String>();
 
 }

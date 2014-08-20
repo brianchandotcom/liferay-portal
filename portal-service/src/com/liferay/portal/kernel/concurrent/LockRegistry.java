@@ -153,13 +153,13 @@ public class LockRegistry {
 		return lockGroup.get(key);
 	}
 
-	private static Object _dummyValue = new Object();
-	private static ConcurrentHashMap
+	private static final Object _dummyValue = new Object();
+	private static final ConcurrentHashMap
 		<String, ConcurrentHashMap<String, ReentrantLock>>
 			_lockGroupMap =
 				new ConcurrentHashMap
 					<String, ConcurrentHashMap<String, ReentrantLock>>();
-	private static Map<String, Object> _prematureLockReleases =
+	private static final Map<String, Object> _prematureLockReleases =
 		new ConcurrentHashMap<String, Object>();
 
 }

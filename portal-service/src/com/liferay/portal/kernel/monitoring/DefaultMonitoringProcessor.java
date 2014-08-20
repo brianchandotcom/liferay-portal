@@ -122,9 +122,10 @@ public class DefaultMonitoringProcessor
 		}
 	}
 
-	private Map<String, List<DataSampleProcessor<DataSample>>>
+	private final Map<String, List<DataSampleProcessor<DataSample>>>
 		_dataSampleProcessors = new ConcurrentHashMap
 			<String, List<DataSampleProcessor<DataSample>>>();
-	private Map<String, Level> _levels = new ConcurrentHashMap<String, Level>();
+	private final Map<String, Level> _levels =
+		new ConcurrentHashMap<String, Level>();
 
 }

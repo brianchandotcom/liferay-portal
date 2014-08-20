@@ -163,7 +163,7 @@ public class ElasticsearchUpdateDocumentCommandImpl
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchUpdateDocumentCommandImpl.class);
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;

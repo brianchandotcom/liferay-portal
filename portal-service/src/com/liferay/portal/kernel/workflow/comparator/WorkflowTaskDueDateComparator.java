@@ -77,9 +77,9 @@ public class WorkflowTaskDueDateComparator
 		return _ascending;
 	}
 
-	private boolean _ascending;
-	private String _orderByAsc;
-	private String _orderByDesc;
-	private String[] _orderByFields;
+	private final boolean _ascending;
+	private final String _orderByAsc;
+	private final String _orderByDesc;
+	private final String[] _orderByFields;
 
 }

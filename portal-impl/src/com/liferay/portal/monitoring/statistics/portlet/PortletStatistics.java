@@ -121,14 +121,15 @@ public class PortletStatistics
 		_resourceRequestStatistics.reset();
 	}
 
-	private RequestStatistics _actionRequestStatistics;
-	private String _displayName;
-	private RequestStatistics _eventRequestStatistics;
-	private String _portletId;
-	private String _portletName;
-	private RequestStatistics _renderRequestStatistics;
-	private Map<PortletRequestType, RequestStatistics> _requestStatistics =
-		new HashMap<PortletRequestType, RequestStatistics>();
-	private RequestStatistics _resourceRequestStatistics;
+	private final RequestStatistics _actionRequestStatistics;
+	private final String _displayName;
+	private final RequestStatistics _eventRequestStatistics;
+	private final String _portletId;
+	private final String _portletName;
+	private final RequestStatistics _renderRequestStatistics;
+	private final Map<PortletRequestType, RequestStatistics>
+		_requestStatistics =
+			new HashMap<PortletRequestType, RequestStatistics>();
+	private final RequestStatistics _resourceRequestStatistics;
 
 }

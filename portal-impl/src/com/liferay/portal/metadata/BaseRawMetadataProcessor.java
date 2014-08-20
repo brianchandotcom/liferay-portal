@@ -171,10 +171,9 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseRawMetadataProcessor.class);
-
-	private static Map<String, Field[]> _fields =
+	private static final Map<String, Field[]> _fields =
 		new HashMap<String, Field[]>();
 
 	static {

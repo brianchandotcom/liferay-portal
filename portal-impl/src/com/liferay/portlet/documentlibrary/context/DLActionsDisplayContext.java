@@ -117,8 +117,8 @@ public class DLActionsDisplayContext {
 		return false;
 	}
 
-	private DLPortletInstanceSettings _dlPortletInstanceSettings;
-	private PortletDisplay _portletDisplay;
-	private HttpServletRequest _request;
+	private final DLPortletInstanceSettings _dlPortletInstanceSettings;
+	private final PortletDisplay _portletDisplay;
+	private final HttpServletRequest _request;
 
 }

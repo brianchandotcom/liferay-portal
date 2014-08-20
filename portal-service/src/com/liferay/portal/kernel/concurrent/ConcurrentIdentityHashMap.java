@@ -29,9 +29,9 @@ public class ConcurrentIdentityHashMap<K, V>
 	}
 
 	public ConcurrentIdentityHashMap(
-		ConcurrentMap<IdentityKey<K>, V> innerMap) {
+		ConcurrentMap<IdentityKey<K>, V> innerConcurrentMap) {
 
-		super(innerMap);
+		super(innerConcurrentMap);
 	}
 
 	public ConcurrentIdentityHashMap(int initialCapacity) {

@@ -274,8 +274,10 @@ public abstract class ConcurrentMapperHashMap<K, IK, V, IV>
 		return values;
 	}
 
-	protected ConcurrentMapperHashMap(ConcurrentMap<IK, IV> innerMap) {
-		this.innerConcurrentMap = innerMap;
+	protected ConcurrentMapperHashMap(
+		ConcurrentMap<IK, IV> innerConcurrentMap) {
+
+		this.innerConcurrentMap = innerConcurrentMap;
 	}
 
 	protected abstract IK mapKey(K key);

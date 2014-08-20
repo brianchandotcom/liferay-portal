@@ -924,9 +924,9 @@ public class ConcurrentMapperHashMapTest {
 		}
 
 		public ConcurrentTypeReferenceHashMap(
-			ConcurrentMap<KeyReference, ValueReference> innerMap) {
+			ConcurrentMap<KeyReference, ValueReference> innerConcurrentMap) {
 
-			super(innerMap);
+			super(innerConcurrentMap);
 		}
 
 		@Override

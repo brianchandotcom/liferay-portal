@@ -18,14 +18,13 @@ import com.liferay.document.library.google.docs.util.GoogleDocsConstants;
 import com.liferay.document.library.google.docs.util.GoogleDocsDLFileEntryTypeFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.UserLocalService;
-import com.liferay.portlet.documentlibrary.context.DLFileEntryActionsDisplayContext;
-import com.liferay.portlet.documentlibrary.context.DLFileEntryActionsDisplayContextFactory;
+import com.liferay.portlet.documentlibrary.context.DLFileVersionActionsDisplayContext;
+import com.liferay.portlet.documentlibrary.context.DLFileVersionActionsDisplayContextFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
@@ -45,10 +44,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  */
 @Component(
-	immediate = true, service = DLFileEntryActionsDisplayContextFactory.class
+	immediate = true, service = DLFileVersionActionsDisplayContextFactory.class
 )
-public class GoogleDocsDLFileEntryActionsDisplayContextFactory
-	implements DLFileEntryActionsDisplayContextFactory {
+public class GoogleDocsDLFileVersionActionsDisplayContextFactory
+	implements DLFileVersionActionsDisplayContextFactory {
 
 	@Activate
 	public void activate() throws PortalException {
@@ -65,16 +64,18 @@ public class GoogleDocsDLFileEntryActionsDisplayContextFactory
 	}
 
 	@Override
-	public DLFileEntryActionsDisplayContext getDLFileEntryActionsDisplayContext(
-		DLFileEntryActionsDisplayContext parentDLFileEntryActionsDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileEntry fileEntry, FileVersion fileVersion) {
+	public DLFileVersionActionsDisplayContext
+		getDLFileVersionActionsDisplayContext(
+			DLFileVersionActionsDisplayContext
+				parentDLFileEntryActionsDisplayContext,
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion) {
 
 		try {
 			if (isGoogleDocs(fileVersion)) {
-				return new GoogleDocsDLFileEntryActionsDisplayContext(
+				return new GoogleDocsDLFileVersionActionsDisplayContext(
 					parentDLFileEntryActionsDisplayContext, request, response,
-					fileEntry, fileVersion);
+					fileVersion);
 			}
 		}
 		catch (PortalException pe) {

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/amazon_rankings/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <c:choose>
 	<c:when test="<%= Validator.isNull(AmazonRankingsUtil.getAmazonAccessKeyId()) %>">

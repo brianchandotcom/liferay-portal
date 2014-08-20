@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/amazon_rankings/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String isbnsString = StringUtil.merge(isbns, StringPool.SPACE);

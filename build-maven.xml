@@ -70,6 +70,7 @@ for GPG setup instructions.
 		<antcall target="prepare-maven">
 			<param name="lp.maven.repository.id" value="" />
 			<param name="lp.maven.repository.url" value="" />
+			<param name="lp.maven.version" value="${lp.maven.version}" />
 			<param name="tstamp.value" value="${tstamp.value}" />
 		</antcall>
 

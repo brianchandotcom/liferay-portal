@@ -66,7 +66,6 @@
 		}
 
 		.workflow-status, .taglib-workflow-status {
-			display: block;
 			margin: 0;
 			padding: 0;
 		}
@@ -138,6 +137,10 @@
 			.dropdown-toggle {
 				display: block;
 			}
+
+			@include respond-to(phone, tablet) {
+				margin-bottom: 5px;
+			}
 		}
 
 		.page-variations {
@@ -165,17 +168,21 @@
 		}
 
 		.publish-link-container {
-			padding-left: 10px;
+			padding-left: 5px;
 			width: 100%;
 
 			&.branching-enabled {
-				bottom: 9px;
+				bottom: 5px;
 				position: absolute;
 
 				@include respond-to(phone) {
-					bottom: inherit;
+					bottom: 0;
 					display: inline-block;
 					position: static;
+				}
+
+				@include respond-to(tablet) {
+					bottom: inherit;
 				}
 			}
 

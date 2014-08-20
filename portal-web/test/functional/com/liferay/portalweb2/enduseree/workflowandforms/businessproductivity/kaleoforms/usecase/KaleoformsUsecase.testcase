@@ -2506,7 +2506,7 @@
 		<execute macro="KaleoFormsAdmin#addProcess" />
 
 		<execute macro="KaleoFormsAdmin#addProcessDetails">
-			<var name="kfProcessName" value="Kaleo Forms Process Description" />
+			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
@@ -2876,7 +2876,7 @@
 		<execute macro="KaleoFormsAdmin#addProcess" />
 
 		<execute macro="KaleoFormsAdmin#addProcessDetails">
-			<var name="kfProcessName" value="Kaleo Forms Process Description" />
+			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 

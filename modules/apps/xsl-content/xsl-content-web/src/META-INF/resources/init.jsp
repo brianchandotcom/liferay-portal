@@ -39,7 +39,6 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.NoSuchTagException" %><%@
 page import="com.liferay.portlet.asset.NoSuchTagPropertyException" %><%@
 page import="com.liferay.portlet.asset.model.AssetTag" %><%@
@@ -48,24 +47,12 @@ page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil" %><%@
 page import="com.liferay.xsl.content.util.XSLContentUtil" %>
 
-<%@ page import="javax.portlet.PortletMode" %><%@
-page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.PortletMode" %><%@
-page import="javax.portlet.WindowState" %>
-
 <%@ page import="java.net.URL" %>
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects />
 
 <%
-PortletMode portletMode = liferayPortletRequest.getPortletMode();
-WindowState windowState = liferayPortletRequest.getWindowState();
-
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-
 String xmlUrl = portletPreferences.getValue("xmlUrl", "@portal_url@" + request.getContextPath() + XSLContentUtil.DEFAULT_XML_URL);
 String xslUrl = portletPreferences.getValue("xslUrl", "@portal_url@" + request.getContextPath() + XSLContentUtil.DEFAULT_XSL_URL);
 %>

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.StringPool;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.search.facet.range.RangeFacetBuilder;
 
 /**
  * @author Michael C. Han
@@ -46,10 +47,10 @@ public class RangeFacetProcessor implements FacetProcessor {
 			return;
 		}
 
-		DefaultRangeBuilder defaultRangeBuilder = new DefaultRangeBuilder(
+		RangeFacetBuilder rangeFacetBuilder = new RangeFacetBuilder(
 			facetConfiguration.getFieldName());
 
-		defaultRangeBuilder.field(facetConfiguration.getFieldName());
+		rangeFacetBuilder.field(facetConfiguration.getFieldName());
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject rangeJSONObject = jsonArray.getJSONObject(i);
@@ -61,10 +62,10 @@ public class RangeFacetProcessor implements FacetProcessor {
 
 			String[] rangeParts = range.split(StringPool.SPACE);
 
-			defaultRangeBuilder.addRange(rangeParts[0], rangeParts[2]);
+			rangeFacetBuilder.addRange(rangeParts[0], rangeParts[2]);
 		}
 
-		searchRequestBuilder.addAggregation(defaultRangeBuilder);
+		searchRequestBuilder.addFacet(rangeFacetBuilder);
 	}
 
 }

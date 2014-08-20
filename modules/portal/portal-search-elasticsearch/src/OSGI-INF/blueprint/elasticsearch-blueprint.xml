@@ -70,8 +70,8 @@
 		<property name="defaultFacetProcessor" ref="com.liferay.portal.search.elasticsearch.facet.DefaultFacetProcessor" />
 		<property name="facetProcessors">
 			<map>
-				<entry key="com.liferay.portal.kernel.search.facet.ModifiedFacet" value-ref="com.liferay.portal.search.elasticsearch.facet.RangeFacetProcessor" />
-				<entry key="com.liferay.portal.kernel.search.facet.RangeFacet" value-ref="com.liferay.portal.search.elasticsearch.facet.RangeFacetProcessor" />
+				<entry key="com.liferay.portal.kernel.search.facet.RangeFacet"
+					   value-ref="com.liferay.portal.search.elasticsearch.facet.RangeFacetProcessor" />
 			</map>
 		</property>
 	</bean>

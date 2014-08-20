@@ -115,6 +115,18 @@ public class LiferayPortlet extends GenericPortlet {
 			return;
 		}
 
+		if (!callResourceMethod(resourceRequest, resourceResponse)) {
+			return;
+		}
+
+		if (!SessionErrors.isEmpty(resourceRequest)) {
+			return;
+		}
+
+		if (!SessionMessages.isEmpty(resourceRequest)) {
+			return;
+		}
+
 		super.serveResource(resourceRequest, resourceResponse);
 	}
 
@@ -155,6 +167,52 @@ public class LiferayPortlet extends GenericPortlet {
 		catch (NoSuchMethodException nsme) {
 			try {
 				super.processAction(actionRequest, actionResponse);
+
+				return true;
+			}
+			catch (Exception e) {
+				throw new PortletException(nsme);
+			}
+		}
+		catch (InvocationTargetException ite) {
+			Throwable cause = ite.getCause();
+
+			if (cause != null) {
+				throw new PortletException(cause);
+			}
+			else {
+				throw new PortletException(ite);
+			}
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+	}
+
+	protected boolean callResourceMethod(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortletException {
+
+		String actionName = ParamUtil.getString(
+			resourceRequest, ActionRequest.ACTION_NAME);
+
+		if (Validator.isNull(actionName) ||
+			actionName.equals("callActionMethod") ||
+			actionName.equals("serveResource")) {
+
+			return false;
+		}
+
+		try {
+			Method method = getResourceMethod(actionName);
+
+			method.invoke(this, resourceRequest, resourceResponse);
+
+			return true;
+		}
+		catch (NoSuchMethodException nsme) {
+			try {
+				super.serveResource(resourceRequest, resourceResponse);
 
 				return true;
 			}
@@ -318,6 +376,25 @@ public class LiferayPortlet extends GenericPortlet {
 		return redirect;
 	}
 
+	protected Method getResourceMethod(String actionName)
+		throws NoSuchMethodException {
+
+		Method method = _resourceMethods.get(actionName);
+
+		if (method != null) {
+			return method;
+		}
+
+		Class<?> clazz = getClass();
+
+		method = clazz.getMethod(
+			actionName, ResourceRequest.class, ResourceResponse.class);
+
+		_resourceMethods.put(actionName, method);
+
+		return method;
+	}
+
 	@Override
 	protected String getTitle(RenderRequest renderRequest) {
 		try {
@@ -425,6 +502,8 @@ public class LiferayPortlet extends GenericPortlet {
 	private static Log _log = LogFactoryUtil.getLog(LiferayPortlet.class);
 
 	private Map<String, Method> _actionMethods =
+		new ConcurrentHashMap<String, Method>();
+	private Map<String, Method> _resourceMethods =
 		new ConcurrentHashMap<String, Method>();
 
 }

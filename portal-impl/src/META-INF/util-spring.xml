@@ -799,6 +799,19 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.util.PrefsPropsUtil" class="com.liferay.portal.util.PrefsPropsUtil" />
+	<bean id="com.liferay.portal.verify.audited.model.LayoutVerifiableAuditedModel" class="com.liferay.portal.verify.audited.model.LayoutVerifiableAuditedModel" />
+	<bean id="com.liferay.portal.verify.audited.model.LayoutFriendlyURLVerifiableAuditedModel" class="com.liferay.portal.verify.audited.model.LayoutFriendlyURLVerifiableAuditedModel" />
+	<bean id="com.liferay.portal.verify.audited.model.LayoutPrototypeVerifiableAuditedModel" class="com.liferay.portal.verify.audited.model.LayoutPrototypeVerifiableAuditedModel" />
+	<bean id="com.liferay.portal.verify.audited.model.LayoutSetPrototypeVerifiableAuditedModel" class="com.liferay.portal.verify.audited.model.LayoutSetPrototypeVerifiableAuditedModel" />
+	<bean id="com.liferay.portal.verify.audited.model.MBDiscussionVerifiableAuditedModel" class="com.liferay.portal.verify.audited.model.MBDiscussionVerifiableAuditedModel" />
+	<bean id="com.liferay.portal.verify.audited.model.MBThreadVerifiableAuditedModel" class="com.liferay.portal.verify.audited.model.MBThreadVerifiableAuditedModel" />
+	<bean id="com.liferay.portal.verify.audited.model.MBThreadFlagVerifiableAuditedModel" class="com.liferay.portal.verify.audited.model.MBThreadFlagVerifiableAuditedModel" />
+	<bean id="com.liferay.portal.verify.audited.model.OrganizationVerifiableAuditedModel" class="com.liferay.portal.verify.audited.model.OrganizationVerifiableAuditedModel" />
+	<bean id="com.liferay.portal.verify.audited.model.PollsChoiceVerifiableAuditedModel" class="com.liferay.portal.verify.audited.model.PollsChoiceVerifiableAuditedModel" />
+	<bean id="com.liferay.portal.verify.audited.model.PollsVoteVerifiableAuditedModel" class="com.liferay.portal.verify.audited.model.PollsVoteVerifiableAuditedModel" />
+	<bean id="com.liferay.portal.verify.audited.model.RepositoryEntryVerifiableAuditedModel" class="com.liferay.portal.verify.audited.model.RepositoryEntryVerifiableAuditedModel" />
+	<bean id="com.liferay.portal.verify.audited.model.RoleVerifiableAuditedModel" class="com.liferay.portal.verify.audited.model.RoleVerifiableAuditedModel" />
+	<bean id="com.liferay.portal.verify.audited.model.UserGroupVerifiableAuditedModel" class="com.liferay.portal.verify.audited.model.UserGroupVerifiableAuditedModel" />
 	<bean id="com.liferay.portal.webserver.WebServerServletTokenUtil" class="com.liferay.portal.webserver.WebServerServletTokenUtil">
 		<property name="webServerServletToken">
 			<bean class="com.liferay.portal.webserver.WebServerServletTokenImpl">

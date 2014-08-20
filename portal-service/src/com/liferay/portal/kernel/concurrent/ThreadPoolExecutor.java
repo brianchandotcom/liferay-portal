@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.AbstractExecutorService;
+import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
@@ -405,6 +406,39 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 	}
 
 	@Override
+	public <T> NoticeableFuture<T> submit(Callable<T> callable) {
+		if (callable == null) {
+			throw new NullPointerException("Callable is null");
+		}
+
+		DefaultNoticeableFuture<T> defaultNoticeableFuture = newTaskFor(
+			callable);
+
+		execute(defaultNoticeableFuture);
+
+		return defaultNoticeableFuture;
+	}
+
+	@Override
+	public NoticeableFuture<?> submit(Runnable runnable) {
+		return submit(runnable, null);
+	}
+
+	@Override
+	public <T> NoticeableFuture<T> submit(Runnable runnable, T result) {
+		if (runnable == null) {
+			throw new NullPointerException("Runnable is null");
+		}
+
+		DefaultNoticeableFuture<T> defaultNoticeableFuture = newTaskFor(
+			runnable, result);
+
+		execute(defaultNoticeableFuture);
+
+		return defaultNoticeableFuture;
+	}
+
+	@Override
 	protected void finalize() {
 		shutdown();
 	}
@@ -419,6 +453,18 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 
 	protected Set<WorkerTask> getWorkerTasks() {
 		return _workerTasks;
+	}
+
+	@Override
+	protected <T> DefaultNoticeableFuture<T> newTaskFor(Callable<T> callable) {
+		return new DefaultNoticeableFuture<T>(callable);
+	}
+
+	@Override
+	protected <T> DefaultNoticeableFuture<T> newTaskFor(
+		Runnable runnable, T value) {
+
+		return new DefaultNoticeableFuture<T>(runnable, value);
 	}
 
 	private void _addWorkerThread() {

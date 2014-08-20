@@ -667,7 +667,7 @@
 	</library>
 	<library>
 		<file-name>lib/development/powermock-mockito.jar</file-name>
-		<version>1.5</version>
+		<version>1.5.5</version>
 		<project-name>Powermock</project-name>
 		<project-url>http://code.google.com/p/powermock</project-url>
 		<licenses>
@@ -2128,7 +2128,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/javassist.jar</file-name>
-		<version>3.15.0</version>
+		<version>3.18.2</version>
 		<project-name>Javassist</project-name>
 		<project-url>http://www.csg.is.titech.ac.jp/~chiba/javassist</project-url>
 		<licenses>

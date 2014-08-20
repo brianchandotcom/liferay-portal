@@ -14,12 +14,13 @@
 
 package com.liferay.portal.security.pacl;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.kernel.util.JavaDetector;
-import com.liferay.portal.kernel.util.WeakValueConcurrentHashMap;
 
 import java.lang.reflect.Field;
 
@@ -276,11 +277,14 @@ public class PortalPolicy extends Policy {
 	private Field _field;
 	private PACLPolicy _paclPolicy = PACLPolicyManager.getDefaultPACLPolicy();
 	private ConcurrentMap<Object, PermissionCollection> _permissionCollections =
-		new WeakValueConcurrentHashMap<Object, PermissionCollection>();
+		new ConcurrentReferenceValueHashMap<Object, PermissionCollection>(
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private Policy _policy;
 	private ConcurrentMap<URLWrapper, PermissionCollection>
 		_urlPermissionCollections =
-			new WeakValueConcurrentHashMap<URLWrapper, PermissionCollection>();
+			new ConcurrentReferenceValueHashMap
+				<URLWrapper, PermissionCollection>(
+					FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 	private class FieldPrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Field> {

@@ -26,10 +26,12 @@ import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.ClusterResponseCallback;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,7 +40,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WeakValueConcurrentHashMap;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.PortalInetSocketAddressEventListener;
 import com.liferay.portal.util.PortalUtil;
@@ -602,7 +603,8 @@ public class ClusterExecutorImpl
 	private JChannel _controlJChannel;
 	private ExecutorService _executorService;
 	private Map<String, FutureClusterResponses> _futureClusterResponses =
-		new WeakValueConcurrentHashMap<String, FutureClusterResponses>();
+		new ConcurrentReferenceValueHashMap<String, FutureClusterResponses>(
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private Map<Address, ClusterNode> _liveInstances =
 		new ConcurrentHashMap<Address, ClusterNode>();
 	private Address _localAddress;

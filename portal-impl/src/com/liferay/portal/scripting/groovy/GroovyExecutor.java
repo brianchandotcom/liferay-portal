@@ -16,6 +16,8 @@ package com.liferay.portal.scripting.groovy;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
@@ -30,7 +32,7 @@ import groovy.lang.Script;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Alberto Montero
@@ -118,14 +120,13 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 		GroovyShell groovyShell = _groovyShells.get(aggregateClassLoader);
 
 		if (groovyShell == null) {
-			synchronized (this) {
-				groovyShell = _groovyShells.get(aggregateClassLoader);
+			groovyShell = _groovyShells.get(aggregateClassLoader);
 
-				if (groovyShell == null) {
-					groovyShell = new GroovyShell(aggregateClassLoader);
+			GroovyShell oldGroovyShell = _groovyShells.putIfAbsent(
+				aggregateClassLoader, groovyShell);
 
-					_groovyShells.put(aggregateClassLoader, groovyShell);
-				}
+			if (oldGroovyShell != null) {
+				groovyShell = oldGroovyShell;
 			}
 		}
 
@@ -137,8 +138,9 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 	private static final String _LANGUAGE = "groovy";
 
 	private volatile GroovyShell _groovyShell = new GroovyShell();
-	private volatile Map<ClassLoader, GroovyShell> _groovyShells =
-		new WeakHashMap<ClassLoader, GroovyShell>();
+	private final ConcurrentMap<ClassLoader, GroovyShell> _groovyShells =
+		new ConcurrentReferenceKeyHashMap<ClassLoader, GroovyShell>(
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private PortalCache<String, Script> _portalCache =
 		SingleVMPoolUtil.getCache(_CACHE_NAME);
 

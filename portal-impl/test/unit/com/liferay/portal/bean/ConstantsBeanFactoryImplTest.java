@@ -14,14 +14,15 @@
 
 package com.liferay.portal.bean;
 
-import com.liferay.portal.kernel.memory.EqualityWeakReference;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.GCUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunner;
 
-import java.lang.ref.Reference;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
@@ -244,6 +245,9 @@ public class ConstantsBeanFactoryImplTest {
 
 	@Test
 	public void testToConstantsBean() throws Exception {
+		System.setProperty(
+			FinalizeManager.class.getName() + ".thread.enabled",
+			StringPool.FALSE);
 
 		// First create
 
@@ -273,7 +277,7 @@ public class ConstantsBeanFactoryImplTest {
 
 		Assert.assertSame(classLoader1, constantsBeanClass1.getClassLoader());
 
-		Map<EqualityWeakReference<Class<?>>, Reference<?>> constantsBeans =
+		Map<Class<?>, ?> constantsBeans =
 			ConstantsBeanFactoryImpl.constantsBeans;
 
 		Assert.assertEquals(1, constantsBeans.size());
@@ -306,7 +310,7 @@ public class ConstantsBeanFactoryImplTest {
 			constantsBeanImpl.getConstantsBean(constantsClass2));
 		Assert.assertEquals(2, constantsBeans.size());
 
-		// Weak reference release
+		// Weak reference release key
 
 		classLoader1 = null;
 		constantsClass1 = null;
@@ -315,10 +319,24 @@ public class ConstantsBeanFactoryImplTest {
 
 		GCUtil.gc();
 
+		ReflectionTestUtil.invoke(
+			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
+
 		Assert.assertSame(
 			constantsBean2,
 			constantsBeanImpl.getConstantsBean(constantsClass2));
 		Assert.assertEquals(1, constantsBeans.size());
+
+		// Weak reference release value
+
+		constantsBean2 = null;
+
+		GCUtil.gc();
+
+		ReflectionTestUtil.invoke(
+			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
+
+		Assert.assertTrue(constantsBeans.isEmpty());
 	}
 
 	public static class Constants {

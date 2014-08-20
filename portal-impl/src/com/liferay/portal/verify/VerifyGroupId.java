@@ -136,20 +136,7 @@ public class VerifyGroupId extends VerifyProcess {
 		}
 	}
 
-	private static final String[][] _MODELS = new String[][] {
-		new String[] {
-			"MBDiscussion", "discussionId", "MBThread", "threadId"
-		},
-		new String[] {
-			"MBThreadFlag", "threadFlagId", "MBThread", "threadId"
-		},
-		new String[] {
-			"PollsChoice", "choiceId", "PollsQuestion", "questionId"
-		},
-		new String[] {
-			"PollsVote", "voteId", "PollsQuestion", "questionId"
-		}
-	};
+	private static final String[][] _MODELS = new String[][] {};
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyGroupId.class);
 

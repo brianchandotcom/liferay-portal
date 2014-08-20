@@ -15,6 +15,8 @@
 package com.liferay.activities.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -33,6 +35,7 @@ import com.liferay.portlet.social.model.SocialActivityFeedEntry;
 import com.liferay.portlet.social.service.SocialActivityInterpreterLocalServiceUtil;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 import com.liferay.util.RSSUtil;
+import com.liferay.util.bridges.mvc.ActionCommand;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
@@ -48,14 +51,52 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Vilmos Papp
  * @author Eduardo Garcia
+ * @author Raymond Augé
  */
-public class RSSAction extends com.liferay.portal.struts.RSSAction {
+@Component(
+	immediate = true,
+	property = {
+		"action.command.name=activities/rss",
+		"javax.portlet.name=com_liferay_activities_portlet_ActivitiesPortlet"
+	},
+	service = ActionCommand.class
+)
+public class RSSAction implements ActionCommand {
+
+	@Override
+	public boolean processCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws PortletException {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			portletResponse);
+
+		try {
+			ServletResponseUtil.sendFile(
+				request, response, null, getRSS(request),
+				ContentTypes.TEXT_XML_UTF8);
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+
+		return true;
+	}
 
 	protected String exportToRSS(
 			HttpServletRequest request, String title, String description,
@@ -174,7 +215,6 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		return Collections.emptyList();
 	}
 
-	@Override
 	protected byte[] getRSS(HttpServletRequest request) throws Exception {
 		String feedTitle = ParamUtil.getString(request, "feedTitle");
 		String format = ParamUtil.getString(

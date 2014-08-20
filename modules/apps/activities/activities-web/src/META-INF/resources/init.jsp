@@ -55,16 +55,17 @@ page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %>
 
-<%@ page import="java.net.URL" %><%@ 
+<%@ page import="java.net.URL" %><%@
 page import="java.text.NumberFormat" %><%@
-page import="java.util.Enumeration" %><%@  
-page import="java.util.List" %><%@  
-page import="java.util.Set" %><%@ 
+page import="java.util.Enumeration" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Set" %><%@
 page import="java.util.TreeSet" %>
 
-<%@ page import="javax.portlet.PortletMode" %><%@
-page import="javax.portlet.PortletURL" %><%@
+<%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.PortletMode" %><%@
+page import="javax.portlet.PortletURL" %><%@
+page import="javax.portlet.ResourceURL" %><%@
 page import="javax.portlet.ValidatorException" %><%@
 page import="javax.portlet.WindowState" %>
 

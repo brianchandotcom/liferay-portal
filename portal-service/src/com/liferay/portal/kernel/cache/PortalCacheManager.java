@@ -41,6 +41,8 @@ public interface PortalCacheManager<K extends Serializable, V> {
 
 	public String getName();
 
+	public boolean isClusterAware();
+
 	@Proxy
 	public void reconfigureCaches(URL configurationURL);
 

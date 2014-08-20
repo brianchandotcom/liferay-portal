@@ -372,6 +372,11 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		}
 
 		@Override
+		public boolean isClusterAware() {
+			return true;
+		}
+
+		@Override
 		public void reconfigureCaches(URL configurationURL) {
 			throw new UnsupportedOperationException();
 		}

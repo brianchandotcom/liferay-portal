@@ -55,7 +55,6 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<!--<bean id="com.liferay.kernel.portal.cache.MultiVMPortalCacheManager" class="com.liferay.portal.cache.memory.MemoryPortalCacheManager" />-->
 	<bean id="com.liferay.portal.kernel.cache.SingleVMPool" class="com.liferay.portal.cache.SingleVMPoolImpl">
 		<property name="portalCacheManager" ref="com.liferay.portal.kernel.cache.SingleVMPortalCacheManager" />
 	</bean>
@@ -66,7 +65,6 @@
 		<property name="configPropertyKey" value="ehcache.single.vm.config.location" />
 		<property name="MBeanServer" ref="registryAwareMBeanServer" />
 	</bean>
-	<!--<bean id="com.liferay.kernel.portal.cache.SingleVMPortalCacheManager" class="com.liferay.portal.cache.memory.MemoryPortalCacheManager" />-->
 	<bean id="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil" class="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil">
 		<property name="cacheKeyGenerators">
 			<map>

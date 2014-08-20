@@ -122,6 +122,8 @@ public class ToolDependencies {
 		MemoryPortalCacheManager<String, String> memoryPortalCacheManager =
 			new MemoryPortalCacheManager<String, String>();
 
+		memoryPortalCacheManager.setName("SingleVMPortalCacheManager");
+
 		memoryPortalCacheManager.afterPropertiesSet();
 
 		PortletPermissionUtil portletPermissionUtil =
@@ -149,6 +151,8 @@ public class ToolDependencies {
 
 		MemoryPortalCacheManager<String, String> memoryPortalCacheManager =
 			new MemoryPortalCacheManager<String, String>();
+
+		memoryPortalCacheManager.setName("MultiVMPortalCacheManager");
 
 		memoryPortalCacheManager.afterPropertiesSet();
 

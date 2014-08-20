@@ -35,6 +35,10 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	implements PortalCacheManager<K, V> {
 
 	public void afterPropertiesSet() {
+		if (_name == null) {
+			throw new NullPointerException("Name is null");
+		}
+
 		_memoryPortalCaches =
 			new ConcurrentHashMap<String, MemoryPortalCache<K, V>>(
 				_cacheManagerInitialCapacity);
@@ -106,6 +110,11 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
+	public boolean isClusterAware() {
+		return _clusterAware;
+	}
+
+	@Override
 	public void reconfigureCaches(URL configurationURL) {
 	}
 
@@ -140,6 +149,10 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 		_cacheManagerInitialCapacity = cacheManagerInitialCapacity;
 	}
 
+	public void setClusterAware(boolean clusterAware) {
+		_clusterAware = clusterAware;
+	}
+
 	public void setName(String name) {
 		_name = name;
 	}
@@ -160,7 +173,8 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	private int _cacheManagerInitialCapacity = 10000;
 	private Set<CacheManagerListener> _cacheManagerListeners =
 		new CopyOnWriteArraySet<CacheManagerListener>();
+	private boolean _clusterAware;
 	private Map<String, MemoryPortalCache<K, V>> _memoryPortalCaches;
-	private String _name = "memory-portal-cache";
+	private String _name;
 
 }

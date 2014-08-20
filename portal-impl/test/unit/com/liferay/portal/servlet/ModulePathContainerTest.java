@@ -38,6 +38,8 @@ public class ModulePathContainerTest {
 			memoryPortalCacheManager =
 				new MemoryPortalCacheManager<Serializable, Serializable>();
 
+		memoryPortalCacheManager.setName("SingleVMPortalCacheManager");
+
 		memoryPortalCacheManager.afterPropertiesSet();
 
 		SingleVMPoolImpl singleVMPoolImpl = new SingleVMPoolImpl();

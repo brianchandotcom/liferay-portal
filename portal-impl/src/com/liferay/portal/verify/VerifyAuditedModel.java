@@ -322,54 +322,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 		}
 	}
 
-	private static final String[][] _MODELS = new String[][] {
-		new String[] {
-			"Layout", "plid", null, null, null, "false"
-		},
-		new String[] {
-			"LayoutFriendlyURL", "layoutFriendlyURLId", null, null, null,
-			"false"
-		},
-		new String[] {
-			"LayoutPrototype", "layoutPrototypeId", null, null, null, "true"
-		},
-		new String[] {
-			"LayoutSetPrototype", "layoutSetPrototypeId", null, null, null,
-			"false"
-		},
-		new String[] {
-			"MBDiscussion", "discussionId", "threadId", "MBThread", "threadId",
-			"true"
-		},
-		new String[] {
-			"MBThread", "threadId", "rootMessageId", "MBMessage", "messageId",
-			"true"
-		},
-		new String[] {
-			"MBThreadFlag", "threadFlagId", "userId", "User_", "userId", "true",
-		},
-		new String[] {
-			"Organization_", "organizationId", null, null, null, "true"
-		},
-		new String[] {
-			"PollsChoice", "choiceId", "questionId", "PollsQuestion",
-			"questionId", "true"
-		},
-		new String[] {
-			"PollsVote", "voteId", "questionId", "PollsQuestion", "questionId",
-			"true"
-		},
-		new String[] {
-			"RepositoryEntry", "repositoryEntryId", "repositoryId",
-			"Repository", "repositoryId", "true"
-		},
-		new String[] {
-			"Role_", "roleId", null, null, null, "true"
-		},
-		new String[] {
-			"UserGroup", "userGroupId", null, null, null, "true"
-		}
-	};
+	private static final String[][] _MODELS = new String[][] {};
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyAuditedModel.class);
 

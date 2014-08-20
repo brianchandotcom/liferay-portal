@@ -17,11 +17,12 @@ package com.liferay.portal.verify;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,25 +42,31 @@ public class VerifyAuditedModel extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		List<String> pendingModels = new ArrayList<String>();
 
-		for (String[] model : _MODELS) {
-			pendingModels.add(model[0]);
+		for (VerifiableAuditedModel verifiableAuditedModel :
+				_verifiableAuditedModels) {
+
+			pendingModels.add(verifiableAuditedModel.getModelName());
 		}
 
 		while (!pendingModels.isEmpty()) {
 			int count = pendingModels.size();
 
-			for (String[] model : _MODELS) {
-				if (pendingModels.contains(model[3]) ||
-					!pendingModels.contains(model[0])) {
+			for (VerifiableAuditedModel verifiableAuditedModel :
+					_verifiableAuditedModels) {
+
+				String joinByColumnName =
+					verifiableAuditedModel.getJoinByColumnName();
+				String modelName = verifiableAuditedModel.getModelName();
+
+				if (pendingModels.contains(joinByColumnName) ||
+					!pendingModels.contains(modelName)) {
 
 					continue;
 				}
 
-				verifyModel(
-					model[0], model[1], model[2], model[3], model[4],
-					GetterUtil.getBoolean(model[5]));
+				verifyModel(verifiableAuditedModel);
 
-				pendingModels.remove(model[0]);
+				pendingModels.remove(modelName);
 			}
 
 			if (pendingModels.size() == count) {
@@ -257,10 +264,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 		}
 	}
 
-	protected void verifyModel(
-			String modelName, String pkColumnName, String joinByColumnName,
-			String relatedModelName, String relatedPKColumnName,
-			boolean updateDates)
+	protected void verifyModel(VerifiableAuditedModel verifiableAuditedModel)
 		throws Exception {
 
 		Connection con = null;
@@ -272,14 +276,21 @@ public class VerifyAuditedModel extends VerifyProcess {
 
 			StringBundler sb = new StringBundler(8);
 
+			String pkColumnName = verifiableAuditedModel.getPkColumnName();
+
 			sb.append("select ");
 			sb.append(pkColumnName);
 			sb.append(", companyId");
+
+			String joinByColumnName =
+				verifiableAuditedModel.getJoinByColumnName();
 
 			if (joinByColumnName != null) {
 				sb.append(StringPool.COMMA_AND_SPACE);
 				sb.append(joinByColumnName);
 			}
+
+			String modelName = verifiableAuditedModel.getModelName();
 
 			sb.append(" from ");
 			sb.append(modelName);
@@ -301,7 +312,9 @@ public class VerifyAuditedModel extends VerifyProcess {
 					long relatedPrimKey = rs.getLong(joinByColumnName);
 
 					modelArray = getModelArray(
-						relatedModelName, relatedPKColumnName, relatedPrimKey);
+						verifiableAuditedModel.getRelatedModelName(),
+						verifiableAuditedModel.getRelatedPKColumnName(),
+						relatedPrimKey);
 				}
 				else if (previousCompanyId != companyId) {
 					modelArray = getDefaultUserArray(con, companyId);
@@ -314,7 +327,8 @@ public class VerifyAuditedModel extends VerifyProcess {
 				}
 
 				verifyModel(
-					modelName, pkColumnName, primKey, modelArray, updateDates);
+					modelName, pkColumnName, primKey, modelArray,
+					verifiableAuditedModel.isUpdateDates());
 			}
 		}
 		finally {
@@ -322,8 +336,10 @@ public class VerifyAuditedModel extends VerifyProcess {
 		}
 	}
 
-	private static final String[][] _MODELS = new String[][] {};
-
 	private static Log _log = LogFactoryUtil.getLog(VerifyAuditedModel.class);
+
+	private ServiceTrackerList<VerifiableAuditedModel>
+		_verifiableAuditedModels = ServiceTrackerCollections.list(
+			VerifiableAuditedModel.class);
 
 }

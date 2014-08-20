@@ -34,9 +34,9 @@ import com.liferay.portal.util.PropsValues;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -634,7 +634,7 @@ public class ChannelImpl extends BaseChannelImpl {
 	private Map<String, NotificationEvent> _getUnconfirmedNotificationEvents() {
 		if (_unconfirmedNotificationEvents == null) {
 			_unconfirmedNotificationEvents =
-				new HashMap<String, NotificationEvent>();
+				new LinkedHashMap<String, NotificationEvent>();
 		}
 
 		return _unconfirmedNotificationEvents;

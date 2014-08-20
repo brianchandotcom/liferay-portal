@@ -41,6 +41,14 @@ public class MailServiceTestUtil {
 		return _smtpServer.getEmailCount();
 	}
 
+	public static MailMessage getLastMailMessage() {
+		if (_smtpServer.getEmailCount() > 0) {
+			return _smtpServer.getMessage(_smtpServer.getEmailCount() - 1);
+		}
+
+		return null;
+	}
+
 	public static List<MailMessage> getMailMessages(
 		String headerName, String headerValue) {
 
@@ -67,6 +75,14 @@ public class MailServiceTestUtil {
 		}
 
 		return mailMessages;
+	}
+
+	public static boolean isTextInLastMailMessage(String textToCheck) {
+		MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
+
+		String bodyMailMessage = mailMessage.getBody();
+
+		return bodyMailMessage.contains(textToCheck);
 	}
 
 	public static void start() {

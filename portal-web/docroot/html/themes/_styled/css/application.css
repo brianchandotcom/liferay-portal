@@ -1,5 +1,6 @@
 @import "aui/alloy-font-awesome/scss/variables";
 @import "compass";
+@import "mixins";
 
 /* ---------- Dragging/sorting indicators ---------- */
 
@@ -786,13 +787,48 @@
 		padding: 0;
 
 		.combobox-content {
-			.field-content .field-input-text {
-				display: block;
-				margin-bottom: 0;
+			.field-content {
+				vertical-align: middle;
+
+				@include respond-to(phone, tablet) {
+					vertical-align: top;
+				}
+
+				.field-input-text {
+					display: block;
+					margin-bottom: 0;
+					margin-top: -3px;
+
+					@include respond-to(phone, tablet) {
+						margin-top: 2px;
+					}
+				}
 			}
 
 			.field-label.textfield-label {
 				display: none;
+			}
+
+			.btn-toolbar-content {
+				display: inline-block;
+				margin-left: -2px;
+				vertical-align: middle;
+
+				.btn-group {
+					margin-top: -2px;
+
+					@include respond-to(phone, tablet) {
+						margin-top: -3px;
+					}
+
+					.btn {
+						float: none;
+
+						@include respond-to(phone, tablet) {
+							display: inline-block;
+						}
+					}
+				}
 			}
 
 			.toolbar-content {

@@ -56,7 +56,7 @@ public class MultiDestinationMessagingProxyInvocationHandler
 		}
 	}
 
-	private static InvocationHandlerFactory _invocationHandlerFactory =
+	private static final InvocationHandlerFactory _invocationHandlerFactory =
 		new InvocationHandlerFactory() {
 
 			@Override
@@ -67,6 +67,6 @@ public class MultiDestinationMessagingProxyInvocationHandler
 
 		};
 
-	private BaseMultiDestinationProxyBean _baseMultiDestinationProxyBean;
+	private final BaseMultiDestinationProxyBean _baseMultiDestinationProxyBean;
 
 }

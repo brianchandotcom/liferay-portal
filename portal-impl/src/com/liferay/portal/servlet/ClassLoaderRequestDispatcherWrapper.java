@@ -86,7 +86,7 @@ public class ClassLoaderRequestDispatcherWrapper implements RequestDispatcher {
 		}
 	}
 
-	private RequestDispatcher _requestDispatcher;
-	private ServletContext _servletContext;
+	private final RequestDispatcher _requestDispatcher;
+	private final ServletContext _servletContext;
 
 }

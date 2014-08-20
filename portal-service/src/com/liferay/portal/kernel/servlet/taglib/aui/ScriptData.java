@@ -169,9 +169,9 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private ConcurrentMap<String, PortletData> _portletDataMap =
+	private final ConcurrentMap<String, PortletData> _portletDataMap =
 		new ConcurrentHashMap<String, PortletData>();
-	private List<ObjectValuePair<StringBundler, Integer>> _sbIndexList =
+	private final List<ObjectValuePair<StringBundler, Integer>> _sbIndexList =
 		new ArrayList<ObjectValuePair<StringBundler, Integer>>();
 
 	private class PortletData implements Serializable {

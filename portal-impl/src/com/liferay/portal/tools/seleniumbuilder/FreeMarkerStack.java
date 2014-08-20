@@ -67,6 +67,6 @@ public class FreeMarkerStack {
 		return StringPool.BLANK;
 	}
 
-	private Stack<Object> _stack = new Stack<Object>();
+	private final Stack<Object> _stack = new Stack<Object>();
 
 }

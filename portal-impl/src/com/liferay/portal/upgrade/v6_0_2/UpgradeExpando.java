@@ -330,6 +330,6 @@ public class UpgradeExpando extends UpgradeProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeExpando.class);
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeExpando.class);
 
 }

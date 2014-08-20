@@ -41,6 +41,6 @@ public class TemplateHandlerComparator
 		return templateHandlerName1.compareTo(templateHandlerName2);
 	}
 
-	private Locale _locale;
+	private final Locale _locale;
 
 }

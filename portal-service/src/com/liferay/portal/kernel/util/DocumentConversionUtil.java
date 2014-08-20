@@ -54,10 +54,10 @@ public class DocumentConversionUtil {
 	private static final String _CLASS_NAME =
 		"com.liferay.portlet.documentlibrary.util.DocumentConversionUtil";
 
-	private static MethodKey _convertMethodKey = new MethodKey(
+	private static final MethodKey _convertMethodKey = new MethodKey(
 		ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME), "convert",
 		String.class, InputStream.class, String.class, String.class);
-	private static MethodKey _getConversionsMethodKey = new MethodKey(
+	private static final MethodKey _getConversionsMethodKey = new MethodKey(
 		ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME),
 		"getConversions", String.class);
 

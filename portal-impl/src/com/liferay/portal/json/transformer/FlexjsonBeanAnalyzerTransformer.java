@@ -90,8 +90,8 @@ public class FlexjsonBeanAnalyzerTransformer
 		return type.getName();
 	}
 
-	private List<PathExpression> _pathExpressions;
-	private List<Map<String, String>> _propertiesList =
+	private final List<PathExpression> _pathExpressions;
+	private final List<Map<String, String>> _propertiesList =
 		new ArrayList<Map<String, String>>();
 
 }

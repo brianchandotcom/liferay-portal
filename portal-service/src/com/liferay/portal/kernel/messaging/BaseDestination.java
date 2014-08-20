@@ -208,7 +208,7 @@ public abstract class BaseDestination implements Destination {
 		new ConcurrentHashSet<MessageListener>();
 	protected String name = StringPool.BLANK;
 
-	private Set<DestinationEventListener> _destinationEventListeners =
+	private final Set<DestinationEventListener> _destinationEventListeners =
 		new ConcurrentHashSet<DestinationEventListener>();
 
 }

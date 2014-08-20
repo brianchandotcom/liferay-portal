@@ -35,7 +35,7 @@ public class ImageTagMatcher extends CallbackMatcher {
 
 	private static final String _REGEX = "\\[\\[Image:[^\\]]+\\]\\]";
 
-	private Callback _callBack = new Callback() {
+	private final Callback _callBack = new Callback() {
 
 		@Override
 		public String foundMatch(MatchResult matchResult) {

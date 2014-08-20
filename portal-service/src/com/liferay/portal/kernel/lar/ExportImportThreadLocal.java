@@ -95,23 +95,23 @@ public class ExportImportThreadLocal {
 		_portletValidationInProcess.set(portletValidationInProcess);
 	}
 
-	private static ThreadLocal<Boolean> _layoutExportInProcess =
+	private static final ThreadLocal<Boolean> _layoutExportInProcess =
 		new AutoResetThreadLocal<Boolean>(
 			ExportImportThreadLocal.class + "._layoutExportInProcess", false);
-	private static ThreadLocal<Boolean> _layoutImportInProcess =
+	private static final ThreadLocal<Boolean> _layoutImportInProcess =
 		new AutoResetThreadLocal<Boolean>(
 			ExportImportThreadLocal.class + "._layoutImportInProcess", false);
-	private static ThreadLocal<Boolean> _layoutValidationInProcess =
+	private static final ThreadLocal<Boolean> _layoutValidationInProcess =
 		new AutoResetThreadLocal<Boolean>(
 			ExportImportThreadLocal.class + "._layoutValidationInProcess",
 			false);
-	private static ThreadLocal<Boolean> _portletExportInProcess =
+	private static final ThreadLocal<Boolean> _portletExportInProcess =
 		new AutoResetThreadLocal<Boolean>(
 			ExportImportThreadLocal.class + "._portletExportInProcess", false);
-	private static ThreadLocal<Boolean> _portletImportInProcess =
+	private static final ThreadLocal<Boolean> _portletImportInProcess =
 		new AutoResetThreadLocal<Boolean>(
 			ExportImportThreadLocal.class + "._portletImportInProcess", false);
-	private static ThreadLocal<Boolean> _portletValidationInProcess =
+	private static final ThreadLocal<Boolean> _portletValidationInProcess =
 		new AutoResetThreadLocal<Boolean>(
 			ExportImportThreadLocal.class + "._portletValidationInProcess",
 			false);

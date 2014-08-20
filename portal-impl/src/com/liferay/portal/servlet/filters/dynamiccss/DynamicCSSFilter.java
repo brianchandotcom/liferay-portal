@@ -235,7 +235,8 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 	private static final String _TEMP_DIR = "css";
 
-	private static Log _log = LogFactoryUtil.getLog(DynamicCSSFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DynamicCSSFilter.class);
 
 	private ServletContext _servletContext;
 	private File _tempDir;

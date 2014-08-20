@@ -471,7 +471,7 @@ public class CacheFilter extends BasePortalFilter {
 
 	private static final int _PATTERN_RESOURCE = 2;
 
-	private static Log _log = LogFactoryUtil.getLog(CacheFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(CacheFilter.class);
 
 	private int _pattern;
 

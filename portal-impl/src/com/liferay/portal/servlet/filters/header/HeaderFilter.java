@@ -158,7 +158,7 @@ public class HeaderFilter extends BasePortalFilter {
 
 	private static final String _EXPIRES = "Expires";
 
-	private static Set<String> _requestHeaderIgnoreInitParams =
+	private static final Set<String> _requestHeaderIgnoreInitParams =
 		SetUtil.fromArray(PropsValues.REQUEST_HEADER_IGNORE_INIT_PARAMS);
 
 	private Format _dateFormat;

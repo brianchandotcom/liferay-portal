@@ -42,7 +42,7 @@ public class ActionResult implements Serializable {
 		return _location;
 	}
 
-	private List<Event> _events;
-	private String _location;
+	private final List<Event> _events;
+	private final String _location;
 
 }

@@ -195,7 +195,7 @@ public class ClusterableInvokerUtil {
 		}
 	}
 
-	private static MethodKey _invokeMethodKey = new MethodKey(
+	private static final MethodKey _invokeMethodKey = new MethodKey(
 		ClusterableInvokerUtil.class, "_invoke", MethodHandler.class,
 		Class.class, Map.class);
 

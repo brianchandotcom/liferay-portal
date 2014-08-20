@@ -114,7 +114,7 @@ public class Netlogon {
 		_ntlmServiceAccount = ntlmServiceAccount;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(Netlogon.class);
+	private static final Log _log = LogFactoryUtil.getLog(Netlogon.class);
 
 	private String _domainController;
 	private String _domainControllerName;

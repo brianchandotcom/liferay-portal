@@ -66,7 +66,7 @@ public class KeywordsSuggestionHolder {
 
 	private static final String _KEYWORDS_DELIMETER_REGEXP = "[ ]+";
 
-	private List<String> _originalKeywords;
-	private List<String> _suggestedKeywords;
+	private final List<String> _originalKeywords;
+	private final List<String> _suggestedKeywords;
 
 }

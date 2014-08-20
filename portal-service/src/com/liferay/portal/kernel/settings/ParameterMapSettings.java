@@ -63,6 +63,6 @@ public class ParameterMapSettings extends BaseSettings {
 		return values;
 	}
 
-	private Map<String, String[]> _parameterMap;
+	private final Map<String, String[]> _parameterMap;
 
 }

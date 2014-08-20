@@ -108,11 +108,11 @@ public class CompositePasswordEncryptor
 			algorithm, plainTextPassword, encryptedPassword);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CompositePasswordEncryptor.class);
 
 	private PasswordEncryptor _defaultPasswordEncryptor;
-	private Map<String, PasswordEncryptor> _passwordEncryptors =
+	private final Map<String, PasswordEncryptor> _passwordEncryptors =
 		new HashMap<String, PasswordEncryptor>();
 
 }

@@ -41,6 +41,8 @@ public class SchedulerEntryRegistry {
 
 	public SchedulerEntryRegistry() {
 		if (!PropsValues.SCHEDULER_ENABLED) {
+			_serviceTracker = null;
+
 			return;
 		}
 
@@ -64,10 +66,11 @@ public class SchedulerEntryRegistry {
 		_serviceTracker.close();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerEntryRegistry.class);
 
-	private ServiceTracker<SchedulerEntry, SchedulerEntry> _serviceTracker;
+	private final ServiceTracker<SchedulerEntry, SchedulerEntry>
+		_serviceTracker;
 
 	private class SchedulerEntryServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<SchedulerEntry, SchedulerEntry> {

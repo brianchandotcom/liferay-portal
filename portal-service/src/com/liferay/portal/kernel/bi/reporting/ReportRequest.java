@@ -73,7 +73,7 @@ public class ReportRequest implements Serializable {
 
 	private ReportDesignRetriever _reportDesignRetriever;
 	private ReportFormat _reportFormat;
-	private Map<String, String> _reportParameters;
+	private final Map<String, String> _reportParameters;
 	private ReportRequestContext _reportRequestContext;
 
 }

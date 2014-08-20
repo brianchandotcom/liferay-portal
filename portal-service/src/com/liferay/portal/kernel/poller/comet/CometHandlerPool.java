@@ -126,11 +126,12 @@ public class CometHandlerPool {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CometHandlerPool.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CometHandlerPool.class);
 
-	private ReadWriteLock _cometHandlerPoolReadWriteLock =
+	private final ReadWriteLock _cometHandlerPoolReadWriteLock =
 		new ReentrantReadWriteLock();
-	private Map<String, CometHandler> _cometHandlers =
+	private final Map<String, CometHandler> _cometHandlers =
 		new HashMap<String, CometHandler>();
 
 }

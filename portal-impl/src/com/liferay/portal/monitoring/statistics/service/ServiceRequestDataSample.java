@@ -41,6 +41,6 @@ public class ServiceRequestDataSample extends BaseDataSample {
 		return _methodSignature;
 	}
 
-	private MethodSignature _methodSignature;
+	private final MethodSignature _methodSignature;
 
 }

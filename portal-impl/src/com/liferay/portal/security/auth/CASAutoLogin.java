@@ -155,6 +155,6 @@ public class CASAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CASAutoLogin.class);
+	private static final Log _log = LogFactoryUtil.getLog(CASAutoLogin.class);
 
 }

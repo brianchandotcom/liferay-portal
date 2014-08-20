@@ -143,6 +143,6 @@ public class ListWrapper<E> implements List<E> {
 		return _list.toArray(a);
 	}
 
-	private List<E> _list;
+	private final List<E> _list;
 
 }

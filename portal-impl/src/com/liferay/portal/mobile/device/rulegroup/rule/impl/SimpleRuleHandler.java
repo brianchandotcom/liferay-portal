@@ -71,20 +71,20 @@ public class SimpleRuleHandler implements RuleHandler {
 	}
 
 	public SimpleRuleHandler() {
-		_propertyNames = new ArrayList<String>(10);
+		Collection<String> propertyNames = new ArrayList<String>(10);
 
-		_propertyNames.add(PROPERTY_OS);
-		_propertyNames.add(PROPERTY_SCREEN_PHYSICAL_WIDTH_MAX);
-		_propertyNames.add(PROPERTY_SCREEN_PHYSICAL_WIDTH_MIN);
-		_propertyNames.add(PROPERTY_SCREEN_PHYSICAL_HEIGHT_MAX);
-		_propertyNames.add(PROPERTY_SCREEN_PHYSICAL_HEIGHT_MIN);
-		_propertyNames.add(PROPERTY_SCREEN_RESOLUTION_WIDTH_MAX);
-		_propertyNames.add(PROPERTY_SCREEN_RESOLUTION_WIDTH_MIN);
-		_propertyNames.add(PROPERTY_SCREEN_RESOLUTION_HEIGHT_MAX);
-		_propertyNames.add(PROPERTY_SCREEN_RESOLUTION_HEIGHT_MIN);
-		_propertyNames.add(PROPERTY_TABLET);
+		propertyNames.add(PROPERTY_OS);
+		propertyNames.add(PROPERTY_SCREEN_PHYSICAL_WIDTH_MAX);
+		propertyNames.add(PROPERTY_SCREEN_PHYSICAL_WIDTH_MIN);
+		propertyNames.add(PROPERTY_SCREEN_PHYSICAL_HEIGHT_MAX);
+		propertyNames.add(PROPERTY_SCREEN_PHYSICAL_HEIGHT_MIN);
+		propertyNames.add(PROPERTY_SCREEN_RESOLUTION_WIDTH_MAX);
+		propertyNames.add(PROPERTY_SCREEN_RESOLUTION_WIDTH_MIN);
+		propertyNames.add(PROPERTY_SCREEN_RESOLUTION_HEIGHT_MAX);
+		propertyNames.add(PROPERTY_SCREEN_RESOLUTION_HEIGHT_MIN);
+		propertyNames.add(PROPERTY_TABLET);
 
-		_propertyNames = Collections.unmodifiableCollection(_propertyNames);
+		_propertyNames = Collections.unmodifiableCollection(propertyNames);
 	}
 
 	@Override
@@ -336,8 +336,9 @@ public class SimpleRuleHandler implements RuleHandler {
 		_log.debug(sb.toString());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SimpleRuleHandler.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SimpleRuleHandler.class);
 
-	private Collection<String> _propertyNames;
+	private final Collection<String> _propertyNames;
 
 }

@@ -76,6 +76,6 @@ public class TransactionalTestRule implements TestRule {
 		return _transactionAttribute;
 	}
 
-	private TransactionAttribute _transactionAttribute;
+	private final TransactionAttribute _transactionAttribute;
 
 }

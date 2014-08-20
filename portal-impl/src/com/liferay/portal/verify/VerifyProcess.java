@@ -132,9 +132,9 @@ public abstract class VerifyProcess extends BaseDBProcess {
 		return portalTableNames.contains(StringUtil.toLowerCase(tableName));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(VerifyProcess.class);
+	private static final Log _log = LogFactoryUtil.getLog(VerifyProcess.class);
 
-	private Pattern _createTablePattern = Pattern.compile(
+	private final Pattern _createTablePattern = Pattern.compile(
 		"create table (\\S*) \\(");
 	private Set<String> _portalTableNames;
 

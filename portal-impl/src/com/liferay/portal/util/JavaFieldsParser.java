@@ -142,6 +142,7 @@ public class JavaFieldsParser {
 		return javaSnippet.substring(x + 1);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(JavaFieldsParser.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		JavaFieldsParser.class);
 
 }

@@ -88,8 +88,8 @@ public class BackgroundTaskStatusRegistryImpl
 		}
 	}
 
-	private Map<Long, BackgroundTaskStatus> _backgroundTaskStatuses =
+	private final Map<Long, BackgroundTaskStatus> _backgroundTaskStatuses =
 		new HashMap<Long, BackgroundTaskStatus>();
-	private ReadWriteLock _readWriteLock = new ReentrantReadWriteLock();
+	private final ReadWriteLock _readWriteLock = new ReentrantReadWriteLock();
 
 }

@@ -84,7 +84,7 @@ public class ThreadLocalCache<T> {
 	}
 
 	private Map<String, T> _cache;
-	private Lifecycle _lifecycle;
-	private Serializable _name;
+	private final Lifecycle _lifecycle;
+	private final Serializable _name;
 
 }

@@ -112,6 +112,6 @@ public class RSSWebCacheItem implements WebCacheItem {
 
 	private static final long _REFRESH_TIME = Time.MINUTE * 20;
 
-	private String _url;
+	private final String _url;
 
 }

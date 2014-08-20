@@ -28,6 +28,6 @@ public class CMISNotExpression implements CMISCriterion {
 		return "NOT(".concat(_cmisCriterion.toQueryFragment().concat(")"));
 	}
 
-	private CMISCriterion _cmisCriterion;
+	private final CMISCriterion _cmisCriterion;
 
 }

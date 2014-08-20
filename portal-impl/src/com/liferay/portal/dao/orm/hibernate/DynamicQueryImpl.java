@@ -139,7 +139,7 @@ public class DynamicQueryImpl implements DynamicQuery {
 	}
 
 	private Criteria _criteria;
-	private DetachedCriteria _detachedCriteria;
+	private final DetachedCriteria _detachedCriteria;
 	private Integer _end;
 	private Integer _start;
 

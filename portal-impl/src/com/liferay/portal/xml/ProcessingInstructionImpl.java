@@ -108,6 +108,6 @@ public class ProcessingInstructionImpl
 		return _processingInstruction.toString();
 	}
 
-	private org.dom4j.ProcessingInstruction _processingInstruction;
+	private final org.dom4j.ProcessingInstruction _processingInstruction;
 
 }

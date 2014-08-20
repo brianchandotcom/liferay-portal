@@ -238,14 +238,14 @@ public class FilterMapping {
 
 	private static final String _STAR_PERIOD = "*.";
 
-	private static Log _log = LogFactoryUtil.getLog(FilterMapping.class);
+	private static final Log _log = LogFactoryUtil.getLog(FilterMapping.class);
 
 	private boolean _dispatcherError;
 	private boolean _dispatcherForward;
 	private boolean _dispatcherInclude;
 	private boolean _dispatcherRequest;
 	private Filter _filter;
-	private List<String> _urlPatterns;
+	private final List<String> _urlPatterns;
 	private Pattern _urlRegexIgnorePattern;
 	private Pattern _urlRegexPattern;
 

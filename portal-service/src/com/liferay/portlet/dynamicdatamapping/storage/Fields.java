@@ -154,6 +154,6 @@ public class Fields implements Iterable<Field>, Serializable {
 		return fieldsList;
 	}
 
-	private Map<String, Field> _fieldsMap = new HashMap<String, Field>();
+	private final Map<String, Field> _fieldsMap = new HashMap<String, Field>();
 
 }

@@ -105,7 +105,7 @@ public class ServiceBeanMethodInvocationFactoryImpl
 		return methodInterceptors;
 	}
 
-	private Map<String, List<MethodInterceptor>> _methodInterceptors =
+	private final Map<String, List<MethodInterceptor>> _methodInterceptors =
 		new HashMap<String, List<MethodInterceptor>>();
 
 }

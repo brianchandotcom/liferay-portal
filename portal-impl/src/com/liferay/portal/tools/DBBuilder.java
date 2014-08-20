@@ -57,10 +57,10 @@ public class DBBuilder {
 	public DBBuilder(
 		String databaseName, String[] databaseTypes, String sqlDir) {
 
-		try {
-			_databaseName = databaseName;
-			_databaseTypes = databaseTypes;
+		_databaseName = databaseName;
+		_databaseTypes = databaseTypes;
 
+		try {
 			if (!sqlDir.endsWith("/WEB-INF/sql")) {
 				_buildSQLFile(sqlDir, "portal");
 				_buildSQLFile(sqlDir, "portal-tables");
@@ -136,7 +136,7 @@ public class DBBuilder {
 		}
 	}
 
-	private String _databaseName;
-	private String[] _databaseTypes;
+	private final String _databaseName;
+	private final String[] _databaseTypes;
 
 }

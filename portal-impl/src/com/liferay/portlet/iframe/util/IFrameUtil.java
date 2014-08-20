@@ -117,6 +117,6 @@ public class IFrameUtil {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(IFrameUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(IFrameUtil.class);
 
 }

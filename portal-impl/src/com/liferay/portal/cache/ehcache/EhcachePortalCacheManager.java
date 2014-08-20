@@ -362,7 +362,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private static final String _DEFAULT_CLUSTERED_EHCACHE_CONFIG_FILE =
 		"/ehcache/liferay-multi-vm-clustered.xml";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		EhcachePortalCacheManager.class);
 
 	private CacheManager _cacheManager;
@@ -371,7 +371,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private ManagementService _managementService;
 	private MBeanServer _mBeanServer;
 	private boolean _mpiOnly;
-	private Map<String, PortalCache<K, V>> _portalCaches =
+	private final Map<String, PortalCache<K, V>> _portalCaches =
 		new HashMap<String, PortalCache<K, V>>();
 	private boolean _registerCacheConfigurations = true;
 	private boolean _registerCacheManager = true;

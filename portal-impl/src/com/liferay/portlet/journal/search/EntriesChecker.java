@@ -155,7 +155,7 @@ public class EntriesChecker extends RowChecker {
 			StringPool.BLANK);
 	}
 
-	private LiferayPortletResponse _liferayPortletResponse;
-	private PermissionChecker _permissionChecker;
+	private final LiferayPortletResponse _liferayPortletResponse;
+	private final PermissionChecker _permissionChecker;
 
 }

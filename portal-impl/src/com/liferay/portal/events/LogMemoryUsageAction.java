@@ -45,6 +45,7 @@ public class LogMemoryUsageAction extends Action {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LogMemoryUsageAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LogMemoryUsageAction.class);
 
 }

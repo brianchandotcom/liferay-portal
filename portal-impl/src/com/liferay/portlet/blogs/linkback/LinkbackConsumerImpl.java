@@ -77,10 +77,11 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 		_commentManager = commentManager;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LinkbackConsumerImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LinkbackConsumerImpl.class);
 
 	private CommentManager _commentManager = BlogsUtil.getCommentManager();
-	private List<Tuple> _trackbacks = Collections.synchronizedList(
+	private final List<Tuple> _trackbacks = Collections.synchronizedList(
 		new ArrayList<Tuple>());
 
 }

@@ -52,6 +52,6 @@ public class ServiceTrackerCustomizerAdapter<S, T>
 			new ServiceReferenceWrapper<S>(serviceReference), service);
 	}
 
-	private ServiceTrackerCustomizer<S, T> _serviceTrackerCustomizer;
+	private final ServiceTrackerCustomizer<S, T> _serviceTrackerCustomizer;
 
 }

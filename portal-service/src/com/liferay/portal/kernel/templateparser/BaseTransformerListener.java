@@ -59,7 +59,7 @@ public abstract class BaseTransformerListener implements TransformerListener {
 		return document;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		BaseTransformerListener.class);
 
 }

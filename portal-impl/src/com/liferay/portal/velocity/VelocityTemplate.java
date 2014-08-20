@@ -120,9 +120,9 @@ public class VelocityTemplate extends AbstractTemplate {
 		}
 	}
 
-	private boolean _privileged;
-	private VelocityContext _velocityContext;
-	private VelocityEngine _velocityEngine;
+	private final boolean _privileged;
+	private final VelocityContext _velocityContext;
+	private final VelocityEngine _velocityEngine;
 
 	private class TemplatePrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Template> {

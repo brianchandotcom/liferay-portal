@@ -59,6 +59,9 @@ public class ThemeDisplayModel {
 		if (portletDisplay != null) {
 			_portletDisplayModel = new PortletDisplayModel(portletDisplay);
 		}
+		else {
+			_portletDisplayModel = null;
+		}
 	}
 
 	public String getCdnHost() {
@@ -161,30 +164,30 @@ public class ThemeDisplayModel {
 		return _secure;
 	}
 
-	private String _cdnHost;
-	private long _companyId;
-	private String _doAsUserId;
-	private String _i18nLanguageId;
-	private String _i18nPath;
-	private String _languageId;
-	private Locale _locale;
-	private String _pathContext;
-	private String _pathFriendlyURLPrivateGroup;
-	private String _pathFriendlyURLPrivateUser;
-	private String _pathFriendlyURLPublic;
-	private String _pathImage;
-	private String _pathMain;
-	private String _pathThemeImages;
-	private long _plid;
-	private String _portalURL;
-	private PortletDisplayModel _portletDisplayModel;
-	private long _realUserId;
-	private long _scopeGroupId;
-	private boolean _secure;
-	private String _serverName;
-	private int _serverPort;
-	private TimeZone _timeZone;
-	private String _urlPortal;
-	private long _userId;
+	private final String _cdnHost;
+	private final long _companyId;
+	private final String _doAsUserId;
+	private final String _i18nLanguageId;
+	private final String _i18nPath;
+	private final String _languageId;
+	private final Locale _locale;
+	private final String _pathContext;
+	private final String _pathFriendlyURLPrivateGroup;
+	private final String _pathFriendlyURLPrivateUser;
+	private final String _pathFriendlyURLPublic;
+	private final String _pathImage;
+	private final String _pathMain;
+	private final String _pathThemeImages;
+	private final long _plid;
+	private final String _portalURL;
+	private final PortletDisplayModel _portletDisplayModel;
+	private final long _realUserId;
+	private final long _scopeGroupId;
+	private final boolean _secure;
+	private final String _serverName;
+	private final int _serverPort;
+	private final TimeZone _timeZone;
+	private final String _urlPortal;
+	private final long _userId;
 
 }

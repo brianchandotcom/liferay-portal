@@ -22,6 +22,7 @@ import com.liferay.portal.parsers.creole.visitor.ASTVisitor;
 public class ParagraphNode extends BaseParentableNode {
 
 	public ParagraphNode() {
+		this(null);
 	}
 
 	public ParagraphNode(CollectionNode collectionNode) {

@@ -79,8 +79,8 @@ public class PrivilegedTemplateWrapper implements Template {
 		_template.put(key, value);
 	}
 
-	private AccessControlContext _accessControlContext;
-	private Template _template;
+	private final AccessControlContext _accessControlContext;
+	private final Template _template;
 
 	private static class ProcessTemplatePrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Void> {
@@ -99,7 +99,7 @@ public class PrivilegedTemplateWrapper implements Template {
 			return null;
 		}
 
-		private Template _template;
+		private final Template _template;
 		private Writer _writer;
 
 	}

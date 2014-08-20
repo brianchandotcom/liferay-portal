@@ -33,7 +33,7 @@ public class ProxiedLayoutsThreadLocal {
 		return _proxiedLayouts.get();
 	}
 
-	private static ThreadLocal<Map<Layout, Object>> _proxiedLayouts =
+	private static final ThreadLocal<Map<Layout, Object>> _proxiedLayouts =
 		new AutoResetThreadLocal<Map<Layout, Object>>(
 			ProxiedLayoutsThreadLocal.class + "._proxiedLayouts",
 			new HashMap<Layout, Object>());

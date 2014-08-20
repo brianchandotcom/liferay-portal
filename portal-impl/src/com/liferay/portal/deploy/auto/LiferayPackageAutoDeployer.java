@@ -45,14 +45,18 @@ import java.util.zip.ZipFile;
 public class LiferayPackageAutoDeployer implements AutoDeployer {
 
 	public LiferayPackageAutoDeployer() {
+		String baseDir = null;
+
 		try {
-			_baseDir = PrefsPropsUtil.getString(
+			baseDir = PrefsPropsUtil.getString(
 				PropsKeys.AUTO_DEPLOY_DEPLOY_DIR,
 				PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_baseDir = baseDir;
 	}
 
 	@Override
@@ -139,9 +143,9 @@ public class LiferayPackageAutoDeployer implements AutoDeployer {
 		return new LiferayPackageAutoDeployer();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayPackageAutoDeployer.class);
 
-	private String _baseDir;
+	private final String _baseDir;
 
 }

@@ -44,6 +44,6 @@ public abstract class BaseDLDisplayContext<T extends DLDisplayContext>
 	protected HttpServletRequest request;
 	protected HttpServletResponse response;
 
-	private UUID _uuid;
+	private final UUID _uuid;
 
 }

@@ -118,8 +118,8 @@ public class ServletContextPath extends FilesystemPath {
 		_useRootURI = userPath.startsWith(_rootURI.toString());
 	}
 
-	private URI _rootURI;
-	private ServletContext _servletContext;
-	private boolean _useRootURI;
+	private final URI _rootURI;
+	private final ServletContext _servletContext;
+	private final boolean _useRootURI;
 
 }

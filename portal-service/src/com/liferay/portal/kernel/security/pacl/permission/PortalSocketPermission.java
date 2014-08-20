@@ -93,7 +93,7 @@ public class PortalSocketPermission {
 		_pacl.checkPermission(location, "connect");
 	}
 
-	private static PACL _pacl = new NoPACL();
+	private static final PACL _pacl = new NoPACL();
 
 	private static class NoPACL implements PACL {
 

@@ -37,9 +37,9 @@ public class EmailAddressValidatorFactory {
 		_serviceTracker.open();
 	}
 
-	private static EmailAddressValidatorFactory _instance =
+	private static final EmailAddressValidatorFactory _instance =
 		new EmailAddressValidatorFactory();
 
-	private ServiceTracker<?, EmailAddressValidator> _serviceTracker;
+	private final ServiceTracker<?, EmailAddressValidator> _serviceTracker;
 
 }

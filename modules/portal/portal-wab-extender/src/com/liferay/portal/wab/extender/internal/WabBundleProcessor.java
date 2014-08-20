@@ -287,16 +287,17 @@ public class WabBundleProcessor {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WabBundleProcessor.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WabBundleProcessor.class);
 
-	private Bundle _bundle;
-	private ClassLoader _bundleClassLoader;
-	private String _contextPath;
-	private ExtendedHttpService _extendedHttpService;
+	private final Bundle _bundle;
+	private final ClassLoader _bundleClassLoader;
+	private final String _contextPath;
+	private final ExtendedHttpService _extendedHttpService;
 	private ServletContextHelper _servletContextHelper;
-	private String _servletContextName;
+	private final String _servletContextName;
 	private WebXMLDefinition _webXML;
-	private WebXMLDefinitionLoader _webXMLDefinitionLoader =
+	private final WebXMLDefinitionLoader _webXMLDefinitionLoader =
 		new WebXMLDefinitionLoader();
 
 }

@@ -136,9 +136,9 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalSessionDestroyer.class);
 
-	private HttpSessionEvent _httpSessionEvent;
+	private final HttpSessionEvent _httpSessionEvent;
 
 }

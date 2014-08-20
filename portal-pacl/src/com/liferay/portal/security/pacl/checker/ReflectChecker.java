@@ -116,7 +116,7 @@ public class ReflectChecker extends BaseChecker {
 			"security-manager-suppress-access-checks");
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ReflectChecker.class);
+	private static final Log _log = LogFactoryUtil.getLog(ReflectChecker.class);
 
 	private boolean _suppressAccessChecks;
 

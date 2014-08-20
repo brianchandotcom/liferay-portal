@@ -58,9 +58,9 @@ public class StartedBundleListener implements BundleListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		StartedBundleListener.class);
 
-	private WebBundleDeployer _webBundleDeployer;
+	private final WebBundleDeployer _webBundleDeployer;
 
 }

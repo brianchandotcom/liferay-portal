@@ -98,9 +98,9 @@ public class UserOrganizationChecker extends RowChecker {
 		return super.isDisabled(obj);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		UserOrganizationChecker.class);
 
-	private Organization _organization;
+	private final Organization _organization;
 
 }

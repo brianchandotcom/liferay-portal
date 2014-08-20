@@ -49,8 +49,9 @@ public class UserGroupTeamChecker extends RowChecker {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UserGroupTeamChecker.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserGroupTeamChecker.class);
 
-	private Team _team;
+	private final Team _team;
 
 }

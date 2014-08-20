@@ -122,9 +122,9 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 		return Validator.isNotNull(bundleSymbolicName);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleAutoDeployListener.class);
 
-	private AutoDeployer _autoDeployer;
+	private final AutoDeployer _autoDeployer;
 
 }

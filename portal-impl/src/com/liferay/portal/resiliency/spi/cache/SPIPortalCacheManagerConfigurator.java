@@ -95,7 +95,7 @@ public class SPIPortalCacheManagerConfigurator {
 	private static final String _BEAN_NAME_MULTI_VM_PORTAL_CACHE_MANAGER =
 		"com.liferay.portal.kernel.cache.MultiVMPortalCacheManager";
 
-	private static ExceptionHandler _exceptionHandler =
+	private static final ExceptionHandler _exceptionHandler =
 		new WarnLogExceptionHandler();
 
 	private static class IntrabandPortalCacheTargetLocator

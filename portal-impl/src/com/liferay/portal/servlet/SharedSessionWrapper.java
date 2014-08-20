@@ -44,8 +44,10 @@ public class SharedSessionWrapper implements HttpSession {
 				_log.warn("Wrapped portal session is null");
 			}
 		}
+		else {
+			_portalSession = portalSession;
+		}
 
-		_portalSession = portalSession;
 		_portletSession = portletSession;
 	}
 
@@ -220,9 +222,10 @@ public class SharedSessionWrapper implements HttpSession {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SharedSessionWrapper.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SharedSessionWrapper.class);
 
-	private static Map<String, String> _sharedSessionAttributesExcludes;
+	private static final Map<String, String> _sharedSessionAttributesExcludes;
 
 	static {
 		_sharedSessionAttributesExcludes = new HashMap<String, String>();
@@ -232,7 +235,7 @@ public class SharedSessionWrapper implements HttpSession {
 		}
 	}
 
-	private HttpSession _portalSession;
+	private final HttpSession _portalSession;
 	private HttpSession _portletSession;
 
 }

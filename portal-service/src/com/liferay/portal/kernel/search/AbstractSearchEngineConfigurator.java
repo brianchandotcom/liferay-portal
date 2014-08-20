@@ -391,11 +391,11 @@ public abstract class AbstractSearchEngineConfigurator
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.INDEX_SEARCH_WRITER_MAX_QUEUE_SIZE));
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AbstractSearchEngineConfigurator.class);
 
 	private String _originalSearchEngineId;
-	private List<SearchEngineRegistration> _searchEngineRegistrations =
+	private final List<SearchEngineRegistration> _searchEngineRegistrations =
 		new ArrayList<SearchEngineRegistration>();
 	private Map<String, SearchEngine> _searchEngines;
 

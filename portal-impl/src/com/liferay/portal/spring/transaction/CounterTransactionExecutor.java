@@ -119,7 +119,7 @@ public class CounterTransactionExecutor extends BaseTransactionExecutor {
 		throw throwable;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CounterTransactionExecutor.class);
 
 }

@@ -87,7 +87,7 @@ public class StagingPermissionImpl implements StagingPermission {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		StagingPermissionImpl.class);
 
 }

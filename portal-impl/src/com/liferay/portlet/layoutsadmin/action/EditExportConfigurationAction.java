@@ -271,7 +271,7 @@ public class EditExportConfigurationAction extends PortletAction {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		EditExportConfigurationAction.class);
 
 }

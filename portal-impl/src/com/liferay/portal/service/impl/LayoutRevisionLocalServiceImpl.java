@@ -673,7 +673,7 @@ public class LayoutRevisionLocalServiceImpl
 		return layoutRevision;
 	}
 
-	private static ThreadLocal<Long> _layoutRevisionId =
+	private static final ThreadLocal<Long> _layoutRevisionId =
 		new AutoResetThreadLocal<Long>(
 			LayoutRevisionLocalServiceImpl.class + "._layoutRevisionId", 0L);
 

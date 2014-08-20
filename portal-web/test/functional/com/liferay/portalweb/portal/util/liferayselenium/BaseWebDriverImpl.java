@@ -861,6 +861,10 @@ public abstract class BaseWebDriverImpl
 		webElement.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 
 		LiferaySeleniumHelper.typeAceEditor(this, locator, value);
+
+		webElement.sendKeys(Keys.chord(Keys.CONTROL, Keys.SHIFT, Keys.END));
+
+		webElement.sendKeys(Keys.DELETE);
 	}
 
 	@Override

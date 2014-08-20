@@ -710,11 +710,6 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public void typeKeys(String locator, String value) {
-		typeKeys(locator, value, false);
-	}
-
-	@Override
-	public void typeKeys(String locator, String value, boolean typeAceEditor) {
 		sendKeys(locator, value);
 	}
 

@@ -4,6 +4,5 @@ Import-Package:\
 	com.liferay.*,\
 	*;resolution:=optional
 Include-Resource: classes
-Private-Package: *
 
 -baseline: *;version="6.2.0"

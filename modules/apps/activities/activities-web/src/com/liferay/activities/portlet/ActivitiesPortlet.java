@@ -28,10 +28,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.configuration-action-class=com.liferay.portal.kernel.portlet.DefaultConfigurationAction",
 		"com.liferay.portlet.css-class-wrapper=portlet-activities",
 		"com.liferay.portlet.display-category=category.social",		
-		"com.liferay.portlet.friendly-url-mapper-class=com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper",
 		"com.liferay.portlet.friendly-url-mapping=activities",
 		"com.liferay.portlet.friendly-url-routes=com/liferay/portlet/activities/activities-friendly-url-routes.xml",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",

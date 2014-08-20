@@ -76,8 +76,8 @@ public class ContentUtil {
 		_contentPool.put(location, content);
 	}
 
-	private static final ContentUtil _instance = new ContentUtil();
 	private static final Log _log = LogFactoryUtil.getLog(ContentUtil.class);
+	private static final ContentUtil _instance = new ContentUtil();
 
 	private final Map<String, String> _contentPool;
 

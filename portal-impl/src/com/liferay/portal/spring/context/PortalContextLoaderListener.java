@@ -354,9 +354,9 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 	}
 
-	private static final Field _filteredPropertyDescriptorsCacheField;
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalContextLoaderListener.class);
+	private static final Field _filteredPropertyDescriptorsCacheField;
 
 	private static String _portalServletContextName = StringPool.BLANK;
 	private static String _portalServletContextPath = StringPool.SLASH;

@@ -85,8 +85,8 @@ public class MinifierUtil {
 		return _javaScriptMinifierInstance.compress(resourceName, content);
 	}
 
-	private static final MinifierUtil _instance = new MinifierUtil();
 	private static final Log _log = LogFactoryUtil.getLog(MinifierUtil.class);
+	private static final MinifierUtil _instance = new MinifierUtil();
 
 	private final JavaScriptMinifier _javaScriptMinifierInstance;
 

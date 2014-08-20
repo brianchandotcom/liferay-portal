@@ -147,10 +147,10 @@ public class JasperVersionDetector {
 		}
 	}
 
-	private static final JasperVersionDetector _instance =
-		new JasperVersionDetector();
 	private static final Log _log = LogFactoryUtil.getLog(
 		JasperVersionDetector.class);
+	private static final JasperVersionDetector _instance =
+		new JasperVersionDetector();
 
 	private String _jasperVersion = StringPool.BLANK;
 	private boolean _jspServletDependantsMap;

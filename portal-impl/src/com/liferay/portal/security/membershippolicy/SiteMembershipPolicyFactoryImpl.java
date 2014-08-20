@@ -48,10 +48,10 @@ public class SiteMembershipPolicyFactoryImpl
 		_serviceTracker.open();
 	}
 
-	private static final SiteMembershipPolicyFactoryImpl _instance =
-		new SiteMembershipPolicyFactoryImpl();
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteMembershipPolicyFactoryImpl.class);
+	private static final SiteMembershipPolicyFactoryImpl _instance =
+		new SiteMembershipPolicyFactoryImpl();
 
 	private final ServiceTracker<?, SiteMembershipPolicy> _serviceTracker;
 

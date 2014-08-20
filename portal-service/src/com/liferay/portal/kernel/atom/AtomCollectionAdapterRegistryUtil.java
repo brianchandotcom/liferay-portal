@@ -121,10 +121,10 @@ public class AtomCollectionAdapterRegistryUtil {
 		}
 	}
 
-	private static final AtomCollectionAdapterRegistryUtil _instance =
-		new AtomCollectionAdapterRegistryUtil();
 	private static final Log _log = LogFactoryUtil.getLog(
 		AtomCollectionAdapterRegistryUtil.class);
+	private static final AtomCollectionAdapterRegistryUtil _instance =
+		new AtomCollectionAdapterRegistryUtil();
 
 	private final Map<String, AtomCollectionAdapter<?>>
 		_atomCollectionAdapters =

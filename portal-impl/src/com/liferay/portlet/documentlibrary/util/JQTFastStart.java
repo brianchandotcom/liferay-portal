@@ -173,7 +173,7 @@ public class JQTFastStart {
 		}
 	}
 
-	private static final JQTFastStart _instance = new JQTFastStart();
 	private static final Log _log = LogFactoryUtil.getLog(JQTFastStart.class);
+	private static final JQTFastStart _instance = new JQTFastStart();
 
 }

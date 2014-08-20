@@ -48,10 +48,10 @@ public class RoleMembershipPolicyFactoryImpl
 		_serviceTracker.open();
 	}
 
-	private static final RoleMembershipPolicyFactoryImpl _instance =
-		new RoleMembershipPolicyFactoryImpl();
 	private static final Log _log = LogFactoryUtil.getLog(
 		RoleMembershipPolicyFactoryImpl.class);
+	private static final RoleMembershipPolicyFactoryImpl _instance =
+		new RoleMembershipPolicyFactoryImpl();
 
 	private final ServiceTracker<?, RoleMembershipPolicy> _serviceTracker;
 

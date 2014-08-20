@@ -121,8 +121,8 @@ public class InstancePool {
 		_instances.clear();
 	}
 
-	private static final InstancePool _instance = new InstancePool();
 	private static final Log _log = LogFactoryUtil.getLog(InstancePool.class);
+	private static final InstancePool _instance = new InstancePool();
 
 	private final Map<String, Object> _instances;
 

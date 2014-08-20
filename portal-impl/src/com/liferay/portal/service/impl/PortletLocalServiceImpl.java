@@ -2403,10 +2403,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			PortletConstants.INSTANCE_SEPARATOR.length() +
 				PortletConstants.USER_SEPARATOR.length() + 39;
 
-	private static final Map<Long, Map<String, Portlet>> _companyPortletsPool =
-		new ConcurrentHashMap<Long, Map<String, Portlet>>();
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletLocalServiceImpl.class);
+	private static final Map<Long, Map<String, Portlet>> _companyPortletsPool =
+		new ConcurrentHashMap<Long, Map<String, Portlet>>();
 	private static final Map<String, PortletApp> _portletAppsPool =
 		new ConcurrentHashMap<String, PortletApp>();
 	private static final Map<String, String> _portletIdsByStrutsPath =

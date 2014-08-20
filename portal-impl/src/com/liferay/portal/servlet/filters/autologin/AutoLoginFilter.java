@@ -266,10 +266,10 @@ public class AutoLoginFilter extends BasePortalFilter {
 
 	private static final String _PATH_CHAT_LATEST = "/-/chat/latest";
 
-	private static final List<AutoLogin> _autoLogins =
-		new CopyOnWriteArrayList<AutoLogin>();
 	private static final Log _log = LogFactoryUtil.getLog(
 		AutoLoginFilter.class);
+	private static final List<AutoLogin> _autoLogins =
+		new CopyOnWriteArrayList<AutoLogin>();
 
 	private final ServiceTracker<?, AutoLogin> _serviceTracker;
 

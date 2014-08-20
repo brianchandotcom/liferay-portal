@@ -265,10 +265,10 @@ public class UserNotificationManagerUtil {
 			serviceContext);
 	}
 
-	private static final UserNotificationManagerUtil _instance =
-		new UserNotificationManagerUtil();
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserNotificationManagerUtil.class);
+	private static final UserNotificationManagerUtil _instance =
+		new UserNotificationManagerUtil();
 
 	private final Map<String, List<UserNotificationDefinition>>
 		_userNotificationDefinitions =

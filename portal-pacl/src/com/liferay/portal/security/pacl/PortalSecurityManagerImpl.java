@@ -531,6 +531,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			TemplateContextHelper.class, new DoTemplateContextHelperPACL());
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalSecurityManagerImpl.class.getName());
 	private static final ThreadLocal<ClassLoader>
 		_checkMemberAccessClassLoader =
 			new AutoResetThreadLocal<ClassLoader>(
@@ -538,8 +540,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 					"._checkMembersAccessClassLoader");
 	private static final RuntimePermission _checkMemberAccessPermission =
 		new RuntimePermission("accessDeclaredMembers");
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSecurityManagerImpl.class.getName());
 
 	private SecurityManager _originalSecurityManager;
 	private final PortalPolicy _portalPolicy;

@@ -170,11 +170,11 @@ public class IndexerRegistryUtil {
 		}
 	}
 
-	private static final Indexer _dummyIndexer = new DummyIndexer();
-	private static final IndexerRegistryUtil _instance =
-		new IndexerRegistryUtil();
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexerRegistryUtil.class);
+	private static final IndexerRegistryUtil _instance =
+		new IndexerRegistryUtil();
+	private static final Indexer _dummyIndexer = new DummyIndexer();
 
 	private final Map<String, Indexer> _indexers =
 		new ConcurrentHashMap<String, Indexer>();

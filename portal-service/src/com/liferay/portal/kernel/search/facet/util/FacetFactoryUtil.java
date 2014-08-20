@@ -66,9 +66,9 @@ public class FacetFactoryUtil {
 		_serviceTracker.open();
 	}
 
-	private static final FacetFactoryUtil _instance = new FacetFactoryUtil();
 	private static final Log _log = LogFactoryUtil.getLog(
 		FacetFactoryUtil.class);
+	private static final FacetFactoryUtil _instance = new FacetFactoryUtil();
 
 	private final Map<String, FacetFactory> _facetFactories =
 		new ConcurrentHashMap<String, FacetFactory>();

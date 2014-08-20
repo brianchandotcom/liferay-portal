@@ -640,8 +640,8 @@ public class SAXReaderImpl implements SAXReader {
 	private static final String _PROPERTY_SCHEMA_SOURCE =
 		"http://java.sun.com/xml/jaxp/properties/schemaSource";
 
-	private static final SAXReaderImpl _instance = new SAXReaderImpl();
 	private static final Log _log = LogFactoryUtil.getLog(SAXReaderImpl.class);
+	private static final SAXReaderImpl _instance = new SAXReaderImpl();
 
 	private final DocumentFactory _documentFactory =
 		DocumentFactory.getInstance();

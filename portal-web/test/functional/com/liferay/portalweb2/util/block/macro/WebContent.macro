@@ -1381,6 +1381,22 @@
 		<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="viewDraftCP">
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_WORKFLOW_STATUS" value1="Draft" />
+		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+
+		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="Draft" />
+		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
+		<execute action="CPWebcontentAddwebcontent#selectFrame" locator-key1="CONTENT_FIELD" />
+		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="BODY_FIELD" value1="${webContentContent}" />
+		<execute action="CPWebcontentAddwebcontent#selectFrameTop" />
+	</command>
+
 	<command name="viewEditWCViaWCD">
 		<execute action="PGWebcontentdisplay#assertElementPresent" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 		<execute action="PGWebcontentdisplay#assertElementPresent" locator-key1="EDIT_WEB_CONTENT" />
@@ -1618,19 +1634,10 @@
 		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
 		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
 		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
-		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_WORKFLOW_STATUS" value1="${workflowStatus}" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_WORKFLOW_STATUS" value1="Pending" />
 		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
 
-		<if>
-			<equals arg1="${workflowStatus}" arg2="Draft" />
-			<then>
-				<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="${workflowStatus}" />
-			</then>
-			<else>
-				<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="${workflowStatus} (${workflowTask})" />
-			</else>
-		</if>
-
+		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="Pending (${workflowTask})" />
 		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 		<execute action="CPWebcontentAddwebcontent#selectFrame" locator-key1="CONTENT_FIELD" />
 		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="BODY_FIELD" value1="${webContentContent}" />

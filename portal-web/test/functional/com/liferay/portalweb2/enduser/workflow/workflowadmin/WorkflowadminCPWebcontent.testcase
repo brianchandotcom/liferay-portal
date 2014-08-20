@@ -86,9 +86,9 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#viewWithWorkflowCP">
-			<var name="workflowStatus" value="Draft" />
-			<var name="workflowStatusDescriptive" value="Draft" />
+		<execute macro="WebContent#viewDraftCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">

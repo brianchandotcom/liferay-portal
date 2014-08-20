@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.amazonrankings.action;
+package com.liferay.amazon.rankings.action;
 
+import com.liferay.amazon.rankings.model.AmazonRankings;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -24,9 +26,17 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true, property = {
+			"javax.portlet.name=com_liferay_amazon_rankings_portlet_AmazonRankingsPortlet"
+	},
+	service = ConfigurationAction.class
+)
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 	@Override
@@ -39,9 +49,16 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			StringUtil.toUpperCase(getParameter(actionRequest, "isbns")),
 			CharPool.SPACE);
 
+		String accessKeyID = getParameter(actionRequest, AmazonRankings.AMAZON_ACCESS_KEY_ID);
+		String associateTag = getParameter(actionRequest, AmazonRankings.AMAZON_ASSOCIATE_TAG);
+		String secretAccessKey = getParameter(actionRequest, AmazonRankings.AMAZON_SECRET_ACCESS_KEY);
+
 		Arrays.sort(isbns);
 
 		setPreference(actionRequest, "isbns", isbns);
+		setPreference(actionRequest, AmazonRankings.AMAZON_ACCESS_KEY_ID, accessKeyID);
+		setPreference(actionRequest, AmazonRankings.AMAZON_ASSOCIATE_TAG, associateTag);
+		setPreference(actionRequest, AmazonRankings.AMAZON_SECRET_ACCESS_KEY, secretAccessKey);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

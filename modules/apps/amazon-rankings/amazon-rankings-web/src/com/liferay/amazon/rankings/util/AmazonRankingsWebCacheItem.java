@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.amazonrankings.util;
+package com.liferay.amazon.rankings.util;
 
+import com.liferay.amazon.rankings.model.AmazonRankings;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portlet.amazonrankings.model.AmazonRankings;
 
 import java.text.DateFormat;
 
@@ -44,8 +44,11 @@ import java.util.Map;
  */
 public class AmazonRankingsWebCacheItem implements WebCacheItem {
 
-	public AmazonRankingsWebCacheItem(String isbn) {
+	public AmazonRankingsWebCacheItem(String isbn, String tag, String key, String secret) {
 		_isbn = isbn;
+		_tag = tag;
+		_key = key;
+		_secret = secret;
 	}
 
 	@Override
@@ -70,10 +73,8 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 	protected AmazonRankings doConvert(String key) throws Exception {
 		Map<String, String> parameters = new HashMap<String, String>();
 
-		parameters.put(
-			"AssociateTag", AmazonRankingsUtil.getAmazonAssociateTag());
-		parameters.put(
-			"AWSAccessKeyId", AmazonRankingsUtil.getAmazonAccessKeyId());
+		parameters.put("AssociateTag", _tag);
+		parameters.put("AWSAccessKeyId", _key);
 		parameters.put("IdType", "ASIN");
 		parameters.put("ItemId", _isbn);
 		parameters.put("Operation", "ItemLookup");
@@ -83,7 +84,7 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 		parameters.put("Timestamp", AmazonRankingsUtil.getTimestamp());
 
 		String urlWithSignature =
-			AmazonSignedRequestsUtil.generateUrlWithSignature(parameters);
+			AmazonSignedRequestsUtil.generateUrlWithSignature(parameters, _secret);
 
 		String xml = HttpUtil.URLtoString(urlWithSignature);
 
@@ -280,5 +281,8 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 		AmazonRankingsWebCacheItem.class);
 
 	private String _isbn;
+	private String _key;
+	private String _secret;
+	private String _tag;
 
 }

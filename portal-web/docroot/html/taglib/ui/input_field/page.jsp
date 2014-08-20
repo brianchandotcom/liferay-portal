@@ -20,7 +20,7 @@
 boolean autoFocus = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-field:autoFocus"));
 boolean autoSize = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-field:autoSize"));
 Object bean = request.getAttribute("liferay-ui:input-field:bean");
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-field:cssClass")) + " form-control";
+String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-field:cssClass"));
 String dateTogglerCheckboxLabel = GetterUtil.getString((String) request.getAttribute("liferay-ui:input-field:dateTogglerCheckboxLabel"));
 String defaultLanguageId = (String)request.getAttribute("liferay-ui:input-field:defaultLanguageId");
 Object defaultValue = request.getAttribute("liferay-ui:input-field:defaultValue");
@@ -347,7 +347,6 @@ if (hints != null) {
 
 			boolean checkTab = false;
 			String displayHeight = ModelHintsConstants.TEXT_DISPLAY_HEIGHT;
-			String displayWidth = ModelHintsConstants.TEXT_DISPLAY_WIDTH;
 			boolean editor = false;
 			String maxLength = ModelHintsConstants.TEXT_MAX_LENGTH;
 			boolean secret = false;
@@ -357,7 +356,6 @@ if (hints != null) {
 				autoSize = GetterUtil.getBoolean(hints.get("autoSize"), autoSize);
 				checkTab = GetterUtil.getBoolean(hints.get("check-tab"), checkTab);
 				displayHeight = GetterUtil.getString(hints.get("display-height"), displayHeight);
-				displayWidth = GetterUtil.getString(hints.get("display-width"), displayWidth);
 				editor = GetterUtil.getBoolean(hints.get("editor"), editor);
 				maxLength = GetterUtil.getString(hints.get("max-length"), maxLength);
 				secret = GetterUtil.getBoolean(hints.get("secret"), secret);
@@ -368,30 +366,10 @@ if (hints != null) {
 				displayHeight = "auto";
 			}
 
-			if (Validator.isDigit(displayWidth)) {
-				int displayWidthInt = GetterUtil.getInteger(displayWidth);
+			cssClass += " form-control";
 
-				if (displayWidthInt <= 60) {
-					cssClass += " input-mini";
-				}
-				else if ((displayWidthInt > 60) && (displayWidthInt <= 90)) {
-					cssClass += " input-small";
-				}
-				else if ((displayWidthInt > 90) && (displayWidthInt <= 150)) {
-					cssClass += " input-medium";
-				}
-				else if ((displayWidthInt > 210) && (displayWidthInt <= 270)) {
-					cssClass += " input-xlarge";
-				}
-				else if (displayWidthInt > 270) {
-					cssClass += " input-xxlarge";
-				}
-				else if (editor) {
-					cssClass += " lfr-input-editor";
-				}
-				else {
-					cssClass += " input-large";
-				}
+			if (editor) {
+				cssClass += " lfr-input-editor";
 			}
 
 			boolean localized = ModelHintsUtil.isLocalized(model, field);

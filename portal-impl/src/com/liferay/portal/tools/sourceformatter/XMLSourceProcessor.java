@@ -305,6 +305,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected String fixPoshiXMLNumberOfTabs(String content) {
 		Matcher matcher = _poshiTabsPattern.matcher(content);
 
+		int index = 0;
 		int tabCount = 0;
 
 		boolean ignoredCdataBlock = false;
@@ -336,6 +337,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				!statement.contains("<![CDATA[") &&
 				!statement.contains("]]>")) {
 
+				index = matcher.start();
+
 				tabCount--;
 			}
 
@@ -366,7 +369,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 					statement, matcher.group(1), sb.toString());
 
 				content = StringUtil.replaceFirst(
-					content, statement, newStatement, matcher.start());
+					content, statement, newStatement, index);
 			}
 
 			if (openingTagMatcher.find() && !closingTagMatcher.find() &&
@@ -374,6 +377,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				!statement.contains("-->") &&
 				!statement.contains("<![CDATA[") &&
 				!statement.contains("]]>")) {
+
+				index = matcher.start();
 
 				tabCount++;
 			}

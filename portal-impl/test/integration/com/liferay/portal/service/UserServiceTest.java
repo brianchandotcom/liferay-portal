@@ -56,8 +56,6 @@ import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
-
-
 /**
  * @author Brian Wing Shun Chan
  * @author Jose M. Navarro
@@ -65,177 +63,6 @@ import org.junit.runner.RunWith;
 
 @RunWith(Enclosed.class)
 public class UserServiceTest {
-
-	@ExecutionTestListeners(
-		listeners = {
-			MainServletExecutionTestListener.class,
-			ResetDatabaseExecutionTestListener.class,
-			SynchronousMailExecutionTestListener.class
-		})
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
-	@Sync
-	public static class WhenSendAPasswordEmail {
-
-		@Before
-		public void setUp() throws Exception {
-			_user = UserTestUtil.addUser();
-		}
-
-		@Test
-		public void shouldSendResetLinkEmailByEmailAddress()
-			throws Exception {
-
-			givenAUserWhoseCompanySendResetPasswordLink(_user);
-
-			int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-			boolean isPasswordSent =
-				UserServiceUtil.sendPasswordByEmailAddress(
-					_user.getCompanyId(), _user.getEmailAddress());
-
-			Assert.assertFalse(isPasswordSent);
-			Assert.assertEquals(
-				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			Assert.assertTrue(
-				MailServiceTestUtil.isTextInLastMailMessage(
-					"You can reset your password"));
-		}
-
-		@Test
-		public void shouldSendResetLinkEmailByScreenName()
-			throws Exception {
-
-			givenAUserWhoseCompanySendResetPasswordLink(_user);
-
-			int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-			boolean isPasswordSent =
-				UserServiceUtil.sendPasswordByScreenName(
-					_user.getCompanyId(), _user.getScreenName());
-
-			Assert.assertFalse(isPasswordSent);
-			Assert.assertEquals(
-				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			Assert.assertTrue(
-				MailServiceTestUtil.isTextInLastMailMessage(
-					"You can reset your password"));
-		}
-
-		@Test
-		public void shouldSendResetLinkEmailByUserId() throws Exception {
-			givenAUserWhoseCompanySendResetPasswordLink(_user);
-
-			int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-			boolean isPasswordSent =
-				UserServiceUtil.sendPasswordByUserId(_user.getUserId());
-
-			Assert.assertFalse(isPasswordSent);
-			Assert.assertEquals(
-				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			Assert.assertTrue(
-				MailServiceTestUtil.isTextInLastMailMessage(
-					"You can reset your password"));
-		}
-
-		@Test
-		public void shouldSendNewPasswordEmailByEmailAddress()
-			throws Exception {
-
-			givenAUserWhoseCompanySendNewPassword(_user);
-
-			int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-			boolean isPasswordSent =
-				UserServiceUtil.sendPasswordByEmailAddress(
-					_user.getCompanyId(), _user.getEmailAddress());
-
-			Assert.assertTrue(isPasswordSent);
-			Assert.assertEquals(
-				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-
-			Assert.assertTrue(
-				MailServiceTestUtil.isTextInLastMailMessage(
-					"Your new password"));
-		}
-
-		@Test
-		public void shouldSendNewPasswordEmailByScreenName()
-			throws Exception {
-
-			givenAUserWhoseCompanySendNewPassword(_user);
-
-			int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-			boolean isPasswordSent =
-				UserServiceUtil.sendPasswordByScreenName(
-					_user.getCompanyId(), _user.getScreenName());
-
-			Assert.assertTrue(isPasswordSent);
-			Assert.assertEquals(
-				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-
-			Assert.assertTrue(
-				MailServiceTestUtil.isTextInLastMailMessage(
-					"Your new password"));
-		}
-
-		@Test
-		public void shouldSendNewPasswordEmailByUserId() throws Exception {
-			int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-			givenAUserWhoseCompanySendNewPassword(_user);
-
-			boolean isPasswordSent =
-				UserServiceUtil.sendPasswordByUserId(_user.getUserId());
-
-			Assert.assertTrue(isPasswordSent);
-			Assert.assertEquals(
-				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-
-			Assert.assertTrue(
-				MailServiceTestUtil.isTextInLastMailMessage(
-					"Your new password"));
-		}
-
-		protected static void givenAUserWhoseCompanySendNewPassword(User user)
-			throws Exception {
-
-			PortletPreferences portletPreferences =
-				PrefsPropsUtil.getPreferences(user.getCompanyId(), false);
-
-			portletPreferences.setValue(
-				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
-				Boolean.TRUE.toString());
-
-			portletPreferences.setValue(
-				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
-				Boolean.FALSE.toString());
-
-			portletPreferences.store();
-		}
-
-		protected static void givenAUserWhoseCompanySendResetPasswordLink(
-				User user)
-			throws Exception {
-
-			PortletPreferences portletPreferences =
-				PrefsPropsUtil.getPreferences(user.getCompanyId(), false);
-
-			portletPreferences.setValue(
-				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
-				Boolean.FALSE.toString());
-
-			portletPreferences.setValue(
-				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
-				Boolean.TRUE.toString());
-
-			portletPreferences.store();
-		}
-
-		private User _user;
-
-	}
 
 	@ExecutionTestListeners(
 		listeners = {
@@ -361,37 +188,182 @@ public class UserServiceTest {
 	@ExecutionTestListeners(
 		listeners = {
 			MainServletExecutionTestListener.class,
+			ResetDatabaseExecutionTestListener.class,
+			SynchronousMailExecutionTestListener.class
+		})
+	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+	@Sync
+	public static class WhenSendAPasswordEmail {
+
+		@Before
+		public void setUp() throws Exception {
+			_user = UserTestUtil.addUser();
+		}
+
+		@Test
+		public void shouldSendNewPasswordEmailByEmailAddress()
+			throws Exception {
+
+			givenAUserWhoseCompanySendNewPassword(_user);
+
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			boolean isPasswordSent =
+				UserServiceUtil.sendPasswordByEmailAddress(
+					_user.getCompanyId(), _user.getEmailAddress());
+
+			Assert.assertTrue(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+
+			Assert.assertTrue(
+				MailServiceTestUtil.isTextInLastMailMessage(
+					"Your new password"));
+		}
+
+		@Test
+		public void shouldSendNewPasswordEmailByScreenName() throws Exception {
+			givenAUserWhoseCompanySendNewPassword(_user);
+
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			boolean isPasswordSent =
+				UserServiceUtil.sendPasswordByScreenName(
+					_user.getCompanyId(), _user.getScreenName());
+
+			Assert.assertTrue(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+
+			Assert.assertTrue(
+				MailServiceTestUtil.isTextInLastMailMessage(
+					"Your new password"));
+		}
+
+		@Test
+		public void shouldSendNewPasswordEmailByUserId() throws Exception {
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			givenAUserWhoseCompanySendNewPassword(_user);
+
+			boolean isPasswordSent = UserServiceUtil.sendPasswordByUserId(
+				_user.getUserId());
+
+			Assert.assertTrue(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+
+			Assert.assertTrue(
+				MailServiceTestUtil.isTextInLastMailMessage(
+					"Your new password"));
+		}
+
+		@Test
+		public void shouldSendResetLinkEmailByEmailAddress() throws Exception {
+			givenAUserWhoseCompanySendResetPasswordLink(_user);
+
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			boolean isPasswordSent =
+				UserServiceUtil.sendPasswordByEmailAddress(
+					_user.getCompanyId(), _user.getEmailAddress());
+
+			Assert.assertFalse(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+			Assert.assertTrue(
+				MailServiceTestUtil.isTextInLastMailMessage(
+					"You can reset your password"));
+		}
+
+		@Test
+		public void shouldSendResetLinkEmailByScreenName() throws Exception {
+			givenAUserWhoseCompanySendResetPasswordLink(_user);
+
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			boolean isPasswordSent =
+				UserServiceUtil.sendPasswordByScreenName(
+					_user.getCompanyId(), _user.getScreenName());
+
+			Assert.assertFalse(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+			Assert.assertTrue(
+				MailServiceTestUtil.isTextInLastMailMessage(
+					"You can reset your password"));
+		}
+
+		@Test
+		public void shouldSendResetLinkEmailByUserId() throws Exception {
+			givenAUserWhoseCompanySendResetPasswordLink(_user);
+
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			boolean isPasswordSent = UserServiceUtil.sendPasswordByUserId(
+				_user.getUserId());
+
+			Assert.assertFalse(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+			Assert.assertTrue(
+				MailServiceTestUtil.isTextInLastMailMessage(
+					"You can reset your password"));
+		}
+
+		protected static void givenAUserWhoseCompanySendNewPassword(User user)
+			throws Exception {
+
+			PortletPreferences portletPreferences =
+				PrefsPropsUtil.getPreferences(user.getCompanyId(), false);
+
+			portletPreferences.setValue(
+				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
+				Boolean.TRUE.toString());
+
+			portletPreferences.setValue(
+				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
+				Boolean.FALSE.toString());
+
+			portletPreferences.store();
+		}
+
+		protected static void givenAUserWhoseCompanySendResetPasswordLink(
+				User user)
+			throws Exception {
+
+			PortletPreferences portletPreferences =
+				PrefsPropsUtil.getPreferences(user.getCompanyId(), false);
+
+			portletPreferences.setValue(
+				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
+				Boolean.FALSE.toString());
+
+			portletPreferences.setValue(
+				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
+				Boolean.TRUE.toString());
+
+			portletPreferences.store();
+		}
+
+		private User _user;
+
+	}
+
+	@ExecutionTestListeners(
+		listeners = {
+			MainServletExecutionTestListener.class,
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenUnsetGroupUsers {
 
-		@Before
-		public void setUp() throws Exception {
-			_organization = OrganizationTestUtil.addOrganization(true);
-
-			_group = GroupTestUtil.addGroup();
-
-			_groupAdminUser = UserTestUtil.addGroupAdminUser(_group);
-
-			_groupOwnerUser = UserTestUtil.addGroupOwnerUser(_group);
-
-			_organizationAdminUser =
-				UserTestUtil.addOrganizationAdminUser(_organization);
-
-			_organizationOwnerUser =
-				UserTestUtil.addOrganizationOwnerUser(_organization);
-
-			_organizationGroupUser = UserTestUtil.addGroupOwnerUser(
-				_organization.getGroup());
-		}
-
 		@Test
 		public void groupAdminShouldUnsetGroupAdmin() throws Exception {
 			User otherGroupAdminUser = UserTestUtil.addGroupAdminUser(_group);
 
-			UserServiceTest.unsetGroupUsers(_group.getGroupId(),
-				_groupAdminUser, otherGroupAdminUser);
+			UserServiceTest.unsetGroupUsers(
+				_group.getGroupId(), _groupAdminUser, otherGroupAdminUser);
 
 			Assert.assertTrue(
 				UserLocalServiceUtil.hasGroupUser(
@@ -400,8 +372,8 @@ public class UserServiceTest {
 
 		@Test
 		public void groupAdminShouldUnsetGroupOwner() throws Exception {
-			UserServiceTest.unsetGroupUsers(_group.getGroupId(),
-				_groupAdminUser, _groupOwnerUser);
+			UserServiceTest.unsetGroupUsers(
+				_group.getGroupId(), _groupAdminUser, _groupOwnerUser);
 
 			Assert.assertTrue(
 				UserLocalServiceUtil.hasGroupUser(
@@ -458,8 +430,8 @@ public class UserServiceTest {
 
 		@Test
 		public void groupOwnerShouldUnsetOrganizationAdmin() throws Exception {
-			User organizationAdminUser =
-				UserTestUtil.addOrganizationAdminUser(_organization);
+			User organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
+				_organization);
 
 			UserServiceTest.unsetOrganizationUsers(
 				_organization.getOrganizationId(), _organizationGroupUser,
@@ -473,8 +445,8 @@ public class UserServiceTest {
 
 		@Test
 		public void groupOwnerShouldUnsetOrganizationOwner() throws Exception {
-			User organizationOwnerUser =
-				UserTestUtil.addOrganizationOwnerUser(_organization);
+			User organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
+				_organization);
 
 			UserServiceTest.unsetOrganizationUsers(
 				_organization.getOrganizationId(), _organizationGroupUser,
@@ -486,13 +458,33 @@ public class UserServiceTest {
 					organizationOwnerUser.getUserId()));
 		}
 
-		private Organization _organization;
+		@Before
+		public void setUp() throws Exception {
+			_organization = OrganizationTestUtil.addOrganization(true);
+
+			_group = GroupTestUtil.addGroup();
+
+			_groupAdminUser = UserTestUtil.addGroupAdminUser(_group);
+
+			_groupOwnerUser = UserTestUtil.addGroupOwnerUser(_group);
+
+			_organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
+				_organization);
+
+			_organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
+				_organization);
+
+			_organizationGroupUser = UserTestUtil.addGroupOwnerUser(
+				_organization.getGroup());
+		}
+
 		private Group _group;
 		private User _groupAdminUser;
 		private User _groupOwnerUser;
+		private Organization _organization;
 		private User _organizationAdminUser;
-		private User _organizationOwnerUser;
 		private User _organizationGroupUser;
+		private User _organizationOwnerUser;
 
 	}
 
@@ -503,17 +495,6 @@ public class UserServiceTest {
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenUnsetOrganizationUsersForNonSiteOrganization {
-
-		@Before
-		public void setUp() throws Exception {
-			_organization = OrganizationTestUtil.addOrganization();
-
-			_organizationAdminUser =
-				UserTestUtil.addOrganizationAdminUser(_organization);
-
-			_organizationOwnerUser =
-				UserTestUtil.addOrganizationOwnerUser(_organization);
-		}
 
 		@Test
 		public void organizationAdminShouldUnsetOrganizationAdmin()
@@ -577,6 +558,17 @@ public class UserServiceTest {
 					otherOrganizationOwnerUser.getUserId()));
 		}
 
+		@Before
+		public void setUp() throws Exception {
+			_organization = OrganizationTestUtil.addOrganization();
+
+			_organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
+				_organization);
+
+			_organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
+				_organization);
+		}
+
 		private Organization _organization;
 		private User _organizationAdminUser;
 		private User _organizationOwnerUser;
@@ -590,23 +582,6 @@ public class UserServiceTest {
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenUnsetOrganizationUsersForSiteOrganization {
-
-		@Before
-		public void setUp() throws Exception {
-			_organization = OrganizationTestUtil.addOrganization(true);
-
-			_group = _organization.getGroup();
-
-			_groupAdminUser = UserTestUtil.addGroupAdminUser(_group);
-
-			_groupOwnerUser = UserTestUtil.addGroupOwnerUser(_group);
-
-			_organizationAdminUser =
-				UserTestUtil.addOrganizationAdminUser(_organization);
-
-			_organizationOwnerUser =
-				UserTestUtil.addOrganizationOwnerUser(_organization);
-		}
 
 		@Test
 		public void organizationAdminShouldUnsetSiteAdmin() throws Exception {
@@ -648,10 +623,27 @@ public class UserServiceTest {
 					_group.getGroupId(), _groupOwnerUser.getUserId()));
 		}
 
-		private Organization _organization;
+		@Before
+		public void setUp() throws Exception {
+			_organization = OrganizationTestUtil.addOrganization(true);
+
+			_group = _organization.getGroup();
+
+			_groupAdminUser = UserTestUtil.addGroupAdminUser(_group);
+
+			_groupOwnerUser = UserTestUtil.addGroupOwnerUser(_group);
+
+			_organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
+				_organization);
+
+			_organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
+				_organization);
+		}
+
 		private Group _group;
 		private User _groupAdminUser;
 		private User _groupOwnerUser;
+		private Organization _organization;
 		private User _organizationAdminUser;
 		private User _organizationOwnerUser;
 
@@ -712,7 +704,7 @@ public class UserServiceTest {
 	}
 
 	protected static void unsetGroupUsers(
-		long groupId, User subjectUser, User objectUser)
+			long groupId, User subjectUser, User objectUser)
 		throws Exception {
 
 		PermissionChecker permissionChecker =
@@ -727,7 +719,7 @@ public class UserServiceTest {
 	}
 
 	protected static void unsetOrganizationUsers(
-		long organizationId, User subjectUser, User objectUser)
+			long organizationId, User subjectUser, User objectUser)
 		throws Exception {
 
 		PermissionChecker permissionChecker =

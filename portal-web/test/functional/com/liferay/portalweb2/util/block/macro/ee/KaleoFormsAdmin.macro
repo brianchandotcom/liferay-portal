@@ -31,6 +31,14 @@
 		<execute action="CPKaleoformsadminNewprocessAddworkflow#type" locator-key1="TITLE_FIELD" value1="${workflowDefinitionTitle}" />
 	</command>
 
+	<command name="assertTaskNotPresent">
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute action="CPKaleoformsadminNewprocess#assertTextNotPresent" locator-key1="FORMS_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="FORMS_TABLE_FORM" />
+		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="FORMS_TABLE_ASSIGN_FORM_BUTTON" />
+	</command>
+
 	<command name="assignForm">
 		<if>
 			<equals arg1="kfPendingForm" arg2="true" />
@@ -69,10 +77,6 @@
 	</command>
 
 	<command name="chooseWorkflow">
-		<var name="key_workflowDefinition" value="${workflowDefinition}" />
-
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="WORKFLOW_TABLE_NAME" value1="${workflowDefinition}" />
-
 		<if>
 			<equals arg1="kfPendingForm" arg2="true" />
 			<then>
@@ -190,7 +194,7 @@
 	</command>
 
 	<command name="editWorkflow">
-		<var name="key_workflowDefinition" value="${workflowDefinition}" />
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
 		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="WORKFLOW_TABLE_ACTIONS" />
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="WORKFLOW_MENULIST_EDIT" value1="Edit" />
@@ -204,6 +208,8 @@
 
 	<command name="publishWorkflow">
 		<execute action="CPKaleoformsadminNewprocessAddworkflow#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="saveFieldsDefinition">

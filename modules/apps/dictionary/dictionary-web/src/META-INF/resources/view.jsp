@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dictionary/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <aui:form name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "lookUp();" %>'>
 	<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="word" />

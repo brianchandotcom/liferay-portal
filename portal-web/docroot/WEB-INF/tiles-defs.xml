@@ -104,14 +104,6 @@
 		<put name="content" value="/portal/verify_email_address.jsp" />
 	</definition>
 
-	<!-- Activities -->
-
-	<definition name="portlet.activities" extends="portlet" />
-
-	<definition name="portlet.activities.view" extends="portlet.activities">
-		<put name="portlet_content" value="/portlet/activities/view.jsp" />
-	</definition>
-
 	<!-- Admin -->
 
 	<definition name="portlet.admin" extends="portlet" />

@@ -117,12 +117,6 @@
 			<forward name="portal.verify_email_address" path="portal.verify_email_address" />
 		</action>
 
-		<!-- Activities -->
-
-		<action path="/activities/rss" type="com.liferay.portlet.activities.action.RSSAction" />
-
-		<action path="/activities/view" forward="portlet.activities.view" />
-
 		<!-- Admin -->
 
 		<action path="/admin/edit_instance" type="com.liferay.portlet.admin.action.EditInstanceAction">

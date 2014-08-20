@@ -32,13 +32,12 @@ import java.awt.event.KeyEvent;
 
 import java.io.StringReader;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1676,28 +1675,25 @@ public class WebDriverToSeleniumBridge
 			value = value.replaceAll("line-number=\"\\d+\"", "");
 		}
 
-		if (value.contains("$")) {
-			value = value.replaceAll("\\$", "");
-		}
-
-		List<Integer> list = _getIndexOfSpecialChars(value);
 		int i = 0;
-		Set<String> keysSpecialCharsSet = _keysSpecialChars.keySet();
-		String c = "";
 
-		for (int item : list) {
-			webElement.sendKeys(value.substring(i, item));
+		Set<Integer> specialCharIndexSet = _getSpecialCharIndexSet(value);
 
-			c = String.valueOf(value.charAt(item));
+		for (int specialCharIndex : specialCharIndexSet) {
+			webElement.sendKeys(value.substring(i, specialCharIndex));
 
-			if (c.equals("-")) {
+			String specialChar = GetterUtil.getString(
+				value.charAt(specialCharIndex));
+
+			if (specialChar.equals("-")) {
 				webElement.sendKeys(Keys.SUBTRACT);
 			}
-			else if (keysSpecialCharsSet.contains(c)) {
-				webElement.sendKeys(Keys.SHIFT, _keysSpecialChars.get(c));
+			else {
+				webElement.sendKeys(
+					Keys.SHIFT, _keysSpecialChars.get(specialChar));
 			}
 
-			i = item + 1;
+			i = specialCharIndex + 1;
 		}
 
 		webElement.sendKeys(value.substring(i, value.length()));
@@ -2022,33 +2018,26 @@ public class WebDriverToSeleniumBridge
 
 	protected String defaultWindowHandle;
 
-	private List<Integer> _getIndexOfSpecialChars(String value) {
-		List<Integer> list = new ArrayList<Integer>();
-		int index = 0;
+	private Set<Integer> _getSpecialCharIndexSet(String value) {
+		Set<Integer> set = new TreeSet<Integer>();
 
 		while (value.contains("-")) {
-			index = value.indexOf("-");
+			set.add(value.indexOf("-"));
 
-			list.add(index);
-
-			value = value.replaceFirst("-", " ");
+			value = StringUtil.replaceFirst(value, "-", " ");
 		}
 
-		Set<String> keysSpecialCharsSet = _keysSpecialChars.keySet();
+		for (String specialChar : _keysSpecialChars.keySet()) {
+			specialChar = "\\" + specialChar;
 
-		for (String specialChar : keysSpecialCharsSet) {
 			while (value.contains(specialChar)) {
-				index = value.indexOf(specialChar);
+				set.add(value.indexOf(specialChar));
 
-				list.add(index);
-
-				value = value.replaceFirst(specialChar, " ");
+				value = StringUtil.replaceFirst(value, specialChar, " ");
 			}
 		}
 
-		Collections.sort(list);
-
-		return list;
+		return set;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

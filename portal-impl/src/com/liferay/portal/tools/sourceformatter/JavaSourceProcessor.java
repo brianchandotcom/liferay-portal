@@ -206,6 +206,85 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected String checkFinalableFields(
+			String fileName, String packagePath, String className,
+			String content)
+		throws IOException {
+
+		ClassLibrary classLibrary = new ClassLibrary();
+
+		classLibrary.addClassLoader(JavaSourceProcessor.class.getClassLoader());
+
+		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(classLibrary);
+
+		try {
+			javaDocBuilder.addSource(
+				new UnsyncStringReader(sanitizeContent(content)));
+		}
+		catch (ParseException pe) {
+			System.err.println(
+				"Unable to parse " + fileName + StringPool.COMMA_AND_SPACE +
+					pe.getMessage());
+
+			return content;
+		}
+
+		com.thoughtworks.qdox.model.JavaClass javaClass =
+			javaDocBuilder.getClassByName(
+				packagePath.concat(StringPool.PERIOD).concat(className));
+
+		String[] lines = null;
+
+		javaField:
+		for (JavaField javaField : javaClass.getFields()) {
+			if (!javaField.isPrivate() || javaField.isFinal()) {
+				continue;
+			}
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("\\b");
+			sb.append(javaField.getName());
+			sb.append(" (=)|(\\+\\+)|(--)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)|(\\|=)");
+			sb.append("|(&=)|(^=) ");
+
+			Pattern pattern = Pattern.compile(sb.toString());
+
+			for (JavaMethod javaMethod : javaClass.getMethods()) {
+				if (javaMethod.isConstructor()) {
+					continue;
+				}
+
+				Matcher matcher = pattern.matcher(javaMethod.getCodeBlock());
+
+				if (matcher.find()) {
+					continue javaField;
+				}
+			}
+
+			if (lines == null) {
+				lines = StringUtil.splitLines(content);
+			}
+
+			String line = lines[javaField.getLineNumber() - 1];
+
+			String newLine = null;
+
+			if (javaField.isStatic()) {
+				newLine = StringUtil.replace(
+					line, "private static ", "private static final ");
+			}
+			else {
+				newLine = StringUtil.replace(
+					line, "private ", "private final ");
+			}
+
+			content = StringUtil.replace(content, line, newLine);
+		}
+
+		return content;
+	}
+
 	protected String checkIfClause(
 			String ifClause, String fileName, int lineCount)
 		throws IOException {
@@ -791,85 +870,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		compareAndAutoFixContent(file, fileName, content, newContent);
 
 		return newContent;
-	}
-
-	protected String checkFinalableFields(
-			String fileName, String packagePath, String className,
-			String content)
-		throws IOException {
-
-		ClassLibrary classLibrary = new ClassLibrary();
-
-		classLibrary.addClassLoader(JavaSourceProcessor.class.getClassLoader());
-
-		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(classLibrary);
-
-		try {
-			javaDocBuilder.addSource(
-				new UnsyncStringReader(sanitizeContent(content)));
-		}
-		catch (ParseException pe) {
-			System.err.println(
-				"Unable to parse " + fileName + StringPool.COMMA_AND_SPACE +
-					pe.getMessage());
-
-			return content;
-		}
-
-		com.thoughtworks.qdox.model.JavaClass javaClass =
-			javaDocBuilder.getClassByName(
-				packagePath.concat(StringPool.PERIOD).concat(className));
-
-		String[] lines = null;
-
-		javaField:
-		for (JavaField javaField : javaClass.getFields()) {
-			if (!javaField.isPrivate() || javaField.isFinal()) {
-				continue;
-			}
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("\\b");
-			sb.append(javaField.getName());
-			sb.append(" (=)|(\\+\\+)|(--)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)|(\\|=)");
-			sb.append("|(&=)|(^=) ");
-
-			Pattern pattern = Pattern.compile(sb.toString());
-
-			for (JavaMethod javaMethod : javaClass.getMethods()) {
-				if (javaMethod.isConstructor()) {
-					continue;
-				}
-
-				Matcher matcher = pattern.matcher(javaMethod.getCodeBlock());
-
-				if (matcher.find()) {
-					continue javaField;
-				}
-			}
-
-			if (lines == null) {
-				lines = StringUtil.splitLines(content);
-			}
-
-			String line = lines[javaField.getLineNumber() - 1];
-
-			String newLine = null;
-
-			if (javaField.isStatic()) {
-				newLine = StringUtil.replace(
-					line, "private static ", "private static final ");
-			}
-			else {
-				newLine = StringUtil.replace(
-					line, "private ", "private final ");
-			}
-
-			content = StringUtil.replace(content, line, newLine);
-		}
-
-		return content;
 	}
 
 	protected String format(

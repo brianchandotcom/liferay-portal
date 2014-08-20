@@ -26,9 +26,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.elasticsearch.common.text.Text;
-import org.elasticsearch.search.facet.Facet;
-import org.elasticsearch.search.facet.range.RangeFacet;
-import org.elasticsearch.search.facet.terms.TermsFacet;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.bucket.range.Range;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 
 /**
  * @author Michael C. Han
@@ -36,18 +36,18 @@ import org.elasticsearch.search.facet.terms.TermsFacet;
  */
 public class ElasticsearchFacetFieldCollector implements FacetCollector {
 
-	public ElasticsearchFacetFieldCollector(Facet facet) {
-		if (facet instanceof RangeFacet) {
-			initialize((RangeFacet)facet);
+	public ElasticsearchFacetFieldCollector(Aggregation aggregation) {
+		if (aggregation instanceof Range) {
+			initialize((Range)aggregation);
 		}
 		else {
-			initialize((TermsFacet)facet);
+			initialize((Terms)aggregation);
 		}
 	}
 
 	@Override
 	public String getFieldName() {
-		return _facet.getName();
+		return _aggregation.getName();
 	}
 
 	@Override
@@ -81,37 +81,37 @@ public class ElasticsearchFacetFieldCollector implements FacetCollector {
 		return _termCollectors;
 	}
 
-	protected void initialize(RangeFacet rangeFacet) {
-		_facet = rangeFacet;
+	protected void initialize(Range range) {
+		_aggregation = range;
 
-		for (RangeFacet.Entry entry : rangeFacet.getEntries()) {
+		for (Range.Bucket bucket : range.getBuckets()) {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append(StringPool.OPEN_BRACKET);
-			sb.append(entry.getFromAsString());
+			sb.append(bucket.getFrom());
 			sb.append(_TO_STRING);
-			sb.append(entry.getToAsString());
+			sb.append(bucket.getTo());
 			sb.append(StringPool.CLOSE_BRACKET);
 
-			_counts.put(sb.toString(), (int)entry.getCount());
+			_counts.put(sb.toString(), (int)bucket.getDocCount());
 		}
 	}
 
-	protected void initialize(TermsFacet termsFacet) {
-		_facet = termsFacet;
+	protected void initialize(Terms terms) {
+		_aggregation = terms;
 
-		for (TermsFacet.Entry entry : termsFacet.getEntries()) {
-			Text term = entry.getTerm();
+		for (Terms.Bucket bucket : terms.getBuckets()) {
+			Text term = bucket.getKeyAsText();
 
-			_counts.put(term.string(), entry.getCount());
+			_counts.put(term.string(), (int)bucket.getDocCount());
 		}
 	}
 
 	private static final String _TO_STRING = " TO ";
 
+	private Aggregation _aggregation;
 	private Map<String, Integer> _counts =
 		new ConcurrentHashMap<String, Integer>();
-	private Facet _facet;
 	private List<TermCollector> _termCollectors;
 
 }

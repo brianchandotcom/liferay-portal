@@ -37,7 +37,8 @@ public class PortletImportBackgroundTaskExecutor
 	public PortletImportBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
 			new PortletExportImportBackgroundTaskStatusMessageTranslator());
-		setSerial(true);
+
+		setSerial(false);
 	}
 
 	@Override
@@ -48,8 +49,11 @@ public class PortletImportBackgroundTaskExecutor
 			backgroundTask.getTaskContextMap();
 
 		long userId = MapUtil.getLong(taskContextMap, "userId");
-		long plid = MapUtil.getLong(taskContextMap, "plid");
 		long groupId = MapUtil.getLong(taskContextMap, "groupId");
+
+		StagingUtil.lockGroup(userId, groupId);
+
+		long plid = MapUtil.getLong(taskContextMap, "plid");
 		String portletId = MapUtil.getString(taskContextMap, "portletId");
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)taskContextMap.get("parameterMap");
@@ -57,10 +61,15 @@ public class PortletImportBackgroundTaskExecutor
 		List<FileEntry> attachmentsFileEntries =
 			backgroundTask.getAttachmentsFileEntries();
 
-		for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
-			LayoutLocalServiceUtil.importPortletInfo(
-				userId, plid, groupId, portletId, parameterMap,
-				attachmentsFileEntry.getContentStream());
+		try {
+			for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
+				LayoutLocalServiceUtil.importPortletInfo(
+					userId, plid, groupId, portletId, parameterMap,
+					attachmentsFileEntry.getContentStream());
+			}
+		}
+		finally {
+			StagingUtil.unlockGroup(groupId);
 		}
 
 		return BackgroundTaskResult.SUCCESS;

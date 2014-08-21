@@ -347,6 +347,7 @@
 	}
 
 	.portlet-list {
+		margin-left: 20px;
 		padding: 10px 0;
 
 		li.tree-item > ul {

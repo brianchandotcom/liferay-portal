@@ -56,6 +56,11 @@ $editLayoutPanelWidth: 460px;
 		top: 0;
 		z-index: 400;
 
+		&.navbar {
+			border-bottom-width: 0;
+			min-height: 0;
+		}
+
 		&.navbar-static-top {
 			position: relative;
 		}
@@ -537,9 +542,6 @@ $editLayoutPanelWidth: 460px;
 
 	.dockbar-split {
 		.dockbar {
-			height: 0;
-			position: absolute;
-
 			@include respond-to(phone, tablet) {
 				height: auto;
 				position: relative;
@@ -638,6 +640,10 @@ $editLayoutPanelWidth: 460px;
 							position: static;
 							right: auto;
 						}
+					}
+
+					&.nav-account-controls-notice {
+						top: 50px;
 					}
 
 					&.nav-add-controls {

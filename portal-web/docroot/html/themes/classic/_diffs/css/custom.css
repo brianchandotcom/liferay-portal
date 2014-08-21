@@ -232,10 +232,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 						background-color: transparent;
 						border-top-width: 0;
 					}
-
-					&.nav-account-controls-notice {
-						top: 50px;
-					}
 				}
 
 				&.nav-add-controls ul.dropdown-menu {

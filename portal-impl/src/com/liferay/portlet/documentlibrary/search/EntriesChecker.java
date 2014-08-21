@@ -65,6 +65,9 @@ public class EntriesChecker extends RowChecker {
 		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
 			_documentLibraryDisplayPortlet = true;
 		}
+		else {
+			_documentLibraryDisplayPortlet = false;
+		}
 	}
 
 	@Override
@@ -223,8 +226,8 @@ public class EntriesChecker extends RowChecker {
 		return sb.toString();
 	}
 
-	private boolean _documentLibraryDisplayPortlet;
-	private LiferayPortletResponse _liferayPortletResponse;
-	private PermissionChecker _permissionChecker;
+	private final boolean _documentLibraryDisplayPortlet;
+	private final LiferayPortletResponse _liferayPortletResponse;
+	private final PermissionChecker _permissionChecker;
 
 }

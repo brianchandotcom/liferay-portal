@@ -928,6 +928,269 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "shoppingCategory.groupId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_N = new FinderPath(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			ShoppingCategoryModelImpl.FINDER_CACHE_ENABLED,
+			ShoppingCategoryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
+			new String[] { Long.class.getName(), String.class.getName() },
+			ShoppingCategoryModelImpl.GROUPID_COLUMN_BITMASK |
+			ShoppingCategoryModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_N = new FinderPath(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			ShoppingCategoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the shopping category where groupId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.shopping.NoSuchCategoryException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the matching shopping category
+	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a matching shopping category could not be found
+	 */
+	@Override
+	public ShoppingCategory findByG_N(long groupId, String name)
+		throws NoSuchCategoryException {
+		ShoppingCategory shoppingCategory = fetchByG_N(groupId, name);
+
+		if (shoppingCategory == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", name=");
+			msg.append(name);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchCategoryException(msg.toString());
+		}
+
+		return shoppingCategory;
+	}
+
+	/**
+	 * Returns the shopping category where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the matching shopping category, or <code>null</code> if a matching shopping category could not be found
+	 */
+	@Override
+	public ShoppingCategory fetchByG_N(long groupId, String name) {
+		return fetchByG_N(groupId, name, true);
+	}
+
+	/**
+	 * Returns the shopping category where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching shopping category, or <code>null</code> if a matching shopping category could not be found
+	 */
+	@Override
+	public ShoppingCategory fetchByG_N(long groupId, String name,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { groupId, name };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_N,
+					finderArgs, this);
+		}
+
+		if (result instanceof ShoppingCategory) {
+			ShoppingCategory shoppingCategory = (ShoppingCategory)result;
+
+			if ((groupId != shoppingCategory.getGroupId()) ||
+					!Validator.equals(name, shoppingCategory.getName())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_SHOPPINGCATEGORY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_N_GROUPID_2);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_N_NAME_1);
+			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_N_NAME_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindName) {
+					qPos.add(name);
+				}
+
+				List<ShoppingCategory> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"ShoppingCategoryPersistenceImpl.fetchByG_N(long, String, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					ShoppingCategory shoppingCategory = list.get(0);
+
+					result = shoppingCategory;
+
+					cacheResult(shoppingCategory);
+
+					if ((shoppingCategory.getGroupId() != groupId) ||
+							(shoppingCategory.getName() == null) ||
+							!shoppingCategory.getName().equals(name)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
+							finderArgs, shoppingCategory);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ShoppingCategory)result;
+		}
+	}
+
+	/**
+	 * Removes the shopping category where groupId = &#63; and name = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the shopping category that was removed
+	 */
+	@Override
+	public ShoppingCategory removeByG_N(long groupId, String name)
+		throws NoSuchCategoryException {
+		ShoppingCategory shoppingCategory = findByG_N(groupId, name);
+
+		return remove(shoppingCategory);
+	}
+
+	/**
+	 * Returns the number of shopping categories where groupId = &#63; and name = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the number of matching shopping categories
+	 */
+	@Override
+	public int countByG_N(long groupId, String name) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_N;
+
+		Object[] finderArgs = new Object[] { groupId, name };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_SHOPPINGCATEGORY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_N_GROUPID_2);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_N_NAME_1);
+			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_N_NAME_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindName) {
+					qPos.add(name);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "shoppingCategory.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_N_NAME_1 = "shoppingCategory.name IS NULL";
+	private static final String _FINDER_COLUMN_G_N_NAME_2 = "shoppingCategory.name = ?";
+	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(shoppingCategory.name IS NULL OR shoppingCategory.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P = new FinderPath(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingCategoryModelImpl.FINDER_CACHE_ENABLED,
 			ShoppingCategoryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -1829,269 +2092,6 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 	private static final String _FINDER_COLUMN_G_P_GROUPID_2 = "shoppingCategory.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_PARENTCATEGORYID_2 = "shoppingCategory.parentCategoryId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_G_N = new FinderPath(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingCategoryModelImpl.FINDER_CACHE_ENABLED,
-			ShoppingCategoryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
-			new String[] { Long.class.getName(), String.class.getName() },
-			ShoppingCategoryModelImpl.GROUPID_COLUMN_BITMASK |
-			ShoppingCategoryModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_N = new FinderPath(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingCategoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
-			new String[] { Long.class.getName(), String.class.getName() });
-
-	/**
-	 * Returns the shopping category where groupId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.shopping.NoSuchCategoryException} if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the matching shopping category
-	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a matching shopping category could not be found
-	 */
-	@Override
-	public ShoppingCategory findByG_N(long groupId, String name)
-		throws NoSuchCategoryException {
-		ShoppingCategory shoppingCategory = fetchByG_N(groupId, name);
-
-		if (shoppingCategory == null) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", name=");
-			msg.append(name);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchCategoryException(msg.toString());
-		}
-
-		return shoppingCategory;
-	}
-
-	/**
-	 * Returns the shopping category where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the matching shopping category, or <code>null</code> if a matching shopping category could not be found
-	 */
-	@Override
-	public ShoppingCategory fetchByG_N(long groupId, String name) {
-		return fetchByG_N(groupId, name, true);
-	}
-
-	/**
-	 * Returns the shopping category where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching shopping category, or <code>null</code> if a matching shopping category could not be found
-	 */
-	@Override
-	public ShoppingCategory fetchByG_N(long groupId, String name,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { groupId, name };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_N,
-					finderArgs, this);
-		}
-
-		if (result instanceof ShoppingCategory) {
-			ShoppingCategory shoppingCategory = (ShoppingCategory)result;
-
-			if ((groupId != shoppingCategory.getGroupId()) ||
-					!Validator.equals(name, shoppingCategory.getName())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_SELECT_SHOPPINGCATEGORY_WHERE);
-
-			query.append(_FINDER_COLUMN_G_N_GROUPID_2);
-
-			boolean bindName = false;
-
-			if (name == null) {
-				query.append(_FINDER_COLUMN_G_N_NAME_1);
-			}
-			else if (name.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				query.append(_FINDER_COLUMN_G_N_NAME_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				if (bindName) {
-					qPos.add(name);
-				}
-
-				List<ShoppingCategory> list = q.list();
-
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
-						finderArgs, list);
-				}
-				else {
-					if ((list.size() > 1) && _log.isWarnEnabled()) {
-						_log.warn(
-							"ShoppingCategoryPersistenceImpl.fetchByG_N(long, String, boolean) with parameters (" +
-							StringUtil.merge(finderArgs) +
-							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-					}
-
-					ShoppingCategory shoppingCategory = list.get(0);
-
-					result = shoppingCategory;
-
-					cacheResult(shoppingCategory);
-
-					if ((shoppingCategory.getGroupId() != groupId) ||
-							(shoppingCategory.getName() == null) ||
-							!shoppingCategory.getName().equals(name)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N,
-							finderArgs, shoppingCategory);
-					}
-				}
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (ShoppingCategory)result;
-		}
-	}
-
-	/**
-	 * Removes the shopping category where groupId = &#63; and name = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the shopping category that was removed
-	 */
-	@Override
-	public ShoppingCategory removeByG_N(long groupId, String name)
-		throws NoSuchCategoryException {
-		ShoppingCategory shoppingCategory = findByG_N(groupId, name);
-
-		return remove(shoppingCategory);
-	}
-
-	/**
-	 * Returns the number of shopping categories where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the number of matching shopping categories
-	 */
-	@Override
-	public int countByG_N(long groupId, String name) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_N;
-
-		Object[] finderArgs = new Object[] { groupId, name };
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_SHOPPINGCATEGORY_WHERE);
-
-			query.append(_FINDER_COLUMN_G_N_GROUPID_2);
-
-			boolean bindName = false;
-
-			if (name == null) {
-				query.append(_FINDER_COLUMN_G_N_NAME_1);
-			}
-			else if (name.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_G_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				query.append(_FINDER_COLUMN_G_N_NAME_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				if (bindName) {
-					qPos.add(name);
-				}
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "shoppingCategory.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_N_NAME_1 = "shoppingCategory.name IS NULL";
-	private static final String _FINDER_COLUMN_G_N_NAME_2 = "shoppingCategory.name = ?";
-	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(shoppingCategory.name IS NULL OR shoppingCategory.name = '')";
 
 	public ShoppingCategoryPersistenceImpl() {
 		setModelClass(ShoppingCategory.class);

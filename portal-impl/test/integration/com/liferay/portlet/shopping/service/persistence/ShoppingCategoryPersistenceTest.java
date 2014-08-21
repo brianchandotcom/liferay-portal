@@ -182,19 +182,6 @@ public class ShoppingCategoryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P() {
-		try {
-			_persistence.countByG_P(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong());
-
-			_persistence.countByG_P(0L, 0L);
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
-		}
-	}
-
-	@Test
 	public void testCountByG_N() {
 		try {
 			_persistence.countByG_N(RandomTestUtil.nextLong(), StringPool.BLANK);
@@ -202,6 +189,19 @@ public class ShoppingCategoryPersistenceTest {
 			_persistence.countByG_N(0L, StringPool.NULL);
 
 			_persistence.countByG_N(0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_P() {
+		try {
+			_persistence.countByG_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
+
+			_persistence.countByG_P(0L, 0L);
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());

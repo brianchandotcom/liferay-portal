@@ -45,6 +45,7 @@ page import="com.liferay.portlet.documentlibrary.context.DLConfigurationDisplayC
 page import="com.liferay.portlet.documentlibrary.context.DLEntryListDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLFileVersionActionsDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.context.DLFileVersionActionsDisplayContextUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.context.MenuAction" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryType" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants" %><%@

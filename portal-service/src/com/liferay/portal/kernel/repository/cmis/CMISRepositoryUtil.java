@@ -90,6 +90,8 @@ public class CMISRepositoryUtil {
 	private static final String _CLASS_NAME =
 		"com.liferay.portal.repository.cmis.CMISRepositoryUtil";
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		CMISRepositoryUtil.class);
 	private static final MethodKey _checkRepositoryMethodKey = new MethodKey(
 		ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME),
 		"checkRepository", long.class, Map.class, UnicodeProperties.class,
@@ -101,7 +103,5 @@ public class CMISRepositoryUtil {
 		new MethodKey(
 			ClassResolverUtil.resolveByPortalClassLoader(_CLASS_NAME),
 			"getTypeSettingsValue", UnicodeProperties.class, String.class);
-	private static final Log _log = LogFactoryUtil.getLog(
-		CMISRepositoryUtil.class);
 
 }

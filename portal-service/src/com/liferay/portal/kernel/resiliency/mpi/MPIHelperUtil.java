@@ -413,8 +413,8 @@ public class MPIHelperUtil {
 		}
 	}
 
-	private static final Intraband _intraband;
 	private static final Log _log = LogFactoryUtil.getLog(MPIHelperUtil.class);
+	private static final Intraband _intraband;
 	private static final MPI _mpi;
 	private static final MPI _mpiImpl;
 	private static final ConcurrentMap<String, SPIProviderContainer>

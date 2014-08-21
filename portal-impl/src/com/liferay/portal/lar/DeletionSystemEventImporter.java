@@ -116,9 +116,9 @@ public class DeletionSystemEventImporter {
 	private DeletionSystemEventImporter() {
 	}
 
-	private static final DeletionSystemEventImporter _instance =
-		new DeletionSystemEventImporter();
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeletionSystemEventImporter.class);
+	private static final DeletionSystemEventImporter _instance =
+		new DeletionSystemEventImporter();
 
 }

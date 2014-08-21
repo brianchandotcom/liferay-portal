@@ -170,10 +170,10 @@ public class PortletResourceBundles {
 		_resourceBundles.remove(servletContextName);
 	}
 
-	private static final PortletResourceBundles _instance =
-		new PortletResourceBundles();
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletResourceBundles.class);
+	private static final PortletResourceBundles _instance =
+		new PortletResourceBundles();
 
 	private final Map<String, Map<String, ResourceBundle>> _resourceBundles;
 

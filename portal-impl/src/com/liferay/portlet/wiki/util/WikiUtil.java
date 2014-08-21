@@ -812,11 +812,11 @@ public class WikiUtil {
 		StringPool.PLUS, StringPool.QUESTION, StringPool.SLASH
 	};
 
+	private static final Log _log = LogFactoryUtil.getLog(WikiUtil.class);
+	private static final WikiUtil _instance = new WikiUtil();
 	private static final Pattern _editPageURLPattern = Pattern.compile(
 		"\\[\\$BEGIN_PAGE_TITLE_EDIT\\$\\](.*?)" +
 			"\\[\\$END_PAGE_TITLE_EDIT\\$\\]");
-	private static final WikiUtil _instance = new WikiUtil();
-	private static final Log _log = LogFactoryUtil.getLog(WikiUtil.class);
 	private static final Pattern _viewPageURLPattern = Pattern.compile(
 		"\\[\\$BEGIN_PAGE_TITLE\\$\\](.*?)\\[\\$END_PAGE_TITLE\\$\\]");
 

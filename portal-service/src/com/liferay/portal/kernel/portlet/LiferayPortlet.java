@@ -503,7 +503,7 @@ public class LiferayPortlet extends GenericPortlet {
 
 	private final Map<String, Method> _actionMethods =
 		new ConcurrentHashMap<String, Method>();
-	private Map<String, Method> _resourceMethods =
+	private final Map<String, Method> _resourceMethods =
 		new ConcurrentHashMap<String, Method>();
 
 }

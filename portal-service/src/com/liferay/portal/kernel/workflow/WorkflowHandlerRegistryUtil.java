@@ -312,10 +312,10 @@ public class WorkflowHandlerRegistryUtil {
 		}
 	}
 
-	private static final WorkflowHandlerRegistryUtil _instance =
-		new WorkflowHandlerRegistryUtil();
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowHandlerRegistryUtil.class);
+	private static final WorkflowHandlerRegistryUtil _instance =
+		new WorkflowHandlerRegistryUtil();
 
 	private final Map<String, WorkflowHandler<?>> _scopeableWorkflowHandlerMap =
 		new ConcurrentSkipListMap<String, WorkflowHandler<?>>();

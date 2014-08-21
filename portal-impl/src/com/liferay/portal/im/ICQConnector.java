@@ -95,8 +95,8 @@ public class ICQConnector implements Observer {
 		}
 	}
 
-	private static final ICQConnector _instance = new ICQConnector();
 	private static final Log _log = LogFactoryUtil.getLog(ICQConnector.class);
+	private static final ICQConnector _instance = new ICQConnector();
 
 	private boolean _connecting;
 	private OscarConnection _icq;

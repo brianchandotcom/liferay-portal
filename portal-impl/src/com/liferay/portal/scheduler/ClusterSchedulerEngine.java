@@ -887,6 +887,8 @@ public class ClusterSchedulerEngine
 
 	private static final String _PORTAL_READY = "portal.ready";
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClusterSchedulerEngine.class);
 	private static final MethodKey _getScheduledJobMethodKey = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJob", String.class,
 		String.class, StorageType.class);
@@ -897,8 +899,6 @@ public class ClusterSchedulerEngine
 		StorageType.class);
 	private static final MethodKey _getScheduledJobsMethodKey3 = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJobs", StorageType.class);
-	private static final Log _log = LogFactoryUtil.getLog(
-		ClusterSchedulerEngine.class);
 
 	private String _beanIdentifier;
 	private ClusterEventListener _clusterEventListener;

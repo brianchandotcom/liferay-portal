@@ -133,11 +133,11 @@ public class GoogleDocsDLFileEntryTypeHelper {
 			descriptionMap, new long[] {ddmStructureId}, serviceContext);
 	}
 
-	private ClassNameLocalService _classNameLocalService;
-	private Company _company;
-	private DDMStructureLocalService _ddmStructureLocalService;
-	private long _dlFileEntryMetadataClassNameId;
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-	private UserLocalService _userLocalService;
+	private final ClassNameLocalService _classNameLocalService;
+	private final Company _company;
+	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final long _dlFileEntryMetadataClassNameId;
+	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private final UserLocalService _userLocalService;
 
 }

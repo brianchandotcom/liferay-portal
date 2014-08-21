@@ -176,8 +176,8 @@ public class SharepointUtil {
 		return url;
 	}
 
-	private static final SharepointUtil _instance = new SharepointUtil();
 	private static final Log _log = LogFactoryUtil.getLog(SharepointUtil.class);
+	private static final SharepointUtil _instance = new SharepointUtil();
 
 	private final Map<String, String> _storageMap;
 

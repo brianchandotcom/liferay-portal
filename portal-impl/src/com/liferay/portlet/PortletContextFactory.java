@@ -99,10 +99,10 @@ public class PortletContextFactory {
 		_pool.remove(portlet.getRootPortletId());
 	}
 
-	private static final PortletContextFactory _instance =
-		new PortletContextFactory();
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletContextFactory.class);
+	private static final PortletContextFactory _instance =
+		new PortletContextFactory();
 
 	private final Map<String, Map<String, PortletContext>> _pool;
 

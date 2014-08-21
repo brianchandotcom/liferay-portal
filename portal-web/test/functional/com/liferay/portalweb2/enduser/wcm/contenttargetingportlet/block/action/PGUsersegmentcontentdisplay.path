@@ -1,0 +1,137 @@
+<html>
+<head>
+<title>PGUsersegmentcontentdisplay</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGUsersegmentcontentdisplay</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGUsersegmentcontentdisplay</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_LINK</td>
+	<td>//div[contains(@class,'usersegmentcontentdisplay')]//a[@data-title='Configuration']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME</td>
+	<td>//iframe[contains(@src,'contenttargetingportlet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_CONTENT_IFRAME</td>
+	<td>//iframe[contains(@id,'selectContent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNDO_LINK</td>
+	<td>//div[contains(@class,'undomanager')]/a[@class='lfr-action-undo']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLEAR_HISTORY_LINK</td>
+	<td>//div[contains(@class,'undomanager')]/a[@class='lfr-action-clear']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT</td>
+	<td>//div[@class='asset-content']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RULE_PANEL-->
+<tr>
+	<td>RULE_PANEL_BELONGS_RADIO</td>
+	<td>//label[contains(.,'belongs')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_PANEL_DOES_NOT_BELONG_RADIO</td>
+	<td>//label[contains(.,'does not belong')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_PANEL_ANY_RADIO</td>
+	<td>//label[contains(.,'Any')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_PANEL_ALL_RADIO</td>
+	<td>//label[contains(.,'All')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_PANEL_USER_SEGMENT_SELECT_BUTTON</td>
+	<td>//button[@title='Select User Segments']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_PANEL_DISPLAY_CONTENT_DROPDOWN</td>
+	<td>//div/a[@title='Select Content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_PANEL_DISPLAY_CONTENT_DROPDOWN_MENULIST</td>
+	<td>//li/a[@data-type='${key_contentType}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT-->
+<tr>
+	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX</td>
+	<td>//div[contains(.,'${key_userSegmentName}')]//i[contains(@class,'icon-check')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_SEARCH_BAR</td>
+	<td>//input[contains(@class,'search-query')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CLOSE_BUTTON</td>
+	<td>//div[contains(@class,'selector-popup')]//button[contains(@class,'btn close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RULE_PANEL_DISPLAY_CONTENT_SELECT-->
+<tr>
+	<td>RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_contentTitle}')]//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

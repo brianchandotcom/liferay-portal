@@ -1,0 +1,180 @@
+<html>
+<head>
+<title>CPContenttargetingAddcampaign</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPContenttargetingAddcampaign</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPContenttargetingAddcampaign</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_NAME_FIELD</td>
+	<td>//input[contains(@id,'contenttargetingweb_name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_DESCRIPTION_FIELD</td>
+	<td>//textarea[contains(@id,'contenttargetingweb_description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_USER_SEGMENT_SELECT</td>
+	<td>//select[contains(@id,'contenttargetingweb_userSegmentId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_START_DATE_FIELD</td>
+	<td>//input[contains(@id,'contenttargetingweb_startDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_START_TIME_FIELD</td>
+	<td>//input[contains(@id,'contenttargetingweb_startDateTime')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_END_DATE_FIELD</td>
+	<td>//input[contains(@id,'contenttargetingweb_endDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_END_TIME_FIELD</td>
+	<td>//input[contains(@id,'contenttargetingweb_endDateTime')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_PRIORITY_SELECT</td>
+	<td>//select[contains(@id,'contenttargetingweb_priority')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_ACTIVE_CHECKBOX</td>
+	<td>//input[contains(@id,'contenttargetingweb_active')][2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CAMPAIGN_TRACKING_ACTIONS_PAGE-->
+<tr>
+	<td>CAMPAIGN_TRACKING_ACTIONS_PAGE_ALIAS_FIELD</td>
+	<td>//div[contains(@class,'pagetrackingaction')]//input[contains(@id,'alias')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TRACKING_ACTIONS_PAGE_FRIENDLY_URL_FIELD</td>
+	<td>//div[contains(@class,'pagetrackingaction')]//input[contains(@id,'friendlyURL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TRACKING_ACTIONS_PAGE_TRACKING_ACTION_SELECT</td>
+	<td>//div[contains(@class,'pagetrackingaction')]//select[contains(@id,'eventType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CAMPAIGN_TRACKING_ACTIONS_FORM-->
+<tr>
+	<td>CAMPAIGN_TRACKING_ACTIONS_FORM_ALIAS_FIELD</td>
+	<td>//div[contains(@class,'formtrackingaction')]//input[contains(@id,'alias')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TRACKING_ACTIONS_FORM_FORM_ID_FIELD</td>
+	<td>//div[contains(@class,'formtrackingaction')]//input[contains(@id,'elementId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TRACKING_ACTIONS_FORM_TRACKING_ACTION_SELECT</td>
+	<td>//div[contains(@class,'formtrackingaction')]//select[contains(@id,'eventType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS-->
+<tr>
+	<td>CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS_ALIAS_FIELD</td>
+	<td>//div[contains(@class,'youtubetrackingaction')]//input[contains(@id,'alias')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS_FRIENDLY_URL_FIELD</td>
+	<td>//div[contains(@class,'youtubetrackingaction')]//input[contains(@id,'friendlyURL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS_TRACKING_ACTION_SELECT</td>
+	<td>//div[contains(@class,'youtubetrackingaction')]//select[contains(@id,'eventType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CAMPAIGN_TRACKING_ACTIONS_CONTENT-->
+<tr>
+	<td>CAMPAIGN_TRACKING_ACTIONS_CONTENT_ALIAS_FIELD</td>
+	<td>//div[contains(@class,'contenttrackingaction')]//input[contains(@id,'alias')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TRACKING_ACTIONS_CONTENT_FRIENDLY_URL_FIELD</td>
+	<td>//div[contains(@class,'contenttrackingaction')]//input[contains(@id,'friendlyURL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TRACKING_ACTIONS_CONTENT_TRACKING_ACTION_SELECT</td>
+	<td>//div[contains(@class,'contenttrackingaction')]//select[contains(@id,'eventType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CAMPAIGN_TRACKING_ACTIONS_LINK-->
+<tr>
+	<td>CAMPAIGN_TRACKING_ACTIONS_LINK_ALIAS_FIELD</td>
+	<td>//div[contains(@class,'linktrackingaction')]//input[contains(@id,'alias')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TRACKING_ACTIONS_LINK_FRIENDLY_URL_FIELD</td>
+	<td>//div[contains(@class,'linktrackingaction')]//input[contains(@id,'friendlyURL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TRACKING_ACTIONS_LINK_TRACKING_ACTION_SELECT</td>
+	<td>//div[contains(@class,'linktrackingaction')]//select[contains(@id,'eventType')]</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

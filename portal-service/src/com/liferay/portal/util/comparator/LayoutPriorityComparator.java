@@ -35,6 +35,9 @@ public class LayoutPriorityComparator extends OrderByComparator<Layout> {
 
 	public LayoutPriorityComparator(boolean ascending) {
 		_ascending = ascending;
+
+		_layout = null;
+		_lessThan = false;
 	}
 
 	public LayoutPriorityComparator(Layout layout, boolean lessThan) {
@@ -115,8 +118,8 @@ public class LayoutPriorityComparator extends OrderByComparator<Layout> {
 		return _ascending;
 	}
 
-	private boolean _ascending;
-	private Layout _layout;
-	private boolean _lessThan;
+	private final boolean _ascending;
+	private final Layout _layout;
+	private final boolean _lessThan;
 
 }

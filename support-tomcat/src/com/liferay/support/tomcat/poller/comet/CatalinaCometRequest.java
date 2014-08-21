@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.poller.comet.BaseCometRequest;
 import java.util.Enumeration;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.catalina.comet.CometEvent;
 
 /**
@@ -30,26 +28,22 @@ import org.apache.catalina.comet.CometEvent;
 public class CatalinaCometRequest extends BaseCometRequest {
 
 	public CatalinaCometRequest(CometEvent cometEvent) {
-		_request = cometEvent.getHttpServletRequest();
-
-		setRequest(_request);
+		super(cometEvent.getHttpServletRequest());
 	}
 
 	@Override
 	public String getParameter(String name) {
-		return _request.getParameter(name);
+		return getRequest().getParameter(name);
 	}
 
 	@Override
 	public Map<String, String[]> getParameterMap() {
-		return _request.getParameterMap();
+		return getRequest().getParameterMap();
 	}
 
 	@Override
 	public Enumeration<String> getParameterNames() {
-		return _request.getParameterNames();
+		return getRequest().getParameterNames();
 	}
-
-	private HttpServletRequest _request;
 
 }

@@ -47,7 +47,9 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class DictionaryPortlet extends MVCPortlet {
+
 	@Reference(unbind = "-")
 	protected void setDictionaryUpgrade(DictionaryUpgrade dictionaryUpgrade) {
 	}
+
 }

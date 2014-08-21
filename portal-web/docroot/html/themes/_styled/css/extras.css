@@ -502,7 +502,7 @@ body:first-of-type {
 	@include border-top-right-radius(0);
 }
 
-.portlet-topper .portlet-topper-toolbar .portlet-options {
+.portlet-options.btn-group {
 	&, &.open {
 		.dropdown-toggle {
 			@include box-shadow(none);

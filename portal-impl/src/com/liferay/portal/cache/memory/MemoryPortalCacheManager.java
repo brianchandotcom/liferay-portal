@@ -85,7 +85,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 		if (portalCache == null) {
 			portalCache = new MemoryPortalCache<K, V>(
-				name, _cacheInitialCapacity);
+				this, name, _cacheInitialCapacity);
 
 			_memoryPortalCaches.put(name, portalCache);
 

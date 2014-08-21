@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.process;
 
+import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
@@ -65,7 +66,7 @@ public class ProcessUtilTest {
 
 			executorService.awaitTermination(10, TimeUnit.SECONDS);
 
-			_nullOutExecutorService();
+			_nullOutThreadPoolExecutor();
 		}
 	}
 
@@ -80,7 +81,7 @@ public class ProcessUtilTest {
 			public void run() {
 				try {
 					ExecutorService executorService =
-						_invokeGetExecutorService();
+						_invokeGetThreadPoolExecutor();
 
 					atomicReference.set(executorService);
 				}
@@ -98,14 +99,14 @@ public class ProcessUtilTest {
 
 			while (thread.getState() != Thread.State.BLOCKED);
 
-			executorService = _invokeGetExecutorService();
+			executorService = _invokeGetThreadPoolExecutor();
 		}
 
 		thread.join();
 
 		Assert.assertSame(executorService, atomicReference.get());
 
-		_invokeGetExecutorService();
+		_invokeGetThreadPoolExecutor();
 	}
 
 	@Test
@@ -121,7 +122,7 @@ public class ProcessUtilTest {
 
 		// Idle destroy
 
-		ExecutorService executorService = _invokeGetExecutorService();
+		ExecutorService executorService = _invokeGetThreadPoolExecutor();
 
 		Assert.assertNotNull(executorService);
 		Assert.assertNotNull(_getExecutorService());
@@ -132,7 +133,7 @@ public class ProcessUtilTest {
 
 		// Busy destroy
 
-		executorService = _invokeGetExecutorService();
+		executorService = _invokeGetThreadPoolExecutor();
 
 		Assert.assertNotNull(executorService);
 		Assert.assertNotNull(_getExecutorService());
@@ -160,7 +161,7 @@ public class ProcessUtilTest {
 
 		// Concurrent destroy
 
-		_invokeGetExecutorService();
+		_invokeGetThreadPoolExecutor();
 
 		final ProcessUtil referenceProcessUtil = processUtil;
 
@@ -183,7 +184,7 @@ public class ProcessUtilTest {
 
 		thread.join();
 
-		_invokeGetExecutorService();
+		_invokeGetThreadPoolExecutor();
 
 		processUtil.destroy();
 
@@ -323,7 +324,7 @@ public class ProcessUtilTest {
 
 	@Test
 	public void testExecuteAfterShutdown() throws Exception {
-		ExecutorService executorService = _invokeGetExecutorService();
+		ExecutorService executorService = _invokeGetThreadPoolExecutor();
 
 		executorService.shutdown();
 
@@ -511,27 +512,27 @@ public class ProcessUtilTest {
 		return argumentsList.toArray(new String[argumentsList.size()]);
 	}
 
-	private static ExecutorService _getExecutorService() throws Exception {
-		Field field = ProcessUtil.class.getDeclaredField("_executorService");
+	private static ThreadPoolExecutor _getExecutorService() throws Exception {
+		Field field = ProcessUtil.class.getDeclaredField("_threadPoolExecutor");
 
 		field.setAccessible(true);
 
-		return (ExecutorService)field.get(null);
+		return (ThreadPoolExecutor)field.get(null);
 	}
 
-	private static ExecutorService _invokeGetExecutorService()
+	private static ThreadPoolExecutor _invokeGetThreadPoolExecutor()
 		throws Exception {
 
 		Method method = ProcessUtil.class.getDeclaredMethod(
-			"_getExecutorService");
+			"_getThreadPoolExecutor");
 
 		method.setAccessible(true);
 
-		return (ExecutorService)method.invoke(method);
+		return (ThreadPoolExecutor)method.invoke(method);
 	}
 
-	private static void _nullOutExecutorService() throws Exception {
-		Field field = ProcessUtil.class.getDeclaredField("_executorService");
+	private static void _nullOutThreadPoolExecutor() throws Exception {
+		Field field = ProcessUtil.class.getDeclaredField("_threadPoolExecutor");
 
 		field.setAccessible(true);
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.nio.intraband.rpc;
 
+import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
+import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.nio.intraband.CompletionHandler;
@@ -29,15 +31,13 @@ import java.io.Serializable;
 
 import java.util.EnumSet;
 import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
 
 /**
  * @author Shuyang Zhou
  */
 public class IntrabandRPCUtil {
 
-	public static <V extends Serializable> Future<V> execute(
+	public static <V extends Serializable> NoticeableFuture<V> execute(
 		RegistrationReference registrationReference,
 		ProcessCallable<V> processCallable) {
 
@@ -52,13 +52,14 @@ public class IntrabandRPCUtil {
 		Datagram datagram = Datagram.createRequestDatagram(
 			systemDataType.getValue(), serializer.toByteBuffer());
 
-		FutureResult<V> futureResult = new FutureResult<V>();
+		DefaultNoticeableFuture<V> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<V>();
 
 		intraband.sendDatagram(
 			registrationReference, datagram, null, repliedEnumSet,
-			new FutureCompletionHandler<V>(futureResult));
+			new FutureCompletionHandler<V>(defaultNoticeableFuture));
 
-		return futureResult;
+		return defaultNoticeableFuture;
 	}
 
 	protected static Callable<Serializable> emptyCallable =
@@ -83,7 +84,7 @@ public class IntrabandRPCUtil {
 
 		@Override
 		public void failed(Object attachment, IOException ioe) {
-			_futureResult.setException(ioe);
+			_defaultNoticeableFuture.setException(ioe);
 		}
 
 		@Override
@@ -97,14 +98,14 @@ public class IntrabandRPCUtil {
 				Exception exception = rpcResponse.getException();
 
 				if (exception != null) {
-					_futureResult.setException(exception);
+					_defaultNoticeableFuture.setException(exception);
 				}
 				else {
-					_futureResult.set((V)rpcResponse.getResult());
+					_defaultNoticeableFuture.set((V)rpcResponse.getResult());
 				}
 			}
 			catch (ClassNotFoundException cnfe) {
-				_futureResult.setException(cnfe);
+				_defaultNoticeableFuture.setException(cnfe);
 			}
 		}
 
@@ -114,33 +115,16 @@ public class IntrabandRPCUtil {
 
 		@Override
 		public void timedOut(Object attachment) {
-			_futureResult.cancel(true);
+			_defaultNoticeableFuture.cancel(true);
 		}
 
-		protected FutureCompletionHandler(FutureResult<V> futureResult) {
-			_futureResult = futureResult;
+		protected FutureCompletionHandler(
+			DefaultNoticeableFuture<V> defaultNoticeableFuture) {
+
+			_defaultNoticeableFuture = defaultNoticeableFuture;
 		}
 
-		private final FutureResult<V> _futureResult;
-
-	}
-
-	protected static class FutureResult<V extends Serializable>
-		extends FutureTask<V> {
-
-		protected FutureResult() {
-			super((Callable<V>)emptyCallable);
-		}
-
-		@Override
-		protected void set(V v) {
-			super.set(v);
-		}
-
-		@Override
-		protected void setException(Throwable t) {
-			super.setException(t);
-		}
+		private final DefaultNoticeableFuture<V> _defaultNoticeableFuture;
 
 	}
 

@@ -223,6 +223,12 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
 			configurationURL, _clusterAware, _usingDefault);
 
+		String cacheManagerName = configuration.getName();
+
+		if (!cacheManagerName.equals(_cacheManager.getName())) {
+			return;
+		}
+
 		Map<String, CacheConfiguration> cacheConfigurations =
 			configuration.getCacheConfigurations();
 

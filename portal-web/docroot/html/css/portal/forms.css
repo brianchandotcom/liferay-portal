@@ -159,21 +159,6 @@
 	}
 }
 
-.lfr-input-resource {
-	width: @model_hints_constants_text_display_width@px;
-}
-
-.lfr-input-text, .form .fieldset .lfr-input-text-container input {
-	max-width: @model_hints_constants_text_display_width@px;
-	width: 100%;
-}
-
-.lfr-textarea, .form .fieldset .lfr-textarea-container textarea {
-	height: @model_hints_constants_textarea_display_height@px;
-	max-width: @model_hints_constants_textarea_display_width@px;
-	width: 100%;
-}
-
 @include respond-to(phone, tablet) {
 	.aui {
 		#{$form_text_fields},

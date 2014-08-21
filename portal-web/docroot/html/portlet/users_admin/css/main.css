@@ -1,41 +1,6 @@
 @import "mixins";
 
 .portlet-users-admin {
-	.form {
-		fieldset {
-			border-width: 0;
-			padding: 0;
-		}
-
-		.fieldset {
-			select {
-				width: auto;
-			}
-
-			textarea {
-				width: 90%;
-			}
-
-			.field {
-				&.mailing-ctrl {
-					clear: both;
-
-					span {
-						margin-right: 0.5em;
-					}
-				}
-
-				&.localized-language-selector {
-					margin-bottom: 0;
-				}
-			}
-
-			.email-field, .url-field {
-				width: 200px;
-			}
-		}
-	}
-
 	#header-bottom {
 		background-color: #F6F8FB;
 		height: 34px;
@@ -81,10 +46,6 @@
 		@include respond-to(phone) {
 			float: none;
 			width: auto;
-		}
-
-		select {
-			width: 100%;
 		}
 
 		> .form-group {
@@ -169,15 +130,6 @@
 		.form-group {
 			margin: 0;
 		}
-
-		.field {
-			float: left;
-		}
-	}
-
-	.addresses .field {
-		float: none;
-		width: auto;
 	}
 
 	.permission-scopes {

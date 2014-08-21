@@ -124,7 +124,7 @@ public class ProcessUtil {
 					0, Integer.MAX_VALUE, 60, TimeUnit.SECONDS, true,
 					Integer.MAX_VALUE, new AbortPolicy(),
 					new NamedThreadFactory(
-						ProcessExecutor.class.getName(), Thread.MIN_PRIORITY,
+						ProcessUtil.class.getName(), Thread.MIN_PRIORITY,
 						PortalClassLoaderUtil.getClassLoader()),
 					new ThreadPoolHandlerAdapter());
 			}

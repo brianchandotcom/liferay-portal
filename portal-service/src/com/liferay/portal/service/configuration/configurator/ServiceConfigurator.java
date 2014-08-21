@@ -12,15 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.spring.extender.internal.service.configurator;
+package com.liferay.portal.service.configuration.configurator;
+
+import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 
 /**
  * @author Miguel Pastor
  */
 public interface ServiceConfigurator {
 
-	public void destroy() throws Exception;
+	public void deactivate(
+			ServiceComponentConfiguration serviceComponentConfiguration,
+			ClassLoader classLoader)
+		throws Exception;
 
-	public void init() throws Exception;
+	public void activate(
+			ServiceComponentConfiguration serviceComponentConfiguration,
+			ClassLoader classLoader)
+		throws Exception;
 
 }

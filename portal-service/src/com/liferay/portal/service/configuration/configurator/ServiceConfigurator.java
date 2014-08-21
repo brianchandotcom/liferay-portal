@@ -21,12 +21,12 @@ import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
  */
 public interface ServiceConfigurator {
 
-	public void deactivate(
+	public void destroyServices(
 			ServiceComponentConfiguration serviceComponentConfiguration,
 			ClassLoader classLoader)
 		throws Exception;
 
-	public void activate(
+	public void initServices(
 			ServiceComponentConfiguration serviceComponentConfiguration,
 			ClassLoader classLoader)
 		throws Exception;

@@ -1028,6 +1028,51 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			fileName, regex, "variable", includeFileNames, checkedFileNames);
 	}
 
+	protected boolean isJSPDuplicateImport(
+		String fileName, String importLine, boolean checkFile) {
+
+		String content = _jspContents.get(fileName);
+
+		if (Validator.isNull(content)) {
+			return false;
+		}
+
+		int x = importLine.indexOf("page");
+
+		if (x == -1) {
+			return false;
+		}
+
+		if (checkFile && content.contains(importLine.substring(x))) {
+			return true;
+		}
+
+		int y = content.indexOf("<%@ include file=");
+
+		if (y == -1) {
+			return false;
+		}
+
+		y = content.indexOf(StringPool.QUOTE, y);
+
+		if (y == -1) {
+			return false;
+		}
+
+		int z = content.indexOf(StringPool.QUOTE, y + 1);
+
+		if (z == -1) {
+			return false;
+		}
+
+		String includeFileName = content.substring(y + 1, z);
+
+		includeFileName = buildFullPathIncludeFileName(
+			fileName, includeFileName);
+
+		return isJSPDuplicateImport(includeFileName, importLine, true);
+	}
+
 	protected boolean isJSPTermRequired(
 		String fileName, String regex, String type,
 		Set<String> includeFileNames, Set<String> checkedFileNames) {
@@ -1077,51 +1122,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return false;
-	}
-
-	protected boolean isJSPDuplicateImport(
-		String fileName, String importLine, boolean checkFile) {
-
-		String content = _jspContents.get(fileName);
-
-		if (Validator.isNull(content)) {
-			return false;
-		}
-
-		int x = importLine.indexOf("page");
-
-		if (x == -1) {
-			return false;
-		}
-
-		if (checkFile && content.contains(importLine.substring(x))) {
-			return true;
-		}
-
-		int y = content.indexOf("<%@ include file=");
-
-		if (y == -1) {
-			return false;
-		}
-
-		y = content.indexOf(StringPool.QUOTE, y);
-
-		if (y == -1) {
-			return false;
-		}
-
-		int z = content.indexOf(StringPool.QUOTE, y + 1);
-
-		if (z == -1) {
-			return false;
-		}
-
-		String includeFileName = content.substring(y + 1, z);
-
-		includeFileName = buildFullPathIncludeFileName(
-			fileName, includeFileName);
-
-		return isJSPDuplicateImport(includeFileName, importLine, true);
 	}
 
 	protected void moveFrequentlyUsedImportsToCommonInit(int minCount)

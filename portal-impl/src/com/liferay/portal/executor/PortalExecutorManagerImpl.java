@@ -14,6 +14,7 @@
 
 package com.liferay.portal.executor;
 
+import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.executor.PortalExecutorFactory;
 import com.liferay.portal.kernel.executor.PortalExecutorManager;
@@ -43,7 +44,7 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 	}
 
 	@Override
-	public <T> Future<T> execute(String name, Callable<T> callable) {
+	public <T> NoticeableFuture<T> execute(String name, Callable<T> callable) {
 		ThreadPoolExecutor threadPoolExecutor = getPortalExecutor(name);
 
 		return threadPoolExecutor.submit(callable);

@@ -14,13 +14,13 @@
 
 package com.liferay.portal.kernel.executor;
 
+import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -29,7 +29,9 @@ import java.util.concurrent.TimeoutException;
  */
 public class PortalExecutorManagerUtil {
 
-	public static <T> Future<T> execute(String name, Callable<T> callable) {
+	public static <T> NoticeableFuture<T> execute(
+		String name, Callable<T> callable) {
+
 		PortalRuntimePermission.checkThreadPoolExecutor(name);
 
 		return getPortalExecutorManager().execute(name, callable);

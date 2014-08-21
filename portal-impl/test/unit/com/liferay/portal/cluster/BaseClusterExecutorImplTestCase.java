@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
+import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
@@ -544,7 +545,9 @@ public abstract class BaseClusterExecutorImplTestCase
 	protected class MockPortalExecutorManager implements PortalExecutorManager {
 
 		@Override
-		public <T> Future<T> execute(String name, Callable<T> callable) {
+		public <T> NoticeableFuture<T> execute(
+			String name, Callable<T> callable) {
+
 			return _threadPoolExecutor.submit(callable);
 		}
 

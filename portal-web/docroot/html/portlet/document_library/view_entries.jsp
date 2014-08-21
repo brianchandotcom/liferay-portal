@@ -72,7 +72,8 @@ portletURL.setParameter("displayStyle", String.valueOf(displayStyle));
 int entryStart = ParamUtil.getInteger(request, "entryStart");
 int entryEnd = ParamUtil.getInteger(request, "entryEnd", dlPortletInstanceSettings.getEntriesPerPage());
 
-SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", entryEnd / (entryEnd - entryStart), entryEnd - entryStart, portletURL, null, null);
+SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+
 
 List<String> headerNames = new ArrayList<String>();
 
@@ -253,10 +254,6 @@ else {
 
 searchContainer.setResults(results);
 
-request.setAttribute("view.jsp-total", String.valueOf(total));
-
-request.setAttribute("view_entries.jsp-entryStart", String.valueOf(searchContainer.getStart()));
-request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer.getEnd()));
 %>
 
 <div class="subscribe-action">
@@ -625,25 +622,10 @@ for (int i = 0; i < results.size(); i++) {
 }
 %>
 
-<c:if test='<%= displayStyle.equals("list") %>'>
-	<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
-</c:if>
+<div class="document-entries-pagination">
+	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+</div>
 
-<aui:script>
-	Liferay.fire(
-		'<portlet:namespace />pageLoaded',
-		{
-			pagination: {
-				name: 'entryPagination',
-				state: {
-					page: <%= (total == 0) ? 0 : searchContainer.getCur() %>,
-					rowsPerPage: <%= searchContainer.getDelta() %>,
-					total: <%= total %>
-				}
-			}
-		}
-	);
-</aui:script>
 
 <%!
 private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_library.view_entries_jsp");

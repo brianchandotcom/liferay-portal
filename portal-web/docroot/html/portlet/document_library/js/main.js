@@ -113,16 +113,6 @@ AUI.add(
 
 						var portletContainerId = instance.ns('documentLibraryContainer');
 
-						var paginatorConfig = config.paginator;
-
-						paginatorConfig.entryPaginationContainer = '.document-entries-pagination';
-						paginatorConfig.folderPaginationContainer = '.folder-pagination';
-						paginatorConfig.namespace = namespace;
-
-						var appViewPaginator = new Liferay.AppViewPaginator(paginatorConfig);
-
-						instance._appViewPaginator = appViewPaginator;
-
 						var selectConfig = config.select;
 
 						selectConfig.checkBoxesId = checkBoxesId;
@@ -216,7 +206,6 @@ AUI.add(
 
 						instance._appViewFolders.destroy();
 						instance._appViewMove.destroy();
-						instance._appViewPaginator.destroy();
 						instance._appViewSelect.destroy();
 
 						instance._documentLibraryContainer.purge(true);
@@ -271,10 +260,6 @@ AUI.add(
 						var instance = this;
 
 						var initialState = History.get();
-
-						if (AObject.isEmpty(initialState)) {
-							initialState = instance._appViewPaginator.get('defaultParams');
-						}
 
 						return initialState;
 					},
@@ -371,8 +356,6 @@ AUI.add(
 								repositoryData.paginationData = paginationData;
 							}
 
-							instance._appViewPaginator.set(STR_PAGINATION_DATA, paginationData);
-
 							instance._toggleSyncNotification();
 						}
 					},
@@ -410,14 +393,6 @@ AUI.add(
 							var repositoryId = searchResultsWrapper.attr('data-repositoryId');
 
 							var repositoryData = instance._repositoriesData[repositoryId];
-
-							if (repositoryData) {
-								var paginationData = repositoryData.paginationData;
-
-								if (paginationData) {
-									instance._appViewPaginator.set(STR_PAGINATION_DATA, paginationData);
-								}
-							}
 
 							if (!searchResultsWrapper.hasAttribute(STR_DATA_SEARCH_PROCESSED)) {
 								searchResultsWrapper.setAttribute(STR_DATA_SEARCH_PROCESSED, true);
@@ -507,7 +482,7 @@ AUI.add(
 						if (searchData.showRepositoryTabs || searchData.showSearchInfo) {
 							var entriesContainer = instance._entriesContainer;
 
-							var searchingTPL = Lang.sub(TPL_MESSAGE_SEARCHING, [Liferay.Language.get('searching,-please-wait')]);
+							var searchingTPL = Lang.sub(TPL_MESSAGE_SEARCHING, [Liferay.Language.get('searching, -please-wait')]);
 
 							entriesContainer.html(searchingTPL);
 						}
@@ -597,11 +572,9 @@ AUI.add(
 						var instance = this;
 
 						if (instance._syncMessage) {
-							var entryPagination = instance._appViewPaginator.get('entryPagination');
 
 							var syncMessageBoundingBox = instance._syncMessage.get('boundingBox');
 
-							syncMessageBoundingBox.toggleClass(CSS_SYNC_MESSAGE_HIDDEN, entryPagination.get('total') <= 0);
 						}
 					},
 
@@ -654,14 +627,12 @@ AUI.add(
 			}
 		);
 
-		Liferay.DL_ENTRIES_PAGINATOR = SRC_ENTRIES_PAGINATOR;
-
 		Liferay.DL_SEARCH = SRC_SEARCH;
 
 		Liferay.Portlet.DocumentLibrary = DocumentLibrary;
 	},
 	'',
 	{
-		requires: ['aui-loading-mask-deprecated', 'document-library-upload', 'event-simulate', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-history-manager', 'liferay-message', 'liferay-portlet-base']
+		requires: ['aui-loading-mask-deprecated', 'document-library-upload', 'event-simulate', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-select', 'liferay-history-manager', 'liferay-message', 'liferay-portlet-base']
 	}
 );

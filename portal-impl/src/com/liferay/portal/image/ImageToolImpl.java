@@ -14,6 +14,7 @@
 
 package com.liferay.portal.image;
 
+import com.liferay.portal.kernel.concurrent.FutureConvertor;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageMagick;
 import com.liferay.portal.kernel.image.ImageTool;
@@ -52,10 +53,7 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -161,7 +159,9 @@ public class ImageToolImpl implements ImageTool {
 	}
 
 	@Override
-	public Future<RenderedImage> convertCMYKtoRGB(byte[] bytes, String type) {
+	public Future<RenderedImage> convertCMYKtoRGB(
+		byte[] bytes, final String type) {
+
 		ImageMagick imageMagick = getImageMagick();
 
 		if (!imageMagick.isEnabled()) {
@@ -169,7 +169,7 @@ public class ImageToolImpl implements ImageTool {
 		}
 
 		File inputFile = _fileUtil.createTempFile(type);
-		File outputFile = _fileUtil.createTempFile(type);
+		final File outputFile = _fileUtil.createTempFile(type);
 
 		try {
 			_fileUtil.write(inputFile, bytes);
@@ -194,10 +194,19 @@ public class ImageToolImpl implements ImageTool {
 				imOperation.addImage(inputFile.getPath());
 				imOperation.addImage(outputFile.getPath());
 
-				Future<?> future = imageMagick.convert(
+				Future<Object> future = (Future<Object>)imageMagick.convert(
 					imOperation.getCmdArgs());
 
-				return new RenderedImageFuture(future, outputFile, type);
+				return new FutureConvertor<RenderedImage, Object>(future) {
+
+					@Override
+					protected RenderedImage convert(Object obj)
+						throws IOException {
+
+						return read(_fileUtil.getBytes(outputFile), type);
+					}
+
+				};
 			}
 		}
 		catch (Exception e) {
@@ -686,78 +695,5 @@ public class ImageToolImpl implements ImageTool {
 	private Image _defaultSpacer;
 	private Image _defaultUserFemalePortrait;
 	private Image _defaultUserMalePortrait;
-
-	private class RenderedImageFuture implements Future<RenderedImage> {
-
-		public RenderedImageFuture(
-			Future<?> future, File outputFile, String type) {
-
-			_future = future;
-			_outputFile = outputFile;
-			_type = type;
-		}
-
-		@Override
-		public boolean cancel(boolean mayInterruptIfRunning) {
-			if (_future.isCancelled() || _future.isDone()) {
-				return false;
-			}
-
-			_future.cancel(true);
-
-			return true;
-		}
-
-		@Override
-		public RenderedImage get()
-			throws ExecutionException, InterruptedException {
-
-			_future.get();
-
-			byte[] bytes = new byte[0];
-
-			try {
-				bytes = _fileUtil.getBytes(_outputFile);
-			}
-			catch (IOException ioe) {
-				throw new ExecutionException(ioe);
-			}
-
-			return read(bytes, _type);
-		}
-
-		@Override
-		public RenderedImage get(long timeout, TimeUnit timeUnit)
-			throws ExecutionException, InterruptedException, TimeoutException {
-
-			_future.get(timeout, timeUnit);
-
-			byte[] bytes = new byte[0];
-
-			try {
-				bytes = _fileUtil.getBytes(_outputFile);
-			}
-			catch (IOException ioe) {
-				throw new ExecutionException(ioe);
-			}
-
-			return read(bytes, _type);
-		}
-
-		@Override
-		public boolean isCancelled() {
-			return _future.isCancelled();
-		}
-
-		@Override
-		public boolean isDone() {
-			return _future.isDone();
-		}
-
-		private final Future<?> _future;
-		private final File _outputFile;
-		private final String _type;
-
-	}
 
 }

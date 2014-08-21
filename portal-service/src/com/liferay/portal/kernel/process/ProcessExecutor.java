@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.FutureListener;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
+import com.liferay.portal.kernel.concurrent.NoticeableFutureConvertor;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedInputStream;
@@ -44,7 +45,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -106,7 +106,7 @@ public class ProcessExecutor {
 
 				_managedProcesses.add(process);
 
-				return _wrapNoticeableFuture(
+				return _convertNoticeableFuture(
 					processCallableNoticeableFuture, process);
 			}
 			catch (RejectedExecutionException ree) {
@@ -159,6 +159,53 @@ public class ProcessExecutor {
 		}
 	}
 
+	private static <T extends Serializable> NoticeableFuture<T>
+		_convertNoticeableFuture(
+			final NoticeableFuture<ProcessCallable<? extends Serializable>>
+				processCallableNoticeableFuture,
+			final Process process) {
+
+		DefaultNoticeableFuture<T> defaultNoticeableFuture =
+			new NoticeableFutureConvertor
+				<T, ProcessCallable<? extends Serializable>>(
+					processCallableNoticeableFuture) {
+
+			@Override
+			protected T convert(
+					ProcessCallable<? extends Serializable> processCallable)
+				throws ProcessException {
+
+				if (processCallable instanceof
+						ReturnProcessCallable<?>) {
+
+					return (T)processCallable.call();
+				}
+
+				ExceptionProcessCallable exceptionProcessCallable =
+					(ExceptionProcessCallable)processCallable;
+
+				throw exceptionProcessCallable.call();
+			}
+
+		};
+
+		defaultNoticeableFuture.addFutureListener(
+			new FutureListener<T>() {
+
+				@Override
+				public void complete(Future<T> future) {
+					if (future.isCancelled()) {
+						processCallableNoticeableFuture.cancel(true);
+
+						process.destroy();
+					}
+				}
+
+			});
+
+		return defaultNoticeableFuture;
+	}
+
 	private static ThreadPoolExecutor _getThreadPoolExecutor() {
 		if (_threadPoolExecutor != null) {
 			return _threadPoolExecutor;
@@ -177,66 +224,6 @@ public class ProcessExecutor {
 		}
 
 		return _threadPoolExecutor;
-	}
-
-	private static <T extends Serializable> NoticeableFuture<T>
-		_wrapNoticeableFuture(
-			final NoticeableFuture<ProcessCallable<? extends Serializable>>
-				processCallableNoticeableFuture,
-			final Process process) {
-
-		final DefaultNoticeableFuture<T> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<T>();
-
-		defaultNoticeableFuture.addFutureListener(
-			new FutureListener<T>() {
-
-				@Override
-				public void complete(Future<T> future) {
-					if (future.isCancelled()) {
-						processCallableNoticeableFuture.cancel(true);
-
-						process.destroy();
-					}
-				}
-
-			});
-
-		processCallableNoticeableFuture.addFutureListener(
-			new FutureListener<ProcessCallable<? extends Serializable>>() {
-
-				@Override
-				public void complete(
-					Future<ProcessCallable<? extends Serializable>> future) {
-
-					try {
-						ProcessCallable<?> processCallable = future.get();
-
-						if (processCallable instanceof
-								ReturnProcessCallable<?>) {
-
-							defaultNoticeableFuture.set(
-								(T)processCallable.call());
-						}
-
-						ExceptionProcessCallable exceptionProcessCallable =
-							(ExceptionProcessCallable)processCallable;
-
-						defaultNoticeableFuture.setException(
-							exceptionProcessCallable.call());
-					}
-					catch (Throwable t) {
-						if (t instanceof ExecutionException) {
-							t = t.getCause();
-						}
-
-						defaultNoticeableFuture.setException(t);
-					}
-				}
-
-			});
-
-		return defaultNoticeableFuture;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ProcessExecutor.class);

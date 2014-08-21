@@ -17,7 +17,6 @@ package com.liferay.portal.repository.capabilities;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
-import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventHandler;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -90,12 +89,9 @@ public class CapabilityLocalRepository
 	public void deleteAll() throws PortalException {
 		LocalRepository localRepository = getRepository();
 
-		if (isCapabilityProvided(TrashCapability.class)) {
-			TrashCapability trashCapability = getCapability(
-				TrashCapability.class);
-
-			trashCapability.deleteTrashEntries(getRepositoryId());
-		}
+		_repositoryEventHandler.trigger(
+			RepositoryEventType.Delete.class, LocalRepository.class,
+			localRepository);
 
 		localRepository.deleteAll();
 	}

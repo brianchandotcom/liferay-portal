@@ -17,6 +17,7 @@ package com.liferay.portal.repository.capabilities;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
@@ -78,23 +79,6 @@ public class LiferayTrashCapability implements TrashCapability {
 	}
 
 	@Override
-	public void deleteTrashEntries(long repositoryId) throws PortalException {
-		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
-			repositoryId);
-
-		if (repository == null) {
-			deleteRepositoryTrashEntries(
-				repositoryId, DLFileEntry.class.getName());
-			deleteRepositoryTrashEntries(
-				repositoryId, DLFolder.class.getName());
-		}
-		else {
-			deleteTrashEntries(
-				repository.getGroupId(), repository.getDlFolderId());
-		}
-	}
-
-	@Override
 	public boolean isInTrash(Folder folder) {
 		DLFolder dlFolder = (DLFolder)folder.getModel();
 
@@ -145,6 +129,9 @@ public class LiferayTrashCapability implements TrashCapability {
 		repositoryEventRegistry.registerRepositoryEventListener(
 			RepositoryEventType.Delete.class, Folder.class,
 			new DeleteFolderRepositoryEventListener());
+		repositoryEventRegistry.registerRepositoryEventListener(
+			RepositoryEventType.Delete.class, LocalRepository.class,
+			new DeleteLocalRepositoryEventListener());
 	}
 
 	@Override
@@ -170,6 +157,24 @@ public class LiferayTrashCapability implements TrashCapability {
 
 		for (TrashEntry trashEntry : trashEntries) {
 			TrashEntryLocalServiceUtil.deleteTrashEntry(trashEntry);
+		}
+	}
+
+	protected void deleteTrashEntries(long repositoryId)
+		throws PortalException {
+
+		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
+			repositoryId);
+
+		if (repository == null) {
+			deleteRepositoryTrashEntries(
+				repositoryId, DLFileEntry.class.getName());
+			deleteRepositoryTrashEntries(
+				repositoryId, DLFolder.class.getName());
+		}
+		else {
+			deleteTrashEntries(
+				repository.getGroupId(), repository.getDlFolderId());
 		}
 	}
 
@@ -267,6 +272,20 @@ public class LiferayTrashCapability implements TrashCapability {
 		@Override
 		public void execute(Folder folder) throws PortalException {
 			LiferayTrashCapability.this.deleteTrashEntry(folder);
+		}
+
+	}
+
+	private class DeleteLocalRepositoryEventListener
+		implements RepositoryEventListener
+			<RepositoryEventType.Delete, LocalRepository> {
+
+		@Override
+		public void execute(LocalRepository localRepository)
+			throws PortalException {
+
+			LiferayTrashCapability.this.deleteTrashEntries(
+				localRepository.getRepositoryId());
 		}
 
 	}

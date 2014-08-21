@@ -17,48 +17,41 @@ package com.liferay.portlet.documentlibrary.context;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
  * @author Iván Zaera
  */
-public abstract class MenuAction {
+public class JavascriptMenuAction extends MenuAction {
 
-	public MenuAction(
-		String id, String jspPath, String iconCssClass, String message) {
+	public JavascriptMenuAction(
+		String id, String iconCssClass, String message, String onClick,
+		Renderer javascriptRenderer) {
 
-		_id = id;
-		_jspPath = jspPath;
-		_iconCssClass = iconCssClass;
-		_message = message;
+		super(id, _JSP_PATH, iconCssClass, message);
+
+		_onClick = onClick;
+		_javascriptRenderer = javascriptRenderer;
 	}
 
-	public String getIconCssClass() {
-		return _iconCssClass;
+	public Renderer getJavascriptRenderer() {
+		return _javascriptRenderer;
 	}
 
-	public String getId() {
-		return _id;
+	public String getOnClick() {
+		return _onClick;
 	}
 
-	public String getMessage() {
-		return _message;
+	public interface Renderer {
+		public void render(PageContext pageContext)
+			throws IOException, ServletException;
 	}
 
-	public void render(PageContext pageContext)
-		throws IOException, ServletException {
+	private static final String _JSP_PATH =
+		"/html/portlet/document_library/display_context/" +
+			"javascript_menu_action.jsp";
 
-		ServletRequest request = pageContext.getRequest();
-
-		request.setAttribute(URLMenuAction.class.getName(), this);
-
-		pageContext.include(_jspPath);
-	}
-
-	private String _iconCssClass;
-	private String _id;
-	private String _jspPath;
-	private String _message;
+	private Renderer _javascriptRenderer;
+	private String _onClick;
 
 }

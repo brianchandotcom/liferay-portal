@@ -114,17 +114,10 @@ DLFileVersionActionsDisplayContext dlFileVersionActionsDisplayContext = DLFileVe
 			<c:when test="<%= (fileShortcut == null) %>">
 
 				<%
-				for (MenuAction menuAction : dlFileVersionActionsDisplayContext.getMenuActions()) {
-					%>
+				List<MenuAction> menuActions = dlFileVersionActionsDisplayContext.getMenuActions();
 
-					<liferay-ui:icon
-						iconCssClass="<%= menuAction.getIconCssClass() %>"
-						message="<%= menuAction.getMessage() %>"
-						target="_blank"
-						url="<%= menuAction.getURL() %>"
-					/>
-
-					<%
+				for (MenuAction menuAction : menuActions) {
+					menuAction.render(pageContext);
 				}
 				%>
 

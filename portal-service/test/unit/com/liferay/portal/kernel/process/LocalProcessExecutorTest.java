@@ -89,7 +89,7 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-public class ProcessExecutorTest {
+public class LocalProcessExecutorTest {
 
 	@ClassRule
 	public static CodeCoverageAssertor codeCoverageAssertor =
@@ -142,7 +142,7 @@ public class ProcessExecutorTest {
 		try {
 			int port = serverSocket.getLocalPort();
 
-			ProcessExecutor.execute(
+			_localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				new AttachParentProcessCallable(
 					AttachChildProcessCallable1.class.getName(), port));
@@ -191,7 +191,7 @@ public class ProcessExecutorTest {
 		try {
 			int port = serverSocket.getLocalPort();
 
-			ProcessExecutor.execute(
+			_localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				new AttachParentProcessCallable(
 					AttachChildProcessCallable2.class.getName(), port));
@@ -249,7 +249,7 @@ public class ProcessExecutorTest {
 		try {
 			int port = serverSocket.getLocalPort();
 
-			ProcessExecutor.execute(
+			_localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				new AttachParentProcessCallable(
 					AttachChildProcessCallable3.class.getName(), port));
@@ -307,7 +307,7 @@ public class ProcessExecutorTest {
 		try {
 			int port = serverSocket.getLocalPort();
 
-			ProcessExecutor.execute(
+			_localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				new AttachParentProcessCallable(
 					AttachChildProcessCallable4.class.getName(), port));
@@ -348,7 +348,7 @@ public class ProcessExecutorTest {
 		try {
 			int port = serverSocket.getLocalPort();
 
-			ProcessExecutor.execute(
+			_localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				new AttachParentProcessCallable(
 					AttachChildProcessCallable5.class.getName(), port));
@@ -389,7 +389,7 @@ public class ProcessExecutorTest {
 		try {
 			int port = serverSocket.getLocalPort();
 
-			ProcessExecutor.execute(
+			_localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				new AttachParentProcessCallable(
 					AttachChildProcessCallable6.class.getName(), port));
@@ -439,7 +439,7 @@ public class ProcessExecutorTest {
 	@Test
 	public void testBrokenPiping() throws Exception {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ProcessExecutor.class.getName(), Level.SEVERE);
+			LocalProcessExecutor.class.getName(), Level.SEVERE);
 
 		try {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -447,7 +447,7 @@ public class ProcessExecutorTest {
 			BrokenPipingProcessCallable brokenPipingProcessCallable =
 				new BrokenPipingProcessCallable();
 
-			Future<String> future = ProcessExecutor.execute(
+			Future<Serializable> future = _localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				brokenPipingProcessCallable);
 
@@ -495,7 +495,7 @@ public class ProcessExecutorTest {
 		ReturnWithoutExitProcessCallable returnWithoutExitProcessCallable =
 			new ReturnWithoutExitProcessCallable("");
 
-		Future<String> future = ProcessExecutor.execute(
+		Future<String> future = _localProcessExecutor.execute(
 			_createJPDAProcessConfig(_JPDA_OPTIONS1),
 			returnWithoutExitProcessCallable);
 
@@ -541,7 +541,7 @@ public class ProcessExecutorTest {
 
 		ExecutorService executorService = null;
 
-		synchronized (ProcessExecutor.class) {
+		synchronized (_localProcessExecutor) {
 			thread.start();
 
 			while (thread.getState() != Thread.State.BLOCKED);
@@ -562,7 +562,7 @@ public class ProcessExecutorTest {
 	@Test
 	public void testCrash() throws Exception {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ProcessExecutor.class.getName(), Level.OFF);
+			LocalProcessExecutor.class.getName(), Level.OFF);
 
 		try {
 
@@ -571,7 +571,7 @@ public class ProcessExecutorTest {
 			KillJVMProcessCallable killJVMProcessCallable =
 				new KillJVMProcessCallable(1);
 
-			Future<Serializable> future = ProcessExecutor.execute(
+			Future<Serializable> future = _localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				killJVMProcessCallable);
 
@@ -603,7 +603,7 @@ public class ProcessExecutorTest {
 
 			killJVMProcessCallable = new KillJVMProcessCallable(0);
 
-			future = ProcessExecutor.execute(
+			future = _localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				killJVMProcessCallable);
 
@@ -647,9 +647,7 @@ public class ProcessExecutorTest {
 
 		// Clean destroy
 
-		ProcessExecutor processExecutor = new ProcessExecutor();
-
-		processExecutor.destroy();
+		_localProcessExecutor.destroy();
 
 		Assert.assertNull(_getThreadPoolExecutor());
 
@@ -660,7 +658,7 @@ public class ProcessExecutorTest {
 		Assert.assertNotNull(executorService);
 		Assert.assertNotNull(_getThreadPoolExecutor());
 
-		processExecutor.destroy();
+		_localProcessExecutor.destroy();
 
 		Assert.assertNull(_getThreadPoolExecutor());
 
@@ -677,7 +675,7 @@ public class ProcessExecutorTest {
 
 		dummyJob.waitUntilStarted();
 
-		processExecutor.destroy();
+		_localProcessExecutor.destroy();
 
 		try {
 			future.get();
@@ -696,7 +694,8 @@ public class ProcessExecutorTest {
 
 		_invokeGetThreadPoolExecutor();
 
-		final ProcessExecutor referenceProcessExecutor = processExecutor;
+		final LocalProcessExecutor referenceProcessExecutor =
+			_localProcessExecutor;
 
 		Thread thread = new Thread() {
 
@@ -707,23 +706,23 @@ public class ProcessExecutorTest {
 
 		};
 
-		synchronized (ProcessExecutor.class) {
+		synchronized (_localProcessExecutor) {
 			thread.start();
 
 			while (thread.getState() != Thread.State.BLOCKED);
 
-			processExecutor.destroy();
+			_localProcessExecutor.destroy();
 		}
 
 		thread.join();
 
 		_invokeGetThreadPoolExecutor();
 
-		processExecutor.destroy();
+		_localProcessExecutor.destroy();
 
 		// Destroy after destroyed
 
-		processExecutor.destroy();
+		_localProcessExecutor.destroy();
 
 		Assert.assertNull(_getThreadPoolExecutor());
 	}
@@ -733,7 +732,7 @@ public class ProcessExecutorTest {
 		DummyExceptionProcessCallable dummyExceptionProcessCallable =
 			new DummyExceptionProcessCallable();
 
-		Future<Serializable> future = ProcessExecutor.execute(
+		Future<Serializable> future = _localProcessExecutor.execute(
 			_createJPDAProcessConfig(_JPDA_OPTIONS1),
 			dummyExceptionProcessCallable);
 
@@ -768,7 +767,7 @@ public class ProcessExecutorTest {
 			new DummyReturnProcessCallable();
 
 		try {
-			ProcessExecutor.execute(
+			_localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				dummyReturnProcessCallable);
 
@@ -790,7 +789,7 @@ public class ProcessExecutorTest {
 		DummyReturnProcessCallable dummyReturnProcessCallable =
 			new DummyReturnProcessCallable();
 
-		Future<String> future = ProcessExecutor.execute(
+		Future<String> future = _localProcessExecutor.execute(
 			_createJPDAProcessConfig(_JPDA_OPTIONS1),
 			dummyReturnProcessCallable);
 
@@ -806,7 +805,7 @@ public class ProcessExecutorTest {
 		ReturnWithoutExitProcessCallable returnWithoutExitProcessCallable =
 			new ReturnWithoutExitProcessCallable("");
 
-		future = ProcessExecutor.execute(
+		future = _localProcessExecutor.execute(
 			_createJPDAProcessConfig(_JPDA_OPTIONS1),
 			returnWithoutExitProcessCallable);
 
@@ -844,7 +843,7 @@ public class ProcessExecutorTest {
 		EchoPayloadProcessCallable echoPayloadProcessCallable =
 			new EchoPayloadProcessCallable(largePayload);
 
-		Future<byte[]> future = ProcessExecutor.execute(
+		Future<byte[]> future = _localProcessExecutor.execute(
 			_createJPDAProcessConfig(_JPDA_OPTIONS1),
 			echoPayloadProcessCallable);
 
@@ -871,7 +870,7 @@ public class ProcessExecutorTest {
 
 		builder.setRuntimeClassPath(largeFileName);
 
-		Future<String> future = ProcessExecutor.execute(
+		Future<String> future = _localProcessExecutor.execute(
 			builder.build(), new EchoRuntimeClassPathProcessCallable());
 
 		Assert.assertEquals(largeFileName, future.get());
@@ -888,7 +887,7 @@ public class ProcessExecutorTest {
 			// Warn level
 
 			captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-				ProcessExecutor.class.getName(), Level.WARNING);
+				LocalProcessExecutor.class.getName(), Level.WARNING);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -898,7 +897,7 @@ public class ProcessExecutorTest {
 			LeadingLogProcessCallable leadingLogProcessCallable =
 				new LeadingLogProcessCallable(leadingLog, bodyLog);
 
-			Future<String> future = ProcessExecutor.execute(
+			Future<Serializable> future = _localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				leadingLogProcessCallable);
 
@@ -922,7 +921,7 @@ public class ProcessExecutorTest {
 			leadingLogProcessCallable = new LeadingLogProcessCallable(
 				leadingLog, bodyLog);
 
-			future = ProcessExecutor.execute(
+			future = _localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				leadingLogProcessCallable);
 
@@ -953,7 +952,7 @@ public class ProcessExecutorTest {
 			leadingLogProcessCallable = new LeadingLogProcessCallable(
 				leadingLog, bodyLog);
 
-			future = ProcessExecutor.execute(
+			future = _localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				leadingLogProcessCallable);
 
@@ -1011,9 +1010,10 @@ public class ProcessExecutorTest {
 				@Override
 				public void run() {
 					try {
-						Future<Serializable> future = ProcessExecutor.execute(
-							_createJPDAProcessConfig(_JPDA_OPTIONS1),
-							loggingProcessCallable);
+						Future<Serializable> future =
+							_localProcessExecutor.execute(
+								_createJPDAProcessConfig(_JPDA_OPTIONS1),
+								loggingProcessCallable);
 
 						future.get();
 
@@ -1076,7 +1076,7 @@ public class ProcessExecutorTest {
 
 		builder.setArguments(arguments);
 
-		Future<String> future = ProcessExecutor.execute(
+		Future<String> future = _localProcessExecutor.execute(
 			builder.build(), new ReadPropertyProcessCallable(propertyKey));
 
 		Assert.assertEquals(propertyValue, future.get());
@@ -1089,7 +1089,7 @@ public class ProcessExecutorTest {
 		DummyReturnProcessCallable dummyReturnProcessCallable =
 			new DummyReturnProcessCallable();
 
-		Future<String> future = ProcessExecutor.execute(
+		Future<String> future = _localProcessExecutor.execute(
 			_createJPDAProcessConfig(_JPDA_OPTIONS1),
 			dummyReturnProcessCallable);
 
@@ -1105,7 +1105,7 @@ public class ProcessExecutorTest {
 		ReturnWithoutExitProcessCallable returnWithoutExitProcessCallable =
 			new ReturnWithoutExitProcessCallable("Premature return value");
 
-		Future<String> future = ProcessExecutor.execute(
+		Future<String> future = _localProcessExecutor.execute(
 			_createJPDAProcessConfig(_JPDA_OPTIONS1),
 			returnWithoutExitProcessCallable);
 
@@ -1120,12 +1120,10 @@ public class ProcessExecutorTest {
 		}
 
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
-			ProcessExecutor.class.getName(), Level.OFF);
+			LocalProcessExecutor.class.getName(), Level.OFF);
 
 		try {
-			ProcessExecutor processExecutor = new ProcessExecutor();
-
-			processExecutor.destroy();
+			_localProcessExecutor.destroy();
 
 			try {
 				future.get();
@@ -1152,7 +1150,7 @@ public class ProcessExecutorTest {
 			new UnserializableProcessCallable();
 
 		try {
-			ProcessExecutor.execute(
+			_localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				unserializableProcessCallable);
 
@@ -1172,7 +1170,7 @@ public class ProcessExecutorTest {
 
 			builder.setJavaExecutable("javax");
 
-			ProcessExecutor.execute(
+			_localProcessExecutor.execute(
 				builder.build(), new DummyReturnProcessCallable());
 
 			Assert.fail();
@@ -1256,37 +1254,6 @@ public class ProcessExecutorTest {
 		}
 	}
 
-	private static ThreadPoolExecutor _getThreadPoolExecutor()
-		throws Exception {
-
-		Field field = ProcessExecutor.class.getDeclaredField(
-			"_threadPoolExecutor");
-
-		field.setAccessible(true);
-
-		return (ThreadPoolExecutor)field.get(null);
-	}
-
-	private static ExecutorService _invokeGetThreadPoolExecutor()
-		throws Exception {
-
-		Method method = ProcessExecutor.class.getDeclaredMethod(
-			"_getThreadPoolExecutor");
-
-		method.setAccessible(true);
-
-		return (ExecutorService)method.invoke(method);
-	}
-
-	private static void _nullOutThreadPoolExecutor() throws Exception {
-		Field field = ProcessExecutor.class.getDeclaredField(
-			"_threadPoolExecutor");
-
-		field.setAccessible(true);
-
-		field.set(null, null);
-	}
-
 	private static void _waitForSignalFile(
 			File signalFile, boolean expectedExists)
 		throws Exception {
@@ -1296,13 +1263,41 @@ public class ProcessExecutorTest {
 		}
 	}
 
+	private ThreadPoolExecutor _getThreadPoolExecutor() throws Exception {
+		Field field = LocalProcessExecutor.class.getDeclaredField(
+			"_threadPoolExecutor");
+
+		field.setAccessible(true);
+
+		return (ThreadPoolExecutor)field.get(_localProcessExecutor);
+	}
+
+	private ExecutorService _invokeGetThreadPoolExecutor() throws Exception {
+		Method method = LocalProcessExecutor.class.getDeclaredMethod(
+			"_getThreadPoolExecutor");
+
+		method.setAccessible(true);
+
+		return (ExecutorService)method.invoke(_localProcessExecutor);
+	}
+
+	private void _nullOutThreadPoolExecutor() throws Exception {
+		Field field = LocalProcessExecutor.class.getDeclaredField(
+			"_threadPoolExecutor");
+
+		field.setAccessible(true);
+
+		field.set(_localProcessExecutor, null);
+	}
+
 	private static final String _JPDA_OPTIONS1 =
 		"-agentlib:jdwp=transport=dt_socket,address=8001,server=y,suspend=y";
 
 	private static final String _JPDA_OPTIONS2 =
 		"-agentlib:jdwp=transport=dt_socket,address=8002,server=y,suspend=y";
 
-	private static Log _log = LogFactoryUtil.getLog(ProcessExecutorTest.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		LocalProcessExecutorTest.class);
 
 	private static ServerSocketConfigurator _serverSocketConfigurator =
 		new ServerSocketConfigurator() {
@@ -1315,6 +1310,9 @@ public class ProcessExecutorTest {
 		}
 
 	};
+
+	private LocalProcessExecutor _localProcessExecutor =
+		new LocalProcessExecutor();
 
 	private static class AttachChildProcessCallable1
 		implements ProcessCallable<Serializable> {
@@ -1608,7 +1606,9 @@ public class ProcessExecutorTest {
 				Constructor<ProcessCallable<?>> constructor =
 					_processCallableClass.getConstructor(int.class);
 
-				ProcessExecutor.execute(
+				ProcessExecutor processExecutor = new LocalProcessExecutor();
+
+				processExecutor.execute(
 					_createJPDAProcessConfig(_JPDA_OPTIONS2),
 					constructor.newInstance(_serverPort));
 			}

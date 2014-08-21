@@ -69,9 +69,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void addJSPIncludeFileNames(
-		String fileName, Set<String> includeFileNames) {
-
+	protected void addJSPIncludeFileNames(String fileName) {
 		String content = _jspContents.get(fileName);
 
 		if (Validator.isNull(content)) {
@@ -114,22 +112,20 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				!includeFileName.endsWith("html/common/init.jsp") &&
 				!includeFileName.endsWith("html/portlet/init.jsp") &&
 				!includeFileName.endsWith("html/taglib/init.jsp") &&
-				!includeFileNames.contains(includeFileName)) {
+				!_includeFileNames.contains(includeFileName)) {
 
-				includeFileNames.add(includeFileName);
+				_includeFileNames.add(includeFileName);
 			}
 
 			x = y;
 		}
 	}
 
-	protected void addJSPReferenceFileNames(
-		String fileName, Set<String> includeFileNames) {
-
+	protected void addJSPReferenceFileNames(String fileName) {
 		for (Map.Entry<String, String> entry : _jspContents.entrySet()) {
 			String referenceFileName = entry.getKey();
 
-			if (includeFileNames.contains(referenceFileName)) {
+			if (_includeFileNames.contains(referenceFileName)) {
 				continue;
 			}
 
@@ -163,7 +159,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				if (content.contains(
 						"<%@ include file=\"" + fileName.substring(x))) {
 
-					includeFileNames.add(referenceFileName);
+					_includeFileNames.add(referenceFileName);
 
 					break;
 				}
@@ -520,6 +516,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(content));
+
+		_checkedForIncludesFileNames = new HashSet<String>();
+		_includeFileNames = new HashSet<String>();
 
 		int lineCount = 0;
 
@@ -1001,14 +1000,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	protected boolean hasUnusedJSPTerm(
 		String fileName, String regex, String type) {
 
-		Set<String> includeFileNames = new HashSet<String>();
+		_includeFileNames.add(fileName);
 
-		includeFileNames.add(fileName);
-
-		Set<String> checkedFileNames = new HashSet<String>();
+		Set<String> checkedForUnusedJSPTerm = new HashSet<String>();
 
 		return !isJSPTermRequired(
-			fileName, regex, type, includeFileNames, checkedFileNames);
+			fileName, regex, type, checkedForUnusedJSPTerm);
 	}
 
 	protected boolean hasUnusedTaglib(String fileName, String line) {
@@ -1102,13 +1099,13 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	protected boolean isJSPTermRequired(
 		String fileName, String regex, String type,
-		Set<String> includeFileNames, Set<String> checkedFileNames) {
+		Set<String> checkedForUnusedJSPTerm) {
 
-		if (checkedFileNames.contains(fileName)) {
+		if (checkedForUnusedJSPTerm.contains(fileName)) {
 			return false;
 		}
 
-		checkedFileNames.add(fileName);
+		checkedForUnusedJSPTerm.add(fileName);
 
 		String content = _jspContents.get(fileName);
 
@@ -1121,28 +1118,32 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = pattern.matcher(content);
 
 		if (matcher.find() &&
-			(!type.equals("variable") || (checkedFileNames.size() > 1) ||
+			(!type.equals("variable") || (checkedForUnusedJSPTerm.size() > 1) ||
 			 matcher.find())) {
 
 			return true;
 		}
 
-		addJSPIncludeFileNames(fileName, includeFileNames);
+		if (!_checkedForIncludesFileNames.contains(fileName)) {
+			addJSPIncludeFileNames(fileName);
 
-		if (fileName.endsWith("init.jsp") || fileName.endsWith("init.jspf") ||
-			fileName.contains("init-ext.jsp")) {
+			if (fileName.endsWith("init.jsp") ||
+				fileName.endsWith("init.jspf") ||
+				fileName.contains("init-ext.jsp")) {
 
-			addJSPReferenceFileNames(fileName, includeFileNames);
+				addJSPReferenceFileNames(fileName);
+			}
 		}
 
-		String[] includeFileNamesArray = includeFileNames.toArray(
-			new String[includeFileNames.size()]);
+		_checkedForIncludesFileNames.add(fileName);
+
+		String[] includeFileNamesArray = _includeFileNames.toArray(
+			new String[_includeFileNames.size()]);
 
 		for (String includeFileName : includeFileNamesArray) {
-			if (!checkedFileNames.contains(includeFileName) &&
+			if (!checkedForUnusedJSPTerm.contains(includeFileName) &&
 				isJSPTermRequired(
-					includeFileName, regex, type, includeFileNames,
-					checkedFileNames)) {
+					includeFileName, regex, type, checkedForUnusedJSPTerm)) {
 
 				return true;
 			}
@@ -1281,10 +1282,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"tiles"
 	};
 
+	private Set<String> _checkedForIncludesFileNames = new HashSet<String>(); 
 	private List<String> _duplicateImportClassNames = new ArrayList<String>();
 	private List<String> _importClassNames = new ArrayList<String>();
 	private Map<String, Integer> _importCountMap =
 		new HashMap<String, Integer>();
+	private Set<String> _includeFileNames = new HashSet<String>();
 	private Pattern _javaClassPattern = Pattern.compile(
 		"\n(private|protected|public).* class ([\\s\\S]*?)\n\\}\n");
 	private Map<String, String> _jspContents = new HashMap<String, String>();

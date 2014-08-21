@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.activities.action;
+package com.liferay.activities.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -25,7 +27,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.social.model.SocialActivity;
@@ -33,6 +34,7 @@ import com.liferay.portlet.social.model.SocialActivityFeedEntry;
 import com.liferay.portlet.social.service.SocialActivityInterpreterLocalServiceUtil;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 import com.liferay.util.RSSUtil;
+import com.liferay.util.bridges.mvc.ActionCommand;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
@@ -48,23 +50,67 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.MimeResponse;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.ResourceURL;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Vilmos Papp
  * @author Eduardo Garcia
+ * @author Raymond Augé
  */
-public class RSSAction extends com.liferay.portal.struts.RSSAction {
+@Component(
+	immediate = true,
+	property = {
+		"action.command.name=activities/rss",
+		"javax.portlet.name=com_liferay_activities_portlet_ActivitiesPortlet"
+	},
+	service = ActionCommand.class
+)
+public class RSSAction implements ActionCommand {
+
+	@Override
+	public boolean processCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws PortletException {
+
+		if (!(portletResponse instanceof MimeResponse)) {
+			return false;
+		}
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			portletResponse);
+
+		try {
+			ServletResponseUtil.sendFile(
+				request, response, null, getRSS(
+					portletRequest, portletResponse),
+				ContentTypes.TEXT_XML_UTF8);
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+
+		return true;
+	}
 
 	protected String exportToRSS(
-			HttpServletRequest request, String title, String description,
-			String format, double version, String displayStyle,
-			List<SocialActivity> activities, ServiceContext serviceContext)
+			ThemeDisplay themeDisplay, PortletResponse portletResponse,
+			String title, String description, String format, double version,
+			String displayStyle, List<SocialActivity> activities,
+			ServiceContext serviceContext)
 		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		SyndFeed syndFeed = new SyndFeedImpl();
 
@@ -124,11 +170,14 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 		syndLinks.add(selfSyndLink);
 
-		String link =
-			PortalUtil.getLayoutFullURL(themeDisplay) +
-				Portal.FRIENDLY_URL_SEPARATOR + "activities/rss";
+		MimeResponse mimeResponse = (MimeResponse)portletResponse;
 
-		selfSyndLink.setHref(link);
+		ResourceURL rssURL = mimeResponse.createResourceURL();
+
+		rssURL.setParameter(ActionRequest.ACTION_NAME, "activities/rss");
+		rssURL.setParameter("feedTitle", title);
+
+		selfSyndLink.setHref(rssURL.toString());
 
 		selfSyndLink.setRel("self");
 
@@ -141,17 +190,14 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 		syndFeed.setPublishedDate(new Date());
 		syndFeed.setTitle(title);
-		syndFeed.setUri(link);
+		syndFeed.setUri(rssURL.toString());
 
 		return RSSUtil.export(syndFeed);
 	}
 
 	protected List<SocialActivity> getActivities(
-			HttpServletRequest request, int max)
+			ThemeDisplay themeDisplay, int max)
 		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		Group group = GroupLocalServiceUtil.getGroup(
 			themeDisplay.getScopeGroupId());
@@ -174,27 +220,31 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		return Collections.emptyList();
 	}
 
-	@Override
-	protected byte[] getRSS(HttpServletRequest request) throws Exception {
-		String feedTitle = ParamUtil.getString(request, "feedTitle");
+	protected byte[] getRSS(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
+		String feedTitle = ParamUtil.getString(portletRequest, "feedTitle");
 		String format = ParamUtil.getString(
-			request, "type", RSSUtil.FORMAT_DEFAULT);
+			portletRequest, "type", RSSUtil.FORMAT_DEFAULT);
 		double version = ParamUtil.getDouble(
-			request, "version", RSSUtil.VERSION_DEFAULT);
+			portletRequest, "version", RSSUtil.VERSION_DEFAULT);
 		String displayStyle = ParamUtil.getString(
-			request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
-
+			portletRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 		int max = ParamUtil.getInteger(
-			request, "max", SearchContainer.DEFAULT_DELTA);
+			portletRequest, "max", SearchContainer.DEFAULT_DELTA);
 
-		List<SocialActivity> activities = getActivities(request, max);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<SocialActivity> activities = getActivities(themeDisplay, max);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			request);
+			portletRequest);
 
 		String rss = exportToRSS(
-			request, feedTitle, null, format, version, displayStyle, activities,
-			serviceContext);
+			themeDisplay, portletResponse, feedTitle, null, format, version,
+			displayStyle, activities, serviceContext);
 
 		return rss.getBytes(StringPool.UTF8);
 	}

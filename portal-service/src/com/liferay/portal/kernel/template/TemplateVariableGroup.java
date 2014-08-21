@@ -26,12 +26,11 @@ import java.util.LinkedHashSet;
 public class TemplateVariableGroup {
 
 	public TemplateVariableGroup(String label) {
-		_label = label;
+		this(label, null);
 	}
 
 	public TemplateVariableGroup(String label, String[] restrictedVariables) {
-		this(label);
-
+		_label = label;
 		_restrictedVariables = restrictedVariables;
 	}
 
@@ -155,8 +154,8 @@ public class TemplateVariableGroup {
 
 	private boolean _autocompleteEnabled = true;
 	private String _label;
-	private String[] _restrictedVariables;
-	private Collection<TemplateVariableDefinition>
+	private final String[] _restrictedVariables;
+	private final Collection<TemplateVariableDefinition>
 		_templateVariableDefinitions =
 			new LinkedHashSet<TemplateVariableDefinition>();
 

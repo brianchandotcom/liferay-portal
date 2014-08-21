@@ -51,91 +51,87 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
-	public void testActionCaseElement1010_1() throws Exception {
+	public void testActionCaseElementInvalidAttributeValue() throws Exception {
 		test(
-			"ActionCaseElement1010_1.action",
+			"ActionCaseElementInvalidAttributeValue_5.action",
 			"Error 1010: Invalid locator-key LOCATOR_KEY_1 at " + _DIR_NAME +
-				"/ActionCaseElement1010_1.action:3");
-	}
+				"/ActionCaseElementInvalidAttributeValue_5.action:3");
 
-	@Test
-	public void testActionCaseElement1010_2() throws Exception {
 		test(
-			"ActionCaseElement1010_2.action",
+			"ActionCaseElementInvalidAttributeValue_6.action",
 			"Error 1010: Invalid locator-key FAIL at " + _DIR_NAME +
-				"/ActionCaseElement1010_2.action:3");
-	}
+				"/ActionCaseElementInvalidAttributeValue_6.action:3");
 
-	@Test
-	public void testActionCaseElement1010_3() throws Exception {
 		test(
-			"ActionCaseElement1010_3.action",
+			"ActionCaseElementInvalidAttributeValue_7.action",
 			"Error 1010: Invalid locator-key LOCATOR_ at " + _DIR_NAME +
-				"/ActionCaseElement1010_3.action:3");
-	}
+				"/ActionCaseElementInvalidAttributeValue_7.action:3");
 
-	@Test
-	public void testActionCaseElement1010_4() throws Exception {
 		test(
-			"ActionCaseElement1010_4.action",
+			"ActionCaseElementInvalidAttributeValue_8.action",
 			"Error 1010: Invalid locator-key _KEY at " + _DIR_NAME +
-				"/ActionCaseElement1010_4.action:3");
+				"/ActionCaseElementInvalidAttributeValue_8.action:3");
 	}
 
 	@Test
-	public void testActionCommandElement1009() throws Exception {
+	public void testActionCommandElementDuplicateCommandName()
+		throws Exception {
+
 		test(
-			"ActionCommandElement1009.action",
+			"ActionCommandElementDuplicateCommandName.action",
 			"Error 1009: Duplicate command name click at " + _DIR_NAME +
-				"/ActionCommandElement1009.action:8");
+				"/ActionCommandElementDuplicateCommandName.action:8");
 	}
 
 	@Test
-	public void testActionCommandElement2001() throws Exception {
+	public void testActionCommandElementInvalidCommandName() throws Exception {
 		test(
-			"ActionCommandElement2001.action",
+			"ActionCommandElementInvalidCommandName.action",
 			"Error 2001: Action command nameFail does not match a function " +
-				"name at " + _DIR_NAME + "/ActionCommandElement2001.action:2");
+				"name at " + _DIR_NAME +
+				"/ActionCommandElementInvalidCommandName.action:2");
 	}
 
 	@Test
-	public void testActionCommandElement2002() throws Exception {
+	public void testActionCommandElementMissingPath() throws Exception {
 		test(
-			"ActionCommandElement2002.action",
-			"Error 2002: Missing matching ActionCommandElement2002.path for " +
-				_DIR_NAME + "/ActionCommandElement2002.action");
+			"ActionCommandElementMissingPath.action",
+			"Error 2002: Missing matching " +
+				"ActionCommandElementMissingPath.path for " + _DIR_NAME +
+				"/ActionCommandElementMissingPath.action");
 	}
 
 	@Test
-	public void testActionExecuteElement1006_1() throws Exception {
+	public void testActionExecuteElementInvalidAttributeValue()
+		throws Exception {
+
 		test(
-			"ActionExecuteElement1006_1.action",
+			"ActionExecuteElementInvalidAttributeValue_2.action",
 			"Error 1006: Invalid function attribute value in " + _DIR_NAME +
-				"/ActionExecuteElement1006_1.action:4");
-	}
+				"/ActionExecuteElementInvalidAttributeValue_2.action:4");
 
-	@Test
-	public void testActionExecuteElement1006_2() throws Exception {
 		test(
-			"ActionExecuteElement1006_2.action",
+			"ActionExecuteElementInvalidAttributeValue_3.action",
 			"Error 1006: Invalid function attribute value in " + _DIR_NAME +
-				"/ActionExecuteElement1006_2.action:4");
+				"/ActionExecuteElementInvalidAttributeValue_3.action:4");
 	}
 
 	@Test
-	public void testActionExecuteElement1011() throws Exception {
-		test(
-			"ActionExecuteElement1011.action",
-			"Error 1011: Invalid function name ClickX at " + _DIR_NAME +
-				"/ActionExecuteElement1011.action:4");
-	}
+	public void testActionExecuteElementInvalidFunctionCommand()
+		throws Exception {
 
-	@Test
-	public void testActionExecuteElement1012() throws Exception {
 		test(
-			"ActionExecuteElement1012.action",
+			"ActionExecuteElementInvalidFunctionCommand.action",
 			"Error 1012: Invalid function command clickAtX at " + _DIR_NAME +
-				"/ActionExecuteElement1012.action:4");
+				"/ActionExecuteElementInvalidFunctionCommand.action:4");
+	}
+
+	@Test
+	public void testActionExecuteElementInvalidFunctionName() throws Exception {
+		test(
+			"ActionExecuteElementInvalidFunctionName.action",
+			"Error 1011: Invalid function name ClickX at " + _DIR_NAME +
+				"/ActionExecuteElementInvalidFunctionName.action:4");
 	}
 
 	@Test
@@ -485,27 +481,26 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
-	public void testPathExtendPath1010_1() throws Exception {
+	public void testPathExtendPathInvalidAttributeValue() throws Exception {
+		test("PathExtend.action");
+
 		test(
-			"PathExtendPath1010_1.action",
+			"PathExtendPathInvalidAttributeValue_1.action",
 			"Error 1010: Invalid locator-key LOCATOR_KEY at " + _DIR_NAME +
-				"/PathExtendPath1010_1.action:3");
-	}
+				"/PathExtendPathInvalidAttributeValue_1.action:3");
 
-	@Test
-	public void testPathExtendPath1010_2() throws Exception {
 		test(
-			"PathExtendPath1010_2.action",
+			"PathExtendPathInvalidAttributeValue_2.action",
 			"Error 1010: Invalid locator-key LOCATOR_ at " + _DIR_NAME +
-				"/PathExtendPath1010_2.action:3");
+				"/PathExtendPathInvalidAttributeValue_2.action:3");
 	}
 
 	@Test
-	public void testPathExtendPath1012() throws Exception {
+	public void testPathExtendPathInvalidFunctionCommand() throws Exception {
 		test(
-			"PathExtendPath1012.action",
+			"PathExtendPathInvalidFunctionCommand.action",
 			"Error 1012: Invalid function command Function at " + _DIR_NAME +
-				"/PathExtendPath1012.action:4");
+				"/PathExtendPathInvalidFunctionCommand.action:4");
 	}
 
 	@Test

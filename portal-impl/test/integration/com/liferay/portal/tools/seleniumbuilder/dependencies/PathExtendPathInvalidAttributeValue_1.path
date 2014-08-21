@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>PathExtendPath1012</title>
+<title>PathExtendPathInvalidAttributeValue_1</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PathExtendPath1012</td></tr>
+<tr><td rowspan="1" colspan="3">PathExtendPathInvalidAttributeValue_1</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PathExtendPath1012</td>
+	<td>PathExtendPathInvalidAttributeValue_1</td>
 </tr>
 <tr>
 	<td></td>
@@ -19,7 +19,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXTEND_ACTION_PATH</td>
+	<td>ACTION_PATH</td>
 	<td>ActionCaseElement1010_3</td>
 	<td></td>
 </tr>

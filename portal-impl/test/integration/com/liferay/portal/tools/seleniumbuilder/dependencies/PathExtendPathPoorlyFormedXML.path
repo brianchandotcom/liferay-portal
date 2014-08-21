@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>PathExtendPath1007</title>
+<title>PathExtendPathPoorlyFormedXML</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PathExtendPath1007</td></tr>
+<tr><td rowspan="1" colspan="3">PathExtendPathPoorlyFormedXML</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PathExtendPath1007</td>
+	<td>PathExtendPathPoorlyFormedXML</td>
 </tr>
 <tr>
 	<td></td>
@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>EXTEND_ACTION_PATH</td>
-	<td>ActionCaseElement1010_3</td>
+	<td>PathExtend</td>
 	<td></td>
 </tr>
 <tr>

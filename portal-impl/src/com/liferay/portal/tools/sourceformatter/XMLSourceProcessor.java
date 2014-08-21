@@ -306,6 +306,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _poshiTabsPattern.matcher(content);
 
 		int tabCount = 0;
+		int tabCountStartIndex = 0;
 
 		boolean ignoredCdataBlock = false;
 		boolean ignoredCommentBlock = false;
@@ -337,6 +338,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				!statement.contains("]]>")) {
 
 				tabCount--;
+
+				tabCountStartIndex = matcher.start();
 			}
 
 			if (statement.contains("]]>")) {
@@ -366,7 +369,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 					statement, matcher.group(1), sb.toString());
 
 				content = StringUtil.replaceFirst(
-					content, statement, newStatement, matcher.start());
+					content, statement, newStatement, tabCountStartIndex);
 			}
 
 			if (openingTagMatcher.find() && !closingTagMatcher.find() &&
@@ -376,6 +379,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				!statement.contains("]]>")) {
 
 				tabCount++;
+
+				tabCountStartIndex = matcher.start();
 			}
 		}
 

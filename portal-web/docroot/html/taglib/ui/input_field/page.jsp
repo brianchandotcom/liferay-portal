@@ -204,6 +204,8 @@ if (hints != null) {
 			if (hints != null) {
 				showTime = GetterUtil.getBoolean(hints.get("show-time"), showTime);
 			}
+
+			cssClass += " form-group form-group-inline";
 			%>
 
 			<div class="clearfix">

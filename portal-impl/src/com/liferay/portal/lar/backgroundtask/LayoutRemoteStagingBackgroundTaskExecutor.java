@@ -89,7 +89,11 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			"layoutIdMap");
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
+		long userId = MapUtil.getLong(settingsMap, "userId");
 		long remoteGroupId = MapUtil.getLong(settingsMap, "remoteGroupId");
+
+		StagingUtil.lockGroup(userId, remoteGroupId);
+
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			exportImportConfiguration,
 			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
@@ -208,6 +212,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 				StagingServiceHttp.cleanUpStagingRequest(
 					httpPrincipal, stagingRequestId);
 			}
+
+			StagingUtil.unlockGroup(remoteGroupId);
 		}
 
 		return processMissingReferences(

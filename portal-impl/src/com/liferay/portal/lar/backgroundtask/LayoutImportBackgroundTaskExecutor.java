@@ -37,7 +37,8 @@ public class LayoutImportBackgroundTaskExecutor
 	public LayoutImportBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
 			new LayoutExportImportBackgroundTaskStatusMessageTranslator());
-		setSerial(true);
+
+		setSerial(false);
 	}
 
 	@Override
@@ -49,6 +50,9 @@ public class LayoutImportBackgroundTaskExecutor
 
 		long userId = MapUtil.getLong(taskContextMap, "userId");
 		long groupId = MapUtil.getLong(taskContextMap, "groupId");
+
+		StagingUtil.lockGroup(userId, groupId);
+
 		boolean privateLayout = MapUtil.getBoolean(
 			taskContextMap, "privateLayout");
 		Map<String, String[]> parameterMap =
@@ -57,10 +61,15 @@ public class LayoutImportBackgroundTaskExecutor
 		List<FileEntry> attachmentsFileEntries =
 			backgroundTask.getAttachmentsFileEntries();
 
-		for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
-			LayoutLocalServiceUtil.importLayouts(
-				userId, groupId, privateLayout, parameterMap,
-				attachmentsFileEntry.getContentStream());
+		try {
+			for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
+				LayoutLocalServiceUtil.importLayouts(
+					userId, groupId, privateLayout, parameterMap,
+					attachmentsFileEntry.getContentStream());
+			}
+		}
+		finally {
+			StagingUtil.unlockGroup(groupId);
 		}
 
 		return BackgroundTaskResult.SUCCESS;

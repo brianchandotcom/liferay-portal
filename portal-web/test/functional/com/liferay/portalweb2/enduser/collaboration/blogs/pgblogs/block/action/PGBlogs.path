@@ -197,6 +197,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_SUBTITLE</td>
+	<td>//div[@class='entry-subtitle']/p[contains(.,'${key_entrySubtitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_WORKFLOW_STATUS_1</td>
 	<td>xpath=(//div[@class='entry-content']/h3)[1]</td>
 	<td></td>

@@ -49,6 +49,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBTITLE_FIELD</td>
+	<td>//textarea[contains(@id,'subtitle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBTITLE_FIELD_LABEL</td>
+	<td>//label[contains(@for,'subtitle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_DATE_DATE_INPUT</td>
 	<td>//input[@id='_33_displayDate']</td>
 	<td></td>

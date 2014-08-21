@@ -76,8 +76,6 @@ public class SourceFormatter {
 						SQLSourceProcessor.class.newInstance());
 					sourceProcessors.add(
 						TLDSourceProcessor.class.newInstance());
-					sourceProcessors.add(
-						XMLSourceProcessor.class.newInstance());
 
 					for (SourceProcessor sourceProcessor : sourceProcessors) {
 						_runSourceProcessor(sourceProcessor);
@@ -95,10 +93,17 @@ public class SourceFormatter {
 			@Override
 			public void run() {
 				try {
-					SourceProcessor sourceProcessor =
-						JSPSourceProcessor.class.newInstance();
+					List<SourceProcessor> sourceProcessors =
+						new ArrayList<SourceProcessor>();
 
-					_runSourceProcessor(sourceProcessor);
+					sourceProcessors.add(
+						JSPSourceProcessor.class.newInstance());
+					sourceProcessors.add(
+						XMLSourceProcessor.class.newInstance());
+
+					for (SourceProcessor sourceProcessor : sourceProcessors) {
+						_runSourceProcessor(sourceProcessor);
+					}
 				}
 				catch (Exception e) {
 					e.printStackTrace();

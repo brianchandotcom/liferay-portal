@@ -578,6 +578,7 @@ create index IX_941BA8C3 on Shard (name);
 create unique index IX_FC46FE16 on ShoppingCart (groupId, userId);
 create index IX_54101CC8 on ShoppingCart (userId);
 
+create index IX_6A84467D on ShoppingCategory (groupId, name);
 create index IX_1E6464F5 on ShoppingCategory (groupId, parentCategoryId);
 
 create unique index IX_DC60CFAE on ShoppingCoupon (code_);

@@ -83,6 +83,10 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="G_N" return-type="ShoppingCategory">
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+		</finder>
 		<finder name="G_P" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="parentCategoryId" />

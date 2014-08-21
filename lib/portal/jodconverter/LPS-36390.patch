@@ -1,0 +1,90 @@
+diff --git a/com/artofsolving/jodconverter/openoffice/converter/OpenOfficeDocumentConverter.java b/com/artofsolving/jodconverter/openoffice/converter/OpenOfficeDocumentConverter.java
+index ece56bd..0a2b11f 100644
+--- a/com/artofsolving/jodconverter/openoffice/converter/OpenOfficeDocumentConverter.java
++++ b/com/artofsolving/jodconverter/openoffice/converter/OpenOfficeDocumentConverter.java
+@@ -33,16 +33,24 @@ import com.artofsolving.jodconverter.DocumentFormat;
+ import com.artofsolving.jodconverter.DocumentFormatRegistry;
+ import com.artofsolving.jodconverter.openoffice.connection.OpenOfficeConnection;
+ import com.artofsolving.jodconverter.openoffice.connection.OpenOfficeException;
++import com.sun.star.beans.PropertyValue;
++import com.sun.star.beans.XPropertySet;
++import com.sun.star.container.XIndexAccess;
+ import com.sun.star.frame.XComponentLoader;
+ import com.sun.star.frame.XStorable;
++import com.sun.star.graphic.XGraphicProvider;
+ import com.sun.star.lang.IllegalArgumentException;
+ import com.sun.star.lang.XComponent;
++import com.sun.star.lang.XServiceInfo;
+ import com.sun.star.task.ErrorCodeIOException;
++import com.sun.star.text.XTextGraphicObjectsSupplier;
+ import com.sun.star.ucb.XFileIdentifierConverter;
+ import com.sun.star.uno.UnoRuntime;
++import com.sun.star.uno.XComponentContext;
+ import com.sun.star.util.CloseVetoException;
+ import com.sun.star.util.XCloseable;
+ 
++
+ /**
+  * Default file-based {@link DocumentConverter} implementation.
+  * <p>
+@@ -135,6 +143,7 @@ public class OpenOfficeDocumentConverter extends AbstractOpenOfficeDocumentConve
+ 		}
+ 		
+ 		refreshDocument(document);
++		processDocument(document);
+ 		
+ 		try {
+ 		    storeDocument(document, outputUrl, storeProperties);
+@@ -145,6 +154,43 @@ public class OpenOfficeDocumentConverter extends AbstractOpenOfficeDocumentConve
+         }
+ 	}
+ 
++
++	 private void processDocument(XComponent document) {
++		 if (cast(XServiceInfo.class, document).supportsService("com.sun.star.text.GenericTextDocument")) {
++			 embedWriterImages(document);
++			}
++		 }
++
++	 private void embedWriterImages(XComponent document) {
++		 XIndexAccess indexAccess =
++			 cast(XIndexAccess.class, cast(XTextGraphicObjectsSupplier.class, document).getGraphicObjects());
++
++		 XComponentContext xContext = openOfficeConnection.getComponentContext();
++		 com.sun.star.lang.XMultiComponentFactory xMCF = xContext.getServiceManager();
++
++		 XGraphicProvider graphicProvider=null;
++		 try {
++			 graphicProvider = (XGraphicProvider) UnoRuntime.queryInterface(XGraphicProvider.class, xMCF.createInstanceWithContext("com.sun.star.graphic.GraphicProvider", xContext));
++		 } catch (com.sun.star.uno.Exception otherException) {
++			 throw new OpenOfficeException("conversion failed: could not convert document", otherException);
++		 }
++
++		 PropertyValue[] queryProperties = new PropertyValue[] {new PropertyValue()};
++		 queryProperties[0].Name = "URL";
++		 for (int i = 0; i < indexAccess.getCount(); i++) {
++			 try {
++				 XPropertySet graphicProperties = cast(XPropertySet.class, indexAccess.getByIndex(i));
++				 String graphicURL = (String) graphicProperties.getPropertyValue("GraphicURL");
++				 if (!graphicURL.contains("vnd.sun.star.GraphicObject")) {
++					 queryProperties[0].Value = graphicURL;
++					 graphicProperties.setPropertyValue("Graphic", graphicProvider.queryGraphic(queryProperties));
++				 }
++			 } catch (Exception otherException) {
++				 throw new OpenOfficeException("conversion failed: could not convert document", otherException);
++			 }
++		 }
++	}
++
+     private XComponent loadDocument(String inputUrl, Map loadProperties) throws com.sun.star.io.IOException, IllegalArgumentException {
+         XComponentLoader desktop = openOfficeConnection.getDesktop();
+         return desktop.loadComponentFromURL(inputUrl, "_blank", 0, toPropertyValues(loadProperties));
+@@ -168,4 +214,8 @@ public class OpenOfficeDocumentConverter extends AbstractOpenOfficeDocumentConve
+ 		}
+     }
+ 
++	public static <T> T cast(Class<T> type, Object object) {
++        return (T) UnoRuntime.queryInterface(type, object);
++    }
++
+ }

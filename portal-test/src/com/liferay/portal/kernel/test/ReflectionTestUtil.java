@@ -32,8 +32,7 @@ import java.util.Arrays;
 public class ReflectionTestUtil {
 
 	public static Method getBridgeMethod(
-			Class<?> clazz, String methodName, Class<?>... parameterTypes)
-		throws NoSuchMethodException {
+		Class<?> clazz, String methodName, Class<?>... parameterTypes) {
 
 		Method method = getMethod(clazz, methodName, parameterTypes);
 
@@ -58,14 +57,15 @@ public class ReflectionTestUtil {
 			clazz =  clazz.getSuperclass();
 		}
 
-		throw new NoSuchMethodException(
-			"No bridge method on " + clazz + " with name " + methodName +
-				" and parameter types " + Arrays.toString(parameterTypes));
+		ReflectionUtil.throwException(
+			new NoSuchMethodException(
+				"No bridge method on " + clazz + " with name " + methodName +
+					" and parameter types " + Arrays.toString(parameterTypes)));
+
+		throw new AssertionError();
 	}
 
-	public static Field getField(Class<?> clazz, String fieldName)
-		throws Exception {
-
+	public static Field getField(Class<?> clazz, String fieldName) {
 		try {
 			Field field = clazz.getField(fieldName);
 
@@ -76,6 +76,9 @@ public class ReflectionTestUtil {
 			return field;
 		}
 		catch (NoSuchFieldException nsfe) {
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
 		}
 
 		while (clazz != null) {
@@ -91,31 +94,46 @@ public class ReflectionTestUtil {
 			catch (NoSuchFieldException nsfe) {
 				clazz = clazz.getSuperclass();
 			}
+			catch (Exception e) {
+				ReflectionUtil.throwException(e);
+			}
 		}
 
-		throw new NoSuchFieldException(
-			"No field on " + clazz + " with name " + fieldName);
+		ReflectionUtil.throwException(
+			new NoSuchFieldException(
+				"No field on " + clazz + " with name " + fieldName));
+
+		throw new AssertionError();
 	}
 
-	public static Object getFieldValue(Class<?> clazz, String fieldName)
-		throws Exception {
-
+	public static Object getFieldValue(Class<?> clazz, String fieldName) {
 		Field field = getField(clazz, fieldName);
 
-		return field.get(null);
+		try {
+			return field.get(null);
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
+
+		throw new AssertionError();
 	}
 
-	public static Object getFieldValue(Object instance, String fieldName)
-		throws Exception {
-
+	public static Object getFieldValue(Object instance, String fieldName) {
 		Field field = getField(instance.getClass(), fieldName);
 
-		return field.get(instance);
+		try {
+			return field.get(instance);
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
+
+		throw new AssertionError();
 	}
 
 	public static Method getMethod(
-			Class<?> clazz, String methodName, Class<?>... parameterTypes)
-		throws NoSuchMethodException {
+		Class<?> clazz, String methodName, Class<?>... parameterTypes) {
 
 		try {
 			Method method = clazz.getMethod(methodName, parameterTypes);
@@ -141,47 +159,67 @@ public class ReflectionTestUtil {
 			}
 		}
 
-		throw new NoSuchMethodException(
-			"No method on " + clazz + " with name " + methodName +
-				" and parameter types " + Arrays.toString(parameterTypes));
+		ReflectionUtil.throwException(
+			new NoSuchMethodException(
+				"No method on " + clazz + " with name " + methodName +
+					" and parameter types " + Arrays.toString(parameterTypes)));
+
+		throw new AssertionError();
 	}
 
 	public static Object invoke(
-			Class<?> clazz, String methodName, Class<?>[] parameterTypes,
-			Object... parameters)
-		throws Exception {
+		Class<?> clazz, String methodName, Class<?>[] parameterTypes,
+		Object... parameters) {
 
 		Method method = getMethod(clazz, methodName, parameterTypes);
 
-		return method.invoke(null, parameters);
+		try {
+			return method.invoke(null, parameters);
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
+
+		throw new AssertionError();
 	}
 
 	public static Object invoke(
-			Object instance, String methodName, Class<?>[] parameterTypes,
-			Object... parameters)
-		throws Exception {
+		Object instance, String methodName, Class<?>[] parameterTypes,
+		Object... parameters) {
 
 		Method method = getMethod(
 			instance.getClass(), methodName, parameterTypes);
 
-		return method.invoke(instance, parameters);
+		try {
+			return method.invoke(instance, parameters);
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
+
+		throw new AssertionError();
 	}
 
 	public static Object invokeBridge(
-			Object instance, String methodName, Class<?>[] parameterTypes,
-			Object... parameters)
-		throws Exception {
+		Object instance, String methodName, Class<?>[] parameterTypes,
+		Object... parameters) {
 
 		Method method = getBridgeMethod(
 			instance.getClass(), methodName, parameterTypes);
 
-		return method.invoke(instance, parameters);
+		try {
+			return method.invoke(instance, parameters);
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
+
+		throw new AssertionError();
 	}
 
 	public static <T extends Enum<T>> T newEnumElement(
-			Class<T> enumClass, Class<?>[] constructorParameterTypes,
-			String name, int ordinal, Object... constructorParameters)
-		throws Exception {
+		Class<T> enumClass, Class<?>[] constructorParameterTypes, String name,
+		int ordinal, Object... constructorParameters) {
 
 		Class<?>[] parameterTypes = null;
 
@@ -204,70 +242,85 @@ public class ReflectionTestUtil {
 			parameterTypes[1] = int.class;
 		}
 
-		Constructor<T> constructor = enumClass.getDeclaredConstructor(
-			parameterTypes);
+		try {
+			Constructor<T> constructor = enumClass.getDeclaredConstructor(
+				parameterTypes);
 
-		Method acquireConstructorAccessorMethod = getDeclaredMethod(
-			Constructor.class, "acquireConstructorAccessor");
+			Method acquireConstructorAccessorMethod = getDeclaredMethod(
+				Constructor.class, "acquireConstructorAccessor");
 
-		acquireConstructorAccessorMethod.invoke(constructor);
+			acquireConstructorAccessorMethod.invoke(constructor);
 
-		Field constructorAccessorField = getDeclaredField(
-			Constructor.class, "constructorAccessor");
+			Field constructorAccessorField = getDeclaredField(
+				Constructor.class, "constructorAccessor");
 
-		Object constructorAccessor = constructorAccessorField.get(constructor);
+			Object constructorAccessor = constructorAccessorField.get(
+				constructor);
 
-		Method newInstanceMethod = getDeclaredMethod(
-			constructorAccessor.getClass(), "newInstance", Object[].class);
+			Method newInstanceMethod = getDeclaredMethod(
+				constructorAccessor.getClass(), "newInstance", Object[].class);
 
-		Object[] parameters = null;
+			Object[] parameters = null;
 
-		if ((constructorParameters != null) &&
-			(constructorParameters.length != 0)) {
+			if ((constructorParameters != null) &&
+				(constructorParameters.length != 0)) {
 
-			parameters = new Object[constructorParameters.length + 2];
+				parameters = new Object[constructorParameters.length + 2];
 
-			parameters[0] = name;
-			parameters[1] = ordinal;
+				parameters[0] = name;
+				parameters[1] = ordinal;
 
-			System.arraycopy(
-				constructorParameters, 0, parameters, 2,
-				constructorParameters.length);
+				System.arraycopy(
+					constructorParameters, 0, parameters, 2,
+					constructorParameters.length);
+			}
+			else {
+				parameters = new Object[2];
+
+				parameters[0] = name;
+				parameters[1] = ordinal;
+			}
+
+			return (T)newInstanceMethod.invoke(
+				constructorAccessor, new Object[] {parameters});
 		}
-		else {
-			parameters = new Object[2];
-
-			parameters[0] = name;
-			parameters[1] = ordinal;
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
 		}
 
-		return (T)newInstanceMethod.invoke(
-			constructorAccessor, new Object[] {parameters});
+		throw new AssertionError();
 	}
 
 	public static <T extends Enum<T>> T newEnumElement(
-			Class<T> enumClass, String name, int ordinal)
-		throws Exception {
+		Class<T> enumClass, String name, int ordinal) {
 
 		return newEnumElement(enumClass, null, name, ordinal, (Object[])null);
 	}
 
 	public static void setFieldValue(
-			Class<?> clazz, String fieldName, Object value)
-		throws Exception {
+		Class<?> clazz, String fieldName, Object value) {
 
 		Field field = getField(clazz, fieldName);
 
-		field.set(null, value);
+		try {
+			field.set(null, value);
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
 	}
 
 	public static void setFieldValue(
-			Object instance, String fieldName, Object value)
-		throws Exception {
+		Object instance, String fieldName, Object value) {
 
 		Field field = getField(instance.getClass(), fieldName);
 
-		field.set(instance, value);
+		try {
+			field.set(instance, value);
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
 	}
 
 	private static Method _findBridgeMethod(Method[] methods, Method method) {

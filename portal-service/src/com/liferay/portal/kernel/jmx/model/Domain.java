@@ -29,6 +29,8 @@ public class Domain implements Serializable {
 
 	public Domain(String domainName) {
 		_domainName = domainName;
+		_mBeans = null;
+		_loaded = false;
 	}
 
 	public Domain(String domainName, List<MBean> mBeans) {
@@ -77,8 +79,8 @@ public class Domain implements Serializable {
 		return _loaded;
 	}
 
-	private String _domainName;
-	private boolean _loaded;
-	private List<MBean> _mBeans;
+	private final String _domainName;
+	private final boolean _loaded;
+	private final List<MBean> _mBeans;
 
 }

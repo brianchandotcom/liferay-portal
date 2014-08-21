@@ -53,6 +53,8 @@ public class MBean implements Serializable {
 	public MBean(String domainName, String mBeanName) {
 		_domainName = domainName;
 		_mBeanName = mBeanName;
+		_mBeanInfo = null;
+		_loaded = false;
 	}
 
 	@Override
@@ -134,10 +136,10 @@ public class MBean implements Serializable {
 
 	private static Log _log = LogFactoryUtil.getLog(MBean.class);
 
-	private String _domainName;
-	private boolean _loaded;
-	private MBeanInfo _mBeanInfo;
-	private String _mBeanName;
+	private final String _domainName;
+	private final boolean _loaded;
+	private final MBeanInfo _mBeanInfo;
+	private final String _mBeanName;
 	private ObjectName _objectName;
 	private List<String> _path;
 

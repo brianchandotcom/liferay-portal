@@ -15,6 +15,7 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.NoSuchResourcePermissionException;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,13 +34,12 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -48,8 +48,9 @@ import java.util.List;
  */
 public class VerifyResourcePermissions extends VerifyProcess {
 
-	@Override
-	protected void doVerify() throws Exception {
+	public void verify(VerifiableResourcedModel ... verifiableResourcedModels)
+		throws Exception {
+
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
 		for (long companyId : companyIds) {
@@ -57,7 +58,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 				companyId, RoleConstants.OWNER);
 
 			for (VerifiableResourcedModel verifiableResourcedModel :
-					_verifiableResourcedModels) {
+					verifiableResourcedModels) {
 
 				verifyResourcedModel(
 					role, verifiableResourcedModel.getModelName(),
@@ -67,6 +68,16 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 			verifyLayout(role);
 		}
+	}
+
+	@Override
+	protected void doVerify() throws Exception {
+		VerifiableResourcedModel[] verifiableResourcedModels =
+			_verifiableResourcedModels.toArray(
+				new VerifiableResourcedModel[
+					_verifiableResourcedModels.size()]);
+
+		verify(verifiableResourcedModels);
 	}
 
 	protected void verifyLayout(Role role) throws Exception {
@@ -201,11 +212,11 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		}
 	}
 
+	private static final Collection<VerifiableResourcedModel>
+		_verifiableResourcedModels = PortalBeanLocatorUtil.locate(
+			VerifiableResourcedModel.class).values();
+
 	private static Log _log = LogFactoryUtil.getLog(
 		VerifyResourcePermissions.class);
-
-	private ServiceTrackerList<VerifiableResourcedModel>
-		_verifiableResourcedModels = ServiceTrackerCollections.list(
-			VerifiableResourcedModel.class);
 
 }

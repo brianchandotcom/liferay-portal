@@ -194,8 +194,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			className = className.substring(
 				className.lastIndexOf(StringPool.PERIOD) + 1);
 
-			if (!isClassOrVariableRequired(
-					fileName, className, "class", includeFileNames,
+			String regex = "[^A-Za-z0-9_\"]" + className + "[^A-Za-z0-9_\"]";
+
+			if (!isJSPTermRequired(
+					fileName, regex, "class", includeFileNames,
 					checkedFileNames)) {
 
 				unneededImports.add(importLine);
@@ -1020,14 +1022,15 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		Set<String> checkedFileNames = new HashSet<String>();
 
-		return !isClassOrVariableRequired(
-			fileName, variableName, "variable", includeFileNames,
-			checkedFileNames);
+		String regex = "[^A-Za-z0-9_\"]" + variableName + "[^A-Za-z0-9_\"]";
+
+		return !isJSPTermRequired(
+			fileName, regex, "variable", includeFileNames, checkedFileNames);
 	}
 
-	protected boolean isClassOrVariableRequired(
-		String fileName, String name, String type, Set<String> includeFileNames,
-		Set<String> checkedFileNames) {
+	protected boolean isJSPTermRequired(
+		String fileName, String regex, String type,
+		Set<String> includeFileNames, Set<String> checkedFileNames) {
 
 		if (checkedFileNames.contains(fileName)) {
 			return false;
@@ -1041,13 +1044,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return false;
 		}
 
-		Pattern pattern = Pattern.compile(
-			"[^A-Za-z0-9_\"]" + name + "[^A-Za-z0-9_\"]");
+		Pattern pattern = Pattern.compile(regex);
 
 		Matcher matcher = pattern.matcher(content);
 
 		if (matcher.find() &&
-			(type.equals("class") || (checkedFileNames.size() > 1) ||
+			(!type.equals("variable") || (checkedFileNames.size() > 1) ||
 			 matcher.find())) {
 
 			return true;
@@ -1066,8 +1068,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		for (String includeFileName : includeFileNamesArray) {
 			if (!checkedFileNames.contains(includeFileName) &&
-				isClassOrVariableRequired(
-					includeFileName, name, type, includeFileNames,
+				isJSPTermRequired(
+					includeFileName, regex, type, includeFileNames,
 					checkedFileNames)) {
 
 				return true;

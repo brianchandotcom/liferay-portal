@@ -858,8 +858,8 @@ public class JournalArticleLocalServiceImpl
 		List<AssetLink> assetLinks = assetLinkLocalService.getDirectLinks(
 			oldAssetEntry.getEntryId());
 
-		long[] assetLinkEntryIds = StringUtil.split(
-			ListUtil.toString(assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
+		long[] assetLinkEntryIds = ListUtil.toLongArray(
+			assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
 
 		updateAsset(
 			userId, newArticle, assetCategoryIds, assetTagNames,
@@ -4997,9 +4997,8 @@ public class JournalArticleLocalServiceImpl
 								draftAssetEntry.getEntryId(),
 								AssetLinkConstants.TYPE_RELATED);
 
-						long[] assetLinkEntryIds = StringUtil.split(
-							ListUtil.toString(
-								assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
+						long[] assetLinkEntryIds = ListUtil.toLongArray(
+							assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
 
 						AssetEntry assetEntry =
 							assetEntryLocalService.updateEntry(

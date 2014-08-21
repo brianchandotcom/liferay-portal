@@ -649,6 +649,10 @@
 		<property name="resourceActions" ref="com.liferay.portal.security.permission.ResourceActions" />
 	</bean>
 	<bean id="com.liferay.portal.security.pwd.PasswordPolicyToolkit" class="com.liferay.portal.security.pwd.PasswordPolicyToolkit" />
+	<bean id="com.liferay.portal.service.configuration.configurator.ServiceConfigurator" class="com.liferay.portal.service.configuration.configurator.impl.ServiceConfiguratorImpl">
+		<property name="portalCacheConfigurator" ref="com.liferay.portal.cache.configurator.PortalCacheConfigurator" />
+		<property name="serviceComponentLocalService" ref="com.liferay.portal.service.ServiceComponentLocalService" />
+	</bean>
 	<bean id="com.liferay.portal.service.impl.LayoutLocalServiceHelper" class="com.liferay.portal.service.impl.LayoutLocalServiceHelper" />
 	<bean id="com.liferay.portal.service.PersistedModelLocalServiceRegistry" class="com.liferay.portal.service.PersistedModelLocalServiceRegistryImpl" />
 	<bean id="com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil" class="com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil">

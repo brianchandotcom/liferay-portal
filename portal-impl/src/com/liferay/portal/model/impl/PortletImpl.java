@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapperTracker;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
@@ -900,14 +901,10 @@ public class PortletImpl extends PortletBaseImpl {
 	public FriendlyURLMapper getFriendlyURLMapperInstance() {
 		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
 
-		List<FriendlyURLMapper> friendlyURLMapperInstances =
-			portletBag.getFriendlyURLMapperInstances();
+		FriendlyURLMapperTracker friendlyURLMapperTracker =
+			portletBag.getFriendlyURLMapperTracker();
 
-		if (friendlyURLMapperInstances.isEmpty()) {
-			return null;
-		}
-
-		return friendlyURLMapperInstances.get(0);
+		return friendlyURLMapperTracker.getFriendlyURLMapper();
 	}
 
 	/**

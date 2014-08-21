@@ -27,12 +27,11 @@ import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapperTracker;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.ResourceBundleTracker;
-import com.liferay.portal.kernel.portlet.Route;
-import com.liferay.portal.kernel.portlet.Router;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
@@ -115,7 +114,7 @@ public class PortletBagFactory {
 		List<SchedulerEntry> schedulerEntryInstances =
 			newSchedulerEntryInstances(portlet);
 
-		List<FriendlyURLMapper> friendlyURLMapperInstances =
+		FriendlyURLMapperTracker friendlyURLMapperTracker =
 			newFriendlyURLMappers(portlet);
 
 		List<URLEncoder> urlEncoderInstances = newURLEncoders(portlet);
@@ -209,7 +208,7 @@ public class PortletBagFactory {
 			portlet.getPortletId(), _servletContext, portletInstance,
 			resourceBundleTracker, configurationActionInstances,
 			indexerInstances, openSearchInstances, schedulerEntryInstances,
-			friendlyURLMapperInstances, urlEncoderInstances,
+			friendlyURLMapperTracker, urlEncoderInstances,
 			portletDataHandlerInstances, stagedModelDataHandlerInstances,
 			templateHandlerInstances, portletLayoutListenerInstances,
 			pollerProcessorInstances, popMessageListenerInstances,
@@ -618,11 +617,11 @@ public class PortletBagFactory {
 		return ddmDisplayInstances;
 	}
 
-	protected List<FriendlyURLMapper> newFriendlyURLMappers(Portlet portlet)
+	protected FriendlyURLMapperTracker newFriendlyURLMappers(Portlet portlet)
 		throws Exception {
 
-		ServiceTrackerList<FriendlyURLMapper> friendlyURLMapperInstances =
-			getServiceTrackerList(FriendlyURLMapper.class, portlet);
+		FriendlyURLMapperTracker friendlyURLMapperTracker =
+			new FriendlyURLMapperTrackerImpl(portlet);
 
 		if (Validator.isNotNull(portlet.getFriendlyURLMapperClass())) {
 			FriendlyURLMapper friendlyURLMapper =
@@ -630,75 +629,10 @@ public class PortletBagFactory {
 					FriendlyURLMapper.class,
 					portlet.getFriendlyURLMapperClass());
 
-			friendlyURLMapper.setMapping(portlet.getFriendlyURLMapping());
-			friendlyURLMapper.setPortletId(portlet.getPortletId());
-			friendlyURLMapper.setPortletInstanceable(portlet.isInstanceable());
-
-			Router router = newFriendlyURLRouter(portlet);
-
-			friendlyURLMapper.setRouter(router);
-
-			friendlyURLMapperInstances.add(friendlyURLMapper);
+			friendlyURLMapperTracker.register(friendlyURLMapper);
 		}
 
-		return friendlyURLMapperInstances;
-	}
-
-	protected Router newFriendlyURLRouter(Portlet portlet) throws Exception {
-		if (Validator.isNull(portlet.getFriendlyURLRoutes())) {
-			return null;
-		}
-
-		Router router = new RouterImpl();
-
-		String xml = getContent(portlet.getFriendlyURLRoutes());
-
-		Document document = SAXReaderUtil.read(xml, true);
-
-		Element rootElement = document.getRootElement();
-
-		for (Element routeElement : rootElement.elements("route")) {
-			String pattern = routeElement.elementText("pattern");
-
-			Route route = router.addRoute(pattern);
-
-			for (Element generatedParameterElement :
-					routeElement.elements("generated-parameter")) {
-
-				String name = generatedParameterElement.attributeValue("name");
-				String value = generatedParameterElement.getText();
-
-				route.addGeneratedParameter(name, value);
-			}
-
-			for (Element ignoredParameterElement :
-					routeElement.elements("ignored-parameter")) {
-
-				String name = ignoredParameterElement.attributeValue("name");
-
-				route.addIgnoredParameter(name);
-			}
-
-			for (Element implicitParameterElement :
-					routeElement.elements("implicit-parameter")) {
-
-				String name = implicitParameterElement.attributeValue("name");
-				String value = implicitParameterElement.getText();
-
-				route.addImplicitParameter(name, value);
-			}
-
-			for (Element overriddenParameterElement :
-					routeElement.elements("overridden-parameter")) {
-
-				String name = overriddenParameterElement.attributeValue("name");
-				String value = overriddenParameterElement.getText();
-
-				route.addOverriddenParameter(name, value);
-			}
-		}
-
-		return router;
+		return friendlyURLMapperTracker;
 	}
 
 	protected List<Indexer> newIndexers(Portlet portlet) throws Exception {

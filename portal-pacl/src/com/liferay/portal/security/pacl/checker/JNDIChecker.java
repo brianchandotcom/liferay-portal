@@ -90,7 +90,7 @@ public class JNDIChecker extends BaseChecker {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(JNDIChecker.class);
+	private static final Log _log = LogFactoryUtil.getLog(JNDIChecker.class);
 
 	private List<Pattern> _patterns;
 

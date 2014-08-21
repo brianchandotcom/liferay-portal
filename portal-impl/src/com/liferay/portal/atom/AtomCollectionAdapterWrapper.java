@@ -299,6 +299,6 @@ public class AtomCollectionAdapterWrapper<E>
 		}
 	}
 
-	private AtomCollectionAdapter<E> _atomCollectionAdapter;
+	private final AtomCollectionAdapter<E> _atomCollectionAdapter;
 
 }

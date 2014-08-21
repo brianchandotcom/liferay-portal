@@ -239,7 +239,8 @@ public class LiferayPageProvider implements WikiPageProvider {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LiferayPageProvider.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiferayPageProvider.class);
 
 	private WikiEngine _engine;
 	private long _nodeId;

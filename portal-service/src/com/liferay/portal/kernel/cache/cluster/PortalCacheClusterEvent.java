@@ -151,10 +151,10 @@ public class PortalCacheClusterEvent implements Serializable {
 		return sb.toString();
 	}
 
-	private String _cacheName;
-	private Serializable _elementKey;
+	private final String _cacheName;
+	private final Serializable _elementKey;
 	private Serializable _elementValue;
-	private PortalCacheClusterEventType _portalCacheClusterEventType;
+	private final PortalCacheClusterEventType _portalCacheClusterEventType;
 	private int _timeToLive;
 
 }

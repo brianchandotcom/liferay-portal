@@ -39,6 +39,6 @@ public class ModelResourceComparator
 		return resource1.compareTo(resource2);
 	}
 
-	private Locale _locale;
+	private final Locale _locale;
 
 }

@@ -87,7 +87,7 @@ public class PortalJobStore extends JobStoreTX {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortalJobStore.class);
+	private static final Log _log = LogFactoryUtil.getLog(PortalJobStore.class);
 
 	private DriverDelegate _driverDelegate;
 

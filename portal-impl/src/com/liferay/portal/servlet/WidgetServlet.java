@@ -89,6 +89,6 @@ public class WidgetServlet extends HttpServlet {
 		return path;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WidgetServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(WidgetServlet.class);
 
 }

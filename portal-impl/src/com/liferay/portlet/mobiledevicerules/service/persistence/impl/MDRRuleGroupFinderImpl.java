@@ -245,7 +245,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 		}
 	}
 
-	private LinkedHashMap<String, Object> _emptyLinkedHashMap =
+	private final LinkedHashMap<String, Object> _emptyLinkedHashMap =
 		new LinkedHashMap<String, Object>(0);
 
 }

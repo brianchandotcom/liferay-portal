@@ -69,6 +69,6 @@ public class MethodFactoryImpl implements MethodFactory {
 		_methods.put(methodName, InstanceFactory.newInstance(className));
 	}
 
-	private Map<String, Object> _methods = new HashMap<String, Object>();
+	private final Map<String, Object> _methods = new HashMap<String, Object>();
 
 }

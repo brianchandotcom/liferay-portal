@@ -183,7 +183,7 @@ public class RemoteSPIProxy implements SPI {
 			_spiConfiguration.toString());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RemoteSPIProxy.class);
+	private static final Log _log = LogFactoryUtil.getLog(RemoteSPIProxy.class);
 
 	private final Future<SPI> _cancelHandlerFuture;
 	private final MPI _mpi;

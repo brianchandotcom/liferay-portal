@@ -823,7 +823,7 @@ public class PortletPreferencesFactoryImpl
 		return preferencesMap;
 	}
 
-	private PortalCache<String, Map<String, Preference>>
+	private final PortalCache<String, Map<String, Preference>>
 		_preferencesMapPortalCache = SingleVMPoolUtil.getCache(
 			PortletPreferencesFactoryImpl.class.getName());
 

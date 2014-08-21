@@ -173,7 +173,7 @@ public class PACLUtil {
 		return false;
 	}
 
-	private static Permission _permission = new PACLUtil.Permission();
+	private static final Permission _permission = new PACLUtil.Permission();
 
 	private static class ProtectionDomainPrivilegedAction
 		implements PrivilegedAction<ProtectionDomain> {

@@ -38,6 +38,7 @@ public class CryptoStartupAction extends SimpleAction {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CryptoStartupAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CryptoStartupAction.class);
 
 }

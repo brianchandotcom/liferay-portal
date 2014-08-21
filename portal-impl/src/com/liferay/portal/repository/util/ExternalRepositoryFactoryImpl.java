@@ -51,6 +51,6 @@ public class ExternalRepositoryFactoryImpl
 	}
 
 	private ClassLoader _classLoader;
-	private String _className;
+	private final String _className;
 
 }

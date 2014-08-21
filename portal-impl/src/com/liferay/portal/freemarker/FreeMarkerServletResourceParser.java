@@ -83,7 +83,7 @@ public class FreeMarkerServletResourceParser extends URLResourceParser {
 		return url;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		FreeMarkerServletResourceParser.class);
 
 }

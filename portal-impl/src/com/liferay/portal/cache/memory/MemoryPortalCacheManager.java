@@ -171,7 +171,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 	private int _cacheInitialCapacity = 10000;
 	private int _cacheManagerInitialCapacity = 10000;
-	private Set<CacheManagerListener> _cacheManagerListeners =
+	private final Set<CacheManagerListener> _cacheManagerListeners =
 		new CopyOnWriteArraySet<CacheManagerListener>();
 	private boolean _clusterAware;
 	private Map<String, MemoryPortalCache<K, V>> _memoryPortalCaches;

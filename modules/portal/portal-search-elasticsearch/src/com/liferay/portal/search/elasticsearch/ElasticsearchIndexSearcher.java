@@ -459,11 +459,11 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchIndexSearcher.class);
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private int _maxResultSize = 1000;
-	private Pattern _pattern = Pattern.compile("<em>(.*?)</em>");
+	private final Pattern _pattern = Pattern.compile("<em>(.*?)</em>");
 
 }

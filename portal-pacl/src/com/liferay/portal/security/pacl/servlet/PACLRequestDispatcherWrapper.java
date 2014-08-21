@@ -89,8 +89,8 @@ public class PACLRequestDispatcherWrapper implements RequestDispatcher {
 		}
 	}
 
-	private RequestDispatcher _requestDispatcher;
-	private ServletContext _servletContext;
+	private final RequestDispatcher _requestDispatcher;
+	private final ServletContext _servletContext;
 
 	private class DispatchPrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Void> {
@@ -118,7 +118,7 @@ public class PACLRequestDispatcherWrapper implements RequestDispatcher {
 		}
 
 		private boolean _include;
-		private RequestDispatcher _requestDispatcher;
+		private final RequestDispatcher _requestDispatcher;
 		private ServletRequest _servletRequest;
 		private ServletResponse _servletResponse;
 

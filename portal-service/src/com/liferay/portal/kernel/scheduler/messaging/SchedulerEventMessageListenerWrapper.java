@@ -146,7 +146,7 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerEventMessageListenerWrapper.class);
 
 	private String _groupName;

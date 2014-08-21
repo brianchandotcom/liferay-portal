@@ -321,11 +321,11 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterRequestReceiver.class);
 
-	private ClusterExecutorImpl _clusterExecutorImpl;
-	private CountDownLatch _countDownLatch;
+	private final ClusterExecutorImpl _clusterExecutorImpl;
+	private final CountDownLatch _countDownLatch;
 	private volatile View _lastView;
 
 }

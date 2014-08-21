@@ -34,6 +34,9 @@ public class PortalSimpleDateFormat extends SimpleDateFormat {
 		if (pattern.equals(DateUtil.ISO_8601_PATTERN)) {
 			_iso8601Pattern = true;
 		}
+		else {
+			_iso8601Pattern = false;
+		}
 	}
 
 	@Override
@@ -56,6 +59,6 @@ public class PortalSimpleDateFormat extends SimpleDateFormat {
 		return modifiedSB;
 	}
 
-	private boolean _iso8601Pattern;
+	private final boolean _iso8601Pattern;
 
 }

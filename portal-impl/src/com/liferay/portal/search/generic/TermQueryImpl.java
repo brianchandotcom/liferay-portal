@@ -37,6 +37,6 @@ public class TermQueryImpl extends BaseQueryImpl implements TermQuery {
 		return this;
 	}
 
-	private QueryTerm _queryTerm;
+	private final QueryTerm _queryTerm;
 
 }

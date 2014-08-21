@@ -159,10 +159,10 @@ public class LayoutStagingBackgroundTaskExecutor
 			serviceContext);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutStagingBackgroundTaskExecutor.class);
 
-	private TransactionAttribute _transactionAttribute =
+	private final TransactionAttribute _transactionAttribute =
 		TransactionAttributeBuilder.build(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 

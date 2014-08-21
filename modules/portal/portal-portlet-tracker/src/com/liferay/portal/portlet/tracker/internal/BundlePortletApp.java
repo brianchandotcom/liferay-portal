@@ -227,11 +227,11 @@ public class BundlePortletApp extends ServletContextHelper
 		_portletApp.setWARFile(warFile);
 	}
 
-	private String _contextPath;
-	private BundlePluginPackage _pluginPackage;
-	private Portlet _portalPortletModel;
-	private PortletApp _portletApp;
+	private final String _contextPath;
+	private final BundlePluginPackage _pluginPackage;
+	private final Portlet _portalPortletModel;
+	private final PortletApp _portletApp;
 	private ServletContext _servletContext;
-	private String _servletContextName;
+	private final String _servletContextName;
 
 }

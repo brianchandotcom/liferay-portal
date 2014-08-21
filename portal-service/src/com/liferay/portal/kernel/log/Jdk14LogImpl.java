@@ -154,6 +154,6 @@ public class Jdk14LogImpl implements Log {
 		_log.log(Level.WARNING, t.getMessage(), t);
 	}
 
-	private Logger _log;
+	private final Logger _log;
 
 }

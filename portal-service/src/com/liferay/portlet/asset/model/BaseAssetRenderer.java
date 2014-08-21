@@ -418,7 +418,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	private static final String[] _AVAILABLE_LANGUAGE_IDS = new String[0];
 
-	private static DDMFieldReader _nullDDMFieldReader =
+	private static final DDMFieldReader _nullDDMFieldReader =
 		new NullDDMFieldReader();
 
 	private AssetRendererFactory _assetRendererFactory;

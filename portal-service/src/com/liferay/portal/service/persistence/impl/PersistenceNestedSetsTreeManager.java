@@ -460,13 +460,13 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 		}
 	}
 
-	private BasePersistenceImpl<?> _basePersistenceImpl;
-	private Class<?> _entityImplClass;
-	private String _entityName;
-	private String _nestedSetsTreeNodeLeftName;
-	private String _nestedSetsTreeNodeRightName;
-	private String _nestedSetsTreeNodeScopeIdName;
-	private String _primaryKeyName;
-	private String _tableName;
+	private final BasePersistenceImpl<?> _basePersistenceImpl;
+	private final Class<?> _entityImplClass;
+	private final String _entityName;
+	private final String _nestedSetsTreeNodeLeftName;
+	private final String _nestedSetsTreeNodeRightName;
+	private final String _nestedSetsTreeNodeScopeIdName;
+	private final String _primaryKeyName;
+	private final String _tableName;
 
 }

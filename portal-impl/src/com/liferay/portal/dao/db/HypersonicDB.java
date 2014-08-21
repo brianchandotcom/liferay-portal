@@ -120,6 +120,6 @@ public class HypersonicDB extends BaseDB {
 		" longvarchar", " longvarchar", " varchar", "", "commit"
 	};
 
-	private static HypersonicDB _instance = new HypersonicDB();
+	private static final HypersonicDB _instance = new HypersonicDB();
 
 }

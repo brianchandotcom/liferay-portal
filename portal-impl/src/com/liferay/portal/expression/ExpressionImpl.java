@@ -269,11 +269,13 @@ public class ExpressionImpl<T> implements Expression<T> {
 		return variableDependencies;
 	}
 
-	private Class<?> _expressionClass;
-	private String _expressionString;
-	private VariableNamesExtractor _variableNamesExtractor =
+	private final Class<?> _expressionClass;
+	private final String _expressionString;
+	private final VariableNamesExtractor _variableNamesExtractor =
 		new VariableNamesExtractor();
-	private Map<String, Variable> _variables = new TreeMap<String, Variable>();
-	private Map<String, Object> _variableValues = new HashMap<String, Object>();
+	private final Map<String, Variable> _variables =
+		new TreeMap<String, Variable>();
+	private final Map<String, Object> _variableValues =
+		new HashMap<String, Object>();
 
 }

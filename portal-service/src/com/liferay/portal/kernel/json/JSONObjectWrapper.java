@@ -27,6 +27,6 @@ public class JSONObjectWrapper {
 		return _value;
 	}
 
-	private Object _value;
+	private final Object _value;
 
 }

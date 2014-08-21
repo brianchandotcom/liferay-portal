@@ -81,6 +81,6 @@ public class GetMethodImpl implements Method {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(GetMethodImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(GetMethodImpl.class);
 
 }

@@ -100,19 +100,23 @@ public class PortalManagerUtil {
 		_portalManager = portalManager;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortalManagerUtil.class);
-
-	private static Method _manageMethod;
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalManagerUtil.class);
+	private static final Method _manageMethod;
 	private static PortalManager _portalManager;
 
 	static {
+		Method manageMethod = null;
+
 		try {
-			_manageMethod = PortalManagerUtil.class.getDeclaredMethod(
+			manageMethod = PortalManagerUtil.class.getDeclaredMethod(
 				"manage", ManageAction.class);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_manageMethod = manageMethod;
 	}
 
 }

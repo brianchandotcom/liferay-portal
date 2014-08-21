@@ -231,7 +231,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 			ruleGroupInstance, importedRuleGroupInstance);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		MDRRuleGroupInstanceStagedModelDataHandler.class);
 
 }

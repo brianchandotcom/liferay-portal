@@ -109,8 +109,8 @@ public class FutureClusterResponses implements Future<ClusterNodeResponses> {
 	}
 
 	private boolean _cancelled;
-	private ClusterNodeResponses _clusterNodeResponses;
-	private CountDownLatch _countDownLatch;
-	private Set<Address> _expectedReplyAddress;
+	private final ClusterNodeResponses _clusterNodeResponses;
+	private final CountDownLatch _countDownLatch;
+	private final Set<Address> _expectedReplyAddress;
 
 }

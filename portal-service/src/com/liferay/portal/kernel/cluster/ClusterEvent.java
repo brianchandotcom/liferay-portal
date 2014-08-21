@@ -65,7 +65,7 @@ public class ClusterEvent implements Serializable {
 		_clusterNodes = clusterNodes;
 	}
 
-	private ClusterEventType _clusterEventType;
+	private final ClusterEventType _clusterEventType;
 	private List<ClusterNode> _clusterNodes;
 
 }

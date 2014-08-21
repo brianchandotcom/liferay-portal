@@ -52,6 +52,6 @@ public class PortalRequestDataSample extends BaseDataSample {
 		return sb.toString();
 	}
 
-	private String _requestURL;
+	private final String _requestURL;
 
 }

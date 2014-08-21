@@ -82,8 +82,8 @@ public class CacheManagerUtil {
 		return cacheManager;
 	}
 
-	private static Field _statisticsExecutorField;
-	private static Field _workQueueField;
+	private static final Field _statisticsExecutorField;
+	private static final Field _workQueueField;
 
 	static {
 		try {
@@ -93,6 +93,9 @@ public class CacheManagerUtil {
 			if (JavaDetector.isJDK6()) {
 				_workQueueField = ReflectionUtil.getDeclaredField(
 					ThreadPoolExecutor.class, "workQueue");
+			}
+			else {
+				_workQueueField = null;
 			}
 		}
 		catch (Exception e) {

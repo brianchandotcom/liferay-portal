@@ -22,6 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
  */
 public class StaticFinalLog {
 
-	private static Log _log = LogFactoryUtil.getLog(StaticFinalLog.class);
+	private static final Log _log = LogFactoryUtil.getLog(StaticFinalLog.class);
 
 }

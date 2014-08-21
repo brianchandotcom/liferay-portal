@@ -320,7 +320,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 
 	private static final int _MINIMUM_WORD_LENGTH = 3;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LuceneSpellCheckIndexWriter.class);
 
 }

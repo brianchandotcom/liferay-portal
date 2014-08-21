@@ -96,7 +96,8 @@ public class ProxyMessageListener implements MessageListener {
 		_messageBus = messageBus;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ProxyMessageListener.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ProxyMessageListener.class);
 
 	private Object _manager;
 	private MessageBus _messageBus;

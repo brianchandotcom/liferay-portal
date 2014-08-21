@@ -64,7 +64,7 @@ public class IncorrectLineBreaks {
 
 	public void method3(String testStringName1, String testStringName2,
 			String[] testStringNames)
-		Throws Exception {
+		throws Exception {
 
 		methodWithASlightlyLongerName(testStringName1, testStringName2,
 			testStringNames);

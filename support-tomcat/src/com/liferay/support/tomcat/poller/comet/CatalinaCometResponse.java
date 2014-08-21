@@ -88,6 +88,6 @@ public class CatalinaCometResponse implements CometResponse {
 	}
 
 	private boolean _open = true;
-	private HttpServletResponse _response;
+	private final HttpServletResponse _response;
 
 }

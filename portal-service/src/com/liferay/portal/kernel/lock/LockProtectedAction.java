@@ -98,12 +98,13 @@ public class LockProtectedAction<T> {
 		return null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LockProtectedAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LockProtectedAction.class);
 
-	private String _className;
-	private String _lockKey;
-	private long _retryDelay;
+	private final String _className;
+	private final String _lockKey;
+	private final long _retryDelay;
 	private T _returnValue;
-	private long _timeout;
+	private final long _timeout;
 
 }

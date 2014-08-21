@@ -71,6 +71,6 @@ public class GroupFriendlyURLComparator extends OrderByComparator<Group> {
 		return _ascending;
 	}
 
-	private boolean _ascending;
+	private final boolean _ascending;
 
 }

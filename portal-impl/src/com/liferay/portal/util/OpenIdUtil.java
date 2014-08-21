@@ -86,9 +86,8 @@ public class OpenIdUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(OpenIdUtil.class);
-
-	private static OpenIdUtil _instance = new OpenIdUtil();
+	private static final Log _log = LogFactoryUtil.getLog(OpenIdUtil.class);
+	private static final OpenIdUtil _instance = new OpenIdUtil();
 
 	private ConsumerManager _manager;
 

@@ -37,8 +37,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Raymond Augé
  */
 @Component(
-	immediate = true,
-	property = {
+	immediate = true, property = {
 		"osgi.command.function=execute", "osgi.command.function=list",
 		"osgi.command.scope=verify-extender"
 	},

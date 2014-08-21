@@ -57,6 +57,6 @@ public class SitemapServlet extends HttpServlet {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SitemapServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(SitemapServlet.class);
 
 }

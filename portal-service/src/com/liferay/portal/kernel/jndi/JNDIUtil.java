@@ -155,6 +155,6 @@ public class JNDIUtil {
 		return obj;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(JNDIUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(JNDIUtil.class);
 
 }

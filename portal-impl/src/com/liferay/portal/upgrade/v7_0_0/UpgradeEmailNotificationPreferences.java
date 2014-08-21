@@ -60,7 +60,7 @@ public class UpgradeEmailNotificationPreferences
 		return _preferenceNamesMap;
 	}
 
-	private Map<String, String> _preferenceNamesMap =
+	private final Map<String, String> _preferenceNamesMap =
 		new HashMap<String, String>();
 
 }

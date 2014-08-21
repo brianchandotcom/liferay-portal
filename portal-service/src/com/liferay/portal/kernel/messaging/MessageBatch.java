@@ -49,7 +49,7 @@ public class MessageBatch implements Serializable {
 		return _messages;
 	}
 
-	private String _messageBatchId;
-	private List<Message> _messages;
+	private final String _messageBatchId;
+	private final List<Message> _messages;
 
 }

@@ -100,7 +100,8 @@ public abstract class BaseIndexSearcher
 		return _querySuggester.suggestKeywordQueries(searchContext, max);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BaseIndexSearcher.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseIndexSearcher.class);
 
 	private QuerySuggester _querySuggester;
 

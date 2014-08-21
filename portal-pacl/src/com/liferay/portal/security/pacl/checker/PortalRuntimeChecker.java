@@ -611,15 +611,16 @@ public class PortalRuntimeChecker extends BaseChecker {
 
 	private static final String _PORTAL_SERVLET_CONTEXT_NAME = "portal";
 
-	private static Log _log = LogFactoryUtil.getLog(PortalRuntimeChecker.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalRuntimeChecker.class);
 
 	private Set<String> _classLoaderReferenceIds;
 	private Set<String> _expandoBridgeClassNames;
-	private Map<String, Set<String>> _getBeanPropertyClassNames =
+	private final Map<String, Set<String>> _getBeanPropertyClassNames =
 		new HashMap<String, Set<String>>();
 	private List<Pattern> _portletBagPoolPortletIdPatterns;
 	private Set<String> _searchEngineIds;
-	private Map<String, Set<String>> _setBeanPropertyClassNames =
+	private final Map<String, Set<String>> _setBeanPropertyClassNames =
 		new HashMap<String, Set<String>>();
 	private List<Pattern> _threadPoolExecutorNamePatterns;
 

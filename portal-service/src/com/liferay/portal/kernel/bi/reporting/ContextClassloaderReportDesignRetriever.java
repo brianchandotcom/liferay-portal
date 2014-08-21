@@ -48,6 +48,6 @@ public class ContextClassloaderReportDesignRetriever
 		return _reportName;
 	}
 
-	private String _reportName;
+	private final String _reportName;
 
 }

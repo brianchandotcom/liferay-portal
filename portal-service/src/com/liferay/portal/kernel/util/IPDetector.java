@@ -74,7 +74,7 @@ public class IPDetector {
 		return _suppportsV6.booleanValue();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(IPDetector.class);
+	private static final Log _log = LogFactoryUtil.getLog(IPDetector.class);
 
 	private static Boolean _prefersV4;
 	private static Boolean _prefersV6;

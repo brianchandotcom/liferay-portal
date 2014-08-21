@@ -35,12 +35,14 @@ public class AtomException extends PortalException {
 
 	public AtomException(String msg) {
 		super(msg);
+
+		_errorCode = AtomCollectionAdapter.SC_INTERNAL_SERVER_ERROR;
 	}
 
 	public int getErrorCode() {
 		return _errorCode;
 	}
 
-	private int _errorCode = AtomCollectionAdapter.SC_INTERNAL_SERVER_ERROR;
+	private final int _errorCode;
 
 }

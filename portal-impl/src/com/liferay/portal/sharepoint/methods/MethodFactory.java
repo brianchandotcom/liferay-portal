@@ -166,8 +166,8 @@ public class MethodFactory {
 			PropsUtil.get(MethodFactory.class.getName() + ".URL_TO_WEB_URL"),
 			UrlToWebUrlMethodImpl.class.getName());
 
-	private static MethodFactory _instance = new MethodFactory();
+	private static final MethodFactory _instance = new MethodFactory();
 
-	private Map<String, Object> _methods;
+	private final Map<String, Object> _methods;
 
 }

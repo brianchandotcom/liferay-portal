@@ -67,7 +67,7 @@ public class SourceFormatter {
 					sourceProcessors.add(
 						FTLSourceProcessor.class.newInstance());
 					sourceProcessors.add(
-						JavaSourceProcessor.class.newInstance());
+						JSPSourceProcessor.class.newInstance());
 					sourceProcessors.add(JSSourceProcessor.class.newInstance());
 					sourceProcessors.add(
 						PropertiesSourceProcessor.class.newInstance());
@@ -96,7 +96,7 @@ public class SourceFormatter {
 			public void run() {
 				try {
 					SourceProcessor sourceProcessor =
-						JSPSourceProcessor.class.newInstance();
+						JavaSourceProcessor.class.newInstance();
 
 					_runSourceProcessor(sourceProcessor);
 				}

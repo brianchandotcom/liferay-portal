@@ -42,6 +42,6 @@ public class TrackbackServiceContextFunction
 		}
 	}
 
-	private PortletRequest _portletRequest;
+	private final PortletRequest _portletRequest;
 
 }

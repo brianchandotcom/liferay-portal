@@ -226,6 +226,6 @@ public class LockMethodImpl implements Method {
 		return XMLFormatter.toString(sb.toString());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LockMethodImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(LockMethodImpl.class);
 
 }

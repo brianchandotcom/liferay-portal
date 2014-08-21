@@ -33,6 +33,6 @@ public class TerminationProcessException extends ProcessException {
 		return _exitCode;
 	}
 
-	private int _exitCode;
+	private final int _exitCode;
 
 }

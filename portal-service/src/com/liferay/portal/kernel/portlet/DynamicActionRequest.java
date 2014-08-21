@@ -157,7 +157,7 @@ public class DynamicActionRequest extends ActionRequestWrapper {
 		_params.put(name, values);
 	}
 
-	private boolean _inherit;
-	private Map<String, String[]> _params;
+	private final boolean _inherit;
+	private final Map<String, String[]> _params;
 
 }

@@ -218,7 +218,7 @@ public class DeletionSystemEventExporter {
 	private DeletionSystemEventExporter() {
 	}
 
-	private static DeletionSystemEventExporter _instance =
+	private static final DeletionSystemEventExporter _instance =
 		new DeletionSystemEventExporter();
 
 }

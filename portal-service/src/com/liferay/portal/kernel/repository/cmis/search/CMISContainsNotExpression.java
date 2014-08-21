@@ -30,6 +30,6 @@ public class CMISContainsNotExpression implements CMISCriterion {
 		return StringPool.DASH.concat(_cmisCriterion.toQueryFragment());
 	}
 
-	private CMISCriterion _cmisCriterion;
+	private final CMISCriterion _cmisCriterion;
 
 }

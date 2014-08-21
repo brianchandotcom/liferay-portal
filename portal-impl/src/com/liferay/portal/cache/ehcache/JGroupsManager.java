@@ -52,17 +52,19 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 		CacheManager cacheManager, String clusterName,
 		String channelProperties) {
 
+		JChannel jChannel = null;
+
 		try {
-			_jChannel = new JChannel(channelProperties);
+			jChannel = new JChannel(channelProperties);
 
-			_jChannel.setReceiver(new EhcacheJGroupsReceiver());
+			jChannel.setReceiver(new EhcacheJGroupsReceiver());
 
-			_jChannel.connect(clusterName);
+			jChannel.connect(clusterName);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Create a new channel with properties " +
-						_jChannel.getProperties());
+						jChannel.getProperties());
 			}
 		}
 		catch (Exception e) {
@@ -71,6 +73,7 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 			}
 		}
 
+		_jChannel = jChannel;
 		_cacheManager = cacheManager;
 	}
 
@@ -269,10 +272,10 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 
 	private static final String _SCHEME = "JGroups";
 
-	private static Log _log = LogFactoryUtil.getLog(JGroupsManager.class);
+	private static final Log _log = LogFactoryUtil.getLog(JGroupsManager.class);
 
-	private CacheManager _cacheManager;
-	private JChannel _jChannel;
+	private final CacheManager _cacheManager;
+	private final JChannel _jChannel;
 
 	private class EhcacheJGroupsReceiver extends BaseReceiver {
 

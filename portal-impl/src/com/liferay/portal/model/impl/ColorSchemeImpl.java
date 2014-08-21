@@ -33,10 +33,11 @@ import java.util.Properties;
 public class ColorSchemeImpl implements ColorScheme {
 
 	public ColorSchemeImpl() {
+		this(null, null, null);
 	}
 
 	public ColorSchemeImpl(String colorSchemeId) {
-		_colorSchemeId = colorSchemeId;
+		this(colorSchemeId, null, null);
 	}
 
 	public ColorSchemeImpl(String colorSchemeId, String name, String cssClass) {
@@ -199,9 +200,10 @@ public class ColorSchemeImpl implements ColorScheme {
 		_settingsProperties = settingsProperties;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ColorSchemeImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ColorSchemeImpl.class);
 
-	private String _colorSchemeId;
+	private final String _colorSchemeId;
 	private String _colorSchemeImagesPath =
 		"${images-path}/color_schemes/${css-class}";
 	private String _cssClass;

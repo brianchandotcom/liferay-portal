@@ -87,7 +87,7 @@ public class DirectSynchronousMessageSender
 		_messageBus = messageBus;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DirectSynchronousMessageSender.class);
 
 	private MessageBus _messageBus;

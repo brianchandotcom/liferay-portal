@@ -51,7 +51,7 @@ public class SPISynchronousQueueUtil {
 		synchronousQueue.put(spi);
 	}
 
-	private static Map<String, SynchronousQueue<SPI>> _synchronousQueues =
+	private static final Map<String, SynchronousQueue<SPI>> _synchronousQueues =
 		new ConcurrentHashMap<String, SynchronousQueue<SPI>>();
 
 }

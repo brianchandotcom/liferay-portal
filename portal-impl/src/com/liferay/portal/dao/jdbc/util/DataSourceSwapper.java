@@ -160,7 +160,8 @@ public class DataSourceSwapper implements BeanFactoryAware {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DataSourceSwapper.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		DataSourceSwapper.class);
 
 	private static BeanFactory _beanFactory;
 	private static DataSourceWrapper _counterDataSourceWrapper;

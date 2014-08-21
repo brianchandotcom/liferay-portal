@@ -88,7 +88,7 @@ public class MethodHandler implements Serializable {
 		return sb.toString();
 	}
 
-	private Object[] _arguments;
-	private MethodKey _methodKey;
+	private final Object[] _arguments;
+	private final MethodKey _methodKey;
 
 }

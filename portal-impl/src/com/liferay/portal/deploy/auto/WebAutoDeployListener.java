@@ -61,9 +61,9 @@ public class WebAutoDeployListener extends BaseAutoDeployListener {
 		return code;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		WebAutoDeployListener.class);
 
-	private AutoDeployer _autoDeployer;
+	private final AutoDeployer _autoDeployer;
 
 }

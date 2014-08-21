@@ -55,7 +55,7 @@ public class JSONDeserializerImpl<T> implements JSONDeserializer<T> {
 		return this;
 	}
 
-	private flexjson.JSONDeserializer<T> _jsonDeserializer;
-	private PortalBeanObjectFactory _portalBeanObjectFactory;
+	private final flexjson.JSONDeserializer<T> _jsonDeserializer;
+	private final PortalBeanObjectFactory _portalBeanObjectFactory;
 
 }

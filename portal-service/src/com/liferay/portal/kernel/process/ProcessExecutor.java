@@ -239,10 +239,11 @@ public class ProcessExecutor {
 		return defaultNoticeableFuture;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ProcessExecutor.class);
-
-	private static Set<Process> _managedProcesses =
+	private static final Log _log = LogFactoryUtil.getLog(
+		ProcessExecutor.class);
+	private static final Set<Process> _managedProcesses =
 		new ConcurrentHashSet<Process>();
+
 	private static volatile ThreadPoolExecutor _threadPoolExecutor;
 
 	private static class SubprocessReactor

@@ -69,6 +69,7 @@ public class HookAutoDeployer extends HookDeployer implements AutoDeployer {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(HookAutoDeployer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		HookAutoDeployer.class);
 
 }

@@ -152,7 +152,8 @@ public class SessionFactoryImpl implements SessionFactory {
 		PropsValues.
 			SPRING_HIBERNATE_SESSION_FACTORY_PRELOAD_CLASSLOADER_CLASSES;
 
-	private static Log _log = LogFactoryUtil.getLog(SessionFactoryImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SessionFactoryImpl.class);
 
 	private ClassLoader _sessionFactoryClassLoader;
 	private SessionFactoryImplementor _sessionFactoryImplementor;

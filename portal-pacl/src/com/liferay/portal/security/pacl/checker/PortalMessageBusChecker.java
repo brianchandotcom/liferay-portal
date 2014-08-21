@@ -134,7 +134,7 @@ public class PortalMessageBusChecker extends BaseChecker {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortalMessageBusChecker.class);
 
 	private Set<String> _listenDestinationNames;

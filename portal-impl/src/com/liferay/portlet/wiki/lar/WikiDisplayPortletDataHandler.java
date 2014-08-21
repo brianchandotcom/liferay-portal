@@ -193,7 +193,7 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 		return actionableDynamicQuery;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		WikiDisplayPortletDataHandler.class);
 
 }

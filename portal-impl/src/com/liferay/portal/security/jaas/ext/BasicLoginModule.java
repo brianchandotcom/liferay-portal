@@ -186,7 +186,8 @@ public class BasicLoginModule implements LoginModule {
 		_principal = principal;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BasicLoginModule.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BasicLoginModule.class);
 
 	private CallbackHandler _callbackHandler;
 	private String _password;

@@ -997,7 +997,7 @@ public class GroupImpl extends GroupBaseImpl {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(GroupImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(GroupImpl.class);
 
 	private Group _liveGroup;
 	private Group _stagingGroup;

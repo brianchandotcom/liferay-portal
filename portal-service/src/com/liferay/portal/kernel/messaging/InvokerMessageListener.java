@@ -76,7 +76,7 @@ public class InvokerMessageListener implements MessageListener {
 		}
 	}
 
-	private ClassLoader _classLoader;
-	private MessageListener _messageListener;
+	private final ClassLoader _classLoader;
+	private final MessageListener _messageListener;
 
 }

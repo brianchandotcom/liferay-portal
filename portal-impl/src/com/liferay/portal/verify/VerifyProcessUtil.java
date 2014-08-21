@@ -129,6 +129,7 @@ public class VerifyProcessUtil {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(VerifyProcessUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		VerifyProcessUtil.class);
 
 }

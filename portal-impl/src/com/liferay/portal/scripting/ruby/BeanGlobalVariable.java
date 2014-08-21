@@ -50,7 +50,7 @@ class BeanGlobalVariable implements IAccessor {
 	}
 
 	private IRubyObject _bean;
-	private Ruby _ruby;
-	private Class<?> _type;
+	private final Ruby _ruby;
+	private final Class<?> _type;
 
 }

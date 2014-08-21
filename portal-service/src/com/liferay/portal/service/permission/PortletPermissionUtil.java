@@ -328,7 +328,7 @@ public class PortletPermissionUtil {
 		_portletPermission = portletPermission;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletPermissionUtil.class);
 
 	private static PortletPermission _portletPermission;

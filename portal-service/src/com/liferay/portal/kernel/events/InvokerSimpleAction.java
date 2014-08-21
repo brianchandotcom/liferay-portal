@@ -46,7 +46,7 @@ public class InvokerSimpleAction extends SimpleAction {
 		}
 	}
 
-	private ClassLoader _classLoader;
-	private SimpleAction _simpleAction;
+	private final ClassLoader _classLoader;
+	private final SimpleAction _simpleAction;
 
 }

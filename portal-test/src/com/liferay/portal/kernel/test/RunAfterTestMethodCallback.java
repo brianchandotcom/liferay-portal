@@ -69,7 +69,7 @@ public class RunAfterTestMethodCallback extends AbstractStatementCallback {
 		}
 	}
 
-	private Object _instance;
-	private Method _method;
+	private final Object _instance;
+	private final Method _method;
 
 }

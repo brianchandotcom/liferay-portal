@@ -202,6 +202,6 @@ public class UpgradeSocial extends UpgradeProcess {
 	private static final String _GET_LAYOUT =
 		"select * from Layout where plid = ?";
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
 
 }

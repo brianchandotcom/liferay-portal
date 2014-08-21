@@ -236,6 +236,6 @@ public class BlogsEntryAssetRenderer
 		}
 	}
 
-	private BlogsEntry _entry;
+	private final BlogsEntry _entry;
 
 }

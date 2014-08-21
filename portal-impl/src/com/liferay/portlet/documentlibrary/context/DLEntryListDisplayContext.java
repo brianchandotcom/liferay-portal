@@ -86,8 +86,8 @@ public class DLEntryListDisplayContext {
 		return folderColumns;
 	}
 
-	private DLActionsDisplayContext _dlActionsDisplayContext;
-	private DLPortletInstanceSettings _dlPortletInstanceSettings;
-	private PortletDisplay _portletDisplay;
+	private final DLActionsDisplayContext _dlActionsDisplayContext;
+	private final DLPortletInstanceSettings _dlPortletInstanceSettings;
+	private final PortletDisplay _portletDisplay;
 
 }

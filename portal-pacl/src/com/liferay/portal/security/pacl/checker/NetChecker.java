@@ -82,6 +82,6 @@ public class NetChecker extends BaseChecker {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(NetChecker.class);
+	private static final Log _log = LogFactoryUtil.getLog(NetChecker.class);
 
 }

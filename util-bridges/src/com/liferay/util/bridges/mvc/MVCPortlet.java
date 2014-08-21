@@ -476,7 +476,7 @@ public class MVCPortlet extends LiferayPortlet {
 		return null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
 
 	private ActionCommandCache _actionCommandCache;
 

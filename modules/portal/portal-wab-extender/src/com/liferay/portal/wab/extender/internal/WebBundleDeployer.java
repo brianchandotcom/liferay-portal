@@ -119,11 +119,12 @@ public class WebBundleDeployer {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WebBundleDeployer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WebBundleDeployer.class);
 
-	private BundleContext _bundleContext;
-	private ExtendedHttpService _extendedHttpService;
-	private Map<Bundle, WabBundleProcessor> _wabBundleProcessors =
+	private final BundleContext _bundleContext;
+	private final ExtendedHttpService _extendedHttpService;
+	private final Map<Bundle, WabBundleProcessor> _wabBundleProcessors =
 		new ConcurrentHashMap<Bundle, WabBundleProcessor>();
 
 }

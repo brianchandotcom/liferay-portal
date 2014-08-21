@@ -60,6 +60,6 @@ public class CronTrigger extends BaseTrigger {
 		return sb.toString();
 	}
 
-	private String _cronText;
+	private final String _cronText;
 
 }

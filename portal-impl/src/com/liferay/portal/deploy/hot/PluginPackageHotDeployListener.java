@@ -290,7 +290,7 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 				PropsKeys.NET_SF_EHCACHE_CONFIGURATION_RESOURCE_NAME));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PluginPackageHotDeployListener.class);
 
 }

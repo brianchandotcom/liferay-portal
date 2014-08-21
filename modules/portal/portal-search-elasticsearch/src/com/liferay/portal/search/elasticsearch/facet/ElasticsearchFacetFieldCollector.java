@@ -110,7 +110,7 @@ public class ElasticsearchFacetFieldCollector implements FacetCollector {
 	private static final String _TO_STRING = " TO ";
 
 	private Aggregation _aggregation;
-	private Map<String, Integer> _counts =
+	private final Map<String, Integer> _counts =
 		new ConcurrentHashMap<String, Integer>();
 	private List<TermCollector> _termCollectors;
 

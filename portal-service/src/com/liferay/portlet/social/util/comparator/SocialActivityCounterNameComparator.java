@@ -40,6 +40,6 @@ public class SocialActivityCounterNameComparator implements Comparator<String> {
 		return name1.compareTo(name2);
 	}
 
-	private Locale _locale;
+	private final Locale _locale;
 
 }

@@ -69,8 +69,8 @@ public class LiferayLoggerFactory implements ILoggerFactory {
 		return logger;
 	}
 
-	private Map<String, Logger> _loggers = new HashMap<String, Logger>();
-	private Lock _readLock;
-	private Lock _writeLock;
+	private final Map<String, Logger> _loggers = new HashMap<String, Logger>();
+	private final Lock _readLock;
+	private final Lock _writeLock;
 
 }

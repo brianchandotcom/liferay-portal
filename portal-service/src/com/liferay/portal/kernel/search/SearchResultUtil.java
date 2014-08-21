@@ -205,6 +205,7 @@ public class SearchResultUtil {
 
 	protected static final int SUMMARY_MAX_CONTENT_LENGTH = 200;
 
-	private static Log _log = LogFactoryUtil.getLog(SearchResultUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		SearchResultUtil.class);
 
 }

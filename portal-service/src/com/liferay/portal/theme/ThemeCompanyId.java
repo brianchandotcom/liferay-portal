@@ -34,7 +34,7 @@ public class ThemeCompanyId implements Serializable {
 		return _pattern;
 	}
 
-	private boolean _pattern;
-	private String _value;
+	private final boolean _pattern;
+	private final String _value;
 
 }

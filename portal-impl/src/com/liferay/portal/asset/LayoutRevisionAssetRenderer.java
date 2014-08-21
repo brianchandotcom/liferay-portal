@@ -173,8 +173,8 @@ public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 		}
 	}
 
-	private LayoutBranch _layoutBranch;
-	private LayoutRevision _layoutRevision;
-	private LayoutSetBranch _layoutSetBranch;
+	private final LayoutBranch _layoutBranch;
+	private final LayoutRevision _layoutRevision;
+	private final LayoutSetBranch _layoutSetBranch;
 
 }

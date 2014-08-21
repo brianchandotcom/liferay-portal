@@ -29,6 +29,6 @@ public enum SystemDataType {
 		_value = value;
 	}
 
-	private byte _value;
+	private final byte _value;
 
 }

@@ -34,9 +34,11 @@ import javax.security.auth.spi.LoginModule;
 public class PortalLoginModule implements LoginModule {
 
 	public PortalLoginModule() {
+		LoginModule loginModule = null;
+
 		if (Validator.isNotNull(PropsValues.PORTAL_JAAS_IMPL)) {
 			try {
-				_loginModule = (LoginModule)InstanceFactory.newInstance(
+				loginModule = (LoginModule)InstanceFactory.newInstance(
 					PropsValues.PORTAL_JAAS_IMPL);
 			}
 			catch (Exception e) {
@@ -44,42 +46,44 @@ public class PortalLoginModule implements LoginModule {
 			}
 		}
 
-		if (_loginModule == null) {
+		if (loginModule == null) {
 			if (ServerDetector.isJBoss()) {
-				_loginModule =
+				loginModule =
 					new com.liferay.portal.security.jaas.ext.jboss.
 						PortalLoginModule();
 			}
 			else if (ServerDetector.isJetty()) {
-				_loginModule =
+				loginModule =
 					new com.liferay.portal.security.jaas.ext.jetty.
 						PortalLoginModule();
 			}
 			else if (ServerDetector.isJOnAS()) {
-				_loginModule =
+				loginModule =
 					new com.liferay.portal.security.jaas.ext.jonas.
 						PortalLoginModule();
 			}
 			else if (ServerDetector.isResin()) {
-				_loginModule =
+				loginModule =
 					new com.liferay.portal.security.jaas.ext.resin.
 						PortalLoginModule();
 			}
 			else if (ServerDetector.isTomcat()) {
-				_loginModule =
+				loginModule =
 					new com.liferay.portal.security.jaas.ext.tomcat.
 						PortalLoginModule();
 			}
 			else if (ServerDetector.isWebLogic()) {
-				_loginModule =
+				loginModule =
 					new com.liferay.portal.security.jaas.ext.weblogic.
 						PortalLoginModule();
 			}
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(_loginModule.getClass().getName());
+			_log.debug(loginModule.getClass().getName());
 		}
+
+		_loginModule = loginModule;
 	}
 
 	@Override
@@ -110,8 +114,9 @@ public class PortalLoginModule implements LoginModule {
 		return _loginModule.logout();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PortalLoginModule.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalLoginModule.class);
 
-	private LoginModule _loginModule;
+	private final LoginModule _loginModule;
 
 }

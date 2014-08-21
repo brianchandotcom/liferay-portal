@@ -274,11 +274,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.dockbar {
-		&.navbar {
-			border-bottom-width: 0;
-			min-height: 40px;
-		}
-
 		.container, .container-fluid {
 			background-color: $dockbarGradientStart;
 

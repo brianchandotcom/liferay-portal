@@ -307,18 +307,18 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 	@Override
 	public void enableRemoteStaging(
-			long userId, Group liveGroup, boolean branchingPublic,
+			long userId, Group stagingGroup, boolean branchingPublic,
 			boolean branchingPrivate, String remoteAddress, int remotePort,
 			String remotePathContext, boolean secureConnection,
 			long remoteGroupId, ServiceContext serviceContext)
 		throws PortalException {
 
 		StagingUtil.validateRemote(
-			liveGroup.getGroupId(), remoteAddress, remotePort,
+			stagingGroup.getGroupId(), remoteAddress, remotePort,
 			remotePathContext, secureConnection, remoteGroupId);
 
-		if (liveGroup.hasStagingGroup()) {
-			disableStaging(liveGroup, serviceContext);
+		if (stagingGroup.hasStagingGroup()) {
+			disableStaging(stagingGroup, serviceContext);
 		}
 
 		String remoteURL = StagingUtil.buildRemoteURL(
@@ -326,7 +326,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, false);
 
 		UnicodeProperties typeSettingsProperties =
-			liveGroup.getTypeSettingsProperties();
+			stagingGroup.getTypeSettingsProperties();
 
 		boolean stagedRemotely = GetterUtil.getBoolean(
 			typeSettingsProperties.getProperty("stagedRemotely"));
@@ -352,7 +352,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		}
 
 		checkDefaultLayoutSetBranches(
-			userId, liveGroup, branchingPublic, branchingPrivate, true,
+			userId, stagingGroup, branchingPublic, branchingPrivate, true,
 			serviceContext);
 
 		typeSettingsProperties.setProperty(
@@ -373,10 +373,10 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			"stagedRemotely", Boolean.TRUE.toString());
 
 		setCommonStagingOptions(
-			liveGroup, typeSettingsProperties, serviceContext);
+			stagingGroup, typeSettingsProperties, serviceContext);
 
 		groupLocalService.updateGroup(
-			liveGroup.getGroupId(), typeSettingsProperties.toString());
+			stagingGroup.getGroupId(), typeSettingsProperties.toString());
 
 		updateStagedPortlets(remoteURL, remoteGroupId, typeSettingsProperties);
 	}

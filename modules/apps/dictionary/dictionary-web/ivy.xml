@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
- 
+
 <ivy-module
 	version="2.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -8,7 +8,7 @@
 	<info module="${plugin.name}" organisation="com.liferay">
 		<extends extendType="configurations,description,info" location="${sdk.dir}/ivy.xml" module="com.liferay.sdk" organisation="com.liferay" revision="latest.integration" />
 	</info>
-	 
+
 	<dependencies defaultconf="default">
 		<dependency name="javax.servlet.jsp.jstl" org="org.glassfish.web" rev="1.2.3" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />

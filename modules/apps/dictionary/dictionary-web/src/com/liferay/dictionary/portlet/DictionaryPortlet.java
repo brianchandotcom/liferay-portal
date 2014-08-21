@@ -16,10 +16,10 @@ package com.liferay.dictionary.portlet;
 import com.liferay.dictionary.upgrade.DictionaryUpgrade;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
+import javax.portlet.Portlet;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import javax.portlet.Portlet;
 
 /**
  * @author Raymond Augé
@@ -46,7 +46,7 @@ import javax.portlet.Portlet;
 	},
 	service = Portlet.class
 )
-public class DictionaryPortlet extends MVCPortlet {	
+public class DictionaryPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setDictionaryUpgrade(DictionaryUpgrade dictionaryUpgrade) {
 	}

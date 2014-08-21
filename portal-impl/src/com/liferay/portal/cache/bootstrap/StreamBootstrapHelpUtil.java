@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.bootstrap;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheProvider;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterLinkUtil;
@@ -59,7 +59,7 @@ import java.util.concurrent.TimeUnit;
 public class StreamBootstrapHelpUtil {
 
 	public static SocketAddress createServerSocketFromCluster(
-			List<String> cacheNames)
+			String cacheManagerName, List<String> cacheNames)
 		throws Exception {
 
 		ServerSocketChannel serverSocketChannel =
@@ -72,7 +72,7 @@ public class StreamBootstrapHelpUtil {
 
 		EhcacheStreamServerThread ehcacheStreamServerThread =
 			new EhcacheStreamServerThread(
-				serverSocket, _getPortalCacheManager(), cacheNames);
+				serverSocket, cacheManagerName, cacheNames);
 
 		ehcacheStreamServerThread.start();
 
@@ -100,15 +100,16 @@ public class StreamBootstrapHelpUtil {
 			return;
 		}
 
-		PortalCacheManager<?, ?> portalCacheManager = _getPortalCacheManager();
+		PortalCacheManager<? extends Serializable, ?> portalCacheManager =
+			PortalCacheProvider.getPortalCacheManager(cacheManagerName);
 
-		if (!cacheManagerName.equals(portalCacheManager.getName())) {
+		if (!portalCacheManager.isClusterAware()) {
 			return;
 		}
 
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			new MethodHandler(
-				_createServerSocketFromClusterMethodKey,
+				_createServerSocketFromClusterMethodKey, cacheManagerName,
 				Arrays.asList(cacheNames)),
 			true);
 
@@ -222,17 +223,6 @@ public class StreamBootstrapHelpUtil {
 		}
 	}
 
-	private static PortalCacheManager<?, ?> _getPortalCacheManager() {
-		if (_portalCacheManager == null) {
-			_portalCacheManager =
-				(PortalCacheManager<?, ?>)PortalBeanLocatorUtil.locate(
-					"com.liferay.portal.kernel.cache." +
-						"MultiVMPortalCacheManager");
-		}
-
-		return _portalCacheManager;
-	}
-
 	private static final String _COMMAND_SOCKET_CLOSE = "${SOCKET_CLOSE}";
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -241,8 +231,7 @@ public class StreamBootstrapHelpUtil {
 	private static MethodKey _createServerSocketFromClusterMethodKey =
 		new MethodKey(
 			StreamBootstrapHelpUtil.class, "createServerSocketFromCluster",
-			List.class);
-	private static volatile PortalCacheManager<?, ?> _portalCacheManager;
+			String.class, List.class);
 	private static ServerSocketConfigurator _serverSocketConfigurator =
 		new SocketCacheServerSocketConfiguration();
 
@@ -269,12 +258,11 @@ public class StreamBootstrapHelpUtil {
 	private static class EhcacheStreamServerThread extends Thread {
 
 		public EhcacheStreamServerThread(
-			ServerSocket serverSocket,
-			PortalCacheManager<?, ?> portalCacheManager,
+			ServerSocket serverSocket, String cacheManagerName,
 			List<String> cacheNames) {
 
 			_serverSocket = serverSocket;
-			_portalCacheManager = portalCacheManager;
+			_cacheManagerName = cacheManagerName;
 			_cacheNames = cacheNames;
 
 			setDaemon(true);
@@ -309,16 +297,21 @@ public class StreamBootstrapHelpUtil {
 				ObjectOutputStream objectOutputStream =
 					new AnnotatedObjectOutputStream(socket.getOutputStream());
 
+				PortalCacheManager<? extends Serializable, ?>
+					portalCacheManager =
+						PortalCacheProvider.getPortalCacheManager(
+							_cacheManagerName);
+
 				for (String cacheName : _cacheNames) {
 					PortalCache<Serializable, Serializable> portalCache =
 						(PortalCache<Serializable, Serializable>)
-							_portalCacheManager.getCache(cacheName);
+							portalCacheManager.getCache(cacheName);
 
 					if (portalCache == null) {
 						EhcacheStreamBootstrapCacheLoader.setSkip();
 
 						try {
-							_portalCacheManager.getCache(cacheName);
+							portalCacheManager.getCache(cacheName);
 						}
 						finally {
 							EhcacheStreamBootstrapCacheLoader.resetSkip();
@@ -360,8 +353,8 @@ public class StreamBootstrapHelpUtil {
 			}
 		}
 
+		private String _cacheManagerName;
 		private List<String> _cacheNames;
-		private PortalCacheManager<?, ?> _portalCacheManager;
 		private ServerSocket _serverSocket;
 
 	}

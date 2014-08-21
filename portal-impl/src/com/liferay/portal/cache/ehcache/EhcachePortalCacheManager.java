@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.BlockingPortalCache;
 import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheProvider;
 import com.liferay.portal.kernel.cache.PortalCacheWrapper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -103,6 +104,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 			_managementService.init();
 		}
+
+		PortalCacheProvider.registerPortalCacheManager(this);
 	}
 
 	@Override
@@ -113,6 +116,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	@Override
 	public void destroy() {
 		try {
+			PortalCacheProvider.unregisterPortalCacheManager(
+				_cacheManager.getName());
+
 			_portalCaches.clear();
 
 			_cacheManager.shutdown();
@@ -144,7 +150,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 					Cache cache = _cacheManager.getCache(name);
 
-					portalCache = new EhcachePortalCache<K, V>(cache);
+					portalCache = new EhcachePortalCache<K, V>(this, cache);
 
 					if (PropsValues.TRANSACTIONAL_CACHE_ENABLED &&
 						isTransactionalPortalCache(name)) {
@@ -216,6 +222,12 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	public void reconfigureCaches(URL configurationURL) {
 		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
 			configurationURL, _clusterAware, _usingDefault);
+
+		String cacheManagerName = configuration.getName();
+
+		if (!cacheManagerName.equals(_cacheManager.getName())) {
+			return;
+		}
 
 		Map<String, CacheConfiguration> cacheConfigurations =
 			configuration.getCacheConfigurations();

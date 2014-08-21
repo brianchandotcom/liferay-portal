@@ -14,9 +14,11 @@
 
 package com.liferay.portal.cache.memory;
 
+import com.liferay.portal.cache.MockPortalCacheManager;
 import com.liferay.portal.cache.TestCacheListener;
 import com.liferay.portal.kernel.cache.AbstractPortalCache;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 
 import java.util.List;
@@ -46,6 +48,7 @@ public class MemoryPortalCacheTest {
 	@Before
 	public void setUp() {
 		_memoryPortalCache = new MemoryPortalCache<String, String>(
+			new MockPortalCacheManager<String, String>(_CACHE_MANAGER_NAME),
 			_CACHE_NAME, 16);
 
 		_memoryPortalCache.put(_KEY_1, _VALUE_1);
@@ -142,6 +145,14 @@ public class MemoryPortalCacheTest {
 	@Test
 	public void testGetName() {
 		Assert.assertEquals(_CACHE_NAME, _memoryPortalCache.getName());
+	}
+
+	@Test
+	public void testGetPortalCacheManager() {
+		PortalCacheManager<String, String> portalCacheManager =
+			_memoryPortalCache.getPortalCacheManager();
+
+		Assert.assertEquals(_CACHE_MANAGER_NAME, portalCacheManager.getName());
 	}
 
 	@Test
@@ -595,6 +606,8 @@ public class MemoryPortalCacheTest {
 
 		_defaultCacheListener.assertActionsCount(0);
 	}
+
+	private static final String _CACHE_MANAGER_NAME = "CACHE_MANAGER_NAME";
 
 	private static final String _CACHE_NAME = "CACHE_NAME";
 

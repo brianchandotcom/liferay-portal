@@ -27,18 +27,22 @@ import java.io.Serializable;
 public class PortalCacheClusterEvent implements Serializable {
 
 	public PortalCacheClusterEvent(
-		String cacheName, Serializable elementKey,
+		String cacheManagerName, String cacheName, Serializable elementKey,
 		PortalCacheClusterEventType portalCacheClusterEventType) {
 
 		this(
-			cacheName, elementKey, null, PortalCache.DEFAULT_TIME_TO_LIVE,
-			portalCacheClusterEventType);
+			cacheManagerName, cacheName, elementKey, null,
+			PortalCache.DEFAULT_TIME_TO_LIVE, portalCacheClusterEventType);
 	}
 
 	public PortalCacheClusterEvent(
-		String cacheName, Serializable elementKey, Serializable elementValue,
-		int timeToLive,
+		String cacheManagerName, String cacheName, Serializable elementKey,
+		Serializable elementValue, int timeToLive,
 		PortalCacheClusterEventType portalCacheClusterEventType) {
+
+		if (cacheManagerName == null) {
+			throw new NullPointerException("Cache manager name is null");
+		}
 
 		if (cacheName == null) {
 			throw new NullPointerException("Cache name is null");
@@ -60,6 +64,7 @@ public class PortalCacheClusterEvent implements Serializable {
 			throw new IllegalArgumentException("Time to live is negative");
 		}
 
+		_cacheManagerName = cacheManagerName;
 		_cacheName = cacheName;
 		_elementKey = elementKey;
 		_elementValue = elementValue;
@@ -80,7 +85,9 @@ public class PortalCacheClusterEvent implements Serializable {
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			(PortalCacheClusterEvent)obj;
 
-		if (Validator.equals(_cacheName, portalCacheClusterEvent._cacheName) &&
+		if (Validator.equals(
+				_cacheManagerName, portalCacheClusterEvent._cacheManagerName) &&
+			Validator.equals(_cacheName, portalCacheClusterEvent._cacheName) &&
 			Validator.equals(
 				_elementKey, portalCacheClusterEvent._elementKey) &&
 			Validator.equals(
@@ -93,6 +100,10 @@ public class PortalCacheClusterEvent implements Serializable {
 		}
 
 		return false;
+	}
+
+	public String getCacheManagerName() {
+		return _cacheManagerName;
 	}
 
 	public String getCacheName() {
@@ -134,8 +145,10 @@ public class PortalCacheClusterEvent implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
+		sb.append(_cacheManagerName);
+		sb.append(StringPool.COLON);
 		sb.append(_cacheName);
 		sb.append(StringPool.COLON);
 		sb.append(_elementKey);
@@ -151,6 +164,7 @@ public class PortalCacheClusterEvent implements Serializable {
 		return sb.toString();
 	}
 
+	private String _cacheManagerName;
 	private String _cacheName;
 	private Serializable _elementKey;
 	private Serializable _elementValue;

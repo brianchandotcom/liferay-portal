@@ -28,7 +28,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentPG">
+		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
 			<var name="attachmentFileName" value="Document_1.jpg" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
@@ -176,6 +176,14 @@
 			<var name="successMessage" value="Your request completed successfully." />
 			<var name="wikiPageContent" value="Wiki LTR Content" />
 		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#viewLocalizedFrontPagePG">
+			<var name="wikiPageContent" value="Wiki LTR Content" />
+		</execute>
 	</command>
 
 	<command name="ViewWikiFrontPageRTL" priority="4">
@@ -214,6 +222,15 @@
 			<var name="emptyPageMessage" value="هذه الصفحة فارغة. قم بتحريرها لإضافة نص." />
 			<var name="rtl" value="true" />
 			<var name="successMessage" value="تم تنفيذ طلبك بنجاح." />
+			<var name="wikiPageContent" value="Wiki RTL محتوى" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#viewLocalizedFrontPagePG">
+			<var name="rtl" value="true" />
 			<var name="wikiPageContent" value="Wiki RTL محتوى" />
 		</execute>
 

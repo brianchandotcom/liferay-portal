@@ -66,7 +66,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentPG">
+		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
 			<var name="attachmentFileName" value="${attachmentFileName}" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
@@ -114,7 +114,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentPG">
+		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
 			<var name="attachmentFileName" value="${attachmentFileName1}" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
@@ -128,7 +128,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentPG">
+		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
 			<var name="attachmentFileName" value="${attachmentFileName2}" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
@@ -142,7 +142,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentPG">
+		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
 			<var name="attachmentFileName" value="${attachmentFileName3}" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
@@ -694,6 +694,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="WikiPage#gotoFrontPagePG" />
+
 		<execute macro="WikiPage#viewFrontPagePG">
 			<var name="wikiPageContent" value="${wikiPageText}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -756,6 +758,8 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
+
+		<execute macro="WikiPage#gotoFrontPagePG" />
 
 		<execute macro="WikiPage#viewFrontPagePG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
@@ -1199,6 +1203,18 @@
 			<var name="wikiPageContentCopy" value="${wikiPageContentCopy}" />
 			<var name="wikiPageTitle" value="${wikiChildPageTitle}" />
 			<var name="wikiPageTitleCopy" value="${wikiPageTitleCopy}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WikiPage#gotoAllPagesPG" />
+
+		<execute macro="WikiPage#viewPG">
+			<var name="wikiPageContent" value="${wikiPageContentCopy}" />
+			<var name="wikiPageTitle" value="${wikiPageTitleCopy}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1659,7 +1675,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentPG">
+		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
 			<var name="attachmentFileName" value="${documentName1}" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
@@ -1673,7 +1689,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentPG">
+		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
 			<var name="attachmentFileName" value="${documentName2}" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
@@ -1702,7 +1718,7 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentPG">
+		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
 			<var name="attachmentFileName" value="${documentName3}" />
 			<var name="wikiPageTitle" value="${wikiChildPageTitle1}" />
 		</execute>
@@ -2021,6 +2037,8 @@
 			<var name="wikiPageContent" value="${wikiPage2Content}" />
 			<var name="wikiPageTitle" value="${wikiPage2Title}" />
 		</execute>
+
+		<execute macro="WikiPage#gotoOrphanPagesPG" />
 
 		<execute macro="WikiPage#linkOrphanPageHtmlPG">
 			<var name="siteName" value="${siteName}" />

@@ -22,6 +22,14 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
+		<execute macro="WikiNode#gotoCP">
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+		</execute>
+
+		<execute macro="WikiPage#gotoCP">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
 		<execute macro="WikiPage#addFrontPageCP">
 			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
 			<var name="wikiNodeName" value="${wikiNodeName}" />
@@ -65,6 +73,8 @@
 			<var name="wikiNodeName" value="${wikiNodeName}" />
 		</execute>
 
+		<execute macro="WikiPage#gotoFrontPageCP" />
+
 		<execute macro="WikiPage#viewFrontPageDefaultCP">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
@@ -80,6 +90,14 @@
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiNode#gotoCP">
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+		</execute>
+
+		<execute macro="WikiPage#gotoCP">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
 		<execute macro="WikiPage#addFrontPageCP">
@@ -125,6 +143,8 @@
 		<execute macro="WikiNode#gotoCP">
 			<var name="wikiNodeName" value="${wikiNodeName}" />
 		</execute>
+
+		<execute macro="WikiPage#gotoFrontPageCP" />
 
 		<execute macro="WikiPage#viewFrontPageCP">
 			<var name="webContentContent" value="${webContentContent}" />

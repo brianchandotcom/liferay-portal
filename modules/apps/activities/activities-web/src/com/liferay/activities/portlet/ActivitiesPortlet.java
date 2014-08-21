@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.css-class-wrapper=portlet-activities",
 		"com.liferay.portlet.display-category=category.social",
 		"com.liferay.portlet.friendly-url-mapping=activities",
-		"com.liferay.portlet.friendly-url-routes=com/liferay/portlet/activities/activities-friendly-url-routes.xml",
+		"com.liferay.portlet.friendly-url-routes=com/liferay/activities/route/activities-friendly-url-routes.xml",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",

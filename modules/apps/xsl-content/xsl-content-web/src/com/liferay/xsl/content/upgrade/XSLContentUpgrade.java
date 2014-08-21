@@ -65,7 +65,7 @@ public class XSLContentUpgrade {
 
 		_releaseLocalService.updateRelease(
 			XSLContentPortlet.class.getName(),
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
 			false);
 	}
 

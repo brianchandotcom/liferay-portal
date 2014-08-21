@@ -65,7 +65,7 @@ public class DictionaryUpgrade {
 
 		_releaseLocalService.updateRelease(
 			DictionaryPortlet.class.getName(),
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
 			false);
 	}
 

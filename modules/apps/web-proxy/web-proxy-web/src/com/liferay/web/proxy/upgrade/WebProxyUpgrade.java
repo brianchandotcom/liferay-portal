@@ -64,7 +64,7 @@ public class WebProxyUpgrade {
 
 		_releaseLocalService.updateRelease(
 			WebProxyPortlet.class.getName(),
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
 			false);
 	}
 

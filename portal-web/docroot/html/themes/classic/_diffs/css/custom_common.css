@@ -1,8 +1,8 @@
 @import "aui/alloy-font-awesome/scss/mixins-alloy";
 @import "aui/alloy-font-awesome/scss/variables";
+@import "aui_variables";
 @import "compass";
 @import "compass/css3/user-interface";
-@import "aui_variables";
 @import "mixins";
 
 @import url(custom_responsive.css);

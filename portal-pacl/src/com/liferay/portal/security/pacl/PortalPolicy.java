@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.pacl;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
@@ -263,18 +265,17 @@ public class PortalPolicy extends Policy {
 		}
 	}
 
-	private static final ThreadLocal<Boolean> _started =
-		new ThreadLocal<Boolean>() {
+	private static ThreadLocal<Boolean> _started = new ThreadLocal<Boolean>() {
 
-			@Override
-			protected Boolean initialValue() {
-				return Boolean.FALSE;
-			}
+		@Override
+		protected Boolean initialValue() {
+			return Boolean.FALSE;
+		}
 
-		};
+	};
 
-	private final Field _field;
-	private final PACLPolicy _paclPolicy =
+	private Field _field;
+	private PACLPolicy _paclPolicy = PACLPolicyManager.getDefaultPACLPolicy();
 	private ConcurrentMap<Object, PermissionCollection> _permissionCollections =
 		new ConcurrentReferenceValueHashMap<Object, PermissionCollection>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);

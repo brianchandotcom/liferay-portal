@@ -334,7 +334,8 @@ public class VerifyAuditedModel extends VerifyProcess {
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyAuditedModel.class);
 
-	private static final Log _log = LogFactoryUtil.getLog(
+	private ServiceTrackerList<VerifiableAuditedModel>
+		_verifiableAuditedModels = ServiceTrackerCollections.list(
 			VerifiableAuditedModel.class);
 
 }

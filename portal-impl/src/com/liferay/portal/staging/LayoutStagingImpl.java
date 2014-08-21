@@ -110,7 +110,7 @@ public class LayoutStagingImpl implements LayoutStaging {
 	public boolean isBranchingLayoutSet(Group group, boolean privateLayout) {
 		boolean isStagingGroup = false;
 
-		if (group.isStagingGroup()) {
+		if (group.isStagingGroup() && !group.isStagedRemotely()) {
 			isStagingGroup = true;
 
 			group = group.getLiveGroup();
@@ -140,7 +140,11 @@ public class LayoutStagingImpl implements LayoutStaging {
 			return false;
 		}
 
-		Group stagingGroup = group.getStagingGroup();
+		Group stagingGroup = group;
+
+		if (isStagingGroup) {
+			stagingGroup = group.getStagingGroup();
+		}
 
 		try {
 			LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(

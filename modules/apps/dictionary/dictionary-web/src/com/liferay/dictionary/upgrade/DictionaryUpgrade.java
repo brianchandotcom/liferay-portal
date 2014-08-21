@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.xsl.content.upgrade;
+package com.liferay.dictionary.upgrade;
 
+import com.liferay.dictionary.portlet.DictionaryPortlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
-import com.liferay.xsl.content.portlet.XSLContentPortlet;
 
 import java.util.Collections;
 
@@ -30,11 +30,12 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
+ * @author Peter Fellwock
  */
 @Component(
-	immediate = true, service = XSLContentUpgrade.class
+	immediate = true, service = DictionaryUpgrade.class
 )
-public class XSLContentUpgrade {
+public class DictionaryUpgrade {
 
 	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
@@ -55,8 +56,7 @@ public class XSLContentUpgrade {
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
 					new String[] {
-						"102",
-						"com_liferay_xsl_content_portlet_XSLContentPortlet"
+						"23", "com_liferay_dictionary_portlet_DictionaryPortlet"
 					}
 				};
 			}
@@ -64,7 +64,7 @@ public class XSLContentUpgrade {
 		};
 
 		_releaseLocalService.updateRelease(
-			XSLContentPortlet.class.getName(),
+			DictionaryPortlet.class.getName(),
 			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
 			false);
 	}

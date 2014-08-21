@@ -1,0 +1,57 @@
+<definition component-name="portal-tools">
+	<property name="testray.main.component.name" value="Tools" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="Difference" priority="5">
+		<var method="MathUtil#difference(&quot;3&quot;, &quot;2&quot;)" name="difference" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${difference}" />
+			<var name="expected" value="1" />
+		</execute>
+	</command>
+
+	<command name="Product" priority="5">
+		<var method="MathUtil#product(&quot;4&quot;, &quot;2&quot;)" name="product" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${product}" />
+			<var name="expected" value="8" />
+		</execute>
+
+		<var method="MathUtil#product(&quot;2&quot;, &quot;3&quot;, &quot;4&quot;)" name="product" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${product}" />
+			<var name="expected" value="24" />
+		</execute>
+	</command>
+
+	<command name="Quotient" priority="5">
+		<var method="MathUtil#quotient(&quot;6&quot;, &quot;2&quot;)" name="quotient" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${quotient}" />
+			<var name="expected" value="3" />
+		</execute>
+	</command>
+
+	<command name="Sum" priority="5">
+		<var method="MathUtil#sum(&quot;1&quot;, &quot;2&quot;)" name="sum" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${sum}" />
+			<var name="expected" value="3" />
+		</execute>
+
+		<var method="MathUtil#sum(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;)" name="sum" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${sum}" />
+			<var name="expected" value="6" />
+		</execute>
+	</command>
+</definition>

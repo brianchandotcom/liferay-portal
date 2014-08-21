@@ -1,0 +1,56 @@
+<definition>
+	<command name="configureDisplayContent">
+		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="CONFIGURATION_LINK" />
+
+		<execute action="PGUsersegmentcontentdisplay#selectFrame" locator-key1="USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+
+		<if>
+			<equals arg1="${doesNotBelong}" arg2="true" />
+			<then>
+				<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_DOES_NOT_BELONG_RADIO" />
+			</then>
+			<else>
+				<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_BELONGS_RADIO" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${toAll}" arg2="true" />
+			<then>
+				<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_ALL_RADIO" />
+			</then>
+			<else>
+				<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_ANY_RADIO" />
+			</else>
+		</if>
+
+		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_USER_SEGMENT_SELECT_BUTTON" />
+
+		<var name="key_userSegmentName" value="${userSegmentName}" />
+
+		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX" />
+		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CLOSE_BUTTON" />
+		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="RULE_PANEL_DISPLAY_CONTENT_DROPDOWN" />
+
+		<var name="key_contentType" value="${contentType}" />
+
+		<execute action="PGUsersegmentcontentdisplay#assertClick" locator-key1="RULE_PANEL_DISPLAY_CONTENT_DROPDOWN_MENULIST" value1="${contentType}" />
+
+		<var name="key_contentTitle" value="${contentTitle}" />
+
+		<execute action="PGUsersegmentcontentdisplay#selectFrame" value1="relative=top" />
+		<execute action="PGUsersegmentcontentdisplay#selectFrame" locator-key1="SELECT_CONTENT_IFRAME" />
+
+		<execute action="PGUsersegmentcontentdisplay#assertClick" locator-key1="RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" value1="Choose" />
+
+		<execute action="PGUsersegmentcontentdisplay#selectFrame" value1="relative=top" />
+		<execute action="PGUsersegmentcontentdisplay#selectFrame" locator-key1="USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+
+		<execute action="PGUsersegmentcontentdisplay#click" locator-key1="SAVE_BUTTON" />
+		<execute action="PGUsersegmentcontentdisplay#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="viewEntryPG">
+		<execute action="PGUsersegmentcontentdisplay#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+	</command>
+</definition>

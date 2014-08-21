@@ -91,6 +91,13 @@
 		<execute action="CPUsersandorganizationsAdduser#type" locator-key1="DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
 
 		<if>
+			<isset var="userBirthday" />
+			<then>
+				<execute action="CPUsersandorganizationsAdduser#type" locator-key1="DETAILS_BIRTHDAY_FIELD" value1="${userBirthday}" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="userMiddleName" />
 			<then>
 				<execute action="CPUsersandorganizationsAdduser#type" locator-key1="DETAILS_MIDDLE_NAME_FIELD" value1="${userMiddleName}" />

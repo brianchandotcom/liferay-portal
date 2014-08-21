@@ -1,0 +1,319 @@
+<definition>
+	<command name="addBehaviorContentVisitedRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Content Visited" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#click" locator-key1="USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_CONTENT_BUTTON" />
+
+		<var name="key_menulistContent" value="Content Visited" />
+
+		<execute action="CPContenttargetingAddusersegment#click" locator-key1="USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_MENULIST_CONTENT" />
+		<execute action="CPContenttargetingAddusersegment#selectFrame" locator-key1="USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_WEB_CONTENT_IFRAME" />
+
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute action="CPContenttargetingAddusersegment#assertClick" locator-key1="USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_WEB_CONTENT_ARTICLE_CHOOSE_BUTTON" value1="Choose" />
+
+		<execute action="CPContenttargetingAddusersegment#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="addBehaviorPageVisitedRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Page Visited" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULE_BEHAVIOR_PAGE_VISITED_FRIENDLY_URL_FIELD" value1="${friendlyURL}" />
+	</command>
+
+	<command name="addBehaviorScorePointsRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Score Points" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULE_BEHAVIOR_SCORE_POINTS_FIELD" value1="${scorePoints}" />
+	</command>
+
+	<command name="addCP">
+		<execute action="CPContenttargeting#assertClick" locator-key1="NAVIGATION_USER_SEGMENTS" value1="User Segments" />
+		<execute action="CPContenttargeting#click" locator-key1="ADD_USER_SEGMENT_BUTTON" />
+
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_NAME_FIELD" value1="${userSegmentName}" />
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_DESCRIPTION_FIELD" value1="${userSegmentDescription}" />
+	</command>
+
+	<command name="addRuleCmdCP">
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULES_SEARCH_FIELD" value1="${userSegmentRule}" />
+
+		<var name="key_userSegmentRule" value="${userSegmentRule}" />
+
+		<execute action="CPContenttargetingAddusersegment#dragAndDrop" locator-key1="USER_SEGMENT_RULES_RULE" locator-key2="USER_SEGMENT_RULES_FORM_BUILDER" value1="${userSegmentRule}" />
+	</command>
+
+	<command name="addSessionAttributesTimeRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Time" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_START_TIME_FIELD" value1="${startTime}" />
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_END_TIME_FIELD" value1="${endTime}" />
+	</command>
+
+	<command name="addSocialFacebookAgeRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Facebook Age" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_OLDER_THAN_FIELD" value1="${facebookOlderThanAge}" />
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_YOUNGER_OLDER_THAN_FIELD" value1="${facebookYoungerThanAge}" />
+	</command>
+
+	<command name="addSocialFacebookCityRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Facebook City" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_CITY_FIELD" value1="${facebookCity}" />
+	</command>
+
+	<command name="addSocialFacebookEducationRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Facebook Education" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#select" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_LEVEL_SELECT" value1="${facebookEducationLevel}" />
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_COLLEGE_HIGH_SCHOOL_NAME_FIELD" value1="${facebookCollegeHighSchoolName}" />
+	</command>
+
+	<command name="addSocialFacebookFriendsRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Facebook Friends" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#select" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_MORE_LESS_THAN_SELECT" value1="${moreLessThan}" />
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_FIELD" value1="${numberOfFriends}" />
+	</command>
+
+	<command name="addSocialFacebookGenderRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Facebook Gender" />
+		</execute>
+
+		<if>
+			<equals arg1="${facebookGenderRadio}" arg2="Male" />
+			<then>
+				<execute action="CPContenttargetingAddusersegment#click" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO" />
+			</then>
+			<elseif>
+				<equals arg1="${facebookGenderRadio}" arg2="Female" />
+				<then>
+					<execute action="CPContenttargetingAddusersegment#click" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_FEMALE_RADIO" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${facebookGenderRadio}" arg2="Custom" />
+				<then>
+					<execute action="CPContenttargetingAddusersegment#click" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_CUSTOM_RADIO" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
+	<command name="addSocialFacebookPageLikeRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Facebook Page Like" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_PAGE_LIKE_FIELD" value1="${facebookURL}" />
+	</command>
+
+	<command name="addSystemAttributesBrowserRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Browser" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#select" locator-key1="USER_SEGMENT_RULE_SESSION_ATTRIBUTES_BROWSER_SELECT" value1="${browserName}" />
+	</command>
+
+	<command name="addSystemAttributesDeviceRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Device" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#select" locator-key1="USER_SEGMENT_RULE_SESSION_ATTRIBUTES_DEVICE_SELECT" value1="${deviceFamilyName}" />
+	</command>
+
+	<command name="addSystemAttributesLocationRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Location" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#select" locator-key1="USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_COUNTRY_SELECT" value1="${countryName}" />
+		<execute action="CPContenttargetingAddusersegment#select" locator-key1="USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_REGION_SELECT" value1="${regionName}" />
+	</command>
+
+	<command name="addSystemAttributesOperatingSystemRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Operating System" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#select" locator-key1="USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_SYSTEM_SELECT" value1="${operatingSystemName}" />
+	</command>
+
+	<command name="addSystemAttributesTimeRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Time" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_START_TIME_FIELD" value1="${startTime}" />
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_END_TIME_FIELD" value1="${endTime}" />
+	</command>
+
+	<command name="addUserAttributesAgeRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Age" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_OLDER_THAN_FIELD" value1="${olderThanAge}" />
+		<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_YOUNGER_THAN_FIELD" value1="${youngerThanAge}" />
+	</command>
+
+	<command name="addUserAttributesGenderRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Gender" />
+		</execute>
+
+		<if>
+			<equals arg1="${genderRadio}" arg2="Male" />
+			<then>
+				<execute action="CPContenttargetingAddusersegment#click" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_MALE_RADIO" />
+			</then>
+			<elseif>
+				<equals arg1="${genderRadio}" arg2="Female" />
+				<then>
+					<execute action="CPContenttargetingAddusersegment#click" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_FEMALE_RADIO" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
+	<command name="addUserAttributesOrganizationMemberRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Organization Member" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#select" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_MEMBER_SELECT" value1="${organizationName}" />
+	</command>
+
+	<command name="addUserAttributesOrganizationRoleRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Organization Role" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#select" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ORGANIZATION_SELECT" value1="${organizationName}" />
+		<execute action="CPContenttargetingAddusersegment#select" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE_SELECT" value1="${organizationRole}" />
+	</command>
+
+	<command name="addUserAttributesRegularRoleRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Regular Role" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#select" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_REGULAR_ROLE_SELECT" value1="${regularRole}" />
+	</command>
+
+	<command name="addUserAttributesSiteMemberRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Site Member" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#select" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER_SELECT" value1="${selectSiteMemberSite}" />
+	</command>
+
+	<command name="addUserAttributesSiteRoleRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Site Role" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#select" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_SELECT" value1="${siteRole}" />
+		<execute action="CPContenttargetingAddusersegment#select" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_SELECT" value1="${siteRoleSite}" />
+	</command>
+
+	<command name="addUserAttributesUserGroupMemberRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="UserGroup Member" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#select" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_SELECT" value1="${userGroupName}" />
+	</command>
+
+	<command name="addUserAttributesUserSignedInRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="User Signed In" />
+		</execute>
+
+		<execute action="CPContenttargetingAddusersegment#assertTextEquals" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_SIGNED_IN_MESSAGE" value1="This rule will be matched if the user is signed in." />
+	</command>
+
+	<command name="deleteUserSegmentCP">
+		<var name="key_userSegment" value="${userSegmentName}" />
+
+		<execute action="CPContenttargetingAddusersegment#click" locator-key1="USER_SEGMENT_TABLE_ACTIONS" />
+		<execute action="CPContenttargetingAddusersegment#click" locator-key1="USER_SEGMENT_TABLE_ACTIONS_MENULIST_DELETE" />
+		<execute action="CPContenttargetingAddusersegment#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPContenttargetingAddusersegment#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPContenttargetingAddusersegment#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No User Segments were found" />
+	</command>
+
+	<command name="editUserSegmentCP">
+		<var name="key_userSegment" value="${userSegmentName}" />
+
+		<execute action="CPContenttargetingEditusersegment#click" locator-key1="USER_SEGMENT_TABLE_ACTIONS" />
+		<execute action="CPContenttargetingEditusersegment#click" locator-key1="USER_SEGMENT_TABLE_ACTIONS_MENULIST_EDIT" />
+		<execute action="CPContenttargetingEditusersegment#type" locator-key1="USER_SEGMENT_NAME_FIELD" value1="${userSegmentNameEdit}" />
+		<execute action="CPContenttargetingEditusersegment#type" locator-key1="USER_SEGMENT_DESCRIPTION_FIELD" value1="${userSegmentDescriptionEdit}" />
+
+		<if>
+			<isset var="userSegmentRuleDeleteList" />
+			<then>
+				<for list="${userSegmentRuleDeleteList}" param="userSegmentRuleDelete">
+					<var name="key_userSegmentRuleDelete" value="${userSegmentRuleDelete}" />
+
+					<execute action="CPContenttargetingEditusersegment#click" locator-key1="USER_SEGMENT_RULE_DELETE" />
+
+					<execute action="CPContenttargetingEditusersegment#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected field(s)?" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="userSegmentRuleAddList" />
+			<then>
+				<for list="${userSegmentRuleAddList}" param="userSegmentRule">
+
+					<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+						<var name="userSegmentRule" value="${userSegmentRule}" />
+					</execute>
+				</for>
+			</then>
+		</if>
+	</command>
+
+	<command name="saveCP">
+		<execute action="CPContenttargetingAddusersegment#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPContenttargetingAddusersegment#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="viewRulesCP">
+		<var name="key_userSegment" value="${userSegmentName}" />
+
+		<execute action="CPContenttargetingEditusersegment#click" locator-key1="USER_SEGMENT_TABLE_ACTIONS" />
+		<execute action="CPContenttargetingEditusersegment#click" locator-key1="USER_SEGMENT_TABLE_ACTIONS_MENULIST_EDIT" />
+
+		<for list="${viewUserSegmentRuleList}" param="usersegmentRuleName">
+			<var name="key_userSegmentRuleName" value="${usersegmentRuleName}" />
+
+			<execute action="CPContenttargetingEditusersegment#assertTextEquals" locator-key1="USER_SEGMENT_RULE_APPLIED" value1="${usersegmentRuleName}" />
+		</for>
+	</command>
+</definition>

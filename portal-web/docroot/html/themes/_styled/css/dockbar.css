@@ -1371,10 +1371,6 @@ $editLayoutPanelWidth: 460px;
 			a.taglib-icon {
 				padding: 9px 15px;
 			}
-
-			[class^="icon-"] {
-				margin-left: 0;
-			}
 		}
 
 		.dockbar .staging-controls {
@@ -1385,12 +1381,6 @@ $editLayoutPanelWidth: 460px;
 				margin: 0;
 				padding: 10px;
 			}
-		}
-	}
-
-	@include respond-to(phone) {
-		.portlet-staging-bar .layout-revision-actions a.taglib-icon {
-			margin-left: -5px;
 		}
 	}
 }

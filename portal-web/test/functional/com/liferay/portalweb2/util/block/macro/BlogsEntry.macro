@@ -116,6 +116,16 @@
 		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
 
 		<execute action="CPBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+
+		<if>
+			<isset var="entrySubtitle" />
+			<then>
+				<execute macro="BlogsEntry#entryAddSubtitleCmdCP">
+					<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+				</execute>
+			</then>
+		</if>
+
 		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
 		<execute action="CPBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
@@ -213,6 +223,15 @@
 
 		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
 		<execute action="PGBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+
+		<if>
+			<isset var="entrySubtitle" />
+			<then>
+				<execute macro="BlogsEntry#entryAddSubtitleCmdPG">
+					<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+				</execute>
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${entryAddPermissions}" arg2="true" />
@@ -715,6 +734,16 @@
 		</if>
 	</command>
 
+	<command name="entryAddSubtitleCmdCP">
+		<execute action="CPBlogsAdd#assertTextEquals" locator-key1="SUBTITLE_FIELD_LABEL" value1="Subtitle" />
+		<execute action="CPBlogsAdd#type" locator-key1="SUBTITLE_FIELD" value1="${entrySubtitle}" />
+	</command>
+
+	<command name="entryAddSubtitleCmdPG">
+		<execute action="PGBlogsAdd#assertTextEquals" locator-key1="SUBTITLE_FIELD_LABEL" value1="Subtitle" />
+		<execute action="PGBlogsAdd#type" locator-key1="SUBTITLE_FIELD" value1="${entrySubtitle}" />
+	</command>
+
 	<command name="flagPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -776,6 +805,14 @@
 					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_SPECIFIC" value1="${entryContent}" />
 					<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+				</then>
+			</elseif>
+			<elseif>
+				<isset var="entrySubtitle" />
+				<then>
+					<var name="key_entrySubtitle" value="${entrySubtitle}" />
+
+					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_SUBTITLE" value1="${entrySubtitle}" />
 				</then>
 			</elseif>
 			<else>
@@ -1063,6 +1100,14 @@
 
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_HEADER" value1="${entryTitle}" />
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
+
+		<if>
+			<isset var="entrySubtitle" />
+			<then>
+				<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_SUBTITLE" value1="${entrySubtitle}" />
+			</then>
+		</if>
+
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 		<execute action="CPBlogsEntry#assertElementNotPresent" locator-key1="ENTRY_WORKFLOW_STATUS" />
 	</command>
@@ -1262,6 +1307,14 @@
 
 	<command name="viewPG">
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+
+		<if>
+			<isset var="entrySubtitle" />
+			<then>
+				<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_SUBTITLE" value1="${entrySubtitle}" />
+			</then>
+		</if>
+
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 

@@ -182,9 +182,13 @@
 
 	<!-- Process executor -->
 
-	<bean id ="com.liferay.portal.kernel.process.ProcessExecutor" class="com.liferay.portal.kernel.process.ProcessExecutor" />
+	<bean id="com.liferay.portal.kernel.process.ProcessExecutorUtil" class="com.liferay.portal.kernel.process.ProcessExecutorUtil">
+		<property name="processExecutor">
+			<bean class="com.liferay.portal.kernel.process.LocalProcessExecutor" />
+		</property>
+	</bean>
 
 	<!-- Process util -->
 
-	<bean id ="com.liferay.portal.kernel.process.ProcessUtil" class="com.liferay.portal.kernel.process.ProcessUtil" />
+	<bean id="com.liferay.portal.kernel.process.ProcessUtil" class="com.liferay.portal.kernel.process.ProcessUtil" />
 </beans>

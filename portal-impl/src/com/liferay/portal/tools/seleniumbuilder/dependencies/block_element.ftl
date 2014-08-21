@@ -85,6 +85,8 @@
 
 			<#include "action_log_element.ftl">
 
+			${selenium}.saveScreenshotBeforeAction(false);
+
 			<#include "action_element.ftl">
 
 			<#if action?contains("#is")>

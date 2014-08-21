@@ -192,6 +192,9 @@ public interface LiferaySelenium extends Selenium {
 
 	public void saveScreenshot() throws Exception;
 
+	public void saveScreenshotBeforeAction(boolean actionFailed)
+		throws Exception;
+
 	public void saveScreenshotAndSource() throws Exception;
 
 	public void scrollWebElementIntoView(String locator) throws Exception;

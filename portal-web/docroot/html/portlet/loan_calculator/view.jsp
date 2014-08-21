@@ -37,7 +37,6 @@ integerFormat.setMinimumFractionDigits(0);
 try {
 	loanAmount = GetterUtil.getInteger(integerFormat.parse(loanAmountString));
 } catch (Exception e) {
-	System.err.println("Caught Exception: " + e.getMessage());
 }
 
 double tempValue = Math.pow((1 + (interestRate / 100 / paymentsPerYear)), (years * paymentsPerYear));
@@ -46,7 +45,7 @@ double totalPaid = amountPerPayment * years * paymentsPerYear;
 double interestPaid = totalPaid - loanAmount;
 %>
 
-<portlet:renderURL var="viewLoanURL">
+<portlet:renderURL var="viewLoanURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 	<portlet:param name="struts_action" value="/loan_calculator/view" />
 </portlet:renderURL>
 
@@ -109,7 +108,7 @@ double interestPaid = totalPaid - loanAmount;
 				}
 			);
 
-			event.preventDefault();
+			event.halt();
 		}
 	);
 </aui:script>

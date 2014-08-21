@@ -52,10 +52,11 @@ import javax.servlet.ServletContext;
 public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 	public ThemeImpl() {
+		this(null);
 	}
 
 	public ThemeImpl(String themeId) {
-		_themeId = themeId;
+		this(themeId, null);
 	}
 
 	public ThemeImpl(String themeId, String name) {
@@ -650,7 +651,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 	private static Log _log = LogFactoryUtil.getLog(ThemeImpl.class);
 
-	private Map<String, ColorScheme> _colorSchemesMap =
+	private final Map<String, ColorScheme> _colorSchemesMap =
 		new HashMap<String, ColorScheme>();
 	private boolean _controlPanelTheme;
 	private String _cssPath = "${root-path}/css";
@@ -659,20 +660,20 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 	private boolean _loadFromServletContext;
 	private String _name;
 	private boolean _pageTheme;
-	private Map<String, Boolean> _resourceExistsMap =
+	private final Map<String, Boolean> _resourceExistsMap =
 		new ConcurrentHashMap<String, Boolean>();
-	private Map<String, String> _resourcePathsMap =
+	private final Map<String, String> _resourcePathsMap =
 		new ConcurrentHashMap<String, String>();
 	private String _rootPath = "/";
 	private String _servletContextName = StringPool.BLANK;
-	private Map<String, SpriteImage> _spriteImagesMap =
+	private final Map<String, SpriteImage> _spriteImagesMap =
 		new HashMap<String, SpriteImage>();
 	private String _templateExtension = "vm";
 	private String _templatesPath = "${root-path}/templates";
 	private ThemeCompanyLimit _themeCompanyLimit;
 	private ThemeGroupLimit _themeGroupLimit;
-	private String _themeId;
-	private Map<String, ThemeSetting> _themeSettingsMap =
+	private final String _themeId;
+	private final Map<String, ThemeSetting> _themeSettingsMap =
 		new LinkedHashMap<String, ThemeSetting>();
 	private long _timestamp;
 	private String _virtualPath = StringPool.BLANK;

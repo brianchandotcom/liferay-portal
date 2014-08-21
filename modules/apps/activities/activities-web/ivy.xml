@@ -8,7 +8,7 @@
 	<info module="${plugin.name}" organisation="com.liferay">
 		<extends extendType="configurations,description,info" location="${sdk.dir}/ivy.xml" module="com.liferay.sdk" organisation="com.liferay" revision="latest.integration" />
 	</info>
-	
+
 	<dependencies defaultconf="default">
 		<dependency name="rome" org="rome" rev="1.0" />
 		<dependency name="javax.servlet.jsp.jstl" org="org.glassfish.web" rev="1.2.3" />

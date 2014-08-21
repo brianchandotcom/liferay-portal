@@ -33,7 +33,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = ActivitiesUpgrade.class)
 public class ActivitiesUpgrade {
-	
+
+	@Reference(unbind = "-")
+	protected void setReleaseLocalService(
+		ReleaseLocalService releaseLocalService) {
+
+		_releaseLocalService = releaseLocalService;
+	}
+
 	@Reference(target = "(original.bean=*)", unbind = "-")
 	protected void setServletContext(ServletContext servletContext) {
 	}
@@ -44,10 +51,10 @@ public class ActivitiesUpgrade {
 
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
-				return new String[][] { 
-					new String[] { 
+				return new String[][] {
+					new String[] {
 						"116",
-						"com_liferay_activities_portlet_ActivitiesPortlet" 
+						"com_liferay_activities_portlet_ActivitiesPortlet"
 						}
 					};
 				}
@@ -57,13 +64,6 @@ public class ActivitiesUpgrade {
 				ActivitiesPortlet.class.getName(),
 				Collections.<UpgradeProcess> singletonList(
 					upgradePortletId), 1, 1, false);
-	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-		
-		_releaseLocalService = releaseLocalService;
 	}
 
 	private ReleaseLocalService _releaseLocalService;

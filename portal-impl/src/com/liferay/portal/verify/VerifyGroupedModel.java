@@ -14,20 +14,20 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.verify.model.grouped.VerifiableGroupedModel;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -35,12 +35,13 @@ import java.util.List;
  */
 public class VerifyGroupedModel extends VerifyProcess {
 
-	@Override
-	protected void doVerify() throws Exception {
+	public void verify(VerifiableGroupedModel ... verifiableGroupedModels)
+		throws Exception {
+
 		List<String> unverifiedTableNames = new ArrayList<String>();
 
 		for (VerifiableGroupedModel verifiableGroupedModel :
-				_verifiableGroupedModels) {
+				verifiableGroupedModels) {
 
 			unverifiedTableNames.add(verifiableGroupedModel.getTableName());
 		}
@@ -49,7 +50,7 @@ public class VerifyGroupedModel extends VerifyProcess {
 			int count = unverifiedTableNames.size();
 
 			for (VerifiableGroupedModel verifiableGroupedModel :
-					_verifiableGroupedModels) {
+					verifiableGroupedModels) {
 
 				if (unverifiedTableNames.contains(
 						verifiableGroupedModel.getRelatedTableName()) ||
@@ -70,6 +71,15 @@ public class VerifyGroupedModel extends VerifyProcess {
 					"Circular dependency detected " + unverifiedTableNames);
 			}
 		}
+	}
+
+	@Override
+	protected void doVerify() throws Exception {
+		VerifiableGroupedModel[] verifiableGroupedModels =
+			_verifiableGroupedModels.toArray(
+				new VerifiableGroupedModel[_verifiableGroupedModels.size()]);
+
+		verify(verifiableGroupedModels);
 	}
 
 	protected long getGroupId(
@@ -165,10 +175,10 @@ public class VerifyGroupedModel extends VerifyProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(VerifyGroupedModel.class);
+	private static final Collection<VerifiableGroupedModel>
+		_verifiableGroupedModels = PortalBeanLocatorUtil.locate(
+			VerifiableGroupedModel.class).values();
 
-	private ServiceTrackerList<VerifiableGroupedModel>
-		_verifiableGroupedModels = ServiceTrackerCollections.list(
-			VerifiableGroupedModel.class);
+	private static Log _log = LogFactoryUtil.getLog(VerifyGroupedModel.class);
 
 }

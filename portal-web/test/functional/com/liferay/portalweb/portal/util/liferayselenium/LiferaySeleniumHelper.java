@@ -767,6 +767,17 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
+		// LPS-49506
+
+		if (line.matches(
+				".*The web application \\[\\] created a ThreadLocal with key " +
+					"of type.*")) {
+
+			if (line.contains("[org.joni.StackMachine$1]")) {
+				return true;
+			}
+		}
+
 		if (Validator.equals(
 				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.1") ||
 			Validator.equals(

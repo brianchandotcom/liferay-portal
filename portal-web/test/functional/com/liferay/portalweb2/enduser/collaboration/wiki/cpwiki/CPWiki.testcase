@@ -28,7 +28,7 @@
 		</execute>
 
 		<execute macro="WikiNode#gotoCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiNodeName" value="Main" />
 		</execute>
 
 		<execute macro="WikiPage#viewFrontPageCP">
@@ -117,7 +117,7 @@
 		</execute>
 
 		<execute macro="WikiNode#gotoCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiNodeName" value="Main" />
 		</execute>
 
 		<execute macro="WikiPage#editPageCP">
@@ -131,7 +131,7 @@
 		</execute>
 
 		<execute macro="WikiNode#gotoCP">
-			<var name="wikiPageTitle" value="${wikiNodeName}" />
+			<var name="wikiNodeName" value="Main" />
 		</execute>
 
 		<execute macro="WikiPage#compareVersionsCP">
@@ -204,7 +204,7 @@
 		</execute>
 
 		<execute macro="WikiNode#gotoCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiNodeName" value="Main" />
 		</execute>
 
 		<execute macro="WikiPage#moveToRecycleBinCP">
@@ -218,7 +218,7 @@
 		</execute>
 
 		<execute macro="WikiNode#gotoCP">
-			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiNodeName" value="Main" />
 		</execute>
 
 		<execute macro="WikiPage#viewFrontPageDefaultCP">

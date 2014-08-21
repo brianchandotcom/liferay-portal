@@ -42,7 +42,7 @@
 		<execute action="CPBlogsEntry#mouseOver" locator-key1="COMMENT" />
 		<execute action="CPBlogsEntry#assertClick" locator-key1="COMMENT_DELETE_1" value1="Delete" />
 
-		<var name="string" method="selenium#getAlert()" />
+		<var method="selenium#getAlert()" name="string" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />
@@ -63,7 +63,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<var name="title" method="selenium#getAttribute(//input[@id='_161_title']@title)" />
+		<var method="selenium#getAttribute(//input[@id='_161_title']@title)" name="title" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${title}" />
@@ -86,7 +86,7 @@
 
 		<execute action="Home#selectFrame" locator1="//iframe[contains(@title,'Rich Text Editor')]" />
 
-		<var name="string" method="selenium#getBodyText()" />
+		<var method="selenium#getBodyText()" name="string" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />
@@ -101,11 +101,11 @@
 
 		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
 
-		<var name="int" method="selenium#getCurrentDay()" />
+		<var method="selenium#getCurrentDay()" name="int" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${int}" />
-			<var name="expected" path="CPBlogsAdd" locator-key="DISPLAY_DATE_DAY" />
+			<var locator-key="DISPLAY_DATE_DAY" name="expected" path="CPBlogsAdd" />
 		</execute>
 	</command>
 
@@ -116,10 +116,10 @@
 
 		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
 
-		<var name="int" path="CPBlogsAdd" locator-key="DISPLAY_DATE" />
+		<var locator-key="DISPLAY_DATE" name="int" path="CPBlogsAdd" />
 
-		<var name="month" method="selenium#getCurrentMonth()" />
-		<var name="regex" input="${int}" pattern="([1-9]*[0-9])/([0-9]*)/([0-9]*)" group="1" />
+		<var method="selenium#getCurrentMonth()" name="month" />
+		<var group="1" input="${int}" name="regex" pattern="([1-9]*[0-9])/([0-9]*)/([0-9]*)" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${month}" />
@@ -134,11 +134,11 @@
 
 		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
 
-		<var name="int" method="selenium#getCurrentYear()" />
+		<var method="selenium#getCurrentYear()" name="int" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${int}" />
-			<var name="expected" path="CPBlogsAdd" locator-key="DISPLAY_DATE_YEAR" />
+			<var locator-key="DISPLAY_DATE_YEAR" name="expected" path="CPBlogsAdd" />
 		</execute>
 	</command>
 
@@ -149,7 +149,7 @@
 
 		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
 
-		<var name="string" method="selenium#getFirstNumber(//input[@id='__161__displayDateYear'])" />
+		<var method="selenium#getFirstNumber(//input[@id='__161__displayDateYear'])" name="string" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />
@@ -164,7 +164,7 @@
 
 		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
 
-		<var name="string" method="selenium#getFirstNumberIncrement(//input[@id='__161__displayDateYear'])" />
+		<var method="selenium#getFirstNumberIncrement(//input[@id='__161__displayDateYear'])" name="string" />
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />
 			<var name="expected" value="3" />
@@ -172,7 +172,7 @@
 	</command>-->
 
 	<command name="GetLocation" priority="5">
-		<var name="url" method='selenium#getLocation()' />
+		<var method="selenium#getLocation()" name="url" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${url}" />
@@ -181,7 +181,7 @@
 	</command>
 
 	<command name="GetNumberDecrement" priority="5">
-		<var name="int" method='selenium#getNumberDecrement("123")' />
+		<var method="selenium#getNumberDecrement(&quot;123&quot;)" name="int" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${int}" />
@@ -190,7 +190,7 @@
 	</command>
 
 	<command name="GetNumberIncrement" priority="5">
-		<var name="int" method='selenium#getNumberIncrement("123")' />
+		<var method="selenium#getNumberIncrement(&quot;123&quot;)" name="int" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${int}" />
@@ -199,7 +199,7 @@
 	</command>
 
 	<command name="GetText" priority="5">
-		<var name="string" method="selenium#getText(//li[@id='_145_adminLinks'])" />
+		<var method="selenium#getText(//li[@id='_145_adminLinks'])" name="string" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />
@@ -229,7 +229,7 @@
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
 
-		<var name="string" method="selenium#getValue(//input[@id='_161_title'])" />
+		<var method="selenium#getValue(//input[@id='_161_title'])" name="string" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />
@@ -274,7 +274,7 @@
 		<execute action="CPBlogsEntry#mouseOver" locator-key1="COMMENT" />
 		<execute action="CPBlogsEntry#assertClick" locator-key1="COMMENT_DELETE_1" value1="Delete" />
 
-		<var name="alert" method="selenium#isAlertPresent()" />
+		<var method="selenium#isAlertPresent()" name="alert" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${alert}" />
@@ -296,7 +296,7 @@
 		<execute action="CPBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
 		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
 
-		<var name="check" method="selenium#isChecked(//input[@id='_161_allowPingbacksCheckbox'])" />
+		<var method="selenium#isChecked(//input[@id='_161_allowPingbacksCheckbox'])" name="check" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${check}" />
@@ -305,7 +305,7 @@
 	</command>
 
 	<command name="IsElementNotPresent" priority="5">
-		<var name="element" method="selenium#isElementNotPresent(//li[@id='_145_adminLinks'])" />
+		<var method="selenium#isElementNotPresent(//li[@id='_145_adminLinks'])" name="element" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${element}" />
@@ -314,7 +314,7 @@
 	</command>
 
 	<command name="IsElementPresent" priority="5">
-		<var name="element" method="selenium#isElementPresent(//li[@id='_145_adminLinks'])" />
+		<var method="selenium#isElementPresent(//li[@id='_145_adminLinks'])" name="element" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${element}" />
@@ -323,7 +323,7 @@
 	</command>
 
 	<command name="IsElementPresentAfterWait" priority="5">
-		<var name="element" method="selenium#isElementPresentAfterWait(//li[@id='_145_adminLinks'])" />
+		<var method="selenium#isElementPresentAfterWait(//li[@id='_145_adminLinks'])" name="element" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${element}" />
@@ -345,7 +345,7 @@
 		<execute action="CPBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
 		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
 
-		<var name="check" method="selenium#isNotChecked(//input[@id='_161_allowPingbacksCheckbox'])" />
+		<var method="selenium#isNotChecked(//input[@id='_161_allowPingbacksCheckbox'])" name="check" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${check}" />
@@ -375,7 +375,7 @@
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
 
-		<var name="string" method="selenium#isNotPartialText(//fieldset[@class='fieldset '], Content)" />
+		<var method="selenium#isNotPartialText(//fieldset[@class='fieldset '], Content)" name="string" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />
@@ -384,7 +384,7 @@
 	</command>
 
 	<command name="IsNotText" priority="5">
-		<var name="string" method="selenium#isNotText(//li[@id='_145_adminLinks'], Admin)" />
+		<var method="selenium#isNotText(//li[@id='_145_adminLinks'], Admin)" name="string" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />
@@ -414,7 +414,7 @@
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
 
-		<var name="string" method="selenium#isNotValue(//input[@id='_161_title'], Blogs Entry Title)" />
+		<var method="selenium#isNotValue(//input[@id='_161_title'], Blogs Entry Title)" name="string" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />
@@ -423,7 +423,7 @@
 	</command>
 
 	<command name="IsNotVisible" priority="5">
-		<var name="string" method="selenium#isNotVisible(//li[@id='_145_adminLinks'])" />
+		<var method="selenium#isNotVisible(//li[@id='_145_adminLinks'])" name="string" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />
@@ -453,7 +453,7 @@
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
 
-		<var name="string" method="selenium#isPartialText(//fieldset[@class='fieldset '], Content)" />
+		<var method="selenium#isPartialText(//fieldset[@class='fieldset '], Content)" name="string" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />
@@ -462,7 +462,7 @@
 	</command>
 
 	<command name="IsText" priority="5">
-		<var name="string" method="selenium#isText(//li[@id='_145_adminLinks'], Admin)" />
+		<var method="selenium#isText(//li[@id='_145_adminLinks'], Admin)" name="string" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />
@@ -471,7 +471,7 @@
 	</command>-->
 
 	<command name="IsTextNotPresent" priority="5">
-		<var name="string" method="selenium#isTextNotPresent('Site Administrator')" />
+		<var method="selenium#isTextNotPresent('Site Administrator')" name="string" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />
@@ -482,7 +482,7 @@
 	<command name="IsTextPresent" priority="5">
 		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
 
-		<var name="string" method="selenium#isTextPresent('Site Administrator')" />
+		<var method="selenium#isTextPresent('Site Administrator')" name="string" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />
@@ -512,7 +512,7 @@
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
 
-		<var name="string" method="selenium#isValue(//div[@id='_161_title'], Blogs Entry Title)" />
+		<var method="selenium#isValue(//div[@id='_161_title'], Blogs Entry Title)" name="string" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />
@@ -521,7 +521,7 @@
 	</command>-->
 
 	<command name="IsVisible" priority="5">
-		<var name="string" method="selenium#isVisible(//li[@id='_145_adminLinks'])" />
+		<var method="selenium#isVisible(//li[@id='_145_adminLinks'])" name="string" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string}" />

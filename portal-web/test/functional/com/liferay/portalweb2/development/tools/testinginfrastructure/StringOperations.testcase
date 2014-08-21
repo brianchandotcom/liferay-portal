@@ -90,14 +90,14 @@
 	</command>
 
 	<command name="Regex" priority="5">
-		<var name="regex" input="regularexpression=32132" pattern="[a-z]*=([0-9]*)" group="0" />
+		<var group="0" input="regularexpression=32132" name="regex" pattern="[a-z]*=([0-9]*)" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${regex}" />
 			<var name="expected" value="regularexpression=32132" />
 		</execute>
 
-		<var name="regex" input="regularexpression=32132" pattern="[a-z]*=([0-9]*)" group="1" />
+		<var group="1" input="regularexpression=32132" name="regex" pattern="[a-z]*=([0-9]*)" />
 
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${regex}" />

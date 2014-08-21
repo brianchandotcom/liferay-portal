@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ERROR_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'lfr-message-response') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NAME_FIELD</td>
 	<td>//input[contains(@class,'field tag-name')]</td>
 	<td></td>
@@ -34,8 +29,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CLOSE_BUTTON</td>
-	<td>//button[contains(.,'Close')]</td>
+	<td>CANCEL_BUTTON</td>
+	<td>//a[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 </tbody>

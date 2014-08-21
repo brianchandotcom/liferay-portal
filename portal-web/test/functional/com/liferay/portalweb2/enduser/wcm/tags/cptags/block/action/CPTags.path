@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@id='portletMessages']</td>
+	<td>//div[contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ALL_TAGS_CHECKBOX</td>
-	<td>//input[@id='_99_checkAllTags']</td>
+	<td>//input[@title='Select All']</td>
 	<td></td>
 </tr>
 <tr>
@@ -35,17 +35,27 @@
 </tr>
 <tr>
 	<td>TOOLBAR_ADD</td>
-	<td>//li[@id='_99_addTagButton']</td>
+	<td>//a[@title='Add Tag']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//input[@id='_99_tagsAdminSearchInput']</td>
+	<td>//input[@id='_99_keywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and(contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-info') and contains(@class,'lfr-message-response')]</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -60,39 +70,13 @@
 </tr>
 <!--ACTIONS_MENULIST-->
 <tr>
-	<td>ACTIONS_MENULIST_DELETE</td>
-	<td>//li[@id='_99_tagsActionsButton']/ul/li[contains(.,'Delete')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ACTIONS_MENULIST_MERGE</td>
 	<td>//li[@id='_99_tagsActionsButton']/ul/li[contains(.,'Merge')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--TAG_DETAILS-->
-<tr>
-	<td>TAG_DETAILS_HEADER</td>
-	<td>//h3[@class='header-title']/span[contains(.,'${key_tagName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TAG_DETAILS_EDIT_BUTTON</td>
-	<td>//button[@id='editTagButton']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TAG_DETAILS_DELETE_BUTTON</td>
-	<td>//button[@id='deleteTagButton']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TAG_DETAILS_COUNT</td>
-	<td>//div[@class='view-tag']/div[2]</td>
+	<td>ACTIONS_MENULIST_DELETE</td>
+	<td>//li[@id='_99_tagsActionsButton']/ul/li[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -100,20 +84,41 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--TAG_ENTRY-->
+<!--TAG_ENTRY_TABLE-->
 <tr>
-	<td>TAG_ENTRY_NAME</td>
-	<td>//li[contains(.,'${key_tagName}')]/a/span</td>
+	<td>TAG_ENTRY_TABLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_tagName}')]/td/input</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TAG_ENTRY_CHECKBOX</td>
-	<td>//li[contains(.,'${key_tagName}')]/a/input</td>
+	<td>TAG_ENTRY_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_tagName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TAG_ENTRY_EDIT_ICON</td>
-	<td>//span[@class='tag-item-actions-trigger']</td>
+	<td>TAG_ENTRY_TABLE_USAGES</td>
+	<td>//tr[contains(.,'${key_tagName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_ENTRY_TABLE_ACTIONS_ARROW</td>
+	<td>//tr[contains(.,'${key_tagName}')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TAG_ENTRY_MENULIST-->
+<tr>
+	<td>TAG_ENTRY_MENULIST_EDIT</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_ENTRY_MENULIST_DELETE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>

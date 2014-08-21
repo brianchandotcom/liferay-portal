@@ -28,7 +28,7 @@
 	List leftList = new ArrayList();
 
 	for (int i = 0; i < symbols.length; i++) {
-		leftList.add(new KeyValuePair(symbols[i], LanguageUtil.get(pageContext, "currency." + symbols[i])));
+		leftList.add(new KeyValuePair(symbols[i], LanguageUtil.get(request, "currency." + symbols[i])));
 	}
 
 	List rightList = new ArrayList();
@@ -40,7 +40,7 @@
 		String currencyValue = entry.getKey();
 
 		if (Arrays.binarySearch(symbols, symbol) < 0) {
-			rightList.add(new KeyValuePair(symbol, LanguageUtil.get(pageContext, "currency." + currencyValue)));
+			rightList.add(new KeyValuePair(symbol, LanguageUtil.get(request, "currency." + currencyValue)));
 		}
 	}
 

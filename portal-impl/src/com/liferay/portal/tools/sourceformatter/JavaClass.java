@@ -321,8 +321,10 @@ public class JavaClass {
 
 				requiresEmptyLine = true;
 			}
-			else if ((previousJavaTerm.getType() ==
-						TYPE_VARIABLE_PRIVATE_STATIC) &&
+			else if (((previousJavaTerm.getType() ==
+						TYPE_VARIABLE_PRIVATE_STATIC) ||
+					  (previousJavaTerm.getType() ==
+						  TYPE_VARIABLE_PRIVATE_STATIC_FINAL)) &&
 					 (previousJavaTermName.equals("_instance") ||
 					  previousJavaTermName.equals("_log") ||
 					  previousJavaTermName.equals("_logger"))) {

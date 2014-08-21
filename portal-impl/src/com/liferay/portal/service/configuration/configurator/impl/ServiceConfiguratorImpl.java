@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.spring.extender.internal.service.configurator.impl;
+package com.liferay.portal.service.configuration.configurator.impl;
 
 import com.liferay.portal.cache.configurator.PortalCacheConfigurator;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ServiceComponentLocalService;
-import com.liferay.portal.spring.extender.internal.loader.ModuleResourceLoader;
-import com.liferay.portal.spring.extender.internal.service.configurator.ServiceConfigurator;
+import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
+import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.util.log4j.Log4JUtil;
 
 import java.net.URL;
@@ -36,40 +36,39 @@ import java.net.URL;
 import java.util.List;
 import java.util.Properties;
 
-import org.eclipse.gemini.blueprint.context.BundleContextAware;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.framework.wiring.BundleWiring;
-
 /**
  * @author Miguel Pastor
  */
-public class ServiceConfiguratorImpl
-	implements BundleContextAware, ServiceConfigurator {
+public class ServiceConfiguratorImpl implements ServiceConfigurator {
 
 	@Override
-	public void destroy() throws Exception {
-		destroyServiceComponent();
+	public void destroyServices(
+			ServiceComponentConfiguration serviceComponentConfiguration,
+			ClassLoader classLoader)
+		throws Exception {
+
+		destroyServiceComponent(serviceComponentConfiguration, classLoader);
 	}
 
 	@Override
-	public void init() throws Exception {
-		initLog4J();
+	public void initServices(
+			ServiceComponentConfiguration serviceComponentConfiguration,
+			ClassLoader classLoader)
+		throws Exception {
 
-		initServiceComponent();
+		initLog4J(classLoader);
 
-		reconfigureCaches();
+		initServiceComponent(serviceComponentConfiguration, classLoader);
 
-		readResourceActions();
+		reconfigureCaches(classLoader);
+
+		readResourceActions(classLoader);
 	}
 
-	@Override
-	public void setBundleContext(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+	public void setPortalCacheConfigurator(
+		PortalCacheConfigurator portalCacheConfigurator) {
 
-		_classLoader = getBundleClassLoader(_bundleContext.getBundle());
+		_portalCacheConfigurator = portalCacheConfigurator;
 	}
 
 	public void setServiceComponentLocalService(
@@ -78,15 +77,13 @@ public class ServiceConfiguratorImpl
 		_serviceComponentLocalService = serviceComponentLocalService;
 	}
 
-	protected void destroyServiceComponent() throws Exception {
+	protected void destroyServiceComponent(
+			ServiceComponentConfiguration serviceComponentConfiguration,
+			ClassLoader classLoader)
+		throws Exception {
+
 		_serviceComponentLocalService.destroyServiceComponent(
-			new ModuleResourceLoader(_bundleContext.getBundle()), _classLoader);
-	}
-
-	protected ClassLoader getBundleClassLoader(Bundle bundle) {
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-		return bundleWiring.getClassLoader();
+			serviceComponentConfiguration, classLoader);
 	}
 
 	protected URL getPortalCacheConfigurationURL(
@@ -102,24 +99,20 @@ public class ServiceConfiguratorImpl
 		return classLoader.getResource(cacheConfigurationLocation);
 	}
 
-	protected PortalCacheConfigurator getPortalCacheConfigurator() {
-		ServiceReference<PortalCacheConfigurator> serviceReference =
-			_bundleContext.getServiceReference(PortalCacheConfigurator.class);
-
-		return _bundleContext.getService(serviceReference);
-	}
-
-	protected void initLog4J() {
+	protected void initLog4J(ClassLoader classLoader) {
 		Log4JUtil.configureLog4J(
-			_classLoader.getResource("META-INF/portal-log4j.xml"));
+			classLoader.getResource("META-INF/portal-log4j.xml"));
 	}
 
-	protected void initServiceComponent() {
+	protected void initServiceComponent(
+		ServiceComponentConfiguration serviceComponentConfiguration,
+		ClassLoader classLoader) {
+
 		Configuration configuration = null;
 
 		try {
 			configuration = ConfigurationFactoryUtil.getConfiguration(
-				_classLoader, "service");
+				classLoader, "service");
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -157,8 +150,8 @@ public class ServiceConfiguratorImpl
 
 		try {
 			_serviceComponentLocalService.initServiceComponent(
-				new ModuleResourceLoader(_bundleContext.getBundle()),
-				_classLoader, buildNamespace, buildNumber, buildDate,
+				serviceComponentConfiguration,
+				classLoader, buildNamespace, buildNumber, buildDate,
 				buildAutoUpgrade);
 		}
 		catch (PortalException pe) {
@@ -166,9 +159,9 @@ public class ServiceConfiguratorImpl
 		}
 	}
 
-	protected void readResourceActions() {
+	protected void readResourceActions(ClassLoader classLoader) {
 		Configuration configuration = ConfigurationFactoryUtil.getConfiguration(
-			_classLoader, "portlet");
+			classLoader, "portlet");
 
 		String[] resourceActionsConfigs = StringUtil.split(
 			configuration.get(PropsKeys.RESOURCE_ACTIONS_CONFIGS));
@@ -176,7 +169,7 @@ public class ServiceConfiguratorImpl
 		for (String resourceActionsConfig : resourceActionsConfigs) {
 			try {
 				ResourceActionsUtil.read(
-					null, _classLoader, resourceActionsConfig);
+					null, classLoader, resourceActionsConfig);
 			}
 			catch (Exception e) {
 				_log.error(
@@ -209,12 +202,12 @@ public class ServiceConfiguratorImpl
 		}
 	}
 
-	protected void reconfigureCaches() throws Exception {
+	protected void reconfigureCaches(ClassLoader classLoader) throws Exception {
 		Configuration configuration = null;
 
 		try {
 			configuration = ConfigurationFactoryUtil.getConfiguration(
-				_classLoader, "portlet");
+				classLoader, "portlet");
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -224,32 +217,28 @@ public class ServiceConfiguratorImpl
 			return;
 		}
 
-		PortalCacheConfigurator portalCacheConfigurator =
-			getPortalCacheConfigurator();
-
-		portalCacheConfigurator.reconfigureCaches(
-			_classLoader,
+		_portalCacheConfigurator.reconfigureCaches(
+			classLoader,
 			getPortalCacheConfigurationURL(
-				configuration, _classLoader,
+				configuration, classLoader,
 				PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION));
 
-		portalCacheConfigurator.reconfigureCaches(
-			_classLoader,
+		_portalCacheConfigurator.reconfigureCaches(
+			classLoader,
 			getPortalCacheConfigurationURL(
-				configuration, _classLoader,
+				configuration, classLoader,
 				PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
 
-		portalCacheConfigurator.reconfigureHibernateCache(
+		_portalCacheConfigurator.reconfigureHibernateCache(
 			getPortalCacheConfigurationURL(
-				configuration, _classLoader,
+				configuration, classLoader,
 				PropsKeys.NET_SF_EHCACHE_CONFIGURATION_RESOURCE_NAME));
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ServiceConfiguratorImpl.class);
 
-	private BundleContext _bundleContext;
-	private ClassLoader _classLoader;
+	private PortalCacheConfigurator _portalCacheConfigurator;
 	private ServiceComponentLocalService _serviceComponentLocalService;
 
 }

@@ -21,6 +21,7 @@ import com.liferay.portal.cache.ehcache.ModifiableEhcacheWrapper;
 import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -68,8 +69,6 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 	public LiferayEhcacheRegionFactory(Properties properties) {
 		super(properties);
-
-		_portalCacheManager = new HibernatePortalCacheManager(manager);
 	}
 
 	@Override
@@ -227,10 +226,21 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 
 			_mBeanRegisteringPortalLifecycle.registerPortalLifecycle(
 				PortalLifecycle.METHOD_INIT);
+
+			_portalCacheManager = new HibernatePortalCacheManager(manager);
+
+			PortalCacheProvider.registerPortalCacheManager(_portalCacheManager);
 		}
 		catch (net.sf.ehcache.CacheException ce) {
 			throw new CacheException(ce);
 		}
+	}
+
+	@Override
+	public void stop() {
+		PortalCacheProvider.unregisterPortalCacheManager(manager.getName());
+
+		super.stop();
 	}
 
 	protected void configureCache(String regionName) {

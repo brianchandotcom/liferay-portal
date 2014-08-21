@@ -239,7 +239,8 @@ public class ProcessExecutor {
 		return defaultNoticeableFuture;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ProcessExecutor.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ProcessExecutor.class);
 	private static final Set<Process> _managedProcesses =
 		new ConcurrentHashSet<Process>();
 

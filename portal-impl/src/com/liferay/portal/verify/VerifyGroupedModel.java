@@ -165,7 +165,8 @@ public class VerifyGroupedModel extends VerifyProcess {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(VerifyGroupedModel.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		VerifyGroupedModel.class);
 
 	private final ServiceTrackerList<VerifiableGroupedModel>
 		_verifiableGroupedModels = ServiceTrackerCollections.list(

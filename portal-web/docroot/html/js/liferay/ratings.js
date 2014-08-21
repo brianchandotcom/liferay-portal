@@ -284,6 +284,12 @@ AUI.add(
 								{
 									boundingBox: '#' + namespace + 'ratingStar',
 									canReset: false,
+									cssClasses: {
+										element: CSS_ICON_STAR_EMPTY,
+										hover: CSS_ICON_STAR,
+										off: CSS_ICON_STAR_EMPTY,
+										on: CSS_ICON_STAR
+									},
 									defaultSelected: yourScore,
 									srcNode: '#' + namespace + 'ratingStarContent'
 								}

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.test;
 
 import com.liferay.portal.kernel.process.ClassPathUtil;
+import com.liferay.portal.kernel.process.LocalProcessExecutor;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessConfig.Builder;
@@ -168,6 +169,9 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 	private static final String _JPDA_OPTIONS =
 		"-agentlib:jdwp=transport=dt_socket,address=8001,server=y,suspend=y";
 
+	private static ProcessExecutor _processExecutor =
+		new LocalProcessExecutor();
+
 	private String _classPath;
 
 	private static class TestProcessCallable
@@ -292,7 +296,7 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 			processCallable = processProcessCallable(
 				processCallable, _testMethodKey);
 
-			Future<String> future = ProcessExecutor.execute(
+			Future<Serializable> future = _processExecutor.execute(
 				_processConfig, processCallable);
 
 			try {

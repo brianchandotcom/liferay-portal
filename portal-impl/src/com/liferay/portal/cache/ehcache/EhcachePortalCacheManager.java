@@ -144,7 +144,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 					Cache cache = _cacheManager.getCache(name);
 
-					portalCache = new EhcachePortalCache<K, V>(cache);
+					portalCache = new EhcachePortalCache<K, V>(this, cache);
 
 					if (PropsValues.TRANSACTIONAL_CACHE_ENABLED &&
 						isTransactionalPortalCache(name)) {

@@ -17,6 +17,7 @@ package com.liferay.portal.cache.ehcache;
 import com.liferay.portal.kernel.cache.AbstractPortalCache;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
 
 import java.io.Serializable;
 
@@ -38,8 +39,11 @@ import net.sf.ehcache.event.RegisteredEventListeners;
 public class EhcachePortalCache<K extends Serializable, V>
 	extends AbstractPortalCache<K, V> {
 
-	public EhcachePortalCache(Ehcache ehcache) {
+	public EhcachePortalCache(
+		PortalCacheManager<K, V> portalCacheManager, Ehcache ehcache) {
+
 		this.ehcache = ehcache;
+		_portalCacheManager = portalCacheManager;
 	}
 
 	@Override
@@ -50,6 +54,11 @@ public class EhcachePortalCache<K extends Serializable, V>
 	@Override
 	public String getName() {
 		return ehcache.getName();
+	}
+
+	@Override
+	public PortalCacheManager<K, V> getPortalCacheManager() {
+		return _portalCacheManager;
 	}
 
 	@Override
@@ -238,6 +247,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	private Map<CacheListener<K, V>, RegistrationPair> _cacheEventListeners =
 		new ConcurrentHashMap<CacheListener<K, V>, RegistrationPair>();
+	private PortalCacheManager<K, V> _portalCacheManager;
 
 	private static class RegistrationPair {
 

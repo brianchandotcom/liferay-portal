@@ -2,6 +2,7 @@
 @import "aui/alloy-font-awesome/scss/variables";
 @import "compass";
 @import "compass/css3/user-interface";
+@import "aui_variables";
 @import "mixins";
 
 @import url(custom_responsive.css);
@@ -101,6 +102,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	li {
 		line-height: 27px;
+
+		label.checkbox {
+			line-height: $line-height-base;
+		}
 	}
 
 	select:focus {

@@ -39,7 +39,7 @@ public class CacheManagerUtil {
 
 		try {
 			ScheduledThreadPoolExecutor scheduledThreadPoolExecutor =
-				(ScheduledThreadPoolExecutor)_statisticsExecutorField.get(
+				(ScheduledThreadPoolExecutor)_STATISTICS_EXECUTOR_FIELD.get(
 					cacheManager);
 
 			BlockingQueue<Runnable> blockingQueue = null;
@@ -48,10 +48,10 @@ public class CacheManagerUtil {
 			// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6522773
 
 			if (JavaDetector.isJDK6()) {
-				blockingQueue = (BlockingQueue<Runnable>)_workQueueField.get(
+				blockingQueue = (BlockingQueue<Runnable>)_WORK_QUEUE_FIELD.get(
 					scheduledThreadPoolExecutor);
 
-				_workQueueField.set(
+				_WORK_QUEUE_FIELD.set(
 					scheduledThreadPoolExecutor,
 					new DelayQueue<RunnableScheduledFuture<?>>() {
 
@@ -72,7 +72,8 @@ public class CacheManagerUtil {
 						PropsValues.
 							EHCACHE_CACHE_MANAGER_STATISTICS_THREAD_POOL_SIZE);
 
-				_workQueueField.set(scheduledThreadPoolExecutor, blockingQueue);
+				_WORK_QUEUE_FIELD.set(
+					scheduledThreadPoolExecutor, blockingQueue);
 			}
 		}
 		catch (Exception e) {
@@ -82,17 +83,20 @@ public class CacheManagerUtil {
 		return cacheManager;
 	}
 
-	private static Field _statisticsExecutorField;
-	private static Field _workQueueField;
+	private static final Field _STATISTICS_EXECUTOR_FIELD;
+	private static final Field _WORK_QUEUE_FIELD;
 
 	static {
 		try {
-			_statisticsExecutorField = ReflectionUtil.getDeclaredField(
+			_STATISTICS_EXECUTOR_FIELD = ReflectionUtil.getDeclaredField(
 				CacheManager.class, "statisticsExecutor");
 
 			if (JavaDetector.isJDK6()) {
-				_workQueueField = ReflectionUtil.getDeclaredField(
+				_WORK_QUEUE_FIELD = ReflectionUtil.getDeclaredField(
 					ThreadPoolExecutor.class, "workQueue");
+			}
+			else {
+				_WORK_QUEUE_FIELD = null;
 			}
 		}
 		catch (Exception e) {

@@ -16,7 +16,6 @@ package com.liferay.portal.cache;
 
 import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 
 import java.io.Serializable;
@@ -36,7 +35,7 @@ public class MockPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public void clearAll() throws PortalCacheException {
+	public void clearAll() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -46,14 +45,12 @@ public class MockPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public PortalCache<K, V> getCache(String name) throws PortalCacheException {
+	public PortalCache<K, V> getCache(String name) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public PortalCache<K, V> getCache(String name, boolean blocking)
-		throws PortalCacheException {
-
+	public PortalCache<K, V> getCache(String name, boolean blocking) {
 		throw new UnsupportedOperationException();
 	}
 

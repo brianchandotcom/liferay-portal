@@ -373,6 +373,60 @@ public class ListUtilTest {
 	}
 
 	@Test
+	public void testToArray() {
+		List<Integer> list = Arrays.asList(1, 2, 3, 4);
+
+		String[] array = ListUtil.toArray(
+			list, new Accessor<Integer, String>() {
+
+				@Override
+				public String get(Integer integer) {
+					return String.valueOf(integer);
+				}
+
+				@Override
+				public Class<String> getAttributeClass() {
+					return String.class;
+				}
+
+				@Override
+				public Class<Integer> getTypeClass() {
+					return Integer.class;
+				}
+
+			});
+
+		Assert.assertArrayEquals(new String[] {"1", "2", "3", "4"}, array);
+	}
+
+	@Test
+	public void testToEmptyArray() {
+		List<Integer> list = Collections.emptyList();
+
+		String[] array = ListUtil.toArray(
+			list, new Accessor<Integer, String>() {
+
+				@Override
+				public String get(Integer integer) {
+					return String.valueOf(integer);
+				}
+
+				@Override
+				public Class<String> getAttributeClass() {
+					return String.class;
+				}
+
+				@Override
+				public Class<Integer> getTypeClass() {
+					return Integer.class;
+				}
+
+			});
+
+		Assert.assertArrayEquals(new String[] {}, array);
+	}
+
+	@Test
 	public void testToList() throws Exception {
 		List<String> list = new ArrayList<String>();
 

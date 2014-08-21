@@ -54,8 +54,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CLOSE_BUTTON</td>
-	<td>//button[contains(.,'Close')]</td>
+	<td>CANCEL_BUTTON</td>
+	<td>//a[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -47,6 +47,13 @@ public class EhcachePortalCacheClusterReplicator implements CacheEventListener {
 			_replicateUpdatesViaCopy = GetterUtil.getBoolean(
 				properties.getProperty(_REPLICATE_UPDATES_VIA_COPY));
 		}
+		else {
+			_replicatePuts = true;
+			_replicatePutsViaCopy = false;
+			_replicateRemovals = true;
+			_replicateUpdates = true;
+			_replicateUpdatesViaCopy = false;
+		}
 	}
 
 	@Override
@@ -170,10 +177,10 @@ public class EhcachePortalCacheClusterReplicator implements CacheEventListener {
 	private static final String _REPLICATE_UPDATES_VIA_COPY =
 		"replicateUpdatesViaCopy";
 
-	private boolean _replicatePuts = true;
-	private boolean _replicatePutsViaCopy;
-	private boolean _replicateRemovals = true;
-	private boolean _replicateUpdates = true;
-	private boolean _replicateUpdatesViaCopy;
+	private final boolean _replicatePuts;
+	private final boolean _replicatePutsViaCopy;
+	private final boolean _replicateRemovals;
+	private final boolean _replicateUpdates;
+	private final boolean _replicateUpdatesViaCopy;
 
 }

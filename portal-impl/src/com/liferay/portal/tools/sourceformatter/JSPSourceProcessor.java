@@ -176,12 +176,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		List<String> unneededImports) {
 
 		for (String importLine : importLines) {
-			Set<String> includeFileNames = new HashSet<String>();
-
-			includeFileNames.add(fileName);
-
-			Set<String> checkedFileNames = new HashSet<String>();
-
 			int x = importLine.indexOf(StringPool.QUOTE);
 			int y = importLine.indexOf(StringPool.QUOTE, x + 1);
 
@@ -196,10 +190,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			String regex = "[^A-Za-z0-9_\"]" + className + "[^A-Za-z0-9_\"]";
 
-			if (!isJSPTermRequired(
-					fileName, regex, "class", includeFileNames,
-					checkedFileNames)) {
-
+			if (hasUnusedJSPTerm(fileName, regex, "class")) {
 				unneededImports.add(importLine);
 			}
 		}
@@ -1007,6 +998,19 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return null;
 	}
 
+	protected boolean hasUnusedJSPTerm(
+		String fileName, String regex, String type) {
+
+		Set<String> includeFileNames = new HashSet<String>();
+
+		includeFileNames.add(fileName);
+
+		Set<String> checkedFileNames = new HashSet<String>();
+
+		return !isJSPTermRequired(
+			fileName, regex, type, includeFileNames, checkedFileNames);
+	}
+
 	protected boolean hasUnusedTaglib(String fileName, String line) {
 		if (!line.startsWith("<%@ taglib uri=")) {
 			return false;
@@ -1028,17 +1032,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		String taglibPrefix = line.substring(x + 1, y);
 
-		Set<String> includeFileNames = new HashSet<String>();
-
-		includeFileNames.add(fileName);
-
-		Set<String> checkedFileNames = new HashSet<String>();
-
 		String regex = StringPool.LESS_THAN + taglibPrefix + StringPool.COLON;
 
-		return !isJSPTermRequired(
-			fileName, regex, "taglib", includeFileNames, checkedFileNames);
-
+		return hasUnusedJSPTerm(fileName, regex, "taglib");
 	}
 
 	protected boolean hasUnusedVariable(String fileName, String line) {
@@ -1054,16 +1050,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return false;
 		}
 
-		Set<String> includeFileNames = new HashSet<String>();
-
-		includeFileNames.add(fileName);
-
-		Set<String> checkedFileNames = new HashSet<String>();
-
 		String regex = "[^A-Za-z0-9_\"]" + variableName + "[^A-Za-z0-9_\"]";
 
-		return !isJSPTermRequired(
-			fileName, regex, "variable", includeFileNames, checkedFileNames);
+		return hasUnusedJSPTerm(fileName, regex, "taglib");
 	}
 
 	protected boolean isJSPDuplicateImport(

@@ -224,6 +224,10 @@
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
 		<execute macro="Category#viewCategoryViewableByCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="viewableBy" value="${viewableBy}" />
@@ -250,6 +254,10 @@
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
 		<execute macro="Category#viewCategoryViewableByCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="viewableBy" value="${viewableBy}" />
@@ -274,6 +282,10 @@
 			<var name="categoryName" value="${categoryName}" />
 			<var name="viewableBy" value="${viewableBy}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
 		</execute>
 
 		<execute macro="Category#viewCategoryViewableByCP">
@@ -1198,7 +1210,7 @@
 
 		<execute action="CPCategories#assertClick" locator-key1="ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
 		<execute action="CPVocabulariesAdd#type" locator-key1="NAME_FIELD" value1="${vocabularyName}" />
-		<execute action="CPVocabulariesAdd#click" locator-key1="CLOSE_BUTTON" />
+		<execute action="CPVocabulariesAdd#click" locator-key1="CANCEL_BUTTON" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />

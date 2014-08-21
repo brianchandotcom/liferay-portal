@@ -502,6 +502,14 @@ body:first-of-type {
 	@include border-top-right-radius(0);
 }
 
+.portlet-options.btn-group {
+	&, &.open {
+		.dropdown-toggle {
+			@include box-shadow(none);
+		}
+	}
+}
+
 @include keyframes(lfr-drop-active) {
 	0% {
 		background-color: #EBEBEB;

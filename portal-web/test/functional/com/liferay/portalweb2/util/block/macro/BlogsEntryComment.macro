@@ -88,6 +88,7 @@
 				<execute action="PGBlogsEntry#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected comment?" />
 			</then>
 			<else>
+				<execute action="PGBlogsEntry#mouseOver" locator-key1="COMMENT_BODY" />
 				<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENT_DELETE" value1="Delete" />
 				<execute action="PGBlogsEntry#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</else>

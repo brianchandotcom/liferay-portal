@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,16 +12,8 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.portlet.documentlibrary.context;
+<%@ include file="/html/portlet/document_library/init.jsp" %>
 
-/**
- * @author Iván Zaera
- */
-public class DLMenuActions {
-
-	public static final String MENU_ACTION_ID_DOWNLOAD = "download";
-
-	public static final String MENU_ACTION_ID_OPEN_DOCUMENT = "open_document";
-
-}
+<%@ include file="/html/portlet/document_library/action/open_document_js.jspf" %>

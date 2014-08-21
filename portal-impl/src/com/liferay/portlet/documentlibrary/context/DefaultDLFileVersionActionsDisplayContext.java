@@ -18,14 +18,17 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -33,19 +36,43 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import javax.portlet.PortletResponse;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Iván Zaera
  */
 public class DefaultDLFileVersionActionsDisplayContext
 	implements DLFileVersionActionsDisplayContext {
+
+	private class _OpenDocumentJavascriptMenuActionRenderer
+		implements JavascriptMenuAction.Renderer {
+
+		@Override
+		public void render(PageContext pageContext)
+			throws IOException, ServletException {
+
+			pageContext.include(
+				"/html/portlet/document_library/display_context/" +
+				"open_document_js.jsp");
+		}
+
+	}
+
+	private PortletResponse _portletResponse;
+
+	private LiferayPortletResponse _liferayPortletResponse;
 
 	public DefaultDLFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
@@ -82,6 +109,12 @@ public class DefaultDLFileVersionActionsDisplayContext
 		_portletDisplay = _themeDisplay.getPortletDisplay();
 		_scopeGroupId = _themeDisplay.getScopeGroupId();
 		_locale = _themeDisplay.getLocale();
+
+		_portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
+			_portletResponse);
 	}
 
 	@Override
@@ -89,8 +122,31 @@ public class DefaultDLFileVersionActionsDisplayContext
 		List<MenuAction> menuActions = new ArrayList<MenuAction>();
 
 		_addDownloadMenuAction(menuActions);
+		_addOpenDocumentMenuAction(menuActions);
 
 		return menuActions;
+	}
+
+	private void _addOpenDocumentMenuAction(List<MenuAction> menuActions)
+		throws PortalException {
+
+		if (isOpenInMsOfficeButtonVisible()) {
+			String webDavURL = DLUtil.getWebDavURL(
+				_themeDisplay, _fileEntry.getFolder(), _fileEntry,
+				PropsValues.
+					DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED,
+				true);
+
+			String onClick =
+				_liferayPortletResponse.getNamespace() + "openDocument('" +
+					webDavURL + "');";
+
+			menuActions.add(
+				new JavascriptMenuAction(
+					DLMenuActions.MENU_ACTION_ID_OPEN_DOCUMENT, "icon-file-alt",
+					"open-in-ms-office", onClick,
+					new _OpenDocumentJavascriptMenuActionRenderer()));
+		}
 	}
 
 	private void _addDownloadMenuAction(List<MenuAction> menuActions)
@@ -107,7 +163,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 					false, true);
 
 				menuActions.add(
-					new MenuAction(
+					new URLMenuAction(
 						DLMenuActions.MENU_ACTION_ID_DOWNLOAD, "icon-download",
 						message, url));
 			}

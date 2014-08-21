@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapperTracker;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.ResourceBundleTracker;
@@ -66,7 +66,7 @@ public class PortletBagImpl implements PortletBag {
 		List<ConfigurationAction> configurationActionInstances,
 		List<Indexer> indexerInstances, List<OpenSearch> openSearchInstances,
 		List<SchedulerEntry> schedulerEntryInstances,
-		List<FriendlyURLMapper> friendlyURLMapperInstances,
+		FriendlyURLMapperTracker friendlyURLMapperTracker,
 		List<URLEncoder> urlEncoderInstances,
 		List<PortletDataHandler> portletDataHandlerInstances,
 		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances,
@@ -97,7 +97,7 @@ public class PortletBagImpl implements PortletBag {
 		_indexerInstances = indexerInstances;
 		_openSearchInstances = openSearchInstances;
 		_schedulerEntryInstances = schedulerEntryInstances;
-		_friendlyURLMapperInstances = friendlyURLMapperInstances;
+		_friendlyURLMapperTracker = friendlyURLMapperTracker;
 		_urlEncoderInstances = urlEncoderInstances;
 		_portletDataHandlerInstances = portletDataHandlerInstances;
 		_stagedModelDataHandlerInstances = stagedModelDataHandlerInstances;
@@ -128,7 +128,7 @@ public class PortletBagImpl implements PortletBag {
 			getPortletName(), getServletContext(), getPortletInstance(),
 			getResourceBundleTracker(), getConfigurationActionInstances(),
 			getIndexerInstances(), getOpenSearchInstances(),
-			getSchedulerEntryInstances(), getFriendlyURLMapperInstances(),
+			getSchedulerEntryInstances(), getFriendlyURLMapperTracker(),
 			getURLEncoderInstances(), getPortletDataHandlerInstances(),
 			getStagedModelDataHandlerInstances(), getTemplateHandlerInstances(),
 			getPortletLayoutListenerInstances(), getPollerProcessorInstances(),
@@ -152,7 +152,7 @@ public class PortletBagImpl implements PortletBag {
 		close(_controlPanelEntryInstances);
 		close(_customAttributesDisplayInstances);
 		close(_ddmDisplayInstances);
-		close(_friendlyURLMapperInstances);
+		close(_friendlyURLMapperTracker);
 		close(_indexerInstances);
 		close(_openSearchInstances);
 		close(_permissionPropagatorInstances);
@@ -205,8 +205,8 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public List<FriendlyURLMapper> getFriendlyURLMapperInstances() {
-		return _friendlyURLMapperInstances;
+	public FriendlyURLMapperTracker getFriendlyURLMapperTracker() {
+		return _friendlyURLMapperTracker;
 	}
 
 	@Override
@@ -378,7 +378,7 @@ public class PortletBagImpl implements PortletBag {
 	private List<ControlPanelEntry> _controlPanelEntryInstances;
 	private List<CustomAttributesDisplay> _customAttributesDisplayInstances;
 	private List<DDMDisplay> _ddmDisplayInstances;
-	private List<FriendlyURLMapper> _friendlyURLMapperInstances;
+	private FriendlyURLMapperTracker _friendlyURLMapperTracker;
 	private List<Indexer> _indexerInstances;
 	private List<OpenSearch> _openSearchInstances;
 	private List<PermissionPropagator> _permissionPropagatorInstances;

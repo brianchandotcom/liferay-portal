@@ -134,9 +134,7 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
-	public void testActionCommandElementMissingAttribute()
-		throws Exception {
-
+	public void testActionCommandElementMissingAttribute() throws Exception {
 		test(
 			"ActionCommandElementMissingAttribute_1.action",
 			"Error 1003: Missing name attribute in " + _DIR_NAME +

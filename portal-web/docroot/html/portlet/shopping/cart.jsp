@@ -46,13 +46,6 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		}
 	}
 
-	function <portlet:namespace />emptyCart() {
-		document.<portlet:namespace />fm.<portlet:namespace />itemIds.value = '';
-		document.<portlet:namespace />fm.<portlet:namespace />couponCodes.value = '';
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
 	function <portlet:namespace />updateCart() {
 		var count = 0;
 		var invalidSKUs = '';
@@ -210,6 +203,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		PortletURL rowURL = renderResponse.createRenderURL();
 
 		rowURL.setParameter("struts_action", "/shopping/view_item");
+		rowURL.setParameter("redirect", currentURL);
 		rowURL.setParameter("itemId", String.valueOf(item.getItemId()));
 
 		// SKU and small image
@@ -538,9 +532,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	<aui:button-row>
 		<aui:button onClick='<%= renderResponse.getNamespace() + "updateCart();" %>' value="update-cart" />
 
-		<aui:button onClick='<%= renderResponse.getNamespace() + "emptyCart();" %>' value="empty-cart" />
-
-		<aui:button disabled="<%= items.isEmpty() %>" onClick='<%= renderResponse.getNamespace() + "checkout();" %>' value="checkout" />
+		<aui:button disabled="<%= items.isEmpty() %>" onClick='<%= renderResponse.getNamespace() + "checkout();" %>' type="submit" value="checkout" />
 	</aui:button-row>
 </aui:form>
 

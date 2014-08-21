@@ -52,3 +52,11 @@ catch (NoSuchOrderException nsoe) {
 		<liferay-ui:message key="your-order-was-already-processed.-please-check-your-email-for-your-order-summary-and-further-details" />
 	</c:otherwise>
 </c:choose>
+
+<portlet:renderURL var="continueShoppingURL">
+	<portlet:param name="struts_action" value="/shopping/view" />
+</portlet:renderURL>
+
+<aui:button-row>
+	<aui:button href="<%= continueShoppingURL.toString() %>" value="continue-shopping" />
+</aui:button-row>

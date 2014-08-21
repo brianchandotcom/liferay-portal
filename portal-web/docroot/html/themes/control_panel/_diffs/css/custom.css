@@ -476,8 +476,13 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.portlet-topper-toolbar {
 		position: absolute;
-		right: 21px;
+		right: 8px;
 		top: 20px;
+	}
+
+	.portlet-topper-titleless .portlet-topper-toolbar {
+		bottom: 30px;
+		top: auto;
 	}
 
 	.lfr-control-panel-help-content.alert {
@@ -486,8 +491,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.portlet-title {
+		display: inline-block;
 		font-size: 25px;
 		font-weight: 100;
+		width: 85%;
 
 		.taglib-icon-help {
 			margin-left: -7px;
@@ -1210,11 +1217,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 					border-left: 1px solid #D3D3D3;
 				}
 			}
-		}
-
-		.portlet-title {
-			display: inline-block;
-			width: 85%;
 		}
 
 		.portlet-journal {

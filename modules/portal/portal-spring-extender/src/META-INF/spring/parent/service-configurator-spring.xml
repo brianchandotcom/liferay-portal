@@ -8,14 +8,5 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd"
 >
-	<bean id="com.liferay.portal.spring.extender.internal.service.configurator.ServiceConfigurator" class="com.liferay.portal.spring.extender.internal.service.configurator.impl.ServiceConfiguratorImpl">
-		<property name="serviceComponentLocalService" ref="com.liferay.portal.service.ServiceComponentLocalService" />
-	</bean>
-	<bean id="com.liferay.portal.spring.extender.internal.service.configurator.listener.BaseServiceConfiguratorListener" class="com.liferay.portal.spring.extender.internal.service.configurator.listener.BaseServiceConfiguratorListener" abstract="true">
-		<property name="serviceConfigurator" ref="com.liferay.portal.spring.extender.internal.service.configurator.ServiceConfigurator" />
-	</bean>
-	<bean id="com.liferay.portal.spring.extender.internal.service.configurator.listener.StartedServiceConfiguratorListener" class="com.liferay.portal.spring.extender.internal.service.configurator.listener.StartedServiceConfiguratorListener" parent="com.liferay.portal.spring.extender.internal.service.configurator.listener.BaseServiceConfiguratorListener" />
-	<bean id="com.liferay.portal.spring.extender.internal.service.configurator.listener.StoppedServiceConfiguratorListener" class="com.liferay.portal.spring.extender.internal.service.configurator.listener.StoppedServiceConfiguratorListener" parent="com.liferay.portal.spring.extender.internal.service.configurator.listener.BaseServiceConfiguratorListener" />
-	<osgi:reference id="com.liferay.portal.service.ServiceComponentLocalService" availability="mandatory" filter="(original.bean=true)" interface="com.liferay.portal.service.ServiceComponentLocalService" />
 	<osgi:reference id="javax.servlet.ServletContext" availability="mandatory" filter="(original.bean=true)" interface="javax.servlet.ServletContext" />
 </beans>

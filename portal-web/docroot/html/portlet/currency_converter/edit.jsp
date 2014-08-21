@@ -57,7 +57,7 @@
 		rightTitle="available"
 	/>
 
-	<aui:button onClick='<%= renderResponse.getNamespace() + "saveCurrency();" %>' primary="<%= true %>" type="button" value="save" />
+	<aui:button onClick='<%= renderResponse.getNamespace() + "saveCurrency();" %>' primary="<%= true %>" value="save" />
 </aui:form>
 
 <aui:script>

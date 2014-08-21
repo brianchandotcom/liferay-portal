@@ -552,6 +552,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
 
+			if (portalSource && hasUnusedTaglib(fileName, line)) {
+				continue;
+			}
+
 			if (!fileName.contains("jsonw") ||
 				!fileName.endsWith("action.jsp")) {
 
@@ -1001,6 +1005,40 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return null;
+	}
+
+	protected boolean hasUnusedTaglib(String fileName, String line) {
+		if (!line.startsWith("<%@ taglib uri=")) {
+			return false;
+		}
+
+		int x = line.indexOf(" prefix=");
+
+		if (x == -1) {
+			return false;
+		}
+
+		x = line.indexOf(StringPool.QUOTE, x);
+
+		int y = line.indexOf(StringPool.QUOTE, x + 1);
+
+		if ((x == -1) || (y == -1)) {
+			return false;
+		}
+
+		String taglibPrefix = line.substring(x + 1, y);
+
+		Set<String> includeFileNames = new HashSet<String>();
+
+		includeFileNames.add(fileName);
+
+		Set<String> checkedFileNames = new HashSet<String>();
+
+		String regex = StringPool.LESS_THAN + taglibPrefix + StringPool.COLON;
+
+		return !isJSPTermRequired(
+			fileName, regex, "taglib", includeFileNames, checkedFileNames);
+
 	}
 
 	protected boolean hasUnusedVariable(String fileName, String line) {

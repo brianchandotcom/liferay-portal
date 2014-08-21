@@ -466,6 +466,25 @@ public class ListUtil {
 		return list;
 	}
 
+	public static <T> long[] toLongArray(
+		List<? extends T> list, Accessor<T, Long> accessor) {
+
+		if (isEmpty(list)) {
+			return (long[])Array.newInstance(long.class, 0);
+		}
+
+		long[] array = (long[])Array.newInstance(long.class, list.size());
+
+		for (int i = 0; i < list.size(); i++) {
+			T bean = list.get(i);
+			Long attribute = accessor.get(bean);
+
+			array[i] = attribute;
+		}
+
+		return array;
+	}
+
 	/**
 	 * @see ArrayUtil#toString(Object[], Accessor)
 	 */

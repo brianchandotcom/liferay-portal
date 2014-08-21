@@ -767,6 +767,17 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
+		// LPS-49505
+
+		if (line.matches(
+				".*The web application \\[\\] created a ThreadLocal with key " +
+					"of type.*")) {
+
+			if (line.contains("[org.jruby.RubyEncoding$2]")) {
+				return true;
+			}
+		}
+
 		// LPS-49506
 
 		if (line.matches(

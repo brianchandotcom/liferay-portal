@@ -156,15 +156,7 @@ AUI.add(
 
 						instance._eventHandles = eventHandles;
 
-						portletContainer.delegate(
-							STR_CLICK,
-							A.bind('_onPortletContainerClick', instance),
-							formatSelectorNS(instance.NS, '#entriesContainer a[data-folder=true], #breadcrumbContainer a')
-						);
-
 						portletContainer.plug(A.LoadingMask);
-
-						instance._listView.after('itemChange', instance._afterListViewItemChange, instance);
 
 						instance._restoreState();
 					},
@@ -306,73 +298,6 @@ AUI.add(
 						);
 					},
 
-					_afterListViewItemChange: function(event) {
-						var instance = this;
-
-						var selFolder = A.one('.folder.active');
-
-						if (selFolder) {
-							selFolder.removeClass(CSS_SELECTED);
-						}
-
-						var item = event.newVal;
-
-						item.ancestor('.folder').addClass(CSS_SELECTED);
-
-						var entryConfig = instance.get('entry');
-
-						var dataBrowseBy = item.attr('data-browse-by');
-						var dataStructureId = item.attr(entryConfig.typeId);
-						var dataFolderId = item.attr(DATA_FOLDER_ID);
-						var dataNavigation = item.attr('data-navigation');
-						var dataViewEntries = item.attr(DATA_VIEW_ENTRIES);
-						var dataViewFolders = item.attr(DATA_VIEW_FOLDERS);
-
-						var direction = 'left';
-
-						if (item.attr(DATA_DIRECTION_RIGHT)) {
-							direction = STR_RIGHT;
-						}
-
-						instance._listView.set('direction', direction);
-
-						var requestParams = {};
-
-						requestParams[instance.ns(PARAM_STRUTS_ACTION)] = instance.get(STR_STRUTS_ACTION);
-
-						if (dataBrowseBy) {
-							requestParams[instance.ns(BROWSE_BY)] = dataBrowseBy;
-						}
-
-						if (dataFolderId) {
-							requestParams[instance._folderId] = dataFolderId;
-						}
-
-						if (dataNavigation) {
-							requestParams[instance.ns('navigation')] = dataNavigation;
-						}
-
-						if (dataViewEntries) {
-							requestParams[instance.ns(VIEW_ENTRIES)] = dataViewEntries;
-						}
-
-						if (dataStructureId) {
-							requestParams[instance.ns(entryConfig.paramName)] = dataStructureId;
-						}
-
-						if (dataViewFolders) {
-							requestParams[instance.ns(VIEW_FOLDERS)] = dataViewFolders;
-						}
-
-						Liferay.fire(
-							instance._eventDataRequest,
-							{
-								requestParams: requestParams,
-								resetPagination: true
-							}
-						);
-					},
-
 					_onDataRequest: function(event) {
 						var instance = this;
 
@@ -394,46 +319,6 @@ AUI.add(
 						instance._portletContainer.loadingmask.hide();
 
 						instance.displayMessage(MESSAGE_TYPE_ERROR, Liferay.Language.get('your-request-failed-to-complete'));
-					},
-
-					_onPortletContainerClick: function(event) {
-						var instance = this;
-
-						event.preventDefault();
-
-						var requestParams = {};
-
-						requestParams[instance.ns(PARAM_STRUTS_ACTION)] = instance.get(STR_STRUTS_ACTION);
-						requestParams[instance.ns('action')] = 'browseFolder';
-						requestParams[instance._folderId] = event.currentTarget.attr(DATA_FOLDER_ID);
-
-						var viewEntries = event.currentTarget.attr(DATA_VIEW_ENTRIES);
-
-						if (viewEntries) {
-							requestParams[instance.ns(VIEW_ENTRIES)] = viewEntries;
-						}
-
-						var viewFolders = event.currentTarget.attr(DATA_VIEW_FOLDERS);
-
-						if (viewFolders) {
-							requestParams[instance.ns(VIEW_FOLDERS)] = viewFolders;
-						}
-
-						var direction = 'left';
-
-						if (event.currentTarget.attr(DATA_DIRECTION_RIGHT)) {
-							direction = STR_RIGHT;
-						}
-
-						instance._listView.set('direction', direction);
-
-						Liferay.fire(
-							instance._eventDataRequest,
-							{
-								requestParams: requestParams,
-								resetPagination: true
-							}
-						);
 					},
 
 					_parseContent: function(data) {

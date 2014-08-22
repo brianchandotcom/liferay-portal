@@ -15,27 +15,27 @@
 package com.liferay.portal.verify.model.verifiable;
 
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.asset.model.AssetVocabulary;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class MBCategoryVerifiableResourcedModel
+public class AssetVocabularyVerifiableModel
 	implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return MBCategory.class.getName();
+		return AssetVocabulary.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "categoryId";
+		return "vocabularyId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "MBCategory";
+		return "AssetVocabulary";
 	}
 
 }

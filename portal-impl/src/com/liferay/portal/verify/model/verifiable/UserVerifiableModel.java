@@ -14,28 +14,27 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
+import com.liferay.portal.model.User;
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.journal.model.JournalArticle;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class JournalArticleVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class UserVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return JournalArticle.class.getName();
+		return User.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "resourcePrimKey";
+		return "userId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "JournalArticle";
+		return "User_";
 	}
 
 }

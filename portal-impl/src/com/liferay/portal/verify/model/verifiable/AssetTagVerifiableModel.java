@@ -14,28 +14,27 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portlet.asset.model.AssetTag;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class LayoutSetBranchVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class AssetTagVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return LayoutSetBranch.class.getName();
+		return AssetTag.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "layoutSetBranchId";
+		return "tagId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "LayoutSetBranch";
+		return "AssetTag";
 	}
 
 }

@@ -14,27 +14,28 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.model.User;
+import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserVerifiableResourcedModel implements VerifiableResourcedModel {
+public class LayoutSetBranchVerifiableModel
+	implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return User.class.getName();
+		return LayoutSetBranch.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "userId";
+		return "layoutSetBranchId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "User_";
+		return "LayoutSetBranch";
 	}
 
 }

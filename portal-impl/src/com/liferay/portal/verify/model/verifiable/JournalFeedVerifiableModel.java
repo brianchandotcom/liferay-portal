@@ -20,8 +20,7 @@ import com.liferay.portlet.journal.model.JournalFeed;
 /**
  * @author Brian Wing Shun Chan
  */
-public class JournalFeedVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class JournalFeedVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {

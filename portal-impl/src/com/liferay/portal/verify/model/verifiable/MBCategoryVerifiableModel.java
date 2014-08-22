@@ -14,42 +14,27 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portlet.messageboards.model.MBCategory;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public class LayoutFriendlyURLVerifiableAuditedModel
-	implements VerifiableAuditedModel {
+public class MBCategoryVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
-	public String getJoinByTableName() {
-		return null;
+	public String getModelName() {
+		return MBCategory.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "layoutFriendlyURLId";
-	}
-
-	@Override
-	public String getRelatedModelName() {
-		return null;
-	}
-
-	@Override
-	public String getRelatedPKColumnName() {
-		return null;
+		return "categoryId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "LayoutFriendlyURL";
-	}
-
-	@Override
-	public boolean isUpdateDates() {
-		return false;
+		return "MBCategory";
 	}
 
 }

@@ -14,28 +14,41 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
-public class BlogsEntryVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class UserGroupVerifiableModel implements VerifiableAuditedModel {
 
 	@Override
-	public String getModelName() {
-		return BlogsEntry.class.getName();
+	public String getJoinByTableName() {
+		return null;
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "entryId";
+		return "userGroupId";
+	}
+
+	@Override
+	public String getRelatedModelName() {
+		return null;
+	}
+
+	@Override
+	public String getRelatedPKColumnName() {
+		return null;
 	}
 
 	@Override
 	public String getTableName() {
-		return "BlogsEntry";
+		return "UserGroup";
+	}
+
+	@Override
+	public boolean isUpdateDates() {
+		return true;
 	}
 
 }

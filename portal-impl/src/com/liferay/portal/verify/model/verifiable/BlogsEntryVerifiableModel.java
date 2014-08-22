@@ -14,41 +14,27 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portlet.blogs.model.BlogsEntry;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public class MBThreadVerifiableAuditedModel implements VerifiableAuditedModel {
+public class BlogsEntryVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
-	public String getJoinByTableName() {
-		return "rootMessageId";
+	public String getModelName() {
+		return BlogsEntry.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "threadId";
-	}
-
-	@Override
-	public String getRelatedModelName() {
-		return "MBMessage";
-	}
-
-	@Override
-	public String getRelatedPKColumnName() {
-		return "messageId";
+		return "entryId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "MBThread";
-	}
-
-	@Override
-	public boolean isUpdateDates() {
-		return true;
+		return "BlogsEntry";
 	}
 
 }

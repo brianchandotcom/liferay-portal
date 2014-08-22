@@ -15,27 +15,26 @@
 package com.liferay.portal.verify.model.verifiable;
 
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.wiki.model.WikiNode;
+import com.liferay.portlet.journal.model.JournalArticle;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiNodeVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class JournalArticleVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return WikiNode.class.getName();
+		return JournalArticle.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "nodeId";
+		return "resourcePrimKey";
 	}
 
 	@Override
 	public String getTableName() {
-		return "WikiNode";
+		return "JournalArticle";
 	}
 
 }

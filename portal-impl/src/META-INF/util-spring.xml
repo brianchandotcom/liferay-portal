@@ -802,48 +802,48 @@
 	</bean>
 	<bean id="com.liferay.portal.util.PrefsPropsUtil" class="com.liferay.portal.util.PrefsPropsUtil" />
 	<bean id="com.liferay.portal.verify.model.audited.LayoutVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.LayoutVerifiableAuditedModel" />
-	<bean id="com.liferay.portal.verify.model.audited.LayoutFriendlyURLVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.LayoutFriendlyURLVerifiableAuditedModel" />
-	<bean id="com.liferay.portal.verify.model.audited.LayoutPrototypeVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.LayoutPrototypeVerifiableAuditedModel" />
-	<bean id="com.liferay.portal.verify.model.audited.LayoutSetPrototypeVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.LayoutSetPrototypeVerifiableAuditedModel" />
+	<bean id="com.liferay.portal.verify.model.audited.LayoutFriendlyURLVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.LayoutFriendlyURLAuditedModel" />
+	<bean id="com.liferay.portal.verify.model.audited.LayoutPrototypeVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.LayoutPrototypeVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.audited.LayoutSetPrototypeVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.LayoutSetPrototypeVerifiableModel" />
 	<bean id="com.liferay.portal.verify.model.audited.MBDiscussionVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.MBDiscussionVerifiableAuditedModel" />
-	<bean id="com.liferay.portal.verify.model.audited.MBThreadVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.MBThreadVerifiableAuditedModel" />
+	<bean id="com.liferay.portal.verify.model.audited.MBThreadVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.MBThreadVerifiableModel" />
 	<bean id="com.liferay.portal.verify.model.audited.MBThreadFlagVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.MBThreadFlagVerifiableAuditedModel" />
 	<bean id="com.liferay.portal.verify.model.audited.OrganizationVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.OrganizationVerifiableAuditedModel" />
 	<bean id="com.liferay.portal.verify.model.audited.PollsChoiceVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.PollsChoiceVerifiableAuditedModel" />
 	<bean id="com.liferay.portal.verify.model.audited.PollsVoteVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.PollsVoteVerifiableAuditedModel" />
-	<bean id="com.liferay.portal.verify.model.audited.RepositoryEntryVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.RepositoryEntryVerifiableAuditedModel" />
-	<bean id="com.liferay.portal.verify.model.audited.RoleVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.RoleVerifiableAuditedModel" />
-	<bean id="com.liferay.portal.verify.model.audited.UserGroupVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.UserGroupVerifiableAuditedModel" />
+	<bean id="com.liferay.portal.verify.model.audited.RepositoryEntryVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.RepositoryEntryVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.audited.RoleVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.RoleVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.audited.UserGroupVerifiableAuditedModel" class="com.liferay.portal.verify.model.verifiable.UserGroupVerifiableModel" />
 	<bean id="com.liferay.portal.verify.model.grouped.MBDiscussionVerifiableGroupedModel" class="com.liferay.portal.verify.model.verifiable.MBDiscussionVerifiableGroupedModel" />
 	<bean id="com.liferay.portal.verify.model.grouped.MBThreadFlagVerifiableGroupedModel" class="com.liferay.portal.verify.model.verifiable.MBThreadFlagVerifiableGroupedModel" />
 	<bean id="com.liferay.portal.verify.model.grouped.PollsChoiceVerifiableGroupedModel" class="com.liferay.portal.verify.model.verifiable.PollsChoiceVerifiableGroupedModel" />
 	<bean id="com.liferay.portal.verify.model.grouped.PollsVoteVerifiableGroupedModel" class="com.liferay.portal.verify.model.verifiable.PollsVoteVerifiableGroupedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.AnnouncementsEntryVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.AnnouncementsEntryVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.AssetCategoryVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.AssetCategoryVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.AssetTagVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.AssetTagVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.AssetVocabularyVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.AssetVocabularyVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.BlogsEntryVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.BlogsEntryVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.DDMStructureVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.DDMStructureVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.DDMTemplateVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.DDMTemplateVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.DLFileEntryVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.DLFileEntryVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.DLFileShortcutVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.DLFileShortcutVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.DLFolderVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.DLFolderVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.JournalArticleVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.JournalArticleVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.JournalFeedVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.JournalFeedVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.LayoutSetBranchVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.LayoutSetBranchVerifiableResourcedModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.AnnouncementsEntryVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.AnnouncementsEntryVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.AssetCategoryVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.AssetCategoryVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.AssetTagVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.AssetTagVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.AssetVocabularyVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.AssetVocabularyVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.BlogsEntryVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.BlogsEntryVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.DDMStructureVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.DDMStructureVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.DDMTemplateVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.DDMTemplateVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.DLFileEntryVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.DLFileEntryVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.DLFileShortcutVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.DLFileShortcutVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.DLFolderVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.DLFolderVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.JournalArticleVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.JournalArticleVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.JournalFeedVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.JournalFeedVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.LayoutSetBranchVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.LayoutSetBranchVerifiableModel" />
 	<bean id="com.liferay.portal.verify.model.resourced.LayoutVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.LayoutVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.MBCategoryVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.MBCategoryVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.MBMessageVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.MBMessageVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.PasswordPolicyVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.PasswordPolicyVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.PollsQuestionVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.PollsQuestionVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.SCFrameworkVersionVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.SCFrameworkVersionVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.SCProductEntryVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.SCProductEntryVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.ShoppingCategoryVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.ShoppingCategoryVerifiableResourcedModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.MBCategoryVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.MBCategoryVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.MBMessageVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.MBMessageVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.PasswordPolicyVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.PasswordPolicyVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.PollsQuestionVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.PollsQuestionVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.SCFrameworkVersionVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.SCFrameworkVersionVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.SCProductEntryVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.SCProductEntryVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.ShoppingCategoryVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.ShoppingCategoryVerifiableModel" />
 	<bean id="com.liferay.portal.verify.model.resourced.ShoppingItemVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.ShoppingItemVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.TeamVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.TeamVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.UserVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.UserVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.WikiNodeVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.WikiNodeVerifiableResourcedModel" />
-	<bean id="com.liferay.portal.verify.model.resourced.WikiPageVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.WikiPageVerifiableResourcedModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.TeamVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.TeamVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.UserVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.UserVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.WikiNodeVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.WikiNodeVerifiableModel" />
+	<bean id="com.liferay.portal.verify.model.resourced.WikiPageVerifiableResourcedModel" class="com.liferay.portal.verify.model.verifiable.WikiPageVerifiableModel" />
 	<bean id="com.liferay.portal.webserver.WebServerServletTokenUtil" class="com.liferay.portal.webserver.WebServerServletTokenUtil">
 		<property name="webServerServletToken">
 			<bean class="com.liferay.portal.webserver.WebServerServletTokenImpl">

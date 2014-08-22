@@ -14,42 +14,28 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public class LayoutPrototypeVerifiableAuditedModel
-	implements VerifiableAuditedModel {
+public class SCFrameworkVersionVerifiableModel
+	implements VerifiableResourcedModel {
 
 	@Override
-	public String getJoinByTableName() {
-		return null;
+	public String getModelName() {
+		return SCFrameworkVersion.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "layoutPrototypeId";
-	}
-
-	@Override
-	public String getRelatedModelName() {
-		return null;
-	}
-
-	@Override
-	public String getRelatedPKColumnName() {
-		return null;
+		return "frameworkVersionId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "LayoutPrototype";
-	}
-
-	@Override
-	public boolean isUpdateDates() {
-		return true;
+		return "SCFrameworkVersion";
 	}
 
 }

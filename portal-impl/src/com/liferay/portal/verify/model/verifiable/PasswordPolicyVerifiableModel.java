@@ -14,28 +14,27 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
+import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.asset.model.AssetCategory;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssetCategoryVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class PasswordPolicyVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return AssetCategory.class.getName();
+		return PasswordPolicy.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "categoryId";
+		return "passwordPolicyId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "AssetCategory";
+		return "PasswordPolicy";
 	}
 
 }

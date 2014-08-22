@@ -14,28 +14,41 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
-public class AssetTagVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class RoleVerifiableModel implements VerifiableAuditedModel {
 
 	@Override
-	public String getModelName() {
-		return AssetTag.class.getName();
+	public String getJoinByTableName() {
+		return null;
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "tagId";
+		return "roleId";
+	}
+
+	@Override
+	public String getRelatedModelName() {
+		return null;
+	}
+
+	@Override
+	public String getRelatedPKColumnName() {
+		return null;
 	}
 
 	@Override
 	public String getTableName() {
-		return "AssetTag";
+		return "Role_";
+	}
+
+	@Override
+	public boolean isUpdateDates() {
+		return true;
 	}
 
 }

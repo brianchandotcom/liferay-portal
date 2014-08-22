@@ -14,41 +14,27 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portlet.polls.model.PollsQuestion;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public class RoleVerifiableAuditedModel implements VerifiableAuditedModel {
+public class PollsQuestionVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
-	public String getJoinByTableName() {
-		return null;
+	public String getModelName() {
+		return PollsQuestion.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "roleId";
-	}
-
-	@Override
-	public String getRelatedModelName() {
-		return null;
-	}
-
-	@Override
-	public String getRelatedPKColumnName() {
-		return null;
+		return "questionId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "Role_";
-	}
-
-	@Override
-	public boolean isUpdateDates() {
-		return true;
+		return "PollsQuestion";
 	}
 
 }

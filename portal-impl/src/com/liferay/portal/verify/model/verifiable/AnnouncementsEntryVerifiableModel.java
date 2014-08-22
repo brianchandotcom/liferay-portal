@@ -15,27 +15,27 @@
 package com.liferay.portal.verify.model.verifiable;
 
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.shopping.model.ShoppingCategory;
+import com.liferay.portlet.announcements.model.AnnouncementsEntry;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ShoppingCategoryVerifiableResourcedModel
+public class AnnouncementsEntryVerifiableModel
 	implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return ShoppingCategory.class.getName();
+		return AnnouncementsEntry.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "categoryId";
+		return "entryId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "ShoppingCategory";
+		return "AnnouncementsEntry";
 	}
 
 }

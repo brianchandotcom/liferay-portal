@@ -14,27 +14,27 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.model.Team;
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class TeamVerifiableResourcedModel implements VerifiableResourcedModel {
+public class DDMTemplateVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return Team.class.getName();
+		return DDMTemplate.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "teamId";
+		return "templateId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "Team";
+		return "DDMTemplate";
 	}
 
 }

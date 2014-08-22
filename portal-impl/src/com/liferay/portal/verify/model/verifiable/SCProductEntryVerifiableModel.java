@@ -14,28 +14,27 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PasswordPolicyVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class SCProductEntryVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return PasswordPolicy.class.getName();
+		return SCProductEntry.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "passwordPolicyId";
+		return "productEntryId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "PasswordPolicy";
+		return "SCProductEntry";
 	}
 
 }

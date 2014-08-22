@@ -15,27 +15,27 @@
 package com.liferay.portal.verify.model.verifiable;
 
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.shopping.model.ShoppingCategory;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssetVocabularyVerifiableResourcedModel
+public class ShoppingCategoryVerifiableModel
 	implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return AssetVocabulary.class.getName();
+		return ShoppingCategory.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "vocabularyId";
+		return "categoryId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "AssetVocabulary";
+		return "ShoppingCategory";
 	}
 
 }

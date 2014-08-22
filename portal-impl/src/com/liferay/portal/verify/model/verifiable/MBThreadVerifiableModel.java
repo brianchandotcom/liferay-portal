@@ -14,28 +14,41 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
-public class DDMStructureVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class MBThreadVerifiableModel implements VerifiableAuditedModel {
 
 	@Override
-	public String getModelName() {
-		return DDMStructure.class.getName();
+	public String getJoinByTableName() {
+		return "rootMessageId";
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "structureId";
+		return "threadId";
+	}
+
+	@Override
+	public String getRelatedModelName() {
+		return "MBMessage";
+	}
+
+	@Override
+	public String getRelatedPKColumnName() {
+		return "messageId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "DDMStructure";
+		return "MBThread";
+	}
+
+	@Override
+	public boolean isUpdateDates() {
+		return true;
 	}
 
 }

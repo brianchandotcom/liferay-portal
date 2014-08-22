@@ -15,27 +15,26 @@
 package com.liferay.portal.verify.model.verifiable;
 
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SCProductEntryVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class DLFileEntryVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return SCProductEntry.class.getName();
+		return DLFileEntry.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "productEntryId";
+		return "fileEntryId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "SCProductEntry";
+		return "DLFileEntry";
 	}
 
 }

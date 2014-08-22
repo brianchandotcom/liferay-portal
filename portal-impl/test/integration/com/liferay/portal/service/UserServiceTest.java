@@ -224,7 +224,7 @@ public class UserServiceTest {
 
 			Assert.assertTrue(
 				MailServiceTestUtil.lastMailMessageContains(
-					"Your new password"));
+					"email_password_sent_body.tmpl"));
 		}
 
 		@Test
@@ -243,7 +243,7 @@ public class UserServiceTest {
 
 			Assert.assertTrue(
 				MailServiceTestUtil.lastMailMessageContains(
-					"Your new password"));
+					"email_password_sent_body.tmpl"));
 		}
 
 		@Test
@@ -261,7 +261,7 @@ public class UserServiceTest {
 
 			Assert.assertTrue(
 				MailServiceTestUtil.lastMailMessageContains(
-					"Your new password"));
+					"email_password_sent_body.tmpl"));
 		}
 
 		@Test
@@ -279,7 +279,7 @@ public class UserServiceTest {
 				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 			Assert.assertTrue(
 				MailServiceTestUtil.lastMailMessageContains(
-					"You can reset your password"));
+					"email_password_reset_body.tmpl"));
 		}
 
 		@Test
@@ -297,7 +297,7 @@ public class UserServiceTest {
 				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 			Assert.assertTrue(
 				MailServiceTestUtil.lastMailMessageContains(
-					"You can reset your password"));
+					"email_password_reset_body.tmpl"));
 		}
 
 		@Test
@@ -314,7 +314,7 @@ public class UserServiceTest {
 				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 			Assert.assertTrue(
 				MailServiceTestUtil.lastMailMessageContains(
-					"You can reset your password"));
+					"email_password_reset_body.tmpl"));
 		}
 
 		protected void givenThatCompanySendsNewPassword()

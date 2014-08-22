@@ -5,11 +5,7 @@
 <html class="${root_css_class}" dir="<@liferay.language key="lang.dir" />" lang="${w3c_language_id}">
 
 <head>
-	<#if site_name == company_name>
-		<title>${the_title} - ${company_name}</title>
-	<#else>
-		<title>${the_title} - ${site_name} - ${company_name}</title>
-	</#if>
+	<title>${the_title} - ${company_name}</title>
 
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 

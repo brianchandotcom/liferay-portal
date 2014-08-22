@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.process;
 
 import com.liferay.portal.kernel.concurrent.AbortPolicy;
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.FutureListener;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFutureConverter;
@@ -110,7 +109,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 
 			ProcessBuilder processBuilder = new ProcessBuilder(commands);
 
-			Process process = processBuilder.start();
+			final Process process = processBuilder.start();
 
 			ObjectOutputStream bootstrapObjectOutputStream =
 				new ObjectOutputStream(process.getOutputStream());
@@ -139,13 +138,50 @@ public class LocalProcessExecutor implements ProcessExecutor {
 					processCallableNoticeableFuture = threadPoolExecutor.submit(
 						subprocessReactor);
 
+				processCallableNoticeableFuture.addFutureListener(
+					new FutureListener
+						<ProcessCallable<? extends Serializable>>() {
+
+						@Override
+						public void complete(
+							Future<ProcessCallable<? extends Serializable>>
+								future) {
+
+							if (future.isCancelled()) {
+								process.destroy();
+							}
+						}
+
+					});
+
 				// Consider the newly created process as a managed process only
 				// after the subprocess reactor is taken by the thread pool
 
 				_managedProcesses.add(process);
 
-				return _convertNoticeableFuture(
-					processCallableNoticeableFuture, process);
+				return new NoticeableFutureConverter
+					<T, ProcessCallable<? extends Serializable>>(
+						processCallableNoticeableFuture) {
+
+						@Override
+						protected T convert(
+								ProcessCallable<? extends Serializable>
+									processCallable)
+							throws ProcessException {
+
+							if (processCallable instanceof
+									ReturnProcessCallable<?>) {
+
+								return (T)processCallable.call();
+							}
+
+							ExceptionProcessCallable exceptionProcessCallable =
+								(ExceptionProcessCallable)processCallable;
+
+							throw exceptionProcessCallable.call();
+						}
+
+					};
 			}
 			catch (RejectedExecutionException ree) {
 				process.destroy();
@@ -157,53 +193,6 @@ public class LocalProcessExecutor implements ProcessExecutor {
 		catch (IOException ioe) {
 			throw new ProcessException(ioe);
 		}
-	}
-
-	private static <T extends Serializable> NoticeableFuture<T>
-		_convertNoticeableFuture(
-			final NoticeableFuture<ProcessCallable<? extends Serializable>>
-				processCallableNoticeableFuture,
-			final Process process) {
-
-		DefaultNoticeableFuture<T> defaultNoticeableFuture =
-			new NoticeableFutureConverter
-				<T, ProcessCallable<? extends Serializable>>(
-					processCallableNoticeableFuture) {
-
-			@Override
-			protected T convert(
-					ProcessCallable<? extends Serializable> processCallable)
-				throws ProcessException {
-
-				if (processCallable instanceof
-						ReturnProcessCallable<?>) {
-
-					return (T)processCallable.call();
-				}
-
-				ExceptionProcessCallable exceptionProcessCallable =
-					(ExceptionProcessCallable)processCallable;
-
-				throw exceptionProcessCallable.call();
-			}
-
-		};
-
-		defaultNoticeableFuture.addFutureListener(
-			new FutureListener<T>() {
-
-				@Override
-				public void complete(Future<T> future) {
-					if (future.isCancelled()) {
-						processCallableNoticeableFuture.cancel(true);
-
-						process.destroy();
-					}
-				}
-
-			});
-
-		return defaultNoticeableFuture;
 	}
 
 	private ThreadPoolExecutor _getThreadPoolExecutor() {

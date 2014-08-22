@@ -43,15 +43,18 @@ public class LiferayStrutsRequestImpl extends HttpServletRequestWrapper {
 	public LiferayStrutsRequestImpl(HttpServletRequest request) {
 		super(request);
 
-		_strutsAttributes = (Map<String, Object>)request.getAttribute(
-			WebKeys.STRUTS_BRIDGES_ATTRIBUTES);
+		Map<String, Object> strutsAttributes =
+			(Map<String, Object>)request.getAttribute(
+				WebKeys.STRUTS_BRIDGES_ATTRIBUTES);
 
-		if (_strutsAttributes == null) {
-			_strutsAttributes = new HashMap<String, Object>();
+		if (strutsAttributes == null) {
+			strutsAttributes = new HashMap<String, Object>();
 
 			request.setAttribute(
-				WebKeys.STRUTS_BRIDGES_ATTRIBUTES, _strutsAttributes);
+				WebKeys.STRUTS_BRIDGES_ATTRIBUTES, strutsAttributes);
 		}
+
+		_strutsAttributes = strutsAttributes;
 	}
 
 	@Override
@@ -124,6 +127,6 @@ public class LiferayStrutsRequestImpl extends HttpServletRequestWrapper {
 	}
 
 	private byte[] _bytes;
-	private Map<String, Object> _strutsAttributes;
+	private final Map<String, Object> _strutsAttributes;
 
 }

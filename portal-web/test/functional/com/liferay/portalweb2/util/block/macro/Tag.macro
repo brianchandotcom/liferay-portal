@@ -35,9 +35,6 @@
 
 				<execute action="CPTagsAdd#type" locator-key1="NAME_FIELD" value1="${tagEntry}" />
 				<execute action="CPTagsAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-				<!-- <execute action="CPTags#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Tag names cannot be an empty string or contain characters such as: ${errorMessage1}" /> -->
-
 				<execute action="CPTags#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Your request failed to complete." />
 			</then>
 			<elseif>
@@ -56,9 +53,6 @@
 
 					<execute action="CPTagsAdd#type" locator-key1="NAME_FIELD" value1="${tagName}" />
 					<execute action="CPTagsAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-					<!-- <execute action="CPTags#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="That tag already exists." /> -->
-
 					<execute action="CPTags#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Your request failed to complete." />
 				</then>
 			</elseif>

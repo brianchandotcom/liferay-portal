@@ -100,7 +100,7 @@ public class NetlogonConnection {
 			new NetrServerAuthenticate3(
 				domainControllerName, ntlmServiceAccount.getAccountName(), 2,
 				ntlmServiceAccount.getComputerName(), clientCredential,
-				new byte[8], _negotiateFlags);
+				new byte[8], _NEGOTIATE_FLAGS);
 
 		dcerpcHandle.sendrecv(netrServerAuthenticate3);
 
@@ -180,21 +180,21 @@ public class NetlogonConnection {
 		return hmact64.digest();
 	}
 
-	private static final int _negotiateFlags;
-
-	private byte[] _clientCredential;
-	private DcerpcHandle _dcerpcHandle;
-	private byte[] _sessionKey;
+	private static final int _NEGOTIATE_FLAGS;
 
 	static {
 		String negotiateFlags = PropsValues.NTLM_AUTH_NEGOTIATE_FLAGS;
 
 		if (negotiateFlags.startsWith("0x")) {
-			_negotiateFlags = Integer.valueOf(negotiateFlags.substring(2), 16);
+			_NEGOTIATE_FLAGS = Integer.valueOf(negotiateFlags.substring(2), 16);
 		}
 		else {
-			_negotiateFlags = 0x600FFFFF;
+			_NEGOTIATE_FLAGS = 0x600FFFFF;
 		}
 	}
+
+	private byte[] _clientCredential;
+	private DcerpcHandle _dcerpcHandle;
+	private byte[] _sessionKey;
 
 }

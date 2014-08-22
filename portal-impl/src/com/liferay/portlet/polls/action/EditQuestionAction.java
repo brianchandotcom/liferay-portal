@@ -31,7 +31,6 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.polls.DuplicateVoteException;
 import com.liferay.portlet.polls.NoSuchChoiceException;
 import com.liferay.portlet.polls.NoSuchQuestionException;
@@ -279,7 +278,7 @@ public class EditQuestionAction extends PortletAction {
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			BookmarksEntry.class.getName(), actionRequest);
+			PollsQuestion.class.getName(), actionRequest);
 
 		if (questionId <= 0) {
 

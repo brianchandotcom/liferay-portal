@@ -561,9 +561,8 @@ DLFileVersionActionsDisplayContext dlFileVersionActionsDisplayContext = DLFileVe
 
 									<aui:form action="<%= compareVersionsURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "compare();" %>'>
 										<aui:input name="backURL" type="hidden" value="<%= currentURL %>" />
-										<aui:input name="fileEntryId" type="hidden" value="<%= fileEntryId %>" />
-										<aui:input name="sourceVersion" type="hidden" value="<%= curFileVersion.getVersion() %>" />
-										<aui:input name="targetVersion" type="hidden" value="<%= fileEntry.getVersion() %>" />
+										<aui:input name="sourceVersionId" type="hidden" value="<%= curFileVersion.getFileVersionId() %>" />
+										<aui:input name="targetVersionId" type="hidden" value="<%= fileVersion.getFileVersionId() %>" />
 
 										<aui:button-row>
 											<aui:button type="submit" value="compare-versions" />
@@ -591,23 +590,23 @@ DLFileVersionActionsDisplayContext dlFileVersionActionsDisplayContext = DLFileVe
 			var A = AUI();
 
 			var rowIds = A.all('input[name=<portlet:namespace />rowIds]:checked');
-			var sourceVersion = A.one('input[name="<portlet:namespace />sourceVersion"]');
-			var targetVersion = A.one('input[name="<portlet:namespace />targetVersion"]');
+			var sourceVersionId = A.one('input[name="<portlet:namespace />sourceVersionId"]');
+			var targetVersionId = A.one('input[name="<portlet:namespace />targetVersionId"]');
 
 			var rowIdsSize = rowIds.size();
 
 			if (rowIdsSize == 1) {
-				if (sourceVersion) {
-					sourceVersion.val(rowIds.item(0).val());
+				if (sourceVersionId) {
+					sourceVersionId.val(rowIds.item(0).val());
 				}
 			}
 			else if (rowIdsSize == 2) {
-				if (sourceVersion) {
-					sourceVersion.val(rowIds.item(1).val());
+				if (sourceVersionId) {
+					sourceVersionId.val(rowIds.item(1).val());
 				}
 
-				if (targetVersion) {
-					targetVersion.val(rowIds.item(0).val());
+				if (targetVersionId) {
+					targetVersionId.val(rowIds.item(0).val());
 				}
 			}
 

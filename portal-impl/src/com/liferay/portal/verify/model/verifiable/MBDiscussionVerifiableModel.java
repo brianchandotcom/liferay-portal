@@ -15,12 +15,13 @@
 package com.liferay.portal.verify.model.verifiable;
 
 import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
+import com.liferay.portal.verify.model.grouped.VerifiableGroupedModel;
 
 /**
  * @author Miguel Pastor
  */
-public class MBDiscussionVerifiableAuditedModel
-	implements VerifiableAuditedModel {
+public class MBDiscussionVerifiableModel
+	implements VerifiableAuditedModel, VerifiableGroupedModel {
 
 	@Override
 	public String getJoinByTableName() {
@@ -30,6 +31,16 @@ public class MBDiscussionVerifiableAuditedModel
 	@Override
 	public String getPrimaryKeyColumnName() {
 		return "discussionId";
+	}
+
+	@Override
+	public String getRelatedPrimaryKeyColumnName() {
+		return "threadId";
+	}
+
+	@Override
+	public String getRelatedTableName() {
+		return "MBThread";
 	}
 
 	@Override

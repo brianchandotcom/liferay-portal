@@ -318,7 +318,7 @@ public class DLFileEntryLocalServiceImpl
 
 		boolean keepFileVersionLabel = isKeepFileVersionLabel(
 			dlFileEntry, lastDLFileVersion, latestDLFileVersion,
-			serviceContext);
+			serviceContext.getCommand(), serviceContext.getWorkflowAction());
 
 		if (keepFileVersionLabel) {
 			if (lastDLFileVersion.getSize() != latestDLFileVersion.getSize()) {
@@ -1997,18 +1997,18 @@ public class DLFileEntryLocalServiceImpl
 
 	/**
 	 * @see com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordLocalServiceImpl#isKeepRecordVersionLabel(
-	 *      DDLRecordVersion, DDLRecordVersion, ServiceContext)
+	 *      DDLRecordVersion, DDLRecordVersion, String, int)
 	 */
 	protected boolean isKeepFileVersionLabel(
 			DLFileEntry dlFileEntry, DLFileVersion lastDLFileVersion,
-			DLFileVersion latestDLFileVersion, ServiceContext serviceContext)
+			DLFileVersion latestDLFileVersion, String cmd, int workflowAction)
 		throws PortalException {
 
 		if (PropsValues.DL_FILE_ENTRY_VERSION_POLICY != 1) {
 			return false;
 		}
 
-		if (serviceContext.isCommandRevert()) {
+		if (Validator.equals(cmd, Constants.RENAME)) {
 			return false;
 		}
 
@@ -2031,9 +2031,7 @@ public class DLFileEntryLocalServiceImpl
 			return false;
 		}
 
-		if (serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_SAVE_DRAFT) {
-
+		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
 			return false;
 		}
 

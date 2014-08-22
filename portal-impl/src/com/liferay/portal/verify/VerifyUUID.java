@@ -27,6 +27,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -92,9 +93,11 @@ public class VerifyUUID extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		Map<String, VerifiableUUIDModel> verifiableUUIDModelsMap =
+			PortalBeanLocatorUtil.locate(VerifiableUUIDModel.class);
+
 		Collection<VerifiableUUIDModel> verifiableUUIDModels =
-			(Collection<VerifiableUUIDModel>)PortalBeanLocatorUtil.locate(
-				"verifiable.models.uuid");
+			verifiableUUIDModelsMap.values();
 
 		verify(
 			verifiableUUIDModels.toArray(

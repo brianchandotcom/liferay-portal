@@ -1233,6 +1233,22 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the file shortcut with the primary key.
+	 *
+	 * @param  fileVersionId the primary key of the file version
+	 * @return the file version with the primary key
+	 * @throws PortalException if the file version could not be found
+	 */
+	@Override
+	public FileVersion getFileVersion(long fileVersionId)
+		throws PortalException {
+
+		Repository repository = getFileVersionRepository(fileVersionId);
+
+		return repository.getFileVersion(fileVersionId);
+	}
+
+	/**
 	 * Returns the folder with the primary key.
 	 *
 	 * @param  folderId the primary key of the folder

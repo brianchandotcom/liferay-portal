@@ -357,7 +357,7 @@ public class UserServiceTest {
 		public void groupAdminShouldUnsetGroupAdmin() throws Exception {
 			User otherGroupAdminUser = UserTestUtil.addGroupAdminUser(_group);
 
-			UserServiceTest.unsetGroupUsers(
+			_unsetGroupUsers(
 				_group.getGroupId(), _groupAdminUser, otherGroupAdminUser);
 
 			Assert.assertTrue(
@@ -367,7 +367,7 @@ public class UserServiceTest {
 
 		@Test
 		public void groupAdminShouldUnsetGroupOwner() throws Exception {
-			UserServiceTest.unsetGroupUsers(
+			_unsetGroupUsers(
 				_group.getGroupId(), _groupAdminUser, _groupOwnerUser);
 
 			Assert.assertTrue(
@@ -377,7 +377,7 @@ public class UserServiceTest {
 
 		@Test
 		public void groupAdminShouldUnsetOrganizationAdmin() throws Exception {
-			UserServiceTest.unsetOrganizationUsers(
+			_unsetOrganizationUsers(
 				_organization.getOrganizationId(), _groupAdminUser,
 				_organizationAdminUser);
 
@@ -389,7 +389,7 @@ public class UserServiceTest {
 
 		@Test
 		public void groupAdminShouldUnsetOrganizationOwner() throws Exception {
-			UserServiceTest.unsetOrganizationUsers(
+			_unsetOrganizationUsers(
 				_organization.getOrganizationId(), _groupAdminUser,
 				_organizationOwnerUser);
 
@@ -403,7 +403,7 @@ public class UserServiceTest {
 		public void groupOwnerShouldUnsetGroupAdmin() throws Exception {
 			User groupAdminUser = UserTestUtil.addGroupAdminUser(_group);
 
-			UserServiceTest.unsetGroupUsers(
+			_unsetGroupUsers(
 				_group.getGroupId(), _groupOwnerUser, groupAdminUser);
 
 			Assert.assertFalse(
@@ -415,7 +415,7 @@ public class UserServiceTest {
 		public void groupOwnerShouldUnsetGroupOwner() throws Exception {
 			User groupOwnerUser = UserTestUtil.addGroupOwnerUser(_group);
 
-			UserServiceTest.unsetGroupUsers(
+			_unsetGroupUsers(
 				_group.getGroupId(), _groupOwnerUser, groupOwnerUser);
 
 			Assert.assertFalse(
@@ -428,7 +428,7 @@ public class UserServiceTest {
 			User organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
 				_organization);
 
-			UserServiceTest.unsetOrganizationUsers(
+			_unsetOrganizationUsers(
 				_organization.getOrganizationId(), _organizationGroupUser,
 				organizationAdminUser);
 
@@ -443,7 +443,7 @@ public class UserServiceTest {
 			User organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
 				_organization);
 
-			UserServiceTest.unsetOrganizationUsers(
+			_unsetOrganizationUsers(
 				_organization.getOrganizationId(), _organizationGroupUser,
 				organizationOwnerUser);
 
@@ -498,7 +498,7 @@ public class UserServiceTest {
 			User otherOrganizationAdminUser =
 				UserTestUtil.addOrganizationAdminUser(_organization);
 
-			UserServiceTest.unsetOrganizationUsers(
+			_unsetOrganizationUsers(
 				_organization.getOrganizationId(), _organizationAdminUser,
 				otherOrganizationAdminUser);
 
@@ -512,7 +512,7 @@ public class UserServiceTest {
 		public void organizationAdminShouldUnsetOrganizationOwner()
 			throws Exception {
 
-			UserServiceTest.unsetOrganizationUsers(
+			_unsetOrganizationUsers(
 				_organization.getOrganizationId(), _organizationAdminUser,
 				_organizationOwnerUser);
 
@@ -526,7 +526,7 @@ public class UserServiceTest {
 		public void organizationOwnerShouldUnsetOrganizationAdmin()
 			throws Exception {
 
-			UserServiceTest.unsetOrganizationUsers(
+			_unsetOrganizationUsers(
 				_organization.getOrganizationId(), _organizationOwnerUser,
 				_organizationAdminUser);
 
@@ -543,7 +543,7 @@ public class UserServiceTest {
 			User otherOrganizationOwnerUser =
 				UserTestUtil.addOrganizationOwnerUser(_organization);
 
-			UserServiceTest.unsetOrganizationUsers(
+			_unsetOrganizationUsers(
 				_organization.getOrganizationId(), _organizationOwnerUser,
 				otherOrganizationOwnerUser);
 
@@ -580,7 +580,7 @@ public class UserServiceTest {
 
 		@Test
 		public void organizationAdminShouldUnsetSiteAdmin() throws Exception {
-			UserServiceTest.unsetGroupUsers(
+			_unsetGroupUsers(
 				_group.getGroupId(), _organizationAdminUser, _groupAdminUser);
 
 			Assert.assertTrue(
@@ -590,7 +590,7 @@ public class UserServiceTest {
 
 		@Test
 		public void organizationAdminShouldUnsetSiteOwner() throws Exception {
-			UserServiceTest.unsetGroupUsers(
+			_unsetGroupUsers(
 				_group.getGroupId(), _organizationAdminUser, _groupOwnerUser);
 
 			Assert.assertTrue(
@@ -600,7 +600,7 @@ public class UserServiceTest {
 
 		@Test
 		public void organizationOwnerShouldUnsetSiteAdmin() throws Exception {
-			UserServiceTest.unsetGroupUsers(
+			_unsetGroupUsers(
 				_group.getGroupId(), _organizationOwnerUser, _groupAdminUser);
 
 			Assert.assertFalse(
@@ -610,7 +610,7 @@ public class UserServiceTest {
 
 		@Test
 		public void organizationOwnerShouldUnsetSiteOwner() throws Exception {
-			UserServiceTest.unsetGroupUsers(
+			_unsetGroupUsers(
 				_group.getGroupId(), _organizationOwnerUser, _groupOwnerUser);
 
 			Assert.assertFalse(
@@ -644,7 +644,7 @@ public class UserServiceTest {
 
 	}
 
-	protected static void unsetGroupUsers(
+	private static void _unsetGroupUsers(
 			long groupId, User subjectUser, User objectUser)
 		throws Exception {
 
@@ -659,7 +659,7 @@ public class UserServiceTest {
 			groupId, new long[] {objectUser.getUserId()}, serviceContext);
 	}
 
-	protected static void unsetOrganizationUsers(
+	private static void _unsetOrganizationUsers(
 			long organizationId, User subjectUser, User objectUser)
 		throws Exception {
 

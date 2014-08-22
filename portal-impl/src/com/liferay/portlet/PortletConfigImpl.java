@@ -51,13 +51,16 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 	public PortletConfigImpl(Portlet portlet, PortletContext portletContext) {
 		_portletApp = portlet.getPortletApp();
 		_portlet = portlet;
-		_portletName = portlet.getRootPortletId();
 
-		int pos = _portletName.indexOf(PortletConstants.WAR_SEPARATOR);
+		String portletName = portlet.getRootPortletId();
+
+		int pos = portletName.indexOf(PortletConstants.WAR_SEPARATOR);
 
 		if (pos != -1) {
-			_portletName = _portletName.substring(0, pos);
+			portletName = portletName.substring(0, pos);
 		}
+
+		_portletName = portletName;
 
 		_portletContext = portletContext;
 		_resourceBundles = new ConcurrentHashMap<String, ResourceBundle>();
@@ -228,11 +231,11 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 		return javaxQNames;
 	}
 
-	private boolean _copyRequestParameters;
-	private Portlet _portlet;
-	private PortletApp _portletApp;
-	private PortletContext _portletContext;
-	private String _portletName;
-	private Map<String, ResourceBundle> _resourceBundles;
+	private final boolean _copyRequestParameters;
+	private final Portlet _portlet;
+	private final PortletApp _portletApp;
+	private final PortletContext _portletContext;
+	private final String _portletName;
+	private final Map<String, ResourceBundle> _resourceBundles;
 
 }

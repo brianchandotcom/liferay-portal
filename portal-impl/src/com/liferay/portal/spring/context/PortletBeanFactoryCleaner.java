@@ -83,7 +83,7 @@ public class PortletBeanFactoryCleaner implements BeanFactoryAware {
 
 			try {
 				Map<Method, ShadowMatch> shadowMatchCache =
-					(Map<Method, ShadowMatch>)_shadowMatchCacheField.get(
+					(Map<Method, ShadowMatch>)_SHADOW_MATCH_CACHE_FIELD.get(
 						aspectJExpressionPointcut);
 
 				shadowMatchCache.clear();
@@ -127,24 +127,30 @@ public class PortletBeanFactoryCleaner implements BeanFactoryAware {
 		}
 	}
 
+	private static final Field _SHADOW_MATCH_CACHE_FIELD;
+
+	private static final Set<AspectJExpressionPointcut>
+		_aspectJExpressionPointcuts = new HashSet<AspectJExpressionPointcut>();
+	private static final Set<BeanFactoryAware> _beanFactoryAwares =
+		new HashSet<BeanFactoryAware>();
+
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletBeanFactoryCleaner.class);
 
-	private static Set<AspectJExpressionPointcut> _aspectJExpressionPointcuts =
-		new HashSet<AspectJExpressionPointcut>();
-	private static BeanFactory _beanFactory;
-	private static Set<BeanFactoryAware> _beanFactoryAwares =
-		new HashSet<BeanFactoryAware>();
-	private static Field _shadowMatchCacheField;
-
 	static {
+		Field shadowMatchCacheField = null;
+
 		try {
-			_shadowMatchCacheField = ReflectionUtil.getDeclaredField(
+			shadowMatchCacheField = ReflectionUtil.getDeclaredField(
 				AspectJExpressionPointcut.class, "shadowMatchCache");
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_SHADOW_MATCH_CACHE_FIELD = shadowMatchCacheField;
 	}
+
+	private static BeanFactory _beanFactory;
 
 }

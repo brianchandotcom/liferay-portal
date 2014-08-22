@@ -337,7 +337,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			Map<Class<?>, PropertyDescriptor[]>
 				filteredPropertyDescriptorsCache =
 					(Map<Class<?>, PropertyDescriptor[]>)
-						_filteredPropertyDescriptorsCacheField.get(
+						_FILTERED_PROPERTY_DESCRIPTORS_CACHE_FIELD.get(
 							autowireCapableBeanFactory);
 
 			filteredPropertyDescriptorsCache.clear();
@@ -354,10 +354,11 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 	}
 
+	private static final Field _FILTERED_PROPERTY_DESCRIPTORS_CACHE_FIELD;
+
 	private static Log _log = LogFactoryUtil.getLog(
 		PortalContextLoaderListener.class);
 
-	private static Field _filteredPropertyDescriptorsCacheField;
 	private static String _portalServletContextName = StringPool.BLANK;
 	private static String _portalServletContextPath = StringPool.SLASH;
 
@@ -366,8 +367,10 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 	private ServiceWrapperRegistry _serviceWrapperRegistry;
 
 	static {
+		Field filteredPropertyDescriptorsCacheField = null;
+
 		try {
-			_filteredPropertyDescriptorsCacheField =
+			filteredPropertyDescriptorsCacheField =
 				ReflectionUtil.getDeclaredField(
 					AbstractAutowireCapableBeanFactory.class,
 					"filteredPropertyDescriptorsCache");
@@ -375,6 +378,9 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_FILTERED_PROPERTY_DESCRIPTORS_CACHE_FIELD =
+			filteredPropertyDescriptorsCacheField;
 	}
 
 }

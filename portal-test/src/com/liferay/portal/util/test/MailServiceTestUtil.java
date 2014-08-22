@@ -46,7 +46,8 @@ public class MailServiceTestUtil {
 			return _smtpServer.getMessage(_smtpServer.getEmailCount() - 1);
 		}
 
-		return null;
+		throw new IndexOutOfBoundsException(
+			"There are no messages in the inbox");
 	}
 
 	public static List<MailMessage> getMailMessages(

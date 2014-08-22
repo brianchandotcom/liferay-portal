@@ -44,6 +44,7 @@ import com.liferay.portlet.shopping.model.ShoppingItemPriceConstants;
 import com.liferay.portlet.shopping.service.ShoppingItemServiceUtil;
 import com.liferay.portlet.shopping.service.persistence.ShoppingItemFieldUtil;
 import com.liferay.portlet.shopping.service.persistence.ShoppingItemPriceUtil;
+import com.liferay.portlet.shopping.util.ShoppingConstants;
 
 import java.io.File;
 
@@ -239,8 +240,15 @@ public class EditItemAction extends PortletAction {
 
 		boolean requiresShipping = ParamUtil.getBoolean(
 			uploadPortletRequest, "requiresShipping");
+
 		int stockQuantity = ParamUtil.getInteger(
 			uploadPortletRequest, "stockQuantity");
+		boolean hasInfiniteStock = ParamUtil.getBoolean(
+			uploadPortletRequest, "hasInfiniteStock");
+
+		if (hasInfiniteStock) {
+			stockQuantity = ShoppingConstants.INFINITE_STOCK;
+		}
 
 		boolean featured = ParamUtil.getBoolean(
 			uploadPortletRequest, "featured");

@@ -23,6 +23,7 @@ import com.liferay.portlet.shopping.model.ShoppingItem;
 import com.liferay.portlet.shopping.model.ShoppingItemPrice;
 import com.liferay.portlet.shopping.service.ShoppingCategoryLocalServiceUtil;
 import com.liferay.portlet.shopping.service.ShoppingItemPriceLocalServiceUtil;
+import com.liferay.portlet.shopping.util.ShoppingConstants;
 import com.liferay.portlet.shopping.util.comparator.ItemNameComparator;
 
 import java.util.List;
@@ -74,6 +75,11 @@ public class ShoppingItemImpl extends ShoppingItemBaseImpl {
 	@Override
 	public List<ShoppingItemPrice> getItemPrices() throws PortalException {
 		return ShoppingItemPriceLocalServiceUtil.getItemPrices(getItemId());
+	}
+
+	@Override
+	public boolean hasInfiniteStock() {
+		return getStockQuantity() == ShoppingConstants.INFINITE_STOCK;
 	}
 
 	@Override

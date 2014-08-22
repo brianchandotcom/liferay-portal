@@ -42,15 +42,19 @@ public class Reflection extends SecurityManager {
 	private Reflection() {
 		Method[] methods = sun.reflect.Reflection.class.getMethods();
 
+		boolean useOldReflection = true;
+
 		for (Method method : methods) {
 			String methodName = method.getName();
 
 			if (methodName.equals("isCallerSensitive")) {
-				_useOldReflection = false;
+				useOldReflection = false;
 
 				break;
 			}
 		}
+
+		_useOldReflection = useOldReflection;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -122,6 +126,6 @@ public class Reflection extends SecurityManager {
 
 	private static final Reflection _instance = new Reflection();
 
-	private boolean _useOldReflection = true;
+	private final boolean _useOldReflection;
 
 }

@@ -89,14 +89,15 @@ public class DefaultDLFileVersionActionsDisplayContext
 			new DLFileEntryActionsDisplayContextHelper(
 				_themeDisplay.getPermissionChecker(), _fileEntry, fileVersion);
 
-		_fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
+		long fileEntryTypeId = ParamUtil.getLong(
+			request, "fileEntryTypeId", -1);
 
 		if ((_fileEntryTypeId == -1) && (_fileEntry != null) &&
 			(_fileEntry.getModel() instanceof DLFileEntry)) {
 
 			DLFileEntry dlFileEntry = (DLFileEntry)_fileEntry.getModel();
 
-			_fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
+			fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
 		}
 
 		_folderId = BeanParamUtil.getLong(_fileEntry, request, "folderId");

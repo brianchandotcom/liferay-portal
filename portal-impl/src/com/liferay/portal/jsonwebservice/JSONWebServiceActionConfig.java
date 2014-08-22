@@ -37,35 +37,52 @@ public class JSONWebServiceActionConfig
 		String contextName, String contextPath, Class<?> actionClass,
 		Method actionMethod, String path, String method) {
 
+		this(
+			contextName, contextPath, null, actionClass, actionMethod, path,
+			method);
+	}
+
+	public JSONWebServiceActionConfig(
+		String contextName, String contextPath, Object actionObject,
+		Class<?> actionClass, Method actionMethod, String path, String method) {
+
 		_contextName = GetterUtil.getString(contextName);
 		_contextPath = GetterUtil.getString(contextPath);
+		_actionObject = actionObject;
 		_actionClass = actionClass;
-		_actionMethod = actionMethod;
-		_path = path;
 		_method = method;
 
-		Deprecated depreacted = actionMethod.getAnnotation(Deprecated.class);
+		Deprecated deprecated = actionMethod.getAnnotation(Deprecated.class);
 
-		if (depreacted != null) {
+		if (deprecated != null) {
 			_deprecated = true;
+		}
+		else {
+			_deprecated = false;
 		}
 
 		if (Validator.isNotNull(_contextName)) {
-			path = _path.substring(1);
+			path = path.substring(1);
 
-			_path = StringPool.SLASH.concat(_contextName).concat(
+			path = StringPool.SLASH.concat(_contextName).concat(
 				StringPool.PERIOD).concat(path);
 		}
+
+		_path = path;
 
 		_methodParameters =
 			MethodParametersResolverUtil.resolveMethodParameters(actionMethod);
 
+		Method realActionMethod = null;
+
 		try {
-			_realActionMethod = _actionClass.getDeclaredMethod(
+			realActionMethod = _actionClass.getDeclaredMethod(
 				actionMethod.getName(), actionMethod.getParameterTypes());
 		}
 		catch (NoSuchMethodException nsme) {
 		}
+
+		_realActionMethod = realActionMethod;
 
 		StringBundler sb = new StringBundler(_methodParameters.length * 2 + 4);
 
@@ -79,27 +96,26 @@ public class JSONWebServiceActionConfig
 		}
 
 		_signature = sb.toString();
-	}
 
-	public JSONWebServiceActionConfig(
-		String contextName, String contextPath, Object actionObject,
-		Class<?> actionClass, Method actionMethod, String path, String method) {
+		Method newActionMethod = actionMethod;
 
-		this(contextName, contextPath, actionClass, actionMethod, path, method);
+		if (actionObject != null) {
+			try {
+				Class<?> actionObjectClass = actionObject.getClass();
 
-		_actionObject = actionObject;
+				Method actionObjectClassActionMethod =
+					actionObjectClass.getMethod(
+						actionMethod.getName(),
+						actionMethod.getParameterTypes());
 
-		try {
-			Class<?> actionObjectClass = actionObject.getClass();
-
-			Method actionObjectClassActionMethod = actionObjectClass.getMethod(
-				actionMethod.getName(), actionMethod.getParameterTypes());
-
-			_actionMethod = actionObjectClassActionMethod;
+				newActionMethod = actionObjectClassActionMethod;
+			}
+			catch (NoSuchMethodException nsme) {
+				throw new IllegalArgumentException(nsme);
+			}
 		}
-		catch (NoSuchMethodException nsme) {
-			throw new IllegalArgumentException(nsme);
-		}
+
+		_actionMethod = newActionMethod;
 	}
 
 	@Override
@@ -220,16 +236,16 @@ public class JSONWebServiceActionConfig
 		return sb.toString();
 	}
 
-	private Class<?> _actionClass;
-	private Method _actionMethod;
-	private Object _actionObject;
-	private String _contextName;
-	private String _contextPath;
-	private boolean _deprecated;
-	private String _method;
-	private MethodParameter[] _methodParameters;
-	private String _path;
-	private Method _realActionMethod;
-	private String _signature;
+	private final Class<?> _actionClass;
+	private final Method _actionMethod;
+	private final Object _actionObject;
+	private final String _contextName;
+	private final String _contextPath;
+	private final boolean _deprecated;
+	private final String _method;
+	private final MethodParameter[] _methodParameters;
+	private final String _path;
+	private final Method _realActionMethod;
+	private final String _signature;
 
 }

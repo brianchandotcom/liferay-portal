@@ -21,8 +21,8 @@ import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
-import com.liferay.portal.repository.registry.RepositoryCatalog;
-import com.liferay.portal.repository.registry.RepositoryConfiguration;
+import com.liferay.portal.repository.registry.RepositoryDefinition;
+import com.liferay.portal.repository.registry.RepositoryDefinitionCatalog;
 import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.RepositoryLocalService;
@@ -168,13 +168,12 @@ public abstract class BaseRepositoryFactory<T> {
 			LiferayRepository.class.getName());
 	}
 
-	protected RepositoryConfiguration getRepositoryConfiguration(
-			long classNameId)
+	protected RepositoryDefinition getRepositoryDefinition(long classNameId)
 		throws PortalException {
 
 		ClassName className = _classNameLocalService.getClassName(classNameId);
 
-		return _repositoryCatalog.getRepositoryConfiguration(
+		return _repositoryDefinitionCatalog.getRepositoryDefinition(
 			className.getClassName());
 	}
 
@@ -218,8 +217,8 @@ public abstract class BaseRepositoryFactory<T> {
 	@BeanReference(type = DLFolderService.class)
 	private DLFolderService _dlFolderService;
 
-	@BeanReference(type = RepositoryCatalog.class)
-	private RepositoryCatalog _repositoryCatalog;
+	@BeanReference(type = RepositoryDefinitionCatalog.class)
+	private RepositoryDefinitionCatalog _repositoryDefinitionCatalog;
 
 	@BeanReference(type = RepositoryEntryLocalService.class)
 	private RepositoryEntryLocalService _repositoryEntryLocalService;

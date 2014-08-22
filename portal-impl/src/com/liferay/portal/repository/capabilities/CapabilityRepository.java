@@ -17,7 +17,7 @@ package com.liferay.portal.repository.capabilities;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
-import com.liferay.portal.kernel.repository.event.RepositoryEventHandler;
+import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -47,11 +47,11 @@ public class CapabilityRepository
 		Repository repository,
 		Map<Class<? extends Capability>, Capability> supportedCapabilities,
 		Set<Class<? extends Capability>> exportedCapabilityClasses,
-		RepositoryEventHandler repositoryEventHandler) {
+		RepositoryEventTrigger repositoryEventTrigger) {
 
 		super(repository, supportedCapabilities, exportedCapabilityClasses);
 
-		_repositoryEventHandler = repositoryEventHandler;
+		_repositoryEventTrigger = repositoryEventTrigger;
 	}
 
 	@Override
@@ -153,7 +153,7 @@ public class CapabilityRepository
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
-		_repositoryEventHandler.trigger(
+		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Delete.class, FileEntry.class, fileEntry);
 
 		repository.deleteFileEntry(fileEntryId);
@@ -167,7 +167,7 @@ public class CapabilityRepository
 
 		FileEntry fileEntry = repository.getFileEntry(folderId, title);
 
-		_repositoryEventHandler.trigger(
+		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Delete.class, FileEntry.class, fileEntry);
 
 		repository.deleteFileEntry(folderId, title);
@@ -186,7 +186,7 @@ public class CapabilityRepository
 
 		Folder folder = repository.getFolder(folderId);
 
-		_repositoryEventHandler.trigger(
+		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Delete.class, Folder.class, folder);
 
 		repository.deleteFolder(folderId);
@@ -200,7 +200,7 @@ public class CapabilityRepository
 
 		Folder folder = repository.getFolder(parentFolderId, title);
 
-		_repositoryEventHandler.trigger(
+		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Delete.class, Folder.class, folder);
 
 		repository.deleteFolder(parentFolderId, title);
@@ -646,6 +646,6 @@ public class CapabilityRepository
 		return getRepository().verifyInheritableLock(folderId, lockUuid);
 	}
 
-	private RepositoryEventHandler _repositoryEventHandler;
+	private RepositoryEventTrigger _repositoryEventTrigger;
 
 }

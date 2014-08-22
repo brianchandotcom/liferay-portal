@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.repository.registry;
 /**
  * @author Adolfo Pérez
  */
-public interface RepositoryRegistryPlugin {
+public interface RepositoryDefiner {
 
 	public String getClassName();
 

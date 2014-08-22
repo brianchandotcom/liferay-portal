@@ -12,31 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.registry;
+package com.liferay.portal.repository.registry;
+
+import com.liferay.portal.kernel.repository.capabilities.Capability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
+import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Adolfo Pérez
  */
-public abstract class BaseRepositoryRegistryPlugin
-	implements RepositoryRegistryPlugin {
+public interface RepositoryDefinition {
 
-	@Override
-	public abstract String getClassName();
+	public Set<Class<? extends Capability>> getExportedCapabilities();
 
-	@Override
-	public abstract boolean isExternalRepository();
+	public RepositoryCreator getRepositoryCreator();
 
-	@Override
-	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
-	}
+	public RepositoryEventTrigger getRepositoryEventTrigger();
 
-	@Override
-	public abstract void registerRepositoryCreator(
-		RepositoryCreatorRegistry repositoryCreatorRegistry);
-
-	@Override
-	public void registerRepositoryEventListeners(
-		RepositoryEventRegistry repositoryEventRegistry) {
-	}
+	public Map<Class<? extends Capability>, Capability>
+		getSupportedCapabilities();
 
 }

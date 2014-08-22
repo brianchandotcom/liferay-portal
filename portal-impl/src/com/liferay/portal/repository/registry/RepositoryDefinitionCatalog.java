@@ -21,11 +21,11 @@ import java.util.Collection;
 /**
  * @author Adolfo Pérez
  */
-public interface RepositoryCatalog {
+public interface RepositoryDefinitionCatalog {
 
 	public Collection<String> getExternalRepositoryClassNames();
 
-	public RepositoryConfiguration getRepositoryConfiguration(String className);
+	public RepositoryDefinition getRepositoryDefinition(String className);
 
 	public void registerLegacyExternalRepositoryFactory(
 		String className, ExternalRepositoryFactory externalRepositoryFactory);

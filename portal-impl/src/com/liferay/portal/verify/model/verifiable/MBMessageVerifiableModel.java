@@ -15,27 +15,26 @@
 package com.liferay.portal.verify.model.verifiable;
 
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.polls.model.PollsQuestion;
+import com.liferay.portlet.messageboards.model.MBMessage;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PollsQuestionVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class MBMessageVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return PollsQuestion.class.getName();
+		return MBMessage.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "questionId";
+		return "messageId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "PollsQuestion";
+		return "MBMessage";
 	}
 
 }

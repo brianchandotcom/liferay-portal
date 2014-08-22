@@ -14,28 +14,42 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.announcements.model.AnnouncementsEntry;
+import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
-public class AnnouncementsEntryVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class LayoutSetPrototypeVerifiableModel
+	implements VerifiableAuditedModel {
 
 	@Override
-	public String getModelName() {
-		return AnnouncementsEntry.class.getName();
+	public String getJoinByTableName() {
+		return null;
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "entryId";
+		return "layoutSetPrototypeId";
+	}
+
+	@Override
+	public String getRelatedModelName() {
+		return null;
+	}
+
+	@Override
+	public String getRelatedPKColumnName() {
+		return null;
 	}
 
 	@Override
 	public String getTableName() {
-		return "AnnouncementsEntry";
+		return "LayoutSetPrototype";
+	}
+
+	@Override
+	public boolean isUpdateDates() {
+		return false;
 	}
 
 }

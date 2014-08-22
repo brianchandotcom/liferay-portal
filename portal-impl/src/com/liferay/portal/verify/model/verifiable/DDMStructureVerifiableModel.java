@@ -14,41 +14,27 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public class UserGroupVerifiableAuditedModel implements VerifiableAuditedModel {
+public class DDMStructureVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
-	public String getJoinByTableName() {
-		return null;
+	public String getModelName() {
+		return DDMStructure.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "userGroupId";
-	}
-
-	@Override
-	public String getRelatedModelName() {
-		return null;
-	}
-
-	@Override
-	public String getRelatedPKColumnName() {
-		return null;
+		return "structureId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "UserGroup";
-	}
-
-	@Override
-	public boolean isUpdateDates() {
-		return true;
+		return "DDMStructure";
 	}
 
 }

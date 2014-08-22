@@ -15,27 +15,26 @@
 package com.liferay.portal.verify.model.verifiable;
 
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DDMTemplateVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class DLFolderVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return DDMTemplate.class.getName();
+		return DLFolder.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "templateId";
+		return "folderId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "DDMTemplate";
+		return "DLFolder";
 	}
 
 }

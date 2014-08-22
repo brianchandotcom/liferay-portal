@@ -15,27 +15,26 @@
 package com.liferay.portal.verify.model.verifiable;
 
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DLFolderVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class DLFileShortcutVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return DLFolder.class.getName();
+		return DLFileShortcut.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "folderId";
+		return "fileShortcutId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "DLFolder";
+		return "DLFileShortcut";
 	}
 
 }

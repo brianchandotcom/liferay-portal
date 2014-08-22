@@ -14,28 +14,41 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion;
+import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
-public class SCFrameworkVersionVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class RepositoryEntryVerifiableModel implements VerifiableAuditedModel {
 
 	@Override
-	public String getModelName() {
-		return SCFrameworkVersion.class.getName();
+	public String getJoinByTableName() {
+		return "repositoryId";
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "frameworkVersionId";
+		return "repositoryEntryId";
+	}
+
+	@Override
+	public String getRelatedModelName() {
+		return "Repository";
+	}
+
+	@Override
+	public String getRelatedPKColumnName() {
+		return "repositoryId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "SCFrameworkVersion";
+		return "RepositoryEntry";
+	}
+
+	@Override
+	public boolean isUpdateDates() {
+		return true;
 	}
 
 }

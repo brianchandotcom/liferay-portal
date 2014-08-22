@@ -14,42 +14,27 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portlet.wiki.model.WikiPage;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public class LayoutSetPrototypeVerifiableAuditedModel
-	implements VerifiableAuditedModel {
+public class WikiPageVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
-	public String getJoinByTableName() {
-		return null;
+	public String getModelName() {
+		return WikiPage.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "layoutSetPrototypeId";
-	}
-
-	@Override
-	public String getRelatedModelName() {
-		return null;
-	}
-
-	@Override
-	public String getRelatedPKColumnName() {
-		return null;
+		return "resourcePrimKey";
 	}
 
 	@Override
 	public String getTableName() {
-		return "LayoutSetPrototype";
-	}
-
-	@Override
-	public boolean isUpdateDates() {
-		return false;
+		return "WikiPage";
 	}
 
 }

@@ -14,42 +14,27 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
+import com.liferay.portal.model.Team;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public class RepositoryEntryVerifiableAuditedModel
-	implements VerifiableAuditedModel {
+public class TeamVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
-	public String getJoinByTableName() {
-		return "repositoryId";
+	public String getModelName() {
+		return Team.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "repositoryEntryId";
-	}
-
-	@Override
-	public String getRelatedModelName() {
-		return "Repository";
-	}
-
-	@Override
-	public String getRelatedPKColumnName() {
-		return "repositoryId";
+		return "teamId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "RepositoryEntry";
-	}
-
-	@Override
-	public boolean isUpdateDates() {
-		return true;
+		return "Team";
 	}
 
 }

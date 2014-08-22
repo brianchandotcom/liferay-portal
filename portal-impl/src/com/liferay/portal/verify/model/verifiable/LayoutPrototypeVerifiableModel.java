@@ -14,28 +14,41 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
-public class MBMessageVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class LayoutPrototypeVerifiableModel implements VerifiableAuditedModel {
 
 	@Override
-	public String getModelName() {
-		return MBMessage.class.getName();
+	public String getJoinByTableName() {
+		return null;
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "messageId";
+		return "layoutPrototypeId";
+	}
+
+	@Override
+	public String getRelatedModelName() {
+		return null;
+	}
+
+	@Override
+	public String getRelatedPKColumnName() {
+		return null;
 	}
 
 	@Override
 	public String getTableName() {
-		return "MBMessage";
+		return "LayoutPrototype";
+	}
+
+	@Override
+	public boolean isUpdateDates() {
+		return true;
 	}
 
 }

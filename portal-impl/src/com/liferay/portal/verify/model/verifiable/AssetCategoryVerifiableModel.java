@@ -15,27 +15,26 @@
 package com.liferay.portal.verify.model.verifiable;
 
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.asset.model.AssetCategory;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DLFileShortcutVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class AssetCategoryVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return DLFileShortcut.class.getName();
+		return AssetCategory.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "fileShortcutId";
+		return "categoryId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "DLFileShortcut";
+		return "AssetCategory";
 	}
 
 }

@@ -14,28 +14,41 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
-public class DLFileEntryVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class LayoutFriendlyURLAuditedModel implements VerifiableAuditedModel {
 
 	@Override
-	public String getModelName() {
-		return DLFileEntry.class.getName();
+	public String getJoinByTableName() {
+		return null;
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "fileEntryId";
+		return "layoutFriendlyURLId";
+	}
+
+	@Override
+	public String getRelatedModelName() {
+		return null;
+	}
+
+	@Override
+	public String getRelatedPKColumnName() {
+		return null;
 	}
 
 	@Override
 	public String getTableName() {
-		return "DLFileEntry";
+		return "LayoutFriendlyURL";
+	}
+
+	@Override
+	public boolean isUpdateDates() {
+		return false;
 	}
 
 }

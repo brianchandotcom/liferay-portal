@@ -121,6 +121,10 @@ DLFileVersionActionsDisplayContext dlFileVersionActionsDisplayContext = DLFileVe
 				}
 				%>
 
+				<%@ include file="/html/portlet/document_library/action/move.jspf" %>
+				<%@ include file="/html/portlet/document_library/action/lock.jspf" %>
+				<%@ include file="/html/portlet/document_library/action/permissions.jspf" %>
+				<%@ include file="/html/portlet/document_library/action/delete.jspf" %>
 			</c:when>
 			<c:otherwise>
 				<%@ include file="/html/portlet/document_library/action/download.jspf" %>

@@ -83,8 +83,9 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void assertEmailSubject(String index, String subject)
 		throws Exception {
-			throw new UnsupportedOperationException();
-		}
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void assertHTMLSourceTextNotPresent(String value) throws Exception {
@@ -99,8 +100,9 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void assertJavaScriptErrors(String ignoreJavaScriptError)
 		throws Exception {
-			throw new UnsupportedOperationException();
-		}
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void assertLiferayErrors() throws Exception {
@@ -136,8 +138,9 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void assertNotSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
-			throw new UnsupportedOperationException();
-		}
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void assertNotText(String locator, String pattern) throws Exception {
@@ -159,14 +162,16 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void assertPartialText(String locator, String pattern)
 		throws Exception {
-			throw new UnsupportedOperationException();
-		}
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void assertSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
-			throw new UnsupportedOperationException();
-		}
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void assertText(String locator, String pattern) throws Exception {
@@ -206,8 +211,9 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void connectToEmailAccount(String emailAddress, String emailPassword)
 		throws Exception {
-			throw new UnsupportedOperationException();
-		}
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void copyText(String locator) {
@@ -475,8 +481,9 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void sendEmail(String to, String subject, String body)
 		throws Exception {
-			throw new UnsupportedOperationException();
-		}
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void sendKeys(String locator, String value) {
@@ -547,8 +554,9 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void sikuliDragAndDrop(String image, String coordString)
 		throws Exception {
-			throw new UnsupportedOperationException();
-		}
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void sikuliLeftMouseDown() throws Exception {
@@ -583,20 +591,23 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void sikuliUploadCommonFile(String image, String value)
 		throws Exception {
-			throw new UnsupportedOperationException();
-		}
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void sikuliUploadTCatFile(String image, String value)
 		throws Exception {
-			throw new UnsupportedOperationException();
-		}
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void sikuliUploadTempFile(String image, String value)
 		throws Exception {
-			throw new UnsupportedOperationException();
-		}
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void startLogger() {
@@ -660,14 +671,16 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void waitForNotPartialText(String locator, String value)
 		throws Exception {
-			throw new UnsupportedOperationException();
-		}
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void waitForNotSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
-			throw new UnsupportedOperationException();
-		}
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void waitForNotText(String locator, String value) throws Exception {
@@ -687,14 +700,16 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void waitForPartialText(String locator, String value)
 		throws Exception {
-			throw new UnsupportedOperationException();
-		}
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void waitForSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
-			throw new UnsupportedOperationException();
-		}
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void waitForText(String locator, String value) throws Exception {

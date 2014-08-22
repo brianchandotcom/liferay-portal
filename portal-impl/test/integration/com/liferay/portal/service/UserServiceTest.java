@@ -221,7 +221,6 @@ public class UserServiceTest {
 			Assert.assertTrue(isPasswordSent);
 			Assert.assertEquals(
 				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-
 			Assert.assertTrue(
 				MailServiceTestUtil.lastMailMessageContains(
 					"email_password_sent_body.tmpl"));
@@ -240,7 +239,6 @@ public class UserServiceTest {
 			Assert.assertTrue(isPasswordSent);
 			Assert.assertEquals(
 				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-
 			Assert.assertTrue(
 				MailServiceTestUtil.lastMailMessageContains(
 					"email_password_sent_body.tmpl"));
@@ -258,7 +256,6 @@ public class UserServiceTest {
 			Assert.assertTrue(isPasswordSent);
 			Assert.assertEquals(
 				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-
 			Assert.assertTrue(
 				MailServiceTestUtil.lastMailMessageContains(
 					"email_password_sent_body.tmpl"));

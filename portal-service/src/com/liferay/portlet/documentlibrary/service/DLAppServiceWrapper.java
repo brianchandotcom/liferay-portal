@@ -891,6 +891,13 @@ public class DLAppServiceWrapper implements DLAppService,
 		return _dlAppService.getFileShortcut(fileShortcutId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileVersion getFileVersion(
+		long fileVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppService.getFileVersion(fileVersionId);
+	}
+
 	/**
 	* Returns the folder with the primary key.
 	*

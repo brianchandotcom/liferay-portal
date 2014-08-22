@@ -876,6 +876,12 @@ public class DLAppServiceUtil {
 		return getService().getFileShortcut(fileShortcutId);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileVersion getFileVersion(
+		long fileVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFileVersion(fileVersionId);
+	}
+
 	/**
 	* Returns the folder with the primary key.
 	*

@@ -174,24 +174,24 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 		<select name="<portlet:namespace />type"
 			onChange="
 				if (this[this.selectedIndex].value == 0) {
-					<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, lengthArray);
-					<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, lengthArray);
+					Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, lengthArray);
+					Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, lengthArray);
 				}
 				else if (this[this.selectedIndex].value == 1) {
-					<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, areaArray);
-					<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, areaArray);
+					Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, areaArray);
+					Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, areaArray);
 				}
 				else if (this[this.selectedIndex].value == 2) {
-					<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, volumeArray);
-					<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, volumeArray);
+					Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, volumeArray);
+					Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, volumeArray);
 				}
 				else if (this[this.selectedIndex].value == 3) {
-					<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, massArray);
-					<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, massArray);
+					Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, massArray);
+					Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, massArray);
 				}
 				else if (this[this.selectedIndex].value == 4) {
-					<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, temperatureArray);
-					<portlet:namespace />setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, temperatureArray);
+					Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />fromId, temperatureArray);
+					Liferay.Util.setBox(document.<portlet:namespace />fm.<portlet:namespace />toId, temperatureArray);
 				}"
 		>
 			<option <%= (type == 0) ? "selected" : "" %> value="0"><liferay-ui:message key="length" /></option>
@@ -211,22 +211,6 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 </form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />setBox',
-		function(oldBox, newBox) {
-			for (var i = oldBox.length - 1; i > -1; i--) {
-				oldBox.options[i] = null;
-			}
-
-			for (i = 0; i < newBox.length; i++) {
-				oldBox.options[i] = new Option(newBox[i].value, i);
-			}
-
-			oldBox.options[0].selected = true;
-		}
-	);
-
 	var lengthArray = [
 		new Option(0, '<%= UnicodeLanguageUtil.get(request, "meter") %>'),
 		new Option(1, '<%= UnicodeLanguageUtil.get(request, "millimeter") %>'),

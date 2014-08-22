@@ -14,10 +14,12 @@
 
 package com.liferay.portal.verify.model.resourced;
 
+import com.liferay.portal.verify.model.VerifiableModel;
+
 /**
  * @author Miguel Pastor
  */
-public interface VerifiableResourcedModel {
+public interface VerifiableResourcedModel extends VerifiableModel {
 
 	public String getModelName();
 

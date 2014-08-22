@@ -12,17 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.verify.model.grouped;
-
-import com.liferay.portal.verify.model.VerifiableModel;
+package com.liferay.portal.verify.model;
 
 /**
  * @author Miguel Pastor
  */
-public interface VerifiableGroupedModel extends VerifiableModel {
+public interface VerifiableModel {
 
-	public String getRelatedPrimaryKeyColumnName();
+	public String getPrimaryKeyColumnName();
 
-	public String getRelatedTableName();
+	public String getTableName();
 
 }

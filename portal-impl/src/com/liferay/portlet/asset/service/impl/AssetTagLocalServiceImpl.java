@@ -659,8 +659,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	protected String[] getTagNames(List<AssetTag>tags) {
-		return StringUtil.split(
-			ListUtil.toString(tags, AssetTag.NAME_ACCESSOR));
+		return ListUtil.toArray(tags, AssetTag.NAME_ACCESSOR);
 	}
 
 	protected void validate(String name) throws PortalException {

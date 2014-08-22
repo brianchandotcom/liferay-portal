@@ -1503,10 +1503,8 @@ public abstract class BaseIndexer implements Indexer {
 		List<AssetCategory> assetCategories =
 			AssetCategoryLocalServiceUtil.getCategories(className, classPK);
 
-		long[] assetCategoryIds = StringUtil.split(
-			ListUtil.toString(
-				assetCategories, AssetCategory.CATEGORY_ID_ACCESSOR),
-			0L);
+		long[] assetCategoryIds = ListUtil.toLongArray(
+			assetCategories, AssetCategory.CATEGORY_ID_ACCESSOR);
 
 		document.addKeyword(Field.ASSET_CATEGORY_IDS, assetCategoryIds);
 
@@ -1518,13 +1516,13 @@ public abstract class BaseIndexer implements Indexer {
 		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
 			classNameId, classPK);
 
-		String[] assetTagNames = StringUtil.split(
-			ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR));
+		String[] assetTagNames = ListUtil.toArray(
+			assetTags, AssetTag.NAME_ACCESSOR);
 
 		document.addText(Field.ASSET_TAG_NAMES, assetTagNames);
 
-		long[] assetTagsIds = StringUtil.split(
-			ListUtil.toString(assetTags, AssetTag.TAG_ID_ACCESSOR), 0L);
+		long[] assetTagsIds = ListUtil.toLongArray(
+			assetTags, AssetTag.TAG_ID_ACCESSOR);
 
 		document.addKeyword(Field.ASSET_TAG_IDS, assetTagsIds);
 

@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -323,6 +325,27 @@ public class ListUtil {
 		return Collections.emptyList();
 	}
 
+	@SuppressWarnings("unchecked")
+	public static <T, A> A[] toArray(
+		List<? extends T> list, Accessor<T, A> accessor) {
+
+		if (isEmpty(list)) {
+			return (A[])Array.newInstance(accessor.getAttributeClass(), 0);
+		}
+
+		A[] array = (A[])Array.newInstance(
+			accessor.getAttributeClass(), list.size());
+
+		for (int i = 0; i < list.size(); i++) {
+			T bean = list.get(i);
+			A attribute = accessor.get(bean);
+
+			array[i] = attribute;
+		}
+
+		return array;
+	}
+
 	public static List<Boolean> toList(boolean[] array) {
 		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<Boolean>();
@@ -441,6 +464,25 @@ public class ListUtil {
 		}
 
 		return list;
+	}
+
+	public static <T> long[] toLongArray(
+		List<? extends T> list, Accessor<T, Long> accessor) {
+
+		if (isEmpty(list)) {
+			return (long[])Array.newInstance(long.class, 0);
+		}
+
+		long[] array = (long[])Array.newInstance(long.class, list.size());
+
+		for (int i = 0; i < list.size(); i++) {
+			T bean = list.get(i);
+			Long attribute = accessor.get(bean);
+
+			array[i] = attribute;
+		}
+
+		return array;
 	}
 
 	/**

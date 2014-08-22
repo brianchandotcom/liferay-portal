@@ -726,14 +726,12 @@ public class AssetCategoryLocalServiceImpl
 	}
 
 	protected long[] getCategoryIds(List<AssetCategory> categories) {
-		return StringUtil.split(
-			ListUtil.toString(categories, AssetCategory.CATEGORY_ID_ACCESSOR),
-			0L);
+		return ListUtil.toLongArray(
+			categories, AssetCategory.CATEGORY_ID_ACCESSOR);
 	}
 
 	protected String[] getCategoryNames(List<AssetCategory> categories) {
-		return StringUtil.split(
-			ListUtil.toString(categories, AssetCategory.NAME_ACCESSOR));
+		return ListUtil.toArray(categories, AssetCategory.NAME_ACCESSOR);
 	}
 
 	protected BaseModelSearchResult<AssetCategory> searchCategories(

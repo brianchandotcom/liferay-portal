@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -401,8 +400,8 @@ public class WikiPageLocalServiceTest {
 		List<AssetLink> assetLinks = AssetLinkLocalServiceUtil.getLinks(
 			assetEntry.getEntryId());
 
-		long[] assetLinkEntryIds = StringUtil.split(
-			ListUtil.toString(assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
+		long[] assetLinkEntryIds = ListUtil.toLongArray(
+			assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
 
 		Assert.assertEquals(
 			assetLinkEntryIds, serviceContext.getAssetLinkEntryIds());

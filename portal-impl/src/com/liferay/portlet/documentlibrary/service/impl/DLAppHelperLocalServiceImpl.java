@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUt
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -238,9 +237,8 @@ public class DLAppHelperLocalServiceImpl
 			List<AssetLink> assetLinks = assetLinkLocalService.getDirectLinks(
 				fileEntryAssetEntry.getEntryId());
 
-			long[] assetLinkIds = StringUtil.split(
-				ListUtil.toString(assetLinks, AssetLink.ENTRY_ID2_ACCESSOR),
-				0L);
+			long[] assetLinkIds = ListUtil.toLongArray(
+				assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
 
 			assetLinkLocalService.updateLinks(
 				userId, fileVersionAssetEntry.getEntryId(), assetLinkIds,
@@ -1165,8 +1163,8 @@ public class DLAppHelperLocalServiceImpl
 		List<AssetLink> assetLinks = assetLinkLocalService.getDirectLinks(
 			assetEntry.getEntryId());
 
-		long[] assetLinkIds = StringUtil.split(
-			ListUtil.toString(assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
+		long[] assetLinkIds = ListUtil.toLongArray(
+			assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
 
 		return updateAsset(
 			userId, fileEntry, fileVersion, assetCategoryIds, assetTagNames,
@@ -1229,9 +1227,8 @@ public class DLAppHelperLocalServiceImpl
 						previousAssetEntry.getEntryId(),
 						AssetLinkConstants.TYPE_RELATED);
 
-				assetLinkEntryIds = StringUtil.split(
-					ListUtil.toString(
-						assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
+				assetLinkEntryIds = ListUtil.toLongArray(
+					assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
 			}
 
 			assetEntry = assetEntryLocalService.updateEntry(
@@ -1419,9 +1416,8 @@ public class DLAppHelperLocalServiceImpl
 								draftAssetEntry.getEntryId(),
 								AssetLinkConstants.TYPE_RELATED);
 
-						long[] assetLinkEntryIds = StringUtil.split(
-							ListUtil.toString(
-								assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
+						long[] assetLinkEntryIds = ListUtil.toLongArray(
+							assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
 
 						AssetEntry assetEntry =
 							assetEntryLocalService.updateEntry(

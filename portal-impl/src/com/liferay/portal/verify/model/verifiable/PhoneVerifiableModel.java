@@ -12,17 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.verify.model.grouped;
+package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.VerifiableModel;
+import com.liferay.portal.verify.model.uuid.VerifiableUUIDModel;
 
 /**
  * @author Miguel Pastor
  */
-public interface VerifiableGroupedModel extends VerifiableModel {
+public class PhoneVerifiableModel implements VerifiableUUIDModel {
 
-	public String getRelatedPrimaryKeyColumnName();
+	@Override
+	public String getPrimaryKeyColumnName() {
+		return "phoneId";
+	}
 
-	public String getRelatedTableName();
+	@Override
+	public String getTableName() {
+		return "Phone";
+	}
 
 }

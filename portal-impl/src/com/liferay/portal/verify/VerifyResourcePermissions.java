@@ -41,7 +41,6 @@ import java.sql.ResultSet;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Raymond Augé
@@ -73,11 +72,9 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		Map<String, VerifiableResourcedModel> verifiableResourcedModelsMap =
-			PortalBeanLocatorUtil.locate(VerifiableResourcedModel.class);
-
 		Collection<VerifiableResourcedModel> verifiableResourcedModels =
-			verifiableResourcedModelsMap.values();
+			(Collection<VerifiableResourcedModel>)PortalBeanLocatorUtil.locate(
+				"verifiable.models.resourced");
 
 		verify(
 			verifiableResourcedModels.toArray(

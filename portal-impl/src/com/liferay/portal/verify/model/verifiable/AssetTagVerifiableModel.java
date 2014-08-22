@@ -12,17 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.verify.model.grouped;
+package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.VerifiableModel;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portlet.asset.model.AssetTag;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public interface VerifiableGroupedModel extends VerifiableModel {
+public class AssetTagVerifiableModel implements VerifiableResourcedModel {
 
-	public String getRelatedPrimaryKeyColumnName();
+	@Override
+	public String getModelName() {
+		return AssetTag.class.getName();
+	}
 
-	public String getRelatedTableName();
+	@Override
+	public String getPrimaryKeyColumnName() {
+		return "tagId";
+	}
+
+	@Override
+	public String getTableName() {
+		return "AssetTag";
+	}
 
 }

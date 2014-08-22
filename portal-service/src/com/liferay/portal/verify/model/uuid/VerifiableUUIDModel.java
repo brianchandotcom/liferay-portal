@@ -12,17 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.verify.model.grouped;
+package com.liferay.portal.verify.model.uuid;
 
 import com.liferay.portal.verify.model.VerifiableModel;
 
 /**
  * @author Miguel Pastor
  */
-public interface VerifiableGroupedModel extends VerifiableModel {
-
-	public String getRelatedPrimaryKeyColumnName();
-
-	public String getRelatedTableName();
+public interface VerifiableUUIDModel extends VerifiableModel {
 
 }

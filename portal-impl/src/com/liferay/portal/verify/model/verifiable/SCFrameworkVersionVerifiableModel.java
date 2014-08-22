@@ -12,17 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.verify.model.grouped;
+package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.VerifiableModel;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public interface VerifiableGroupedModel extends VerifiableModel {
+public class SCFrameworkVersionVerifiableModel
+	implements VerifiableResourcedModel {
 
-	public String getRelatedPrimaryKeyColumnName();
+	@Override
+	public String getModelName() {
+		return SCFrameworkVersion.class.getName();
+	}
 
-	public String getRelatedTableName();
+	@Override
+	public String getPrimaryKeyColumnName() {
+		return "frameworkVersionId";
+	}
+
+	@Override
+	public String getTableName() {
+		return "SCFrameworkVersion";
+	}
 
 }

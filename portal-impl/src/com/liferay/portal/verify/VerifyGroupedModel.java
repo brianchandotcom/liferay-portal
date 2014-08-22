@@ -29,7 +29,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Shinn Lok
@@ -76,11 +75,9 @@ public class VerifyGroupedModel extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		Map<String, VerifiableGroupedModel> verifiableGroupedModelsMap =
-			PortalBeanLocatorUtil.locate(VerifiableGroupedModel.class);
-
 		Collection<VerifiableGroupedModel> verifiableGroupedModels =
-			verifiableGroupedModelsMap.values();
+			(Collection<VerifiableGroupedModel>)PortalBeanLocatorUtil.locate(
+				"verifiable.models.grouped");
 
 		verify(
 			verifiableGroupedModels.toArray(

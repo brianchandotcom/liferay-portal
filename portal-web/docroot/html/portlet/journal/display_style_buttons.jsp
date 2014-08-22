@@ -19,7 +19,7 @@
 <%
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+String folderId = (String)request.getAttribute("view.jsp-folderId");
 
 String structureId = ParamUtil.getString(request, "structureId");
 
@@ -29,50 +29,15 @@ PortletURL displayStyleURL = renderResponse.createRenderURL();
 
 displayStyleURL.setParameter("struts_action", "/journal/view");
 displayStyleURL.setParameter("navigation", HtmlUtil.escapeJS(navigation));
-displayStyleURL.setParameter("folderId", String.valueOf(folderId));
+displayStyleURL.setParameter("folderId", folderId);
 
 if (!structureId.equals("0")) {
 	displayStyleURL.setParameter("structureId", structureId);
 }
 %>
 
-<c:if test="<%= displayViews.length > 1 %>">
-	<div id="<portlet:namespace />displayStyleButtons">
-		<liferay-ui:icon-menu direction="down" icon='<%= "../aui/" + _getIcon(displayStyle) %>' message="" select="<%= true %>">
-
-			<%
-			for (String dataStyle : displayViews) {
-				displayStyleURL.setParameter("displayStyle", dataStyle);
-			%>
-
-				<liferay-ui:icon
-					image='<%= "../aui/" + _getIcon(dataStyle) %>'
-					message="<%= dataStyle %>"
-					url="<%= displayStyleURL.toString() %>"
-				/>
-
-			<%
-			}
-			%>
-
-		</liferay-ui:icon-menu>
-	</div>
-</c:if>
-
-<%!
-private String _getIcon(String displayStyle) {
-	String icon = displayStyle;
-
-	if (displayStyle.equals("descriptive")) {
-		icon = "th-list";
-	}
-	else if (displayStyle.equals("icon")) {
-		icon = "th-large";
-	}
-	else if (displayStyle.equals("list")) {
-		icon = "align-justify";
-	}
-
-	return icon;
-}
-%>
+<liferay-ui:app-view-display-style
+	displayStyle="<%= displayStyle %>"
+	displayStyles="<%= displayViews %>"
+	displayStyleUrl="<%= displayStyleURL %>"
+/>

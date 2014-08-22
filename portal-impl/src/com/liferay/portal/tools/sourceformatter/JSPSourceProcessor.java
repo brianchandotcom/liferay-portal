@@ -1049,7 +1049,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		String regex = "[^A-Za-z0-9_\"]" + variableName + "[^A-Za-z0-9_\"]";
 
-		return hasUnusedJSPTerm(fileName, regex, "taglib");
+		return hasUnusedJSPTerm(fileName, regex, "variable");
 	}
 
 	protected boolean isJSPDuplicateImport(

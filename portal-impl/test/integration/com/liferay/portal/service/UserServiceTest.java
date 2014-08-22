@@ -87,6 +87,8 @@ public class UserServiceTest {
 				PrincipalThreadLocal.setName(0);
 
 				UserServiceTest.addUser(true);
+
+				Assert.fail();
 			}
 			finally {
 				field.set(null, value);
@@ -112,6 +114,8 @@ public class UserServiceTest {
 				PrincipalThreadLocal.setName(user.getUserId());
 
 				UserServiceTest.updateUser(user);
+
+				Assert.fail();
 			}
 			finally {
 				field.set(null, value);
@@ -143,6 +147,8 @@ public class UserServiceTest {
 				UserServiceUtil.updateEmailAddress(
 					user.getUserId(), user.getPassword(), emailAddress,
 					emailAddress, new ServiceContext());
+
+				Assert.fail();
 			}
 			finally {
 				field.set(null, value);

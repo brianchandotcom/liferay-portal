@@ -60,15 +60,14 @@ public class BaseResourceImpl implements Resource {
 		String parentPath, String name, String displayName, Date createDate,
 		Date modifiedDate, long size) {
 
-		_href = parentPath;
+		_displayName = displayName;
+		_size = size;
 
 		if (Validator.isNotNull(name)) {
-			_href += StringPool.SLASH + name;
+			parentPath += StringPool.SLASH + name;
 		}
 
-		_href = HttpUtil.encodePath(_href);
-
-		_displayName = displayName;
+		_href = HttpUtil.encodePath(parentPath);
 
 		if (createDate == null) {
 			_createDate = new Date();
@@ -83,8 +82,6 @@ public class BaseResourceImpl implements Resource {
 		else {
 			_modifiedDate = _createDate;
 		}
-
-		_size = size;
 	}
 
 	@Override
@@ -168,20 +165,20 @@ public class BaseResourceImpl implements Resource {
 		_primaryKey = primaryKey;
 	}
 
-	private static Format _createDateFormatter =
+	private static final Format _createDateFormatter =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'", LocaleUtil.US, TimeZoneUtil.GMT);
-	private static Format _modifiedDateFormatter =
+	private static final Format _modifiedDateFormatter =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"EEE, dd MMM yyyy HH:mm:ss zzz", LocaleUtil.US, TimeZoneUtil.GMT);
 
 	private String _className;
-	private Date _createDate;
-	private String _displayName;
-	private String _href;
+	private final Date _createDate;
+	private final String _displayName;
+	private final String _href;
 	private Object _model;
-	private Date _modifiedDate;
+	private final Date _modifiedDate;
 	private long _primaryKey = -1;
-	private long _size;
+	private final long _size;
 
 }

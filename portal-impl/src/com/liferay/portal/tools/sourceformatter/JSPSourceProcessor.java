@@ -203,26 +203,30 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			topLevelDirName = includeFileName.substring(1, x);
 		}
 
+		String path = fileName;
+
 		while (true) {
-			int y = fileName.lastIndexOf(CharPool.SLASH);
+			int y = path.lastIndexOf(CharPool.SLASH);
 
 			if (y == -1) {
 				return StringPool.BLANK;
 			}
 
 			if (Validator.isNull(topLevelDirName) ||
-				fileName.equals(topLevelDirName) ||
-				fileName.endsWith(StringPool.SLASH + topLevelDirName)) {
+				path.equals(topLevelDirName) ||
+				path.endsWith(StringPool.SLASH + topLevelDirName)) {
 
 				String fullPathIncludeFileName =
-					fileName.substring(0, y) + includeFileName;
+					path.substring(0, y) + includeFileName;
 
-				if (_jspContents.containsKey(fullPathIncludeFileName)) {
+				if (_jspContents.containsKey(fullPathIncludeFileName) &&
+					!fullPathIncludeFileName.equals(fileName)) {
+
 					return fullPathIncludeFileName;
 				}
 			}
 
-			fileName = fileName.substring(0, y);
+			path = path.substring(0, y);
 		}
 	}
 

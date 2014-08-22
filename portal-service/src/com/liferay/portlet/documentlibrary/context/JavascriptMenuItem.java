@@ -22,9 +22,9 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Iván Zaera
  */
-public class JavascriptMenuAction extends MenuAction {
+public class JavascriptMenuItem extends MenuItem {
 
-	public JavascriptMenuAction(
+	public JavascriptMenuItem(
 		String id, String iconCssClass, String message, String onClick,
 		Renderer javascriptRenderer) {
 
@@ -49,7 +49,7 @@ public class JavascriptMenuAction extends MenuAction {
 
 	private static final String _JSP_PATH =
 		"/html/portlet/document_library/display_context/" +
-			"javascript_menu_action.jsp";
+			"javascript_menu_item.jsp";
 
 	private Renderer _javascriptRenderer;
 	private String _onClick;

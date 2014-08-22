@@ -23,7 +23,7 @@ import java.util.List;
  */
 public interface DLFileVersionActionsDisplayContext extends DLDisplayContext {
 
-	public List<MenuAction> getMenuActions() throws PortalException;
+	public List<MenuItem> getMenuItems() throws PortalException;
 
 	public String getPublishButtonLabel() throws PortalException;
 

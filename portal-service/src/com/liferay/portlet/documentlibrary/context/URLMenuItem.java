@@ -17,15 +17,15 @@ package com.liferay.portlet.documentlibrary.context;
 /**
  * @author Iván Zaera
  */
-public class URLMenuAction extends MenuAction {
+public class URLMenuItem extends MenuItem {
 
-	public URLMenuAction(
+	public URLMenuItem(
 		String id, String iconCssClass, String message, String url) {
 
 		this(id, iconCssClass, message, url, "_self");
 	}
 
-	public URLMenuAction(
+	public URLMenuItem(
 		String id, String iconCssClass, String message, String url,
 		String target) {
 
@@ -44,7 +44,7 @@ public class URLMenuAction extends MenuAction {
 	}
 
 	private static final String _JSP_PATH =
-		"/html/portlet/document_library/display_context/url_menu_action.jsp";
+		"/html/portlet/document_library/display_context/url_menu_item.jsp";
 
 	private String _target;
 	private String _url;

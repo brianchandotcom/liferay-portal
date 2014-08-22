@@ -23,9 +23,9 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Iván Zaera
  */
-public abstract class MenuAction {
+public abstract class MenuItem {
 
-	public MenuAction(
+	public MenuItem(
 		String id, String jspPath, String iconCssClass, String message) {
 
 		_id = id;
@@ -51,7 +51,7 @@ public abstract class MenuAction {
 
 		ServletRequest request = pageContext.getRequest();
 
-		request.setAttribute(URLMenuAction.class.getName(), this);
+		request.setAttribute(URLMenuItem.class.getName(), this);
 
 		pageContext.include(_jspPath);
 	}

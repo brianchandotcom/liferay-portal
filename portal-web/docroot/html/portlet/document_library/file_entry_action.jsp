@@ -114,11 +114,11 @@ DLFileVersionActionsDisplayContext dlFileVersionActionsDisplayContext = DLFileVe
 			<c:when test="<%= (fileShortcut == null) %>">
 
 				<%
-				List<MenuAction> menuActions = dlFileVersionActionsDisplayContext.getMenuActions();
+					List<MenuItem> menuItems = dlFileVersionActionsDisplayContext.getMenuItems();
 
-				for (MenuAction menuAction : menuActions) {
-					menuAction.render(pageContext);
-				}
+					for (MenuItem menuItem : menuItems) {
+						menuItem.render(pageContext);
+					}
 				%>
 
 				<%@ include file="/html/portlet/document_library/action/move.jspf" %>

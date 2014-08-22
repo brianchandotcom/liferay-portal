@@ -39,8 +39,8 @@ public class BaseDLFileVersionActionsDisplayContext
 	}
 
 	@Override
-	public List<MenuAction> getMenuActions() throws PortalException {
-		return parentDLDisplayContext.getMenuActions();
+	public List<MenuItem> getMenuItems() throws PortalException {
+		return parentDLDisplayContext.getMenuItems();
 	}
 
 	@Override

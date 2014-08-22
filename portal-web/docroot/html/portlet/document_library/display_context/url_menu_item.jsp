@@ -1,4 +1,3 @@
-
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -18,12 +17,12 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-URLMenuAction urlMenuAction = (URLMenuAction)request.getAttribute(URLMenuAction.class.getName());
+URLMenuItem urlMenuItem = (URLMenuItem)request.getAttribute(URLMenuItem.class.getName());
 %>
 
 <liferay-ui:icon
-	iconCssClass="<%= urlMenuAction.getIconCssClass() %>"
-	message="<%= urlMenuAction.getMessage() %>"
-	target="<%= urlMenuAction.getTarget() %>"
-	url="<%= urlMenuAction.getURL() %>"
+	iconCssClass="<%= urlMenuItem.getIconCssClass() %>"
+	message="<%= urlMenuItem.getMessage() %>"
+	target="<%= urlMenuItem.getTarget() %>"
+	url="<%= urlMenuItem.getURL() %>"
 />

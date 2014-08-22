@@ -17,12 +17,12 @@ package com.liferay.portlet.documentlibrary.context;
 /**
  * @author Iván Zaera
  */
-public class DLMenuActions {
+public class DLMenuItems {
 
-	public static final String MENU_ACTION_ID_DOWNLOAD = "download";
+	public static final String MENU_ITEM_ID_DOWNLOAD = "download";
 
-	public static final String MENU_ACTION_ID_EDIT = "edit";
+	public static final String MENU_ITEM_ID_EDIT = "edit";
 
-	public static final String MENU_ACTION_ID_OPEN_DOCUMENT = "open_document";
+	public static final String MENU_ITEM_ID_OPEN_DOCUMENT = "open_document";
 
 }

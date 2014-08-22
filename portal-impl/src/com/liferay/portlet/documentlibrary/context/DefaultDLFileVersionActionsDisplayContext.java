@@ -101,17 +101,17 @@ public class DefaultDLFileVersionActionsDisplayContext
 	}
 
 	@Override
-	public List<MenuAction> getMenuActions() throws PortalException {
-		List<MenuAction> menuActions = new ArrayList<MenuAction>();
+	public List<MenuItem> getMenuItems() throws PortalException {
+		List<MenuItem> menuItems = new ArrayList<MenuItem>();
 
-		_addDownloadMenuAction(menuActions);
-		_addOpenDocumentMenuAction(menuActions);
-		_addEditMenuAction(menuActions);
+		_addDownloadMenuItem(menuItems);
+		_addOpenDocumentMenuItem(menuItems);
+		_addEditMenuItem(menuItems);
 
-		return menuActions;
+		return menuItems;
 	}
 
-	private void _addEditMenuAction(List<MenuAction> menuActions)
+	private void _addEditMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
 		DLPortletInstanceSettings dlPortletInstanceSettings =
@@ -138,9 +138,9 @@ public class DefaultDLFileVersionActionsDisplayContext
 				editURL.setParameter(
 					"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
-				menuActions.add(
-					new URLMenuAction(
-						DLMenuActions.MENU_ACTION_ID_EDIT, "icon-edit", "edit",
+				menuItems.add(
+					new URLMenuItem(
+						DLMenuItems.MENU_ITEM_ID_EDIT, "icon-edit", "edit",
 						editURL.toString()));
 			}
 		}
@@ -174,7 +174,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 		return PortalUtil.getLiferayPortletResponse(portletResponse);
 	}
 
-	private void _addOpenDocumentMenuAction(List<MenuAction> menuActions)
+	private void _addOpenDocumentMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
 		if (isOpenInMsOfficeButtonVisible()) {
@@ -191,15 +191,15 @@ public class DefaultDLFileVersionActionsDisplayContext
 				liferayPortletResponse.getNamespace() + "openDocument('" +
 					webDavURL + "');";
 
-			menuActions.add(
-				new JavascriptMenuAction(
-					DLMenuActions.MENU_ACTION_ID_OPEN_DOCUMENT, "icon-file-alt",
+			menuItems.add(
+				new JavascriptMenuItem(
+					DLMenuItems.MENU_ITEM_ID_OPEN_DOCUMENT, "icon-file-alt",
 					"open-in-ms-office", onClick,
-					new _OpenDocumentJavascriptMenuActionRenderer()));
+					new _OpenDocumentJavascriptMenuItemRenderer()));
 		}
 	}
 
-	private void _addDownloadMenuAction(List<MenuAction> menuActions)
+	private void _addDownloadMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
 			if (isDownloadButtonVisible()) {
@@ -212,9 +212,9 @@ public class DefaultDLFileVersionActionsDisplayContext
 					_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,
 					false, true);
 
-				menuActions.add(
-					new URLMenuAction(
-						DLMenuActions.MENU_ACTION_ID_DOWNLOAD, "icon-download",
+				menuItems.add(
+					new URLMenuItem(
+						DLMenuItems.MENU_ITEM_ID_DOWNLOAD, "icon-download",
 						message, url, "_blank"));
 			}
 		}
@@ -517,8 +517,8 @@ public class DefaultDLFileVersionActionsDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"85F6C50E-3893-4E32-9D63-208528A503FA");
 
-	private class _OpenDocumentJavascriptMenuActionRenderer
-		implements JavascriptMenuAction.Renderer {
+	private class _OpenDocumentJavascriptMenuItemRenderer
+		implements JavascriptMenuItem.Renderer {
 
 		@Override
 		public void render(PageContext pageContext)

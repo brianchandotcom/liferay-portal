@@ -17,17 +17,17 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-JavascriptMenuAction javascriptMenuAction = (JavascriptMenuAction)request.getAttribute(URLMenuAction.class.getName());
+JavascriptMenuItem javascriptMenuItem = (JavascriptMenuItem)request.getAttribute(JavascriptMenuItem.class.getName());
 %>
 
 <liferay-ui:icon
-	iconCssClass="<%= javascriptMenuAction.getIconCssClass() %>"
-	message="<%= javascriptMenuAction.getMessage() %>"
-	onClick="<%= javascriptMenuAction.getOnClick() %>"
+	iconCssClass="<%= javascriptMenuItem.getIconCssClass() %>"
+	message="<%= javascriptMenuItem.getMessage() %>"
+	onClick="<%= javascriptMenuItem.getOnClick() %>"
 	target="_blank"
 	url="javascript:;"
 />
 
 <%
-javascriptMenuAction.getJavascriptRenderer().render(pageContext);
+javascriptMenuItem.getJavascriptRenderer().render(pageContext);
 %>

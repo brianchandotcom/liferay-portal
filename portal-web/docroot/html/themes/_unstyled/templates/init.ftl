@@ -305,6 +305,10 @@
 	<#assign the_title = htmlUtil.escape(the_title) />
 </#if>
 
+<#if the_title != "">
+	<#assign the_title = the_title + " - " + site_name />
+</#if>
+
 <#if layouts??>
 	<#assign pages = layouts />
 </#if>

@@ -14,37 +14,63 @@
 
 package com.liferay.portal.kernel.concurrent;
 
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
  * @author Shuyang Zhou
  */
 public abstract class NoticeableFutureConverter<T, V>
-	extends DefaultNoticeableFuture<T> {
+	extends FutureConverter<T, V> implements NoticeableFuture<T> {
 
 	public NoticeableFutureConverter(NoticeableFuture<V> noticeableFuture) {
-		noticeableFuture.addFutureListener(
-			new FutureListener<V>() {
+		super(noticeableFuture);
+
+		_noticeableFuture = noticeableFuture;
+	}
+
+	@Override
+	public boolean addFutureListener(FutureListener<T> futureListener) {
+		return _noticeableFuture.addFutureListener(
+			new FutureListenerConverter(futureListener));
+	}
+
+	@Override
+	public boolean removeFutureListener(FutureListener<T> futureListener) {
+		return _noticeableFuture.removeFutureListener(
+			new FutureListenerConverter(futureListener));
+	}
+
+	private final NoticeableFuture<V> _noticeableFuture;
+
+	private class FutureListenerConverter implements FutureListener<V> {
+
+		public FutureListenerConverter(FutureListener<T> futureListener) {
+			_futureListener = futureListener;
+		}
+
+		@Override
+		public void complete(Future<V> future) {
+			_futureListener.complete(new FutureConverter<T, V>(future) {
 
 				@Override
-				public void complete(Future<V> future) {
-					try {
-						NoticeableFutureConverter.this.set(
-							convert(future.get()));
-					}
-					catch (Throwable t) {
-						if (t instanceof ExecutionException) {
-							t = t.getCause();
-						}
-
-						NoticeableFutureConverter.this.setException(t);
-					}
+				protected T convert(V v) throws Throwable {
+					return NoticeableFutureConverter.this.convert(v);
 				}
 
 			});
-	}
+		}
 
-	protected abstract T convert(V v) throws Throwable;
+		@Override
+		public boolean equals(Object obj) {
+			FutureListenerConverter futureListenerConverter =
+				(FutureListenerConverter)obj;
+
+			return _futureListener.equals(
+				futureListenerConverter._futureListener);
+		}
+
+		private final FutureListener<T> _futureListener;
+
+	}
 
 }

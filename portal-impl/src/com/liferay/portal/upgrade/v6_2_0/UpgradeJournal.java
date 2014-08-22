@@ -208,6 +208,45 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		}
 	}
 
+	protected long doUpdateStructure(ResultSet rs) throws Exception {
+		String uuid_ = rs.getString("uuid_");
+		long id_ = rs.getLong("id_");
+		long groupId = rs.getLong("groupId");
+		long companyId = rs.getLong("companyId");
+		long userId = rs.getLong("userId");
+		String userName = rs.getString("userName");
+		Timestamp createDate = rs.getTimestamp("createDate");
+		Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+		String structureId = rs.getString("structureId");
+		String parentStructureId = rs.getString("parentStructureId");
+		String name = rs.getString("name");
+		String description = rs.getString("description");
+		String xsd = rs.getString("xsd");
+
+		Long insertedDdmStructureId = _ddmStructureIds.get(
+			groupId + "#" + structureId);
+
+		if (insertedDdmStructureId != null) {
+			return insertedDdmStructureId;
+		}
+
+		long ddmStructureId = increment();
+
+		addDDMStructure(
+			uuid_, ddmStructureId, groupId, companyId, userId, userName,
+			createDate, modifiedDate, parentStructureId, structureId, name,
+			description, xsd);
+
+		updateResourcePermission(
+			companyId, "com.liferay.portlet.journal.model.JournalStructure",
+			DDMStructure.class.getName(), id_, ddmStructureId);
+
+		_ddmStructureIds.put(groupId + "#" + structureId, ddmStructureId);
+		_ddmStructurePKs.put(id_, ddmStructureId);
+
+		return 0;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		try {
@@ -347,40 +386,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
-				String uuid_ = rs.getString("uuid_");
-				long id_ = rs.getLong("id_");
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				String userName = rs.getString("userName");
-				Timestamp createDate = rs.getTimestamp("createDate");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
-				String parentStructureId = rs.getString("parentStructureId");
-				String name = rs.getString("name");
-				String description = rs.getString("description");
-				String xsd = rs.getString("xsd");
-
-				Long ddmStructureId = _ddmStructureIds.get(
-					groupId + "#" + structureId);
-
-				if (ddmStructureId != null) {
-					return ddmStructureId;
-				}
-
-				ddmStructureId = increment();
-
-				addDDMStructure(
-					uuid_, ddmStructureId, groupId, companyId, userId, userName,
-					createDate, modifiedDate, parentStructureId, structureId,
-					name, description, xsd);
-
-				updateResourcePermission(
-					companyId,
-					"com.liferay.portlet.journal.model.JournalStructure",
-					DDMStructure.class.getName(), id_, ddmStructureId);
-
-				_ddmStructureIds.put(
-					groupId + "#" + structureId, ddmStructureId);
+				return doUpdateStructure(rs);
 			}
 
 			return 0;
@@ -410,35 +416,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				String uuid_ = rs.getString("uuid_");
-				long id_ = rs.getLong("id_");
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				String userName = rs.getString("userName");
-				Timestamp createDate = rs.getTimestamp("createDate");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
-				String structureId = rs.getString("structureId");
-				String parentStructureId = rs.getString("parentStructureId");
-				String name = rs.getString("name");
-				String description = rs.getString("description");
-				String xsd = rs.getString("xsd");
-
-				long ddmStructureId = increment();
-
-				addDDMStructure(
-					uuid_, ddmStructureId, groupId, companyId, userId, userName,
-					createDate, modifiedDate, parentStructureId, structureId,
-					name, description, xsd);
-
-				updateResourcePermission(
-					companyId,
-					"com.liferay.portlet.journal.model.JournalStructure",
-					DDMStructure.class.getName(), id_, ddmStructureId);
-
-				_ddmStructureIds.put(
-					groupId + "#" + structureId, ddmStructureId);
-				_ddmStructurePKs.put(id_, ddmStructureId);
+				doUpdateStructure(rs);
 			}
 		}
 		finally {

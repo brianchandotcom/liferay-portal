@@ -28,6 +28,8 @@ public class TestContext {
 	public TestContext(Object instance, Method method) {
 		_instance = instance;
 		_method = method;
+
+		_clazz = null;
 	}
 
 	public Class<?> getClazz() {
@@ -50,7 +52,7 @@ public class TestContext {
 		_method = method;
 	}
 
-	private Class<?> _clazz;
+	private final Class<?> _clazz;
 	private Object _instance;
 	private Method _method;
 

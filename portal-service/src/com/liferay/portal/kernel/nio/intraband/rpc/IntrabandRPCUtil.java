@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.EnumSet;
-import java.util.concurrent.Callable;
 
 /**
  * @author Shuyang Zhou
@@ -61,16 +60,6 @@ public class IntrabandRPCUtil {
 
 		return defaultNoticeableFuture;
 	}
-
-	protected static Callable<Serializable> emptyCallable =
-		new Callable<Serializable>() {
-
-		@Override
-		public Serializable call() throws Exception {
-			return null;
-		}
-
-	};
 
 	protected static EnumSet<CompletionType> repliedEnumSet = EnumSet.of(
 		CompletionType.REPLIED);

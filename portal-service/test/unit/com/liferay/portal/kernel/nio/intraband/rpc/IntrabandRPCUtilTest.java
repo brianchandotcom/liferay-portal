@@ -63,11 +63,6 @@ public class IntrabandRPCUtilTest {
 	}
 
 	@Test
-	public void testEmptyCallable() throws Exception {
-		Assert.assertNull(IntrabandRPCUtil.emptyCallable.call());
-	}
-
-	@Test
 	public void testExecuteFail() throws Exception {
 		PortalClassLoaderUtil.setClassLoader(getClass().getClassLoader());
 

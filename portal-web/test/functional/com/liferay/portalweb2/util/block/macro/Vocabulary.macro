@@ -183,9 +183,6 @@
 				<execute action="CPCategories#click" locator-key1="ACTIONS_BUTTON" />
 				<execute action="CPCategories#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 				<execute action="CPCategories#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-				<!-- <execute action="CPCategories#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no categories." /> -->
-
 			</then>
 		</if>
 	</command>
@@ -213,8 +210,6 @@
 		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPVocabulariesEdit#assertClick" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
-
-		<!-- <execute action="CPVocabulariesEditPermissions#selectFrame" locator-key1="IFRAME" /> -->
 
 		<if>
 			<equals arg1="${viewableBy}" arg2="Anyone (Guest Role)" />

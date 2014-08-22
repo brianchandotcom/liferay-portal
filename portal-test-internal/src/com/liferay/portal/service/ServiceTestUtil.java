@@ -233,18 +233,9 @@ public class ServiceTestUtil {
 
 		PortalRegisterTestUtil.registerAssetRendererFactories();
 
-		// Service context thread local
+		// Thread Locals
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setPortalURL("http://tests:8080");
-		serviceContext.setPathMain("path");
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		// Locale thread local
-
-		LocaleThreadLocal.setThemeDisplayLocale(new Locale("en", "US"));
+		_setThreadLocals();
 
 		// Company
 
@@ -355,6 +346,21 @@ public class ServiceTestUtil {
 		MessageBus messageBus = MessageBusUtil.getMessageBus();
 
 		messageBus.replace(baseDestination);
+	}
+
+	private static void _setThreadLocals() {
+		// Service context thread local
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setPortalURL("http://tests:8080");
+		serviceContext.setPathMain("path");
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		// Locale thread local
+
+		LocaleThreadLocal.setThemeDisplayLocale(new Locale("en", "US"));
 	}
 
 }

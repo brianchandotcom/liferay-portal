@@ -117,26 +117,30 @@ public class MBCommentManagerImplTest extends Mockito {
 
 	@Test(expected = DuplicateCommentException.class)
 	public void testAddDuplicateComment() throws Exception {
-		when(
-			_mbMessage.getBody()
-		).thenReturn(
-			_BODY
-		);
-
-		List<MBMessage> messages = Collections.singletonList(_mbMessage);
-
-		when(
-			_mbMessageLocalService.getThreadMessages(
-				_THREAD_ID, WorkflowConstants.STATUS_APPROVED)
-		).thenReturn(
-			messages
-		);
+		simulatePreexistingComment(_BODY);
 
 		_mbCommentManagerImpl.addComment(
 			_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID, _BODY,
 			_serviceContext);
 
 		Assert.fail();
+	}
+
+	@Test
+	public void testAddNonDuplicateComment() throws Exception {
+		simulatePreexistingComment(_BODY + RandomTestUtil.randomString());
+
+		_mbCommentManagerImpl.addComment(
+			_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID, _BODY,
+			_serviceContext);
+
+		Mockito.verify(
+			_mbMessageLocalService
+		).addDiscussionMessage(
+			_USER_ID, StringPool.BLANK, _GROUP_ID, _CLASS_NAME, _ENTRY_ID,
+			_THREAD_ID, _ROOT_MESSAGE_ID, StringPool.BLANK, _BODY,
+			_serviceContext
+		);
 	}
 
 	@Test
@@ -240,6 +244,23 @@ public class MBCommentManagerImplTest extends Mockito {
 			_serviceContextFunction.apply(MBMessage.class.getName())
 		).thenReturn(
 			_serviceContext
+		);
+	}
+
+	protected void simulatePreexistingComment(String body) {
+		when(
+			_mbMessage.getBody()
+		).thenReturn(
+			body
+		);
+
+		List<MBMessage> messages = Collections.singletonList(_mbMessage);
+
+		when(
+			_mbMessageLocalService.getThreadMessages(
+				_THREAD_ID, WorkflowConstants.STATUS_APPROVED)
+		).thenReturn(
+			messages
 		);
 	}
 

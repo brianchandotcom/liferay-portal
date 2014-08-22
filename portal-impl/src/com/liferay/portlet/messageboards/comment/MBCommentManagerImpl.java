@@ -56,7 +56,7 @@ public class MBCommentManagerImpl implements CommentManager {
 		for (MBMessage message : messages) {
 			String messageBody = message.getBody();
 
-			if (messageBody.equals(messageBody)) {
+			if (messageBody.equals(body)) {
 				throw new DuplicateCommentException();
 			}
 		}

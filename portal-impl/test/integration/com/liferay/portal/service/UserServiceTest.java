@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.ReservedUserEmailAddressException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -165,11 +166,14 @@ public class UserServiceTest {
 			UserTestUtil.addUser(true);
 		}
 
-		@Test
+		@Test(expected = NoSuchUserException.class)
 		public void testDeleteUser() throws Exception {
 			User user = UserTestUtil.addUser(true);
 
 			UserServiceUtil.deleteUser(user.getUserId());
+
+			UserServiceUtil.getUserByEmailAddress(
+				TestPropsValues.getCompanyId(), user.getEmailAddress());
 		}
 
 		@Test

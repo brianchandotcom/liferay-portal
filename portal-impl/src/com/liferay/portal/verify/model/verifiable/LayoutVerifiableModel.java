@@ -15,13 +15,19 @@
 package com.liferay.portal.verify.model.verifiable;
 
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
-public class LayoutVerifiableResourcedModel
-	implements VerifiableResourcedModel {
+public class LayoutVerifiableModel
+	implements VerifiableAuditedModel, VerifiableResourcedModel {
+
+	@Override
+	public String getJoinByTableName() {
+		return null;
+	}
 
 	@Override
 	public String getModelName() {
@@ -34,8 +40,23 @@ public class LayoutVerifiableResourcedModel
 	}
 
 	@Override
+	public String getRelatedModelName() {
+		return null;
+	}
+
+	@Override
+	public String getRelatedPKColumnName() {
+		return null;
+	}
+
+	@Override
 	public String getTableName() {
 		return "Layout";
+	}
+
+	@Override
+	public boolean isUpdateDates() {
+		return false;
 	}
 
 }

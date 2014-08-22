@@ -24,6 +24,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class BaseCometRequest implements CometRequest {
 
+	public BaseCometRequest(HttpServletRequest request) {
+		_request = request;
+
+		setRequest(request);
+	}
+
 	@Override
 	public long getCompanyId() {
 		return _companyId;

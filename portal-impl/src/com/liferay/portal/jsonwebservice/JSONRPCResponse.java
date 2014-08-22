@@ -36,13 +36,13 @@ public class JSONRPCResponse implements JSONSerializable {
 
 		_jsonrpc = GetterUtil.getString(jsonRPCRequest.getJsonrpc());
 
+		Error error = null;
+
 		if (!_jsonrpc.equals("2.0")) {
-			_error = new Error(-32700, "Invalid JSON RPC version " + _jsonrpc);
+			error = new Error(-32700, "Invalid JSON RPC version " + _jsonrpc);
+			result = null;
 		}
-		else if (exception == null) {
-			_result = result;
-		}
-		else {
+		else if (exception != null) {
 			int code = -32603;
 
 			String message = null;
@@ -62,8 +62,12 @@ public class JSONRPCResponse implements JSONSerializable {
 				message = exception.toString();
 			}
 
-			_error = new Error(code, message);
+			error = new Error(code, message);
+			result = null;
 		}
+
+		_error = error;
+		_result = result;
 	}
 
 	@Override
@@ -114,9 +118,9 @@ public class JSONRPCResponse implements JSONSerializable {
 
 	}
 
-	private Error _error;
-	private Integer _id;
-	private String _jsonrpc;
-	private Object _result;
+	private final Error _error;
+	private final Integer _id;
+	private final String _jsonrpc;
+	private final Object _result;
 
 }

@@ -210,7 +210,7 @@ public class UserServiceTest {
 		public void shouldSendNewPasswordEmailByEmailAddress()
 			throws Exception {
 
-			givenAUserWhoseCompanySendNewPassword();
+			givenThatCompanySendsNewPassword();
 
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
@@ -229,7 +229,7 @@ public class UserServiceTest {
 
 		@Test
 		public void shouldSendNewPasswordEmailByScreenName() throws Exception {
-			givenAUserWhoseCompanySendNewPassword();
+			givenThatCompanySendsNewPassword();
 
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
@@ -250,7 +250,7 @@ public class UserServiceTest {
 		public void shouldSendNewPasswordEmailByUserId() throws Exception {
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
-			givenAUserWhoseCompanySendNewPassword();
+			givenThatCompanySendsNewPassword();
 
 			boolean isPasswordSent = UserServiceUtil.sendPasswordByUserId(
 				_user.getUserId());
@@ -317,7 +317,7 @@ public class UserServiceTest {
 					"You can reset your password"));
 		}
 
-		protected void givenAUserWhoseCompanySendNewPassword()
+		protected void givenThatCompanySendsNewPassword()
 			throws Exception {
 
 			PortletPreferences portletPreferences =

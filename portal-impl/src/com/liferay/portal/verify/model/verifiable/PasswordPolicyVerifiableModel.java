@@ -22,7 +22,7 @@ import com.liferay.portal.verify.model.uuid.VerifiableUUIDModel;
  * @author Brian Wing Shun Chan
  */
 public class PasswordPolicyVerifiableModel
-	implements VerifiableUUIDModel, VerifiableResourcedModel {
+	implements VerifiableResourcedModel, VerifiableUUIDModel {
 
 	@Override
 	public String getModelName() {

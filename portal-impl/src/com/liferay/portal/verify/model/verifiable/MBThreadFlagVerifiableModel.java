@@ -22,8 +22,8 @@ import com.liferay.portal.verify.model.uuid.VerifiableUUIDModel;
  * @author Miguel Pastor
  */
 public class MBThreadFlagVerifiableModel
-	implements VerifiableAuditedModel, VerifiableUUIDModel,
-		VerifiableGroupedModel {
+	implements VerifiableAuditedModel, VerifiableGroupedModel,
+			   VerifiableUUIDModel {
 
 	@Override
 	public String getJoinByTableName() {

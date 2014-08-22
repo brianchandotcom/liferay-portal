@@ -22,7 +22,7 @@ import com.liferay.portlet.journal.model.JournalFeed;
  * @author Brian Wing Shun Chan
  */
 public class JournalFeedVerifiableModel
-	implements VerifiableUUIDModel, VerifiableResourcedModel {
+	implements VerifiableResourcedModel, VerifiableUUIDModel {
 
 	@Override
 	public String getModelName() {

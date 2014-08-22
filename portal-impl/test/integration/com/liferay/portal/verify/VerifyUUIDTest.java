@@ -41,6 +41,7 @@ public class VerifyUUIDTest extends BaseVerifyTestCase {
 	public void testVerifyModelWithUnknownPKColumnName() throws Exception {
 		VerifyUUID.verifyModel(
 			new VerifiableUUIDModel() {
+
 				@Override
 				public String getPrimaryKeyColumnName() {
 					return _UNKNOWN;
@@ -50,6 +51,7 @@ public class VerifyUUIDTest extends BaseVerifyTestCase {
 				public String getTableName() {
 					return "Layout";
 				}
+
 			});
 	}
 
@@ -59,6 +61,7 @@ public class VerifyUUIDTest extends BaseVerifyTestCase {
 
 		VerifyUUID.verifyModel(
 			new VerifiableUUIDModel() {
+
 				@Override
 				public String getPrimaryKeyColumnName() {
 					return _UNKNOWN;
@@ -68,6 +71,7 @@ public class VerifyUUIDTest extends BaseVerifyTestCase {
 				public String getTableName() {
 					return _UNKNOWN;
 				}
+
 			});
 	}
 

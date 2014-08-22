@@ -23,7 +23,7 @@ import com.liferay.portal.verify.model.uuid.VerifiableUUIDModel;
  */
 public class MBDiscussionVerifiableModel
 	implements VerifiableAuditedModel, VerifiableGroupedModel,
-		VerifiableUUIDModel {
+			   VerifiableUUIDModel {
 
 	@Override
 	public String getJoinByTableName() {

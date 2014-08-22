@@ -23,8 +23,8 @@ import com.liferay.portal.verify.model.uuid.VerifiableUUIDModel;
  * @author Miguel Pastor
  */
 public class LayoutVerifiableModel
-	implements VerifiableAuditedModel, VerifiableUUIDModel,
-		VerifiableResourcedModel {
+	implements VerifiableAuditedModel, VerifiableResourcedModel,
+			   VerifiableUUIDModel {
 
 	@Override
 	public String getJoinByTableName() {

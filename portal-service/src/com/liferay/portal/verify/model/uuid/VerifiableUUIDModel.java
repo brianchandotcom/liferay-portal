@@ -20,5 +20,4 @@ import com.liferay.portal.verify.model.VerifiableModel;
  * @author Miguel Pastor
  */
 public interface VerifiableUUIDModel extends VerifiableModel {
-
 }

@@ -14,43 +14,21 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
 import com.liferay.portal.verify.model.uuid.VerifiableUUIDModel;
 
 /**
  * @author Miguel Pastor
  */
-public class LayoutPrototypeVerifiableModel
-	implements VerifiableAuditedModel, VerifiableUUIDModel {
-
-	@Override
-	public String getJoinByTableName() {
-		return null;
-	}
+public class GroupVerifiableModel implements VerifiableUUIDModel {
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "layoutPrototypeId";
-	}
-
-	@Override
-	public String getRelatedModelName() {
-		return null;
-	}
-
-	@Override
-	public String getRelatedPKColumnName() {
-		return null;
+		return "emailAddressId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "LayoutPrototype";
-	}
-
-	@Override
-	public boolean isUpdateDates() {
-		return true;
+		return "EmailAddress";
 	}
 
 }

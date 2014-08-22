@@ -16,12 +16,14 @@ package com.liferay.portal.verify.model.verifiable;
 
 import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
 import com.liferay.portal.verify.model.grouped.VerifiableGroupedModel;
+import com.liferay.portal.verify.model.uuid.VerifiableUUIDModel;
 
 /**
  * @author Miguel Pastor
  */
 public class MBDiscussionVerifiableModel
-	implements VerifiableAuditedModel, VerifiableGroupedModel {
+	implements VerifiableAuditedModel, VerifiableGroupedModel,
+		VerifiableUUIDModel {
 
 	@Override
 	public String getJoinByTableName() {
@@ -34,16 +36,6 @@ public class MBDiscussionVerifiableModel
 	}
 
 	@Override
-	public String getRelatedPrimaryKeyColumnName() {
-		return "threadId";
-	}
-
-	@Override
-	public String getRelatedTableName() {
-		return "MBThread";
-	}
-
-	@Override
 	public String getRelatedModelName() {
 		return "MBThread";
 	}
@@ -51,6 +43,16 @@ public class MBDiscussionVerifiableModel
 	@Override
 	public String getRelatedPKColumnName() {
 		return "threadId";
+	}
+
+	@Override
+	public String getRelatedPrimaryKeyColumnName() {
+		return "threadId";
+	}
+
+	@Override
+	public String getRelatedTableName() {
+		return "MBThread";
 	}
 
 	@Override

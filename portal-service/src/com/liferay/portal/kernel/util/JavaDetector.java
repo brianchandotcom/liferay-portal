@@ -130,18 +130,28 @@ public class JavaDetector {
 		_64bit = Validator.equals(
 			"64", System.getProperty("sun.arch.data.model"));
 
+		boolean oracle = false;
+
 		if (_javaVendor != null) {
 			_ibm = _javaVendor.startsWith("IBM");
 
 			if (_javaVendor.startsWith("Oracle") ||
 				_javaVendor.startsWith("Sun")) {
 
-				_oracle = true;
+				oracle = true;
 			}
 		}
+		else {
+			_ibm = false;
+		}
+
+		_oracle = oracle;
 
 		if (_javaRuntimeName != null) {
 			_openJDK = _javaRuntimeName.contains("OpenJDK");
+		}
+		else {
+			_openJDK = false;
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -161,17 +171,17 @@ public class JavaDetector {
 
 	private static JavaDetector _instance = new JavaDetector();
 
-	private boolean _64bit;
-	private boolean _ibm;
-	private String _javaClassPath;
-	private double _javaClassVersion;
-	private String _javaRuntimeName;
-	private String _javaRuntimeVersion;
-	private double _javaSpecificationVersion;
-	private String _javaVendor;
-	private String _javaVersion;
-	private String _javaVmVersion;
-	private boolean _openJDK;
-	private boolean _oracle;
+	private final boolean _64bit;
+	private final boolean _ibm;
+	private final String _javaClassPath;
+	private final double _javaClassVersion;
+	private final String _javaRuntimeName;
+	private final String _javaRuntimeVersion;
+	private final double _javaSpecificationVersion;
+	private final String _javaVendor;
+	private final String _javaVersion;
+	private final String _javaVmVersion;
+	private final boolean _openJDK;
+	private final boolean _oracle;
 
 }

@@ -702,7 +702,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			DDLRecordVersion latestRecordVersion, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.equals(serviceContext.getCommand(), Constants.RENAME)) {
+		if (Validator.equals(serviceContext.getCommand(), Constants.REVERT)) {
 			return false;
 		}
 

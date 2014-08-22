@@ -2008,7 +2008,7 @@ public class DLFileEntryLocalServiceImpl
 			return false;
 		}
 
-		if (Validator.equals(serviceContext.getCommand(), Constants.RENAME)) {
+		if (Validator.equals(serviceContext.getCommand(), Constants.REVERT)) {
 			return false;
 		}
 

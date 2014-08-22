@@ -19,7 +19,7 @@
 <%
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+String folderId = (String)request.getAttribute("view.jsp-folderId");
 
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
@@ -31,32 +31,20 @@ if (Validator.isNull(displayStyle)) {
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-Map<String, String> requestParams = new HashMap<String, String>();
+PortletURL displayStyleUrl = renderResponse.createRenderURL();
 
-requestParams.put("struts_action", Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search");
-requestParams.put("navigation", HtmlUtil.escapeJS(navigation));
-requestParams.put("folderId", String.valueOf(folderId));
-requestParams.put("saveDisplayStyle", Boolean.TRUE.toString());
-requestParams.put("searchType", String.valueOf(DLSearchConstants.FRAGMENT));
-requestParams.put("viewEntriesPage", Boolean.FALSE.toString());
-requestParams.put("viewFolders", Boolean.FALSE.toString());
+displayStyleUrl.setParameter("struts_action", Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search");
+displayStyleUrl.setParameter("navigation", HtmlUtil.escapeJS(navigation));
+displayStyleUrl.setParameter("folderId", folderId);
 
-if (Validator.isNull(keywords)) {
-	requestParams.put("viewEntries", Boolean.TRUE.toString());
-}
-else {
-	requestParams.put("keywords", HtmlUtil.escapeJS(keywords));
-	requestParams.put("searchFolderId", String.valueOf(folderId));
-	requestParams.put("viewEntries", Boolean.FALSE.toString());
+if(fileEntryTypeId != -1){
+	displayStyleUrl.setParameter("fileEntryTypeId", String.valueOf(fileEntryTypeId));
 }
 
-if (fileEntryTypeId != -1) {
-	requestParams.put("fileEntryTypeId", String.valueOf(fileEntryTypeId));
-}
 %>
 
 <liferay-ui:app-view-display-style
 	displayStyle="<%= displayStyle %>"
 	displayStyles="<%= dlPortletInstanceSettings.getDisplayViews() %>"
-	requestParams="<%= requestParams %>"
+	displayStyleUrl="<%= displayStyleUrl %>"
 />

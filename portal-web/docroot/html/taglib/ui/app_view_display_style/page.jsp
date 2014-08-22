@@ -18,19 +18,47 @@
 
 <%
 String displayStyle = (String)request.getAttribute("liferay-ui:app-view-display-style:displayStyle");
-String[] displayStyles = (String[])request.getAttribute("liferay-ui:app-view-display-style:displayStyles");
+String[] displayViews = (String[])request.getAttribute("liferay-ui:app-view-display-style:displayStyles");
 String eventName = (String)request.getAttribute("liferay-ui:app-view-display-style:eventName");
 Map<String, String> requestParams = (Map<String, String>)request.getAttribute("liferay-ui:app-view-display-style:requestParams");
+PortletURL displayStyleUrl = (PortletURL)request.getAttribute("liferay-ui:app-view-display-style:displayStyleUrl");
 %>
 
-<c:if test="<%= displayStyles.length > 1 %>">
+<c:if test="<%= (displayViews.length > 1) && (displayStyleUrl != null) %>">
 	<span class="display-style-buttons-container" id="<portlet:namespace />displayStyleButtonsContainer">
 		<div class="display-style-buttons" id="<portlet:namespace />displayStyleButtons">
 			<aui:nav-item anchorCssClass="btn btn-default" dropdown="<%= true %>" iconCssClass='<%= "icon-" + _getIcon(displayStyle) %>'>
 
 				<%
-				for (int i = 0; i < displayStyles.length; i++) {
-					String dataStyle = displayStyles[i];
+				for (String dataStyle : displayViews) {
+					if (displayStyleUrl != null) {
+						displayStyleUrl.setParameter("displayStyle", dataStyle);
+					}
+				%>
+
+					<aui:nav-item
+						href='<%= (displayStyleUrl == null) ? "javascript:;" : displayStyleUrl.toString() %>'
+						iconCssClass='<%= "icon-" + _getIcon(dataStyle) %>'
+						label="<%= dataStyle %>"
+					/>
+
+				<%
+				}
+				%>
+
+			</aui:nav-item>
+		</div>
+	</span>
+</c:if>
+
+<c:if test="<%= (displayViews.length > 1) && (displayStyleUrl == null) %>">
+	<span class="display-style-buttons-container" id="<portlet:namespace />displayStyleButtonsContainer">
+		<div class="display-style-buttons" id="<portlet:namespace />displayStyleButtons">
+			<aui:nav-item anchorCssClass="btn btn-default" dropdown="<%= true %>" iconCssClass='<%= "icon-" + _getIcon(displayStyle) %>'>
+
+				<%
+				for (int i = 0; i < displayViews.length; i++) {
+					String dataStyle = displayViews[i];
 
 					Map<String, Object> data = new HashMap<String, Object>();
 
@@ -51,9 +79,7 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 			</aui:nav-item>
 		</div>
 	</span>
-</c:if>
 
-<c:if test="<%= displayStyles.length > 1 %>">
 	<aui:script use="aui-base">
 		function changeDisplayStyle(displayStyle) {
 			var config = {};

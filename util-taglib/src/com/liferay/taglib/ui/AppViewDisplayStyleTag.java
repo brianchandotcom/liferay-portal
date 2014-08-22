@@ -20,6 +20,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.portlet.PortletURL;
+
 /**
  * @author Sergio González
  */
@@ -46,12 +48,17 @@ public class AppViewDisplayStyleTag extends IncludeTag {
 		_requestParams = requestParams;
 	}
 
+	public void setDisplayStyleUrl(PortletURL displayStyleUrl) {
+		_displayStyleUrl = displayStyleUrl;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_displayStyle = null;
 		_displayStyles = null;
 		_eventName = null;
 		_requestParams = null;
+		_displayStyleUrl = null;
 	}
 
 	@Override
@@ -74,6 +81,8 @@ public class AppViewDisplayStyleTag extends IncludeTag {
 			"liferay-ui:app-view-display-style:eventName", _eventName);
 		request.setAttribute(
 			"liferay-ui:app-view-display-style:requestParams", _requestParams);
+		request.setAttribute(
+			"liferay-ui:app-view-display-style:displayStyleUrl", _displayStyleUrl);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
@@ -85,5 +94,6 @@ public class AppViewDisplayStyleTag extends IncludeTag {
 	private String[] _displayStyles;
 	private String _eventName;
 	private Map<String, String> _requestParams;
+	private PortletURL _displayStyleUrl;
 
 }

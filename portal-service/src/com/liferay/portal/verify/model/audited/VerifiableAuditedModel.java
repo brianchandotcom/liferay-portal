@@ -14,20 +14,18 @@
 
 package com.liferay.portal.verify.model.audited;
 
+import com.liferay.portal.verify.model.VerifiableModel;
+
 /**
  * @author Miguel Pastor
  */
-public interface VerifiableAuditedModel {
+public interface VerifiableAuditedModel extends VerifiableModel {
 
 	public String getJoinByTableName();
-
-	public String getPrimaryKeyColumnName();
 
 	public String getRelatedModelName();
 
 	public String getRelatedPKColumnName();
-
-	public String getTableName();
 
 	public boolean isUpdateDates();
 

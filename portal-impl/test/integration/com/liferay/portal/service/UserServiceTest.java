@@ -217,7 +217,7 @@ public class UserServiceTest {
 				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 
 			Assert.assertTrue(
-				MailServiceTestUtil.isTextInLastMailMessage(
+				MailServiceTestUtil.lastMailMessageContains(
 					"Your new password"));
 		}
 
@@ -236,7 +236,7 @@ public class UserServiceTest {
 				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 
 			Assert.assertTrue(
-				MailServiceTestUtil.isTextInLastMailMessage(
+				MailServiceTestUtil.lastMailMessageContains(
 					"Your new password"));
 		}
 
@@ -254,7 +254,7 @@ public class UserServiceTest {
 				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 
 			Assert.assertTrue(
-				MailServiceTestUtil.isTextInLastMailMessage(
+				MailServiceTestUtil.lastMailMessageContains(
 					"Your new password"));
 		}
 
@@ -272,7 +272,7 @@ public class UserServiceTest {
 			Assert.assertEquals(
 				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 			Assert.assertTrue(
-				MailServiceTestUtil.isTextInLastMailMessage(
+				MailServiceTestUtil.lastMailMessageContains(
 					"You can reset your password"));
 		}
 
@@ -290,7 +290,7 @@ public class UserServiceTest {
 			Assert.assertEquals(
 				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 			Assert.assertTrue(
-				MailServiceTestUtil.isTextInLastMailMessage(
+				MailServiceTestUtil.lastMailMessageContains(
 					"You can reset your password"));
 		}
 
@@ -307,7 +307,7 @@ public class UserServiceTest {
 			Assert.assertEquals(
 				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 			Assert.assertTrue(
-				MailServiceTestUtil.isTextInLastMailMessage(
+				MailServiceTestUtil.lastMailMessageContains(
 					"You can reset your password"));
 		}
 

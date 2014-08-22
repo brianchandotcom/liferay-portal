@@ -545,18 +545,6 @@
 			}
 		},
 
-		setBox: function(oldBox, newBox) {
-			for (var i = oldBox.length - 1; i > -1; i--) {
-				oldBox.options[i] = null;
-			}
-
-			for (i = 0; i < newBox.length; i++) {
-				oldBox.options[i] = new Option(newBox[i].value, i);
-			}
-
-			oldBox.options[0].selected = true;
-		},
-
 		setCursorPosition: function(el, position) {
 			var instance = this;
 

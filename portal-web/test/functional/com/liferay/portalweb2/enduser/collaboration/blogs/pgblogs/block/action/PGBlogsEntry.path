@@ -499,11 +499,6 @@
 	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_entryComment}')]//..//..//..//button[contains(@class,'btn') and contains(@class,'btn-cancel')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>COMMENT_OPTIONS</td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

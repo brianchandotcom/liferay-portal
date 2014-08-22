@@ -567,6 +567,7 @@
 
 		<execute macro="BlogsEntry#viewViewCountCP">
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryViewCount" value="0" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewViewCountCP">

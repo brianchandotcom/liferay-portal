@@ -471,6 +471,8 @@
 	</command>
 
 	<command name="changeParentWikipagetoWikipagePG">
+		<var name="key_wikiPageTitle" value="${wikiPage2Title}" />
+
 		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPage2Title}" />
 		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPage2Content}" />
 		<execute action="PGWikiWikipage#assertClick" locator-key1="WIKI_PAGE_ACTIONS_DETAILS" value1="Details" />
@@ -574,7 +576,6 @@
 				<execute action="PGWikiWikipageHistory#assertTextEquals" locator-key1="COMPARE_VERSIONS_TEXT_MODE_TABLE_CONTENT_NEW_1" value1="${wikiPageContentCompareNew}" />
 			</then>
 			<else>
-				<execute action="PGWikiWikipageHistory#selectFrame" locator-key1="SELECT_VERSION_IFRAME" />
 				<execute action="PGWikiWikipageHistory#assertTextEquals" locator-key1="COMPARE_VERSIONS_DIFF" value1="${wikiPageVersionDiff}" />
 			</else>
 		</if>
@@ -1246,6 +1247,8 @@
 	</command>
 
 	<command name="viewCP">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
 		<execute action="CPWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPageTitle}" />
 		<execute action="CPWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 

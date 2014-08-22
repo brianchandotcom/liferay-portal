@@ -435,6 +435,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMENT_BODY</td>
+	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_entryComment}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENT_1</td>
 	<td>xpath=(//div[@class='lfr-discussion-message'])[1]</td>
 	<td></td>

@@ -64,6 +64,8 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 
 <aui:script>
 	function <portlet:namespace />monitorIframe() {
+		var A = AUI();
+
 		var url = null;
 
 		try {
@@ -80,7 +82,7 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 
 		if ((url == iframeSrc) || (url == (iframeSrc + '/'))) {
 		}
-		else if (Liferay.Util.startsWith(url, baseSrc)) {
+		else if (A.Lang.String.startsWith(url, baseSrc)) {
 			url = url.substring(baseSrc.length);
 
 			<portlet:namespace />updateHash(url);

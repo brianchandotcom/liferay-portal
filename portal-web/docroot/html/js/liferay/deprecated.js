@@ -154,6 +154,10 @@
 		oldBox.options[0].selected = true;
 	};
 
+	Util.startsWith = function(str, x) {
+		return (str.indexOf(x) === 0);
+	};
+
 	Util.textareaTabs = function(event) {
 		var el = event.currentTarget.getDOM();
 		var pressedKey = event.keyCode;

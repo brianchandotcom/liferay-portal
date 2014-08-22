@@ -604,10 +604,6 @@
 			return 0;
 		},
 
-		startsWith: function(str, x) {
-			return (str.indexOf(x) === 0);
-		},
-
 		toCharCode: A.cached(
 			function(name) {
 				var buffer = [];

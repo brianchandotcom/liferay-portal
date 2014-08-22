@@ -23,8 +23,10 @@ public interface VerifiableResourcedModel extends VerifiableModel {
 
 	public String getModelName();
 
+	@Override
 	public String getPrimaryKeyColumnName();
 
+	@Override
 	public String getTableName();
 
 }

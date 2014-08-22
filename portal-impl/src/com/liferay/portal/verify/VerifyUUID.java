@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.verify.model.uuid.VerifiableUUIDModel;
 
@@ -78,7 +79,8 @@ public class VerifyUUID extends VerifyProcess {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				long pk = rs.getLong(pkColumnName);
+				long pk = rs.getLong(
+					verifiableUUIDModel.getPrimaryKeyColumnName());
 
 				updateUUID(verifiableUUIDModel, pk);
 			}

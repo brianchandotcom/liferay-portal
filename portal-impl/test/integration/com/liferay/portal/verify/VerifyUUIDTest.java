@@ -34,12 +34,12 @@ public class VerifyUUIDTest extends BaseVerifyTestCase {
 
 	@Test
 	public void testVerifyModel() throws Exception {
-		VerifyUUID.verifyModel(new LayoutVerifiableModel());
+		VerifyUUID.verifyUUID(new LayoutVerifiableModel());
 	}
 
 	@Test(expected = SQLException.class)
 	public void testVerifyModelWithUnknownPKColumnName() throws Exception {
-		VerifyUUID.verifyModel(
+		VerifyUUID.verifyUUID(
 			new VerifiableUUIDModel() {
 
 				@Override
@@ -59,7 +59,7 @@ public class VerifyUUIDTest extends BaseVerifyTestCase {
 	public void testVerifyUnknownModelWithUnknownPKColumnName()
 		throws Exception {
 
-		VerifyUUID.verifyModel(
+		VerifyUUID.verifyUUID(
 			new VerifiableUUIDModel() {
 
 				@Override

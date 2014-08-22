@@ -80,11 +80,9 @@ public class VerifyAuditedModel extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		Map<String, VerifiableAuditedModel> verifiableAuditedModelsMap =
-			PortalBeanLocatorUtil.locate(VerifiableAuditedModel.class);
-
 		Collection<VerifiableAuditedModel> verifiableAuditedModels =
-			verifiableAuditedModelsMap.values();
+			(Collection<VerifiableAuditedModel>) PortalBeanLocatorUtil.locate(
+				"verifiable.models.audited");
 
 		verify(
 			verifiableAuditedModels.toArray(

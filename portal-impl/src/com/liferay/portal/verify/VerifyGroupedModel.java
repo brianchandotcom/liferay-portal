@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.verify.model.grouped.VerifiableGroupedModel;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -76,11 +77,9 @@ public class VerifyGroupedModel extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		Map<String, VerifiableGroupedModel> verifiableGroupedModelsMap =
-			PortalBeanLocatorUtil.locate(VerifiableGroupedModel.class);
-
 		Collection<VerifiableGroupedModel> verifiableGroupedModels =
-			verifiableGroupedModelsMap.values();
+			(Collection<VerifiableGroupedModel>) PortalBeanLocatorUtil.locate(
+				"verifiable.models.grouped");
 
 		verify(
 			verifiableGroupedModels.toArray(

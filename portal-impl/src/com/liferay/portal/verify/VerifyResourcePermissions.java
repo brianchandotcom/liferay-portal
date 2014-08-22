@@ -73,11 +73,9 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		Map<String, VerifiableResourcedModel> verifiableResourcedModelsMap =
-			PortalBeanLocatorUtil.locate(VerifiableResourcedModel.class);
-
 		Collection<VerifiableResourcedModel> verifiableResourcedModels =
-			verifiableResourcedModelsMap.values();
+			(Collection<VerifiableResourcedModel>) PortalBeanLocatorUtil.locate(
+				"verifiable.models.resourced");
 
 		verify(
 			verifiableResourcedModels.toArray(

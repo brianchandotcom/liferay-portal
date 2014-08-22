@@ -29,8 +29,6 @@ import javax.servlet.ServletContext;
 public class DynamicFilterConfig implements FilterConfig {
 
 	public DynamicFilterConfig(FilterConfig filterConfig) {
-		this(null, null);
-
 		Enumeration<String> enu = filterConfig.getInitParameterNames();
 
 		while (enu.hasMoreElements()) {
@@ -71,9 +69,9 @@ public class DynamicFilterConfig implements FilterConfig {
 		return _servletContext;
 	}
 
-	private final String _filterName;
-	private final Map<String, String> _parameters =
+	private String _filterName;
+	private Map<String, String> _parameters =
 		new LinkedHashMap<String, String>();
-	private final ServletContext _servletContext;
+	private ServletContext _servletContext;
 
 }

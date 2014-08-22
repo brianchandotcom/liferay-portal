@@ -33,8 +33,6 @@ public class LocaleException extends PortalException {
 
 	public LocaleException() {
 		super();
-
-		_type = 0;
 	}
 
 	public LocaleException(int type) {
@@ -81,6 +79,6 @@ public class LocaleException extends PortalException {
 
 	private Locale[] _sourceAvailableLocales;
 	private Locale[] _targetAvailableLocales;
-	private final int _type;
+	private int _type;
 
 }

@@ -26,7 +26,7 @@ public class StrictPortletPreferencesImpl
 	implements Cloneable, Serializable {
 
 	public StrictPortletPreferencesImpl() {
-		_companyId = 0;
+		super();
 	}
 
 	public StrictPortletPreferencesImpl(
@@ -42,8 +42,6 @@ public class StrictPortletPreferencesImpl
 		String xml, Map<String, Preference > preferences) {
 
 		super(xml, preferences);
-
-		_companyId = 0;
 	}
 
 	@Override
@@ -66,6 +64,6 @@ public class StrictPortletPreferencesImpl
 		return super.equals(obj);
 	}
 
-	private final long _companyId;
+	private long _companyId;
 
 }

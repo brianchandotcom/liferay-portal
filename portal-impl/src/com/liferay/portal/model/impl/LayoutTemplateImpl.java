@@ -45,11 +45,10 @@ public class LayoutTemplateImpl
 	extends PluginBaseImpl implements LayoutTemplate {
 
 	public LayoutTemplateImpl() {
-		this(null, null);
 	}
 
 	public LayoutTemplateImpl(String layoutTemplateId) {
-		this(layoutTemplateId, null);
+		_layoutTemplateId = layoutTemplateId;
 	}
 
 	public LayoutTemplateImpl(String layoutTemplateId, String name) {
@@ -347,7 +346,7 @@ public class LayoutTemplateImpl
 
 	private List<String> _columns = new ArrayList<String>();
 	private String _content;
-	private final String _layoutTemplateId;
+	private String _layoutTemplateId;
 	private String _name;
 	private transient ServletContext _servletContext;
 	private String _servletContextName = StringPool.BLANK;

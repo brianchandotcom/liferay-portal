@@ -30,28 +30,26 @@ import org.apache.catalina.comet.CometEvent;
 public class CatalinaCometRequest extends BaseCometRequest {
 
 	public CatalinaCometRequest(CometEvent cometEvent) {
-		super(cometEvent.getHttpServletRequest());
+		_request = cometEvent.getHttpServletRequest();
+
+		setRequest(_request);
 	}
 
 	@Override
 	public String getParameter(String name) {
-		HttpServletRequest request = getRequest();
-
-		return request.getParameter(name);
+		return _request.getParameter(name);
 	}
 
 	@Override
 	public Map<String, String[]> getParameterMap() {
-		HttpServletRequest request = getRequest();
-
-		return request.getParameterMap();
+		return _request.getParameterMap();
 	}
 
 	@Override
 	public Enumeration<String> getParameterNames() {
-		HttpServletRequest request = getRequest();
-
-		return request.getParameterNames();
+		return _request.getParameterNames();
 	}
+
+	private HttpServletRequest _request;
 
 }

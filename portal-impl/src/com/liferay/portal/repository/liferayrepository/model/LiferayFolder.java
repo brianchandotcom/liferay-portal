@@ -38,7 +38,7 @@ import java.util.Map;
 public class LiferayFolder extends LiferayModel implements Folder {
 
 	public LiferayFolder(DLFolder dlFolder) {
-		this(dlFolder, false);
+		_dlFolder = dlFolder;
 	}
 
 	public LiferayFolder(DLFolder dlFolder, boolean escapedModel) {
@@ -411,7 +411,7 @@ public class LiferayFolder extends LiferayModel implements Folder {
 		}
 	}
 
-	private final DLFolder _dlFolder;
-	private final boolean _escapedModel;
+	private DLFolder _dlFolder;
+	private boolean _escapedModel;
 
 }

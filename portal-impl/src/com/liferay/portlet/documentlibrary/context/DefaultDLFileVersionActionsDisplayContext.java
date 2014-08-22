@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -44,7 +43,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 import javax.portlet.PortletRequest;
@@ -61,50 +59,21 @@ import javax.servlet.jsp.PageContext;
 public class DefaultDLFileVersionActionsDisplayContext
 	implements DLFileVersionActionsDisplayContext {
 
-	private class _OpenDocumentJavascriptMenuActionRenderer
-		implements JavascriptMenuAction.Renderer {
-
-		@Override
-		public void render(PageContext pageContext)
-			throws IOException, ServletException {
-
-			pageContext.include(
-				"/html/portlet/document_library/display_context/" +
-				"open_document_js.jsp");
-		}
-
-	}
-
-	private PortletResponse _portletResponse;
-
-	private LiferayPortletResponse _liferayPortletResponse;
-
-	private String _portletId;
-
-	private PortletRequest _portletRequest;
-
-	private LiferayPortletRequest _liferayPortletRequest;
-
-	private Layout _layout;
-
-	private PageContext _pageContext;
-
 	public DefaultDLFileVersionActionsDisplayContext(
 			PageContext pageContext, FileVersion fileVersion)
 		throws PortalException {
 
 		_pageContext = pageContext;
-		_request = (HttpServletRequest)pageContext.getRequest();
 		_fileVersion = fileVersion;
-
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_companyId = _themeDisplay.getCompanyId();
 
 		if (fileVersion != null) {
 			_fileEntry = fileVersion.getFileEntry();
 		}
+
+		_request = (HttpServletRequest)pageContext.getRequest();
+
+		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		_dlFileEntryActionsDisplayContextHelper =
 			new DLFileEntryActionsDisplayContextHelper(
@@ -121,28 +90,14 @@ public class DefaultDLFileVersionActionsDisplayContext
 		}
 
 		_folderId = BeanParamUtil.getLong(_fileEntry, _request, "folderId");
-		_portletDisplay = _themeDisplay.getPortletDisplay();
-		_scopeGroupId = _themeDisplay.getScopeGroupId();
-		_layout = _themeDisplay.getLayout();
-		_locale = _themeDisplay.getLocale();
 
-		_portletId = _portletDisplay.getId();
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		_portletId = portletDisplay.getId();
 
 		if (_portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 			_portletId = ParamUtil.getString(_request, "portletResource");
 		}
-
-		_portletRequest = (PortletRequest)_request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		_portletResponse = (PortletResponse)_request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
-			_portletRequest);
-
-		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
-			_portletResponse);
 	}
 
 	@Override
@@ -160,7 +115,8 @@ public class DefaultDLFileVersionActionsDisplayContext
 		throws PortalException {
 
 		DLPortletInstanceSettings dlPortletInstanceSettings =
-			DLPortletInstanceSettings.getInstance(_layout, _portletId);
+			DLPortletInstanceSettings.getInstance(
+				_themeDisplay.getLayout(), _portletId);
 
 		DLActionsDisplayContext dlActionsDisplayContext =
 			DLActionsDisplayContextUtil.getDLActionsDisplayContext(
@@ -168,12 +124,12 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 		if (dlActionsDisplayContext.isShowActions()) {
 			if (isEditButtonVisible()) {
-				PortletURL portletURL = PortletURLUtil.getCurrent(
-					_liferayPortletRequest, _liferayPortletResponse);
+				LiferayPortletResponse liferayPortletResponse =
+					_getLiferayPortletResponse();
 
-				String currentURL = portletURL.toString();
+				PortletURL editURL = liferayPortletResponse.createRenderURL();
 
-				PortletURL editURL = _liferayPortletResponse.createRenderURL();
+				String currentURL = _getCurrentURL();
 
 				editURL.setParameter(
 					"struts_action", "/document_library/edit_file_entry");
@@ -190,6 +146,34 @@ public class DefaultDLFileVersionActionsDisplayContext
 		}
 	}
 
+	private String _getCurrentURL() {
+		LiferayPortletRequest liferayPortletRequest =
+			_getLiferayPortletRequest();
+
+		LiferayPortletResponse liferayPortletResponse =
+			_getLiferayPortletResponse();
+
+		PortletURL portletURL = PortletURLUtil.getCurrent(
+			liferayPortletRequest, liferayPortletResponse);
+
+		return portletURL.toString();
+	}
+
+	private LiferayPortletRequest _getLiferayPortletRequest() {
+		PortletRequest portletRequest = (PortletRequest)_request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		return PortalUtil.getLiferayPortletRequest(portletRequest);
+	}
+
+	private LiferayPortletResponse _getLiferayPortletResponse() {
+		PortletResponse portletResponse =
+				(PortletResponse)_request.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		return PortalUtil.getLiferayPortletResponse(portletResponse);
+	}
+
 	private void _addOpenDocumentMenuAction(List<MenuAction> menuActions)
 		throws PortalException {
 
@@ -200,8 +184,11 @@ public class DefaultDLFileVersionActionsDisplayContext
 					DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED,
 				true);
 
+			LiferayPortletResponse liferayPortletResponse =
+				_getLiferayPortletResponse();
+
 			String onClick =
-				_liferayPortletResponse.getNamespace() + "openDocument('" +
+				liferayPortletResponse.getNamespace() + "openDocument('" +
 					webDavURL + "');";
 
 			menuActions.add(
@@ -219,7 +206,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 				String message =
 					LanguageUtil.get(_request, "download") + " (" +
 					TextFormatter.formatStorageSize(
-						_fileEntry.getSize(), _locale) + ")";
+						_fileEntry.getSize(), _themeDisplay.getLocale()) + ")";
 
 				String url = DLUtil.getDownloadURL(
 					_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,
@@ -271,15 +258,13 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 	@Override
 	public boolean isAssetMetadataVisible() {
-		String portletId = _portletDisplay.getId();
-
-		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
-			portletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ||
-			portletId.equals(PortletKeys.MY_WORKFLOW_INSTANCES) ||
-			portletId.equals(PortletKeys.MY_WORKFLOW_TASKS) ||
-			portletId.equals(PortletKeys.TRASH)) {
+		if (_portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			_portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
+			_portletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ||
+			_portletId.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ||
+			_portletId.equals(PortletKeys.MY_WORKFLOW_INSTANCES) ||
+			_portletId.equals(PortletKeys.MY_WORKFLOW_TASKS) ||
+			_portletId.equals(PortletKeys.TRASH)) {
 
 			return true;
 		}
@@ -451,7 +436,8 @@ public class DefaultDLFileVersionActionsDisplayContext
 	private boolean _hasWorkflowDefinitionLink() {
 		try {
 			return DLUtil.hasWorkflowDefinitionLink(
-				_companyId, _scopeGroupId, _folderId, _fileEntryTypeId);
+				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
+				_folderId, _fileEntryTypeId);
 		}
 		catch (Exception e) {
 			throw new SystemException(
@@ -515,20 +501,36 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 	private boolean _isTrashEnabled() throws PortalException {
 		if (_trashEnabled == null) {
-			_trashEnabled = TrashUtil.isTrashEnabled(_scopeGroupId);
+			_trashEnabled = TrashUtil.isTrashEnabled(
+				_themeDisplay.getScopeGroupId());
 		}
 
 		return _trashEnabled;
 	}
 
 	private boolean _isWebDAVEnabled() {
-		return _portletDisplay.isWebDAVEnabled();
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		return portletDisplay.isWebDAVEnabled();
 	}
 
 	private static final UUID _UUID = UUID.fromString(
 		"85F6C50E-3893-4E32-9D63-208528A503FA");
 
-	private long _companyId;
+	private class _OpenDocumentJavascriptMenuActionRenderer
+		implements JavascriptMenuAction.Renderer {
+
+		@Override
+		public void render(PageContext pageContext)
+			throws IOException, ServletException {
+
+			pageContext.include(
+				"/html/portlet/document_library/display_context/" +
+				"open_document_js.jsp");
+		}
+
+	}
+
 	private DLFileEntryActionsDisplayContextHelper
 		_dlFileEntryActionsDisplayContextHelper;
 	private FileEntry _fileEntry;
@@ -536,10 +538,9 @@ public class DefaultDLFileVersionActionsDisplayContext
 	private FileVersion _fileVersion;
 	private long _folderId;
 	private Boolean _ieOnWin32;
-	private Locale _locale;
-	private PortletDisplay _portletDisplay;
+	private PageContext _pageContext;
+	private String _portletId;
 	private HttpServletRequest _request;
-	private long _scopeGroupId;
 	private ThemeDisplay _themeDisplay;
 	private Boolean _trashEnabled;
 

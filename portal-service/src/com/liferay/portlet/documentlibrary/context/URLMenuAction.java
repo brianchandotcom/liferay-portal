@@ -22,9 +22,21 @@ public class URLMenuAction extends MenuAction {
 	public URLMenuAction(
 		String id, String iconCssClass, String message, String url) {
 
+		this(id, iconCssClass, message, url, "_self");
+	}
+
+	public URLMenuAction(
+		String id, String iconCssClass, String message, String url,
+		String target) {
+
 		super(id, _JSP_PATH, iconCssClass, message);
 
 		_url = url;
+		_target = target;
+	}
+
+	public String getTarget() {
+		return _target;
 	}
 
 	public String getURL() {
@@ -34,6 +46,7 @@ public class URLMenuAction extends MenuAction {
 	private static final String _JSP_PATH =
 		"/html/portlet/document_library/display_context/url_menu_action.jsp";
 
+	private String _target;
 	private String _url;
 
 }

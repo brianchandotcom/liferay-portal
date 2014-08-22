@@ -266,7 +266,7 @@ public class UserServiceTest {
 
 		@Test
 		public void shouldSendResetLinkEmailByEmailAddress() throws Exception {
-			givenAUserWhoseCompanySendResetPasswordLink();
+			givenThatCompanySendsResetPasswordLink();
 
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
@@ -284,7 +284,7 @@ public class UserServiceTest {
 
 		@Test
 		public void shouldSendResetLinkEmailByScreenName() throws Exception {
-			givenAUserWhoseCompanySendResetPasswordLink();
+			givenThatCompanySendsResetPasswordLink();
 
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
@@ -302,7 +302,7 @@ public class UserServiceTest {
 
 		@Test
 		public void shouldSendResetLinkEmailByUserId() throws Exception {
-			givenAUserWhoseCompanySendResetPasswordLink();
+			givenThatCompanySendsResetPasswordLink();
 
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
@@ -334,7 +334,7 @@ public class UserServiceTest {
 			portletPreferences.store();
 		}
 
-		protected void givenAUserWhoseCompanySendResetPasswordLink()
+		protected void givenThatCompanySendsResetPasswordLink()
 			throws Exception {
 
 			PortletPreferences portletPreferences =

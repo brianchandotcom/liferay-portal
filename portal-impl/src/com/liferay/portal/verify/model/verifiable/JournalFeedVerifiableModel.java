@@ -15,12 +15,14 @@
 package com.liferay.portal.verify.model.verifiable;
 
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portal.verify.model.uuid.VerifiableUUIDModel;
 import com.liferay.portlet.journal.model.JournalFeed;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class JournalFeedVerifiableModel implements VerifiableResourcedModel {
+public class JournalFeedVerifiableModel
+	implements VerifiableUUIDModel, VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {

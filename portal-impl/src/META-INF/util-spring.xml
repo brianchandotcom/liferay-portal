@@ -1165,4 +1165,31 @@
 			</util:list>
 		</constructor-arg>
 	</bean>
+	<bean id="verifiable.models.uuid" class="java.util.ArrayList">
+		<constructor-arg>
+			<util:list value-type="com.liferay.portal.verify.model.uuid.VerifiableUUIDModel">
+				<bean class="com.liferay.portal.verify.model.verifiable.AddressVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.DLFileVersionVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.EmailAddressVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.GroupVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.JournalArticleResourceVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.JournalFeedVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.LayoutPrototypeVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.LayoutSetPrototypeVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.LayoutVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.MBBanVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.MBDiscussionVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.MBThreadFlagVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.MBThreadVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.OrganizationVerifiableAuditedModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.PasswordPolicyVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.PhoneVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.PollsVoteVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.RatingsEntryVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.RoleVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.UserGroupVerifiableModel" />
+				<bean class="com.liferay.portal.verify.model.verifiable.WebSiteVerifiableModel" />
+			</util:list>
+		</constructor-arg>
+	</bean>
 </beans>

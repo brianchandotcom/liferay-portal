@@ -17,12 +17,14 @@ package com.liferay.portal.verify.model.verifiable;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portal.verify.model.uuid.VerifiableUUIDModel;
 
 /**
  * @author Miguel Pastor
  */
 public class LayoutVerifiableModel
-	implements VerifiableAuditedModel, VerifiableResourcedModel {
+	implements VerifiableAuditedModel, VerifiableUUIDModel,
+		VerifiableResourcedModel {
 
 	@Override
 	public String getJoinByTableName() {

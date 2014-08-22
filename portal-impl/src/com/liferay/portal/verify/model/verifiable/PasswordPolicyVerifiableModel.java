@@ -16,11 +16,13 @@ package com.liferay.portal.verify.model.verifiable;
 
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portal.verify.model.uuid.VerifiableUUIDModel;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PasswordPolicyVerifiableModel implements VerifiableResourcedModel {
+public class PasswordPolicyVerifiableModel
+	implements VerifiableUUIDModel, VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {

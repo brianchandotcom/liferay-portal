@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -26,12 +27,15 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletURLUtil;
+import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -43,7 +47,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -74,12 +80,23 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 	private LiferayPortletResponse _liferayPortletResponse;
 
+	private HttpServletResponse _response;
+
+	private String _portletId;
+
+	private PortletRequest _portletRequest;
+
+	private LiferayPortletRequest _liferayPortletRequest;
+
+	private Layout _layout;
+
 	public DefaultDLFileVersionActionsDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion)
 		throws PortalException {
 
 		_request = request;
+		_response = response;
 		_fileVersion = fileVersion;
 
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -108,10 +125,23 @@ public class DefaultDLFileVersionActionsDisplayContext
 		_folderId = BeanParamUtil.getLong(_fileEntry, request, "folderId");
 		_portletDisplay = _themeDisplay.getPortletDisplay();
 		_scopeGroupId = _themeDisplay.getScopeGroupId();
+		_layout = _themeDisplay.getLayout();
 		_locale = _themeDisplay.getLocale();
+
+		_portletId = _portletDisplay.getId();
+
+		if (_portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+			_portletId = ParamUtil.getString(request, "portletResource");
+		}
+
+		_portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		_portletResponse = (PortletResponse)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
+			_portletRequest);
 
 		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
 			_portletResponse);
@@ -123,8 +153,43 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 		_addDownloadMenuAction(menuActions);
 		_addOpenDocumentMenuAction(menuActions);
+		_addEditMenuAction(menuActions);
 
 		return menuActions;
+	}
+
+	private void _addEditMenuAction(List<MenuAction> menuActions)
+		throws PortalException {
+
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			DLPortletInstanceSettings.getInstance(_layout, _portletId);
+
+		DLActionsDisplayContext dlActionsDisplayContext =
+			DLActionsDisplayContextUtil.getDLActionsDisplayContext(
+				_request, _response, dlPortletInstanceSettings);
+
+		if (dlActionsDisplayContext.isShowActions()) {
+			if (isEditButtonVisible()) {
+				PortletURL portletURL = PortletURLUtil.getCurrent(
+					_liferayPortletRequest, _liferayPortletResponse);
+
+				String currentURL = portletURL.toString();
+
+				PortletURL editURL = _liferayPortletResponse.createRenderURL();
+
+				editURL.setParameter(
+					"struts_action", "/document_library/edit_file_entry");
+				editURL.setParameter("redirect", currentURL);
+				editURL.setParameter("backURL", currentURL);
+				editURL.setParameter(
+					"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
+				menuActions.add(
+					new URLMenuAction(
+						DLMenuActions.MENU_ACTION_ID_EDIT, "icon-edit", "edit",
+						editURL.toString()));
+			}
+		}
 	}
 
 	private void _addOpenDocumentMenuAction(List<MenuAction> menuActions)
@@ -165,7 +230,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 				menuActions.add(
 					new URLMenuAction(
 						DLMenuActions.MENU_ACTION_ID_DOWNLOAD, "icon-download",
-						message, url));
+						message, url, "_blank"));
 			}
 		}
 

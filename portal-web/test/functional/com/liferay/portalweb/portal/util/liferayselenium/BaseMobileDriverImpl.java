@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portalweb.portal.util.TestPropsValues;
+
 import io.appium.java_client.MobileDriver;
 
 /**
@@ -249,7 +251,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public String getDependenciesDirName() {
-		throw new UnsupportedOperationException();
+		return _dependenciesDirName;
 	}
 
 	@Override
@@ -284,22 +286,22 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public String getOutputDirName() {
-		throw new UnsupportedOperationException();
+		return _outputDirName;
 	}
 
 	@Override
 	public String getPrimaryTestSuiteName() {
-		throw new UnsupportedOperationException();
+		return _primaryTestSuiteName;
 	}
 
 	@Override
 	public String getProjectDirName() {
-		throw new UnsupportedOperationException();
+		return _projectDirName;
 	}
 
 	@Override
 	public String getSikuliImagesDirName() {
-		throw new UnsupportedOperationException();
+		return _sikuliImagesDirName;
 	}
 
 	@Override
@@ -429,7 +431,6 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void pauseLoggerCheck() throws Exception {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -464,12 +465,11 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void sendActionDescriptionLogger(String description) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean sendActionLogger(String command, String[] params) {
-		throw new UnsupportedOperationException();
+		return true;
 	}
 
 	@Override
@@ -490,22 +490,18 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void sendLogger(String id, String status) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void sendMacroDescriptionLogger(String description) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void sendTestCaseCommandLogger(String command) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void sendTestCaseHeaderLogger(String command) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -520,7 +516,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void setPrimaryTestSuiteName(String primaryTestSuiteName) {
-		throw new UnsupportedOperationException();
+		_primaryTestSuiteName = primaryTestSuiteName;
 	}
 
 	@Override
@@ -604,7 +600,6 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void startLogger() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -730,5 +725,13 @@ public abstract class BaseMobileDriverImpl
 	public void windowMaximizeAndWait() {
 		throw new UnsupportedOperationException();
 	}
+
+	private String _dependenciesDirName =
+		"portal-web//test//functional//com//liferay//portalweb//dependencies//";
+	private String _outputDirName = TestPropsValues.OUTPUT_DIR_NAME;
+	private String _primaryTestSuiteName;
+	private String _projectDirName;
+	private String _sikuliImagesDirName =
+		_dependenciesDirName + "sikuli//linux//";
 
 }

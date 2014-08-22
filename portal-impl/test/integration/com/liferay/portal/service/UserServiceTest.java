@@ -199,7 +199,7 @@ public class UserServiceTest {
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
-	public static class WhenSendAPasswordEmail {
+	public static class WhenSendingAPasswordEmail {
 
 		@Before
 		public void setUp() throws Exception {
@@ -362,7 +362,7 @@ public class UserServiceTest {
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
-	public static class WhenUnsetGroupUsers {
+	public static class WhenUnsettingGroupUsers {
 
 		@Test
 		public void groupAdminShouldUnsetGroupAdmin() throws Exception {
@@ -500,7 +500,7 @@ public class UserServiceTest {
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
-	public static class WhenUnsetOrganizationUsersForNonSiteOrganization {
+	public static class WhenUnsettingOrganizationUsersForNonSiteOrganization {
 
 		@Test
 		public void organizationAdminShouldUnsetOrganizationAdmin()
@@ -587,7 +587,7 @@ public class UserServiceTest {
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
-	public static class WhenUnsetOrganizationUsersForSiteOrganization {
+	public static class WhenUnsettingOrganizationUsersForSiteOrganization {
 
 		@Test
 		public void organizationAdminShouldUnsetSiteAdmin() throws Exception {

@@ -15,12 +15,13 @@
 package com.liferay.portal.verify.model.verifiable;
 
 import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
+import com.liferay.portal.verify.model.grouped.VerifiableGroupedModel;
 
 /**
  * @author Miguel Pastor
  */
-public class MBThreadFlagVerifiableAuditedModel
-	implements VerifiableAuditedModel {
+public class MBThreadFlagVerifiableModel
+	implements VerifiableAuditedModel, VerifiableGroupedModel {
 
 	@Override
 	public String getJoinByTableName() {
@@ -40,6 +41,16 @@ public class MBThreadFlagVerifiableAuditedModel
 	@Override
 	public String getRelatedPKColumnName() {
 		return "userId";
+	}
+
+	@Override
+	public String getRelatedPrimaryKeyColumnName() {
+		return "threadId";
+	}
+
+	@Override
+	public String getRelatedTableName() {
+		return "MBThread";
 	}
 
 	@Override

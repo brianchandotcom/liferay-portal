@@ -77,12 +77,12 @@ public class MailServiceTestUtil {
 		return mailMessages;
 	}
 
-	public static boolean isTextInLastMailMessage(String textToCheck) {
-		MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
+	public static boolean lastMailMessageContains(String text) {
+		MailMessage mailMessage = getLastMailMessage();
 
 		String bodyMailMessage = mailMessage.getBody();
 
-		return bodyMailMessage.contains(textToCheck);
+		return bodyMailMessage.contains(text);
 	}
 
 	public static void start() {

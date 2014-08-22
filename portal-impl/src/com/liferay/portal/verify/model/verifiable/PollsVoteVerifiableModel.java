@@ -14,16 +14,33 @@
 
 package com.liferay.portal.verify.model.verifiable;
 
+import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
 import com.liferay.portal.verify.model.grouped.VerifiableGroupedModel;
 
 /**
  * @author Miguel Pastor
  */
-public class PollsVoteVerifiableGroupedModel implements VerifiableGroupedModel {
+public class PollsVoteVerifiableModel
+	implements VerifiableAuditedModel, VerifiableGroupedModel {
+
+	@Override
+	public String getJoinByTableName() {
+		return "questionId";
+	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
 		return "voteId";
+	}
+
+	@Override
+	public String getRelatedModelName() {
+		return "PollsQuestion";
+	}
+
+	@Override
+	public String getRelatedPKColumnName() {
+		return "questionId";
 	}
 
 	@Override
@@ -39,6 +56,11 @@ public class PollsVoteVerifiableGroupedModel implements VerifiableGroupedModel {
 	@Override
 	public String getTableName() {
 		return "PollsVote";
+	}
+
+	@Override
+	public boolean isUpdateDates() {
+		return true;
 	}
 
 }

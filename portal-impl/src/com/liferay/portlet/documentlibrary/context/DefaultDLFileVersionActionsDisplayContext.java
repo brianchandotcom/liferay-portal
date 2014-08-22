@@ -53,7 +53,6 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -80,8 +79,6 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 	private LiferayPortletResponse _liferayPortletResponse;
 
-	private HttpServletResponse _response;
-
 	private String _portletId;
 
 	private PortletRequest _portletRequest;
@@ -90,16 +87,17 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 	private Layout _layout;
 
+	private PageContext _pageContext;
+
 	public DefaultDLFileVersionActionsDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
+			PageContext pageContext, FileVersion fileVersion)
 		throws PortalException {
 
-		_request = request;
-		_response = response;
+		_pageContext = pageContext;
+		_request = (HttpServletRequest)pageContext.getRequest();
 		_fileVersion = fileVersion;
 
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
+		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_companyId = _themeDisplay.getCompanyId();
@@ -112,7 +110,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 			new DLFileEntryActionsDisplayContextHelper(
 				_themeDisplay.getPermissionChecker(), _fileEntry, fileVersion);
 
-		_fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
+		_fileEntryTypeId = ParamUtil.getLong(_request, "fileEntryTypeId", -1);
 
 		if ((_fileEntryTypeId == -1) && (_fileEntry != null) &&
 			(_fileEntry.getModel() instanceof DLFileEntry)) {
@@ -122,7 +120,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 			_fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
 		}
 
-		_folderId = BeanParamUtil.getLong(_fileEntry, request, "folderId");
+		_folderId = BeanParamUtil.getLong(_fileEntry, _request, "folderId");
 		_portletDisplay = _themeDisplay.getPortletDisplay();
 		_scopeGroupId = _themeDisplay.getScopeGroupId();
 		_layout = _themeDisplay.getLayout();
@@ -131,13 +129,13 @@ public class DefaultDLFileVersionActionsDisplayContext
 		_portletId = _portletDisplay.getId();
 
 		if (_portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-			_portletId = ParamUtil.getString(request, "portletResource");
+			_portletId = ParamUtil.getString(_request, "portletResource");
 		}
 
-		_portletRequest = (PortletRequest)request.getAttribute(
+		_portletRequest = (PortletRequest)_request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		_portletResponse = (PortletResponse)request.getAttribute(
+		_portletResponse = (PortletResponse)_request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
@@ -166,7 +164,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 		DLActionsDisplayContext dlActionsDisplayContext =
 			DLActionsDisplayContextUtil.getDLActionsDisplayContext(
-				_request, _response, dlPortletInstanceSettings);
+				_pageContext, dlPortletInstanceSettings);
 
 		if (dlActionsDisplayContext.isShowActions()) {
 			if (isEditButtonVisible()) {

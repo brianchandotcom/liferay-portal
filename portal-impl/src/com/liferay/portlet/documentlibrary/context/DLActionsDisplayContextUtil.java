@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Iván Zaera
@@ -27,11 +27,13 @@ public class DLActionsDisplayContextUtil {
 
 	public static DLActionsDisplayContext
 		getDLActionsDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
+			PageContext pageContext,
 			DLPortletInstanceSettings dlPortletInstanceSettings)
 		throws PortalException {
 
-		return new DLActionsDisplayContext(request, dlPortletInstanceSettings);
+		return new DLActionsDisplayContext(
+			(HttpServletRequest)pageContext.getRequest(),
+			dlPortletInstanceSettings);
 	}
 
 }

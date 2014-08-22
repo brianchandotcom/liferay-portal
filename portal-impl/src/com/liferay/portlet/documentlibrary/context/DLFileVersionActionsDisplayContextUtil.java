@@ -22,8 +22,7 @@ import com.liferay.registry.RegistryUtil;
 
 import java.util.Collection;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Iván Zaera
@@ -32,18 +31,17 @@ public class DLFileVersionActionsDisplayContextUtil {
 
 	public static DLFileVersionActionsDisplayContext
 		getDLFileVersionActionsDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
+			PageContext pageContext, FileVersion fileVersion)
 		throws PortalException {
 
 		DLFileVersionActionsDisplayContext dlFileVersionActionsDisplayContext =
 			new DefaultDLFileVersionActionsDisplayContext(
-				request, response, fileVersion);
+				pageContext, fileVersion);
 
 		if (fileVersion != null) {
 			dlFileVersionActionsDisplayContext =
 				_chainDLFileVersionActionsDisplayContexts(
-					request, response, fileVersion,
+					pageContext, fileVersion,
 					dlFileVersionActionsDisplayContext);
 		}
 
@@ -52,8 +50,8 @@ public class DLFileVersionActionsDisplayContextUtil {
 
 	private static DLFileVersionActionsDisplayContext
 		_chainDLFileVersionActionsDisplayContexts(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion, DLFileVersionActionsDisplayContext
+			PageContext pageContext, FileVersion fileVersion,
+			DLFileVersionActionsDisplayContext
 				dlFileVersionActionsDisplayContext) {
 
 		Collection<DLFileVersionActionsDisplayContextFactory>
@@ -67,7 +65,7 @@ public class DLFileVersionActionsDisplayContextUtil {
 			dlFileVersionActionsDisplayContext =
 				dlFileVersionActionsDisplayContextFactory.
 					getDLFileVersionActionsDisplayContext(
-						dlFileVersionActionsDisplayContext, request, response,
+						dlFileVersionActionsDisplayContext, pageContext,
 						fileVersion);
 		}
 

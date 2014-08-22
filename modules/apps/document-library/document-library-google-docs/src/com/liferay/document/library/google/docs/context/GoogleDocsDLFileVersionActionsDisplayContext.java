@@ -20,8 +20,7 @@ import com.liferay.portlet.documentlibrary.context.DLFileVersionActionsDisplayCo
 
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Iván Zaera
@@ -31,10 +30,9 @@ public class GoogleDocsDLFileVersionActionsDisplayContext
 
 	public GoogleDocsDLFileVersionActionsDisplayContext(
 		DLFileVersionActionsDisplayContext parentDLDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion) {
+		PageContext pageContext, FileVersion fileVersion) {
 
-		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
+		super(_UUID, parentDLDisplayContext, pageContext, fileVersion);
 	}
 
 	private static final UUID _UUID = UUID.fromString(

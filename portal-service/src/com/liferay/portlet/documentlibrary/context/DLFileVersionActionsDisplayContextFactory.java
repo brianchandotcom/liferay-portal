@@ -16,8 +16,7 @@ package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Iván Zaera
@@ -28,7 +27,6 @@ public interface DLFileVersionActionsDisplayContextFactory {
 		getDLFileVersionActionsDisplayContext(
 			DLFileVersionActionsDisplayContext
 				parentDLFileVersionActionsDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion);
+			PageContext pageContext, FileVersion fileVersion);
 
 }

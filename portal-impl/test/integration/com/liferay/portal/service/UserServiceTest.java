@@ -73,7 +73,7 @@ public class UserServiceTest {
 	public static class WhenCompanySecurityStrangers {
 
 		@Test(expected = ReservedUserEmailAddressException.class)
-		public void testCompanySecurityStrangersWithMX1() throws Exception {
+		public void testAddUserWithMX1() throws Exception {
 			Field field = ReflectionUtil.getDeclaredField(
 				PropsValues.class, "COMPANY_SECURITY_STRANGERS_WITH_MX");
 
@@ -96,7 +96,7 @@ public class UserServiceTest {
 		}
 
 		@Test(expected = ReservedUserEmailAddressException.class)
-		public void testCompanySecurityStrangersWithMX2() throws Exception {
+		public void testUpdateUserWithMX2() throws Exception {
 			Field field = ReflectionUtil.getDeclaredField(
 				PropsValues.class, "COMPANY_SECURITY_STRANGERS_WITH_MX");
 
@@ -121,7 +121,7 @@ public class UserServiceTest {
 		}
 
 		@Test(expected = ReservedUserEmailAddressException.class)
-		public void testCompanySecurityStrangersWithMX3() throws Exception {
+		public void testUpdateEmailAddressWithMX3() throws Exception {
 			Field field = ReflectionUtil.getDeclaredField(
 				PropsValues.class, "COMPANY_SECURITY_STRANGERS_WITH_MX");
 

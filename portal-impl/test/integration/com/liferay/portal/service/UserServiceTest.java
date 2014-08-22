@@ -162,8 +162,13 @@ public class UserServiceTest {
 	public static class WhenCRUDOperations {
 
 		@Test
-		public void testAddUser() throws Exception {
-			UserTestUtil.addUser(true);
+		public void testAddAndGetUser() throws Exception {
+			User user = UserTestUtil.addUser(true);
+
+			User retrievedUser = UserServiceUtil.getUserByEmailAddress(
+				TestPropsValues.getCompanyId(), user.getEmailAddress());
+
+			Assert.assertEquals(user, retrievedUser);
 		}
 
 		@Test(expected = NoSuchUserException.class)
@@ -174,16 +179,6 @@ public class UserServiceTest {
 
 			UserServiceUtil.getUserByEmailAddress(
 				TestPropsValues.getCompanyId(), user.getEmailAddress());
-		}
-
-		@Test
-		public void testGetUser() throws Exception {
-			User user = UserTestUtil.addUser(true);
-
-			User retrievedUser = UserServiceUtil.getUserByEmailAddress(
-				TestPropsValues.getCompanyId(), user.getEmailAddress());
-
-			Assert.assertEquals(user, retrievedUser);
 		}
 
 	}

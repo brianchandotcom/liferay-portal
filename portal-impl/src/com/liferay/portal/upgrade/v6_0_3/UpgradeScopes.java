@@ -31,17 +31,20 @@ public class UpgradeScopes extends BaseUpgradePortletPreferences {
 	protected void doUpgrade() throws Exception {
 		super.doUpgrade();
 
-		VerifyUUID.verify(new VerifiableUUIDModel() {
-			@Override
-			public String getPrimaryKeyColumnName() {
-				return "plid";
-			}
+		VerifyUUID.verify(
+			new VerifiableUUIDModel() {
 
-			@Override
-			public String getTableName() {
-				return "Layout";
-			}
-		});
+				@Override
+				public String getPrimaryKeyColumnName() {
+					return "plid";
+				}
+
+				@Override
+				public String getTableName() {
+					return "Layout";
+				}
+
+			});
 	}
 
 	@Override

@@ -36,25 +36,31 @@ public class VerifyUUID extends VerifyProcess {
 		throws Exception {
 
 		for (VerifiableUUIDModel verifiableUUIDModel : verifiableUUIDModels) {
-			verifyModel(verifiableUUIDModel);
+			verifyUUID(verifiableUUIDModel);
 		}
 	}
 
 	protected static void updateUUID(
-			VerifiableUUIDModel verifiableUUIDModel, long pk)
+			VerifiableUUIDModel verifiableUUIDModel, long primKey)
 		throws Exception {
-
-		String uuid = PortalUUIDUtil.generate();
 
 		DB db = DBFactoryUtil.getDB();
 
-		db.runSQL(
-			"update " + verifiableUUIDModel.getTableName() + " set uuid_ = '" +
-				uuid + "' where " +
-				verifiableUUIDModel.getPrimaryKeyColumnName() + " = " + pk);
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("update ");
+		sb.append(verifiableUUIDModel.getTableName());
+		sb.append(" set uuid_ = '");
+		sb.append(PortalUUIDUtil.generate());
+		sb.append("' where ");
+		sb.append(verifiableUUIDModel.getPrimaryKeyColumnName());
+		sb.append(" = ");
+		sb.append(primKey);
+
+		db.runSQL(sb.toString());
 	}
 
-	protected static void verifyModel(VerifiableUUIDModel verifiableUUIDModel)
+	protected static void verifyUUID(VerifiableUUIDModel verifiableUUIDModel)
 		throws Exception {
 
 		Connection con = null;
@@ -64,12 +70,10 @@ public class VerifyUUID extends VerifyProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			String tableName = verifiableUUIDModel.getTableName();
-			String pkColumnName = verifiableUUIDModel.getPrimaryKeyColumnName();
-
 			ps = con.prepareStatement(
-				"select " + pkColumnName + " from " + tableName +
-					" where uuid_ is null or uuid_ = ''");
+				"select " + verifiableUUIDModel.getPrimaryKeyColumnName() +
+					" from " + verifiableUUIDModel.getTableName() +
+						" where uuid_ is null or uuid_ = ''");
 
 			rs = ps.executeQuery();
 

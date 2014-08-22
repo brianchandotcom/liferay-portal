@@ -210,7 +210,7 @@ public class UserServiceTest {
 		public void shouldSendNewPasswordEmailByEmailAddress()
 			throws Exception {
 
-			givenAUserWhoseCompanySendNewPassword(_user);
+			givenAUserWhoseCompanySendNewPassword();
 
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
@@ -229,7 +229,7 @@ public class UserServiceTest {
 
 		@Test
 		public void shouldSendNewPasswordEmailByScreenName() throws Exception {
-			givenAUserWhoseCompanySendNewPassword(_user);
+			givenAUserWhoseCompanySendNewPassword();
 
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
@@ -250,7 +250,7 @@ public class UserServiceTest {
 		public void shouldSendNewPasswordEmailByUserId() throws Exception {
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
-			givenAUserWhoseCompanySendNewPassword(_user);
+			givenAUserWhoseCompanySendNewPassword();
 
 			boolean isPasswordSent = UserServiceUtil.sendPasswordByUserId(
 				_user.getUserId());
@@ -266,7 +266,7 @@ public class UserServiceTest {
 
 		@Test
 		public void shouldSendResetLinkEmailByEmailAddress() throws Exception {
-			givenAUserWhoseCompanySendResetPasswordLink(_user);
+			givenAUserWhoseCompanySendResetPasswordLink();
 
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
@@ -284,7 +284,7 @@ public class UserServiceTest {
 
 		@Test
 		public void shouldSendResetLinkEmailByScreenName() throws Exception {
-			givenAUserWhoseCompanySendResetPasswordLink(_user);
+			givenAUserWhoseCompanySendResetPasswordLink();
 
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
@@ -302,7 +302,7 @@ public class UserServiceTest {
 
 		@Test
 		public void shouldSendResetLinkEmailByUserId() throws Exception {
-			givenAUserWhoseCompanySendResetPasswordLink(_user);
+			givenAUserWhoseCompanySendResetPasswordLink();
 
 			int initialInboxSize = MailServiceTestUtil.getInboxSize();
 
@@ -317,11 +317,11 @@ public class UserServiceTest {
 					"You can reset your password"));
 		}
 
-		protected static void givenAUserWhoseCompanySendNewPassword(User user)
+		protected void givenAUserWhoseCompanySendNewPassword()
 			throws Exception {
 
 			PortletPreferences portletPreferences =
-				PrefsPropsUtil.getPreferences(user.getCompanyId(), false);
+				PrefsPropsUtil.getPreferences(_user.getCompanyId(), false);
 
 			portletPreferences.setValue(
 				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
@@ -334,12 +334,11 @@ public class UserServiceTest {
 			portletPreferences.store();
 		}
 
-		protected static void givenAUserWhoseCompanySendResetPasswordLink(
-				User user)
+		protected void givenAUserWhoseCompanySendResetPasswordLink()
 			throws Exception {
 
 			PortletPreferences portletPreferences =
-				PrefsPropsUtil.getPreferences(user.getCompanyId(), false);
+				PrefsPropsUtil.getPreferences(_user.getCompanyId(), false);
 
 			portletPreferences.setValue(
 				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,

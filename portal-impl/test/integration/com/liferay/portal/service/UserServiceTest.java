@@ -92,33 +92,6 @@ public class UserServiceTest {
 		}
 
 		@Test(expected = ReservedUserEmailAddressException.class)
-		public void testUpdateUser() throws Exception {
-			Field field = ReflectionUtil.getDeclaredField(
-				PropsValues.class, "COMPANY_SECURITY_STRANGERS_WITH_MX");
-
-			Object value = field.get(null);
-
-			String name = PrincipalThreadLocal.getName();
-
-			try {
-				field.set(null, Boolean.FALSE);
-
-				User user = UserTestUtil.addUser(false);
-
-				PrincipalThreadLocal.setName(user.getUserId());
-
-				UserTestUtil.updateUser(user);
-
-				Assert.fail();
-			}
-			finally {
-				field.set(null, value);
-
-				PrincipalThreadLocal.setName(name);
-			}
-		}
-
-		@Test(expected = ReservedUserEmailAddressException.class)
 		public void testUpdateEmailAddress() throws Exception {
 			Field field = ReflectionUtil.getDeclaredField(
 				PropsValues.class, "COMPANY_SECURITY_STRANGERS_WITH_MX");
@@ -141,6 +114,33 @@ public class UserServiceTest {
 				UserServiceUtil.updateEmailAddress(
 					user.getUserId(), user.getPassword(), emailAddress,
 					emailAddress, new ServiceContext());
+
+				Assert.fail();
+			}
+			finally {
+				field.set(null, value);
+
+				PrincipalThreadLocal.setName(name);
+			}
+		}
+
+		@Test(expected = ReservedUserEmailAddressException.class)
+		public void testUpdateUser() throws Exception {
+			Field field = ReflectionUtil.getDeclaredField(
+				PropsValues.class, "COMPANY_SECURITY_STRANGERS_WITH_MX");
+
+			Object value = field.get(null);
+
+			String name = PrincipalThreadLocal.getName();
+
+			try {
+				field.set(null, Boolean.FALSE);
+
+				User user = UserTestUtil.addUser(false);
+
+				PrincipalThreadLocal.setName(user.getUserId());
+
+				UserTestUtil.updateUser(user);
 
 				Assert.fail();
 			}
@@ -306,9 +306,7 @@ public class UserServiceTest {
 					"email_password_reset_body.tmpl"));
 		}
 
-		protected void givenThatCompanySendsNewPassword()
-			throws Exception {
-
+		protected void givenThatCompanySendsNewPassword() throws Exception {
 			PortletPreferences portletPreferences =
 				PrefsPropsUtil.getPreferences(_user.getCompanyId(), false);
 

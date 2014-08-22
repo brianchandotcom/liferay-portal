@@ -17,7 +17,7 @@ package com.liferay.portal.repository.capabilities;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
-import com.liferay.portal.kernel.repository.event.RepositoryEventHandler;
+import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -43,12 +43,12 @@ public class CapabilityLocalRepository
 		LocalRepository localRepository,
 		Map<Class<? extends Capability>, Capability> supportedCapabilities,
 		Set<Class<? extends Capability>> exportedCapabilityClasses,
-		RepositoryEventHandler repositoryEventHandler) {
+		RepositoryEventTrigger repositoryEventTrigger) {
 
 		super(
 			localRepository, supportedCapabilities, exportedCapabilityClasses);
 
-		_repositoryEventHandler = repositoryEventHandler;
+		_repositoryEventTrigger = repositoryEventTrigger;
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class CapabilityLocalRepository
 	public void deleteAll() throws PortalException {
 		LocalRepository localRepository = getRepository();
 
-		_repositoryEventHandler.trigger(
+		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Delete.class, LocalRepository.class,
 			localRepository);
 
@@ -102,7 +102,7 @@ public class CapabilityLocalRepository
 
 		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 
-		_repositoryEventHandler.trigger(
+		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Delete.class, FileEntry.class, fileEntry);
 
 		localRepository.deleteFileEntry(fileEntryId);
@@ -114,7 +114,7 @@ public class CapabilityLocalRepository
 
 		Folder folder = localRepository.getFolder(folderId);
 
-		_repositoryEventHandler.trigger(
+		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Delete.class, Folder.class, folder);
 
 		localRepository.deleteFolder(folderId);
@@ -238,6 +238,6 @@ public class CapabilityLocalRepository
 			folderId, parentFolderId, title, description, serviceContext);
 	}
 
-	private RepositoryEventHandler _repositoryEventHandler;
+	private RepositoryEventTrigger _repositoryEventTrigger;
 
 }

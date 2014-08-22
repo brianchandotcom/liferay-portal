@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Adolfo Pérez
  */
-public interface RepositoryEventHandler {
+public interface RepositoryEventTrigger {
 
 	public <S extends RepositoryEventType, T> void trigger(
 			Class<S> repositoryEventTypeClass, Class<T> modelClass, T payload)

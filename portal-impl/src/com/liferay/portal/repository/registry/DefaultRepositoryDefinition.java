@@ -16,8 +16,8 @@ package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
-import com.liferay.portal.kernel.repository.event.RepositoryEventHandler;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
+import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
@@ -35,12 +35,12 @@ import java.util.Set;
 /**
  * @author Adolfo Pérez
  */
-public class DefaultRepositoryRegistry
-	implements CapabilityRegistry, RepositoryConfiguration,
-			   RepositoryCreatorRegistry, RepositoryEventHandler,
+public class DefaultRepositoryDefinition
+	implements CapabilityRegistry, RepositoryDefinition,
+			   RepositoryCreatorRegistry, RepositoryEventTrigger,
 			   RepositoryEventRegistry {
 
-	public DefaultRepositoryRegistry() {
+	public DefaultRepositoryDefinition() {
 		_exportedCapabilities = new HashSet<Class<? extends Capability>>();
 
 		_supportedCapabilities =
@@ -74,7 +74,7 @@ public class DefaultRepositoryRegistry
 	}
 
 	@Override
-	public RepositoryEventHandler getRepositoryEventHandler() {
+	public RepositoryEventTrigger getRepositoryEventTrigger() {
 		return this;
 	}
 

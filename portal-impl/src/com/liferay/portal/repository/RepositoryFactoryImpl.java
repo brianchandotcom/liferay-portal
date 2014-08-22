@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
 import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
-import com.liferay.portal.repository.registry.RepositoryConfiguration;
+import com.liferay.portal.repository.registry.RepositoryDefinition;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
@@ -47,20 +47,20 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 			long repositoryId, long classNameId)
 		throws PortalException {
 
-		RepositoryConfiguration repositoryConfiguration =
-			getRepositoryConfiguration(classNameId);
+		RepositoryDefinition repositoryDefinition = getRepositoryDefinition(
+			classNameId);
 
 		RepositoryCreator repositoryCreator =
-			repositoryConfiguration.getRepositoryCreator();
+			repositoryDefinition.getRepositoryCreator();
 
 		Repository repository = repositoryCreator.createRepository(
 			repositoryId);
 
 		Map<Class<? extends Capability>, Capability>
 			externalSupportedCapabilities =
-				repositoryConfiguration.getSupportedCapabilities();
+				repositoryDefinition.getSupportedCapabilities();
 		Set<Class<? extends Capability>> externalExportedCapabilityClasses =
-			repositoryConfiguration.getExportedCapabilities();
+			repositoryDefinition.getExportedCapabilities();
 
 		CMISRepositoryHandler cmisRepositoryHandler = getCMISRepositoryHandler(
 			repository);
@@ -75,7 +75,7 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 		return new CapabilityRepository(
 			repository, externalSupportedCapabilities,
 			externalExportedCapabilityClasses,
-			repositoryConfiguration.getRepositoryEventHandler());
+			repositoryDefinition.getRepositoryEventTrigger());
 	}
 
 	@Override
@@ -93,19 +93,19 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 	protected Repository createInternalRepository(long repositoryId)
 		throws PortalException {
 
-		RepositoryConfiguration repositoryConfiguration =
-			getRepositoryConfiguration(getDefaultClassNameId());
+		RepositoryDefinition repositoryDefinition = getRepositoryDefinition(
+			getDefaultClassNameId());
 
 		RepositoryCreator repositoryCreator =
-			repositoryConfiguration.getRepositoryCreator();
+			repositoryDefinition.getRepositoryCreator();
 
 		Repository repository = repositoryCreator.createRepository(
 			repositoryId);
 
 		return new CapabilityRepository(
-			repository, repositoryConfiguration.getSupportedCapabilities(),
-			repositoryConfiguration.getExportedCapabilities(),
-			repositoryConfiguration.getRepositoryEventHandler());
+			repository, repositoryDefinition.getSupportedCapabilities(),
+			repositoryDefinition.getExportedCapabilities(),
+			repositoryDefinition.getRepositoryEventTrigger());
 	}
 
 	protected CMISRepositoryHandler getCMISRepositoryHandler(

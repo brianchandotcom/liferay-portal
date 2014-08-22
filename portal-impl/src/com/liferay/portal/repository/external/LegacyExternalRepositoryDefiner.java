@@ -14,17 +14,16 @@
 
 package com.liferay.portal.repository.external;
 
-import com.liferay.portal.kernel.repository.registry.BaseRepositoryRegistryPlugin;
+import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreatorRegistry;
 
 /**
  * @author Adolfo Pérez
  */
-public class LegacyExternalRepositoryRegistryPlugin
-	extends BaseRepositoryRegistryPlugin {
+public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 
-	public LegacyExternalRepositoryRegistryPlugin(
+	public LegacyExternalRepositoryDefiner(
 		String className, RepositoryCreator repositoryCreator) {
 
 		_className = className;

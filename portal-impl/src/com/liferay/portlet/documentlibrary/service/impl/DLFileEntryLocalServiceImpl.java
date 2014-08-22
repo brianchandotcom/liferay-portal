@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -315,13 +316,9 @@ public class DLFileEntryLocalServiceImpl
 		DLFileVersion latestDLFileVersion =
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
-		boolean keepFileVersionLabel = false;
-
-		if (!majorVersion) {
-			keepFileVersionLabel = isKeepFileVersionLabel(
-				dlFileEntry, lastDLFileVersion, latestDLFileVersion,
-				serviceContext.getWorkflowAction());
-		}
+		boolean keepFileVersionLabel = isKeepFileVersionLabel(
+			dlFileEntry, lastDLFileVersion, latestDLFileVersion,
+			serviceContext.getCommand(), serviceContext.getWorkflowAction());
 
 		if (keepFileVersionLabel) {
 			if (lastDLFileVersion.getSize() != latestDLFileVersion.getSize()) {
@@ -1477,6 +1474,8 @@ public class DLFileEntryLocalServiceImpl
 		InputStream is = getFileAsStream(userId, fileEntryId, version);
 		long size = dlFileVersion.getSize();
 
+		serviceContext.setCommand(Constants.REVERT);
+
 		DLFileEntry dlFileEntry = updateFileEntry(
 			userId, fileEntryId, sourceFileName, extension, mimeType, title,
 			description, changeLog, majorVersion, extraSettings,
@@ -1998,14 +1997,18 @@ public class DLFileEntryLocalServiceImpl
 
 	/**
 	 * @see com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordLocalServiceImpl#isKeepRecordVersionLabel(
-	 *      DDLRecordVersion, DDLRecordVersion, int)
+	 *      DDLRecordVersion, DDLRecordVersion, String, int)
 	 */
 	protected boolean isKeepFileVersionLabel(
 			DLFileEntry dlFileEntry, DLFileVersion lastDLFileVersion,
-			DLFileVersion latestDLFileVersion, int workflowAction)
+			DLFileVersion latestDLFileVersion, String cmd, int workflowAction)
 		throws PortalException {
 
 		if (PropsValues.DL_FILE_ENTRY_VERSION_POLICY != 1) {
+			return false;
+		}
+
+		if (Validator.equals(cmd, Constants.RENAME)) {
 			return false;
 		}
 

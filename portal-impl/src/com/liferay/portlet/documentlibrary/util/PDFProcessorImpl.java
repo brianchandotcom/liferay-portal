@@ -631,7 +631,8 @@ public class PDFProcessorImpl
 				try {
 					addFileToStore(
 						fileVersion.getCompanyId(), PREVIEW_PATH,
-						getPreviewFilePath(fileVersion, index +1), previewFile);
+						getPreviewFilePath(fileVersion, index + 1),
+						previewFile);
 				}
 				finally {
 					FileUtil.delete(previewFile);

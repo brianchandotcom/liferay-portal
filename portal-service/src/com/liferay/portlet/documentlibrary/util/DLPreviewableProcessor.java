@@ -355,11 +355,11 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	protected void deletePreviews(
 		long companyId, long groupId, long fileEntryId, long fileVersionId) {
 
-		String path = getPreviewFilePath(
+		String dirName = getPreviewFilePath(
 			groupId, fileEntryId, fileVersionId, null);
 
 		try {
-			DLStoreUtil.deleteFile(companyId, REPOSITORY_ID, path);
+			DLStoreUtil.deleteDirectory(companyId, REPOSITORY_ID, dirName);
 		}
 		catch (Exception e) {
 		}
@@ -370,10 +370,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		String thumbnailType, int index) {
 
 		try {
-			String dirName = getThumbnailFilePath(
+			String path = getThumbnailFilePath(
 				groupId, fileEntryId, fileVersionId, thumbnailType, index);
 
-			DLStoreUtil.deleteFile(companyId, REPOSITORY_ID, dirName);
+			DLStoreUtil.deleteFile(companyId, REPOSITORY_ID, path);
 		}
 		catch (Exception e) {
 		}

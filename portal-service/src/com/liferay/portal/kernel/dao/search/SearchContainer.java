@@ -81,6 +81,10 @@ public class SearchContainer<R> {
 	public static final int MAX_DELTA = 200;
 
 	public SearchContainer() {
+		_curParam = DEFAULT_CUR_PARAM;
+		_displayTerms = null;
+		_portletRequest = null;
+		_searchTerms = null;
 	}
 
 	public SearchContainer(
@@ -521,11 +525,11 @@ public class SearchContainer<R> {
 
 	private String _className;
 	private int _cur;
-	private String _curParam = DEFAULT_CUR_PARAM;
+	private final String _curParam;
 	private int _delta = DEFAULT_DELTA;
 	private boolean _deltaConfigurable = DEFAULT_DELTA_CONFIGURABLE;
 	private String _deltaParam = DEFAULT_DELTA_PARAM;
-	private DisplayTerms _displayTerms;
+	private final DisplayTerms _displayTerms;
 	private String _emptyResultsMessage;
 	private int _end;
 	private List<String> _headerNames;
@@ -547,12 +551,12 @@ public class SearchContainer<R> {
 	private String _orderByJS;
 	private String _orderByType;
 	private String _orderByTypeParam = DEFAULT_ORDER_BY_TYPE_PARAM;
-	private PortletRequest _portletRequest;
+	private final PortletRequest _portletRequest;
 	private int _resultEnd;
-	private List<ResultRow> _resultRows = new ArrayList<ResultRow>();
+	private final List<ResultRow> _resultRows = new ArrayList<ResultRow>();
 	private List<R> _results = new ArrayList<R>();
 	private RowChecker _rowChecker;
-	private DisplayTerms _searchTerms;
+	private final DisplayTerms _searchTerms;
 	private int _start;
 	private int _total;
 	private String _totalVar;

@@ -1,7 +1,0 @@
-<definition>
-	<command name="isElementPresent">
-		<case locator-key1="CATEGORY_DETAILS_DROPDOWN_TREE">
-			<execute function="IsElementPresent#isVisible" />
-		</case>
-	</command>
-</definition>

@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_SUBTITLE</td>
+	<td>//div[@class='entry-subtitle']/p</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_CONTENT</td>
 	<td>//div[@class='entry-body']/div</td>
 	<td></td>

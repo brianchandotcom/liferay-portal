@@ -19,23 +19,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NAME_FIELD</td>
-	<td>//input[contains(@class,'field tag-name')]</td>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>CPTagsAdd</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
-	<td>DELETE_BUTTON</td>
-	<td>//button[contains(.,'Delete')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CLOSE_BUTTON</td>
-	<td>//button[contains(.,'Close')]</td>
+	<td>TAG_HEADER</td>
+	<td>//h3[@class='header-title']/span[contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 </tbody>

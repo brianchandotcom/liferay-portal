@@ -31,13 +31,11 @@
 		<if>
 			<equals arg1="${tagNameVariation}" arg2="Variation" />
 			<then>
-				<execute action="CPTags#assertClick" locator-key1="TOOLBAR_ADD" value1="Add Tag" />
-
 				<var name="errorMessage1"><![CDATA[, = > / < [ { % | + # ` ? " ; / * ~.]]></var>
 
 				<execute action="CPTagsAdd#type" locator-key1="NAME_FIELD" value1="${tagEntry}" />
 				<execute action="CPTagsAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-				<execute action="CPTagsAdd#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Tag names cannot be an empty string or contain characters such as: ${errorMessage1}" />
+				<execute action="CPTags#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Your request failed to complete." />
 			</then>
 			<elseif>
 				<equals arg1="${tagNameVariation}" arg2="Duplicate" />
@@ -45,29 +43,28 @@
 					<execute action="CPTagsAdd#type" locator-key1="NAME_FIELD" value1="${tagName}" />
 					<execute action="CPTagsAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-					<execute action="CPTags#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+					<execute action="CPTags#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 					<var name="key_tagName" value="${tagName}" />
 
-					<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName}" />
+					<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
 
 					<execute action="CPTags#assertClick" locator-key1="TOOLBAR_ADD" value1="Add Tag" />
 
 					<execute action="CPTagsAdd#type" locator-key1="NAME_FIELD" value1="${tagName}" />
 					<execute action="CPTagsAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-					<execute action="CPTagsAdd#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="That tag already exists." />
+					<execute action="CPTags#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Your request failed to complete." />
 				</then>
 			</elseif>
 			<else>
 				<execute action="CPTagsAdd#type" locator-key1="NAME_FIELD" value1="${tagName}" />
 				<execute action="CPTagsAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-				<execute action="CPTags#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+				<execute action="CPTags#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 				<var name="key_tagName" value="${tagName}" />
 
-				<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName}" />
+				<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
 			</else>
 		</if>
 	</command>
@@ -198,11 +195,11 @@
 	<command name="deleteCP">
 		<var name="key_tagName" value="${tagName}" />
 
-		<execute action="CPTags#check" locator-key1="TAG_ENTRY_CHECKBOX" />
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_DETAILS_HEADER" value1="${tagName}" />
-		<execute action="CPTags#assertClick" locator-key1="TAG_DETAILS_DELETE_BUTTON" value1="Delete" />
-		<execute action="CPTags#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this tag?" />
-		<execute action="CPTags#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="CPTags#check" locator-key1="TAG_ENTRY_TABLE_CHECKBOX" />
+		<execute action="CPTags#click" locator-key1="TAG_ENTRY_TABLE_ACTIONS_ARROW" />
+		<execute action="CPTags#assertClick" locator-key1="TAG_ENTRY_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPTags#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPTags#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPTags#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no tags." />
 		<execute action="CPTags#assertTextNotPresent" value1="${tagName}" />
 	</command>
@@ -210,24 +207,27 @@
 	<command name="editCancelCP">
 		<var name="key_tagName" value="${tagName}" />
 
-		<execute action="CPTags#assertClick" locator-key1="TAG_ENTRY_NAME" value1="${tagName}" />
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_DETAILS_HEADER" value1="${tagName}" />
-		<execute action="CPTags#assertClick" locator-key1="TAG_DETAILS_EDIT_BUTTON" value1="Edit" />
+		<execute action="CPTags#click" locator-key1="TAG_ENTRY_TABLE_ACTIONS_ARROW" />
+		<execute action="CPTags#assertClick" locator-key1="TAG_ENTRY_MENULIST_EDIT" value1="Edit" />
 
-		<execute action="CPTagsEdit#assertClick" locator-key1="CLOSE_BUTTON" value1="Close" />
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName}" />
+		<execute action="CPTagsEdit#assertTextEquals" locator-key1="TAG_HEADER" value1="${tagName}" />
+		<execute action="CPTagsEdit#assertClick" locator-key1="CANCEL_BUTTON" value1="Cancel" />
+
+		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
 	</command>
 
 	<command name="editCP">
 		<var name="key_tagName" value="${tagName}" />
 
-		<execute action="CPTags#assertClick" locator-key1="TAG_ENTRY_NAME" value1="${tagName}" />
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_DETAILS_HEADER" value1="${tagName}" />
-		<execute action="CPTags#assertClick" locator-key1="TAG_DETAILS_EDIT_BUTTON" value1="Edit" />
+		<execute action="CPTags#click" locator-key1="TAG_ENTRY_TABLE_ACTIONS_ARROW" />
+		<execute action="CPTags#assertClick" locator-key1="TAG_ENTRY_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPTagsEdit#assertTextEquals" locator-key1="TAG_HEADER" value1="${tagName}" />
 		<execute action="CPTagsEdit#type" locator-key1="NAME_FIELD" value1="${tagName} edit" />
 		<execute action="CPTagsEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPTags#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName} edit" />
+
+		<execute action="CPTags#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_TABLE_NAME" value1="${tagName} edit" />
 	</command>
 
 	<command name="removeSelectTagViaBlogsPG">
@@ -320,21 +320,21 @@
 
 		<var name="key_tagName" value="${tagName3}" />
 
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName3}" />
+		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_TABLE_NAME" value1="${tagName3}" />
 
 		<execute action="CPTags#type" locator-key1="SEARCH_FIELD" value1="tag" />
 
 		<var name="key_tagName" value="${tagName1}" />
 
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName1}" />
+		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_TABLE_NAME" value1="${tagName1}" />
 
 		<var name="key_tagName" value="${tagName2}" />
 
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName2}" />
+		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_TABLE_NAME" value1="${tagName2}" />
 
 		<var name="key_tagName" value="${tagName3}" />
 
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName3}" />
+		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_TABLE_NAME" value1="${tagName3}" />
 	</command>
 
 	<command name="tearDownCP">
@@ -348,7 +348,7 @@
 				<execute action="CPTags#check" locator-key1="ALL_TAGS_CHECKBOX" />
 				<execute action="CPTags#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
 				<execute action="CPTags#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
-				<execute action="CPTags#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected tags?" />
+				<execute action="CPTags#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</if>
 
@@ -371,14 +371,14 @@
 	<command name="viewTagsCP">
 		<var name="key_tagName" value="${tagName1}" />
 
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName1}" />
+		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_TABLE_NAME" value1="${tagName1}" />
 
 		<var name="key_tagName" value="${tagName2}" />
 
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName2}" />
+		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_TABLE_NAME" value1="${tagName2}" />
 
 		<var name="key_tagName" value="${tagName3}" />
 
-		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName3}" />
+		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_TABLE_NAME" value1="${tagName3}" />
 	</command>
 </definition>

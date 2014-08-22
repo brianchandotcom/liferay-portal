@@ -4,7 +4,8 @@
 
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
 
-		<execute action="CPVocabulariesEdit#click" locator-key1="EDIT_ICON" />
+		<execute action="CPCategories#click" locator-key1="VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<if>
 			<condition action="CPVocabulariesEdit#isElementNotPresent" locator-key1="ASSOCIATED_ASSET_TYPES_SELECT" />
@@ -16,7 +17,7 @@
 		<execute action="CPVocabulariesEdit#click" locator-key1="ASSOCIATED_ASSET_TYPES_ADD_BUTTON" />
 		<execute action="CPVocabulariesEdit#select" locator-key1="ASSOCIATED_ASSET_TYPES_SELECT_2" value1="${vocabularyAssociatedAssetType2}" />
 		<execute action="CPVocabulariesEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addCP">
@@ -58,7 +59,7 @@
 		</if>
 
 		<execute action="CPVocabulariesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
@@ -72,7 +73,7 @@
 		<execute action="CPVocabulariesAdd#select" locator-key1="VIEWABLE_BY_SELECT" value1="${viewableBy}" />
 		<execute action="CPVocabulariesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
@@ -100,7 +101,7 @@
 
 		<execute action="CPVocabulariesAdd#select" locator-key1="ASSOCIATED_ASSET_TYPES_SELECT" value1="${vocabularyAssociatedAssetType}" />
 		<execute action="CPVocabulariesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
@@ -112,7 +113,8 @@
 
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
 
-		<execute action="CPVocabulariesEdit#click" locator-key1="EDIT_ICON" />
+		<execute action="CPCategories#click" locator-key1="VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<if>
 			<condition action="CPVocabulariesEdit#isElementNotPresent" locator-key1="ASSOCIATED_ASSET_TYPES_SELECT" />
@@ -123,7 +125,7 @@
 
 		<execute action="CPVocabulariesEdit#click" locator-key1="ASSOCIATED_ASSET_TYPES_DELETE_BUTTON_2" />
 		<execute action="CPVocabulariesEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deleteByActionsCP">
@@ -131,10 +133,10 @@
 
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
 		<execute action="CPCategories#check" locator-key1="ALL_VOCABULARIES_CHECKBOX" />
-		<execute action="CPCategories#assertClick" locator-key1="ACTIONS_BUTTON" value1="Actions" />
-		<execute action="CPCategories#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
-		<execute action="CPCategories#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected vocabularies?" />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="CPCategories#click" locator-key1="CATEGORY_ENTRY_MENULIST_ARROW" />
+		<execute action="CPCategories#assertClick" locator-key1="CATEGORY_ENTRY_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPCategories#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPCategories#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no categories." />
 		<execute action="CPCategories#assertTextNotPresent" value1="${vocabularyName}" />
 	</command>
@@ -146,8 +148,8 @@
 
 		<execute action="CPVocabulariesEdit#click" locator-key1="EDIT_ICON" />
 		<execute action="CPVocabulariesEdit#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
-		<execute action="CPVocabulariesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this vocabulary?" />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="CPVocabulariesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPCategories#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no categories." />
 		<execute action="CPCategories#assertTextNotPresent" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
 	</command>
@@ -156,11 +158,12 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
-		<execute action="CPCategories#click" locator-key1="VOCABULARY_ENTRY_EDIT_ICON" />
+		<execute action="CPCategories#click" locator-key1="VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPVocabulariesEdit#type" locator-key1="NAME_FIELD" value1="${vocabularyNameEdit}" />
 		<execute action="CPVocabulariesEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<var name="key_vocabularyName" value="${vocabularyNameEdit}" />
 
@@ -175,11 +178,11 @@
 		<if>
 			<condition action="CPCategories#isElementPresent" locator-key1="VOCABULARY_ENTRY_GENERIC" />
 			<then>
+
 				<execute action="CPCategories#check" locator-key1="ALL_VOCABULARIES_CHECKBOX" />
-				<execute action="CPCategories#assertClick" locator-key1="ACTIONS_BUTTON" value1="Actions" />
+				<execute action="CPCategories#click" locator-key1="ACTIONS_BUTTON" />
 				<execute action="CPCategories#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
-				<execute action="CPCategories#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected vocabularies?" />
-				<execute action="CPCategories#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no categories." />
+				<execute action="CPCategories#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</if>
 	</command>
@@ -192,7 +195,8 @@
 		<if>
 			<equals arg1="${allowMultipleCategories}" arg2="False" />
 			<then>
-				<execute action="CPVocabulariesEdit#click" locator-key1="EDIT_ICON" />
+				<execute action="CPCategories#click" locator-key1="VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+				<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
 				<execute action="CPVocabulariesEdit#assertNotChecked" locator-key1="ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
 			</then>
 		</if>
@@ -202,10 +206,10 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
-		<execute action="CPVocabulariesEdit#click" locator-key1="EDIT_ICON" />
+		<execute action="CPCategories#click" locator-key1="VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPVocabulariesEdit#assertClick" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
-		<execute action="CPVocabulariesEditPermissions#selectFrame" locator-key1="IFRAME" />
 
 		<if>
 			<equals arg1="${viewableBy}" arg2="Anyone (Guest Role)" />
@@ -235,7 +239,8 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
-		<execute action="CPVocabulariesEdit#click" locator-key1="EDIT_ICON" />
+		<execute action="CPCategories#click" locator-key1="VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<if>
 			<condition action="CPVocabulariesAdd#isElementNotPresent" locator-key1="ASSOCIATED_ASSET_TYPES_SELECT" />

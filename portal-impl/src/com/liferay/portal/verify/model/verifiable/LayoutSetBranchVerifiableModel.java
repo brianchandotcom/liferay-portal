@@ -12,21 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.verify.model.resourced;
+package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.VerifiableModel;
+import com.liferay.portal.model.LayoutSetBranch;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public interface VerifiableResourcedModel extends VerifiableModel {
-
-	public String getModelName();
-
-	@Override
-	public String getPrimaryKeyColumnName();
+public class LayoutSetBranchVerifiableModel
+	implements VerifiableResourcedModel {
 
 	@Override
-	public String getTableName();
+	public String getModelName() {
+		return LayoutSetBranch.class.getName();
+	}
+
+	@Override
+	public String getPrimaryKeyColumnName() {
+		return "layoutSetBranchId";
+	}
+
+	@Override
+	public String getTableName() {
+		return "LayoutSetBranch";
+	}
 
 }

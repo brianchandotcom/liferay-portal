@@ -12,21 +12,43 @@
  * details.
  */
 
-package com.liferay.portal.verify.model.resourced;
+package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.VerifiableModel;
+import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
 
 /**
  * @author Miguel Pastor
  */
-public interface VerifiableResourcedModel extends VerifiableModel {
-
-	public String getModelName();
+public class LayoutFriendlyURLAuditedModel implements VerifiableAuditedModel {
 
 	@Override
-	public String getPrimaryKeyColumnName();
+	public String getJoinByTableName() {
+		return null;
+	}
 
 	@Override
-	public String getTableName();
+	public String getPrimaryKeyColumnName() {
+		return "layoutFriendlyURLId";
+	}
+
+	@Override
+	public String getRelatedModelName() {
+		return null;
+	}
+
+	@Override
+	public String getRelatedPKColumnName() {
+		return null;
+	}
+
+	@Override
+	public String getTableName() {
+		return "LayoutFriendlyURL";
+	}
+
+	@Override
+	public boolean isUpdateDates() {
+		return false;
+	}
 
 }

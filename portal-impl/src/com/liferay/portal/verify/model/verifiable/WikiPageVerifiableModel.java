@@ -12,21 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.verify.model.resourced;
+package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.VerifiableModel;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portlet.wiki.model.WikiPage;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public interface VerifiableResourcedModel extends VerifiableModel {
-
-	public String getModelName();
+public class WikiPageVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
-	public String getPrimaryKeyColumnName();
+	public String getModelName() {
+		return WikiPage.class.getName();
+	}
 
 	@Override
-	public String getTableName();
+	public String getPrimaryKeyColumnName() {
+		return "resourcePrimKey";
+	}
+
+	@Override
+	public String getTableName() {
+		return "WikiPage";
+	}
 
 }

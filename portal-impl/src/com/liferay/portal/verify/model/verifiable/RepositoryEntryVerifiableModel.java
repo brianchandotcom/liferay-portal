@@ -12,21 +12,43 @@
  * details.
  */
 
-package com.liferay.portal.verify.model.resourced;
+package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.VerifiableModel;
+import com.liferay.portal.verify.model.audited.VerifiableAuditedModel;
 
 /**
  * @author Miguel Pastor
  */
-public interface VerifiableResourcedModel extends VerifiableModel {
-
-	public String getModelName();
+public class RepositoryEntryVerifiableModel implements VerifiableAuditedModel {
 
 	@Override
-	public String getPrimaryKeyColumnName();
+	public String getJoinByTableName() {
+		return "repositoryId";
+	}
 
 	@Override
-	public String getTableName();
+	public String getPrimaryKeyColumnName() {
+		return "repositoryEntryId";
+	}
+
+	@Override
+	public String getRelatedModelName() {
+		return "Repository";
+	}
+
+	@Override
+	public String getRelatedPKColumnName() {
+		return "repositoryId";
+	}
+
+	@Override
+	public String getTableName() {
+		return "RepositoryEntry";
+	}
+
+	@Override
+	public boolean isUpdateDates() {
+		return true;
+	}
 
 }

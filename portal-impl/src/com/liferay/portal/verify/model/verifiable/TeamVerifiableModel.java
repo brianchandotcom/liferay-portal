@@ -12,21 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.verify.model.resourced;
+package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.VerifiableModel;
+import com.liferay.portal.model.Team;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public interface VerifiableResourcedModel extends VerifiableModel {
-
-	public String getModelName();
+public class TeamVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
-	public String getPrimaryKeyColumnName();
+	public String getModelName() {
+		return Team.class.getName();
+	}
 
 	@Override
-	public String getTableName();
+	public String getPrimaryKeyColumnName() {
+		return "teamId";
+	}
+
+	@Override
+	public String getTableName() {
+		return "Team";
+	}
 
 }

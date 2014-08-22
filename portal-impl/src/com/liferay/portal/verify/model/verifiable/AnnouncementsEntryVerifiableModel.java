@@ -12,21 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.verify.model.resourced;
+package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.VerifiableModel;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portlet.announcements.model.AnnouncementsEntry;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public interface VerifiableResourcedModel extends VerifiableModel {
-
-	public String getModelName();
-
-	@Override
-	public String getPrimaryKeyColumnName();
+public class AnnouncementsEntryVerifiableModel
+	implements VerifiableResourcedModel {
 
 	@Override
-	public String getTableName();
+	public String getModelName() {
+		return AnnouncementsEntry.class.getName();
+	}
+
+	@Override
+	public String getPrimaryKeyColumnName() {
+		return "entryId";
+	}
+
+	@Override
+	public String getTableName() {
+		return "AnnouncementsEntry";
+	}
 
 }

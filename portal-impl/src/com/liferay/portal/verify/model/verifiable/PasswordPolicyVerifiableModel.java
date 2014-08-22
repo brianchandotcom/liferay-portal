@@ -12,21 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.verify.model.resourced;
+package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.VerifiableModel;
+import com.liferay.portal.model.PasswordPolicy;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portal.verify.model.uuid.VerifiableUUIDModel;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public interface VerifiableResourcedModel extends VerifiableModel {
-
-	public String getModelName();
-
-	@Override
-	public String getPrimaryKeyColumnName();
+public class PasswordPolicyVerifiableModel
+	implements VerifiableResourcedModel, VerifiableUUIDModel {
 
 	@Override
-	public String getTableName();
+	public String getModelName() {
+		return PasswordPolicy.class.getName();
+	}
+
+	@Override
+	public String getPrimaryKeyColumnName() {
+		return "passwordPolicyId";
+	}
+
+	@Override
+	public String getTableName() {
+		return "PasswordPolicy";
+	}
 
 }

@@ -12,21 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.verify.model.resourced;
+package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.VerifiableModel;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portlet.shopping.model.ShoppingItem;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public interface VerifiableResourcedModel extends VerifiableModel {
-
-	public String getModelName();
-
-	@Override
-	public String getPrimaryKeyColumnName();
+public class ShoppingItemVerifiableResourcedModel
+	implements VerifiableResourcedModel {
 
 	@Override
-	public String getTableName();
+	public String getModelName() {
+		return ShoppingItem.class.getName();
+	}
+
+	@Override
+	public String getPrimaryKeyColumnName() {
+		return "itemId";
+	}
+
+	@Override
+	public String getTableName() {
+		return "ShoppingItem";
+	}
 
 }

@@ -12,21 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.verify.model.resourced;
+package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.VerifiableModel;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portlet.journal.model.JournalArticle;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public interface VerifiableResourcedModel extends VerifiableModel {
-
-	public String getModelName();
+public class JournalArticleVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
-	public String getPrimaryKeyColumnName();
+	public String getModelName() {
+		return JournalArticle.class.getName();
+	}
 
 	@Override
-	public String getTableName();
+	public String getPrimaryKeyColumnName() {
+		return "resourcePrimKey";
+	}
+
+	@Override
+	public String getTableName() {
+		return "JournalArticle";
+	}
 
 }

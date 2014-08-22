@@ -12,21 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.verify.model.resourced;
+package com.liferay.portal.verify.model.verifiable;
 
-import com.liferay.portal.verify.model.VerifiableModel;
+import com.liferay.portal.verify.model.resourced.VerifiableResourcedModel;
+import com.liferay.portlet.messageboards.model.MBMessage;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public interface VerifiableResourcedModel extends VerifiableModel {
-
-	public String getModelName();
+public class MBMessageVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
-	public String getPrimaryKeyColumnName();
+	public String getModelName() {
+		return MBMessage.class.getName();
+	}
 
 	@Override
-	public String getTableName();
+	public String getPrimaryKeyColumnName() {
+		return "messageId";
+	}
+
+	@Override
+	public String getTableName() {
+		return "MBMessage";
+	}
 
 }

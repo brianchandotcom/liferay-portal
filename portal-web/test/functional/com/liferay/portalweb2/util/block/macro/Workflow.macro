@@ -669,7 +669,7 @@
 		<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_NAME" value1="${workflowDefinitionName}" />
 
 		<if>
-			<isset var="${workflowDefinitionTitle}" />
+			<isset var="workflowDefinitionTitle" />
 			<then>
 				<execute action="CPPortalWorkflowconfiguration#assertTextEquals" locator-key1="DEFINITION_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
 			</then>

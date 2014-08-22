@@ -233,6 +233,8 @@
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="DIALOG_BOX_TITLE" value1="Update Due Date" />
 		<execute action="PGKaleoforms#type" locator-key1="DIALOG_BOX_UPDATE_DUE_DATE_DATE" value1="${kfProcessDueDateDate}" />
 		<execute action="PGKaleoforms#type" locator-key1="DIALOG_BOX_UPDATE_DUE_DATE_TIME" value1="${kfProcessDueDateTime}" />
+		<execute action="PGKaleoforms#click" locator-key1="DIALOG_BOX_UPDATE_DUE_DATE_DATE" />
+		<execute action="PGKaleoforms#click" locator-key1="DIALOG_BOX_UPDATE_DUE_DATE_TIME" />
 
 		<if>
 			<isset var="comment" />

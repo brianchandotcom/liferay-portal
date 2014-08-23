@@ -675,7 +675,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public String getLocation() {
-		return getCurrentUrl();
+		return WebDriverHelper.getLocation(this);
 	}
 
 	@Override
@@ -1301,38 +1301,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void open(String url) {
-		String targetURL = "";
-
-		if (url.startsWith("/")) {
-			targetURL = TestPropsValues.PORTAL_URL + url;
-		}
-		else {
-			targetURL = url;
-		}
-
-		for (int second = 0;; second++) {
-			if (second >= TestPropsValues.TIMEOUT_IMPLICIT_WAIT) {
-				break;
-			}
-
-			try {
-				get(targetURL);
-
-				if (TestPropsValues.BROWSER_TYPE.equals("*iehta") ||
-					TestPropsValues.BROWSER_TYPE.equals("*iexplore")) {
-
-					refresh();
-				}
-
-				if (targetURL.equals(getLocation())) {
-					break;
-				}
-
-				Thread.sleep(1000);
-			}
-			catch (Exception e) {
-			}
-		}
+		WebDriverHelper.open(this, url);
 	}
 
 	@Override
@@ -1347,9 +1316,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void refresh() {
-		WebDriver.Navigation navigation = navigate();
-
-		navigation.refresh();
+		WebDriverHelper.refresh(this);
 	}
 
 	@Override

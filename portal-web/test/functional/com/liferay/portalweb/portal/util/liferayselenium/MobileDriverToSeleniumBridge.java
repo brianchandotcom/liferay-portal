@@ -350,7 +350,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public String getLocation() {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.getLocation(this);
 	}
 
 	@Override
@@ -641,7 +641,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void open(String url) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.open(this, url);
 	}
 
 	@Override
@@ -656,7 +656,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void refresh() {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.refresh(this);
 	}
 
 	@Override

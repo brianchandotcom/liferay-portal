@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.portlet.polls.verify.model;
 
+import com.liferay.portal.verify.model.VerifiableResourcedModel;
 import com.liferay.portlet.polls.model.PollsQuestion;
 
 /**

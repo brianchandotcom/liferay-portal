@@ -12,14 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.portlet.polls.verify.model;
+
+import com.liferay.portal.verify.model.VerifiableAuditedModel;
+import com.liferay.portal.verify.model.VerifiableGroupedModel;
+import com.liferay.portal.verify.model.VerifiableUUIDModel;
 
 /**
  * @author Miguel Pastor
  */
 public class PollsVoteVerifiableModel
 	implements VerifiableAuditedModel, VerifiableGroupedModel,
-			   VerifiableUUIDModel {
+	VerifiableUUIDModel {
 
 	@Override
 	public String getJoinByTableName() {

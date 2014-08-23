@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.facet.ElasticsearchFacetFieldCollector;
-import com.liferay.portal.search.elasticsearch.facet.FacetProcessorUtil;
+import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch.util.DocumentTypes;
 
 import java.util.ArrayList;
@@ -188,6 +188,12 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		_elasticsearchConnectionManager = elasticsearchConnectionManager;
 	}
 
+	public void setFacetProcessor(
+		FacetProcessor<SearchRequestBuilder> facetProcessor) {
+
+		_facetProcessor = facetProcessor;
+	}
+
 	public void setSwallowException(boolean swallowException) {
 		_swallowException = swallowException;
 	}
@@ -203,7 +209,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				continue;
 			}
 
-			FacetProcessorUtil.processFacet(searchRequestBuilder, facet);
+			_facetProcessor.processFacet(searchRequestBuilder, facet);
 		}
 	}
 
@@ -608,6 +614,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		ElasticsearchIndexSearcher.class);
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
+	private FacetProcessor<SearchRequestBuilder> _facetProcessor;
 	private Pattern _pattern = Pattern.compile("<em>(.*?)</em>");
 	private boolean _swallowException;
 

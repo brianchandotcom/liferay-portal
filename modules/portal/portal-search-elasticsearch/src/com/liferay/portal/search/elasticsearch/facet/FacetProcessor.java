@@ -16,14 +16,11 @@ package com.liferay.portal.search.elasticsearch.facet;
 
 import com.liferay.portal.kernel.search.facet.Facet;
 
-import org.elasticsearch.action.search.SearchRequestBuilder;
-
 /**
  * @author Michael C. Han
  */
-public interface FacetProcessor {
+public interface FacetProcessor<T> {
 
-	public void processFacet(
-		SearchRequestBuilder searchRequestBuilder, Facet facet);
+	public void processFacet(T searchRequestBuilder, Facet facet);
 
 }

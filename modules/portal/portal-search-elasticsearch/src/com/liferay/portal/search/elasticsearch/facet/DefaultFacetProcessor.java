@@ -24,7 +24,8 @@ import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
  * @author Michael C. Han
  * @author Milen Dyankov
  */
-public class DefaultFacetProcessor implements FacetProcessor {
+public class DefaultFacetProcessor
+	implements FacetProcessor<SearchRequestBuilder> {
 
 	@Override
 	public void processFacet(

@@ -24,9 +24,10 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 /**
  * @author Michael C. Han
  */
-public class FacetProcessorUtil {
+public class CompositeFacetProcessor
+	implements FacetProcessor<SearchRequestBuilder> {
 
-	public static void processFacet(
+	public void processFacet(
 		SearchRequestBuilder searchRequestBuilder, Facet facet) {
 
 		Class<?> clazz = facet.getClass();

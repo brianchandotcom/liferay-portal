@@ -4,6 +4,7 @@
 <project>
 	<path id="plugins.includes.path">
 		<dirset dir="dictionary" includes="*" />
+		<!-- <dirset dir="polls" includes="polls-api,polls-service,polls-web" /> -->
 		<dirset dir="web-proxy" includes="*" />
 		<dirset dir="xsl-content" includes="*" />
 	</path>

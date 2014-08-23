@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.portlet.polls.verify.model;
+
+import com.liferay.portal.verify.model.VerifiableAuditedModel;
+import com.liferay.portal.verify.model.VerifiableGroupedModel;
 
 /**
  * @author Miguel Pastor

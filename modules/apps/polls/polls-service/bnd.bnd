@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Polls Service
+Bundle-Name: Liferay Polls Services
 Bundle-SymbolicName: com.liferay.polls.service
 Bundle-Version: 1.0.0
 Export-Package:\

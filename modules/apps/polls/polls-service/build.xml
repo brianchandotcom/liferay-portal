@@ -3,7 +3,7 @@
 
 <project>
 	<property name="import.shared" value="polls-api" />
-	<property name="plugin.name" value="com.liferay.portlet.polls.service" />
+	<property name="plugin.name" value="com.liferay.polls.service" />
 
 	<property name="service.input.file" value="service.xml" />
 

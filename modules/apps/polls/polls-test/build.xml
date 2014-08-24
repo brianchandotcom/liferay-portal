@@ -3,7 +3,7 @@
 
 <project>
 	<property name="import.shared" value="polls-service" />
-	<property name="plugin.name" value="com.liferay.portlet.polls.test" />
+	<property name="plugin.name" value="com.liferay.polls.test" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

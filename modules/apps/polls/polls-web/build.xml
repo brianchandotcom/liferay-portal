@@ -4,7 +4,7 @@
 <project>
 	<property name="import.shared" value="polls-service" />
 	<property name="osgi.auto.update.xml" value="true" />
-	<property name="plugin.name" value="com.liferay.polls.web" />
+	<property name="plugin.name" value="com.liferay.portlet.polls.web-portlet" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

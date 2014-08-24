@@ -1,5 +1,5 @@
 Bundle-Version: 1.0.0
-Bundle-SymbolicName: com.liferay.portlet.polls.web-portlet
+Bundle-SymbolicName: com.liferay.polls.web-portlet
 Bundle-Name: Polls Web
 Import-Package: \
 	${bnd.jsp.support.imports},\
@@ -22,11 +22,11 @@ Import-Package: \
 	com.liferay.portal.theme,\
 	com.liferay.portal.webserver,\
 	\
-	com.liferay.portlet.polls,\
-	com.liferay.portlet.polls.*,\
-	com.liferay.portlet.polls.constants,\
-	com.liferay.portlet.polls.lar,\
-	com.liferay.portlet.polls.service.permission,\
+	com.liferay.polls,\
+	com.liferay.polls.*,\
+	com.liferay.polls.constants,\
+	com.liferay.polls.lar,\
+	com.liferay.polls.service.permission,\
 	\
 	org.apache.struts.action,\
 	org.apache.struts.action.*,\

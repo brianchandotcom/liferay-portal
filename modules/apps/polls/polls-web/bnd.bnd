@@ -1,6 +1,6 @@
 Bundle-Version: 1.0.0
-Bundle-SymbolicName: com.liferay.polls.web-portlet
-Bundle-Name: Polls Web
+Bundle-SymbolicName: com.liferay.polls.web
+Bundle-Name: Liferay Polls Web
 Import-Package: \
 	${bnd.jsp.support.imports},\
 	\

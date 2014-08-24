@@ -148,6 +148,7 @@ public class ClassPathUtil {
 		Builder builder = new Builder();
 
 		builder.setBootstrapClassPath(_globalClassPath);
+		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
 		builder.setRuntimeClassPath(_portalClassPath);
 
 		_portalProcessConfig = builder.build();

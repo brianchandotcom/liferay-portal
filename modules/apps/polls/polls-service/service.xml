@@ -46,8 +46,8 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.polls" entity="PollsQuestion" />
+		<reference package-path="com.liferay.portal" entity="User" />
 	</entity>
 	<entity name="PollsQuestion" uuid="true" local-service="true" remote-service="true">
 
@@ -88,11 +88,11 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.polls" entity="PollsChoice" />
+		<reference package-path="com.liferay.polls" entity="PollsVote" />
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.polls" entity="PollsChoice" />
-		<reference package-path="com.liferay.polls" entity="PollsVote" />
 	</entity>
 	<entity name="PollsVote" uuid="true" local-service="true" remote-service="true">
 
@@ -133,9 +133,9 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.polls" entity="PollsChoice" />
 		<reference package-path="com.liferay.polls" entity="PollsQuestion" />
+		<reference package-path="com.liferay.portal" entity="User" />
 	</entity>
 	<exceptions>
 		<exception>DuplicateVote</exception>

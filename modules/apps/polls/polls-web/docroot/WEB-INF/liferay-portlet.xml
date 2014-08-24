@@ -6,10 +6,10 @@
 		<portlet-name>25</portlet-name>
 		<icon>/html/icons/polls.png</icon>
 		<struts-path>polls</struts-path>
-		<portlet-data-handler-class>com.liferay.portlet.polls.lar.PollsPortletDataHandler</portlet-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.polls.lar.PollsChoiceStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.polls.lar.PollsQuestionStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.polls.lar.PollsVoteStagedModelDataHandler</staged-model-data-handler-class>
+		<portlet-data-handler-class>com.liferay.polls.lar.PollsPortletDataHandler</portlet-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.polls.lar.PollsChoiceStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.polls.lar.PollsQuestionStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.polls.lar.PollsVoteStagedModelDataHandler</staged-model-data-handler-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
 		<control-panel-entry-weight>10.0</control-panel-entry-weight>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>
@@ -26,10 +26,10 @@
 		<icon>/html/icons/polls_display.png</icon>
 		<struts-path>polls_display</struts-path>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
-		<portlet-data-handler-class>com.liferay.portlet.polls.lar.PollsDisplayPortletDataHandler</portlet-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.polls.lar.PollsChoiceStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.polls.lar.PollsQuestionStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.portlet.polls.lar.PollsVoteStagedModelDataHandler</staged-model-data-handler-class>
+		<portlet-data-handler-class>com.liferay.polls.lar.PollsDisplayPortletDataHandler</portlet-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.polls.lar.PollsChoiceStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.polls.lar.PollsQuestionStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.polls.lar.PollsVoteStagedModelDataHandler</staged-model-data-handler-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<instanceable>true</instanceable>
 		<private-request-attributes>false</private-request-attributes>

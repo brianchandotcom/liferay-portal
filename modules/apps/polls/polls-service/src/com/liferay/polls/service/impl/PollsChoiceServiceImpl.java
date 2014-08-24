@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.polls.util;
+package com.liferay.polls.service.impl;
+
+import com.liferay.polls.service.base.PollsChoiceServiceBaseImpl;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Brian Wing Shun Chan
  */
-public class PollsWebKeys {
-
-	public static final String POLLS_QUESTION = "POLLS_QUESTION";
-
+public class PollsChoiceServiceImpl extends PollsChoiceServiceBaseImpl {
 }

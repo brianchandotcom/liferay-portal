@@ -12,13 +12,23 @@
  * details.
  */
 
-package com.liferay.polls.util;
+package com.liferay.polls.model.impl;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.polls.model.PollsChoice;
+import com.liferay.polls.service.PollsChoiceLocalServiceUtil;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Brian Wing Shun Chan
  */
-public class PollsWebKeys {
+public class PollsVoteImpl extends PollsVoteBaseImpl {
 
-	public static final String POLLS_QUESTION = "POLLS_QUESTION";
+	public PollsVoteImpl() {
+	}
+
+	@Override
+	public PollsChoice getChoice() throws PortalException {
+		return PollsChoiceLocalServiceUtil.getChoice(getChoiceId());
+	}
 
 }

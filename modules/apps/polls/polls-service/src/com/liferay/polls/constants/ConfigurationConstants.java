@@ -12,13 +12,24 @@
  * details.
  */
 
-package com.liferay.polls.util;
+package com.liferay.polls.constants;
+
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
- * @author Carlos Sierra Andrés
+ *
+ * @author Miguel pastor
  */
-public class PollsWebKeys {
+public class ConfigurationConstants {
 
-	public static final String POLLS_QUESTION = "POLLS_QUESTION";
+	public static final Configuration CONFIGURATION =
+		ConfigurationFactoryUtil.getConfiguration(
+			ConfigurationConstants.class.getClassLoader(), "portlet");
+
+	public static final boolean POLLS_PUBLISH_TO_LIVE_BY_DEFAULT =
+		GetterUtil.getBoolean(
+			CONFIGURATION.get("polls.publish.to.live.by.default"));
 
 }

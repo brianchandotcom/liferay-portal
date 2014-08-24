@@ -33,8 +33,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -68,13 +67,12 @@ public class GoogleDocsDLFileVersionActionsDisplayContextFactory
 		getDLFileVersionActionsDisplayContext(
 			DLFileVersionActionsDisplayContext
 				parentDLFileEntryActionsDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion) {
+			PageContext pageContext, FileVersion fileVersion) {
 
 		try {
 			if (isGoogleDocs(fileVersion)) {
 				return new GoogleDocsDLFileVersionActionsDisplayContext(
-					parentDLFileEntryActionsDisplayContext, request, response,
+					parentDLFileEntryActionsDisplayContext, pageContext,
 					fileVersion);
 			}
 		}

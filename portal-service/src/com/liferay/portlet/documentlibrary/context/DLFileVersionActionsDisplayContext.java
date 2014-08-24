@@ -16,10 +16,14 @@ package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
+
 /**
  * @author Iván Zaera
  */
 public interface DLFileVersionActionsDisplayContext extends DLDisplayContext {
+
+	public List<MenuItem> getMenuItems() throws PortalException;
 
 	public String getPublishButtonLabel() throws PortalException;
 

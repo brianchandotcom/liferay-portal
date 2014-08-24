@@ -105,19 +105,38 @@ if (fileShortcut != null) {
 }
 
 DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
-DLFileVersionActionsDisplayContext dlFileVersionActionsDisplayContext = DLFileVersionActionsDisplayContextUtil.getDLFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
+DLFileVersionActionsDisplayContext dlFileVersionActionsDisplayContext = DLFileVersionActionsDisplayContextUtil.getDLFileVersionActionsDisplayContext(pageContext, fileEntry.getFileVersion());
 %>
 
 <liferay-util:buffer var="iconMenu">
 	<liferay-ui:icon-menu direction='<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? "down" : "left" %>' extended="<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? false : true %>" icon="<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? StringPool.BLANK : null %>" message='<%= dlActionsDisplayContext.isShowMinimalActionsButton() ? StringPool.BLANK : "actions" %>' showExpanded="<%= false %>" showWhenSingleIcon="<%= dlActionsDisplayContext.isShowWhenSingleIconActionButton() %>" triggerCssClass="btn btn-default">
-		<%@ include file="/html/portlet/document_library/action/download.jspf" %>
-		<%@ include file="/html/portlet/document_library/action/open_document.jspf" %>
-		<%@ include file="/html/portlet/document_library/action/view_original.jspf" %>
-		<%@ include file="/html/portlet/document_library/action/edit.jspf" %>
-		<%@ include file="/html/portlet/document_library/action/move.jspf" %>
-		<%@ include file="/html/portlet/document_library/action/lock.jspf" %>
-		<%@ include file="/html/portlet/document_library/action/permissions.jspf" %>
-		<%@ include file="/html/portlet/document_library/action/delete.jspf" %>
+		<c:choose>
+			<c:when test="<%= (fileShortcut == null) %>">
+
+				<%
+					List<MenuItem> menuItems = dlFileVersionActionsDisplayContext.getMenuItems();
+
+					for (MenuItem menuItem : menuItems) {
+						menuItem.render(pageContext);
+					}
+				%>
+
+				<%@ include file="/html/portlet/document_library/action/move.jspf" %>
+				<%@ include file="/html/portlet/document_library/action/lock.jspf" %>
+				<%@ include file="/html/portlet/document_library/action/permissions.jspf" %>
+				<%@ include file="/html/portlet/document_library/action/delete.jspf" %>
+			</c:when>
+			<c:otherwise>
+				<%@ include file="/html/portlet/document_library/action/download.jspf" %>
+				<%@ include file="/html/portlet/document_library/action/open_document.jspf" %>
+				<%@ include file="/html/portlet/document_library/action/view_original.jspf" %>
+				<%@ include file="/html/portlet/document_library/action/edit.jspf" %>
+				<%@ include file="/html/portlet/document_library/action/move.jspf" %>
+				<%@ include file="/html/portlet/document_library/action/lock.jspf" %>
+				<%@ include file="/html/portlet/document_library/action/permissions.jspf" %>
+				<%@ include file="/html/portlet/document_library/action/delete.jspf" %>
+			</c:otherwise>
+		</c:choose>
 	</liferay-ui:icon-menu>
 </liferay-util:buffer>
 

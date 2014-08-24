@@ -14,19 +14,39 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
-import com.liferay.portal.kernel.repository.model.FileVersion;
-
-import javax.servlet.jsp.PageContext;
-
 /**
  * @author Iván Zaera
  */
-public interface DLFileVersionActionsDisplayContextFactory {
+public class URLMenuItem extends MenuItem {
 
-	public DLFileVersionActionsDisplayContext
-		getDLFileVersionActionsDisplayContext(
-			DLFileVersionActionsDisplayContext
-				parentDLFileVersionActionsDisplayContext,
-			PageContext pageContext, FileVersion fileVersion);
+	public URLMenuItem(
+		String id, String iconCssClass, String message, String url) {
+
+		this(id, iconCssClass, message, url, "_self");
+	}
+
+	public URLMenuItem(
+		String id, String iconCssClass, String message, String url,
+		String target) {
+
+		super(id, _JSP_PATH, iconCssClass, message);
+
+		_url = url;
+		_target = target;
+	}
+
+	public String getTarget() {
+		return _target;
+	}
+
+	public String getURL() {
+		return _url;
+	}
+
+	private static final String _JSP_PATH =
+		"/html/portlet/document_library/display_context/url_menu_item.jsp";
+
+	private String _target;
+	private String _url;
 
 }

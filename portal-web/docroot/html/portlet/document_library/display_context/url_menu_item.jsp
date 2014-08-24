@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,22 +12,17 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.portlet.documentlibrary.context;
+<%@ include file="/html/portlet/document_library/init.jsp" %>
 
-import com.liferay.portal.kernel.repository.model.FileVersion;
+<%
+URLMenuItem urlMenuItem = (URLMenuItem)request.getAttribute(URLMenuItem.class.getName());
+%>
 
-import javax.servlet.jsp.PageContext;
-
-/**
- * @author Iván Zaera
- */
-public interface DLFileVersionActionsDisplayContextFactory {
-
-	public DLFileVersionActionsDisplayContext
-		getDLFileVersionActionsDisplayContext(
-			DLFileVersionActionsDisplayContext
-				parentDLFileVersionActionsDisplayContext,
-			PageContext pageContext, FileVersion fileVersion);
-
-}
+<liferay-ui:icon
+	iconCssClass="<%= urlMenuItem.getIconCssClass() %>"
+	message="<%= urlMenuItem.getMessage() %>"
+	target="<%= urlMenuItem.getTarget() %>"
+	url="<%= urlMenuItem.getURL() %>"
+/>

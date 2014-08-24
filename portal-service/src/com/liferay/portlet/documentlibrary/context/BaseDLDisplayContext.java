@@ -18,6 +18,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Iván Zaera
@@ -26,13 +27,13 @@ public abstract class BaseDLDisplayContext<T extends DLDisplayContext>
 	implements DLDisplayContext {
 
 	public BaseDLDisplayContext(
-		UUID uuid, T parentDLDisplayContext, HttpServletRequest request,
-		HttpServletResponse response) {
+		UUID uuid, T parentDLDisplayContext, PageContext pageContext) {
 
 		_uuid = uuid;
 		this.parentDLDisplayContext = parentDLDisplayContext;
-		this.request = request;
-		this.response = response;
+		this.pageContext = pageContext;
+		this.request = (HttpServletRequest)pageContext.getRequest();
+		this.response = (HttpServletResponse)pageContext.getResponse();
 	}
 
 	@Override
@@ -40,6 +41,7 @@ public abstract class BaseDLDisplayContext<T extends DLDisplayContext>
 		return _uuid;
 	}
 
+	protected PageContext pageContext;
 	protected T parentDLDisplayContext;
 	protected HttpServletRequest request;
 	protected HttpServletResponse response;

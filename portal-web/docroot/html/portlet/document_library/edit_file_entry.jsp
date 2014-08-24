@@ -112,7 +112,7 @@ if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 	saveAsDraft = true;
 }
 
-DLFileVersionActionsDisplayContext dlFileVersionActionsDisplayContext = DLFileVersionActionsDisplayContextUtil.getDLFileVersionActionsDisplayContext(request, response, fileVersion);
+DLFileVersionActionsDisplayContext dlFileVersionActionsDisplayContext = DLFileVersionActionsDisplayContextUtil.getDLFileVersionActionsDisplayContext(pageContext, fileVersion);
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">

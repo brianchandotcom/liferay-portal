@@ -14,19 +14,26 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
-import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
  * @author Iván Zaera
  */
-public interface DLFileVersionActionsDisplayContextFactory {
+public class DLActionsDisplayContextUtil {
 
-	public DLFileVersionActionsDisplayContext
-		getDLFileVersionActionsDisplayContext(
-			DLFileVersionActionsDisplayContext
-				parentDLFileVersionActionsDisplayContext,
-			PageContext pageContext, FileVersion fileVersion);
+	public static DLActionsDisplayContext
+		getDLActionsDisplayContext(
+			PageContext pageContext,
+			DLPortletInstanceSettings dlPortletInstanceSettings)
+		throws PortalException {
+
+		return new DLActionsDisplayContext(
+			(HttpServletRequest)pageContext.getRequest(),
+			dlPortletInstanceSettings);
+	}
 
 }

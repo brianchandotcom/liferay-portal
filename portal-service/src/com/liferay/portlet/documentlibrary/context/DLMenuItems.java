@@ -14,19 +14,15 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
-import com.liferay.portal.kernel.repository.model.FileVersion;
-
-import javax.servlet.jsp.PageContext;
-
 /**
  * @author Iván Zaera
  */
-public interface DLFileVersionActionsDisplayContextFactory {
+public class DLMenuItems {
 
-	public DLFileVersionActionsDisplayContext
-		getDLFileVersionActionsDisplayContext(
-			DLFileVersionActionsDisplayContext
-				parentDLFileVersionActionsDisplayContext,
-			PageContext pageContext, FileVersion fileVersion);
+	public static final String MENU_ITEM_ID_DOWNLOAD = "download";
+
+	public static final String MENU_ITEM_ID_EDIT = "edit";
+
+	public static final String MENU_ITEM_ID_OPEN_DOCUMENT = "open_document";
 
 }

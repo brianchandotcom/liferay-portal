@@ -17,10 +17,10 @@ package com.liferay.portlet.documentlibrary.context;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
+import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Iván Zaera
@@ -31,12 +31,16 @@ public class BaseDLFileVersionActionsDisplayContext
 
 	public BaseDLFileVersionActionsDisplayContext(
 		UUID uuid, DLFileVersionActionsDisplayContext parentDLDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion) {
+		PageContext pageContext, FileVersion fileVersion) {
 
-		super(uuid, parentDLDisplayContext, request, response);
+		super(uuid, parentDLDisplayContext, pageContext);
 
 		this.fileVersion = fileVersion;
+	}
+
+	@Override
+	public List<MenuItem> getMenuItems() throws PortalException {
+		return parentDLDisplayContext.getMenuItems();
 	}
 
 	@Override

@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,22 +12,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.portlet.documentlibrary.context;
+<%@ include file="/html/portlet/document_library/init.jsp" %>
 
-import com.liferay.portal.kernel.repository.model.FileVersion;
+<%
+JavascriptMenuItem javascriptMenuItem = (JavascriptMenuItem)request.getAttribute(JavascriptMenuItem.class.getName());
+%>
 
-import javax.servlet.jsp.PageContext;
+<liferay-ui:icon
+	iconCssClass="<%= javascriptMenuItem.getIconCssClass() %>"
+	message="<%= javascriptMenuItem.getMessage() %>"
+	onClick="<%= javascriptMenuItem.getOnClick() %>"
+	target="_blank"
+	url="javascript:;"
+/>
 
-/**
- * @author Iván Zaera
- */
-public interface DLFileVersionActionsDisplayContextFactory {
-
-	public DLFileVersionActionsDisplayContext
-		getDLFileVersionActionsDisplayContext(
-			DLFileVersionActionsDisplayContext
-				parentDLFileVersionActionsDisplayContext,
-			PageContext pageContext, FileVersion fileVersion);
-
-}
+<%
+javascriptMenuItem.getJavascriptRenderer().render(pageContext);
+%>

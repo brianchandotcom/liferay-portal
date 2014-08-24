@@ -17,23 +17,41 @@ package com.liferay.portlet.documentlibrary.context;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletURLUtil;
+import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Iván Zaera
@@ -42,41 +60,164 @@ public class DefaultDLFileVersionActionsDisplayContext
 	implements DLFileVersionActionsDisplayContext {
 
 	public DefaultDLFileVersionActionsDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
+			PageContext pageContext, FileVersion fileVersion)
 		throws PortalException {
 
-		_request = request;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_companyId = themeDisplay.getCompanyId();
-
-		FileEntry fileEntry = null;
+		_pageContext = pageContext;
+		_fileVersion = fileVersion;
 
 		if (fileVersion != null) {
-			fileEntry = fileVersion.getFileEntry();
+			_fileEntry = fileVersion.getFileEntry();
 		}
+
+		_request = (HttpServletRequest)pageContext.getRequest();
+
+		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		_dlFileEntryActionsDisplayContextHelper =
 			new DLFileEntryActionsDisplayContextHelper(
-				themeDisplay.getPermissionChecker(), fileEntry, fileVersion);
+				_themeDisplay.getPermissionChecker(), _fileEntry, fileVersion);
 
-		_fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
+		_fileEntryTypeId = ParamUtil.getLong(_request, "fileEntryTypeId", -1);
 
-		if ((_fileEntryTypeId == -1) && (fileEntry != null) &&
-			(fileEntry.getModel() instanceof DLFileEntry)) {
+		if ((_fileEntryTypeId == -1) && (_fileEntry != null) &&
+			(_fileEntry.getModel() instanceof DLFileEntry)) {
 
-			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+			DLFileEntry dlFileEntry = (DLFileEntry)_fileEntry.getModel();
 
 			_fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
 		}
 
-		_folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
-		_portletDisplay = themeDisplay.getPortletDisplay();
-		_scopeGroupId = themeDisplay.getScopeGroupId();
+		_folderId = BeanParamUtil.getLong(_fileEntry, _request, "folderId");
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		_portletId = portletDisplay.getId();
+
+		if (_portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+			_portletId = ParamUtil.getString(_request, "portletResource");
+		}
 	}
+
+	@Override
+	public List<MenuItem> getMenuItems() throws PortalException {
+		List<MenuItem> menuItems = new ArrayList<MenuItem>();
+
+		_addDownloadMenuItem(menuItems);
+		_addOpenDocumentMenuItem(menuItems);
+		_addEditMenuItem(menuItems);
+
+		return menuItems;
+	}
+
+	private void _addEditMenuItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			DLPortletInstanceSettings.getInstance(
+				_themeDisplay.getLayout(), _portletId);
+
+		DLActionsDisplayContext dlActionsDisplayContext =
+			DLActionsDisplayContextUtil.getDLActionsDisplayContext(
+				_pageContext, dlPortletInstanceSettings);
+
+		if (dlActionsDisplayContext.isShowActions()) {
+			if (isEditButtonVisible()) {
+				LiferayPortletResponse liferayPortletResponse =
+					_getLiferayPortletResponse();
+
+				PortletURL editURL = liferayPortletResponse.createRenderURL();
+
+				String currentURL = _getCurrentURL();
+
+				editURL.setParameter(
+					"struts_action", "/document_library/edit_file_entry");
+				editURL.setParameter("redirect", currentURL);
+				editURL.setParameter("backURL", currentURL);
+				editURL.setParameter(
+					"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
+				menuItems.add(
+					new URLMenuItem(
+						DLMenuItems.MENU_ITEM_ID_EDIT, "icon-edit", "edit",
+						editURL.toString()));
+			}
+		}
+	}
+
+	private String _getCurrentURL() {
+		LiferayPortletRequest liferayPortletRequest =
+			_getLiferayPortletRequest();
+
+		LiferayPortletResponse liferayPortletResponse =
+			_getLiferayPortletResponse();
+
+		PortletURL portletURL = PortletURLUtil.getCurrent(
+			liferayPortletRequest, liferayPortletResponse);
+
+		return portletURL.toString();
+	}
+
+	private LiferayPortletRequest _getLiferayPortletRequest() {
+		PortletRequest portletRequest = (PortletRequest)_request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		return PortalUtil.getLiferayPortletRequest(portletRequest);
+	}
+
+	private LiferayPortletResponse _getLiferayPortletResponse() {
+		PortletResponse portletResponse =
+				(PortletResponse)_request.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		return PortalUtil.getLiferayPortletResponse(portletResponse);
+	}
+
+	private void _addOpenDocumentMenuItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+		if (isOpenInMsOfficeButtonVisible()) {
+			String webDavURL = DLUtil.getWebDavURL(
+				_themeDisplay, _fileEntry.getFolder(), _fileEntry,
+				PropsValues.
+					DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED,
+				true);
+
+			LiferayPortletResponse liferayPortletResponse =
+				_getLiferayPortletResponse();
+
+			String onClick =
+				liferayPortletResponse.getNamespace() + "openDocument('" +
+					webDavURL + "');";
+
+			menuItems.add(
+				new JavascriptMenuItem(
+					DLMenuItems.MENU_ITEM_ID_OPEN_DOCUMENT, "icon-file-alt",
+					"open-in-ms-office", onClick,
+					new _OpenDocumentJavascriptMenuItemRenderer()));
+		}
+	}
+
+	private void _addDownloadMenuItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+			if (isDownloadButtonVisible()) {
+				String message =
+					LanguageUtil.get(_request, "download") + " (" +
+					TextFormatter.formatStorageSize(
+						_fileEntry.getSize(), _themeDisplay.getLocale()) + ")";
+
+				String url = DLUtil.getDownloadURL(
+					_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,
+					false, true);
+
+				menuItems.add(
+					new URLMenuItem(
+						DLMenuItems.MENU_ITEM_ID_DOWNLOAD, "icon-download",
+						message, url, "_blank"));
+			}
+		}
 
 	@Override
 	public String getPublishButtonLabel() {
@@ -117,15 +258,13 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 	@Override
 	public boolean isAssetMetadataVisible() {
-		String portletId = _portletDisplay.getId();
-
-		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
-			portletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ||
-			portletId.equals(PortletKeys.MY_WORKFLOW_INSTANCES) ||
-			portletId.equals(PortletKeys.MY_WORKFLOW_TASKS) ||
-			portletId.equals(PortletKeys.TRASH)) {
+		if (_portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			_portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
+			_portletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ||
+			_portletId.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ||
+			_portletId.equals(PortletKeys.MY_WORKFLOW_INSTANCES) ||
+			_portletId.equals(PortletKeys.MY_WORKFLOW_TASKS) ||
+			_portletId.equals(PortletKeys.TRASH)) {
 
 			return true;
 		}
@@ -297,7 +436,8 @@ public class DefaultDLFileVersionActionsDisplayContext
 	private boolean _hasWorkflowDefinitionLink() {
 		try {
 			return DLUtil.hasWorkflowDefinitionLink(
-				_companyId, _scopeGroupId, _folderId, _fileEntryTypeId);
+				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
+				_folderId, _fileEntryTypeId);
 		}
 		catch (Exception e) {
 			throw new SystemException(
@@ -361,28 +501,47 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 	private boolean _isTrashEnabled() throws PortalException {
 		if (_trashEnabled == null) {
-			_trashEnabled = TrashUtil.isTrashEnabled(_scopeGroupId);
+			_trashEnabled = TrashUtil.isTrashEnabled(
+				_themeDisplay.getScopeGroupId());
 		}
 
 		return _trashEnabled;
 	}
 
 	private boolean _isWebDAVEnabled() {
-		return _portletDisplay.isWebDAVEnabled();
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		return portletDisplay.isWebDAVEnabled();
 	}
 
 	private static final UUID _UUID = UUID.fromString(
 		"85F6C50E-3893-4E32-9D63-208528A503FA");
 
-	private long _companyId;
+	private class _OpenDocumentJavascriptMenuItemRenderer
+		implements JavascriptMenuItem.Renderer {
+
+		@Override
+		public void render(PageContext pageContext)
+			throws IOException, ServletException {
+
+			pageContext.include(
+				"/html/portlet/document_library/display_context/" +
+				"open_document_js.jsp");
+		}
+
+	}
+
 	private DLFileEntryActionsDisplayContextHelper
 		_dlFileEntryActionsDisplayContextHelper;
+	private FileEntry _fileEntry;
 	private long _fileEntryTypeId;
+	private FileVersion _fileVersion;
 	private long _folderId;
 	private Boolean _ieOnWin32;
-	private PortletDisplay _portletDisplay;
+	private PageContext _pageContext;
+	private String _portletId;
 	private HttpServletRequest _request;
-	private long _scopeGroupId;
+	private ThemeDisplay _themeDisplay;
 	private Boolean _trashEnabled;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.resiliency.spi.agent;
 
-import com.liferay.portal.kernel.process.ProcessLauncher;
+import com.liferay.portal.kernel.process.local.LocalProcessLauncher;
 import com.liferay.portal.kernel.resiliency.spi.MockSPI;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
@@ -77,7 +77,7 @@ public class AcceptorServletTest {
 		);
 
 		ConcurrentMap<String, Object> attributes =
-			ProcessLauncher.ProcessContext.getAttributes();
+			LocalProcessLauncher.ProcessContext.getAttributes();
 
 		SPI spi = new MockSPI() {
 

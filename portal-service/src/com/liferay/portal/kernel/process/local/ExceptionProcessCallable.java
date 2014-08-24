@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process;
+package com.liferay.portal.kernel.process.local;
+
+import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessException;
 
 /**
  * @author Shuyang Zhou

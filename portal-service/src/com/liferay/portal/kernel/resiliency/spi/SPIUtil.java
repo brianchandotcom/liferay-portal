@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.resiliency.spi;
 
-import com.liferay.portal.kernel.process.ProcessLauncher;
+import com.liferay.portal.kernel.process.local.LocalProcessLauncher;
 
 import java.util.concurrent.ConcurrentMap;
 
@@ -45,7 +45,7 @@ public class SPIUtil {
 
 	static {
 		ConcurrentMap<String, Object> attributes =
-			ProcessLauncher.ProcessContext.getAttributes();
+			LocalProcessLauncher.ProcessContext.getAttributes();
 
 		_spi = (SPI)attributes.remove(SPI.SPI_INSTANCE_PUBLICATION_KEY);
 	}

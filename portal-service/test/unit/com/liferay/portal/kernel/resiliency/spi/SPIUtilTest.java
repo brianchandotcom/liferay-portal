@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.resiliency.spi;
 
-import com.liferay.portal.kernel.process.ProcessLauncher;
+import com.liferay.portal.kernel.process.local.LocalProcessLauncher;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
 
@@ -60,7 +60,7 @@ public class SPIUtilTest {
 		MockSPI mockSPI = new MockSPI();
 
 		ConcurrentMap<String, Object> attributes =
-			ProcessLauncher.ProcessContext.getAttributes();
+			LocalProcessLauncher.ProcessContext.getAttributes();
 
 		attributes.put(SPI.SPI_INSTANCE_PUBLICATION_KEY, mockSPI);
 

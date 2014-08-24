@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process;
+package com.liferay.portal.kernel.process.local;
+
+import com.liferay.portal.kernel.process.ProcessCallable;
 
 import java.io.Serializable;
 

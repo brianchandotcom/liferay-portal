@@ -12,15 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process;
+package com.liferay.portal.kernel.process.local;
 
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessConfig.Builder;
-import com.liferay.portal.kernel.process.ProcessLauncher.ProcessContext;
-import com.liferay.portal.kernel.process.ProcessLauncher.ShutdownHook;
+import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.process.ProcessExecutor;
+import com.liferay.portal.kernel.process.TerminationProcessException;
+import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessContext;
+import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ShutdownHook;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
@@ -100,9 +105,10 @@ public class LocalProcessExecutorTest {
 				assertClasses.add(ProcessConfig.class);
 				assertClasses.addAll(
 					Arrays.asList(ProcessConfig.class.getDeclaredClasses()));
-				assertClasses.add(ProcessLauncher.class);
+				assertClasses.add(LocalProcessLauncher.class);
 				assertClasses.addAll(
-					Arrays.asList(ProcessLauncher.class.getDeclaredClasses()));
+					Arrays.asList(
+						LocalProcessLauncher.class.getDeclaredClasses()));
 			}
 
 		};
@@ -556,7 +562,7 @@ public class LocalProcessExecutorTest {
 
 	@Test
 	public void testConstructor() {
-		new ProcessLauncher();
+		new LocalProcessLauncher();
 	}
 
 	@Test

@@ -12,9 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process;
+package com.liferay.portal.kernel.process.local;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedOutputStream;
+import com.liferay.portal.kernel.process.ClassPathUtil;
+import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.util.ClassLoaderObjectInputStream;
 import com.liferay.portal.kernel.util.StringPool;
@@ -36,7 +39,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * @author Shuyang Zhou
  */
-public class ProcessLauncher {
+public class LocalProcessLauncher {
 
 	public static void main(String[] arguments)
 		throws ClassNotFoundException, IOException {

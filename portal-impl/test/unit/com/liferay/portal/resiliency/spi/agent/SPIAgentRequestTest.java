@@ -17,7 +17,7 @@ package com.liferay.portal.resiliency.spi.agent;
 import com.liferay.portal.cache.MultiVMPoolImpl;
 import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
-import com.liferay.portal.kernel.process.ProcessLauncher;
+import com.liferay.portal.kernel.process.local.LocalProcessLauncher;
 import com.liferay.portal.kernel.resiliency.spi.MockSPI;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
@@ -735,7 +735,7 @@ public class SPIAgentRequestTest {
 		// SPI, already populated
 
 		ConcurrentMap<String, Object> attributes =
-			ProcessLauncher.ProcessContext.getAttributes();
+			LocalProcessLauncher.ProcessContext.getAttributes();
 
 		attributes.put(SPI.SPI_INSTANCE_PUBLICATION_KEY, new MockSPI());
 
@@ -782,7 +782,7 @@ public class SPIAgentRequestTest {
 		// SPI, not populated, no SPI agent request
 
 		ConcurrentMap<String, Object> attributes =
-			ProcessLauncher.ProcessContext.getAttributes();
+			LocalProcessLauncher.ProcessContext.getAttributes();
 
 		attributes.put(SPI.SPI_INSTANCE_PUBLICATION_KEY, new MockSPI());
 
@@ -826,7 +826,7 @@ public class SPIAgentRequestTest {
 		// attributes
 
 		ConcurrentMap<String, Object> attributes =
-			ProcessLauncher.ProcessContext.getAttributes();
+			LocalProcessLauncher.ProcessContext.getAttributes();
 
 		attributes.put(SPI.SPI_INSTANCE_PUBLICATION_KEY, new MockSPI());
 
@@ -877,7 +877,7 @@ public class SPIAgentRequestTest {
 		// attributes
 
 		ConcurrentMap<String, Object> attributes =
-			ProcessLauncher.ProcessContext.getAttributes();
+			LocalProcessLauncher.ProcessContext.getAttributes();
 
 		attributes.put(SPI.SPI_INSTANCE_PUBLICATION_KEY, new MockSPI());
 

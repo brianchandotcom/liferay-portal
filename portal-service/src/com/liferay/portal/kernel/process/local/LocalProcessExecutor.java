@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.process;
+package com.liferay.portal.kernel.process.local;
 
 import com.liferay.portal.kernel.concurrent.AbortPolicy;
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
@@ -25,6 +25,11 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessConfig;
+import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.process.ProcessExecutor;
+import com.liferay.portal.kernel.process.TerminationProcessException;
 import com.liferay.portal.kernel.util.ClassLoaderObjectInputStream;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -105,7 +110,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 			commands.add("-cp");
 			commands.add(processConfig.getBootstrapClassPath());
 			commands.addAll(arguments);
-			commands.add(ProcessLauncher.class.getName());
+			commands.add(LocalProcessLauncher.class.getName());
 
 			ProcessBuilder processBuilder = new ProcessBuilder(commands);
 

@@ -12,13 +12,29 @@
  * details.
  */
 
-package com.liferay.polls.util;
+package com.liferay.polls.verify.model;
+
+import com.liferay.portal.verify.model.VerifiableResourcedModel;
+import com.liferay.polls.model.PollsQuestion;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Brian Wing Shun Chan
  */
-public class PollsWebKeys {
+public class PollsQuestionVerifiableModel implements VerifiableResourcedModel {
 
-	public static final String POLLS_QUESTION = "POLLS_QUESTION";
+	@Override
+	public String getModelName() {
+		return PollsQuestion.class.getName();
+	}
+
+	@Override
+	public String getPrimaryKeyColumnName() {
+		return "questionId";
+	}
+
+	@Override
+	public String getTableName() {
+		return "PollsQuestion";
+	}
 
 }

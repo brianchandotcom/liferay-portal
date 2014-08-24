@@ -12,13 +12,29 @@
  * details.
  */
 
-package com.liferay.polls.util;
+package com.liferay.polls;
+
+import com.liferay.portal.NoSuchModelException;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Brian Wing Shun Chan
  */
-public class PollsWebKeys {
+public class NoSuchQuestionException extends NoSuchModelException {
 
-	public static final String POLLS_QUESTION = "POLLS_QUESTION";
+	public NoSuchQuestionException() {
+		super();
+	}
+
+	public NoSuchQuestionException(String msg) {
+		super(msg);
+	}
+
+	public NoSuchQuestionException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public NoSuchQuestionException(Throwable cause) {
+		super(cause);
+	}
 
 }

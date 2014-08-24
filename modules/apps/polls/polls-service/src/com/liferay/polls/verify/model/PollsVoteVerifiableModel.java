@@ -23,7 +23,7 @@ import com.liferay.portal.verify.model.VerifiableUUIDModel;
  */
 public class PollsVoteVerifiableModel
 	implements VerifiableAuditedModel, VerifiableGroupedModel,
-	VerifiableUUIDModel {
+			   VerifiableUUIDModel {
 
 	@Override
 	public String getJoinByTableName() {

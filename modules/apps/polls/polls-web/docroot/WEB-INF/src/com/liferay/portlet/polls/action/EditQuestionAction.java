@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.polls.action;
+package com.liferay.polls.action;
 
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -31,18 +31,18 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.polls.DuplicateVoteException;
-import com.liferay.portlet.polls.NoSuchChoiceException;
-import com.liferay.portlet.polls.NoSuchQuestionException;
-import com.liferay.portlet.polls.QuestionChoiceException;
-import com.liferay.portlet.polls.QuestionDescriptionException;
-import com.liferay.portlet.polls.QuestionExpirationDateException;
-import com.liferay.portlet.polls.QuestionExpiredException;
-import com.liferay.portlet.polls.QuestionTitleException;
-import com.liferay.portlet.polls.model.PollsChoice;
-import com.liferay.portlet.polls.model.PollsQuestion;
-import com.liferay.portlet.polls.service.PollsQuestionServiceUtil;
-import com.liferay.portlet.polls.service.persistence.PollsChoiceUtil;
+import com.liferay.polls.DuplicateVoteException;
+import com.liferay.polls.NoSuchChoiceException;
+import com.liferay.polls.NoSuchQuestionException;
+import com.liferay.polls.QuestionChoiceException;
+import com.liferay.polls.QuestionDescriptionException;
+import com.liferay.polls.QuestionExpirationDateException;
+import com.liferay.polls.QuestionExpiredException;
+import com.liferay.polls.QuestionTitleException;
+import com.liferay.polls.model.PollsChoice;
+import com.liferay.polls.model.PollsQuestion;
+import com.liferay.polls.service.PollsQuestionServiceUtil;
+import com.liferay.polls.service.persistence.PollsChoiceUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;

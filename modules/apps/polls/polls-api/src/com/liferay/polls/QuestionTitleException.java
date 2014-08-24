@@ -12,13 +12,29 @@
  * details.
  */
 
-package com.liferay.polls.util;
+package com.liferay.polls;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Brian Wing Shun Chan
  */
-public class PollsWebKeys {
+public class QuestionTitleException extends PortalException {
 
-	public static final String POLLS_QUESTION = "POLLS_QUESTION";
+	public QuestionTitleException() {
+		super();
+	}
+
+	public QuestionTitleException(String msg) {
+		super(msg);
+	}
+
+	public QuestionTitleException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public QuestionTitleException(Throwable cause) {
+		super(cause);
+	}
 
 }

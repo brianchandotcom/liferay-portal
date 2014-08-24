@@ -1,5 +1,5 @@
 Bundle-Name: Polls API
-Bundle-SymbolicName: com.liferay.portlet.polls.api
+Bundle-SymbolicName: com.liferay.polls.api
 Bundle-Version: 1.0.0
 Export-Package: *
 Include-Resource: classes

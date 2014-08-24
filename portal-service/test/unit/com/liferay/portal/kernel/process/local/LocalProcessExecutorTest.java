@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.InetAddressUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.SocketUtil;
 import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -87,7 +86,6 @@ import java.util.logging.Logger;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -112,13 +110,6 @@ public class LocalProcessExecutorTest {
 			}
 
 		};
-
-	@Before
-	public void setUp() throws Exception {
-		Class<?> clazz = getClass();
-
-		PortalClassLoaderUtil.setClassLoader(clazz.getClassLoader());
-	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -1243,6 +1234,8 @@ public class LocalProcessExecutorTest {
 
 		builder.setArguments(_createArguments(jpdaOption));
 		builder.setBootstrapClassPath(System.getProperty("java.class.path"));
+		builder.setReactClassLoader(
+			LocalProcessExecutorTest.class.getClassLoader());
 
 		return builder.build();
 	}
@@ -1594,10 +1587,6 @@ public class LocalProcessExecutorTest {
 
 		@Override
 		public Serializable call() throws ProcessException {
-			Class<?> clazz = getClass();
-
-			PortalClassLoaderUtil.setClassLoader(clazz.getClassLoader());
-
 			Logger logger = Logger.getLogger("");
 
 			logger.setLevel(Level.FINE);

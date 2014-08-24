@@ -12,13 +12,21 @@
  * details.
  */
 
-package com.liferay.polls.util;
+package com.liferay.polls.model.impl;
+
+import com.liferay.polls.service.PollsVoteLocalServiceUtil;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Brian Wing Shun Chan
  */
-public class PollsWebKeys {
+public class PollsChoiceImpl extends PollsChoiceBaseImpl {
 
-	public static final String POLLS_QUESTION = "POLLS_QUESTION";
+	public PollsChoiceImpl() {
+	}
+
+	@Override
+	public int getVotesCount() {
+		return PollsVoteLocalServiceUtil.getChoiceVotesCount(getChoiceId());
+	}
 
 }

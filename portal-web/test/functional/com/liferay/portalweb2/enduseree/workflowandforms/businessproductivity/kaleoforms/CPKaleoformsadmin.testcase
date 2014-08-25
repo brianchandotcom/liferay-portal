@@ -1239,10 +1239,6 @@
 
 		<execute macro="KaleoDesigner#addSourceXML" />
 
-<!--
-		<execute macro="KaleoDesigner#editSourceXML" />
--->
-
 		<execute macro="KaleoFormsAdmin#publishWorkflow" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">

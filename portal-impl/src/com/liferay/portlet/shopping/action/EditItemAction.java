@@ -243,10 +243,8 @@ public class EditItemAction extends PortletAction {
 
 		int stockQuantity = ParamUtil.getInteger(
 			uploadPortletRequest, "stockQuantity");
-		boolean hasInfiniteStock = ParamUtil.getBoolean(
-			uploadPortletRequest, "hasInfiniteStock");
 
-		if (hasInfiniteStock) {
+		if (ParamUtil.getBoolean(uploadPortletRequest, "hasInfiniteStock")) {
 			stockQuantity = ShoppingConstants.INFINITE_STOCK;
 		}
 

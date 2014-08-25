@@ -144,51 +144,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>16</portlet-name>
-		<display-name>Currency Converter</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
-		<init-param>
-			<name>edit-action</name>
-			<value>/currency_converter/edit</value>
-		</init-param>
-		<init-param>
-			<name>edit-guest-action</name>
-			<value>/currency_converter/edit</value>
-		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/currency_converter/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/currency_converter/view</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>edit</portlet-mode>
-			<portlet-mode>edit_guest</portlet-mode>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<portlet-preferences>
-			<preference>
-				<name>symbols</name>
-				<value>GBP</value>
-				<value>CNY</value>
-				<value>EUR</value>
-				<value>JPY</value>
-				<value>USD</value>
-			</preference>
-			<preferences-validator>com.liferay.portlet.currencyconverter.CurrencyPreferencesValidator</preferences-validator>
-		</portlet-preferences>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>19</portlet-name>
 		<display-name>Message Boards</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

@@ -411,20 +411,30 @@
 				border-width: 0;
 			}
 
+			.thread-bottom {
+				&:after {
+					clear: both;
+					content: '';
+					display: block;
+					height: 0;
+					visibility: hidden;
+				}
+
+				br {
+					display: none;
+				}
+
+				.edit-controls {
+					margin-bottom: 0;
+				}
+			}
+
 			.thread-message-view {
 				min-width: 0;
 			}
 
 			.edit-controls li, .taglib-ratings, .taglib-user-display > a, .taglib-user-display .user-details {
 				display: inline-block;
-			}
-
-			.edit-controls, .edit-controls li, .subject, .taglib-flags, .thumbs {
-				float: none;
-			}
-
-			.edit-controls li {
-				margin-right: 0;
 			}
 
 			.taglib-user-display {
@@ -445,17 +455,14 @@
 				}
 			}
 
-			.taglib-flags {
-				margin-left: 0;
-			}
-
 			td.user-info {
 				padding: 0;
 				width: auto;
 			}
 
-			.thumbs {
-				margin: 0;
+			.thumbs, .taglib-flags {
+				margin-bottom: 0;
+				margin-top: 0;
 			}
 		}
 

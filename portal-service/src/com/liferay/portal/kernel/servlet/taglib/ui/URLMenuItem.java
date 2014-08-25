@@ -20,8 +20,14 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
 public class URLMenuItem extends MenuItem {
 
 	public URLMenuItem(
-		String id, String iconCssClass, String message, String target,
-		String url) {
+		String id, String iconCssClass, String message, String url) {
+
+		this(id, iconCssClass, message, url, "_self");
+	}
+
+	public URLMenuItem(
+		String id, String iconCssClass, String message, String url,
+		String target) {
 
 		super(id, iconCssClass, message);
 

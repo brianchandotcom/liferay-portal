@@ -134,7 +134,7 @@ public class WikiPageLocalServiceTest {
 	public void testDeleteTrashedPageWithExplicitTrashedRedirectPage()
 		throws Exception {
 
-		WikiPage[] pages = WikiTestUtil.addTrashedPageWithRedirectPage(
+		WikiPage[] pages = WikiTestUtil.addRenamedTrashedPage(
 			_group.getGroupId(), _node.getNodeId(), true);
 
 		WikiPage page = pages[0];
@@ -159,7 +159,7 @@ public class WikiPageLocalServiceTest {
 	public void testDeleteTrashedPageWithImplicitTrashedRedirectPage()
 		throws Exception {
 
-		WikiPage[] pages = WikiTestUtil.addTrashedPageWithRedirectPage(
+		WikiPage[] pages = WikiTestUtil.addRenamedTrashedPage(
 			_group.getGroupId(), _node.getNodeId(), false);
 
 		WikiPage page = pages[0];
@@ -209,7 +209,7 @@ public class WikiPageLocalServiceTest {
 	public void testDeleteTrashedPageWithRestoredRedirectPage()
 		throws Exception {
 
-		WikiPage[] pages = WikiTestUtil.addTrashedPageWithRedirectPage(
+		WikiPage[] pages = WikiTestUtil.addRenamedTrashedPage(
 			_group.getGroupId(), _node.getNodeId(), true);
 
 		WikiPage page = pages[0];
@@ -294,7 +294,30 @@ public class WikiPageLocalServiceTest {
 	}
 
 	@Test
-	public void testMoveMovedPage() throws Exception {
+	public void testRenamePage() throws Exception {
+		testRenamePage(false);
+	}
+
+	@Test(expected = DuplicatePageException.class)
+	public void testRenamePageSameName() throws Exception {
+		WikiPage page = WikiTestUtil.addPage(
+			_group.getGroupId(), _node.getNodeId(), true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiPageLocalServiceUtil.renamePage(
+			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
+			page.getTitle(), true, serviceContext);
+	}
+
+	@Test
+	public void testRenamePageWithExpando() throws Exception {
+		testRenamePage(true);
+	}
+
+	@Test
+	public void testRenameRenamedPage() throws Exception {
 		WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
 			"A", true);
@@ -302,11 +325,11 @@ public class WikiPageLocalServiceTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		WikiPageLocalServiceUtil.movePage(
+		WikiPageLocalServiceUtil.renamePage(
 			TestPropsValues.getUserId(), _node.getNodeId(), "A", "B", true,
 			serviceContext);
 
-		WikiPageLocalServiceUtil.movePage(
+		WikiPageLocalServiceUtil.renamePage(
 			TestPropsValues.getUserId(), _node.getNodeId(), "A", "C", true,
 			serviceContext);
 
@@ -320,34 +343,11 @@ public class WikiPageLocalServiceTest {
 		Assert.assertEquals(pageA.getRedirectTitle(), "C");
 		Assert.assertEquals(pageB.getRedirectTitle(), StringPool.BLANK);
 		Assert.assertEquals(pageC.getRedirectTitle(), StringPool.BLANK);
-		Assert.assertEquals(pageA.getSummary(), "Moved to C");
+		Assert.assertEquals(pageA.getSummary(), "Renamed to C");
 		Assert.assertEquals(pageB.getSummary(), "Summary");
 		Assert.assertEquals(pageC.getSummary(), StringPool.BLANK);
 		Assert.assertEquals(pageA.getContent(), "[[C]]");
 		Assert.assertEquals(pageC.getContent(), "[[B]]");
-	}
-
-	@Test
-	public void testMovePage() throws Exception {
-		testMovePage(false);
-	}
-
-	@Test(expected = DuplicatePageException.class)
-	public void testMovePageSameName() throws Exception {
-		WikiPage page = WikiTestUtil.addPage(
-			_group.getGroupId(), _node.getNodeId(), true);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		WikiPageLocalServiceUtil.movePage(
-			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
-			page.getTitle(), true, serviceContext);
-	}
-
-	@Test
-	public void testMovePageWithExpando() throws Exception {
-		testMovePage(true);
 	}
 
 	@Test
@@ -445,7 +445,7 @@ public class WikiPageLocalServiceTest {
 			serviceContext, retrievedPage, hasExpandoValues);
 	}
 
-	protected void testMovePage(boolean hasExpandoValues) throws Exception {
+	protected void testRenamePage(boolean hasExpandoValues) throws Exception {
 		WikiPage page = WikiTestUtil.addPage(
 			_group.getGroupId(), _node.getNodeId(), true);
 
@@ -456,17 +456,17 @@ public class WikiPageLocalServiceTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		WikiPageLocalServiceUtil.movePage(
+		WikiPageLocalServiceUtil.renamePage(
 			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
 			"New Title", true, serviceContext);
 
-		WikiPage movedPage = WikiPageLocalServiceUtil.getPage(
+		WikiPage renamedPage = WikiPageLocalServiceUtil.getPage(
 			_node.getNodeId(), "New Title");
 
-		Assert.assertNotNull(movedPage);
+		Assert.assertNotNull(renamedPage);
 
 		checkPopulatedServiceContext(
-			serviceContext, movedPage, hasExpandoValues);
+			serviceContext, renamedPage, hasExpandoValues);
 	}
 
 	protected void testRestorePageFromTrash(boolean hasExpandoValues)

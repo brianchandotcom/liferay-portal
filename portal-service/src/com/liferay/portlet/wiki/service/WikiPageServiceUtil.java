@@ -90,6 +90,12 @@ public class WikiPageServiceUtil {
 			inputStream, mimeType);
 	}
 
+	public static void changeNode(long nodeId, java.lang.String title,
+		long newNodeId, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().changeNode(nodeId, title, newNodeId, serviceContext);
+	}
+
 	public static void changeParent(long nodeId, java.lang.String title,
 		java.lang.String newParentTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -305,6 +311,10 @@ public class WikiPageServiceUtil {
 		return getService().getTempPageAttachmentNames(nodeId, tempFolderName);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, String,
+	String, ServiceContext)}
+	*/
 	public static void movePage(long nodeId, java.lang.String title,
 		java.lang.String newTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -328,6 +338,13 @@ public class WikiPageServiceUtil {
 		long nodeId, java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().movePageToTrash(nodeId, title, version);
+	}
+
+	public static void renamePage(long nodeId, java.lang.String title,
+		java.lang.String newTitle,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().renamePage(nodeId, title, newTitle, serviceContext);
 	}
 
 	public static void restorePageAttachmentFromTrash(long nodeId,

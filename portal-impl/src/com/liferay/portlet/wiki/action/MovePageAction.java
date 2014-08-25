@@ -25,6 +25,7 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.wiki.DuplicatePageException;
 import com.liferay.portlet.wiki.NoSuchNodeException;
 import com.liferay.portlet.wiki.NoSuchPageException;
+import com.liferay.portlet.wiki.NodeChangeException;
 import com.liferay.portlet.wiki.PageContentException;
 import com.liferay.portlet.wiki.PageTitleException;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -58,6 +59,9 @@ public class MovePageAction extends PortletAction {
 			if (cmd.equals(Constants.CHANGE_PARENT)) {
 				changeParentPage(actionRequest);
 			}
+			else if (cmd.equals(Constants.MOVE)) {
+				changeNode(actionRequest);
+			}
 			else if (cmd.equals(Constants.RENAME)) {
 				renamePage(actionRequest);
 			}
@@ -80,6 +84,9 @@ public class MovePageAction extends PortletAction {
 					 e instanceof PageTitleException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else if (e instanceof NodeChangeException) {
+				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
 			else {
 				throw e;
@@ -117,6 +124,18 @@ public class MovePageAction extends PortletAction {
 			getForward(renderRequest, "portlet.wiki.move_page"));
 	}
 
+	protected void changeNode(ActionRequest actionRequest) throws Exception {
+		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
+		String title = ParamUtil.getString(actionRequest, "title");
+		long newNodeId = ParamUtil.getLong(actionRequest, "newNodeId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			WikiPage.class.getName(), actionRequest);
+
+		WikiPageServiceUtil.changeNode(
+			nodeId, title, newNodeId, serviceContext);
+	}
+
 	protected void changeParentPage(ActionRequest actionRequest)
 		throws Exception {
 
@@ -145,7 +164,7 @@ public class MovePageAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			WikiPage.class.getName(), actionRequest);
 
-		WikiPageServiceUtil.movePage(nodeId, title, newTitle, serviceContext);
+		WikiPageServiceUtil.renamePage(nodeId, title, newTitle, serviceContext);
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

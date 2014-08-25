@@ -1118,21 +1118,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(content));
 
-		int lineCount = 0;
-
 		String line = null;
-
 		String previousLine = StringPool.BLANK;
 
+		int lineCount = 0;
 		int lineToSkipIfEmpty = 0;
 
 		String componentAnnotationPropertyValue = null;
-
 		String ifClause = StringPool.BLANK;
-
-		String regexPattern = StringPool.BLANK;
-
 		String packageName = StringPool.BLANK;
+		String regexPattern = StringPool.BLANK;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;

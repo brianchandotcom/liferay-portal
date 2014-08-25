@@ -154,12 +154,13 @@
 	</command>
 
 	<command name="editForm">
-		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="FIELDS_DEFINITION_TABLE_ACTIONS" />
-		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELDS_DEFINITION_MENULIST_EDIT" value1="Edit" />
+		<var name="key_kfFormName" value="${kfFormName}" />
 
+		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="FORM_TABLE_NAME" value1="${kfFormName}" />
+		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="FORM_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPKaleoformsadminNewprocessSelectform#assertClick" locator-key1="FORM_MENULIST_EDIT" value1="Edit" />
 		<execute action="CPKaleoformsadminNewprocessSelectformNewform#selectFrame" locator-key1="FORM_IFRAME" />
-		<execute action="CPKaleoformsadminNewprocessSelectformNewform#type" locator-key1="NAME_FIELD" value1="${formNameEdit}" />
-
+		<execute action="CPKaleoformsadminNewprocessSelectformNewform#type" locator-key1="NAME_FIELD" value1="${kfFormNameEdit}" />
 		<execute action="CPKaleoformsadminNewprocessSelectform#selectFrame" value1="relative=top" />
 	</command>
 

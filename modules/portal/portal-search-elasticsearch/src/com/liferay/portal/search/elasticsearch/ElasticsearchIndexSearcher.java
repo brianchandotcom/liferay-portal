@@ -88,6 +88,21 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		stopWatch.start();
 
 		try {
+			int total = (int)searchCount(searchContext, query);
+
+			if ((searchContext.getStart() == QueryUtil.ALL_POS) &&
+				(searchContext.getEnd() == QueryUtil.ALL_POS)) {
+
+				searchContext.setStart(0);
+				searchContext.setEnd(total);
+			}
+
+			int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+				searchContext.getStart(), searchContext.getEnd(), total);
+
+			searchContext.setStart(startAndEnd[0]);
+			searchContext.setEnd(startAndEnd[1]);
+
 			SearchResponse searchResponse = doSearch(searchContext, query);
 
 			Hits hits = processSearchResponse(
@@ -107,6 +122,43 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			}
 
 			return new HitsImpl();
+		}
+		finally {
+			if (_log.isInfoEnabled()) {
+				stopWatch.stop();
+
+				_log.info(
+					"Searching " + query.toString() + " took " +
+						stopWatch.getTime() + " ms");
+			}
+		}
+	}
+
+	public long searchCount(SearchContext searchContext, Query query)
+		throws SearchException {
+
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
+		try {
+			SearchResponse searchResponse = doSearch(
+				searchContext, query, true);
+
+			SearchHits searchHits = searchResponse.getHits();
+
+			return searchHits.getTotalHits();
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+
+			if (!_swallowException) {
+				throw new SearchException(e.getMessage());
+			}
+
+			return 0;
 		}
 		finally {
 			if (_log.isInfoEnabled()) {
@@ -330,25 +382,36 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
+	protected SearchResponse doSearch(SearchContext searchContext, Query query)
+		throws Exception {
+
+		return doSearch(searchContext, query, false);
+	}
+
 	protected SearchResponse doSearch(
-		SearchContext searchContext, Query query) {
+		SearchContext searchContext, Query query, boolean count) {
 
 		Client client = _elasticsearchConnectionManager.getClient();
 
 		SearchRequestBuilder searchRequestBuilder = client.prepareSearch(
 			String.valueOf(searchContext.getCompanyId()));
 
-		QueryConfig queryConfig = query.getQueryConfig();
+		if (!count) {
+			QueryConfig queryConfig = query.getQueryConfig();
 
-		addFacets(searchRequestBuilder, searchContext);
-		addHighlights(searchRequestBuilder, queryConfig);
-		addPagination(
-			searchRequestBuilder, searchContext.getStart(),
-			searchContext.getEnd());
-		addSelectedFields(searchRequestBuilder, queryConfig);
-		addSort(searchRequestBuilder, searchContext.getSorts());
+			addFacets(searchRequestBuilder, searchContext);
+			addHighlights(searchRequestBuilder, queryConfig);
+			addPagination(
+				searchRequestBuilder, searchContext.getStart(),
+				searchContext.getEnd());
+			addSelectedFields(searchRequestBuilder, queryConfig);
+			addSort(searchRequestBuilder, searchContext.getSorts());
 
-		searchRequestBuilder.setTrackScores(queryConfig.isScoreEnabled());
+			searchRequestBuilder.setTrackScores(queryConfig.isScoreEnabled());
+		}
+		else {
+			searchRequestBuilder.setSize(0);
+		}
 
 		QueryBuilder queryBuilder = QueryBuilders.queryString(query.toString());
 
@@ -399,26 +462,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		Query query) {
 
 		SearchHits searchHits = searchResponse.getHits();
-
-		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
-			searchContext.getStart(), searchContext.getEnd(),
-			(int)searchHits.getTotalHits());
-
-		int start = startAndEnd[0];
-		int end = startAndEnd[1];
-
-		if ((searchContext.getStart() != QueryUtil.ALL_POS) &&
-			(searchContext.getEnd() != QueryUtil.ALL_POS) &&
-			((start != searchContext.getStart()) ||
-			 (end != searchContext.getEnd()))) {
-
-			searchContext.setEnd(end);
-			searchContext.setStart(start);
-
-			searchResponse = doSearch(searchContext, query);
-
-			searchHits = searchResponse.getHits();
-		}
 
 		updateFacetCollectors(searchContext, searchResponse);
 

@@ -1,4 +1,31 @@
 <definition>
+	<command name="addCP">
+		<execute action="MobileDevice#click" locator-key1="ADD_DEVICE_FAMILY_BUTTON" />
+		<execute action="MobileDevice#type" locator-key1="ADD_DEVICE_FAMILY_NAME_FIELD" value1="Device Family Name" />
+		<execute action="MobileDevice#type" locator-key1="ADD_DEVICE_FAMILY_DESCRIPTION_FIELD" value1="Device Family Description" />
+		<execute action="MobileDevice#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="MobileDevice#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="MobileDevice#click" locator-key1="MANAGE_CLASSIFICATION_RULES" />
+		<execute action="MobileDevice#click" locator-key1="ADD_CLASSIFICATION_RULE_BUTTON" />
+		<execute action="MobileDevice#type" locator-key1="ADD_CLASSIFICATION_RULE_NAME_FIELD" value1="Classification Name" />
+		<execute action="MobileDevice#type" locator-key1="ADD_CLASSIFICATION_RULE_DESCRIPTION_FIELD" value1="Classification Description" />
+		<execute action="MobileDevice#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="MobileDevice#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<var name="key_classificationName" value="${classificationName}" />
+
+		<execute action="MobileDevice#assertTextEquals" locator-key1="ADD_CLASSIFICATION_RULE_TABLE_NAME" value1="Classification Name" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Mobile Device Families" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<var name="key_deviceFamilyName" value="${deviceFamilyName}" />
+
+		<execute action="MobileDevice#assertTextEquals" locator-key1="DEVICE_FAMILY_TABLE_NAME" value1="${deviceFamilyName}" />
+	</command>
+
 	<command name="previewPG">
 		<execute action="Dockbar#click" locator-key1="PREVIEW" />
 

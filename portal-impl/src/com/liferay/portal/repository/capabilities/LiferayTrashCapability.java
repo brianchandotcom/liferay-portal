@@ -125,7 +125,7 @@ public class LiferayTrashCapability implements TrashCapability {
 	}
 
 	@Override
-	public boolean isFolderInTrash(Folder folder) throws PortalException {
+	public boolean isInTrash(Folder folder) throws PortalException {
 		DLFolder dlFolder = (DLFolder)folder.getModel();
 
 		return dlFolder.isInTrash();

@@ -787,7 +787,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			TrashCapability trashCapability = repository.getCapability(
 				TrashCapability.class);
 
-			if (trashCapability.isFolderInTrash(folder)) {
+			if (trashCapability.isInTrash(folder)) {
 				trashCapability.deleteFolder(folder);
 
 				return;
@@ -828,7 +828,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			TrashCapability trashCapability = repository.getCapability(
 				TrashCapability.class);
 
-			if (trashCapability.isFolderInTrash(folder)) {
+			if (trashCapability.isInTrash(folder)) {
 				trashCapability.deleteFolder(folder);
 
 				return;

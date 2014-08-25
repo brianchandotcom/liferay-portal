@@ -14,15 +14,16 @@
 
 package com.liferay.polls.configurator;
 
+import com.liferay.polls.verify.Verifier;
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;
-import com.liferay.polls.verify.Verifier;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 import org.springframework.context.ApplicationContext;
@@ -39,12 +40,18 @@ public class PollServicesConfigurator {
 		"com.liferay.polls.service";
 
 	@Activate
-	public void activate() throws Exception {
+	protected void activate() throws Exception {
 		_serviceConfigurator.initServices(getConfiguration(), getClassLoader());
 
 		Verifier verifier = new Verifier();
 
 		verifier.verify();
+	}
+
+	@Deactivate
+	protected void deactivate() throws Exception {
+		_serviceConfigurator.destroyServices(
+			getConfiguration(), getClassLoader());
 	}
 
 	protected ClassLoader getClassLoader() {
@@ -62,31 +69,18 @@ public class PollServicesConfigurator {
 	@Reference(
 		target =
 			"(org.springframework.context.service.name=" +
-				BUNDLE_SYMBOLYC_NAME + ")"
+				BUNDLE_SYMBOLYC_NAME + ")",
+		unbind = "-"
 	)
 	protected void setApplicationContext(ApplicationContext applicationContext)
 		throws Exception {
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setServiceConfigurator(
 		ServiceConfigurator serviceConfigurator) {
 
 		_serviceConfigurator = serviceConfigurator;
-	}
-
-	protected void unsetApplicationContext(
-			ApplicationContext applicationContext)
-		throws Exception {
-
-		_serviceConfigurator.destroyServices(
-			getConfiguration(), getClassLoader());
-	}
-
-	protected void unsetServiceConfigurator(
-		ServiceConfigurator serviceConfigurator) {
-
-		_serviceConfigurator = null;
 	}
 
 	private ServiceConfigurator _serviceConfigurator;

@@ -184,7 +184,7 @@
 
 	<bean id="com.liferay.portal.kernel.process.ProcessExecutorUtil" class="com.liferay.portal.kernel.process.ProcessExecutorUtil">
 		<property name="processExecutor">
-			<bean class="com.liferay.portal.kernel.process.LocalProcessExecutor" />
+			<bean class="com.liferay.portal.kernel.process.local.LocalProcessExecutor" />
 		</property>
 	</bean>
 

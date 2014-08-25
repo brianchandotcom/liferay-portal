@@ -1578,6 +1578,8 @@ create database lportal2 character set utf8;</echo>
 
 		<echo append="true" file="${jenkins.results.xml.suite.file}">&lt;/testsuite&gt;</echo>
 
+		<copy file="${jenkins.results.xml.suite.file}" tofile="${env.WORKSPACE}/TEST-ConsolidatedResults.xml" />
+
 		<if>
 			<isset property="jenkins.testray.results.dir" />
 			<then>

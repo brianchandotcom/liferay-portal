@@ -19,72 +19,71 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.util.bridges.mvc.ActionCommand;
 
-import javax.portlet.ActionRequest;
+import org.osgi.service.component.annotations.Component;
+
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.ValidatorException;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
-public class EditPreferencesAction extends PortletAction {
+@Component(
+immediate = true,
+property = {
+	"action.command.name=currency_converter/edit",
+	"javax.portlet.name=com_liferay_currency_converter_portlet_CurrencyConverterPortlet"
+	},
+	service = ActionCommand.class
+)
+public class EditPreferencesAction implements ActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
+	public boolean processCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse) 
+		throws PortletException {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+		String cmd = ParamUtil.getString(portletRequest, Constants.CMD);
 
 		if (!cmd.equals(Constants.UPDATE)) {
-			return;
+			return false;
 		}
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getPortletPreferences(
-				PortalUtil.getHttpServletRequest(actionRequest),
-				PortletKeys.CURRENCY_CONVERTER);
+		PortletPreferences portletPreferences =	portletRequest.getPreferences();
 
 		String[] symbols = StringUtil.split(
 			StringUtil.toUpperCase(
-				ParamUtil.getString(actionRequest, "symbols")));
+				ParamUtil.getString(portletRequest, "symbols")));
 
 		portletPreferences.setValues("symbols", symbols);
 
 		try {
 			portletPreferences.store();
 		}
-		catch (ValidatorException ve) {
+		catch (Exception e) {
 			SessionErrors.add(
-				actionRequest, ValidatorException.class.getName(), ve);
+				portletRequest, ValidatorException.class.getName(), e);
 
-			return;
+			return false;
 		}
 
 		SessionMessages.add(
-			actionRequest,
-			PortalUtil.getPortletId(actionRequest) +
+			portletRequest,
+			PortalUtil.getPortletId(portletRequest) +
 				SessionMessages.KEY_SUFFIX_UPDATED_PREFERENCES);
-	}
 
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+		ActionResponse actionResponse = (ActionResponse) portletResponse;
 
-		return actionMapping.findForward("portlet.currency_converter.edit");
+		actionResponse.setRenderParameter("mvcPath", "/edit.jsp");
+
+		return true;
 	}
 
 }

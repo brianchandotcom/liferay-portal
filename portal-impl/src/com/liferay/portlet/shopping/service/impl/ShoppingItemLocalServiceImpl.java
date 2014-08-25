@@ -29,8 +29,6 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.amazonrankings.model.AmazonRankings;
-import com.liferay.portlet.amazonrankings.util.AmazonRankingsUtil;
 import com.liferay.portlet.shopping.AmazonException;
 import com.liferay.portlet.shopping.DuplicateItemSKUException;
 import com.liferay.portlet.shopping.ItemLargeImageNameException;
@@ -64,19 +62,6 @@ import java.util.List;
  */
 public class ShoppingItemLocalServiceImpl
 	extends ShoppingItemLocalServiceBaseImpl {
-
-	@Override
-	public void addBookItems(
-			long userId, long groupId, long categoryId, String[] isbns)
-		throws PortalException {
-
-		try {
-			doAddBookItems(userId, groupId, categoryId, isbns);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
 
 	@Override
 	public ShoppingItem addItem(
@@ -591,164 +576,6 @@ public class ShoppingItemLocalServiceImpl
 				StringPool.BLANK, StringPool.BLANK
 			}
 		);
-	}
-
-	protected void doAddBookItems(
-			long userId, long groupId, long categoryId, String[] isbns)
-		throws IOException, PortalException {
-
-		if (!AmazonRankingsUtil.isEnabled()) {
-			throw new AmazonException("Amazon integration is not enabled");
-		}
-
-		String tmpDir = SystemProperties.get(SystemProperties.TMP_DIR);
-
-		for (int i = 0; (i < isbns.length) && (i < 50); i++) {
-			String isbn = isbns[i];
-
-			AmazonRankings amazonRankings =
-				AmazonRankingsUtil.getAmazonRankings(isbn);
-
-			if (amazonRankings == null) {
-				continue;
-			}
-
-			String name = amazonRankings.getProductName();
-			String description = StringPool.BLANK;
-			String properties = getBookProperties(amazonRankings);
-
-			int minQuantity = 0;
-			int maxQuantity = 0;
-			double price = amazonRankings.getListPrice();
-			double discount = 1 - amazonRankings.getOurPrice() / price;
-			boolean taxable = true;
-			double shipping = 0.0;
-			boolean useShippingFormula = true;
-
-			ShoppingItemPrice itemPrice = shoppingItemPricePersistence.create(
-				0);
-
-			itemPrice.setMinQuantity(minQuantity);
-			itemPrice.setMaxQuantity(maxQuantity);
-			itemPrice.setPrice(price);
-			itemPrice.setDiscount(discount);
-			itemPrice.setTaxable(taxable);
-			itemPrice.setShipping(shipping);
-			itemPrice.setUseShippingFormula(useShippingFormula);
-			itemPrice.setStatus(
-				ShoppingItemPriceConstants.STATUS_ACTIVE_DEFAULT);
-
-			boolean requiresShipping = true;
-			int stockQuantity = 0;
-			boolean featured = false;
-			Boolean sale = null;
-
-			// Small image
-
-			boolean smallImage = true;
-			String smallImageURL = StringPool.BLANK;
-			File smallImageFile = new File(
-				tmpDir + File.separatorChar +
-					PwdGenerator.getPassword(8, PwdGenerator.KEY2) + ".jpg");
-
-			byte[] smallImageBytes = HttpUtil.URLtoByteArray(
-				amazonRankings.getSmallImageURL());
-
-			if (smallImageBytes.length < 1024) {
-				smallImage = false;
-			}
-			else {
-				OutputStream os = new FileOutputStream(smallImageFile);
-
-				os.write(smallImageBytes);
-
-				os.close();
-			}
-
-			// Medium image
-
-			boolean mediumImage = true;
-			String mediumImageURL = StringPool.BLANK;
-			File mediumImageFile = new File(
-				tmpDir + File.separatorChar +
-					PwdGenerator.getPassword(8, PwdGenerator.KEY2) + ".jpg");
-
-			byte[] mediumImageBytes = HttpUtil.URLtoByteArray(
-				amazonRankings.getMediumImageURL());
-
-			if (mediumImageBytes.length < 1024) {
-				mediumImage = false;
-			}
-			else {
-				OutputStream os = new FileOutputStream(mediumImageFile);
-
-				os.write(mediumImageBytes);
-
-				os.close();
-			}
-
-			// Large image
-
-			boolean largeImage = true;
-			String largeImageURL = StringPool.BLANK;
-			File largeImageFile = new File(
-				tmpDir + File.separatorChar +
-					PwdGenerator.getPassword(8, PwdGenerator.KEY2) + ".jpg");
-
-			byte[] largeImageBytes = HttpUtil.URLtoByteArray(
-				amazonRankings.getLargeImageURL());
-
-			if (largeImageBytes.length < 1024) {
-				largeImage = false;
-			}
-			else {
-				OutputStream os = new FileOutputStream(largeImageFile);
-
-				os.write(largeImageBytes);
-
-				os.close();
-			}
-
-			List<ShoppingItemField> itemFields =
-				new ArrayList<ShoppingItemField>();
-
-			List<ShoppingItemPrice> itemPrices =
-				new ArrayList<ShoppingItemPrice>();
-
-			itemPrices.add(itemPrice);
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setAddGroupPermissions(true);
-			serviceContext.setAddGuestPermissions(true);
-
-			addItem(
-				userId, groupId, categoryId, isbn, name, description,
-				properties, StringPool.BLANK, requiresShipping, stockQuantity,
-				featured, sale, smallImage, smallImageURL, smallImageFile,
-				mediumImage, mediumImageURL, mediumImageFile, largeImage,
-				largeImageURL, largeImageFile, itemFields, itemPrices,
-				serviceContext);
-
-			smallImageFile.delete();
-			mediumImageFile.delete();
-			largeImageFile.delete();
-		}
-	}
-
-	protected String getBookProperties(AmazonRankings amazonRankings) {
-		String isbn = amazonRankings.getISBN();
-
-		String authors = StringUtil.merge(amazonRankings.getAuthors(), ", ");
-
-		String publisher =
-			amazonRankings.getManufacturer() + "; (" +
-				amazonRankings.getReleaseDateAsString() + ")";
-
-		String properties =
-			"ISBN=" + isbn + "\nAuthor=" + authors + "\nPublisher=" + publisher;
-
-		return properties;
 	}
 
 	protected long getCategory(ShoppingItem item, long categoryId) {

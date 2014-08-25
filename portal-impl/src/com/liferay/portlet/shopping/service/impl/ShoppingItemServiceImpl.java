@@ -40,9 +40,6 @@ public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 
 		ShoppingCategoryPermission.check(
 			getPermissionChecker(), groupId, categoryId, ActionKeys.ADD_ITEM);
-
-		shoppingItemLocalService.addBookItems(
-			getUserId(), groupId, categoryId, isbns);
 	}
 
 	@Override

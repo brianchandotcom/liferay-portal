@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.currencyconverter;
+package com.liferay.currency.converter;
 
-import com.liferay.portlet.currencyconverter.model.Currency;
-import com.liferay.portlet.currencyconverter.util.CurrencyUtil;
+import com.liferay.currency.converter.model.Currency;
+import com.liferay.currency.converter.util.CurrencyUtil;
 
 import java.util.ArrayList;
 import java.util.List;

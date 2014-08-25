@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.currencyconverter.util;
+package com.liferay.currency.converter.util;
 
+import com.liferay.currency.converter.model.Currency;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
-import com.liferay.portlet.currencyconverter.model.Currency;
 
 import java.util.HashSet;
 import java.util.Locale;

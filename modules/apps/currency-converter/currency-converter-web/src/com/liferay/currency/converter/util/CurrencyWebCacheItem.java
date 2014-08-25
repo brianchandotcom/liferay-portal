@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.currencyconverter.util;
+package com.liferay.currency.converter.util;
 
+import com.liferay.currency.converter.model.Currency;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
-import com.liferay.portlet.currencyconverter.model.Currency;
 
 import java.util.StringTokenizer;
 

@@ -34,14 +34,6 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	}
 
 	@Override
-	public void addBookItems(long userId, long groupId, long categoryId,
-		java.lang.String[] isbns)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingItemLocalService.addBookItems(userId, groupId, categoryId,
-			isbns);
-	}
-
-	@Override
 	public com.liferay.portlet.shopping.model.ShoppingItem addItem(
 		long userId, long groupId, long categoryId, java.lang.String sku,
 		java.lang.String name, java.lang.String description,

@@ -14,12 +14,12 @@
 
 package com.liferay.polls.action;
 
+import com.liferay.polls.util.PollsUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.polls.util.PollsUtil;
 
 import java.io.OutputStream;
 

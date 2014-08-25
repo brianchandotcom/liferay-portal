@@ -19,6 +19,8 @@ package com.liferay.polls.util;
  */
 public class PollsWebKeys {
 
+	public static final String POLLS_PORTLET = "com.liferay.polls.web";
+
 	public static final String POLLS_QUESTION = "POLLS_QUESTION";
 
 }

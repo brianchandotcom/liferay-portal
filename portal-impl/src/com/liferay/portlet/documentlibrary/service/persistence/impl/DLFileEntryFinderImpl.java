@@ -264,6 +264,8 @@ public class DLFileEntryFinderImpl
 
 			q.addEntity(DLFileEntryImpl.TABLE_NAME, DLFileEntryImpl.class);
 
+			q.setMaxResults(1);
+
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(imageId);

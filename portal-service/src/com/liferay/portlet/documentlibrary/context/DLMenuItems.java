@@ -21,6 +21,8 @@ public class DLMenuItems {
 
 	public static final String MENU_ITEM_ID_DOWNLOAD = "download";
 
+	public static final String MENU_ITEM_ID_EDIT = "edit";
+
 	public static final String MENU_ITEM_ID_OPEN_DOCUMENT = "open-document";
 
 }

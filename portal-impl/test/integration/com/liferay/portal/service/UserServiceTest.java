@@ -52,9 +52,8 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Brian Wing Shun Chan
- * @author Jose M. Navarro
+ * @author José Manuel Navarro
  */
-
 @RunWith(Enclosed.class)
 public class UserServiceTest {
 

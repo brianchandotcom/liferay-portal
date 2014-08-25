@@ -2103,7 +2103,7 @@
 
 		<execute action="PGSitesdirectory#assertClick" locator-key1="ORG_SITE_ENTRY" value1="${orgName1}" />
 
-		<execute action="PGBreadcrumb#assertTextEquals" locator-key1="BREADCRUMB_ENTRY" value1="Organization Name 1/Test Page" />
+		<execute action="PGBreadcrumb#assertTextEquals" locator-key1="BREADCRUMB_ENTRY" value1="Organization Name 1Test Page" />
 		<execute action="PGBreadcrumb#assertTextNotPresent" locator-key1="BREADCRUMB_ENTRY" value1="Liferay/Organization Name 1/Test Page/" />
 
 		<execute macro="Page#tearDownPG" />

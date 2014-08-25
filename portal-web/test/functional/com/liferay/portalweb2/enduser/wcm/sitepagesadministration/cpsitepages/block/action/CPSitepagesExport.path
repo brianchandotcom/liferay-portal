@@ -266,13 +266,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXPORT_TEMPLATES_TABLE_EXPORT_BUTTON</td>
+	<td>EXPORT_TEMPLATES_TABLE_EXPORT_ARROW_BUTTON</td>
 	<td>//div[@id='_156_savedConfigurations']//tr[contains(.,'${key_exportTemplateName}')]/td/span/a[contains(.,'Export')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EXPORT_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_BUTTON</td>
 	<td>//div[@id='_156_savedConfigurations']//tr[contains(.,'${key_exportTemplateName}')]//a/span[contains(.,'Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EXPORT_TEMPLATES_EXPORT-->
+<tr>
+	<td>EXPORT_TEMPLATES_EXPORT_BUTTON</td>
+	<td>//button[contains(.,'Export')]</td>
 	<td></td>
 </tr>
 </tbody>

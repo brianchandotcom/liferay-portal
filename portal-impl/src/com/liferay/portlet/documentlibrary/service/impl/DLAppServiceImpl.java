@@ -781,14 +781,25 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public void deleteFolder(long folderId) throws PortalException {
 		Repository repository = getFolderRepository(folderId);
 
+		Folder folder = repository.getFolder(folderId);
+
+		if (repository.isCapabilityProvided(TrashCapability.class)) {
+			TrashCapability trashCapability = repository.getCapability(
+				TrashCapability.class);
+
+			if (trashCapability.isFolderInTrash(folder)) {
+				trashCapability.deleteFolder(folder);
+
+				return;
+			}
+		}
+
 		List<FileEntry> fileEntries = repository.getRepositoryFileEntries(
 			0, folderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		for (FileEntry fileEntry : fileEntries) {
 			dlAppHelperLocalService.deleteFileEntry(fileEntry);
 		}
-
-		Folder folder = repository.getFolder(folderId);
 
 		repository.deleteFolder(folderId);
 
@@ -810,6 +821,19 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		Repository repository = getRepository(repositoryId);
+
+		Folder folder = repository.getFolder(parentFolderId, name);
+
+		if (repository.isCapabilityProvided(TrashCapability.class)) {
+			TrashCapability trashCapability = repository.getCapability(
+				TrashCapability.class);
+
+			if (trashCapability.isFolderInTrash(folder)) {
+				trashCapability.deleteFolder(folder);
+
+				return;
+			}
+		}
 
 		repository.deleteFolder(parentFolderId, name);
 	}

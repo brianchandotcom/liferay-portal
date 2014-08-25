@@ -16,11 +16,11 @@ package com.liferay.polls.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.polls.model.PollsVote;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.polls.model.PollsVote;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -764,9 +764,8 @@ public class PollsVoteUtil {
 	* @return the matching polls vote
 	* @throws com.liferay.polls.NoSuchVoteException if a matching polls vote could not be found
 	*/
-	public static com.liferay.polls.model.PollsVote findByQ_U(
-		long questionId, long userId)
-		throws com.liferay.polls.NoSuchVoteException {
+	public static com.liferay.polls.model.PollsVote findByQ_U(long questionId,
+		long userId) throws com.liferay.polls.NoSuchVoteException {
 		return getPersistence().findByQ_U(questionId, userId);
 	}
 
@@ -824,8 +823,7 @@ public class PollsVoteUtil {
 	*
 	* @param pollsVote the polls vote
 	*/
-	public static void cacheResult(
-		com.liferay.polls.model.PollsVote pollsVote) {
+	public static void cacheResult(com.liferay.polls.model.PollsVote pollsVote) {
 		getPersistence().cacheResult(pollsVote);
 	}
 

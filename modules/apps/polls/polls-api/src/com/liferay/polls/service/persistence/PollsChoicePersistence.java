@@ -16,9 +16,9 @@ package com.liferay.polls.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.persistence.BasePersistence;
-
 import com.liferay.polls.model.PollsChoice;
+
+import com.liferay.portal.service.persistence.BasePersistence;
 
 /**
  * The persistence interface for the polls choice service.
@@ -465,9 +465,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @return the matching polls choice
 	* @throws com.liferay.polls.NoSuchChoiceException if a matching polls choice could not be found
 	*/
-	public com.liferay.polls.model.PollsChoice findByQ_N(
-		long questionId, java.lang.String name)
-		throws com.liferay.polls.NoSuchChoiceException;
+	public com.liferay.polls.model.PollsChoice findByQ_N(long questionId,
+		java.lang.String name) throws com.liferay.polls.NoSuchChoiceException;
 
 	/**
 	* Returns the polls choice where questionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -476,8 +475,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param name the name
 	* @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	*/
-	public com.liferay.polls.model.PollsChoice fetchByQ_N(
-		long questionId, java.lang.String name);
+	public com.liferay.polls.model.PollsChoice fetchByQ_N(long questionId,
+		java.lang.String name);
 
 	/**
 	* Returns the polls choice where questionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -487,8 +486,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	*/
-	public com.liferay.polls.model.PollsChoice fetchByQ_N(
-		long questionId, java.lang.String name, boolean retrieveFromCache);
+	public com.liferay.polls.model.PollsChoice fetchByQ_N(long questionId,
+		java.lang.String name, boolean retrieveFromCache);
 
 	/**
 	* Removes the polls choice where questionId = &#63; and name = &#63; from the database.
@@ -497,9 +496,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param name the name
 	* @return the polls choice that was removed
 	*/
-	public com.liferay.polls.model.PollsChoice removeByQ_N(
-		long questionId, java.lang.String name)
-		throws com.liferay.polls.NoSuchChoiceException;
+	public com.liferay.polls.model.PollsChoice removeByQ_N(long questionId,
+		java.lang.String name) throws com.liferay.polls.NoSuchChoiceException;
 
 	/**
 	* Returns the number of polls choices where questionId = &#63; and name = &#63;.
@@ -515,8 +513,7 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	*
 	* @param pollsChoice the polls choice
 	*/
-	public void cacheResult(
-		com.liferay.polls.model.PollsChoice pollsChoice);
+	public void cacheResult(com.liferay.polls.model.PollsChoice pollsChoice);
 
 	/**
 	* Caches the polls choices in the entity cache if it is enabled.
@@ -554,8 +551,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @return the polls choice
 	* @throws com.liferay.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
 	*/
-	public com.liferay.polls.model.PollsChoice findByPrimaryKey(
-		long choiceId) throws com.liferay.polls.NoSuchChoiceException;
+	public com.liferay.polls.model.PollsChoice findByPrimaryKey(long choiceId)
+		throws com.liferay.polls.NoSuchChoiceException;
 
 	/**
 	* Returns the polls choice with the primary key or returns <code>null</code> if it could not be found.
@@ -563,8 +560,7 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	* @param choiceId the primary key of the polls choice
 	* @return the polls choice, or <code>null</code> if a polls choice with the primary key could not be found
 	*/
-	public com.liferay.polls.model.PollsChoice fetchByPrimaryKey(
-		long choiceId);
+	public com.liferay.polls.model.PollsChoice fetchByPrimaryKey(long choiceId);
 
 	@Override
 	public java.util.Map<java.io.Serializable, com.liferay.polls.model.PollsChoice> fetchByPrimaryKeys(

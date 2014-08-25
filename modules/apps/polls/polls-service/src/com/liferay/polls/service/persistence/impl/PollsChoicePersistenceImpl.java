@@ -16,6 +16,12 @@ package com.liferay.polls.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.polls.NoSuchChoiceException;
+import com.liferay.polls.model.PollsChoice;
+import com.liferay.polls.model.impl.PollsChoiceImpl;
+import com.liferay.polls.model.impl.PollsChoiceModelImpl;
+import com.liferay.polls.service.persistence.PollsChoicePersistence;
+
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -34,12 +40,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-
-import com.liferay.polls.NoSuchChoiceException;
-import com.liferay.polls.model.PollsChoice;
-import com.liferay.polls.model.impl.PollsChoiceImpl;
-import com.liferay.polls.model.impl.PollsChoiceModelImpl;
-import com.liferay.polls.service.persistence.PollsChoicePersistence;
 
 import java.io.Serializable;
 

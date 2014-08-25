@@ -16,11 +16,11 @@ package com.liferay.polls.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.polls.model.PollsQuestion;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.polls.model.PollsQuestion;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -712,8 +712,7 @@ public class PollsQuestionUtil {
 	* @param questionId the primary key for the new polls question
 	* @return the new polls question
 	*/
-	public static com.liferay.polls.model.PollsQuestion create(
-		long questionId) {
+	public static com.liferay.polls.model.PollsQuestion create(long questionId) {
 		return getPersistence().create(questionId);
 	}
 
@@ -724,8 +723,7 @@ public class PollsQuestionUtil {
 	* @return the polls question that was removed
 	* @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
 	*/
-	public static com.liferay.polls.model.PollsQuestion remove(
-		long questionId)
+	public static com.liferay.polls.model.PollsQuestion remove(long questionId)
 		throws com.liferay.polls.NoSuchQuestionException {
 		return getPersistence().remove(questionId);
 	}
@@ -743,8 +741,7 @@ public class PollsQuestionUtil {
 	* @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
 	*/
 	public static com.liferay.polls.model.PollsQuestion findByPrimaryKey(
-		long questionId)
-		throws com.liferay.polls.NoSuchQuestionException {
+		long questionId) throws com.liferay.polls.NoSuchQuestionException {
 		return getPersistence().findByPrimaryKey(questionId);
 	}
 

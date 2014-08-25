@@ -16,9 +16,9 @@ package com.liferay.polls.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.persistence.BasePersistence;
-
 import com.liferay.polls.model.PollsQuestion;
+
+import com.liferay.portal.service.persistence.BasePersistence;
 
 /**
  * The persistence interface for the polls question service.
@@ -525,8 +525,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	*
 	* @param pollsQuestion the polls question
 	*/
-	public void cacheResult(
-		com.liferay.polls.model.PollsQuestion pollsQuestion);
+	public void cacheResult(com.liferay.polls.model.PollsQuestion pollsQuestion);
 
 	/**
 	* Caches the polls questions in the entity cache if it is enabled.
@@ -565,8 +564,7 @@ public interface PollsQuestionPersistence extends BasePersistence<PollsQuestion>
 	* @throws com.liferay.polls.NoSuchQuestionException if a polls question with the primary key could not be found
 	*/
 	public com.liferay.polls.model.PollsQuestion findByPrimaryKey(
-		long questionId)
-		throws com.liferay.polls.NoSuchQuestionException;
+		long questionId) throws com.liferay.polls.NoSuchQuestionException;
 
 	/**
 	* Returns the polls question with the primary key or returns <code>null</code> if it could not be found.

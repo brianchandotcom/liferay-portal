@@ -68,8 +68,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	* @param choiceId the primary key for the new polls choice
 	* @return the new polls choice
 	*/
-	public com.liferay.polls.model.PollsChoice createPollsChoice(
-		long choiceId);
+	public com.liferay.polls.model.PollsChoice createPollsChoice(long choiceId);
 
 	/**
 	* @throws PortalException
@@ -87,8 +86,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	* @throws PortalException if a polls choice with the primary key could not be found
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.polls.model.PollsChoice deletePollsChoice(
-		long choiceId)
+	public com.liferay.polls.model.PollsChoice deletePollsChoice(long choiceId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -167,8 +165,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.polls.model.PollsChoice fetchPollsChoice(
-		long choiceId);
+	public com.liferay.polls.model.PollsChoice fetchPollsChoice(long choiceId);
 
 	/**
 	* Returns the polls choice matching the UUID and group.
@@ -220,8 +217,7 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	* @throws PortalException if a polls choice with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.polls.model.PollsChoice getPollsChoice(
-		long choiceId)
+	public com.liferay.polls.model.PollsChoice getPollsChoice(long choiceId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -276,9 +272,8 @@ public interface PollsChoiceLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public com.liferay.polls.model.PollsChoice updateChoice(
-		long choiceId, long questionId, java.lang.String name,
-		java.lang.String description,
+	public com.liferay.polls.model.PollsChoice updateChoice(long choiceId,
+		long questionId, java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

@@ -61,8 +61,7 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 	* @return the new polls vote
 	*/
 	@Override
-	public com.liferay.polls.model.PollsVote createPollsVote(
-		long voteId) {
+	public com.liferay.polls.model.PollsVote createPollsVote(long voteId) {
 		return _pollsVoteLocalService.createPollsVote(voteId);
 	}
 
@@ -96,8 +95,8 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 	* @throws PortalException if a polls vote with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.polls.model.PollsVote deletePollsVote(
-		long voteId) throws com.liferay.portal.kernel.exception.PortalException {
+	public com.liferay.polls.model.PollsVote deletePollsVote(long voteId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsVoteLocalService.deletePollsVote(voteId);
 	}
 

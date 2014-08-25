@@ -42,9 +42,8 @@ public class PollsChoiceLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.polls.service.impl.PollsChoiceLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.polls.model.PollsChoice addChoice(
-		long userId, long questionId, java.lang.String name,
-		java.lang.String description,
+	public static com.liferay.polls.model.PollsChoice addChoice(long userId,
+		long questionId, java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -215,8 +214,7 @@ public class PollsChoiceLocalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static com.liferay.polls.model.PollsChoice getChoice(
-		long choiceId)
+	public static com.liferay.polls.model.PollsChoice getChoice(long choiceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getChoice(choiceId);
 	}

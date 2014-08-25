@@ -16,6 +16,12 @@ package com.liferay.polls.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.polls.model.PollsVote;
+import com.liferay.polls.service.PollsVoteLocalService;
+import com.liferay.polls.service.persistence.PollsChoicePersistence;
+import com.liferay.polls.service.persistence.PollsQuestionPersistence;
+import com.liferay.polls.service.persistence.PollsVotePersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -43,12 +49,6 @@ import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
-
-import com.liferay.polls.model.PollsVote;
-import com.liferay.polls.service.PollsVoteLocalService;
-import com.liferay.polls.service.persistence.PollsChoicePersistence;
-import com.liferay.polls.service.persistence.PollsQuestionPersistence;
-import com.liferay.polls.service.persistence.PollsVotePersistence;
 
 import java.io.Serializable;
 
@@ -474,62 +474,6 @@ public abstract class PollsVoteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.service.UserLocalService getUserLocalService() {
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.service.UserLocalService userLocalService) {
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
-	/**
 	 * Returns the polls choice local service.
 	 *
 	 * @return the polls choice local service
@@ -643,6 +587,62 @@ public abstract class PollsVoteLocalServiceBaseImpl extends BaseLocalServiceImpl
 		this.pollsQuestionPersistence = pollsQuestionPersistence;
 	}
 
+	/**
+	 * Returns the user local service.
+	 *
+	 * @return the user local service
+	 */
+	public com.liferay.portal.service.UserLocalService getUserLocalService() {
+		return userLocalService;
+	}
+
+	/**
+	 * Sets the user local service.
+	 *
+	 * @param userLocalService the user local service
+	 */
+	public void setUserLocalService(
+		com.liferay.portal.service.UserLocalService userLocalService) {
+		this.userLocalService = userLocalService;
+	}
+
+	/**
+	 * Returns the user remote service.
+	 *
+	 * @return the user remote service
+	 */
+	public com.liferay.portal.service.UserService getUserService() {
+		return userService;
+	}
+
+	/**
+	 * Sets the user remote service.
+	 *
+	 * @param userService the user remote service
+	 */
+	public void setUserService(
+		com.liferay.portal.service.UserService userService) {
+		this.userService = userService;
+	}
+
+	/**
+	 * Returns the user persistence.
+	 *
+	 * @return the user persistence
+	 */
+	public UserPersistence getUserPersistence() {
+		return userPersistence;
+	}
+
+	/**
+	 * Sets the user persistence.
+	 *
+	 * @param userPersistence the user persistence
+	 */
+	public void setUserPersistence(UserPersistence userPersistence) {
+		this.userPersistence = userPersistence;
+	}
+
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.polls.model.PollsVote",
 			pollsVoteLocalService);
@@ -713,12 +713,6 @@ public abstract class PollsVoteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected PollsVotePersistence pollsVotePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
-	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 	@BeanReference(type = com.liferay.polls.service.PollsChoiceLocalService.class)
 	protected com.liferay.polls.service.PollsChoiceLocalService pollsChoiceLocalService;
 	@BeanReference(type = com.liferay.polls.service.PollsChoiceService.class)
@@ -731,6 +725,12 @@ public abstract class PollsVoteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.polls.service.PollsQuestionService pollsQuestionService;
 	@BeanReference(type = PollsQuestionPersistence.class)
 	protected PollsQuestionPersistence pollsQuestionPersistence;
+	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	protected com.liferay.portal.service.UserLocalService userLocalService;
+	@BeanReference(type = com.liferay.portal.service.UserService.class)
+	protected com.liferay.portal.service.UserService userService;
+	@BeanReference(type = UserPersistence.class)
+	protected UserPersistence userPersistence;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private String _beanIdentifier;

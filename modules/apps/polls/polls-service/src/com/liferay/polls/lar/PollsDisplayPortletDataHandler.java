@@ -14,6 +14,13 @@
 
 package com.liferay.polls.lar;
 
+import com.liferay.polls.NoSuchQuestionException;
+import com.liferay.polls.constants.ConfigurationConstants;
+import com.liferay.polls.model.PollsChoice;
+import com.liferay.polls.model.PollsQuestion;
+import com.liferay.polls.model.PollsVote;
+import com.liferay.polls.service.permission.PollsPermission;
+import com.liferay.polls.service.persistence.PollsQuestionUtil;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
@@ -23,13 +30,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.polls.NoSuchQuestionException;
-import com.liferay.polls.constants.ConfigurationConstants;
-import com.liferay.polls.model.PollsChoice;
-import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.model.PollsVote;
-import com.liferay.polls.service.permission.PollsPermission;
-import com.liferay.polls.service.persistence.PollsQuestionUtil;
 
 import java.util.Map;
 

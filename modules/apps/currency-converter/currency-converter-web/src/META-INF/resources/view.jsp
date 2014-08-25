@@ -14,13 +14,13 @@
  */
 --%>
 
-<%@ include file="/html/portlet/currency_converter/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-String from = ParamUtil.getString(request, "from", com.liferay.portlet.currencyconverter.model.Currency.DEFAULT_FROM);
-String to = ParamUtil.getString(request, "to", com.liferay.portlet.currencyconverter.model.Currency.DEFAULT_TO);
+String from = ParamUtil.getString(request, "from", com.liferay.currency.converter.model.Currency.DEFAULT_FROM);
+String to = ParamUtil.getString(request, "to", com.liferay.currency.converter.model.Currency.DEFAULT_TO);
 
-com.liferay.portlet.currencyconverter.model.Currency currency = CurrencyUtil.getCurrency(from + to);
+com.liferay.currency.converter.model.Currency currency = CurrencyUtil.getCurrency(from + to);
 
 double number = ParamUtil.getDouble(request, "number", 1.0);
 
@@ -32,9 +32,7 @@ decimalFormat.setMaximumFractionDigits(2);
 decimalFormat.setMinimumFractionDigits(2);
 %>
 
-<portlet:renderURL var="convertURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-	<portlet:param name="struts_action" value="/currency_converter/view" />
-</portlet:renderURL>
+<portlet:renderURL var="convertURL" windowState="<%= WindowState.MAXIMIZED.toString() %>" />
 
 <aui:form action="<%= convertURL %>" cssClass="form-inline" method="post" name="fm">
 	<aui:field-wrapper>

@@ -72,7 +72,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void assertElementPresent(String locator) throws Exception {
-		throw new UnsupportedOperationException();
+		LiferaySeleniumHelper.assertElementPresent(this, locator);
 	}
 
 	@Override
@@ -106,7 +106,11 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void assertLiferayErrors() throws Exception {
-		throw new UnsupportedOperationException();
+		if (!TestPropsValues.TEST_ASSERT_LIFERAY_ERRORS) {
+			return;
+		}
+
+		LiferaySeleniumHelper.assertLiferayErrors();
 	}
 
 	@Override
@@ -175,7 +179,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void assertText(String locator, String pattern) throws Exception {
-		throw new UnsupportedOperationException();
+		LiferaySeleniumHelper.assertText(this, locator, pattern);
 	}
 
 	@Override
@@ -195,7 +199,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void assertVisible(String locator) throws Exception {
-		throw new UnsupportedOperationException();
+		LiferaySeleniumHelper.assertVisible(this, locator);
 	}
 
 	@Override
@@ -232,7 +236,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void echo(String message) {
-		throw new UnsupportedOperationException();
+		LiferaySeleniumHelper.echo(message);
 	}
 
 	@Override
@@ -322,12 +326,12 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public boolean isElementNotPresent(String locator) {
-		throw new UnsupportedOperationException();
+		return LiferaySeleniumHelper.isElementNotPresent(this, locator);
 	}
 
 	@Override
 	public boolean isElementPresentAfterWait(String locator) throws Exception {
-		throw new UnsupportedOperationException();
+		return LiferaySeleniumHelper.isElementPresentAfterWait(this, locator);
 	}
 
 	@Override
@@ -337,7 +341,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public boolean isMobileDeviceEnabled() {
-		throw new UnsupportedOperationException();
+		return LiferaySeleniumHelper.isMobileDeviceEnabled();
 	}
 
 	@Override
@@ -367,7 +371,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public boolean isNotVisible(String locator) {
-		throw new UnsupportedOperationException();
+		return LiferaySeleniumHelper.isNotVisible(this, locator);
 	}
 
 	@Override
@@ -382,7 +386,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public boolean isTCatEnabled() {
-		throw new UnsupportedOperationException();
+		return LiferaySeleniumHelper.isTCatEnabled();
 	}
 
 	@Override
@@ -432,7 +436,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void pause(String waitTime) throws Exception {
-		throw new UnsupportedOperationException();
+		LiferaySeleniumHelper.pause(waitTime);
 	}
 
 	@Override
@@ -451,7 +455,11 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void saveScreenshot() throws Exception {
-		throw new UnsupportedOperationException();
+		if (!TestPropsValues.SAVE_SCREENSHOT) {
+			return;
+		}
+
+		LiferaySeleniumHelper.saveScreenshot(this);
 	}
 
 	@Override
@@ -548,7 +556,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void sikuliClick(String image) throws Exception {
-		throw new UnsupportedOperationException();
+		LiferaySeleniumHelper.sikuliClick(this, image);
 	}
 
 	@Override
@@ -625,7 +633,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void typeFrame(String locator, String value) {
-		throw new UnsupportedOperationException();
+		LiferaySeleniumHelper.typeFrame(this, locator, value);
 	}
 
 	@Override
@@ -665,7 +673,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void waitForElementPresent(String locator) throws Exception {
-		throw new UnsupportedOperationException();
+		LiferaySeleniumHelper.waitForElementPresent(this, locator);
 	}
 
 	@Override
@@ -713,7 +721,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void waitForText(String locator, String value) throws Exception {
-		throw new UnsupportedOperationException();
+		LiferaySeleniumHelper.waitForText(this, locator, value);
 	}
 
 	@Override
@@ -733,7 +741,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void waitForVisible(String locator) throws Exception {
-		throw new UnsupportedOperationException();
+		LiferaySeleniumHelper.waitForVisible(this, locator);
 	}
 
 	@Override

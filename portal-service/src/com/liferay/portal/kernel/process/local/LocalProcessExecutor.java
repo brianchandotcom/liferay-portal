@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.process.local;
 
 import com.liferay.portal.kernel.concurrent.AbortPolicy;
-import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.concurrent.FutureListener;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFutureConverter;
@@ -45,10 +44,12 @@ import java.io.Serializable;
 import java.io.StreamCorruptedException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -74,12 +75,15 @@ public class LocalProcessExecutor implements ProcessExecutor {
 				// destroy the same process, but this is JDK's job to ensure
 				// that processes are destroyed in a thread safe manner.
 
-				Iterator<Process> iterator = _managedProcesses.iterator();
+				Collection<NoticeableFuture<?>> values =
+					_managedProcesses.values();
+
+				Iterator<NoticeableFuture<?>> iterator = values.iterator();
 
 				while (iterator.hasNext()) {
-					Process process = iterator.next();
+					NoticeableFuture<?> noticeableFuture = iterator.next();
 
-					process.destroy();
+					noticeableFuture.cancel(true);
 
 					iterator.remove();
 				}
@@ -162,7 +166,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 				// Consider the newly created process as a managed process only
 				// after the subprocess reactor is taken by the thread pool
 
-				_managedProcesses.add(process);
+				_managedProcesses.put(process, processCallableNoticeableFuture);
 
 				return new NoticeableFutureConverter
 					<T, ProcessCallable<? extends Serializable>>(
@@ -223,7 +227,8 @@ public class LocalProcessExecutor implements ProcessExecutor {
 
 	private static Log _log = LogFactoryUtil.getLog(LocalProcessExecutor.class);
 
-	private Set<Process> _managedProcesses = new ConcurrentHashSet<Process>();
+	private final Map<Process, NoticeableFuture<?>> _managedProcesses =
+		new ConcurrentHashMap<Process, NoticeableFuture<?>>();
 	private volatile ThreadPoolExecutor _threadPoolExecutor;
 
 	private class SubprocessReactor

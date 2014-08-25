@@ -1590,19 +1590,6 @@
 
 	Liferay.provide(
 		Util,
-		'setSelectedValue',
-		function(col, value) {
-			var option = A.one(col).one('option[value=' + value + STR_RIGHT_SQUARE_BRACKET);
-
-			if (option) {
-				option.attr('selected', true);
-			}
-		},
-		['aui-base']
-	);
-
-	Liferay.provide(
-		Util,
 		'sortBox',
 		function(box) {
 			var newBox = [];

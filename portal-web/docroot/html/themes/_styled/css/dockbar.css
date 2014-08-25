@@ -424,6 +424,10 @@ $editLayoutPanelWidth: 460px;
 
 					a, > a {
 						color: #555;
+
+						&:hover {
+							text-decoration: none;
+						}
 					}
 				}
 			}

@@ -65,8 +65,7 @@ public class PollsQuestionServiceWrapper implements PollsQuestionService,
 	}
 
 	@Override
-	public com.liferay.polls.model.PollsQuestion getQuestion(
-		long questionId)
+	public com.liferay.polls.model.PollsQuestion getQuestion(long questionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsQuestionService.getQuestion(questionId);
 	}

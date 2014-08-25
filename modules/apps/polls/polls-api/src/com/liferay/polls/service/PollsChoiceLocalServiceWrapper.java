@@ -61,8 +61,7 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	* @return the new polls choice
 	*/
 	@Override
-	public com.liferay.polls.model.PollsChoice createPollsChoice(
-		long choiceId) {
+	public com.liferay.polls.model.PollsChoice createPollsChoice(long choiceId) {
 		return _pollsChoiceLocalService.createPollsChoice(choiceId);
 	}
 
@@ -84,8 +83,7 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	* @throws PortalException if a polls choice with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.polls.model.PollsChoice deletePollsChoice(
-		long choiceId)
+	public com.liferay.polls.model.PollsChoice deletePollsChoice(long choiceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsChoiceLocalService.deletePollsChoice(choiceId);
 	}
@@ -188,8 +186,7 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	}
 
 	@Override
-	public com.liferay.polls.model.PollsChoice fetchPollsChoice(
-		long choiceId) {
+	public com.liferay.polls.model.PollsChoice fetchPollsChoice(long choiceId) {
 		return _pollsChoiceLocalService.fetchPollsChoice(choiceId);
 	}
 
@@ -260,8 +257,7 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	* @throws PortalException if a polls choice with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.polls.model.PollsChoice getPollsChoice(
-		long choiceId)
+	public com.liferay.polls.model.PollsChoice getPollsChoice(long choiceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsChoiceLocalService.getPollsChoice(choiceId);
 	}
@@ -335,9 +331,8 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	}
 
 	@Override
-	public com.liferay.polls.model.PollsChoice updateChoice(
-		long choiceId, long questionId, java.lang.String name,
-		java.lang.String description,
+	public com.liferay.polls.model.PollsChoice updateChoice(long choiceId,
+		long questionId, java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsChoiceLocalService.updateChoice(choiceId, questionId,

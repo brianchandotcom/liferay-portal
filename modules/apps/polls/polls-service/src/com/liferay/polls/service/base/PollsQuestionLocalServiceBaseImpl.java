@@ -16,6 +16,12 @@ package com.liferay.polls.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.polls.model.PollsQuestion;
+import com.liferay.polls.service.PollsQuestionLocalService;
+import com.liferay.polls.service.persistence.PollsChoicePersistence;
+import com.liferay.polls.service.persistence.PollsQuestionPersistence;
+import com.liferay.polls.service.persistence.PollsVotePersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -44,12 +50,6 @@ import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.persistence.SystemEventPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
-
-import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.service.PollsQuestionLocalService;
-import com.liferay.polls.service.persistence.PollsChoicePersistence;
-import com.liferay.polls.service.persistence.PollsQuestionPersistence;
-import com.liferay.polls.service.persistence.PollsVotePersistence;
 
 import java.io.Serializable;
 
@@ -479,6 +479,63 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the polls choice local service.
+	 *
+	 * @return the polls choice local service
+	 */
+	public com.liferay.polls.service.PollsChoiceLocalService getPollsChoiceLocalService() {
+		return pollsChoiceLocalService;
+	}
+
+	/**
+	 * Sets the polls choice local service.
+	 *
+	 * @param pollsChoiceLocalService the polls choice local service
+	 */
+	public void setPollsChoiceLocalService(
+		com.liferay.polls.service.PollsChoiceLocalService pollsChoiceLocalService) {
+		this.pollsChoiceLocalService = pollsChoiceLocalService;
+	}
+
+	/**
+	 * Returns the polls choice remote service.
+	 *
+	 * @return the polls choice remote service
+	 */
+	public com.liferay.polls.service.PollsChoiceService getPollsChoiceService() {
+		return pollsChoiceService;
+	}
+
+	/**
+	 * Sets the polls choice remote service.
+	 *
+	 * @param pollsChoiceService the polls choice remote service
+	 */
+	public void setPollsChoiceService(
+		com.liferay.polls.service.PollsChoiceService pollsChoiceService) {
+		this.pollsChoiceService = pollsChoiceService;
+	}
+
+	/**
+	 * Returns the polls choice persistence.
+	 *
+	 * @return the polls choice persistence
+	 */
+	public PollsChoicePersistence getPollsChoicePersistence() {
+		return pollsChoicePersistence;
+	}
+
+	/**
+	 * Sets the polls choice persistence.
+	 *
+	 * @param pollsChoicePersistence the polls choice persistence
+	 */
+	public void setPollsChoicePersistence(
+		PollsChoicePersistence pollsChoicePersistence) {
+		this.pollsChoicePersistence = pollsChoicePersistence;
+	}
+
+	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -589,63 +646,6 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	 */
 	public void setUserPersistence(UserPersistence userPersistence) {
 		this.userPersistence = userPersistence;
-	}
-
-	/**
-	 * Returns the polls choice local service.
-	 *
-	 * @return the polls choice local service
-	 */
-	public com.liferay.polls.service.PollsChoiceLocalService getPollsChoiceLocalService() {
-		return pollsChoiceLocalService;
-	}
-
-	/**
-	 * Sets the polls choice local service.
-	 *
-	 * @param pollsChoiceLocalService the polls choice local service
-	 */
-	public void setPollsChoiceLocalService(
-		com.liferay.polls.service.PollsChoiceLocalService pollsChoiceLocalService) {
-		this.pollsChoiceLocalService = pollsChoiceLocalService;
-	}
-
-	/**
-	 * Returns the polls choice remote service.
-	 *
-	 * @return the polls choice remote service
-	 */
-	public com.liferay.polls.service.PollsChoiceService getPollsChoiceService() {
-		return pollsChoiceService;
-	}
-
-	/**
-	 * Sets the polls choice remote service.
-	 *
-	 * @param pollsChoiceService the polls choice remote service
-	 */
-	public void setPollsChoiceService(
-		com.liferay.polls.service.PollsChoiceService pollsChoiceService) {
-		this.pollsChoiceService = pollsChoiceService;
-	}
-
-	/**
-	 * Returns the polls choice persistence.
-	 *
-	 * @return the polls choice persistence
-	 */
-	public PollsChoicePersistence getPollsChoicePersistence() {
-		return pollsChoicePersistence;
-	}
-
-	/**
-	 * Sets the polls choice persistence.
-	 *
-	 * @param pollsChoicePersistence the polls choice persistence
-	 */
-	public void setPollsChoicePersistence(
-		PollsChoicePersistence pollsChoicePersistence) {
-		this.pollsChoicePersistence = pollsChoicePersistence;
 	}
 
 	/**
@@ -775,6 +775,12 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	protected PollsQuestionPersistence pollsQuestionPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.polls.service.PollsChoiceLocalService.class)
+	protected com.liferay.polls.service.PollsChoiceLocalService pollsChoiceLocalService;
+	@BeanReference(type = com.liferay.polls.service.PollsChoiceService.class)
+	protected com.liferay.polls.service.PollsChoiceService pollsChoiceService;
+	@BeanReference(type = PollsChoicePersistence.class)
+	protected PollsChoicePersistence pollsChoicePersistence;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.portal.service.SystemEventLocalService.class)
@@ -787,12 +793,6 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 	protected com.liferay.portal.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	@BeanReference(type = com.liferay.polls.service.PollsChoiceLocalService.class)
-	protected com.liferay.polls.service.PollsChoiceLocalService pollsChoiceLocalService;
-	@BeanReference(type = com.liferay.polls.service.PollsChoiceService.class)
-	protected com.liferay.polls.service.PollsChoiceService pollsChoiceService;
-	@BeanReference(type = PollsChoicePersistence.class)
-	protected PollsChoicePersistence pollsChoicePersistence;
 	@BeanReference(type = com.liferay.polls.service.PollsVoteLocalService.class)
 	protected com.liferay.polls.service.PollsVoteLocalService pollsVoteLocalService;
 	@BeanReference(type = com.liferay.polls.service.PollsVoteService.class)

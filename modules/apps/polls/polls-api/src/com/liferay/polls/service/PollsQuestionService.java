@@ -67,8 +67,7 @@ public interface PollsQuestionService extends BaseService {
 	public java.lang.String getBeanIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.polls.model.PollsQuestion getQuestion(
-		long questionId)
+	public com.liferay.polls.model.PollsQuestion getQuestion(long questionId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**

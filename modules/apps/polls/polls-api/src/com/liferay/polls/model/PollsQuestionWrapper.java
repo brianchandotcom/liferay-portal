@@ -151,8 +151,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.polls.model.PollsQuestion pollsQuestion) {
+	public int compareTo(com.liferay.polls.model.PollsQuestion pollsQuestion) {
 		return _pollsQuestion.compareTo(pollsQuestion);
 	}
 

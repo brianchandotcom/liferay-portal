@@ -144,8 +144,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.polls.model.PollsChoice pollsChoice) {
+	public int compareTo(com.liferay.polls.model.PollsChoice pollsChoice) {
 		return _pollsChoice.compareTo(pollsChoice);
 	}
 

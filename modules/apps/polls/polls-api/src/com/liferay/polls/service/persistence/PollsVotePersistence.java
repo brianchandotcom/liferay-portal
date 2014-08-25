@@ -16,9 +16,9 @@ package com.liferay.polls.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.service.persistence.BasePersistence;
-
 import com.liferay.polls.model.PollsVote;
+
+import com.liferay.portal.service.persistence.BasePersistence;
 
 /**
  * The persistence interface for the polls vote service.
@@ -583,9 +583,8 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @return the matching polls vote
 	* @throws com.liferay.polls.NoSuchVoteException if a matching polls vote could not be found
 	*/
-	public com.liferay.polls.model.PollsVote findByQ_U(
-		long questionId, long userId)
-		throws com.liferay.polls.NoSuchVoteException;
+	public com.liferay.polls.model.PollsVote findByQ_U(long questionId,
+		long userId) throws com.liferay.polls.NoSuchVoteException;
 
 	/**
 	* Returns the polls vote where questionId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -594,8 +593,8 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param userId the user ID
 	* @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
 	*/
-	public com.liferay.polls.model.PollsVote fetchByQ_U(
-		long questionId, long userId);
+	public com.liferay.polls.model.PollsVote fetchByQ_U(long questionId,
+		long userId);
 
 	/**
 	* Returns the polls vote where questionId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -605,8 +604,8 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
 	*/
-	public com.liferay.polls.model.PollsVote fetchByQ_U(
-		long questionId, long userId, boolean retrieveFromCache);
+	public com.liferay.polls.model.PollsVote fetchByQ_U(long questionId,
+		long userId, boolean retrieveFromCache);
 
 	/**
 	* Removes the polls vote where questionId = &#63; and userId = &#63; from the database.
@@ -615,9 +614,8 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param userId the user ID
 	* @return the polls vote that was removed
 	*/
-	public com.liferay.polls.model.PollsVote removeByQ_U(
-		long questionId, long userId)
-		throws com.liferay.polls.NoSuchVoteException;
+	public com.liferay.polls.model.PollsVote removeByQ_U(long questionId,
+		long userId) throws com.liferay.polls.NoSuchVoteException;
 
 	/**
 	* Returns the number of polls votes where questionId = &#63; and userId = &#63;.
@@ -671,8 +669,8 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @return the polls vote
 	* @throws com.liferay.polls.NoSuchVoteException if a polls vote with the primary key could not be found
 	*/
-	public com.liferay.polls.model.PollsVote findByPrimaryKey(
-		long voteId) throws com.liferay.polls.NoSuchVoteException;
+	public com.liferay.polls.model.PollsVote findByPrimaryKey(long voteId)
+		throws com.liferay.polls.NoSuchVoteException;
 
 	/**
 	* Returns the polls vote with the primary key or returns <code>null</code> if it could not be found.
@@ -680,8 +678,7 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param voteId the primary key of the polls vote
 	* @return the polls vote, or <code>null</code> if a polls vote with the primary key could not be found
 	*/
-	public com.liferay.polls.model.PollsVote fetchByPrimaryKey(
-		long voteId);
+	public com.liferay.polls.model.PollsVote fetchByPrimaryKey(long voteId);
 
 	@Override
 	public java.util.Map<java.io.Serializable, com.liferay.polls.model.PollsVote> fetchByPrimaryKeys(

@@ -16,11 +16,11 @@ package com.liferay.polls.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.polls.model.PollsChoice;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.polls.model.PollsChoice;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -703,8 +703,7 @@ public class PollsChoiceUtil {
 	* @param choiceId the primary key for the new polls choice
 	* @return the new polls choice
 	*/
-	public static com.liferay.polls.model.PollsChoice create(
-		long choiceId) {
+	public static com.liferay.polls.model.PollsChoice create(long choiceId) {
 		return getPersistence().create(choiceId);
 	}
 
@@ -715,8 +714,8 @@ public class PollsChoiceUtil {
 	* @return the polls choice that was removed
 	* @throws com.liferay.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
 	*/
-	public static com.liferay.polls.model.PollsChoice remove(
-		long choiceId) throws com.liferay.polls.NoSuchChoiceException {
+	public static com.liferay.polls.model.PollsChoice remove(long choiceId)
+		throws com.liferay.polls.NoSuchChoiceException {
 		return getPersistence().remove(choiceId);
 	}
 

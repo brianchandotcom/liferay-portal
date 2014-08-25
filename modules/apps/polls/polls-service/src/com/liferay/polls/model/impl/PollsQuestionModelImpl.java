@@ -16,6 +16,10 @@ package com.liferay.polls.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.polls.model.PollsQuestion;
+import com.liferay.polls.model.PollsQuestionModel;
+import com.liferay.polls.model.PollsQuestionSoap;
+
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,9 +42,6 @@ import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
-import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.model.PollsQuestionModel;
-import com.liferay.polls.model.PollsQuestionSoap;
 
 import java.io.Serializable;
 

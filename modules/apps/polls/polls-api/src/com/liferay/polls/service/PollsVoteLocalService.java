@@ -69,8 +69,7 @@ public interface PollsVoteLocalService extends BaseLocalService,
 	* @param voteId the primary key for the new polls vote
 	* @return the new polls vote
 	*/
-	public com.liferay.polls.model.PollsVote createPollsVote(
-		long voteId);
+	public com.liferay.polls.model.PollsVote createPollsVote(long voteId);
 
 	/**
 	* @throws PortalException
@@ -98,8 +97,8 @@ public interface PollsVoteLocalService extends BaseLocalService,
 	* @throws PortalException if a polls vote with the primary key could not be found
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.polls.model.PollsVote deletePollsVote(
-		long voteId) throws com.liferay.portal.kernel.exception.PortalException;
+	public com.liferay.polls.model.PollsVote deletePollsVote(long voteId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 

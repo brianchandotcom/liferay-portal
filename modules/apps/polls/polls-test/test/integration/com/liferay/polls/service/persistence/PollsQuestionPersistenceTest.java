@@ -14,6 +14,11 @@
 
 package com.liferay.polls.service.persistence;
 
+import com.liferay.polls.NoSuchQuestionException;
+import com.liferay.polls.model.PollsQuestion;
+import com.liferay.polls.model.impl.PollsQuestionModelImpl;
+import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -31,22 +36,15 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.RandomTestUtil;
 
-import com.liferay.polls.NoSuchQuestionException;
-import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.model.impl.PollsQuestionModelImpl;
-import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
-
 import org.jboss.arquillian.junit.Arquillian;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -82,15 +80,6 @@ public class PollsQuestionPersistenceTest {
 		TemplateManagerUtil.init();
 	}
 
-	@Before
-	public void setUp() {
-		_modelListeners = _persistence.getListeners();
-
-		for (ModelListener<PollsQuestion> modelListener : _modelListeners) {
-			_persistence.unregisterListener(modelListener);
-		}
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		Iterator<PollsQuestion> iterator = _pollsQuestions.iterator();
@@ -99,10 +88,6 @@ public class PollsQuestionPersistenceTest {
 			_persistence.remove(iterator.next());
 
 			iterator.remove();
-		}
-
-		for (ModelListener<PollsQuestion> modelListener : _modelListeners) {
-			_persistence.registerListener(modelListener);
 		}
 	}
 
@@ -550,6 +535,5 @@ public class PollsQuestionPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(PollsQuestionPersistenceTest.class);
 	private List<PollsQuestion> _pollsQuestions = new ArrayList<PollsQuestion>();
-	private ModelListener<PollsQuestion>[] _modelListeners;
 	private PollsQuestionPersistence _persistence = PollsQuestionUtil.getPersistence();
 }

@@ -54,8 +54,8 @@ public class PollsVoteLocalServiceUtil {
 		return getService().addPollsVote(pollsVote);
 	}
 
-	public static com.liferay.polls.model.PollsVote addVote(
-		long userId, long questionId, long choiceId,
+	public static com.liferay.polls.model.PollsVote addVote(long userId,
+		long questionId, long choiceId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addVote(userId, questionId, choiceId, serviceContext);
@@ -67,8 +67,7 @@ public class PollsVoteLocalServiceUtil {
 	* @param voteId the primary key for the new polls vote
 	* @return the new polls vote
 	*/
-	public static com.liferay.polls.model.PollsVote createPollsVote(
-		long voteId) {
+	public static com.liferay.polls.model.PollsVote createPollsVote(long voteId) {
 		return getService().createPollsVote(voteId);
 	}
 
@@ -99,8 +98,8 @@ public class PollsVoteLocalServiceUtil {
 	* @return the polls vote that was removed
 	* @throws PortalException if a polls vote with the primary key could not be found
 	*/
-	public static com.liferay.polls.model.PollsVote deletePollsVote(
-		long voteId) throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.polls.model.PollsVote deletePollsVote(long voteId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePollsVote(voteId);
 	}
 
@@ -182,8 +181,7 @@ public class PollsVoteLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.polls.model.PollsVote fetchPollsVote(
-		long voteId) {
+	public static com.liferay.polls.model.PollsVote fetchPollsVote(long voteId) {
 		return getService().fetchPollsVote(voteId);
 	}
 
@@ -239,8 +237,8 @@ public class PollsVoteLocalServiceUtil {
 	* @return the polls vote
 	* @throws PortalException if a polls vote with the primary key could not be found
 	*/
-	public static com.liferay.polls.model.PollsVote getPollsVote(
-		long voteId) throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.polls.model.PollsVote getPollsVote(long voteId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPollsVote(voteId);
 	}
 
@@ -305,9 +303,8 @@ public class PollsVoteLocalServiceUtil {
 		return getService().getQuestionVotesCount(questionId);
 	}
 
-	public static com.liferay.polls.model.PollsVote getVote(
-		long questionId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.polls.model.PollsVote getVote(long questionId,
+		long userId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getVote(questionId, userId);
 	}
 

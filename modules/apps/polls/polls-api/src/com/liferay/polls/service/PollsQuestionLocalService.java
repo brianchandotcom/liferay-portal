@@ -59,8 +59,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	public com.liferay.polls.model.PollsQuestion addPollsQuestion(
 		com.liferay.polls.model.PollsQuestion pollsQuestion);
 
-	public com.liferay.polls.model.PollsQuestion addQuestion(
-		long userId,
+	public com.liferay.polls.model.PollsQuestion addQuestion(long userId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
@@ -127,8 +126,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public void deleteQuestion(
-		com.liferay.polls.model.PollsQuestion question)
+	public void deleteQuestion(com.liferay.polls.model.PollsQuestion question)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteQuestion(long questionId)
@@ -295,8 +293,7 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	public int getPollsQuestionsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.polls.model.PollsQuestion getQuestion(
-		long questionId)
+	public com.liferay.polls.model.PollsQuestion getQuestion(long questionId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -327,8 +324,8 @@ public interface PollsQuestionLocalService extends BaseLocalService,
 	public com.liferay.polls.model.PollsQuestion updatePollsQuestion(
 		com.liferay.polls.model.PollsQuestion pollsQuestion);
 
-	public com.liferay.polls.model.PollsQuestion updateQuestion(
-		long userId, long questionId,
+	public com.liferay.polls.model.PollsQuestion updateQuestion(long userId,
+		long questionId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,

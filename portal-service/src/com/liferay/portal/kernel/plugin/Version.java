@@ -290,6 +290,9 @@ public class Version implements Comparable<Version>, Serializable {
 		if (st.hasMoreTokens()) {
 			_buildNumber = st.nextToken();
 		}
+		else {
+			_buildNumber = null;
+		}
 	}
 
 	private static boolean _contains(
@@ -356,11 +359,11 @@ public class Version implements Comparable<Version>, Serializable {
 
 	private static final String _SEPARATOR = StringPool.PERIOD;
 
-	private static Map<String, Version> _versions =
+	private static final Map<String, Version> _versions =
 		new ConcurrentHashMap<String, Version>();
 
 	private String _bugFix;
-	private String _buildNumber;
+	private final String _buildNumber;
 	private String _major;
 	private String _minor;
 

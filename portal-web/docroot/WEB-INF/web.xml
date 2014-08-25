@@ -94,9 +94,6 @@
 	<listener>
 		<listener-class>com.liferay.portal.kernel.servlet.PortletSessionListenerManager</listener-class>
 	</listener>
-	<listener>
-		<listener-class>com.liferay.portal.servlet.SharedSessionAttributeListener</listener-class>
-	</listener>
 	<servlet>
 		<servlet-name>Main Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.MainServlet</servlet-class>

@@ -35,16 +35,18 @@ import javax.servlet.http.HttpSessionListener;
  * </p>
  *
  * @author Michael C. Han
+ * @deprecated As of 7.0.0, with no direct replacement
  */
 public class SharedSessionAttributeListener
 	implements HttpSessionAttributeListener, HttpSessionListener {
 
 	public SharedSessionAttributeListener() {
 		if (ServletVersionDetector.is2_5()) {
-			return;
+			_sessionIds = null;
 		}
-
-		_sessionIds = new ConcurrentHashSet<String>();
+		else {
+			_sessionIds = new ConcurrentHashSet<String>();
+		}
 	}
 
 	@Override
@@ -145,6 +147,6 @@ public class SharedSessionAttributeListener
 		_sessionIds.remove(session.getId());
 	}
 
-	private Set<String> _sessionIds;
+	private final Set<String> _sessionIds;
 
 }

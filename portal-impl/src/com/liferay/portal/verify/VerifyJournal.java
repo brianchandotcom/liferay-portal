@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,16 +33,20 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
+import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalContentSearch;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -60,6 +65,7 @@ public class VerifyJournal extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		updateFolderAssets();
+		verifyCreateDate();
 		verifyOracleNewLine();
 		verifyPermissionsAndAssets();
 		verifySearch();
@@ -175,6 +181,39 @@ public class VerifyJournal extends VerifyProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void verifyCreateDate() throws Exception {
+		List<JournalArticleResource> journalArticleResources =
+			JournalArticleResourceLocalServiceUtil.getJournalArticleResources(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (JournalArticleResource journalArticleResource :
+				journalArticleResources) {
+
+			List<JournalArticle> journalArticles =
+				JournalArticleLocalServiceUtil.getArticles(
+					journalArticleResource.getGroupId(),
+					journalArticleResource.getArticleId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, new ArticleVersionComparator(true));
+
+			if (journalArticles.size() <= 1) {
+				continue;
+			}
+
+			JournalArticle firstArticle = journalArticles.get(0);
+
+			Date createDate = firstArticle.getCreateDate();
+
+			for (JournalArticle journalArticle : journalArticles) {
+				if (!createDate.equals(journalArticle.getCreateDate())) {
+					journalArticle.setCreateDate(createDate);
+
+					JournalArticleLocalServiceUtil.updateJournalArticle(
+						journalArticle);
+				}
+			}
 		}
 	}
 

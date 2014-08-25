@@ -233,7 +233,7 @@ public class ServiceTestUtil {
 
 		PortalRegisterTestUtil.registerAssetRendererFactories();
 
-		// Thread Locals
+		// Thread locals
 
 		_setThreadLocals();
 
@@ -349,18 +349,14 @@ public class ServiceTestUtil {
 	}
 
 	private static void _setThreadLocals() {
-		// Service context thread local
+		LocaleThreadLocal.setThemeDisplayLocale(new Locale("en", "US"));
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setPortalURL("http://tests:8080");
 		serviceContext.setPathMain("path");
+		serviceContext.setPortalURL("http://tests:8080");
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		// Locale thread local
-
-		LocaleThreadLocal.setThemeDisplayLocale(new Locale("en", "US"));
 	}
 
 }

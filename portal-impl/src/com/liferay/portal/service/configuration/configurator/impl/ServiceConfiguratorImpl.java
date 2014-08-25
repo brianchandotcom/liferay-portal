@@ -180,17 +180,11 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 		}
 
 		String[] portletIds = StringUtil.split(
-			configuration.get("portlet.ids"));
+			configuration.get("service.model.permission.key"));
 
 		for (String portletId : portletIds) {
 			List<String> modelNames =
 				ResourceActionsUtil.getPortletModelResources(portletId);
-
-			List<String> portletActions =
-				ResourceActionsUtil.getPortletResourceActions(portletId);
-
-			ResourceActionLocalServiceUtil.checkResourceActions(
-				portletId, portletActions);
 
 			for (String modelName : modelNames) {
 				List<String> modelActions =

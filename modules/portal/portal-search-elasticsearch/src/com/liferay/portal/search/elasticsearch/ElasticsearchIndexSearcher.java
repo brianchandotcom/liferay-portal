@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.facet.ElasticsearchFacetFieldCollector;
-import com.liferay.portal.search.elasticsearch.facet.FacetProcessorUtil;
+import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch.util.DocumentTypes;
 
 import java.util.ArrayList;
@@ -125,8 +125,10 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		_elasticsearchConnectionManager = elasticsearchConnectionManager;
 	}
 
-	public void setMaxResultSize(int maxResultSize) {
-		_maxResultSize = maxResultSize;
+	public void setFacetProcessor(
+		FacetProcessor<SearchRequestBuilder> facetProcessor) {
+
+		_facetProcessor = facetProcessor;
 	}
 
 	public void setSwallowException(boolean swallowException) {
@@ -144,7 +146,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				continue;
 			}
 
-			FacetProcessorUtil.processFacet(searchRequestBuilder, facet);
+			_facetProcessor.processFacet(searchRequestBuilder, facet);
 		}
 	}
 
@@ -184,13 +186,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	protected void addPagination(
 		SearchRequestBuilder searchRequestBuilder, int start, int end) {
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
-			searchRequestBuilder.setSize(_maxResultSize);
-		}
-		else {
-			searchRequestBuilder.setFrom(start);
-			searchRequestBuilder.setSize(end - start);
-		}
+		searchRequestBuilder.setFrom(start);
+		searchRequestBuilder.setSize(end - start);
 	}
 
 	protected void addSelectedFields(
@@ -491,7 +488,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		ElasticsearchIndexSearcher.class);
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-	private int _maxResultSize = 1000;
+	private FacetProcessor<SearchRequestBuilder> _facetProcessor;
 	private Pattern _pattern = Pattern.compile("<em>(.*?)</em>");
 	private boolean _swallowException;
 

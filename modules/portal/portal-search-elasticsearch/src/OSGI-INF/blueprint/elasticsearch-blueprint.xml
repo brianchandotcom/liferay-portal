@@ -6,6 +6,7 @@
 
 	<bean class="com.liferay.portal.search.elasticsearch.ElasticsearchIndexSearcher" id="com.liferay.portal.search.elasticsearch.ElasticsearchIndexSearcher">
 		<property name="elasticsearchConnectionManager" ref="com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager" />
+		<property name="facetProcessor" ref="com.liferay.portal.search.elasticsearch.facet.CompositeFacetProcessor" />
 		<property name="querySuggester">
 			<bean class="com.liferay.portal.search.elasticsearch.ElasticsearchQuerySuggester">
 				<property name="elasticsearchConnectionManager" ref="com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager" />
@@ -66,7 +67,7 @@
 
 	<bean class="com.liferay.portal.search.elasticsearch.facet.DefaultFacetProcessor" id="com.liferay.portal.search.elasticsearch.facet.DefaultFacetProcessor" />
 	<bean class="com.liferay.portal.search.elasticsearch.facet.RangeFacetProcessor" id="com.liferay.portal.search.elasticsearch.facet.RangeFacetProcessor" />
-	<bean class="com.liferay.portal.search.elasticsearch.facet.FacetProcessorUtil" id="com.liferay.portal.search.elasticsearch.facet.FacetProcessorUtil">
+	<bean class="com.liferay.portal.search.elasticsearch.facet.CompositeFacetProcessor" id="com.liferay.portal.search.elasticsearch.facet.CompositeFacetProcessor">
 		<property name="defaultFacetProcessor" ref="com.liferay.portal.search.elasticsearch.facet.DefaultFacetProcessor" />
 		<property name="facetProcessors">
 			<map>

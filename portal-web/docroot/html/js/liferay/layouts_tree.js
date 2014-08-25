@@ -179,6 +179,20 @@ AUI.add(
 				return A.Lang.sub(NODE_LINK_TPL, data);
 			},
 
+			_displayNotice: function(message, type, timeout, useAnimation) {
+				new Liferay.Notice(
+					{
+						closeText: false,
+						content: message + '<button type="button" class="close">&times;</button>',
+						noticeClass: 'hide',
+						timeout: timeout || 10000,
+						toggleText: false,
+						type: type || 'warning',
+						useAnimation: Lang.isValue(useAnimation) ? useAnimation : true
+					}
+				).show();
+			},
+
 			_formatJSONResults: function(json) {
 				var instance = this;
 
@@ -427,7 +441,64 @@ AUI.add(
 				return value;
 			},
 
+			_putNodeBackToOriginalPosition: function(response) {
+				var instance = this;
+
+				instance._displayNotice(response.message, 'warning', 10000, true);
+
+				var nodeId = A.Lang.sub(
+					NODE_ID_TPL,
+					{
+						groupId: response.groupId,
+						layoutId: response.layoutId,
+						plid: response.plid,
+						treeId: instance._treeId
+					}
+				);
+
+				var parentNodeId = A.Lang.sub(
+					NODE_ID_TPL,
+					{
+						groupId: response.groupId,
+						layoutId: response.originalParentLayoutId,
+						plid: response.originalParentPlid,
+						treeId: instance._treeId
+					}
+				);
+
+				var action = "append";
+				var index = response.originalPriority;
+				var node = instance.getNodeById(nodeId);
+				var parentNode = instance.getNodeById(parentNodeId);
+				var sibling;
+
+				if (index > 0) {
+					if (index === parentNode.childrenLength) {
+						action = "append";
+					}
+					else {
+						if (node.get('parentNode').get('id') === parentNodeId) {
+							sibling = parentNode.item(index);
+						}
+						else {
+							sibling = parentNode.item(index - 1);
+						}
+
+						action = "after";
+					}
+				}
+
+				if (sibling) {
+					instance.insert(node, sibling, action);
+				}
+				else {
+					parentNode.appendChild(node);
+				}
+			},
+
 			_updateLayout: function(data) {
+				var instance = this;
+
 				A.io.request(
 					themeDisplay.getPathMain() + '/layouts_admin/update_page',
 					{
@@ -440,7 +511,23 @@ AUI.add(
 								p_l_id: themeDisplay.getPlid(),
 								p_p_id: '88'
 							}
-						)
+						),
+						dataType: 'JSON',
+						on: {
+							success: function(event, id, xhr) {
+								var response;
+
+								try {
+									response = A.JSON.parse(xhr.responseText);
+
+									if (response.status === Liferay.STATUS_CODE.BAD_REQUEST) {
+										instance._putNodeBackToOriginalPosition(response);
+									}
+								}
+								catch (e) {
+								}
+							}
+						}
 					}
 				);
 			},

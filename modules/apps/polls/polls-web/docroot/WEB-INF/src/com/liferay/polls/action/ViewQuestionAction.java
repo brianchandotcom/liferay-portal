@@ -14,11 +14,11 @@
 
 package com.liferay.polls.action;
 
+import com.liferay.polls.service.PollsVoteServiceUtil;
+import com.liferay.polls.util.PollsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.polls.service.PollsVoteServiceUtil;
-import com.liferay.polls.util.PollsUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

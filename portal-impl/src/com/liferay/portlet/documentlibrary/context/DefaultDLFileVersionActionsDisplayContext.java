@@ -17,11 +17,15 @@ package com.liferay.portlet.documentlibrary.context;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
@@ -31,7 +35,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,40 +54,43 @@ public class DefaultDLFileVersionActionsDisplayContext
 		throws PortalException {
 
 		_request = request;
+		_fileVersion = fileVersion;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_companyId = themeDisplay.getCompanyId();
-
-		FileEntry fileEntry = null;
+		_companyId = _themeDisplay.getCompanyId();
 
 		if (fileVersion != null) {
-			fileEntry = fileVersion.getFileEntry();
+			_fileEntry = fileVersion.getFileEntry();
 		}
 
 		_dlFileEntryActionsDisplayContextHelper =
 			new DLFileEntryActionsDisplayContextHelper(
-				themeDisplay.getPermissionChecker(), fileEntry, fileVersion);
+				_themeDisplay.getPermissionChecker(), _fileEntry, fileVersion);
 
 		_fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
-		if ((_fileEntryTypeId == -1) && (fileEntry != null) &&
-			(fileEntry.getModel() instanceof DLFileEntry)) {
+		if ((_fileEntryTypeId == -1) && (_fileEntry != null) &&
+			(_fileEntry.getModel() instanceof DLFileEntry)) {
 
-			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+			DLFileEntry dlFileEntry = (DLFileEntry)_fileEntry.getModel();
 
 			_fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
 		}
 
-		_folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
-		_portletDisplay = themeDisplay.getPortletDisplay();
-		_scopeGroupId = themeDisplay.getScopeGroupId();
+		_folderId = BeanParamUtil.getLong(_fileEntry, request, "folderId");
+		_portletDisplay = _themeDisplay.getPortletDisplay();
+		_scopeGroupId = _themeDisplay.getScopeGroupId();
 	}
 
 	@Override
 	public List<MenuItem> getMenuItems() throws PortalException {
-		return Collections.emptyList();
+		List<MenuItem> menuItems = new ArrayList<MenuItem>();
+
+		_addDownloadMenuItem(menuItems);
+
+		return menuItems;
 	}
 
 	@Override
@@ -303,6 +310,26 @@ public class DefaultDLFileVersionActionsDisplayContext
 		return _dlFileEntryActionsDisplayContextHelper.hasViewPermission();
 	}
 
+	private void _addDownloadMenuItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+		if (isDownloadButtonVisible()) {
+			String message =
+				LanguageUtil.get(_request, "download") + " (" +
+					TextFormatter.formatStorageSize(
+						_fileEntry.getSize(), _themeDisplay.getLocale()) + ")";
+
+			String url = DLUtil.getDownloadURL(
+				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,
+				false, true);
+
+			menuItems.add(
+				new URLMenuItem(
+					DLMenuItems.MENU_ITEM_ID_DOWNLOAD, "icon-download", message,
+					"_blank", url));
+		}
+	}
+
 	private boolean _hasWorkflowDefinitionLink() {
 		try {
 			return DLUtil.hasWorkflowDefinitionLink(
@@ -386,12 +413,15 @@ public class DefaultDLFileVersionActionsDisplayContext
 	private long _companyId;
 	private DLFileEntryActionsDisplayContextHelper
 		_dlFileEntryActionsDisplayContextHelper;
+	private FileEntry _fileEntry;
 	private long _fileEntryTypeId;
+	private FileVersion _fileVersion;
 	private long _folderId;
 	private Boolean _ieOnWin32;
 	private PortletDisplay _portletDisplay;
 	private HttpServletRequest _request;
 	private long _scopeGroupId;
+	private ThemeDisplay _themeDisplay;
 	private Boolean _trashEnabled;
 
 }

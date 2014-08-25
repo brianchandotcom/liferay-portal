@@ -121,7 +121,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 		DLAppServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
 
-		DLFolderLocalServiceUtil.deleteFolder(parentFolder.getFolderId());
+		DLAppServiceUtil.deleteFolder(parentFolder.getFolderId());
 
 		GroupLocalServiceUtil.deleteGroup(group);
 

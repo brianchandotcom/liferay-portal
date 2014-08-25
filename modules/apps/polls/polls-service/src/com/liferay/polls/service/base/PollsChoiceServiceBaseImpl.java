@@ -14,6 +14,11 @@
 
 package com.liferay.polls.service.base;
 
+import com.liferay.polls.model.PollsChoice;
+import com.liferay.polls.service.PollsChoiceService;
+import com.liferay.polls.service.persistence.PollsChoicePersistence;
+import com.liferay.polls.service.persistence.PollsQuestionPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -24,11 +29,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
-
-import com.liferay.polls.model.PollsChoice;
-import com.liferay.polls.service.PollsChoiceService;
-import com.liferay.polls.service.persistence.PollsChoicePersistence;
-import com.liferay.polls.service.persistence.PollsQuestionPersistence;
 
 import javax.sql.DataSource;
 

@@ -47,8 +47,7 @@ public class PollsQuestionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.polls.model.PollsQuestion addQuestion(
-		long userId,
+	public com.liferay.polls.model.PollsQuestion addQuestion(long userId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
@@ -145,8 +144,7 @@ public class PollsQuestionLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteQuestion(
-		com.liferay.polls.model.PollsQuestion question)
+	public void deleteQuestion(com.liferay.polls.model.PollsQuestion question)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_pollsQuestionLocalService.deleteQuestion(question);
 	}
@@ -369,8 +367,7 @@ public class PollsQuestionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.polls.model.PollsQuestion getQuestion(
-		long questionId)
+	public com.liferay.polls.model.PollsQuestion getQuestion(long questionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pollsQuestionLocalService.getQuestion(questionId);
 	}
@@ -415,8 +412,8 @@ public class PollsQuestionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.polls.model.PollsQuestion updateQuestion(
-		long userId, long questionId,
+	public com.liferay.polls.model.PollsQuestion updateQuestion(long userId,
+		long questionId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,

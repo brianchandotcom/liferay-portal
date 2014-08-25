@@ -15,6 +15,7 @@
 package com.liferay.ip.geocoder;
 
 import com.maxmind.geoip.Location;
+import com.maxmind.geoip.regionName;
 
 /**
  * @author Brian Wing Shun Chan
@@ -34,7 +35,10 @@ public class IPInfo {
 			_latitude = location.latitude;
 			_longitude = location.longitude;
 			_postalCode = location.postalCode;
-			_region = location.region;
+			_regionCode = location.region;
+
+			_regionName = regionName.regionNameByCode(
+				_countryCode, _regionCode);
 		}
 	}
 
@@ -66,8 +70,12 @@ public class IPInfo {
 		return _postalCode;
 	}
 
-	public String getRegion() {
-		return _region;
+	public String getRegionCode() {
+		return _regionCode;
+	}
+
+	public String getRegionName() {
+		return _regionName;
 	}
 
 	public void setCity(String city) {
@@ -98,8 +106,12 @@ public class IPInfo {
 		_postalCode = postalCode;
 	}
 
-	public void setRegion(String region) {
-		_region = region;
+	public void setRegionCode(String regionCode) {
+		_regionCode = regionCode;
+	}
+
+	public void setRegionName(String regionName) {
+		_regionName = regionName;
 	}
 
 	private String _city;
@@ -109,6 +121,7 @@ public class IPInfo {
 	private float _latitude;
 	private float _longitude;
 	private String _postalCode;
-	private String _region;
+	private String _regionCode;
+	private String _regionName;
 
 }

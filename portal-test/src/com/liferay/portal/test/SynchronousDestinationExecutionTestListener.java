@@ -116,6 +116,8 @@ public class SynchronousDestinationExecutionTestListener
 			replaceDestination(
 				DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
 			replaceDestination(DestinationNames.MAIL);
+			replaceDestination(DestinationNames.SEARCH_READER);
+			replaceDestination(DestinationNames.SEARCH_WRITER);
 			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);
 		}
 

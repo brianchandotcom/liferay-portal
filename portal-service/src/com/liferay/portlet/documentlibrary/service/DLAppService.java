@@ -781,6 +781,11 @@ public interface DLAppService extends BaseService {
 		long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.repository.model.FileVersion getFileVersion(
+		long fileVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	/**
 	* Returns the folder with the primary key.
 	*

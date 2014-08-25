@@ -25,14 +25,15 @@ import java.util.List;
 public class CollectionNode extends ASTNode {
 
 	public CollectionNode() {
+		this(0, null);
 	}
 
 	public CollectionNode(int token) {
-		super(token);
+		this(token, null);
 	}
 
 	public CollectionNode(List<ASTNode> astNodes) {
-		_astNodes = astNodes;
+		this(0, astNodes);
 	}
 
 	@Override
@@ -56,6 +57,17 @@ public class CollectionNode extends ASTNode {
 		return _astNodes.size();
 	}
 
-	private List<ASTNode> _astNodes = new ArrayList<ASTNode>();
+	protected CollectionNode(int token, List<ASTNode> astNodes) {
+		super(token);
+
+		if (astNodes != null) {
+			_astNodes = astNodes;
+		}
+		else {
+			_astNodes = new ArrayList<ASTNode>();
+		}
+	}
+
+	private final List<ASTNode> _astNodes;
 
 }

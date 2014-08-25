@@ -20,15 +20,15 @@ package com.liferay.portal.parsers.creole.ast;
 public abstract class TextNode extends BaseParentableNode {
 
 	public TextNode(ASTNode astNode) {
-		super((CollectionNode)astNode);
+		this(astNode, 0, null);
 	}
 
 	public TextNode(int tokenType) {
-		super(tokenType);
+		this(null, tokenType, null);
 	}
 
 	public TextNode(String content) {
-		_content = content;
+		this(null, 0, content);
 	}
 
 	public String getContent() {
@@ -44,6 +44,12 @@ public abstract class TextNode extends BaseParentableNode {
 		}
 	}
 
-	private String _content;
+	protected TextNode(ASTNode astNode, int tokenType, String content) {
+		super((CollectionNode)astNode, tokenType);
+
+		_content = content;
+	}
+
+	private final String _content;
 
 }

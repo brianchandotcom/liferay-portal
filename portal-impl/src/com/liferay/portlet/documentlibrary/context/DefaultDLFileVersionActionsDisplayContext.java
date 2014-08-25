@@ -14,20 +14,25 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
+import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.JavascriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -36,8 +41,12 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -82,6 +91,13 @@ public class DefaultDLFileVersionActionsDisplayContext
 		_folderId = BeanParamUtil.getLong(_fileEntry, request, "folderId");
 		_portletDisplay = _themeDisplay.getPortletDisplay();
 		_scopeGroupId = _themeDisplay.getScopeGroupId();
+
+		PortletResponse portletResponse =
+			(PortletResponse)_request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
+			portletResponse);
 	}
 
 	@Override
@@ -89,6 +105,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 		List<MenuItem> menuItems = new ArrayList<MenuItem>();
 
 		_addDownloadMenuItem(menuItems);
+		_addOpenDocumentMenuItem(menuItems);
 
 		return menuItems;
 	}
@@ -330,6 +347,41 @@ public class DefaultDLFileVersionActionsDisplayContext
 		}
 	}
 
+	private void _addOpenDocumentMenuItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+		if (isOpenInMsOfficeButtonVisible()) {
+			String webDavURL = DLUtil.getWebDavURL(
+				_themeDisplay, _fileEntry.getFolder(), _fileEntry,
+				PropsValues.
+					DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED,
+				true);
+
+			String onClick =
+				_liferayPortletResponse.getNamespace() + "openDocument('" +
+					webDavURL + "');";
+
+			Map<String, String> context = new HashMap<String, String>();
+
+			context.put("namespace", _liferayPortletResponse.getNamespace());
+
+			context.put(
+				"errorMessage", UnicodeLanguageUtil.get(
+					_request,
+					"cannot-open-the-requested-document-due-to-the-following-" +
+						"reason"));
+
+			String javascript = _processFreeMarkerTemplate(
+				"/com/liferay/portlet/documentlibrary/context/" +
+					"open_document_js.ftl", context);
+
+			menuItems.add(
+				new JavascriptMenuItem(
+					DLMenuItems.MENU_ITEM_ID_OPEN_DOCUMENT, "icon-file-alt",
+					"open-in-ms-office", onClick, javascript));
+		}
+	}
+
 	private boolean _hasWorkflowDefinitionLink() {
 		try {
 			return DLUtil.hasWorkflowDefinitionLink(
@@ -407,6 +459,18 @@ public class DefaultDLFileVersionActionsDisplayContext
 		return _portletDisplay.isWebDAVEnabled();
 	}
 
+	private String _processFreeMarkerTemplate(
+		String name, Map<String, String> context) {
+
+		try {
+			return FreeMarkerUtil.process(name, context);
+		}
+		catch (Exception e) {
+			throw new SystemException(
+				"Unable to process Freemarker template", e);
+		}
+	}
+
 	private static final UUID _UUID = UUID.fromString(
 		"85F6C50E-3893-4E32-9D63-208528A503FA");
 
@@ -418,6 +482,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 	private FileVersion _fileVersion;
 	private long _folderId;
 	private Boolean _ieOnWin32;
+	private PortletResponse _liferayPortletResponse;
 	private PortletDisplay _portletDisplay;
 	private HttpServletRequest _request;
 	private long _scopeGroupId;

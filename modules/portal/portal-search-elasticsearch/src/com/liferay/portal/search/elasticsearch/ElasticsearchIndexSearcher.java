@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
@@ -37,7 +38,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.facet.ElasticsearchFacetFieldCollector;
-import com.liferay.portal.search.elasticsearch.facet.FacetProcessorUtil;
+import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch.util.DocumentTypes;
 
 import java.util.ArrayList;
@@ -79,26 +80,95 @@ import org.elasticsearch.search.sort.SortOrder;
 public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	@Override
-	public Hits search(SearchContext searchContext, Query query) {
+	public Hits search(SearchContext searchContext, Query query)
+		throws SearchException {
+
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
 
-		SearchResponse searchResponse = doSearch(searchContext, query);
+		try {
+			int total = (int)searchCount(searchContext, query);
 
-		Hits hits = processSearchResponse(searchResponse, searchContext, query);
+			if ((searchContext.getStart() == QueryUtil.ALL_POS) &&
+				(searchContext.getEnd() == QueryUtil.ALL_POS)) {
 
-		hits.setStart(stopWatch.getStartTime());
+				searchContext.setStart(0);
+				searchContext.setEnd(total);
+			}
 
-		if (_log.isInfoEnabled()) {
-			stopWatch.stop();
+			int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+				searchContext.getStart(), searchContext.getEnd(), total);
 
-			_log.info(
-				"Searching " + query.toString() + " took " +
-					stopWatch.getTime() + " ms");
+			searchContext.setStart(startAndEnd[0]);
+			searchContext.setEnd(startAndEnd[1]);
+
+			SearchResponse searchResponse = doSearch(searchContext, query);
+
+			Hits hits = processSearchResponse(
+				searchResponse, searchContext, query);
+
+			hits.setStart(stopWatch.getStartTime());
+
+			return hits;
 		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
 
-		return hits;
+			if (!_swallowException) {
+				throw new SearchException(e.getMessage());
+			}
+
+			return new HitsImpl();
+		}
+		finally {
+			if (_log.isInfoEnabled()) {
+				stopWatch.stop();
+
+				_log.info(
+					"Searching " + query.toString() + " took " +
+						stopWatch.getTime() + " ms");
+			}
+		}
+	}
+
+	public long searchCount(SearchContext searchContext, Query query)
+		throws SearchException {
+
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
+		try {
+			SearchResponse searchResponse = doSearch(
+				searchContext, query, true);
+
+			SearchHits searchHits = searchResponse.getHits();
+
+			return searchHits.getTotalHits();
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+
+			if (!_swallowException) {
+				throw new SearchException(e.getMessage());
+			}
+
+			return 0;
+		}
+		finally {
+			if (_log.isInfoEnabled()) {
+				stopWatch.stop();
+
+				_log.info(
+					"Searching " + query.toString() + " took " +
+						stopWatch.getTime() + " ms");
+			}
+		}
 	}
 
 	public void setElasticsearchConnectionManager(
@@ -107,8 +177,14 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		_elasticsearchConnectionManager = elasticsearchConnectionManager;
 	}
 
-	public void setMaxResultSize(int maxResultSize) {
-		_maxResultSize = maxResultSize;
+	public void setFacetProcessor(
+		FacetProcessor<SearchRequestBuilder> facetProcessor) {
+
+		_facetProcessor = facetProcessor;
+	}
+
+	public void setSwallowException(boolean swallowException) {
+		_swallowException = swallowException;
 	}
 
 	protected void addFacets(
@@ -122,7 +198,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				continue;
 			}
 
-			FacetProcessorUtil.processFacet(searchRequestBuilder, facet);
+			_facetProcessor.processFacet(searchRequestBuilder, facet);
 		}
 	}
 
@@ -162,13 +238,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	protected void addPagination(
 		SearchRequestBuilder searchRequestBuilder, int start, int end) {
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
-			searchRequestBuilder.setSize(_maxResultSize);
-		}
-		else {
-			searchRequestBuilder.setFrom(start);
-			searchRequestBuilder.setSize(end - start);
-		}
+		searchRequestBuilder.setFrom(start);
+		searchRequestBuilder.setSize(end - start);
 	}
 
 	protected void addSelectedFields(
@@ -218,14 +289,16 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			snippet = sb.toString();
 		}
 
-		Matcher matcher = _pattern.matcher(snippet);
+		if (!snippet.equals(StringPool.BLANK)) {
+			Matcher matcher = _pattern.matcher(snippet);
 
-		while (matcher.find()) {
-			queryTerms.add(matcher.group(1));
+			while (matcher.find()) {
+				queryTerms.add(matcher.group(1));
+			}
+
+			snippet = StringUtil.replace(snippet, "<em>", StringPool.BLANK);
+			snippet = StringUtil.replace(snippet, "</em>", StringPool.BLANK);
 		}
-
-		snippet = StringUtil.replace(snippet, "<em>", StringPool.BLANK);
-		snippet = StringUtil.replace(snippet, "</em>", StringPool.BLANK);
 
 		document.addText(
 			Field.SNIPPET.concat(StringPool.UNDERLINE).concat(snippetFieldName),
@@ -309,21 +382,36 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
+	protected SearchResponse doSearch(SearchContext searchContext, Query query)
+		throws Exception {
+
+		return doSearch(searchContext, query, false);
+	}
+
 	protected SearchResponse doSearch(
-		SearchContext searchContext, Query query) {
+		SearchContext searchContext, Query query, boolean count) {
 
 		Client client = _elasticsearchConnectionManager.getClient();
 
 		SearchRequestBuilder searchRequestBuilder = client.prepareSearch(
 			String.valueOf(searchContext.getCompanyId()));
 
-		addFacets(searchRequestBuilder, searchContext);
-		addHighlights(searchRequestBuilder, query.getQueryConfig());
-		addPagination(
-			searchRequestBuilder, searchContext.getStart(),
-			searchContext.getEnd());
-		addSelectedFields(searchRequestBuilder, query.getQueryConfig());
-		addSort(searchRequestBuilder, searchContext.getSorts());
+		if (!count) {
+			QueryConfig queryConfig = query.getQueryConfig();
+
+			addFacets(searchRequestBuilder, searchContext);
+			addHighlights(searchRequestBuilder, queryConfig);
+			addPagination(
+				searchRequestBuilder, searchContext.getStart(),
+				searchContext.getEnd());
+			addSelectedFields(searchRequestBuilder, queryConfig);
+			addSort(searchRequestBuilder, searchContext.getSorts());
+
+			searchRequestBuilder.setTrackScores(queryConfig.isScoreEnabled());
+		}
+		else {
+			searchRequestBuilder.setSize(0);
+		}
 
 		QueryBuilder queryBuilder = QueryBuilders.queryString(query.toString());
 
@@ -374,26 +462,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		Query query) {
 
 		SearchHits searchHits = searchResponse.getHits();
-
-		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
-			searchContext.getStart(), searchContext.getEnd(),
-			(int)searchHits.getTotalHits());
-
-		int start = startAndEnd[0];
-		int end = startAndEnd[1];
-
-		if ((searchContext.getStart() != QueryUtil.ALL_POS) &&
-			(searchContext.getEnd() != QueryUtil.ALL_POS) &&
-			((start != searchContext.getStart()) ||
-			 (end != searchContext.getEnd()))) {
-
-			searchContext.setEnd(end);
-			searchContext.setStart(start);
-
-			searchResponse = doSearch(searchContext, query);
-
-			searchHits = searchResponse.getHits();
-		}
 
 		updateFacetCollectors(searchContext, searchResponse);
 
@@ -463,7 +531,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		ElasticsearchIndexSearcher.class);
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-	private int _maxResultSize = 1000;
+	private FacetProcessor<SearchRequestBuilder> _facetProcessor;
 	private Pattern _pattern = Pattern.compile("<em>(.*?)</em>");
+	private boolean _swallowException;
 
 }

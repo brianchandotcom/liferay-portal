@@ -36,6 +36,10 @@ public class ProcessConfig implements Serializable {
 		return _javaExecutable;
 	}
 
+	public ClassLoader getReactClassLoader() {
+		return _reactClassLoader;
+	}
+
 	public String getRuntimeClassPath() {
 		return _runtimeClassPath;
 	}
@@ -64,6 +68,12 @@ public class ProcessConfig implements Serializable {
 			return this;
 		}
 
+		public Builder setReactClassLoader(ClassLoader reactClassLoader) {
+			_reactClassLoader = reactClassLoader;
+
+			return this;
+		}
+
 		public Builder setRuntimeClassPath(String runtimeClassPath) {
 			_runtimeClassPath = runtimeClassPath;
 
@@ -74,6 +84,8 @@ public class ProcessConfig implements Serializable {
 		private String _bootstrapClassPath = System.getProperty(
 			"java.class.path");
 		private String _javaExecutable = "java";
+		private ClassLoader _reactClassLoader =
+			ProcessConfig.class.getClassLoader();
 		private String _runtimeClassPath = _bootstrapClassPath;
 
 	}
@@ -82,6 +94,7 @@ public class ProcessConfig implements Serializable {
 		_arguments = builder._arguments;
 		_bootstrapClassPath = builder._bootstrapClassPath;
 		_javaExecutable = builder._javaExecutable;
+		_reactClassLoader = builder._reactClassLoader;
 		_runtimeClassPath = builder._runtimeClassPath;
 	}
 
@@ -90,6 +103,7 @@ public class ProcessConfig implements Serializable {
 	private final List<String> _arguments;
 	private final String _bootstrapClassPath;
 	private final String _javaExecutable;
+	private final transient ClassLoader _reactClassLoader;
 	private final String _runtimeClassPath;
 
 }

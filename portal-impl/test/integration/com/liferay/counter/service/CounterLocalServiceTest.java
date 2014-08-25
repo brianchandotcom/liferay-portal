@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutorUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
@@ -75,6 +76,7 @@ public class CounterLocalServiceTest {
 		builder.setArguments(
 			Arrays.asList("-Xmx1024m", "-XX:MaxPermSize=200m"));
 		builder.setBootstrapClassPath(classPath);
+		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
 		builder.setRuntimeClassPath(classPath);
 
 		ProcessConfig processConfig = builder.build();

@@ -136,7 +136,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 			ThreadPoolExecutor threadPoolExecutor = _getThreadPoolExecutor();
 
 			SubprocessReactor subprocessReactor = new SubprocessReactor(
-				process);
+				process, processConfig.getReactClassLoader());
 
 			try {
 				NoticeableFuture<ProcessCallable<? extends Serializable>>
@@ -229,8 +229,11 @@ public class LocalProcessExecutor implements ProcessExecutor {
 	private class SubprocessReactor
 		implements Callable<ProcessCallable<? extends Serializable>> {
 
-		public SubprocessReactor(Process process) {
+		public SubprocessReactor(
+			Process process, ClassLoader reactClassLoader) {
+
 			_process = process;
+			_reactClassLoader = reactClassLoader;
 		}
 
 		@Override
@@ -254,8 +257,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 						unsyncBufferedInputStream.mark(4);
 
 						objectInputStream = new ClassLoaderObjectInputStream(
-							unsyncBufferedInputStream,
-							PortalClassLoaderUtil.getClassLoader());
+							unsyncBufferedInputStream, _reactClassLoader);
 
 						// Found the beginning of the object input stream. Flush
 						// out corrupted log if necessary.
@@ -354,6 +356,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 		}
 
 		private final Process _process;
+		private final ClassLoader _reactClassLoader;
 
 	}
 

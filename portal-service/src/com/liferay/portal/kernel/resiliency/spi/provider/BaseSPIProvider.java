@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
 import com.liferay.portal.kernel.resiliency.spi.remote.RemoteSPI;
 import com.liferay.portal.kernel.resiliency.spi.remote.RemoteSPIProxy;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.concurrent.Callable;
@@ -49,6 +50,7 @@ public abstract class BaseSPIProvider implements SPIProvider {
 		builder.setArguments(spiConfiguration.getJVMArguments());
 		builder.setBootstrapClassPath(getClassPath());
 		builder.setJavaExecutable(spiConfiguration.getJavaExecutable());
+		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
 		builder.setRuntimeClassPath(getClassPath());
 
 		RemoteSPI remoteSPI = createRemoteSPI(spiConfiguration);

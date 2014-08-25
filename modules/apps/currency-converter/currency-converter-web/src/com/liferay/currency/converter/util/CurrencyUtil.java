@@ -60,9 +60,16 @@ public class CurrencyUtil {
 
 	public static Currency getCurrency(String symbol) {
 		WebCacheItem wci = new CurrencyWebCacheItem(symbol);
+		
+		String key = CurrencyUtil.class.getName() + StringPool.PERIOD + symbol;
 
-		return (Currency)WebCachePoolUtil.get(
-			CurrencyUtil.class.getName() + StringPool.PERIOD + symbol, wci);
+		try{
+
+			return (Currency)WebCachePoolUtil.get(key, wci);
+		}catch(ClassCastException cce){
+			WebCachePoolUtil.remove(key);
+		}
+		return null;
 	}
 
 	public static boolean isCurrency(String symbol) {

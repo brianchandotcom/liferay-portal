@@ -66,12 +66,22 @@ public class DLTestUtil {
 			long groupId, boolean deleteExisting, ServiceContext serviceContext)
 		throws Exception {
 
+		return addDLFolder(
+			groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, deleteExisting,
+			serviceContext);
+	}
+
+	public static DLFolder addDLFolder(
+			long groupId, long parentFolderId, boolean deleteExisting,
+			ServiceContext serviceContext)
+		throws Exception {
+
 		String name = RandomTestUtil.randomString();
 
 		if (deleteExisting) {
 			try {
 				DLFolder folder = DLFolderLocalServiceUtil.getFolder(
-					groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
+					groupId, parentFolderId, name);
 
 				DLFolderLocalServiceUtil.deleteFolder(folder.getFolderId());
 			}
@@ -81,8 +91,7 @@ public class DLTestUtil {
 
 		return DLFolderLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), groupId, groupId, false,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name, StringPool.BLANK,
-			false, serviceContext);
+			parentFolderId, name, StringPool.BLANK, false, serviceContext);
 	}
 
 	public static DLFolder addDLFolder(

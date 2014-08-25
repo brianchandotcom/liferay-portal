@@ -1113,5 +1113,5 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		_dlFileVersion.resetOriginalValues();
 	}
 
-	private final DLFileVersion _dlFileVersion;
+	private DLFileVersion _dlFileVersion;
 }

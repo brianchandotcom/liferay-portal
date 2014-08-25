@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -50,7 +48,6 @@ import java.util.Map;
  * @see com.liferay.portlet.documentlibrary.model.DLFileEntryMetadataModel
  * @generated
  */
-@ProviderType
 public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetadata>
 	implements DLFileEntryMetadataModel {
 	/*
@@ -84,12 +81,12 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata"),
 			true);
-	public static final long DDMSTRUCTUREID_COLUMN_BITMASK = 1L;
-	public static final long FILEENTRYID_COLUMN_BITMASK = 2L;
-	public static final long FILEENTRYTYPEID_COLUMN_BITMASK = 4L;
-	public static final long FILEVERSIONID_COLUMN_BITMASK = 8L;
-	public static final long UUID_COLUMN_BITMASK = 16L;
-	public static final long FILEENTRYMETADATAID_COLUMN_BITMASK = 32L;
+	public static long DDMSTRUCTUREID_COLUMN_BITMASK = 1L;
+	public static long FILEENTRYID_COLUMN_BITMASK = 2L;
+	public static long FILEENTRYTYPEID_COLUMN_BITMASK = 4L;
+	public static long FILEVERSIONID_COLUMN_BITMASK = 8L;
+	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long FILEENTRYMETADATAID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata"));
 
@@ -534,8 +531,8 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = DLFileEntryMetadata.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static ClassLoader _classLoader = DLFileEntryMetadata.class.getClassLoader();
+	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			DLFileEntryMetadata.class
 		};
 	private String _uuid;

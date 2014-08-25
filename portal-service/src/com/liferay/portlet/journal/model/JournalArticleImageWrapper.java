@@ -457,5 +457,5 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 		_journalArticleImage.resetOriginalValues();
 	}
 
-	private final JournalArticleImage _journalArticleImage;
+	private JournalArticleImage _journalArticleImage;
 }

@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.journal.service.http;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -53,7 +51,6 @@ import com.liferay.portlet.journal.service.JournalFeedServiceUtil;
  * @see com.liferay.portlet.journal.service.JournalFeedServiceUtil
  * @generated
  */
-@ProviderType
 public class JournalFeedServiceHttp {
 	public static com.liferay.portlet.journal.model.JournalFeed addFeed(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String feedId,

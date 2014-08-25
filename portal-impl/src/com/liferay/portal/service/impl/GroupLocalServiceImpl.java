@@ -4373,6 +4373,18 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 	}
 
+	protected void updateTreePath(Group group) throws PortalException {
+		List<Group> groups = groupPersistence.findByC_T(
+			group.getCompanyId(),
+			CustomSQLUtil.keywords(group.getTreePath())[0]);
+
+		for (Group curGroup : groups) {
+			curGroup.setTreePath(curGroup.buildTreePath());
+
+			groupPersistence.update(curGroup);
+		}
+	}
+
 	protected void validateFriendlyURL(
 			long companyId, long groupId, long classNameId, long classPK,
 			String friendlyURL)

@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.bookmarks.service.http;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -53,7 +51,6 @@ import com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil;
  * @see com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil
  * @generated
  */
-@ProviderType
 public class BookmarksEntryServiceHttp {
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry addEntry(
 		HttpPrincipal httpPrincipal, long groupId, long folderId,

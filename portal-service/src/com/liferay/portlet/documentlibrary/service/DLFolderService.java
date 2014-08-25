@@ -36,9 +36,9 @@ import com.liferay.portal.service.BaseService;
  * @see com.liferay.portlet.documentlibrary.service.impl.DLFolderServiceImpl
  * @generated
  */
+@ProviderType
 @AccessControlled
 @JSONWebService
-@ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface DLFolderService extends BaseService {

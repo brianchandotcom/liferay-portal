@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.journal.model;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -29,7 +27,6 @@ import java.util.List;
  * @see com.liferay.portlet.journal.service.http.JournalArticleServiceSoap
  * @generated
  */
-@ProviderType
 public class JournalArticleSoap implements Serializable {
 	public static JournalArticleSoap toSoapModel(JournalArticle model) {
 		JournalArticleSoap soapModel = new JournalArticleSoap();

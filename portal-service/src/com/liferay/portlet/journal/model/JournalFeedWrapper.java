@@ -880,5 +880,5 @@ public class JournalFeedWrapper implements JournalFeed,
 		_journalFeed.resetOriginalValues();
 	}
 
-	private final JournalFeed _journalFeed;
+	private JournalFeed _journalFeed;
 }

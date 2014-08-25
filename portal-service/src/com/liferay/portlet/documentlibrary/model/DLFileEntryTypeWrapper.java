@@ -839,5 +839,5 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 		_dlFileEntryType.resetOriginalValues();
 	}
 
-	private final DLFileEntryType _dlFileEntryType;
+	private DLFileEntryType _dlFileEntryType;
 }

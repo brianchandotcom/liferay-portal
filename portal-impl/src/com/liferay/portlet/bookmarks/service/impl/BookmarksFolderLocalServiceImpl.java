@@ -44,6 +44,7 @@ import com.liferay.portlet.bookmarks.util.comparator.FolderIdComparator;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -324,7 +325,6 @@ public class BookmarksFolderLocalServiceImpl
 		}
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BookmarksFolder moveFolder(long folderId, long parentFolderId)
 		throws PortalException {
@@ -333,9 +333,10 @@ public class BookmarksFolderLocalServiceImpl
 			folderId);
 
 		folder.setParentFolderId(parentFolderId);
-		folder.setTreePath(folder.buildTreePath());
 
 		bookmarksFolderPersistence.update(folder);
+
+		updateTreePath(folder);
 
 		return folder;
 	}
@@ -896,6 +897,45 @@ public class BookmarksFolderLocalServiceImpl
 
 				indexer.reindex(folder);
 			}
+		}
+	}
+
+	protected void updateTreePath(BookmarksFolder folder)
+		throws PortalException {
+
+		// Entries
+
+		List<BookmarksEntry> entries =
+			bookmarksEntryPersistence.findByC_T(
+				folder.getCompanyId(),
+				CustomSQLUtil.keywords(folder.getTreePath())[0]);
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			BookmarksEntry.class);
+
+		for (BookmarksEntry entry : entries) {
+			entry.setTreePath(entry.buildTreePath());
+
+			bookmarksEntryPersistence.update(entry);
+
+			indexer.reindex(entry);
+		}
+
+		// Subfolders
+
+		List<BookmarksFolder> folders =
+			bookmarksFolderPersistence.findByC_T(
+				folder.getCompanyId(),
+				CustomSQLUtil.keywords(folder.getTreePath())[0]);
+
+		indexer = IndexerRegistryUtil.nullSafeGetIndexer(BookmarksFolder.class);
+
+		for (BookmarksFolder curFolder : folders) {
+			curFolder.setTreePath(curFolder.buildTreePath());
+
+			bookmarksFolderPersistence.update(curFolder);
+
+			indexer.reindex(curFolder);
 		}
 	}
 

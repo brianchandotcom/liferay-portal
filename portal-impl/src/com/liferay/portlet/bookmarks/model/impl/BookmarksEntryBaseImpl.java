@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.bookmarks.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 
@@ -31,7 +29,6 @@ import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
  * @see com.liferay.portlet.bookmarks.model.BookmarksEntry
  * @generated
  */
-@ProviderType
 public abstract class BookmarksEntryBaseImpl extends BookmarksEntryModelImpl
 	implements BookmarksEntry {
 	/*

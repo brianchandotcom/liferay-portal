@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 
@@ -31,7 +29,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUt
  * @see com.liferay.portlet.documentlibrary.model.DLFileEntryType
  * @generated
  */
-@ProviderType
 public abstract class DLFileEntryTypeBaseImpl extends DLFileEntryTypeModelImpl
 	implements DLFileEntryType {
 	/*

@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -62,7 +60,6 @@ import java.util.Set;
  * @see DLFileRankUtil
  * @generated
  */
-@ProviderType
 public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	implements DLFileRankPersistence {
 	/*
@@ -3147,11 +3144,11 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLFileRank exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFileRank exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final Log _log = LogFactoryUtil.getLog(DLFileRankPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static Log _log = LogFactoryUtil.getLog(DLFileRankPersistenceImpl.class);
+	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"active"
 			});
-	private static final DLFileRank _nullDLFileRank = new DLFileRankImpl() {
+	private static DLFileRank _nullDLFileRank = new DLFileRankImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -3163,7 +3160,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			}
 		};
 
-	private static final CacheModel<DLFileRank> _nullDLFileRankCacheModel = new CacheModel<DLFileRank>() {
+	private static CacheModel<DLFileRank> _nullDLFileRankCacheModel = new CacheModel<DLFileRank>() {
 			@Override
 			public DLFileRank toEntityModel() {
 				return _nullDLFileRank;

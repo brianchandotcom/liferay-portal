@@ -365,5 +365,5 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 		_dlSyncEvent.resetOriginalValues();
 	}
 
-	private final DLSyncEvent _dlSyncEvent;
+	private DLSyncEvent _dlSyncEvent;
 }

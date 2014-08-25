@@ -343,7 +343,6 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
 		long groupId, long folderId);
 
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder moveFolder(
 		long folderId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException;

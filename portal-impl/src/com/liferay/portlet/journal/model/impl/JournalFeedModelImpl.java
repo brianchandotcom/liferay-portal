@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.journal.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -61,7 +59,6 @@ import java.util.Map;
  * @generated
  */
 @JSON(strict = true)
-@ProviderType
 public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	implements JournalFeedModel {
 	/*
@@ -111,10 +108,10 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.journal.model.JournalFeed"),
 			true);
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long FEEDID_COLUMN_BITMASK = 2L;
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long FEEDID_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long UUID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -1228,8 +1225,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = JournalFeed.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static ClassLoader _classLoader = JournalFeed.class.getClassLoader();
+	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			JournalFeed.class
 		};
 	private String _uuid;

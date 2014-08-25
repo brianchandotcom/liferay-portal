@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -38,7 +36,6 @@ import java.util.List;
  * @see com.liferay.portlet.documentlibrary.model.DLFolder
  * @generated
  */
-@ProviderType
 public abstract class DLFolderBaseImpl extends DLFolderModelImpl
 	implements DLFolder {
 	/*

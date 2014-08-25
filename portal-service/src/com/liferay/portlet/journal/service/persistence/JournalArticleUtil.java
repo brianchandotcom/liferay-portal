@@ -4030,6 +4030,161 @@ public class JournalArticleUtil {
 	}
 
 	/**
+	* Returns all the journal articles where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @return the matching journal articles
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_T(
+		long companyId, java.lang.String treePath) {
+		return getPersistence().findByC_T(companyId, treePath);
+	}
+
+	/**
+	* Returns a range of all the journal articles where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @return the range of matching journal articles
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_T(
+		long companyId, java.lang.String treePath, int start, int end) {
+		return getPersistence().findByC_T(companyId, treePath, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the journal articles where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.journal.model.impl.JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching journal articles
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_T(
+		long companyId, java.lang.String treePath, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .findByC_T(companyId, treePath, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first journal article in the ordered set where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching journal article
+	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle findByC_T_First(
+		long companyId, java.lang.String treePath,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchArticleException {
+		return getPersistence()
+				   .findByC_T_First(companyId, treePath, orderByComparator);
+	}
+
+	/**
+	* Returns the first journal article in the ordered set where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByC_T_First(
+		long companyId, java.lang.String treePath,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_T_First(companyId, treePath, orderByComparator);
+	}
+
+	/**
+	* Returns the last journal article in the ordered set where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal article
+	* @throws com.liferay.portlet.journal.NoSuchArticleException if a matching journal article could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle findByC_T_Last(
+		long companyId, java.lang.String treePath,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchArticleException {
+		return getPersistence()
+				   .findByC_T_Last(companyId, treePath, orderByComparator);
+	}
+
+	/**
+	* Returns the last journal article in the ordered set where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle fetchByC_T_Last(
+		long companyId, java.lang.String treePath,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_T_Last(companyId, treePath, orderByComparator);
+	}
+
+	/**
+	* Returns the journal articles before and after the current journal article in the ordered set where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param id the primary key of the current journal article
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next journal article
+	* @throws com.liferay.portlet.journal.NoSuchArticleException if a journal article with the primary key could not be found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle[] findByC_T_PrevAndNext(
+		long id, long companyId, java.lang.String treePath,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
+		throws com.liferay.portlet.journal.NoSuchArticleException {
+		return getPersistence()
+				   .findByC_T_PrevAndNext(id, companyId, treePath,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the journal articles where companyId = &#63; and treePath LIKE &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	*/
+	public static void removeByC_T(long companyId, java.lang.String treePath) {
+		getPersistence().removeByC_T(companyId, treePath);
+	}
+
+	/**
+	* Returns the number of journal articles where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @return the number of matching journal articles
+	*/
+	public static int countByC_T(long companyId, java.lang.String treePath) {
+		return getPersistence().countByC_T(companyId, treePath);
+	}
+
+	/**
 	* Returns all the journal articles where companyId = &#63; and version = &#63;.
 	*
 	* @param companyId the company ID

@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.bookmarks.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -37,7 +35,6 @@ import com.liferay.portlet.bookmarks.model.BookmarksEntry;
  * @generated
  */
 @Deprecated
-@ProviderType
 public class BookmarksEntryExportActionableDynamicQuery
 	extends BookmarksEntryActionableDynamicQuery {
 	public BookmarksEntryExportActionableDynamicQuery(

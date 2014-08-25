@@ -1255,5 +1255,5 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		_dlFileEntry.resetOriginalValues();
 	}
 
-	private final DLFileEntry _dlFileEntry;
+	private DLFileEntry _dlFileEntry;
 }

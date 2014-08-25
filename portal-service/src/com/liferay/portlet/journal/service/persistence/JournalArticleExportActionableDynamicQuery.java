@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.journal.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -39,7 +37,6 @@ import com.liferay.portlet.journal.model.JournalArticle;
  * @generated
  */
 @Deprecated
-@ProviderType
 public class JournalArticleExportActionableDynamicQuery
 	extends JournalArticleActionableDynamicQuery {
 	public JournalArticleExportActionableDynamicQuery(

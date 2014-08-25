@@ -37,9 +37,9 @@ import com.liferay.portal.service.BaseService;
  * @see com.liferay.portlet.journal.service.impl.JournalFeedServiceImpl
  * @generated
  */
+@ProviderType
 @AccessControlled
 @JSONWebService
-@ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface JournalFeedService extends BaseService {

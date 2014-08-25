@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -37,7 +35,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
  * @generated
  */
 @Deprecated
-@ProviderType
 public class DLFileVersionExportActionableDynamicQuery
 	extends DLFileVersionActionableDynamicQuery {
 	public DLFileVersionExportActionableDynamicQuery(

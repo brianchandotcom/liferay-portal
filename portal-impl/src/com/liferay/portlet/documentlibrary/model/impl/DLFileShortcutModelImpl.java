@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -70,7 +68,6 @@ import java.util.Map;
  * @generated
  */
 @JSON(strict = true)
-@ProviderType
 public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	implements DLFileShortcutModel {
 	/*
@@ -114,14 +111,15 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.documentlibrary.model.DLFileShortcut"),
 			true);
-	public static final long ACTIVE_COLUMN_BITMASK = 1L;
-	public static final long COMPANYID_COLUMN_BITMASK = 2L;
-	public static final long FOLDERID_COLUMN_BITMASK = 4L;
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
-	public static final long STATUS_COLUMN_BITMASK = 16L;
-	public static final long TOFILEENTRYID_COLUMN_BITMASK = 32L;
-	public static final long UUID_COLUMN_BITMASK = 64L;
-	public static final long FILESHORTCUTID_COLUMN_BITMASK = 128L;
+	public static long ACTIVE_COLUMN_BITMASK = 1L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long FOLDERID_COLUMN_BITMASK = 4L;
+	public static long GROUPID_COLUMN_BITMASK = 8L;
+	public static long STATUS_COLUMN_BITMASK = 16L;
+	public static long TOFILEENTRYID_COLUMN_BITMASK = 32L;
+	public static long TREEPATH_COLUMN_BITMASK = 64L;
+	public static long UUID_COLUMN_BITMASK = 128L;
+	public static long FILESHORTCUTID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -562,7 +560,17 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	@Override
 	public void setTreePath(String treePath) {
+		_columnBitmask |= TREEPATH_COLUMN_BITMASK;
+
+		if (_originalTreePath == null) {
+			_originalTreePath = _treePath;
+		}
+
 		_treePath = treePath;
+	}
+
+	public String getOriginalTreePath() {
+		return GetterUtil.getString(_originalTreePath);
 	}
 
 	@JSON
@@ -1019,6 +1027,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 		dlFileShortcutModelImpl._setOriginalToFileEntryId = false;
 
+		dlFileShortcutModelImpl._originalTreePath = dlFileShortcutModelImpl._treePath;
+
 		dlFileShortcutModelImpl._originalActive = dlFileShortcutModelImpl._active;
 
 		dlFileShortcutModelImpl._setOriginalActive = false;
@@ -1241,8 +1251,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = DLFileShortcut.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static ClassLoader _classLoader = DLFileShortcut.class.getClassLoader();
+	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			DLFileShortcut.class
 		};
 	private String _uuid;
@@ -1266,6 +1276,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	private long _originalToFileEntryId;
 	private boolean _setOriginalToFileEntryId;
 	private String _treePath;
+	private String _originalTreePath;
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;

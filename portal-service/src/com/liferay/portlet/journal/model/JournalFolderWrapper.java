@@ -970,5 +970,5 @@ public class JournalFolderWrapper implements JournalFolder,
 		_journalFolder.resetOriginalValues();
 	}
 
-	private final JournalFolder _journalFolder;
+	private JournalFolder _journalFolder;
 }

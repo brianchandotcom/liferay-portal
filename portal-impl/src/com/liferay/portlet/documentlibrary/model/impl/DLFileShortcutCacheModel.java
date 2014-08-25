@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -36,7 +34,6 @@ import java.util.Date;
  * @see DLFileShortcut
  * @generated
  */
-@ProviderType
 public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 	Externalizable {
 	@Override

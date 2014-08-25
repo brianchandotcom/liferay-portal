@@ -1860,19 +1860,14 @@ public class OrganizationLocalServiceImpl
 				serviceContext.getAssetTagNames());
 		}
 
+		updateTreePath(organization);
+
 		// Indexer
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			Organization.class);
 
-		if (oldParentOrganizationId != parentOrganizationId) {
-			long[] organizationIds = getReindexOrganizationIds(organization);
-
-			indexer.reindex(organizationIds);
-		}
-		else {
-			indexer.reindex(organization);
-		}
+		indexer.reindex(organization);
 
 		return organization;
 	}
@@ -2037,37 +2032,6 @@ public class OrganizationLocalServiceImpl
 		return parentOrganizationId;
 	}
 
-	protected long[] getReindexOrganizationIds(Organization organization)
-		throws PortalException {
-
-		List<Organization> organizations = organizationPersistence.findByC_T(
-			organization.getCompanyId(),
-			CustomSQLUtil.keywords(organization.getTreePath())[0],
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new OrganizationNameComparator(true));
-
-		long[] organizationIds = new long[organizations.size()];
-
-		for (int i = 0; i < organizations.size(); i++) {
-			Organization curOrganization = organizations.get(i);
-
-			curOrganization.setTreePath(curOrganization.buildTreePath());
-
-			organizationPersistence.update(curOrganization);
-
-			organizationIds[i] = curOrganization.getOrganizationId();
-		}
-
-		if (!ArrayUtil.contains(
-				organizationIds, organization.getOrganizationId())) {
-
-			organizationIds = ArrayUtil.append(
-				organizationIds, organization.getOrganizationId());
-		}
-
-		return organizationIds;
-	}
-
 	protected boolean isOrganizationGroup(long organizationId, long groupId) {
 		if ((organizationId ==
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) &&
@@ -2124,6 +2088,27 @@ public class OrganizationLocalServiceImpl
 		}
 
 		return true;
+	}
+
+	protected void updateTreePath(Organization organization)
+		throws PortalException {
+
+		List<Organization> organizations = organizationPersistence.findByC_T(
+			organization.getCompanyId(),
+			CustomSQLUtil.keywords(organization.getTreePath())[0]);
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Organization.class);
+
+		for (int i = 0; i < organizations.size(); i++) {
+			Organization curOrganization = organizations.get(i);
+
+			curOrganization.setTreePath(curOrganization.buildTreePath());
+
+			organizationPersistence.update(curOrganization);
+
+			indexer.reindex(organization);
+		}
 	}
 
 	protected void validate(

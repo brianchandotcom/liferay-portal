@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.journal.service.http;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -53,7 +51,6 @@ import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
  * @see com.liferay.portlet.journal.service.JournalArticleServiceUtil
  * @generated
  */
-@ProviderType
 public class JournalArticleServiceHttp {
 	public static com.liferay.portlet.journal.model.JournalArticle addArticle(
 		HttpPrincipal httpPrincipal, long groupId, long folderId,

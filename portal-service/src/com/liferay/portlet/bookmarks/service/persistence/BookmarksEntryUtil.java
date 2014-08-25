@@ -1603,6 +1603,161 @@ public class BookmarksEntryUtil {
 	}
 
 	/**
+	* Returns all the bookmarks entries where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @return the matching bookmarks entries
+	*/
+	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByC_T(
+		long companyId, java.lang.String treePath) {
+		return getPersistence().findByC_T(companyId, treePath);
+	}
+
+	/**
+	* Returns a range of all the bookmarks entries where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param start the lower bound of the range of bookmarks entries
+	* @param end the upper bound of the range of bookmarks entries (not inclusive)
+	* @return the range of matching bookmarks entries
+	*/
+	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByC_T(
+		long companyId, java.lang.String treePath, int start, int end) {
+		return getPersistence().findByC_T(companyId, treePath, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the bookmarks entries where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param start the lower bound of the range of bookmarks entries
+	* @param end the upper bound of the range of bookmarks entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching bookmarks entries
+	*/
+	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksEntry> findByC_T(
+		long companyId, java.lang.String treePath, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
+		return getPersistence()
+				   .findByC_T(companyId, treePath, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first bookmarks entry in the ordered set where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching bookmarks entry
+	* @throws com.liferay.portlet.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	*/
+	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByC_T_First(
+		long companyId, java.lang.String treePath,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
+		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_T_First(companyId, treePath, orderByComparator);
+	}
+
+	/**
+	* Returns the first bookmarks entry in the ordered set where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
+	*/
+	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByC_T_First(
+		long companyId, java.lang.String treePath,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_T_First(companyId, treePath, orderByComparator);
+	}
+
+	/**
+	* Returns the last bookmarks entry in the ordered set where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching bookmarks entry
+	* @throws com.liferay.portlet.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	*/
+	public static com.liferay.portlet.bookmarks.model.BookmarksEntry findByC_T_Last(
+		long companyId, java.lang.String treePath,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
+		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_T_Last(companyId, treePath, orderByComparator);
+	}
+
+	/**
+	* Returns the last bookmarks entry in the ordered set where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
+	*/
+	public static com.liferay.portlet.bookmarks.model.BookmarksEntry fetchByC_T_Last(
+		long companyId, java.lang.String treePath,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_T_Last(companyId, treePath, orderByComparator);
+	}
+
+	/**
+	* Returns the bookmarks entries before and after the current bookmarks entry in the ordered set where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param entryId the primary key of the current bookmarks entry
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next bookmarks entry
+	* @throws com.liferay.portlet.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	*/
+	public static com.liferay.portlet.bookmarks.model.BookmarksEntry[] findByC_T_PrevAndNext(
+		long entryId, long companyId, java.lang.String treePath,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.bookmarks.model.BookmarksEntry> orderByComparator)
+		throws com.liferay.portlet.bookmarks.NoSuchEntryException {
+		return getPersistence()
+				   .findByC_T_PrevAndNext(entryId, companyId, treePath,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the bookmarks entries where companyId = &#63; and treePath LIKE &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	*/
+	public static void removeByC_T(long companyId, java.lang.String treePath) {
+		getPersistence().removeByC_T(companyId, treePath);
+	}
+
+	/**
+	* Returns the number of bookmarks entries where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @return the number of matching bookmarks entries
+	*/
+	public static int countByC_T(long companyId, java.lang.String treePath) {
+		return getPersistence().countByC_T(companyId, treePath);
+	}
+
+	/**
 	* Returns all the bookmarks entries where companyId = &#63; and status &ne; &#63;.
 	*
 	* @param companyId the company ID

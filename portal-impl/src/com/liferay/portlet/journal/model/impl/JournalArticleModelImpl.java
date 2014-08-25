@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.journal.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
@@ -76,7 +74,6 @@ import java.util.TreeSet;
  * @generated
  */
 @JSON(strict = true)
-@ProviderType
 public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	implements JournalArticleModel {
 	/*
@@ -137,24 +134,25 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.journal.model.JournalArticle"),
 			true);
-	public static final long ARTICLEID_COLUMN_BITMASK = 1L;
-	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
-	public static final long CLASSPK_COLUMN_BITMASK = 4L;
-	public static final long COMPANYID_COLUMN_BITMASK = 8L;
-	public static final long DISPLAYDATE_COLUMN_BITMASK = 16L;
-	public static final long FOLDERID_COLUMN_BITMASK = 32L;
-	public static final long GROUPID_COLUMN_BITMASK = 64L;
-	public static final long INDEXABLE_COLUMN_BITMASK = 128L;
-	public static final long LAYOUTUUID_COLUMN_BITMASK = 256L;
-	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 512L;
-	public static final long SMALLIMAGEID_COLUMN_BITMASK = 1024L;
-	public static final long STATUS_COLUMN_BITMASK = 2048L;
-	public static final long STRUCTUREID_COLUMN_BITMASK = 4096L;
-	public static final long TEMPLATEID_COLUMN_BITMASK = 8192L;
-	public static final long URLTITLE_COLUMN_BITMASK = 16384L;
-	public static final long USERID_COLUMN_BITMASK = 32768L;
-	public static final long UUID_COLUMN_BITMASK = 65536L;
-	public static final long VERSION_COLUMN_BITMASK = 131072L;
+	public static long ARTICLEID_COLUMN_BITMASK = 1L;
+	public static long CLASSNAMEID_COLUMN_BITMASK = 2L;
+	public static long CLASSPK_COLUMN_BITMASK = 4L;
+	public static long COMPANYID_COLUMN_BITMASK = 8L;
+	public static long DISPLAYDATE_COLUMN_BITMASK = 16L;
+	public static long FOLDERID_COLUMN_BITMASK = 32L;
+	public static long GROUPID_COLUMN_BITMASK = 64L;
+	public static long INDEXABLE_COLUMN_BITMASK = 128L;
+	public static long LAYOUTUUID_COLUMN_BITMASK = 256L;
+	public static long RESOURCEPRIMKEY_COLUMN_BITMASK = 512L;
+	public static long SMALLIMAGEID_COLUMN_BITMASK = 1024L;
+	public static long STATUS_COLUMN_BITMASK = 2048L;
+	public static long STRUCTUREID_COLUMN_BITMASK = 4096L;
+	public static long TEMPLATEID_COLUMN_BITMASK = 8192L;
+	public static long TREEPATH_COLUMN_BITMASK = 16384L;
+	public static long URLTITLE_COLUMN_BITMASK = 32768L;
+	public static long USERID_COLUMN_BITMASK = 65536L;
+	public static long UUID_COLUMN_BITMASK = 131072L;
+	public static long VERSION_COLUMN_BITMASK = 262144L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -803,7 +801,17 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	@Override
 	public void setTreePath(String treePath) {
+		_columnBitmask |= TREEPATH_COLUMN_BITMASK;
+
+		if (_originalTreePath == null) {
+			_originalTreePath = _treePath;
+		}
+
 		_treePath = treePath;
+	}
+
+	public String getOriginalTreePath() {
+		return GetterUtil.getString(_originalTreePath);
 	}
 
 	@JSON
@@ -1880,6 +1888,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 		journalArticleModelImpl._setOriginalClassPK = false;
 
+		journalArticleModelImpl._originalTreePath = journalArticleModelImpl._treePath;
+
 		journalArticleModelImpl._originalArticleId = journalArticleModelImpl._articleId;
 
 		journalArticleModelImpl._originalVersion = journalArticleModelImpl._version;
@@ -2347,8 +2357,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = JournalArticle.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static ClassLoader _classLoader = JournalArticle.class.getClassLoader();
+	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			JournalArticle.class
 		};
 	private String _uuid;
@@ -2379,6 +2389,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
 	private String _treePath;
+	private String _originalTreePath;
 	private String _articleId;
 	private String _originalArticleId;
 	private double _version;

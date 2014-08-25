@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.journal.service.persistence.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -61,7 +59,6 @@ import java.util.Set;
  * @see JournalContentSearchUtil
  * @generated
  */
-@ProviderType
 public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<JournalContentSearch>
 	implements JournalContentSearchPersistence {
 	/*
@@ -5308,8 +5305,8 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No JournalContentSearch exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No JournalContentSearch exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
-	private static final Log _log = LogFactoryUtil.getLog(JournalContentSearchPersistenceImpl.class);
-	private static final JournalContentSearch _nullJournalContentSearch = new JournalContentSearchImpl() {
+	private static Log _log = LogFactoryUtil.getLog(JournalContentSearchPersistenceImpl.class);
+	private static JournalContentSearch _nullJournalContentSearch = new JournalContentSearchImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -5321,7 +5318,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			}
 		};
 
-	private static final CacheModel<JournalContentSearch> _nullJournalContentSearchCacheModel =
+	private static CacheModel<JournalContentSearch> _nullJournalContentSearchCacheModel =
 		new CacheModel<JournalContentSearch>() {
 			@Override
 			public JournalContentSearch toEntityModel() {

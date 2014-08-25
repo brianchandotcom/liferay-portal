@@ -431,5 +431,5 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 		_journalContentSearch.resetOriginalValues();
 	}
 
-	private final JournalContentSearch _journalContentSearch;
+	private JournalContentSearch _journalContentSearch;
 }

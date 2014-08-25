@@ -977,6 +977,161 @@ public class GroupUtil {
 	}
 
 	/**
+	* Returns all the groups where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @return the matching groups
+	*/
+	public static java.util.List<com.liferay.portal.model.Group> findByC_T(
+		long companyId, java.lang.String treePath) {
+		return getPersistence().findByC_T(companyId, treePath);
+	}
+
+	/**
+	* Returns a range of all the groups where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param start the lower bound of the range of groups
+	* @param end the upper bound of the range of groups (not inclusive)
+	* @return the range of matching groups
+	*/
+	public static java.util.List<com.liferay.portal.model.Group> findByC_T(
+		long companyId, java.lang.String treePath, int start, int end) {
+		return getPersistence().findByC_T(companyId, treePath, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the groups where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param start the lower bound of the range of groups
+	* @param end the upper bound of the range of groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching groups
+	*/
+	public static java.util.List<com.liferay.portal.model.Group> findByC_T(
+		long companyId, java.lang.String treePath, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator) {
+		return getPersistence()
+				   .findByC_T(companyId, treePath, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first group in the ordered set where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching group
+	* @throws com.liferay.portal.NoSuchGroupException if a matching group could not be found
+	*/
+	public static com.liferay.portal.model.Group findByC_T_First(
+		long companyId, java.lang.String treePath,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator)
+		throws com.liferay.portal.NoSuchGroupException {
+		return getPersistence()
+				   .findByC_T_First(companyId, treePath, orderByComparator);
+	}
+
+	/**
+	* Returns the first group in the ordered set where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching group, or <code>null</code> if a matching group could not be found
+	*/
+	public static com.liferay.portal.model.Group fetchByC_T_First(
+		long companyId, java.lang.String treePath,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_T_First(companyId, treePath, orderByComparator);
+	}
+
+	/**
+	* Returns the last group in the ordered set where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching group
+	* @throws com.liferay.portal.NoSuchGroupException if a matching group could not be found
+	*/
+	public static com.liferay.portal.model.Group findByC_T_Last(
+		long companyId, java.lang.String treePath,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator)
+		throws com.liferay.portal.NoSuchGroupException {
+		return getPersistence()
+				   .findByC_T_Last(companyId, treePath, orderByComparator);
+	}
+
+	/**
+	* Returns the last group in the ordered set where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching group, or <code>null</code> if a matching group could not be found
+	*/
+	public static com.liferay.portal.model.Group fetchByC_T_Last(
+		long companyId, java.lang.String treePath,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_T_Last(companyId, treePath, orderByComparator);
+	}
+
+	/**
+	* Returns the groups before and after the current group in the ordered set where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param groupId the primary key of the current group
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next group
+	* @throws com.liferay.portal.NoSuchGroupException if a group with the primary key could not be found
+	*/
+	public static com.liferay.portal.model.Group[] findByC_T_PrevAndNext(
+		long groupId, long companyId, java.lang.String treePath,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Group> orderByComparator)
+		throws com.liferay.portal.NoSuchGroupException {
+		return getPersistence()
+				   .findByC_T_PrevAndNext(groupId, companyId, treePath,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the groups where companyId = &#63; and treePath LIKE &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	*/
+	public static void removeByC_T(long companyId, java.lang.String treePath) {
+		getPersistence().removeByC_T(companyId, treePath);
+	}
+
+	/**
+	* Returns the number of groups where companyId = &#63; and treePath LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param treePath the tree path
+	* @return the number of matching groups
+	*/
+	public static int countByC_T(long companyId, java.lang.String treePath) {
+		return getPersistence().countByC_T(companyId, treePath);
+	}
+
+	/**
 	* Returns the group where companyId = &#63; and name = &#63; or throws a {@link com.liferay.portal.NoSuchGroupException} if it could not be found.
 	*
 	* @param companyId the company ID

@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.base;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -97,7 +95,6 @@ import javax.sql.DataSource;
  * @see com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil
  * @generated
  */
-@ProviderType
 public abstract class DLFileEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements DLFileEntryLocalService,
 		IdentifiableBean {

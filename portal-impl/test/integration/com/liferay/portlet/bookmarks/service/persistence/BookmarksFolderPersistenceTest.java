@@ -292,6 +292,20 @@ public class BookmarksFolderPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_T() {
+		try {
+			_persistence.countByC_T(RandomTestUtil.nextLong(), StringPool.BLANK);
+
+			_persistence.countByC_T(0L, StringPool.NULL);
+
+			_persistence.countByC_T(0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByC_NotS() {
 		try {
 			_persistence.countByC_NotS(RandomTestUtil.nextLong(),

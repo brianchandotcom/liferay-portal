@@ -447,5 +447,5 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 		_dlContent.resetOriginalValues();
 	}
 
-	private final DLContent _dlContent;
+	private DLContent _dlContent;
 }

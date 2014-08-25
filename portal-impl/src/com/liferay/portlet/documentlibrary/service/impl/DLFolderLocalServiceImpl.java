@@ -52,8 +52,10 @@ import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.RequiredFileEntryTypeException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
@@ -61,6 +63,7 @@ import com.liferay.portlet.documentlibrary.service.base.DLFolderLocalServiceBase
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FolderIdComparator;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.Serializable;
 
@@ -704,7 +707,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			expirationTime);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DLFolder moveFolder(
 			long userId, long folderId, long parentFolderId,
@@ -733,10 +735,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 			dlFolder.setModifiedDate(serviceContext.getModifiedDate(null));
 			dlFolder.setParentFolderId(parentFolderId);
-			dlFolder.setTreePath(dlFolder.buildTreePath());
 			dlFolder.setExpandoBridgeAttributes(serviceContext);
 
 			dlFolderPersistence.update(dlFolder);
+
+			updateTreePath(dlFolder);
 
 			return dlFolder;
 		}
@@ -1135,6 +1138,55 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 
 		return parentFolderId;
+	}
+
+	protected void updateTreePath(DLFolder folder) throws PortalException {
+
+		// File Entries
+
+		List<DLFileEntry> fileEntries = dlFileEntryPersistence.findByC_T(
+			folder.getCompanyId(),
+			CustomSQLUtil.keywords(folder.getTreePath())[0]);
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			DLFileEntry.class);
+
+		for (DLFileEntry fileEntry : fileEntries) {
+			fileEntry.setTreePath(fileEntry.buildTreePath());
+
+			dlFileEntryPersistence.update(fileEntry);
+
+			indexer.reindex(fileEntry);
+		}
+
+		// File Shortcuts
+
+		List<DLFileShortcut> fileShortcuts =
+			dlFileShortcutPersistence.findByC_T(
+				folder.getCompanyId(),
+				CustomSQLUtil.keywords(folder.getTreePath())[0]);
+
+		for (DLFileShortcut fileShortcut : fileShortcuts) {
+			fileShortcut.setTreePath(fileShortcut.buildTreePath());
+
+			dlFileShortcutPersistence.update(fileShortcut);
+		}
+
+		// Subfolders
+
+		List<DLFolder> folders = dlFolderPersistence.findByC_T(
+			folder.getCompanyId(),
+			CustomSQLUtil.keywords(folder.getTreePath())[0]);
+
+		indexer = IndexerRegistryUtil.nullSafeGetIndexer(DLFolder.class);
+
+		for (DLFolder curFolder : folders) {
+			curFolder.setTreePath(curFolder.buildTreePath());
+
+			dlFolderPersistence.update(curFolder);
+
+			indexer.reindex(curFolder);
+		}
 	}
 
 	protected void validateFolder(

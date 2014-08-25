@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.journal.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -50,7 +48,6 @@ import java.util.Map;
  * @see com.liferay.portlet.journal.model.JournalArticleImageModel
  * @generated
  */
-@ProviderType
 public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleImage>
 	implements JournalArticleImageModel {
 	/*
@@ -85,14 +82,14 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.journal.model.JournalArticleImage"),
 			true);
-	public static final long ARTICLEID_COLUMN_BITMASK = 1L;
-	public static final long ELINSTANCEID_COLUMN_BITMASK = 2L;
-	public static final long ELNAME_COLUMN_BITMASK = 4L;
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
-	public static final long LANGUAGEID_COLUMN_BITMASK = 16L;
-	public static final long TEMPIMAGE_COLUMN_BITMASK = 32L;
-	public static final long VERSION_COLUMN_BITMASK = 64L;
-	public static final long ARTICLEIMAGEID_COLUMN_BITMASK = 128L;
+	public static long ARTICLEID_COLUMN_BITMASK = 1L;
+	public static long ELINSTANCEID_COLUMN_BITMASK = 2L;
+	public static long ELNAME_COLUMN_BITMASK = 4L;
+	public static long GROUPID_COLUMN_BITMASK = 8L;
+	public static long LANGUAGEID_COLUMN_BITMASK = 16L;
+	public static long TEMPIMAGE_COLUMN_BITMASK = 32L;
+	public static long VERSION_COLUMN_BITMASK = 64L;
+	public static long ARTICLEIMAGEID_COLUMN_BITMASK = 128L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.journal.model.JournalArticleImage"));
 
@@ -622,8 +619,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = JournalArticleImage.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
+	private static ClassLoader _classLoader = JournalArticleImage.class.getClassLoader();
+	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			JournalArticleImage.class
 		};
 	private long _articleImageId;

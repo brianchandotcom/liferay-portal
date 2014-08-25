@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -29,7 +27,6 @@ import java.util.List;
  * @see com.liferay.portlet.documentlibrary.service.http.DLFileEntryServiceSoap
  * @generated
  */
-@ProviderType
 public class DLFileEntrySoap implements Serializable {
 	public static DLFileEntrySoap toSoapModel(DLFileEntry model) {
 		DLFileEntrySoap soapModel = new DLFileEntrySoap();

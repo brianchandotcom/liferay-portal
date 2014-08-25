@@ -60,6 +60,7 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -463,7 +464,6 @@ public class JournalFolderLocalServiceImpl
 		}
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalFolder moveFolder(
 			long folderId, long parentFolderId, ServiceContext serviceContext)
@@ -482,10 +482,11 @@ public class JournalFolderLocalServiceImpl
 
 		folder.setModifiedDate(serviceContext.getModifiedDate(null));
 		folder.setParentFolderId(parentFolderId);
-		folder.setTreePath(folder.buildTreePath());
 		folder.setExpandoBridgeAttributes(serviceContext);
 
 		journalFolderPersistence.update(folder);
+
+		updateTreePath(folder);
 
 		return folder;
 	}
@@ -1318,6 +1319,44 @@ public class JournalFolderLocalServiceImpl
 
 				indexer.reindex(folder);
 			}
+		}
+	}
+
+	protected void updateTreePath(JournalFolder folder) throws PortalException {
+
+		// Articles
+
+		List<JournalArticle> articles =
+			journalArticlePersistence.findByC_T(
+				folder.getCompanyId(),
+				CustomSQLUtil.keywords(folder.getTreePath())[0]);
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			JournalArticle.class);
+
+		for (JournalArticle article : articles) {
+			article.setTreePath(article.buildTreePath());
+
+			journalArticlePersistence.update(article);
+
+			indexer.reindex(article);
+		}
+
+		// Subfolders
+
+		List<JournalFolder> folders =
+			journalFolderPersistence.findByC_T(
+				folder.getCompanyId(),
+				CustomSQLUtil.keywords(folder.getTreePath())[0]);
+
+		indexer = IndexerRegistryUtil.nullSafeGetIndexer(JournalFolder.class);
+
+		for (JournalFolder curFolder : folders) {
+			curFolder.setTreePath(curFolder.buildTreePath());
+
+			journalFolderPersistence.update(curFolder);
+
+			indexer.reindex(curFolder);
 		}
 	}
 

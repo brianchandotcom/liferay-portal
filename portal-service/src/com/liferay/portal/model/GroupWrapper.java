@@ -1184,5 +1184,5 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		_group.resetOriginalValues();
 	}
 
-	private final Group _group;
+	private Group _group;
 }

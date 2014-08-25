@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.Serializable;
 
 import java.sql.Blob;
@@ -29,7 +27,6 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class DLContentSoap implements Serializable {
 	public static DLContentSoap toSoapModel(DLContent model) {
 		DLContentSoap soapModel = new DLContentSoap();

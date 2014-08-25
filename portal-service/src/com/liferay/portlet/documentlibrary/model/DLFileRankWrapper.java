@@ -449,5 +449,5 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 		_dlFileRank.resetOriginalValues();
 	}
 
-	private final DLFileRank _dlFileRank;
+	private DLFileRank _dlFileRank;
 }

@@ -105,18 +105,19 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.Group"),
 			true);
-	public static final long ACTIVE_COLUMN_BITMASK = 1L;
-	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
-	public static final long CLASSPK_COLUMN_BITMASK = 4L;
-	public static final long COMPANYID_COLUMN_BITMASK = 8L;
-	public static final long FRIENDLYURL_COLUMN_BITMASK = 16L;
-	public static final long GROUPID_COLUMN_BITMASK = 32L;
-	public static final long LIVEGROUPID_COLUMN_BITMASK = 64L;
-	public static final long NAME_COLUMN_BITMASK = 128L;
-	public static final long PARENTGROUPID_COLUMN_BITMASK = 256L;
-	public static final long SITE_COLUMN_BITMASK = 512L;
-	public static final long TYPE_COLUMN_BITMASK = 1024L;
-	public static final long UUID_COLUMN_BITMASK = 2048L;
+	public static long ACTIVE_COLUMN_BITMASK = 1L;
+	public static long CLASSNAMEID_COLUMN_BITMASK = 2L;
+	public static long CLASSPK_COLUMN_BITMASK = 4L;
+	public static long COMPANYID_COLUMN_BITMASK = 8L;
+	public static long FRIENDLYURL_COLUMN_BITMASK = 16L;
+	public static long GROUPID_COLUMN_BITMASK = 32L;
+	public static long LIVEGROUPID_COLUMN_BITMASK = 64L;
+	public static long NAME_COLUMN_BITMASK = 128L;
+	public static long PARENTGROUPID_COLUMN_BITMASK = 256L;
+	public static long SITE_COLUMN_BITMASK = 512L;
+	public static long TREEPATH_COLUMN_BITMASK = 1024L;
+	public static long TYPE_COLUMN_BITMASK = 2048L;
+	public static long UUID_COLUMN_BITMASK = 4096L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -632,7 +633,17 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public void setTreePath(String treePath) {
+		_columnBitmask |= TREEPATH_COLUMN_BITMASK;
+
+		if (_originalTreePath == null) {
+			_originalTreePath = _treePath;
+		}
+
 		_treePath = treePath;
+	}
+
+	public String getOriginalTreePath() {
+		return GetterUtil.getString(_originalTreePath);
 	}
 
 	@JSON
@@ -973,6 +984,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 		groupModelImpl._setOriginalLiveGroupId = false;
 
+		groupModelImpl._originalTreePath = groupModelImpl._treePath;
+
 		groupModelImpl._originalName = groupModelImpl._name;
 
 		groupModelImpl._originalType = groupModelImpl._type;
@@ -1218,10 +1231,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return sb.toString();
 	}
 
-	private static final ClassLoader _classLoader = Group.class.getClassLoader();
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Group.class
-		};
+	private static ClassLoader _classLoader = Group.class.getClassLoader();
+	private static Class<?>[] _escapedModelInterfaces = new Class[] { Group.class };
 	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
@@ -1245,6 +1256,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	private long _originalLiveGroupId;
 	private boolean _setOriginalLiveGroupId;
 	private String _treePath;
+	private String _originalTreePath;
 	private String _name;
 	private String _originalName;
 	private String _description;

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<c:if test="<%= dlFileVersionActionsDisplayContext.isDownloadButtonVisible() %>">
-	<liferay-ui:icon
-		iconCssClass="icon-download"
-		message='<%= LanguageUtil.get(request, "download") + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
-		url="<%= DLUtil.getDownloadURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>"
-	/>
-</c:if>
+package com.liferay.portlet.documentlibrary.context;
+
+/**
+ * @author Iván Zaera
+ */
+public class DLMenuItems {
+
+	public static final String MENU_ITEM_ID_DOWNLOAD = "download";
+
+}

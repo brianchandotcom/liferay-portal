@@ -386,18 +386,6 @@
 		<put name="portlet_content" value="/portlet/control_panel_menu/view.jsp" />
 	</definition>
 
-	<!-- Currency Converter -->
-
-	<definition name="portlet.currency_converter" extends="portlet" />
-
-	<definition name="portlet.currency_converter.edit" extends="portlet.currency_converter">
-		<put name="portlet_content" value="/portlet/currency_converter/edit.jsp" />
-	</definition>
-
-	<definition name="portlet.currency_converter.view" extends="portlet.currency_converter">
-		<put name="portlet_content" value="/portlet/currency_converter/view.jsp" />
-	</definition>
-
 	<!-- Directory -->
 
 	<definition name="portlet.directory" extends="portlet" />

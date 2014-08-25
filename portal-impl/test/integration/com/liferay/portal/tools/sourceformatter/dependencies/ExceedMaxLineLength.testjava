@@ -14,9 +14,21 @@
 
 package com.liferay.portal.tools.sourceformatter.dependencies;
 
+import com.liferay.util.bridges.mvc.ActionCommand;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Hugo Huijser
  */
+@Component(
+	immediate = true,
+	property = {
+		"action.command.name=rss",
+		"javax.portlet.name=com_liferay_social_activities_portlet_SocialActivitiesPortlet"
+	},
+	service = ActionCommand.class
+)
 public class ExceedMaxLineLength {
 
 	public static final String TEST = "This is very long line and therefore it will exceed the maximum allowed line length";

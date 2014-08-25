@@ -1127,13 +1127,9 @@ public class LocalProcessExecutorTest {
 
 				Assert.fail();
 			}
-			catch (ExecutionException ee) {
-				Assert.assertFalse(future.isCancelled());
+			catch (CancellationException ce) {
+				Assert.assertTrue(future.isCancelled());
 				Assert.assertTrue(future.isDone());
-
-				Throwable throwable = ee.getCause();
-
-				Assert.assertTrue(throwable instanceof ProcessException);
 			}
 		}
 		finally {

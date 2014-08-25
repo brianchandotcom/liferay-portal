@@ -1126,6 +1126,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		int lineToSkipIfEmpty = 0;
 
+		String componentAnnotationPropertyValue = null;
+
 		String ifClause = StringPool.BLANK;
 
 		String regexPattern = StringPool.BLANK;
@@ -1592,8 +1594,22 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						 line.contains(" index IX_")) {
 				}
 				else if (lineLength > 80) {
-					processErrorMessage(
-						fileName, "> 80: " + fileName + " " + lineCount);
+					if (componentAnnotationPropertyValue == null) {
+						Matcher matcher = _componentAnnotationPattern.matcher(
+							content);
+
+						if (matcher.find()) {
+							componentAnnotationPropertyValue = matcher.group(2);
+						}
+						else {
+							componentAnnotationPropertyValue = StringPool.BLANK;
+						}
+					}
+
+					if (!componentAnnotationPropertyValue.contains(line)) {
+						processErrorMessage(
+							fileName, "> 80: " + fileName + " " + lineCount);
+					}
 				}
 				else {
 					int lineLeadingTabCount = getLeadingTabCount(line);
@@ -2294,6 +2310,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private boolean _checkUnprocessedExceptions;
+	private Pattern _componentAnnotationPattern = Pattern.compile(
+		"\n@Component\\(\n([\\s\\S]*?)\tproperty = \\{([\\s\\S]*?)\t\\}");
 	private Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(Map|Set|List)<(.+)>" +
 			"\\(\n*\t*(.*)\\);\n");

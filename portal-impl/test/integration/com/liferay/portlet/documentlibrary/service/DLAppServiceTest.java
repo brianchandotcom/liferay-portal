@@ -429,75 +429,50 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testDeleteExplicitlyTrashedFolder() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+		Folder folder = DLAppTestUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId());
+		Folder subfolder = DLAppTestUtil.addFolder(
+			group.getGroupId(), folder.getFolderId());
 
-		Folder parent = DLAppServiceUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+		DLAppServiceUtil.moveFolderToTrash(subfolder.getFolderId());
+		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
 
-		Folder child = DLAppServiceUtil.addFolder(
-			group.getGroupId(), parent.getFolderId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+		DLAppServiceUtil.deleteFolder(folder.getFolderId());
 
-		DLAppServiceUtil.moveFolderToTrash(child.getFolderId());
-		DLAppServiceUtil.moveFolderToTrash(parent.getFolderId());
-
-		DLAppServiceUtil.deleteFolder(parent.getFolderId());
-
-		DLAppServiceUtil.getFolder(child.getFolderId());
+		DLAppServiceUtil.getFolder(subfolder.getFolderId());
 	}
 
 	@Test
 	public void testDeleteExplicitlyTrashedFolderByName() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+		Folder folder = DLAppTestUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId());
+		Folder subfolder = DLAppTestUtil.addFolder(
+			group.getGroupId(), folder.getFolderId());
 
-		Folder parent = DLAppServiceUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+		DLAppServiceUtil.moveFolderToTrash(subfolder.getFolderId());
+		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
 
-		Folder child = DLAppServiceUtil.addFolder(
-			group.getGroupId(), parent.getFolderId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
-
-		DLAppServiceUtil.moveFolderToTrash(child.getFolderId());
-		DLAppServiceUtil.moveFolderToTrash(parent.getFolderId());
-
-		parent = DLAppServiceUtil.getFolder(parent.getFolderId());
+		folder = DLAppServiceUtil.getFolder(folder.getFolderId());
 
 		DLAppServiceUtil.deleteFolder(
-			parent.getRepositoryId(), parent.getParentFolderId(),
-			parent.getName());
+			folder.getRepositoryId(), folder.getParentFolderId(),
+			folder.getName());
 
-		DLAppServiceUtil.getFolder(child.getFolderId());
+		DLAppServiceUtil.getFolder(subfolder.getFolderId());
 	}
 
 	@Test
 	public void testDeleteImplicitlyTrashedFolder() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
 		int initialFolderCount = DLAppServiceUtil.getFoldersCount(
 			group.getGroupId(), parentFolder.getFolderId());
 
-		Folder parent = DLAppServiceUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+		Folder folder = DLAppTestUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId());
+		DLAppTestUtil.addFolder(group.getGroupId(), folder.getFolderId());
 
-		DLAppServiceUtil.addFolder(
-			group.getGroupId(), parent.getFolderId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
 
-		DLAppServiceUtil.moveFolderToTrash(parent.getFolderId());
-
-		DLAppServiceUtil.deleteFolder(parent.getFolderId());
+		DLAppServiceUtil.deleteFolder(folder.getFolderId());
 
 		int afterDeleteFolderCount = DLAppServiceUtil.getFoldersCount(
 			group.getGroupId(), parentFolder.getFolderId());
@@ -507,29 +482,20 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testDeleteImplicitlyTrashedFolderByName() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
 		int initialFolderCount = DLAppServiceUtil.getFoldersCount(
 			group.getGroupId(), parentFolder.getFolderId());
 
-		Folder parent = DLAppServiceUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+		Folder folder = DLAppTestUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId());
+		DLAppTestUtil.addFolder(group.getGroupId(), folder.getFolderId());
 
-		DLAppServiceUtil.addFolder(
-			group.getGroupId(), parent.getFolderId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
 
-		DLAppServiceUtil.moveFolderToTrash(parent.getFolderId());
-
-		parent = DLAppServiceUtil.getFolder(parent.getFolderId());
+		folder = DLAppServiceUtil.getFolder(folder.getFolderId());
 
 		DLAppServiceUtil.deleteFolder(
-			parent.getRepositoryId(), parent.getParentFolderId(),
-			parent.getName());
+			folder.getRepositoryId(), folder.getParentFolderId(),
+			folder.getName());
 
 		int afterDeleteFolderCount = DLAppServiceUtil.getFoldersCount(
 			group.getGroupId(), parentFolder.getFolderId());

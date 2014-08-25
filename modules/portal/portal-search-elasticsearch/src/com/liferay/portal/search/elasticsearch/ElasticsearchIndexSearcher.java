@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
@@ -79,26 +80,43 @@ import org.elasticsearch.search.sort.SortOrder;
 public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	@Override
-	public Hits search(SearchContext searchContext, Query query) {
+	public Hits search(SearchContext searchContext, Query query)
+		throws SearchException {
+
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
 
-		SearchResponse searchResponse = doSearch(searchContext, query);
+		try {
+			SearchResponse searchResponse = doSearch(searchContext, query);
 
-		Hits hits = processSearchResponse(searchResponse, searchContext, query);
+			Hits hits = processSearchResponse(
+				searchResponse, searchContext, query);
 
-		hits.setStart(stopWatch.getStartTime());
+			hits.setStart(stopWatch.getStartTime());
 
-		if (_log.isInfoEnabled()) {
-			stopWatch.stop();
-
-			_log.info(
-				"Searching " + query.toString() + " took " +
-					stopWatch.getTime() + " ms");
+			return hits;
 		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
 
-		return hits;
+			if (!_swallowException) {
+				throw new SearchException(e.getMessage());
+			}
+
+			return new HitsImpl();
+		}
+		finally {
+			if (_log.isInfoEnabled()) {
+				stopWatch.stop();
+
+				_log.info(
+					"Searching " + query.toString() + " took " +
+						stopWatch.getTime() + " ms");
+			}
+		}
 	}
 
 	public void setElasticsearchConnectionManager(
@@ -109,6 +127,10 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	public void setMaxResultSize(int maxResultSize) {
 		_maxResultSize = maxResultSize;
+	}
+
+	public void setSwallowException(boolean swallowException) {
+		_swallowException = swallowException;
 	}
 
 	protected void addFacets(
@@ -218,14 +240,16 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			snippet = sb.toString();
 		}
 
-		Matcher matcher = _pattern.matcher(snippet);
+		if (!snippet.equals(StringPool.BLANK)) {
+			Matcher matcher = _pattern.matcher(snippet);
 
-		while (matcher.find()) {
-			queryTerms.add(matcher.group(1));
+			while (matcher.find()) {
+				queryTerms.add(matcher.group(1));
+			}
+
+			snippet = StringUtil.replace(snippet, "<em>", StringPool.BLANK);
+			snippet = StringUtil.replace(snippet, "</em>", StringPool.BLANK);
 		}
-
-		snippet = StringUtil.replace(snippet, "<em>", StringPool.BLANK);
-		snippet = StringUtil.replace(snippet, "</em>", StringPool.BLANK);
 
 		document.addText(
 			Field.SNIPPET.concat(StringPool.UNDERLINE).concat(snippetFieldName),
@@ -317,13 +341,17 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		SearchRequestBuilder searchRequestBuilder = client.prepareSearch(
 			String.valueOf(searchContext.getCompanyId()));
 
+		QueryConfig queryConfig = query.getQueryConfig();
+
 		addFacets(searchRequestBuilder, searchContext);
-		addHighlights(searchRequestBuilder, query.getQueryConfig());
+		addHighlights(searchRequestBuilder, queryConfig);
 		addPagination(
 			searchRequestBuilder, searchContext.getStart(),
 			searchContext.getEnd());
-		addSelectedFields(searchRequestBuilder, query.getQueryConfig());
+		addSelectedFields(searchRequestBuilder, queryConfig);
 		addSort(searchRequestBuilder, searchContext.getSorts());
+
+		searchRequestBuilder.setTrackScores(queryConfig.isScoreEnabled());
 
 		QueryBuilder queryBuilder = QueryBuilders.queryString(query.toString());
 
@@ -465,5 +493,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private int _maxResultSize = 1000;
 	private Pattern _pattern = Pattern.compile("<em>(.*?)</em>");
+	private boolean _swallowException;
 
 }

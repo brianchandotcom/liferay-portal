@@ -14,6 +14,13 @@
 
 package com.liferay.polls.service.impl;
 
+import com.liferay.polls.QuestionChoiceException;
+import com.liferay.polls.QuestionDescriptionException;
+import com.liferay.polls.QuestionExpirationDateException;
+import com.liferay.polls.QuestionTitleException;
+import com.liferay.polls.model.PollsChoice;
+import com.liferay.polls.model.PollsQuestion;
+import com.liferay.polls.service.base.PollsQuestionLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -23,13 +30,6 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.polls.QuestionChoiceException;
-import com.liferay.polls.QuestionDescriptionException;
-import com.liferay.polls.QuestionExpirationDateException;
-import com.liferay.polls.QuestionTitleException;
-import com.liferay.polls.model.PollsChoice;
-import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.service.base.PollsQuestionLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;

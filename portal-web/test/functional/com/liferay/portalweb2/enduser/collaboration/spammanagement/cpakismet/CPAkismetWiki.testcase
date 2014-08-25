@@ -78,6 +78,8 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
+		<execute macro="WikiPage#gotoAllPagesCP" />
+
 		<execute macro="WikiPage#addCP">
 			<var name="wikiPageContent" value="Wiki Page Content" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -208,6 +210,8 @@
 		<execute macro="WikiNode#gotoCP">
 			<var name="wikiNodeName" value="Main" />
 		</execute>
+
+		<execute macro="WikiPage#gotoAllPagesCP" />
 
 		<execute macro="WikiPage#addCP">
 			<var name="wikiPageContent" value="Wiki Page Content" />

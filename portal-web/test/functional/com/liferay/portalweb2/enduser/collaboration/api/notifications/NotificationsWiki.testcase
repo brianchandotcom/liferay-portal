@@ -32,6 +32,10 @@
 	</tear-down>
 
 	<command name="ViewWebsiteNotificationForNewWikiPage" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
 		<execute macro="WikiPortlet#subscribeToNodeCP">
 			<var name="wikiNodeName" value="Main" />
 		</execute>
@@ -87,6 +91,10 @@
 		<execute macro="WikiPage#addPG">
 			<var name="wikiPageContent" value="Wiki Page Content" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
 		</execute>
 
 		<execute macro="WikiPortlet#subscribeToNodeCP">

@@ -345,6 +345,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="WikiPage#gotoFrontPagePG" />
+
 		<execute macro="WikiPage#viewFrontPagePG">
 			<var name="wikiPageContent" value="${wikiPageText}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
@@ -737,6 +739,23 @@
 			<var name="wikiPage2Link" value="${wikiPage2Link}" />
 			<var name="wikiPage2Title" value="${wikiPage2Title}" />
 		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="${wikiPage1Title}" />
+		</execute>
+
+		<execute macro="WikiPage#gotoBodyLinkPG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="WikiPage#viewPG">
+			<var name="wikiPageContent" value="${wikiPage2Content}" />
+			<var name="wikiPageTitle" value="${wikiPage2Title}" />
+		</execute>
 	</command>
 
 	<command name="RemoveRedirectWikiPage" priority="5">
@@ -786,6 +805,11 @@
 			<var name="wikiPageRedirectLink" value="${wikiPageRedirectLink}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 			<var name="wikiPageTitleRename" value="${wikiPageTitleRename}" />
+		</execute>
+
+		<execute macro="WikiPage#viewRenamedPG">
+			<var name="wikiPageRedirectLink" value="${wikiPageRedirectLink}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

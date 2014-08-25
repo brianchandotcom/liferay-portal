@@ -24,7 +24,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PORLET_BODY_TITLE_HEADER</td>
+	<td>PORTLET_BODY_TITLE_HEADER</td>
 	<td>xpath=(//h3[@class='header-title']/span)[1]</td>
 	<td></td>
 </tr>

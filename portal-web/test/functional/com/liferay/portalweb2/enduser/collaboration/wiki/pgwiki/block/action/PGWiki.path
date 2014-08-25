@@ -44,7 +44,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PORLET_BODY_TITLE_HEADER</td>
+	<td>PORTLET_BODY_TITLE_HEADER</td>
 	<td>//h3[@class='header-title']/span</td>
 	<td></td>
 </tr>

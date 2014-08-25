@@ -19,10 +19,6 @@
 	</command>
 
 	<command name="subscribeToNodeCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
 		<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_ACTIONS" />

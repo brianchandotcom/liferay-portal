@@ -262,7 +262,7 @@
 			<isset var="contentDateRange" />
 			<then>
 				<execute action="StagingPublishtolivenow#click" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
-				<execute action="StagingPublishtolivenow#assertClick" locator-key1="CHOOSE_CONTENT_DATE_RANGE_SELECT_LINK" value1="Select" />
+				<execute action="StagingPublishtolivenow#assertClick" locator-key1="CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK" value1="Change" />
 
 				<var name="key_contentDateRange" value="${contentDateRange}" />
 
@@ -523,7 +523,7 @@
 			<isset var="contentDateRange" />
 			<then>
 				<execute action="StagingPublishtolivenow#click" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
-				<execute action="StagingPublishtolivenow#assertClick" locator-key1="CHOOSE_CONTENT_DATE_RANGE_SELECT_LINK" value1="Select" />
+				<execute action="StagingPublishtolivenow#assertClick" locator-key1="CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK" value1="Change" />
 
 				<var name="key_contentDateRange" value="${contentDateRange}" />
 
@@ -631,7 +631,8 @@
 
 		<var name="key_publishTemplateName" value="${publishTemplateName}" />
 
-		<execute action="StagingPublishtolivenow#click" locator-key1="PUBLISH_TEMPLATES_TABLE_PUBLISH_TO_LIVE_BUTTON" />
+		<execute action="StagingPublishtolivenow#click" locator-key1="PUBLISH_TEMPLATES_TABLE_PUBLISH_TO_LIVE_ARROW_BUTTON" />
+		<execute action="StagingPublishtolivenow#assertClick" locator-key1="PUBLISH_TEMPLATE_PUBLISH_TO_LIVE_BUTTON" value1="Publish to Live" />
 		<execute action="StagingPublishtolivenow#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_TABLE_STATUS" value1="Successful" />
 		<execute action="StagingPublishtolivenow#selectFrameTop" value1="relative=top" />
 	</command>
@@ -774,7 +775,7 @@
 
 		<execute action="StagingPublishtolivenow#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />
 		<execute action="StagingPublishtolivenow#check" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
-		<execute action="StagingPublishtolivenow#click" locator-key1="CHOOSE_CONTENT_DATE_RANGE_SELECT_LINK" />
+		<execute action="StagingPublishtolivenow#click" locator-key1="CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK" />
 
 		<var name="key_contentDateRange" value="DateRange" />
 

@@ -54,6 +54,9 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.time.StopWatch;
 
 import org.elasticsearch.action.ActionFuture;
+import org.elasticsearch.action.count.CountRequest;
+import org.elasticsearch.action.count.CountRequestBuilder;
+import org.elasticsearch.action.count.CountResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -88,6 +91,15 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		stopWatch.start();
 
 		try {
+			if ((searchContext.getStart() == QueryUtil.ALL_POS) &&
+				(searchContext.getEnd() == QueryUtil.ALL_POS)) {
+
+				long total = searchCount(searchContext, query);
+
+				searchContext.setStart(0);
+				searchContext.setEnd((int)total);
+			}
+
 			SearchResponse searchResponse = doSearch(searchContext, query);
 
 			Hits hits = processSearchResponse(
@@ -119,14 +131,60 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
+	public long searchCount(SearchContext searchContext, Query query)
+		throws SearchException {
+
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
+		try {
+			Client client = _elasticsearchConnectionManager.getClient();
+
+			CountRequestBuilder countRequestBuilder = client.prepareCount(
+				String.valueOf(searchContext.getCompanyId()));
+
+			QueryBuilder queryBuilder = QueryBuilders.queryString(
+				query.toString());
+
+			countRequestBuilder.setQuery(queryBuilder);
+
+			countRequestBuilder.setTypes(DocumentTypes.LIFERAY);
+
+			CountRequest countRequest = countRequestBuilder.request();
+
+			ActionFuture<CountResponse> future = client.count(countRequest);
+
+			CountResponse countResponse = future.actionGet();
+
+			return countResponse.getCount();
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+
+			if (!_swallowException) {
+				throw new SearchException(e.getMessage());
+			}
+
+			return 0;
+		}
+		finally {
+			if (_log.isInfoEnabled()) {
+				stopWatch.stop();
+
+				_log.info(
+					"Searching " + query.toString() + " took " +
+						stopWatch.getTime() + " ms");
+			}
+		}
+	}
+
 	public void setElasticsearchConnectionManager(
 		ElasticsearchConnectionManager elasticsearchConnectionManager) {
 
 		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-	}
-
-	public void setMaxResultSize(int maxResultSize) {
-		_maxResultSize = maxResultSize;
 	}
 
 	public void setSwallowException(boolean swallowException) {
@@ -184,13 +242,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	protected void addPagination(
 		SearchRequestBuilder searchRequestBuilder, int start, int end) {
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
-			searchRequestBuilder.setSize(_maxResultSize);
-		}
-		else {
-			searchRequestBuilder.setFrom(start);
-			searchRequestBuilder.setSize(end - start);
-		}
+		searchRequestBuilder.setFrom(start);
+		searchRequestBuilder.setSize(end - start);
 	}
 
 	protected void addSelectedFields(
@@ -410,8 +463,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		int start = startAndEnd[0];
 		int end = startAndEnd[1];
 
-		if ((searchContext.getStart() != QueryUtil.ALL_POS) &&
-			(searchContext.getEnd() != QueryUtil.ALL_POS) &&
+		if ((searchContext.getStart() != 0) &&
+			(searchContext.getEnd() != searchHits.getTotalHits()) &&
 			((start != searchContext.getStart()) ||
 			 (end != searchContext.getEnd()))) {
 
@@ -491,7 +544,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		ElasticsearchIndexSearcher.class);
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-	private int _maxResultSize = 1000;
 	private Pattern _pattern = Pattern.compile("<em>(.*?)</em>");
 	private boolean _swallowException;
 

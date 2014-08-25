@@ -33,7 +33,8 @@ IPInfo ipInfo = (IPInfo)request.getAttribute(IPInfo.class.getName());
 		Latitude: <%= ipInfo.getLatitude() %><br />
 		Longitude: <%= ipInfo.getLongitude() %><br />
 		Postal Code: <%= ipInfo.getPostalCode() %><br />
-		Region: <%= ipInfo.getRegion() %>
+		Region Code: <%= ipInfo.getRegionCode() %>
+		Region Name: <%= ipInfo.getRegionName() %>
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-error">

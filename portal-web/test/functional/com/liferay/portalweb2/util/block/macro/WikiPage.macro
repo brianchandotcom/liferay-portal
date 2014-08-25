@@ -1313,7 +1313,7 @@
 
 	<command name="viewLocalizedFrontPagePG">
 		<if>
-			<equals arg1="${rtl}" arg2="true" />
+			<equals arg1="${rightToLeft}" arg2="true" />
 			<then>
 				<var name="textDirection" value="rtl" />
 			</then>

@@ -146,7 +146,7 @@
 			<isset var="contentDateRange" />
 			<then>
 				<execute action="BasePortletExport#click" locator-key1="CONTENT_CHOOSE_CONTENT_RADIO" />
-				<execute action="BasePortletExport#assertClick" locator-key1="CHOOSE_CONTENT_DATE_RANGE_SELECT_LINK" value1="Select" />
+				<execute action="BasePortletExport#assertClick" locator-key1="CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK" value1="Change" />
 
 				<var name="key_contentDateRange" value="${contentDateRange}" />
 
@@ -205,7 +205,8 @@
 	<command name="exportExportTemplateCP">
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 
-		<execute action="CPSitepagesExport#click" locator-key1="EXPORT_TEMPLATES_TABLE_EXPORT_BUTTON" />
+		<execute action="CPSitepagesExport#click" locator-key1="EXPORT_TEMPLATES_TABLE_EXPORT_ARROW_BUTTON" />
+		<execute action="CPSitepagesExport#assertClick" locator-key1="EXPORT_TEMPLATES_EXPORT_BUTTON" value1="Export" />
 
 		<var name="exportTemplateName" value="${exportTemplateName?replace(' ', '_')}" />
 		<var name="key_larFileName" value="${exportTemplateName}" />

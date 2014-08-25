@@ -14,14 +14,14 @@
 
 package com.liferay.pollsdisplay.action;
 
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.polls.NoSuchQuestionException;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.PollsQuestionServiceUtil;
 import com.liferay.polls.util.PollsWebKeys;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.struts.PortletAction;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;

@@ -30,7 +30,9 @@ import org.springframework.context.ApplicationContext;
 /**
  * @author Miguel Pastor
  */
-@Component(immediate = true)
+@Component(
+	immediate = true, service = PollServicesConfigurator.class
+)
 public class PollServicesConfigurator {
 
 	public static final String BUNDLE_SYMBOLYC_NAME =

@@ -14,11 +14,11 @@
 
 package com.liferay.polls.verify;
 
-import com.liferay.portal.verify.VerifyAuditedModel;
-import com.liferay.portal.verify.VerifyResourcePermissions;
 import com.liferay.polls.verify.model.PollsChoiceVerifiableModel;
 import com.liferay.polls.verify.model.PollsQuestionVerifiableModel;
 import com.liferay.polls.verify.model.PollsVoteVerifiableModel;
+import com.liferay.portal.verify.VerifyAuditedModel;
+import com.liferay.portal.verify.VerifyResourcePermissions;
 
 /**
  * @author Miguel Pastor

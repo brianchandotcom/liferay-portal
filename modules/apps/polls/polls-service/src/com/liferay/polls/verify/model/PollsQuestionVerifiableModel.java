@@ -14,8 +14,8 @@
 
 package com.liferay.polls.verify.model;
 
-import com.liferay.portal.verify.model.VerifiableResourcedModel;
 import com.liferay.polls.model.PollsQuestion;
+import com.liferay.portal.verify.model.VerifiableResourcedModel;
 
 /**
  * @author Brian Wing Shun Chan

@@ -14,13 +14,13 @@
 
 package com.liferay.polls.service.impl;
 
+import com.liferay.polls.QuestionChoiceException;
+import com.liferay.polls.model.PollsChoice;
+import com.liferay.polls.service.base.PollsChoiceLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.polls.QuestionChoiceException;
-import com.liferay.polls.model.PollsChoice;
-import com.liferay.polls.service.base.PollsChoiceLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;

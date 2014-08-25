@@ -321,6 +321,95 @@
 
 	Liferay.provide(
 		Util,
+		'resizeTextarea',
+		function(elString, usingRichEditor) {
+			var el = A.one('#' + elString);
+
+			if (!el) {
+				el = A.one('textarea[name=' + elString + STR_RIGHT_SQUARE_BRACKET);
+			}
+
+			if (el) {
+				var pageBody = A.getBody();
+
+				var diff;
+
+				var resize = function(event) {
+					var pageBodyHeight = pageBody.get('winHeight');
+
+					if (usingRichEditor) {
+						try {
+							if (el.get('nodeName').toLowerCase() != 'iframe') {
+								el = window[elString];
+							}
+						}
+						catch (e) {
+						}
+					}
+
+					if (!diff) {
+						var buttonRow = pageBody.one('.button-holder');
+						var templateEditor = pageBody.one('.lfr-template-editor');
+
+						if (buttonRow && templateEditor) {
+							var region = templateEditor.getXY();
+
+							diff = (buttonRow.outerHeight(true) + region[1]) + 25;
+						}
+						else {
+							diff = 170;
+						}
+					}
+
+					el = A.one(el);
+
+					var styles = {
+						width: '98%'
+					};
+
+					if (event) {
+						styles.height = (pageBodyHeight - diff);
+					}
+
+					if (usingRichEditor) {
+						if (!el || !A.DOM.inDoc(el)) {
+							A.on(
+								'available',
+								function(event) {
+									el = A.one(window[elString]);
+
+									if (el) {
+										el.setStyles(styles);
+									}
+								},
+								'#' + elString + '_cp'
+							);
+
+							return;
+						}
+					}
+
+					if (el) {
+						el.setStyles(styles);
+					}
+				};
+
+				resize();
+
+				var dialog = Liferay.Util.getWindow();
+
+				if (dialog) {
+					var resizeEventHandle = dialog.iframe.after('resizeiframe:heightChange', resize);
+
+					A.getWin().on('unload', resizeEventHandle.detach, resizeEventHandle);
+				}
+			}
+		},
+		['aui-base']
+	);
+
+	Liferay.provide(
+		Util,
 		'setSelectedValue',
 		function(col, value) {
 			var option = A.one(col).one('option[value=' + value + STR_RIGHT_SQUARE_BRACKET);

@@ -82,13 +82,13 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 
 	@Override
 	public void enableRemoteStaging(long userId,
-		com.liferay.portal.model.Group liveGroup, boolean branchingPublic,
+		com.liferay.portal.model.Group stagingGroup, boolean branchingPublic,
 		boolean branchingPrivate, java.lang.String remoteAddress,
 		int remotePort, java.lang.String remotePathContext,
 		boolean secureConnection, long remoteGroupId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_stagingLocalService.enableRemoteStaging(userId, liveGroup,
+		_stagingLocalService.enableRemoteStaging(userId, stagingGroup,
 			branchingPublic, branchingPrivate, remoteAddress, remotePort,
 			remotePathContext, secureConnection, remoteGroupId, serviceContext);
 	}

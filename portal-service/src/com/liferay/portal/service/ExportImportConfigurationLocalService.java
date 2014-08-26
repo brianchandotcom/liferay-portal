@@ -64,6 +64,7 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.ExportImportConfiguration addExportImportConfiguration(
 		long userId, long groupId, java.lang.String name,
 		java.lang.String description, int type,
@@ -251,10 +252,12 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.ExportImportConfiguration moveExportImportConfigurationToTrash(
 		long userId, long exportImportConfigurationId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.ExportImportConfiguration restoreExportImportConfigurationFromTrash(
 		long userId, long exportImportConfigurationId)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -276,6 +279,7 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 	public com.liferay.portal.model.ExportImportConfiguration updateExportImportConfiguration(
 		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration);
 
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.ExportImportConfiguration updateExportImportConfiguration(
 		long userId, long exportImportConfigurationId, java.lang.String name,
 		java.lang.String description,
@@ -283,6 +287,7 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portal.model.ExportImportConfiguration updateStatus(
 		long userId, long exportImportConfigurationId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException;

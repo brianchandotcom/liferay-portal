@@ -71,7 +71,7 @@ public interface StagingLocalService extends BaseLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void enableRemoteStaging(long userId,
-		com.liferay.portal.model.Group liveGroup, boolean branchingPublic,
+		com.liferay.portal.model.Group stagingGroup, boolean branchingPublic,
 		boolean branchingPrivate, java.lang.String remoteAddress,
 		int remotePort, java.lang.String remotePathContext,
 		boolean secureConnection, long remoteGroupId,

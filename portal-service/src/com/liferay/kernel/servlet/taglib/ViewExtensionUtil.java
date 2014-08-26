@@ -29,12 +29,8 @@ import java.util.List;
  */
 public class ViewExtensionUtil {
 
-	public static ViewExtensionUtil getInstance() {
-		return LazyInitializer.INSTANCE;
-	}
-
 	public static List<ViewExtension> getViewExtensions(String extensionId) {
-		return getInstance()._extensions.getService(extensionId);
+		return _instance._extensions.getService(extensionId);
 	}
 
 	private ViewExtensionUtil() {
@@ -44,13 +40,8 @@ public class ViewExtensionUtil {
 		_extensions.open();
 	}
 
-	private ServiceTrackerMap<String, List<ViewExtension>> _extensions;
+	private	static final ViewExtensionUtil _instance = new ViewExtensionUtil();
 
-	/**
-	 * Initialization-on-demand holder idiom
-	 */
-	private static class LazyInitializer {
-		static final ViewExtensionUtil INSTANCE = new ViewExtensionUtil();
-	}
+	private ServiceTrackerMap<String, List<ViewExtension>> _extensions;
 
 }

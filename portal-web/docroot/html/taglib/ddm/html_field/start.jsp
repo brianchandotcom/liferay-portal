@@ -45,12 +45,13 @@
 
 		<aui:input name="<%= fieldsDisplayInputName %>" type="hidden" />
 
-		<aui:script use="liferay-ddm-repeatable-fields">
-			new Liferay.DDM.RepeatableFields(
+		<aui:script use="liferay-ddm-form">
+			new Liferay.DDM.Form(
 				{
 					classNameId: <%= classNameId %>,
 					classPK: <%= classPK %>,
 					container: '#<%= randomNamespace %>',
+					definition: <%= DDMFormJSONSerializerUtil.serialize(ddmForm) %>,
 					doAsGroupId: <%= scopeGroupId %>,
 					fieldsDisplayInput: '#<portlet:namespace /><%= fieldsDisplayInputName %>',
 					namespace: '<%= fieldsNamespace %>',

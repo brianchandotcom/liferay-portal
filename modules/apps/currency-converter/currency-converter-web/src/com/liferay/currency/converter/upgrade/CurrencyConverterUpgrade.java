@@ -19,13 +19,13 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 import java.util.Collections;
 
 import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
@@ -33,11 +33,11 @@ import javax.servlet.ServletContext;
  */
 @Component(immediate = true, service = CurrencyConverterUpgrade.class)
 public class CurrencyConverterUpgrade {
-	
+
 	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
-		
+
 		_releaseLocalService = releaseLocalService;
 	}
 
@@ -59,7 +59,7 @@ public class CurrencyConverterUpgrade {
 					};
 				}
 			};
-			
+
 			_releaseLocalService.updateRelease(
 				CurrencyConverterPortlet.class.getName(),
 				Collections.<UpgradeProcess> singletonList(upgradePortletId),

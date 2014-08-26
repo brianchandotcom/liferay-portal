@@ -16,4 +16,3 @@
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 	</dependencies>
 </ivy-module>
-

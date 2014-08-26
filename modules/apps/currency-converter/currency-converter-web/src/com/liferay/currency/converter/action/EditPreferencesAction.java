@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.ActionCommand;
 
-import org.osgi.service.component.annotations.Component;
-
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -31,15 +29,17 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.ValidatorException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Peter Fellwock
  */
 @Component(
-immediate = true,
-property = {
-	"action.command.name=currency_converter/edit",
-	"javax.portlet.name=com_liferay_currency_converter_portlet_CurrencyConverterPortlet"
+	immediate = true,
+	property = {
+		"action.command.name=currency_converter/edit",
+		"javax.portlet.name=com_liferay_currency_converter_portlet_CurrencyConverterPortlet"
 	},
 	service = ActionCommand.class
 )
@@ -47,7 +47,7 @@ public class EditPreferencesAction implements ActionCommand {
 
 	@Override
 	public boolean processCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse) 
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortletException {
 
 		String cmd = ParamUtil.getString(portletRequest, Constants.CMD);

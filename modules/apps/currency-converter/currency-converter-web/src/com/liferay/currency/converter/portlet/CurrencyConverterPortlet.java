@@ -17,10 +17,10 @@ package com.liferay.currency.converter.portlet;
 import com.liferay.currency.converter.upgrade.CurrencyConverterUpgrade;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
+import javax.portlet.Portlet;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import javax.portlet.Portlet;
 
 /**
 * @author Raymond Augé
@@ -44,7 +44,7 @@ import javax.portlet.Portlet;
 			"javax.portlet.init-param.edit-template=/edit.jsp",
 			"javax.portlet.init-param.template-path=/",
 			"javax.portlet.init-param.view-template=/view.jsp",
-			"javax.portlet.portlet.display-name=Currency Converter", 
+			"javax.portlet.portlet.display-name=Currency Converter",
 			"javax.portlet.portlet.expiration-cache=0",
 			"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",
 			"javax.portlet.resource-bundle=content.Language",

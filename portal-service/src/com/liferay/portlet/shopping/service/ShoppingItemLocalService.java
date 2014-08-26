@@ -47,10 +47,6 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ShoppingItemLocalServiceUtil} to access the shopping item local service. Add custom service methods to {@link com.liferay.portlet.shopping.service.impl.ShoppingItemLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addBookItems(long userId, long groupId, long categoryId,
-		java.lang.String[] isbns)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	public com.liferay.portlet.shopping.model.ShoppingItem addItem(
 		long userId, long groupId, long categoryId, java.lang.String sku,
 		java.lang.String name, java.lang.String description,

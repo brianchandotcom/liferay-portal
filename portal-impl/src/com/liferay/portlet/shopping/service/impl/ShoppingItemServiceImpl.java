@@ -35,17 +35,6 @@ import java.util.List;
 public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 
 	@Override
-	public void addBookItems(long groupId, long categoryId, String[] isbns)
-		throws PortalException {
-
-		ShoppingCategoryPermission.check(
-			getPermissionChecker(), groupId, categoryId, ActionKeys.ADD_ITEM);
-
-		shoppingItemLocalService.addBookItems(
-			getUserId(), groupId, categoryId, isbns);
-	}
-
-	@Override
 	public ShoppingItem addItem(
 			long groupId, long categoryId, String sku, String name,
 			String description, String properties, String fieldsQuantities,

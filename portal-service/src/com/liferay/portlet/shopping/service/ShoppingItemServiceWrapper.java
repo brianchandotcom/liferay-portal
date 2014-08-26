@@ -33,13 +33,6 @@ public class ShoppingItemServiceWrapper implements ShoppingItemService,
 	}
 
 	@Override
-	public void addBookItems(long groupId, long categoryId,
-		java.lang.String[] isbns)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingItemService.addBookItems(groupId, categoryId, isbns);
-	}
-
-	@Override
 	public com.liferay.portlet.shopping.model.ShoppingItem addItem(
 		long groupId, long categoryId, java.lang.String sku,
 		java.lang.String name, java.lang.String description,

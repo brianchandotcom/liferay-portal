@@ -55,34 +55,6 @@ import com.liferay.portlet.shopping.service.ShoppingItemServiceUtil;
  */
 @ProviderType
 public class ShoppingItemServiceHttp {
-	public static void addBookItems(HttpPrincipal httpPrincipal, long groupId,
-		long categoryId, java.lang.String[] isbns)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
-					"addBookItems", _addBookItemsParameterTypes0);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					categoryId, isbns);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static com.liferay.portlet.shopping.model.ShoppingItem addItem(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId,
 		java.lang.String sku, java.lang.String name,
@@ -100,7 +72,7 @@ public class ShoppingItemServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
-					"addItem", _addItemParameterTypes1);
+					"addItem", _addItemParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId, sku, name, description, properties,
@@ -136,7 +108,7 @@ public class ShoppingItemServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
-					"deleteItem", _deleteItemParameterTypes2);
+					"deleteItem", _deleteItemParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, itemId);
 
@@ -163,7 +135,7 @@ public class ShoppingItemServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
 					"getCategoriesItemsCount",
-					_getCategoriesItemsCountParameterTypes3);
+					_getCategoriesItemsCountParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryIds);
@@ -191,7 +163,7 @@ public class ShoppingItemServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
-					"getItem", _getItemParameterTypes4);
+					"getItem", _getItemParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, itemId);
 
@@ -221,7 +193,7 @@ public class ShoppingItemServiceHttp {
 		HttpPrincipal httpPrincipal, long groupId, long categoryId) {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
-					"getItems", _getItemsParameterTypes5);
+					"getItems", _getItemsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId);
@@ -250,7 +222,7 @@ public class ShoppingItemServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingItem> obc) {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
-					"getItems", _getItemsParameterTypes6);
+					"getItems", _getItemsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId, start, end, obc);
@@ -277,7 +249,7 @@ public class ShoppingItemServiceHttp {
 		long categoryId) {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
-					"getItemsCount", _getItemsCountParameterTypes7);
+					"getItemsCount", _getItemsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId);
@@ -306,7 +278,7 @@ public class ShoppingItemServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
-					"getItemsPrevAndNext", _getItemsPrevAndNextParameterTypes8);
+					"getItemsPrevAndNext", _getItemsPrevAndNextParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, itemId,
 					obc);
@@ -350,7 +322,7 @@ public class ShoppingItemServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ShoppingItemServiceUtil.class,
-					"updateItem", _updateItemParameterTypes9);
+					"updateItem", _updateItemParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, itemId,
 					groupId, categoryId, sku, name, description, properties,
@@ -383,10 +355,7 @@ public class ShoppingItemServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ShoppingItemServiceHttp.class);
-	private static final Class<?>[] _addBookItemsParameterTypes0 = new Class[] {
-			long.class, long.class, java.lang.String[].class
-		};
-	private static final Class<?>[] _addItemParameterTypes1 = new Class[] {
+	private static final Class<?>[] _addItemParameterTypes0 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, boolean.class,
@@ -397,29 +366,29 @@ public class ShoppingItemServiceHttp {
 			java.util.List.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteItemParameterTypes2 = new Class[] {
+	private static final Class<?>[] _deleteItemParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCategoriesItemsCountParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getCategoriesItemsCountParameterTypes2 = new Class[] {
 			long.class, java.util.List.class
 		};
-	private static final Class<?>[] _getItemParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getItemParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getItemsParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getItemsParameterTypes4 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _getItemsParameterTypes6 = new Class[] {
+	private static final Class<?>[] _getItemsParameterTypes5 = new Class[] {
 			long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getItemsCountParameterTypes7 = new Class[] {
+	private static final Class<?>[] _getItemsCountParameterTypes6 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _getItemsPrevAndNextParameterTypes8 = new Class[] {
+	private static final Class<?>[] _getItemsPrevAndNextParameterTypes7 = new Class[] {
 			long.class, com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _updateItemParameterTypes9 = new Class[] {
+	private static final Class<?>[] _updateItemParameterTypes8 = new Class[] {
 			long.class, long.class, long.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, boolean.class,

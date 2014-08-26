@@ -40,12 +40,6 @@ public class ShoppingItemServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.shopping.service.impl.ShoppingItemServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void addBookItems(long groupId, long categoryId,
-		java.lang.String[] isbns)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addBookItems(groupId, categoryId, isbns);
-	}
-
 	public static com.liferay.portlet.shopping.model.ShoppingItem addItem(
 		long groupId, long categoryId, java.lang.String sku,
 		java.lang.String name, java.lang.String description,

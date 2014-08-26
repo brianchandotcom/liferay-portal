@@ -16,9 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.amazonrankings.util.AmazonRankingsUtil" %><%@
-page import="com.liferay.portlet.shopping.AmazonException" %><%@
-page import="com.liferay.portlet.shopping.BillingCityException" %><%@
+<%@ page import="com.liferay.portlet.shopping.BillingCityException" %><%@
 page import="com.liferay.portlet.shopping.BillingCountryException" %><%@
 page import="com.liferay.portlet.shopping.BillingEmailAddressException" %><%@
 page import="com.liferay.portlet.shopping.BillingFirstNameException" %><%@

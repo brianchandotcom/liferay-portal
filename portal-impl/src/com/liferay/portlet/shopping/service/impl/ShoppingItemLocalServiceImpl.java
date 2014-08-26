@@ -672,10 +672,10 @@ public class ShoppingItemLocalServiceImpl
 			if (smallImageName != null) {
 				boolean validSmallImageExtension = false;
 
-				for (int i = 0; i < imageExtensions.length; i++) {
-					if (StringPool.STAR.equals(imageExtensions[i]) ||
+				for (String imageExtension : imageExtensions) {
+					if (StringPool.STAR.equals(imageExtension) ||
 						StringUtil.endsWith(
-							smallImageName, imageExtensions[i])) {
+							smallImageName, imageExtension)) {
 
 						validSmallImageExtension = true;
 
@@ -709,10 +709,10 @@ public class ShoppingItemLocalServiceImpl
 			if (mediumImageName != null) {
 				boolean validMediumImageExtension = false;
 
-				for (int i = 0; i < imageExtensions.length; i++) {
-					if (StringPool.STAR.equals(imageExtensions[i]) ||
+				for (String imageExtension : imageExtensions) {
+					if (StringPool.STAR.equals(imageExtension) ||
 						StringUtil.endsWith(
-							mediumImageName, imageExtensions[i])) {
+							mediumImageName, imageExtension)) {
 
 						validMediumImageExtension = true;
 
@@ -749,10 +749,10 @@ public class ShoppingItemLocalServiceImpl
 		if (largeImageName != null) {
 			boolean validLargeImageExtension = false;
 
-			for (int i = 0; i < imageExtensions.length; i++) {
-				if (StringPool.STAR.equals(imageExtensions[i]) ||
+			for (String imageExtension : imageExtensions) {
+				if (StringPool.STAR.equals(imageExtension) ||
 					StringUtil.endsWith(
-						largeImageName, imageExtensions[i])) {
+						largeImageName, imageExtension)) {
 
 					validLargeImageExtension = true;
 

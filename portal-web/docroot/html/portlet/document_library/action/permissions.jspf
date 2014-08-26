@@ -15,44 +15,21 @@
 --%>
 
 <c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
-	<c:choose>
-		<c:when test="<%= (fileShortcut == null) %>">
-			<c:if test="<%= dlFileVersionActionsDisplayContext.isPermissionsButtonVisible() %>">
-				<liferay-security:permissionsURL
-					modelResource="<%= DLFileEntryConstants.getClassName() %>"
-					modelResourceDescription="<%= HtmlUtil.unescape(fileEntry.getTitle()) %>"
-					resourcePrimKey="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
-					var="permissionsURL"
-					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-				/>
+	<c:if test="<%= DLFileShortcutPermission.contains(permissionChecker, fileShortcut, ActionKeys.PERMISSIONS) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= DLFileShortcut.class.getName() %>"
+			modelResourceDescription="<%= fileEntry.getTitle() %>"
+			resourcePrimKey="<%= String.valueOf(fileShortcut.getFileShortcutId()) %>"
+			var="shortcutPermissionsURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
 
-				<liferay-ui:icon
-					iconCssClass="icon-lock"
-					message="permissions"
-					method="get"
-					url="<%= permissionsURL %>"
-					useDialog="<%= true %>"
-				/>
-			</c:if>
-		</c:when>
-		<c:otherwise>
-			<c:if test="<%= DLFileShortcutPermission.contains(permissionChecker, fileShortcut, ActionKeys.PERMISSIONS) %>">
-				<liferay-security:permissionsURL
-					modelResource="<%= DLFileShortcut.class.getName() %>"
-					modelResourceDescription="<%= fileEntry.getTitle() %>"
-					resourcePrimKey="<%= String.valueOf(fileShortcut.getFileShortcutId()) %>"
-					var="shortcutPermissionsURL"
-					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-				/>
-
-				<liferay-ui:icon
-					iconCssClass="icon-lock"
-					message="permissions"
-					method="get"
-					url="<%= shortcutPermissionsURL %>"
-					useDialog="<%= true %>"
-				/>
-			</c:if>
-		</c:otherwise>
-	</c:choose>
+		<liferay-ui:icon
+			iconCssClass="icon-lock"
+			message="permissions"
+			method="get"
+			url="<%= shortcutPermissionsURL %>"
+			useDialog="<%= true %>"
+		/>
+	</c:if>
 </c:if>

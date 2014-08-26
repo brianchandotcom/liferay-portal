@@ -73,11 +73,20 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 	>
 
 		<%
-		AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), true);
+		List<AssetVocabulary> vocabularies = null;
+
+		if (Validator.isNotNull(keywords)) {
+			AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), true);
+
+			vocabularies = assetVocabularyDisplay.getVocabularies();
+		}
+		else {
+			vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd(), null, true);
+		}
 		%>
 
 		<liferay-ui:search-container-results
-			results="<%= assetVocabularyDisplay.getVocabularies() %>"
+			results="<%= vocabularies %>"
 		/>
 
 		<liferay-ui:search-container-row

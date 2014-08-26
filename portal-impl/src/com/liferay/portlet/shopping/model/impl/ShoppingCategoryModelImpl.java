@@ -97,8 +97,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 				"value.object.column.bitmask.enabled.com.liferay.portlet.shopping.model.ShoppingCategory"),
 			true);
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
-	public static final long PARENTCATEGORYID_COLUMN_BITMASK = 2L;
-	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 2L;
+	public static final long PARENTCATEGORYID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.

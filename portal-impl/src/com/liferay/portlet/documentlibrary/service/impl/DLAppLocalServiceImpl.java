@@ -387,11 +387,20 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 	@Override
 	public void deleteAllRepositories(long groupId) throws PortalException {
+		LocalRepository groupLocalRepository =
+			repositoryLocalService.getLocalRepositoryImpl(groupId);
+
+		deleteRepository(groupLocalRepository);
+
 		List<LocalRepository> localRepositories =
 			repositoryLocalService.getGroupLocalRepositoryImpl(groupId);
 
+		long groupLocalRepositoryId = groupLocalRepository.getRepositoryId();
+
 		for (LocalRepository localRepository : localRepositories) {
-			deleteRepository(localRepository);
+			if (localRepository.getRepositoryId() != groupLocalRepositoryId) {
+				deleteRepository(localRepository);
+			}
 		}
 	}
 

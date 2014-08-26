@@ -466,7 +466,7 @@ AUI.add(
 					}
 				);
 
-				var action = "append";
+				var action = 'append';
 				var index = response.originalPriority;
 				var node = instance.getNodeById(nodeId);
 				var parentNode = instance.getNodeById(parentNodeId);
@@ -474,7 +474,7 @@ AUI.add(
 
 				if (index > 0) {
 					if (index === parentNode.childrenLength) {
-						action = "append";
+						action = 'append';
 					}
 					else {
 						if (node.get('parentNode').get('id') === parentNodeId) {
@@ -484,7 +484,7 @@ AUI.add(
 							sibling = parentNode.item(index - 1);
 						}
 
-						action = "after";
+						action = 'after';
 					}
 				}
 

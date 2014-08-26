@@ -347,7 +347,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		else if (type.equals(Object.class) || type.equals(Serializable.class)) {
 			return "map";
 		}
-		else if (ReflectUtil.isSubclass(type, Number.class)) {
+		else if (ReflectUtil.isTypeOf(type, Number.class)) {
 			String typeName = null;
 
 			if (type == Character.class) {
@@ -365,13 +365,12 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 		String typeName = type.getName();
 
-		if ((type == Collection.class) || (type == List.class) ||
-			ReflectUtil.isSubclass(type, List.class)) {
+		if ((type == Collection.class) ||
+			ReflectUtil.isTypeOf(type, List.class)) {
 
 			typeName = "list";
 		}
-		else if ((type == Map.class) ||
-				 ReflectUtil.isSubclass(type, Map.class)) {
+		else if (ReflectUtil.isTypeOf(type, Map.class)) {
 
 			typeName = "map";
 		}

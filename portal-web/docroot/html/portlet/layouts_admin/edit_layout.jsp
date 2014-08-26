@@ -170,13 +170,13 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 					<%@ include file="/html/portlet/layouts_admin/error_remote_export_exception.jspf" %>
 
-					<div class="alert alert-block">
+					<div class="alert alert-warning">
 						<liferay-ui:message key="the-staging-environment-is-activated-changes-have-to-be-published-to-make-them-available-to-end-users" />
 					</div>
 				</c:if>
 
 				<c:if test="<%= selGroup.hasLocalOrRemoteStagingGroup() && !selGroup.isStagingGroup() %>">
-					<div class="alert alert-block">
+					<div class="alert alert-warning">
 						<liferay-ui:message key="changes-are-immediately-available-to-end-users" />
 					</div>
 				</c:if>
@@ -187,12 +187,12 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 				<c:choose>
 					<c:when test="<%= !SitesUtil.isLayoutUpdateable(selLayout) %>">
-						<div class="alert alert-block">
+						<div class="alert alert-warning">
 							<liferay-ui:message key="this-page-cannot-be-modified-because-it-is-associated-to-a-site-template-does-not-allow-modifications-to-it" />
 						</div>
 					</c:when>
 					<c:when test="<%= !SitesUtil.isLayoutDeleteable(selLayout) %>">
-						<div class="alert alert-block">
+						<div class="alert alert-warning">
 							<liferay-ui:message key="this-page-cannot-be-deleted-and-cannot-have-child-pages-because-it-is-associated-to-a-site-template" />
 						</div>
 					</c:when>
@@ -204,7 +204,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 					UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(selLayoutGroup.getClassPK());
 					%>
 
-					<div class="alert alert-block">
+					<div class="alert alert-warning">
 						<liferay-ui:message arguments="<%= HtmlUtil.escape(userGroup.getName()) %>" key="this-page-cannot-be-modified-because-it-belongs-to-the-user-group-x" translateArguments="<%= false %>" />
 					</div>
 				</c:if>

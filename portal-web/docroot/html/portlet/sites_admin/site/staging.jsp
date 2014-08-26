@@ -71,7 +71,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 </c:if>
 
 <c:if test="<%= stagedLocally && (BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(liveGroupId, LayoutStagingBackgroundTaskExecutor.class.getName(), false) > 0) %>">
-	<div class="alert alert-block">
+	<div class="alert alert-warning">
 		<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
 
 		<a id="<portlet:namespace />publishProcessesLink"><liferay-ui:message key="the-status-of-the-publication-can-be-checked-on-the-publish-screen" /></a>
@@ -86,7 +86,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 				Liferay.Util.openWindow(
 					{
 						id: 'publishProcesses',
-						title: Liferay.Language.get('initial-publication'),
+						title: '<liferay-ui:message key="initial-publication" />',
 
 						<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="publishProcessesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
@@ -204,7 +204,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 			</c:if>
 
 			<aui:fieldset helpMessage="staged-portlets-help" label="staged-content">
-				<div class="alert alert-block">
+				<div class="alert alert-warning">
 					<liferay-ui:message key="staged-portlets-alert" />
 				</div>
 

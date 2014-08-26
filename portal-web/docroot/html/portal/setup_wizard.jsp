@@ -318,11 +318,12 @@
 									A.io.request(
 										setupForm.get('action'),
 										{
-											form: {
-												id: document.fm
-											},
-											dataType: 'JSON',
 											after: {
+												failure: function(event, id, obj) {
+													loadingMask.hide();
+
+													updateMessage('<%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-database") %>', 'error');
+												},
 												success: function(event, id, obj) {
 													command.val('<%= Constants.UPDATE %>');
 
@@ -336,13 +337,11 @@
 													else {
 														submitForm(document.fm);
 													}
-
-												},
-												failure: function(event, id, obj) {
-													loadingMask.hide();
-
-													updateMessage('<%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-database") %>', 'error');
 												}
+											},
+											dataType: 'JSON',
+											form: {
+												id: document.fm
 											},
 											on: {
 												start: startInstall
@@ -406,7 +405,7 @@
 						</c:when>
 						<c:otherwise>
 							<p>
-								<div class="alert alert-block">
+								<div class="alert alert-warning">
 
 									<%
 									String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + "</span>";

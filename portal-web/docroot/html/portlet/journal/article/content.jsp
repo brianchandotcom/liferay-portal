@@ -90,7 +90,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 
 			<c:if test="<%= Validator.isNull(toLanguageId) %>">
 				<div class="article-structure-template-toolbar journal-metadata">
-					<span class="alert alert-block hide structure-message" id="<portlet:namespace />structureMessage">
+					<span class="alert alert-warning hide structure-message" id="<portlet:namespace />structureMessage">
 						<liferay-ui:message key="this-structure-has-not-been-saved" />
 
 						<liferay-ui:message arguments='<%= new Object[] {"journal-save-structure-trigger", "#"} %>' key="click-here-to-save-it-now" />

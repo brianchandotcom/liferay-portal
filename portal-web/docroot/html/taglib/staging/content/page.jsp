@@ -30,7 +30,7 @@
 
 							<ul class="list-unstyled" id="<portlet:namespace />showDeleteContentWarning">
 								<li>
-									<div class="alert alert-block">
+									<div class="alert alert-warning">
 										<liferay-ui:message key="delete-content-before-importing-warning" />
 
 										<liferay-ui:message key="delete-content-before-importing-suggestion" />

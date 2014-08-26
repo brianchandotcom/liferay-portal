@@ -143,7 +143,7 @@ if (reminderAttempts == null) {
 				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<div class="alert alert-block">
+				<div class="alert alert-warning">
 					<liferay-ui:message key="the-system-cannot-send-you-a-new-password-because-you-have-not-provided-an-email-address" />
 				</div>
 			</c:otherwise>

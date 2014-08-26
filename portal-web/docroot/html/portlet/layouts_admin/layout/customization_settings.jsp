@@ -71,12 +71,12 @@ if (selLayout != null) {
 
 <c:choose>
 	<c:when test="<%= curFreeformLayout %>">
-		<div class="alert alert-block">
+		<div class="alert alert-warning">
 			<liferay-ui:message key="it-is-not-possible-to-specify-customization-settings-for-freeform-layouts" />
 		</div>
 	</c:when>
 	<c:when test="<%= prototypeGroup %>">
-		<div class="alert alert-block">
+		<div class="alert alert-warning">
 			<liferay-ui:message key="it-is-not-possible-to-specify-customization-settings-for-pages-in-site-templates-or-page-templates" />
 		</div>
 	</c:when>

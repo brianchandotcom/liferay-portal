@@ -99,7 +99,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 					<c:choose>
 						<c:when test="<%= TrashUtil.isInTrash(className, classPK) %>">
-							<div class="alert alert-block">
+							<div class="alert alert-warning">
 								<liferay-ui:message key="commenting-is-disabled-because-this-entry-is-in-the-recycle-bin" />
 							</div>
 						</c:when>

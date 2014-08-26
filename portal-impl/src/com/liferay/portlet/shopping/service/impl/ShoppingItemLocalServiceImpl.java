@@ -15,21 +15,17 @@
 package com.liferay.portlet.shopping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.shopping.AmazonException;
 import com.liferay.portlet.shopping.DuplicateItemSKUException;
 import com.liferay.portlet.shopping.ItemLargeImageNameException;
 import com.liferay.portlet.shopping.ItemLargeImageSizeException;
@@ -46,14 +42,10 @@ import com.liferay.portlet.shopping.model.ShoppingItemField;
 import com.liferay.portlet.shopping.model.ShoppingItemPrice;
 import com.liferay.portlet.shopping.model.ShoppingItemPriceConstants;
 import com.liferay.portlet.shopping.service.base.ShoppingItemLocalServiceBaseImpl;
-import com.liferay.util.PwdGenerator;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

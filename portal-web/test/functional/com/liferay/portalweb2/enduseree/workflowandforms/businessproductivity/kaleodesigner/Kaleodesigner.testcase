@@ -1,0 +1,55 @@
+<definition component-name="portal-business-productivity-ee">
+	<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet" />
+	<property name="web.plugins.includes" value="kaleo-web" />
+	<property name="testray.main.component.name" value="Business Productivity" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Workflow#tearDownWorkflowDefinition">
+			<var name="workflowDefinitionTitle" value="Single Approver Edited" />
+		</execute>
+
+		<execute macro="Workflow#tearDownUploadedWorkflowDefinition" />
+	</tear-down>
+
+	<command name="EditDefinitionDeleteTaskNode" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="Workflow#editWorkflowDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="Single Approver" />
+		</execute>
+
+		<execute macro="Workflow#editWorkflowDefinitionTitleViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="Single Approver Edited" />
+		</execute>
+
+		<execute macro="Workflow#editWorkflowDefinitionDeleteNode">
+			<var name="nodeNodeLabel" value="update" />
+		</execute>
+
+		<execute macro="Workflow#publishWorkflowDefinitionViaWorkflowCP" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="Workflow#viewDefinition">
+			<var name="workflowDefinitionName" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver Edited" />
+			<var name="workflowDefinitionVersionNumber" value="2" />
+		</execute>
+
+		<execute macro="Workflow#editWorkflowDefinitionViaWorkflowCP">
+			<var name="workflowDefinitionTitle" value="Single Approver Edited" />
+		</execute>
+
+		<execute macro="Workflow#assertNodeNotPresent">
+			<var name="nodeNodeLabel" value="update" />
+		</execute>
+	</command>
+</definition>

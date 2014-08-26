@@ -445,7 +445,7 @@
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${entryAuthor} sent a new announcement." />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryContent}" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_SUBCONTENT" value1="${entryTitle}" />
 		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_NOTIFICATION_ENTRY_CONTENT" value1="${entryAuthor} sent a new announcement." />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 	</command>

@@ -1688,12 +1688,20 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			}
 		}
 
-		WikiPage page = getPage(nodeId, title);
-
 		serviceContext.setCommand(Constants.RENAME);
 
+		WikiPage page = getPage(nodeId, title);
+
+		String summary = page.getSummary();
+
+		if (Validator.isNotNull(page.getRedirectTitle())) {
+			page.setRedirectTitle(StringPool.BLANK);
+
+			summary = StringPool.BLANK;
+		}
+
 		updatePage(
-			userId, page, 0, newTitle, page.getContent(), page.getSummary(),
+			userId, page, 0, newTitle, page.getContent(), summary,
 			page.getMinorEdit(), page.getFormat(), page.getParentTitle(),
 			page.getRedirectTitle(), serviceContext);
 	}
@@ -2451,13 +2459,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		for (WikiPage versionPage : versionPages) {
+			versionPage.setRedirectTitle(page.getRedirectTitle());
 			versionPage.setTitle(newTitle);
-
-			if (Validator.isNotNull(versionPage.getRedirectTitle())) {
-				versionPage.setRedirectTitle(StringPool.BLANK);
-
-				versionPage.setSummary(StringPool.BLANK);
-			}
 
 			wikiPagePersistence.update(versionPage);
 		}

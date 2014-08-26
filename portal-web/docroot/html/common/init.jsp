@@ -229,6 +229,7 @@ page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.AssetTagServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.AssetVocabularyServiceUtil" %><%@
+page import="com.liferay.portlet.asset.service.permission.AssetCategoryPermission" %><%@
 page import="com.liferay.portlet.asset.service.persistence.AssetEntryQuery" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.portlet.blogs.model.BlogsEntry" %><%@

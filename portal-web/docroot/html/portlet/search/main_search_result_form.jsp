@@ -212,7 +212,7 @@ if (summary != null) {
 
 							AssetCategory assetCategory = AssetCategoryLocalServiceUtil.fetchCategory(assetCategoryId);
 
-							if (assetCategory == null) {
+							if ((assetCategory == null) || !permissionChecker.hasPermission(assetCategory.getGroupId(), assetCategory.getModelClassName(), assetCategory.getPrimaryKey(), ActionKeys.VIEW)) {
 								continue;
 							}
 

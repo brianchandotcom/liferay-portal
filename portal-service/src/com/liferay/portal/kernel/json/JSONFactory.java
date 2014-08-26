@@ -58,10 +58,6 @@ public interface JSONFactory {
 
 	public JSONObject getUnmodifiableJSONObject();
 
-	public Object looseDeserialize(String json);
-
-	public <T> T looseDeserialize(String json, Class<T> clazz);
-
 	public Object looseDeserializeSafe(String json);
 
 	public <T> T looseDeserializeSafe(String json, Class<T> clazz);

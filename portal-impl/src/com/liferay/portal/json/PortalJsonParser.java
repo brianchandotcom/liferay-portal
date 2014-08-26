@@ -14,30 +14,23 @@
 
 package com.liferay.portal.json;
 
-import com.liferay.portal.kernel.json.JSONDeserializer;
+import flexjson.JSONException;
 import jodd.json.JsonParser;
 
-/**
- * @author Brian Wing Shun Chan
- */
-public class JSONDeserializerImpl<T> implements JSONDeserializer<T> {
-
-	public JSONDeserializerImpl() {
-		_jsonDeserializer = new PortalJsonParser();
-	}
+public class PortalJsonParser extends JsonParser {
 
 	@Override
-	public T deserialize(String input) {
-		return _jsonDeserializer.parse(input);
+	protected Object newObjectInstance(Class targetType) {
+		String targetClassName = targetType.getName();
+
+		if (targetClassName.contains("com.liferay") &&
+			targetClassName.contains("Util")) {
+
+			throw new JSONException(
+				"Not instantiating " + targetClassName + " at " + path);
+		}
+
+		return super.newObjectInstance(targetType);
 	}
-
-	@Override
-	public JSONDeserializer<T> use(String path, Class<?> clazz) {
-		_jsonDeserializer.map(path, clazz);
-
-		return this;
-	}
-
-	private JsonParser _jsonDeserializer;
 
 }

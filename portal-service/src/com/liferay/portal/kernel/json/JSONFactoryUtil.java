@@ -103,14 +103,6 @@ public class JSONFactoryUtil {
 		return getJSONFactory().getUnmodifiableJSONObject();
 	}
 
-	public static Object looseDeserialize(String json) {
-		return getJSONFactory().looseDeserialize(json);
-	}
-
-	public static <T> T looseDeserialize(String json, Class<T> clazz) {
-		return getJSONFactory().looseDeserialize(json, clazz);
-	}
-
 	public static Object looseDeserializeSafe(String json) {
 		return getJSONFactory().looseDeserializeSafe(json);
 	}

@@ -19,6 +19,8 @@ package com.liferay.portlet.documentlibrary.context;
  */
 public class DLMenuItems {
 
+	public static final String MENU_ITEM_DELETE = "delete";
+
 	public static final String MENU_ITEM_ID_CANCEL_CHECKOUT = "cancel-checkout";
 
 	public static final String MENU_ITEM_ID_CHECKIN = "checkin";

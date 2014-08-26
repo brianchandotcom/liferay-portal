@@ -115,11 +115,11 @@ DLFileVersionActionsDisplayContext dlFileVersionActionsDisplayContext = DLFileVe
 
 				<%
 				for (MenuItem menuItem : dlFileVersionActionsDisplayContext.getMenuItems()) {
-					%>
+				%>
 
 					<liferay-ui:menu-item menuItem="<%= menuItem %>" />
 
-					<%
+				<%
 				}
 				%>
 

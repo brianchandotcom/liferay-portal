@@ -91,6 +91,12 @@
 		<execute action="PGKaleoforms#assertClick" locator-key1="ASSIGNED_TO_ME_MENULIST_COMPLETE_FORM" value1="Complete Form" />
 	</command>
 
+	<command name="populateFieldBoolean">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsSubmitnew#check" locator-key1="NEW_PROCESS_FIELDS_BOOLEAN" />
+	</command>
+
 	<command name="populateFieldDate">
 		<var name="key_fieldName" value="${fieldName}" />
 
@@ -120,6 +126,25 @@
 		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
+	<command name="populateFieldHTML">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsSubmitnew#type" locator-key1="NEW_PROCESS_FIELDS_HTML_FIELD_EDITOR" value1="${ddlRecordFieldData}" />
+	</command>
+
+	<command name="populateFieldLinkToPage">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsSubmitnew#select" locator-key1="NEW_PROCESS_LINK_TO_PAGE_SELECT" value1="regexp:–\s+${ddlRecordFieldData}" />
+	</command>
+
+	<command name="populateFieldRadio">
+		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsSubmitnew#click" locator-key1="NEW_PROCESS_RADIO_OPTION_RADIO" />
+	</command>
+
 	<command name="populateFieldSelect">
 		<var name="key_fieldName" value="${fieldName}" />
 
@@ -133,6 +158,8 @@
 	</command>
 
 	<command name="populateFieldTextBox">
+		<var name="fieldName" value="${fieldName?replace(' ', '_')}" />
+
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute action="PGKaleoformsSubmitnew#type" locator-key1="NEW_PROCESS_FIELDS_TEXT_BOX_FIELD" value1="${ddlRecordFieldData}" />
@@ -328,7 +355,7 @@
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="CURRENT_ENTRY_FIELD" value1="${fieldName} ${ddlRecordFieldData}" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="CURRENT_ENTRY_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="viewMyCompletedRequestsTasks">

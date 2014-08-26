@@ -19,11 +19,15 @@
 <%
 String strutsAction = ParamUtil.getString(request, "struts_action");
 
+String keywords = ParamUtil.getString(request, "keywords");
+
 Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
+
+String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 Group scopeGroup = themeDisplay.getScopeGroup();
 %>
@@ -102,19 +106,21 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 	<c:if test="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>">
 		<aui:nav-bar-search>
 			<div class="form-search">
-				<liferay-portlet:resourceURL varImpl="searchURL">
+				<liferay-portlet:renderURL varImpl="searchURL">
 					<portlet:param name="struts_action" value="/document_library/search" />
 					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 					<portlet:param name="searchRepositoryId" value="<%= String.valueOf(folderId) %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 					<portlet:param name="searchFolderId" value="<%= String.valueOf(folderId) %>" />
-				</liferay-portlet:resourceURL>
+					<portlet:param name="keywords" value="<%= String.valueOf(keywords) %>" />
+					<portlet:param name="searchType" value="1" />
+					<portlet:param name="showRepositoryTabs" value="<% (folderId == 0) %>" />
+					<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+				</liferay-portlet:renderURL>
 
-				<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1" onSubmit="event.preventDefault();">
+				<aui:form action="<%= searchURL %>" method="get" name="fm1">
 					<liferay-portlet:renderURLParams varImpl="searchURL" />
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-					<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= folderId %>" />
-					<aui:input name="searchFolderIds" type="hidden" value="<%= folderId %>" />
 
 					<liferay-ui:input-search />
 				</aui:form>

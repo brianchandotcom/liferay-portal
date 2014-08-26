@@ -181,12 +181,6 @@ AUI.add(
 							)
 						);
 
-						var searchFormNode = instance.one('#fm1');
-
-						if (searchFormNode) {
-							searchFormNode.on('submit', instance._onSearchFormSubmit, instance);
-						}
-
 						instance._toggleSyncNotification();
 						instance._toggleTrashAction();
 
@@ -358,28 +352,6 @@ AUI.add(
 
 							instance._toggleSyncNotification();
 						}
-					},
-
-					_onSearchFormSubmit: function(event) {
-						var instance = this;
-
-						event.preventDefault();
-
-						var selectedFolder = instance._appViewSelect.get(STR_SELECTED_FOLDER);
-
-						var showTabs = (selectedFolder.id == DEFAULT_FOLDER_ID);
-
-						var searchData = {
-							folderId: selectedFolder.id,
-							keywords: instance._keywordsNode.get('value'),
-							repositoryId: selectedFolder.repositoryId,
-							searchFolderId: selectedFolder.id,
-							searchRepositoryId: selectedFolder.repositoryId,
-							showRepositoryTabs: showTabs,
-							showSearchInfo: true
-						};
-
-						instance._searchFileEntry(searchData);
 					},
 
 					_onShowTab: function(event) {

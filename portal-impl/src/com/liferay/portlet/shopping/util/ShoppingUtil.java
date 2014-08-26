@@ -985,6 +985,10 @@ public class ShoppingUtil {
 	}
 
 	public static boolean isInStock(ShoppingItem item) {
+		if (item.hasInfiniteStock()) {
+			return true;
+		}
+
 		if (!item.isFields()) {
 			if (item.getStockQuantity() > 0) {
 				return true;
@@ -1009,6 +1013,10 @@ public class ShoppingUtil {
 	public static boolean isInStock(
 		ShoppingItem item, ShoppingItemField[] itemFields, String[] fieldsArray,
 		Integer orderedQuantity) {
+
+		if (item.hasInfiniteStock()) {
+			return true;
+		}
 
 		if (!item.isFields()) {
 			int stockQuantity = item.getStockQuantity();

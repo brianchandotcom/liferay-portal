@@ -25,6 +25,8 @@ long itemId = BeanParamUtil.getLong(item, request, "itemId");
 
 long categoryId = BeanParamUtil.getLong(item, request, "categoryId", ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
+boolean hasInfiniteStock = BeanParamUtil.getBoolean(item, request, "hasInfiniteStock");
+
 // Fields
 
 ShoppingItemField[] itemFields = null;
@@ -151,7 +153,9 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 		<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="featured" />
 
-		<c:if test="<%= fieldsCount == 0 %>">
+		<aui:input checked="<%= hasInfiniteStock %>" helpMessage="disable-stock-checking-help" label="disable-stock-checking" name="hasInfiniteStock" onchange='<%= renderResponse.getNamespace() + "toggleInfiniteStock(this);" %>' type="checkbox" />
+
+		<c:if test="<%= (fieldsCount == 0) && !hasInfiniteStock %>">
 			<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="stockQuantity" />
 		</c:if>
 
@@ -237,13 +241,13 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 			</table>
 
-			<c:if test="<%= fieldsCount > 0 %>">
+			<c:if test="<%= (fieldsCount > 0) && !hasInfiniteStock %>">
 				<br />
 			</c:if>
 
 			<aui:button onClick='<%= renderResponse.getNamespace() + "addField();" %>' value="add-field" />
 
-			<c:if test="<%= fieldsCount > 0 %>">
+			<c:if test="<%= (fieldsCount > 0) && !hasInfiniteStock %>">
 				<aui:button onClick='<%= renderResponse.getNamespace() + "editItemQuantities();" %>' value="edit-stock-quantity" />
 			</c:if>
 
@@ -578,5 +582,9 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 		document.<portlet:namespace />fm.<portlet:namespace />categoryId.value = categoryId;
 
 		document.getElementById('<portlet:namespace />categoryName').value = categoryName;
+	}
+
+	function <portlet:namespace />toggleInfiniteStock(checkbox) {
+		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

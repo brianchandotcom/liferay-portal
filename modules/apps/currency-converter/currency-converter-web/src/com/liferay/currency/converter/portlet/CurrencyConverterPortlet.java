@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 			"com.liferay.portlet.css-class-wrapper=portlet-currency-converter",
 			"com.liferay.portlet.display-category=category.finance",
 			"com.liferay.portlet.header-portlet-css=/css/main.css",
-			"com.liferay.portlet.icon=/currency_converter.png",
+			"com.liferay.portlet.icon=/icons/currency_converter.png",
 			"com.liferay.portlet.preferences-owned-by-group=false",
 			"com.liferay.portlet.private-request-attributes=false",
 			"com.liferay.portlet.private-session-attributes=false",

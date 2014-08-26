@@ -480,20 +480,6 @@
 		<css-class-wrapper>portlet-hello-world</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>48</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<struts-path>iframe</struts-path>
-		<configuration-action-class>com.liferay.portlet.iframe.action.ConfigurationActionImpl</configuration-action-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<instanceable>true</instanceable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/iframe/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-iframe</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>49</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<parent-struts-path>my_sites</parent-struts-path>

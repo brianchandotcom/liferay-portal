@@ -102,7 +102,6 @@
 	</category>
 	<category name="category.sample">
 		<portlet id="47" />
-		<portlet id="48" />
 		<portlet id="50" />
 	</category>
 	<category name="category.shopping">

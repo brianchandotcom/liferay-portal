@@ -62,11 +62,16 @@ public abstract class NoticeableFutureConverter<T, V>
 
 		@Override
 		public boolean equals(Object obj) {
-			FutureListenerConverter futureListenerConverter =
-				(FutureListenerConverter)obj;
+			FutureListener<?> futureListener = (FutureListener<?>)obj;
 
-			return _futureListener.equals(
-				futureListenerConverter._futureListener);
+			if (futureListener instanceof
+					NoticeableFutureConverter.FutureListenerConverter) {
+
+				futureListener =
+					((FutureListenerConverter)futureListener)._futureListener;
+			}
+
+			return _futureListener.equals(futureListener);
 		}
 
 		private final FutureListener<T> _futureListener;

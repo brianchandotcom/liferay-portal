@@ -24,9 +24,17 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PreferencesValidator;
 import javax.portlet.ValidatorException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=com_liferay_currency_converter_portlet_CurrencyConverterPortlet"
+	}
+)
 public class CurrencyPreferencesValidator implements PreferencesValidator {
 
 	@Override

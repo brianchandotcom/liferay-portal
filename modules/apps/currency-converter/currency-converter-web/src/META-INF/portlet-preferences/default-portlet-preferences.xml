@@ -9,5 +9,4 @@
 		<value>JPY</value>
 		<value>USD</value>
 	</preference>
-	<preferences-validator>com.liferay.currency.converter.CurrencyPreferencesValidator</preferences-validator>
 </portlet-preferences>

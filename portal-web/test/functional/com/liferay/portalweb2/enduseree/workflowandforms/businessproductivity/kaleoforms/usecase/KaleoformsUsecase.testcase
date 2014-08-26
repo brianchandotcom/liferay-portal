@@ -37,6 +37,137 @@
 		<execute macro="Role#tearDownCP" />
 	</tear-down>
 
+	<command name="AssertEditFormNotUsedAsCreateForm" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Kaleo Forms Admin" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addProcess" />
+
+		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
+			<var name="kfFieldsDefinitionName" value="Inventory" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#chooseWorkflow">
+			<var name="workflowDefinition" value="Single Approver" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#assignForm">
+			<var name="workflowTask" value="review" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addForm">
+			<var name="kfFormName" value="Review Task Form" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addFieldFormTemplateSpecific">
+			<var name="field" value="Separator" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveForm" />
+
+		<execute macro="KaleoFormsAdmin#chooseForm">
+			<var name="kfFormName" value="Review Task Form" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#assignForm">
+			<var name="workflowTask" value="create" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#assertFormsNotPresent">
+			<var name="workflowTask" value="review" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addForm">
+			<var name="kfFormName" value="Created Task Form" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveForm" />
+
+		<execute macro="KaleoFormsAdmin#chooseForm">
+			<var name="kfFormName" value="Created Task Form" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveProcess" />
+
+		<execute macro="KaleoFormsAdmin#viewProcess">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Kaleo Forms Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Kaleo Forms" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewNoTasks" />
+
+		<execute macro="KaleoFormsPortlet#submitNewProcess">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldTextBox">
+			<var name="ddlRecordFieldData" value="Test Description" />
+			<var name="fieldName" value="description" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="Test Item" />
+			<var name="fieldName" value="item" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="Diamond Bar" />
+			<var name="fieldName" value="location" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldDate">
+			<var name="ddlRecordFieldData" value="04/01/2017" />
+			<var name="fieldName" value="purchaseDate" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="3.99" />
+			<var name="fieldName" value="purchasePrice" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="4" />
+			<var name="fieldName" value="quantity" />
+		</execute>
+
+		<execute action="PGKaleoformsSubmitnew#assertElementNotPresent" locator-key1="NEW_PROCESS_FIELDS_SEPARATOR" />
+
+		<execute macro="KaleoFormsPortlet#saveNewProcess" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Kaleo Forms Page" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#assignProcessToMe">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="workflowTask" value="review" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#approveProcess">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="workflowTask" value="review" />
+		</execute>
+	</command>
+
 	<command name="AssignRolePermissionsAddProcessCP" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
@@ -1165,6 +1296,462 @@
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
+	</command>
+
+	<command name="CompleteProcessLargeFieldsDefinition" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Kaleo Forms Admin" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addProcess" />
+
+		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#addFieldsDefinition">
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
+		</execute>
+
+		<for list="Boolean,Date,Decimal,HTML,Integer,Link to Page, Number, Radio, Select,Text,Text Box" param="field">
+			<for list="1_${field},2_${field},3_${field}" param="fieldFieldLabel">
+				<execute macro="DynamicDataMapping#addField">
+					<var name="field" value="${field}" />
+					<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+				</execute>
+			</for>
+		</for>
+
+		<execute macro="KaleoFormsAdmin#saveFieldsDefinition" />
+
+		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#chooseWorkflow">
+			<var name="workflowDefinition" value="Single Approver" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#assignForm">
+			<var name="workflowTask" value="create" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addForm">
+			<var name="kfFormName" value="Created Task Form" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveForm" />
+
+		<execute macro="KaleoFormsAdmin#chooseForm">
+			<var name="kfFormName" value="Created Task Form" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveProcess" />
+
+		<execute macro="KaleoFormsAdmin#viewProcess">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Kaleo Forms" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Kaleo Forms" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewNoTasks" />
+
+		<execute macro="KaleoFormsPortlet#submitNewProcess">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldBoolean">
+			<var name="fieldName" value="1_Boolean" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldBoolean">
+			<var name="fieldName" value="3_Boolean" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldDate">
+			<var name="ddlRecordFieldData" value="08/04/2015" />
+			<var name="fieldName" value="3_Date" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="2.13" />
+			<var name="fieldName" value="3_Decimal" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="89.56" />
+			<var name="fieldName" value="2_Decimal" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldHTML">
+			<var name="ddlRecordFieldData" value="HTML Content 3" />
+			<var name="fieldName" value="3_HTML" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="7" />
+			<var name="fieldName" value="2_Integer" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldLinkToPage">
+			<var name="ddlRecordFieldData" value="Kaleo Forms" />
+			<var name="fieldName" value="3_Link to Page" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="6" />
+			<var name="fieldName" value="1_Number" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldRadio">
+			<var name="ddlRecordFieldData" value="option 2" />
+			<var name="fieldName" value="1_Radio" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldSelect">
+			<var name="ddlRecordFieldData" value="option 3" />
+			<var name="fieldName" value="1_Select" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="1st Test" />
+			<var name="fieldName" value="1_Text" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldTextBox">
+			<var name="ddlRecordFieldData" value="1st Test Text Box" />
+			<var name="fieldName" value="1_Text Box" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldRadio">
+			<var name="ddlRecordFieldData" value="option 1" />
+			<var name="fieldName" value="2_Radio" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldTextBox">
+			<var name="ddlRecordFieldData" value="2nd Test Text Box" />
+			<var name="fieldName" value="2_Text Box" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="2nd Test" />
+			<var name="fieldName" value="2_Text" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldSelect">
+			<var name="ddlRecordFieldData" value="option 1" />
+			<var name="fieldName" value="2_Select" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldLinkToPage">
+			<var name="ddlRecordFieldData" value="Welcome" />
+			<var name="fieldName" value="1_Link to Page" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="78" />
+			<var name="fieldName" value="2_Number" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldHTML">
+			<var name="ddlRecordFieldData" value="HTML Content 1" />
+			<var name="fieldName" value="1_HTML" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldLinkToPage">
+			<var name="ddlRecordFieldData" value="Kaleo Forms" />
+			<var name="fieldName" value="2_Link to Page" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="9.56" />
+			<var name="fieldName" value="1_Decimal" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="2" />
+			<var name="fieldName" value="3_Integer" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldTextBox">
+			<var name="ddlRecordFieldData" value="3rd Test Text Box" />
+			<var name="fieldName" value="3_Text Box" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldDate">
+			<var name="ddlRecordFieldData" value="06/16/2015" />
+			<var name="fieldName" value="2_Date" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="6" />
+			<var name="fieldName" value="1_Integer" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldRadio">
+			<var name="ddlRecordFieldData" value="option 3" />
+			<var name="fieldName" value="3_Radio" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldSelect">
+			<var name="ddlRecordFieldData" value="option 3" />
+			<var name="fieldName" value="3_Select" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="3rd Test" />
+			<var name="fieldName" value="3_Text" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldDate">
+			<var name="ddlRecordFieldData" value="07/09/2016" />
+			<var name="fieldName" value="1_Date" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldHTML">
+			<var name="ddlRecordFieldData" value="HTML Content 2" />
+			<var name="fieldName" value="2_HTML" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="8932839301" />
+			<var name="fieldName" value="3_Number" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#saveNewProcess" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Kaleo Forms" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#assignProcessToMe">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="workflowTask" value="review" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#approveProcess">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="workflowTask" value="review" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="workflowDefinition" value="Single Approver" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="Yes" />
+			<var name="fieldName" value="1_Boolean" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="Yes" />
+			<var name="fieldName" value="3_Boolean" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="8/4/15" />
+			<var name="fieldName" value="3_Date" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="2.13" />
+			<var name="fieldName" value="3_Decimal" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="89.56" />
+			<var name="fieldName" value="2_Decimal" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="HTML Content 3" />
+			<var name="fieldName" value="3_HTML" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="7" />
+			<var name="fieldName" value="2_Integer" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="Kaleo Forms" />
+			<var name="fieldName" value="3_Link to Page" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="6" />
+			<var name="fieldName" value="1_Number" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="option 2" />
+			<var name="fieldName" value="1_Radio" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="option 3" />
+			<var name="fieldName" value="1_Select" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="1st Test" />
+			<var name="fieldName" value="1_Text" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="1st Test Text Box" />
+			<var name="fieldName" value="1_Text Box" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="option 1" />
+			<var name="fieldName" value="2_Radio" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="2nd Test Text Box" />
+			<var name="fieldName" value="2_Text Box" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="2nd Test" />
+			<var name="fieldName" value="2_Text" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="option 1" />
+			<var name="fieldName" value="2_Select" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="Welcome" />
+			<var name="fieldName" value="1_Link to Page" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="78" />
+			<var name="fieldName" value="2_Number" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="HTML Content 1" />
+			<var name="fieldName" value="1_HTML" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="Kaleo Forms" />
+			<var name="fieldName" value="2_Link to Page" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="9.56" />
+			<var name="fieldName" value="1_Decimal" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="2" />
+			<var name="fieldName" value="3_Integer" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="3rd Test Text Box" />
+			<var name="fieldName" value="3_Text Box" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="6/16/15" />
+			<var name="fieldName" value="2_Date" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="6" />
+			<var name="fieldName" value="1_Integer" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="option 3" />
+			<var name="fieldName" value="3_Radio" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="option 3" />
+			<var name="fieldName" value="3_Select" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="3rd Test" />
+			<var name="fieldName" value="3_Text" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="7/9/16" />
+			<var name="fieldName" value="1_Date" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="No" />
+			<var name="fieldName" value="2_Boolean" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="HTML Content 2" />
+			<var name="fieldName" value="2_HTML" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="8932839301" />
+			<var name="fieldName" value="3_Number" />
+		</execute>
+
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][1]/label" value1="1_Boolean" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][2]/label" value1="3_Boolean" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][3]/label" value1="3_Date" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][4]/label" value1="3_Decimal" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][5]/label" value1="2_Decimal" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][6]/label" value1="3_HTML" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][7]/label" value1="2_Integer" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][8]/label" value1="3_Link to Page" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][9]/label" value1="1_Number" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][10]/label" value1="1_Radio" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][11]/label" value1="1_Select" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][12]/label" value1="1_Text" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][13]/label" value1="1_Text Box" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][14]/label" value1="2_Radio" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][15]/label" value1="2_Text Box" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][16]/label" value1="2_Text" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][17]/label" value1="2_Select" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][18]/label" value1="1_Link to Page" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][18]/div/label" value1="2_Number" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][19]/label" value1="1_HTML" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][19]/div/label" value1="2_Link to Page" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][20]/label" value1="1_Decimal" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][20]/div[1]/label" value1="3_Integer" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][20]/div[2]/label" value1="3_Text Box" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][21]/label" value1="2_Date" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][21]/div[1]/label" value1="1_Integer" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][21]/div/div[1]/label" value1="3_Radio" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][21]/div/div[2]/label" value1="3_Select" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][21]/div[2]/label" value1="3_Text" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][22]/label" value1="1_Date" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][23]/label" value1="2_Boolean" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][23]/div/label" value1="2_HTML" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][23]/div/div/label" value1="3_Number" />
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>

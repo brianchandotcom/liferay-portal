@@ -871,13 +871,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.panel-group .lfr-add-content .toggler-header {
-			border: solid #D3D3D3;
-			border-width: 0 1px 1px 1px;
-		}
+		.panel-group .lfr-add-content {
+			margin-top: -1px;
 
-		.panel-group .lfr-add-content:first-of-type .toggler-header {
-			border-top-width: 1px;
+			.toggler-header {
+				border: 1px solid #D3D3D3;
+			}
 		}
 	}
 
@@ -948,13 +947,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.lfr-edit-layout-panel {
-		.panel-group .toggler-header {
-			border: solid #D3D3D3;
-			border-width: 0 1px 1px 1px;
-		}
+		.panel-group .panel {
+			margin-top: -1px;
 
-		.panel-group .panel:first-of-type .toggler-header {
-			border-top-width: 1px;
+			.toggler-header {
+				border: 1px solid #D3D3D3;
+			}
 		}
 	}
 

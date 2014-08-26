@@ -49,7 +49,7 @@ public class ExtensionTag extends TagSupport {
 		if ((viewExtensions != null) && !viewExtensions.isEmpty()) {
 			for (ViewExtension viewExtension : viewExtensions) {
 				try {
-					viewExtension.render(getRequest(), getResponse());
+					viewExtension.include(getRequest(), getResponse());
 				}
 				catch (Exception e) {
 					_log.error(e.getLocalizedMessage(), e);

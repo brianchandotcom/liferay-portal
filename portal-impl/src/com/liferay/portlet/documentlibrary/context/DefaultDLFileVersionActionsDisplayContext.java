@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.DeleteMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavascriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
@@ -150,6 +151,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 		_addCheckinMenuItem(menuItems);
 		_addCancelCheckoutMenuItem(menuItems);
 		_addPermissionsMenuItem(menuItems);
+		_addDeleteMenuItem(menuItems);
 
 		return menuItems;
 	}
@@ -436,6 +438,47 @@ public class DefaultDLFileVersionActionsDisplayContext
 				new URLMenuItem(
 					DLMenuItems.MENU_ITEM_ID_CHECKOUT, "icon-unlock",
 					"checkout[document]", checkoutURL.toString()));
+		}
+	}
+
+	private void _addDeleteMenuItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+		if (_dlActionsDisplayContext.isShowActions()) {
+			if (isDeleteButtonVisible()) {
+				PortletURL deleteURL =
+					_liferayPortletResponse.createActionURL();
+
+				deleteURL.setParameter(
+					"struts_action", "/document_library/edit_file_entry");
+
+				deleteURL.setParameter(Constants.CMD, Constants.DELETE);
+				deleteURL.setParameter("redirect", _currentURL);
+				deleteURL.setParameter(
+					"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
+				menuItems.add(
+					new DeleteMenuItem(
+						DLMenuItems.MENU_ITEM_DELETE, deleteURL.toString()));
+			}
+
+			if (isMoveToTheRecycleBinButtonVisible()) {
+				PortletURL deleteURL =
+					_liferayPortletResponse.createActionURL();
+
+				deleteURL.setParameter(
+					"struts_action", "/document_library/edit_file_entry");
+
+				deleteURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
+				deleteURL.setParameter("redirect", _currentURL);
+				deleteURL.setParameter(
+					"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
+				menuItems.add(
+					new DeleteMenuItem(
+						DLMenuItems.MENU_ITEM_DELETE, deleteURL.toString(),
+						true));
+			}
 		}
 	}
 

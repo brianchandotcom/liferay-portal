@@ -184,7 +184,7 @@ public class UserServiceTest {
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
-	public static class WhenSendsPasswordEmail {
+	public static class WhenPortalSendsPasswordEmail {
 
 		@Before
 		public void setUp() throws Exception {

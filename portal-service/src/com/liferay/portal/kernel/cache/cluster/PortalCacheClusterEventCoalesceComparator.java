@@ -36,8 +36,11 @@ public class PortalCacheClusterEventCoalesceComparator
 		}
 
 		if (Validator.equals(
-				portalCacheClusterEvent1.getCacheName(),
-				portalCacheClusterEvent2.getCacheName()) &&
+				portalCacheClusterEvent1.getPortalCacheManagerName(),
+				portalCacheClusterEvent2.getPortalCacheManagerName()) &&
+			Validator.equals(
+				portalCacheClusterEvent1.getPortalCacheName(),
+				portalCacheClusterEvent2.getPortalCacheName()) &&
 			Validator.equals(
 				portalCacheClusterEvent1.getElementKey(),
 				portalCacheClusterEvent2.getElementKey()) &&

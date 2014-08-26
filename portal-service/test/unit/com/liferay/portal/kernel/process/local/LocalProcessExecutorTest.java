@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessException;
@@ -444,9 +445,13 @@ public class LocalProcessExecutorTest {
 			BrokenPipingProcessCallable brokenPipingProcessCallable =
 				new BrokenPipingProcessCallable();
 
-			Future<Serializable> future = _localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				brokenPipingProcessCallable);
+			ProcessChannel<Serializable> processChannel =
+				_localProcessExecutor.execute(
+					_createJPDAProcessConfig(_JPDA_OPTIONS1),
+					brokenPipingProcessCallable);
+
+			Future<Serializable> future =
+				processChannel.getProcessNoticeableFuture();
 
 			try {
 				future.get();
@@ -492,9 +497,12 @@ public class LocalProcessExecutorTest {
 		ReturnWithoutExitProcessCallable returnWithoutExitProcessCallable =
 			new ReturnWithoutExitProcessCallable("");
 
-		Future<String> future = _localProcessExecutor.execute(
-			_createJPDAProcessConfig(_JPDA_OPTIONS1),
-			returnWithoutExitProcessCallable);
+		ProcessChannel<String> processChannel =
+			_localProcessExecutor.execute(
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
+				returnWithoutExitProcessCallable);
+
+		Future<String> future = processChannel.getProcessNoticeableFuture();
 
 		Assert.assertFalse(future.isCancelled());
 		Assert.assertFalse(future.isDone());
@@ -568,9 +576,13 @@ public class LocalProcessExecutorTest {
 			KillJVMProcessCallable killJVMProcessCallable =
 				new KillJVMProcessCallable(1);
 
-			Future<Serializable> future = _localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				killJVMProcessCallable);
+			ProcessChannel<Serializable> processChannel =
+				_localProcessExecutor.execute(
+					_createJPDAProcessConfig(_JPDA_OPTIONS1),
+					killJVMProcessCallable);
+
+			Future<Serializable> future =
+				processChannel.getProcessNoticeableFuture();
 
 			try {
 				future.get();
@@ -600,9 +612,11 @@ public class LocalProcessExecutorTest {
 
 			killJVMProcessCallable = new KillJVMProcessCallable(0);
 
-			future = _localProcessExecutor.execute(
+			processChannel = _localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				killJVMProcessCallable);
+
+			future = processChannel.getProcessNoticeableFuture();
 
 			try {
 				future.get();
@@ -729,9 +743,13 @@ public class LocalProcessExecutorTest {
 		DummyExceptionProcessCallable dummyExceptionProcessCallable =
 			new DummyExceptionProcessCallable();
 
-		Future<Serializable> future = _localProcessExecutor.execute(
-			_createJPDAProcessConfig(_JPDA_OPTIONS1),
-			dummyExceptionProcessCallable);
+		ProcessChannel<Serializable> processChannel =
+			_localProcessExecutor.execute(
+				_createJPDAProcessConfig(_JPDA_OPTIONS1),
+				dummyExceptionProcessCallable);
+
+		Future<Serializable> future =
+			processChannel.getProcessNoticeableFuture();
 
 		try {
 			future.get();
@@ -786,9 +804,11 @@ public class LocalProcessExecutorTest {
 		DummyReturnProcessCallable dummyReturnProcessCallable =
 			new DummyReturnProcessCallable();
 
-		Future<String> future = _localProcessExecutor.execute(
+		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
 			_createJPDAProcessConfig(_JPDA_OPTIONS1),
 			dummyReturnProcessCallable);
+
+		Future<String> future = processChannel.getProcessNoticeableFuture();
 
 		String returnValue = future.get(100, TimeUnit.SECONDS);
 
@@ -802,9 +822,11 @@ public class LocalProcessExecutorTest {
 		ReturnWithoutExitProcessCallable returnWithoutExitProcessCallable =
 			new ReturnWithoutExitProcessCallable("");
 
-		future = _localProcessExecutor.execute(
+		processChannel = _localProcessExecutor.execute(
 			_createJPDAProcessConfig(_JPDA_OPTIONS1),
 			returnWithoutExitProcessCallable);
+
+		future = processChannel.getProcessNoticeableFuture();
 
 		try {
 			future.get(1, TimeUnit.SECONDS);
@@ -840,9 +862,11 @@ public class LocalProcessExecutorTest {
 		EchoPayloadProcessCallable echoPayloadProcessCallable =
 			new EchoPayloadProcessCallable(largePayload);
 
-		Future<byte[]> future = _localProcessExecutor.execute(
+		ProcessChannel<byte[]> processChannel = _localProcessExecutor.execute(
 			_createJPDAProcessConfig(_JPDA_OPTIONS1),
 			echoPayloadProcessCallable);
+
+		Future<byte[]> future = processChannel.getProcessNoticeableFuture();
 
 		Assert.assertArrayEquals(largePayload, future.get());
 		Assert.assertFalse(future.isCancelled());
@@ -867,8 +891,10 @@ public class LocalProcessExecutorTest {
 
 		builder.setRuntimeClassPath(largeFileName);
 
-		Future<String> future = _localProcessExecutor.execute(
+		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
 			builder.build(), new EchoRuntimeClassPathProcessCallable());
+
+		Future<String> future = processChannel.getProcessNoticeableFuture();
 
 		Assert.assertEquals(largeFileName, future.get());
 		Assert.assertFalse(future.isCancelled());
@@ -894,9 +920,13 @@ public class LocalProcessExecutorTest {
 			LeadingLogProcessCallable leadingLogProcessCallable =
 				new LeadingLogProcessCallable(leadingLog, bodyLog);
 
-			Future<Serializable> future = _localProcessExecutor.execute(
-				_createJPDAProcessConfig(_JPDA_OPTIONS1),
-				leadingLogProcessCallable);
+			ProcessChannel<Serializable> processChannel =
+				_localProcessExecutor.execute(
+					_createJPDAProcessConfig(_JPDA_OPTIONS1),
+					leadingLogProcessCallable);
+
+			Future<Serializable> future =
+				processChannel.getProcessNoticeableFuture();
 
 			future.get();
 
@@ -918,9 +948,11 @@ public class LocalProcessExecutorTest {
 			leadingLogProcessCallable = new LeadingLogProcessCallable(
 				leadingLog, bodyLog);
 
-			future = _localProcessExecutor.execute(
+			processChannel = _localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				leadingLogProcessCallable);
+
+			future = processChannel.getProcessNoticeableFuture();
 
 			future.get();
 
@@ -949,9 +981,11 @@ public class LocalProcessExecutorTest {
 			leadingLogProcessCallable = new LeadingLogProcessCallable(
 				leadingLog, bodyLog);
 
-			future = _localProcessExecutor.execute(
+			processChannel = _localProcessExecutor.execute(
 				_createJPDAProcessConfig(_JPDA_OPTIONS1),
 				leadingLogProcessCallable);
+
+			future = processChannel.getProcessNoticeableFuture();
 
 			future.get();
 
@@ -1007,10 +1041,13 @@ public class LocalProcessExecutorTest {
 				@Override
 				public void run() {
 					try {
-						Future<Serializable> future =
+						ProcessChannel<Serializable> processChannel =
 							_localProcessExecutor.execute(
 								_createJPDAProcessConfig(_JPDA_OPTIONS1),
 								loggingProcessCallable);
+
+						Future<Serializable> future =
+							processChannel.getProcessNoticeableFuture();
 
 						future.get();
 
@@ -1061,6 +1098,82 @@ public class LocalProcessExecutorTest {
 	}
 
 	@Test
+	public void testProcessChannelPiping() throws Exception {
+		ReturnWithoutExitProcessCallable returnWithoutExitProcessCallable =
+			new ReturnWithoutExitProcessCallable("Premature return value");
+
+		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
+			_createJPDAProcessConfig(_JPDA_OPTIONS1),
+			returnWithoutExitProcessCallable);
+
+		Future<String> resultFuture = processChannel.write(
+			new DummyReturnProcessCallable());
+
+		Assert.assertEquals(
+			DummyReturnProcessCallable.class.getName(), resultFuture.get());
+
+		PrintStream oldErrPrintStream = System.err;
+
+		ByteArrayOutputStream errByteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		PrintStream newErrPrintStream = new PrintStream(
+			errByteArrayOutputStream, true);
+
+		System.setErr(newErrPrintStream);
+
+		try {
+			Future<Serializable> exceptionFuture = processChannel.write(
+				new DummyExceptionProcessCallable());
+
+			try {
+				exceptionFuture.get();
+
+				Assert.fail();
+			}
+			catch (ExecutionException ee) {
+				Throwable throwable = ee.getCause();
+
+				Assert.assertEquals(
+					DummyExceptionProcessCallable.class.getName(),
+					throwable.getMessage());
+			}
+
+			Future<Serializable> interruptFuture = processChannel.write(
+				new InterruptProcessCallable());
+
+			Assert.assertNull(interruptFuture.get());
+		}
+		finally {
+			System.setErr(oldErrPrintStream);
+
+			String errLog = errByteArrayOutputStream.toString();
+
+			Assert.assertTrue(
+				errLog.startsWith(
+					"[" + returnWithoutExitProcessCallable.toString() + "]" +
+						new ProcessException(
+							DummyExceptionProcessCallable.class.getName())));
+		}
+
+		Future<String> processFuture =
+			processChannel.getProcessNoticeableFuture();
+
+		try {
+			processFuture.get();
+
+			Assert.fail();
+		}
+		catch (ExecutionException ee) {
+			Throwable throwable = ee.getCause();
+
+			throwable = throwable.getCause();
+
+			Assert.assertSame(InterruptedException.class, throwable.getClass());
+		}
+	}
+
+	@Test
 	public void testPropertyPassing() throws Exception {
 		Builder builder = new Builder();
 
@@ -1073,8 +1186,10 @@ public class LocalProcessExecutorTest {
 
 		builder.setArguments(arguments);
 
-		Future<String> future = _localProcessExecutor.execute(
+		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
 			builder.build(), new ReadPropertyProcessCallable(propertyKey));
+
+		Future<String> future = processChannel.getProcessNoticeableFuture();
 
 		Assert.assertEquals(propertyValue, future.get());
 		Assert.assertFalse(future.isCancelled());
@@ -1086,9 +1201,11 @@ public class LocalProcessExecutorTest {
 		DummyReturnProcessCallable dummyReturnProcessCallable =
 			new DummyReturnProcessCallable();
 
-		Future<String> future = _localProcessExecutor.execute(
+		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
 			_createJPDAProcessConfig(_JPDA_OPTIONS1),
 			dummyReturnProcessCallable);
+
+		Future<String> future = processChannel.getProcessNoticeableFuture();
 
 		Assert.assertEquals(
 			DummyReturnProcessCallable.class.getName(), future.get());
@@ -1102,9 +1219,11 @@ public class LocalProcessExecutorTest {
 		ReturnWithoutExitProcessCallable returnWithoutExitProcessCallable =
 			new ReturnWithoutExitProcessCallable("Premature return value");
 
-		Future<String> future = _localProcessExecutor.execute(
+		ProcessChannel<String> processChannel = _localProcessExecutor.execute(
 			_createJPDAProcessConfig(_JPDA_OPTIONS1),
 			returnWithoutExitProcessCallable);
+
+		Future<String> future = processChannel.getProcessNoticeableFuture();
 
 		for (int i = 0; i < 10; i++) {
 			try {
@@ -1813,6 +1932,22 @@ public class LocalProcessExecutorTest {
 
 	}
 
+	private static class InterruptProcessCallable
+		implements ProcessCallable<Serializable> {
+
+		@Override
+		public Serializable call() throws ProcessException {
+			Thread thread = ReturnWithoutExitProcessCallable._thread;
+
+			Assert.assertNotNull(thread);
+
+			thread.interrupt();
+
+			return null;
+		}
+
+	}
+
 	private static class KillJVMProcessCallable
 		implements ProcessCallable<Serializable> {
 
@@ -2056,6 +2191,8 @@ public class LocalProcessExecutorTest {
 				processOutputStream.writeProcessCallable(
 					new ReturnProcessCallable<String>(_returnValue));
 
+				_thread = Thread.currentThread();
+
 				Thread.sleep(Long.MAX_VALUE);
 			}
 			catch (Exception e) {
@@ -2082,6 +2219,8 @@ public class LocalProcessExecutorTest {
 		}
 
 		private static final long serialVersionUID = 1L;
+
+		private static volatile Thread _thread;
 
 		private String _returnValue;
 

@@ -45,11 +45,11 @@ public class CurrencyPreferencesValidator implements PreferencesValidator {
 
 		String[] symbols = preferences.getValues("symbols", new String[0]);
 
-		for (int i = 0; i < symbols.length; i++) {
-			Currency currency = CurrencyUtil.getCurrency(symbols[i]);
+		for (String symbol : symbols) {
+			Currency currency = CurrencyUtil.getCurrency(symbol);
 
 			if (currency == null) {
-				badSymbols.add(symbols[i]);
+				badSymbols.add(symbol);
 			}
 		}
 

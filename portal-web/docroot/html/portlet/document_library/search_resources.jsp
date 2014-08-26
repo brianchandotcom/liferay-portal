@@ -35,6 +35,8 @@ if (searchRepositoryId == 0) {
 
 long folderId = ParamUtil.getLong(request, "folderId");
 
+String displayStyle = ParamUtil.getString(request, "displayStyle");
+
 long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
 long searchFolderIds = ParamUtil.getLong(request, "searchFolderIds");
 
@@ -135,7 +137,12 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 				</span>
 			</c:if>
 
-			<liferay-ui:icon cssClass="close-search" iconCssClass="icon-remove" id="closeSearch" url="javascript:;" />
+			<portlet:renderURL var="closeSearchURL">
+				<portlet:param name="struts_action" value="/document_library/view" />
+				<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+			</portlet:renderURL>
+
+			<liferay-ui:icon cssClass="close-search" iconCssClass="icon-remove" id="closeSearch" message="remove" url="<%= closeSearchURL %>" />
 		</div>
 
 		<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
@@ -144,24 +151,6 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 			</aui:script>
 		</c:if>
 
-		<aui:script use="aui-base">
-			A.one('#<portlet:namespace />closeSearch').on(
-				'click',
-				function(event) {
-					Liferay.fire(
-						'<portlet:namespace />dataRequest',
-						{
-							requestParams: {
-								'<portlet:namespace />struts_action': '/document_library/view',
-								'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
-								'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>
-							},
-							src: Liferay.DL_SEARCH_END
-						}
-					);
-				}
-			);
-		</aui:script>
 	</liferay-util:buffer>
 
 	<div id="<portlet:namespace />searchInfo">

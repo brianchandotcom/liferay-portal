@@ -25,15 +25,11 @@ import java.io.PrintWriter;
 
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-
 import javax.servlet.jsp.JspException;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.jsp.JspWriter;
 
 /**
@@ -81,23 +77,12 @@ public class ExtensionTag extends TagSupport {
 	}
 
 	protected HttpServletRequest getRequest() {
-		ServletRequest request = pageContext.getRequest();
-
-		if (!(request instanceof HttpServletRequest)) {
-			throw new IllegalStateException("This can only be used from HTTP");
-		}
-
-		return (HttpServletRequest)request;
+		return (HttpServletRequest)pageContext.getRequest();
 	}
 
 	protected HttpServletResponse getResponse() throws IOException {
-		ServletResponse response = pageContext.getResponse();
-
-		if (!(response instanceof HttpServletResponse)) {
-			throw new IllegalStateException("This can only be used from HTTP");
-		}
-
-		HttpServletResponse httpServletResponse = (HttpServletResponse)response;
+		HttpServletResponse httpServletResponse =
+			(HttpServletResponse)pageContext.getResponse();
 
 		return new HttpServletResponseWrapper(httpServletResponse) {
 

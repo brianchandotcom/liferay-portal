@@ -2366,6 +2366,9 @@
 				<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
 			</license>
 		</licenses>
+		<comments>
+			This includes a public patch from LPS-36390.
+		</comments>
 	</library>
 	<library>
 		<file-name>lib/portal/jodd.jar</file-name>

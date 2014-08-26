@@ -302,6 +302,10 @@
 	#set ($the_title = $htmlUtil.escape($the_title))
 #end
 
+#if ($the_title != "" && $company_name != $site_name)
+	#set ($the_title = $the_title + " - " + $site_name)
+#end
+
 #if ($layouts)
 	#set ($pages = $layouts)
 #end

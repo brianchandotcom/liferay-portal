@@ -17,6 +17,10 @@
 <%@ include file="/html/common/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %><%@
+page import="com.liferay.portal.view.model.DeleteMenuItem" %><%@
+page import="com.liferay.portal.view.model.JavascriptMenuItem" %><%@
+page import="com.liferay.portal.view.model.MenuItem" %><%@
+page import="com.liferay.portal.view.model.URLMenuItem" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
 page import="com.liferay.taglib.util.InlineUtil" %>
 

@@ -60,15 +60,16 @@ public class CurrencyUtil {
 
 	public static Currency getCurrency(String symbol) {
 		WebCacheItem wci = new CurrencyWebCacheItem(symbol);
-		
+
 		String key = CurrencyUtil.class.getName() + StringPool.PERIOD + symbol;
 
-		try{
-
+		try {
 			return (Currency)WebCachePoolUtil.get(key, wci);
-		}catch(ClassCastException cce){
+		}
+		catch (ClassCastException cce) {
 			WebCachePoolUtil.remove(key);
 		}
+
 		return null;
 	}
 

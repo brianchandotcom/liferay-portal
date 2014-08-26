@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<portlet:actionURL var="editCurrency" name="currency_converter/edit" />
+<portlet:actionURL name="currency_converter/edit" var="editCurrency" />
 
 <aui:form action="<%= editCurrency %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />

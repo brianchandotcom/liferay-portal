@@ -56,7 +56,7 @@ public class EditPreferencesAction implements ActionCommand {
 			return false;
 		}
 
-		PortletPreferences portletPreferences =	portletRequest.getPreferences();
+		PortletPreferences portletPreferences = portletRequest.getPreferences();
 
 		String[] symbols = StringUtil.split(
 			StringUtil.toUpperCase(
@@ -79,7 +79,7 @@ public class EditPreferencesAction implements ActionCommand {
 			PortalUtil.getPortletId(portletRequest) +
 				SessionMessages.KEY_SUFFIX_UPDATED_PREFERENCES);
 
-		ActionResponse actionResponse = (ActionResponse) portletResponse;
+		ActionResponse actionResponse = (ActionResponse)portletResponse;
 
 		actionResponse.setRenderParameter("mvcPath", "/edit.jsp");
 

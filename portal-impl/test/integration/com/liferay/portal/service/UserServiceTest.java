@@ -343,6 +343,26 @@ public class UserServiceTest {
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenGroupAdminUnsetsGroupUsers {
 
+		@Before
+		public void setUp() throws Exception {
+			_organization = OrganizationTestUtil.addOrganization(true);
+
+			_group = GroupTestUtil.addGroup();
+
+			_groupAdminUser = UserTestUtil.addGroupAdminUser(_group);
+
+			_groupOwnerUser = UserTestUtil.addGroupOwnerUser(_group);
+
+			_organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
+				_organization);
+
+			_organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
+				_organization);
+
+			_organizationGroupUser = UserTestUtil.addGroupOwnerUser(
+				_organization.getGroup());
+		}
+
 		@Test
 		public void shouldUnsetGroupAdmin() throws Exception {
 			User otherGroupAdminUser = UserTestUtil.addGroupAdminUser(_group);
@@ -389,6 +409,24 @@ public class UserServiceTest {
 					_organizationOwnerUser.getUserId()));
 		}
 
+		private Group _group;
+		private User _groupAdminUser;
+		private User _groupOwnerUser;
+		private Organization _organization;
+		private User _organizationAdminUser;
+		private User _organizationGroupUser;
+		private User _organizationOwnerUser;
+
+	}
+
+	@ExecutionTestListeners(
+		listeners = {
+			MainServletExecutionTestListener.class,
+			ResetDatabaseExecutionTestListener.class
+		})
+	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+	public static class WhenGroupOwnerUnsetsGroupUsers {
+
 		@Before
 		public void setUp() throws Exception {
 			_organization = OrganizationTestUtil.addOrganization(true);
@@ -408,24 +446,6 @@ public class UserServiceTest {
 			_organizationGroupUser = UserTestUtil.addGroupOwnerUser(
 				_organization.getGroup());
 		}
-
-		private Group _group;
-		private User _groupAdminUser;
-		private User _groupOwnerUser;
-		private Organization _organization;
-		private User _organizationAdminUser;
-		private User _organizationGroupUser;
-		private User _organizationOwnerUser;
-
-	}
-
-	@ExecutionTestListeners(
-		listeners = {
-			MainServletExecutionTestListener.class,
-			ResetDatabaseExecutionTestListener.class
-		})
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
-	public static class WhenGroupOwnerUnsetsGroupUsers {
 
 		@Test
 		public void shouldUnsetGroupAdmin() throws Exception {
@@ -481,26 +501,6 @@ public class UserServiceTest {
 					organizationOwnerUser.getUserId()));
 		}
 
-		@Before
-		public void setUp() throws Exception {
-			_organization = OrganizationTestUtil.addOrganization(true);
-
-			_group = GroupTestUtil.addGroup();
-
-			_groupAdminUser = UserTestUtil.addGroupAdminUser(_group);
-
-			_groupOwnerUser = UserTestUtil.addGroupOwnerUser(_group);
-
-			_organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
-				_organization);
-
-			_organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
-				_organization);
-
-			_organizationGroupUser = UserTestUtil.addGroupOwnerUser(
-				_organization.getGroup());
-		}
-
 		private Group _group;
 		private User _groupAdminUser;
 		private User _groupOwnerUser;
@@ -518,6 +518,17 @@ public class UserServiceTest {
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenOrganizationAdminUnsetsOrganizationUsersForNonSiteOrganization {
+
+		@Before
+		public void setUp() throws Exception {
+			_organization = OrganizationTestUtil.addOrganization();
+
+			_organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
+				_organization);
+
+			_organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
+				_organization);
+		}
 
 		@Test
 		public void shouldUnsetOrganizationAdmin()
@@ -550,17 +561,6 @@ public class UserServiceTest {
 					_organizationOwnerUser.getUserId()));
 		}
 
-		@Before
-		public void setUp() throws Exception {
-			_organization = OrganizationTestUtil.addOrganization();
-
-			_organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
-				_organization);
-
-			_organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
-				_organization);
-		}
-
 		private Organization _organization;
 		private User _organizationAdminUser;
 		private User _organizationOwnerUser;
@@ -574,6 +574,17 @@ public class UserServiceTest {
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenOrganizationOwnerUnsetsOrganizationUsersForNonSiteOrganization {
+
+		@Before
+		public void setUp() throws Exception {
+			_organization = OrganizationTestUtil.addOrganization();
+
+			_organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
+				_organization);
+
+			_organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
+				_organization);
+		}
 
 		@Test
 		public void shouldUnsetOrganizationAdmin()
@@ -606,17 +617,6 @@ public class UserServiceTest {
 					otherOrganizationOwnerUser.getUserId()));
 		}
 
-		@Before
-		public void setUp() throws Exception {
-			_organization = OrganizationTestUtil.addOrganization();
-
-			_organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
-				_organization);
-
-			_organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
-				_organization);
-		}
-
 		private Organization _organization;
 		private User _organizationAdminUser;
 		private User _organizationOwnerUser;
@@ -630,6 +630,23 @@ public class UserServiceTest {
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenOrganizationAdminUnsetsOrganizationUsersForSiteOrganization {
+
+		@Before
+		public void setUp() throws Exception {
+			_organization = OrganizationTestUtil.addOrganization(true);
+
+			_group = _organization.getGroup();
+
+			_groupAdminUser = UserTestUtil.addGroupAdminUser(_group);
+
+			_groupOwnerUser = UserTestUtil.addGroupOwnerUser(_group);
+
+			_organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
+				_organization);
+
+			_organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
+				_organization);
+		}
 
 		@Test
 		public void shouldUnsetSiteAdmin() throws Exception {
@@ -651,23 +668,6 @@ public class UserServiceTest {
 					_group.getGroupId(), _groupOwnerUser.getUserId()));
 		}
 
-		@Before
-		public void setUp() throws Exception {
-			_organization = OrganizationTestUtil.addOrganization(true);
-
-			_group = _organization.getGroup();
-
-			_groupAdminUser = UserTestUtil.addGroupAdminUser(_group);
-
-			_groupOwnerUser = UserTestUtil.addGroupOwnerUser(_group);
-
-			_organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
-				_organization);
-
-			_organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
-				_organization);
-		}
-
 		private Group _group;
 		private User _groupAdminUser;
 		private User _groupOwnerUser;
@@ -684,6 +684,23 @@ public class UserServiceTest {
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenOrganizationOwnerUnsetsOrganizationUsersForSiteOrganization {
+
+		@Before
+		public void setUp() throws Exception {
+			_organization = OrganizationTestUtil.addOrganization(true);
+
+			_group = _organization.getGroup();
+
+			_groupAdminUser = UserTestUtil.addGroupAdminUser(_group);
+
+			_groupOwnerUser = UserTestUtil.addGroupOwnerUser(_group);
+
+			_organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
+				_organization);
+
+			_organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
+				_organization);
+		}
 
 		@Test
 		public void shouldUnsetSiteAdmin() throws Exception {
@@ -703,23 +720,6 @@ public class UserServiceTest {
 			Assert.assertFalse(
 				UserLocalServiceUtil.hasGroupUser(
 					_group.getGroupId(), _groupOwnerUser.getUserId()));
-		}
-
-		@Before
-		public void setUp() throws Exception {
-			_organization = OrganizationTestUtil.addOrganization(true);
-
-			_group = _organization.getGroup();
-
-			_groupAdminUser = UserTestUtil.addGroupAdminUser(_group);
-
-			_groupOwnerUser = UserTestUtil.addGroupOwnerUser(_group);
-
-			_organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
-				_organization);
-
-			_organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
-				_organization);
 		}
 
 		private Group _group;

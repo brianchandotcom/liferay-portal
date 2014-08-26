@@ -340,8 +340,7 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 								<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
 							</portlet:renderURL>
 
-							<aui:button href="<%= addItemURL %>" value="add-item" />
-							
+							<aui:button href="<%= addItemURL %>" value="add-item" />						
 						</c:if>
 					</aui:button-row>
 				</c:if>

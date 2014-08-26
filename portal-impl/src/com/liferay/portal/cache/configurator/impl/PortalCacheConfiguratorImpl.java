@@ -17,15 +17,19 @@ package com.liferay.portal.cache.configurator.impl;
 import com.liferay.portal.cache.configurator.PortalCacheConfigurator;
 import com.liferay.portal.dao.orm.hibernate.region.LiferayEhcacheRegionFactory;
 import com.liferay.portal.dao.orm.hibernate.region.SingletonLiferayEhcacheRegionFactory;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.ClassLoaderUtil;
 
+import java.io.Serializable;
+
 import java.net.URL;
+
+import java.util.Collection;
 
 /**
  * @author Miguel Pastor
@@ -52,13 +56,22 @@ public class PortalCacheConfiguratorImpl implements PortalCacheConfigurator {
 		try {
 			ClassLoaderUtil.setContextClassLoader(aggregateClassLoader);
 
-			log(_singleVMCacheManager.getName(), url);
+			Collection<PortalCacheManager<? extends Serializable, ?>>
+				portalCacheManagers =
+					PortalCacheProvider.getPortalCacheManagers();
 
-			_singleVMCacheManager.reconfigureCaches(url);
+			for (PortalCacheManager<? extends Serializable, ?>
+					portalCacheManager :
+						portalCacheManagers) {
 
-			log(_multiVMCacheManager.getName(), url);
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Reconfiguring caches in cache manager " +
+							portalCacheManager.getName() + " using " + url);
+				}
 
-			_multiVMCacheManager.reconfigureCaches(url);
+				portalCacheManager.reconfigureCaches(url);
+			}
 		}
 		finally {
 			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
@@ -81,23 +94,7 @@ public class PortalCacheConfiguratorImpl implements PortalCacheConfigurator {
 		liferayEhcacheRegionFactory.reconfigureCaches(url);
 	}
 
-	protected void log(String cacheName, URL url) {
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Reconfiguring caches in cache manager " + cacheName +
-					" using " + url);
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		PortalCacheConfiguratorImpl.class);
-
-	@BeanReference(
-		name = "com.liferay.portal.kernel.cache.MultiVMPortalCacheManager")
-	private PortalCacheManager<?, ?> _multiVMCacheManager;
-
-	@BeanReference(
-		name = "com.liferay.portal.kernel.cache.SingleVMPortalCacheManager")
-	private PortalCacheManager<?, ?> _singleVMCacheManager;
 
 }

@@ -525,11 +525,6 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public void setDefaultTimeoutImplicit() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void setPrimaryTestSuiteName(String primaryTestSuiteName) {
 		_primaryTestSuiteName = primaryTestSuiteName;
 	}

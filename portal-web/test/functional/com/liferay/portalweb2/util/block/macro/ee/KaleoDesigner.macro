@@ -1,0 +1,64 @@
+<definition>
+	<command name="addSourceXML">
+		<var name="sourceXMLGeneric" >
+<![CDATA[
+<?xml version="1.0"?>
+<workflow-definition${line.separator} xmlns="urn:liferay.com:liferay-workflow_6.2.0"${line.separator} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"${line.separator} xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd">${line.separator}
+<name>Workflow Definition Name</name>${line.separator}${line.separator}
+
+<description>${line.separator}
+</description>${line.separator}${line.separator}
+
+<version>1</version>${line.separator}${line.separator}
+
+<state>${line.separator}
+<name>TestStartNode</name>${line.separator}${line.separator}
+
+<metadata>${line.separator}
+</metadata>${line.separator}${line.separator}
+
+<initial>true</initial>${line.separator}${line.separator}
+
+<transitions>${line.separator}
+<transition>${line.separator}
+<name>connector1443</name>${line.separator}${line.separator}
+
+<target>EndNode</target>${line.separator}${line.separator}
+
+<default>true</default>${line.separator}
+</transition>${line.separator}
+</transitions>${line.separator}
+</state>${line.separator}${line.separator}
+
+<state>${line.separator}
+<name>EndNode</name>${line.separator}${line.separator}
+
+<metadata>${line.separator}
+</metadata>${line.separator}${line.separator}
+
+<actions>${line.separator}
+<action>${line.separator}
+<name>Approve</name>${line.separator}${line.separator}
+
+<description>Approve</description>${line.separator}${line.separator}
+
+<script>${line.separator}
+</script>${line.separator}${line.separator}
+
+<script-language>javascript</script-language>${line.separator}${line.separator}
+
+<execution-type>onEntry</execution-type>${line.separator}
+</action>${line.separator}
+</actions>${line.separator}
+</state>${line.separator}
+</workflow-definition>
+]]>
+		</var>
+		<execute action="Kaleodesigner#assertClick" locator-key1="SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
+		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute action="Kaleodesigner#type" locator-key1="SOURCE_KALEO_XML_CONTENT" value1="${sourceXMLGeneric}" />
+		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_TAB" value1="View" />
+		<execute action="Kaleodesigner#pause" locator1="1000" />
+	</command>
+</definition>

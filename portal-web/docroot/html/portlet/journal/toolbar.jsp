@@ -93,7 +93,7 @@ portletURL.setParameter("displayStyle", JournalUtil.getDisplayStyle(liferayPortl
 			</c:if>
 		</aui:nav>
 
-		<aui:nav-bar-search cssClass="navbar-search-advanced" file="/html/portlet/journal/article_search.jsp" />
+		<aui:nav-bar-search file="/html/portlet/journal/article_search.jsp" />
 	</aui:nav-bar>
 </aui:form>
 

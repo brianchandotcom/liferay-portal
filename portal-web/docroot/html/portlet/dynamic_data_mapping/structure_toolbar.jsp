@@ -45,5 +45,5 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 		</c:if>
 	</aui:nav>
 
-	<aui:nav-bar-search cssClass="navbar-search-advanced" file="/html/portlet/dynamic_data_mapping/structure_search.jsp" searchContainer="<%= searchContainer %>" />
+	<aui:nav-bar-search file="/html/portlet/dynamic_data_mapping/structure_search.jsp" searchContainer="<%= searchContainer %>" />
 </aui:nav-bar>

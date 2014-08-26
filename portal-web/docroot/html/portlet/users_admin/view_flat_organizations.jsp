@@ -95,7 +95,7 @@ if (filterManageableOrganizations) {
 
 					<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp" />
 
-					<aui:nav-bar-search cssClass="navbar-search-advanced" file="/html/portlet/users_admin/organization_search.jsp" searchContainer="<%= organizationSearchContainer %>" />
+					<aui:nav-bar-search file="/html/portlet/users_admin/organization_search.jsp" searchContainer="<%= organizationSearchContainer %>" />
 				</aui:nav-bar>
 
 				<div id="breadcrumb">

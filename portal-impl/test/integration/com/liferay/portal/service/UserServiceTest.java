@@ -499,7 +499,7 @@ public class UserServiceTest {
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
-	public static class WhenOrganizationAdminUnsetsOrganizationUsersForNonSiteOrganization {
+	public static class WhenOrganizationAdminUnsetsUsersForNonSiteOrganization {
 
 		@Before
 		public void setUp() throws Exception {
@@ -555,7 +555,7 @@ public class UserServiceTest {
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
-	public static class WhenOrganizationOwnerUnsetsOrganizationUsersForNonSiteOrganization {
+	public static class WhenOrganizationOwnerUnsetsUsersForNonSiteOrganization {
 
 		@Before
 		public void setUp() throws Exception {
@@ -610,7 +610,7 @@ public class UserServiceTest {
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
-	public static class WhenOrganizationAdminUnsetsOrganizationUsersForSiteOrganization {
+	public static class WhenOrganizationAdminUnsetsUsersForSiteOrganization {
 
 		@Before
 		public void setUp() throws Exception {
@@ -658,7 +658,7 @@ public class UserServiceTest {
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
-	public static class WhenOrganizationOwnerUnsetsOrganizationUsersForSiteOrganization {
+	public static class WhenOrganizationOwnerUnsetsUsersForSiteOrganization {
 
 		@Before
 		public void setUp() throws Exception {

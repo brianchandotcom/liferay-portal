@@ -143,7 +143,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
-		.nav > li.staging-toggle {
+		.staging-controls .nav > li.staging-toggle {
 			&.active a, > a {
 				color: #FFF;
 			}
@@ -163,7 +163,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.staging-bar {
-			margin: 10px 0;
+			margin: 6px 0;
 
 			> li {
 				background: transparent;
@@ -288,10 +288,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		.page-customization-bar-container {
 			top: -1px;
-		}
-
-		.staging-bar {
-			margin: 6px 0;
 		}
 	}
 
@@ -538,6 +534,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.portlet-staging-bar {
 		.row .layout-revision-info {
+			max-width: 100%;
+
 			.layout-revision-version {
 				label {
 					color: #B6DDF5;

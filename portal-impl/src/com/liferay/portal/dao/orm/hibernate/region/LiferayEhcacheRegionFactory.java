@@ -132,12 +132,6 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		return timestampsRegion;
 	}
 
-	public PortalCacheManager<Serializable, Serializable>
-		getPortalCacheManager() {
-
-		return _portalCacheManager;
-	}
-
 	public void reconfigureCaches(URL cacheConfigFile) {
 		if (manager == null) {
 			return;
@@ -227,9 +221,8 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 			_mBeanRegisteringPortalLifecycle.registerPortalLifecycle(
 				PortalLifecycle.METHOD_INIT);
 
-			_portalCacheManager = new HibernatePortalCacheManager(manager);
-
-			PortalCacheProvider.registerPortalCacheManager(_portalCacheManager);
+			PortalCacheProvider.registerPortalCacheManager(
+				new HibernatePortalCacheManager(manager));
 		}
 		catch (net.sf.ehcache.CacheException ce) {
 			throw new CacheException(ce);
@@ -314,7 +307,6 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 		LiferayEhcacheRegionFactory.class);
 
 	private MBeanRegisteringPortalLifecycle _mBeanRegisteringPortalLifecycle;
-	private PortalCacheManager<Serializable, Serializable> _portalCacheManager;
 	private boolean _usingDefault;
 
 	private class HibernatePortalCacheManager

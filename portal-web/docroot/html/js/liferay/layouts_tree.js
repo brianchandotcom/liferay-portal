@@ -441,7 +441,7 @@ AUI.add(
 				return value;
 			},
 
-			_putNodeBackToOriginalPosition: function(response) {
+			_restoreNodePosition: function(response) {
 				var instance = this;
 
 				instance._displayNotice(response.message, 'warning', 10000, true);
@@ -467,9 +467,12 @@ AUI.add(
 				);
 
 				var action = 'append';
+
 				var index = response.originalPriority;
+
 				var node = instance.getNodeById(nodeId);
 				var parentNode = instance.getNodeById(parentNodeId);
+
 				var sibling;
 
 				if (index > 0) {
@@ -477,12 +480,13 @@ AUI.add(
 						action = 'append';
 					}
 					else {
-						if (node.get('parentNode').get('id') === parentNodeId) {
-							sibling = parentNode.item(index);
+						var siblingIndex = index;
+
+						if (node.get('parentNode').get('id') !== parentNodeId) {
+							siblingIndex -= 1;
 						}
-						else {
-							sibling = parentNode.item(index - 1);
-						}
+
+						sibling = parentNode.item(siblingIndex);
 
 						action = 'after';
 					}
@@ -521,7 +525,7 @@ AUI.add(
 									response = A.JSON.parse(xhr.responseText);
 
 									if (response.status === Liferay.STATUS_CODE.BAD_REQUEST) {
-										instance._putNodeBackToOriginalPosition(response);
+										instance._restoreNodePosition(response);
 									}
 								}
 								catch (e) {

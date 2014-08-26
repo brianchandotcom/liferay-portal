@@ -66,7 +66,7 @@ public class UserServiceTest {
 	public static class WhenCompanySecurityStrangersWithMX {
 
 		@Test(expected = ReservedUserEmailAddressException.class)
-		public void testAddUser() throws Exception {
+		public void shouldNotAddUser() throws Exception {
 			Field field = ReflectionUtil.getDeclaredField(
 				PropsValues.class, "COMPANY_SECURITY_STRANGERS_WITH_MX");
 
@@ -89,7 +89,7 @@ public class UserServiceTest {
 		}
 
 		@Test(expected = ReservedUserEmailAddressException.class)
-		public void testUpdateEmailAddress() throws Exception {
+		public void shouldNotUpdateEmailAddress() throws Exception {
 			Field field = ReflectionUtil.getDeclaredField(
 				PropsValues.class, "COMPANY_SECURITY_STRANGERS_WITH_MX");
 
@@ -120,7 +120,7 @@ public class UserServiceTest {
 		}
 
 		@Test(expected = ReservedUserEmailAddressException.class)
-		public void testUpdateUser() throws Exception {
+		public void shouldNotUpdateUser() throws Exception {
 			Field field = ReflectionUtil.getDeclaredField(
 				PropsValues.class, "COMPANY_SECURITY_STRANGERS_WITH_MX");
 
@@ -152,10 +152,10 @@ public class UserServiceTest {
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
-	public static class WhenCRUDOperations {
+	public static class WhenGetUserByEmailAddress {
 
 		@Test
-		public void testAddAndGetUser() throws Exception {
+		public void shouldGetUserWhenAdded() throws Exception {
 			User user = UserTestUtil.addUser(true);
 
 			User retrievedUser = UserServiceUtil.getUserByEmailAddress(
@@ -165,7 +165,7 @@ public class UserServiceTest {
 		}
 
 		@Test(expected = NoSuchUserException.class)
-		public void testDeleteUser() throws Exception {
+		public void shouldNotGetUserWhenDeleted() throws Exception {
 			User user = UserTestUtil.addUser(true);
 
 			UserServiceUtil.deleteUser(user.getUserId());

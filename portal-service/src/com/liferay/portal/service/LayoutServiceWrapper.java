@@ -1277,6 +1277,24 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	/**
+	* Updates the parent layout ID and priority of the layout in a shared
+	* transaction.
+	*
+	* @param plid the primary key of the layout
+	* @param parentPlid the primary key of the parent layout
+	* @param priority the layout's new priority
+	* @return the layout matching the primary key
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.Layout updateParentLayoutIdAndPriority(
+		long plid, long parentPlid, int priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutService.updateParentLayoutIdAndPriority(plid, parentPlid,
+			priority);
+	}
+
+	/**
 	* Updates the priority of the layout matching the group, layout ID, and
 	* privacy, setting the layout's priority based on the priorities of the
 	* next and previous layouts.

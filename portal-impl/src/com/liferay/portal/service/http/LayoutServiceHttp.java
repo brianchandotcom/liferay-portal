@@ -2031,6 +2031,39 @@ public class LayoutServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.model.Layout updateParentLayoutIdAndPriority(
+		HttpPrincipal httpPrincipal, long plid, long parentPlid, int priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LayoutServiceUtil.class,
+					"updateParentLayoutIdAndPriority",
+					_updateParentLayoutIdAndPriorityParameterTypes58);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, plid,
+					parentPlid, priority);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.model.Layout)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portal.model.Layout updatePriority(
 		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
 		long layoutId, int priority)
@@ -2515,6 +2548,8 @@ public class LayoutServiceHttp {
 	private static final Class<?>[] _updateParentLayoutIdParameterTypes58 = new Class[] {
 			long.class, long.class
 		};
+	private static final Class<?>[] _updateParentLayoutIdAndPriorityParameterTypes58 =
+		new Class[] { long.class, long.class, int.class };
 	private static final Class<?>[] _updatePriorityParameterTypes59 = new Class[] {
 			long.class, boolean.class, long.class, int.class
 		};

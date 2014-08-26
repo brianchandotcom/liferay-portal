@@ -119,6 +119,13 @@ public class DefaultDLFileVersionActionsDisplayContext
 		if (_portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 			_portletId = ParamUtil.getString(_request, "portletResource");
 		}
+
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			DLPortletInstanceSettings.getInstance(
+				_themeDisplay.getLayout(), _portletId);
+
+		_dlActionsDisplayContext = new DLActionsDisplayContext(
+			_request, dlPortletInstanceSettings);
 	}
 
 	@Override
@@ -128,6 +135,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 		_addDownloadMenuItem(menuItems);
 		_addOpenDocumentMenuItem(menuItems);
 		_addEditMenuItem(menuItems);
+		_addMoveMenuItem(menuItems);
 
 		return menuItems;
 	}
@@ -372,14 +380,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 	private void _addEditMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			DLPortletInstanceSettings.getInstance(
-				_themeDisplay.getLayout(), _portletId);
-
-		DLActionsDisplayContext dlActionsDisplayContext =
-			new DLActionsDisplayContext(_request, dlPortletInstanceSettings);
-
-		if (dlActionsDisplayContext.isShowActions()) {
+		if (_dlActionsDisplayContext.isShowActions()) {
 			if (isEditButtonVisible()) {
 				PortletURL portletURL = PortletURLUtil.getCurrent(
 					_liferayPortletRequest, _liferayPortletResponse);
@@ -400,6 +401,33 @@ public class DefaultDLFileVersionActionsDisplayContext
 						DLMenuItems.MENU_ITEM_ID_EDIT, "icon-edit", "edit",
 						editURL.toString()));
 			}
+		}
+	}
+
+	private void _addMoveMenuItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+		if (_dlActionsDisplayContext.isShowActions() && isMoveButtonVisible()) {
+			PortletURL moveURL = _liferayPortletResponse.createRenderURL();
+
+			moveURL.setParameter(
+				"struts_action", "/document_library/move_entry");
+			moveURL.setParameter(
+				"fileEntryIds", String.valueOf(_fileEntry.getFileEntryId()));
+
+			PortletURL viewFolderURL =
+				_liferayPortletResponse.createRenderURL();
+
+			viewFolderURL.setParameter(
+				"struts_action", "/document_library/view");
+			viewFolderURL.setParameter("folderId", String.valueOf(_folderId));
+
+			moveURL.setParameter("redirect", viewFolderURL.toString());
+
+			menuItems.add(
+				new URLMenuItem(
+					DLMenuItems.MENU_ITEM_ID_MOVE, "icon-move", "move",
+					moveURL.toString()));
 		}
 	}
 
@@ -531,6 +559,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 		"85F6C50E-3893-4E32-9D63-208528A503FA");
 
 	private long _companyId;
+	private DLActionsDisplayContext _dlActionsDisplayContext;
 	private DLFileEntryActionsDisplayContextHelper
 		_dlFileEntryActionsDisplayContextHelper;
 	private FileEntry _fileEntry;

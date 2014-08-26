@@ -45,7 +45,9 @@ public class ServiceReferenceServiceTuple<S>
 	@Override
 	public int compareTo(ServiceReferenceServiceTuple<S> o) {
 		return getServiceReference().compareTo(o.getServiceReference());
-	} private S _service;
+	} 
+	
+	private S _service;
 	private ServiceReference<S> _serviceReference;
 
 	@Override

@@ -93,7 +93,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 		</liferay-ui:search-container-results>
 
 		<aui:nav-bar>
-			<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/users_admin/group_search.jsp" searchContainer="<%= searchContainer %>" />
+			<aui:nav-bar-search file="/html/portlet/users_admin/group_search.jsp" searchContainer="<%= searchContainer %>" />
 		</aui:nav-bar>
 
 		<liferay-ui:error exception="<%= RequiredGroupException.class %>">

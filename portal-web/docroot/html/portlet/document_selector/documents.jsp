@@ -174,7 +174,7 @@ portletURL.setParameter("type", type);
 			</aui:nav-item>
 		</aui:nav>
 
-		<aui:nav-bar-search cssClass="pull-right"
+		<aui:nav-bar-search
 			file="/html/portlet/document_selector/search.jsp"
 			searchContainer="<%= fileEntrySearchContainer %>"
 		/>

@@ -51,7 +51,7 @@ portletURL.setParameter("eventName", eventName);
 				</aui:nav>
 			</c:if>
 
-			<aui:nav-bar-search cssClass="navbar-search-advanced" file="/html/portlet/mobile_device_rules/rule_group_search.jsp" searchContainer="<%= ruleGroupSearch %>" />
+			<aui:nav-bar-search file="/html/portlet/mobile_device_rules/rule_group_search.jsp" searchContainer="<%= ruleGroupSearch %>" />
 		</aui:nav-bar>
 
 		<%

@@ -34,7 +34,7 @@ try {
 
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 		<aui:nav-bar>
-			<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/workflow_tasks/workflow_search_tasks.jsp" />
+			<aui:nav-bar-search file="/html/portlet/workflow_tasks/workflow_search_tasks.jsp" />
 		</aui:nav-bar>
 
 		<c:choose>

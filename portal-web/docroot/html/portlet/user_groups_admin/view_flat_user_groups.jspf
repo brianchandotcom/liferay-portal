@@ -41,7 +41,7 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, portletURL)
 			</c:if>
 		</aui:nav>
 
-		<aui:nav-bar-search cssClass="navbar-search-advanced" file="/html/portlet/user_groups_admin/user_group_search.jsp" searchContainer="<%= userGroupSearch %>" />
+		<aui:nav-bar-search file="/html/portlet/user_groups_admin/user_group_search.jsp" searchContainer="<%= userGroupSearch %>" />
 	</aui:nav-bar>
 
 	<%

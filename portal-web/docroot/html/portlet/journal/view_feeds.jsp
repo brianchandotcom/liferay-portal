@@ -65,7 +65,6 @@ portletURL.setParameter("struts_action", "/journal/view_feeds");
 			</aui:nav>
 
 			<aui:nav-bar-search
-				cssClass="pull-right"
 				file="/html/portlet/journal/feed_search.jsp"
 				searchContainer="<%= searchContainer %>"
 			/>

@@ -125,11 +125,9 @@ public class LiferaySerializer extends AbstractSerializer {
 
 					int modifiers = field.getModifiers();
 
-					// Only marshall fields that are not final, static, or
-					// transient
+					// Only marshall fields that are not static, or transient
 
-					if (((modifiers & Modifier.FINAL) == Modifier.FINAL) ||
-						((modifiers & Modifier.STATIC) == Modifier.STATIC) ||
+					if (((modifiers & Modifier.STATIC) == Modifier.STATIC) ||
 						((modifiers & Modifier.TRANSIENT) ==
 							Modifier.TRANSIENT)) {
 
@@ -313,11 +311,9 @@ public class LiferaySerializer extends AbstractSerializer {
 
 					int modifiers = field.getModifiers();
 
-					// Only unmarshall fields that are not final, static, or
-					// transient
+					// Only unmarshall fields that are not static, or transient
 
-					if (((modifiers & Modifier.FINAL) == Modifier.FINAL) ||
-						((modifiers & Modifier.STATIC) == Modifier.STATIC) ||
+					if (((modifiers & Modifier.STATIC) == Modifier.STATIC) ||
 						((modifiers & Modifier.TRANSIENT) ==
 							Modifier.TRANSIENT)) {
 

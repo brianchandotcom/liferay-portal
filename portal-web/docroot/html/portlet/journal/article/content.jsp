@@ -70,7 +70,6 @@ if (ddmFields != null) {
 
 	availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
 }
-
 %>
 
 <liferay-ui:error-marker key="errorSection" value="content" />
@@ -219,7 +218,6 @@ if (ddmFields != null) {
 		</div>
 
 		<div class="journal-article-container" id="<portlet:namespace />journalArticleContainer">
-
 			<liferay-ddm:html
 				checkRequired="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
 				classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"

@@ -34,7 +34,7 @@ AUI.add(
 					doAsGroupId: {
 					},
 
-					fieldsDisplayInput: {
+					ddmFormValuesInput: {
 						setter: A.one
 					},
 
@@ -161,7 +161,7 @@ AUI.add(
 						return parentNode;
 					},
 
-					_getFieldsDisplay: function(nodes, isNested) {
+					_getFieldValues: function(nodes, isNested) {
 						var instance = this;
 
 						var definitionFields = instance.get('definition').fields;
@@ -181,10 +181,9 @@ AUI.add(
 
 								var instanceId = fieldNamespace.split(INSTANCE_STR)[1];
 
-								var isItemInStructure = definitionFieldNames.indexOf(fieldName) >= 0;
+								var isStructureField = definitionFieldNames.indexOf(fieldName) >= 0;
 
-								if (isItemInStructure || isNested) {
-
+								if (isStructureField || isNested) {
 									var field = {
 										instanceId: instanceId,
 										name: fieldName
@@ -193,7 +192,7 @@ AUI.add(
 									var nestedFields = instance._getFieldsList(null, item, true);
 
 									if (nestedFields._nodes.length) {
-										field.nestedFieldValues = instance._getFieldsDisplay(nestedFields, true);
+										field.nestedFieldValues = instance._getFieldValues(nestedFields, true);
 									}
 
 									field.value = instance.fieldsLocalizationMap[instanceId];
@@ -432,26 +431,17 @@ AUI.add(
 					_syncFieldsTreeUI: function() {
 						var instance = this;
 
-						var availableLocales;
+						var ddmFormValuesInput = instance.get('ddmFormValuesInput');
 
-						var defaultLocale;
+						var fieldsList = instance._getFieldsList(null, null, true);
 
-						var definition = instance.get('definition');
-
-						var fieldsDisplayInput = instance.get('fieldsDisplayInput');
-
-						var jsonValue;
-
-						availableLocales = instance.translationManager.get('availableLocales');
-						defaultLocale = instance.translationManager.get('defaultLocale');
-
-						jsonValue = {
-							availableLanguageIds: availableLocales,
-							defaultLanguageId: defaultLocale,
-							fieldValues: instance._getFieldsDisplay(instance._getFieldsList(null, null, true), false)
+						var ddmFormValuesJSON = {
+							availableLanguageIds: instance.translationManager.get('availableLocales'),
+							defaultLanguageId: instance.translationManager.get('defaultLocale'),
+							fieldValues: instance._getFieldValues(fieldsList, false)
 						};
 
-						fieldsDisplayInput.set('value', JSON.stringify(jsonValue.fieldValues));
+						ddmFormValuesInput.set('value', JSON.stringify(ddmFormValuesJSON));
 					},
 
 					_syncFieldsValues: function(locale) {

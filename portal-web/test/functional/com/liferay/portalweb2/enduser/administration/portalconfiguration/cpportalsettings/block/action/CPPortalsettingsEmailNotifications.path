@@ -65,6 +65,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAVIGATION_EMAIL_VERIFICATiON_NOTIFICATION_BODY</td>
+	<td>//div[@id='cke_3_contents']/iframe</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -129,6 +134,16 @@
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_FIELD</td>
 	<td>//iframe[contains(@title,'adminEmailUserAddedNoPasswordBody')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD</td>
+	<td>//div[contains(@class,'cke_contents')]/iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>

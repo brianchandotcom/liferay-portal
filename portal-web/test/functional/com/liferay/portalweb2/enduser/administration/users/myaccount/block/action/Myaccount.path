@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ALERT_SUCCESS_MESSAGE</td>
+	<td>//fieldset[contains(@class,'fieldset')]//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_MESSAGE_1</td>
 	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))])[1]</td>
 	<td></td>

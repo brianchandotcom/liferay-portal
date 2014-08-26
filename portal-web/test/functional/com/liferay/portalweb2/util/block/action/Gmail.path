@@ -50,6 +50,46 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOGOUT_SIGN_OUT_BUTTON</td>
+	<td>//div[@id='guser']//a[contains(@href,'https://mail.google.com/mail') and contains(.,'Sign out')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_PASSWORD</td>
+	<td>//tr[4]/td/div[@class='msg']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_VERIFICATION_CODE</td>
+	<td>//tr[4]/td/div[@class='msg']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_ADDRESS_VERIFICATION_URL</td>
+	<td>//div[@class='msg']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_EMAIL_MESSAGE_TITLE</td>
+	<td>//tr/td[contains(.,'${key_gmailMessageTitle}')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_MAIL_USER_NAME</td>
+	<td>//form[@method='POST']//table[2]/tbody/tr[contains(.,'${key_emailFromUserName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGN_IN_WITH_DIFFERENT_ACCOUNT</td>
+	<td>//p[@class='switch-account']/a[@id='account-chooser-link']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ACCOUNT_BUTTON</td>
+	<td>//div[contains(@class,'action-card')]//a[contains(@id,'add-account')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -151,6 +191,11 @@
 <tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_TITLE</td>
 	<td>//tr[contains(.,'${key_gmailAssetType}')]//h2/font/b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_TITLE</td>
+	<td>//tr[contains(.,'Your New Account')]//h2/font/b</td>
 	<td></td>
 </tr>
 <tr>

@@ -13,6 +13,15 @@
 		<execute action="Gmail#pause" locator1="3000" />
 	</command>
 
+	<command name="gotoMailMessage">
+		<var name="key_emailFromUserName" value="${emailFromUserName}" />
+		<var name="key_gmailMessageTitle" value="${gmailMessageTitle}" />
+
+		<execute action="Gmail#assertTextEquals" locator-key1="GMAIL_MAIL_USER_NAME" value1="${emailFromUserName}" />
+		<execute action="Gmail#click" locator-key1="GMAIL_EMAIL_MESSAGE_TITLE" value1="${gmailMessageTitle}" />
+		<execute action="Gmail#pause" locator1="1000" />
+	</command>
+
 	<command name="login">
 		<execute action="Home#open" locator1="http://www.gmail.com" />
 		<execute action="Home#pause" locator1="5000" />
@@ -38,6 +47,27 @@
 				<execute action="Gmail#assertElementPresent" locator-key1="GMAIL_NORMAL_MODE_USER_SCREENNAME" />
 			</else>
 		</if>
+	</command>
+
+	<command name="logoutAndLogin">
+		<execute action="Home#open" locator1="http://www.gmail.com" />
+		<execute action="Home#pause" locator1="3000" />
+
+		<execute action="Gmail#assertClick" locator-key1="LOGOUT_SIGN_OUT_BUTTON" value1="Sign out" />
+
+		<if>
+			<condition action="Gmail#isElementPresent" locator-key1="SIGN_IN_WITH_DIFFERENT_ACCOUNT" />
+			<then>
+				<execute action="Gmail#assertClick" locator-key1="SIGN_IN_WITH_DIFFERENT_ACCOUNT" value1="Sign in with a different account" />
+				<execute action="Gmail#assertClick" locator-key1="ADD_ACCOUNT_BUTTON" value1="Add account" />
+			</then>
+		</if>
+
+		<execute action="Gmail#type" locator-key1="LOGIN_EMAIL_FIELD" value1="${userEmailAddress}" />
+		<execute action="Gmail#type" locator-key1="LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
+		<execute action="Gmail#check" locator-key1="LOGIN_STAY_SIGNED_IN_CHECKBOX" />
+		<execute action="Gmail#click" locator-key1="LOGIN_SIGN_IN_BUTTON" />
+		<execute action="Gmail#pause" locator1="5000" />
 	</command>
 
 	<command name="openMessageLink">

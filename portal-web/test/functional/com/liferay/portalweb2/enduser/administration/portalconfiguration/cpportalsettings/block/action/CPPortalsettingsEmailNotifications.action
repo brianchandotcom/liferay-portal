@@ -12,4 +12,14 @@
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>
+
+	<command name="type">
+		<case locator-key1="EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD">
+			<execute function="Type#typeFrame" />
+		</case>
+
+		<case locator-key1="NAVIGATION_EMAIL_VERIFICATiON_NOTIFICATION_BODY">
+			<execute function="Type#typeFrame" />
+		</case>
+	</command>
 </definition>

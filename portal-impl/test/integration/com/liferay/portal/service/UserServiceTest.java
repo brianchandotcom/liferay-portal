@@ -152,10 +152,10 @@ public class UserServiceTest {
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
-	public static class WhenGetUserByEmailAddress {
+	public static class WhenGettingUserByEmailAddress {
 
 		@Test
-		public void shouldGetUserWhenAdded() throws Exception {
+		public void shouldReturnUserIfPresent() throws Exception {
 			User user = UserTestUtil.addUser(true);
 
 			User retrievedUser = UserServiceUtil.getUserByEmailAddress(
@@ -165,7 +165,7 @@ public class UserServiceTest {
 		}
 
 		@Test(expected = NoSuchUserException.class)
-		public void shouldNotGetUserWhenDeleted() throws Exception {
+		public void shouldFailIfUserDeleted() throws Exception {
 			User user = UserTestUtil.addUser(true);
 
 			UserServiceUtil.deleteUser(user.getUserId());

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.process;
 
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
-
 import java.io.Serializable;
 
 /**
@@ -23,7 +21,7 @@ import java.io.Serializable;
  */
 public interface ProcessExecutor {
 
-	public <T extends Serializable> NoticeableFuture<T> execute(
+	public <T extends Serializable> ProcessChannel<T> execute(
 			ProcessConfig processConfig, ProcessCallable<T> processCallable)
 		throws ProcessException;
 

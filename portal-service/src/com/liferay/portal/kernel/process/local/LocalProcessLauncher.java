@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.process.local;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedOutputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
@@ -110,6 +112,14 @@ public class LocalProcessLauncher {
 
 			ProcessCallable<?> processCallable =
 				(ProcessCallable<?>)objectInputStream.readObject();
+
+			Thread thread = new Thread(
+				new ProcessCallableRunner(objectInputStream),
+				"ProcessCallable-Runner");
+
+			thread.setDaemon(true);
+
+			thread.start();
 
 			Serializable result = processCallable.call();
 
@@ -299,6 +309,46 @@ public class LocalProcessLauncher {
 
 		private String _message;
 
+	}
+
+	private static class ProcessCallableRunner implements Runnable {
+
+		public ProcessCallableRunner(ObjectInputStream objectInputStream) {
+			_objectInputStream = objectInputStream;
+		}
+
+		@Override
+		public void run() {
+			while (true) {
+				try {
+					ProcessCallable<?> processCallable =
+						(ProcessCallable<?>)_objectInputStream.readObject();
+
+					processCallable.call();
+				}
+				catch (Exception e) {
+					UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+						new UnsyncByteArrayOutputStream();
+
+					UnsyncPrintWriter unsyncPrintWriter = new UnsyncPrintWriter(
+						unsyncByteArrayOutputStream);
+
+					unsyncPrintWriter.println(e);
+
+					e.printStackTrace(unsyncPrintWriter);
+
+					unsyncPrintWriter.println();
+					unsyncPrintWriter.close();
+
+					System.err.write(
+						unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
+						unsyncByteArrayOutputStream.size());
+					System.err.flush();
+				}
+			}
+		}
+
+		private final ObjectInputStream _objectInputStream;
 	}
 
 }

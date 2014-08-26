@@ -14,30 +14,19 @@
 
 package com.liferay.portal.kernel.process;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 
 import java.io.Serializable;
 
 /**
  * @author Shuyang Zhou
  */
-public class ProcessExecutorUtil {
+public interface ProcessChannel<T extends Serializable> {
 
-	public static <T extends Serializable> ProcessChannel<T> execute(
-			ProcessConfig processConfig, ProcessCallable<T> processCallable)
-		throws ProcessException {
+	public NoticeableFuture<T> getProcessNoticeableFuture();
 
-		PortalRuntimePermission.checkGetBeanProperty(ProcessExecutorUtil.class);
-
-		return _processExecutor.execute(processConfig, processCallable);
-	}
-
-	public void setProcessExecutor(ProcessExecutor processExecutor) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_processExecutor = processExecutor;
-	}
-
-	private static ProcessExecutor _processExecutor;
+	public <V extends Serializable> NoticeableFuture<V> write(
+			ProcessCallable<V> processCallable)
+		throws ProcessException;
 
 }

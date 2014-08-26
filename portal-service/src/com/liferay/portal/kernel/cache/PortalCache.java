@@ -39,6 +39,8 @@ public interface PortalCache<K extends Serializable, V> {
 	@Id
 	public String getName();
 
+	public PortalCacheManager<K, V> getPortalCacheManager();
+
 	@Proxy
 	public void put(K key, V value);
 

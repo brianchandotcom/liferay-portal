@@ -17,6 +17,7 @@ package com.liferay.portal.cache.memory;
 import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheProvider;
 
 import java.io.Serializable;
 
@@ -48,6 +49,8 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 			cacheManagerListener.init();
 		}
+
+		PortalCacheProvider.registerPortalCacheManager(this);
 	}
 
 	@Override
@@ -61,6 +64,8 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public void destroy() {
+		PortalCacheProvider.unregisterPortalCacheManager(_name);
+
 		for (MemoryPortalCache<K, V> memoryPortalCache :
 				_memoryPortalCaches.values()) {
 
@@ -85,7 +90,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 		if (portalCache == null) {
 			portalCache = new MemoryPortalCache<K, V>(
-				name, _cacheInitialCapacity);
+				this, name, _cacheInitialCapacity);
 
 			_memoryPortalCaches.put(name, portalCache);
 

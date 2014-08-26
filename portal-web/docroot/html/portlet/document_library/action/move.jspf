@@ -19,14 +19,8 @@
 	<%
 	PortletURL moveURL = liferayPortletResponse.createRenderURL();
 
-	if (fileShortcut != null) {
-		moveURL.setParameter("struts_action", "/document_library/move_entry");
-		moveURL.setParameter("fileShortcutIds", String.valueOf(fileShortcut.getFileShortcutId()));
-	}
-	else {
-		moveURL.setParameter("struts_action", "/document_library/move_entry");
-		moveURL.setParameter("fileEntryIds", String.valueOf(fileEntry.getFileEntryId()));
-	}
+	moveURL.setParameter("struts_action", "/document_library/move_entry");
+	moveURL.setParameter("fileShortcutIds", String.valueOf(fileShortcut.getFileShortcutId()));
 
 	moveURL.setParameter("redirect", viewFolderURL.toString());
 	%>

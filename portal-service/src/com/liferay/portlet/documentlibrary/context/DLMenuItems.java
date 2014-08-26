@@ -23,6 +23,8 @@ public class DLMenuItems {
 
 	public static final String MENU_ITEM_ID_EDIT = "edit";
 
+	public static final String MENU_ITEM_ID_MOVE = "move";
+
 	public static final String MENU_ITEM_ID_OPEN_DOCUMENT = "open-document";
 
 }

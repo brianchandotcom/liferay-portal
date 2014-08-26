@@ -1,0 +1,531 @@
+<definition component-name="portal-tools">
+	<property name="testray.main.component.name" value="Tools" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="GetAlert" priority="5">
+		<var name="entryComment" value="Blogs Entry Comment Body" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#addCP">
+			<var name="entryComment" value="${entryComment}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<var name="key_entryComment" value="${entryComment}" />
+
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
+		<execute action="CPBlogsEntry#mouseOver" locator-key1="COMMENT" />
+		<execute action="CPBlogsEntry#assertClick" locator-key1="COMMENT_DELETE_1" value1="Delete" />
+
+		<var method="selenium#getAlert()" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="Are you sure you want to delete this? It will be deleted immediately." />
+		</execute>
+	</command>
+
+	<!--<command name="GetAttribute" priority="5">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<var method="selenium#getAttribute(//input[@id='_161_title']@title)" name="title" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${title}" />
+			<var name="expected" value="Title" />
+		</execute>
+	</command>-->
+
+	<command name="GetBodyText" priority="5">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+
+		<execute action="CPBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+
+		<execute action="Home#selectFrame" locator1="//iframe[contains(@title,'Rich Text Editor')]" />
+
+		<var method="selenium#getBodyText()" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="Blogs Entry Content" />
+		</execute>
+	</command>
+
+	<command name="GetCurrentDay" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+
+		<var method="selenium#getCurrentDay()" name="int" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${int}" />
+			<var locator-key="DISPLAY_DATE_DAY" name="expected" path="CPBlogsAdd" />
+		</execute>
+	</command>
+
+	<command name="GetCurrentMonth" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+
+		<var locator-key="DISPLAY_DATE" name="int" path="CPBlogsAdd" />
+
+		<var method="selenium#getCurrentMonth()" name="month" />
+		<var group="1" input="${int}" name="regex" pattern="([1-9]*[0-9])/([0-9]*)/([0-9]*)" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${month}" />
+			<var name="expected" value="${regex}" />
+		</execute>
+	</command>
+
+	<command name="GetCurrentYear" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+
+		<var method="selenium#getCurrentYear()" name="int" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${int}" />
+			<var locator-key="DISPLAY_DATE_YEAR" name="expected" path="CPBlogsAdd" />
+		</execute>
+	</command>
+
+	<!--<command name="GetFirstNumber" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+
+		<var method="selenium#getFirstNumber(//input[@id='__161__displayDateYear'])" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="2" />
+		</execute>
+	</command>
+
+	<command name="GetFirstNumberIncrement" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+
+		<var method="selenium#getFirstNumberIncrement(//input[@id='__161__displayDateYear'])" name="string" />
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="3" />
+		</execute>
+	</command>-->
+
+	<command name="GetLocation" priority="5">
+		<var method="selenium#getLocation()" name="url" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${url}" />
+			<var name="expected" value="http://localhost:8080/web/guest" />
+		</execute>
+	</command>
+
+	<command name="GetNumberDecrement" priority="5">
+		<var method="selenium#getNumberDecrement(&quot;123&quot;)" name="int" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${int}" />
+			<var name="expected" value="122" />
+		</execute>
+	</command>
+
+	<command name="GetNumberIncrement" priority="5">
+		<var method="selenium#getNumberIncrement(&quot;123&quot;)" name="int" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${int}" />
+			<var name="expected" value="124" />
+		</execute>
+	</command>
+
+	<command name="GetText" priority="5">
+		<var method="selenium#getText(//li[@id='_145_adminLinks'])" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="Admin" />
+		</execute>
+	</command>
+
+	<command name="GetValue" priority="5">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+
+		<var method="selenium#getValue(//input[@id='_161_title'])" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="Blogs Entry Title" />
+		</execute>
+	</command>
+
+	<command name="IsAlertPresent" priority="5">
+		<var name="entryComment" value="Blogs Entry Comment Body" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#addCP">
+			<var name="entryComment" value="${entryComment}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<var name="key_entryComment" value="${entryComment}" />
+
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
+		<execute action="CPBlogsEntry#mouseOver" locator-key1="COMMENT" />
+		<execute action="CPBlogsEntry#assertClick" locator-key1="COMMENT_DELETE_1" value1="Delete" />
+
+		<var method="selenium#isAlertPresent()" name="alert" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${alert}" />
+			<var name="expected" value="true" />
+		</execute>
+	</command>
+
+	<command name="IsChecked" priority="5">
+		<var name="entryComment" value="Blogs Entry Comment Body" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+
+		<execute action="CPBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+
+		<var method="selenium#isChecked(//input[@id='_161_allowPingbacksCheckbox'])" name="check" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${check}" />
+			<var name="expected" value="true" />
+		</execute>
+	</command>
+
+	<command name="IsElementNotPresent" priority="5">
+		<var method="selenium#isElementNotPresent(//li[@id='_145_adminLinks'])" name="element" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${element}" />
+			<var name="expected" value="false" />
+		</execute>
+	</command>
+
+	<command name="IsElementPresent" priority="5">
+		<var method="selenium#isElementPresent(//li[@id='_145_adminLinks'])" name="element" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${element}" />
+			<var name="expected" value="true" />
+		</execute>
+	</command>
+
+	<command name="IsElementPresentAfterWait" priority="5">
+		<var method="selenium#isElementPresentAfterWait(//li[@id='_145_adminLinks'])" name="element" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${element}" />
+			<var name="expected" value="true" />
+		</execute>
+	</command>
+
+	<command name="IsNotChecked" priority="5">
+		<var name="entryComment" value="Blogs Entry Comment Body" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+
+		<execute action="CPBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+
+		<var method="selenium#isNotChecked(//input[@id='_161_allowPingbacksCheckbox'])" name="check" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${check}" />
+			<var name="expected" value="false" />
+		</execute>
+	</command>
+
+	<command name="IsNotPartialText" priority="5">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+
+		<var method="selenium#isNotPartialText(//fieldset[@class='fieldset '], Content)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="false" />
+		</execute>
+	</command>
+
+	<command name="IsNotText" priority="5">
+		<var method="selenium#isNotText(//li[@id='_145_adminLinks'], Admin)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="false" />
+		</execute>
+	</command>
+
+	<command name="IsNotValue" priority="5">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+
+		<var method="selenium#isNotValue(//input[@id='_161_title'], Blogs Entry Title)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="false" />
+		</execute>
+	</command>
+
+	<command name="IsNotVisible" priority="5">
+		<var method="selenium#isNotVisible(//li[@id='_145_adminLinks'])" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="false" />
+		</execute>
+	</command>
+
+	<!--<command name="IsPartialText" priority="5">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+
+		<var method="selenium#isPartialText(//fieldset[@class='fieldset '], Content)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="True" />
+		</execute>
+	</command>
+
+	<command name="IsText" priority="5">
+		<var method="selenium#isText(//li[@id='_145_adminLinks'], Admin)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="true" />
+		</execute>
+	</command>-->
+
+	<command name="IsTextNotPresent" priority="5">
+		<var method="selenium#isTextNotPresent('Site Administrator')" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="true" />
+		</execute>
+	</command>
+
+	<command name="IsTextPresent" priority="5">
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+
+		<var method="selenium#isTextPresent('Site Administrator')" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="false" />
+		</execute>
+	</command>
+
+	<!--<command name="IsValue" priority="5">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+
+		<var method="selenium#isValue(//div[@id='_161_title'], Blogs Entry Title)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="true" />
+		</execute>
+	</command>-->
+
+	<command name="IsVisible" priority="5">
+		<var method="selenium#isVisible(//li[@id='_145_adminLinks'])" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="true" />
+		</execute>
+	</command>
+</definition>

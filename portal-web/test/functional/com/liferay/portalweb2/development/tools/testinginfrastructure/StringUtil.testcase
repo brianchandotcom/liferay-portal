@@ -1,0 +1,239 @@
+<definition component-name="portal-tools">
+	<property name="testray.main.component.name" value="Tools" />
+
+	<command name="Add" priority="5">
+		<var method="StringUtil#add(&quot;abc&quot;, &quot;def&quot;, &quot;...&quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="abc...def..." />
+		</execute>
+	</command>
+
+	<command name="Contains" priority="5">
+		<var method="StringUtil#contains(&quot;These are tests&quot;, &quot;test&quot;)" name="boolean" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${boolean}" />
+			<var name="expected" value="false" />
+		</execute>
+	</command>
+
+	<command name="Count" priority="5">
+		<var method="StringUtil#count(&quot;Life Ray is Life of Portal&quot;, &quot;Life&quot;)" name="int" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${int}" />
+			<var name="expected" value="2" />
+		</execute>
+	</command>
+
+	<command name="EndsWith" priority="5">
+		<var method="StringUtil#endsWith(&quot;Hello World&quot;, &quot;World&quot;)" name="boolean" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${boolean}" />
+			<var name="expected" value="true" />
+		</execute>
+	</command>
+
+	<command name="ExtractChars" priority="5">
+		<var method="StringUtil#extractChars(&quot;These are t23415ests&quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="Thesearetests" />
+		</execute>
+	</command>
+
+	<command name="ExtractDigits" priority="5">
+		<var method="StringUtil#extractDigits(&quot;These are t23415ests&quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="23415" />
+		</execute>
+	</command>
+
+	<command name="ExtractFirst" priority="5">
+		<var method="StringUtil#extractFirst(&quot;The Life Ray is the Life of Portal&quot;, &quot;Life&quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="The " />
+		</execute>
+	</command>
+
+	<command name="ExtractLast" priority="5">
+		<var method="StringUtil#extractLast(&quot;The Life Ray is the Life of Portal&quot;, &quot;Life&quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value=" of Portal" />
+		</execute>
+	</command>
+
+	<command name="ExtractLeadingDigits" priority="5">
+		<var method="StringUtil#extractLeadingDigits(&quot;123456Hello World&quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="123456" />
+		</execute>
+	</command>
+
+	<command name="IsLowerCase" priority="5">
+		<var method="StringUtil#isLowerCase(&quot;heLLo&quot;)" name="boolean" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${boolean}" />
+			<var name="expected" value="false" />
+		</execute>
+	</command>
+
+	<command name="IsUpperCase" priority="5">
+		<var method="StringUtil#isUpperCase(&quot;HELL0&quot;)" name="boolean" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${boolean}" />
+			<var name="expected" value="true" />
+		</execute>
+	</command>
+
+	<command name="LowerCase" priority="5">
+		<var method="StringUtil#lowerCase(&quot;heLLo&quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="hello" />
+		</execute>
+	</command>
+
+	<command name="LowerCaseFirstLetter" priority="5">
+		<var method="StringUtil#lowerCaseFirstLetter(&quot;HELLO&quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="hELLO" />
+		</execute>
+	</command>
+
+	<command name="Matches" priority="5">
+		<var method="StringUtil#matches(&quot;The fox jumped over the lazy dog&quot;, &quot;lazy dog&quot;)" name="boolean" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${boolean}" />
+			<var name="expected" value="true" />
+		</execute>
+	</command>
+
+	<command name="Quote" priority="5">
+		<var method="StringUtil#quote(&quot;Love&quot;, &quot;xo&quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="xoLovexo" />
+		</execute>
+	</command>
+
+	<!--<command name="Remove" priority="5">
+		<var method="StringUtil#remove(&quot;The fox jumped over the lazy dog&quot;, &quot;lazy&quot;)" name="stringRemove" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${stringRemove}" />
+			<var name="expected" value="The fox jumped over the dog" />
+		</execute>
+	</command>-->
+
+	<command name="Replace" priority="5">
+		<var method="StringUtil#replace(&quot;You are my guest&quot;, &quot;guest&quot;, &quot;friend&quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="You are my friend" />
+		</execute>
+	</command>
+
+	<command name="Reverse" priority="5">
+		<var method="StringUtil#reverse(&quot;Hello&quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="olleH" />
+		</execute>
+	</command>
+
+	<command name="StartsWith" priority="5">
+		<var method="StringUtil#startsWith(&quot;This is a test&quot;, &quot;This&quot;)" name="boolean" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${boolean}" />
+			<var name="expected" value="true" />
+		</execute>
+	</command>
+
+	<command name="StripBetween" priority="5">
+		<var method="StringUtil#stripBetween(&quot;Liferay is the life of portal&quot;, &quot;is&quot;, &quot;of &quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="Liferay portal" />
+		</execute>
+	</command>
+
+	<command name="Trim" priority="5">
+		<var method="StringUtil#trim(&quot;       Life Ray is Life of Portal             &quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="Life Ray is Life of Portal" />
+		</execute>
+	</command>
+
+	<command name="TrimLeading" priority="5">
+		<var method="StringUtil#trimLeading(&quot;            Hello&quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="Hello" />
+		</execute>
+	</command>
+
+	<command name="TrimTrailing" priority="5">
+		<var method="StringUtil#trimTrailing(&quot;Hello                 &quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="Hello" />
+		</execute>
+	</command>
+
+	<command name="Unquote" priority="5">
+		<var name="stringUnquote"><![CDATA["HELP"]]></var>
+
+		<var method="StringUtil#unquote(&quot;${stringUnquote}&quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="HELP" />
+		</execute>
+	</command>
+
+	<command name="UpperCase" priority="5">
+		<var method="StringUtil#upperCase(&quot;heLLo&quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="HELLO" />
+		</execute>
+	</command>
+
+	<command name="UpperCaseFirstLetter" priority="5">
+		<var method="StringUtil#upperCaseFirstLetter(&quot;heLLo&quot;)" name="string" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${string}" />
+			<var name="expected" value="HeLLo" />
+		</execute>
+	</command>
+</definition>

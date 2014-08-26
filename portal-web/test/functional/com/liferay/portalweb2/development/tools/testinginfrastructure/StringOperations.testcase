@@ -21,6 +21,14 @@
 		</execute>
 	</command>
 
+	<command name="GetIPAddress" priority="5">
+		<echo message="Test getIPAddress()" />
+
+		<var name="ipAddress" value="${getIPAddress()}" />
+
+		<echo message="${ipAddress}" />
+	</command>
+
 	<command name="Increment" priority="5">
 		<echo message="Test increment()" />
 
@@ -39,14 +47,6 @@
 			<var name="actual" value="${number?increment()}" />
 			<var name="expected" value="2" />
 		</execute>
-	</command>
-
-	<command name="IPAddress" priority="5">
-		<echo message="Test getIPAddress()" />
-
-		<var name="ipAddress" value="${getIPAddress()}" />
-
-		<echo message="${ipAddress}" />
 	</command>
 
 	<command name="Length" priority="5">
@@ -86,6 +86,22 @@
 		<execute macro="TestUtils#assertEquals">
 			<var name="actual" value="${string?lowercase()}" />
 			<var name="expected" value="abcde" />
+		</execute>
+	</command>
+
+	<command name="Regex" priority="5">
+		<var group="0" input="regularexpression=32132" name="regex" pattern="[a-z]*=([0-9]*)" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${regex}" />
+			<var name="expected" value="regularexpression=32132" />
+		</execute>
+
+		<var group="1" input="regularexpression=32132" name="regex" pattern="[a-z]*=([0-9]*)" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${regex}" />
+			<var name="expected" value="32132" />
 		</execute>
 	</command>
 

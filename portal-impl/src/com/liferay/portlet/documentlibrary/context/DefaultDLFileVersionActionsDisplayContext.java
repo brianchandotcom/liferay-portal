@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavascriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -126,6 +127,11 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 		_dlActionsDisplayContext = new DLActionsDisplayContext(
 			_request, dlPortletInstanceSettings);
+
+		PortletURL portletURL = PortletURLUtil.getCurrent(
+			_liferayPortletRequest, _liferayPortletResponse);
+
+		_currentURL = portletURL.toString();
 	}
 
 	@Override
@@ -136,6 +142,9 @@ public class DefaultDLFileVersionActionsDisplayContext
 		_addOpenDocumentMenuItem(menuItems);
 		_addEditMenuItem(menuItems);
 		_addMoveMenuItem(menuItems);
+		_addCheckoutMenuItem(menuItems);
+		_addCheckinMenuItem(menuItems);
+		_addCancelCheckoutMenuItem(menuItems);
 
 		return menuItems;
 	}
@@ -357,6 +366,74 @@ public class DefaultDLFileVersionActionsDisplayContext
 		return _dlFileEntryActionsDisplayContextHelper.hasViewPermission();
 	}
 
+	private void _addCancelCheckoutMenuItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+		if (_dlActionsDisplayContext.isShowActions() &&
+			isCancelCheckoutDocumentButtonVisible()) {
+
+			PortletURL cancelCheckoutURL =
+				_liferayPortletResponse.createActionURL();
+
+			cancelCheckoutURL.setParameter(
+				"struts_action", "/document_library/edit_file_entry");
+			cancelCheckoutURL.setParameter(
+				Constants.CMD, Constants.CANCEL_CHECKOUT);
+			cancelCheckoutURL.setParameter("redirect", _currentURL);
+			cancelCheckoutURL.setParameter(
+				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
+			menuItems.add(
+				new URLMenuItem(
+					DLMenuItems.MENU_ITEM_ID_CANCEL_CHECKOUT, "icon-remove",
+					"cancel-checkout[document]", cancelCheckoutURL.toString()));
+		}
+	}
+
+	private void _addCheckinMenuItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+		if (_dlActionsDisplayContext.isShowActions() &&
+			isCheckinButtonVisible()) {
+
+			PortletURL checkinURL = _liferayPortletResponse.createActionURL();
+
+			checkinURL.setParameter(
+				"struts_action", "/document_library/edit_file_entry");
+			checkinURL.setParameter(Constants.CMD, Constants.CHECKIN);
+			checkinURL.setParameter("redirect", _currentURL);
+			checkinURL.setParameter(
+				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
+			menuItems.add(
+				new URLMenuItem(
+					DLMenuItems.MENU_ITEM_ID_CHECKIN, "icon-lock", "checkin",
+					checkinURL.toString()));
+		}
+	}
+
+	private void _addCheckoutMenuItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+		if (_dlActionsDisplayContext.isShowActions() &&
+			isCheckoutDocumentButtonVisible()) {
+
+			PortletURL checkoutURL = _liferayPortletResponse.createActionURL();
+
+			checkoutURL.setParameter(
+				"struts_action", "/document_library/edit_file_entry");
+			checkoutURL.setParameter(Constants.CMD, Constants.CHECKOUT);
+			checkoutURL.setParameter("redirect", _currentURL);
+			checkoutURL.setParameter(
+				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
+			menuItems.add(
+				new URLMenuItem(
+					DLMenuItems.MENU_ITEM_ID_CHECKOUT, "icon-unlock",
+					"checkout[document]", checkoutURL.toString()));
+		}
+	}
+
 	private void _addDownloadMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -382,17 +459,12 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 		if (_dlActionsDisplayContext.isShowActions()) {
 			if (isEditButtonVisible()) {
-				PortletURL portletURL = PortletURLUtil.getCurrent(
-					_liferayPortletRequest, _liferayPortletResponse);
-
-				String currentURL = portletURL.toString();
-
 				PortletURL editURL = _liferayPortletResponse.createRenderURL();
 
 				editURL.setParameter(
 					"struts_action", "/document_library/edit_file_entry");
-				editURL.setParameter("redirect", currentURL);
-				editURL.setParameter("backURL", currentURL);
+				editURL.setParameter("redirect", _currentURL);
+				editURL.setParameter("backURL", _currentURL);
 				editURL.setParameter(
 					"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
@@ -559,6 +631,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 		"85F6C50E-3893-4E32-9D63-208528A503FA");
 
 	private long _companyId;
+	private String _currentURL;
 	private DLActionsDisplayContext _dlActionsDisplayContext;
 	private DLFileEntryActionsDisplayContextHelper
 		_dlFileEntryActionsDisplayContextHelper;

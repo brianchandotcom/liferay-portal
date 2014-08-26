@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/dockbar/init.jsp" %>
 
 <div id="<portlet:namespace />devicePreviewContainer">
-	<aui:button cssClass="close pull-right" name="closePanelPreview" value="&times;" />
+	<aui:button cssClass="close" name="closePanelPreview" value="&times;" />
 
 	<h1><liferay-ui:message key="preview" /></h1>
 

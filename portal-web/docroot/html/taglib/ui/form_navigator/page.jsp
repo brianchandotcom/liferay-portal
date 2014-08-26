@@ -70,7 +70,7 @@ if (Validator.isNotNull(historyKey)) {
 			</liferay-ui:panel-container>
 
 			<aui:button-row>
-				<aui:button cssClass="btn-primary pull-right" type="submit" />
+				<aui:button cssClass="btn-primary" type="submit" />
 			</aui:button-row>
 		</c:when>
 		<c:otherwise>

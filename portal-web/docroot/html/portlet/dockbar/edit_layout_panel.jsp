@@ -44,7 +44,7 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 			</aui:script>
 		</c:when>
 		<c:otherwise>
-			<aui:button cssClass="close pull-right" name="closePanelEdit" value="&times;" />
+			<aui:button cssClass="close" name="closePanelEdit" value="&times;" />
 
 			<h1><liferay-ui:message key="edit-page" /></h1>
 
@@ -106,11 +106,10 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 							A.io.request(
 								form.attr('action'),
 								{
-									dataType: 'JSON',
-									form: {
-										id: form.attr('id')
-									},
 									after: {
+										failure: function(event) {
+											loadingMask.hide();
+										},
 										success: function(event, id, obj) {
 											var response = this.get('responseData');
 
@@ -123,10 +122,11 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 											panel.setContent(response);
 
 											loadingMask.hide();
-										},
-										failure: function(event) {
-											loadingMask.hide();
 										}
+									},
+									dataType: 'JSON',
+									form: {
+										id: form.attr('id')
 									}
 								}
 							);

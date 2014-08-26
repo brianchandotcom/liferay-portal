@@ -38,7 +38,7 @@
 
 			<c:if test="<%= !group.isControlPanel() && (hasLayoutAddPermission || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
 				<div class="add-content-menu" id="<portlet:namespace />addPanelContainer">
-					<aui:button cssClass="close pull-right" name="closePanelAdd" value="&times;" />
+					<aui:button cssClass="close" name="closePanelAdd" value="&times;" />
 
 					<%
 					String[] tabs1Names = new String[0];

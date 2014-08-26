@@ -775,7 +775,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				SystemProperties.get(SystemProperties.TMP_DIR) +
 					File.separator + Time.getTimestamp());
 
-			excludes += "**/WEB-INF/web.xml";
+			excludes += "/WEB-INF/web.xml";
 
 			WarTask.war(srcFile, tempDir, excludes, webXml);
 

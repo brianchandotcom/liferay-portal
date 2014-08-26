@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.security;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -29,6 +30,7 @@ import com.liferay.portlet.PortletURLFactoryUtil;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -41,33 +43,13 @@ import javax.servlet.jsp.tagext.TagSupport;
  */
 public class PermissionsURLTag extends TagSupport {
 
-	public static void doTag(
-			String redirect, String modelResource,
-			String modelResourceDescription, Object resourceGroupId,
-			String resourcePrimKey, String windowState, String var,
-			int[] roleTypes, PageContext pageContext)
-		throws Exception {
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
+	public static PortletURL createURL(
+		String redirect, String modelResource, String modelResourceDescription,
+		String resourceGroupId, String resourcePrimKey, String windowState,
+		int[] roleTypes, HttpServletRequest request) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		if (resourceGroupId instanceof Number) {
-			Number resourceGroupIdNumber = (Number)resourceGroupId;
-
-			if (resourceGroupIdNumber.longValue() < 0) {
-				resourceGroupId = null;
-			}
-		}
-		else if (resourceGroupId instanceof String) {
-			String esourceGroupIdString = (String)resourceGroupId;
-
-			if (esourceGroupIdString.length() == 0) {
-				resourceGroupId = null;
-			}
-		}
 
 		if (resourceGroupId == null) {
 			resourceGroupId = String.valueOf(themeDisplay.getScopeGroupId());
@@ -88,15 +70,21 @@ public class PermissionsURLTag extends TagSupport {
 			request, PortletKeys.PORTLET_CONFIGURATION, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		if (Validator.isNotNull(windowState)) {
-			portletURL.setWindowState(
-				WindowStateFactory.getWindowState(windowState));
+		try {
+			if (Validator.isNotNull(windowState)) {
+				portletURL.setWindowState(
+					WindowStateFactory.getWindowState(windowState));
+			}
+			else if (themeDisplay.isStatePopUp()) {
+				portletURL.setWindowState(LiferayWindowState.POP_UP);
+			}
+			else {
+				portletURL.setWindowState(WindowState.MAXIMIZED);
+			}
 		}
-		else if (themeDisplay.isStatePopUp()) {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		else {
-			portletURL.setWindowState(WindowState.MAXIMIZED);
+		catch (WindowStateException wse) {
+			throw new SystemException(
+				"Unable to create permissions portlet URL", wse);
 		}
 
 		portletURL.setParameter(
@@ -121,6 +109,41 @@ public class PermissionsURLTag extends TagSupport {
 		if (roleTypes != null) {
 			portletURL.setParameter("roleTypes", StringUtil.merge(roleTypes));
 		}
+
+		return portletURL;
+	}
+
+	public static void doTag(
+			String redirect, String modelResource,
+			String modelResourceDescription, Object resourceGroupId,
+			String resourcePrimKey, String windowState, String var,
+			int[] roleTypes, PageContext pageContext)
+		throws Exception {
+
+		String resourceGroupIdString = null;
+
+		if (resourceGroupId instanceof Number) {
+			Number resourceGroupIdNumber = (Number)resourceGroupId;
+
+			if (resourceGroupIdNumber.longValue() < 0) {
+				resourceGroupIdString = null;
+			}
+			else {
+				resourceGroupIdString = resourceGroupIdNumber.toString();
+			}
+		}
+		else if (resourceGroupId instanceof String) {
+			resourceGroupIdString = (String)resourceGroupId;
+
+			if (resourceGroupIdString.length() == 0) {
+				resourceGroupIdString = null;
+			}
+		}
+
+		PortletURL portletURL = createURL(
+			redirect, modelResourceDescription, modelResourceDescription,
+			resourceGroupIdString, resourcePrimKey, windowState, roleTypes,
+			(HttpServletRequest)pageContext.getRequest());
 
 		String portletURLToString = portletURL.toString();
 

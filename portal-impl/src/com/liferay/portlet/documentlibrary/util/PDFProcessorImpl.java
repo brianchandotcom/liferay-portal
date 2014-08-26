@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -586,8 +587,10 @@ public class PDFProcessorImpl
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH,
 					generatePreview, generateThumbnail);
 
-			Future<String> future = ProcessExecutorUtil.execute(
+			ProcessChannel<String> processChannel = ProcessExecutorUtil.execute(
 				ClassPathUtil.getPortalProcessConfig(), processCallable);
+
+			Future<String> future = processChannel.getProcessNoticeableFuture();
 
 			String processIdentity = String.valueOf(
 				fileVersion.getFileVersionId());

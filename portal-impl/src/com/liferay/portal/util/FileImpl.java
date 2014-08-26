@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.nio.charset.CharsetEncoderUtil;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutorUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
@@ -367,9 +368,13 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			}
 
 			if (forkProcess) {
-				Future<String> future = ProcessExecutorUtil.execute(
-					ClassPathUtil.getPortalProcessConfig(),
-					new ExtractTextProcessCallable(getBytes(is)));
+				ProcessChannel<String> processChannel =
+					ProcessExecutorUtil.execute(
+						ClassPathUtil.getPortalProcessConfig(),
+						new ExtractTextProcessCallable(getBytes(is)));
+
+				Future<String> future =
+					processChannel.getProcessNoticeableFuture();
 
 				text = future.get();
 			}

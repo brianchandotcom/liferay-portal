@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutorUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -129,9 +130,13 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 				new ExtractMetadataProcessCallable(file, metadata, _parser);
 
 			try {
-				Future<Metadata> future = ProcessExecutorUtil.execute(
-					ClassPathUtil.getPortalProcessConfig(),
-					extractMetadataProcessCallable);
+				ProcessChannel<Metadata> processChannel =
+					ProcessExecutorUtil.execute(
+						ClassPathUtil.getPortalProcessConfig(),
+						extractMetadataProcessCallable);
+
+				Future<Metadata> future =
+					processChannel.getProcessNoticeableFuture();
 
 				return future.get();
 			}
@@ -182,9 +187,13 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 				ExtractMetadataProcessCallable extractMetadataProcessCallable =
 					new ExtractMetadataProcessCallable(file, metadata, _parser);
 
-				Future<Metadata> future = ProcessExecutorUtil.execute(
-					ClassPathUtil.getPortalProcessConfig(),
-					extractMetadataProcessCallable);
+				ProcessChannel<Metadata> processChannel =
+					ProcessExecutorUtil.execute(
+						ClassPathUtil.getPortalProcessConfig(),
+						extractMetadataProcessCallable);
+
+				Future<Metadata> future =
+					processChannel.getProcessNoticeableFuture();
 
 				return future.get();
 			}

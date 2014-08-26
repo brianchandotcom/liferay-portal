@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.JavascriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -42,8 +44,10 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -145,6 +149,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 		_addCheckoutMenuItem(menuItems);
 		_addCheckinMenuItem(menuItems);
 		_addCancelCheckoutMenuItem(menuItems);
+		_addPermissionsMenuItem(menuItems);
 
 		return menuItems;
 	}
@@ -535,6 +540,37 @@ public class DefaultDLFileVersionActionsDisplayContext
 				new JavascriptMenuItem(
 					DLMenuItems.MENU_ITEM_ID_OPEN_DOCUMENT, "icon-file-alt",
 					"open-in-ms-office", onClick, javascript));
+		}
+	}
+
+	private void _addPermissionsMenuItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+		if (_dlActionsDisplayContext.isShowActions() &&
+			isPermissionsButtonVisible()) {
+
+			String permissionsURL = null;
+
+			try {
+				permissionsURL = PermissionsURLTag.doTag(
+					null, DLFileEntryConstants.getClassName(),
+					HtmlUtil.unescape(_fileEntry.getTitle()), null,
+					String.valueOf(_fileEntry.getFileEntryId()),
+					LiferayWindowState.POP_UP.toString(), null, _request);
+			}
+			catch (Exception e) {
+				throw new SystemException(
+					"Unable to create permissions URL", e);
+			}
+
+			URLMenuItem urlMenuItem = new URLMenuItem(
+				DLMenuItems.MENU_ITEM_ID_PERMISSIONS, "icon-lock",
+				"permissions", permissionsURL);
+
+			urlMenuItem.setMethod("get");
+			urlMenuItem.setUseDialog(true);
+
+			menuItems.add(urlMenuItem);
 		}
 	}
 

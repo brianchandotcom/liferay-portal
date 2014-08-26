@@ -22,6 +22,7 @@ page import="com.liferay.portal.CompanyWebIdException" %><%@
 page import="com.liferay.portal.RequiredCompanyException" %><%@
 page import="com.liferay.portal.captcha.recaptcha.ReCaptchaImpl" %><%@
 page import="com.liferay.portal.convert.ConvertProcess" %><%@
+page import="com.liferay.portal.convert.InvalidFileSystemStoreRootDirException" %><%@
 page import="com.liferay.portal.dao.shard.ManualShardSelector" %><%@
 page import="com.liferay.portal.kernel.dao.shard.ShardUtil" %><%@
 page import="com.liferay.portal.kernel.image.ImageMagickUtil" %><%@

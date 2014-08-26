@@ -18,6 +18,7 @@ import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.captcha.CaptchaImpl;
 import com.liferay.portal.captcha.recaptcha.ReCaptchaImpl;
 import com.liferay.portal.captcha.simplecaptcha.SimpleCaptchaImpl;
+import com.liferay.portal.convert.ConvertException;
 import com.liferay.portal.convert.ConvertProcess;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
@@ -296,6 +297,15 @@ public class EditServerAction extends PortletAction {
 			}
 
 			convertProcess.setParameterValues(values);
+		}
+
+		try {
+			convertProcess.validateConversion();
+		}
+		catch (ConvertException ce) {
+			SessionErrors.add(actionRequest, ce.getClass(), ce);
+
+			return null;
 		}
 
 		String path = convertProcess.getPath();

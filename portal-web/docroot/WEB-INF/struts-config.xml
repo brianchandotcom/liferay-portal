@@ -1749,11 +1749,6 @@
 
 		<!-- Shopping -->
 
-		<action path="/shopping/add_book_items" type="com.liferay.portlet.shopping.action.AddBookItemsAction">
-			<forward name="portlet.shopping.add_book_items" path="portlet.shopping.add_book_items" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
-		</action>
-
 		<action path="/shopping/cart" type="com.liferay.portlet.shopping.action.CartAction">
 			<forward name="portlet.shopping.cart" path="portlet.shopping.cart" />
 			<forward name="portlet.shopping.error" path="portlet.shopping.error" />

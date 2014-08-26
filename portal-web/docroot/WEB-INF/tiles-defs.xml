@@ -1407,10 +1407,6 @@
 
 	<definition name="portlet.shopping" extends="portlet" />
 
-	<definition name="portlet.shopping.add_book_items" extends="portlet.shopping">
-		<put name="portlet_content" value="/portlet/shopping/add_book_items.jsp" />
-	</definition>
-
 	<definition name="portlet.shopping.cart" extends="portlet.shopping">
 		<put name="portlet_content" value="/portlet/shopping/cart.jsp" />
 	</definition>

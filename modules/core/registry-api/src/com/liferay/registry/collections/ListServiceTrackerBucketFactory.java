@@ -31,6 +31,10 @@ import java.util.TreeSet;
 public class ListServiceTrackerBucketFactory<S>
 	implements ServiceTrackerBucketFactory<S, List<S>> {
 
+	public ListServiceTrackerBucketFactory() {
+		_comparator = Collections.reverseOrder();
+	}
+
 	public ListServiceTrackerBucketFactory(
 		Comparator<ServiceReference<S>> comparator) {
 
@@ -84,13 +88,8 @@ public class ListServiceTrackerBucketFactory<S>
 		}
 
 		private ListServiceTrackerBucket() {
-			if (_comparator == null) {
-				_serviceTuples = new TreeSet<ServiceReferenceServiceTuple<S>>();
-			}
-			else {
-				_serviceTuples = new TreeSet<ServiceReferenceServiceTuple<S>>(
-					new ServiceReferenceServiceTupleComparator<S>(_comparator));
-			}
+			_serviceTuples = new TreeSet<ServiceReferenceServiceTuple<S>>(
+				new ServiceReferenceServiceTupleComparator<S>(_comparator));
 		}
 
 		private List<S> _services = new ArrayList<S>();

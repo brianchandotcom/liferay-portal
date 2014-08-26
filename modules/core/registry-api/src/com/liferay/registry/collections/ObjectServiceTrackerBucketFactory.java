@@ -18,6 +18,7 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.internal.ServiceReferenceServiceTuple;
 import com.liferay.registry.collections.internal.ServiceReferenceServiceTupleComparator;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -26,6 +27,10 @@ import java.util.PriorityQueue;
  */
 public class ObjectServiceTrackerBucketFactory<S>
 	implements ServiceTrackerBucketFactory<S, S> {
+
+	public ObjectServiceTrackerBucketFactory() {
+		_comparator = Collections.reverseOrder();
+	}
 
 	public ObjectServiceTrackerBucketFactory(
 		Comparator<ServiceReference<S>> comparator) {

@@ -14,9 +14,9 @@
 
 package com.liferay.registry.collections;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.collections.internal.ServiceReferenceServiceTuple;
+import com.liferay.registry.collections.internal.ServiceReferenceServiceTupleComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,47 +54,47 @@ public class ListServiceTrackerBucketFactory<S>
 
 		@Override
 		public synchronized boolean isDisposable() {
-			return _serviceReferences.isEmpty();
+			return _serviceTuples.isEmpty();
 		}
 
 		@Override
-		public synchronized void remove(ServiceReference<S> serviceReference) {
-			_serviceReferences.remove(serviceReference);
+		public synchronized void remove(ServiceReferenceServiceTuple<S> tuple) {
+			_serviceTuples.remove(tuple);
 
 			rebuild();
 		}
 
 		@Override
-		public synchronized void store(ServiceReference<S> serviceReference) {
-			_serviceReferences.add(serviceReference);
+		public synchronized void store(ServiceReferenceServiceTuple<S> tuple) {
+			_serviceTuples.add(tuple);
 
 			rebuild();
 		}
 
 		protected void rebuild() {
-			Registry registry = RegistryUtil.getRegistry();
+			_services = new ArrayList<S>(_serviceTuples.size());
 
-			try {
-				_services = new ArrayList<S>(_serviceReferences.size());
+			for (
+				ServiceReferenceServiceTuple<S> tuple : _serviceTuples) {
 
-				for (
-					ServiceReference<S> serviceReference : _serviceReferences) {
-
-					_services.add(registry.getService(serviceReference));
-				}
-
-				_services = Collections.unmodifiableList(_services);
+				_services.add(tuple.getService());
 			}
-			catch (IllegalStateException ise) {
-				_serviceReferences.clear();
 
-				_services = new ArrayList<S>();
+			_services = Collections.unmodifiableList(_services);
+		}
+
+		private ListServiceTrackerBucket() {
+			if (_comparator == null) {
+				_serviceTuples = new TreeSet<ServiceReferenceServiceTuple<S>>();
+			}
+			else {
+				_serviceTuples = new TreeSet<ServiceReferenceServiceTuple<S>>(
+					new ServiceReferenceServiceTupleComparator<S>(_comparator));
 			}
 		}
 
-		private Set<ServiceReference<S>> _serviceReferences =
-			new TreeSet<ServiceReference<S>>(_comparator);
 		private List<S> _services = new ArrayList<S>();
+		private Set<ServiceReferenceServiceTuple<S>> _serviceTuples;
 
 	}
 

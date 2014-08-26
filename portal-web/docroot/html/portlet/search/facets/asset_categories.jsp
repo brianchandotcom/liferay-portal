@@ -86,7 +86,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 
 			AssetCategory curAssetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(assetCategoryId);
 
-			if (permissionChecker.hasPermission(curAssetCategory.getGroupId(), curAssetCategory.getModelClassName(), curAssetCategory.getPrimaryKey(), ActionKeys.VIEW)) {
+			if (AssetCategoryPermission.contains(permissionChecker, curAssetCategory, ActionKeys.VIEW)) {
 		%>
 
 				<c:if test="<%= fieldParam.equals(termCollector.getTerm()) %>">

@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-ddm-repeatable-fields',
+	'liferay-ddm-form',
 	function(A) {
 
 		var CHECKBOX_TYPE = 'checkbox';
@@ -14,7 +14,7 @@ AUI.add(
 
 		var TPL_DELETE_REPEATABLE = '<a class="lfr-ddm-repeatable-delete-button icon-minus-sign" href="javascript:;"></a>';
 
-		var RepeatableFields = A.Component.create(
+		var Form = A.Component.create(
 			{
 				ATTRS: {
 					classNameId: {
@@ -63,7 +63,7 @@ AUI.add(
 
 				form: {},
 
-				NAME: 'liferay-ddm-repeatable-fields',
+				NAME: 'liferay-ddm-form',
 
 				translationManager: {},
 
@@ -501,7 +501,7 @@ AUI.add(
 			}
 		);
 
-		Liferay.namespace('DDM').RepeatableFields = RepeatableFields;
+		Liferay.namespace('DDM').Form = Form;
 	},
 	'',
 	{

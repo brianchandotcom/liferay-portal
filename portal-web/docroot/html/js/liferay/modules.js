@@ -188,8 +188,8 @@
 						path: 'browser_selectors.js',
 						requires: ['yui-base']
 					},
-					'liferay-ddm-repeatable-fields': {
-						path: 'ddm_repeatable_fields.js',
+					'liferay-ddm-form': {
+						path: 'ddm_form.js',
 						requires: [
 							'aui-base',
 							'aui-io-request',

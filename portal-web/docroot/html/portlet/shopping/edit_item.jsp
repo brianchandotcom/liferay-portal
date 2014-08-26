@@ -184,7 +184,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 			<liferay-ui:error exception="<%= DuplicateItemFieldNameException.class %>">
 
-				 <%
+				<%
 				DuplicateItemFieldNameException difne = (DuplicateItemFieldNameException)errorException;
 				%>
 

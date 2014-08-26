@@ -665,27 +665,31 @@ public class ShoppingItemLocalServiceImpl
 		List<String> duplicateItemFieldNames = new ArrayList<String>();
 
 		for (ShoppingItemField itemField : itemFields) {
-			if (itemFieldNames.contains(itemField.getName()) &&
-				!duplicateItemFieldNames.contains(itemField.getName())) {
-
-				duplicateItemFieldNames.add(itemField.getName());
+			if (itemFieldNames.contains(itemField.getName())) {
+				if (!duplicateItemFieldNames.contains(itemField.getName())) {
+					duplicateItemFieldNames.add(itemField.getName());
+				}
 			}
-
-			itemFieldNames.add(itemField.getName());
+			else {
+				itemFieldNames.add(itemField.getName());
+			}
 		}
 
 		if (!duplicateItemFieldNames.isEmpty()) {
-			StringBundler sb = new StringBundler();
+			int duplicateItemFieldNamesSize = duplicateItemFieldNames.size();
 
-			for (String duplicateItemFieldName : duplicateItemFieldNames) {
-				sb.append(duplicateItemFieldName);
-				sb.append(", ");
+			StringBundler sb = new StringBundler(
+				2 * duplicateItemFieldNamesSize - 1);
+
+			for (int i = 0; i < duplicateItemFieldNamesSize; i++) {
+				sb.append(duplicateItemFieldNames.get(i));
+
+				if ((i + 1) < duplicateItemFieldNamesSize) {
+					sb.append(StringPool.COMMA_AND_SPACE);
+				}
 			}
 
-			String message =
-				sb.toString().substring(0, sb.toString().length() - 2);
-
-			throw new DuplicateItemFieldNameException(message);
+			throw new DuplicateItemFieldNameException(sb.toString());
 		}
 
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(

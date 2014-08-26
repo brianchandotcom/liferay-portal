@@ -53,11 +53,12 @@ else {
 
 for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 	String property = (String)entry.getKey();
-	String value;
+	String value = StringPool.BLANK;
 
 	if (obfuscatedPropertyValues.contains(property)) {
 		value = "********";
-	} else {
+	}
+	else {
 		value = (String)entry.getValue();
 	}
 

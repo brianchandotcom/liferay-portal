@@ -1081,6 +1081,11 @@
 		<execute action="Home#assertLocation" value1="${sitePageURL}" />
 	</command>
 
+	<command name="viewThemePG">
+		<execute action="Home#assertElementNotPresent" locator-key1="DARK_THEME" />
+		<execute action="Home#assertElementPresent" locator-key1="LIGHT_THEME"/>
+	</command>
+
 	<command name="viewVirtualHostsURLPG">
 		<var name="key_pageName" value="${sitePageName}" />
 

@@ -145,6 +145,13 @@
 		<execute action="CPSitepagesAddpage#assertChecked" locator-key1="PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
 	</command>
 
+	<command name="changeColorSchemesCP">
+		<execute action="CPSitepages#assertVisible" locator-key1="LOOK_AND_FEEL_COLOR_SCHEMES_DARK_IMG" />
+		<execute action="CPSitepages#click" locator-key1="LOOK_AND_FEEL_COLOR_SCHEMES_DARK_RADIO_BUTTON" />
+		<execute action="CPSitepages#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="changePageTypeLayoutCP">
 		<var name="key_pageType" value="${pageType}" />
 

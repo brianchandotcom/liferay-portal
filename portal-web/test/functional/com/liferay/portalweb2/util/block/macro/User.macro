@@ -143,6 +143,16 @@
 		</if>
 	</command>
 
+	<command name="addCreateAccountPG">
+		<execute action="PGCreateAccount#assertClick" locator-key1="CREATE_ACCOUNT_LINk" value1="Create Account" />
+		<execute action="PGCreateAccount#type" locator-key1="CREATE_ACCOUNT_FIRST_NAME" value1="${userFirstName}" />
+		<execute action="PGCreateAccount#type" locator-key1="CREATE_ACCOUNT_LAST_NAME" value1="${userLastName}" />
+		<execute action="PGCreateAccount#type" locator-key1="CREATE_ACCOUNT_SCREEN_NAME" value1="${userScreenName}" />
+		<execute action="PGCreateAccount#type" locator-key1="CREATE_ACCOUNT_EMAIL_ADDRESS" value1="${userEmailAddress}" />
+		<execute action="PGCreateAccount#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGCreateAccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Thank you for creating an account. Your email verification code has been sent to liferay.qa1@gmail.com. Your password has been sent to liferay.qa1@gmail.com." />
+	</command>
+
 	<command name="addInstantMessengerViaMyAccount">
 		<execute action="Myaccount#click" locator-key1="MENU_IDENTIFICATION_INSTANT_MESSENGER" />
 
@@ -1042,6 +1052,18 @@
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="editEmailViaMyAccount">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#assertClick" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#type" locator-key1="DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="Myaccount#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#assertTextEquals" locator-key1="ALERT_SUCCESS_MESSAGE" value1="Your email verification code has been sent and the new email address will be applied to your account once it is verified." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="editPasswordCP">
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
 
@@ -1460,6 +1482,50 @@
 		</if>
 	</command>
 
+	<command name="signInPG">
+		<execute action="Dockbar#assertClick" locator-key1="USER_SIGN_IN" value1="Sign In" />
+
+		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${emailPassword}" />
+		<execute action="PGLogin#check" locator-key1="REMEMBER_ME_CHECKBOX" />
+		<execute action="PGLogin#assertClick" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />
+
+		<if>
+			<condition action="PGLoginTermsofservice#isElementPresent" locator-key1="I_AGREE_BUTTON" value1="I Agree" />
+			<then>
+				<execute action="PGLoginTermsofservice#assertClick" locator-key1="I_AGREE_BUTTON" value1="I Agree" />
+			</then>
+		</if>
+
+		<execute action="PGLoginEmailVerificationCode#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="Please enter your verification code." />
+		<execute action="PGLoginEmailVerificationCode#type" locator-key1="EMAIL_VERIFICATION_CODE_FIELD" value1="${emailVerification}" />
+		<execute action="PGLoginEmailVerificationCode#assertClick" locator-key1="VERIFY_BUTTON" value1="Verify" />
+
+		<if>
+			<condition action="PGLoginNewpassword#isElementPresent" locator-key1="PASSWORD_FIELD" />
+			<then>
+				<if>
+					<not>
+						<equals arg1="${syntaxCheckingEnabled}" arg2="true" />
+					</not>
+					<then>
+						<execute action="PGLoginNewpassword#type" locator-key1="PASSWORD_FIELD" value1="test" />
+						<execute action="PGLoginNewpassword#type" locator-key1="ENTER_AGAIN_FIELD" value1="test" />
+						<execute action="PGLoginNewpassword#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<condition action="PGLoginPasswordreminder#isElementPresent" locator-key1="ANSWER_FIELD" />
+			<then>
+				<execute action="PGLoginPasswordreminder#type" locator-key1="ANSWER_FIELD" value1="test" />
+				<execute action="PGLoginPasswordreminder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+			</then>
+		</if>
+	</command>
+
 	<command name="tearDownCP">
 		<var name="userFirstName" value="userfn*" />
 
@@ -1568,10 +1634,10 @@
 		<if>
 			<equals arg1="${authenticationMethod}" arg2="By Screen Name" />
 			<then>
-				<execute action="PGLogin#assertElementPresent" locator-key1="SCREEN_NAME_FIELD" />
+					<execute action="PGLogin#assertElementPresent" locator-key1="SCREEN_NAME_FIELD" />
 			</then>
 			<else>
-				<execute action="PGLogin#assertElementPresent" locator-key1="EMAIL_ADDRESS_FIELD" />
+					<execute action="PGLogin#assertElementPresent" locator-key1="EMAIL_ADDRESS_FIELD" />
 			</else>
 		</if>
 

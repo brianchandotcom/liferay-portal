@@ -63,7 +63,7 @@ public class UserServiceTest {
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
-	public static class WhenCompanySecurityStrangersWithMX {
+	public static class WhenCompanySecurityStrangersWithMXDisabled {
 
 		@Test(expected = ReservedUserEmailAddressException.class)
 		public void shouldNotAddUser() throws Exception {

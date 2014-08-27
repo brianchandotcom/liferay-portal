@@ -72,6 +72,12 @@ public class RegistryWrapper implements Registry {
 	}
 
 	public <T> boolean ungetService(ServiceReference<T> serviceReference) {
+		AtomicInteger atomicInteger = _references.get(serviceReference);
+
+		if (atomicInteger != null) {
+			atomicInteger.decrementAndGet();
+		}
+
 		return _instance.ungetService(serviceReference);
 	}
 

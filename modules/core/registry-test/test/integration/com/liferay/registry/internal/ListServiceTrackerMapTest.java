@@ -16,6 +16,8 @@ package com.liferay.registry.internal;
 
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.registry.collections.ServiceTrackerMapFactory;
 
@@ -45,8 +47,6 @@ import org.osgi.framework.ServiceRegistration;
  */
 @RunWith(Arquillian.class)
 public class ListServiceTrackerMapTest {
-
-	private ServiceTrackerMap<String, List<TrackedOne>> _serviceTrackerMap;
 
 	@Before
 	public void setUp() throws BundleException {
@@ -211,7 +211,7 @@ public class ListServiceTrackerMapTest {
 	}
 
 	@Test
-	public void testOperationOnlyCallsGetServiceOnce() {
+	public void testOperationBalancesOutGetServiceAndUngetService() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		RegistryWrapper registryWrapper = new RegistryWrapper(registry);
@@ -230,20 +230,73 @@ public class ListServiceTrackerMapTest {
 
 		sr2.unregister();
 
+		sr1.unregister();
+
 		Collection<AtomicInteger> values =
 			registryWrapper.getReferences().values();
 
 		Assert.assertEquals(3, values.size());
 
-		for (AtomicInteger i: values) {
+		for (AtomicInteger i : values) {
 			int count = i.get();
 
-			Assert.assertEquals(1, count);
+			Assert.assertEquals(0, count);
 		}
 
 		serviceTrackerMap.close();
 
 		RegistryUtil.setRegistry(registry);
+	}
+
+	@Test
+	public void testUnkeyedServiceReferencesBalanceRefCount() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		RegistryWrapper registryWrapper = new RegistryWrapper(registry);
+
+		ServiceTrackerMap<TrackedOne, TrackedOne> serviceTrackerMap =
+			ServiceTrackerMapFactory.createObjectServiceTrackerMap(
+				TrackedOne.class, null,
+				new ServiceReferenceMapper<TrackedOne>() {
+
+					@Override
+					public void map(
+						ServiceReference<?> serviceReference,
+						Emitter<TrackedOne> emitter) {
+						//noop;
+					}
+				}
+			);
+
+		serviceTrackerMap.open();
+
+		ServiceRegistration<TrackedOne> sr1 = registerService(new TrackedOne());
+		ServiceRegistration<TrackedOne> sr2 = registerService(new TrackedOne());
+
+		Collection<AtomicInteger> values = registryWrapper.getReferences().values();
+
+		Assert.assertEquals(0, values.size());
+
+		for (AtomicInteger i : values) {
+			int count = i.get();
+
+			Assert.assertEquals(0, count);
+		}
+
+		sr1.unregister();
+		sr2.unregister();
+
+		values = registryWrapper.getReferences().values();
+
+		Assert.assertEquals(0, values.size());
+
+		for (AtomicInteger i : values) {
+			int count = i.get();
+
+			Assert.assertEquals(0, count);
+		}
+
+		serviceTrackerMap.close();
 	}
 
 	protected ServiceRegistration<TrackedOne> registerService(
@@ -281,6 +334,9 @@ public class ListServiceTrackerMapTest {
 			TrackedOne.class, trackedOne, properties);
 	}
 
+	@ArquillianResource
+	private Bundle _bundle;
+
 	protected ServiceTrackerMap<String, List<TrackedOne>>
 		createServiceTrackerMap() {
 
@@ -292,9 +348,7 @@ public class ListServiceTrackerMapTest {
 		return _serviceTrackerMap;
 	}
 
-	@ArquillianResource
-	private Bundle _bundle;
-
 	private BundleContext _bundleContext;
+	private ServiceTrackerMap<String, List<TrackedOne>> _serviceTrackerMap;
 
 }

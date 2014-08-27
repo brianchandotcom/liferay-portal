@@ -47,8 +47,6 @@ import org.osgi.framework.ServiceRegistration;
 @RunWith(Arquillian.class)
 public class ObjectServiceTrackerMapTest {
 
-	private ServiceTrackerMap<String, TrackedOne> _serviceTrackerMap;
-
 	@Before
 	public void setUp() throws BundleException {
 		_bundle.start();
@@ -169,7 +167,8 @@ public class ObjectServiceTrackerMapTest {
 						return -1;
 					}
 
-				});
+				}
+			);
 
 		serviceTrackerMap.open();
 
@@ -253,7 +252,7 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
-	public void testOperationOnlyCallsGetServiceOnce() {
+	public void testOperationBalancesOutGetServiceAndUngetService() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		RegistryWrapper registryWrapper = new RegistryWrapper(registry);
@@ -272,20 +271,73 @@ public class ObjectServiceTrackerMapTest {
 
 		sr2.unregister();
 
+		sr1.unregister();
+
 		Collection<AtomicInteger> values =
 			registryWrapper.getReferences().values();
 
 		Assert.assertEquals(3, values.size());
-		
-		for (AtomicInteger i: registryWrapper.getReferences().values()) {
+
+		for (AtomicInteger i : registryWrapper.getReferences().values()) {
 			int count = i.get();
 
-			Assert.assertEquals(1, count);
+			Assert.assertEquals(0, count);
 		}
 
 		serviceTrackerMap.close();
 
 		RegistryUtil.setRegistry(registry);
+	}
+
+	@Test
+	public void testUnkeyedServiceReferencesBalanceRefCount() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		RegistryWrapper registryWrapper = new RegistryWrapper(registry);
+
+		ServiceTrackerMap<TrackedOne, TrackedOne> serviceTrackerMap =
+			ServiceTrackerMapFactory.createObjectServiceTrackerMap(
+				TrackedOne.class, null,
+				new ServiceReferenceMapper<TrackedOne>() {
+
+				@Override
+				public void map(
+					ServiceReference<?> serviceReference,
+					Emitter<TrackedOne> emitter) {
+					//noop;
+				}
+			}
+		);
+
+		serviceTrackerMap.open();
+
+		ServiceRegistration<TrackedOne> sr1 = registerService(new TrackedOne());
+		ServiceRegistration<TrackedOne> sr2 = registerService(new TrackedOne());
+
+		Collection<AtomicInteger> values = registryWrapper.getReferences().values();
+
+		Assert.assertEquals(0, values.size());
+
+		for (AtomicInteger i : values) {
+			int count = i.get();
+
+			Assert.assertEquals(0, count);
+		}
+
+		sr1.unregister();
+		sr2.unregister();
+
+		values = registryWrapper.getReferences().values();
+
+		Assert.assertEquals(0, values.size());
+
+		for (AtomicInteger i : values) {
+			int count = i.get();
+
+			Assert.assertEquals(0, count);
+		}
+
+		serviceTrackerMap.close();
 	}
 
 	@ArquillianResource
@@ -337,5 +389,6 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	private BundleContext _bundleContext;
+	private ServiceTrackerMap<String, TrackedOne> _serviceTrackerMap;
 
 }

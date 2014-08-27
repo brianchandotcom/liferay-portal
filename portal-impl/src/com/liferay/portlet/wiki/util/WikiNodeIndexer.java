@@ -89,7 +89,8 @@ public class WikiNodeIndexer extends BaseIndexer {
 		document.addUID(PORTLET_ID, node.getNodeId(), node.getName());
 
 		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), node.getCompanyId(), document.get(Field.UID));
+			getSearchEngineId(), node.getCompanyId(), document.get(Field.UID),
+			isCommitImmediately());
 	}
 
 	@Override

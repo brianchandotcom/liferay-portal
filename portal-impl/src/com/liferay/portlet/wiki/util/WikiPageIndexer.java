@@ -171,7 +171,8 @@ public class WikiPageIndexer extends BaseIndexer {
 			document.addUID(PORTLET_ID, nodeId, title);
 
 			SearchEngineUtil.deleteDocument(
-				getSearchEngineId(), companyId, document.get(Field.UID));
+				getSearchEngineId(), companyId, document.get(Field.UID),
+				isCommitImmediately());
 		}
 		else if (obj instanceof WikiPage) {
 			WikiPage page = (WikiPage)obj;
@@ -234,7 +235,8 @@ public class WikiPageIndexer extends BaseIndexer {
 		Document document = getDocument(page);
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), page.getCompanyId(), document);
+			getSearchEngineId(), page.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	@Override

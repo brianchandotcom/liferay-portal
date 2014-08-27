@@ -127,8 +127,8 @@ public class MBThreadIndexer extends BaseIndexer {
 		document.addUID(PORTLET_ID, thread.getThreadId());
 
 		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), thread.getCompanyId(),
-			document.get(Field.UID));
+			getSearchEngineId(), thread.getCompanyId(), document.get(Field.UID),
+			isCommitImmediately());
 	}
 
 	@Override
@@ -169,7 +169,8 @@ public class MBThreadIndexer extends BaseIndexer {
 		Document document = getDocument(thread);
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), thread.getCompanyId(), document);
+			getSearchEngineId(), thread.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	@Override

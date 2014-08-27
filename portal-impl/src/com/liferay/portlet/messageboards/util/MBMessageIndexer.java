@@ -295,7 +295,8 @@ public class MBMessageIndexer extends BaseIndexer {
 		Document document = getDocument(message);
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), message.getCompanyId(), document);
+			getSearchEngineId(), message.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	@Override

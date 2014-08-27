@@ -184,7 +184,7 @@ public class DDLIndexer extends BaseIndexer {
 
 				SearchEngineUtil.deleteDocument(
 					getSearchEngineId(), record.getCompanyId(),
-					document.get(Field.UID));
+					document.get(Field.UID), isCommitImmediately());
 			}
 
 			return;
@@ -192,7 +192,8 @@ public class DDLIndexer extends BaseIndexer {
 
 		if (document != null) {
 			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), record.getCompanyId(), document);
+				getSearchEngineId(), record.getCompanyId(), document,
+				isCommitImmediately());
 		}
 	}
 
@@ -300,7 +301,7 @@ public class DDLIndexer extends BaseIndexer {
 		}
 
 		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
+			getSearchEngineId(), companyId, documents, isCommitImmediately());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DDLIndexer.class);

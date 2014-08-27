@@ -86,6 +86,12 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 
 	public long getFileEntryId();
 
+	/**
+	 * The filename is the title + extension. In repositories where the title
+	 * already includes the extension, the filename and title are the same.
+	 *
+	 * @return the current filename
+	 */
 	public String getFilename();
 
 	/**

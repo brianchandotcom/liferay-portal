@@ -15,8 +15,6 @@
 package com.liferay.registry.collections;
 
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.collections.internal.ServiceReferenceServiceTuple;
-import com.liferay.registry.collections.internal.ServiceReferenceServiceTupleComparator;
 
 import java.util.Collections;
 import java.util.Comparator;

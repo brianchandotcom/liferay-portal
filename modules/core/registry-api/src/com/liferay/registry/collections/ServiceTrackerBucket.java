@@ -14,7 +14,6 @@
 
 package com.liferay.registry.collections;
 
-import com.liferay.registry.collections.internal.ServiceReferenceServiceTuple;
 
 /**
  * @author Carlos Sierra Andrés

@@ -20,7 +20,6 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.internal.ServiceReferenceServiceTuple;
 
 import java.util.concurrent.ConcurrentHashMap;
 

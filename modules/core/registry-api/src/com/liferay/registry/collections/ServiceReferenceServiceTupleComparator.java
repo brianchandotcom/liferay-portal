@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.registry.collections.internal;
+package com.liferay.registry.collections;
 
 import com.liferay.registry.ServiceReference;
 

@@ -1398,6 +1398,12 @@
 			<then>
 				<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY_GENERIC" value1="${wikiPageContent}" />
 			</then>
+			<elseif>
+				<equals arg1="${wikiPageContentLink}" arg2="true" />
+				<then>
+					<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY_LINK" value1="${wikiPageContent}" />
+				</then>
+			</elseif>
 			<else>
 				<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 			</else>

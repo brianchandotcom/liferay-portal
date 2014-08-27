@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,22 +11,33 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<c:if test="<%= dlActionsDisplayContext.isShowActions() && dlFileVersionActionsDisplayContext.isMoveButtonVisible() %>">
+package com.liferay.portal.view.model;
 
-	<%
-	PortletURL moveURL = liferayPortletResponse.createRenderURL();
+/**
+ * @author Iván Zaera
+ */
+public class JavascriptMenuItem extends MenuItem {
 
-	moveURL.setParameter("struts_action", "/document_library/move_entry");
-	moveURL.setParameter("fileShortcutIds", String.valueOf(fileShortcut.getFileShortcutId()));
+	public JavascriptMenuItem(
+		String id, String iconCssClass, String message, String onClick,
+		String javascript) {
 
-	moveURL.setParameter("redirect", viewFolderURL.toString());
-	%>
+		super(id, iconCssClass, message);
 
-	<liferay-ui:icon
-		iconCssClass="icon-move"
-		message="move"
-		url="<%= moveURL.toString() %>"
-	/>
-</c:if>
+		_onClick = onClick;
+		_javascript = javascript;
+	}
+
+	public String getJavascript() {
+		return _javascript;
+	}
+
+	public String getOnClick() {
+		return _onClick;
+	}
+
+	private String _javascript;
+	private String _onClick;
+
+}

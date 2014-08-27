@@ -1059,8 +1059,11 @@ public class HookHotDeployListener
 			_ddmFormFieldRenderersContainerMap.put(
 				servletContextName, ddmFormFieldRenderersContainer);
 
-			for (Element element : ddmFormFieldRenderersElements) {
-				String ddmFormFieldRendererClassName = element.getText();
+			for (Element ddmFormFieldRendererElement :
+					ddmFormFieldRenderersElements) {
+
+				String ddmFormFieldRendererClassName =
+					ddmFormFieldRendererElement.getText();
 
 				DDMFormFieldRenderer ddmFormFieldRenderer =
 					(DDMFormFieldRenderer)newInstance(

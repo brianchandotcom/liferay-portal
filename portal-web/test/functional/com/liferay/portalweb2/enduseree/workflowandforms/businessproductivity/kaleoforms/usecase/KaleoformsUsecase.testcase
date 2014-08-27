@@ -1719,40 +1719,6 @@
 			<var name="fieldName" value="3_Number" />
 		</execute>
 
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][1]/label" value1="1_Boolean" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][2]/label" value1="3_Boolean" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][3]/label" value1="3_Date" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][4]/label" value1="3_Decimal" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][5]/label" value1="2_Decimal" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][6]/label" value1="3_HTML" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][7]/label" value1="2_Integer" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][8]/label" value1="3_Link to Page" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][9]/label" value1="1_Number" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][10]/label" value1="1_Radio" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][11]/label" value1="1_Select" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][12]/label" value1="1_Text" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][13]/label" value1="1_Text Box" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][14]/label" value1="2_Radio" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][15]/label" value1="2_Text Box" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][16]/label" value1="2_Text" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][17]/label" value1="2_Select" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][18]/label" value1="1_Link to Page" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][18]/div/label" value1="2_Number" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][19]/label" value1="1_HTML" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][19]/div/label" value1="2_Link to Page" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][20]/label" value1="1_Decimal" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][20]/div[1]/label" value1="3_Integer" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][20]/div[2]/label" value1="3_Text Box" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][21]/label" value1="2_Date" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][21]/div[1]/label" value1="1_Integer" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][21]/div/div[1]/label" value1="3_Radio" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][21]/div/div[2]/label" value1="3_Select" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][21]/div[2]/label" value1="3_Text" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][22]/label" value1="1_Date" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][23]/label" value1="2_Boolean" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][23]/div/label" value1="2_HTML" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'forms-field-wrapper')][23]/div/div/label" value1="3_Number" />
-
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 

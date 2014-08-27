@@ -147,16 +147,9 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 						serviceTrackerBucket.store(
 							serviceReferenceServiceTuple);
 					}
-
 				});
 
-			ServiceReferenceServiceTuple<S> result = tupleHolder.get();
-
-			if (result == null) {
-				registry.ungetService(serviceReference);
-			}
-
-			return result;
+			return tupleHolder.get();
 		}
 
 		@Override

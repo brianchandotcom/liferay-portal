@@ -174,6 +174,7 @@ create index IX_4CB1B2B4 on DLFileEntry (companyId);
 create index IX_772ECDE7 on DLFileEntry (fileEntryTypeId);
 create index IX_8F6C75D0 on DLFileEntry (folderId, name);
 create index IX_29D0AF28 on DLFileEntry (groupId, folderId, fileEntryTypeId);
+create unique index IX_15D2ED0E on DLFileEntry (groupId, folderId, filename);
 create unique index IX_5391712 on DLFileEntry (groupId, folderId, name);
 create unique index IX_ED5CA615 on DLFileEntry (groupId, folderId, title);
 create index IX_D20C434D on DLFileEntry (groupId, userId, folderId);

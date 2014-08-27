@@ -51,6 +51,7 @@ public class DLFileEntrySoap implements Serializable {
 		soapModel.setExtension(model.getExtension());
 		soapModel.setMimeType(model.getMimeType());
 		soapModel.setTitle(model.getTitle());
+		soapModel.setFilename(model.getFilename());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setExtraSettings(model.getExtraSettings());
 		soapModel.setFileEntryTypeId(model.getFileEntryTypeId());
@@ -250,6 +251,14 @@ public class DLFileEntrySoap implements Serializable {
 		_title = title;
 	}
 
+	public String getFilename() {
+		return _filename;
+	}
+
+	public void setFilename(String filename) {
+		_filename = filename;
+	}
+
 	public String getDescription() {
 		return _description;
 	}
@@ -359,6 +368,7 @@ public class DLFileEntrySoap implements Serializable {
 	private String _extension;
 	private String _mimeType;
 	private String _title;
+	private String _filename;
 	private String _description;
 	private String _extraSettings;
 	private long _fileEntryTypeId;

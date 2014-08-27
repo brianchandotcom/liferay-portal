@@ -383,11 +383,11 @@
 		<execute macro="SOUserBar#showEditControls" />
 
 		<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_PAGE" value1="${dashboardPageLocalized}" />
-		<execute action="SODashboard#assertTextNotPresent" value1="-" />
 
+		<var method="StringUtil#upperCase(&quot;${microblogsStatusUpdatePortletLocalized}&quot;)" name="microblogsStatusUpdatePortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${microblogsStatusUpdatePortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${microblogsStatusUpdatePortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${microblogsStatusUpdatePortletLocalizedUpperCase}" />
 
 		<var name="key_portletName" value="${announcementsPortletLocalized}" />
 
@@ -409,41 +409,46 @@
 
 		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${contactsCenterPageLocalized}" />
 
+		<var method="StringUtil#upperCase(&quot;${contactsCenterPortletLocalized}&quot;)" name="contactsCenterPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${contactsCenterPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${contactsCenterPortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${contactsCenterPortletLocalizedUpperCase}" />
 
 		<var name="key_pageName" value="${microblogsPageLocalized}" />
 
 		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${microblogsPageLocalized}" />
 
+		<var method="StringUtil#upperCase(&quot;${microblogsPortletLocalized}&quot;)" name="microblogsPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${microblogsPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${microblogsPortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${microblogsPortletLocalizedUpperCase}" />
 
 		<var name="key_pageName" value="${messagesPageLocalized}" />
 
 		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${messagesPageLocalized}" />
 
+		<var method="StringUtil#upperCase(&quot;${privateMessagingPortletLocalized}&quot;)" name="privateMessagingPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${privateMessagingPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${privateMessagingPortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${privateMessagingPortletLocalizedUpperCase}" />
 
 		<var name="key_pageName" value="${myDocumentsPageLocalized}" />
 
 		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${myDocumentsPageLocalized}" />
 
+		<var method="StringUtil#upperCase(&quot;${documentsAndMediaPortletLocalized}&quot;)" name="documentsAndMediaPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${documentsAndMediaPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${documentsAndMediaPortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${documentsAndMediaPortletLocalizedUpperCase}" />
 
 		<var name="key_pageName" value="${tasksPageLocalized}" />
 
 		<execute action="SODashboard#assertClick" locator-key1="NAVIGATION_PAGE" value1="${tasksPageLocalized}" />
 
+		<var method="StringUtil#upperCase(&quot;${tasksPortletLocalized}&quot;)" name="tasksPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${tasksPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${tasksPortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${tasksPortletLocalizedUpperCase}" />
 	</command>
 
 	<command name="viewTodaysEvent">

@@ -1172,37 +1172,43 @@
 
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_PAGE" value1="${profilePageLocalized}" />
 
+		<var method="StringUtil#upperCase(&quot;${profilePortletLocalized}&quot;)" name="profilePortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${profilePortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${profilePortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${profilePortletLocalizedUpperCase}" />
 
+		<var method="StringUtil#upperCase(&quot;${microblogsStatusUpdatePortletLocalized}&quot;)" name="microblogsStatusUpdatePortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${microblogsStatusUpdatePortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${microblogsStatusUpdatePortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${microblogsStatusUpdatePortletLocalizedUpperCase}" />
 
 		<var name="key_pageName" value="${contactsPageLocalized}" />
 
 		<execute action="SOProfile#assertClick" locator-key1="NAVIGATION_PAGE" value1="${contactsPageLocalized}" />
 
+		<var method="StringUtil#upperCase(&quot;${profilePortletLocalized}&quot;)" name="profilePortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${profilePortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${profilePortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${profilePortletLocalizedUpperCase}" />
 
+		<var method="StringUtil#upperCase(&quot;${contactsCenterPortletLocalized}&quot;)" name="contactsCenterPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${contactsCenterPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${contactsCenterPortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${contactsCenterPortletLocalizedUpperCase}" />
 
 		<var name="key_pageName" value="${microblogsPageLocalized}" />
 
 		<execute action="SOProfile#assertClick" locator-key1="NAVIGATION_PAGE" value1="${microblogsPageLocalized}" />
 
+		<var method="StringUtil#upperCase(&quot;${profilePortletLocalized}&quot;)" name="profilePortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${profilePortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${profilePortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${profilePortletLocalizedUpperCase}" />
 
+		<var method="StringUtil#upperCase(&quot;${microblogsPortletLocalized}&quot;)" name="microblogsPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${microblogsPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${microblogsPortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${microblogsPortletLocalizedUpperCase}" />
 	</command>
 
 	<command name="viewMicroblogsEntryMention">

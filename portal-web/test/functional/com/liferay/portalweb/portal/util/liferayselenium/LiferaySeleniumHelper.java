@@ -795,7 +795,9 @@ public class LiferaySeleniumHelper {
 				".*The web application \\[\\] created a ThreadLocal with key " +
 					"of type.*")) {
 
-			if (line.contains("[org.apache.poi.extractor.ExtractorFactory$1]")) {
+			if (line.contains(
+					"[org.apache.poi.extractor.ExtractorFactory$1]")) {
+
 				return true;
 			}
 		}

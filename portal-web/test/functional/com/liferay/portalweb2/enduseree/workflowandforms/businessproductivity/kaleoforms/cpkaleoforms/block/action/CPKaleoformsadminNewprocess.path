@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CANCEL_BUTTON</td>
 	<td>//a[contains(.,'Cancel')]</td>
 	<td></td>

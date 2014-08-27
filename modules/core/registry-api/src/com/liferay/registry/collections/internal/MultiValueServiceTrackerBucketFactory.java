@@ -12,9 +12,13 @@
  * details.
  */
 
-package com.liferay.registry.collections;
+package com.liferay.registry.collections.internal;
 
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.collections.ServiceReferenceServiceTuple;
+import com.liferay.registry.collections.ServiceReferenceServiceTupleComparator;
+import com.liferay.registry.collections.ServiceTrackerBucket;
+import com.liferay.registry.collections.ServiceTrackerBucketFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;

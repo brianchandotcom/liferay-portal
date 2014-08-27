@@ -12,9 +12,13 @@
  * details.
  */
 
-package com.liferay.registry.collections;
+package com.liferay.registry.collections.internal;
 
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.collections.ServiceReferenceServiceTuple;
+import com.liferay.registry.collections.ServiceReferenceServiceTupleComparator;
+import com.liferay.registry.collections.ServiceTrackerBucket;
+import com.liferay.registry.collections.ServiceTrackerBucketFactory;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -52,7 +56,6 @@ public class SingleValueServiceTrackerBucketFactory<S>
 				new PriorityQueue<ServiceReferenceServiceTuple<S>>(
 					1, new ServiceReferenceServiceTupleComparator<S>(
 						_comparator));
-
 		}
 
 		@Override

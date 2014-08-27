@@ -12,33 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.view.model;
+package com.liferay.portal.kernel.servlet.taglib.ui;
 
 /**
  * @author Iván Zaera
  */
-public class DeleteMenuItem extends MenuItem {
+public abstract class MenuItem {
 
-	public DeleteMenuItem(String id, String url) {
-		this(id, url, false);
+	public MenuItem(String id, String iconCssClass, String message) {
+		_id = id;
+		_iconCssClass = iconCssClass;
+		_message = message;
 	}
 
-	public DeleteMenuItem(String id, String url, boolean trash) {
-		super(id, null, null);
-
-		_url = url;
-		_trash = trash;
+	public String getIconCssClass() {
+		return _iconCssClass;
 	}
 
-	public boolean getTrash() {
-		return _trash;
+	public String getId() {
+		return _id;
 	}
 
-	public String getURL() {
-		return _url;
+	public String getMessage() {
+		return _message;
 	}
 
-	private boolean _trash;
-	private String _url;
+	private String _iconCssClass;
+	private String _id;
+	private String _message;
 
 }

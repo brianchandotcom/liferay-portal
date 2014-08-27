@@ -154,16 +154,6 @@ public class UserServiceTest {
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenGettingUserByEmailAddress {
 
-		@Test
-		public void shouldReturnUserIfPresent() throws Exception {
-			User user = UserTestUtil.addUser(true);
-
-			User retrievedUser = UserServiceUtil.getUserByEmailAddress(
-				TestPropsValues.getCompanyId(), user.getEmailAddress());
-
-			Assert.assertEquals(user, retrievedUser);
-		}
-
 		@Test(expected = NoSuchUserException.class)
 		public void shouldFailIfUserDeleted() throws Exception {
 			User user = UserTestUtil.addUser(true);
@@ -174,164 +164,15 @@ public class UserServiceTest {
 				TestPropsValues.getCompanyId(), user.getEmailAddress());
 		}
 
-	}
-
-	@ExecutionTestListeners(
-		listeners = {
-			MainServletExecutionTestListener.class,
-			ResetDatabaseExecutionTestListener.class,
-			SynchronousMailExecutionTestListener.class
-		})
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
-	@Sync
-	public static class WhenPortalSendsPasswordEmail {
-
-		@Before
-		public void setUp() throws Exception {
-			_user = UserTestUtil.addUser();
-		}
-
 		@Test
-		public void shouldSendNewPasswordEmailByEmailAddress()
-			throws Exception {
+		public void shouldReturnUserIfPresent() throws Exception {
+			User user = UserTestUtil.addUser(true);
 
-			givenThatCompanySendsNewPassword();
+			User retrievedUser = UserServiceUtil.getUserByEmailAddress(
+				TestPropsValues.getCompanyId(), user.getEmailAddress());
 
-			int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-			boolean isPasswordSent =
-				UserServiceUtil.sendPasswordByEmailAddress(
-					_user.getCompanyId(), _user.getEmailAddress());
-
-			Assert.assertTrue(isPasswordSent);
-			Assert.assertEquals(
-				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			Assert.assertTrue(
-				MailServiceTestUtil.lastMailMessageContains(
-					"email_password_sent_body.tmpl"));
+			Assert.assertEquals(user, retrievedUser);
 		}
-
-		@Test
-		public void shouldSendNewPasswordEmailByScreenName() throws Exception {
-			givenThatCompanySendsNewPassword();
-
-			int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-			boolean isPasswordSent =
-				UserServiceUtil.sendPasswordByScreenName(
-					_user.getCompanyId(), _user.getScreenName());
-
-			Assert.assertTrue(isPasswordSent);
-			Assert.assertEquals(
-				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			Assert.assertTrue(
-				MailServiceTestUtil.lastMailMessageContains(
-					"email_password_sent_body.tmpl"));
-		}
-
-		@Test
-		public void shouldSendNewPasswordEmailByUserId() throws Exception {
-			int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-			givenThatCompanySendsNewPassword();
-
-			boolean isPasswordSent = UserServiceUtil.sendPasswordByUserId(
-				_user.getUserId());
-
-			Assert.assertTrue(isPasswordSent);
-			Assert.assertEquals(
-				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			Assert.assertTrue(
-				MailServiceTestUtil.lastMailMessageContains(
-					"email_password_sent_body.tmpl"));
-		}
-
-		@Test
-		public void shouldSendResetLinkEmailByEmailAddress() throws Exception {
-			givenThatCompanySendsResetPasswordLink();
-
-			int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-			boolean isPasswordSent =
-				UserServiceUtil.sendPasswordByEmailAddress(
-					_user.getCompanyId(), _user.getEmailAddress());
-
-			Assert.assertFalse(isPasswordSent);
-			Assert.assertEquals(
-				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			Assert.assertTrue(
-				MailServiceTestUtil.lastMailMessageContains(
-					"email_password_reset_body.tmpl"));
-		}
-
-		@Test
-		public void shouldSendResetLinkEmailByScreenName() throws Exception {
-			givenThatCompanySendsResetPasswordLink();
-
-			int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-			boolean isPasswordSent =
-				UserServiceUtil.sendPasswordByScreenName(
-					_user.getCompanyId(), _user.getScreenName());
-
-			Assert.assertFalse(isPasswordSent);
-			Assert.assertEquals(
-				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			Assert.assertTrue(
-				MailServiceTestUtil.lastMailMessageContains(
-					"email_password_reset_body.tmpl"));
-		}
-
-		@Test
-		public void shouldSendResetLinkEmailByUserId() throws Exception {
-			givenThatCompanySendsResetPasswordLink();
-
-			int initialInboxSize = MailServiceTestUtil.getInboxSize();
-
-			boolean isPasswordSent = UserServiceUtil.sendPasswordByUserId(
-				_user.getUserId());
-
-			Assert.assertFalse(isPasswordSent);
-			Assert.assertEquals(
-				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
-			Assert.assertTrue(
-				MailServiceTestUtil.lastMailMessageContains(
-					"email_password_reset_body.tmpl"));
-		}
-
-		protected void givenThatCompanySendsNewPassword() throws Exception {
-			PortletPreferences portletPreferences =
-				PrefsPropsUtil.getPreferences(_user.getCompanyId(), false);
-
-			portletPreferences.setValue(
-				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
-				Boolean.TRUE.toString());
-
-			portletPreferences.setValue(
-				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
-				Boolean.FALSE.toString());
-
-			portletPreferences.store();
-		}
-
-		protected void givenThatCompanySendsResetPasswordLink()
-			throws Exception {
-
-			PortletPreferences portletPreferences =
-				PrefsPropsUtil.getPreferences(_user.getCompanyId(), false);
-
-			portletPreferences.setValue(
-				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
-				Boolean.FALSE.toString());
-
-			portletPreferences.setValue(
-				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
-				Boolean.TRUE.toString());
-
-			portletPreferences.store();
-		}
-
-		private User _user;
 
 	}
 
@@ -513,9 +354,7 @@ public class UserServiceTest {
 		}
 
 		@Test
-		public void shouldUnsetOrganizationAdmin()
-			throws Exception {
-
+		public void shouldUnsetOrganizationAdmin() throws Exception {
 			User otherOrganizationAdminUser =
 				UserTestUtil.addOrganizationAdminUser(_organization);
 
@@ -530,9 +369,7 @@ public class UserServiceTest {
 		}
 
 		@Test
-		public void shouldUnsetOrganizationOwner()
-			throws Exception {
-
+		public void shouldUnsetOrganizationOwner() throws Exception {
 			_unsetOrganizationUsers(
 				_organization.getOrganizationId(), _organizationAdminUser,
 				_organizationOwnerUser);
@@ -555,67 +392,12 @@ public class UserServiceTest {
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
-	public static class WhenOrganizationOwnerUnsetsUsersForNonSiteOrganization {
-
-		@Before
-		public void setUp() throws Exception {
-			_organization = OrganizationTestUtil.addOrganization();
-
-			_organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
-				_organization);
-		}
-
-		@Test
-		public void shouldUnsetOrganizationAdmin()
-			throws Exception {
-
-			User organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
-				_organization);
-
-			_unsetOrganizationUsers(
-				_organization.getOrganizationId(), _organizationOwnerUser,
-				organizationAdminUser);
-
-			Assert.assertFalse(
-				UserLocalServiceUtil.hasOrganizationUser(
-					_organization.getOrganizationId(),
-					organizationAdminUser.getUserId()));
-		}
-
-		@Test
-		public void shouldUnsetOrganizationOwner()
-			throws Exception {
-
-			User otherOrganizationOwnerUser =
-				UserTestUtil.addOrganizationOwnerUser(_organization);
-
-			_unsetOrganizationUsers(
-				_organization.getOrganizationId(), _organizationOwnerUser,
-				otherOrganizationOwnerUser);
-
-			Assert.assertFalse(
-				UserLocalServiceUtil.hasOrganizationUser(
-					_organization.getOrganizationId(),
-					otherOrganizationOwnerUser.getUserId()));
-		}
-
-		private Organization _organization;
-		private User _organizationOwnerUser;
-
-	}
-
-	@ExecutionTestListeners(
-		listeners = {
-			MainServletExecutionTestListener.class,
-			ResetDatabaseExecutionTestListener.class
-		})
-	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenOrganizationAdminUnsetsUsersForSiteOrganization {
 
 		@Before
 		public void setUp() throws Exception {
-			Organization organization =
-				OrganizationTestUtil.addOrganization(true);
+			Organization organization = OrganizationTestUtil.addOrganization(
+				true);
 
 			_group = organization.getGroup();
 
@@ -658,12 +440,63 @@ public class UserServiceTest {
 			ResetDatabaseExecutionTestListener.class
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+	public static class WhenOrganizationOwnerUnsetsUsersForNonSiteOrganization {
+
+		@Before
+		public void setUp() throws Exception {
+			_organization = OrganizationTestUtil.addOrganization();
+
+			_organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
+				_organization);
+		}
+
+		@Test
+		public void shouldUnsetOrganizationAdmin() throws Exception {
+			User organizationAdminUser = UserTestUtil.addOrganizationAdminUser(
+				_organization);
+
+			_unsetOrganizationUsers(
+				_organization.getOrganizationId(), _organizationOwnerUser,
+				organizationAdminUser);
+
+			Assert.assertFalse(
+				UserLocalServiceUtil.hasOrganizationUser(
+					_organization.getOrganizationId(),
+					organizationAdminUser.getUserId()));
+		}
+
+		@Test
+		public void shouldUnsetOrganizationOwner() throws Exception {
+			User otherOrganizationOwnerUser =
+				UserTestUtil.addOrganizationOwnerUser(_organization);
+
+			_unsetOrganizationUsers(
+				_organization.getOrganizationId(), _organizationOwnerUser,
+				otherOrganizationOwnerUser);
+
+			Assert.assertFalse(
+				UserLocalServiceUtil.hasOrganizationUser(
+					_organization.getOrganizationId(),
+					otherOrganizationOwnerUser.getUserId()));
+		}
+
+		private Organization _organization;
+		private User _organizationOwnerUser;
+
+	}
+
+	@ExecutionTestListeners(
+		listeners = {
+			MainServletExecutionTestListener.class,
+			ResetDatabaseExecutionTestListener.class
+		})
+	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	public static class WhenOrganizationOwnerUnsetsUsersForSiteOrganization {
 
 		@Before
 		public void setUp() throws Exception {
-			Organization organization =
-				OrganizationTestUtil.addOrganization(true);
+			Organization organization = OrganizationTestUtil.addOrganization(
+				true);
 
 			_group = organization.getGroup();
 
@@ -697,6 +530,165 @@ public class UserServiceTest {
 
 		private Group _group;
 		private User _organizationOwnerUser;
+
+	}
+
+	@ExecutionTestListeners(
+		listeners = {
+			MainServletExecutionTestListener.class,
+			ResetDatabaseExecutionTestListener.class,
+			SynchronousMailExecutionTestListener.class
+		})
+	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+	@Sync
+	public static class WhenPortalSendsPasswordEmail {
+
+		@Before
+		public void setUp() throws Exception {
+			_user = UserTestUtil.addUser();
+		}
+
+		@Test
+		public void shouldSendNewPasswordEmailByEmailAddress()
+			throws Exception {
+
+			givenThatCompanySendsNewPassword();
+
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			boolean isPasswordSent =
+				UserServiceUtil.sendPasswordByEmailAddress(
+					_user.getCompanyId(), _user.getEmailAddress());
+
+			Assert.assertTrue(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+			Assert.assertTrue(
+				MailServiceTestUtil.lastMailMessageContains(
+					"email_password_sent_body.tmpl"));
+		}
+
+		@Test
+		public void shouldSendNewPasswordEmailByScreenName() throws Exception {
+			givenThatCompanySendsNewPassword();
+
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			boolean isPasswordSent =
+				UserServiceUtil.sendPasswordByScreenName(
+					_user.getCompanyId(), _user.getScreenName());
+
+			Assert.assertTrue(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+			Assert.assertTrue(
+				MailServiceTestUtil.lastMailMessageContains(
+					"email_password_sent_body.tmpl"));
+		}
+
+		@Test
+		public void shouldSendNewPasswordEmailByUserId() throws Exception {
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			givenThatCompanySendsNewPassword();
+
+			boolean isPasswordSent = UserServiceUtil.sendPasswordByUserId(
+				_user.getUserId());
+
+			Assert.assertTrue(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+			Assert.assertTrue(
+				MailServiceTestUtil.lastMailMessageContains(
+					"email_password_sent_body.tmpl"));
+		}
+
+		@Test
+		public void shouldSendResetLinkEmailByEmailAddress() throws Exception {
+			givenThatCompanySendsResetPasswordLink();
+
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			boolean isPasswordSent =
+				UserServiceUtil.sendPasswordByEmailAddress(
+					_user.getCompanyId(), _user.getEmailAddress());
+
+			Assert.assertFalse(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+			Assert.assertTrue(
+				MailServiceTestUtil.lastMailMessageContains(
+					"email_password_reset_body.tmpl"));
+		}
+
+		@Test
+		public void shouldSendResetLinkEmailByScreenName() throws Exception {
+			givenThatCompanySendsResetPasswordLink();
+
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			boolean isPasswordSent =
+				UserServiceUtil.sendPasswordByScreenName(
+					_user.getCompanyId(), _user.getScreenName());
+
+			Assert.assertFalse(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+			Assert.assertTrue(
+				MailServiceTestUtil.lastMailMessageContains(
+					"email_password_reset_body.tmpl"));
+		}
+
+		@Test
+		public void shouldSendResetLinkEmailByUserId() throws Exception {
+			givenThatCompanySendsResetPasswordLink();
+
+			int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+			boolean isPasswordSent = UserServiceUtil.sendPasswordByUserId(
+				_user.getUserId());
+
+			Assert.assertFalse(isPasswordSent);
+			Assert.assertEquals(
+				initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
+			Assert.assertTrue(
+				MailServiceTestUtil.lastMailMessageContains(
+					"email_password_reset_body.tmpl"));
+		}
+
+		protected void givenThatCompanySendsNewPassword() throws Exception {
+			PortletPreferences portletPreferences =
+				PrefsPropsUtil.getPreferences(_user.getCompanyId(), false);
+
+			portletPreferences.setValue(
+				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
+				Boolean.TRUE.toString());
+
+			portletPreferences.setValue(
+				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
+				Boolean.FALSE.toString());
+
+			portletPreferences.store();
+		}
+
+		protected void givenThatCompanySendsResetPasswordLink()
+			throws Exception {
+
+			PortletPreferences portletPreferences =
+				PrefsPropsUtil.getPreferences(_user.getCompanyId(), false);
+
+			portletPreferences.setValue(
+				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD,
+				Boolean.FALSE.toString());
+
+			portletPreferences.setValue(
+				PropsKeys.COMPANY_SECURITY_SEND_PASSWORD_RESET_LINK,
+				Boolean.TRUE.toString());
+
+			portletPreferences.store();
+		}
+
+		private User _user;
 
 	}
 

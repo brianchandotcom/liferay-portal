@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
+import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -73,10 +74,14 @@ import org.elasticsearch.search.sort.ScoreSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  * @author Milen Dyankov
  */
+@Component(immediate = true, service = IndexSearcher.class)
 public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	@Override
@@ -118,7 +123,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			}
 
 			if (!_swallowException) {
-				throw new SearchException(e.getMessage());
+				throw new SearchException(e.getMessage(), e);
 			}
 
 			return new HitsImpl();
@@ -155,7 +160,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			}
 
 			if (!_swallowException) {
-				throw new SearchException(e.getMessage());
+				throw new SearchException(e.getMessage(), e);
 			}
 
 			return 0;
@@ -171,12 +176,16 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
+	@Reference
 	public void setElasticsearchConnectionManager(
 		ElasticsearchConnectionManager elasticsearchConnectionManager) {
 
 		_elasticsearchConnectionManager = elasticsearchConnectionManager;
 	}
 
+	@Reference(
+		target = "(objectClass=com.liferay.portal.search.elasticsearch.facet.CompositeFacetProcessor)"
+	)
 	public void setFacetProcessor(
 		FacetProcessor<SearchRequestBuilder> facetProcessor) {
 

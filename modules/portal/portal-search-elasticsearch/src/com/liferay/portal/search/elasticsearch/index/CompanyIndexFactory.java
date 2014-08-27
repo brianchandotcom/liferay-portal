@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch.index;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.util.LogUtil;
@@ -34,9 +35,22 @@ import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = {
+		"indexConfigFileName=/META-INF/index-settings.json",
+		"typeMappings._default_=/META-INF/mappings/default-type-mappings.json",
+		"typeMappings.KeywordQueryDocumentType=/META-INF/mappings/keyword-query-type-mappings.json",
+		"typeMappings.LiferayDocumentType=/META-INF/mappings/liferay-type-mappings.json",
+		"typeMappings.SpellCheckDocumentType=/META-INF/mappings/spellcheck-type-mappings.json"
+	}
+)
 public class CompanyIndexFactory implements IndexFactory {
 
 	@Override
@@ -111,6 +125,24 @@ public class CompanyIndexFactory implements IndexFactory {
 		_typeMappings = typeMappings;
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		setIndexConfigFileName(
+			MapUtil.getString(properties, "indexConfigFileName"));
+
+		Map<String, String> typeMappings = new HashMap<String, String>();
+
+		for (String key : properties.keySet()) {
+			if (key.startsWith(_PREFIX)) {
+				String value = MapUtil.getString(properties, key);
+
+				typeMappings.put(key.substring(_PREFIX_LENGHT), value);
+			}
+		}
+
+		setTypeMappings(typeMappings);
+	}
+
 	protected boolean hasIndex(
 			IndicesAdminClient indicesAdminClient, long companyId)
 		throws Exception {
@@ -125,6 +157,10 @@ public class CompanyIndexFactory implements IndexFactory {
 
 		return indicesExistsResponse.isExists();
 	}
+
+	private static final String _PREFIX = "typeMappings.";
+
+	private static final int _PREFIX_LENGHT = _PREFIX.length();
 
 	private static Log _log = LogFactoryUtil.getLog(CompanyIndexFactory.class);
 

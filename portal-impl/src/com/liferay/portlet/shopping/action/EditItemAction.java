@@ -26,6 +26,7 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.shopping.DuplicateItemFieldNameException;
 import com.liferay.portlet.shopping.DuplicateItemSKUException;
 import com.liferay.portlet.shopping.ItemLargeImageNameException;
 import com.liferay.portlet.shopping.ItemLargeImageSizeException;
@@ -96,7 +97,8 @@ public class EditItemAction extends PortletAction {
 
 				setForward(actionRequest, "portlet.shopping.error");
 			}
-			else if (e instanceof DuplicateItemSKUException ||
+			else if (e instanceof DuplicateItemFieldNameException ||
+					 e instanceof DuplicateItemSKUException ||
 					 e instanceof ItemLargeImageNameException ||
 					 e instanceof ItemLargeImageSizeException ||
 					 e instanceof ItemMediumImageNameException ||
@@ -106,7 +108,7 @@ public class EditItemAction extends PortletAction {
 					 e instanceof ItemSmallImageNameException ||
 					 e instanceof ItemSmallImageSizeException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
 			else {
 				throw e;

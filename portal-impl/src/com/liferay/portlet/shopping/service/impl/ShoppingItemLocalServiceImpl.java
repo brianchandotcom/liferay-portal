@@ -26,6 +26,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portlet.shopping.DuplicateItemFieldNameException;
 import com.liferay.portlet.shopping.DuplicateItemSKUException;
 import com.liferay.portlet.shopping.ItemLargeImageNameException;
 import com.liferay.portlet.shopping.ItemLargeImageSizeException;
@@ -90,7 +91,7 @@ public class ShoppingItemLocalServiceImpl
 			user.getCompanyId(), 0, sku, name, smallImage, smallImageURL,
 			smallImageFile, smallImageBytes, mediumImage, mediumImageURL,
 			mediumImageFile, mediumImageBytes, largeImage, largeImageURL,
-			largeImageFile, largeImageBytes);
+			largeImageFile, largeImageBytes, itemFields);
 
 		long itemId = counterLocalService.increment();
 
@@ -468,7 +469,7 @@ public class ShoppingItemLocalServiceImpl
 			user.getCompanyId(), itemId, sku, name, smallImage, smallImageURL,
 			smallImageFile, smallImageBytes, mediumImage, mediumImageURL,
 			mediumImageFile, mediumImageBytes, largeImage, largeImageURL,
-			largeImageFile, largeImageBytes);
+			largeImageFile, largeImageBytes, itemFields);
 
 		item.setModifiedDate(new Date());
 		item.setCategoryId(categoryId);
@@ -634,7 +635,8 @@ public class ShoppingItemLocalServiceImpl
 			boolean smallImage, String smallImageURL, File smallImageFile,
 			byte[] smallImageBytes, boolean mediumImage, String mediumImageURL,
 			File mediumImageFile, byte[] mediumImageBytes, boolean largeImage,
-			String largeImageURL, File largeImageFile, byte[] largeImageBytes)
+			String largeImageURL, File largeImageFile, byte[] largeImageBytes,
+			List<ShoppingItemField> itemFields)
 		throws PortalException {
 
 		if (Validator.isNull(sku)) {
@@ -657,6 +659,35 @@ public class ShoppingItemLocalServiceImpl
 
 		if (Validator.isNull(name)) {
 			throw new ItemNameException();
+		}
+
+		if (!itemFields.isEmpty()) {
+			List<String> itemFieldNames = new ArrayList<String>();
+			List<String> duplicateItemFieldNames = new ArrayList<String>();
+
+			StringBundler sb = new StringBundler(itemFields.size());
+
+			for (ShoppingItemField itemField : itemFields) {
+				if (itemFieldNames.contains(itemField.getName())) {
+					if (!duplicateItemFieldNames.contains(
+							itemField.getName())) {
+
+						duplicateItemFieldNames.add(itemField.getName());
+
+						sb.append(itemField.getName());
+						sb.append(StringPool.COMMA_AND_SPACE);
+					}
+				}
+				else {
+					itemFieldNames.add(itemField.getName());
+				}
+			}
+
+			if (!duplicateItemFieldNames.isEmpty()) {
+				sb.setIndex(sb.index() - 1);
+
+				throw new DuplicateItemFieldNameException(sb.toString());
+			}
 		}
 
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(

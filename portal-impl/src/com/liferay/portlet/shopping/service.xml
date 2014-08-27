@@ -452,6 +452,7 @@
 		<exception>CouponName</exception>
 		<exception>CouponStartDate</exception>
 		<exception>DuplicateCouponCode</exception>
+		<exception>DuplicateItemFieldName</exception>
 		<exception>DuplicateItemSKU</exception>
 		<exception>ItemLargeImageName</exception>
 		<exception>ItemLargeImageSize</exception>

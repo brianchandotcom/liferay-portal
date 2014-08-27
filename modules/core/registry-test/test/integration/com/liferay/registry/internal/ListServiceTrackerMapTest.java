@@ -18,8 +18,8 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
+import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
-import com.liferay.registry.collections.ServiceTrackerMapFactory;
 
 import java.util.Collection;
 import java.util.Dictionary;
@@ -255,7 +255,7 @@ public class ListServiceTrackerMapTest {
 		RegistryWrapper registryWrapper = new RegistryWrapper(registry);
 
 		ServiceTrackerMap<TrackedOne, TrackedOne> serviceTrackerMap =
-			ServiceTrackerMapFactory.createObjectServiceTrackerMap(
+			ServiceTrackerCollections.singleValueMap(
 				TrackedOne.class, null,
 				new ServiceReferenceMapper<TrackedOne>() {
 
@@ -340,7 +340,7 @@ public class ListServiceTrackerMapTest {
 	protected ServiceTrackerMap<String, List<TrackedOne>>
 		createServiceTrackerMap() {
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.createListServiceTracker(
+		_serviceTrackerMap = ServiceTrackerCollections.multiValueMap(
 			TrackedOne.class, "target");
 
 		_serviceTrackerMap.open();

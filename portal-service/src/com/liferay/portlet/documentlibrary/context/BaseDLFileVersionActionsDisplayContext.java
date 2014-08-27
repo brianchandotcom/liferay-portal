@@ -16,7 +16,7 @@ package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.view.model.MenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 
 import java.util.List;
 import java.util.UUID;

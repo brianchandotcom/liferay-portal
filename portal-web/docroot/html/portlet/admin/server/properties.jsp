@@ -40,8 +40,6 @@ serverURL.setParameter("tabs3", tabs3);
 <%
 Map<String, String> filteredProperties = new TreeMap<String, String>();
 
-Set<String> obfuscatedPropertyValues = new HashSet<String>(Arrays.asList(PropsValues.OBFUSCATED_PROPERTY_VALUES));
-
 Properties properties = null;
 
 if (tabs3.equals("portal-properties")) {
@@ -55,7 +53,7 @@ for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 	String property = (String)entry.getKey();
 	String value = StringPool.BLANK;
 
-	if (obfuscatedPropertyValues.contains(property)) {
+	if (ArrayUtil.contains(PropsValues.OBFUSCATED_PROPERTY_VALUES, property)) {
 		value = "********";
 	}
 	else {

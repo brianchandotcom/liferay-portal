@@ -170,6 +170,11 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	@Override
+	public String getFilename() {
+		return _document.getName();
+	}
+
+	@Override
 	public FileVersion getFileVersion() throws PortalException {
 		return getLatestFileVersion();
 	}

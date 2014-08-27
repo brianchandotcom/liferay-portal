@@ -86,6 +86,8 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 
 	public long getFileEntryId();
 
+	public String getFilename();
+
 	/**
 	 * Returns the current file version. The workflow state of the latest file
 	 * version may affect the file version that is returned. In a Liferay

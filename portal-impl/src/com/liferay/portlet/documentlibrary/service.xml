@@ -135,6 +135,7 @@
 		<column name="extension" type="String" />
 		<column name="mimeType" type="String" />
 		<column name="title" type="String" />
+		<column name="filename" type="String" />
 		<column name="description" type="String" />
 		<column name="extraSettings" type="String" />
 		<column name="fileEntryTypeId" type="long" />
@@ -194,6 +195,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="folderId" />
 			<finder-column name="title" />
+		</finder>
+		<finder name="G_F_FN" return-type="DLFileEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="folderId" />
+			<finder-column name="filename" />
 		</finder>
 		<finder name="G_F_F" return-type="Collection">
 			<finder-column name="groupId" />
@@ -469,6 +475,7 @@
 		<column name="extension" type="String" />
 		<column name="mimeType" type="String" />
 		<column name="title" type="String" />
+		<column name="filename" type="String" />
 		<column name="description" type="String" />
 		<column name="changeLog" type="String" />
 		<column name="extraSettings" type="String" />

@@ -50,6 +50,8 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 
 	public long getFileEntryId();
 
+	public String getFilename();
+
 	public long getFileVersionId();
 
 	@Override

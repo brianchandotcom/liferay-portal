@@ -894,7 +894,7 @@ public class WebServerServlet extends HttpServlet {
 			return;
 		}
 
-		String fileName = fileVersion.getTitle();
+		String fileName = fileVersion.getFilename();
 
 		String extension = fileVersion.getExtension();
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.registry.collections;
+package com.liferay.registry.collections.internal;
 
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
@@ -21,6 +21,8 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.ServiceRegistrationMap;
+import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.lang.reflect.Array;
 
@@ -39,7 +41,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * @author Raymond Augé
  */
-class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
+public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 
 	@Override
 	public void add(int index, S service) {
@@ -263,7 +265,7 @@ class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 		return services;
 	}
 
-	protected ServiceTrackerCollectionImpl(
+	public ServiceTrackerCollectionImpl(
 		Class<S> clazz, Filter filter,
 		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer,
 		Map<String, Object> properties) {

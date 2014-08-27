@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.registry.collections;
+package com.liferay.registry.collections.internal;
 
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
@@ -20,13 +20,18 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.ServiceReferenceMapper;
+import com.liferay.registry.collections.ServiceReferenceServiceTuple;
+import com.liferay.registry.collections.ServiceTrackerBucket;
+import com.liferay.registry.collections.ServiceTrackerBucketFactory;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Carlos Sierra Andrés
  */
-class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
+public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 
 	public ServiceTrackerMapImpl(
 		Class<S> clazz, String filterString,
@@ -103,7 +108,7 @@ class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 
 			final Registry registry = RegistryUtil.getRegistry();
 
-			//This holder is used to know if some key has been emitted in the 
+			//This holder is used to know if some key has been emitted in the
 			//mapper
 			final Holder<ServiceReferenceServiceTuple<S>>
 				tupleHolder = new Holder<ServiceReferenceServiceTuple<S>>();

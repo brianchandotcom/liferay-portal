@@ -20,6 +20,8 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.internal.MultiValueServiceTrackerBucketFactory;
+import com.liferay.registry.collections.internal.ServiceTrackerCollectionImpl;
+import com.liferay.registry.collections.internal.ServiceTrackerMapImpl;
 import com.liferay.registry.collections.internal.SingleValueServiceTrackerBucketFactory;
 
 import java.util.Comparator;

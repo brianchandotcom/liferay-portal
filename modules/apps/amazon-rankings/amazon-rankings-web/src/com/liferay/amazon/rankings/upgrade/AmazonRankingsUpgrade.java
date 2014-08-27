@@ -63,7 +63,7 @@ public class AmazonRankingsUpgrade {
 			_releaseLocalService.updateRelease(
 				AmazonRankingsPortlet.class.getName(),
 				Collections.<UpgradeProcess> singletonList(upgradePortletId), 1,
-				1, false);
+				0, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

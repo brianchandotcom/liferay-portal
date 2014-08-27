@@ -38,6 +38,16 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>extension</name>
+		<tag-class>com.liferay.taglib.util.ExtensionTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>extensionId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>get-url</name>
 		<tag-class>com.liferay.taglib.util.GetUrlTag</tag-class>
 		<tei-class>com.liferay.taglib.util.GetUrlTei</tei-class>

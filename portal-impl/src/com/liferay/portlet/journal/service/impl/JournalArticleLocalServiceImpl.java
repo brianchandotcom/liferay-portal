@@ -1035,6 +1035,7 @@ public class JournalArticleLocalServiceImpl
 			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 			extraDataJSONObject.put("version", article.getVersion());
+			extraDataJSONObject.put("uuid", article.getUuid());
 
 			systemEventLocalService.addSystemEvent(
 				0, article.getGroupId(), article.getModelClassName(),

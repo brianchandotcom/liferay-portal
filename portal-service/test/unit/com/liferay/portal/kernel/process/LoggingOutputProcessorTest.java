@@ -38,12 +38,12 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 		new CodeCoverageAssertor();
 
 	@Test
-	public void testLoggingFail() throws Exception {
+	public void testLoggingFail() {
 		testFailToRead(new LoggingOutputProcessor());
 	}
 
 	@Test
-	public void testLoggingSuccess() throws Exception, ProcessException {
+	public void testLoggingSuccess() throws Exception {
 		LoggingOutputProcessor loggingOutputProcessor =
 			new LoggingOutputProcessor();
 

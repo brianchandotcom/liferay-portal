@@ -31,7 +31,7 @@ public class ConsumerOutputProcessorTest extends BaseOutputProcessorTestCase {
 		new CodeCoverageAssertor();
 
 	@Test
-	public void testConsumeFail() throws Exception {
+	public void testConsumeFail() {
 		testFailToRead(new ConsumerOutputProcessor());
 	}
 

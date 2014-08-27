@@ -1123,7 +1123,7 @@ public class MPIHelperUtilTest {
 		}
 	}
 
-	private static MPI _getMPIImpl() throws Exception {
+	private static MPI _getMPIImpl() {
 		MPI mpiImpl = (MPI)ReflectionTestUtil.getFieldValue(
 			MPIHelperUtil.class, "_mpiImpl");
 

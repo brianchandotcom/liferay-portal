@@ -41,7 +41,7 @@ public class SPISynchronousQueueUtilTest {
 	}
 
 	@Test
-	public void testSPISynchronousQueueUtil() throws Exception {
+	public void testSPISynchronousQueueUtil() throws InterruptedException {
 
 		// Create
 

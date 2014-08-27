@@ -37,7 +37,7 @@ public class DistributedRegistryTest {
 		new CodeCoverageAssertor();
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		_exactDirections =
 			(Map<String, Direction>)ReflectionTestUtil.getFieldValue(
 				DistributedRegistry.class, "_exactDirections");

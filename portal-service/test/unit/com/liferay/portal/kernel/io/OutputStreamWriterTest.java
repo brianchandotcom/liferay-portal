@@ -208,7 +208,7 @@ public class OutputStreamWriterTest {
 		_testWriteString(true);
 	}
 
-	private int _getDefaultOutputBufferSize() throws Exception {
+	private int _getDefaultOutputBufferSize() {
 		return (Integer)ReflectionTestUtil.getFieldValue(
 			OutputStreamWriter.class, "_DEFAULT_OUTPUT_BUFFER_SIZE");
 	}

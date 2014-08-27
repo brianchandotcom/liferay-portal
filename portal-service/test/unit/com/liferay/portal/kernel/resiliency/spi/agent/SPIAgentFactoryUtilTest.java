@@ -105,7 +105,7 @@ public class SPIAgentFactoryUtilTest {
 	}
 
 	@Test
-	public void testRegisteration() throws Exception {
+	public void testRegisteration() throws ClassNotFoundException {
 
 		// Spring registeration
 

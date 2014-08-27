@@ -90,7 +90,7 @@ public class FinalizeManagerTest {
 	}
 
 	@Test
-	public void testManuelClear() throws Exception {
+	public void testManuelClear() throws InterruptedException {
 		System.setProperty(_THREAD_ENABLED_KEY, StringPool.FALSE);
 
 		Object object = new Object();
@@ -127,7 +127,7 @@ public class FinalizeManagerTest {
 	}
 
 	@Test
-	public void testRegisterationIdentity() throws Exception {
+	public void testRegisterationIdentity() {
 		System.setProperty(_THREAD_ENABLED_KEY, StringPool.FALSE);
 
 		String testString = new String("testString");

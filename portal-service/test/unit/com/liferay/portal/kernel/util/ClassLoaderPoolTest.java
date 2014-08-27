@@ -37,7 +37,7 @@ public class ClassLoaderPoolTest {
 		new CodeCoverageAssertor();
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		Class<?> clazz = getClass();
 
 		PortalClassLoaderUtil.setClassLoader(clazz.getClassLoader());

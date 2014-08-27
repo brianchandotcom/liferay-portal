@@ -726,8 +726,7 @@ public class IntrabandProxyUtilTest {
 			@Override
 			protected void doDispatch(
 					RegistrationReference registrationReference,
-					Datagram datagram, Deserializer deserializer)
-				throws Exception {
+					Datagram datagram, Deserializer deserializer) {
 
 				int i = deserializer.readInt();
 

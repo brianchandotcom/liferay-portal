@@ -60,7 +60,7 @@ public class SecureRandomUtilTest {
 			new Callable<Long>() {
 
 				@Override
-				public Long call() throws Exception {
+				public Long call() {
 					return reload();
 				}
 
@@ -396,7 +396,7 @@ public class SecureRandomUtilTest {
 		return predictableRandom;
 	}
 
-	protected long reload() throws Exception {
+	protected long reload() {
 		return (Long)ReflectionTestUtil.invoke(
 			SecureRandomUtil.class, "_reload", new Class<?>[0]);
 	}

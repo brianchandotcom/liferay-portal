@@ -328,8 +328,8 @@ public class ComboServletStaticURLGeneratorTest {
 
 		assertURLs(
 			urls,
-			_URL_PREFIX + "&" + PortletKeys.ACTIVITIES +
-				":%2Fcss%2Fmain.css&" + PortletKeys.ACTIVITIES +
+			_URL_PREFIX + "&" + PortletKeys.PORTAL +
+				":%2Fcss%2Fmain.css&" + PortletKeys.PORTAL +
 				":%2Fcss%2Fmore.css&t=0");
 	}
 
@@ -374,7 +374,7 @@ public class ComboServletStaticURLGeneratorTest {
 		portlet.setHeaderPortalJavaScript(portletResourcesList);
 		portlet.setHeaderPortletCss(portletResourcesList);
 		portlet.setHeaderPortletJavaScript(portletResourcesList);
-		portlet.setPortletId(PortletKeys.ACTIVITIES);
+		portlet.setPortletId(PortletKeys.PORTAL);
 		portlet.setPortletName(contextName);
 
 		PortletAppImpl portletApp = new PortletAppImpl(contextName);

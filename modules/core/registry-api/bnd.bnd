@@ -9,6 +9,6 @@ Include-Resource:\
 	classes,\
 	@lib/aQute.bnd.jar!/aQute/lib/filter/Filter.class
 Import-Package:\
-	com.liferay.registry,\
-	com.liferay.registry.collections,\
-	com.liferay.registry.util
+	com.liferay.registry;version=${@},\
+	com.liferay.registry.collections;version=${@},\
+	com.liferay.registry.util;version=${@}

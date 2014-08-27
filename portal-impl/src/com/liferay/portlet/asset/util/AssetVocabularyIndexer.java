@@ -54,6 +54,7 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 	public static final String PORTLET_ID = PortletKeys.ASSET_CATEGORIES_ADMIN;
 
 	public AssetVocabularyIndexer() {
+		setCommitImmediately(true);
 		setDefaultSelectedFieldNames(
 			Field.ASSET_VOCABULARY_ID, Field.COMPANY_ID, Field.GROUP_ID,
 			Field.UID);
@@ -112,7 +113,7 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 
 		SearchEngineUtil.deleteDocument(
 			getSearchEngineId(), vocabulary.getCompanyId(),
-			document.get(Field.UID));
+			document.get(Field.UID), isCommitImmediately());
 	}
 
 	@Override
@@ -155,7 +156,8 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 
 		if (document != null) {
 			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), vocabulary.getCompanyId(), document);
+				getSearchEngineId(), vocabulary.getCompanyId(), document,
+				isCommitImmediately());
 		}
 	}
 

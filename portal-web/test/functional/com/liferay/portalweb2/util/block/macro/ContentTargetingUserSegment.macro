@@ -6,7 +6,7 @@
 
 		<execute action="CPContenttargetingAddusersegment#click" locator-key1="USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_CONTENT_BUTTON" />
 
-		<var name="key_menulistContent" value="Content Visited" />
+		<var name="key_menulistContent" value="${contentVisitedContent}" />
 
 		<execute action="CPContenttargetingAddusersegment#click" locator-key1="USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_MENULIST_CONTENT" />
 		<execute action="CPContenttargetingAddusersegment#selectFrame" locator-key1="USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_WEB_CONTENT_IFRAME" />
@@ -314,6 +314,187 @@
 			<var name="key_userSegmentRuleName" value="${usersegmentRuleName}" />
 
 			<execute action="CPContenttargetingEditusersegment#assertTextEquals" locator-key1="USER_SEGMENT_RULE_APPLIED" value1="${usersegmentRuleName}" />
+
+			<if>
+				<equals arg1="${usersegmentRuleName}" arg2="Content Visited" />
+				<then>
+					<execute action="CPContenttargetingEditusersegment#assertTextEquals" locator-key1="USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_WEB_CONTENT_TITLE" value1="${webContentTitle}" />
+				</then>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Score Points" />
+					<then>
+						<execute action="CPContenttargetingEditusersegment#assertTextEquals" locator-key1="USER_SEGMENT_RULE_BEHAVIOR_SCORE_POINTS_FIELD" value1="${scorePoints}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Page Visited" />
+					<then>
+						<execute action="CPContenttargetingEditusersegment#assertTextEquals" locator-key1="USER_SEGMENT_RULE_BEHAVIOR_PAGE_VISITED_FRIENDLY_URL_FIELD" value1="${friendlyURL}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Facebook Education" />
+					<then>
+						<execute action="CPContenttargetingEditusersegment#assertSelectedLabel" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_LEVEL_SELECT" value1="${facebookEducationLevel}" />
+						<execute action="CPContenttargetingEditusersegment#assertTextEquals" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_COLLEGE_HIGH_SCHOOL_NAME_FIELD" value1="${facebookCollegeHighSchoolName}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Facebook City" />
+					<then>
+						<execute action="CPContenttargetingEditusersegment#assertTextEquals" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_CITY_FIELD" value1="${facebookCity}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Facebook Page Like" />
+					<then>
+						<execute action="CPContenttargetingEditusersegment#assertTextEquals" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_PAGE_LIKE_FIELD" value1="${facebookURL}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Facebook Gender" />
+					<then>
+						<if>
+							<equals arg1="${facebookGenderRadio}" arg2="Male" />
+							<then>
+								<execute action="CPContenttargetingAddusersegment#assertChecked" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO" />
+							</then>
+							<elseif>
+								<equals arg1="${facebookGenderRadio}" arg2="Female" />
+								<then>
+									<execute action="CPContenttargetingAddusersegment#assertChecked" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_FEMALE_RADIO" />
+								</then>
+							</elseif>
+							<elseif>
+								<equals arg1="${facebookGenderRadio}" arg2="Custom" />
+								<then>
+									<execute action="CPContenttargetingAddusersegment#assertChecked" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_CUSTOM_RADIO" />
+								</then>
+							</elseif>
+						</if>
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Facebook Friends" />
+					<then>
+						<execute action="CPContenttargetingAddusersegment#assertSelectedLabel" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_MORE_LESS_THAN_SELECT" value1="${moreLessThan}" />
+						<execute action="CPContenttargetingAddusersegment#assertTextEquals" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_FIELD" value1="${numberOfFriends}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Facebook Age" />
+					<then>
+						<execute action="CPContenttargetingAddusersegment#assertTextEquals" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_OLDER_THAN_FIELD" value1="${facebookOlderThanAge}" />
+						<execute action="CPContenttargetingAddusersegment#assertTextEquals" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_YOUNGER_OLDER_THAN_FIELD" value1="${facebookYoungerThanAge}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Site Member" />
+					<then>
+						<execute action="CPContenttargetingAddusersegment#assertSelectedLabel" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER_SELECT" value1="${selectSiteMemberSite}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Gender" />
+					<then>
+						<if>
+							<equals arg1="${facebookGenderRadio}" arg2="Male" />
+							<then>
+								<execute action="CPContenttargetingAddusersegment#assertChecked" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO" />
+							</then>
+							<elseif>
+								<equals arg1="${facebookGenderRadio}" arg2="Female" />
+								<then>
+									<execute action="CPContenttargetingAddusersegment#assertChecked" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_FEMALE_RADIO" />
+								</then>
+							</elseif>
+							<elseif>
+								<equals arg1="${facebookGenderRadio}" arg2="Custom" />
+								<then>
+									<execute action="CPContenttargetingAddusersegment#assertChecked" locator-key1="USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_CUSTOM_RADIO" />
+								</then>
+							</elseif>
+						</if>
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Site Role" />
+					<then>
+						<execute action="CPContenttargetingAddusersegment#assertSelectedLabel" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_SELECT" value1="${siteRole}" />
+						<execute action="CPContenttargetingAddusersegment#assertSelectedLabel" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_SELECT" value1="${siteRoleSite}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="UserGroup Member" />
+					<then>
+						<execute action="CPContenttargetingAddusersegment#assertSelectedLabel" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_SELECT" value1="${userGroupName}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="User Signed In" />
+					<then>
+						<execute action="CPContenttargetingAddusersegment#assertTextEquals" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_SIGNED_IN_MESSAGE" value1="This rule will be matched if the user is signed in." />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Organization Role" />
+					<then>
+						<execute action="CPContenttargetingAddusersegment#assertSelectedLabel" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ORGANIZATION_SELECT" value1="${organizationName}" />
+						<execute action="CPContenttargetingAddusersegment#assertSelectedLabel" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE_SELECT" value1="${organizationRole}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Organization Member" />
+					<then>
+						<execute action="CPContenttargetingAddusersegment#assertSelectedLabel" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_MEMBER_SELECT" value1="${organizationName}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Regular Role" />
+					<then>
+						<execute action="CPContenttargetingAddusersegment#assertSelectedLabel" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_REGULAR_ROLE_SELECT" value1="${regularRole}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Age" />
+					<then>
+						<execute action="CPContenttargetingAddusersegment#assertTextEquals" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_OLDER_THAN_FIELD" value1="${olderThanAge}" />
+						<execute action="CPContenttargetingAddusersegment#assertTextEquals" locator-key1="USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_YOUNGER_THAN_FIELD" value1="${youngerThanAge}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Location" />
+					<then>
+						<execute action="CPContenttargetingAddusersegment#assertSelectedLabel" locator-key1="USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_COUNTRY_SELECT" value1="${countryName}" />
+						<execute action="CPContenttargetingAddusersegment#assertSelectedLabel" locator-key1="USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_REGION_SELECT" value1="${regionName}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Browser" />
+					<then>
+						<execute action="CPContenttargetingAddusersegment#assertSelectedLabel" locator-key1="USER_SEGMENT_RULE_SESSION_ATTRIBUTES_BROWSER_SELECT" value1="${browserName}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Operating System" />
+					<then>
+						<execute action="CPContenttargetingAddusersegment#assertSelectedLabel" locator-key1="USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_SYSTEM_SELECT" value1="${operatingSystemName}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Time" />
+					<then>
+						<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_START_TIME_FIELD" value1="${startTime}" />
+						<execute action="CPContenttargetingAddusersegment#type" locator-key1="USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_END_TIME_FIELD" value1="${endTime}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Device" />
+					<then>
+						<execute action="CPContenttargetingAddusersegment#select" locator-key1="USER_SEGMENT_RULE_SESSION_ATTRIBUTES_DEVICE_SELECT" value1="${deviceFamilyName}" />
+					</then>
+				</elseif>
+			</if>
 		</for>
 	</command>
 </definition>

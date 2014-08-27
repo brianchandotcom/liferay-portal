@@ -15,24 +15,37 @@
 package com.liferay.portal.search.elasticsearch.facet;
 
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	service = {CompositeFacetProcessor.class, FacetProcessor.class}
+)
 public class CompositeFacetProcessor
 	implements FacetProcessor<SearchRequestBuilder> {
 
+	@Override
 	public void processFacet(
 		SearchRequestBuilder searchRequestBuilder, Facet facet) {
 
 		Class<?> clazz = facet.getClass();
 
-		FacetProcessor facetProcessor = _facetProcessors.get(clazz.getName());
+		FacetProcessor<SearchRequestBuilder> facetProcessor =
+			_facetProcessors.get(clazz.getName());
 
 		if (facetProcessor == null) {
 			facetProcessor = _defaultFacetProcessor;
@@ -41,18 +54,49 @@ public class CompositeFacetProcessor
 		facetProcessor.processFacet(searchRequestBuilder, facet);
 	}
 
-	public void setDefaultFacetProcessor(FacetProcessor defaultFacetProcessor) {
+	@Reference(
+		cardinality = ReferenceCardinality.MANDATORY,
+		target = "(class.name=DEFAULT)"
+	)
+	public void setDefaultFacetProcessor(
+		FacetProcessor<SearchRequestBuilder> defaultFacetProcessor) {
+
 		_defaultFacetProcessor = defaultFacetProcessor;
 	}
 
-	public void setFacetProcessors(
-		Map<String, FacetProcessor> facetProcessors) {
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(&(class.name=*)(!(class.name=DEFAULT)))"
+	)
+	public void setFacetProcessor(
+		FacetProcessor<SearchRequestBuilder> facetProcessor,
+		Map<String, Object> properties) {
 
-		_facetProcessors = facetProcessors;
+		String className = MapUtil.getString(properties, "class.name");
+
+		_facetProcessors.put(className, facetProcessor);
 	}
 
-	private static FacetProcessor _defaultFacetProcessor;
-	private static Map<String, FacetProcessor> _facetProcessors =
-		new HashMap<String, FacetProcessor>();
+	public void unsetDefaultFacetProcessor(
+		FacetProcessor<SearchRequestBuilder> defaultFacetProcessor) {
+
+		_defaultFacetProcessor = null;
+	}
+
+	public void unsetFacetProcessor(
+		FacetProcessor<SearchRequestBuilder> facetProcessor,
+		Map<String, Object> properties) {
+
+		String className = MapUtil.getString(properties, "class.name");
+
+		_facetProcessors.remove(className);
+	}
+
+	private static FacetProcessor<SearchRequestBuilder> _defaultFacetProcessor;
+	private static Map<String, FacetProcessor<SearchRequestBuilder>>
+		_facetProcessors =
+			new HashMap<String, FacetProcessor<SearchRequestBuilder>>();
 
 }

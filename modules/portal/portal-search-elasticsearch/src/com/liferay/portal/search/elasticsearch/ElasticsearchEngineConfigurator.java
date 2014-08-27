@@ -20,14 +20,26 @@ import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.search.AbstractSearchEngineConfigurator;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
+import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.search.SearchEngineConfigurator;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = SearchEngineConfigurator.class)
 public class ElasticsearchEngineConfigurator
 	extends AbstractSearchEngineConfigurator {
 
@@ -41,22 +53,31 @@ public class ElasticsearchEngineConfigurator
 		super.destroy();
 	}
 
+	@Reference
 	public void setElasticsearchConnectionManager(
 		ElasticsearchConnectionManager elasticsearchConnectionManager) {
 
 		_elasticsearchConnectionManager = elasticsearchConnectionManager;
 	}
 
+	@Reference
 	public void setIndexSearcher(IndexSearcher indexSearcher) {
 		_indexSearcher = indexSearcher;
 	}
 
+	@Reference
 	public void setIndexWriter(IndexWriter indexWriter) {
 		_indexWriter = indexWriter;
 	}
 
+	@Reference
 	public void setMessageBus(MessageBus messageBus) {
 		_messageBus = messageBus;
+	}
+
+	@Activate
+	protected void activate() {
+		setSearchEngines(_searchEngines);
 	}
 
 	@Override
@@ -120,9 +141,34 @@ public class ElasticsearchEngineConfigurator
 		return clazz.getClassLoader();
 	}
 
+	@Reference(target = "(search.engine.id=SYSTEM_ENGINE)")
+	protected void setSearchEngine(
+		SearchEngine searchEngine, Map<String, Object> properties) {
+
+		String searchEngineId = MapUtil.getString(
+			properties, "search.engine.id");
+
+		_searchEngines.put(searchEngineId, searchEngine);
+	}
+
+	protected void unsetSearchEngine(
+		SearchEngine searchEngine, Map<String, Object> properties) {
+
+		String searchEngineId = MapUtil.getString(
+			properties, "search.engine.id");
+
+		if (Validator.isNull(searchEngineId)) {
+			return;
+		}
+
+		_searchEngines.remove(searchEngineId);
+	}
+
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;
 	private MessageBus _messageBus;
+	private Map<String, SearchEngine> _searchEngines =
+		new ConcurrentHashMap<String, SearchEngine>();
 
 }

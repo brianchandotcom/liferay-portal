@@ -14,19 +14,26 @@
 
 package com.liferay.portal.search.elasticsearch.connection;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.ClusterAdminClient;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, service = ElasticsearchConnectionManager.class
+)
 public class ElasticsearchConnectionManager {
-
-	public void afterPropertiesSet() {
-		_elasticsearchConnection.initialize();
-	}
 
 	public AdminClient getAdminClient() {
 		Client client = getClient();
@@ -35,12 +42,12 @@ public class ElasticsearchConnectionManager {
 	}
 
 	public Client getClient() {
-		if (_elasticsearchConnection == null) {
+		if (_elasticsearchConnection.get() == null) {
 			throw new IllegalStateException(
 				"Elasticsearch connection not initialized");
 		}
 
-		return _elasticsearchConnection.getClient();
+		return _elasticsearchConnection.get().getClient();
 	}
 
 	public ClusterAdminClient getClusterAdminClient() {
@@ -50,19 +57,31 @@ public class ElasticsearchConnectionManager {
 	}
 
 	public ClusterHealthResponse getClusterHealthResponse() {
-		return _elasticsearchConnection.getClusterHealthResponse();
+		return _elasticsearchConnection.get().getClusterHealthResponse();
 	}
 
 	public ElasticsearchConnection getElasticsearchConnection() {
-		return _elasticsearchConnection;
+		return _elasticsearchConnection.get();
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MANDATORY,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	public void setElasticsearchConnection(
 		ElasticsearchConnection elasticsearchConnection) {
 
-		_elasticsearchConnection = elasticsearchConnection;
+		_elasticsearchConnection.set(elasticsearchConnection);
 	}
 
-	private ElasticsearchConnection _elasticsearchConnection;
+	public void unsetElasticsearchConnection(
+		ElasticsearchConnection elasticsearchConnection) {
+
+		_elasticsearchConnection.set(null);
+	}
+
+	private AtomicReference<ElasticsearchConnection> _elasticsearchConnection =
+		new AtomicReference<ElasticsearchConnection>();
 
 }

@@ -17,12 +17,17 @@ package com.liferay.portal.search.elasticsearch.connection;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.elasticsearch.index.IndexFactory;
+import com.liferay.registry.util.StringPlus;
 
 import java.net.InetAddress;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.elasticsearch.client.Client;
@@ -30,13 +35,54 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
+	property = {
+		"configFileName=/META-INF/elasticsearch-remote.yml",
+		"service.ranking:Integer=1000",
+		"testConfigFileName=/META-INF/elasticsearch-test.yml"
+	},
+	service = ElasticsearchConnection.class
+)
 public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
+
+	@Override
+	public void close() {
+		super.close();
+	}
+
+	@Override
+	@Reference
+	public void setIndexFactory(IndexFactory indexFactory) {
+		super.setIndexFactory(indexFactory);
+	}
 
 	public void setTransportAddresses(Set<String> transportAddresses) {
 		_transportAddresses = transportAddresses;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		setClusterName(
+			MapUtil.getString(properties, "clusterName", CLUSTER_NAME));
+		setConfigFileName(MapUtil.getString(properties, "configFileName"));
+		setTestConfigFileName(
+			MapUtil.getString(properties, "testConfigFileName"));
+
+		List<String> transportAddresses = StringPlus.asList(
+			properties.get("transportAddresses"));
+
+		setTransportAddresses(new HashSet<String>(transportAddresses));
+
+		initialize();
 	}
 
 	@Override

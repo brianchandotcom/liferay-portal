@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.view.model;
+package com.liferay.portal.kernel.servlet.taglib.ui;
 
 /**
  * @author Iván Zaera

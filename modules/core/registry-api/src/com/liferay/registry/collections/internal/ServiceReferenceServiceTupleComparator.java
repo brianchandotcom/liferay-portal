@@ -26,8 +26,8 @@ public class ServiceReferenceServiceTupleComparator<S>
 
 	@Override
 	public int compare(
-		ServiceReferenceServiceTuple sr1,
-		ServiceReferenceServiceTuple sr2) {
+		ServiceReferenceServiceTuple<S> sr1,
+		ServiceReferenceServiceTuple<S> sr2) {
 
 		if (sr1 == null) {
 			if (sr2 == null) {

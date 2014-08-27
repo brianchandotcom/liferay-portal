@@ -250,6 +250,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			boolean branchingPrivate, ServiceContext serviceContext)
 		throws PortalException {
 
+		// Failsafe in case the group is currently being remotely staged
+
 		if (liveGroup.isStagedRemotely()) {
 			disableStaging(liveGroup, serviceContext);
 		}
@@ -316,6 +318,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		StagingUtil.validateRemote(
 			stagingGroup.getGroupId(), remoteAddress, remotePort,
 			remotePathContext, secureConnection, remoteGroupId);
+
+		// Failsafe in case the group is being locally staged
 
 		if (stagingGroup.hasStagingGroup()) {
 			disableStaging(stagingGroup, serviceContext);

@@ -1,4 +1,4 @@
-<definition component-name="portal-wcm">
+<definition component-name="extra-apps-content-targeting">
 	<property name="testray.main.component.name" value="WCM" />
 
 	<set-up>
@@ -61,6 +61,16 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Content Visited" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentBehaviorPageVisitedCP" priority="5">
@@ -79,6 +89,17 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="friendlyURL" value="test-page-name" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Page Visited" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentBehaviorScorePointsCP" priority="5">
@@ -97,6 +118,17 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="scorePoints" value="100" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Score Pointes" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentBlankCP" priority="5">
@@ -130,6 +162,18 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="facebookOlderThanAge" value="18" />
+			<var name="facebookYoungerThanAge" value="50" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Facebook Age" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentSocialFacebookCityCP" priority="5">
@@ -148,6 +192,16 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Facebook City" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentSocialFacebookEducationCP" priority="5">
@@ -167,6 +221,18 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="facebookCollegeHighSchoolName" value="UC Irvine" />
+			<var name="facebookEducationLevel" value="College" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Facebook Education" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentSocialFacebookFriendsCP" priority="5">
@@ -186,6 +252,18 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="moreLessThan" value="less" />
+			<var name="numberOfFriends" value="50" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Facebook Friends" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentSocialFacebookGenderCP" priority="5">
@@ -204,6 +282,17 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="facebookGenderRadio" value="Male" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Facebook Gender" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentSocialFacebookPageLikeCP" priority="5">
@@ -222,6 +311,17 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="facebookURL" value="liferay" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Facebook Page Like" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentSystemAttributesBrowserCP" priority="5">
@@ -240,6 +340,17 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="browserName" value="Firefox" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Browser" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentSystemAttributesDeviceCP" priority="5">
@@ -268,6 +379,17 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="deviceFamilyName" value="Device Family Name" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Device" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentSystemAttributesLocationCP" priority="5">
@@ -287,6 +409,18 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="countryName" value="Spain" />
+			<var name="regionName" value="Madrid" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Location" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentSystemAttributesOperatingSystemCP" priority="5">
@@ -305,6 +439,17 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="operatingSystemName" value="Mac" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Operating System" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentSystemAttributesTimeCP" priority="5">
@@ -324,6 +469,18 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="endTime" value="11:30 PM" />
+			<var name="startTime" value="10:30 AM" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Time" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentUserAttributesAgeCP" priority="5">
@@ -343,6 +500,18 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="olderThanAge" value="21" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Age" />
+			<var name="youngerThanAge" value="99" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentUserAttributesGenderCP" priority="5">
@@ -361,6 +530,17 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="genderRadio" value="Female" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Gender" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentUserAttributesOrganizationMemberCP" priority="5">
@@ -379,6 +559,17 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="organizationName" value="Organization Name" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Organization Member" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentUserAttributesOrganizationRoleCP" priority="5">
@@ -407,6 +598,18 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="organizationName" value="Organization Name" />
+			<var name="organizationRole" value="Organization Owner" />
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Organization Role" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentUserAttributesRegularRoleCP" priority="5">
@@ -425,6 +628,16 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Regular Role" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentUserAttributesSiteMemberCP" priority="5">
@@ -443,6 +656,17 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="selectSiteMemberSite" value="Site Name" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Site Member" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentUserAttributesSiteRoleCP" priority="5">
@@ -462,6 +686,18 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="siteRole" value="Site Owner" />
+			<var name="siteRoleSite" value="Liferay" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Site Role" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentUserAttributesUserGroupMemberCP" priority="5">
@@ -488,6 +724,17 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="userGroupName" value="User Group Name" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="UserGroup Member" />
+		</execute>
 	</command>
 
 	<command name="AddUserSegmentUserAttributesUserSignedInCP" priority="5">
@@ -504,6 +751,16 @@
 		<execute macro="ContentTargetingUserSegment#addUserAttributesUserSignedInRuleCP" />
 
 		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="User Signed In" />
+		</execute>
 	</command>
 
 	<command name="DeleteUserSegmentCP" priority="5">

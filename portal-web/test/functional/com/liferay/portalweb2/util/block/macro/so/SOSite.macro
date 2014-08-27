@@ -141,37 +141,42 @@
 
 		<execute action="SOSiteHome#assertClick" locator-key1="NAVIGATION_PAGE" value1="${calendarPageLocalized}" />
 
+		<var method="StringUtil#upperCase(&quot;${calendarPortletLocalized}&quot;)" name="calendarPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${calendarPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${calendarPortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${calendarPortletLocalizedUpperCase}" />
 
 		<var name="key_pageName" value="${documentsPageLocalized}" />
 
 		<execute action="SOSiteHome#assertClick" locator-key1="NAVIGATION_PAGE" value1="${documentsPageLocalized}" />
 
+		<var method="StringUtil#upperCase(&quot;${documentsAndMediaPortletLocalized}&quot;)" name="documentsAndMediaPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${documentsAndMediaPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${documentsAndMediaPortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${documentsAndMediaPortletLocalizedUpperCase}" />
 
 		<var name="key_pageName" value="${forumsPageLocalized}" />
 
 		<execute action="SOSiteHome#assertClick" locator-key1="NAVIGATION_PAGE" value1="${forumsPageLocalized}" />
 
+		<var method="StringUtil#upperCase(&quot;${breadcrumbPortletLocalized}&quot;)" name="breadcrumbPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${breadcrumbPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${breadcrumbPortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${breadcrumbPortletLocalizedUpperCase}" />
 
+		<var method="StringUtil#upperCase(&quot;${messageBoardsPortletLocalized}&quot;)" name="messageBoardsPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${messageBoardsPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${messageBoardsPortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${messageBoardsPortletLocalizedUpperCase}" />
 
 		<var name="key_pageName" value="${blogsPageLocalized}" />
 
 		<execute action="SOSiteHome#assertClick" locator-key1="NAVIGATION_PAGE" value1="${blogsPageLocalized}" />
 
+		<var method="StringUtil#upperCase(&quot;${blogsPortletLocalized}&quot;)" name="blogsPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${blogsPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${blogsPortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${blogsPortletLocalizedUpperCase}" />
 
 		<var name="key_portletName" value="${recentBlogsPortletLocalized}" />
 
@@ -181,19 +186,22 @@
 
 		<execute action="SOSiteHome#assertClick" locator-key1="NAVIGATION_PAGE" value1="${wikiPageLocalized}" />
 
+		<var method="StringUtil#upperCase(&quot;${wikiPortletLocalized}&quot;)" name="wikiPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${wikiPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${wikiPortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${wikiPortletLocalizedUpperCase}" />
 
 		<var name="key_pageName" value="${membersPageLocalized}" />
 
 		<execute action="SOSiteHome#assertClick" locator-key1="NAVIGATION_PAGE" value1="${membersPageLocalized}" />
 
+		<var method="StringUtil#upperCase(&quot;${inviteMembersPortletLocalized}&quot;)" name="inviteMembersPortletLocalizedUpperCase" />
+		<var method="StringUtil#upperCase(&quot;${membersPortletLocalized}&quot;)" name="membersPortletLocalizedUpperCase" />
 		<var name="key_portletName" value="${inviteMembersPortletLocalized}" />
 
-		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${inviteMembersPortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator-key1="PORTLET_BORDERLESS" value1="${inviteMembersPortletLocalizedUpperCase}" />
 
-		<execute action="Home#assertTextEquals" locator1="//div[contains(@class,'portlet-borderless')]/span[@class='portlet-title-default' and .='${membersPortletLocalized}']" value1="${membersPortletLocalized?uppercase()}" />
+		<execute action="Home#assertTextEquals" locator1="//div[contains(@class,'portlet-borderless')]/span[@class='portlet-title-default' and .='${membersPortletLocalized}']" value1="${membersPortletLocalizedUpperCase}" />
 	</command>
 
 	<command name="viewSOSite">

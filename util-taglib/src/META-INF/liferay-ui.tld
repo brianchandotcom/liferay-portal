@@ -636,6 +636,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a calendar UI Component.</description>
 		<name>calendar</name>
 		<tag-class>com.liferay.taglib.ui.CalendarTag</tag-class>
 		<body-content>JSP</body-content>
@@ -643,36 +644,48 @@
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.Set&lt;Integer&gt;</type>
 		</attribute>
 		<attribute>
+			<description>Defines the day of the month.</description>
 			<name>day</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
+			<description>Sets the format of the header.</description>
 			<name>headerFormat</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>java.text.Format</type>
 		</attribute>
 		<attribute>
+			<description>Defines the pattern for the calendar header. Example value is MMM/dd/yyyy.</description>
 			<name>headerPattern</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Defines the month of the year.</description>
 			<name>month</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
+			<description>Whether to display up to six calendar weeks (including weeks of the next month), if the set day of the month is in the latter part of the set month.</description>
 			<name>showAllPotentialWeeks</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Defines the year.</description>
 			<name>year</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -1343,10 +1356,12 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>A icon UI component.</description>
 		<name>icon</name>
 		<tag-class>com.liferay.taglib.ui.IconTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Corresponds to the value of the alt attribute for the embedded img tag.</description>
 			<name>alt</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1355,28 +1370,35 @@
 			<name>ariaRole</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<description>Defines a role for assistive technologies to interpret for HTML elements that have been used for something other than their intended purpose. For example the p tag being used for something other than a paragraph.</description>
 		</attribute>
 		<attribute>
+			<description>Defines a CSS class for styling.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Used to store misc. data hidden from the browser.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>Map&lt;String, Object&gt;</type>
 		</attribute>
 		<attribute>
+			<description>Defines the icon using a Bootstrap icon CSS Class. Note this is overridden by the image attribute. icon names can be found at http://marcoceppi.github.io/bootstrap-glyphicons/</description>
 			<name>iconCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>identifier of the component.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The name of the theme image icon, which can be the prefix of any image filename in the Liferay theme's "common" image folder. Overrides the iconCssClass attribute.</description>
 			<name>image</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1387,16 +1409,20 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the message attribute is displayed as a label.</description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Defines the language for the icon. Used to assist search engines and web browsers.</description>
 			<name>lang</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Defines a CSS class style for the url attribute.</description>
 			<name>linkCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1407,21 +1433,25 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Text included with the icon.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Defines a HTTP request method.</description>
 			<name>method</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Defines a function that is called during the onclick event of the icon.</description>
 			<name>onClick</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Defines the location for the image used for the icon.</description>
 			<name>src</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1432,24 +1462,30 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Determines the target window the link opens in. Default value is 'self'. Possible values: blank, self, parent, top and framename.</description>
 			<name>target</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether a tooltip is used. Default value is true.</description>
 			<name>toolTip</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Defines the url the icon links to when clicked.</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the link attribute opens in a dialog window. Default value is false.</description>
 			<name>useDialog</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -1658,123 +1694,156 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>An input checkbox.</description>
 		<name>input-checkbox</name>
 		<tag-class>com.liferay.taglib.ui.InputCheckBoxTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>CSS class for styling.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the checkbox is checked by default.</description>
 			<name>defaultValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Whether the checkbox is disabled.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Name of the form the checkbox is included in.</description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Identifier component of the checkbox.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Action that is triggered during an onclick event.</description>
 			<name>onClick</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Parameter for the checkbox.</description>
 			<name>param</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
+		<description>A date input field.</description>
 		<name>input-date</name>
 		<tag-class>com.liferay.taglib.ui.InputDateTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Whether the date field gets focus by default. Default is false.</description>
 			<name>autoFocus</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>CSS class for styling.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the day Parameter.</description>
 			<name>dayParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the day value.</description>
 			<name>dayValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
+			<description>Whether the namespace for the component is disabled. Default is false.</description>
 			<name>disableNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Whether the field is disabled. Default is false.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Marks the first day of the week. Default is "Calendar.SUNDAY - 1."</description>
 			<name>firstDayOfWeek</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
+			<description>Sets the form name attribute of the component.</description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the month and year parameter.</description>
 			<name>monthAndYearParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the month parameter.</description>
 			<name>monthParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the value of the month numerically starting with 0.</description>
 			<name>monthValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
+			<description>Sets the name attribute of the component.</description>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the component's values can be set to null.</description>
 			<name>nullable</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the year parameter.</description>
 			<name>yearParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the year value.</description>
 			<name>yearValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -1888,21 +1957,27 @@
 		<tag-class>com.liferay.taglib.ui.InputFieldTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Whether the field gets focus by default.</description>
 			<name>autoFocus</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Whether the field is autosized.</description>
 			<name>autoSize</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Corresponds to the bean the field is associated with.</description>
 			<name>bean</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets CSS styling for the field.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1913,19 +1988,23 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			
 			<name>defaultLanguageId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Displays the value given as the default value of the input field.</description>
 			<name>defaultValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the field is disabled by default.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>field</name>
@@ -1938,6 +2017,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the form name attribute for the field.</description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1948,6 +2028,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Identifier of the component.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1956,6 +2037,7 @@
 			<name>ignoreRequestValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>languageId</name>
@@ -1968,6 +2050,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Displays the value given as the placeholder text for the field.</description>
 			<name>placeholder</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2200,215 +2283,275 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
+		<description>liferay-ui:input-search box.</description>
 		<name>input-search</name>
 		<tag-class>com.liferay.taglib.ui.InputSearchTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Whether the search field get's focus by default. Default is false.</description>
 			<name>autoFocus</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>A label for the button text. Default is Search.</description>
 			<name>buttonLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Identifier for the component. Default is &lt;code&gt;DisplayTerms.KEYWORDS&lt;code&gt;</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the name attribute of the component. Default is &lt;code&gt;DisplayTerms.KEYWORDS&lt;code&gt;</description>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the placeholder text for the search field. Default is the buttonLabel text.</description>
 			<name>placeholder</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to show the search button. Default is true.</description>
 			<name>showButton</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Sets the title attribute of the component.</description>
 			<name>title</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to use the namespace. Default is true.</description>
 			<name>useNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 	</tag>
 	<tag>
+		<description>A basic select input with yes or no options.</description>
 		<name>input-select</name>
 		<tag-class>com.liferay.taglib.ui.InputSelectTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Sets the CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the input has a selected value of yes by default.</description>
 			<name>defaultValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Whether the input is disabled.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Sets the form name attribute of the component.</description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Defines parameters for the component.</description>
 			<name>param</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
+		<description>A textarea input field.</description>
 		<name>input-textarea</name>
 		<tag-class>com.liferay.taglib.ui.InputTextAreaTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Sets the CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Displays the value given as the default value of the text area.</description>
 			<name>defaultValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the input is disabled. Default is false.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Defines parameters for the component.</description>
 			<name>param</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
+		<description>A time input field.</description>
 		<name>input-time</name>
 		<tag-class>com.liferay.taglib.ui.InputTimeTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Sets the ampm parameter for the component. Acceptable value is ampm.</description>
 			<name>amPmParam</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the time to am or pm. Acceptable values are 0 for AM and 1 for PM. Default value is 0/AM.</description>
 			<name>amPmValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
+			<description>Sets the CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the date parameter for the component. Acceptable value is date.</description>
 			<name>dateParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the default date for the time displayed.</description>
 			<name>dateValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.Date</type>
 		</attribute>
 		<attribute>
+			<description>Whether the input field is disabled.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Sets the hour parameter for the component. Acceptable value is hour.</description>
 			<name>hourParam</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the default hour for the time displayed. Default value is 12.</description>
 			<name>hourValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
+			<description>Sets the minute intervals displayed in the input. Default value is 30.</description>
 			<name>minuteInterval</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
+			<description>Sets the minute parameter for the component. Acceptable value is minute.</description>
 			<name>minuteParam</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the default minute for the time displayed. Default value is 00.</description>
 			<name>minuteValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
+			<description>Sets the name attribute for the component.</description>
 			<name>name</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
+		<description>A timezone drop-down menu component.</description>
 		<name>input-time-zone</name>
 		<tag-class>com.liferay.taglib.ui.InputTimeZoneTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Whether the field gets focus by default.</description>
 			<name>autoFocus</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Sets the CSS styling for the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether daylight savings is considered for the times.</description>
 			<name>daylight</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Whether the field is disabled.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Value corresponding to the timezone long name, e.g. "Pacific Standard Time."</description>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
+			<description>Sets the name attribute of the component.</description>
 			<name>name</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the times can be null.</description>
 			<name>nullable</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Sets the timezone value to the given Id.</description>
 			<name>value</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4078,6 +4221,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>A set of tabs.</description>
 		<name>tabs</name>
 		<tag-class>com.liferay.taglib.ui.TabsTag</tag-class>
 		<body-content>JSP</body-content>
@@ -4085,31 +4229,37 @@
 		values is a reserved property, so we have to use tabsValues intead
 		-->
 		<attribute>
+			<description>Sets a label for the back link.</description>	
 			<name>backLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets a link for back.</description>
 			<name>backURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the attribute for the form name.</description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the names of the tabs. Each name must be separated by a comma with no spaces.</description>
 			<name>names</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Calls the given function during an on click event.</description>
 			<name>onClick</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Parameter for the tabs component. Appended to the URL attribute.</description>
 			<name>param</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4120,21 +4270,26 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the page refreshes when a tab is clicked.</description>
 			<name>refresh</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
-		<attribute>
+		<attribute>	
+			<description>Sets the value attribute for the tabs. Values must follow the same pattern as the names.</description>
 			<name>tabsValues</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the type of tab. Possible values are 'tabs' and 'pills.'</description>
 			<name>type</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the URL that all the tabs link to. You can also set each tab's URL individually using url[number] attribute.</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

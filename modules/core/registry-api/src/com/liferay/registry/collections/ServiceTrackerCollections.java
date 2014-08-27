@@ -131,7 +131,7 @@ public class ServiceTrackerCollections {
 		return new ServiceTrackerMapImpl<String, S, List<S>>(
 			clazz,"(" + propertyKey + "=*)",
 			new PropertyServiceReferenceMapper<String>(propertyKey),
-			new ListServiceTrackerBucketFactory<S>());
+			new MultiValueServiceTrackerBucketFactory<S>());
 	}
 
 	public static <K, S> ServiceTrackerMap<K, List<S>> multiValueMap(
@@ -140,7 +140,7 @@ public class ServiceTrackerCollections {
 
 		return new ServiceTrackerMapImpl<K, S, List<S>>(
 			clazz, filterString, serviceReferenceMapper,
-			new ListServiceTrackerBucketFactory<S>());
+			new MultiValueServiceTrackerBucketFactory<S>());
 	}
 
 	public static <K, S> ServiceTrackerMap<K, List<S>> multiValueMap(
@@ -150,7 +150,7 @@ public class ServiceTrackerCollections {
 
 		return new ServiceTrackerMapImpl<K, S, List<S>>(
 			clazz, filterString, serviceReferenceMapper,
-				new ListServiceTrackerBucketFactory<S>(comparator));
+				new MultiValueServiceTrackerBucketFactory<S>(comparator));
 	}
 
 	public static <S> ServiceTrackerMap<String, S> singleValueMap(
@@ -159,7 +159,7 @@ public class ServiceTrackerCollections {
 		return new ServiceTrackerMapImpl<String, S, S>(
 			clazz, "(" + propertyKey + "=*)",
 			new PropertyServiceReferenceMapper<String>(propertyKey),
-			new ObjectServiceTrackerBucketFactory<S>());
+			new SingleValueServiceTrackerBucketFactory<S>());
 	}
 
 	public static <K, S> ServiceTrackerMap<K, S> singleValueMap(
@@ -168,7 +168,7 @@ public class ServiceTrackerCollections {
 
 		return new ServiceTrackerMapImpl<K, S, S>(
 			clazz, filterString, serviceReferenceMapper,
-			new ObjectServiceTrackerBucketFactory<S>());
+			new SingleValueServiceTrackerBucketFactory<S>());
 	}
 
 	public static <K, S> ServiceTrackerMap<K, S> singleValueMap(
@@ -178,7 +178,7 @@ public class ServiceTrackerCollections {
 
 		return new ServiceTrackerMapImpl<K, S, S>(
 			clazz, filterString, serviceReferenceMapper,
-			new ObjectServiceTrackerBucketFactory<S>(comparator));
+			new SingleValueServiceTrackerBucketFactory<S>(comparator));
 	}
 
 	public static class PropertyServiceReferenceComparator <T>

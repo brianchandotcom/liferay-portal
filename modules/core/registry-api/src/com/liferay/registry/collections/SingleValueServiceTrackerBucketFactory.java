@@ -23,14 +23,14 @@ import java.util.PriorityQueue;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ObjectServiceTrackerBucketFactory<S>
+public class SingleValueServiceTrackerBucketFactory<S>
 	implements ServiceTrackerBucketFactory<S, S> {
 
-	public ObjectServiceTrackerBucketFactory() {
+	public SingleValueServiceTrackerBucketFactory() {
 		_comparator = Collections.reverseOrder();
 	}
 
-	public ObjectServiceTrackerBucketFactory(
+	public SingleValueServiceTrackerBucketFactory(
 		Comparator<ServiceReference<S>> comparator) {
 
 		_comparator = comparator;

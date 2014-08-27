@@ -26,14 +26,14 @@ import java.util.TreeSet;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ListServiceTrackerBucketFactory<S>
+public class MultiValueServiceTrackerBucketFactory<S>
 	implements ServiceTrackerBucketFactory<S, List<S>> {
 
-	public ListServiceTrackerBucketFactory() {
+	public MultiValueServiceTrackerBucketFactory() {
 		_comparator = Collections.reverseOrder();
 	}
 
-	public ListServiceTrackerBucketFactory(
+	public MultiValueServiceTrackerBucketFactory(
 		Comparator<ServiceReference<S>> comparator) {
 
 		_comparator = comparator;

@@ -9,5 +9,4 @@
 		<value>0310205719</value>
 		<value>0310241448</value>
 	</preference>
-	<preferences-validator>com.liferay.portlet.amazonrankings.AmazonRankingsPreferencesValidator</preferences-validator>
 </portlet-preferences>

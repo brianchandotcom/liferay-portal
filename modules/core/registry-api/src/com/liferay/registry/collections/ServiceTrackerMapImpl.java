@@ -153,8 +153,7 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 			ServiceReferenceServiceTuple<S> result = tupleHolder.get();
 
 			if (result == null) {
-				//Won't track this since no key has been emitted
-				return null;
+				registry.ungetService(serviceReference);
 			}
 
 			return result;
@@ -195,6 +194,10 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 						}
 					}
 				});
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
 		}
 	}
 

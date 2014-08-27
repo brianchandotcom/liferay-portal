@@ -35,6 +35,7 @@ import javax.servlet.http.HttpSessionListener;
  * </p>
  *
  * @author Michael C. Han
+ * @deprecated As of 7.0.0, with no direct replacement
  */
 public class SharedSessionAttributeListener
 	implements HttpSessionAttributeListener, HttpSessionListener {

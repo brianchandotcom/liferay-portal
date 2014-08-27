@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.view.model.MenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;

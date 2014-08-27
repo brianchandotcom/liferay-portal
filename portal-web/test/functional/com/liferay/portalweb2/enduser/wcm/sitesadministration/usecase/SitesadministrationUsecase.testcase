@@ -492,7 +492,9 @@
 			<var name="portletName" value="Site Pages" />
 		</execute>
 
-		<execute macro="SitePage#changeColorSchemesCP" />
+		<execute macro="SitePage#changeColorSchemesCP">
+			<var name="colorScheme" value="Dark" />
+		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -620,8 +622,7 @@
 		<execute action="Home#selectWindow" locator1="title=Verify Email Address - Liferay" />
 		<execute action="Home#assertLocation" value1="${emailAddressVerificationURL}" />
 
-		<execute macro="Site#viewThemePG">
-		</execute>
+		<execute macro="Site#viewDefaultThemePG" />
 	</command>
 
 	<command name="SiteFriendlyURLLayoutImporter" priority="3">

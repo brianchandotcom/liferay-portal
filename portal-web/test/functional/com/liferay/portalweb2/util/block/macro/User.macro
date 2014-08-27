@@ -1634,10 +1634,10 @@
 		<if>
 			<equals arg1="${authenticationMethod}" arg2="By Screen Name" />
 			<then>
-					<execute action="PGLogin#assertElementPresent" locator-key1="SCREEN_NAME_FIELD" />
+				<execute action="PGLogin#assertElementPresent" locator-key1="SCREEN_NAME_FIELD" />
 			</then>
 			<else>
-					<execute action="PGLogin#assertElementPresent" locator-key1="EMAIL_ADDRESS_FIELD" />
+				<execute action="PGLogin#assertElementPresent" locator-key1="EMAIL_ADDRESS_FIELD" />
 			</else>
 		</if>
 

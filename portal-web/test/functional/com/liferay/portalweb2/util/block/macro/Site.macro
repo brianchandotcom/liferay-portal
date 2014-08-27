@@ -938,6 +938,11 @@
 		</if>
 	</command>
 
+	<command name="viewDefaultThemePG">
+		<execute action="Home#assertElementNotPresent" locator-key1="DARK_THEME" />
+		<execute action="Home#assertElementPresent" locator-key1="DEFAULT_THEME" />
+	</command>
+
 	<command name="viewGlobalLandingDefault">
 		<var name="key_portletName" value="${portletName}" />
 
@@ -1079,11 +1084,6 @@
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${sitePageName}" />
 		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${childSiteName}" />
 		<execute action="Home#assertLocation" value1="${sitePageURL}" />
-	</command>
-
-	<command name="viewThemePG">
-		<execute action="Home#assertElementNotPresent" locator-key1="DARK_THEME" />
-		<execute action="Home#assertElementPresent" locator-key1="LIGHT_THEME"/>
 	</command>
 
 	<command name="viewVirtualHostsURLPG">

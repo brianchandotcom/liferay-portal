@@ -169,8 +169,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LIGHT_THEME</td>
+	<td>DEFAULT_THEME</td>
 	<td>//body[contains(@class,'default')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIGHT_THEME</td>
+	<td>//body[contains(@class,'light')]</td>
 	<td></td>
 </tr>
 <tr>

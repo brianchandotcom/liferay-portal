@@ -146,8 +146,28 @@
 	</command>
 
 	<command name="changeColorSchemesCP">
-		<execute action="CPSitepages#assertVisible" locator-key1="LOOK_AND_FEEL_COLOR_SCHEMES_DARK_IMG" />
-		<execute action="CPSitepages#click" locator-key1="LOOK_AND_FEEL_COLOR_SCHEMES_DARK_RADIO_BUTTON" />
+		<if>
+			<equals arg1="${colorScheme}" arg2="Dark" />
+			<then>
+				<execute action="CPSitepages#assertVisible" locator-key1="LOOK_AND_FEEL_COLOR_SCHEMES_DARK_IMG" />
+				<execute action="CPSitepages#click" locator-key1="LOOK_AND_FEEL_COLOR_SCHEMES_DARK_RADIO_BUTTON" />
+			</then>
+			<elseif>
+				<equals arg1="${colorScheme}" arg2="Default" />
+				<then>
+					<execute action="CPSitepages#assertVisible" locator-key1="LOOK_AND_FEEL_COLOR_SCHEMES_DEFAULT_IMG" />
+					<execute action="CPSitepages#click" locator-key1="LOOK_AND_FEEL_COLOR_SCHEMES_DEFAULT_RADIO_BUTTON" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${colorScheme}" arg2="Light" />
+				<then>
+					<execute action="CPSitepages#assertVisible" locator-key1="LOOK_AND_FEEL_COLOR_SCHEMES_LIGHT_IMG" />
+					<execute action="CPSitepages#click" locator-key1="LOOK_AND_FEEL_COLOR_SCHEMES_LIGHT_RADIO_BUTTON" />
+				</then>
+			</elseif>
+		</if>
+
 		<execute action="CPSitepages#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>

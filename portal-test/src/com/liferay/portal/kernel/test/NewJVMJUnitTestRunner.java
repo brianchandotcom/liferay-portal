@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.test;
 
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessException;
@@ -296,8 +297,11 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 			processCallable = processProcessCallable(
 				processCallable, _testMethodKey);
 
-			Future<Serializable> future = _processExecutor.execute(
-				_processConfig, processCallable);
+			ProcessChannel<Serializable> processChannel =
+				_processExecutor.execute(_processConfig, processCallable);
+
+			Future<Serializable> future =
+				processChannel.getProcessNoticeableFuture();
 
 			try {
 				future.get();

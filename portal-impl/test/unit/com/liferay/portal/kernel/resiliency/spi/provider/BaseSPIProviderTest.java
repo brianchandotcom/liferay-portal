@@ -14,14 +14,17 @@
 
 package com.liferay.portal.kernel.resiliency.spi.provider;
 
+import com.liferay.portal.kernel.concurrent.AsyncBroker;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
+import com.liferay.portal.kernel.io.DummyOutputStream;
 import com.liferay.portal.kernel.nio.intraband.blocking.ExecutorIntraband;
 import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.process.ProcessExecutorUtil;
+import com.liferay.portal.kernel.process.local.LocalProcessChannel;
 import com.liferay.portal.kernel.resiliency.PortalResiliencyException;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.resiliency.spi.MockRemoteSPI;
@@ -42,6 +45,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.resiliency.spi.SPIRegistryImpl;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import java.util.logging.Level;
@@ -186,7 +191,7 @@ public class BaseSPIProviderTest {
 
 		@Override
 		@SuppressWarnings("unchecked")
-		public <T extends Serializable> NoticeableFuture<T> execute(
+		public <T extends Serializable> ProcessChannel<T> execute(
 				ProcessConfig processConfig, ProcessCallable<T> processCallable)
 			throws ProcessException {
 
@@ -228,7 +233,15 @@ public class BaseSPIProviderTest {
 
 			defaultNoticeableFuture.set((T)mockSPI);
 
-			return defaultNoticeableFuture;
+			try {
+				return new LocalProcessChannel<T>(
+					defaultNoticeableFuture,
+					new ObjectOutputStream(new DummyOutputStream()),
+					new AsyncBroker<Long, Serializable>());
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
+			}
 		}
 
 		public void setInterrupt(boolean interrupt) {

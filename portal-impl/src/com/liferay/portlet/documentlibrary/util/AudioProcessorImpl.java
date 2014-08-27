@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -365,8 +366,13 @@ public class AudioProcessorImpl
 						PropsUtil.getProperties(
 							PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO, false));
 
-				Future<String> future = ProcessExecutorUtil.execute(
-					ClassPathUtil.getPortalProcessConfig(), processCallable);
+				ProcessChannel<String> processChannel =
+					ProcessExecutorUtil.execute(
+						ClassPathUtil.getPortalProcessConfig(),
+						processCallable);
+
+				Future<String> future =
+					processChannel.getProcessNoticeableFuture();
 
 				String processIdentity = String.valueOf(
 					fileVersion.getFileVersionId());

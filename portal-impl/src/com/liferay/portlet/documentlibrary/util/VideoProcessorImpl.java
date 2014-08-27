@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -338,9 +339,13 @@ public class VideoProcessorImpl
 							PropsValues.
 								DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE);
 
-					Future<String> future = ProcessExecutorUtil.execute(
-						ClassPathUtil.getPortalProcessConfig(),
-						processCallable);
+					ProcessChannel<String> processChannel =
+						ProcessExecutorUtil.execute(
+							ClassPathUtil.getPortalProcessConfig(),
+							processCallable);
+
+					Future<String> future =
+						processChannel.getProcessNoticeableFuture();
 
 					String processIdentity = String.valueOf(
 						fileVersion.getFileVersionId());
@@ -512,8 +517,10 @@ public class VideoProcessorImpl
 						PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO, false),
 					PropsUtil.getProperties(PropsKeys.XUGGLER_FFPRESET, true));
 
-			Future<String> future = ProcessExecutorUtil.execute(
+			ProcessChannel<String> processChannel = ProcessExecutorUtil.execute(
 				ClassPathUtil.getPortalProcessConfig(), processCallable);
+
+			Future<String> future = processChannel.getProcessNoticeableFuture();
 
 			String processIdentity = Long.toString(
 				fileVersion.getFileVersionId());

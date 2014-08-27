@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.process.local;
 
 import com.liferay.portal.kernel.concurrent.AbortPolicy;
-import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
+import com.liferay.portal.kernel.concurrent.AsyncBroker;
 import com.liferay.portal.kernel.concurrent.FutureListener;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFutureConverter;
@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.process.ProcessExecutor;
@@ -45,10 +46,12 @@ import java.io.Serializable;
 import java.io.StreamCorruptedException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -74,12 +77,15 @@ public class LocalProcessExecutor implements ProcessExecutor {
 				// destroy the same process, but this is JDK's job to ensure
 				// that processes are destroyed in a thread safe manner.
 
-				Iterator<Process> iterator = _managedProcesses.iterator();
+				Collection<NoticeableFuture<?>> values =
+					_managedProcesses.values();
+
+				Iterator<NoticeableFuture<?>> iterator = values.iterator();
 
 				while (iterator.hasNext()) {
-					Process process = iterator.next();
+					NoticeableFuture<?> noticeableFuture = iterator.next();
 
-					process.destroy();
+					noticeableFuture.cancel(true);
 
 					iterator.remove();
 				}
@@ -97,7 +103,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 	}
 
 	@Override
-	public <T extends Serializable> NoticeableFuture<T> execute(
+	public <T extends Serializable> ProcessChannel<T> execute(
 			ProcessConfig processConfig, ProcessCallable<T> processCallable)
 		throws ProcessException {
 
@@ -126,17 +132,17 @@ public class LocalProcessExecutor implements ProcessExecutor {
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
 				bootstrapObjectOutputStream);
 
-			try {
-				objectOutputStream.writeObject(processCallable);
-			}
-			finally {
-				objectOutputStream.close();
-			}
+			objectOutputStream.writeObject(processCallable);
+
+			objectOutputStream.flush();
 
 			ThreadPoolExecutor threadPoolExecutor = _getThreadPoolExecutor();
 
+			AsyncBroker<Long, Serializable> asyncBroker =
+				new AsyncBroker<Long, Serializable>();
+
 			SubprocessReactor subprocessReactor = new SubprocessReactor(
-				process, processConfig.getReactClassLoader());
+				process, processConfig.getReactClassLoader(), asyncBroker);
 
 			try {
 				NoticeableFuture<ProcessCallable<? extends Serializable>>
@@ -162,31 +168,37 @@ public class LocalProcessExecutor implements ProcessExecutor {
 				// Consider the newly created process as a managed process only
 				// after the subprocess reactor is taken by the thread pool
 
-				_managedProcesses.add(process);
+				_managedProcesses.put(process, processCallableNoticeableFuture);
 
-				return new NoticeableFutureConverter
-					<T, ProcessCallable<? extends Serializable>>(
-						processCallableNoticeableFuture) {
+				NoticeableFuture<T> noticeableFuture =
+					new NoticeableFutureConverter
+						<T, ProcessCallable<? extends Serializable>>(
+							processCallableNoticeableFuture) {
 
-						@Override
-						protected T convert(
-								ProcessCallable<? extends Serializable>
-									processCallable)
-							throws ProcessException {
+							@Override
+							protected T convert(
+									ProcessCallable<? extends Serializable>
+										processCallable)
+								throws ProcessException {
 
-							if (processCallable instanceof
-									ReturnProcessCallable<?>) {
+								if (processCallable instanceof
+										ReturnProcessCallable<?>) {
 
-								return (T)processCallable.call();
+									return (T)processCallable.call();
+								}
+
+								ExceptionProcessCallable
+									exceptionProcessCallable =
+										(ExceptionProcessCallable)
+											processCallable;
+
+								throw exceptionProcessCallable.call();
 							}
 
-							ExceptionProcessCallable exceptionProcessCallable =
-								(ExceptionProcessCallable)processCallable;
+						};
 
-							throw exceptionProcessCallable.call();
-						}
-
-					};
+				return new LocalProcessChannel<T>(
+					noticeableFuture, objectOutputStream, asyncBroker);
 			}
 			catch (RejectedExecutionException ree) {
 				process.destroy();
@@ -223,22 +235,27 @@ public class LocalProcessExecutor implements ProcessExecutor {
 
 	private static Log _log = LogFactoryUtil.getLog(LocalProcessExecutor.class);
 
-	private Set<Process> _managedProcesses = new ConcurrentHashSet<Process>();
+	private final Map<Process, NoticeableFuture<?>> _managedProcesses =
+		new ConcurrentHashMap<Process, NoticeableFuture<?>>();
 	private volatile ThreadPoolExecutor _threadPoolExecutor;
 
 	private class SubprocessReactor
 		implements Callable<ProcessCallable<? extends Serializable>> {
 
 		public SubprocessReactor(
-			Process process, ClassLoader reactClassLoader) {
+			Process process, ClassLoader reactClassLoader,
+			AsyncBroker<Long, Serializable> asyncBroker) {
 
 			_process = process;
 			_reactClassLoader = reactClassLoader;
+			_asyncBroker = asyncBroker;
 		}
 
 		@Override
 		public ProcessCallable<? extends Serializable> call() throws Exception {
 			ProcessCallable<?> resultProcessCallable = null;
+
+			AsyncBrokerThreadLocal.setAsyncBroker(_asyncBroker);
 
 			UnsyncBufferedInputStream unsyncBufferedInputStream =
 				new UnsyncBufferedInputStream(_process.getInputStream());
@@ -352,9 +369,12 @@ public class LocalProcessExecutor implements ProcessExecutor {
 
 					return resultProcessCallable;
 				}
+
+				AsyncBrokerThreadLocal.removeAsyncBroker();
 			}
 		}
 
+		private final AsyncBroker<Long, Serializable> _asyncBroker;
 		private final Process _process;
 		private final ClassLoader _reactClassLoader;
 

@@ -18,6 +18,7 @@ import com.liferay.counter.model.Counter;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessConfig.Builder;
 import com.liferay.portal.kernel.process.ProcessException;
@@ -88,8 +89,11 @@ public class CounterLocalServiceTest {
 				new IncrementProcessCallable(
 					"Increment Process-" + i, _COUNTER_NAME, _INCREMENT_COUNT);
 
-			Future<Long[]> futures = ProcessExecutorUtil.execute(
+			ProcessChannel<Long[]> processChannel = ProcessExecutorUtil.execute(
 				processConfig, processCallable);
+
+			Future<Long[]> futures =
+				processChannel.getProcessNoticeableFuture();
 
 			futuresList.add(futures);
 		}

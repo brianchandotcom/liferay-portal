@@ -661,35 +661,33 @@ public class ShoppingItemLocalServiceImpl
 			throw new ItemNameException();
 		}
 
-		List<String> itemFieldNames = new ArrayList<String>();
-		List<String> duplicateItemFieldNames = new ArrayList<String>();
+		if (!itemFields.isEmpty()) {
+			List<String> itemFieldNames = new ArrayList<String>();
+			List<String> duplicateItemFieldNames = new ArrayList<String>();
 
-		for (ShoppingItemField itemField : itemFields) {
-			if (itemFieldNames.contains(itemField.getName())) {
-				if (!duplicateItemFieldNames.contains(itemField.getName())) {
-					duplicateItemFieldNames.add(itemField.getName());
+			StringBundler sb = new StringBundler(itemFields.size());
+
+			for (ShoppingItemField itemField : itemFields) {
+				if (itemFieldNames.contains(itemField.getName())) {
+					if (!duplicateItemFieldNames.contains(
+							itemField.getName())) {
+
+						duplicateItemFieldNames.add(itemField.getName());
+
+						sb.append(itemField.getName());
+						sb.append(StringPool.COMMA_AND_SPACE);
+					}
 				}
-			}
-			else {
-				itemFieldNames.add(itemField.getName());
-			}
-		}
-
-		if (!duplicateItemFieldNames.isEmpty()) {
-			int duplicateItemFieldNamesSize = duplicateItemFieldNames.size();
-
-			StringBundler sb = new StringBundler(
-				2 * duplicateItemFieldNamesSize - 1);
-
-			for (int i = 0; i < duplicateItemFieldNamesSize; i++) {
-				sb.append(duplicateItemFieldNames.get(i));
-
-				if ((i + 1) < duplicateItemFieldNamesSize) {
-					sb.append(StringPool.COMMA_AND_SPACE);
+				else {
+					itemFieldNames.add(itemField.getName());
 				}
 			}
 
-			throw new DuplicateItemFieldNameException(sb.toString());
+			if (!duplicateItemFieldNames.isEmpty()) {
+				sb.setIndex(sb.index() - 1);
+
+				throw new DuplicateItemFieldNameException(sb.toString());
+			}
 		}
 
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(

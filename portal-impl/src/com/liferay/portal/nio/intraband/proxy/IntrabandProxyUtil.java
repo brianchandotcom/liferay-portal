@@ -108,8 +108,10 @@ public class IntrabandProxyUtil {
 
 			validate(classLoader, clazz, false);
 
-			return generateStubClass(classLoader, clazz, skeletonId);
+			stubClass = generateStubClass(classLoader, clazz, skeletonId);
 		}
+
+		return stubClass;
 	}
 
 	public static <T> T newStubInstance(
@@ -599,8 +601,10 @@ public class IntrabandProxyUtil {
 
 			validate(classLoader, clazz, true);
 
-			return generateSkeletonClass(classLoader, clazz);
+			skeletonClass = generateSkeletonClass(classLoader, clazz);
 		}
+
+		return skeletonClass;
 	}
 
 	protected static Class<?> loadClass(

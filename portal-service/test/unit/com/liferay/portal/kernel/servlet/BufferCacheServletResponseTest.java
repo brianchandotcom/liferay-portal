@@ -173,7 +173,7 @@ public class BufferCacheServletResponseTest {
 	}
 
 	@Test
-	public void testGetByteBuffer() throws Exception {
+	public void testGetByteBuffer() throws IOException {
 		StubHttpServletResponse stubHttpServletResponse =
 			new StubHttpServletResponse() {
 

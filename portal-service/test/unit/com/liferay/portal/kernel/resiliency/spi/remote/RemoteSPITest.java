@@ -918,7 +918,7 @@ public class RemoteSPITest {
 			new Callable<Object>() {
 
 				@Override
-				public Object call() throws Exception {
+				public Object call() {
 					AbstractQueuedSynchronizer abstractQueuedSynchronizer =
 						(AbstractQueuedSynchronizer)
 							ReflectionTestUtil.getFieldValue(

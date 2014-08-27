@@ -837,7 +837,7 @@ public class IntrabandProxyUtilTest {
 	}
 
 	@Test
-	public void testTemplateStub() throws Exception {
+	public void testTemplateStub() throws SecurityException {
 		try {
 			new TemplateStub(null, null, null);
 

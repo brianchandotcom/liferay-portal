@@ -2104,7 +2104,7 @@ public class LocalProcessExecutorTest {
 
 	private static class NPEOOSShutdownHook implements ShutdownHook {
 
-		public NPEOOSShutdownHook() throws Exception {
+		public NPEOOSShutdownHook() {
 			ProcessOutputStream processOutputStream =
 				ProcessContext.getProcessOutputStream();
 

@@ -1169,9 +1169,7 @@ public class HttpClientSPIAgentTest {
 		socketChannel.close();
 	}
 
-	protected SocketImpl swapSocketImpl(Socket socket, SocketImpl socketImpl)
-		throws Exception {
-
+	protected SocketImpl swapSocketImpl(Socket socket, SocketImpl socketImpl) {
 		SocketImpl oldSocketImpl = (SocketImpl)ReflectionTestUtil.getFieldValue(
 			socket, "impl");
 

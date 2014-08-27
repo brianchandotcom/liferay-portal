@@ -38,7 +38,7 @@ public class IntrabandBridgeMessageListenerTest {
 		new CodeCoverageAssertor();
 
 	@Test
-	public void testConstructor() throws Exception {
+	public void testConstructor() {
 		IntrabandBridgeMessageListener intrabandBridgeMessageListener =
 			new IntrabandBridgeMessageListener(_mockRegistrationReference);
 

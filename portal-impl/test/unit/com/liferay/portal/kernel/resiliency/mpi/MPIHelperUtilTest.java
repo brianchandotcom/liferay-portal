@@ -728,7 +728,7 @@ public class MPIHelperUtilTest {
 
 	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
 	@Test
-	public void testSPIRegistration() throws Exception {
+	public void testSPIRegistration() throws SecurityException {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			MPIHelperUtil.class.getName(), Level.WARNING);
 

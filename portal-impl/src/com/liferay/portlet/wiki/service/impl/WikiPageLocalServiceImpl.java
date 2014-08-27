@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.wiki.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -2393,7 +2394,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Version pages
 
 		List<WikiPage> versionPages = wikiPagePersistence.findByN_T(
-			nodeId, title);
+			nodeId, title, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new PageVersionComparator());
 
 		WikiPage page = fetchLatestPage(
 			newNodeId, title, WorkflowConstants.STATUS_ANY, false);
@@ -2448,7 +2450,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Version pages
 
 		List<WikiPage> versionPages = wikiPagePersistence.findByN_T(
-			nodeId, title);
+			nodeId, title, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new PageVersionComparator());
 
 		WikiPage page = fetchLatestPage(
 			nodeId, newTitle, WorkflowConstants.STATUS_ANY, false);

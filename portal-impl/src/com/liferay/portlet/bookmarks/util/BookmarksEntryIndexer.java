@@ -143,7 +143,8 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 		Document document = getDocument(entry);
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), entry.getCompanyId(), document);
+			getSearchEngineId(), entry.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	@Override

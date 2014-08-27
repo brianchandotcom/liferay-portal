@@ -167,7 +167,8 @@ public class ContactIndexer extends BaseIndexer {
 
 		if (document != null) {
 			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), contact.getCompanyId(), document);
+				getSearchEngineId(), contact.getCompanyId(), document,
+				isCommitImmediately());
 		}
 	}
 

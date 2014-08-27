@@ -329,7 +329,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 		SearchEngineUtil.deleteDocument(
 			getSearchEngineId(), dlFileEntry.getCompanyId(),
-			document.get(Field.UID));
+			document.get(Field.UID), isCommitImmediately());
 	}
 
 	@Override
@@ -502,7 +502,8 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 		if (document != null) {
 			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), dlFileEntry.getCompanyId(), document);
+				getSearchEngineId(), dlFileEntry.getCompanyId(), document,
+				isCommitImmediately());
 		}
 	}
 

@@ -167,7 +167,8 @@ public class SCIndexer extends BaseIndexer {
 		Document document = getDocument(productEntry);
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), productEntry.getCompanyId(), document);
+			getSearchEngineId(), productEntry.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	@Override

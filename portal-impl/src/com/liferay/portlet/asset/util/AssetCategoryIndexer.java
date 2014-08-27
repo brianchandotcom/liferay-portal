@@ -56,6 +56,7 @@ public class AssetCategoryIndexer extends BaseIndexer {
 	public static final String PORTLET_ID = PortletKeys.ASSET_CATEGORIES_ADMIN;
 
 	public AssetCategoryIndexer() {
+		setCommitImmediately(true);
 		setDefaultSelectedFieldNames(
 			Field.ASSET_CATEGORY_ID, Field.COMPANY_ID, Field.GROUP_ID,
 			Field.UID);
@@ -156,7 +157,7 @@ public class AssetCategoryIndexer extends BaseIndexer {
 
 		SearchEngineUtil.deleteDocument(
 			getSearchEngineId(), assetCategory.getCompanyId(),
-			document.get(Field.UID));
+			document.get(Field.UID), isCommitImmediately());
 	}
 
 	@Override
@@ -210,7 +211,8 @@ public class AssetCategoryIndexer extends BaseIndexer {
 
 		if (document != null) {
 			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), category.getCompanyId(), document);
+				getSearchEngineId(), category.getCompanyId(), document,
+				isCommitImmediately());
 		}
 	}
 

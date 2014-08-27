@@ -107,7 +107,7 @@ public class DLFolderIndexer extends BaseIndexer {
 
 		SearchEngineUtil.deleteDocument(
 			getSearchEngineId(), dlFolder.getCompanyId(),
-			document.get(Field.UID));
+			document.get(Field.UID), isCommitImmediately());
 	}
 
 	@Override
@@ -178,7 +178,8 @@ public class DLFolderIndexer extends BaseIndexer {
 
 		if (document != null) {
 			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), dlFolder.getCompanyId(), document);
+				getSearchEngineId(), dlFolder.getCompanyId(), document,
+				isCommitImmediately());
 		}
 	}
 

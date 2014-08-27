@@ -150,6 +150,11 @@ public abstract class BaseActionableDynamicQuery
 	}
 
 	@Override
+	public void setCommitImmediately(boolean commitImmediately) {
+		_commitImmediately = commitImmediately;
+	}
+
+	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
@@ -352,7 +357,8 @@ public abstract class BaseActionableDynamicQuery
 		}
 
 		SearchEngineUtil.updateDocuments(
-			_searchEngineId, _companyId, new ArrayList<Document>(_documents));
+			_searchEngineId, _companyId, new ArrayList<Document>(_documents),
+			_commitImmediately);
 
 		_documents.clear();
 	}
@@ -372,6 +378,7 @@ public abstract class BaseActionableDynamicQuery
 	private BaseLocalService _baseLocalService;
 	private ClassLoader _classLoader;
 	private Class<?> _clazz;
+	private boolean _commitImmediately;
 	private long _companyId;
 	private Collection<Document> _documents;
 	private Method _dynamicQueryCountMethod;

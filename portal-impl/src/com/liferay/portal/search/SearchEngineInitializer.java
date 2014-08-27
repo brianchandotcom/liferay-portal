@@ -126,7 +126,8 @@ public class SearchEngineInitializer implements Runnable {
 
 					if (searchEngineIds.add(searchEngineId)) {
 						SearchEngineUtil.deletePortletDocuments(
-							searchEngineId, _companyId, portlet.getPortletId());
+							searchEngineId, _companyId, portlet.getPortletId(),
+							true);
 					}
 
 					reindex(indexer);

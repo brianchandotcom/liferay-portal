@@ -104,7 +104,8 @@ public class CalIndexer extends BaseIndexer {
 		Document document = getDocument(event);
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), event.getCompanyId(), document);
+			getSearchEngineId(), event.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	@Override

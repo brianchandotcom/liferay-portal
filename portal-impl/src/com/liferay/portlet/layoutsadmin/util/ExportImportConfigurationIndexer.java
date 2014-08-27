@@ -133,7 +133,7 @@ public class ExportImportConfigurationIndexer extends BaseIndexer {
 
 		SearchEngineUtil.updateDocument(
 			getSearchEngineId(), exportImportConfiguration.getCompanyId(),
-			document);
+			document, isCommitImmediately());
 	}
 
 	@Override

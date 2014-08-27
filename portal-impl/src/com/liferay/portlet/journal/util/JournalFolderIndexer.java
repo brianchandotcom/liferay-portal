@@ -102,8 +102,8 @@ public class JournalFolderIndexer extends BaseIndexer {
 		document.addUID(PORTLET_ID, folder.getFolderId());
 
 		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), folder.getCompanyId(),
-			document.get(Field.UID));
+			getSearchEngineId(), folder.getCompanyId(), document.get(Field.UID),
+			isCommitImmediately());
 	}
 
 	@Override
@@ -166,7 +166,8 @@ public class JournalFolderIndexer extends BaseIndexer {
 		Document document = getDocument(folder);
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), folder.getCompanyId(), document);
+			getSearchEngineId(), folder.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	@Override

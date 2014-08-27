@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
+class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 
 	public ServiceTrackerMapImpl(
 		Class<S> clazz, String filterString,

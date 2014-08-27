@@ -39,7 +39,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * @author Raymond Augé
  */
-public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
+class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 
 	@Override
 	public void add(int index, S service) {

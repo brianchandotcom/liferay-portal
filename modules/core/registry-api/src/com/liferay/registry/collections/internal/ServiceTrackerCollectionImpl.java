@@ -43,6 +43,33 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 
+	public ServiceTrackerCollectionImpl(
+		Class<S> clazz, Filter filter,
+		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer,
+		Map<String, Object> properties) {
+
+		_clazz = clazz;
+		_filter = filter;
+		_properties = Collections.unmodifiableMap(properties);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		if (filter != null) {
+			filter = _getFilter(filter, _clazz);
+
+			_serviceTracker = registry.trackServices(
+				filter,
+				new DefaultServiceTrackerCustomizer(serviceTrackerCustomizer));
+		}
+		else {
+			_serviceTracker = registry.trackServices(
+				clazz,
+				new DefaultServiceTrackerCustomizer(serviceTrackerCustomizer));
+		}
+
+		_serviceTracker.open();
+	}
+
 	@Override
 	public void add(int index, S service) {
 		throw new UnsupportedOperationException();
@@ -263,33 +290,6 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 		}
 
 		return services;
-	}
-
-	public ServiceTrackerCollectionImpl(
-		Class<S> clazz, Filter filter,
-		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer,
-		Map<String, Object> properties) {
-
-		_clazz = clazz;
-		_filter = filter;
-		_properties = Collections.unmodifiableMap(properties);
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		if (filter != null) {
-			filter = _getFilter(filter, _clazz);
-
-			_serviceTracker = registry.trackServices(
-				filter,
-				new DefaultServiceTrackerCustomizer(serviceTrackerCustomizer));
-		}
-		else {
-			_serviceTracker = registry.trackServices(
-				clazz,
-				new DefaultServiceTrackerCustomizer(serviceTrackerCustomizer));
-		}
-
-		_serviceTracker.open();
 	}
 
 	private Filter _getFilter(Filter filter, Class<S> clazz) {

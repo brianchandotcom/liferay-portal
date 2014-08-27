@@ -1312,6 +1312,8 @@ public class PropsValues {
 
 	public static final String NTLM_SERVICE_PASSWORD = PropsUtil.get(PropsKeys.NTLM_SERVICE_PASSWORD);
 
+	public static final String[] OBFUSCATED_PROPERTY_VALUES = PropsUtil.getArray(PropsKeys.OBFUSCATED_PROPERTY_VALUES);
+
 	public static final long[] OMNIADMIN_USERS = StringUtil.split(PropsUtil.get(PropsKeys.OMNIADMIN_USERS), 0L);
 
 	public static final boolean OPEN_ID_AUTH_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.OPEN_ID_AUTH_ENABLED));

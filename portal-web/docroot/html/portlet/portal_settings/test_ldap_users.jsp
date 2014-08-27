@@ -163,7 +163,7 @@ portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		<liferay-ui:search-container-column-text
 			name="password"
-			value='<%= Validator.isNotNull(password) ? "********" : "" %>'
+			value="<%= Validator.isNotNull(password) ? StringPool.EIGHT_STARS : StringPool.BLANK %>"
 		/>
 
 		<liferay-ui:search-container-column-text

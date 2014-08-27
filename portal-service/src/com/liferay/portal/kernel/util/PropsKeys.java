@@ -1877,6 +1877,8 @@ public interface PropsKeys {
 
 	public static final String NTLM_SERVICE_PASSWORD = "ntlm.auth.service.password";
 
+	public static final String OBFUSCATED_PROPERTY_VALUES = "obfuscated.property.values";
+
 	public static final String OMNIADMIN_USERS = "omniadmin.users";
 
 	public static final String OPEN_ID_AUTH_ENABLED = "open.id.auth.enabled";

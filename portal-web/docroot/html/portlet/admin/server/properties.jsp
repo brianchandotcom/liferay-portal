@@ -51,7 +51,14 @@ else {
 
 for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 	String property = (String)entry.getKey();
-	String value = (String)entry.getValue();
+	String value = StringPool.BLANK;
+
+	if (ArrayUtil.contains(PropsValues.OBFUSCATED_PROPERTY_VALUES, property)) {
+		value = StringPool.EIGHT_STARS;
+	}
+	else {
+		value = (String)entry.getValue();
+	}
 
 	if (Validator.isNull(keywords) || property.contains(keywords) || value.contains(keywords)) {
 		filteredProperties.put(property, value);

@@ -54,7 +54,7 @@ for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 	String value = StringPool.BLANK;
 
 	if (ArrayUtil.contains(PropsValues.OBFUSCATED_PROPERTY_VALUES, property)) {
-		value = "********";
+		value = StringPool.EIGHT_STARS;
 	}
 	else {
 		value = (String)entry.getValue();

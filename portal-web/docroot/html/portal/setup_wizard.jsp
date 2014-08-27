@@ -155,7 +155,7 @@
 															<liferay-ui:message key="password" />
 														</dt>
 														<dd>
-															********
+															<%= StringPool.EIGHT_STARS %>
 														</dd>
 													</c:otherwise>
 												</c:choose>

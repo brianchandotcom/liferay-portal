@@ -72,6 +72,10 @@ public class DocumentImpl implements Document {
 	}
 
 	public static String getSortFieldName(Sort sort, String scoreFieldName) {
+		if (sort.getType() == Sort.SCORE_TYPE) {
+			return scoreFieldName;
+		}
+
 		String fieldName = sort.getFieldName();
 
 		if (fieldName.endsWith(_SORTABLE_FIELD_SUFFIX)) {

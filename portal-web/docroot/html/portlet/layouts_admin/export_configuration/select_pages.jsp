@@ -55,10 +55,10 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 
 			<liferay-ui:layouts-tree
 				defaultStateChecked="<%= true %>"
-				groupId="<%= layoutsAdminDisplayContext.getGroupId() %>"
+				groupId="<%= groupId %>"
 				incomplete="<%= false %>"
 				portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
-				privateLayout="<%= layoutsAdminDisplayContext.isPrivateLayout() %>"
+				privateLayout="<%= privateLayout %>"
 				rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
 				selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
 				selectableTree="<%= true %>"

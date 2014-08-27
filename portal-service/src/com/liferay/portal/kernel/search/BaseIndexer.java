@@ -112,7 +112,7 @@ public abstract class BaseIndexer implements Indexer {
 	public void delete(long companyId, String uid) throws SearchException {
 		try {
 			SearchEngineUtil.deleteDocument(
-				getSearchEngineId(), companyId, uid);
+				getSearchEngineId(), companyId, uid, _commitImmediately);
 		}
 		catch (SearchException se) {
 			throw se;
@@ -360,6 +360,10 @@ public abstract class BaseIndexer implements Indexer {
 		return true;
 	}
 
+	public boolean isCommitImmediately() {
+		return _commitImmediately;
+	}
+
 	@Override
 	public boolean isFilterSearch() {
 		return _filterSearch;
@@ -565,6 +569,10 @@ public abstract class BaseIndexer implements Indexer {
 		queryConfig.setSelectedFieldNames(selectedFieldNames);
 
 		return search(searchContext);
+	}
+
+	public void setCommitImmediately(boolean commitImmediately) {
+		_commitImmediately = commitImmediately;
 	}
 
 	public void setSelectAllLocales(boolean selectAllLocales) {
@@ -1423,7 +1431,8 @@ public abstract class BaseIndexer implements Indexer {
 		document.addUID(getPortletId(), field1);
 
 		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), companyId, document.get(Field.UID));
+			getSearchEngineId(), companyId, document.get(Field.UID),
+			_commitImmediately);
 	}
 
 	protected void deleteDocument(long companyId, String field1, String field2)
@@ -1434,7 +1443,8 @@ public abstract class BaseIndexer implements Indexer {
 		document.addUID(getPortletId(), field1, field2);
 
 		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), companyId, document.get(Field.UID));
+			getSearchEngineId(), companyId, document.get(Field.UID),
+			_commitImmediately);
 	}
 
 	protected abstract void doDelete(Object obj) throws Exception;
@@ -1822,6 +1832,7 @@ public abstract class BaseIndexer implements Indexer {
 
 	private static Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 
+	private boolean _commitImmediately;
 	private String[] _defaultSelectedFieldNames;
 	private String[] _defaultSelectedLocalizedFieldNames;
 	private Document _document = new DocumentImpl();

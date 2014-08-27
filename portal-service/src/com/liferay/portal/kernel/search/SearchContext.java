@@ -207,6 +207,10 @@ public class SearchContext implements Serializable {
 		return _andSearch;
 	}
 
+	public boolean isCommitImmediately() {
+		return _commitImmediately;
+	}
+
 	public boolean isIncludeAttachments() {
 		return _includeAttachments;
 	}
@@ -275,6 +279,10 @@ public class SearchContext implements Serializable {
 
 	public void setClassTypeIds(long[] classTypeIds) {
 		_classTypeIds = classTypeIds;
+	}
+
+	public void setCommitImmediately(boolean commitImmediately) {
+		_commitImmediately = commitImmediately;
 	}
 
 	public void setCompanyId(long companyId) {
@@ -399,6 +407,7 @@ public class SearchContext implements Serializable {
 	private BooleanClause[] _booleanClauses;
 	private long[] _categoryIds;
 	private long[] _classTypeIds;
+	private boolean _commitImmediately;
 	private long _companyId;
 	private int _end = QueryUtil.ALL_POS;
 	private String[] _entryClassNames;

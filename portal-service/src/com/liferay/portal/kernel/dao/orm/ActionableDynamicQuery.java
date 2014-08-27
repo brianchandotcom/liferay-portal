@@ -44,6 +44,8 @@ public interface ActionableDynamicQuery {
 
 	public void setClassLoader(ClassLoader classLoader);
 
+	public void setCommitImmediately(boolean commitImmediately);
+
 	public void setCompanyId(long companyId);
 
 	public void setGroupId(long groupId);

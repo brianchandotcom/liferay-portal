@@ -279,6 +279,10 @@ public class InstrumentationAgent {
 	private static void _assertClassDataCoverage(
 		Class<?> clazz, ClassData classData) {
 
+		if (clazz.isSynthetic()) {
+			return;
+		}
+
 		if (classData == null) {
 			throw new RuntimeException(
 				"Class " + clazz.getName() + " has no coverage data");

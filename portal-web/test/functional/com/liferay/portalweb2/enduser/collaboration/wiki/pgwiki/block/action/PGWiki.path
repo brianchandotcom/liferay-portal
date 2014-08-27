@@ -207,6 +207,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WIKI_PAGE_BODY_LINK</td>
+	<td>//div[@class='wiki-body']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WIKI_PAGE_TAG</td>
 	<td>//div[@class='page-tags']/span/a</td>
 	<td></td>

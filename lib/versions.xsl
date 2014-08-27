@@ -16,30 +16,40 @@
 		<img src="https://cdn.lfrs.sl/www.liferay.com/osb-community-theme/images/custom/heading.png" />
 
 		<h1>Third-Party Software List</h1>
-		<h2>Liferay Portal</h2>
 
-		<table class="table table-striped table-condensed">
-		<tr>
-			<th>
-				File Name
-			</th>
-			<th>
-				Version
-			</th>
-			<th>
-				Project
-			</th>
-			<th>
-				License
-			</th>
-			<th>
-				Comments
-			</th>
-		</tr>
+		<xsl:for-each select="versions/version">
+			<h2><xsl:value-of select="@name" /></h2>
 
-		<xsl:apply-templates />
+			<xsl:choose>
+				<xsl:when test="libraries">
+					<table class="table table-striped table-condensed">
+					<tr>
+						<th>
+							File Name
+						</th>
+						<th>
+							Version
+						</th>
+						<th>
+							Project
+						</th>
+						<th>
+							License
+						</th>
+						<th>
+							Comments
+						</th>
+					</tr>
 
-		</table>
+					<xsl:apply-templates />
+
+					</table>
+				</xsl:when>
+				<xsl:otherwise>
+					<i>There were third-party library changes in this version.</i>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:for-each>
 		</div>
 		</body>
 

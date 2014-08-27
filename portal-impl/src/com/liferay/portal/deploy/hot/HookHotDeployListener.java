@@ -129,6 +129,8 @@ import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.DLProcessor;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderer;
+import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRendererRegistryUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -418,6 +420,17 @@ public class HookHotDeployListener
 		}
 	}
 
+	protected void destroyDynamicDataMappingFormFieldRenderers(
+		String servletContextName) {
+
+		DDMFormFieldRenderersContainer ddmFormFieldRenderersContainer =
+			_ddmFormFieldRenderersContainerMap.remove(servletContextName);
+
+		if (ddmFormFieldRenderersContainer != null) {
+			ddmFormFieldRenderersContainer.unregisterDDMFormFieldRenderers();
+		}
+	}
+
 	protected void destroyPortalProperties(
 			String servletContextName, Properties portalProperties)
 		throws Exception {
@@ -570,6 +583,9 @@ public class HookHotDeployListener
 
 		initStrutsActions(servletContextName, portletClassLoader, rootElement);
 
+		initDynamicDataMappingFormFieldRenderers(
+			servletContextName, portletClassLoader, rootElement);
+
 		List<Element> modelListenerElements = rootElement.elements(
 			"model-listener");
 
@@ -678,6 +694,8 @@ public class HookHotDeployListener
 
 			serviceRegistrations.clear();
 		}
+
+		destroyDynamicDataMappingFormFieldRenderers(servletContextName);
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Hook for " + servletContextName + " was unregistered");
@@ -1030,6 +1048,34 @@ public class HookHotDeployListener
 
 		initCustomJspBag(
 			servletContextName, pluginPackage.getName(), customJspBag);
+	}
+
+	protected void initDynamicDataMappingFormFieldRenderers(
+		String servletContextName, ClassLoader portletClassLoader,
+		Element parentElement) throws Exception {
+
+		List<Element> ddmFormFieldRenderersElements = parentElement.elements(
+			"dynamic-data-mapping-form-field-renderer");
+
+		if (!ddmFormFieldRenderersElements.isEmpty()) {
+			DDMFormFieldRenderersContainer ddmFormFieldRenderersContainer =
+				new DDMFormFieldRenderersContainer();
+
+			_ddmFormFieldRenderersContainerMap.put(
+				servletContextName, ddmFormFieldRenderersContainer);
+
+			for (Element element : ddmFormFieldRenderersElements) {
+				String ddmFormFieldRendererClassName = element.getText();
+
+				DDMFormFieldRenderer ddmFormFieldRenderer =
+					(DDMFormFieldRenderer)newInstance(
+						portletClassLoader, DDMFormFieldRenderer.class,
+						ddmFormFieldRendererClassName);
+
+				ddmFormFieldRenderersContainer.registerDDMFormFieldRenderer(
+					ddmFormFieldRenderer);
+			}
+		}
 	}
 
 	protected void initEvent(
@@ -2476,6 +2522,9 @@ public class HookHotDeployListener
 		new HashMap<String, AuthPublicPathsContainer>();
 	private Map<String, CustomJspBag> _customJspBagsMap =
 		new HashMap<String, CustomJspBag>();
+	private Map<String, DDMFormFieldRenderersContainer>
+		_ddmFormFieldRenderersContainerMap =
+			new HashMap<String, DDMFormFieldRenderersContainer>();
 	private Map<String, DLFileEntryProcessorContainer>
 		_dlFileEntryProcessorContainerMap =
 			new HashMap<String, DLFileEntryProcessorContainer>();
@@ -2551,6 +2600,32 @@ public class HookHotDeployListener
 		private String _customJspDir;
 		private boolean _customJspGlobal;
 		private List<String> _customJsps;
+
+	}
+
+	private class DDMFormFieldRenderersContainer {
+
+		public void registerDDMFormFieldRenderer(
+			DDMFormFieldRenderer ddmFormFieldRenderer) {
+
+			DDMFormFieldRendererRegistryUtil.register(ddmFormFieldRenderer);
+
+			_ddmFormFieldRenderers.add(ddmFormFieldRenderer);
+		}
+
+		public void unregisterDDMFormFieldRenderers() {
+			for (DDMFormFieldRenderer ddmFormFieldRenderer
+							: _ddmFormFieldRenderers) {
+
+				DDMFormFieldRendererRegistryUtil.unregister(
+					ddmFormFieldRenderer);
+			}
+
+			_ddmFormFieldRenderers.clear();
+		}
+
+		private List<DDMFormFieldRenderer> _ddmFormFieldRenderers =
+			new ArrayList<DDMFormFieldRenderer>();
 
 	}
 

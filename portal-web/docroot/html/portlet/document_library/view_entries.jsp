@@ -547,11 +547,12 @@ for (int i = 0; i < results.size(); i++) {
 						rowURL.setParameter("struts_action", "/document_library/view");
 						rowURL.setParameter("redirect", currentURL);
 						rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+						rowURL.setParameter("displayStyle", displayStyle);
 						%>
 
 						<liferay-ui:app-view-entry
 							data="<%= data %>"
-							displayStyle="list"
+							displayStyle="<%= displayStyle %>"
 							folder="<%= true %>"
 							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							showCheckbox="<%= false %>"

@@ -346,7 +346,7 @@ else {
 					</portlet:renderURL>
 
 					<aui:nav-item
-						cssClass="file-entry-type folder"
+						cssClass="app-view-navigation-entry folder list-group-item"
 						href="<%= viewURL %>"
 						iconCssClass="icon-level-up"
 						label='<%= LanguageUtil.get(request, "up") %>'
@@ -371,7 +371,7 @@ else {
 						</portlet:renderURL>
 
 						<aui:nav-item
-							cssClass="file-entry-type folder"
+							cssClass="app-view-navigation-entry folder list-group-item"
 							href="<%= viewURL %>"
 							iconCssClass='<%= (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, true) > 0) ? "icon-folder-open" : "icon-folder-close" %>'
 							label='<%= curFolder.getName() %>'

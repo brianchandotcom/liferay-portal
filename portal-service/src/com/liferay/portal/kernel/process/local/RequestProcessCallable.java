@@ -48,7 +48,7 @@ public class RequestProcessCallable<T extends Serializable>
 		catch (Throwable t) {
 			throwable = t;
 
-			throw t;
+			throw (ProcessException)t;
 		}
 		finally {
 			try {

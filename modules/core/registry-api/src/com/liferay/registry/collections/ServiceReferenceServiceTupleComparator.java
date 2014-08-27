@@ -24,6 +24,12 @@ import java.util.Comparator;
 public class ServiceReferenceServiceTupleComparator<S>
 	implements Comparator<ServiceReferenceServiceTuple<S>> {
 
+	public ServiceReferenceServiceTupleComparator(
+		Comparator<ServiceReference<S>> delegatee) {
+
+		_delegatee = delegatee;
+	}
+
 	@Override
 	public int compare(
 		ServiceReferenceServiceTuple<S> sr1,
@@ -39,12 +45,6 @@ public class ServiceReferenceServiceTupleComparator<S>
 
 		return _delegatee.compare(
 			sr1.getServiceReference(), sr2.getServiceReference());
-	}
-
-	public ServiceReferenceServiceTupleComparator(
-		Comparator<ServiceReference<S>> delegatee) {
-
-		_delegatee = delegatee;
 	}
 
 	private Comparator<ServiceReference<S>> _delegatee;

@@ -14,7 +14,6 @@
 
 package com.liferay.registry.collections;
 
-
 /**
  * @author Carlos Sierra Andrés
  */

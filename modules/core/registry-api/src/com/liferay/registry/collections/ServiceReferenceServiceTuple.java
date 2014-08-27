@@ -29,26 +29,10 @@ public class ServiceReferenceServiceTuple<S>
 		_service = service;
 	}
 
-	public S getService() {
-		return _service;
-	}
-
-	public ServiceReference<S> getServiceReference() {
-		return _serviceReference;
-	}
-
-	@Override
-	public int hashCode() {
-		return _serviceReference.hashCode();
-	}
-
 	@Override
 	public int compareTo(ServiceReferenceServiceTuple<S> o) {
 		return getServiceReference().compareTo(o.getServiceReference());
-	} 
-	
-	private S _service;
-	private ServiceReference<S> _serviceReference;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -66,5 +50,21 @@ public class ServiceReferenceServiceTuple<S>
 		return _serviceReference.equals(
 			serviceReferenceServiceTuple.getServiceReference());
 	}
+
+	public S getService() {
+		return _service;
+	}
+
+	public ServiceReference<S> getServiceReference() {
+		return _serviceReference;
+	}
+
+	@Override
+	public int hashCode() {
+		return _serviceReference.hashCode();
+	}
+
+	private S _service;
+	private ServiceReference<S> _serviceReference;
 
 }

@@ -52,7 +52,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Brian Wing Shun Chan
- * @author José Manuel Navarro
+ * @author Josï¿½ Manuel Navarro
  */
 @RunWith(Enclosed.class)
 public class UserServiceTest {
@@ -668,7 +668,7 @@ public class UserServiceTest {
 			_group = organization.getGroup();
 
 			_organizationOwnerUser = UserTestUtil.addOrganizationOwnerUser(
-				_organization);
+				organization);
 		}
 
 		@Test
@@ -696,7 +696,6 @@ public class UserServiceTest {
 		}
 
 		private Group _group;
-		private Organization _organization;
 		private User _organizationOwnerUser;
 
 	}

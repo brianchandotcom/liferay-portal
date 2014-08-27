@@ -73,7 +73,9 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 				String.valueOf(searchContext.getCompanyId()),
 				DocumentTypes.LIFERAY, uid);
 
-			if (PortalRunMode.isTestMode()) {
+			if (PortalRunMode.isTestMode() ||
+				searchContext.isCommitImmediately()) {
+
 				deleteRequestBuilder.setRefresh(true);
 			}
 
@@ -107,7 +109,9 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 				bulkRequestBuilder.add(deleteRequestBuilder);
 			}
 
-			if (PortalRunMode.isTestMode()) {
+			if (PortalRunMode.isTestMode()||
+				searchContext.isCommitImmediately()) {
+
 				bulkRequestBuilder.setRefresh(true);
 			}
 

@@ -19,8 +19,6 @@ package com.liferay.portal.util;
  */
 public class PortletKeys {
 
-	public static final String ACTIVITIES = "116";
-
 	public static final String ADMIN = "9";
 
 	public static final String ADMIN_INSTANCE = "135";

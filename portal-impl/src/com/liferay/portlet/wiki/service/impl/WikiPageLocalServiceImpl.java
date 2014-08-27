@@ -2483,7 +2483,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		double version = WikiPageConstants.VERSION_DEFAULT;
 		String summary = LanguageUtil.format(
-			serviceContext.getLocale(), "moved-to-x", newTitle);
+			serviceContext.getLocale(), "renamed-as-x", newTitle);
 		String format = page.getFormat();
 		boolean head = true;
 		String parentTitle = page.getParentTitle();

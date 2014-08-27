@@ -1687,8 +1687,6 @@ setup.wizard.enabled=false
 
 mail.session.jndi.name=
 
-virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}
-
 axis.servlet.hosts.allowed=
 
 tunnel.servlet.hosts.allowed=</echo>
@@ -1833,6 +1831,15 @@ ${custom.properties}</echo>
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
 portal.security.manager.strategy=liferay</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${mobile.device.enabled}" arg2="true" />
+			<then>
+				<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}</echo>
 			</then>
 		</if>
 

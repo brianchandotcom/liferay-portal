@@ -125,8 +125,8 @@ public class ServiceTrackerCollections {
 			properties);
 	}
 
-	public static <S> ServiceTrackerMap<String, List<S>>
-		createListServiceTracker(Class<S> clazz, String propertyKey) {
+	public static <S> ServiceTrackerMap<String, List<S>> multiValueMap(
+		Class<S> clazz, String propertyKey) {
 
 		return new ServiceTrackerMapImpl<String, S, List<S>>(
 			clazz,"(" + propertyKey + "=*)",
@@ -134,29 +134,27 @@ public class ServiceTrackerCollections {
 			new ListServiceTrackerBucketFactory<S>());
 	}
 
-	public static <K, S> ServiceTrackerMap<K, List<S>>
-		createListServiceTrackerMap(
-			Class<S> clazz, String filterString,
-			ServiceReferenceMapper<K> serviceReferenceMapper) {
+	public static <K, S> ServiceTrackerMap<K, List<S>> multiValueMap(
+		Class<S> clazz, String filterString,
+		ServiceReferenceMapper<K> serviceReferenceMapper) {
 
 		return new ServiceTrackerMapImpl<K, S, List<S>>(
 			clazz, filterString, serviceReferenceMapper,
 			new ListServiceTrackerBucketFactory<S>());
 	}
 
-	public static <K, S> ServiceTrackerMap<K, List<S>>
-		createListServiceTrackerMap(
-			Class<S> clazz, String filterString,
-			ServiceReferenceMapper<K> serviceReferenceMapper,
-			Comparator<ServiceReference<S>> comparator) {
+	public static <K, S> ServiceTrackerMap<K, List<S>> multiValueMap(
+		Class<S> clazz, String filterString,
+		ServiceReferenceMapper<K> serviceReferenceMapper,
+		Comparator<ServiceReference<S>> comparator) {
 
 		return new ServiceTrackerMapImpl<K, S, List<S>>(
 			clazz, filterString, serviceReferenceMapper,
 				new ListServiceTrackerBucketFactory<S>(comparator));
 	}
 
-	public static <S> ServiceTrackerMap<String, S>
-		createObjectServiceTrackerMap(Class<S> clazz, String propertyKey) {
+	public static <S> ServiceTrackerMap<String, S> singleValueMap(
+		Class<S> clazz, String propertyKey) {
 
 		return new ServiceTrackerMapImpl<String, S, S>(
 			clazz, "(" + propertyKey + "=*)",
@@ -164,7 +162,7 @@ public class ServiceTrackerCollections {
 			new ObjectServiceTrackerBucketFactory<S>());
 	}
 
-	public static <K, S> ServiceTrackerMap<K, S> createObjectServiceTrackerMap(
+	public static <K, S> ServiceTrackerMap<K, S> singleValueMap(
 		Class<S> clazz, String filterString,
 		ServiceReferenceMapper<K> serviceReferenceMapper) {
 
@@ -173,7 +171,7 @@ public class ServiceTrackerCollections {
 			new ObjectServiceTrackerBucketFactory<S>());
 	}
 
-	public static <K, S> ServiceTrackerMap<K, S> createObjectServiceTrackerMap(
+	public static <K, S> ServiceTrackerMap<K, S> singleValueMap(
 		Class<S> clazz, String filterString,
 		ServiceReferenceMapper<K> serviceReferenceMapper,
 		Comparator<ServiceReference<S>> comparator) {

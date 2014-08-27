@@ -14,8 +14,8 @@
 
 package com.liferay.kernel.servlet.taglib;
 
+import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
-import com.liferay.registry.collections.ServiceTrackerMapFactory;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class DynamicIncludeUtil {
 	}
 
 	private DynamicIncludeUtil() {
-		_dynamicIncludes = ServiceTrackerMapFactory.createListServiceTracker(
+		_dynamicIncludes = ServiceTrackerCollections.multiValueMap(
 			DynamicInclude.class, "key");
 
 		_dynamicIncludes.open();

@@ -422,14 +422,6 @@
 
 		<action path="/control_panel_menu/view" forward="portlet.control_panel_menu.view" />
 
-		<!-- Currency Converter -->
-
-		<action path="/currency_converter/edit" type="com.liferay.portlet.currencyconverter.action.EditPreferencesAction">
-			<forward name="portlet.currency_converter.edit" path="portlet.currency_converter.edit" />
-		</action>
-
-		<action path="/currency_converter/view" forward="portlet.currency_converter.view" />
-
 		<!-- Directory -->
 
 		<action path="/directory/find_user" type="com.liferay.portlet.usersadmin.action.FindUserAction" />

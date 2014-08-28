@@ -8333,6 +8333,7 @@ public class PortalImpl implements Portal {
 
 	protected boolean isValidPortalDomain(String domain) {
 		long companyId = CompanyThreadLocal.getCompanyId();
+
 		return isValidPortalDomain(companyId, domain);
 	}
 

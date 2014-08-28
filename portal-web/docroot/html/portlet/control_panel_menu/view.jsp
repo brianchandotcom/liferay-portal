@@ -90,7 +90,15 @@
 						<div class="lfr-title-scope-selector nobr">
 							<liferay-ui:message key="scope" />:
 							<liferay-ui:icon-menu direction="down" icon="" message="<%= scopeLabel %>">
+
+								<%
+								Map<String, Object> data = new HashMap<String, Object>();
+
+								data.put("navigation", Boolean.TRUE.toString());
+								%>
+
 								<liferay-ui:icon
+									data="<%= data %>"
 									iconCssClass="<%= curSite.getIconCssClass() %>"
 									message="default"
 									url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", curSite.getGroupId()) %>'
@@ -102,6 +110,7 @@
 								%>
 
 									<liferay-ui:icon
+										data="<%= data %>"
 										iconCssClass="<%= scopeGroup.getIconCssClass() %>"
 										message="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>"
 										url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", scopeGroup.getGroupId()) %>'

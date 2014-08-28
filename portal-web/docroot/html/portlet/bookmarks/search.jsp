@@ -132,6 +132,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 						<liferay-ui:icon
 							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							label="<%= true %>"
+							localizeMessage="<%= false %>"
 							message="<%= entry.getName() %>"
 							target="_blank"
 							url="<%= rowHREF %>"
@@ -189,6 +190,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 						<liferay-ui:icon
 							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 							label="<%= true %>"
+							localizeMessage="<%= false %>"
 							message="<%= HtmlUtil.escape(folder.getName()) %>"
 							url="<%= rowURL %>"
 						/>

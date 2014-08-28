@@ -42,6 +42,7 @@
 		cssClass="entry-display-style selectable"
 		iconCssClass="<%= assetRenderer.getIconCssClass() %>"
 		label="<%= true %>"
+		localizeMessage="<%= false %>"
 		message="<%= HtmlUtil.escape(curArticle.getTitle(locale)) %>"
 		method="get"
 		url="<%= rowURL.toString() %>"

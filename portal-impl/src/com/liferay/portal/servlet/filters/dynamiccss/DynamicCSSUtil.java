@@ -157,10 +157,7 @@ public class DynamicCSSUtil {
 		}
 
 		if ((themeCssFastLoad || !content.contains(_CSS_IMPORT_BEGIN)) &&
-			(cacheResourceURLConnection != null) &&
-			(resourceURLConnection != null) &&
-			(cacheResourceURLConnection.getLastModified() >=
-				resourceURLConnection.getLastModified())) {
+			(cacheResourceURLConnection != null)) {
 
 			parsedContent = StringUtil.read(
 				cacheResourceURLConnection.getInputStream());

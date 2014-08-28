@@ -18,10 +18,12 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.GroupTestUtil;
+import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -46,6 +48,37 @@ public class DLFileShortcutLocalServiceTreeTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testFileShortcutTreepathWhenMovingSubfolderWithFileShortcut()
+		throws Exception {
+
+		Folder folderA = DLAppTestUtil.addFolder(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Folder A");
+
+		Folder folderAA = DLAppTestUtil.addFolder(
+			_group.getGroupId(), folderA.getFolderId(), "Folder AA");
+
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			_group.getGroupId(), folderA.getFolderId(), "Entry.txt");
+
+		DLFileShortcut dlFileShortcut = DLAppTestUtil.addDLFileShortcut(
+			fileEntry, TestPropsValues.getGroupId(), folderAA.getFolderId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		DLAppLocalServiceUtil.moveFolder(
+			TestPropsValues.getUserId(), folderAA.getFolderId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+
+		dlFileShortcut = DLFileShortcutLocalServiceUtil.getDLFileShortcut(
+			dlFileShortcut.getFileShortcutId());
+
+		Assert.assertEquals(
+			dlFileShortcut.buildTreePath(), dlFileShortcut.getTreePath());
 	}
 
 	@Test

@@ -14,9 +14,15 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 /**
  * @author Kenji Heigel
@@ -25,6 +31,12 @@ public class WebDriverHelper {
 
 	public static String getLocation(WebDriver webDriver) {
 		return webDriver.getCurrentUrl();
+	}
+
+	public boolean isElementPresent(String locator) {
+		List<WebElement> webElements = getWebElements(locator, "1");
+
+		return !webElements.isEmpty();
 	}
 
 	public static void open(WebDriver webDriver, String url) {
@@ -66,6 +78,91 @@ public class WebDriverHelper {
 		WebDriver.Navigation navigation = webDriver.navigate();
 
 		navigation.refresh();
+	}
+
+	public void setDefaultTimeoutImplicit() {
+		int timeout = TestPropsValues.TIMEOUT_IMPLICIT_WAIT * 1000;
+
+		setTimeoutImplicit(String.valueOf(timeout));
+	}
+
+	public void setTimeoutImplicit(String timeout) {
+		WebDriver.Options options = manage();
+
+		WebDriver.Timeouts timeouts = options.timeouts();
+
+		timeouts.implicitlyWait(
+			GetterUtil.getInteger(timeout), TimeUnit.MILLISECONDS);
+	}
+
+	protected WebElement getWebElement(String locator) {
+		return getWebElement(locator, null);
+	}
+
+	protected WebElement getWebElement(String locator, String timeout) {
+		List<WebElement> webElements = getWebElements(locator, timeout);
+
+		if (!webElements.isEmpty()) {
+			return webElements.get(0);
+		}
+
+		return null;
+	}
+
+	protected List<WebElement> getWebElements(String locator) {
+		return getWebElements(locator, null);
+	}
+
+	protected List<WebElement> getWebElements(String locator, String timeout) {
+		if (timeout != null) {
+			setTimeoutImplicit(timeout);
+		}
+
+		try {
+			if (locator.startsWith("//")) {
+				return findElements(By.xpath(locator));
+			}
+			else if (locator.startsWith("class=")) {
+				locator = locator.substring(6);
+
+				return findElements(By.className(locator));
+			}
+			else if (locator.startsWith("css=")) {
+				locator = locator.substring(4);
+
+				return findElements(By.cssSelector(locator));
+			}
+			else if (locator.startsWith("link=")) {
+				locator = locator.substring(5);
+
+				return findElements(By.linkText(locator));
+			}
+			else if (locator.startsWith("name=")) {
+				locator = locator.substring(5);
+
+				return findElements(By.name(locator));
+			}
+			else if (locator.startsWith("tag=")) {
+				locator = locator.substring(4);
+
+				return findElements(By.tagName(locator));
+			}
+			else if (locator.startsWith("xpath=") ||
+					 locator.startsWith("xPath=")) {
+
+				locator = locator.substring(6);
+
+				return findElements(By.xpath(locator));
+			}
+			else {
+				return findElements(By.id(locator));
+			}
+		}
+		finally {
+			if (timeout != null) {
+				setDefaultTimeoutImplicit();
+			}
+		}
 	}
 
 }

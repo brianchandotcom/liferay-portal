@@ -183,13 +183,23 @@ public class ShoppingUtil {
 			return discount;
 		}
 
-		String[] categoryIds = StringUtil.split(coupon.getLimitCategories());
+		String[] categoryNames = StringUtil.split(coupon.getLimitCategories());
 		String[] skus = StringUtil.split(coupon.getLimitSkus());
 
-		if ((categoryIds.length > 0) || (skus.length > 0)) {
-			Set<String> categoryIdsSet = new HashSet<String>();
+		List<Long> categoryIds = new ArrayList<Long>();
 
-			for (String categoryId : categoryIds) {
+		for (String categoryName : categoryNames) {
+			ShoppingCategory category =
+				ShoppingCategoryLocalServiceUtil.getCategory(
+					coupon.getGroupId(), categoryName);
+
+			categoryIds.add(category.getCategoryId());
+		}
+
+		if ((categoryIds.size() > 0) || (skus.length > 0)) {
+			Set<Long> categoryIdsSet = new HashSet<Long>();
+
+			for (Long categoryId : categoryIds) {
 				categoryIdsSet.add(categoryId);
 			}
 
@@ -211,8 +221,7 @@ public class ShoppingUtil {
 				ShoppingItem item = cartItem.getItem();
 
 				if ((!categoryIdsSet.isEmpty() &&
-					 categoryIdsSet.contains(
-						 String.valueOf(item.getCategoryId()))) ||
+					 categoryIdsSet.contains(item.getCategoryId())) ||
 					(!skusSet.isEmpty() && skusSet.contains(item.getSku()))) {
 
 					newItems.put(cartItem, count);

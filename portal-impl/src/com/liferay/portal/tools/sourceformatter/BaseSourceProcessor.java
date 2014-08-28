@@ -380,7 +380,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		processErrorMessage(fileName, "plus: " + fileName + " " + lineCount);
 	}
 
-	protected void compareAndAutoFixContent(
+	protected void processFormattedFile(
 			File file, String fileName, String content, String newContent)
 		throws IOException {
 
@@ -660,7 +660,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String newContent = format(file, fileName, absolutePath, content);
 
 		if (!content.equals(newContent)) {
-			compareAndAutoFixContent(file, fileName, content, newContent);
+			processFormattedFile(file, fileName, content, newContent);
 		}
 
 		return newContent;

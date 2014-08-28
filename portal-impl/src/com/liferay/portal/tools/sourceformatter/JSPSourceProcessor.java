@@ -349,7 +349,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if (!content.equals(newContent)) {
-				compareAndAutoFixContent(file, fileName, content, newContent);
+				processFormattedFile(file, fileName, content, newContent);
 			}
 
 			if (portalSource &&

@@ -29,10 +29,15 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.portal.service.persistence.ResourcePermissionFinder;
+import com.liferay.portal.service.persistence.ResourcePermissionUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
+
+import java.io.Serializable;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -211,6 +216,35 @@ public class ResourcePermissionFinderImpl
 	}
 
 	@Override
+	public Map<Serializable, ResourcePermission> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		return ResourcePermissionUtil.fetchByPrimaryKeys(primaryKeys);
+	}
+
+	protected String getScopes(int[] scopes) {
+		if (scopes.length == 0) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(scopes.length * 2 + 1);
+
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		for (int i = 0; i < scopes.length; i++) {
+			sb.append("ResourcePermission.scope = ? ");
+
+			if ((i + 1) != scopes.length) {
+				sb.append("OR ");
+			}
+		}
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
+	}
+
+	@Override
 	public List<ResourcePermission> findByR_S(
 		long roleId, int[] scopes, int start, int end) {
 
@@ -241,28 +275,6 @@ public class ResourcePermissionFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	protected String getScopes(int[] scopes) {
-		if (scopes.length == 0) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(scopes.length * 2 + 1);
-
-		sb.append(StringPool.OPEN_PARENTHESIS);
-
-		for (int i = 0; i < scopes.length; i++) {
-			sb.append("ResourcePermission.scope = ? ");
-
-			if ((i + 1) != scopes.length) {
-				sb.append("OR ");
-			}
-		}
-
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		return sb.toString();
 	}
 
 }

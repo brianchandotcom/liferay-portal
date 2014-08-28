@@ -426,7 +426,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		if (matcher.find()) {
 			newContent = formatJavaTerms(
-				fileName, newContent, matcher.group(), null, null);
+				fileName, absolutePath, newContent, matcher.group(), null,
+				null);
 		}
 
 		return newContent;
@@ -453,6 +454,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			fileName = StringUtil.replace(
 				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
+			String absolutePath = getAbsolutePath(file);
+
 			String content = fileUtil.read(file);
 
 			Matcher matcher = pattern.matcher(content);
@@ -473,7 +476,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			if (portalSource &&
 				mainReleaseVersion.equals(MAIN_RELEASE_LATEST_VERSION) &&
 				fileName.endsWith("/init.jsp") &&
-				!fileName.startsWith("modules/") &&
+				!absolutePath.contains("/modules/") &&
 				!fileName.endsWith("/common/init.jsp")) {
 
 				addImportCounts(content);
@@ -569,7 +572,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if (javaSource && portalSource &&
-				!isExcluded(_unusedVariablesExclusions, fileName, lineCount) &&
+				!isExcluded(
+					_unusedVariablesExclusions, absolutePath, lineCount) &&
 				!_jspContents.isEmpty() &&
 				hasUnusedVariable(fileName, trimmedLine)) {
 
@@ -901,11 +905,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	@Override
-	protected String getAbsolutePath(File file) {
-		return fileUtil.getAbsolutePath(file);
-	}
-
 	protected List<String> getJSPDuplicateImports(
 		String fileName, String content, List<String> importLines) {
 
@@ -1144,6 +1143,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	protected void moveFrequentlyUsedImportsToCommonInit(int minCount)
 		throws IOException {
+
+		if (_importCountMap.isEmpty()) {
+			return;
+		}
 
 		String commonInitFileName = "portal-web/docroot/html/common/init.jsp";
 

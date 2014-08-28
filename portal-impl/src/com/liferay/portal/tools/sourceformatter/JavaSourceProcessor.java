@@ -695,7 +695,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		if (!isExcluded(_staticLogVariableExclusions, fileName)) {
+		if (!isExcluded(_staticLogVariableExclusions, absolutePath)) {
 			newContent = StringUtil.replace(
 				newContent, "private Log _log", "private static Log _log");
 		}
@@ -720,7 +720,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-34911
 
 		if (portalSource &&
-			!isExcluded(_upgradeServiceUtilExclusions, fileName) &&
+			!isExcluded(_upgradeServiceUtilExclusions, absolutePath) &&
 			fileName.contains("/portal/upgrade/") &&
 			!fileName.contains("/test/") &&
 			newContent.contains("ServiceUtil.")) {
@@ -729,7 +729,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (!isRunsOutsidePortal(absolutePath) &&
-			!isExcluded(_proxyExclusions, fileName) &&
+			!isExcluded(_proxyExclusions, absolutePath) &&
 			newContent.contains("import java.lang.reflect.Proxy;")) {
 
 			processErrorMessage(fileName, "Proxy: " + fileName);
@@ -810,7 +810,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-39508
 
-		if (!isExcluded(_secureRandomExclusions, fileName) &&
+		if (!isExcluded(_secureRandomExclusions, absolutePath) &&
 			!isRunsOutsidePortal(absolutePath) &&
 			content.contains("java.security.SecureRandom") &&
 			!content.contains("javax.crypto.KeyGenerator")) {
@@ -887,8 +887,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String javaClassContent = newContent.substring(pos);
 
 			newContent = formatJavaTerms(
-				fileName, newContent, javaClassContent, _javaTermSortExclusions,
-				_testAnnotationsExclusions);
+				fileName, absolutePath, newContent, javaClassContent,
+				_javaTermSortExclusions, _testAnnotationsExclusions);
 		}
 
 		newContent = formatJava(fileName, absolutePath, newContent);
@@ -1101,7 +1101,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int lineCount = 0;
 		int lineToSkipIfEmpty = 0;
 
-		String componentAnnotationPropertyValue = null;
 		String ifClause = StringPool.BLANK;
 		String packageName = StringPool.BLANK;
 		String regexPattern = StringPool.BLANK;
@@ -1151,7 +1150,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			// LPS-42599
 
-			if (!isExcluded(_hibernateSQLQueryExclusions, fileName) &&
+			if (!isExcluded(_hibernateSQLQueryExclusions, absolutePath) &&
 				line.contains("= session.createSQLQuery(") &&
 				content.contains("com.liferay.portal.kernel.dao.orm.Session")) {
 
@@ -1552,8 +1551,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			Tuple combinedLines = null;
 			int lineLength = getLineLength(line);
 
-			if (!isExcluded(_lineLengthExclusions, fileName, lineCount) &&
-				!line.startsWith("import ") && !line.startsWith("package ") &&
+			if (!line.startsWith("import ") && !line.startsWith("package ") &&
 				!line.matches("\\s*\\*.*")) {
 
 				if (fileName.endsWith("Table.java") &&
@@ -1566,19 +1564,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						 line.contains(" index IX_")) {
 				}
 				else if (lineLength > 80) {
-					if (componentAnnotationPropertyValue == null) {
-						Matcher matcher = _componentAnnotationPattern.matcher(
-							content);
+					if (!isExcluded(
+							_lineLengthExclusions, absolutePath, lineCount) &&
+						!isAnnotationParameter(content, trimmedLine)) {
 
-						if (matcher.find()) {
-							componentAnnotationPropertyValue = matcher.group(2);
-						}
-						else {
-							componentAnnotationPropertyValue = StringPool.BLANK;
-						}
-					}
-
-					if (!componentAnnotationPropertyValue.contains(line)) {
 						processErrorMessage(
 							fileName, "> 80: " + fileName + " " + lineCount);
 					}
@@ -1691,7 +1680,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 
 					if (!isExcluded(
-							_fitOnSingleLineExclusions, fileName, lineCount)) {
+							_fitOnSingleLineExclusions, absolutePath,
+							lineCount)) {
 
 						combinedLines = getCombinedLines(
 							trimmedLine, previousLine, lineLeadingTabCount,
@@ -1812,11 +1802,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return newContent;
-	}
-
-	@Override
-	protected String getAbsolutePath(File file) {
-		return fileUtil.getAbsolutePath(file);
 	}
 
 	protected Tuple getCombinedLines(
@@ -2193,6 +2178,24 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return fileNames;
 	}
 
+	protected boolean isAnnotationParameter(String content, String line) {
+		if (!line.contains(" = ") && (!line.startsWith(StringPool.QUOTE))) {
+			return false;
+		}
+
+		Matcher matcher = _annotationPattern.matcher(content);
+
+		while (matcher.find()) {
+			String annotationParameters = matcher.group(3);
+
+			if (annotationParameters.contains(line)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected boolean isGenerated(String content) {
 		if (content.contains("* @generated") || content.contains("$ANTLR")) {
 			return true;
@@ -2284,11 +2287,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private static Pattern _importsPattern = Pattern.compile(
 		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
 
+	private Pattern _annotationPattern = Pattern.compile(
+		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\n(\t*)\\)");
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private boolean _checkUnprocessedExceptions;
-	private Pattern _componentAnnotationPattern = Pattern.compile(
-		"\n@Component\\(\n([\\s\\S]*?)\tproperty = \\{([\\s\\S]*?)\t\\}");
 	private Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(Map|Set|List)<(.+)>" +
 			"\\(\n*\t*(.*)\\);\n");

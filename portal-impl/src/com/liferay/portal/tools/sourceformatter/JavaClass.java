@@ -108,9 +108,11 @@ public class JavaClass {
 
 	public static final int TYPE_VARIABLE_PUBLIC_STATIC_FINAL = 1;
 
-	public JavaClass(String fileName, String content, String indent)
+	public JavaClass(
+			String fileName, String absolutePath, String content, String indent)
 		throws Exception {
 
+		_absolutePath = absolutePath;
 		_fileName = fileName;
 		_content = content;
 		_indent = indent;
@@ -146,7 +148,8 @@ public class JavaClass {
 				}
 
 				JavaClass innerClass = new JavaClass(
-					_fileName, javaTermContent, _indent + StringPool.TAB);
+					_fileName, _absolutePath, javaTermContent,
+					_indent + StringPool.TAB);
 
 				String newJavaTermContent = innerClass.formatJavaTerms(
 					javaTermSortExclusions, testAnnotationsExclusions);
@@ -289,8 +292,8 @@ public class JavaClass {
 			String javaTermName = javaTerm.getName();
 
 			if (BaseSourceProcessor.isExcluded(
-					javaTermSortExclusions, _fileName, javaTerm.getLineCount(),
-					javaTermName)) {
+					javaTermSortExclusions, _absolutePath,
+					javaTerm.getLineCount(), javaTermName)) {
 
 				previousJavaTerm = javaTerm;
 
@@ -498,7 +501,7 @@ public class JavaClass {
 
 		if ((_indent.length() == 1) && _fileName.contains("/test/") &&
 			!BaseSourceProcessor.isExcluded(
-				testAnnotationsExclusions, _fileName) &&
+				testAnnotationsExclusions, _absolutePath) &&
 			!_fileName.endsWith("TestCase.java")) {
 
 			checkTestAnnotations(javaTerm);
@@ -924,7 +927,7 @@ public class JavaClass {
 		String javaTermName = javaTerm.getName();
 
 		if (BaseSourceProcessor.isExcluded(
-				javaTermSortExclusions, _fileName, -1, javaTermName)) {
+				javaTermSortExclusions, _absolutePath, -1, javaTermName)) {
 
 			return;
 		}
@@ -965,6 +968,7 @@ public class JavaClass {
 		}
 	}
 
+	private String _absolutePath;
 	private String _content;
 	private String _fileName;
 	private String _indent;

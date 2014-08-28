@@ -918,9 +918,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	public void testTrashVersionCreationWhenMovingToTrash()
-		throws Exception {
-
+	public void testTrashVersionCreationWhenMovingToTrash() throws Exception {
 		int initialTrashVersionsCount =
 			TrashVersionLocalServiceUtil.getTrashVersionsCount();
 

@@ -49,7 +49,7 @@ public class OverrideIncrementTest {
 	}
 
 	@Test
-	public void testGetterAndSetter() throws Exception {
+	public void testGetterAndSetter() {
 		IntegerOverrideIncrement integerOverrideIncrement =
 			new IntegerOverrideIncrement(1);
 

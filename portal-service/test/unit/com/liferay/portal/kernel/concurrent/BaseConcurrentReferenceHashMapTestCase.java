@@ -46,7 +46,7 @@ public class BaseConcurrentReferenceHashMapTestCase {
 
 	protected void testAutoRemove(
 			ConcurrentMap<String, Object> concurrentMap, boolean fullGC)
-		throws Exception {
+		throws InterruptedException {
 
 		Map<Reference<?>, FinalizeAction> finalizeActions =
 			(Map<Reference<?>, FinalizeAction>)ReflectionTestUtil.getFieldValue(

@@ -1162,16 +1162,14 @@ public class HttpClientSPIAgentTest {
 
 	protected void closeSocketChannel(
 			SocketChannel socketChannel, FileDescriptor fileDescriptor)
-		throws Exception {
+		throws IOException {
 
 		ReflectionTestUtil.setFieldValue(socketChannel, "fd", fileDescriptor);
 
 		socketChannel.close();
 	}
 
-	protected SocketImpl swapSocketImpl(Socket socket, SocketImpl socketImpl)
-		throws Exception {
-
+	protected SocketImpl swapSocketImpl(Socket socket, SocketImpl socketImpl) {
 		SocketImpl oldSocketImpl = (SocketImpl)ReflectionTestUtil.getFieldValue(
 			socket, "impl");
 

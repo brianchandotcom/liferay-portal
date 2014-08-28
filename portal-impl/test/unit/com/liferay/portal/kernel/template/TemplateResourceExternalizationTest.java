@@ -247,7 +247,7 @@ public class TemplateResourceExternalizationTest {
 	}
 
 	@Test
-	public void testURLTemplateResourceExternalization() throws Exception {
+	public void testURLTemplateResourceExternalization() throws IOException {
 		String templateId = "testId";
 
 		Class<?> clazz = getClass();

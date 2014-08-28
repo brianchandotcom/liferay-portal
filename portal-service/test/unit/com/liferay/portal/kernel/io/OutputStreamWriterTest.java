@@ -57,7 +57,7 @@ public class OutputStreamWriterTest {
 	}
 
 	@Test
-	public void testConstructor() throws Exception {
+	public void testConstructor() {
 		DummyOutputStream dummyOutputStream = new DummyOutputStream();
 
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
@@ -165,7 +165,7 @@ public class OutputStreamWriterTest {
 	}
 
 	@Test
-	public void testWriteError() throws Exception {
+	public void testWriteError() {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
 			new DummyOutputStream(), "US-ASCII");
 
@@ -208,14 +208,12 @@ public class OutputStreamWriterTest {
 		_testWriteString(true);
 	}
 
-	private int _getDefaultOutputBufferSize() throws Exception {
+	private int _getDefaultOutputBufferSize() {
 		return (Integer)ReflectionTestUtil.getFieldValue(
 			OutputStreamWriter.class, "_DEFAULT_OUTPUT_BUFFER_SIZE");
 	}
 
-	private int _getInputBufferSize(OutputStreamWriter outputStreamWriter)
-		throws Exception {
-
+	private int _getInputBufferSize(OutputStreamWriter outputStreamWriter) {
 		CharBuffer inputCharBuffer =
 			(CharBuffer)ReflectionTestUtil.getFieldValue(
 				outputStreamWriter, "_inputCharBuffer");
@@ -223,25 +221,21 @@ public class OutputStreamWriterTest {
 		return inputCharBuffer.capacity();
 	}
 
-	private int _getOutputBufferSize(OutputStreamWriter outputStreamWriter)
-		throws Exception {
-
+	private int _getOutputBufferSize(OutputStreamWriter outputStreamWriter) {
 		ByteBuffer outputBuffer = (ByteBuffer)ReflectionTestUtil.getFieldValue(
 			outputStreamWriter, "_outputByteBuffer");
 
 		return outputBuffer.capacity();
 	}
 
-	private OutputStream _getOutputStream(OutputStreamWriter outputStreamWriter)
-		throws Exception {
+	private OutputStream _getOutputStream(
+		OutputStreamWriter outputStreamWriter) {
 
 		return (OutputStream)ReflectionTestUtil.getFieldValue(
 			outputStreamWriter, "_outputStream");
 	}
 
-	private boolean _isAutoFlush(OutputStreamWriter outputStreamWriter)
-		throws Exception {
-
+	private boolean _isAutoFlush(OutputStreamWriter outputStreamWriter) {
 		return (Boolean)ReflectionTestUtil.getFieldValue(
 			outputStreamWriter, "_autoFlush");
 	}

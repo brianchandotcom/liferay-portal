@@ -67,7 +67,7 @@ public class WriterOutputStreamTest {
 	}
 
 	@Test
-	public void testConstructor() throws Exception {
+	public void testConstructor() {
 		DummyWriter dummyWriter = new DummyWriter();
 
 		WriterOutputStream writerOutputStream = new WriterOutputStream(
@@ -256,7 +256,7 @@ public class WriterOutputStreamTest {
 	}
 
 	@Test
-	public void testWriteError() throws Exception {
+	public void testWriteError() {
 		WriterOutputStream writerOutputStream = new WriterOutputStream(
 			new DummyWriter(), "US-ASCII");
 
@@ -277,14 +277,12 @@ public class WriterOutputStreamTest {
 		}
 	}
 
-	private int _getDefaultOutputBufferSize() throws Exception {
+	private int _getDefaultOutputBufferSize() {
 		return (Integer)ReflectionTestUtil.getFieldValue(
 			WriterOutputStream.class, "_DEFAULT_OUTPUT_BUFFER_SIZE");
 	}
 
-	private int _getInputBufferSize(WriterOutputStream writerOutputStream)
-		throws Exception {
-
+	private int _getInputBufferSize(WriterOutputStream writerOutputStream) {
 		ByteBuffer inputByteBuffer =
 			(ByteBuffer)ReflectionTestUtil.getFieldValue(
 				writerOutputStream, "_inputByteBuffer");
@@ -292,25 +290,19 @@ public class WriterOutputStreamTest {
 		return inputByteBuffer.capacity();
 	}
 
-	private int _getOutputBufferSize(WriterOutputStream writerOutputStream)
-		throws Exception {
-
+	private int _getOutputBufferSize(WriterOutputStream writerOutputStream) {
 		CharBuffer outputBuffer = (CharBuffer)ReflectionTestUtil.getFieldValue(
 			writerOutputStream, "_outputCharBuffer");
 
 		return outputBuffer.capacity();
 	}
 
-	private Writer _getWriter(WriterOutputStream writerOutputStream)
-		throws Exception {
-
+	private Writer _getWriter(WriterOutputStream writerOutputStream) {
 		return (Writer)ReflectionTestUtil.getFieldValue(
 			writerOutputStream, "_writer");
 	}
 
-	private boolean _isAutoFlush(WriterOutputStream writerOutputStream)
-		throws Exception {
-
+	private boolean _isAutoFlush(WriterOutputStream writerOutputStream) {
 		return (Boolean)ReflectionTestUtil.getFieldValue(
 			writerOutputStream, "_autoFlush");
 	}

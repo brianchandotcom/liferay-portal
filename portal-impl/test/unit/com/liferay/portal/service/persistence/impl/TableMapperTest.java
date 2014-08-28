@@ -789,12 +789,12 @@ public class TableMapperTest {
 	}
 
 	@Test
-	public void testDestroy() throws Exception {
+	public void testDestroy() {
 		testDestroy(_tableMapperImpl);
 	}
 
 	@Test
-	public void testDestroyReverse() throws Exception {
+	public void testDestroyReverse() {
 		testDestroy(new ReverseTableMapper<Right, Left>(_tableMapperImpl));
 	}
 
@@ -1311,7 +1311,7 @@ public class TableMapperTest {
 		Assert.assertTrue(tableMappers.isEmpty());
 	}
 
-	protected void testDestroy(TableMapper<?, ?> tableMapper) throws Exception {
+	protected void testDestroy(TableMapper<?, ?> tableMapper) {
 		MockMultiVMPool mockMultiVMPool =
 			(MockMultiVMPool)MultiVMPoolUtil.getMultiVMPool();
 

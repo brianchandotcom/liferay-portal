@@ -42,7 +42,7 @@ public class ConcurrentReferenceKeyHashMapTest
 		new CodeCoverageAssertor();
 
 	@Test
-	public void testAutoRemove() throws Exception {
+	public void testAutoRemove() throws InterruptedException {
 		System.setProperty(
 			FinalizeManager.class.getName() + ".thread.enabled",
 			StringPool.FALSE);

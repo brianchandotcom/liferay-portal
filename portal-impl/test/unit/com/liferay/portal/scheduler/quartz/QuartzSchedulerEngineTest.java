@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
@@ -91,7 +92,7 @@ import org.quartz.spi.JobFactory;
 public class QuartzSchedulerEngineTest {
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws SchedulerException {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
@@ -653,7 +654,7 @@ public class QuartzSchedulerEngineTest {
 
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
-	public void testUpdate3() throws Exception {
+	public void testUpdate3() throws SchedulerException {
 		MockScheduler mockScheduler =
 			(MockScheduler)ReflectionTestUtil.getFieldValue(
 				_quartzSchedulerEngine, "_memoryScheduler");

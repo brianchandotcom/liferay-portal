@@ -60,7 +60,7 @@ public class SPIRegistryImplTest {
 		new CodeCoverageAssertor();
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		_spiRegistryImpl = new SPIRegistryImpl();
 
 		_spiRegistryImpl.setErrorSPI(new ErrorSPI());

@@ -191,7 +191,7 @@ public class SPIClassPathContextListenerTest {
 	}
 
 	@Test
-	public void testClassPathGeneration() throws Exception {
+	public void testClassPathGeneration() throws SecurityException {
 		CaptureHandler captureHandler = null;
 
 		try {
@@ -325,7 +325,7 @@ public class SPIClassPathContextListenerTest {
 	}
 
 	@Test
-	public void testRegistration() throws Exception {
+	public void testRegistration() throws SecurityException {
 
 		// Register
 

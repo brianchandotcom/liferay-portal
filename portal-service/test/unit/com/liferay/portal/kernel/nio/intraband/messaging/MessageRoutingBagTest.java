@@ -113,7 +113,7 @@ public class MessageRoutingBagTest {
 	}
 
 	@Test
-	public void testManualSerialization() throws Exception {
+	public void testManualSerialization() throws ClassNotFoundException {
 		Message message = new Message();
 
 		String destinationName = "destinationName";
@@ -174,7 +174,7 @@ public class MessageRoutingBagTest {
 	}
 
 	@Test
-	public void testMessageAssociation() throws Exception {
+	public void testMessageAssociation() {
 		Message message = new Message();
 
 		MessageRoutingBag messageRoutingBag = new MessageRoutingBag(

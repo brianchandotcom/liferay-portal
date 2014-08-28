@@ -36,7 +36,7 @@ public class AsyncBrokerTest {
 		new CodeCoverageAssertor();
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		_defaultNoticeableFutures =
 			(ConcurrentMap<String, DefaultNoticeableFuture<String>>)
 				ReflectionTestUtil.getFieldValue(

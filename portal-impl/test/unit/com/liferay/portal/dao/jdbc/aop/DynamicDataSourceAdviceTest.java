@@ -114,7 +114,7 @@ public class DynamicDataSourceAdviceTest {
 	}
 
 	@Test
-	public void testAnnotationType() throws Exception {
+	public void testAnnotationType() {
 		MasterDataSource masterDataSource =
 			(MasterDataSource)ReflectionTestUtil.getFieldValue(
 				DynamicDataSourceAdvice.class, "_nullMasterDataSource");

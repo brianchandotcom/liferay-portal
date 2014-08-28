@@ -389,7 +389,7 @@ public class IntrabandBridgeDestinationTest {
 		Assert.assertNull(message.get(_RECEIVE_KEY));
 	}
 
-	private static void _installSPIs(SPI... spis) throws Exception {
+	private static void _installSPIs(SPI... spis) throws RemoteException {
 		Map<String, Object> spiProviderContainers =
 			(Map<String, Object>)ReflectionTestUtil.getFieldValue(
 				MPIHelperUtil.class, "_spiProviderContainers");

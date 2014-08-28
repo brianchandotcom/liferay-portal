@@ -43,7 +43,7 @@ public class ValidatorTest extends PowerMockito {
 	}
 
 	@Test
-	public void testIsDomain() throws Exception {
+	public void testIsDomain() {
 
 		// 来锐.com, живот.рс
 
@@ -549,8 +549,7 @@ public class ValidatorTest extends PowerMockito {
 	}
 
 	protected void testIsValidByMethodName(
-			String methodName, String[] params, boolean valid)
-		throws Exception {
+		String methodName, String[] params, boolean valid) {
 
 		for (String param : params) {
 			Assert.assertEquals(
@@ -562,22 +561,18 @@ public class ValidatorTest extends PowerMockito {
 	}
 
 	protected void testValidEmailAddreses(
-			String[] emailAddresses, boolean valid)
-		throws Exception {
+		String[] emailAddresses, boolean valid) {
 
 		testIsValidByMethodName("isEmailAddress", emailAddresses, valid);
 	}
 
 	protected void testValidFileExtensions(
-			String[] fileExtensions, boolean valid)
-		throws Exception {
+		String[] fileExtensions, boolean valid) {
 
 		testIsValidByMethodName("isFileExtension", fileExtensions, valid);
 	}
 
-	protected void testValidFileNames(String[] fileNames, boolean valid)
-		throws Exception {
-
+	protected void testValidFileNames(String[] fileNames, boolean valid) {
 		testIsValidByMethodName("isFileName", fileNames, valid);
 	}
 
@@ -592,31 +587,27 @@ public class ValidatorTest extends PowerMockito {
 		}
 	}
 
-	protected void testValidHostNames(String[] hostNames, boolean valid)
-		throws Exception {
-
+	protected void testValidHostNames(String[] hostNames, boolean valid) {
 		testIsValidByMethodName("isHostName", hostNames, valid);
 	}
 
-	protected void testValidIPv4Addresses(String[] iPv4Addresses, boolean valid)
-		throws Exception {
+	protected void testValidIPv4Addresses(
+		String[] iPv4Addresses, boolean valid) {
 
 		testIsValidByMethodName("isIPv4Address", iPv4Addresses, valid);
 	}
 
-	protected void testValidIPv6Addresses(String[] iPv6Addresses, boolean valid)
-		throws Exception {
+	protected void testValidIPv6Addresses(
+		String[] iPv6Addresses, boolean valid) {
 
 		testIsValidByMethodName("isIPv6Address", iPv6Addresses, valid);
 	}
 
-	protected void testValidUris(String[] uris, boolean valid)
-		throws Exception {
-
+	protected void testValidUris(String[] uris, boolean valid) {
 		testIsValidByMethodName("isUri", uris, valid);
 	}
 
-	protected void testValidUrl(String[] urls, boolean valid) throws Exception {
+	protected void testValidUrl(String[] urls, boolean valid) {
 		testIsValidByMethodName("isUrl", urls, valid);
 	}
 

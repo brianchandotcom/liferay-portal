@@ -33,12 +33,12 @@ public class CollectorOutputProcessorTest extends BaseOutputProcessorTestCase {
 		new CodeCoverageAssertor();
 
 	@Test
-	public void testCollectFail() throws Exception {
+	public void testCollectFail() {
 		testFailToRead(new CollectorOutputProcessor());
 	}
 
 	@Test
-	public void testCollectSuccess() throws Exception, ProcessException {
+	public void testCollectSuccess() throws ProcessException {
 		CollectorOutputProcessor collectorOutputProcessor =
 			new CollectorOutputProcessor();
 

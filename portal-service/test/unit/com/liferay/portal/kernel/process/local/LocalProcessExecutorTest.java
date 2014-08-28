@@ -1355,7 +1355,7 @@ public class LocalProcessExecutorTest {
 		return builder.build();
 	}
 
-	private static Thread _getHeartbeatThread(boolean remove) throws Exception {
+	private static Thread _getHeartbeatThread(boolean remove) {
 		AtomicReference<? extends Thread> heartbeatThreadReference =
 			(AtomicReference<? extends Thread>)ReflectionTestUtil.getFieldValue(
 				ProcessContext.class, "_heartbeatThreadReference");
@@ -2104,7 +2104,7 @@ public class LocalProcessExecutorTest {
 
 	private static class NPEOOSShutdownHook implements ShutdownHook {
 
-		public NPEOOSShutdownHook() throws Exception {
+		public NPEOOSShutdownHook() {
 			ProcessOutputStream processOutputStream =
 				ProcessContext.getProcessOutputStream();
 

@@ -253,9 +253,8 @@ public class MessageDatagramReceiveHandlerTest {
 	}
 
 	protected void assertMessageRoutingBagEquals(
-			MessageRoutingBag expectedMessageRoutingBag,
-			MessageRoutingBag actualMessageRoutingBag)
-		throws Exception {
+		MessageRoutingBag expectedMessageRoutingBag,
+		MessageRoutingBag actualMessageRoutingBag) {
 
 		Assert.assertEquals(
 			expectedMessageRoutingBag.getDestinationName(),

@@ -60,7 +60,7 @@ public class SecureRandomUtilTest {
 			new Callable<Long>() {
 
 				@Override
-				public Long call() throws Exception {
+				public Long call() {
 					return reload();
 				}
 
@@ -95,7 +95,7 @@ public class SecureRandomUtilTest {
 	}
 
 	@Test
-	public void testInitialization() throws Exception {
+	public void testInitialization() {
 		System.setProperty(_KEY_BUFFER_SIZE, "10");
 
 		Assert.assertEquals(
@@ -110,7 +110,7 @@ public class SecureRandomUtilTest {
 	}
 
 	@Test
-	public void testNextBoolean() throws Exception {
+	public void testNextBoolean() {
 
 		// First load
 
@@ -156,7 +156,7 @@ public class SecureRandomUtilTest {
 	}
 
 	@Test
-	public void testNextByte() throws Exception {
+	public void testNextByte() {
 
 		// First load
 
@@ -183,7 +183,7 @@ public class SecureRandomUtilTest {
 	}
 
 	@Test
-	public void testNextDouble() throws Exception {
+	public void testNextDouble() {
 
 		// First load
 
@@ -231,7 +231,7 @@ public class SecureRandomUtilTest {
 	}
 
 	@Test
-	public void testNextFloat() throws Exception {
+	public void testNextFloat() {
 
 		// First load
 
@@ -279,7 +279,7 @@ public class SecureRandomUtilTest {
 	}
 
 	@Test
-	public void testNextInt() throws Exception {
+	public void testNextInt() {
 
 		// First load
 
@@ -324,7 +324,7 @@ public class SecureRandomUtilTest {
 	}
 
 	@Test
-	public void testNextLong() throws Exception {
+	public void testNextLong() {
 
 		// First load
 
@@ -370,19 +370,19 @@ public class SecureRandomUtilTest {
 		}
 	}
 
-	protected long getFirstLong() throws Exception {
+	protected long getFirstLong() {
 		byte[] bytes = (byte[])ReflectionTestUtil.getFieldValue(
 			SecureRandomUtil.class, "_bytes");
 
 		return BigEndianCodec.getLong(bytes, 0);
 	}
 
-	protected long getGapSeed() throws Exception {
+	protected long getGapSeed() {
 		return (Long)ReflectionTestUtil.getFieldValue(
 			SecureRandomUtil.class, "_gapSeed");
 	}
 
-	protected SecureRandom installPredictableRandom() throws Exception {
+	protected SecureRandom installPredictableRandom() {
 		SecureRandom predictableRandom = new PredictableRandom();
 
 		ReflectionTestUtil.setFieldValue(
@@ -396,7 +396,7 @@ public class SecureRandomUtilTest {
 		return predictableRandom;
 	}
 
-	protected long reload() throws Exception {
+	protected long reload() {
 		return (Long)ReflectionTestUtil.invoke(
 			SecureRandomUtil.class, "_reload", new Class<?>[0]);
 	}

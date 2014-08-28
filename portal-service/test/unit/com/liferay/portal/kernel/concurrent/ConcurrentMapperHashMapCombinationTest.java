@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
 public class ConcurrentMapperHashMapCombinationTest {
 
 	@Test
-	public void testIdentityKeyWeakValue() throws Exception {
+	public void testIdentityKeyWeakValue() throws InterruptedException {
 		System.setProperty(
 			FinalizeManager.class.getName() + ".thread.enabled",
 			StringPool.FALSE);
@@ -82,7 +82,7 @@ public class ConcurrentMapperHashMapCombinationTest {
 	}
 
 	@Test
-	public void testSoftKeyWeakValue() throws Exception {
+	public void testSoftKeyWeakValue() throws InterruptedException {
 		System.setProperty(
 			FinalizeManager.class.getName() + ".thread.enabled",
 			StringPool.FALSE);

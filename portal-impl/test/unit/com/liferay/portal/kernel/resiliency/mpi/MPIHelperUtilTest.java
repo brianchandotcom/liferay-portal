@@ -728,7 +728,7 @@ public class MPIHelperUtilTest {
 
 	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
 	@Test
-	public void testSPIRegistration() throws Exception {
+	public void testSPIRegistration() throws SecurityException {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			MPIHelperUtil.class.getName(), Level.WARNING);
 
@@ -1123,7 +1123,7 @@ public class MPIHelperUtilTest {
 		}
 	}
 
-	private static MPI _getMPIImpl() throws Exception {
+	private static MPI _getMPIImpl() {
 		MPI mpiImpl = (MPI)ReflectionTestUtil.getFieldValue(
 			MPIHelperUtil.class, "_mpiImpl");
 

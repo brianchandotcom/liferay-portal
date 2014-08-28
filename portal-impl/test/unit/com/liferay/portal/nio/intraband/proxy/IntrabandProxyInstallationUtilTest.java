@@ -106,7 +106,7 @@ public class IntrabandProxyInstallationUtilTest {
 
 	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
 	@Test
-	public void testInstallSkeletonLocally() throws Exception {
+	public void testInstallSkeletonLocally() {
 		IntrabandProxyInstallationUtil.checkProxyMethodSignatures(
 			IntrabandProxyInstallationUtil.installSkeleton(
 				TestClass.class, _targetLocator),

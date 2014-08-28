@@ -2,17 +2,146 @@ AUI.add(
 	'liferay-ddm-form',
 	function(A) {
 
+		var BOOLEAN_TYPE = 'Boolean';
+
 		var CHECKBOX_TYPE = 'checkbox';
 
 		var INSTANCE_STR = '_INSTANCE_';
 
 		var Lang = A.Lang;
 
+		var RADIO_TYPE = 'Radio';
+
 		var SELECTOR_REPEAT_BUTTONS = '.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button';
 
 		var TPL_ADD_REPEATABLE = '<a class="lfr-ddm-repeatable-add-button icon-plus-sign" href="javascript:;"></a>';
 
 		var TPL_DELETE_REPEATABLE = '<a class="lfr-ddm-repeatable-delete-button icon-minus-sign" href="javascript:;"></a>';
+
+		var Field = A.Component.create(
+			{
+				ATTRS: {
+					nodeWrapper: {
+						setter: A.one
+					},
+
+					portletNamespace: {
+						value: ''
+					}
+				},
+
+				childNode: {},
+
+				EXTENDS: A.Base,
+
+				NAME: 'liferay-ddm-field',
+
+				prototype: {
+					initializer: function() {
+					},
+
+					getChildNode: function() {
+						var instance = this;
+
+						var id = instance._getId();
+
+						var name = instance.getName();
+
+						var nodeWrapper = instance.get('nodeWrapper');
+
+						if (!instance.childNode) {
+							if (name === RADIO_TYPE) {
+								instance.childNode = nodeWrapper.all('[name="' + id + '"]');
+							}
+							else {
+								instance.childNode = nodeWrapper.one('#' + id);
+							}
+						}
+
+						return instance.childNode;
+					},
+
+					getName: function() {
+						var instance = this;
+
+						return instance.get('nodeWrapper').getData('fieldName');
+					},
+
+					getNamespace: function() {
+						var instance = this;
+
+						return instance.get('nodeWrapper').getData('fieldNamespace');
+					},
+
+					getValue: function(nodes) {
+						var instance = this;
+
+						var name = instance.getName();
+
+						var value;
+
+						if (name === RADIO_TYPE) {
+							A.each(
+								nodes,
+								function(node) {
+									if (node.get('checked') === true) {
+										value = node.get('value');
+									}
+								}
+							);
+
+						}
+						else if (name === BOOLEAN_TYPE) {
+							value = nodes.get('checked').toString();
+						}
+						else {
+							value = Lang.String.unescapeHTML(nodes.get('value'));
+						}
+
+						return value;
+					},
+
+					setValue: function(fields, value) {
+						var instance = this;
+
+						var name = instance.getName();
+
+						if (name === RADIO_TYPE) {
+							A.each(
+								fields,
+								function(field) {
+									if (field.get('value') === value) {
+										field.set('checked', true);
+									}
+									else {
+										field.set('checked', false);
+									}
+								}
+							);
+
+						}
+						else if (name === BOOLEAN_TYPE) {
+							fields.set('checked', value === 'true' ? true : false);
+						}
+						else {
+							fields.set('value', value);
+						}
+					},
+
+					_getId: function() {
+						var instance = this;
+
+						var name = instance.getName();
+
+						var namespace = instance.getNamespace();
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						return portletNamespace + name + namespace;
+					}
+				}
+			}
+		);
 
 		var Form = A.Component.create(
 			{
@@ -87,7 +216,9 @@ AUI.add(
 
 						instance.form = container.ancestor('form');
 
-						instance.form.on('submit', instance._onSubmitForm, instance);
+						if (instance.form) {
+							instance.form.on('submit', instance._onSubmitForm, instance);
+						}
 
 						var hoverHandler = instance._onHoverRepeatableButton;
 
@@ -95,8 +226,10 @@ AUI.add(
 
 						var translationManager = instance.translationManager;
 
-						translationManager.on('editingLocaleChange', instance._onEditingLocaleChange, instance);
-						translationManager.on('deleteAvailableLocale', instance._onDeleteAvailableLocale, instance);
+						if (translationManager) {
+							translationManager.on('editingLocaleChange', instance._onEditingLocaleChange, instance);
+							translationManager.on('deleteAvailableLocale', instance._onDeleteAvailableLocale, instance);
+						}
 					},
 
 					syncUI: function() {
@@ -355,22 +488,27 @@ AUI.add(
 						A.each(
 							fields,
 							function(field) {
-								var fieldName = field.getData('fieldName');
+								var field = new Field(
+									{
+										nodeWrapper: field,
+										portletNamespace: portletNamespace
+									}
+								);
 
-								var fieldNamespace = field.getData('fieldNamespace');
+								var fieldName = field.getName();
 
-								var id = '#' + portletNamespace + fieldName + fieldNamespace;
+								var fieldNamespace = field.getNamespace();
 
 								var instanceId = fieldNamespace.split(INSTANCE_STR)[1];
 
 								var isFieldLocalizable;
 
-								var fieldNode = A.one(id);
+								var childNode = field.getChildNode();
 
 								var value;
 
-								if (fieldNode) {
-									value = instance._getFieldValue(fieldNode);
+								if (childNode) {
+									value = field.getValue(childNode);
 
 									isFieldLocalizable = instance._isFieldLocalizable(fieldName, definitionFields);
 
@@ -431,13 +569,19 @@ AUI.add(
 					_syncFieldsTreeUI: function() {
 						var instance = this;
 
+						var defaultLocale = instance.translationManager.get('defaultLocale');
+
+						var availableLocales = instance.translationManager.get('availableLocales');
+
+						availableLocales.push(defaultLocale);
+
 						var ddmFormValuesInput = instance.get('ddmFormValuesInput');
 
 						var fieldsList = instance._getFieldsList(null, null, true);
 
 						var ddmFormValuesJSON = {
-							availableLanguageIds: instance.translationManager.get('availableLocales'),
-							defaultLanguageId: instance.translationManager.get('defaultLocale'),
+							availableLanguageIds: availableLocales,
+							defaultLanguageId: defaultLocale,
 							fieldValues: instance._getFieldValues(fieldsList, false)
 						};
 
@@ -456,23 +600,28 @@ AUI.add(
 						A.each(
 							fields,
 							function(field) {
-								var fieldName = field.getData('fieldName');
+								var field = new Field(
+									{
+										nodeWrapper: field,
+										portletNamespace: portletNamespace
+									}
+								);
 
-								var fieldNamespace = field.getData('fieldNamespace');
+								var fieldName = field.getName();
 
-								var id = '#' + portletNamespace + fieldName + fieldNamespace;
+								var fieldNamespace = field.getNamespace();
 
 								var instanceId = fieldNamespace.split(INSTANCE_STR)[1];
 
 								var fieldMap = map[instanceId];
 
-								var fieldNode = A.one(id);
+								var childNode = field.getChildNode();
 
 								var value;
 
-								if (fieldNode && fieldMap) {
+								if (childNode && fieldMap) {
 									value = fieldMap[locale] || '';
-									fieldNode.set('value', value);
+									field.setValue(childNode, value);
 								}
 							}
 						);

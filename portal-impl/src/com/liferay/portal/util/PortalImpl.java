@@ -820,7 +820,7 @@ public class PortalImpl implements Portal {
 			domain = domain.substring(0, pos);
 		}
 
-		if (isValidVirtualHost(domain) || isValidVirtualHostname(domain)) {
+		if (isValidPortalDomain(domain)) {
 			return url;
 		}
 
@@ -5931,32 +5931,8 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getValidPortalDomain(long companyId, String domain) {
-		if (Validator.isHostName(domain)) {
-			if (isValidVirtualHost(domain)) {
-				return domain;
-			}
-
-			if (StringUtil.equalsIgnoreCase(
-					domain, PropsValues.WEB_SERVER_HOST)) {
-
-				return PropsValues.WEB_SERVER_HOST;
-			}
-
-			if (isValidVirtualHostname(domain)) {
-				return domain;
-			}
-
-			if (StringUtil.equalsIgnoreCase(
-					domain, getCDNHostHttp(companyId))) {
-
-				return domain;
-			}
-
-			if (StringUtil.equalsIgnoreCase(
-					domain, getCDNHostHttps(companyId))) {
-
-				return domain;
-			}
+		if (isValidPortalDomain(companyId, domain)) {
+			return domain;
 		}
 
 		if (_log.isWarnEnabled()) {
@@ -8304,7 +8280,9 @@ public class PortalImpl implements Portal {
 		Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay,
 		boolean canonicalURL) {
 
-		if (!canonicalURL || isValidVirtualHost(themeDisplay.getServerName())) {
+		if (!canonicalURL ||
+			isValidPortalDomain(themeDisplay.getServerName())) {
+
 			return false;
 		}
 
@@ -8323,6 +8301,39 @@ public class PortalImpl implements Portal {
 		}
 
 		return true;
+	}
+
+	protected boolean isValidPortalDomain(long companyId, String domain) {
+		if (!Validator.isHostName(domain)) {
+			return false;
+		}
+
+		if (isValidVirtualHost(domain)) {
+			return true;
+		}
+
+		if (StringUtil.equalsIgnoreCase(domain, PropsValues.WEB_SERVER_HOST)) {
+			return true;
+		}
+
+		if (isValidVirtualHostname(domain)) {
+			return true;
+		}
+
+		if (StringUtil.equalsIgnoreCase(domain, getCDNHostHttp(companyId))) {
+			return true;
+		}
+
+		if (StringUtil.equalsIgnoreCase(domain, getCDNHostHttps(companyId))) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isValidPortalDomain(String domain) {
+		long companyId = CompanyThreadLocal.getCompanyId();
+		return isValidPortalDomain(companyId, domain);
 	}
 
 	protected boolean isValidVirtualHost(String domain) {

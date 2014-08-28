@@ -1,6 +1,5 @@
 @import "aui/alloy-font-awesome/scss/variables";
 @import "compass";
-@import "mixins";
 
 /* ---------- Dragging/sorting indicators ---------- */
 
@@ -786,59 +785,29 @@
 	.lfr-portlet-title-editable-content {
 		padding: 0;
 
-		.combobox-content {
-			.field-content {
-				vertical-align: middle;
+		.field-input {
+			margin-bottom: 0;
+		}
 
-				@include respond-to(phone, tablet) {
-					vertical-align: top;
-				}
+		.textfield-label {
+			display: none;
+		}
 
-				.field-input-text {
-					display: block;
-					margin-bottom: 0;
-					margin-top: -3px;
+		.btn-toolbar-content {
+			display: inline-block;
+			margin-top: 0;
+			vertical-align: top;
+		}
 
-					@include respond-to(phone, tablet) {
-						margin-top: 2px;
-					}
-				}
-			}
+		.btn-group {
+			margin-top: 0;
+		}
 
-			.field-label.textfield-label {
-				display: none;
-			}
-
-			.btn-toolbar-content {
-				display: inline-block;
-				margin-left: -2px;
-				vertical-align: middle;
-
-				.btn-group {
-					margin-top: -2px;
-
-					@include respond-to(phone, tablet) {
-						margin-top: -3px;
-					}
-
-					.btn {
-						float: none;
-
-						@include respond-to(phone, tablet) {
-							display: inline-block;
-						}
-					}
-				}
-			}
-
-			.toolbar-content {
-				margin-top: 0;
-				vertical-align: top;
-
-				.btn-group {
-					margin-top: 0;
-				}
-			}
+		.btn {
+			display: inline-block;
+			float: none;
+			margin-top: 0;
+			width: auto;
 		}
 	}
 }

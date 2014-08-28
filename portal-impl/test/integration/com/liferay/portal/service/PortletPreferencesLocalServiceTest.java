@@ -329,7 +329,7 @@ public class PortletPreferencesLocalServiceTest {
 		throws Exception {
 
 		PortletPreferencesTestUtil.addLayoutPortletPreferences(
-				_layout, _portlet);
+			_layout, _portlet);
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			_layout.getCompanyId(), String.valueOf(_PORTLET_ID + 1));

@@ -376,9 +376,7 @@ public class ServiceBuilder {
 		return humanName;
 	}
 
-	public static void writeFile(File file, String content)
-		throws IOException {
-
+	public static void writeFile(File file, String content) throws IOException {
 		writeFile(file, content, AUTHOR);
 	}
 
@@ -1128,8 +1126,7 @@ public class ServiceBuilder {
 
 		String refPackageDir = StringUtil.replace(refPackage, ".", "/");
 
-		String refFileName =
-			_implDir + "/" + refPackageDir + "/service.xml";
+		String refFileName = _implDir + "/" + refPackageDir + "/service.xml";
 
 		File refFile = new File(refFileName);
 
@@ -1143,8 +1140,7 @@ public class ServiceBuilder {
 
 			FileUtil.write(
 				refFileName,
-				StringUtil.read(
-					classLoader, refPackageDir + "/service.xml"));
+				StringUtil.read(classLoader, refPackageDir + "/service.xml"));
 
 			useTempFile = true;
 		}
@@ -2914,8 +2910,7 @@ public class ServiceBuilder {
 				_outputPath + "/service/base/" + entity.getName() +
 					_getSessionTypeName(sessionType) + "ServiceBaseImpl.java");
 
-			methods = ArrayUtil.append(
-				parentJavaClass.getMethods(), methods);
+			methods = ArrayUtil.append(parentJavaClass.getMethods(), methods);
 		}
 
 		Map<String, Object> context = _getContext();
@@ -3086,8 +3081,8 @@ public class ServiceBuilder {
 		}
 
 		File file = new File(
-			_implDir + "/" + StringUtil.replace(_propsUtil, ".", "/")
-				+ ".java");
+			_implDir + "/" + StringUtil.replace(_propsUtil, ".", "/") +
+				".java");
 
 		if (file.exists()) {
 			return;
@@ -3955,7 +3950,7 @@ public class ServiceBuilder {
 					sb.append("LONG");
 				}
 				else if (colType.equals("Map")) {
-						sb.append("TEXT");
+					sb.append("TEXT");
 				}
 				else if (colType.equals("String")) {
 					Map<String, String> hints = ModelHintsUtil.getHints(
@@ -4135,9 +4130,7 @@ public class ServiceBuilder {
 				sb.append(" default 0");
 			}
 
-			if (((i + 1) != regularColList.size()) ||
-				entity.hasCompoundPK()) {
-
+			if (((i + 1) != regularColList.size()) || entity.hasCompoundPK()) {
 				sb.append(",");
 			}
 
@@ -4585,8 +4578,7 @@ public class ServiceBuilder {
 					"Util;");
 
 			content = StringUtil.replace(
-				content,
-				"package " + _packagePath + ".service.persistence;",
+				content, "package " + _packagePath + ".service.persistence;",
 				sb.toString());
 
 			FileUtil.write(
@@ -4914,7 +4906,7 @@ public class ServiceBuilder {
 				String finderColArrayableOperator =
 					GetterUtil.getString(
 						finderColumnElement.attributeValue(
-						"arrayable-operator"));
+							"arrayable-operator"));
 
 				EntityColumn col = Entity.getColumn(finderColName, columnList);
 
@@ -5254,8 +5246,7 @@ public class ServiceBuilder {
 		_TPL_ROOT + "service_clp_serializer.ftl";
 	private String _tplServiceHttp = _TPL_ROOT + "service_http.ftl";
 	private String _tplServiceImpl = _TPL_ROOT + "service_impl.ftl";
-	private String _tplServicePropsUtil =
-		_TPL_ROOT + "service_props_util.ftl";
+	private String _tplServicePropsUtil = _TPL_ROOT + "service_props_util.ftl";
 	private String _tplServiceSoap = _TPL_ROOT + "service_soap.ftl";
 	private String _tplServiceUtil = _TPL_ROOT + "service_util.ftl";
 	private String _tplServiceWrapper = _TPL_ROOT + "service_wrapper.ftl";

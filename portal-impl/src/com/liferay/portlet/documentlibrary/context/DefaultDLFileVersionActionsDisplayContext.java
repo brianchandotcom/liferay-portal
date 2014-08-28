@@ -117,7 +117,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 	@Override
 	public boolean isAssetMetadataVisible() {
-		String portletId = _portletDisplay.getId();
+		String portletId = _portletDisplay.getPortletName();
 
 		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
 			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||

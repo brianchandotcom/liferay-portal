@@ -44,14 +44,15 @@ public class WebDriverHelper {
 		return !webElements.isEmpty();
 	}
 
-	public void makeVisible(String locator) {
-		WebElement bodyWebElement = getWebElement("//body");
+	public static void makeVisible(WebDriver webDriver, String locator) {
+		WebElement bodyWebElement = getWebElement(webDriver, "//body");
 
 		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
 
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
 
-		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)webDriver;
+		JavascriptExecutor javascriptExecutor = (
+			JavascriptExecutor)wrappedWebDriver;
 
 		StringBundler sb = new StringBundler(4);
 
@@ -63,7 +64,7 @@ public class WebDriverHelper {
 		sb.append("element.style.opacity = '1';");
 		sb.append("element.style.visibility = 'visible';");
 
-		WebElement locatorWebElement = getWebElement(locator);
+		WebElement locatorWebElement = getWebElement(webDriver, locator);
 
 		javascriptExecutor.executeScript(sb.toString(), locatorWebElement);
 	}

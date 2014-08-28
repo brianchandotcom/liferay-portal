@@ -159,7 +159,6 @@
 
 	<command name="populateFieldTextBox">
 		<var name="fieldName" value="${fieldName?replace(' ', '_')}" />
-
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute action="PGKaleoformsSubmitnew#type" locator-key1="NEW_PROCESS_FIELDS_TEXT_BOX_FIELD" value1="${ddlRecordFieldData}" />

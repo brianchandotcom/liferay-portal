@@ -16,6 +16,7 @@ package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.struts.path.AuthPublicPath;
+import com.liferay.portal.kernel.struts.path.DefaultAuthPublicPath;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -108,21 +109,6 @@ public class AuthPublicPathRegistry {
 			AuthPublicPath.class, new AuthPublicTrackerCustomizer());
 
 		_serviceTracker.open();
-	}
-
-	private static class DefaultAuthPublicPath implements AuthPublicPath {
-
-		public DefaultAuthPublicPath(String path) {
-			_path = path;
-		}
-
-		@Override
-		public String path() {
-			return _path;
-		}
-
-		private String _path;
-
 	}
 
 }

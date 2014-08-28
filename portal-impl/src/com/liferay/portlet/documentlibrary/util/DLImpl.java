@@ -741,6 +741,20 @@ public class DLImpl implements DL {
 	}
 
 	@Override
+	public String getFilename(String title, String extension) {
+		String filename = StringUtil.replace(
+			title, StringPool.SLASH, StringPool.UNDERLINE);
+
+		if (Validator.isNotNull(extension) &&
+			!filename.endsWith(StringPool.PERIOD + extension)) {
+
+			filename += StringPool.PERIOD + extension;
+		}
+
+		return filename;
+	}
+
+	@Override
 	public String getGenericName(String extension) {
 		String genericName = _genericNames.get(extension);
 

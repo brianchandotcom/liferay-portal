@@ -64,7 +64,7 @@ public abstract class BaseWebDriverImpl
 				_sikuliImagesDirName, "linux", "windows");
 		}
 
-		if (!TestPropsValues.MOBILE_DEVICE_ENABLED) {
+		if (!TestPropsValues.TEST_MOBILE_DEVICE_ENABLED) {
 			WebDriver.Options options = webDriver.manage();
 
 			WebDriver.Window window = options.window();

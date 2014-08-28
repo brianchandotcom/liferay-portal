@@ -99,7 +99,7 @@ public class SeleniumUtil extends TestPropsValues {
 			}
 		}
 		else if (SELENIUM_IMPLEMENTATION.equals(WebDriver.class.getName())) {
-			if (MOBILE_DEVICE_ENABLED) {
+			if (TEST_MOBILE_DEVICE_ENABLED) {
 				if (SELENIUM_LOGGER_ENABLED) {
 					_selenium = _wrapWithLoggerHandler(
 						new AppiumWebDriverImpl(projectDir, portalURL));

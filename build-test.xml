@@ -1423,7 +1423,7 @@ create database lportal2 character set utf8;</echo>
 	<target name="generate-test-properties" depends="check-config">
 		<property file="${project.dir}/test.generated.properties" />
 
-		<var name="mobile.device.type" unset="true" />
+		<var name="test.mobile.device.type" unset="true" />
 
 		<if>
 			<contains string="${test.class}" substring="#" />
@@ -1494,8 +1494,8 @@ create database lportal2 character set utf8;</echo>
 		<property file="${project.dir}/test.${env.HOSTNAME}.properties" />
 		<property file="${project.dir}/test.properties" />
 
-		<propertycopy from="mobile.device.resolution[${mobile.device.type}]" name="mobile.device.resolution" />
-		<propertycopy from="mobile.device.user.agent[${mobile.device.type}]" name="mobile.device.user.agent" />
+		<propertycopy from="test.mobile.device.resolution[${test.mobile.device.type}]" name="test.mobile.device.resolution" />
+		<propertycopy from="test.mobile.device.user.agent[${test.mobile.device.type}]" name="test.mobile.device.user.agent" />
 	</target>
 
 	<target name="kill-spi">
@@ -2267,12 +2267,12 @@ tck.url=true</echo>
 		</if>
 
 		<if>
-			<equals arg1="${mobile.device.enabled}" arg2="true" />
+			<equals arg1="${test.mobile.device.enabled}" arg2="true" />
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					mobile.device.enabled=${mobile.device.enabled}
-					mobile.device.resolution=${mobile.device.resolution}
-					mobile.device.user.agent=${mobile.device.user.agent}
+					test.mobile.device.enabled=${test.mobile.device.enabled}
+					test.mobile.device.resolution=${test.mobile.device.resolution}
+					test.mobile.device.user.agent=${test.mobile.device.user.agent}
 				</echo>
 			</then>
 		</if>
@@ -2379,7 +2379,7 @@ tck.url=true</echo>
 				</echo>
 			</then>
 			<elseif>
-				<equals arg1="${mobile.device.enabled}" arg2="true" />
+				<equals arg1="${test.mobile.device.enabled}" arg2="true" />
 				<then>
 					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 						portal.url=http://${ip.address}:8080
@@ -3341,7 +3341,7 @@ if (ppstate.equals("normal")) {
 		</if>
 
 		<if>
-			<equals arg1="${mobile.device.enabled}" arg2="true" />
+			<equals arg1="${test.mobile.device.enabled}" arg2="true" />
 			<then>
 				<antcall target="prepare-android-device" />
 
@@ -3610,7 +3610,7 @@ if (ppstate.equals("normal")) {
 		</if>
 
 		<if>
-			<equals arg1="${mobile.device.enabled}" arg2="true" />
+			<equals arg1="${test.mobile.device.enabled}" arg2="true" />
 			<then>
 				<antcall target="stop-android-device" />
 

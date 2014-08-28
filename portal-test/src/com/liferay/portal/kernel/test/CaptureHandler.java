@@ -42,7 +42,7 @@ public class CaptureHandler extends Handler {
 	}
 
 	@Override
-	public void close() throws SecurityException {
+	public void close() {
 		_logRecords.clear();
 
 		_logger.removeHandler(this);

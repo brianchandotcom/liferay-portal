@@ -60,7 +60,7 @@ public class AntivirusScannerException extends PortalException {
 			return "a-virus-was-detected-in-the-file";
 		}
 
-		return null;
+		return "an-error-occurred-while-executing-the-antivirus";
 	}
 
 	private int _type;

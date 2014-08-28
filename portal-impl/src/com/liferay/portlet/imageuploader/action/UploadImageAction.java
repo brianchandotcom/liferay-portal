@@ -51,6 +51,7 @@ import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
+import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 
 import java.awt.image.RenderedImage;
 
@@ -242,7 +243,8 @@ public class UploadImageAction extends PortletAction {
 
 			setForward(actionRequest, "portal.error");
 		}
-		else if (e instanceof FileExtensionException ||
+		else if (e instanceof AntivirusScannerException ||
+				 e instanceof FileExtensionException ||
 				 e instanceof FileSizeException ||
 				 e instanceof ImageTypeException ||
 				 e instanceof NoSuchFileException ||
@@ -257,7 +259,13 @@ public class UploadImageAction extends PortletAction {
 
 				String errorMessage = StringPool.BLANK;
 
-				if (e instanceof FileExtensionException) {
+				if (e instanceof AntivirusScannerException) {
+					AntivirusScannerException ase =
+						(AntivirusScannerException)e;
+
+					errorMessage = themeDisplay.translate(ase.getMessageKey());
+				}
+				else if (e instanceof FileExtensionException) {
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-extension-x",
 						StringUtil.merge(

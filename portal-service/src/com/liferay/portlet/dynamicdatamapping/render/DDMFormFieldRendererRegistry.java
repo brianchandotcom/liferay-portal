@@ -22,8 +22,4 @@ public interface DDMFormFieldRendererRegistry {
 	public DDMFormFieldRenderer getDDMFormFieldRenderer(
 		String ddmFormFieldType);
 
-	public void register(DDMFormFieldRenderer ddmFormFieldRenderer);
-
-	public void unregister(DDMFormFieldRenderer ddmFormFieldRenderer);
-
 }

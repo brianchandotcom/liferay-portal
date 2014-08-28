@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.BackgroundTask;
 
 /**
@@ -46,6 +47,13 @@ public class DelegatingBackgroundTaskExecutor
 	@Override
 	public String handleException(BackgroundTask backgroundTask, Exception e) {
 		return _backgroundTaskExecutor.handleException(backgroundTask, e);
+	}
+
+	@Override
+	public boolean isLocked(BackgroundTask backgroundTask)
+		throws PortalException {
+
+		return _backgroundTaskExecutor.isLocked(backgroundTask);
 	}
 
 	@Override

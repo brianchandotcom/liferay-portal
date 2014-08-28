@@ -323,7 +323,6 @@
 		<execute action="CPDynamicdatalistsListEditrecordtranslation#assertClick" locator-key1="ADD_TRANSLATION_BUTTON" value1="Add Translation" />
 
 		<execute action="CPDynamicdatalistsListEditrecord#selectFrame" value1="relative=top" />
-
 		<execute action="CPDynamicdatalistsListEditrecord#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The changes in your translations will be available once the content is published." />
 	</command>
 

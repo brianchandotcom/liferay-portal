@@ -288,9 +288,7 @@
 		<var name="ddlRecordFieldData" value="Contenido" />
 
 		<execute action="CPDynamicdatalistsListEditrecordtranslation#assertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][1]/input[@value='${ddlRecordFieldData}'])" />
-
 		<execute action="CPDynamicdatalistsListEditrecordtranslation#assertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][2]/input[@value='Content 2'])" />
-
 		<execute action="CPDynamicdatalistsListEditrecordtranslation#assertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][3]/input[@value='${ddlRecordFieldData} 2'])" />
 	</command>
 
@@ -1688,9 +1686,7 @@
 		<var name="ddlRecordFieldData" value="Contenido" />
 
 		<execute action="CPDynamicdatalistsListEditrecordtranslation#assertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][1]/input[@value='${ddlRecordFieldData}'])" />
-
 		<execute action="CPDynamicdatalistsListEditrecordtranslation#assertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][2]/input[@value='${ddlRecordFieldData} 3'])" />
-
 		<execute action="CPDynamicdatalistsListEditrecordtranslation#assertElementNotPresent" locator1="xpath=(//div[@data-fieldname='Text'])[3]" />
 	</command>
 

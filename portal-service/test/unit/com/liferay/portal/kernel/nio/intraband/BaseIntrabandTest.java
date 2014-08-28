@@ -1026,7 +1026,7 @@ public class BaseIntrabandTest {
 	}
 
 	@Test
-	public void testResponseWaiting() throws Exception {
+	public void testResponseWaiting() throws InterruptedException {
 
 		// Add
 

@@ -251,7 +251,7 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 			SetBadPortalInetSocketAddressAdvice.class
 		})
 	@Test
-	public void testErrorLogAndExceptions() throws Exception {
+	public void testErrorLogAndExceptions() throws UnknownHostException {
 		SetBadPortalInetSocketAddressAdvice.setPort(8080);
 
 		PortalUtil portalUtil = new PortalUtil();

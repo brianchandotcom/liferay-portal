@@ -31,6 +31,8 @@ import com.liferay.portal.test.runners.AspectJMockingNewClassLoaderJUnitTestRunn
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+import java.rmi.RemoteException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -115,7 +117,7 @@ public class SPIRegistryImplTest {
 
 	@AdviseWith(adviceClasses = {PortletLocalServiceUtilAdvice.class})
 	@Test
-	public void testRegistration() throws Exception {
+	public void testRegistration() throws RemoteException {
 		PortletLocalServiceUtilAdvice._portletIds = Arrays.asList(
 			"portlet3", "portlet4");
 

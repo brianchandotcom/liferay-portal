@@ -253,7 +253,7 @@ public class QuartzSchedulerEngineTest {
 
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
-	public void testGetQuartzTrigger3() throws Exception {
+	public void testGetQuartzTrigger3() throws SchedulerException {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			QuartzSchedulerEngine.class.getName(), Level.FINE);
 

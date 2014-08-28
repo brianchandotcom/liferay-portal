@@ -209,7 +209,7 @@ public class MPIHelperUtilTest {
 
 	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
 	@Test
-	public void testShutdownFailWithLog() throws Exception {
+	public void testShutdownFailWithLog() throws NoSuchObjectException {
 		UnicastRemoteObject.unexportObject(_getMPIImpl(), true);
 
 		final IOException ioException = new IOException();
@@ -260,7 +260,7 @@ public class MPIHelperUtilTest {
 
 	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
 	@Test
-	public void testShutdownFailWithoutLog() throws Exception {
+	public void testShutdownFailWithoutLog() throws NoSuchObjectException {
 		UnicastRemoteObject.unexportObject(_getMPIImpl(), true);
 
 		final IOException ioException = new IOException();
@@ -293,7 +293,7 @@ public class MPIHelperUtilTest {
 
 	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
 	@Test
-	public void testShutdownSuccess() throws Exception {
+	public void testShutdownSuccess() {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			MPIHelperUtil.class.getName(), Level.ALL);
 
@@ -311,7 +311,7 @@ public class MPIHelperUtilTest {
 
 	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
 	@Test
-	public void testSPIProviderRegistration() throws Exception {
+	public void testSPIProviderRegistration() throws RemoteException {
 
 		// Register SPI provider, null name
 
@@ -728,7 +728,7 @@ public class MPIHelperUtilTest {
 
 	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
 	@Test
-	public void testSPIRegistration() throws SecurityException {
+	public void testSPIRegistration() {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			MPIHelperUtil.class.getName(), Level.WARNING);
 

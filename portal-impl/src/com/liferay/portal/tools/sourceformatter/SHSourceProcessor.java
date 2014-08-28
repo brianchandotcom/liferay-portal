@@ -16,6 +16,8 @@ package com.liferay.portal.tools.sourceformatter;
 
 import java.io.File;
 
+import java.util.List;
+
 /**
  * @author Hugo Huijser
  */
@@ -23,11 +25,13 @@ public class SHSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
-		format("ext/create.sh");
-		format("hooks/create.sh");
-		format("layouttpl/create.sh");
-		format("portlets/create.sh");
-		format("themes/create.sh");
+		String[] includes = new String[] {"**\\*.sh"};
+
+		List<String> fileNames = getFileNames(new String[0], includes);
+
+		for (String fileName : fileNames) {
+			format(fileName);
+		}
 	}
 
 	@Override

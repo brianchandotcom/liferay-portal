@@ -591,6 +591,8 @@ AUI.add(
 					_syncFieldsValues: function(locale) {
 						var instance = this;
 
+						var defaultLocale = instance.translationManager.get('defaultLocale');
+
 						var fields = instance._getFieldsList(null, null, false);
 
 						var map = instance.fieldsLocalizationMap;
@@ -620,7 +622,7 @@ AUI.add(
 								var value;
 
 								if (childNode && fieldMap) {
-									value = fieldMap[locale] || '';
+									value = fieldMap[locale] || fieldMap[defaultLocale];
 									field.setValue(childNode, value);
 								}
 							}

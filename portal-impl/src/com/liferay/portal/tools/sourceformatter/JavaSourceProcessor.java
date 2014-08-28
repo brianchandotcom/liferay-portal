@@ -1551,8 +1551,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			Tuple combinedLines = null;
 			int lineLength = getLineLength(line);
 
-			if (!isExcluded(_lineLengthExclusions, absolutePath, lineCount) &&
-				!line.startsWith("import ") && !line.startsWith("package ") &&
+			if (!line.startsWith("import ") && !line.startsWith("package ") &&
 				!line.matches("\\s*\\*.*")) {
 
 				if (fileName.endsWith("Table.java") &&
@@ -1565,7 +1564,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						 line.contains(" index IX_")) {
 				}
 				else if (lineLength > 80) {
-					if (!isAnnotationParameter(content, trimmedLine)) {
+					if (!isExcluded(
+							_lineLengthExclusions, absolutePath, lineCount) &&
+						!isAnnotationParameter(content, trimmedLine)) {
+
 						processErrorMessage(
 							fileName, "> 80: " + fileName + " " + lineCount);
 					}

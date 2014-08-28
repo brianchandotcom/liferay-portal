@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.List;
 
@@ -33,30 +32,10 @@ import java.util.List;
 public class SQLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	protected void format() throws Exception {
-		String[] includes = new String[] {"**\\sql\\*.sql"};
+	protected String doFormat(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
 
-		List<String> fileNames = getFileNames(new String[0], includes);
-
-		for (String fileName : fileNames) {
-			format(fileName);
-		}
-	}
-
-	@Override
-	protected String format(String fileName) throws Exception {
-		File file = new File(BASEDIR + fileName);
-
-		String content = fileUtil.read(file);
-
-		String newContent = formatSQL(content);
-
-		compareAndAutoFixContent(file, fileName, content, newContent);
-
-		return newContent;
-	}
-
-	protected String formatSQL(String content) throws IOException {
 		StringBundler sb = new StringBundler();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -104,6 +83,17 @@ public class SQLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
+	}
+
+	@Override
+	protected void format() throws Exception {
+		String[] includes = new String[] {"**\\sql\\*.sql"};
+
+		List<String> fileNames = getFileNames(new String[0], includes);
+
+		for (String fileName : fileNames) {
+			format(fileName);
+		}
 	}
 
 }

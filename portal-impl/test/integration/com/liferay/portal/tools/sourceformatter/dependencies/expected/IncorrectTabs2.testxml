@@ -1,0 +1,5 @@
+<definition>
+	<element name="test">
+		<attribute name="hello world" />
+	</element>
+</definition>

@@ -30,6 +30,18 @@ import java.util.regex.Pattern;
  */
 public class CSSSourceProcessor extends BaseSourceProcessor {
 
+	@Override
+	protected String doFormat(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		String newContent = trimContent(content, false);
+
+		newContent = fixComments(newContent);
+
+		return fixHexColors(newContent);
+	}
+
 	protected String fixComments(String content) {
 		Matcher matcher = _commentPattern.matcher(content);
 
@@ -92,26 +104,6 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 		for (String fileName : fileNames) {
 			format(fileName);
 		}
-	}
-
-	@Override
-	protected String format(String fileName) throws Exception {
-		File file = new File(BASEDIR + fileName);
-
-		fileName = StringUtil.replace(
-			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-		String content = fileUtil.read(file);
-
-		String newContent = trimContent(content, false);
-
-		newContent = fixComments(newContent);
-
-		newContent = fixHexColors(newContent);
-
-		compareAndAutoFixContent(file, fileName, content, newContent);
-
-		return newContent;
 	}
 
 	private Pattern _commentPattern = Pattern.compile("/\\* -+(.+)-+ \\*/");

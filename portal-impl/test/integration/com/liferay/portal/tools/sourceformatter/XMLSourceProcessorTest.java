@@ -14,32 +14,18 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import java.io.File;
-
-import java.util.List;
+import org.junit.Test;
 
 /**
- * @author Hugo Huijser
+ * @author Karen Dang
  */
-public class SHSourceProcessor extends BaseSourceProcessor {
+public class XMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
-	@Override
-	protected String doFormat(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		return content;
-	}
-
-	@Override
-	protected void format() throws Exception {
-		String[] includes = new String[] {"**\\*.sh"};
-
-		List<String> fileNames = getFileNames(new String[0], includes);
-
-		for (String fileName : fileNames) {
-			format(fileName);
-		}
+	@Test
+	public void testIncorrectTabs() throws Exception {
+		test("IncorrectTabs1.testxml");
+		test("IncorrectTabs2.testxml");
+		test("IncorrectTabs3.testxml");
 	}
 
 }

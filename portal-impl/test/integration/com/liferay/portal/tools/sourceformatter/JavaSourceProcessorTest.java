@@ -60,12 +60,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testIncorrectImports1() throws Exception {
+	public void testIncorrectImports() throws Exception {
 		test("IncorrectImports1.testjava");
-	}
-
-	@Test
-	public void testIncorrectImports2() throws Exception {
 		test(
 			"IncorrectImports2.testjava",
 			new String[] {
@@ -167,17 +163,9 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testSortJavaTerms1() throws Exception {
+	public void testSortJavaTerms() throws Exception {
 		test("SortJavaTerms1.testjava");
-	}
-
-	@Test
-	public void testSortJavaTerms2() throws Exception {
 		test("SortJavaTerms2.testjava");
-	}
-
-	@Test
-	public void testSortJavaTerms3() throws Exception {
 		test("SortJavaTerms3.testjava");
 	}
 

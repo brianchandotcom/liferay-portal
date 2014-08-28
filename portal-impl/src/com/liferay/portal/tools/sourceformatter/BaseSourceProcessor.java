@@ -380,29 +380,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		processErrorMessage(fileName, "plus: " + fileName + " " + lineCount);
 	}
 
-	protected void compareAndAutoFixContent(
-			File file, String fileName, String content, String newContent)
-		throws IOException {
-
-		if ((newContent == null) || content.equals(newContent)) {
-			return;
-		}
-
-		fileName = StringUtil.replace(
-			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-		if (_autoFix) {
-			fileUtil.write(file, newContent);
-		}
-		else if (_firstSourceMismatchException == null) {
-			_firstSourceMismatchException =
-				new SourceMismatchException(fileName, content, newContent);
-		}
-
-		if (_printErrors) {
-			sourceFormatterHelper.printError(fileName, file);
-		}
-	}
+	protected abstract String doFormat(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception;
 
 	protected String fixCompatClassImports(String absolutePath, String content)
 		throws IOException {
@@ -651,7 +631,38 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected abstract void format() throws Exception;
 
 	protected String format(String fileName) throws Exception {
-		return null;
+		File file = new File(BASEDIR + fileName);
+
+		fileName = StringUtil.replace(
+			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+		String absolutePath = getAbsolutePath(file);
+
+		String content = fileUtil.read(file);
+
+		String newContent = format(file, fileName, absolutePath, content);
+
+		if (!content.equals(newContent)) {
+			processFormattedFile(file, fileName, content, newContent);
+		}
+
+		return newContent;
+	}
+
+	protected String format(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		String newContent = doFormat(file, fileName, absolutePath, content);
+
+		newContent = StringUtil.replace(
+			newContent, StringPool.RETURN, StringPool.BLANK);
+
+		if (content.equals(newContent)) {
+			return content;
+		}
+
+		return format(file, fileName, absolutePath, newContent);
 	}
 
 	protected String formatJavaTerms(
@@ -672,6 +683,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return content;
+	}
+
+	protected String getAbsolutePath(File file) {
+		return null;
 	}
 
 	protected Map<String, String> getCompatClassNamesMap() throws IOException {
@@ -985,6 +1000,23 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return false;
+	}
+
+	protected void processFormattedFile(
+			File file, String fileName, String content, String newContent)
+		throws IOException {
+
+		if (_autoFix) {
+			fileUtil.write(file, newContent);
+		}
+		else if (_firstSourceMismatchException == null) {
+			_firstSourceMismatchException =
+				new SourceMismatchException(fileName, content, newContent);
+		}
+
+		if (_printErrors) {
+			sourceFormatterHelper.printError(fileName, file);
+		}
 	}
 
 	protected String replacePrimitiveWrapperInstantiation(

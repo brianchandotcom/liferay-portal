@@ -1101,7 +1101,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int lineCount = 0;
 		int lineToSkipIfEmpty = 0;
 
-		String componentAnnotationPropertyValue = null;
 		String ifClause = StringPool.BLANK;
 		String packageName = StringPool.BLANK;
 		String regexPattern = StringPool.BLANK;
@@ -1566,19 +1565,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						 line.contains(" index IX_")) {
 				}
 				else if (lineLength > 80) {
-					if (componentAnnotationPropertyValue == null) {
-						Matcher matcher = _componentAnnotationPattern.matcher(
-							content);
-
-						if (matcher.find()) {
-							componentAnnotationPropertyValue = matcher.group(2);
-						}
-						else {
-							componentAnnotationPropertyValue = StringPool.BLANK;
-						}
-					}
-
-					if (!componentAnnotationPropertyValue.contains(line)) {
+					if (!isAnnotationParameter(content, trimmedLine)) {
 						processErrorMessage(
 							fileName, "> 80: " + fileName + " " + lineCount);
 					}
@@ -2189,6 +2176,24 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return fileNames;
 	}
 
+	protected boolean isAnnotationParameter(String content, String line) {
+		if (!line.contains(" = ") && (!line.startsWith(StringPool.QUOTE))) {
+			return false;
+		}
+
+		Matcher matcher = _annotationPattern.matcher(content);
+
+		while (matcher.find()) {
+			String annotationParameters = matcher.group(3);
+
+			if (annotationParameters.contains(line)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected boolean isGenerated(String content) {
 		if (content.contains("* @generated") || content.contains("$ANTLR")) {
 			return true;
@@ -2280,11 +2285,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private static Pattern _importsPattern = Pattern.compile(
 		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
 
+	private Pattern _annotationPattern = Pattern.compile(
+		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\n(\t*)\\)");
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private boolean _checkUnprocessedExceptions;
-	private Pattern _componentAnnotationPattern = Pattern.compile(
-		"\n@Component\\(\n([\\s\\S]*?)\tproperty = \\{([\\s\\S]*?)\t\\}");
 	private Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(Map|Set|List)<(.+)>" +
 			"\\(\n*\t*(.*)\\);\n");

@@ -26,7 +26,6 @@ import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
@@ -78,44 +77,6 @@ public class DLFileEntryLocalServiceTreeTest {
 
 		Assert.assertEquals(
 			dlFileEntry.buildTreePath(), dlFileEntry.getTreePath());
-	}
-
-	@Test
-	public void testFolderTreepathWhenMovingFolderWithSubfolder()
-		throws Exception {
-
-		List<Folder> folders = new ArrayList<Folder>();
-
-		Folder folderA = DLAppTestUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Folder A");
-
-		folders.add(folderA);
-
-		Folder folderAA = DLAppTestUtil.addFolder(
-			_group.getGroupId(), folderA.getFolderId(), "Folder AA");
-
-		folders.add(folderAA);
-
-		Folder folderAAA = DLAppTestUtil.addFolder(
-			_group.getGroupId(), folderAA.getFolderId(), "Folder AAA");
-
-		folders.add(folderAAA);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		DLAppLocalServiceUtil.moveFolder(
-			TestPropsValues.getUserId(), folderAA.getFolderId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
-
-		for (Folder curFolder : folders) {
-			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
-				curFolder.getFolderId());
-
-			Assert.assertEquals(
-				dlFolder.buildTreePath(), dlFolder.getTreePath());
-		}
 	}
 
 	@Test

@@ -77,41 +77,6 @@ public class BookmarksEntryLocalServiceTreeTest {
 	}
 
 	@Test
-	public void testBookmarksFolderTreePathWhenMovingFolderWithSubfolder()
-		throws Exception {
-
-		List<BookmarksFolder> folders = new ArrayList<BookmarksFolder>();
-
-		BookmarksFolder folderA = BookmarksTestUtil.addFolder(
-			_group.getGroupId(), "Folder A");
-
-		folders.add(folderA);
-
-		BookmarksFolder folderAA = BookmarksTestUtil.addFolder(
-			_group.getGroupId(), folderA.getFolderId(), "Folder AA");
-
-		folders.add(folderAA);
-
-		BookmarksFolder folderAAA = BookmarksTestUtil.addFolder(
-			_group.getGroupId(), folderAA.getFolderId(), "Folder AAA");
-
-		folders.add(folderAAA);
-
-		BookmarksFolderServiceUtil.moveFolder(
-			folderAA.getFolderId(),
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		for (BookmarksFolder curFolder : folders) {
-			BookmarksFolder bookmarksFolder =
-				BookmarksFolderLocalServiceUtil.getFolder(
-					curFolder.getFolderId());
-
-			Assert.assertEquals(
-				bookmarksFolder.buildTreePath(), bookmarksFolder.getTreePath());
-		}
-	}
-
-	@Test
 	public void testRebuildTree() throws Exception {
 		List<BookmarksEntry> entries = createTree();
 

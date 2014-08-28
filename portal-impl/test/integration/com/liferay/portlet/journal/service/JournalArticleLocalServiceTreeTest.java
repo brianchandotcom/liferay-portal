@@ -78,43 +78,6 @@ public class JournalArticleLocalServiceTreeTest {
 	}
 
 	@Test
-	public void testJournalFolderTreePathWhenMovingFolderWithSubfolder()
-		throws Exception {
-
-		List<JournalFolder> folders = new ArrayList<JournalFolder>();
-
-		JournalFolder folderA = JournalTestUtil.addFolder(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A");
-
-		folders.add(folderA);
-
-		JournalFolder folderAA = JournalTestUtil.addFolder(
-			_group.getGroupId(), folderA.getFolderId(), "Folder AA");
-
-		folders.add(folderAA);
-
-		JournalFolder folderAAA = JournalTestUtil.addFolder(
-			_group.getGroupId(), folderAA.getFolderId(), "Folder AAA");
-
-		folders.add(folderAAA);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		JournalFolderLocalServiceUtil.moveFolder(
-			folderAA.getFolderId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
-
-		for (JournalFolder curFolder : folders) {
-			JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
-				curFolder.getFolderId());
-
-			Assert.assertEquals(folder.buildTreePath(), folder.getTreePath());
-		}
-	}
-
-	@Test
 	public void testRebuildTree() throws Exception {
 		List<JournalArticle> articles = createTree();
 

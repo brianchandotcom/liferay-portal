@@ -24,9 +24,7 @@ public class XMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testIncorrectTabs() throws Exception {
 		test("IncorrectTabs1.testxml");
-
 		test("IncorrectTabs2.testxml");
-
 		test("IncorrectTabs3.testxml");
 	}
 

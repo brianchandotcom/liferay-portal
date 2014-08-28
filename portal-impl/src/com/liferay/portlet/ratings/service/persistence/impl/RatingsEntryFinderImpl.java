@@ -26,9 +26,14 @@ import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.impl.RatingsEntryImpl;
 import com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl;
 import com.liferay.portlet.ratings.service.persistence.RatingsEntryFinder;
+import com.liferay.portlet.ratings.service.persistence.RatingsEntryUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Shuyang Zhou
@@ -48,6 +53,13 @@ public class RatingsEntryFinderImpl
 		new String[] {
 			Long.class.getName(), Long.class.getName(), List.class.getName()
 		});
+
+	@Override
+	public Map<Serializable, RatingsEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		return RatingsEntryUtil.fetchByPrimaryKeys(primaryKeys);
+	}
 
 	@Override
 	public List<RatingsEntry> findByU_C_C(

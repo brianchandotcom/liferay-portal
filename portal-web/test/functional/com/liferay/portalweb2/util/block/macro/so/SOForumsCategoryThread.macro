@@ -60,8 +60,22 @@
 				<execute action="PGMessageboardsCategory#assertClick" locator-key1="QUESTION_CATEGORY_THREAD_TABLE_QUESTION" value1="${threadSubject}" />
 			</then>
 			<else>
+				<if>
+					<equals arg1="${threadPriority}" arg2="Sticky" />
+					<then>
+						<execute action="PGMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_THREAD_STICKY_IMAGE" />
+					</then>
+					<elseif>
+						<equals arg1="${threadPriority}" arg2="Urgent" />
+						<then>
+							<execute action="PGMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_THREAD_URGENT_IMAGE" />
+						</then>
+					</elseif>
+				</if>
+
 				<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 				<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY" value1="${userName}" />
+
 				<if>
 					<isset var="categoryPostCount" />
 					<then>
@@ -216,6 +230,19 @@
 		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
 		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
 		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_3" value1="My Posts" />
+
+		<if>
+			<equals arg1="${threadPriority}" arg2="Sticky" />
+			<then>
+				<execute action="PGMessageboardsMyposts#assertElementPresent" locator-key1="THREAD_TABLE_THREAD_STICKY_IMAGE" />
+			</then>
+			<elseif>
+				<equals arg1="${threadPriority}" arg2="Urgent" />
+				<then>
+					<execute action="PGMessageboardsMyposts#assertElementPresent" locator-key1="THREAD_TABLE_THREAD_URGENT_IMAGE" />
+				</then>
+			</elseif>
+		</if>
 
 		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY" value1="${userName}" />
@@ -387,6 +414,19 @@
 		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
 		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
 		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_3" value1="Recent Posts" />
+
+		<if>
+			<equals arg1="${threadPriority}" arg2="Sticky" />
+			<then>
+				<execute action="PGMessageboardsMyposts#assertElementPresent" locator-key1="THREAD_TABLE_THREAD_STICKY_IMAGE" />
+			</then>
+			<elseif>
+				<equals arg1="${threadPriority}" arg2="Urgent" />
+				<then>
+					<execute action="PGMessageboardsMyposts#assertElementPresent" locator-key1="THREAD_TABLE_THREAD_URGENT_IMAGE" />
+				</then>
+			</elseif>
+		</if>
 
 		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY" value1="${userName}" />

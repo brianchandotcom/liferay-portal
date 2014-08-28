@@ -10,6 +10,15 @@
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="addNullPG">
+		<execute action="PGMessageboards#click" locator-key1="ADD_CATEGORY_BUTTON" />
+
+		<execute action="PGMessageboardsAddcategory#type" locator-key1="NAME_FIELD" value1="${categoryNullName}" />
+		<execute action="PGMessageboardsAddcategory#type" locator-key1="DESCRIPTION_FIELD" value1="${categoryDescription}" />
+		<execute action="PGMessageboardsAddcategory#click" locator-key1="SAVE_BUTTON" />
+		<execute action="PGMessageboardsAddcategory#assertTextEquals" locator-key1="REQUIRED_ALERT" value1="This field is required." />
+	</command>
+
 	<command name="addPG">
 		<execute action="PGMessageboards#assertClick" locator-key1="ADD_CATEGORY_BUTTON" value1="Add Category" />
 
@@ -310,6 +319,19 @@
 		</if>
 
 		<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="NAME_HEADER" value1="${categoryName}" />
+	</command>
+
+	<command name="viewStatisticsCategoriesCountPG">
+		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_STATISTICS" value1="Statistics" />
+
+		<if>
+			<condition action="PGMessageboardsStatistics#isElementPresent" locator-key1="GENERAL_DROPDOWN_COLLAPSED" />
+			<then>
+				<execute action="PGMessageboardsStatistics#assertClick" locator-key1="GENERAL_DROPDOWN" value1="General" />>
+			</then>
+		</if>
+
+		<execute action="PGMessageboardsStatistics#assertTextEquals" locator-key1="GENERAL_NUMBER_OF_CATEGORIES" value1="${categoriesNumber}" />
 	</command>
 
 	<command name="viewSubcategoryCP">

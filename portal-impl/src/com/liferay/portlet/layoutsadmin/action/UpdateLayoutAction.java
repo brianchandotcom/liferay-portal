@@ -106,8 +106,6 @@ public class UpdateLayoutAction extends JSONAction {
 			if ((lte.getType() == LayoutTypeException.FIRST_LAYOUT) &&
 				(plid > 0)) {
 
-				jsonObject.put("status", HttpServletResponse.SC_BAD_REQUEST);
-
 				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 				jsonObject.put("groupId", layout.getGroupId());
@@ -117,6 +115,8 @@ public class UpdateLayoutAction extends JSONAction {
 				jsonObject.put("originalParentPlid", layout.getParentPlid());
 				jsonObject.put("originalPriority", layout.getPriority());
 				jsonObject.put("plid", plid);
+
+				jsonObject.put("status", HttpServletResponse.SC_BAD_REQUEST);
 			}
 		}
 

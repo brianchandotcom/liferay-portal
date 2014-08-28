@@ -87,6 +87,13 @@
 		</if>
 
 		<if>
+			<equals arg1="${priority}" arg2="true" />
+			<then>
+				<execute action="PGMessageboardsPostthread#select" locator-key1="PRIORITY_SELECT" value1="${threadPriority}" />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${viewableBy}" arg2="true" />
 			<then>
 				<execute action="PGMessageboardsPostthread#select" locator-key1="PERMISSIONS_VIEWABLE_BY_DROPDOWN" value1="${viewableBySelection}" />
@@ -990,7 +997,7 @@
 		<if>
 			<condition action="PGMessageboardsStatistics#isElementPresent" locator-key1="GENERAL_DROPDOWN_COLLAPSED" />
 			<then>
-				<execute action="PGMessageboardsStatistics#assertClick" locator-key1="GENERAL_DROPDOWN" value1="General" />>
+				<execute action="PGMessageboardsStatistics#assertClick" locator-key1="GENERAL_DROPDOWN" value1="General" />
 			</then>
 		</if>
 
@@ -1006,16 +1013,53 @@
 		<if>
 			<condition action="PGMessageboardsStatistics#isElementPresent" locator-key1="GENERAL_DROPDOWN_COLLAPSED" />
 			<then>
-				<execute action="PGMessageboardsStatistics#assertClick" locator-key1="GENERAL_DROPDOWN" value1="General" />>
+				<execute action="PGMessageboardsStatistics#assertClick" locator-key1="GENERAL_DROPDOWN" value1="General" />
 			</then>
 		</if>
 
 		<execute action="PGMessageboardsStatistics#assertTextEquals" locator-key1="GENERAL_NUMBER_OF_POSTS" value1="${threadPostNumber}" />
 
+		<if>
+			<isset var="userPostNumber" />
+			<then>
+				<execute macro="MessageboardsThread#viewStatisticsTopPoster" />
+			</then>
+			<else>
+				<execute macro="MessageboardsThread#viewStatisticsTopPoster">
+					<var name="userPostNumber" value="${threadPostNumber}" />
+				</execute>
+			</else>
+		</if>
+	</command>
+
+	<command name="viewStatisticsTopPoster">
+		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_STATISTICS" value1="Statistics" />
+
+		<if>
+			<condition action="PGMessageboardsStatistics#isElementPresent" locator-key1="TOP_POSTERS_DROPDOWN_COLLAPSED" />
+			<then>
+				<execute action="PGMessageboardsStatistics#assertClick" locator-key1="TOP_POSTERS_DROPDOWN" value1="Top Posters" />
+			</then>
+		</if>
+
 		<var name="key_userName" value="${userName}" />
 
 		<execute action="PGMessageboardsStatistics#assertTextEquals" locator-key1="TOP_POSTERS_AUTHOR_NAME" value1="${userName}" />
-		<execute action="PGMessageboardsStatistics#assertTextEquals" locator-key1="TOP_POSTERS_AUTHOR_POSTS" value1="Posts: ${threadPostNumber}" />
+
+		<if>
+			<isset var="userMessageboardsRank" />
+			<then>
+				<execute action="PGMessageboardsStatistics#assertTextEquals" locator-key1="TOP_POSTERS_AUTHOR_RANK" value1="Rank: ${userMessageboardsRank}" />
+			</then>
+			<else>
+				<execute action="PGMessageboardsStatistics#assertTextEquals" locator-key1="TOP_POSTERS_AUTHOR_RANK" value1="Rank: Youngling" />
+			</else>
+		</if>
+
+		<execute action="PGMessageboardsStatistics#assertTextEquals" locator-key1="TOP_POSTERS_AUTHOR_POSTS" value1="Posts: ${userPostNumber}" />
+		<execute action="PGMessageboardsStatistics#assertElementPresent" locator-key1="TOP_POSTERS_AUTHOR_JOIN_DATE" />
+		<execute action="PGMessageboardsStatistics#assertElementPresent" locator-key1="TOP_POSTERS_AUTHOR_LAST_POST_DATE" />
+		<execute action="PGMessageboardsStatistics#assertElementPresent" locator-key1="TOP_POSTERS_AUTHOR_PROFILE_PICTURE" />
 	</command>
 
 	<command name="viewTagPG">

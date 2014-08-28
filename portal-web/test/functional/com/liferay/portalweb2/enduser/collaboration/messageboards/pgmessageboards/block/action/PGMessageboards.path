@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSIONS_BUTTON</td>
+	<td>//button[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RSS_LINK</td>
 	<td>//div[contains(@class,'category-subscription-types')]/span/a/span[contains(.,'RSS')]</td>
 	<td></td>
@@ -248,6 +253,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_TABLE_THREAD_URGENT_IMAGE</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[1]/a/img[@title='Urgent']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_THREAD_STICKY_IMAGE</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[1]/a/img[@title='Sticky']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THREAD_TABLE_FLAG</td>
 	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[2]/a</td>
 	<td></td>
@@ -325,7 +340,7 @@
 </tr>
 <tr>
 	<td>THREAD_MENULIST_MOVE</td>
-	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Move')]/span[.='Move']</td>
 	<td></td>
 </tr>
 <tr>

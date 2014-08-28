@@ -653,7 +653,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		fileName = StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-		String absolutePath = fileUtil.getAbsolutePath(file);
+		String absolutePath = getAbsolutePath(file);
 
 		String content = fileUtil.read(file);
 
@@ -700,6 +700,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return content;
+	}
+
+	protected String getAbsolutePath(File file) {
+		return null;
 	}
 
 	protected Map<String, String> getCompatClassNamesMap() throws IOException {

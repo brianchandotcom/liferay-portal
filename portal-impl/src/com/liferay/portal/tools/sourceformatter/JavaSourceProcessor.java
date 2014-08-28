@@ -1814,6 +1814,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
+	@Override
+	protected String getAbsolutePath(File file) {
+		return fileUtil.getAbsolutePath(file);
+	}
+
 	protected Tuple getCombinedLines(
 		String line, String previousLine, int lineTabCount,
 		int previousLineTabCount) {

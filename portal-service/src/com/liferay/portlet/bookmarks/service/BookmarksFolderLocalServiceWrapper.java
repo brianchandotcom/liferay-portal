@@ -466,8 +466,17 @@ public class BookmarksFolderLocalServiceWrapper
 	}
 
 	@Override
-	public void rebuildTree(long companyId) {
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_bookmarksFolderLocalService.rebuildTree(companyId);
+	}
+
+	@Override
+	public void rebuildTree(long companyId, long parentFolderId,
+		java.lang.String parentTreePath, boolean reindex)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_bookmarksFolderLocalService.rebuildTree(companyId, parentFolderId,
+			parentTreePath, reindex);
 	}
 
 	@Override

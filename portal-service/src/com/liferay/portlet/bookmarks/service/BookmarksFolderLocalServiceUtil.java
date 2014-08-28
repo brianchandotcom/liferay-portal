@@ -414,8 +414,16 @@ public class BookmarksFolderLocalServiceUtil {
 		return getService().moveFolderToTrash(userId, folderId);
 	}
 
-	public static void rebuildTree(long companyId) {
+	public static void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().rebuildTree(companyId);
+	}
+
+	public static void rebuildTree(long companyId, long parentFolderId,
+		java.lang.String parentTreePath, boolean reindex)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.rebuildTree(companyId, parentFolderId, parentTreePath, reindex);
 	}
 
 	public static void restoreFolderFromTrash(long userId, long folderId)

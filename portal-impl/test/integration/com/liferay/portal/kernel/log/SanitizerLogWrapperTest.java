@@ -43,7 +43,7 @@ import org.junit.runner.RunWith;
 public class SanitizerLogWrapperTest {
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() {
 		char[] chars = new char[128];
 
 		for (int i = 0; i < chars.length; i++) {

@@ -93,39 +93,48 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected static boolean isExcluded(
-		List<String> exclusions, String fileName) {
+		List<String> exclusions, String absolutePath) {
 
-		return isExcluded(exclusions, fileName, -1);
+		return isExcluded(exclusions, absolutePath, -1);
 	}
 
 	protected static boolean isExcluded(
-		List<String> exclusions, String fileName, int lineCount) {
+		List<String> exclusions, String absolutePath, int lineCount) {
 
-		return isExcluded(exclusions, fileName, lineCount, null);
+		return isExcluded(exclusions, absolutePath, lineCount, null);
 	}
 
 	protected static boolean isExcluded(
-		List<String> exclusions, String fileName, int lineCount,
+		List<String> exclusions, String absolutePath, int lineCount,
 		String javaTermName) {
 
 		if (ListUtil.isEmpty(exclusions)) {
 			return false;
 		}
 
-		if (exclusions.contains(fileName)) {
-			return true;
+		String absolutePathWithJavaTermName = null;
+
+		if (Validator.isNotNull(javaTermName)) {
+			absolutePathWithJavaTermName =
+				absolutePath + StringPool.AT + javaTermName;
 		}
 
-		if ((lineCount > 0) &&
-			exclusions.contains(fileName + StringPool.AT + lineCount)) {
+		String absolutePathWithLineCount = null;
 
-			return true;
+		if (lineCount > 0) {
+			absolutePathWithLineCount =
+				absolutePath + StringPool.AT + lineCount;
 		}
 
-		if (Validator.isNotNull(javaTermName) &&
-			exclusions.contains(fileName + StringPool.AT + javaTermName)) {
+		for (String exclusion : exclusions) {
+			if (absolutePath.endsWith(exclusion) ||
+				((absolutePathWithJavaTermName != null) &&
+				 absolutePathWithJavaTermName.endsWith(exclusion)) ||
+				((absolutePathWithLineCount != null) &&
+				 absolutePathWithLineCount.endsWith(exclusion))) {
 
-			return true;
+				return true;
+			}
 		}
 
 		return false;
@@ -666,13 +675,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String formatJavaTerms(
-			String fileName, String content, String javaClassContent,
-			List<String> javaTermSortExclusions,
+			String fileName, String absolutePath, String content,
+			String javaClassContent, List<String> javaTermSortExclusions,
 			List<String> testAnnotationsExclusions)
 		throws Exception {
 
 		JavaClass javaClass = new JavaClass(
-			fileName, javaClassContent, StringPool.TAB);
+			fileName, absolutePath, javaClassContent, StringPool.TAB);
 
 		String newJavaClassContent = javaClass.formatJavaTerms(
 			javaTermSortExclusions, testAnnotationsExclusions);

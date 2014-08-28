@@ -695,7 +695,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		if (!isExcluded(_staticLogVariableExclusions, fileName)) {
+		if (!isExcluded(_staticLogVariableExclusions, absolutePath)) {
 			newContent = StringUtil.replace(
 				newContent, "private Log _log", "private static Log _log");
 		}
@@ -720,7 +720,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-34911
 
 		if (portalSource &&
-			!isExcluded(_upgradeServiceUtilExclusions, fileName) &&
+			!isExcluded(_upgradeServiceUtilExclusions, absolutePath) &&
 			fileName.contains("/portal/upgrade/") &&
 			!fileName.contains("/test/") &&
 			newContent.contains("ServiceUtil.")) {
@@ -729,7 +729,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (!isRunsOutsidePortal(absolutePath) &&
-			!isExcluded(_proxyExclusions, fileName) &&
+			!isExcluded(_proxyExclusions, absolutePath) &&
 			newContent.contains("import java.lang.reflect.Proxy;")) {
 
 			processErrorMessage(fileName, "Proxy: " + fileName);
@@ -810,7 +810,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-39508
 
-		if (!isExcluded(_secureRandomExclusions, fileName) &&
+		if (!isExcluded(_secureRandomExclusions, absolutePath) &&
 			!isRunsOutsidePortal(absolutePath) &&
 			content.contains("java.security.SecureRandom") &&
 			!content.contains("javax.crypto.KeyGenerator")) {
@@ -887,8 +887,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String javaClassContent = newContent.substring(pos);
 
 			newContent = formatJavaTerms(
-				fileName, newContent, javaClassContent, _javaTermSortExclusions,
-				_testAnnotationsExclusions);
+				fileName, absolutePath, newContent, javaClassContent,
+				_javaTermSortExclusions, _testAnnotationsExclusions);
 		}
 
 		newContent = formatJava(fileName, absolutePath, newContent);
@@ -1151,7 +1151,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			// LPS-42599
 
-			if (!isExcluded(_hibernateSQLQueryExclusions, fileName) &&
+			if (!isExcluded(_hibernateSQLQueryExclusions, absolutePath) &&
 				line.contains("= session.createSQLQuery(") &&
 				content.contains("com.liferay.portal.kernel.dao.orm.Session")) {
 
@@ -1552,7 +1552,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			Tuple combinedLines = null;
 			int lineLength = getLineLength(line);
 
-			if (!isExcluded(_lineLengthExclusions, fileName, lineCount) &&
+			if (!isExcluded(_lineLengthExclusions, absolutePath, lineCount) &&
 				!line.startsWith("import ") && !line.startsWith("package ") &&
 				!line.matches("\\s*\\*.*")) {
 
@@ -1691,7 +1691,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 
 					if (!isExcluded(
-							_fitOnSingleLineExclusions, fileName, lineCount)) {
+							_fitOnSingleLineExclusions, absolutePath,
+							lineCount)) {
 
 						combinedLines = getCombinedLines(
 							trimmedLine, previousLine, lineLeadingTabCount,
@@ -1816,7 +1817,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected String getAbsolutePath(File file) {
-		return fileUtil.getAbsolutePath(file);
+		String absolutePath = fileUtil.getAbsolutePath(file);
+
+		return StringUtil.replace(absolutePath, "/./", StringPool.SLASH);
 	}
 
 	protected Tuple getCombinedLines(

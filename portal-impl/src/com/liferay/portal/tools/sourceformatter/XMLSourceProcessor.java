@@ -168,7 +168,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (isExcluded(_xmlExclusions, fileName)) {
+		if (isExcluded(_xmlExclusions, absolutePath)) {
 			return content;
 		}
 
@@ -185,14 +185,14 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent = formatDDLStructuresXML(newContent);
 		}
 		else if (fileName.endsWith("routes.xml")) {
-			newContent = formatFriendlyURLRoutesXML(fileName, newContent);
+			newContent = formatFriendlyURLRoutesXML(absolutePath, newContent);
 		}
 		else if (fileName.endsWith("/liferay-portlet.xml") ||
 				 (portalSource &&
 				  fileName.endsWith("/portlet-custom.xml")) ||
 				 (!portalSource && fileName.endsWith("/portlet.xml"))) {
 
-			newContent = formatPortletXML(fileName, newContent);
+			newContent = formatPortletXML(fileName, absolutePath, newContent);
 		}
 		else if (portalSource &&
 				 (fileName.endsWith(".action") ||
@@ -539,10 +539,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return document.formattedString();
 	}
 
-	protected String formatFriendlyURLRoutesXML(String fileName, String content)
+	protected String formatFriendlyURLRoutesXML(
+			String absolutePath, String content)
 		throws Exception {
 
-		if (isExcluded(_friendlyUrlRoutesSortExclusions, fileName)) {
+		if (isExcluded(_friendlyUrlRoutesSortExclusions, absolutePath)) {
 			return content;
 		}
 
@@ -673,7 +674,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return sb.toString();
 	}
 
-	protected String formatPortletXML(String fileName, String content)
+	protected String formatPortletXML(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		Document document = saxReaderUtil.read(content);
@@ -683,7 +685,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		rootElement.sortAttributes(true);
 
 		boolean checkNumericalPortletNameElement = !isExcluded(
-			_numericalPortletNameElementExclusions, fileName);
+			_numericalPortletNameElementExclusions, absolutePath);
 
 		List<Element> portletElements = rootElement.elements("portlet");
 
@@ -909,6 +911,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		return newContent.substring(0, x) + sb.toString() +
 			newContent.substring(y);
+	}
+
+	@Override
+	protected String getAbsolutePath(File file) {
+		String absolutePath = fileUtil.getAbsolutePath(file);
+
+		return StringUtil.replace(absolutePath, "/./", StringPool.SLASH);
 	}
 
 	protected List<String> getColumnNames(String fileName, String entityName)

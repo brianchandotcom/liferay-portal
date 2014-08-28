@@ -17,9 +17,11 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.TreeModel;
 
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,8 +32,20 @@ import java.util.List;
 public class TreePathUtil {
 
 	public static void rebuildTree(
-		long companyId, long defaultParentPrimaryKey,
-		TreeModelFinder<?> treeModelFinder) {
+			long companyId, long parentPrimaryKey, String parentTreePath,
+			TreeModelFinder<?> treeModelFinder)
+		throws PortalException {
+
+		if (parentTreePath.equals(StringPool.SLASH)) {
+			treeModelFinder.rebuildDependentModelsTreePaths(
+				parentPrimaryKey, "/0/");
+		}
+		else {
+			treeModelFinder.rebuildDependentModelsTreePaths(
+				parentPrimaryKey, parentTreePath);
+		}
+
+		List<TreeModel> modifiedTreeModels = new ArrayList<TreeModel>();
 
 		int size = GetterUtil.getInteger(
 			PropsUtil.get(
@@ -39,19 +53,18 @@ public class TreePathUtil {
 
 		Deque<Object[]> traces = new LinkedList<Object[]>();
 
-		traces.push(
-			new Object[] {defaultParentPrimaryKey, StringPool.SLASH, 0L});
+		traces.push(new Object[] {parentPrimaryKey, parentTreePath, 0L});
 
 		Object[] trace = null;
 
 		while ((trace = traces.poll()) != null) {
-			Long parentPrimaryKey = (Long)trace[0];
-			String parentPath = (String)trace[1];
+			Long curParentPrimaryKey = (Long)trace[0];
+			String curParentTreePath = (String)trace[1];
 			Long previousPrimaryKey = (Long)trace[2];
 
 			List<? extends TreeModel> treeModels =
 				treeModelFinder.findTreeModels(
-					previousPrimaryKey, companyId, parentPrimaryKey, size);
+					previousPrimaryKey, companyId, curParentPrimaryKey, size);
 
 			if (treeModels.isEmpty()) {
 				continue;
@@ -66,32 +79,39 @@ public class TreePathUtil {
 			}
 
 			for (TreeModel treeModel : treeModels) {
-				String treePath = parentPath.concat(
+				String treePath = curParentTreePath.concat(
 					String.valueOf(treeModel.getPrimaryKeyObj())).concat(
 						StringPool.SLASH);
 
 				treeModel.updateTreePath(treePath);
 
+				treeModelFinder.rebuildDependentModelsTreePaths(
+					(Long)treeModel.getPrimaryKeyObj(), treePath);
+
 				traces.push(
 					new Object[] {treeModel.getPrimaryKeyObj(), treePath, 0L});
+
+				modifiedTreeModels.add(treeModel);
 			}
 		}
+
+		treeModelFinder.reindexTreeModels(modifiedTreeModels);
 	}
 
-	public static void rebuildTree(
+	public static void rebuildTreePaths(
 		Session session, long companyId, String tableName,
 		String parentTableName, String parentPrimaryKeyColumnName,
 		boolean statusColumn) {
 
-		rebuildTree(
+		rebuildTreePaths(
 			session, companyId, tableName, parentTableName,
 			parentPrimaryKeyColumnName, statusColumn, false);
-		rebuildTree(
+		rebuildTreePaths(
 			session, companyId, tableName, parentTableName,
 			parentPrimaryKeyColumnName, statusColumn, true);
 	}
 
-	protected static void rebuildTree(
+	protected static void rebuildTreePaths(
 		Session session, long companyId, String tableName,
 		String parentTableName, String parentPrimaryKeyColumnName,
 		boolean statusColumn, boolean rootParent) {

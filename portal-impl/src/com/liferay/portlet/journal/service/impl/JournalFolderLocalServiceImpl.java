@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
+import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.service.ServiceContext;
@@ -487,6 +488,9 @@ public class JournalFolderLocalServiceImpl
 
 		journalFolderPersistence.update(folder);
 
+		rebuildTree(
+			folder.getCompanyId(), folderId, folder.getTreePath(), true);
+
 		return folder;
 	}
 
@@ -594,9 +598,20 @@ public class JournalFolderLocalServiceImpl
 	}
 
 	@Override
-	public void rebuildTree(long companyId) {
-		TreePathUtil.rebuildTree(
+	public void rebuildTree(long companyId) throws PortalException {
+		rebuildTree(
 			companyId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringPool.SLASH, false);
+	}
+
+	@Override
+	public void rebuildTree(
+			long companyId, long parentFolderId, String parentTreePath,
+			final boolean reindex)
+		throws PortalException {
+
+		TreePathUtil.rebuildTree(
+			companyId, parentFolderId, parentTreePath,
 			new TreeModelFinder<JournalFolder>() {
 
 				@Override
@@ -608,6 +623,31 @@ public class JournalFolderLocalServiceImpl
 						previousId, companyId, parentPrimaryKey,
 						WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
 						size, new FolderIdComparator(true));
+				}
+
+				@Override
+				public void rebuildDependentModelsTreePaths(
+						long parentPrimaryKey, String treePath)
+					throws PortalException {
+
+					journalArticleLocalService.setTreePaths(
+						parentPrimaryKey, treePath);
+				}
+
+				@Override
+				public void reindexTreeModels(List<TreeModel> treeModels)
+					throws PortalException {
+
+					if (!reindex) {
+						return;
+					}
+
+					Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+						JournalFolder.class);
+
+					for (TreeModel treeModel : treeModels) {
+						indexer.reindex(treeModel);
+					}
 				}
 
 			}

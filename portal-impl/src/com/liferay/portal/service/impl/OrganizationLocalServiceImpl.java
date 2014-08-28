@@ -57,6 +57,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.SystemEventConstants;
+import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.impl.OrganizationImpl;
@@ -1021,6 +1022,7 @@ public class OrganizationLocalServiceImpl
 	public void rebuildTree(long companyId) throws PortalException {
 		TreePathUtil.rebuildTree(
 			companyId, OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			StringPool.SLASH,
 			new TreeModelFinder<Organization>() {
 
 				@Override
@@ -1032,6 +1034,15 @@ public class OrganizationLocalServiceImpl
 						previousId, companyId, parentPrimaryKey,
 						QueryUtil.ALL_POS, size,
 						new OrganizationIdComparator(true));
+				}
+
+				@Override
+				public void rebuildDependentModelsTreePaths(
+					long parentPrimaryKey, String treePath) {
+				}
+
+				@Override
+				public void reindexTreeModels(List<TreeModel> treeModels) {
 				}
 
 			}

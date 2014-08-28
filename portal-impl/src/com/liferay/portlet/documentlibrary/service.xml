@@ -642,6 +642,7 @@
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntry" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntryType" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileShortcut" />
+		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileVersion" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 	</entity>

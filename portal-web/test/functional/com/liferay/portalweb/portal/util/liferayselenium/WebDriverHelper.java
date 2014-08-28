@@ -33,8 +33,10 @@ public class WebDriverHelper {
 		return webDriver.getCurrentUrl();
 	}
 
-	public boolean isElementPresent(String locator) {
-		List<WebElement> webElements = getWebElements(locator, "1");
+	public static boolean isElementPresent(
+		WebDriver webDriver, String locator) {
+
+		List<WebElement> webElements = getWebElements(webDriver, locator, "1");
 
 		return !webElements.isEmpty();
 	}
@@ -80,14 +82,14 @@ public class WebDriverHelper {
 		navigation.refresh();
 	}
 
-	public void setDefaultTimeoutImplicit() {
+	public static void setDefaultTimeoutImplicit(WebDriver webDriver) {
 		int timeout = TestPropsValues.TIMEOUT_IMPLICIT_WAIT * 1000;
 
-		setTimeoutImplicit(String.valueOf(timeout));
+		setTimeoutImplicit(webDriver, String.valueOf(timeout));
 	}
 
-	public void setTimeoutImplicit(String timeout) {
-		WebDriver.Options options = manage();
+	public static void setTimeoutImplicit(WebDriver webDriver, String timeout) {
+		WebDriver.Options options = webDriver.manage();
 
 		WebDriver.Timeouts timeouts = options.timeouts();
 
@@ -95,12 +97,17 @@ public class WebDriverHelper {
 			GetterUtil.getInteger(timeout), TimeUnit.MILLISECONDS);
 	}
 
-	protected WebElement getWebElement(String locator) {
-		return getWebElement(locator, null);
+	protected static WebElement getWebElement(
+		WebDriver webDriver, String locator) {
+
+		return getWebElement(webDriver, locator, null);
 	}
 
-	protected WebElement getWebElement(String locator, String timeout) {
-		List<WebElement> webElements = getWebElements(locator, timeout);
+	protected static WebElement getWebElement(
+		WebDriver webDriver, String locator, String timeout) {
+
+		List<WebElement> webElements = getWebElements(
+			webDriver, locator, timeout);
 
 		if (!webElements.isEmpty()) {
 			return webElements.get(0);
@@ -109,58 +116,62 @@ public class WebDriverHelper {
 		return null;
 	}
 
-	protected List<WebElement> getWebElements(String locator) {
-		return getWebElements(locator, null);
+	protected static List<WebElement> getWebElements(
+		WebDriver webDriver, String locator) {
+
+		return getWebElements(webDriver, locator, null);
 	}
 
-	protected List<WebElement> getWebElements(String locator, String timeout) {
+	protected static List<WebElement> getWebElements(
+		WebDriver webDriver, String locator, String timeout) {
+
 		if (timeout != null) {
-			setTimeoutImplicit(timeout);
+			setTimeoutImplicit(webDriver, timeout);
 		}
 
 		try {
 			if (locator.startsWith("//")) {
-				return findElements(By.xpath(locator));
+				return webDriver.findElements(By.xpath(locator));
 			}
 			else if (locator.startsWith("class=")) {
 				locator = locator.substring(6);
 
-				return findElements(By.className(locator));
+				return webDriver.findElements(By.className(locator));
 			}
 			else if (locator.startsWith("css=")) {
 				locator = locator.substring(4);
 
-				return findElements(By.cssSelector(locator));
+				return webDriver.findElements(By.cssSelector(locator));
 			}
 			else if (locator.startsWith("link=")) {
 				locator = locator.substring(5);
 
-				return findElements(By.linkText(locator));
+				return webDriver.findElements(By.linkText(locator));
 			}
 			else if (locator.startsWith("name=")) {
 				locator = locator.substring(5);
 
-				return findElements(By.name(locator));
+				return webDriver.findElements(By.name(locator));
 			}
 			else if (locator.startsWith("tag=")) {
 				locator = locator.substring(4);
 
-				return findElements(By.tagName(locator));
+				return webDriver.findElements(By.tagName(locator));
 			}
 			else if (locator.startsWith("xpath=") ||
 					 locator.startsWith("xPath=")) {
 
 				locator = locator.substring(6);
 
-				return findElements(By.xpath(locator));
+				return webDriver.findElements(By.xpath(locator));
 			}
 			else {
-				return findElements(By.id(locator));
+				return webDriver.findElements(By.id(locator));
 			}
 		}
 		finally {
 			if (timeout != null) {
-				setDefaultTimeoutImplicit();
+				setDefaultTimeoutImplicit(webDriver);
 			}
 		}
 	}

@@ -29,14 +29,36 @@ import java.util.Set;
 
 /**
  * @author Mika Koivisto
+ * @author Raymond Augé
  */
 public class AuthPublicPathRegistry {
 
 	public static boolean contains(String path) {
-		return _paths.contains(path);
+		return _instance._contains(path);
 	}
 
 	public static void register(String... paths) {
+		_instance._register(paths);
+	}
+
+	public static void unregister(String... paths) {
+		_instance._unregister(paths);
+	}
+
+	private AuthPublicPathRegistry() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			AuthPublicPath.class, new AuthPublicTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
+	private boolean _contains(String path) {
+		return _paths.contains(path);
+	}
+
+	private void _register(String... paths) {
 		Registry registry = RegistryUtil.getRegistry();
 
 		for (String path : paths) {
@@ -48,7 +70,7 @@ public class AuthPublicPathRegistry {
 		}
 	}
 
-	public static void unregister(String... paths) {
+	private void _unregister(String... paths) {
 		for (String path : paths) {
 			ServiceRegistration<AuthPublicPath> serviceRegistration =
 				_serviceRegistrations.remove(path);
@@ -59,13 +81,16 @@ public class AuthPublicPathRegistry {
 		}
 	}
 
-	private static Set<String> _paths = new ConcurrentHashSet<>();
-	private static StringServiceRegistrationMap<AuthPublicPath>
+	private final static AuthPublicPathRegistry _instance =
+		new AuthPublicPathRegistry();
+
+	private final Set<String> _paths = new ConcurrentHashSet<>();
+	private final StringServiceRegistrationMap<AuthPublicPath>
 		_serviceRegistrations = new StringServiceRegistrationMap<>();
-	private static ServiceTracker<AuthPublicPath, AuthPublicPath>
+	private final ServiceTracker<AuthPublicPath, AuthPublicPath>
 		_serviceTracker;
 
-	private static class AuthPublicTrackerCustomizer
+	private class AuthPublicTrackerCustomizer
 		implements ServiceTrackerCustomizer<AuthPublicPath, AuthPublicPath> {
 
 		@Override
@@ -93,22 +118,13 @@ public class AuthPublicPathRegistry {
 			ServiceReference<AuthPublicPath> serviceReference,
 			AuthPublicPath authPublicPath) {
 
-			_paths.remove(authPublicPath.path());
-
 			Registry registry = RegistryUtil.getRegistry();
 
 			registry.ungetService(serviceReference);
+
+			_paths.remove(authPublicPath.path());
 		}
 
-	}
-
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			AuthPublicPath.class, new AuthPublicTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 }

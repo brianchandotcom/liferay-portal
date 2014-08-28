@@ -608,13 +608,43 @@ public class ResourcePermissionLocalServiceImpl
 			List<Resource> resources, long[] roleIds, String actionId)
 		throws PortalException {
 
+		int size = resources.size();
+
+		if (size < 2) {
+			throw new IllegalArgumentException(
+				"The list of resources must contain at least two values");
+		}
+
+		Resource fristResource = resources.get(0);
+
+		if (fristResource.getScope() != ResourceConstants.SCOPE_INDIVIDUAL) {
+			throw new IllegalArgumentException(
+				"The first resource must be individual scope");
+		}
+
+		Resource lastResource = resources.get(size - 1);
+
+		if (lastResource.getScope() != ResourceConstants.SCOPE_COMPANY) {
+			throw new IllegalArgumentException(
+				"The last resource must be company scope");
+		}
+
+		// See LPS-47464
+
+		if (resourcePermissionPersistence.countByC_N_S_P(
+				fristResource.getCompanyId(), fristResource.getName(),
+				fristResource.getScope(), fristResource.getPrimKey()) < 1) {
+
+			return false;
+		}
+
 		// Iterate the list of resources in reverse order to test permissions
 		// from company scope to individual scope because it is more likely that
 		// a permission is assigned at a higher scope. Optimizing this method to
 		// one SQL call may actually slow things down since most of the calls
 		// will pull from the cache after the first request.
 
-		for (int i = resources.size() - 1; i >= 0; i--) {
+		for (int i = size - 1; i >= 0; i--) {
 			Resource resource = resources.get(i);
 
 			if (hasResourcePermission(

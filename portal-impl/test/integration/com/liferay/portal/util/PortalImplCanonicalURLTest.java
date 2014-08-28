@@ -373,7 +373,7 @@ public class PortalImplCanonicalURLTest {
 
 		ThemeDisplay themeDisplay = getThemeDisplay(group);
 
-		themeDisplay.setPortalURL("http://" + portalDomain + ":8080/");
+		themeDisplay.setPortalURL("http://" + portalDomain);
 
 		String actualCanonicalURL = PortalUtil.getCanonicalURL(
 			completeURL, themeDisplay, layout, forceLayoutFriendlyURL);

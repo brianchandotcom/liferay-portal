@@ -1371,35 +1371,35 @@
 			<name>ariaRole</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<description>Sets a role for assistive technologies to interpret for HTML elements that have been used for something other than their intended purpose. For example, the <![CDATA[&lt;p&gt;]]> tag being used for something other than a paragraph, would be an HTML element being used for something other then their intended purpose.</description>
+			<description>Sets a role for assistive technologies to interpret for HTML elements that have been used for something other than their intended purpose. For example, the <![CDATA[<code>&lt;p&gt;</code>]]> tag being used for something other than a paragraph, would be an HTML element being used for something other then their intended purpose.</description>
 		</attribute>
 		<attribute>
-			<description>Sets a CSS class for styling.</description>
+			<description>Sets a CSS class for styling this component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Used to store misc. data hidden from the browser.</description>
+			<description>Stores miscellaneous data. This data is not shared with the browser.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>Map<![CDATA[<String, Object>]]></type>
 		</attribute>
 		<attribute>
-			<description>Sets the icon using a Bootstrap icon CSS Class. Note, this is overridden by the image attribute. Icon names can be found at http://marcoceppi.github.io/bootstrap-glyphicons/</description>
+			<description>Sets the icon using a Bootstrap icon CSS Class. Note, that any image set by the <![CDATA[<code>image</code>]]> attribute takes precedence. Icon classes can be found at <![CDATA[<a href="http://marcoceppi.github.io/bootstrap-glyphicons/" >http://marcoceppi.github.io/bootstrap-glyphicons/</a>]]>.</description>
 			<name>iconCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>identifier of the component.</description>
+			<description>Identifies the component instance.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The name of the theme image icon, which can be the prefix of any image filename in the Liferay theme's "common" image folder. The image attribute overrides the iconCssClass attribute.</description>
+			<description>Sets the icon's image using an image icon from the current theme. The value can be the filename prefix of any image file in the theme's <![CDATA[<code>common</code>]]> image folder. This image takes precedence over any icon value set via the <![CDATA[<code>iconCssClass</code>]]> attribute.</description>
 			<name>image</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1410,20 +1410,20 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the message attribute is displayed as a label.</description>
+			<description>Whether to display the <![CDATA[<code>message</code>]]> attribute's value as the icon's label.</description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Defines the language for the icon. The language attribute is used to assist search engines and web browsers.</description>
+			<description>Sets the language of the icon to assist search engines and web browsers in finding and rendering the icon appropriately.</description>
 			<name>lang</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets a CSS class style for the url attribute.</description>
+			<description>Sets a CSS class for styling the icon's URL.</description>
 			<name>linkCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1434,25 +1434,25 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Displays the value given as text for the icon on mouse over.</description>
+			<description>Sets text to be displayed for the icon on mouse over.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets a HTTP request method. Possible values are <![CDATA[<code>get</code>]]> and <![CDATA[<code>post</code>]]>.</description>
+			<description>Sets an HTTP request method. Possible values are <![CDATA[<code>get</code>]]> and <![CDATA[<code>post</code>]]>.</description>
 			<name>method</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets a function that is called during the onclick event of the icon.</description>
+			<description>Sets a function to be called on users clicking the icon.</description>
 			<name>onClick</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets the location for the image used for the icon.</description>
+			<description>Sets the location of the image file to use in the icon.</description>
 			<name>src</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1463,7 +1463,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Determines the target window the link opens in. The default value is <![CDATA[<code>self</code>]]>. Possible values are <![CDATA[<code>blank</code>]]>, <![CDATA[<code>self</code>]]>, <![CDATA[<code>parent</code>]]>, <![CDATA[<code>top</code>]]> and a unique framename.</description>
+			<description>Sets the target window into which the URL is opened. The default value is <![CDATA[<code>self</code>]]>. Possible values are <![CDATA[<code>blank</code>]]>, <![CDATA[<code>self</code>]]>, <![CDATA[<code>parent</code>]]>, <![CDATA[<code>top</code>]]>, and a unique frame's name.</description>
 			<name>target</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1475,13 +1475,13 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Sets the url the icon links to when clicked.</description>
+			<description>Sets the URL to which the icon links when clicked.</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the link attribute opens in a dialog window. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<description>Whether to open the URL in a dialog window. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>useDialog</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

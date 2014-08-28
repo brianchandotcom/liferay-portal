@@ -26,6 +26,11 @@ public class AntivirusScannerException extends PortalException {
 
 	public static final int VIRUS_DETECTED = 2;
 
+	/**
+	 * @deprecated As of 7.0.0, replace by {@link
+	 *             #AntivirusScannerException(int)}
+	 */
+	@Deprecated
 	public AntivirusScannerException() {
 		super();
 	}
@@ -34,6 +39,11 @@ public class AntivirusScannerException extends PortalException {
 		_type = type;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replace by {@link
+	 *             #AntivirusScannerException(String,int)}
+	 */
+	@Deprecated
 	public AntivirusScannerException(String msg) {
 		super(msg);
 	}

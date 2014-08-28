@@ -36,7 +36,7 @@ public class ConsumerOutputProcessorTest extends BaseOutputProcessorTestCase {
 	}
 
 	@Test
-	public void testConsumeSuccess() throws Exception {
+	public void testConsumeSuccess() throws ProcessException {
 		ConsumerOutputProcessor consumerOutputProcessor =
 			new ConsumerOutputProcessor();
 

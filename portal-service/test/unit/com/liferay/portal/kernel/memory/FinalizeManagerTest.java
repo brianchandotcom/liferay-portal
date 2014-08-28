@@ -324,12 +324,7 @@ public class FinalizeManagerTest {
 	}
 
 	private <T> T getReferent(Reference<T> reference) {
-		try {
-			return (T)ReflectionTestUtil.getFieldValue(reference, "referent");
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		return (T)ReflectionTestUtil.getFieldValue(reference, "referent");
 	}
 
 	private void waitUntilMarked(MarkFinalizeAction markFinalizeAction)

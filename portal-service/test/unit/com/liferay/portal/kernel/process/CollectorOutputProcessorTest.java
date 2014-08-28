@@ -38,7 +38,7 @@ public class CollectorOutputProcessorTest extends BaseOutputProcessorTestCase {
 	}
 
 	@Test
-	public void testCollectSuccess() throws Exception {
+	public void testCollectSuccess() throws ProcessException {
 		CollectorOutputProcessor collectorOutputProcessor =
 			new CollectorOutputProcessor();
 

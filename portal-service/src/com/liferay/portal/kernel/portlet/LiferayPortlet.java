@@ -86,11 +86,9 @@ public class LiferayPortlet extends GenericPortlet {
 				return;
 			}
 
-			if (!SessionMessages.isEmpty(actionRequest)) {
-				return;
+			if (SessionMessages.isEmpty(actionRequest)) {
+				addSuccessMessage(actionRequest, actionResponse);
 			}
-
-			addSuccessMessage(actionRequest, actionResponse);
 
 			sendRedirect(actionRequest, actionResponse);
 		}

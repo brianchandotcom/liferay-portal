@@ -401,20 +401,15 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			"**\\*.xml"
 		};
 
-		List<String> exclusions = getExclusions("xml.excludes");
-
 		_friendlyUrlRoutesSortExclusions = getExclusions(
 			"friendly.url.routes.sort.excludes");
 		_numericalPortletNameElementExclusions = getExclusions(
 			"numerical.portlet.name.element.excludes");
+		_xmlExclusions = getExclusions("xml.excludes");
 
 		List<String> fileNames = getFileNames(excludes, includes);
 
 		for (String fileName : fileNames) {
-			if (isExcluded(exclusions, fileName)) {
-				continue;
-			}
-
 			format(fileName);
 		}
 	}
@@ -427,6 +422,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
 		String content = fileUtil.read(file);
+
+		if (isExcluded(_xmlExclusions, fileName)) {
+			return content;
+		}
 
 		String newContent = content;
 
@@ -1193,6 +1192,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			"(?:(?:\\n){1,}+|\\</execute\\>)");
 	private Pattern _poshiWholeTagPattern = Pattern.compile("<[^\\>^/]*\\/>");
 	private String _tablesContent;
+	private List<String> _xmlExclusions;
 
 	private class FinderElementComparator implements Comparator<Element> {
 

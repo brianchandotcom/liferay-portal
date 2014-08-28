@@ -938,6 +938,11 @@
 		</if>
 	</command>
 
+	<command name="viewDefaultThemePG">
+		<execute action="Home#assertElementNotPresent" locator-key1="DARK_THEME" />
+		<execute action="Home#assertElementPresent" locator-key1="DEFAULT_THEME" />
+	</command>
+
 	<command name="viewGlobalLandingDefault">
 		<var name="key_portletName" value="${portletName}" />
 

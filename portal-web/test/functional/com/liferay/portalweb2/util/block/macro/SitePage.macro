@@ -145,6 +145,33 @@
 		<execute action="CPSitepagesAddpage#assertChecked" locator-key1="PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
 	</command>
 
+	<command name="changeColorSchemesCP">
+		<if>
+			<equals arg1="${colorScheme}" arg2="Dark" />
+			<then>
+				<execute action="CPSitepages#assertVisible" locator-key1="LOOK_AND_FEEL_COLOR_SCHEMES_DARK_IMG" />
+				<execute action="CPSitepages#click" locator-key1="LOOK_AND_FEEL_COLOR_SCHEMES_DARK_RADIO_BUTTON" />
+			</then>
+			<elseif>
+				<equals arg1="${colorScheme}" arg2="Default" />
+				<then>
+					<execute action="CPSitepages#assertVisible" locator-key1="LOOK_AND_FEEL_COLOR_SCHEMES_DEFAULT_IMG" />
+					<execute action="CPSitepages#click" locator-key1="LOOK_AND_FEEL_COLOR_SCHEMES_DEFAULT_RADIO_BUTTON" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${colorScheme}" arg2="Light" />
+				<then>
+					<execute action="CPSitepages#assertVisible" locator-key1="LOOK_AND_FEEL_COLOR_SCHEMES_LIGHT_IMG" />
+					<execute action="CPSitepages#click" locator-key1="LOOK_AND_FEEL_COLOR_SCHEMES_LIGHT_RADIO_BUTTON" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="CPSitepages#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="changePageTypeLayoutCP">
 		<var name="key_pageType" value="${pageType}" />
 

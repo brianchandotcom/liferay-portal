@@ -411,8 +411,43 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SEO-->
 <!--LOOK_AND_FEEL-->
+<tr>
+	<td>LOOK_AND_FEEL_COLOR_SCHEMES_DARK_IMG</td>
+	<td>//div[contains(@class,'theme-entry')]/img[@title='Dark']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOOK_AND_FEEL_COLOR_SCHEMES_DARK_RADIO_BUTTON</td>
+	<td>//div[contains(@class,'theme-entry')]//input[@id='_156_regularColorSchemeId0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOOK_AND_FEEL_COLOR_SCHEMES_DEFAULT_IMG</td>
+	<td>//div[contains(@class,'theme-entry')]/img[@title='Default']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOOK_AND_FEEL_COLOR_SCHEMES_DEFAULT_RADIO_BUTTON</td>
+	<td>//div[contains(@class,'theme-entry')]//input[@id='_156_regularColorSchemeId1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOOK_AND_FEEL_COLOR_SCHEMES_LIGHT_IMG</td>
+	<td>//div[contains(@class,'theme-entry')]/img[@title='Light']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOOK_AND_FEEL_COLOR_SCHEMES_LIGHT_RADIO_BUTTON</td>
+	<td>//div[contains(@class,'theme-entry')]//input[@id='_156_regularColorSchemeId2']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SEO-->
 <!--LAYOUT-->
 <!--JAVASCRIPT-->
 <!--CUSTOM_FIELDS-->

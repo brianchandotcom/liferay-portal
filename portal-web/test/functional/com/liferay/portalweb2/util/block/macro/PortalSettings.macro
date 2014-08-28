@@ -136,7 +136,16 @@
 	<command name="editConfigurationAuthenticationGeneral">
 		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
 
-		<execute action="CPPortalsettingsAuthentication#select" locator-key1="AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT" value1="${authenticationMethod}" />
+		<if>
+			<equals arg1="${enableRequireStrangers}" arg2="true" />
+			<then>
+				<execute action="CPPortalsettingsAuthentication#check" locator-key1="AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="CPPortalsettingsAuthentication#select" locator-key1="AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT" value1="${authenticationMethod}" />
+			</else>
+		</if>
+
 		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -187,6 +196,34 @@
 		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
 		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
+	</command>
+
+	<command name="editConfigurationUsersEmailNotificationsCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_EMAIL_NOTIFICATIONS" value1="Email Notifications" />
+
+		<execute action="CPPortalsettingsEmailNotifications#assertClick" locator-key1="NAVIGATION_ACCOUNT_CREATED_NOTIFICATION" value1="Account Created Notification" />
+		<execute action="CPPortalsettingsEmailNotifications#type" locator-key1="EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD" value1="[$USER_PASSWORD$]" />
+		<execute action="CPPortalsettingsEmailNotifications#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalsettingsEmailNotifications#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="editConfigurationUsersEmailVerificationNotificationsCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_EMAIL_NOTIFICATIONS" value1="Email Notifications" />
+
+		<execute action="CPPortalsettingsEmailNotifications#assertClick" locator-key1="NAVIGATION_EMAIL_VERIFICATiON_NOTIFICATION" value1="Email Verification Notification" />
+
+		<if>
+			<equals arg1="${emailVerificationURL}" arg2="true" />
+			<then>
+				<execute action="CPPortalsettingsEmailNotifications#type" locator-key1="NAVIGATION_EMAIL_VERIFICATiON_NOTIFICATION_BODY" value1="[$EMAIL_VERIFICATION_URL$]" />
+			</then>
+			<else>
+				<execute action="CPPortalsettingsEmailNotifications#type" locator-key1="NAVIGATION_EMAIL_VERIFICATiON_NOTIFICATION_BODY" value1="[$EMAIL_VERIFICATION_CODE$]" />
+			</else>
+		</if>
+
+		<execute action="CPPortalsettingsEmailNotifications#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalsettingsEmailNotifications#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editDefaultLandingPageCP">

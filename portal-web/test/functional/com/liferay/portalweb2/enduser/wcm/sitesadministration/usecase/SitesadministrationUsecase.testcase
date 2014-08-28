@@ -461,6 +461,170 @@
 		</execute>
 	</command>
 
+	<command name="ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured" priority="4">
+		<property name="custom.properties" value="layout.default.template.id=2_columns_iii$${line.separator}layout.user.private.layouts.enabled=false$${line.separator}layout.user.private.layouts.auto.create=false$${line.separator}layout.user.private.layouts.power.user.required=true$${line.separator}layout.user.public.layouts.enabled=false$${line.separator}layout.user.public.layouts.auto.create=false$${line.separator}layout.user.public.layouts.power.user.required=true" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#editVirtualHostCP">
+			<var name="virtualHostName" value="www.able.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#editConfigurationAuthenticationGeneral">
+			<var name="enableRequireStrangers" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#editConfigurationUsersEmailNotificationsCP" />
+
+		<execute macro="PortalSettings#editConfigurationUsersEmailVerificationNotificationsCP" />
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#changeColorSchemesCP">
+			<var name="colorScheme" value="Dark" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#addVirtualHostsURLCP">
+			<var name="publicPageVirtualHostURL" value="www.baker.com" />
+			<var name="publicVirtualHosts" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="sitePageName" value="Site Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureMailServerSettings">
+			<var name="userName" property-value="email.address.1" />
+			<var name="userPassword" property-value="email.password.1" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteURL" value="true" />
+			<var name="virtualHostsURL" value="http://www.able.com:8080/" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteURL" value="true" />
+			<var name="virtualHostsURL" value="http://www.baker.com:8080/" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#addCreateAccountPG">
+			<var name="userEmailAddress" value="liferay.qa1@gmail.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Gmail#login">
+			<var name="userEmailAddress" property-value="email.address.2" />
+			<var name="userPassword" property-value="email.password.2" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#gotoMailMessage">
+			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailMessageTitle" value="Your New Account" />
+		</execute>
+
+		<var locator-key="EMAIL_PASSWORD" name="emailPassword" path="Gmail" />
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#gotoMailMessage">
+			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailMessageTitle" value="Email Address Verification" />
+		</execute>
+
+		<var locator-key="EMAIL_VERIFICATION_CODE" name="emailVerification" path="Gmail" />
+
+		<execute macro="Page#openURL">
+			<var name="siteURL" value="true" />
+			<var name="virtualHostsURL" value="http://www.baker.com:8080/" />
+		</execute>
+
+		<execute macro="User#signInPG">
+			<var name="userEmailAddress" value="liferay.qa1@gmail.com" />
+		</execute>
+
+		<execute macro="User#firstLoginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#editConfigurationUsersEmailVerificationNotificationsCP">
+			<var name="emailVerificationURL" value="true" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteURL" value="true" />
+			<var name="virtualHostsURL" value="http://www.baker.com:8080/" />
+		</execute>
+
+		<execute macro="User#editEmailViaMyAccount">
+			<var name="userEmailAddress" value="liferay.qa2@gmail.com" />
+		</execute>
+
+		<execute macro="Gmail#logoutAndLogin">
+			<var name="userEmailAddress" property-value="email.address.3" />
+			<var name="userPassword" property-value="email.password.3" />
+		</execute>
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#gotoMailMessage">
+			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="emailVerificationURL" value="true" />
+			<var name="gmailMessageTitle" value="Email Address Verification" />
+		</execute>
+
+		<var locator-key="EMAIL_ADDRESS_VERIFICATION_URL" name="emailAddressVerificationURL" path="Gmail" />
+
+		<execute action="Gmail#click" locator-key1="EMAIL_ADDRESS_VERIFICATION_URL" />
+
+		<execute action="Home#selectWindow" locator1="title=Verify Email Address - Liferay" />
+		<execute action="Home#assertLocation" value1="${emailAddressVerificationURL}" />
+
+		<execute macro="Site#viewDefaultThemePG" />
+	</command>
+
 	<command name="SiteFriendlyURLLayoutImporter" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />

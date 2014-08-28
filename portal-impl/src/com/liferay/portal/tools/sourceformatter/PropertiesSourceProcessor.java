@@ -31,6 +31,21 @@ import java.util.List;
 public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 	@Override
+	protected String doFormat(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		if (!portalSource && fileName.endsWith("portlet.properties")) {
+			return formatPortletProperties(content);
+
+		}
+
+		formatPortalProperties(fileName, content);
+
+		return content;
+	}
+
+	@Override
 	protected void format() throws Exception {
 		_portalPortalPropertiesContent = formatPortalPortalProperties();
 
@@ -53,21 +68,6 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		for (String fileName : fileNames) {
 			format(fileName);
 		}
-	}
-
-	@Override
-	protected String doFormat(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		if (!portalSource && fileName.endsWith("portlet.properties")) {
-			return formatPortletProperties(content);
-
-		}
-
-		formatPortalProperties(fileName, content);
-
-		return content;
 	}
 
 	protected String formatPortalPortalProperties() throws Exception {

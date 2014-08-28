@@ -32,17 +32,6 @@ import java.util.List;
 public class SQLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	protected void format() throws Exception {
-		String[] includes = new String[] {"**\\sql\\*.sql"};
-
-		List<String> fileNames = getFileNames(new String[0], includes);
-
-		for (String fileName : fileNames) {
-			format(fileName);
-		}
-	}
-
-	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
@@ -94,6 +83,17 @@ public class SQLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
+	}
+
+	@Override
+	protected void format() throws Exception {
+		String[] includes = new String[] {"**\\sql\\*.sql"};
+
+		List<String> fileNames = getFileNames(new String[0], includes);
+
+		for (String fileName : fileNames) {
+			format(fileName);
+		}
 	}
 
 }

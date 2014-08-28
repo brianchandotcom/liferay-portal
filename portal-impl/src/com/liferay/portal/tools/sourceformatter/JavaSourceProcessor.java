@@ -577,196 +577,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected String fixDataAccessConnection(String className, String content) {
-		int x = content.indexOf("package ");
-
-		int y = content.indexOf(CharPool.SEMICOLON, x);
-
-		if ((x == -1) || (y == -1)) {
-			return content;
-		}
-
-		String packageName = content.substring(x + 8, y);
-
-		if (!packageName.startsWith("com.liferay.portal.kernel.upgrade") &&
-			!packageName.startsWith("com.liferay.portal.kernel.verify") &&
-			!packageName.startsWith("com.liferay.portal.upgrade") &&
-			!packageName.startsWith("com.liferay.portal.verify")) {
-
-			return content;
-		}
-
-		content = StringUtil.replace(
-			content, "DataAccess.getConnection",
-			"DataAccess.getUpgradeOptimizedConnection");
-
-		return content;
-	}
-
-	protected String fixIfClause(String ifClause, String line, int delta) {
-		String newLine = line;
-
-		String whiteSpace = StringPool.BLANK;
-		int whiteSpaceLength = Math.abs(delta);
-
-		while (whiteSpaceLength > 0) {
-			if (whiteSpaceLength >= 4) {
-				whiteSpace += StringPool.TAB;
-
-				whiteSpaceLength -= 4;
-			}
-			else {
-				whiteSpace += StringPool.SPACE;
-
-				whiteSpaceLength -= 1;
-			}
-		}
-
-		if (delta > 0) {
-			if (!line.contains(StringPool.TAB + whiteSpace)) {
-				newLine = StringUtil.replaceLast(
-					newLine, StringPool.TAB, StringPool.FOUR_SPACES);
-			}
-
-			newLine = StringUtil.replaceLast(
-				newLine, StringPool.TAB + whiteSpace, StringPool.TAB);
-		}
-		else {
-			newLine = StringUtil.replaceLast(
-				newLine, StringPool.TAB, StringPool.TAB + whiteSpace);
-		}
-
-		newLine = StringUtil.replaceLast(
-			newLine, StringPool.FOUR_SPACES, StringPool.TAB);
-
-		return StringUtil.replace(ifClause, line, newLine);
-	}
-
-	protected String fixIncorrectEmptyLineBeforeCloseCurlyBrace(
-		String content, String fileName) {
-
-		if (fileName.endsWith("AnnotationLocatorTest.java")) {
-			return content;
-		}
-
-		Matcher matcher = _incorrectCloseCurlyBracePattern.matcher(content);
-
-		while (matcher.find()) {
-			String lastLine = StringUtil.trimLeading(matcher.group(1));
-
-			if (lastLine.startsWith("// ")) {
-				continue;
-			}
-
-			String tabs = matcher.group(2);
-			int tabCount = tabs.length();
-
-			int pos = matcher.start();
-
-			while (true) {
-				pos = content.lastIndexOf("\n" + tabs, pos - 1);
-
-				if (content.charAt(pos + tabCount + 1) == CharPool.TAB) {
-					continue;
-				}
-
-				String codeBlock = content.substring(
-					pos + tabCount + 1, matcher.end());
-
-				String firstLine = codeBlock.substring(
-					0, codeBlock.indexOf("\n"));
-
-				if (firstLine.contains(" class ") ||
-					firstLine.contains(" enum ") ||
-					firstLine.contains(" interface ") ||
-					firstLine.startsWith("new ") ||
-					firstLine.contains(" new ")) {
-
-					break;
-				}
-
-				return StringUtil.replaceFirst(
-					content, "\n\n" + tabs + "}\n", "\n" + tabs + "}\n", pos);
-			}
-		}
-
-		return content;
-	}
-
-	protected String fixSystemExceptions(String content) {
-		Matcher matcher = _throwsSystemExceptionPattern.matcher(content);
-
-		if (!matcher.find()) {
-			return content;
-		}
-
-		String match = matcher.group();
-		String replacement = null;
-
-		String afterException = matcher.group(3);
-		String beforeException = matcher.group(2);
-
-		if (Validator.isNull(beforeException) &&
-			Validator.isNull(afterException)) {
-
-			replacement = matcher.group(4);
-
-			String beforeThrows = matcher.group(1);
-
-			if (Validator.isNotNull(StringUtil.trim(beforeThrows))) {
-				replacement = beforeThrows + replacement;
-			}
-		}
-		else if (Validator.isNull(beforeException)) {
-			replacement = StringUtil.replaceFirst(
-				match, "SystemException, ", StringPool.BLANK);
-		}
-		else {
-			replacement = StringUtil.replaceFirst(
-				match, ", SystemException", StringPool.BLANK);
-		}
-
-		if (match.equals(replacement)) {
-			return content;
-		}
-
-		return fixSystemExceptions(
-			StringUtil.replaceFirst(content, match, replacement));
-	}
-
-	@Override
-	protected void format() throws Exception {
-		Collection<String> fileNames = null;
-
-		if (portalSource) {
-			fileNames = getPortalJavaFiles();
-
-			_checkUnprocessedExceptions = GetterUtil.getBoolean(
-				System.getProperty(
-					"source.formatter.check.unprocessed.exceptions"));
-		}
-		else {
-			fileNames = getPluginJavaFiles();
-		}
-
-		_fitOnSingleLineExclusions = getExclusions(
-			"fit.on.single.line.exludes");
-		_hibernateSQLQueryExclusions = getExclusions(
-			"hibernate.sql.query.excludes");
-		_javaTermSortExclusions = getExclusions("javaterm.sort.excludes");
-		_lineLengthExclusions = getExclusions("line.length.excludes");
-		_proxyExclusions = getExclusions("proxy.excludes");
-		_secureRandomExclusions = getExclusions("secure.random.excludes");
-		_staticLogVariableExclusions = getExclusions("static.log.excludes");
-		_testAnnotationsExclusions = getExclusions("test.annotations.excludes");
-		_upgradeServiceUtilExclusions = getExclusions(
-			"upgrade.service.util.excludes");
-
-		for (String fileName : fileNames) {
-			format(fileName);
-		}
-	}
-
 	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
@@ -1084,6 +894,196 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = formatJava(fileName, absolutePath, newContent);
 
 		return StringUtil.replace(newContent, "\n\n\n", "\n\n");
+	}
+
+	protected String fixDataAccessConnection(String className, String content) {
+		int x = content.indexOf("package ");
+
+		int y = content.indexOf(CharPool.SEMICOLON, x);
+
+		if ((x == -1) || (y == -1)) {
+			return content;
+		}
+
+		String packageName = content.substring(x + 8, y);
+
+		if (!packageName.startsWith("com.liferay.portal.kernel.upgrade") &&
+			!packageName.startsWith("com.liferay.portal.kernel.verify") &&
+			!packageName.startsWith("com.liferay.portal.upgrade") &&
+			!packageName.startsWith("com.liferay.portal.verify")) {
+
+			return content;
+		}
+
+		content = StringUtil.replace(
+			content, "DataAccess.getConnection",
+			"DataAccess.getUpgradeOptimizedConnection");
+
+		return content;
+	}
+
+	protected String fixIfClause(String ifClause, String line, int delta) {
+		String newLine = line;
+
+		String whiteSpace = StringPool.BLANK;
+		int whiteSpaceLength = Math.abs(delta);
+
+		while (whiteSpaceLength > 0) {
+			if (whiteSpaceLength >= 4) {
+				whiteSpace += StringPool.TAB;
+
+				whiteSpaceLength -= 4;
+			}
+			else {
+				whiteSpace += StringPool.SPACE;
+
+				whiteSpaceLength -= 1;
+			}
+		}
+
+		if (delta > 0) {
+			if (!line.contains(StringPool.TAB + whiteSpace)) {
+				newLine = StringUtil.replaceLast(
+					newLine, StringPool.TAB, StringPool.FOUR_SPACES);
+			}
+
+			newLine = StringUtil.replaceLast(
+				newLine, StringPool.TAB + whiteSpace, StringPool.TAB);
+		}
+		else {
+			newLine = StringUtil.replaceLast(
+				newLine, StringPool.TAB, StringPool.TAB + whiteSpace);
+		}
+
+		newLine = StringUtil.replaceLast(
+			newLine, StringPool.FOUR_SPACES, StringPool.TAB);
+
+		return StringUtil.replace(ifClause, line, newLine);
+	}
+
+	protected String fixIncorrectEmptyLineBeforeCloseCurlyBrace(
+		String content, String fileName) {
+
+		if (fileName.endsWith("AnnotationLocatorTest.java")) {
+			return content;
+		}
+
+		Matcher matcher = _incorrectCloseCurlyBracePattern.matcher(content);
+
+		while (matcher.find()) {
+			String lastLine = StringUtil.trimLeading(matcher.group(1));
+
+			if (lastLine.startsWith("// ")) {
+				continue;
+			}
+
+			String tabs = matcher.group(2);
+			int tabCount = tabs.length();
+
+			int pos = matcher.start();
+
+			while (true) {
+				pos = content.lastIndexOf("\n" + tabs, pos - 1);
+
+				if (content.charAt(pos + tabCount + 1) == CharPool.TAB) {
+					continue;
+				}
+
+				String codeBlock = content.substring(
+					pos + tabCount + 1, matcher.end());
+
+				String firstLine = codeBlock.substring(
+					0, codeBlock.indexOf("\n"));
+
+				if (firstLine.contains(" class ") ||
+					firstLine.contains(" enum ") ||
+					firstLine.contains(" interface ") ||
+					firstLine.startsWith("new ") ||
+					firstLine.contains(" new ")) {
+
+					break;
+				}
+
+				return StringUtil.replaceFirst(
+					content, "\n\n" + tabs + "}\n", "\n" + tabs + "}\n", pos);
+			}
+		}
+
+		return content;
+	}
+
+	protected String fixSystemExceptions(String content) {
+		Matcher matcher = _throwsSystemExceptionPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String match = matcher.group();
+		String replacement = null;
+
+		String afterException = matcher.group(3);
+		String beforeException = matcher.group(2);
+
+		if (Validator.isNull(beforeException) &&
+			Validator.isNull(afterException)) {
+
+			replacement = matcher.group(4);
+
+			String beforeThrows = matcher.group(1);
+
+			if (Validator.isNotNull(StringUtil.trim(beforeThrows))) {
+				replacement = beforeThrows + replacement;
+			}
+		}
+		else if (Validator.isNull(beforeException)) {
+			replacement = StringUtil.replaceFirst(
+				match, "SystemException, ", StringPool.BLANK);
+		}
+		else {
+			replacement = StringUtil.replaceFirst(
+				match, ", SystemException", StringPool.BLANK);
+		}
+
+		if (match.equals(replacement)) {
+			return content;
+		}
+
+		return fixSystemExceptions(
+			StringUtil.replaceFirst(content, match, replacement));
+	}
+
+	@Override
+	protected void format() throws Exception {
+		Collection<String> fileNames = null;
+
+		if (portalSource) {
+			fileNames = getPortalJavaFiles();
+
+			_checkUnprocessedExceptions = GetterUtil.getBoolean(
+				System.getProperty(
+					"source.formatter.check.unprocessed.exceptions"));
+		}
+		else {
+			fileNames = getPluginJavaFiles();
+		}
+
+		_fitOnSingleLineExclusions = getExclusions(
+			"fit.on.single.line.exludes");
+		_hibernateSQLQueryExclusions = getExclusions(
+			"hibernate.sql.query.excludes");
+		_javaTermSortExclusions = getExclusions("javaterm.sort.excludes");
+		_lineLengthExclusions = getExclusions("line.length.excludes");
+		_proxyExclusions = getExclusions("proxy.excludes");
+		_secureRandomExclusions = getExclusions("secure.random.excludes");
+		_staticLogVariableExclusions = getExclusions("static.log.excludes");
+		_testAnnotationsExclusions = getExclusions("test.annotations.excludes");
+		_upgradeServiceUtilExclusions = getExclusions(
+			"upgrade.service.util.excludes");
+
+		for (String fileName : fileNames) {
+			format(fileName);
+		}
 	}
 
 	protected String formatJava(

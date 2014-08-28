@@ -315,67 +315,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void format() throws Exception {
-		_unusedVariablesExclusions = getExclusions(
-			"jsp.unused.variables.excludes");
-
-		String[] excludes = new String[] {"**\\null.jsp", "**\\tools\\**"};
-		String[] includes = new String[] {
-			"**\\*.jsp", "**\\*.jspf", "**\\*.vm"
-		};
-
-		List<String> fileNames = getFileNames(excludes, includes);
-
-		Pattern pattern = Pattern.compile(
-			"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
-
-		for (String fileName : fileNames) {
-			File file = new File(BASEDIR + fileName);
-
-			fileName = StringUtil.replace(
-				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-			String content = fileUtil.read(file);
-
-			Matcher matcher = pattern.matcher(content);
-
-			String newContent = content;
-
-			while (matcher.find()) {
-				newContent = StringUtil.replaceFirst(
-					newContent, matcher.group(),
-					"@ include file=\"" + matcher.group(1) + "\"",
-					matcher.start());
-			}
-
-			if (!content.equals(newContent)) {
-				processFormattedFile(file, fileName, content, newContent);
-			}
-
-			if (portalSource &&
-				mainReleaseVersion.equals(MAIN_RELEASE_LATEST_VERSION) &&
-				fileName.endsWith("/init.jsp") &&
-				!fileName.startsWith("modules/") &&
-				!fileName.endsWith("/common/init.jsp")) {
-
-				addImportCounts(content);
-			}
-
-			_jspContents.put(fileName, newContent);
-		}
-
-		if (portalSource &&
-			!mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0)) {
-
-			moveFrequentlyUsedImportsToCommonInit(4);
-		}
-
-		for (String fileName : fileNames) {
-			format(fileName);
-		}
-	}
-
-	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
@@ -491,6 +430,67 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return newContent;
+	}
+
+	@Override
+	protected void format() throws Exception {
+		_unusedVariablesExclusions = getExclusions(
+			"jsp.unused.variables.excludes");
+
+		String[] excludes = new String[] {"**\\null.jsp", "**\\tools\\**"};
+		String[] includes = new String[] {
+			"**\\*.jsp", "**\\*.jspf", "**\\*.vm"
+		};
+
+		List<String> fileNames = getFileNames(excludes, includes);
+
+		Pattern pattern = Pattern.compile(
+			"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
+
+		for (String fileName : fileNames) {
+			File file = new File(BASEDIR + fileName);
+
+			fileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+			String content = fileUtil.read(file);
+
+			Matcher matcher = pattern.matcher(content);
+
+			String newContent = content;
+
+			while (matcher.find()) {
+				newContent = StringUtil.replaceFirst(
+					newContent, matcher.group(),
+					"@ include file=\"" + matcher.group(1) + "\"",
+					matcher.start());
+			}
+
+			if (!content.equals(newContent)) {
+				processFormattedFile(file, fileName, content, newContent);
+			}
+
+			if (portalSource &&
+				mainReleaseVersion.equals(MAIN_RELEASE_LATEST_VERSION) &&
+				fileName.endsWith("/init.jsp") &&
+				!fileName.startsWith("modules/") &&
+				!fileName.endsWith("/common/init.jsp")) {
+
+				addImportCounts(content);
+			}
+
+			_jspContents.put(fileName, newContent);
+		}
+
+		if (portalSource &&
+			!mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0)) {
+
+			moveFrequentlyUsedImportsToCommonInit(4);
+		}
+
+		for (String fileName : fileNames) {
+			format(fileName);
+		}
 	}
 
 	protected String formatJSP(

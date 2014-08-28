@@ -24,6 +24,14 @@ import java.util.List;
 public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
+	protected String doFormat(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		return trimContent(content, false);
+	}
+
+	@Override
 	protected void format() throws Exception {
 		String[] excludes = new String[] {
 			"**\\journal\\dependencies\\template.ftl",
@@ -36,14 +44,6 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 		for (String fileName : fileNames) {
 			format(fileName);
 		}
-	}
-
-	@Override
-	protected String doFormat(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		return trimContent(content, false);
 	}
 
 }

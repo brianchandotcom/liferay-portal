@@ -24,6 +24,14 @@ import java.util.List;
 public class TLDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
+	protected String doFormat(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		return trimContent(content, false);
+	}
+
+	@Override
 	protected void format() throws Exception {
 		String[] excludes = new String[] {"**\\WEB-INF\\tld\\**"};
 		String[] includes = new String[] {"**\\*.tld"};
@@ -33,14 +41,6 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 		for (String fileName : fileNames) {
 			format(fileName);
 		}
-	}
-
-	@Override
-	protected String doFormat(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		return trimContent(content, false);
 	}
 
 }

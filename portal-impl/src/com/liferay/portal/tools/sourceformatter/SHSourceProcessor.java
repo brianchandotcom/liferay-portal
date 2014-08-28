@@ -24,6 +24,14 @@ import java.util.List;
 public class SHSourceProcessor extends BaseSourceProcessor {
 
 	@Override
+	protected String doFormat(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		return content;
+	}
+
+	@Override
 	protected void format() throws Exception {
 		String[] includes = new String[] {"**\\*.sh"};
 
@@ -32,14 +40,6 @@ public class SHSourceProcessor extends BaseSourceProcessor {
 		for (String fileName : fileNames) {
 			format(fileName);
 		}
-	}
-
-	@Override
-	protected String doFormat(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		return content;
 	}
 
 }

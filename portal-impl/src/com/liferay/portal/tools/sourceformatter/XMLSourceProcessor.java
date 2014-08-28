@@ -163,6 +163,66 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	@Override
+	protected String doFormat(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		if (isExcluded(_xmlExclusions, fileName)) {
+			return content;
+		}
+
+		String newContent = content;
+
+		if (!fileName.contains("/build")) {
+			newContent = trimContent(newContent, false);
+		}
+
+		if (fileName.contains("/build") && !fileName.contains("/tools/")) {
+			newContent = formatAntXML(fileName, newContent);
+		}
+		else if (fileName.endsWith("structures.xml")) {
+			newContent = formatDDLStructuresXML(newContent);
+		}
+		else if (fileName.endsWith("routes.xml")) {
+			newContent = formatFriendlyURLRoutesXML(fileName, newContent);
+		}
+		else if (fileName.endsWith("/liferay-portlet.xml") ||
+				 (portalSource &&
+				  fileName.endsWith("/portlet-custom.xml")) ||
+				 (!portalSource && fileName.endsWith("/portlet.xml"))) {
+
+			newContent = formatPortletXML(fileName, newContent);
+		}
+		else if (portalSource &&
+				 (fileName.endsWith(".action") ||
+				  fileName.endsWith(".function") ||
+				  fileName.endsWith(".macro") ||
+				  fileName.endsWith(".testcase") ||
+				  fileName.endsWith(".testxml"))) {
+
+			newContent = formatPoshiXML(fileName, newContent);
+		}
+		else if (fileName.endsWith("/service.xml")) {
+			formatServiceXML(fileName, newContent);
+		}
+		else if (portalSource && fileName.endsWith("/struts-config.xml")) {
+			formatStrutsConfigXML(fileName, newContent);
+		}
+		else if (portalSource && fileName.endsWith("/tiles-defs.xml")) {
+			formatTilesDefsXML(fileName, newContent);
+		}
+		else if ((portalSource &&
+				  fileName.endsWith(
+					  "portal-web/docroot/WEB-INF/web.xml")) ||
+				 (!portalSource && fileName.endsWith("/web.xml"))) {
+
+			newContent = formatWebXML(fileName, newContent);
+		}
+
+		return formatXML(newContent);
+	}
+
 	protected String fixAntXMLProjectName(String fileName, String content) {
 		int x = 0;
 
@@ -411,66 +471,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		for (String fileName : fileNames) {
 			format(fileName);
 		}
-	}
-
-	@Override
-	protected String doFormat(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		if (isExcluded(_xmlExclusions, fileName)) {
-			return content;
-		}
-
-		String newContent = content;
-
-		if (!fileName.contains("/build")) {
-			newContent = trimContent(newContent, false);
-		}
-
-		if (fileName.contains("/build") && !fileName.contains("/tools/")) {
-			newContent = formatAntXML(fileName, newContent);
-		}
-		else if (fileName.endsWith("structures.xml")) {
-			newContent = formatDDLStructuresXML(newContent);
-		}
-		else if (fileName.endsWith("routes.xml")) {
-			newContent = formatFriendlyURLRoutesXML(fileName, newContent);
-		}
-		else if (fileName.endsWith("/liferay-portlet.xml") ||
-				 (portalSource &&
-				  fileName.endsWith("/portlet-custom.xml")) ||
-				 (!portalSource && fileName.endsWith("/portlet.xml"))) {
-
-			newContent = formatPortletXML(fileName, newContent);
-		}
-		else if (portalSource &&
-				 (fileName.endsWith(".action") ||
-				  fileName.endsWith(".function") ||
-				  fileName.endsWith(".macro") ||
-				  fileName.endsWith(".testcase") ||
-				  fileName.endsWith(".testxml"))) {
-
-			newContent = formatPoshiXML(fileName, newContent);
-		}
-		else if (fileName.endsWith("/service.xml")) {
-			formatServiceXML(fileName, newContent);
-		}
-		else if (portalSource && fileName.endsWith("/struts-config.xml")) {
-			formatStrutsConfigXML(fileName, newContent);
-		}
-		else if (portalSource && fileName.endsWith("/tiles-defs.xml")) {
-			formatTilesDefsXML(fileName, newContent);
-		}
-		else if ((portalSource &&
-				  fileName.endsWith(
-					  "portal-web/docroot/WEB-INF/web.xml")) ||
-				 (!portalSource && fileName.endsWith("/web.xml"))) {
-
-			newContent = formatWebXML(fileName, newContent);
-		}
-
-		return formatXML(newContent);
 	}
 
 	protected String formatAntXML(String fileName, String content)

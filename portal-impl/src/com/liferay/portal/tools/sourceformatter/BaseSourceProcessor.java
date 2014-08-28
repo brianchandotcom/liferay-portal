@@ -380,22 +380,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		processErrorMessage(fileName, "plus: " + fileName + " " + lineCount);
 	}
 
-	protected void processFormattedFile(
-			File file, String fileName, String content, String newContent)
-		throws IOException {
-
-		if (_autoFix) {
-			fileUtil.write(file, newContent);
-		}
-		else if (_firstSourceMismatchException == null) {
-			_firstSourceMismatchException =
-				new SourceMismatchException(fileName, content, newContent);
-		}
-
-		if (_printErrors) {
-			sourceFormatterHelper.printError(fileName, file);
-		}
-	}
+	protected abstract String doFormat(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception;
 
 	protected String fixCompatClassImports(String absolutePath, String content)
 		throws IOException {
@@ -642,10 +629,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected abstract void format() throws Exception;
-
-	protected abstract String doFormat(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception;
 
 	protected String format(String fileName) throws Exception {
 		File file = new File(BASEDIR + fileName);
@@ -1017,6 +1000,23 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return false;
+	}
+
+	protected void processFormattedFile(
+			File file, String fileName, String content, String newContent)
+		throws IOException {
+
+		if (_autoFix) {
+			fileUtil.write(file, newContent);
+		}
+		else if (_firstSourceMismatchException == null) {
+			_firstSourceMismatchException =
+				new SourceMismatchException(fileName, content, newContent);
+		}
+
+		if (_printErrors) {
+			sourceFormatterHelper.printError(fileName, file);
+		}
 	}
 
 	protected String replacePrimitiveWrapperInstantiation(

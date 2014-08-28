@@ -13,7 +13,6 @@
  */
 package com.liferay.portal.kernel.struts.path;
 
-
 public class DefaultAuthPublicPath implements AuthPublicPath {
 
 	public DefaultAuthPublicPath(String path) {

@@ -851,11 +851,11 @@ public class HookHotDeployListener
 			portalProperties.getProperty(AUTH_PUBLIC_PATHS));
 
 		for (String publicPath : publicPaths) {
-			AuthPublicPath authPublicPath =
-				new DefaultAuthPublicPath(publicPath);
+			AuthPublicPath authPublicPath = new DefaultAuthPublicPath(
+				publicPath);
 
 			registerService(
-				servletContextName, AUTH_PUBLIC_PATHS  + publicPath,
+				servletContextName, AUTH_PUBLIC_PATHS + publicPath,
 				AuthPublicPath.class, authPublicPath);
 		}
 	}

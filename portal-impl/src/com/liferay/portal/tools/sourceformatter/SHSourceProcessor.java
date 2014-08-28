@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import com.liferay.portal.kernel.util.StringUtil;
-
 import java.io.File;
 
 /**
@@ -37,7 +35,7 @@ public class SHSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		return StringUtil.replace(content, "\r", "");
+		return content;
 	}
 
 }

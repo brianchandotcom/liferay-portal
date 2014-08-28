@@ -211,6 +211,13 @@ public class ShoppingCategoryLocalServiceImpl
 	}
 
 	@Override
+	public ShoppingCategory getCategory(long groupId, String categoryName)
+		throws PortalException {
+
+		return shoppingCategoryPersistence.fetchByG_N(groupId, categoryName);
+	}
+
+	@Override
 	public List<ShoppingCategory> getParentCategories(long categoryId)
 		throws PortalException {
 

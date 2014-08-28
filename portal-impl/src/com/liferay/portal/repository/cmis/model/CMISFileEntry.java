@@ -171,7 +171,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 	@Override
 	public String getFilename() {
-		return _document.getName();
+		return getTitle();
 	}
 
 	@Override

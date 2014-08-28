@@ -835,9 +835,14 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			String dbType = db.getType();
 
 			if (dbType.equals(DB.TYPE_SQLSERVER)) {
-				properties.setProperty(
-					"org.quartz.jobStore.lockHandler.class",
-					UpdateLockRowSemaphore.class.getName());
+				String lockHandlerClassName = properties.getProperty(
+					"org.quartz.jobStore.lockHandler.class");
+
+				if (Validator.isNull(lockHandlerClassName)) {
+					properties.setProperty(
+						"org.quartz.jobStore.lockHandler.class",
+						UpdateLockRowSemaphore.class.getName());
+				}
 			}
 
 			if (PropsValues.CLUSTER_LINK_ENABLED) {

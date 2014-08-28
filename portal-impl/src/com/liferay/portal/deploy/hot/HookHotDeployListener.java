@@ -59,6 +59,8 @@ import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterConfig;
 import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.struts.StrutsPortletAction;
+import com.liferay.portal.kernel.struts.path.AuthPublicPath;
+import com.liferay.portal.kernel.struts.path.DefaultAuthPublicPath;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -111,7 +113,6 @@ import com.liferay.portal.service.ServiceWrapper;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
-import com.liferay.portal.struts.AuthPublicPathRegistry;
 import com.liferay.portal.util.CustomJspRegistryUtil;
 import com.liferay.portal.util.JavaScriptBundleUtil;
 import com.liferay.portal.util.LayoutSettings;
@@ -622,13 +623,6 @@ public class HookHotDeployListener
 			return;
 		}
 
-		AuthPublicPathsContainer authPublicPathsContainer =
-			_authPublicPathsContainerMap.remove(servletContextName);
-
-		if (authPublicPathsContainer != null) {
-			authPublicPathsContainer.unregisterPaths();
-		}
-
 		CustomJspBag customJspBag = _customJspBagsMap.remove(
 			servletContextName);
 
@@ -853,16 +847,17 @@ public class HookHotDeployListener
 			String servletContextName, Properties portalProperties)
 		throws Exception {
 
-		AuthPublicPathsContainer authPublicPathsContainer =
-			new AuthPublicPathsContainer();
-
-		_authPublicPathsContainerMap.put(
-			servletContextName, authPublicPathsContainer);
-
 		String[] publicPaths = StringUtil.split(
 			portalProperties.getProperty(AUTH_PUBLIC_PATHS));
 
-		authPublicPathsContainer.registerPaths(publicPaths);
+		for (String publicPath : publicPaths) {
+			AuthPublicPath authPublicPath =
+				new DefaultAuthPublicPath(publicPath);
+
+			registerService(
+				servletContextName, AUTH_PUBLIC_PATHS  + publicPath,
+				AuthPublicPath.class, authPublicPath);
+		}
 	}
 
 	protected void initAuthVerifiers(
@@ -2472,8 +2467,6 @@ public class HookHotDeployListener
 	private static Log _log = LogFactoryUtil.getLog(
 		HookHotDeployListener.class);
 
-	private Map<String, AuthPublicPathsContainer> _authPublicPathsContainerMap =
-		new HashMap<String, AuthPublicPathsContainer>();
 	private Map<String, CustomJspBag> _customJspBagsMap =
 		new HashMap<String, CustomJspBag>();
 	private Map<String, DLFileEntryProcessorContainer>
@@ -2502,28 +2495,6 @@ public class HookHotDeployListener
 	private Set<String> _servletContextNames = new HashSet<String>();
 	private Map<String, ServletFiltersContainer> _servletFiltersContainerMap =
 		new HashMap<String, ServletFiltersContainer>();
-
-	private class AuthPublicPathsContainer {
-
-		public void registerPaths(String[] paths) {
-			for (String path : paths) {
-				_paths.add(path);
-			}
-
-			AuthPublicPathRegistry.register(paths);
-		}
-
-		public void unregisterPaths() {
-			for (String path : _paths) {
-				AuthPublicPathRegistry.unregister(path);
-			}
-
-			_paths.clear();
-		}
-
-		private Set<String> _paths = new HashSet<String>();
-
-	}
 
 	private class CustomJspBag {
 

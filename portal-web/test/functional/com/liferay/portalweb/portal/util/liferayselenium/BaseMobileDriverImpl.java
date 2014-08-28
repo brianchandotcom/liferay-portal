@@ -421,7 +421,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void makeVisible(String locator) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.makeVisible(this, locator);
 	}
 
 	@Override

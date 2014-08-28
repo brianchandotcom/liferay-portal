@@ -913,13 +913,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent.substring(y);
 	}
 
-	@Override
-	protected String getAbsolutePath(File file) {
-		String absolutePath = fileUtil.getAbsolutePath(file);
-
-		return StringUtil.replace(absolutePath, "/./", StringPool.SLASH);
-	}
-
 	protected List<String> getColumnNames(String fileName, String entityName)
 		throws Exception {
 

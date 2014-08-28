@@ -905,13 +905,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	@Override
-	protected String getAbsolutePath(File file) {
-		String absolutePath = fileUtil.getAbsolutePath(file);
-
-		return StringUtil.replace(absolutePath, "/./", StringPool.SLASH);
-	}
-
 	protected List<String> getJSPDuplicateImports(
 		String fileName, String content, List<String> importLines) {
 

@@ -1815,13 +1815,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
-	@Override
-	protected String getAbsolutePath(File file) {
-		String absolutePath = fileUtil.getAbsolutePath(file);
-
-		return StringUtil.replace(absolutePath, "/./", StringPool.SLASH);
-	}
-
 	protected Tuple getCombinedLines(
 		String line, String previousLine, int lineTabCount,
 		int previousLineTabCount) {

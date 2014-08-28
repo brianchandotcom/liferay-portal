@@ -28,6 +28,64 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="SearchWikiCommentsAndAttachments" priority="4">
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="wikiNodeName" value="Main" />
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
+			<var name="attachmentFileName" value="Document_1.txt" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#addChildPagePG">
+			<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
+			<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="Wiki FrontPage Child Page Title" />
+		</execute>
+
+		<execute macro="WikiPage#addCommentPG">
+			<var name="commentBody" value="Wiki FrontPage Child Page Comment Body document" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#searchPG">
+			<var name="searchTerm" value="document" />
+		</execute>
+
+		<execute macro="WikiPage#viewSearchResultsPG">
+			<var name="commentBody" value="Wiki FrontPage Child Page Comment Body document" />
+			<var name="wikiComment" value="true" />
+			<var name="wikiPageTitle" value="Wiki FrontPage Child Page Title" />
+		</execute>
+
+		<execute macro="WikiPage#viewSearchResultsPG">
+			<var name="wikiAttachment" value="true" />
+			<var name="wikiAttachmentBody" value="This is a *.txt document." />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+	</command>
+
 	<command name="ViewCKEditorResizerAfterEditing" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />

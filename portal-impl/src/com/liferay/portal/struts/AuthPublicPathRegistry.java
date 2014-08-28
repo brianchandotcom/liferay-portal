@@ -14,7 +14,16 @@
 
 package com.liferay.portal.struts;
 
-import java.util.HashSet;
+import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
+import com.liferay.portal.kernel.struts.path.AuthPublicPath;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistration;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.StringServiceRegistrationMap;
+
 import java.util.Set;
 
 /**
@@ -27,17 +36,93 @@ public class AuthPublicPathRegistry {
 	}
 
 	public static void register(String... paths) {
+		Registry registry = RegistryUtil.getRegistry();
+
 		for (String path : paths) {
-			_paths.add(path);
+			ServiceRegistration<AuthPublicPath> serviceRegistration =
+				registry.registerService(
+					AuthPublicPath.class, new DefaultAuthPublicPath(path));
+
+			_serviceRegistrations.put(path, serviceRegistration);
 		}
 	}
 
 	public static void unregister(String... paths) {
 		for (String path : paths) {
-			_paths.remove(path);
+			ServiceRegistration<AuthPublicPath> serviceRegistration =
+				_serviceRegistrations.remove(path);
+
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
+			}
 		}
 	}
 
-	private static Set<String> _paths = new HashSet<String>();
+	private static Set<String> _paths = new ConcurrentHashSet<>();
+	private static StringServiceRegistrationMap<AuthPublicPath>
+		_serviceRegistrations = new StringServiceRegistrationMap<>();
+	private static ServiceTracker<AuthPublicPath, AuthPublicPath>
+		_serviceTracker;
+
+	private static class AuthPublicTrackerCustomizer
+		implements ServiceTrackerCustomizer<AuthPublicPath, AuthPublicPath> {
+
+		@Override
+		public AuthPublicPath addingService(
+			ServiceReference<AuthPublicPath> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			AuthPublicPath authPublicPath = registry.getService(
+				serviceReference);
+
+			_paths.add(authPublicPath.path());
+
+			return authPublicPath;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<AuthPublicPath> serviceReference,
+			AuthPublicPath authPublicPath) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<AuthPublicPath> serviceReference,
+			AuthPublicPath authPublicPath) {
+
+			_paths.remove(authPublicPath.path());
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+		}
+
+	}
+
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			AuthPublicPath.class, new AuthPublicTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
+	private static class DefaultAuthPublicPath implements AuthPublicPath {
+
+		public DefaultAuthPublicPath(String path) {
+			_path = path;
+		}
+
+		@Override
+		public String path() {
+			return _path;
+		}
+
+		private String _path;
+
+	}
 
 }

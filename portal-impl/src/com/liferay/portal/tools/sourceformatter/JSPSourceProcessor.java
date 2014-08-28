@@ -348,7 +348,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					matcher.start());
 			}
 
-			compareAndAutoFixContent(file, fileName, content, newContent);
+			if (!content.equals(newContent)) {
+				compareAndAutoFixContent(file, fileName, content, newContent);
+			}
 
 			if (portalSource &&
 				mainReleaseVersion.equals(MAIN_RELEASE_LATEST_VERSION) &&
@@ -374,25 +376,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected String format(String fileName) throws Exception {
-		File file = new File(BASEDIR + fileName);
-
-		fileName = StringUtil.replace(
-			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-		String absolutePath = fileUtil.getAbsolutePath(file);
-
-		String content = fileUtil.read(file);
-
-		String newContent = format(fileName, absolutePath, content);
-
-		compareAndAutoFixContent(file, fileName, content, newContent);
-
-		return newContent;
-	}
-
-	protected String format(
-			String fileName, String absolutePath, String content)
+	protected String doFormat(
+			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
 		String newContent = formatJSP(fileName, absolutePath, content);
@@ -505,11 +490,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				fileName, newContent, matcher.group(), null, null);
 		}
 
-		if (content.equals(newContent)) {
-			return newContent;
-		}
-
-		return format(fileName, absolutePath, newContent);
+		return newContent;
 	}
 
 	protected String formatJSP(

@@ -45,13 +45,9 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected String format(String fileName) throws Exception {
-		File file = new File(BASEDIR + fileName);
-
-		fileName = StringUtil.replace(
-			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-		String content = fileUtil.read(file);
+	protected String doFormat(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
 
 		String newContent = trimContent(content, false);
 
@@ -97,8 +93,6 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 		if (newContent.contains("debugger.")) {
 			processErrorMessage(fileName, "debugger " + fileName);
 		}
-
-		compareAndAutoFixContent(file, fileName, content, newContent);
 
 		return newContent;
 	}

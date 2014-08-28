@@ -414,26 +414,14 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected String format(String fileName) throws Exception {
-		File file = new File(BASEDIR + fileName);
-
-		fileName = StringUtil.replace(
-			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-		String content = fileUtil.read(file);
+	protected String doFormat(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
 
 		if (isExcluded(_xmlExclusions, fileName)) {
 			return content;
 		}
 
-		String newContent = format(fileName, content);
-
-		compareAndAutoFixContent(file, fileName, content, newContent);
-
-		return newContent;
-	}
-
-	protected String format(String fileName, String content) throws Exception {
 		String newContent = content;
 
 		if (!fileName.contains("/build")) {
@@ -482,13 +470,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent = formatWebXML(fileName, newContent);
 		}
 
-		newContent = formatXML(newContent);
-
-		if (content.equals(newContent)) {
-			return newContent;
-		}
-
-		return format(fileName, newContent);
+		return formatXML(newContent);
 	}
 
 	protected String formatAntXML(String fileName, String content)

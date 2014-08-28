@@ -36,16 +36,11 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected String format(String fileName) throws Exception {
-		File file = new File(BASEDIR + fileName);
+	protected String doFormat(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
 
-		String content = fileUtil.read(file);
-
-		String newContent = trimContent(content, false);
-
-		compareAndAutoFixContent(file, fileName, content, newContent);
-
-		return newContent;
+		return trimContent(content, false);
 	}
 
 }

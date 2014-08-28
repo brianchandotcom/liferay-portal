@@ -384,13 +384,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file, String fileName, String content, String newContent)
 		throws IOException {
 
-		if ((newContent == null) || content.equals(newContent)) {
-			return;
-		}
-
-		fileName = StringUtil.replace(
-			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
 		if (_autoFix) {
 			fileUtil.write(file, newContent);
 		}
@@ -650,8 +643,43 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected abstract void format() throws Exception;
 
+	protected abstract String doFormat(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception;
+
 	protected String format(String fileName) throws Exception {
-		return null;
+		File file = new File(BASEDIR + fileName);
+
+		fileName = StringUtil.replace(
+			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+		String absolutePath = fileUtil.getAbsolutePath(file);
+
+		String content = fileUtil.read(file);
+
+		String newContent = format(file, fileName, absolutePath, content);
+
+		if (!content.equals(newContent)) {
+			compareAndAutoFixContent(file, fileName, content, newContent);
+		}
+
+		return newContent;
+	}
+
+	protected String format(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		String newContent = doFormat(file, fileName, absolutePath, content);
+
+		newContent = StringUtil.replace(
+			newContent, StringPool.RETURN, StringPool.BLANK);
+
+		if (content.equals(newContent)) {
+			return content;
+		}
+
+		return format(file, fileName, absolutePath, newContent);
 	}
 
 	protected String formatJavaTerms(

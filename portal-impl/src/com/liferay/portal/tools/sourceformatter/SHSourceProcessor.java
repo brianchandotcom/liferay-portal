@@ -17,7 +17,6 @@ package com.liferay.portal.tools.sourceformatter;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * @author Hugo Huijser
@@ -34,20 +33,11 @@ public class SHSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected String format(String fileName) throws IOException {
-		File file = new File(fileName);
+	protected String doFormat(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
 
-		if (!file.exists()) {
-			return null;
-		}
-
-		String content = fileUtil.read(new File(fileName), true);
-
-		String newContent = StringUtil.replace(content, "\r", "");
-
-		compareAndAutoFixContent(file, fileName, content, newContent);
-
-		return newContent;
+		return StringUtil.replace(content, "\r", "");
 	}
 
 }

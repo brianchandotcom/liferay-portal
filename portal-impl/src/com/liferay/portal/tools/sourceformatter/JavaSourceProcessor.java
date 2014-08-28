@@ -768,30 +768,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected String format(String fileName) throws Exception {
-		File file = new File(BASEDIR + fileName);
-
-		fileName = StringUtil.replace(
-			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-		String absolutePath = fileUtil.getAbsolutePath(file);
-
-		String content = fileUtil.read(file);
-
-		if (isGenerated(content)) {
-			return null;
-		}
-
-		String newContent = format(file, fileName, absolutePath, content);
-
-		compareAndAutoFixContent(file, fileName, content, newContent);
-
-		return newContent;
-	}
-
-	protected String format(
+	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
+
+		if (isGenerated(content)) {
+			return content;
+		}
 
 		String className = file.getName();
 
@@ -816,7 +799,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (packagePath.endsWith(".model")) {
 			if (content.contains("extends " + className + "Model")) {
-				return null;
+				return content;
 			}
 		}
 
@@ -1100,13 +1083,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = formatJava(fileName, absolutePath, newContent);
 
-		newContent = StringUtil.replace(newContent, "\n\n\n", "\n\n");
-
-		if (content.equals(newContent)) {
-			return newContent;
-		}
-
-		return format(file, fileName, absolutePath, newContent);
+		return StringUtil.replace(newContent, "\n\n\n", "\n\n");
 	}
 
 	protected String formatJava(

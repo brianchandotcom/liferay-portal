@@ -15,14 +15,17 @@
 package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.internal.WrapsDriver;
 
 /**
  * @author Kenji Heigel
@@ -39,6 +42,30 @@ public class WebDriverHelper {
 		List<WebElement> webElements = getWebElements(webDriver, locator, "1");
 
 		return !webElements.isEmpty();
+	}
+
+	public void makeVisible(String locator) {
+		WebElement bodyWebElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)webDriver;
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("var element = arguments[0];");
+		sb.append("element.style.cssText = 'display:inline !important';");
+		sb.append("element.style.overflow = 'visible';");
+		sb.append("element.style.minHeight = '1px';");
+		sb.append("element.style.minWidth = '1px';");
+		sb.append("element.style.opacity = '1';");
+		sb.append("element.style.visibility = 'visible';");
+
+		WebElement locatorWebElement = getWebElement(locator);
+
+		javascriptExecutor.executeScript(sb.toString(), locatorWebElement);
 	}
 
 	public static void open(WebDriver webDriver, String url) {

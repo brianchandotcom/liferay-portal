@@ -92,7 +92,7 @@ import org.quartz.spi.JobFactory;
 public class QuartzSchedulerEngineTest {
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws SchedulerException {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());

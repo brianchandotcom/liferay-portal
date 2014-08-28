@@ -1162,7 +1162,7 @@ public class HttpClientSPIAgentTest {
 
 	protected void closeSocketChannel(
 			SocketChannel socketChannel, FileDescriptor fileDescriptor)
-		throws Exception {
+		throws IOException {
 
 		ReflectionTestUtil.setFieldValue(socketChannel, "fd", fileDescriptor);
 

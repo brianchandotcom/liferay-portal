@@ -1515,6 +1515,15 @@ create database lportal2 character set utf8;</echo>
 	</target>
 
 	<target name="merge-jenkins-test-results">
+		<if>
+			<isset property="jenkins.shared.results.dir" />
+			<then>
+				<copy todir="${env.JENKINS_HOME}/userContent/jobs">
+					<fileset dir="${jenkins.shared.results.dir}/${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_NUMBER}" />
+				</copy>
+			</then>
+		</if>
+
 		<property name="jenkins.test.results.dir" value="${env.JENKINS_HOME}/userContent/jobs/${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results" />
 
 		<property name="jenkins.results.xml.suite.file" value="${jenkins.test.results.dir}/test-suite/TESTS-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}.xml" />
@@ -3241,6 +3250,16 @@ if (ppstate.equals("normal")) {
 		</if>
 
 		<if>
+			<isset property="jenkins.shared.results.dir" />
+			<then>
+				<var name="jenkins.shared.results.base.dir" value="${jenkins.shared.results.dir}/${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_NUMBER}" />
+			</then>
+			<else>
+				<var name="jenkins.shared.results.base.dir" value="." />
+			</else>
+		</if>
+
+		<if>
 			<isset property="env.JENKINS_HOME" />
 			<then>
 				<antelope:stringutil property="job.name" string="${env.JOB_NAME}">
@@ -3253,7 +3272,7 @@ if (ppstate.equals("normal")) {
 						<equals arg1="${test.save.screenshot}" arg2="true" />
 					</and>
 					<then>
-						<copy todir="${job.name}/builds/${env.BUILD_NUMBER}/screenshots">
+						<copy todir="${jenkins.shared.results.base.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshots">
 							<fileset
 								dir="portal-web/test-results/functional/screenshots"
 							/>
@@ -3269,7 +3288,7 @@ if (ppstate.equals("normal")) {
 					<then>
 						<copy
 							file="portal-web/test-results/functional/report.html"
-							tofile="${job.name}/builds/${env.BUILD_NUMBER}/report.html"
+							tofile="${jenkins.shared.results.base.dir}/${job.name}/builds/${env.BUILD_NUMBER}/report.html"
 						/>
 					</then>
 				</if>
@@ -3296,7 +3315,7 @@ if (ppstate.equals("normal")) {
 
 						<copy
 							file="${jenkins.results.xml.file}"
-							tofile="${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml"
+							tofile="${jenkins.shared.results.base.dir}/${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml"
 						/>
 					</then>
 				</if>

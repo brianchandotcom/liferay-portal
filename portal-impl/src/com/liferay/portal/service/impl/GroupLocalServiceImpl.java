@@ -58,7 +58,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TreeModelFinder;
+import com.liferay.portal.kernel.util.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -84,7 +84,6 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
@@ -2084,7 +2083,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public void rebuildTree(long companyId) throws PortalException {
 		TreePathUtil.rebuildTree(
 			companyId, GroupConstants.DEFAULT_PARENT_GROUP_ID, StringPool.SLASH,
-			new TreeModelFinder<Group>() {
+			new TreeModelTasksAdapter<Group>() {
 
 				@Override
 				public List<Group> findTreeModels(
@@ -2094,15 +2093,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					return groupPersistence.findByG_C_P(
 						previousId, companyId, parentPrimaryKey,
 						QueryUtil.ALL_POS, size, new GroupIdComparator(true));
-				}
-
-				@Override
-				public void rebuildDependentModelsTreePaths(
-					long parentPrimaryKey, String treePath) {
-				}
-
-				@Override
-				public void reindexTreeModels(List<TreeModel> treeModels) {
 				}
 
 			}

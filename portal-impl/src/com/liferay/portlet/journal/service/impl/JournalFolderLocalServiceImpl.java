@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.TreeModelFinder;
+import com.liferay.portal.kernel.util.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -612,7 +612,7 @@ public class JournalFolderLocalServiceImpl
 
 		TreePathUtil.rebuildTree(
 			companyId, parentFolderId, parentTreePath,
-			new TreeModelFinder<JournalFolder>() {
+			new TreeModelTasksAdapter<JournalFolder>() {
 
 				@Override
 				public List<JournalFolder> findTreeModels(

@@ -33,15 +33,15 @@ public class TreePathUtil {
 
 	public static void rebuildTree(
 			long companyId, long parentPrimaryKey, String parentTreePath,
-			TreeModelFinder<?> treeModelFinder)
+			TreeModelTasks<?> treeModelTasks)
 		throws PortalException {
 
 		if (parentTreePath.equals(StringPool.SLASH)) {
-			treeModelFinder.rebuildDependentModelsTreePaths(
+			treeModelTasks.rebuildDependentModelsTreePaths(
 				parentPrimaryKey, "/0/");
 		}
 		else {
-			treeModelFinder.rebuildDependentModelsTreePaths(
+			treeModelTasks.rebuildDependentModelsTreePaths(
 				parentPrimaryKey, parentTreePath);
 		}
 
@@ -63,7 +63,7 @@ public class TreePathUtil {
 			Long previousPrimaryKey = (Long)trace[2];
 
 			List<? extends TreeModel> treeModels =
-				treeModelFinder.findTreeModels(
+				treeModelTasks.findTreeModels(
 					previousPrimaryKey, companyId, curParentPrimaryKey, size);
 
 			if (treeModels.isEmpty()) {
@@ -85,7 +85,7 @@ public class TreePathUtil {
 
 				treeModel.updateTreePath(treePath);
 
-				treeModelFinder.rebuildDependentModelsTreePaths(
+				treeModelTasks.rebuildDependentModelsTreePaths(
 					(Long)treeModel.getPrimaryKeyObj(), treePath);
 
 				traces.push(
@@ -95,7 +95,7 @@ public class TreePathUtil {
 			}
 		}
 
-		treeModelFinder.reindexTreeModels(modifiedTreeModels);
+		treeModelTasks.reindexTreeModels(modifiedTreeModels);
 	}
 
 	public static void rebuildTreePaths(

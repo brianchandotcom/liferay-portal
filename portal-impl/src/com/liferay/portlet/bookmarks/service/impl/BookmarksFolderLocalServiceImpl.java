@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.TreeModelFinder;
+import com.liferay.portal.kernel.util.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -454,7 +454,7 @@ public class BookmarksFolderLocalServiceImpl
 
 		TreePathUtil.rebuildTree(
 			companyId, parentFolderId, parentTreePath,
-			new TreeModelFinder<BookmarksFolder>() {
+			new TreeModelTasksAdapter<BookmarksFolder>() {
 
 				@Override
 				public List<BookmarksFolder> findTreeModels(

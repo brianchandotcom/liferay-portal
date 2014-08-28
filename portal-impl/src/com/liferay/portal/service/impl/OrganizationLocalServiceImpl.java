@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TreeModelFinder;
+import com.liferay.portal.kernel.util.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -57,7 +57,6 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.SystemEventConstants;
-import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.impl.OrganizationImpl;
@@ -1023,7 +1022,7 @@ public class OrganizationLocalServiceImpl
 		TreePathUtil.rebuildTree(
 			companyId, OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			StringPool.SLASH,
-			new TreeModelFinder<Organization>() {
+			new TreeModelTasksAdapter<Organization>() {
 
 				@Override
 				public List<Organization> findTreeModels(
@@ -1034,15 +1033,6 @@ public class OrganizationLocalServiceImpl
 						previousId, companyId, parentPrimaryKey,
 						QueryUtil.ALL_POS, size,
 						new OrganizationIdComparator(true));
-				}
-
-				@Override
-				public void rebuildDependentModelsTreePaths(
-					long parentPrimaryKey, String treePath) {
-				}
-
-				@Override
-				public void reindexTreeModels(List<TreeModel> treeModels) {
 				}
 
 			}

@@ -1726,8 +1726,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * Updates the parent layout ID and priority of the layout in a shared
-	 * transaction.
+	 * Updates the parent layout ID and priority of the layout.
 	 *
 	 * @param  plid the primary key of the layout
 	 * @param  parentPlid the primary key of the parent layout

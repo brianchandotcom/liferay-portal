@@ -748,8 +748,8 @@
 		<var name="entryContent2" value="Blogs Entry2 Content" />
 		<var name="entryTitle" value="Blogs Entry1 Title" />
 		<var name="entryTitle2" value="Blogs Entry2 Title" />
-		<var name="pageName2" value="Blogs Page2" />
-		<var name="portletName2" value="Blogs" />
+		<var name="pageName2" value="Blogs Page2 Name" />
+		<var name="portletName" value="Blogs" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -769,11 +769,11 @@
 
 		<execute macro="SOUserBar#addPortlet">
 			<var name="pageName" value="${pageName2}" />
-			<var name="portletName" value="${portletName2}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
 
 		<execute macro="BlogsPortlet#configureScopePG">
-			<var name="portletName" value="${portletName2}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="scopeSelection" value="${pageName2}" />
 			<var name="soPage" value="false" />
 		</execute>
@@ -831,7 +831,7 @@
 		</execute>
 
 		<execute macro="BlogsPortlet#configureScopePG">
-			<var name="portletName" value="${portletName2}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="scopeSelection" value="${siteName}" />
 			<var name="soPage" value="false" />
 		</execute>

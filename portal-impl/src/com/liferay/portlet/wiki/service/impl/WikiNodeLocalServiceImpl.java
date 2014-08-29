@@ -561,7 +561,8 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 				continue;
 			}
 
-			wikiPageLocalService.restoreDependentFromTrash(page, trashEntryId);
+			wikiPageLocalService.restoreDependentFromTrash(
+				page, nodeId, page.getParentTitle(), trashEntryId);
 		}
 	}
 

@@ -14,11 +14,17 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.model.WikiPageResource;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil;
+import com.liferay.portlet.wiki.util.comparator.PageVersionComparator;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,6 +34,59 @@ public class VerifyWiki extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		verifyCreateDate();
+		verifyNoAssetPages();
+	}
+
+	protected void verifyCreateDate() throws Exception {
+		ActionableDynamicQuery actionableDynamicQuery =
+			WikiPageResourceLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object) {
+					WikiPageResource wikiPageResource =
+						(WikiPageResource)object;
+
+					verifyCreateDate(wikiPageResource);
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Create dates verified for pages");
+		}
+	}
+
+	protected void verifyCreateDate(WikiPageResource wikiPageResource) {
+		List<WikiPage> wikiPages =
+			WikiPageLocalServiceUtil.getPages(
+				wikiPageResource.getNodeId(), wikiPageResource.getTitle(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new PageVersionComparator(true));
+
+		if (wikiPages.size() <= 1) {
+			return;
+		}
+
+		WikiPage firstPage = wikiPages.get(0);
+
+		Date createDate = firstPage.getCreateDate();
+
+		for (WikiPage wikiPage : wikiPages) {
+			if (!createDate.equals(wikiPage.getCreateDate())) {
+				wikiPage.setCreateDate(createDate);
+
+				WikiPageLocalServiceUtil.updateWikiPage(wikiPage);
+			}
+		}
+	}
+
+	protected void verifyNoAssetPages() throws Exception {
 		List<WikiPage> pages = WikiPageLocalServiceUtil.getNoAssetPages();
 
 		if (_log.isDebugEnabled()) {

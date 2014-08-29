@@ -2,15 +2,15 @@ AUI.add(
 	'liferay-ddm-form',
 	function(A) {
 
-		var BOOLEAN_TYPE = 'Boolean';
-
 		var CHECKBOX_TYPE = 'checkbox';
+
+		var DDM_DATE_TYPE = 'ddm-date';
 
 		var INSTANCE_STR = '_INSTANCE_';
 
 		var Lang = A.Lang;
 
-		var RADIO_TYPE = 'Radio';
+		var RADIO_TYPE = 'radio';
 
 		var SELECTOR_REPEAT_BUTTONS = '.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button';
 
@@ -21,6 +21,12 @@ AUI.add(
 		var Field = A.Component.create(
 			{
 				ATTRS: {
+					definitionFields: {
+
+					},
+					fieldsNamespace: {
+
+					},
 					nodeWrapper: {
 						setter: A.one
 					},
@@ -41,17 +47,23 @@ AUI.add(
 					},
 
 					getChildNode: function() {
+
 						var instance = this;
 
 						var id = instance._getId();
 
 						var name = instance.getName();
 
+						var childType = instance._getChildType(name);
+
 						var nodeWrapper = instance.get('nodeWrapper');
 
 						if (!instance.childNode) {
-							if (name === RADIO_TYPE) {
+							if (childType === RADIO_TYPE) {
 								instance.childNode = nodeWrapper.all('[name="' + id + '"]');
+							}
+							else if (childType === DDM_DATE_TYPE) {
+								instance.childNode = nodeWrapper.one('[name="' + id + '"]');
 							}
 							else {
 								instance.childNode = nodeWrapper.one('#' + id);
@@ -61,13 +73,32 @@ AUI.add(
 						return instance.childNode;
 					},
 
+					_getChildType: function(name) {
+						var instance = this;
+
+						var definitionFields = instance.get('definitionFields');
+
+						var type;
+
+						A.each(
+							definitionFields,
+							function(field) {
+								if (field.name === name) {
+									type = field.type;
+								}
+							}
+						)
+
+						return type;
+					},
+
 					getName: function() {
 						var instance = this;
 
 						return instance.get('nodeWrapper').getData('fieldName');
 					},
 
-					getNamespace: function() {
+					instanceSuffix: function() {
 						var instance = this;
 
 						return instance.get('nodeWrapper').getData('fieldNamespace');
@@ -78,9 +109,11 @@ AUI.add(
 
 						var name = instance.getName();
 
+						var childType = instance._getChildType(name);
+
 						var value;
 
-						if (name === RADIO_TYPE) {
+						if (childType === RADIO_TYPE) {
 							A.each(
 								nodes,
 								function(node) {
@@ -89,10 +122,12 @@ AUI.add(
 									}
 								}
 							);
-
 						}
-						else if (name === BOOLEAN_TYPE) {
+						else if (childType === CHECKBOX_TYPE) {
 							value = nodes.get('checked').toString();
+						}
+						else if (childType === DDM_DATE_TYPE) {
+							value = nodes.get('value');
 						}
 						else {
 							value = Lang.String.unescapeHTML(nodes.get('value'));
@@ -106,7 +141,9 @@ AUI.add(
 
 						var name = instance.getName();
 
-						if (name === RADIO_TYPE) {
+						var childType = instance._getChildType(name);
+
+						if (childType === RADIO_TYPE) {
 							A.each(
 								fields,
 								function(field) {
@@ -120,7 +157,7 @@ AUI.add(
 							);
 
 						}
-						else if (name === BOOLEAN_TYPE) {
+						else if (childType === CHECKBOX_TYPE) {
 							fields.set('checked', value === 'true' ? true : false);
 						}
 						else {
@@ -131,13 +168,24 @@ AUI.add(
 					_getId: function() {
 						var instance = this;
 
+						var id;
+
 						var name = instance.getName();
 
-						var namespace = instance.getNamespace();
+						var instanceSuffix = instance.instanceSuffix();
+
+						var fieldsNamespace = instance.get('fieldsNamespace');
 
 						var portletNamespace = instance.get('portletNamespace');
 
-						return portletNamespace + name + namespace;
+						if (fieldsNamespace) {
+							id = portletNamespace + fieldsNamespace + name + instanceSuffix;
+						}
+						else {
+							id = portletNamespace + name + instanceSuffix;
+						}
+
+						return id;
 					}
 				}
 			}
@@ -201,6 +249,15 @@ AUI.add(
 						var instance = this;
 
 						instance.translationManager = Liferay.component(instance.get('portletNamespace') + 'translationManager');
+
+						if (!instance.translationManager) {
+							instance.translationManager = new Liferay.TranslationManager(
+								{
+									defaultLocale: themeDisplay.getDefaultLanguageId()
+								}
+							);
+						}
+
 						instance.fieldsLocalizationMap = {};
 
 						instance.bindUI();
@@ -481,6 +538,8 @@ AUI.add(
 
 						var fields = instance._getFieldsList(null, null, false);
 
+						var fieldsNamespace = instance.get('namespace');
+
 						var map = instance.fieldsLocalizationMap;
 
 						var portletNamespace = instance.get('portletNamespace');
@@ -488,8 +547,11 @@ AUI.add(
 						A.each(
 							fields,
 							function(field) {
-								var field = new Field(
+
+								field = new Field(
 									{
+										definitionFields: definitionFields,
+										fieldsNamespace: fieldsNamespace,
 										nodeWrapper: field,
 										portletNamespace: portletNamespace
 									}
@@ -497,7 +559,7 @@ AUI.add(
 
 								var fieldName = field.getName();
 
-								var fieldNamespace = field.getNamespace();
+								var fieldNamespace = field.instanceSuffix();
 
 								var instanceId = fieldNamespace.split(INSTANCE_STR)[1];
 
@@ -593,7 +655,11 @@ AUI.add(
 
 						var defaultLocale = instance.translationManager.get('defaultLocale');
 
+						var definitionFields = instance.get('definition').fields;
+
 						var fields = instance._getFieldsList(null, null, false);
+
+						var fieldsNamespace = instance.get('namespace');
 
 						var map = instance.fieldsLocalizationMap;
 
@@ -604,6 +670,8 @@ AUI.add(
 							function(field) {
 								var field = new Field(
 									{
+										definitionFields: definitionFields,
+										fieldsNamespace: fieldsNamespace,
 										nodeWrapper: field,
 										portletNamespace: portletNamespace
 									}
@@ -611,7 +679,7 @@ AUI.add(
 
 								var fieldName = field.getName();
 
-								var fieldNamespace = field.getNamespace();
+								var fieldNamespace = field.instanceSuffix();
 
 								var instanceId = fieldNamespace.split(INSTANCE_STR)[1];
 
@@ -646,6 +714,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-datatype', 'aui-io-request', 'aui-parse-content']
+		requires: ['aui-base', 'aui-datatype', 'aui-io-request', 'aui-parse-content', 'liferay-translation-manager']
 	}
 );

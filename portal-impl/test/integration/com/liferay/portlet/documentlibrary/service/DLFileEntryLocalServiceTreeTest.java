@@ -52,7 +52,7 @@ public class DLFileEntryLocalServiceTreeTest {
 	}
 
 	@Test
-	public void testFileEntryTreepathWhenMovingSubfolderWithFileEntry()
+	public void testFileEntryTreePathWhenMovingSubfolderWithFileEntry()
 		throws Exception {
 
 		Folder folderA = DLAppTestUtil.addFolder(

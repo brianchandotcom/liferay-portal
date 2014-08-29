@@ -88,9 +88,10 @@
 
 		<execute action="SOMembers#selectWindow" locator-key1="MEMBERS_POP_UP_WINDOW" />
 
+		<execute action="SONotifications#assertClick" locator-key1="REQUESTS_LIST_LINK" value1="Requests" />
 		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY" value1="${adminName} invited you to join ${siteName}." />
 		<execute action="SONotifications#assertClick" locator-key1="CONFIRM_BUTTON" value1="Confirm" />
-		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_NONE_MESSAGE" value1="You do not have any notifications." />
+		<execute action="SONotifications#assertTextEquals" locator-key1="REQUESTS_NONE_MESSAGE" value1="You do not have any requests." />
 
 		<execute action="SOMembers#close" locator-key1="MEMBERS_POP_UP_WINDOW" />
 
@@ -167,9 +168,10 @@
 
 		<execute action="SOMembers#selectWindow" locator-key1="MEMBERS_POP_UP_WINDOW" />
 
+		<execute action="SONotifications#assertClick" locator-key1="REQUESTS_LIST_LINK" value1="Requests" />
 		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY" value1="${adminName} invited you to join ${siteName}." />
 		<execute action="SONotifications#assertClick" locator-key1="CONFIRM_BUTTON" value1="Confirm" />
-		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_NONE_MESSAGE" value1="You do not have any notifications." />
+		<execute action="SONotifications#assertTextEquals" locator-key1="REQUESTS_NONE_MESSAGE" value1="You do not have any requests." />
 
 		<execute action="SOMembers#close" locator-key1="MEMBERS_POP_UP_WINDOW" />
 

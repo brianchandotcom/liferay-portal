@@ -251,7 +251,8 @@ public class Logger {
 
 			for (Object argument : arguments) {
 				sb.append("\"");
-				sb.append(String.valueOf(argument));
+				sb.append(
+					StringEscapeUtils.escapeHtml4(String.valueOf(argument)));
 				sb.append("\" ");
 			}
 		}

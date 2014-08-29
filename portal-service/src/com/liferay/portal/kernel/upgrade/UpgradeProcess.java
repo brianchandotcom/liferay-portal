@@ -114,7 +114,7 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 			for (int i = 0; i < rsmd.getColumnCount(); i++) {
 				String curColumnName = rsmd.getColumnName(i + 1);
 
-				if (curColumnName.equals(columnName)) {
+				if (StringUtil.equalsIgnoreCase(curColumnName, columnName)) {
 					return true;
 				}
 			}

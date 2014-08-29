@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.registry.collections;
+package com.liferay.registry.collections.internal;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.collections.ServiceReferenceServiceTuple;
+import com.liferay.registry.collections.ServiceReferenceServiceTupleComparator;
+import com.liferay.registry.collections.ServiceTrackerBucket;
+import com.liferay.registry.collections.ServiceTrackerBucketFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,10 +30,14 @@ import java.util.TreeSet;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ListServiceTrackerBucketFactory<S>
+public class MultiValueServiceTrackerBucketFactory<S>
 	implements ServiceTrackerBucketFactory<S, List<S>> {
 
-	public ListServiceTrackerBucketFactory(
+	public MultiValueServiceTrackerBucketFactory() {
+		_comparator = Collections.reverseOrder();
+	}
+
+	public MultiValueServiceTrackerBucketFactory(
 		Comparator<ServiceReference<S>> comparator) {
 
 		_comparator = comparator;
@@ -54,47 +60,42 @@ public class ListServiceTrackerBucketFactory<S>
 
 		@Override
 		public synchronized boolean isDisposable() {
-			return _serviceReferences.isEmpty();
+			return _serviceTuples.isEmpty();
 		}
 
 		@Override
-		public synchronized void remove(ServiceReference<S> serviceReference) {
-			_serviceReferences.remove(serviceReference);
+		public synchronized void remove(ServiceReferenceServiceTuple<S> tuple) {
+			_serviceTuples.remove(tuple);
 
 			rebuild();
 		}
 
 		@Override
-		public synchronized void store(ServiceReference<S> serviceReference) {
-			_serviceReferences.add(serviceReference);
+		public synchronized void store(ServiceReferenceServiceTuple<S> tuple) {
+			_serviceTuples.add(tuple);
 
 			rebuild();
 		}
 
 		protected void rebuild() {
-			Registry registry = RegistryUtil.getRegistry();
+			_services = new ArrayList<S>(_serviceTuples.size());
 
-			try {
-				_services = new ArrayList<S>(_serviceReferences.size());
+			for (
+				ServiceReferenceServiceTuple<S> tuple : _serviceTuples) {
 
-				for (
-					ServiceReference<S> serviceReference : _serviceReferences) {
-
-					_services.add(registry.getService(serviceReference));
-				}
-
-				_services = Collections.unmodifiableList(_services);
+				_services.add(tuple.getService());
 			}
-			catch (IllegalStateException ise) {
-				_serviceReferences.clear();
 
-				_services = new ArrayList<S>();
-			}
+			_services = Collections.unmodifiableList(_services);
 		}
 
-		private Set<ServiceReference<S>> _serviceReferences =
-			new TreeSet<ServiceReference<S>>(_comparator);
+		private ListServiceTrackerBucket() {
+			_serviceTuples = new TreeSet<ServiceReferenceServiceTuple<S>>(
+				new ServiceReferenceServiceTupleComparator<S>(_comparator));
+		}
+
 		private List<S> _services = new ArrayList<S>();
+		private Set<ServiceReferenceServiceTuple<S>> _serviceTuples;
 
 	}
 

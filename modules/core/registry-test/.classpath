@@ -23,10 +23,10 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.apache.felix/org.apache.felix.framework/bundles/org.apache.felix.framework-4.4.0.jar" />
+	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-core/jars/arquillian-junit-core-1.1.2.Final.jar" />
+	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.arquillian.test/arquillian-test-api/jars/arquillian-test-api-1.1.2.Final.jar" />
 	<classpathentry kind="lib" path="lib/aQute.bnd.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.registry.api.jar" />
-	<classpathentry kind="lib" path="../../../.ivy/cache/org.apache.felix/org.apache.felix.framework/bundles/org.apache.felix.framework-4.4.0.jar" />
-	<classpathentry kind="lib" path="../../../.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-core/jars/arquillian-junit-core-1.1.2.Final.jar" />
-	<classpathentry kind="lib" path="../../../.ivy/cache/org.jboss.arquillian.test/arquillian-test-api/jars/arquillian-test-api-1.1.2.Final.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

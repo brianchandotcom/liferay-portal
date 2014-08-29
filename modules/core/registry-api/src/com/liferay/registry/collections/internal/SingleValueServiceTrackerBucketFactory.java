@@ -12,22 +12,29 @@
  * details.
  */
 
-package com.liferay.registry.collections;
+package com.liferay.registry.collections.internal;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.collections.ServiceReferenceServiceTuple;
+import com.liferay.registry.collections.ServiceReferenceServiceTupleComparator;
+import com.liferay.registry.collections.ServiceTrackerBucket;
+import com.liferay.registry.collections.ServiceTrackerBucketFactory;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public class ObjectServiceTrackerBucketFactory<S>
+public class SingleValueServiceTrackerBucketFactory<S>
 	implements ServiceTrackerBucketFactory<S, S> {
 
-	public ObjectServiceTrackerBucketFactory(
+	public SingleValueServiceTrackerBucketFactory() {
+		_comparator = Collections.reverseOrder();
+	}
+
+	public SingleValueServiceTrackerBucketFactory(
 		Comparator<ServiceReference<S>> comparator) {
 
 		_comparator = comparator;
@@ -43,10 +50,12 @@ public class ObjectServiceTrackerBucketFactory<S>
 	private class SingleBucket implements ServiceTrackerBucket<S, S> {
 
 		public SingleBucket() {
-			_serviceReferences = new PriorityQueue<ServiceReference<S>>(
-				1, _comparator);
-
 			_service = null;
+
+			_serviceReferences =
+				new PriorityQueue<ServiceReferenceServiceTuple<S>>(
+					1, new ServiceReferenceServiceTupleComparator<S>(
+						_comparator));
 		}
 
 		@Override
@@ -60,23 +69,14 @@ public class ObjectServiceTrackerBucketFactory<S>
 		}
 
 		@Override
-		public synchronized void remove(ServiceReference<S> serviceReference) {
-			Registry registry = RegistryUtil.getRegistry();
+		public synchronized void remove(ServiceReferenceServiceTuple<S> tuple) {
+			_serviceReferences.remove(tuple);
 
-			_serviceReferences.remove(serviceReference);
-
-			ServiceReference<S> headServiceReference =
+			ServiceReferenceServiceTuple<S> headTuple =
 				_serviceReferences.peek();
 
-			if (headServiceReference != null) {
-				try {
-					_service = registry.getService(headServiceReference);
-				}
-				catch (IllegalStateException ise) {
-					_service = null;
-
-					_serviceReferences.clear();
-				}
+			if (headTuple != null) {
+				_service = headTuple.getService();
 			}
 			else {
 				_service = null;
@@ -84,16 +84,15 @@ public class ObjectServiceTrackerBucketFactory<S>
 		}
 
 		@Override
-		public synchronized void store(ServiceReference<S> serviceReference) {
-			Registry registry = RegistryUtil.getRegistry();
+		public synchronized void store(ServiceReferenceServiceTuple<S> tuple) {
+			_serviceReferences.add(tuple);
 
-			_serviceReferences.add(serviceReference);
-
-			_service = registry.getService(_serviceReferences.peek());
+			_service = _serviceReferences.peek().getService();
 		}
 
 		private S _service;
-		private PriorityQueue<ServiceReference<S>> _serviceReferences;
+		private PriorityQueue<ServiceReferenceServiceTuple<S>>
+			_serviceReferences;
 
 	}
 

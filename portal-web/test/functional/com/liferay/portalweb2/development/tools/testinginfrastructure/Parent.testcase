@@ -1,9 +1,8 @@
 <definition component-name="portal-tools">
 	<property name="testray.main.component.name" value="Tools" />
+	<property name="portal.url" value="" />
 
 	<set-up>
-		<execute macro="User#firstLoginPG" />
-
 		<var name="parentSetUpVar" value="parent test case set-up var value" />
 	</set-up>
 

@@ -1,5 +1,6 @@
 <definition component-name="portal-tools">
 	<property name="testray.main.component.name" value="Tools" />
+	<property name="portal.url" value="" />
 
 	<command name="Add" priority="5">
 		<var method="StringUtil#add(&quot;abc&quot;, &quot;def&quot;, &quot;...&quot;)" name="string" />

@@ -1422,6 +1422,198 @@
 		</execute>
 	</command>
 
+	<command name="CompleteProcessAndAssertFieldOrder" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Kaleo Forms Admin" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addProcess" />
+
+		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#addFieldsDefinition">
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text Box" />
+			<var name="fieldFieldLabel" value="Text Box" />
+			<var name="fieldName" value="Text_Box" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="Select" />
+			<var name="fieldName" value="Select" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveFieldsDefinition" />
+
+		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#chooseWorkflow">
+			<var name="workflowDefinition" value="Single Approver" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#assignForm">
+			<var name="workflowTask" value="create" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addForm">
+			<var name="kfFormName" value="Created Task Form" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveForm" />
+
+		<execute macro="KaleoFormsAdmin#chooseForm">
+			<var name="kfFormName" value="Created Task Form" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#assignForm">
+			<var name="workflowTask" value="review" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addForm">
+			<var name="kfFormName" value="Review Task Form" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#deleteField">
+			<var name="fieldFieldLabel" value="Text Box" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveForm" />
+
+		<execute macro="KaleoFormsAdmin#chooseForm">
+			<var name="kfFormName" value="Review Task Form" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveProcess" />
+
+		<execute macro="KaleoFormsAdmin#viewProcess">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Kaleo Forms Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Kaleo Forms" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewNoTasks" />
+
+		<execute macro="KaleoFormsPortlet#submitNewProcess">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldText">
+			<var name="ddlRecordFieldData" value="Test Description" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldTextBox">
+			<var name="ddlRecordFieldData" value="Test Box Description" />
+			<var name="fieldName" value="Text_Box" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#populateFieldSelect">
+			<var name="ddlRecordFieldData" value="option 2" />
+			<var name="fieldName" value="Select" />
+		</execute>
+
+		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][1]/label" value1="Text" />
+		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][2]/label" value1="Text Box" />
+		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][3]/div/label" value1="Select" />
+
+		<execute macro="KaleoFormsPortlet#saveNewProcess" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Kaleo Forms Page" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#assignProcessToMe">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="workflowTask" value="review" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#completeFormForTask">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="workflowTask" value="review" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldText">
+			<var name="ddlRecordFieldData" value="Test Description" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldSelect">
+			<var name="ddlRecordFieldData" value="option 2" />
+			<var name="fieldName" value="Select" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#assertCompleteFormFieldNotPresent">
+			<var name="fieldName" value="Text Box" />
+		</execute>
+
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][1]/label" value1="Text" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][2]/div/label" value1="Select" />
+
+		<execute macro="KaleoFormsPortlet#saveNewProcess" />
+
+		<execute macro="KaleoFormsPortlet#approveProcess">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="workflowTask" value="review" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Kaleo Forms Page" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+			<var name="workflowDefinition" value="Single Approver" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="Test Description" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="Test Box Description" />
+			<var name="fieldName" value="Text Box" />
+		</execute>
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+			<var name="ddlRecordFieldData" value="option 2" />
+			<var name="fieldName" value="Select" />
+		</execute>
+
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][1]/label" value1="Text" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][2]/label" value1="Text Box" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][3]/label" value1="Select" />
+
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
+	</command>
+
 	<command name="CompleteProcessAndViewNotifications" priority="5">
 		<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet,notifications-portlet" />
 
@@ -3130,7 +3322,7 @@
 
 		<execute macro="Workflow#viewDefinition">
 			<var name="workflowDefinitionName" value="Uploaded Definition" />
-			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
+			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 			<var name="workflowDefinitionVersionNumber" value="1" />
 		</execute>
 

@@ -1375,7 +1375,7 @@
 	<command name="EditUploadedWorkflowViaViewTabViaAddProcess" priority="5">
 		<var name="kfFieldSetName" value="Data Definition" />
 		<var name="workflowDefinitionName" value="Uploaded Definition" />
-		<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
+		<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 		<var name="workflowDefinitionTitleEdit" value="New Uploaded Definition Edit" />
 
 		<execute macro="Page#gotoCP">

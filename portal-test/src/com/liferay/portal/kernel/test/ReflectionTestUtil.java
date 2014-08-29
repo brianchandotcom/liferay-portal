@@ -62,7 +62,7 @@ public class ReflectionTestUtil {
 				"No bridge method on " + clazz + " with name " + methodName +
 					" and parameter types " + Arrays.toString(parameterTypes)));
 
-		throw new AssertionError();
+		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static Field getField(Class<?> clazz, String fieldName) {
@@ -103,7 +103,7 @@ public class ReflectionTestUtil {
 			new NoSuchFieldException(
 				"No field on " + clazz + " with name " + fieldName));
 
-		throw new AssertionError();
+		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static Object getFieldValue(Class<?> clazz, String fieldName) {
@@ -116,7 +116,7 @@ public class ReflectionTestUtil {
 			ReflectionUtil.throwException(e);
 		}
 
-		throw new AssertionError();
+		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static Object getFieldValue(Object instance, String fieldName) {
@@ -129,7 +129,7 @@ public class ReflectionTestUtil {
 			ReflectionUtil.throwException(e);
 		}
 
-		throw new AssertionError();
+		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static Method getMethod(
@@ -164,7 +164,7 @@ public class ReflectionTestUtil {
 				"No method on " + clazz + " with name " + methodName +
 					" and parameter types " + Arrays.toString(parameterTypes)));
 
-		throw new AssertionError();
+		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static Object invoke(
@@ -180,7 +180,7 @@ public class ReflectionTestUtil {
 			ReflectionUtil.throwException(e);
 		}
 
-		throw new AssertionError();
+		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static Object invoke(
@@ -197,7 +197,7 @@ public class ReflectionTestUtil {
 			ReflectionUtil.throwException(e);
 		}
 
-		throw new AssertionError();
+		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static Object invokeBridge(
@@ -214,7 +214,7 @@ public class ReflectionTestUtil {
 			ReflectionUtil.throwException(e);
 		}
 
-		throw new AssertionError();
+		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static <T extends Enum<T>> T newEnumElement(
@@ -288,7 +288,7 @@ public class ReflectionTestUtil {
 			ReflectionUtil.throwException(e);
 		}
 
-		throw new AssertionError();
+		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static <T extends Enum<T>> T newEnumElement(

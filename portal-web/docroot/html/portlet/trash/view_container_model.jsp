@@ -23,6 +23,7 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectContainer");
+boolean showRootContainerModel = ParamUtil.getBoolean(request, "showRootContainerModel", false);
 
 TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
 
@@ -30,9 +31,11 @@ TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
 
 ContainerModel containerModel = (ContainerModel)request.getAttribute(WebKeys.TRASH_CONTAINER_MODEL);
 
+String containerModelClassName = trashHandler.getContainerModelClassName(classPK);
 long containerModelId = 0;
 
 if (containerModel != null) {
+	containerModelClassName = containerModel.getModelClassName();
 	containerModelId = containerModel.getContainerModelId();
 }
 
@@ -43,20 +46,26 @@ containerURL.setParameter("redirect", redirect);
 containerURL.setParameter("backURL", currentURL);
 containerURL.setParameter("className", className);
 containerURL.setParameter("classPK", String.valueOf(classPK));
-containerURL.setParameter("containerModelClassName", trashHandler.getContainerModelClassName(classPK));
+containerURL.setParameter("containerModelClassName", containerModelClassName);
 
-TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler.getContainerModelClassName(classPK), containerModelId, containerURL);
+TrashUtil.addContainerModelBreadcrumbEntries(request, containerModelClassName, containerModelId, containerURL);
+
+String containerModelName = trashHandler.getContainerModelName(classPK);
+
+if (showRootContainerModel) {
+	containerModelName = trashHandler.getRootContainerModelName();
+}
 %>
 
-<div class="alert alert-warning">
-	<liferay-ui:message arguments="<%= new Object[] {LanguageUtil.get(request, trashHandler.getContainerModelName()), HtmlUtil.escape(trashRenderer.getTitle(locale))} %>" key="the-original-x-does-not-exist-anymore" translateArguments="<%= false %>" />
+<div class="alert alert-block">
+	<liferay-ui:message arguments="<%= new Object[] {LanguageUtil.get(request, containerModelName), HtmlUtil.escape(trashRenderer.getTitle(locale))} %>" key="the-original-x-does-not-exist-anymore" translateArguments="<%= false %>" />
 </div>
 
 <aui:form method="post" name="selectContainerFm">
 	<liferay-ui:header
 		backURL="<%= backURL %>"
 		showBackURL="<%= containerModel != null %>"
-		title='<%= LanguageUtil.format(request, "select-x", trashHandler.getContainerModelName()) %>'
+		title='<%= LanguageUtil.format(request, "select-x", containerModelName) %>'
 	/>
 
 	<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
@@ -72,7 +81,7 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler.getContainerM
 		data.put("redirect", redirect);
 		%>
 
-		<aui:button cssClass="selector-button" data="<%= data %>" value='<%= LanguageUtil.format(request, "choose-this-x", trashHandler.getContainerModelName()) %>' />
+		<aui:button cssClass="selector-button" data="<%= data %>" value='<%= LanguageUtil.format(request, "choose-this-x", containerModelName) %>' />
 	</aui:button-row>
 
 	<br />
@@ -83,10 +92,10 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler.getContainerM
 
 	<liferay-ui:search-container
 		searchContainer="<%= new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, containerURL, null, null) %>"
-		total="<%= trashHandler.getContainerModelsCount(classPK, containerModelId) %>"
+		total="<%= showRootContainerModel ? trashHandler.getRootContainerModelsCount(scopeGroupId) : trashHandler.getContainerModelsCount(classPK, containerModelId) %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= trashHandler.getContainerModels(classPK, containerModelId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			results="<%= showRootContainerModel ? trashHandler.getRootContainerModels(scopeGroupId) : trashHandler.getContainerModels(classPK, containerModelId, searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
 		<liferay-ui:search-container-row
@@ -96,23 +105,24 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler.getContainerM
 		>
 
 			<%
-			containerURL.setParameter("containerModelId", String.valueOf(curContainerModel.getContainerModelId()));
+			TrashHandler curContainerModelTrashHandler = TrashHandlerRegistryUtil.getTrashHandler(((BaseModel)curContainerModel).getModelClassName());
+
+			TrashRenderer curContainerModelTrashRenderer = curContainerModelTrashHandler.getTrashRenderer(curContainerModel.getContainerModelId());
+
+			long curContainerModelId = curContainerModel.getContainerModelId();
+
+			containerURL.setParameter("containerModelId", String.valueOf(curContainerModelId));
+			containerURL.setParameter("containerModelClassName", curContainerModelTrashHandler.getClassName());
 			%>
 
 			<liferay-ui:search-container-column-text
-				name="<%= LanguageUtil.get(request, trashHandler.getContainerModelName()) %>"
+				name="<%= LanguageUtil.get(request, containerModelName) %>"
 			>
 				<c:choose>
-					<c:when test="<%= curContainerModel.getContainerModelId() > 0 %>">
-
-						<%
-						TrashHandler containerTrashHandler = TrashHandlerRegistryUtil.getTrashHandler(((BaseModel)curContainerModel).getModelClassName());
-
-						TrashRenderer containerTrashRenderer = containerTrashHandler.getTrashRenderer(curContainerModel.getContainerModelId());
-						%>
+					<c:when test="<%= curContainerModelId > 0 %>">
 
 						<liferay-ui:icon
-							iconCssClass="<%= containerTrashRenderer.getIconCssClass() %>"
+							iconCssClass="<%= curContainerModelTrashRenderer.getIconCssClass() %>"
 							label="<%= true %>"
 							message="<%= curContainerModel.getContainerModelName() %>"
 							method="get"
@@ -126,8 +136,8 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler.getContainerM
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				name='<%= LanguageUtil.format(request, "num-of-x", trashHandler.getContainerModelName()) %>'
-				value="<%= String.valueOf(trashHandler.getContainerModelsCount(classPK, curContainerModel.getContainerModelId())) %>"
+				name='<%= LanguageUtil.format(request, "num-of-x", curContainerModelTrashHandler.getSubcontainerModelName()) %>'
+				value="<%= String.valueOf(curContainerModelTrashHandler.getContainerModelsCount(classPK, curContainerModelId)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text>
@@ -137,7 +147,7 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler.getContainerM
 
 				data.put("classname", className);
 				data.put("classpk", classPK);
-				data.put("containermodelid", curContainerModel.getContainerModelId());
+				data.put("containermodelid", curContainerModelId);
 				data.put("redirect", redirect);
 				%>
 

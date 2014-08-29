@@ -80,6 +80,30 @@ public class DLFileEntryLocalServiceTreeTest {
 	}
 
 	@Test
+	public void testRebuildFolderTree() throws Exception {
+		List<FileEntry> fileEntries = createTree();
+
+		for (FileEntry fileEntry : fileEntries) {
+			DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
+				fileEntry.getFileEntryId());
+
+			dlFileEntry.setTreePath(null);
+
+			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+		}
+
+		DLFolderLocalServiceUtil.rebuildTree(TestPropsValues.getCompanyId());
+
+		for (FileEntry fileEntry : fileEntries) {
+			DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
+				fileEntry.getFileEntryId());
+
+			Assert.assertEquals(
+				dlFileEntry.buildTreePath(), dlFileEntry.getTreePath());
+		}
+	}
+
+	@Test
 	public void testRebuildTree() throws Exception {
 		List<FileEntry> fileEntries = createTree();
 

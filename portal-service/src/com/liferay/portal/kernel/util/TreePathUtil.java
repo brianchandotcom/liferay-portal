@@ -49,8 +49,14 @@ public class TreePathUtil {
 			String curParentTreePath = (String)trace[1];
 			Long previousPrimaryKey = (Long)trace[2];
 
-			treeModelTasks.rebuildDependentModelsTreePaths(
-				curParentPrimaryKey, curParentTreePath);
+			if (curParentTreePath.equals(StringPool.SLASH)) {
+				treeModelTasks.rebuildDependentModelsTreePaths(
+					curParentPrimaryKey, "/0/");
+			}
+			else {
+				treeModelTasks.rebuildDependentModelsTreePaths(
+					curParentPrimaryKey, curParentTreePath);
+			}
 
 			List<? extends TreeModel> treeModels =
 				treeModelTasks.findTreeModels(

@@ -132,7 +132,7 @@ img.icon {
 
 .modal-open .alert.taglib-portal-message {
 	@include respond-to(phone, tablet) {
-		position: fixed;
+		position: absolute;
 	}
 }
 

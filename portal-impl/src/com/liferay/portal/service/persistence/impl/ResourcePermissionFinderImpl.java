@@ -29,10 +29,15 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.portal.service.persistence.ResourcePermissionFinder;
+import com.liferay.portal.service.persistence.ResourcePermissionUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
+
+import java.io.Serializable;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -208,6 +213,13 @@ public class ResourcePermissionFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	@Override
+	public Map<Serializable, ResourcePermission> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		return ResourcePermissionUtil.fetchByPrimaryKeys(primaryKeys);
 	}
 
 	@Override

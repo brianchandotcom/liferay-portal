@@ -1,0 +1,7 @@
+<definition>
+	<command name="type">
+		<case locator-key1="NEW_PROCESS_FIELDS_HTML_FIELD_EDITOR">
+			<execute function="Type#typeFrame" />
+		</case>
+	</command>
+</definition>

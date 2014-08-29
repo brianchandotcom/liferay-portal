@@ -228,7 +228,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELD</td>
-	<td>xpath=(//div[contains(@class,'component form-builder-field')]/div/label[contains(.,'${key_fieldFieldLabel}')])[1]</td>
+	<td>//div[contains(@class,'component form-builder-field')]/div/label[.='${key_fieldFieldLabel}']</td>
 	<td></td>
 </tr>
 <tr>

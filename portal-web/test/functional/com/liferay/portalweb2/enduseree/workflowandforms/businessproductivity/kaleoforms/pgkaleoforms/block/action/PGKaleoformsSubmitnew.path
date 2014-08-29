@@ -41,6 +41,26 @@
 </tr>
 <!--NEW_PROCESS_FIELDS-->
 <tr>
+	<td>NEW_PROCESS_FIELDS_BOOLEAN</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_FIELDS_HTML_FIELD_EDITOR</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]//iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_LINK_TO_PAGE_SELECT</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(.,'${key_fieldName}')]//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_RADIO_OPTION_RADIO</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]/label[contains(.,'${key_kfProcessFieldData}')]/input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEW_PROCESS_FIELDS_TEXT_FIELD</td>
 	<td>//div[@class='form-group field-wrapper' and @data-fieldname='${key_fieldName}']/input[@type='text']</td>
 	<td></td>
@@ -68,6 +88,11 @@
 <tr>
 	<td>NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_SELECT</td>
 	<td>//div[@class='form-group field-wrapper' and @data-fieldname='${key_fieldName}']//button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_FIELDS_SEPARATOR</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'Separator')]/div[contains(@class,'separator')]</td>
 	<td></td>
 </tr>
 </tbody>

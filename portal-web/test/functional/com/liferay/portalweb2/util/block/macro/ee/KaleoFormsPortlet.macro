@@ -27,8 +27,8 @@
 	</command>
 
 	<command name="assertMyCompletedRequestsFieldNotPresent">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
 		<execute action="PGKaleoformsMycompletedrequestsProcess#assertElementNotPresent" locator-key1="CURRENT_ENTRY_FIELD" />\
 	</command>
@@ -91,10 +91,27 @@
 		<execute action="PGKaleoforms#assertClick" locator-key1="ASSIGNED_TO_ME_MENULIST_COMPLETE_FORM" value1="Complete Form" />
 	</command>
 
+	<command name="populateFieldBoolean">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<if>
+			<equals arg1="${kfProcessFieldData}" arg2="true" />
+			<then>
+				<execute action="PGKaleoformsSubmitnew#check" locator-key1="NEW_PROCESS_FIELDS_BOOLEAN" />
+			</then>
+			<elseif>
+				<equals arg1="${kfProcessFieldData}" arg2="false" />
+				<then>
+					<execute action="PGKaleoformsSubmitnew#uncheck" locator-key1="NEW_PROCESS_FIELDS_BOOLEAN" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
 	<command name="populateFieldDate">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="PGKaleoformsSubmitnew#type" locator-key1="NEW_PROCESS_FIELDS_DATE_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="PGKaleoformsSubmitnew#type" locator-key1="NEW_PROCESS_FIELDS_DATE_FIELD" value1="${kfProcessFieldData}" />
 		<execute action="PGKaleoformsSubmitnew#click" locator-key1="NEW_PROCESS_FIELDS_DATE_FIELD" />
 	</command>
 
@@ -108,34 +125,54 @@
 		<execute action="CPDynamicdatalistsListAddrecordSelect#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 
 		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${document}" />
-		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#type" locator-key1="TITLE_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#type" locator-key1="TITLE_FIELD" value1="${kfProcessFieldData}" />
 		<execute action="CPDynamicdatalistsListAddrecordSelectAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
-		<var name="key_documentTitle" value="${ddlRecordFieldData}" />
+		<var name="key_documentTitle" value="${kfProcessFieldData}" />
 
-		<execute action="CPDynamicdatalistsListAddrecordSelect#assertTextEquals" locator-key1="DOCUMENTS_TABLE_DOCUMENT" value1="${ddlRecordFieldData}" />
+		<execute action="CPDynamicdatalistsListAddrecordSelect#assertTextEquals" locator-key1="DOCUMENTS_TABLE_DOCUMENT" value1="${kfProcessFieldData}" />
 		<execute action="CPDynamicdatalistsListAddrecordSelect#click" locator-key1="DOCUMENTS_TABLE_CHOOSE" />
 
 		<execute action="PGKaleoformsSubmitnew#selectFrame" value1="relative=top" />
-		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_FIELD" value1="${kfProcessFieldData}" />
+	</command>
+
+	<command name="populateFieldHTML">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsSubmitnew#type" locator-key1="NEW_PROCESS_FIELDS_HTML_FIELD_EDITOR" value1="${kfProcessFieldData}" />
+	</command>
+
+	<command name="populateFieldLinkToPage">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsSubmitnew#select" locator-key1="NEW_PROCESS_LINK_TO_PAGE_SELECT" value1="regexp:–\s+${kfProcessFieldData}" />
+	</command>
+
+	<command name="populateFieldRadio">
+		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
+
+		<execute action="PGKaleoformsSubmitnew#click" locator-key1="NEW_PROCESS_RADIO_OPTION_RADIO" />
 	</command>
 
 	<command name="populateFieldSelect">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="PGKaleoformsSubmitnew#select" locator-key1="NEW_PROCESS_FIELDS_SELECT_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="PGKaleoformsSubmitnew#select" locator-key1="NEW_PROCESS_FIELDS_SELECT_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="populateFieldText">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="PGKaleoformsSubmitnew#type" locator-key1="NEW_PROCESS_FIELDS_TEXT_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="PGKaleoformsSubmitnew#type" locator-key1="NEW_PROCESS_FIELDS_TEXT_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="populateFieldTextBox">
+		<var name="fieldName" value="${fieldName?replace(' ', '_')}" />
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="PGKaleoformsSubmitnew#type" locator-key1="NEW_PROCESS_FIELDS_TEXT_BOX_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="PGKaleoformsSubmitnew#type" locator-key1="NEW_PROCESS_FIELDS_TEXT_BOX_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="rejectProcess">
@@ -248,45 +285,45 @@
 	</command>
 
 	<command name="viewCompleteFormFieldDate">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_DATE_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_DATE_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="viewCompleteFormFieldDocumentsAndMedia">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="viewCompleteFormFieldDocumentsAndMediaSelect">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_SELECT" value1="${ddlRecordFieldData}" />
+		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_SELECT" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="viewCompleteFormFieldSelect">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_SELECT_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_SELECT_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="viewCompleteFormFieldText">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_TEXT_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_TEXT_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="viewCompleteFormFieldTextBox">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_TEXT_BOX_FIELD" value1="${ddlRecordFieldData}" />
+		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_TEXT_BOX_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="viewMyCompletedRequests">
@@ -325,10 +362,10 @@
 	</command>
 
 	<command name="viewMyCompletedRequestsField">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="CURRENT_ENTRY_FIELD" value1="${fieldName} ${ddlRecordFieldData}" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="CURRENT_ENTRY_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="viewMyCompletedRequestsTasks">
@@ -352,10 +389,10 @@
 	</command>
 
 	<command name="viewMyPendingRequestsField">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute action="PGKaleoformsMypendingrequestsProcess#assertTextEquals" locator-key1="CURRENT_ENTRY_FIELD" value1="${fieldName} ${ddlRecordFieldData}" />
+		<execute action="PGKaleoformsMypendingrequestsProcess#assertTextEquals" locator-key1="CURRENT_ENTRY_FIELD" value1="${fieldName} ${kfProcessFieldData}" />
 	</command>
 
 	<command name="viewMyPendingRequestsTasksRejected">

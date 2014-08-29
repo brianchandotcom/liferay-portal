@@ -271,6 +271,8 @@
 
 	Liferay.BBCodeParser = Parser;
 })();;(function() {
+	var A = AUI();
+
 	var BBCodeUtil = Liferay.BBCodeUtil;
 	var CKTools = CKEDITOR.tools;
 

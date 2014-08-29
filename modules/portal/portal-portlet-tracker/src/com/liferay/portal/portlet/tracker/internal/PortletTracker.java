@@ -705,7 +705,7 @@ public class PortletTracker
 			SetUtil.fromArray(new String[] {toLowerCase(PortletMode.VIEW)}));
 
 		List<String> portletModesStrings = StringPlus.asList(
-			serviceReference.getProperty("javax.portlet.portlet.modes"));
+			serviceReference.getProperty("javax.portlet.portlet-mode"));
 
 		for (String portletModesString : portletModesStrings) {
 			String[] portletModesStringParts = StringUtil.split(
@@ -915,7 +915,7 @@ public class PortletTracker
 				}));
 
 		List<String> windowStatesStrings = StringPlus.asList(
-			serviceReference.getProperty("javax.portlet.window.states"));
+			serviceReference.getProperty("javax.portlet.window-state"));
 
 		for (String windowStatesString : windowStatesStrings) {
 			String[] windowStatesStringParts = StringUtil.split(

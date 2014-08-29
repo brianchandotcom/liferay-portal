@@ -356,7 +356,8 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 		long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void rebuildTree(long companyId);
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.portlet.bookmarks.model.BookmarksEntry restoreEntryFromTrash(
@@ -374,6 +375,9 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public void setTreePaths(long folderId, java.lang.String treePath)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void subscribeEntry(long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException;

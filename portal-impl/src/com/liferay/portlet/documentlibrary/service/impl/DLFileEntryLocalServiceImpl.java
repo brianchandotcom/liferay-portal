@@ -18,6 +18,10 @@ import com.liferay.portal.ExpiredLockException;
 import com.liferay.portal.InvalidLockException;
 import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -1416,13 +1420,13 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
-	public void rebuildTree(long companyId) {
+	public void rebuildTree(long companyId) throws PortalException {
 		dlFolderLocalService.rebuildTree(companyId);
 
 		Session session = dlFileEntryPersistence.openSession();
 
 		try {
-			TreePathUtil.rebuildTree(
+			TreePathUtil.rebuildTreePaths(
 				session, companyId, DLFileEntryModelImpl.TABLE_NAME,
 				DLFolderModelImpl.TABLE_NAME, "folderId", false);
 		}
@@ -1546,6 +1550,56 @@ public class DLFileEntryLocalServiceImpl
 		searchContext.setUserId(userId);
 
 		return indexer.search(searchContext);
+	}
+
+	@Override
+	public void setTreePaths(final long folderId, final String treePath)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property folderIdProperty = PropertyFactoryUtil.forName(
+						"folderId");
+
+					dynamicQuery.add(folderIdProperty.eq(folderId));
+
+					Property treePathProperty = PropertyFactoryUtil.forName(
+						"treePath");
+
+					dynamicQuery.add(treePathProperty.ne(treePath));
+				}
+
+			}
+		);
+
+		final Indexer indexer = IndexerRegistryUtil.getIndexer(
+			DLFileEntry.class.getName());
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					DLFileEntry entry = (DLFileEntry)object;
+
+					entry.setTreePath(treePath);
+
+					updateDLFileEntry(entry);
+
+					indexer.reindex(entry);
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override

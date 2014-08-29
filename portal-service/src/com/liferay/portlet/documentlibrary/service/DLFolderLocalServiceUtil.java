@@ -681,8 +681,16 @@ public class DLFolderLocalServiceUtil {
 				   .moveFolder(userId, folderId, parentFolderId, serviceContext);
 	}
 
-	public static void rebuildTree(long companyId) {
+	public static void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().rebuildTree(companyId);
+	}
+
+	public static void rebuildTree(long companyId, long parentFolderId,
+		java.lang.String parentTreePath, boolean reindex)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.rebuildTree(companyId, parentFolderId, parentTreePath, reindex);
 	}
 
 	/**

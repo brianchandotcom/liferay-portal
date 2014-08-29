@@ -826,7 +826,8 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
-	public void rebuildTree(long companyId) {
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileEntryLocalService.rebuildTree(companyId);
 	}
 
@@ -864,6 +865,12 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_dlFileEntryLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public void setTreePaths(long folderId, java.lang.String treePath)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileEntryLocalService.setTreePaths(folderId, treePath);
 	}
 
 	@Override

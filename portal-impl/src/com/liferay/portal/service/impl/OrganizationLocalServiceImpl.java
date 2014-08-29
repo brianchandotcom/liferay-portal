@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TreeModelFinder;
+import com.liferay.portal.kernel.util.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1021,7 +1021,8 @@ public class OrganizationLocalServiceImpl
 	public void rebuildTree(long companyId) throws PortalException {
 		TreePathUtil.rebuildTree(
 			companyId, OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-			new TreeModelFinder<Organization>() {
+			StringPool.SLASH,
+			new TreeModelTasksAdapter<Organization>() {
 
 				@Override
 				public List<Organization> findTreeModels(

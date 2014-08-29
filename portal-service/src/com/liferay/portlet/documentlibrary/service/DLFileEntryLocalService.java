@@ -594,7 +594,8 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void rebuildTree(long companyId);
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void revertFileEntry(long userId, long fileEntryId,
 		java.lang.String version,
@@ -618,6 +619,9 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public void setTreePaths(long folderId, java.lang.String treePath)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void unlockFileEntry(long fileEntryId);
 

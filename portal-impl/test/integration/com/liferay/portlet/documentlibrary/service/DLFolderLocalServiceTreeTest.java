@@ -18,13 +18,20 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.service.BaseLocalServiceTreeTestCase;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -33,6 +40,43 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLFolderLocalServiceTreeTest extends BaseLocalServiceTreeTestCase {
+
+	@Test
+	public void testFolderTreepathWhenMovingFolderWithSubfolder()
+		throws Exception {
+
+		List<Folder> folders = new ArrayList<Folder>();
+
+		Folder folderA = DLAppTestUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Folder A");
+
+		folders.add(folderA);
+
+		Folder folderAA = DLAppTestUtil.addFolder(
+			group.getGroupId(), folderA.getFolderId(), "Folder AA");
+
+		folders.add(folderAA);
+
+		Folder folderAAA = DLAppTestUtil.addFolder(
+			group.getGroupId(), folderAA.getFolderId(), "Folder AAA");
+
+		folders.add(folderAAA);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		DLAppLocalServiceUtil.moveFolder(
+			TestPropsValues.getUserId(), folderAA.getFolderId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+
+		for (Folder curFolder : folders) {
+			DLFolder folder = DLFolderLocalServiceUtil.getFolder(
+				curFolder.getFolderId());
+
+			Assert.assertEquals(folder.buildTreePath(), folder.getTreePath());
+		}
+	}
 
 	@Override
 	protected TreeModel addTreeModel(TreeModel parentTreeModel)

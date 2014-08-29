@@ -626,8 +626,17 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
-	public void rebuildTree(long companyId) {
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_journalFolderLocalService.rebuildTree(companyId);
+	}
+
+	@Override
+	public void rebuildTree(long companyId, long parentFolderId,
+		java.lang.String parentTreePath, boolean reindex)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_journalFolderLocalService.rebuildTree(companyId, parentFolderId,
+			parentTreePath, reindex);
 	}
 
 	@Override

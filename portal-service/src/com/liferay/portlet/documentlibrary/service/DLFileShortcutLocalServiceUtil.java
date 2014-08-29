@@ -379,7 +379,8 @@ public class DLFileShortcutLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static void rebuildTree(long companyId) {
+	public static void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().rebuildTree(companyId);
 	}
 
@@ -390,6 +391,11 @@ public class DLFileShortcutLocalServiceUtil {
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	public static void setTreePaths(long folderId, java.lang.String treePath)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().setTreePaths(folderId, treePath);
 	}
 
 	public static void updateAsset(long userId,

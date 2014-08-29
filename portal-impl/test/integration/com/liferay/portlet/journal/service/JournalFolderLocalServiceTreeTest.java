@@ -17,14 +17,21 @@ package com.liferay.portlet.journal.service;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.service.BaseLocalServiceTreeTestCase;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
+import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -34,6 +41,43 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class JournalFolderLocalServiceTreeTest
 	extends BaseLocalServiceTreeTestCase {
+
+	@Test
+	public void testJournalFolderTreePathWhenMovingFolderWithSubfolder()
+		throws Exception {
+
+		List<JournalFolder> folders = new ArrayList<JournalFolder>();
+
+		JournalFolder folderA = JournalTestUtil.addFolder(
+			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Folder A");
+
+		folders.add(folderA);
+
+		JournalFolder folderAA = JournalTestUtil.addFolder(
+			group.getGroupId(), folderA.getFolderId(), "Folder AA");
+
+		folders.add(folderAA);
+
+		JournalFolder folderAAA = JournalTestUtil.addFolder(
+			group.getGroupId(), folderAA.getFolderId(), "Folder AAA");
+
+		folders.add(folderAAA);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		JournalFolderLocalServiceUtil.moveFolder(
+			folderAA.getFolderId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+
+		for (JournalFolder curFolder : folders) {
+			JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
+				curFolder.getFolderId());
+
+			Assert.assertEquals(folder.buildTreePath(), folder.getTreePath());
+		}
+	}
 
 	@Override
 	protected TreeModel addTreeModel(TreeModel parentTreeModel)

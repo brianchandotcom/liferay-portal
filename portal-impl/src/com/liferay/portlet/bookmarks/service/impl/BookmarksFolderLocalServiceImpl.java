@@ -25,12 +25,14 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.TreeModelFinder;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
+import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -337,6 +339,9 @@ public class BookmarksFolderLocalServiceImpl
 
 		bookmarksFolderPersistence.update(folder);
 
+		rebuildTree(
+			folder.getCompanyId(), folderId, folder.getTreePath(), true);
+
 		return folder;
 	}
 
@@ -435,10 +440,21 @@ public class BookmarksFolderLocalServiceImpl
 	}
 
 	@Override
-	public void rebuildTree(long companyId) {
-		TreePathUtil.rebuildTree(
+	public void rebuildTree(long companyId) throws PortalException {
+		rebuildTree(
 			companyId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			new TreeModelFinder<BookmarksFolder>() {
+			StringPool.SLASH, false);
+	}
+
+	@Override
+	public void rebuildTree(
+			long companyId, long parentFolderId, String parentTreePath,
+			final boolean reindex)
+		throws PortalException {
+
+		TreePathUtil.rebuildTree(
+			companyId, parentFolderId, parentTreePath,
+			new TreeModelTasksAdapter<BookmarksFolder>() {
 
 				@Override
 				public List<BookmarksFolder> findTreeModels(
@@ -449,6 +465,31 @@ public class BookmarksFolderLocalServiceImpl
 						previousId, companyId, parentPrimaryKey,
 						WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
 						size, new FolderIdComparator(true));
+				}
+
+				@Override
+				public void rebuildDependentModelsTreePaths(
+						long parentPrimaryKey, String treePath)
+					throws PortalException {
+
+					bookmarksEntryLocalService.setTreePaths(
+						parentPrimaryKey, treePath);
+				}
+
+				@Override
+				public void reindexTreeModels(List<TreeModel> treeModels)
+					throws PortalException {
+
+					if (!reindex) {
+						return;
+					}
+
+					Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+						BookmarksFolder.class);
+
+					for (TreeModel treeModel : treeModels) {
+						indexer.reindex(treeModel);
+					}
 				}
 
 			}

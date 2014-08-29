@@ -349,7 +349,8 @@ public class DLFileVersionLocalServiceWrapper
 	}
 
 	@Override
-	public void rebuildTree(long companyId) {
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileVersionLocalService.rebuildTree(companyId);
 	}
 
@@ -361,6 +362,12 @@ public class DLFileVersionLocalServiceWrapper
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_dlFileVersionLocalService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public void setTreePaths(long folderId, java.lang.String treePath)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileVersionLocalService.setTreePaths(folderId, treePath);
 	}
 
 	/**

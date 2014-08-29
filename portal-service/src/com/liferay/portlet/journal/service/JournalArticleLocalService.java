@@ -1886,7 +1886,8 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		long userId, long groupId, java.lang.String articleId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void rebuildTree(long companyId);
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Removes the web content of the web content article matching the group,
@@ -2503,6 +2504,9 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public void setTreePaths(long folderId, java.lang.String treePath)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void subscribeStructure(long groupId, long userId,
 		long ddmStructureId)

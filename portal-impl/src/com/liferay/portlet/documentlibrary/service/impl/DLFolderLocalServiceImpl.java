@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.TreeModelFinder;
+import com.liferay.portal.kernel.util.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -43,9 +43,11 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
+import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
@@ -738,6 +740,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 			dlFolderPersistence.update(dlFolder);
 
+			rebuildTree(
+				dlFolder.getCompanyId(), folderId, dlFolder.getTreePath(),
+				true);
+
 			return dlFolder;
 		}
 		finally {
@@ -751,10 +757,20 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void rebuildTree(long companyId) {
+	public void rebuildTree(long companyId) throws PortalException {
+		rebuildTree(
+			companyId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringPool.SLASH, false);
+	}
+
+	public void rebuildTree(
+			long companyId, long parentFolderId, String parentTreePath,
+			final boolean reindex)
+		throws PortalException {
+
 		TreePathUtil.rebuildTree(
-			companyId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			new TreeModelFinder<DLFolder>() {
+			companyId, parentFolderId, parentTreePath,
+			new TreeModelTasksAdapter<DLFolder>() {
 
 				@Override
 				public List<DLFolder> findTreeModels(
@@ -765,6 +781,35 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 						previousId, companyId, parentPrimaryKey,
 						WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
 						size, new FolderIdComparator(true));
+				}
+
+				@Override
+				public void rebuildDependentModelsTreePaths(
+						long parentPrimaryKey, String treePath)
+					throws PortalException {
+
+					dlFileEntryLocalService.setTreePaths(
+						parentPrimaryKey, treePath);
+					dlFileShortcutLocalService.setTreePaths(
+						parentPrimaryKey, treePath);
+					dlFileVersionLocalService.setTreePaths(
+						parentPrimaryKey, treePath);
+				}
+
+				@Override
+				public void reindexTreeModels(List<TreeModel> treeModels)
+					throws PortalException {
+
+					if (!reindex) {
+						return;
+					}
+
+					Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+						DLFolder.class);
+
+					for (TreeModel treeModel : treeModels) {
+						indexer.reindex(treeModel);
+					}
 				}
 
 			}

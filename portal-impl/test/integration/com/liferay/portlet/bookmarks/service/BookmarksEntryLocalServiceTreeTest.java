@@ -25,6 +25,7 @@ import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
 
 import java.util.ArrayList;
@@ -49,10 +50,37 @@ public class BookmarksEntryLocalServiceTreeTest {
 	}
 
 	@Test
-	public void testRebuildTree() throws Exception {
-		createTree();
+	public void testBookmarksEntryTreePathWhenMovingSubfolderWithEntry()
+		throws Exception {
 
-		for (BookmarksEntry entry : _entries) {
+		BookmarksFolder folderA = BookmarksTestUtil.addFolder(
+			_group.getGroupId(),
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A");
+
+		BookmarksFolder folderAA = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), folderA.getFolderId(), "Folder AA");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		BookmarksEntry entry = BookmarksTestUtil.addEntry(
+			folderAA.getFolderId(), true, serviceContext);
+
+		BookmarksFolderLocalServiceUtil.moveFolder(
+			folderAA.getFolderId(),
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		entry = BookmarksEntryLocalServiceUtil.getBookmarksEntry(
+			entry.getEntryId());
+
+		Assert.assertEquals(entry.buildTreePath(), entry.getTreePath());
+	}
+
+	@Test
+	public void testRebuildTree() throws Exception {
+		List<BookmarksEntry> entries = createTree();
+
+		for (BookmarksEntry entry : entries) {
 			entry.setTreePath(null);
 
 			BookmarksEntryLocalServiceUtil.updateBookmarksEntry(entry);
@@ -61,32 +89,34 @@ public class BookmarksEntryLocalServiceTreeTest {
 		BookmarksEntryLocalServiceUtil.rebuildTree(
 			TestPropsValues.getCompanyId());
 
-		for (BookmarksEntry entry : _entries) {
+		for (BookmarksEntry entry : entries) {
 			entry = BookmarksEntryLocalServiceUtil.getEntry(entry.getEntryId());
 
 			Assert.assertEquals(entry.buildTreePath(), entry.getTreePath());
 		}
 	}
 
-	protected void createTree() throws Exception {
+	protected List<BookmarksEntry> createTree() throws Exception {
+		List<BookmarksEntry> entries = new ArrayList<BookmarksEntry>();
+
 		BookmarksEntry entryA = BookmarksTestUtil.addEntry(
 			_group.getGroupId(), true);
 
-		_entries.add(entryA);
+		entries.add(entryA);
 
-		_folder = BookmarksTestUtil.addFolder(_group.getGroupId(), "Folder A");
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), "Folder A");
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		BookmarksEntry entryAA = BookmarksTestUtil.addEntry(
-			_folder.getFolderId(), true, serviceContext);
+			folder.getFolderId(), true, serviceContext);
 
-		_entries.add(entryAA);
+		entries.add(entryAA);
+
+		return entries;
 	}
-
-	private List<BookmarksEntry> _entries = new ArrayList<BookmarksEntry>();
-	private BookmarksFolder _folder;
 
 	@DeleteAfterTestRun
 	private Group _group;

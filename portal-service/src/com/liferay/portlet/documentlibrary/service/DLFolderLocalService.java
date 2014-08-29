@@ -545,7 +545,12 @@ public interface DLFolderLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void rebuildTree(long companyId);
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void rebuildTree(long companyId, long parentFolderId,
+		java.lang.String parentTreePath, boolean reindex)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.

@@ -429,7 +429,7 @@ public class TextFormatter {
 
 	private static final String _STORAGE_SIZE_SUFFIX_GB = "GB";
 
-	private static final String _STORAGE_SIZE_SUFFIX_KB = "k";
+	private static final String _STORAGE_SIZE_SUFFIX_KB = "KB";
 
 	private static final String _STORAGE_SIZE_SUFFIX_MB = "MB";
 

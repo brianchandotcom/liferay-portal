@@ -393,6 +393,34 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="record-testray-project-name">
+		<sequential>
+			<propertyregex
+				input="${testray.product.version}"
+				override="true"
+				property="testray.product.major.version"
+				regexp="(\d+\.?\d+?).*"
+				replace="\1"
+			/>
+
+			<propertyregex
+				defaultValue="${testray.product.major.version}"
+				global="true"
+				input="${testray.product.major.version}"
+				override="true"
+				property="testray.product.major.version.build"
+				regexp="\."
+				replace=""
+			/>
+
+			<propertycopy
+				from="testray.project.${testray.product.type}${testray.product.major.version.build}.name"
+				name="testray.project.name"
+				override="true"
+			/>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="set-app-server-properties">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.number" />
@@ -758,6 +786,7 @@ create database lportal2 character set utf8;</echo>
 		<record-env-liferay-portal />
 		<record-env-operating-system />
 		<record-testray-components />
+		<record-testray-project-name />
 
 		<property name="test.case.properties">
 			<![CDATA[

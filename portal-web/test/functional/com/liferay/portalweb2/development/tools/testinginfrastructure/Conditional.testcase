@@ -3,47 +3,61 @@
 	<property name="portal.url" value="http://the-internet.herokuapp.com/status_codes" />
 
 	<command name="Condition" priority="5">
-		<var name="test" value="test" />
-
 		<if>
 			<condition action="Conditional#isElementPresent" locator-key1="TITLE_ELEMENT" />
 			<then>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Webpage title element was found: PASS" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Webpage title element was not found: FAIL" />
+				</execute>
 			</else>
 		</if>
 
 		<if>
 			<condition action="Conditional#isElementNotPresent" locator-key1="TITLE_ELEMENT" />
 			<then>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Webpage title element was not found: FAIL" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Webpage title element was found: PASS" />
+				</execute>
 			</else>
 		</if>
 
 		<if>
 			<condition action="Conditional#isElementPresent" locator-key1="LIST_ELEMENT" />
 			<then>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Webpage list element was found: PASS" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Webpage list element was not found: FAIL" />
+				</execute>
 			</else>
 		</if>
 
 		<if>
 			<condition action="Conditional#isElementNotPresent" locator-key1="LIST_ELEMENT" />
 			<then>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Webpage list element was not found: FAIL" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Webpage list element was found: PASS" />
+				</execute>
 			</else>
-		</if>		
+		</if>
 	</command>
 
 	<command name="Contains" priority="5">
@@ -54,40 +68,56 @@
 		<if>
 			<contains string="${string}" substring="${substring}" />
 			<then>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Substring was found within string: PASS" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Substring was not found within string: FAIL" />
+				</execute>
 			</else>
 		</if>
 
 		<if>
 			<contains string="${string}" substring="${nonSubstring}" />
 			<then>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Matched a non-substring as a substring: FAIL" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Did not match non-substring as a substring: PASS" />
+				</execute>
 			</else>
 		</if>
 
 		<if>
 			<contains string="string" substring="str" />
 			<then>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Substring was found within string: PASS" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Substring was not found within string: FAIL" />
+				</execute>
 			</else>
 		</if>
 
 		<if>
 			<contains string="string" substring="abc" />
 			<then>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Matched a non-substring as a substring: FAIL" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Did not match non-substring as a substring: PASS" />
+				</execute>
 			</else>
 		</if>
 	</command>
@@ -100,40 +130,56 @@
 		<if>
 			<equals arg1="${var1}" arg2="${var2}" />
 			<then>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Two non-matching variables were matched: FAIL" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Two non-matching variables were not matched: PASS" />
+				</execute>
 			</else>
 		</if>
 
 		<if>
 			<equals arg1="${var1}" arg2="${var3}" />
 			<then>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Two matching variables were matched: PASS" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Two matching variables were not matched: FAIL" />
+				</execute>
 			</else>
 		</if>
 
 		<if>
 			<equals arg1="matching value" arg2="matching value" />
 			<then>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Two matching values were matched: PASS" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Two matching values were not matched: FAIL" />
+				</execute>
 			</else>
 		</if>
 
 		<if>
 			<equals arg1="non-matching value" arg2="" />
 			<then>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Two non-matching values were matched: FAIL" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Two non-matching values were not matched: PASS" />
+				</execute>
 			</else>
 		</if>
 	</command>
@@ -144,10 +190,14 @@
 		<if>
 			<isset var="validVar1" />
 			<then>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Detected a set variable was set: PASS" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Detected a set variable as not set: FAIL" />
+				</execute>
 			</else>
 		</if>
 
@@ -156,20 +206,28 @@
 		<if>
 			<isset var="validVar2" />
 			<then>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Detected a set variable was set: PASS" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Detected a set variable as not set: FAIL" />
+				</execute>
 			</else>
 		</if>
 
 		<if>
 			<isset var="nonexistentVar1" />
 			<then>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Detected a non-set variable as set: FAIL" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Detected the variable was not set: PASS" />
+				</execute>
 			</else>
 		</if>
 
@@ -178,10 +236,14 @@
 		<if>
 			<isset var="nonexistentVar2" />
 			<then>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Detected a non-set variable as set: FAIL" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Detected the variable was not set: PASS" />
+				</execute>
 			</else>
 		</if>
 
@@ -190,10 +252,14 @@
 		<if>
 			<isset var="invalidVar1" />
 			<then>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Detected a non-set variable as set: FAIL" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Detected the variable was not set: PASS" />
+				</execute>
 			</else>
 		</if>
 
@@ -202,10 +268,14 @@
 		<if>
 			<isset var="invalidVar2" />
 			<then>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Detected a non-set variable as set: FAIL" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Detected the variable was not set: PASS" />
+				</execute>
 			</else>
 		</if>
 
@@ -214,10 +284,14 @@
 		<if>
 			<isset var="validWithLineSeparator" />
 			<then>
-				<execute macro="TestUtils#pass" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Detected a variable was set with special character: PASS" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="TestUtils#fail" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Detected a set variable with special character as not set" />
+				</execute>
 			</else>
 		</if>
 	</command>

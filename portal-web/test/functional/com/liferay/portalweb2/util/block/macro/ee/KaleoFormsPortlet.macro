@@ -23,7 +23,7 @@
 	<command name="assertCompleteFormFieldNotPresent">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="PGKaleoformsSubmitnew#assertElementNotPresent" locator-key1="NEW_PROCESS_FIELDS_TEXT_FIELD" />
+		<execute action="PGKaleoformsSubmitnew#assertElementNotPresent" locator-key1="NEW_PROCESS_FIELDS_FIELD" />
 	</command>
 
 	<command name="assertMyCompletedRequestsFieldNotPresent">

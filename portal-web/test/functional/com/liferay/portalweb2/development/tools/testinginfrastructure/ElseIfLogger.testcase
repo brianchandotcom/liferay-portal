@@ -1,19 +1,18 @@
 <definition component-name="portal-tools">
 	<property name="testray.main.component.name" value="Tools" />
-
-	<set-up>
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+	<property name="portal.url" value="http://the-internet.herokuapp.com/status_codes" />
 
 	<command name="MacroElseClauseEvaluated" priority="5">
 		<execute macro="ElseIfLogger#switchConditional">
 			<var name="switch" value="5" />
+			<var name="expected" value="Last clause" />
 		</execute>
 	</command>
 
 	<command name="MacroElseIfClauseEvaluated" priority="5">
 		<execute macro="ElseIfLogger#switchConditional">
 			<var name="switch" value="3" />
+			<var name="expected" value="3rd clause" />
 		</execute>
 	</command>
 
@@ -23,28 +22,38 @@
 		<if>
 			<equals arg1="${switch}" arg2="1" />
 			<then>
-				<echo message="first clause was true; this should not print" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="1st clause is not true: FAIL" />
+				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${switch}" arg2="2" />
 				<then>
-					<echo message="2nd clause was true" />
+					<execute macro="TestUtils#fail">
+						<var name="message" value="2nd clause is not true: FAIL" />
+					</execute>
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${switch}" arg2="3" />
 				<then>
-					<echo message="3rd clause was true" />
+					<execute macro="TestUtils#fail">
+						<var name="message" value="3rd clause is not true: FAIL" />
+					</execute>
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${switch}" arg2="4" />
 				<then>
-					<echo message="4th clause was true" />
+					<execute macro="TestUtils#fail">
+						<var name="message" value="4th clause is not true: FAIL" />
+					</execute>
 				</then>
 			</elseif>
 			<else>
-				<echo message="last clause" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Last clause is true: PASS" />
+				</execute>
 			</else>
 		</if>
 	</command>
@@ -55,28 +64,38 @@
 		<if>
 			<equals arg1="${switch}" arg2="1" />
 			<then>
-				<echo message="first clause was true" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="1st clause is not true: FAIL" />
+				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${switch}" arg2="2" />
 				<then>
-					<echo message="2nd clause was true" />
+					<execute macro="TestUtils#fail">
+						<var name="message" value="2nd clause is not true: FAIL" />
+					</execute>
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${switch}" arg2="3" />
 				<then>
-					<echo message="3rd clause was true" />
+					<execute macro="TestUtils#fail">
+						<var name="message" value="3rd clause is not true: FAIL" />
+					</execute>
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${switch}" arg2="4" />
 				<then>
-					<echo message="4th clause was true" />
+					<execute macro="TestUtils#pass">
+						<var name="message" value="4th clause is true: PASS" />
+					</execute>
 				</then>
 			</elseif>
 			<else>
-				<echo message="last clause" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Last clause is not true: FAIL" />
+				</execute>
 			</else>
 		</if>
 	</command>

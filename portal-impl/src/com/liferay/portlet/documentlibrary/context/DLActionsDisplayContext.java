@@ -43,10 +43,10 @@ public class DLActionsDisplayContext {
 	}
 
 	public boolean isAddFolderButtonVisible() {
-		String portletId = _portletDisplay.getId();
+		String portletName = _portletDisplay.getPortletName();
 
-		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 
 			return true;
 		}
@@ -55,10 +55,10 @@ public class DLActionsDisplayContext {
 	}
 
 	public boolean isFolderMenuVisible() {
-		String portletId = _portletDisplay.getId();
+		String portletName = _portletDisplay.getPortletName();
 
-		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 
 			return true;
 		}
@@ -67,11 +67,11 @@ public class DLActionsDisplayContext {
 	}
 
 	public boolean isShowActions() {
-		String portletId = _portletDisplay.getId();
+		String portletName = _portletDisplay.getPortletName();
 		String portletResource = _portletDisplay.getPortletResource();
 
-		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
+		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
 			portletResource.equals(PortletKeys.DOCUMENT_LIBRARY) ||
 			portletResource.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 
@@ -82,10 +82,10 @@ public class DLActionsDisplayContext {
 	}
 
 	public boolean isShowMinimalActionsButton() {
-		String portletId = _portletDisplay.getId();
+		String portletName = _portletDisplay.getPortletName();
 
-		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 
 			return true;
 		}
@@ -94,10 +94,10 @@ public class DLActionsDisplayContext {
 	}
 
 	public boolean isShowTabs() {
-		String portletId = _portletDisplay.getId();
+		String portletName = _portletDisplay.getPortletName();
 
-		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 
 			return true;
 		}
@@ -106,10 +106,10 @@ public class DLActionsDisplayContext {
 	}
 
 	public boolean isShowWhenSingleIconActionButton() {
-		String portletId = _portletDisplay.getId();
+		String portletName = _portletDisplay.getPortletName();
 
-		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 
 			return true;
 		}

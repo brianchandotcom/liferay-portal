@@ -500,10 +500,16 @@
 							'aui-base'
 						]
 					},
+					'liferay-layouts-tree-node-task': {
+						path: 'layouts_tree_node_task.js',
+						requires: [
+							'aui-tree-node'
+						]
+					},
 					'liferay-layouts-tree-selectable': {
 						path: 'layouts_tree_selectable.js',
 						requires: [
-							'aui-base'
+							'liferay-layouts-tree-node-task'
 						]
 					},
 					'liferay-layouts-tree-state': {

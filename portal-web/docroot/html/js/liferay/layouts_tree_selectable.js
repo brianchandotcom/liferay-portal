@@ -56,7 +56,7 @@ AUI.add(
 								currentRetVal,
 								{
 									checked: instance.get(STR_DEFAULT_STATE),
-									type: 'task'
+									type: 'liferay-task'
 								}
 							)
 						);
@@ -86,7 +86,7 @@ AUI.add(
 								{
 									checked: instance.get(STR_DEFAULT_STATE),
 									label: rootConfig.label,
-									type: 'task'
+									type: 'liferay-task'
 								}
 							)
 						);
@@ -149,6 +149,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['liferay-layouts-tree-node-task']
 	}
 );

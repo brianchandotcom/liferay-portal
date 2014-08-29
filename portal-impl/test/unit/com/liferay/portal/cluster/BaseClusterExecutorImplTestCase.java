@@ -227,7 +227,7 @@ public abstract class BaseClusterExecutorImplTestCase
 	protected void assertFutureClusterResponsesWithException(
 			FutureClusterResponses futureClusterResponses, String expectedUUID,
 			Address expectedAddress, String expectedExceptionMessage)
-		throws Exception {
+		throws InterruptedException {
 
 		ClusterNodeResponses clusterNodeResponses =
 			futureClusterResponses.get();
@@ -303,8 +303,7 @@ public abstract class BaseClusterExecutorImplTestCase
 	}
 
 	protected ClusterExecutorImpl getClusterExecutorImpl(
-			boolean useMockReceiver, boolean loadSpringXML)
-		throws Exception {
+		boolean useMockReceiver, boolean loadSpringXML) {
 
 		_initialize(loadSpringXML);
 

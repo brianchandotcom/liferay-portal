@@ -257,6 +257,69 @@
 		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertTextEquals" locator1="//div[contains(@class,'modal-header')]/h3" value1="Field Set" />
 	</command>
 
+	<command name="AssertErrorMessageUponSavingBlankFieldsDefinition" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Kaleo Forms Admin" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addProcess" />
+
+		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#addFieldsDefinition">
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveFieldsDefinition" />
+
+		<execute macro="KaleoFormsAdmin#assertInvalidDefinitionMessage" />
+	</command>
+
+	<command name="AssertFieldDefinitionCreateHeaderTitle" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Kaleo Forms Admin" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addProcess" />
+
+		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#next" />
+
+		<execute macro="KaleoFormsAdmin#addFieldsDefinition">
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#assertHeaderTitle" />
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveFieldsDefinition" />
+
+		<execute macro="KaleoFormsAdmin#editFieldsDefinition">
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
+			<var name="kfFieldsDefinitionNameEdit" value="Data Definition" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#assertHeaderTitle">
+			<var name="kfFieldsDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveFieldsDefinition" />
+	</command>
+
 	<command name="DeleteCreateFormViaDDL" priority="5">
 		<var name="kfFieldsDefinitionName" value="Data Definition" />
 

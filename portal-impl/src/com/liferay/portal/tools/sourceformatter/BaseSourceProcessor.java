@@ -84,7 +84,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public List<String> getErrorMessages() {
-		return _errorMessages;
+		List<String> errorMessages = new ArrayList<String>();
+
+		for (Map.Entry<String, List<String>> entry :
+				_errorMessagesMap.entrySet()) {
+
+			errorMessages.addAll(entry.getValue());
+		}
+
+		return errorMessages;
 	}
 
 	@Override
@@ -141,11 +149,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected static void processErrorMessage(String fileName, String message) {
-		_errorMessages.add(message);
+		List<String> errorMessages = _errorMessagesMap.get(fileName);
 
-		if (_printErrors) {
-			sourceFormatterHelper.printError(fileName, message);
+		if (errorMessages == null) {
+			errorMessages = new ArrayList<String>();
 		}
+
+		errorMessages.add(message);
+
+		_errorMessagesMap.put(fileName, errorMessages);
 	}
 
 	protected void checkEmptyCollection(
@@ -651,9 +663,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String newContent = format(file, fileName, absolutePath, content);
 
-		if (!content.equals(newContent)) {
-			processFormattedFile(file, fileName, content, newContent);
-		}
+		processFormattedFile(file, fileName, content, newContent);
 
 		return newContent;
 	}
@@ -661,6 +671,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected String format(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
+
+		_errorMessagesMap.remove(fileName);
 
 		String newContent = doFormat(file, fileName, absolutePath, content);
 
@@ -1016,6 +1028,20 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void processFormattedFile(
 			File file, String fileName, String content, String newContent)
 		throws IOException {
+
+		if (_printErrors) {
+			List<String> errorMessages = _errorMessagesMap.get(fileName);
+
+			if (errorMessages != null) {
+				for (String errorMessage : errorMessages) {
+					sourceFormatterHelper.printError(fileName, errorMessage);
+				}
+			}
+		}
+
+		if (content.equals(newContent)) {
+			return;
+		}
 
 		if (_autoFix) {
 			fileUtil.write(file, newContent);
@@ -1535,7 +1561,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			String mainReleaseVersion)
 		throws Exception {
 
-		_errorMessages = new ArrayList<String>();
+		_errorMessagesMap = new HashMap<String, List<String>>();
 
 		sourceFormatterHelper = new SourceFormatterHelper(useProperties);
 
@@ -1563,7 +1589,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	private static List<String> _errorMessages = new ArrayList<String>();
+	private static Map<String, List<String>> _errorMessagesMap =
+		new HashMap<String, List<String>>();
 	private static boolean _printErrors;
 
 	private boolean _autoFix;

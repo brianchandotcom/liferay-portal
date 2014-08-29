@@ -469,9 +469,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					matcher.start());
 			}
 
-			if (!content.equals(newContent)) {
-				processFormattedFile(file, fileName, content, newContent);
-			}
+			processFormattedFile(file, fileName, content, newContent);
 
 			if (portalSource &&
 				mainReleaseVersion.equals(MAIN_RELEASE_LATEST_VERSION) &&

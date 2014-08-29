@@ -94,6 +94,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 	<aui:script use="liferay-search-container">
 		var Util = Liferay.Util;
+		var REGEX_DELIMITER_NS = /_/g;
+		var STR_BLANK = '';
 
 		A.one('#<portlet:namespace />selectSiteLink').on(
 			'click',
@@ -170,6 +172,15 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 				);
 			}
 		);
+
+		var onDestroyPortlet = function(event) {
+			if ('<portlet:namespace />'.replace(REGEX_DELIMITER_NS, STR_BLANK) == event.portletId) {
+				Liferay.detach('<portlet:namespace />enableRemovedSites');
+			}
+			Liferay.detach('destroyPortlet', onDestroyPortlet);
+		}
+
+		Liferay.on('destroyPortlet',onDestroyPortlet);
 	</aui:script>
 </c:if>
 

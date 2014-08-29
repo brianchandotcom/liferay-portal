@@ -22,6 +22,8 @@
 
 	var STR_CHECKED = 'checked';
 
+	var REGEX_DIALOG_ID = /^_(.*)_(.*)$/;
+
 	var Window = {
 		_map: {}
 	};
@@ -1449,6 +1451,18 @@
 					}
 				);
 			}
+
+			var destroyDialog = function(event) {
+
+				var dialogWindow = Util.getWindow(config.id);
+				if (dialogWindow && dialogWindow.get('id').replace(REGEX_DIALOG_ID, '$1') == event.portletId) {
+					dialogWindow.destroy();
+				}
+				Liferay.detach('destroyPortlet', destroyDialog);
+			}
+
+			Liferay.on('destroyPortlet',destroyDialog);
+
 		},
 		['aui-base', 'liferay-util-window']
 	);

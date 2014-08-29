@@ -117,15 +117,15 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 	@Override
 	public boolean isAssetMetadataVisible() {
-		String portletId = _portletDisplay.getPortletName();
+		String portletName = _portletDisplay.getPortletName();
 
-		if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
-			portletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ||
-			portletId.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ||
-			portletId.equals(PortletKeys.MY_WORKFLOW_INSTANCES) ||
-			portletId.equals(PortletKeys.MY_WORKFLOW_TASKS) ||
-			portletId.equals(PortletKeys.TRASH)) {
+		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
+			portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ||
+			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ||
+			portletName.equals(PortletKeys.MY_WORKFLOW_INSTANCES) ||
+			portletName.equals(PortletKeys.MY_WORKFLOW_TASKS) ||
+			portletName.equals(PortletKeys.TRASH)) {
 
 			return true;
 		}

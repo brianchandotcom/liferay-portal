@@ -28,47 +28,6 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddWikiWithHTMLFormat" priority="3">
-		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="htmlSource" value="true" />
-			<var name="wikiPageContent"><![CDATA[<a href="/">Home</a>]]></var>
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="WikiPage#gotoPG">
-			<var name="isOrphanPage" value="true" />
-			<var name="wikiPageTitle" value="FrontPage" />
-		</execute>
-
-		<execute macro="WikiPage#viewPG">
-			<var name="isOrphanPage" value="true" />
-			<var name="wikiPageContent" value="Home" />
-			<var name="wikiPageContentLink" value="true" />
-			<var name="wikiPageRevision" value="1.1" />
-			<var name="wikiPageTitle" value="FrontPage" />
-			<var name="wikiPageUsername" value="Test Test" />
-		</execute>
-	</command>
-
 	<command name="ViewCKEditorResizerAfterEditing" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />

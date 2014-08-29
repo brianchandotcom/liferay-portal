@@ -19,6 +19,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATIONS_LIST_LINK</td>
+	<td>//a[contains(@class,'non-actionable') and contains(.,'Notifications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUESTS_LIST_LINK</td>
+	<td>//a[contains(@class,'actionable') and contains(.,'Requests')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_LINK</td>
+	<td>//a[contains(@class,'manage') and contains(.,'Notification Delivery')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIRM_BUTTON</td>
 	<td>//a[contains(.,'Confirm')]</td>
 	<td></td>
@@ -26,6 +41,11 @@
 <tr>
 	<td>NOTIFICATIONS_NONE_MESSAGE</td>
 	<td>//div[@class='message'][contains(.,'You do not have any notifications.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUESTS_NONE_MESSAGE</td>
+	<td>//div[@class='message'][contains(.,'You do not have any requests.')]</td>
 	<td></td>
 </tr>
 <tr>

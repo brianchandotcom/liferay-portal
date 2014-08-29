@@ -3,6 +3,7 @@
 
 	window['${portletNamespace}${namespacedFieldName}clearFileEntry'] = function(title) {
 		title = title || '';
+
 		A.one("#${portletNamespace}${namespacedFieldName}ClearFile").setStyle('display', 'none');
 
 		window['${portletNamespace}${namespacedFieldName}setFileEntry']('', '', '', title, '');
@@ -44,10 +45,10 @@
 
 <@aui.script use="liferay-portlet-url">
 	var A = AUI();
-	var namespacedField = A.one('#${namespacedFieldName}');
+	var chooseFileButton = A.one('#${portletNamespace}${namespacedFieldName}ChooseFile');
 
-	if (namespacedField) {
-		namespacedField.on(
+	if (chooseFileButton) {
+		chooseFileButton.on(
 			'click',
 			function(event) {
 				var portletURL = Liferay.PortletURL.createURL('${themeDisplay.getURLControlPanel()}');

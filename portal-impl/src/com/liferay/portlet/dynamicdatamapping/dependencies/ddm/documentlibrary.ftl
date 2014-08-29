@@ -26,7 +26,7 @@
 	</@aui.input>
 
 	<@aui["button-row"]>
-		<@aui.button id=namespacedFieldName value="choose-from-library" />
+		<@aui.button id="${portletNamespace}${namespacedFieldName}ChooseFile" value="choose-from-library" />
 
 		<@aui.button cssClass="clear-file" id="${portletNamespace}${namespacedFieldName}ClearFile" onClick="window['${portletNamespace}${namespacedFieldName}clearFileEntry']();" value="clear" />
 	</@>
@@ -36,4 +36,4 @@
 	${fieldStructure.children}
 </@>
 
-<#include "select-file-util.ftl">
+<#include "select-file-entry-actions.ftl">

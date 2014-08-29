@@ -179,32 +179,32 @@ public class FinalizeManagerTest {
 	}
 
 	@Test
-	public void testRegisterPhantomWithoutThread() throws Exception {
+	public void testRegisterPhantomWithoutThread() throws InterruptedException {
 		doTestRegister(false, ReferenceType.PHANTOM);
 	}
 
 	@Test
-	public void testRegisterPhantomWithThread() throws Exception {
+	public void testRegisterPhantomWithThread() throws InterruptedException {
 		doTestRegister(true, ReferenceType.PHANTOM);
 	}
 
 	@Test
-	public void testRegisterSoftWithoutThread() throws Exception {
+	public void testRegisterSoftWithoutThread() throws InterruptedException {
 		doTestRegister(false, ReferenceType.SOFT);
 	}
 
 	@Test
-	public void testRegisterSoftWithThread() throws Exception {
+	public void testRegisterSoftWithThread() throws InterruptedException {
 		doTestRegister(true, ReferenceType.SOFT);
 	}
 
 	@Test
-	public void testRegisterWeakWithoutThread() throws Exception {
+	public void testRegisterWeakWithoutThread() throws InterruptedException {
 		doTestRegister(false, ReferenceType.WEAK);
 	}
 
 	@Test
-	public void testRegisterWeakWithThread() throws Exception {
+	public void testRegisterWeakWithThread() throws InterruptedException {
 		doTestRegister(true, ReferenceType.WEAK);
 	}
 

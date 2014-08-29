@@ -77,7 +77,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		}
 	)
 	@Test
-	public void testDestroy2() throws Exception {
+	public void testDestroy2() {
 		TransportationConfigurationAdvice.setChannelCount(2);
 
 		ClusterLinkImpl clusterLinkImpl = null;
@@ -196,7 +196,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		}
 	)
 	@Test
-	public void testGetLocalTransportAddresses2() throws Exception {
+	public void testGetLocalTransportAddresses2() {
 		TransportationConfigurationAdvice.setChannelCount(2);
 
 		ClusterLinkImpl clusterLinkImpl = null;
@@ -244,7 +244,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		}
 	)
 	@Test
-	public void testGetTransportAddressesByPriority2() throws Exception {
+	public void testGetTransportAddressesByPriority2() {
 		TransportationConfigurationAdvice.setChannelCount(2);
 
 		ClusterLinkImpl clusterLinkImpl1 = null;

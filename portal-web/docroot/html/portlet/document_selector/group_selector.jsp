@@ -29,7 +29,7 @@ boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector")
 String type = DocumentSelectorUtil.getType(request);
 %>
 
-<liferay-ui:icon-menu direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" localizeMessage="<%= false %>" message="<%= HtmlUtil.escape(group.getDescriptiveName()) %>" showWhenSingleIcon="<%= true %>" triggerCssClass="btn btn-default">
+<liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" localizeMessage="<%= false %>" message="<%= HtmlUtil.escape(group.getDescriptiveName()) %>" showWhenSingleIcon="<%= true %>">
 
 	<%
 	String refererPortletName = ParamUtil.getString(request, "refererPortletName");

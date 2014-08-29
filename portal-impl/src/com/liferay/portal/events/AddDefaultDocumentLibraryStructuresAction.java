@@ -15,10 +15,12 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
@@ -101,10 +103,12 @@ public class AddDefaultDocumentLibraryStructuresAction
 				groupId, dlFileEntryTypeKey);
 		}
 		catch (NoSuchFileEntryTypeException nsfete) {
+			Map<Locale, String> localizationMap = getLocalizationMap(
+				dlFileEntryTypeKey);
+
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-				userId, groupId, dlFileEntryTypeKey,
-				getLocalizationMap(dlFileEntryTypeKey, locale),
-				getLocalizationMap(dlFileEntryTypeKey, locale),
+				userId, groupId, dlFileEntryTypeKey, localizationMap,
+				localizationMap,
 				ArrayUtil.toArray(
 					ddmStructureIds.toArray(new Long[ddmStructureIds.size()])),
 				serviceContext);
@@ -299,12 +303,22 @@ public class AddDefaultDocumentLibraryStructuresAction
 			defaultUserId, group.getGroupId(), serviceContext);
 	}
 
-	protected Map<Locale, String> getLocalizationMap(
-		String content, Locale locale) {
-
+	protected Map<Locale, String> getLocalizationMap(String content) {
 		Map<Locale, String> localizationMap = new HashMap<Locale, String>();
 
-		localizationMap.put(locale, content);
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultValue = LanguageUtil.get(defaultLocale, content);
+
+		for (Locale locale : LanguageUtil.getSupportedLocales()) {
+			String value = LanguageUtil.get(locale, content);
+
+			if (!locale.equals(defaultLocale) && value.equals(defaultValue)) {
+				continue;
+			}
+
+			localizationMap.put(locale, value);
+		}
 
 		return localizationMap;
 	}

@@ -287,6 +287,8 @@
 		<reference package-path="com.liferay.portal" entity="PasswordPolicy" />
 		<reference package-path="com.liferay.portal" entity="PortalPreferences" />
 		<reference package-path="com.liferay.portal" entity="Portlet" />
+		<reference package-path="com.liferay.portal" entity="Resource" />
+		<reference package-path="com.liferay.portal" entity="ResourcePermission" />
 		<reference package-path="com.liferay.portal" entity="Role" />
 		<reference package-path="com.liferay.portal" entity="Shard" />
 		<reference package-path="com.liferay.portal" entity="User" />

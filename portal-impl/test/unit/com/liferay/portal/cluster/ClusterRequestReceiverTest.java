@@ -169,7 +169,7 @@ public class ClusterRequestReceiverTest
 			EnableClusterLinkAdvice.class
 		})
 	@Test
-	public void testInvoke4() throws Exception {
+	public void testInvoke4() throws InterruptedException {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			ClusterRequestReceiver.class.getName(), Level.OFF);
 

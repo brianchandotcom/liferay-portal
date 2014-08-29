@@ -58,6 +58,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -716,7 +717,7 @@ public class IntrabandProxyUtilTest {
 	}
 
 	@Test
-	public void testTemplateSkeleton() throws Exception {
+	public void testTemplateSkeleton() throws ClassNotFoundException {
 		class TestTemplateSkeleton extends TemplateSkeleton {
 
 			TestTemplateSkeleton(TargetLocator targetLocator) {
@@ -836,7 +837,7 @@ public class IntrabandProxyUtilTest {
 	}
 
 	@Test
-	public void testTemplateStub() throws SecurityException {
+	public void testTemplateStub() {
 		try {
 			new TemplateStub(null, null, null);
 
@@ -985,13 +986,17 @@ public class IntrabandProxyUtilTest {
 
 	@AdviseWith(adviceClasses = {DisableProxyClassesDump.class})
 	@Test
-	public void testToClassProxyClassesDumpDisabled() throws Exception {
+	public void testToClassProxyClassesDumpDisabled()
+		throws FileNotFoundException {
+
 		_doTestToClass(false, false);
 	}
 
 	@AdviseWith(adviceClasses = {EnableProxyClassesDump.class})
 	@Test
-	public void testToClassProxyClassesDumpEnabled() throws Exception {
+	public void testToClassProxyClassesDumpEnabled()
+		throws FileNotFoundException {
+
 		_doTestToClass(true, true);
 		_doTestToClass(true, false);
 	}
@@ -1976,7 +1981,7 @@ public class IntrabandProxyUtilTest {
 
 	private void _doTestToClass(
 			boolean proxyClassesDumpEnabled, boolean logEnabled)
-		throws Exception {
+		throws FileNotFoundException {
 
 		class TestClass {
 		}

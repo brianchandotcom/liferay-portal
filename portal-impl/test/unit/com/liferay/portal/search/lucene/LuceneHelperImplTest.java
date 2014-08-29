@@ -194,7 +194,7 @@ public class LuceneHelperImplTest {
 		}
 	)
 	@Test
-	public void testLoadIndexClusterEventListener2() throws Exception {
+	public void testLoadIndexClusterEventListener2() {
 		_mockClusterExecutor.setNodeNumber(2);
 		_mockClusterExecutor.setThrowException(true);
 
@@ -227,7 +227,7 @@ public class LuceneHelperImplTest {
 		}
 	)
 	@Test
-	public void testLoadIndexClusterEventListener3() throws Exception {
+	public void testLoadIndexClusterEventListener3() {
 		_mockClusterExecutor.setNodeNumber(3);
 
 		CaptureHandler captureHandler = null;
@@ -298,7 +298,7 @@ public class LuceneHelperImplTest {
 		}
 	)
 	@Test
-	public void testLoadIndexFromCluster2() throws Exception {
+	public void testLoadIndexFromCluster2() {
 		_mockClusterExecutor.setNodeNumber(3);
 		_mockClusterExecutor.setAutoResponse(false);
 
@@ -351,7 +351,7 @@ public class LuceneHelperImplTest {
 		}
 	)
 	@Test
-	public void testLoadIndexFromCluster3() throws Exception {
+	public void testLoadIndexFromCluster3() {
 		_mockClusterExecutor.setNodeNumber(2);
 
 		CaptureHandler captureHandler = null;
@@ -393,7 +393,7 @@ public class LuceneHelperImplTest {
 		}
 	)
 	@Test
-	public void testLoadIndexFromCluster4() throws Exception {
+	public void testLoadIndexFromCluster4() {
 		_mockClusterExecutor.setNodeNumber(2);
 		_mockClusterExecutor.setPort(1024);
 
@@ -427,7 +427,7 @@ public class LuceneHelperImplTest {
 		}
 	)
 	@Test
-	public void testLoadIndexFromCluster5() throws Exception {
+	public void testLoadIndexFromCluster5() {
 		_mockClusterExecutor.setNodeNumber(2);
 		_mockClusterExecutor.setInvokeMethodThrowException(true);
 		_mockClusterExecutor.setPort(1024);
@@ -474,7 +474,7 @@ public class LuceneHelperImplTest {
 		}
 	)
 	@Test
-	public void testLoadIndexFromCluster6() throws Exception {
+	public void testLoadIndexFromCluster6() {
 		_mockClusterExecutor.setNodeNumber(1);
 
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
@@ -505,7 +505,7 @@ public class LuceneHelperImplTest {
 		}
 	)
 	@Test
-	public void testLoadIndexFromCluster7() throws Exception {
+	public void testLoadIndexFromCluster7() {
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
 			LuceneHelperImpl.class.getName(), Level.FINE);
 

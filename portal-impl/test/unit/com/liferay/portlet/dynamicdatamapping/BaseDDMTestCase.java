@@ -453,13 +453,13 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		mockStatic(LanguageUtil.class);
 
 		when(
-			LanguageUtil.isAvailableLanguageCode("en_US")
+			LanguageUtil.isAvailableLocale("en_US")
 		).thenReturn(
 			true
 		);
 
 		when(
-			LanguageUtil.isAvailableLanguageCode("pt_BR")
+			LanguageUtil.isAvailableLocale("pt_BR")
 		).thenReturn(
 			true
 		);

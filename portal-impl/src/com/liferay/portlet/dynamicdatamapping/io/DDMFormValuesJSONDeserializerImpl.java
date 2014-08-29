@@ -144,7 +144,7 @@ public class DDMFormValuesJSONDeserializerImpl
 		while (keys.hasNext()) {
 			String key = keys.next();
 
-			if (!LanguageUtil.isAvailableLanguageCode(key)) {
+			if (!LanguageUtil.isAvailableLocale(key)) {
 				return false;
 			}
 		}

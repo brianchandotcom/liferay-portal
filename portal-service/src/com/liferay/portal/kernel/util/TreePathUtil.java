@@ -38,10 +38,6 @@ public class TreePathUtil {
 
 		List<TreeModel> modifiedTreeModels = new ArrayList<TreeModel>();
 
-		int size = GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE));
-
 		Deque<Object[]> traces = new LinkedList<Object[]>();
 
 		traces.push(new Object[] {parentPrimaryKey, parentTreePath, 0L});
@@ -58,13 +54,16 @@ public class TreePathUtil {
 
 			List<? extends TreeModel> treeModels =
 				treeModelTasks.findTreeModels(
-					previousPrimaryKey, companyId, curParentPrimaryKey, size);
+					previousPrimaryKey, companyId, curParentPrimaryKey,
+					_MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE);
 
 			if (treeModels.isEmpty()) {
 				continue;
 			}
 
-			if (treeModels.size() == size) {
+			if (treeModels.size() ==
+					_MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE) {
+
 				TreeModel treeModel = treeModels.get(treeModels.size() - 1);
 
 				trace[2] = treeModel.getPrimaryKeyObj();
@@ -164,5 +163,10 @@ public class TreePathUtil {
 
 		sqlQuery.executeUpdate();
 	}
+
+	private static final int _MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE =
+		GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE));
 
 }

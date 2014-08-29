@@ -39,16 +39,18 @@ if (containerModel != null) {
 	containerModelId = containerModel.getContainerModelId();
 }
 
-PortletURL containerURL = renderResponse.createRenderURL();
+PortletURL portletURL = renderResponse.createRenderURL();
 
-containerURL.setParameter("struts_action", "/trash/view_container_model");
-containerURL.setParameter("redirect", redirect);
-containerURL.setParameter("backURL", currentURL);
-containerURL.setParameter("className", className);
-containerURL.setParameter("classPK", String.valueOf(classPK));
-containerURL.setParameter("containerModelClassName", containerModelClassName);
+portletURL.setParameter("struts_action", "/trash/view_container_model");
+portletURL.setParameter("redirect", redirect);
+portletURL.setParameter("backURL", currentURL);
+portletURL.setParameter("className", className);
+portletURL.setParameter("classPK", String.valueOf(classPK));
+portletURL.setParameter("containerModelClassName", containerModelClassName);
 
-TrashUtil.addContainerModelBreadcrumbEntries(request, containerModelClassName, containerModelId, containerURL);
+PortletURL containerURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+TrashUtil.addContainerModelBreadcrumbEntries(request, containerModelClassName, containerModelId, portletURL);
 
 String containerModelName = trashHandler.getContainerModelName(classPK);
 

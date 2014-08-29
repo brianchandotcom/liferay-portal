@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>NEW_PROCESS_RADIO_OPTION_RADIO</td>
-	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]/label[contains(.,'${key_ddlRecordFieldData}')]/input</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]/label[contains(.,'${key_kfProcessFieldData}')]/input</td>
 	<td></td>
 </tr>
 <tr>

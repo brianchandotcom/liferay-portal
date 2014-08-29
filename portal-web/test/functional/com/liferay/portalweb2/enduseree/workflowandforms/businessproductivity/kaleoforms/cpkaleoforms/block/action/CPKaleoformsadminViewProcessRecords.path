@@ -36,7 +36,7 @@
 <!--RECORD_TABLE-->
 <tr>
 	<td>RECORD_TABLE_ENTRY</td>
-	<td>//td[contains(@class,'table-cell') and contains(.,'${key_ddlRecordFieldData}')]</td>
+	<td>//td[contains(@class,'table-cell') and contains(.,'${key_kfProcessFieldData}')]</td>
 	<td></td>
 </tr>
 <tr>

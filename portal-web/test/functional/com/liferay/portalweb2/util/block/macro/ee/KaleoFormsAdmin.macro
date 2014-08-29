@@ -313,9 +313,9 @@
 
 		<execute action="CPKaleoformsadminViewProcessRecords#assertTextEquals" locator-key1="RECORD_TABLE_AUTHOR" value1="${kfAuthor}" />
 
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
+		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute action="CPKaleoformsadminViewProcessRecords#assertTextEquals" locator-key1="RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
+		<execute action="CPKaleoformsadminViewProcessRecords#assertTextEquals" locator-key1="RECORD_TABLE_ENTRY" value1="${kfProcessFieldData}" />
 
 		<var name="key_kfStatus" value="${kfStatus}" />
 

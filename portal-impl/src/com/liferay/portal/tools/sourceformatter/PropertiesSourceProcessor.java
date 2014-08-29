@@ -108,9 +108,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			newContent = newContent.substring(0, newContent.length() - 1);
 		}
 
-		if (!content.equals(newContent)) {
-			processFormattedFile(file, fileName, content, newContent);
-		}
+		processFormattedFile(file, fileName, content, newContent);
 
 		return newContent;
 	}

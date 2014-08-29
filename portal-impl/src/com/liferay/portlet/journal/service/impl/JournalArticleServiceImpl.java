@@ -880,6 +880,17 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			groupId, folderId, WorkflowConstants.STATUS_ANY);
 	}
 
+	/**
+	 * Returns the number of web content articles matching the group, folder,
+	 * and status.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  folderId the primary key of the web content article's folder
+	 * @param  status the web content article's workflow status. For more
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
+	 * @return the number of matching web content articles
+	 */
 	@Override
 	public int getArticlesCount(long groupId, long folderId, int status) {
 		QueryDefinition<JournalArticle> queryDefinition =
@@ -993,6 +1004,37 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			ArrayUtil.toArray(folderIds.toArray(new Long[folderIds.size()])));
 	}
 
+	/**
+	 * Returns an ordered range of all the web content articles matching the
+	 * group, user, the root folder or any of its subfolders.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  userId the primary key of the user (optionally <code>0</code>)
+	 * @param  rootFolderId the primary key of the root folder to begin the
+	 *         search
+	 * @param  status the web content article's workflow status. For more
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
+	 * @param  start the lower bound of the range of web content articles to
+	 *         return
+	 * @param  end the upper bound of the range of web content articles to
+	 *         return (not inclusive)
+	 * @param  orderByComparator the comparator to order the web content
+	 *         articles
+	 * @return the range of matching web content articles ordered by the
+	 *         comparator
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Override
 	public List<JournalArticle> getGroupArticles(
 			long groupId, long userId, long rootFolderId, int status, int start,
@@ -1018,6 +1060,16 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	/**
 	 * Returns an ordered range of all the web content articles matching the
 	 * group, user, the root folder or any of its subfolders.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
 	 *
 	 * @param  groupId the primary key of the web content article's group
 	 * @param  userId the primary key of the user (optionally <code>0</code>)
@@ -1068,6 +1120,20 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			groupId, userId, rootFolderId, WorkflowConstants.STATUS_ANY);
 	}
 
+	/**
+	 * Returns the number of web content articles matching the group, user, and
+	 * the root folder or any of its subfolders.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  userId the primary key of the user (optionally <code>0</code>)
+	 * @param  rootFolderId the primary key of the root folder to begin the
+	 *         search
+	 * @param  status the web content article's workflow status. For more
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
+	 * @return the number of matching web content articles
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Override
 	public int getGroupArticlesCount(
 			long groupId, long userId, long rootFolderId, int status)
@@ -1385,6 +1451,34 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		restoreArticleFromTrash(article.getResourcePrimKey());
 	}
 
+	/**
+	 * Returns a range of all the web content articles matching the group, creator,
+	 * creator, and workflow status using the indexer. It is preferable to use this
+	 * method instead of the non-indexed version whenever possible for performance
+	 * reasons.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  creatorUserId the primary key of the web content article's
+	 *         creator
+	 * @param  status the web content article's workflow status. For more
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
+	 * @param  start the lower bound of the range of web content articles to
+	 *         return
+	 * @param  end the upper bound of the range of web content articles to
+	 *         return (not inclusive)
+	 * @return the matching web content articles
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Override
 	public Hits search(
 			long groupId, long creatorUserId, int status, int start, int end)
@@ -1811,6 +1905,15 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			andOperator, new QueryDefinition<JournalArticle>(status));
 	}
 
+	/**
+	 * Subscribes the user to changes in elements that belong to the web content
+	 * article's DDM structure.
+	 *
+	 * @param  groupId the primary key of the folder's group
+	 * @param  userId the primary key of the user to be subscribed
+	 * @param  ddmStructureId the primary key of the structure to subscribe to
+	 * @throws PortalException if a matching user or group could not be found
+	 */
 	@Override
 	public void subscribeStructure(
 			long groupId, long userId, long ddmStructureId)
@@ -1823,6 +1926,16 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			groupId, userId, ddmStructureId);
 	}
 
+	/**
+	 * Unsubscribes the user from changes in elements that belong to the web
+	 * content article's DDM structure.
+	 *
+	 * @param  groupId the primary key of the folder's group
+	 * @param  userId the primary key of the user to be subscribed
+	 * @param  ddmStructureId the primary key of the structure to subscribe to
+	 * @throws PortalException if a matching user or subscription could not be
+	 *         found
+	 */
 	@Override
 	public void unsubscribeStructure(
 			long groupId, long userId, long ddmStructureId)

@@ -317,7 +317,8 @@ public class Logger {
 
 			for (Object argument : arguments) {
 				sb.append("<b>");
-				sb.append(String.valueOf(argument));
+				sb.append(
+					StringEscapeUtils.escapeHtml4(String.valueOf(argument)));
 				sb.append("</b> ");
 			}
 		}
@@ -601,7 +602,7 @@ public class Logger {
 
 			if (Validator.isNotNull(value)) {
 				sb.append(" value <b>");
-				sb.append(value);
+				sb.append(StringEscapeUtils.escapeHtml4(value));
 				sb.append("</b>");
 			}
 		}

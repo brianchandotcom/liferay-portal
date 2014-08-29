@@ -238,6 +238,8 @@ public class PortletTracker
 		String displayName = GetterUtil.getString(
 			serviceReference.getProperty("javax.portlet.display-name"),
 			portletName);
+		
+		warnPorletProperties(portletName, serviceReference);
 
 		portletModel.setDisplayName(displayName);
 
@@ -284,6 +286,19 @@ public class PortletTracker
 
 			return null;
 		}
+	}
+
+	private void warnPorletProperties(String portletName,
+			ServiceReference<Portlet> serviceReference) {
+
+		String[] unsupportedKeys = PortletPropertyValidator
+			.validatePropertiesKeys(serviceReference.getPropertyKeys());
+
+		for(String key : unsupportedKeys){
+			_log.info("Portlet:" + portletName +
+				" - Incorrect property key:" + key);
+		}
+
 	}
 
 	protected com.liferay.portal.model.Portlet buildPortletModel(

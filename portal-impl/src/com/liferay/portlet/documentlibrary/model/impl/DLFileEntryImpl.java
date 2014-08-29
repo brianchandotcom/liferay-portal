@@ -65,6 +65,10 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 	@Override
 	public String buildTreePath() throws PortalException {
+		if (getFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return StringPool.SLASH;
+		}
+
 		DLFolder dlFolder = getFolder();
 
 		return dlFolder.buildTreePath();

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -69,7 +68,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -130,8 +128,6 @@ import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.impl.JournalArticleDisplayImpl;
-import com.liferay.portlet.journal.model.impl.JournalArticleModelImpl;
-import com.liferay.portlet.journal.model.impl.JournalFolderModelImpl;
 import com.liferay.portlet.journal.service.base.JournalArticleLocalServiceBaseImpl;
 import com.liferay.portlet.journal.social.JournalActivityKeys;
 import com.liferay.portlet.journal.util.JournalUtil;
@@ -3489,19 +3485,6 @@ public class JournalArticleLocalServiceImpl
 	@Override
 	public void rebuildTree(long companyId) throws PortalException {
 		journalFolderLocalService.rebuildTree(companyId);
-
-		Session session = journalArticlePersistence.openSession();
-
-		try {
-			TreePathUtil.rebuildTreePaths(
-				session, companyId, JournalArticleModelImpl.TABLE_NAME,
-				JournalFolderModelImpl.TABLE_NAME, "folderId", true);
-		}
-		finally {
-			journalArticlePersistence.closeSession(session);
-
-			journalArticlePersistence.clearCache();
-		}
 	}
 
 	/**

@@ -14,11 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.dao.orm.QueryPos;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.TreeModel;
 
 import java.util.ArrayList;
@@ -49,14 +45,8 @@ public class TreePathUtil {
 			String curParentTreePath = (String)trace[1];
 			Long previousPrimaryKey = (Long)trace[2];
 
-			if (curParentTreePath.equals(StringPool.SLASH)) {
-				treeModelTasks.rebuildDependentModelsTreePaths(
-					curParentPrimaryKey, "/0/");
-			}
-			else {
-				treeModelTasks.rebuildDependentModelsTreePaths(
-					curParentPrimaryKey, curParentTreePath);
-			}
+			treeModelTasks.rebuildDependentModelsTreePaths(
+				curParentPrimaryKey, curParentTreePath);
 
 			List<? extends TreeModel> treeModels =
 				treeModelTasks.findTreeModels(
@@ -92,82 +82,6 @@ public class TreePathUtil {
 		}
 
 		treeModelTasks.reindexTreeModels(modifiedTreeModels);
-	}
-
-	public static void rebuildTreePaths(
-		Session session, long companyId, String tableName,
-		String parentTableName, String parentPrimaryKeyColumnName,
-		boolean statusColumn) {
-
-		rebuildTreePaths(
-			session, companyId, tableName, parentTableName,
-			parentPrimaryKeyColumnName, statusColumn, false);
-		rebuildTreePaths(
-			session, companyId, tableName, parentTableName,
-			parentPrimaryKeyColumnName, statusColumn, true);
-	}
-
-	protected static void rebuildTreePaths(
-		Session session, long companyId, String tableName,
-		String parentTableName, String parentPrimaryKeyColumnName,
-		boolean statusColumn, boolean rootParent) {
-
-		StringBundler sb = new StringBundler(26);
-
-		sb.append("update ");
-		sb.append(tableName);
-		sb.append(" set ");
-
-		if (rootParent) {
-			sb.append("treePath = '/0/' ");
-		}
-		else {
-			sb.append("treePath = (select ");
-			sb.append(parentTableName);
-			sb.append(".treePath from ");
-			sb.append(parentTableName);
-			sb.append(" where ");
-			sb.append(parentTableName);
-			sb.append(".");
-			sb.append(parentPrimaryKeyColumnName);
-			sb.append(" = ");
-			sb.append(tableName);
-			sb.append(".");
-			sb.append(parentPrimaryKeyColumnName);
-			sb.append(") ");
-		}
-
-		sb.append("where (");
-		sb.append(tableName);
-		sb.append(".companyId = ?) and (");
-		sb.append(tableName);
-		sb.append(".");
-		sb.append(parentPrimaryKeyColumnName);
-
-		if (rootParent) {
-			sb.append(" = 0)");
-		}
-		else {
-			sb.append(" != 0)");
-		}
-
-		if (statusColumn) {
-			sb.append(" and (");
-			sb.append(tableName);
-			sb.append(".status != ?)");
-		}
-
-		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sb.toString());
-
-		QueryPos qPos = QueryPos.getInstance(sqlQuery);
-
-		qPos.add(companyId);
-
-		if (statusColumn) {
-			qPos.add(WorkflowConstants.STATUS_IN_TRASH);
-		}
-
-		sqlQuery.executeUpdate();
 	}
 
 	private static final int _MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE =

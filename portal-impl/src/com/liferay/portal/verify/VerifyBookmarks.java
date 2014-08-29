@@ -97,7 +97,6 @@ public class VerifyBookmarks extends VerifyProcess {
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
 		for (long companyId : companyIds) {
-			BookmarksEntryLocalServiceUtil.rebuildTree(companyId);
 			BookmarksFolderLocalServiceUtil.rebuildTree(companyId);
 		}
 	}

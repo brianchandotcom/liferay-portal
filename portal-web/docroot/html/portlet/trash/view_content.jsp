@@ -105,7 +105,9 @@
 										<portlet:param name="redirect" value="<%= backURL %>" />
 										<portlet:param name="className" value="<%= entry.getClassName() %>" />
 										<portlet:param name="classPK" value="<%= String.valueOf(entry.getClassPK()) %>" />
-										<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName() %>" />
+										<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName(entry.getClassPK()) %>" />
+										<portlet:param name="containerModelId" value="<%= String.valueOf(trashHandler.getRootContainerModelId(entry.getClassPK())) %>" />
+										<portlet:param name="showRootContainerModel" value="<%= String.valueOf(trashHandler.hasRootContainerModel()) %>" />
 									</portlet:renderURL>
 
 									<%

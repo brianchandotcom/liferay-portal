@@ -6,6 +6,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.block.macro.BaseMacro;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 <#assign rootElement = seleniumBuilderContext.getMacroRootElement(macroName)>
 
 <#if rootElement.attributeValue("extends")??>

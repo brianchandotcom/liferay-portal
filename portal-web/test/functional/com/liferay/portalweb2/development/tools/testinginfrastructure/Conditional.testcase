@@ -58,6 +58,62 @@
 				</execute>
 			</else>
 		</if>
+
+		<if>
+			<condition action="Conditional#isTextEqual" locator-key1="TITLE_ELEMENT_NAME" value1="Status Codes" />
+			<then>
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Matched webpage title value: PASS" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Did not match webpage title value: FAIL" />
+				</execute>
+			</else>
+		</if>
+
+		<if>
+			<condition action="Conditional#isTextEqual" locator-key1="TITLE_ELEMENT_NAME" value1="Not real title" />
+			<then>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Matched incorrect webpage title value: FAIL" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Did not match incorrect webpage title value: PASS" />
+				</execute>
+			</else>
+		</if>
+
+		<if>
+			<condition action="Conditional#isTextNotEqual" locator-key1="TITLE_ELEMENT_NAME" value1="Status Codes" />
+			<then>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Did not match webpage title value: FAIL" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Matched webpage title value: PASS" />
+				</execute>
+			</else>
+		</if>
+
+		<if>
+			<condition action="Conditional#isTextNotEqual" locator-key1="TITLE_ELEMENT_NAME" value1="Not real title" />
+			<then>
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Did not match incorrect webpage title value: PASS" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Matched incorrect webpage title value: FAIL" />
+				</execute>
+			</else>
+		</if>
 	</command>
 
 	<command name="Contains" priority="5">

@@ -268,7 +268,7 @@ public class ClusterSchedulerEngineTest {
 	}
 
 	@Test
-	public void testMasterToSlave1() throws Exception {
+	public void testMasterToSlave1() throws SchedulerException {
 		_clusterSchedulerEngine = _getClusterSchedulerEngine(true, 2, 2);
 
 		Assert.assertTrue(_isMaster(_clusterSchedulerEngine));
@@ -293,7 +293,7 @@ public class ClusterSchedulerEngineTest {
 	}
 
 	@Test
-	public void testMasterToSlave2() throws Exception {
+	public void testMasterToSlave2() throws SchedulerException {
 		_clusterSchedulerEngine = _getClusterSchedulerEngine(true, 2, 2);
 
 		Assert.assertTrue(_isMaster(_clusterSchedulerEngine));
@@ -493,7 +493,7 @@ public class ClusterSchedulerEngineTest {
 	}
 
 	@Test
-	public void testSchedule2() throws Exception {
+	public void testSchedule2() throws SchedulerException {
 		_clusterSchedulerEngine = _getClusterSchedulerEngine(false, 1, 0);
 
 		Map<String, SchedulerResponse> schedulerResponses =
@@ -607,7 +607,7 @@ public class ClusterSchedulerEngineTest {
 	}
 
 	@Test
-	public void testSlaveToMaster() throws Exception {
+	public void testSlaveToMaster() throws SchedulerException {
 		_clusterSchedulerEngine = _getClusterSchedulerEngine(false, 2, 0);
 
 		Assert.assertFalse(_isMaster(_clusterSchedulerEngine));
@@ -849,7 +849,9 @@ public class ClusterSchedulerEngineTest {
 	}
 
 	@Test
-	public void testUpdateMemorySchedulerClusterMaster() throws Exception {
+	public void testUpdateMemorySchedulerClusterMaster()
+		throws SchedulerException {
+
 		_clusterSchedulerEngine = _getClusterSchedulerEngine(false, 2, 0);
 
 		Assert.assertFalse(_isMaster(_clusterSchedulerEngine));
@@ -907,7 +909,7 @@ public class ClusterSchedulerEngineTest {
 
 	private ClusterSchedulerEngine _getClusterSchedulerEngine(
 			boolean master, int memoryClusterJobs, int persistentJobs)
-		throws Exception {
+		throws SchedulerException {
 
 		MockSchedulerEngine mockSchedulerEngine = new MockSchedulerEngine(
 			memoryClusterJobs, persistentJobs);

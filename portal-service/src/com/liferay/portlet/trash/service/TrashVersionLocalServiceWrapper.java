@@ -201,6 +201,16 @@ public class TrashVersionLocalServiceWrapper implements TrashVersionLocalService
 
 	@Override
 	public com.liferay.portlet.trash.model.TrashVersion fetchVersion(
+		java.lang.String className, long classPK) {
+		return _trashVersionLocalService.fetchVersion(className, classPK);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #fetchVersion(String, long)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portlet.trash.model.TrashVersion fetchVersion(
 		long entryId, java.lang.String className, long classPK) {
 		return _trashVersionLocalService.fetchVersion(entryId, className,
 			classPK);

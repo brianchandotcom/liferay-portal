@@ -226,6 +226,17 @@ public class DLAppHelperLocalServiceUtil {
 	}
 
 	public static void restoreDependentsFromTrash(
+		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().restoreDependentsFromTrash(dlFileEntriesAndDLFolders);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #restoreDependentsFromTrash(
+	List)}
+	*/
+	@Deprecated
+	public static void restoreDependentsFromTrash(
 		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
 		long trashEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

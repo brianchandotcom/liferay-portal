@@ -1,15 +1,12 @@
 <definition component-name="portal-tools">
 	<property name="testray.main.component.name" value="Tools" />
-
-	<set-up>
-		<execute macro="User#firstLoginPG" />
-	</set-up>
+	<property name="portal.url" value="http://the-internet.herokuapp.com/status_codes" />
 
 	<command name="Condition" priority="5">
 		<var name="test" value="test" />
 
 		<if>
-			<condition action="Dockbar#isElementPresent" locator-key1="ADD" />
+			<condition action="Conditional#isElementPresent" locator-key1="TITLE_ELEMENT" />
 			<then>
 				<execute macro="TestUtils#pass" />
 			</then>
@@ -19,7 +16,7 @@
 		</if>
 
 		<if>
-			<condition action="Dockbar#isElementNotPresent" locator-key1="ADD" />
+			<condition action="Conditional#isElementNotPresent" locator-key1="TITLE_ELEMENT" />
 			<then>
 				<execute macro="TestUtils#fail" />
 			</then>
@@ -29,7 +26,7 @@
 		</if>
 
 		<if>
-			<condition action="Dockbar#isElementPresent" locator1="//a[@id='_145_addPanel']" />
+			<condition action="Conditional#isElementPresent" locator-key1="LIST_ELEMENT" />
 			<then>
 				<execute macro="TestUtils#pass" />
 			</then>
@@ -39,14 +36,14 @@
 		</if>
 
 		<if>
-			<condition action="Dockbar#isElementNotPresent" locator1="//a[@id='_145_addPanel']" />
+			<condition action="Conditional#isElementNotPresent" locator-key1="LIST_ELEMENT" />
 			<then>
 				<execute macro="TestUtils#fail" />
 			</then>
 			<else>
 				<execute macro="TestUtils#pass" />
 			</else>
-		</if>
+		</if>		
 	</command>
 
 	<command name="Contains" priority="5">

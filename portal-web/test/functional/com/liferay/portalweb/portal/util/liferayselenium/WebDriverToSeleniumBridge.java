@@ -1212,7 +1212,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void mouseOver(String locator) {
-		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
+		if (TestPropsValues.TEST_MOBILE_DEVICE_ENABLED) {
 			return;
 		}
 
@@ -1608,7 +1608,7 @@ public class WebDriverToSeleniumBridge
 			return;
 		}
 
-		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
+		if (TestPropsValues.TEST_MOBILE_DEVICE_ENABLED) {
 			webElement.clear();
 
 			webElement.click();

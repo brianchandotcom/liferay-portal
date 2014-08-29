@@ -72,10 +72,10 @@ public class FirefoxWebDriverImpl extends BaseWebDriverImpl {
 		_firefoxProfile.setPreference("dom.max_chrome_script_run_time", 300);
 		_firefoxProfile.setPreference("dom.max_script_run_time", 300);
 
-		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
+		if (TestPropsValues.TEST_MOBILE_DEVICE_ENABLED) {
 			_firefoxProfile.setPreference(
 				"general.useragent.override",
-				TestPropsValues.MOBILE_DEVICE_USER_AGENT);
+				TestPropsValues.TEST_MOBILE_DEVICE_USER_AGENT);
 		}
 	}
 

@@ -73,15 +73,6 @@ public class TestPropsValues
 	public static final String LIFERAY_PORTAL_BUNDLE = TestPropsUtil.get(
 		"liferay.portal.bundle");
 
-	public static final boolean MOBILE_DEVICE_ENABLED = GetterUtil.getBoolean(
-		TestPropsUtil.get("mobile.device.enabled"));
-
-	public static final String MOBILE_DEVICE_RESOLUTION = TestPropsUtil.get(
-		"mobile.device.resolution");
-
-	public static final String MOBILE_DEVICE_USER_AGENT = TestPropsUtil.get(
-		"mobile.device.user.agent");
-
 	public static final String OUTPUT_DIR_NAME = TestPropsUtil.get(
 		"output.dir");
 
@@ -129,6 +120,15 @@ public class TestPropsValues
 
 	public static final boolean TEST_DATABASE_MINIMAL = GetterUtil.getBoolean(
 		TestPropsUtil.get("test.database.minimal"));
+
+	public static final boolean TEST_MOBILE_DEVICE_ENABLED =
+		GetterUtil.getBoolean(TestPropsUtil.get("test.mobile.device.enabled"));
+
+	public static final String TEST_MOBILE_DEVICE_RESOLUTION =
+		TestPropsUtil.get("test.mobile.device.resolution");
+
+	public static final String TEST_MOBILE_DEVICE_USER_AGENT =
+		TestPropsUtil.get("test.mobile.device.user.agent");
 
 	public static final boolean TEST_SKIP_TEAR_DOWN = GetterUtil.getBoolean(
 		TestPropsUtil.get("test.skip.tear.down"));

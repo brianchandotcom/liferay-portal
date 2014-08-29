@@ -865,7 +865,7 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static boolean isMobileDeviceEnabled() {
-		return TestPropsValues.MOBILE_DEVICE_ENABLED;
+		return TestPropsValues.TEST_MOBILE_DEVICE_ENABLED;
 	}
 
 	public static boolean isNotChecked(

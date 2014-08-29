@@ -2,6 +2,7 @@
 
 <@aui["field-wrapper"] data=data>
 	<@aui.input helpMessage=escape(fieldStructure.tip) inlineField=true label=escape(label) name="${namespacedFieldName}Title" readonly="readonly" type="text" value=fileEntryTitle style="margin-bottom:0" />
+
 	<div class="progress">
 		<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
 		</div>
@@ -9,8 +10,10 @@
 
 	<div>
 		<@aui["button-row"]>
-			<@aui.button id=namespacedFieldName value="Choose From Library" />
+			<@aui.button id="${portletNamespace}${namespacedFieldName}ChooseFile" value="choose-from-library" />
+
 			<div class="image-upload-container" id="imageUpload"></div>
+
 			<button class="btn btn-default clear-file" id="${portletNamespace}${namespacedFieldName}ClearFile" type="button">Clear</button>
 		</@>
 	</div>
@@ -26,7 +29,7 @@
 		<#assign fileEntry = getFileEntry(fileJSONObject)>
 
 		<#assign alt = fileJSONObject.getString("alt")>
-		<#assign src = getFileEntryURL(fileEntry)>
+		<#assign src = fileJSONObject.getString("data")>
 	</#if>
 
 	<#if src?has_content>
@@ -39,8 +42,6 @@
 
 			<img id="${portletNamespace}${namespacedFieldName}Image" src="${src}" />
 		</div>
-
-		<@aui.input name="${namespacedFieldName}URL" type="hidden" value="${src}" />
 	</#if>
 
 	<@aui.input label="image-description" name="${namespacedFieldName}Alt" type="text" value="${alt}" />
@@ -49,6 +50,7 @@
 </@>
 
 <@aui.script>
+	var uploader;
 
 	YUI().use('aui-base', 'uploader', function(Y) {
 		var acceptedFileFormats = ['image/gif', 'image/jpeg', 'image/jpg', 'image/png'];
@@ -56,8 +58,7 @@
 		var clearFileButton = Y.one("#${portletNamespace}${namespacedFieldName}ClearFile");
 
 		var titleNode = Y.one('#${portletNamespace}${namespacedFieldName}Title');
-
-		var uploader;
+		var fieldNode = Y.one('#${portletNamespace}${namespacedFieldName}');
 
 		setInputValue();
 
@@ -98,8 +99,9 @@
 		if (Y.Uploader.TYPE !== 'none' && !Y.UA.ios) {
 			uploader = new Y.Uploader({ appendNewFiles: false,
 										fileFilters: acceptedFileFormats,
+										fileFieldName: 'file',
 	                                    height: '34px',
-	                                    uploadURL: '<@liferay_portlet.actionURL><@liferay_portlet.param name="struts_action" value="/document_library/upload_multiple_file_entries"></@liferay_portlet.param><@liferay_portlet.param name="cmd" value="add_temp"></@liferay_portlet.param><@liferay_portlet.param name="folderId" value="0"></@liferay_portlet.param></@liferay_portlet.actionURL>',
+	                                    uploadURL: '<@liferay_portlet.actionURL><@liferay_portlet.param name="struts_action" value="/journal/upload_image"></@liferay_portlet.param><@liferay_portlet.param name="cmd" value="add_dynamic"></@liferay_portlet.param><@liferay_portlet.param name="repositoryId" value="${scopeGroupId?c}"></@liferay_portlet.param><@liferay_portlet.param name="folderId" value="${folderId}"></@liferay_portlet.param></@liferay_portlet.actionURL>',
 										width: '100px',
 	                                    withCredentials: false
 	                                }).render('#imageUpload');
@@ -118,6 +120,18 @@
 						}
 
 						uploader.uploadAll();
+
+						uploader.on('uploadcomplete', function(evt) {
+
+							fieldNode.val(evt.data);
+						});
+
+						uploader.on('uploaderror', function(evt) {
+
+							// TODO
+
+						});
+
 						clearFileButton.setStyle('display', 'inline-block');
 					}
 				}
@@ -176,11 +190,12 @@
 
 			var disabled = true;
 
-			var imageAltInputNode = A.one('#${portletNamespace}${namespacedFieldName}Alt');
-			var imageFileInputNode = A.one('#${portletNamespace}${namespacedFieldName}File');
-			var imageURLInputNode = A.one('#${portletNamespace}${namespacedFieldName}URL');
+			var chooseFileButton = A.one('#${portletNamespace}${namespacedFieldName}ChooseFile');
 
-			if (imageFileInputNode.get('disabled')) {
+			var imageAltInputNode = A.one('#${portletNamespace}${namespacedFieldName}Alt');
+			var imageInputNode = A.one('#${portletNamespace}${namespacedFieldName}');
+
+			if (imageInputNode.get('disabled')) {
 				buttonText = '${languageUtil.get(locale, "delete")}';
 
 				disabled = false;
@@ -188,9 +203,12 @@
 
 			A.one('#${portletNamespace}${namespacedFieldName}DeleteImage').setContent(buttonText);
 
+			chooseFileButton.attr('disabled', disabled);
+
 			imageAltInputNode.attr('disabled', disabled);
-			imageFileInputNode.attr('disabled', disabled);
-			imageURLInputNode.attr('disabled', disabled);
+			imageInputNode.attr('disabled', disabled);
+
+			uploader.set('enabled', !disabled);
 
 			A.one('#${portletNamespace}${namespacedFieldName}Image').toggle();
 		},
@@ -198,4 +216,4 @@
 	);
 </@>
 
-<#include "select-file-util.ftl">
+<#include "select-file-entry-actions.ftl">

@@ -4,6 +4,8 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 import com.liferay.portalweb2.util.block.action.BaseAction;
 import com.liferay.portalweb2.util.block.action.BaseLiferayAction;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 <#if seleniumBuilderContext.getActionRootElement(actionName)??>
 	<#assign rootElement = seleniumBuilderContext.getActionRootElement(actionName)>
 
@@ -187,6 +189,8 @@ public class ${actionSimpleClassName} extends
 
 					<#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
 						locator${i} = getLocator(locator${i}, locatorKey${i}, environmentScopeVariables);
+
+						value${i} = StringEscapeUtils.escapeHtml4(value${i});
 					</#list>
 
 					<#if commandElement.element("default")??>

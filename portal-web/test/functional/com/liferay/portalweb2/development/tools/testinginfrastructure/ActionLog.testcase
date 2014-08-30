@@ -1,5 +1,6 @@
 <definition component-name="portal-tools">
 	<property name="testray.main.component.name" value="Tools" />
+	<property name="portal.url" value="http://the-internet.herokuapp.com/status_codes" />
 
 	<command name="EchoStatement" priority="5">
 		<echo message="echoMessage" />
@@ -19,7 +20,7 @@
 
 	<command name="IfStatements" priority="5">
 		<if>
-			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
+			<condition action="ActionLog#isElementPresent" locator-key1="PAGE_TITLE" />
 			<then>
 				<echo message="" />
 			</then>
@@ -59,7 +60,7 @@
 
 	<command name="WhileLoops" priority="5">
 		<while>
-			<condition action="Dockbar#isElementNotPresent" locator-key1="USER_NAME" />
+			<condition action="ActionLog#isElementNotPresent" locator-key1="PAGE_TITLE" />
 			<then>
 				<echo message="" />
 			</then>

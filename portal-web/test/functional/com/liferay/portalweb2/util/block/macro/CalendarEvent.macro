@@ -336,7 +336,6 @@
 					<execute action="PGCalendarAddevent#type" locator-key1="END_DATE_TIME" value1="${setEndDateTime}" />
 
 					<var locator-key="START_DATE" name="startDate" path="PGCalendarAddevent" />
-
 					<var name="endDate" value="${startDate}" />
 
 					<execute action="PGCalendarAddevent#type" locator-key1="END_DATE" value1="${endDate}" />

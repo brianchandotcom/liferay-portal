@@ -211,6 +211,33 @@
 		}
 	}
 
+	.user-status-selector {
+		margin-top: 5px;
+
+		@include respond-to(tablet, desktop) {
+			float: right;
+			margin-top: 0;
+		}
+
+		.form-group {
+			margin-bottom: 0;
+		}
+
+		.input-select-wrapper {
+			width: 100%;
+
+			@include respond-to(tablet, desktop) {
+				width: auto;
+			}
+		}
+	}
+
+	@include respond-to(tablet, desktop) {
+		.user-table button {
+			float: left;
+		}
+	}
+
 	.view-all-link {
 		color: #666;
 		font-weight: normal;

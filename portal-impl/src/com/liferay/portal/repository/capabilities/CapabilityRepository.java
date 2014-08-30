@@ -17,7 +17,8 @@ package com.liferay.portal.repository.capabilities;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
-import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -45,9 +46,12 @@ public class CapabilityRepository
 	public CapabilityRepository(
 		Repository repository,
 		Map<Class<? extends Capability>, Capability> supportedCapabilities,
-		Set<Class<? extends Capability>> exportedCapabilityClasses) {
+		Set<Class<? extends Capability>> exportedCapabilityClasses,
+		RepositoryEventTrigger repositoryEventTrigger) {
 
 		super(repository, supportedCapabilities, exportedCapabilityClasses);
+
+		_repositoryEventTrigger = repositoryEventTrigger;
 	}
 
 	@Override
@@ -147,14 +151,10 @@ public class CapabilityRepository
 	public void deleteFileEntry(long fileEntryId) throws PortalException {
 		Repository repository = getRepository();
 
-		if (isCapabilityProvided(TrashCapability.class)) {
-			TrashCapability trashCapability = getCapability(
-				TrashCapability.class);
+		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
-			FileEntry fileEntry = repository.getFileEntry(fileEntryId);
-
-			trashCapability.deleteTrashEntry(fileEntry);
-		}
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Delete.class, FileEntry.class, fileEntry);
 
 		repository.deleteFileEntry(fileEntryId);
 	}
@@ -165,14 +165,10 @@ public class CapabilityRepository
 
 		Repository repository = getRepository();
 
-		if (isCapabilityProvided(TrashCapability.class)) {
-			TrashCapability trashCapability = getCapability(
-				TrashCapability.class);
+		FileEntry fileEntry = repository.getFileEntry(folderId, title);
 
-			FileEntry fileEntry = repository.getFileEntry(folderId, title);
-
-			trashCapability.deleteTrashEntry(fileEntry);
-		}
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Delete.class, FileEntry.class, fileEntry);
 
 		repository.deleteFileEntry(folderId, title);
 	}
@@ -188,14 +184,10 @@ public class CapabilityRepository
 	public void deleteFolder(long folderId) throws PortalException {
 		Repository repository = getRepository();
 
-		if (isCapabilityProvided(TrashCapability.class)) {
-			TrashCapability trashCapability = getCapability(
-				TrashCapability.class);
+		Folder folder = repository.getFolder(folderId);
 
-			Folder folder = repository.getFolder(folderId);
-
-			trashCapability.deleteTrashEntry(folder);
-		}
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Delete.class, Folder.class, folder);
 
 		repository.deleteFolder(folderId);
 	}
@@ -206,14 +198,10 @@ public class CapabilityRepository
 
 		Repository repository = getRepository();
 
-		if (isCapabilityProvided(TrashCapability.class)) {
-			TrashCapability trashCapability = getCapability(
-				TrashCapability.class);
+		Folder folder = repository.getFolder(parentFolderId, title);
 
-			Folder folder = repository.getFolder(parentFolderId, title);
-
-			trashCapability.deleteTrashEntry(folder);
-		}
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Delete.class, Folder.class, folder);
 
 		repository.deleteFolder(parentFolderId, title);
 	}
@@ -657,5 +645,7 @@ public class CapabilityRepository
 
 		return getRepository().verifyInheritableLock(folderId, lockUuid);
 	}
+
+	private RepositoryEventTrigger _repositoryEventTrigger;
 
 }

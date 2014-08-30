@@ -956,6 +956,16 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
+	.dialog-iframe-popup {
+		.panel-manage-frontpage .control-panel-bar-secondary {
+			padding: 15px 5px;
+		}
+
+		.taglib-portal-message {
+			display: none;
+		}
+	}
+
 	/* ---------- Extras ---------- */
 
 	button {

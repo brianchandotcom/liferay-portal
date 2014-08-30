@@ -595,9 +595,15 @@ $dockbarOpenGradientStart: #0EA6F9;
 		background-color: transparent;
 	}
 
-	.lfr-portlet-title-editable-content .field {
-		display: inline;
-		float: none;
+	.lfr-portlet-title-editable-content {
+		.field-input {
+			height: 30px;
+		}
+
+		.btn {
+			height: 30px;
+			line-height: 1em;
+		}
 	}
 
 	.portlet-journal-content .lfr-icon-actions {

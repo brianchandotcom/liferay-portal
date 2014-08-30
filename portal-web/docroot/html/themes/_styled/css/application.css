@@ -785,24 +785,27 @@
 	.lfr-portlet-title-editable-content {
 		padding: 0;
 
-		.combobox-content {
-			.field-content .field-input-text {
-				display: block;
-				margin-bottom: 0;
-			}
+		.field-input {
+			margin-bottom: 0;
+		}
 
-			.field-label.textfield-label {
-				display: none;
-			}
+		.textfield-label {
+			display: none;
+		}
 
-			.toolbar-content {
-				margin-top: 0;
-				vertical-align: top;
+		.btn-toolbar-content {
+			display: inline-block;
+		}
 
-				.btn-group {
-					margin-top: 0;
-				}
-			}
+		.btn-group {
+			margin-top: 0;
+		}
+
+		.btn {
+			display: inline-block;
+			float: none;
+			margin-top: 0;
+			width: auto;
 		}
 	}
 }

@@ -22,29 +22,57 @@
 		<if>
 			<condition action="ActionLog#isElementPresent" locator-key1="PAGE_TITLE" />
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Webpage title element was found: PASS" />
+				</execute>
 			</then>
+			<else>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Webpage title element was not found: FAIL" />
+				</execute>
+			</else>
 		</if>
 
 		<if>
 			<contains string="string" substring="substring" />
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Matched incorrect substring to string: FAIL" />
+				</execute>
 			</then>
+			<else>
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Did not match incorrect substring: PASS" />
+				</execute>
+			</else>
 		</if>
 
 		<if>
 			<equals arg1="arg1" arg2="arg2" />
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Incorrectly matched arg1 to arg2: FAIL" />
+				</execute>
 			</then>
+			<else>
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Did not match arg1 to arg2: PASS" />
+				</execute>
+			</else>
 		</if>
 
 		<if>
 			<isset var="var" />
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Detected non-set variable var as set: FAIL" />
+				</execute>
 			</then>
+			<else>
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Detected variable var is not set: PASS" />
+				</execute>
+			</else>
 		</if>
 
 		<if>
@@ -53,8 +81,15 @@
 				<equals arg1="b" arg2="b" />
 			</and>
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Both condition cases match: PASS" />
+				</execute>
 			</then>
+			<else>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="One or both condition cases did not match: FAIL" />
+				</execute>
+			</else>
 		</if>
 	</command>
 

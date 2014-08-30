@@ -97,28 +97,61 @@
 		<while>
 			<condition action="ActionLog#isElementNotPresent" locator-key1="PAGE_TITLE" />
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Element is present and should not go into this while loop: FAIL" />
+				</execute>
 			</then>
 		</while>
 
 		<while>
 			<contains string="string" substring="substring" />
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Matched an incorrect substring: FAIL" />
+				</execute>
 			</then>
 		</while>
 
 		<while>
 			<equals arg1="arg1" arg2="arg2" />
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="arg1 does not equal arg2: FAIL" />
+				</execute>
 			</then>
 		</while>
+
+		<var name="number" value="0" />
+
+		<while>
+			<not>
+				<equals arg1="${number}" arg2="4" />
+			</not>
+			<then>
+				<var method="MathUtil#sum(&quot;1&quot;, ${number})" name="number" />
+			</then>
+		</while>
+
+		<if>
+			<equals arg1="${number}" arg2="4" />
+			<then>
+				<execute macro="TestUtils#pass">
+					<var name="message" value="Ending condition sum was 4: PASS" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Ending condition sum was NOT 4: FAIL" />
+				</execute>
+			</else>
+		</if>
 
 		<while>
 			<isset var="var" />
 			<then>
-				<echo message="" />
+				<execute macro="TestUtils#fail">
+					<var name="message" value="var is not set: FAIL" />
+				</execute>
 			</then>
 		</while>
 	</command>

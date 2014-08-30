@@ -353,21 +353,15 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiFrontPageCreoleBold" priority="5">
-		<var name="wikiPageContent" value="**Wiki FrontPage Content**" />
-		<var name="wikiPageRevision" value="1.1" />
-		<var name="wikiPageText" value="Wiki FrontPage Content" />
-		<var name="wikiPageTitle" value="FrontPage" />
-		<var name="wikiPageUsername" value="Test Test" />
-
+	<command name="AddWikiFrontPageFormatCreole" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="creoleSource" value="true" />
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageText" value="${wikiPageText}" />
+			<var name="wikiPageContent" value="**Wiki FrontPage Content**" />
+			<var name="wikiPageText" value="Wiki FrontPage Content" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -375,15 +369,44 @@
 		</execute>
 
 		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageContent" value="${wikiPageText}" />
-			<var name="wikiPageRevision" value="${wikiPageRevision}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
-			<var name="wikiPageUsername" value="${wikiPageUsername}" />
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiPageRevision" value="1.1" />
+			<var name="wikiPageTitle" value="FrontPage" />
+			<var name="wikiPageUsername" value="Test Test" />
 		</execute>
 
 		<execute macro="WikiPage#viewPG">
-			<var name="wikiPageContent" value="${wikiPageText}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+	</command>
+
+	<command name="AddWikiFrontPageFormatHTML" priority="3">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="htmlSource" value="true" />
+			<var name="wikiPageContent"><![CDATA[<a href="/">Home</a>]]></var>
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="isOrphanPage" value="true" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="WikiPage#viewPG">
+			<var name="isOrphanPage" value="true" />
+			<var name="wikiPageContent" value="Home" />
+			<var name="wikiPageContentLink" value="true" />
+			<var name="wikiPageRevision" value="1.1" />
+			<var name="wikiPageTitle" value="FrontPage" />
+			<var name="wikiPageUsername" value="Test Test" />
 		</execute>
 	</command>
 

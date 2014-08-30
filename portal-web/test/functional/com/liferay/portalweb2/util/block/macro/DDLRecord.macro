@@ -8,6 +8,22 @@
 		<execute action="CPDynamicdatalistsList#assertClick" locator-key1="ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinitionName}" />
 	</command>
 
+	<command name="addRepeatableField">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="CPDynamicdatalistsListAddrecord#click" locator-key1="FIELD_ADD" />
+	</command>
+
+	<command name="addTranslation">
+		<execute action="CPDynamicdatalistsListEditrecord#assertClick" locator-key1="ADD_TRANSLATION" value1="Add Translation" />
+
+		<var name="key_localizedLanguage" value="${localizedLanguage}" />
+
+		<execute action="CPDynamicdatalistsListEditrecord#assertClick" locator-key1="ADD_TRANSLATION_MENULIST_LANGUAGE" value1="${localizedLanguage}" />
+
+		<execute action="CPDynamicdatalistsListEditrecordtranslation#selectFrame" locator-key1="RECORD_TRANSLATION_IFRAME" />
+	</command>
+
 	<command name="addViaDDLDisplayPG">
 		<execute action="PGDynamicdatalists#click" locator-key1="ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinitionName}" />
 	</command>
@@ -23,6 +39,12 @@
 		<execute action="CPDynamicdatalistsList#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No" />
+	</command>
+
+	<command name="deleteRepeatableField">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="CPDynamicdatalistsListAddrecord#click" locator-key1="FIELD_DELETE" />
 	</command>
 
 	<command name="deleteViaDDLDisplayPG">
@@ -46,6 +68,14 @@
 	<command name="editPG">
 		<execute action="PGDynamicdatalists#click" locator-key1="RECORD_TABLE_ACTIONS_1" />
 		<execute action="PGDynamicdatalists#assertClick" locator-key1="RECORD_MENULIST_EDIT" value1="Edit" />
+	</command>
+
+	<command name="editTranslation">
+		<var name="key_localizedLanguage" value="${localizedLanguage}" />
+
+		<execute action="CPDynamicdatalistsListEditrecord#assertClick" locator-key1="AVAILABLE_TRANSLATION" value1="${localizedLanguage}" />
+
+		<execute action="CPDynamicdatalistsListEditrecordtranslation#selectFrame" locator-key1="RECORD_TRANSLATION_IFRAME" />
 	</command>
 
 	<command name="editViaRecordViewCP">
@@ -191,6 +221,22 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute action="CPDynamicdatalistsListAddrecord#type" locator-key1="TEXT_FIELD" value1="${ddlRecordFieldData}" />
+
+		<var name="i" value="1" />
+
+		<while>
+			<condition action="CPDynamicdatalistsListAddrecord#isElementPresent" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')])[${i}]" />
+			<then>
+				<var name="i" value="${i?increment()}" />
+
+				<if>
+					<condition action="CPDynamicdatalistsListAddrecord#isElementPresent" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')])[${i}]" />
+					<then>
+						<execute action="CPDynamicdatalistsListAddrecord#type" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')]/../input)[${i}]" value1="${ddlRecordFieldData} ${i}" />
+					</then>
+				</if>
+			</then>
+		</while>
 	</command>
 
 	<command name="populateFieldTextBox">
@@ -215,6 +261,28 @@
 		<execute action="PGDynamicdatalistsSpreadsheetview#type" locator-key1="CELL_EDITOR_FIELD" value1="${ddlRecordFieldData}" />
 		<execute action="PGDynamicdatalistsSpreadsheetview#click" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGDynamicdatalistsSpreadsheetview#assertTextEquals" locator-key1="RECORD_TABLE_FIELD_ENTRY" value1="${ddlRecordFieldData}" />
+	</command>
+
+	<command name="populateTranslationFieldText">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="CPDynamicdatalistsListEditrecordtranslation#type" locator-key1="TEXT_FIELD" value1="${ddlRecordFieldData}" />
+
+		<var name="i" value="1" />
+
+		<while>
+			<condition action="CPDynamicdatalistsListAddrecord#isElementPresent" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" />
+			<then>
+				<var name="i" value="${i?increment()}" />
+
+				<if>
+					<condition action="CPDynamicdatalistsListAddrecord#isElementPresent" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" />
+					<then>
+						<execute action="CPDynamicdatalistsListAddrecord#type" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" value1="${ddlRecordFieldData} ${i}" />
+					</then>
+				</if>
+			</then>
+		</while>
 	</command>
 
 	<command name="publishCP">
@@ -243,6 +311,19 @@
 		</if>
 
 		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="saveAsDraftCP">
+		<execute action="CPDynamicdatalistsListAddrecord#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+
+		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="saveTranslation">
+		<execute action="CPDynamicdatalistsListEditrecordtranslation#assertClick" locator-key1="ADD_TRANSLATION_BUTTON" value1="Add Translation" />
+
+		<execute action="CPDynamicdatalistsListEditrecord#selectFrame" value1="relative=top" />
+		<execute action="CPDynamicdatalistsListEditrecord#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The changes in your translations will be available once the content is published." />
 	</command>
 
 	<command name="viewCP">

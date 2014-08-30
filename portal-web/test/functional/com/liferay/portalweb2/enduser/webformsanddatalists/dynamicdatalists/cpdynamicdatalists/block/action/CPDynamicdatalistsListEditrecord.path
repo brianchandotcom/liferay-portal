@@ -19,6 +19,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[contains(@class,'alert alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_TRANSLATION</td>
+	<td>//div[contains(@class,'translation-manager')]/a[@title='Add Translation']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_TRANSLATION_MENULIST_LANGUAGE</td>
+	<td>//li[contains(@class,'translation-item')]/a[contains(.,'${key_localizedLanguage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVAILABLE_TRANSLATION</td>
+	<td>//div[contains(@class,'available-translations')]/span[contains(.,'${key_localizedLanguage}')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_AS_DRAFT_BUTTON</td>
 	<td>//button[@id='_167_saveButton']</td>
 	<td></td>

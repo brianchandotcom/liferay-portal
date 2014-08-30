@@ -1072,32 +1072,11 @@
 		<execute action="PGWikiAddpage#selectFrameTop" />
 	</command>
 
-	<command name="searchWikiPG">
+	<command name="searchPG">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute action="PGWiki#type" locator-key1="SEARCH_FIELD" value1="${searchTerm}" />
 		<execute action="PGWiki#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-
-		<if>
-			<equals arg1="${searchNoResults}" arg2="true" />
-			<then>
-				<execute action="PGWiki#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No pages were found that matched the keywords: ${searchTerm}." />
-				<execute action="PGWiki#assertTextEquals" locator-key1="SEARCH_CREATE_NEW_PAGE_LINK" value1="Create a new page on this topic." />
-			</then>
-			<else>
-				<execute action="PGWiki#assertTextEquals" locator-key1="SEARCH_RESULT_TITLE" value1="${wikiPageTitle}" />
-				<execute action="PGWiki#assertTextEquals" locator-key1="SEARCH_RESULT_DESCRIPTION" value1="${wikiPageContent}" />
-				<if>
-					<isset var="wikiNodeName" />
-					<then>
-						<execute action="PGWiki#assertTextEquals" locator-key1="SEARCH_RESULT_NODE" value1="${wikiNodeName}" />
-					</then>
-					<else>
-						<execute action="PGWiki#assertTextEquals" locator-key1="SEARCH_RESULT_NODE" value1="Main" />
-					</else>
-				</if>
-			</else>
-		</if>
 	</command>
 
 	<command name="subscribeToPagePG">
@@ -1398,6 +1377,12 @@
 			<then>
 				<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY_GENERIC" value1="${wikiPageContent}" />
 			</then>
+			<elseif>
+				<equals arg1="${wikiPageContentLink}" arg2="true" />
+				<then>
+					<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY_LINK" value1="${wikiPageContent}" />
+				</then>
+			</elseif>
 			<else>
 				<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 			</else>
@@ -1523,6 +1508,43 @@
 		<execute action="PGWikiDraftpages#assertTextEquals" locator-key1="DRAFT_PAGES_TABLE_REVISION" value1="${wikiPageRevision}" />
 		<execute action="PGWikiDraftpages#assertTextEquals" locator-key1="DRAFT_PAGES_TABLE_USER" value1="${wikiPageUsername}" />
 		<execute action="PGWikiDraftpages#assertElementPresent" locator-key1="DRAFT_PAGES_TABLE_DATE" />
+	</command>
+
+	<command name="viewSearchResultsPG">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<if>
+			<equals arg1="${searchNoResults}" arg2="true" />
+			<then>
+				<execute action="PGWiki#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No pages were found that matched the keywords: ${searchTerm}." />
+				<execute action="PGWiki#assertTextEquals" locator-key1="SEARCH_CREATE_NEW_PAGE_LINK" value1="Create a new page on this topic." />
+			</then>
+			<elseif>
+				<equals arg1="${wikiComment}" arg2="true" />
+				<then>
+					<execute action="PGWiki#assertTextEquals" locator-key1="SEARCH_RESULT_COMMENT" value1="${commentBody}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${wikiAttachment}" arg2="true" />
+				<then>
+					<execute action="PGWiki#assertTextEquals" locator-key1="SEARCH_RESULT_ATTACHMENT_BODY" value1="${wikiAttachmentBody}" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="PGWiki#assertTextEquals" locator-key1="SEARCH_RESULT_TITLE" value1="${wikiPageTitle}" />
+				<execute action="PGWiki#assertTextEquals" locator-key1="SEARCH_RESULT_DESCRIPTION" value1="${wikiPageContent}" />
+				<if>
+					<isset var="wikiNodeName" />
+					<then>
+						<execute action="PGWiki#assertTextEquals" locator-key1="SEARCH_RESULT_NODE" value1="${wikiNodeName}" />
+					</then>
+					<else>
+						<execute action="PGWiki#assertTextEquals" locator-key1="SEARCH_RESULT_NODE" value1="Main" />
+					</else>
+				</if>
+			</else>
+		</if>
 	</command>
 
 	<command name="viewTagPG">

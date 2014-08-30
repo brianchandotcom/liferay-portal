@@ -59,6 +59,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_ADD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_DELETE</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-delete-button')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BOOLEAN_CHECKBOX</td>
 	<td>//div[@data-fieldname='${key_fieldName}']/label/input</td>
 	<td></td>

@@ -121,7 +121,7 @@
 </tr>
 <tr>
 	<td>SEARCH_BUTTON</td>
-	<td>//div[@class='form-search']//div/button[@type='submit']</td>
+	<td>//div[@class='form-search']//div//button[@type='submit']</td>
 	<td></td>
 </tr>
 <tr>
@@ -137,6 +137,16 @@
 <tr>
 	<td>SEARCH_RESULT_DESCRIPTION</td>
 	<td>//div[@data-title='${key_wikiPageTitle}']//span[@class='entry-description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RESULT_COMMENT</td>
+	<td>//div[@data-title='${key_wikiPageTitle}']//div[@class='entry-discussion']//span[@class='body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RESULT_ATTACHMENT_BODY</td>
+	<td>//div[@data-title='${key_wikiPageTitle}']//div[@class='entry-attachment']//span[@class='body']</td>
 	<td></td>
 </tr>
 <tr>
@@ -204,6 +214,11 @@
 <tr>
 	<td>WIKI_PAGE_BODY_GENERIC</td>
 	<td>//div[@class='wiki-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_BODY_LINK</td>
+	<td>//div[@class='wiki-body']/a</td>
 	<td></td>
 </tr>
 <tr>

@@ -259,6 +259,20 @@
 		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="editFieldRepeatable">
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
+		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_REPEATABLE" />
+		<execute action="Dynamicdatamapping#click" locator-key1="SETTINGS_CELL_EDITOR_YES_RADIO" />
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
+		<execute action="Dynamicdatamapping#click" locator-key1="HEADER_TITLE" />
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="editFieldShowLabel">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 

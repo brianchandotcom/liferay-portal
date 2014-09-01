@@ -200,7 +200,7 @@ public class ReflectionTest {
 		}
 	}
 
-	private static final String TEST_FIELD_2 = "TEST_FIELD_2";
+	private static final String _TEST_FIELD_2 = "TEST_FIELD_2";
 
 	private static Log _log = LogFactoryUtil.getLog(ReflectionTest.class);
 
@@ -209,7 +209,7 @@ public class ReflectionTest {
 		// Prevent compiler from removing the unused fields
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(TEST_FIELD_2);
+			_log.debug(_TEST_FIELD_2);
 		}
 	}
 

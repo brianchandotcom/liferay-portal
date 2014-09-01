@@ -94,26 +94,26 @@ public class LiferayIntegrationJUnitTestRunner
 				Thread currentThread = Thread.currentThread();
 
 				Object inheritableThreadLocals =
-					_inheritableThreadLocalsField.get(currentThread);
+					_INHERITABLE_THREAD_LOCALS_FIELD.get(currentThread);
 
 				if (inheritableThreadLocals != null) {
-					_inheritableThreadLocalsField.set(
+					_INHERITABLE_THREAD_LOCALS_FIELD.set(
 						currentThread,
-						_createInheritedMapMethod.invoke(
+						_CREATE_INHERITED_MAP_METHOD.invoke(
 							null, inheritableThreadLocals));
 				}
 
-				Object threadLocals = _threadLocalsField.get(currentThread);
+				Object threadLocals = _THREAD_LOCALS_FIELD.get(currentThread);
 
-				_threadLocalsField.set(currentThread, null);
+				_THREAD_LOCALS_FIELD.set(currentThread, null);
 
 				try {
 					statement.evaluate();
 				}
 				finally {
-					_inheritableThreadLocalsField.set(
+					_INHERITABLE_THREAD_LOCALS_FIELD.set(
 						currentThread, inheritableThreadLocals);
-					_threadLocalsField.set(currentThread, threadLocals);
+					_THREAD_LOCALS_FIELD.set(currentThread, threadLocals);
 				}
 			}
 
@@ -135,22 +135,25 @@ public class LiferayIntegrationJUnitTestRunner
 			super.methodBlock(frameworkMethod), frameworkMethod.getMethod());
 	}
 
-	private static final Method _createInheritedMapMethod;
-	private static final Field _inheritableThreadLocalsField;
-	private static final Class<?> _threadLocalMapClass;
-	private static final Field _threadLocalsField;
+	private static final Method _CREATE_INHERITED_MAP_METHOD;
+
+	private static final Field _INHERITABLE_THREAD_LOCALS_FIELD;
+
+	private static final Class<?> _THREAD_LOCAL_MAP_CLASS;
+	private static final Field _THREAD_LOCALS_FIELD;
 
 	static {
 		try {
-			_threadLocalMapClass = Class.forName(
+			_THREAD_LOCAL_MAP_CLASS = Class.forName(
 				ThreadLocal.class.getName().concat("$ThreadLocalMap"));
 
-			_createInheritedMapMethod = ReflectionUtil.getDeclaredMethod(
-				ThreadLocal.class, "createInheritedMap", _threadLocalMapClass);
+			_CREATE_INHERITED_MAP_METHOD = ReflectionUtil.getDeclaredMethod(
+				ThreadLocal.class, "createInheritedMap",
+				_THREAD_LOCAL_MAP_CLASS);
 
-			_inheritableThreadLocalsField = ReflectionUtil.getDeclaredField(
+			_INHERITABLE_THREAD_LOCALS_FIELD = ReflectionUtil.getDeclaredField(
 				Thread.class, "inheritableThreadLocals");
-			_threadLocalsField = ReflectionUtil.getDeclaredField(
+			_THREAD_LOCALS_FIELD = ReflectionUtil.getDeclaredField(
 				Thread.class, "threadLocals");
 		}
 		catch (Exception e) {

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -52,6 +53,17 @@ import org.apache.tools.ant.DirectoryScanner;
  * @author Hugo Huijser
  */
 public abstract class BaseSourceProcessor implements SourceProcessor {
+
+	public BaseSourceProcessor() {
+		portalSource = _isPortalSource();
+
+		try {
+			_properties = _getProperties();
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
+	}
 
 	@Override
 	public void format(
@@ -805,12 +817,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return null;
 	}
 
-	protected List<String> getExclusions(String key) {
-		return ListUtil.fromString(
-			GetterUtil.getString(_properties.getProperty(key)),
-			StringPool.COMMA);
-	}
-
 	protected File getFile(String fileName, int level) {
 		for (int i = 0; i < level; i++) {
 			if (fileUtil.exists(fileName)) {
@@ -910,6 +916,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return new String[0];
+	}
+
+	protected List<String> getPropertyList(String key) {
+		return ListUtil.fromString(
+			GetterUtil.getString(_properties.getProperty(key)),
+			StringPool.COMMA);
 	}
 
 	protected boolean hasMissingParentheses(String s) {
@@ -1012,7 +1024,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected boolean isRunsOutsidePortal(String absolutePath) {
 		if (_runOutsidePortalExclusions == null) {
-			_runOutsidePortalExclusions = getExclusions(
+			_runOutsidePortalExclusions = getPropertyList(
 				"run.outside.portal.excludes");
 		}
 
@@ -1460,7 +1472,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			GetterUtil.getString(
 				System.getProperty("source.formatter.excludes")));
 
-		excludesList.addAll(getExclusions("source.formatter.excludes"));
+		excludesList.addAll(getPropertyList("source.formatter.excludes"));
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
@@ -1570,10 +1582,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_autoFix = autoFix;
 
 		BaseSourceProcessor.mainReleaseVersion = mainReleaseVersion;
-
-		portalSource = _isPortalSource();
-
-		_properties = _getProperties();
 
 		_excludes = _getExcludes();
 

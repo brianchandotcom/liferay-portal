@@ -460,11 +460,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			"**\\*.xml"
 		};
 
-		_friendlyUrlRoutesSortExclusions = getExclusions(
+		_friendlyUrlRoutesSortExclusions = getPropertyList(
 			"friendly.url.routes.sort.excludes");
-		_numericalPortletNameElementExclusions = getExclusions(
+		_numericalPortletNameElementExclusions = getPropertyList(
 			"numerical.portlet.name.element.excludes");
-		_xmlExclusions = getExclusions("xml.excludes");
+		_xmlExclusions = getPropertyList("xml.excludes");
 
 		List<String> fileNames = getFileNames(excludes, includes);
 

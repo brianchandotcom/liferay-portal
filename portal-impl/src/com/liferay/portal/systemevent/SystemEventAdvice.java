@@ -54,7 +54,7 @@ public class SystemEventAdvice
 			return;
 		}
 
-		if (!isValid(methodInvocation, PHASE_AFTER_RETURNING)) {
+		if (!isValid(methodInvocation, _PHASE_AFTER_RETURNING)) {
 			return;
 		}
 
@@ -120,7 +120,7 @@ public class SystemEventAdvice
 		}
 
 		if (systemEvent.action() != SystemEventConstants.ACTION_NONE) {
-			if (!isValid(methodInvocation, PHASE_BEFORE)) {
+			if (!isValid(methodInvocation, _PHASE_BEFORE)) {
 				return null;
 			}
 
@@ -149,7 +149,7 @@ public class SystemEventAdvice
 			return;
 		}
 
-		if (!isValid(methodInvocation, PHASE_DURING_FINALLY)) {
+		if (!isValid(methodInvocation, _PHASE_DURING_FINALLY)) {
 			return;
 		}
 
@@ -259,7 +259,7 @@ public class SystemEventAdvice
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
 		if (parameterTypes.length == 0) {
-			if (_log.isDebugEnabled() && (phase == PHASE_BEFORE)) {
+			if (_log.isDebugEnabled() && (phase == _PHASE_BEFORE)) {
 				_log.debug(
 					"The method " + methodInvocation +
 						" must have at least one parameter");
@@ -271,7 +271,7 @@ public class SystemEventAdvice
 		Class<?> parameterType = parameterTypes[0];
 
 		if (!ClassedModel.class.isAssignableFrom(parameterType)) {
-			if (_log.isDebugEnabled() && (phase == PHASE_BEFORE)) {
+			if (_log.isDebugEnabled() && (phase == _PHASE_BEFORE)) {
 				_log.debug(
 					"The first parameter of " + methodInvocation +
 						" must implement ClassedModel");
@@ -285,7 +285,7 @@ public class SystemEventAdvice
 		ClassedModel classedModel = (ClassedModel)arguments[0];
 
 		if (!(classedModel.getPrimaryKeyObj() instanceof Long)) {
-			if (_log.isDebugEnabled() && (phase == PHASE_BEFORE)) {
+			if (_log.isDebugEnabled() && (phase == _PHASE_BEFORE)) {
 				_log.debug(
 					"The first parameter of " + methodInvocation +
 						" must be a long");
@@ -294,7 +294,7 @@ public class SystemEventAdvice
 			return false;
 		}
 
-		if (phase != PHASE_AFTER_RETURNING) {
+		if (phase != _PHASE_AFTER_RETURNING) {
 			return true;
 		}
 
@@ -319,11 +319,11 @@ public class SystemEventAdvice
 		return true;
 	}
 
-	private static final int PHASE_AFTER_RETURNING = 1;
+	private static final int _PHASE_AFTER_RETURNING = 1;
 
-	private static final int PHASE_BEFORE = 0;
+	private static final int _PHASE_BEFORE = 0;
 
-	private static final int PHASE_DURING_FINALLY = 2;
+	private static final int _PHASE_DURING_FINALLY = 2;
 
 	private static Log _log = LogFactoryUtil.getLog(SystemEventAdvice.class);
 

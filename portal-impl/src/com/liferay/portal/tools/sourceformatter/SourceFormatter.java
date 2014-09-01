@@ -67,7 +67,7 @@ public class SourceFormatter {
 					sourceProcessors.add(
 						FTLSourceProcessor.class.newInstance());
 					sourceProcessors.add(
-						JavaSourceProcessor.class.newInstance());
+						JSPSourceProcessor.class.newInstance());
 					sourceProcessors.add(JSSourceProcessor.class.newInstance());
 					sourceProcessors.add(
 						PropertiesSourceProcessor.class.newInstance());
@@ -76,6 +76,8 @@ public class SourceFormatter {
 						SQLSourceProcessor.class.newInstance());
 					sourceProcessors.add(
 						TLDSourceProcessor.class.newInstance());
+					sourceProcessors.add(
+						XMLSourceProcessor.class.newInstance());
 
 					for (SourceProcessor sourceProcessor : sourceProcessors) {
 						_runSourceProcessor(sourceProcessor);
@@ -93,17 +95,10 @@ public class SourceFormatter {
 			@Override
 			public void run() {
 				try {
-					List<SourceProcessor> sourceProcessors =
-						new ArrayList<SourceProcessor>();
+					SourceProcessor sourceProcessor =
+						JavaSourceProcessor.class.newInstance();
 
-					sourceProcessors.add(
-						JSPSourceProcessor.class.newInstance());
-					sourceProcessors.add(
-						XMLSourceProcessor.class.newInstance());
-
-					for (SourceProcessor sourceProcessor : sourceProcessors) {
-						_runSourceProcessor(sourceProcessor);
-					}
+					_runSourceProcessor(sourceProcessor);
 				}
 				catch (Exception e) {
 					e.printStackTrace();

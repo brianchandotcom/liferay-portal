@@ -439,7 +439,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
-		_unusedVariablesExclusions = getExclusions(
+		_unusedVariablesExclusions = getPropertyList(
 			"jsp.unused.variables.excludes");
 
 		String[] excludes = new String[] {"**\\null.jsp", "**\\tools\\**"};

@@ -16,7 +16,7 @@ package com.liferay.polls.constants;
 
 /**
  * @author Carlos Sierra Andrés
- * @author Miguel pastor
+ * @author Miguel Pastor
  */
 public class PollsPortletKeys {
 

@@ -14,19 +14,19 @@
 
 package com.liferay.portal.json.transformer;
 
+import com.liferay.portal.json.JoddJSONContext;
 import com.liferay.portal.kernel.json.JSONContext;
-import com.liferay.portal.kernel.repository.model.RepositoryModel;
+import com.liferay.portal.kernel.json.JSONTransformer;
 
-/**
- * @author Igor Spasic
- */
-public class RepositoryModelJSONTransformer extends ObjectTransformer {
+import jodd.json.impl.ObjectJsonSerializer;
+public abstract class ObjectTransformer extends ObjectJsonSerializer
+	implements JSONTransformer {
 
 	@Override
 	public void transform(JSONContext jsonContext, Object object) {
-		RepositoryModel<?> repositoryModel = (RepositoryModel<?>)object;
+		JoddJSONContext joddJSONContext = (JoddJSONContext)jsonContext;
 
-		super.transform(jsonContext, repositoryModel.getModel());
+		serialize(joddJSONContext.getImplementation(), object);
 	}
 
 }

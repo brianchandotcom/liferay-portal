@@ -14,31 +14,36 @@
 
 package com.liferay.portal.json.transformer;
 
-import flexjson.JSONContext;
+import com.liferay.portal.json.JoddJSONContext;
+import com.liferay.portal.kernel.json.JSONContext;
+import com.liferay.portal.kernel.json.JSONTransformer;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
+
+import jodd.json.impl.MapJsonSerializer;
 
 /**
  * @author Igor Spasic
  */
-public class SortedHashMapJSONTransformer extends BaseJSONTransformer {
+public class SortedHashMapJSONTransformer extends MapJsonSerializer
+	implements JSONTransformer {
 
-	@Override
-	public void transform(Object object) {
-		if (object instanceof HashMap) {
-			HashMap<Object, Object> hashMap = (HashMap<Object, Object>)object;
+	public void transform(JSONContext jsonContext, Object map) {
+		if (map instanceof HashMap) {
+			HashMap<Object, Object> hashMap = (HashMap<Object, Object>)map;
 
-			TreeMap<Object, Object> treeMap = new TreeMap<Object, Object>();
+			TreeMap<Object, Object> treeMap = new TreeMap<>();
 
 			treeMap.putAll(hashMap);
 
-			object = treeMap;
+			map = treeMap;
 		}
 
-		JSONContext jsonContext = getContext();
+		JoddJSONContext joddJSONContext = (JoddJSONContext)jsonContext;
 
-		jsonContext.transform(object);
+		super.serialize(joddJSONContext.getImplementation(), (Map<?, ?>)map);
 	}
 
 }

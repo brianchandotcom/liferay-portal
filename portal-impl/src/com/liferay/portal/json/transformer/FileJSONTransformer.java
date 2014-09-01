@@ -15,21 +15,22 @@
 package com.liferay.portal.json.transformer;
 
 import com.liferay.portal.json.data.FileData;
+import com.liferay.portal.kernel.json.JSONContext;
 
 import java.io.File;
 
 /**
  * @author Igor Spasic
  */
-public class FileJSONTransformer extends FlexjsonObjectJSONTransformer {
+public class FileJSONTransformer extends ObjectTransformer {
 
 	@Override
-	public void transform(Object object) {
+	public void transform(JSONContext jsonContext, Object object) {
 		File file = (File)object;
 
 		FileData fileData = new FileData(file);
 
-		super.transform(fileData);
+		super.transform(jsonContext, fileData);
 	}
 
 }

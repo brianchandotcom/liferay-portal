@@ -72,21 +72,23 @@ if (showRootContainerModel) {
 
 	<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
 
-	<aui:button-row>
+	<c:if test="<%= !showRootContainerModel %>">
+		<aui:button-row>
 
-		<%
-		Map<String, Object> data = new HashMap<String, Object>();
+			<%
+				Map<String, Object> data = new HashMap<String, Object>();
 
-		data.put("classname", className);
-		data.put("classpk", classPK);
-		data.put("containermodelid", containerModelId);
-		data.put("redirect", redirect);
-		%>
+				data.put("classname", className);
+				data.put("classpk", classPK);
+				data.put("containermodelid", containerModelId);
+				data.put("redirect", redirect);
+			%>
 
 		<aui:button cssClass="selector-button" data="<%= data %>" value='<%= LanguageUtil.format(request, "choose-this-x", containerModelName) %>' />
 	</aui:button-row>
 
-	<br />
+		<br />
+	</c:if>
 
 	<%
 	containerURL.setParameter("containerModelId", String.valueOf(containerModelId));

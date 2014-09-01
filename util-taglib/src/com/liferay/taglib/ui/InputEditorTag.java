@@ -164,9 +164,9 @@ public class InputEditorTag extends IncludeTag {
 			String.valueOf(_allowBrowseDocuments));
 		request.setAttribute(
 			"liferay-ui:input-editor:configParams", _configParams);
+		request.setAttribute("liferay-ui:input-editor:contents", _contents);
 		request.setAttribute(
 			"liferay-ui:input-editor:contentsLanguageId", _contentsLanguageId);
-		request.setAttribute("liferay-ui:input-editor:contents", _contents);
 		request.setAttribute("liferay-ui:input-editor:cssClass", _cssClass);
 		request.setAttribute("liferay-ui:input-editor:cssClasses", cssClasses);
 		request.setAttribute("liferay-ui:input-editor:editorImpl", editorImpl);

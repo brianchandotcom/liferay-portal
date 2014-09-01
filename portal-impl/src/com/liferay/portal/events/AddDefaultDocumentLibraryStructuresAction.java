@@ -69,8 +69,9 @@ public class AddDefaultDocumentLibraryStructuresAction
 	}
 
 	protected void addDLFileEntryType(
-			long userId, long groupId, String dlFileEntryTypeKey,
-			List<String> ddmStructureNames, ServiceContext serviceContext)
+			long userId, long groupId, String languageKey,
+			String dlFileEntryTypeKey, List<String> ddmStructureNames,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		List<Long> ddmStructureIds = new ArrayList<Long>();
@@ -94,7 +95,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
 
 		String definition = getDynamicDDMStructureDefinition(
-			"document-library-structures.xml", dlFileEntryTypeKey, locale);
+			"document-library-structures.xml", languageKey, locale);
 
 		serviceContext.setAttribute("definition", definition);
 
@@ -104,7 +105,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 		}
 		catch (NoSuchFileEntryTypeException nsfete) {
 			Map<Locale, String> localizationMap = getLocalizationMap(
-				dlFileEntryTypeKey);
+				languageKey);
 
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 				userId, groupId, dlFileEntryTypeKey, localizationMap,
@@ -123,6 +124,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		addDLFileEntryType(
 			userId, groupId, DLFileEntryTypeConstants.NAME_CONTRACT,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_CONTRACT,
 			ddmStructureNames, serviceContext);
 
 		ddmStructureNames.clear();
@@ -131,6 +133,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		addDLFileEntryType(
 			userId, groupId, DLFileEntryTypeConstants.NAME_MARKETING_BANNER,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_MARKETING_BANNER,
 			ddmStructureNames, serviceContext);
 
 		ddmStructureNames.clear();
@@ -139,6 +142,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		addDLFileEntryType(
 			userId, groupId, DLFileEntryTypeConstants.NAME_ONLINE_TRAINING,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_ONLINE_TRAINING,
 			ddmStructureNames, serviceContext);
 
 		ddmStructureNames.clear();
@@ -147,11 +151,13 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		addDLFileEntryType(
 			userId, groupId, DLFileEntryTypeConstants.NAME_SALES_PRESENTATION,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_SALES_PRESENTATION,
 			ddmStructureNames, serviceContext);
 
 		if (UpgradeProcessUtil.isCreateIGImageDocumentType()) {
 			addDLFileEntryType(
 				userId, groupId, DLFileEntryTypeConstants.NAME_IG_IMAGE,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_KEY_IG_IMAGE,
 				ddmStructureNames, serviceContext);
 		}
 	}

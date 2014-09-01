@@ -15,10 +15,10 @@
 package com.liferay.portal.kernel.json;
 
 /**
- * @author Bruno Basto
+ * @author Igor Spasic
  */
-public interface JSONTransformer {
+public interface JSONContext {
 
-	public void transform(JSONContext jsonContext, Object object);
+	public void write(String content);
 
 }

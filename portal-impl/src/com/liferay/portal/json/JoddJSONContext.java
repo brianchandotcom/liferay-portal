@@ -14,24 +14,28 @@
 
 package com.liferay.portal.json;
 
-import com.liferay.portal.kernel.json.JSONTransformer;
+import com.liferay.portal.kernel.json.JSONContext;
 
-import flexjson.transformer.Transformer;
+import jodd.json.JsonContext;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Igor Spasic
  */
-public class FlexjsonTransformer implements Transformer {
+public class JoddJSONContext implements JSONContext {
 
-	public FlexjsonTransformer(JSONTransformer jsonTransformer) {
-		_jsonTransformer = jsonTransformer;
+	public JoddJSONContext(JsonContext jsonContext) {
+		_jsonContext = jsonContext;
+	}
+
+	public JsonContext getImplementation() {
+		return _jsonContext;
 	}
 
 	@Override
-	public void transform(Object object) {
-		_jsonTransformer.transform(object);
+	public void write(String content) {
+		_jsonContext.write(content);
 	}
 
-	private JSONTransformer _jsonTransformer;
+	private final JsonContext _jsonContext;
 
 }

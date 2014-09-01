@@ -207,7 +207,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String checkFields(
+	protected String checkFieldTypes(
 			String fileName, String packagePath, String className,
 			String content)
 		throws IOException {
@@ -236,9 +236,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		content = checkImmutableFields(javaClass, content);
 
-		content = checkStaticableFields(javaClass, content);
-
-		return content;
+		return checkStaticableFields(javaClass, content);
 	}
 
 	protected String checkIfClause(
@@ -361,7 +359,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			com.thoughtworks.qdox.model.JavaClass javaClass, String content)
 		throws IOException {
 
-		javaField:
 		for (JavaField javaField : javaClass.getFields()) {
 			Type type = javaField.getType();
 
@@ -478,7 +475,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String[] lines = null;
 
-		javaField:
 		for (JavaField javaField : javaClass.getFields()) {
 			Type type = javaField.getType();
 
@@ -708,11 +704,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String packagePath = fileName;
 
 		int packagePathX = packagePath.indexOf("/src/");
-		int packagePathY = packagePath.lastIndexOf(StringPool.SLASH);
 
 		if (packagePathX == -1) {
 			packagePathX = packagePath.indexOf("/integration/") + 8;
 		}
+
+		int packagePathY = packagePath.lastIndexOf(StringPool.SLASH);
 
 		if ((packagePathX + 5) >= packagePathY) {
 			packagePath = StringPool.BLANK;
@@ -730,8 +727,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		String newContent = checkFields(
-			fileName, packagePath, className, content);
+		String newContent = content;
 
 		if (newContent.contains("$\n */")) {
 			processErrorMessage(fileName, "*: " + fileName);
@@ -995,6 +991,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-48153
 
 		//newContent = applyDiamondOperator(newContent);
+
+		// LPS-49294
+
+		newContent = checkFieldTypes(
+			fileName, packagePath, className, newContent);
 
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			newContent, fileName);
@@ -2360,16 +2361,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Matcher componentPropertyMatcher = _componentPropertyPattern.matcher(
 			content);
 
-		if (componentPropertyMatcher.find()) {
-			String prefix = content.substring(
-				0, componentPropertyMatcher.start(1));
-
-			String postfix = content.substring(componentPropertyMatcher.end(1));
-
-			content = prefix.concat(postfix);
+		if (!componentPropertyMatcher.find()) {
+			return content;
 		}
 
-		return content;
+		String prefix = content.substring(0, componentPropertyMatcher.start(1));
+		String postfix = content.substring(componentPropertyMatcher.end(1));
+
+		return prefix.concat(postfix);
 	}
 
 	protected String sortExceptions(String line) {

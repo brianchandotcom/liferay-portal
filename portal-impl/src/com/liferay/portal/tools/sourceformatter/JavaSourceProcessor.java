@@ -207,87 +207,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String checkImmutableAndStaticableFieldTypes(
-			String fileName, String packagePath, String className,
-			String content)
-		throws IOException {
-
-		ClassLibrary classLibrary = new ClassLibrary();
-
-		classLibrary.addClassLoader(JavaSourceProcessor.class.getClassLoader());
-
-		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(classLibrary);
-
-		try {
-			javaDocBuilder.addSource(
-				new UnsyncStringReader(sanitizeContent(content)));
-		}
-		catch (ParseException pe) {
-			System.err.println(
-				"Unable to parse " + fileName + StringPool.COMMA_AND_SPACE +
-					pe.getMessage());
-
-			return content;
-		}
-
-		com.thoughtworks.qdox.model.JavaClass javaClass =
-			javaDocBuilder.getClassByName(
-				packagePath.concat(StringPool.PERIOD).concat(className));
-
-		String[] lines = null;
-
-		for (JavaField javaField : javaClass.getFields()) {
-			Type type = javaField.getType();
-
-			String fieldTypeName = type.getFullyQualifiedName();
-
-			if (!javaField.isPrivate() || !javaField.isFinal() ||
-				!_immutableFieldTypes.contains(fieldTypeName)) {
-
-				continue;
-			}
-
-			String oldName = javaField.getName();
-
-			if (!type.isArray() && javaField.isStatic() &&
-				!oldName.equals("serialVersionUID")) {
-
-				Matcher matcher = _camelCasePattern.matcher(oldName);
-
-				String newName = matcher.replaceAll("$1_$2");
-
-				newName = StringUtil.toUpperCase(newName);
-
-				if (newName.charAt(0) != CharPool.UNDERLINE) {
-					newName = StringPool.UNDERLINE.concat(newName);
-				}
-
-				content = content.replaceAll(
-					"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
-			}
-
-			String initializationExpression =
-				StringUtil.trim(javaField.getInitializationExpression());
-
-			if (javaField.isStatic() || initializationExpression.isEmpty()) {
-				continue;
-			}
-
-			if (lines == null) {
-				lines = StringUtil.splitLines(content);
-			}
-
-			String line = lines[javaField.getLineNumber() - 1];
-
-			String newLine = StringUtil.replace(
-				line, "private final", "private static final");
-
-			content = StringUtil.replace(content, line, newLine);
-		}
-
-		return content;
-	}
-
 	protected String checkIfClause(
 			String ifClause, String fileName, int lineCount)
 		throws IOException {
@@ -402,6 +321,87 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return ifClause;
+	}
+
+	protected String checkImmutableAndStaticableFieldTypes(
+			String fileName, String packagePath, String className,
+			String content)
+		throws IOException {
+
+		ClassLibrary classLibrary = new ClassLibrary();
+
+		classLibrary.addClassLoader(JavaSourceProcessor.class.getClassLoader());
+
+		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(classLibrary);
+
+		try {
+			javaDocBuilder.addSource(
+				new UnsyncStringReader(sanitizeContent(content)));
+		}
+		catch (ParseException pe) {
+			System.err.println(
+				"Unable to parse " + fileName + StringPool.COMMA_AND_SPACE +
+					pe.getMessage());
+
+			return content;
+		}
+
+		com.thoughtworks.qdox.model.JavaClass javaClass =
+			javaDocBuilder.getClassByName(
+				packagePath.concat(StringPool.PERIOD).concat(className));
+
+		String[] lines = null;
+
+		for (JavaField javaField : javaClass.getFields()) {
+			Type type = javaField.getType();
+
+			String fieldTypeName = type.getFullyQualifiedName();
+
+			if (!javaField.isPrivate() || !javaField.isFinal() ||
+				!_immutableFieldTypes.contains(fieldTypeName)) {
+
+				continue;
+			}
+
+			String oldName = javaField.getName();
+
+			if (!type.isArray() && javaField.isStatic() &&
+				!oldName.equals("serialVersionUID")) {
+
+				Matcher matcher = _camelCasePattern.matcher(oldName);
+
+				String newName = matcher.replaceAll("$1_$2");
+
+				newName = StringUtil.toUpperCase(newName);
+
+				if (newName.charAt(0) != CharPool.UNDERLINE) {
+					newName = StringPool.UNDERLINE.concat(newName);
+				}
+
+				content = content.replaceAll(
+					"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
+			}
+
+			String initializationExpression =
+				StringUtil.trim(javaField.getInitializationExpression());
+
+			if (javaField.isStatic() || initializationExpression.isEmpty()) {
+				continue;
+			}
+
+			if (lines == null) {
+				lines = StringUtil.splitLines(content);
+			}
+
+			String line = lines[javaField.getLineNumber() - 1];
+
+			String newLine = StringUtil.replace(
+				line, "private final", "private static final");
+
+			content = StringUtil.replace(content, line, newLine);
+		}
+
+		return content;
 	}
 
 	protected void checkLogLevel(

@@ -5,6 +5,4 @@
 	<property name="import.shared" value="polls-service" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
 </project>

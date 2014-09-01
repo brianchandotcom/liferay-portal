@@ -259,11 +259,11 @@ public class ListServiceTrackerMapTest {
 		try (ServiceTrackerMap<TrackedOne, TrackedOne> serviceTrackerMap =
 				ServiceTrackerCollections.singleValueMap(
 					TrackedOne.class, null,
-					new ServiceReferenceMapper<TrackedOne>() {
+					new ServiceReferenceMapper<TrackedOne, TrackedOne>() {
 
 						@Override
 						public void map(
-							ServiceReference<?> serviceReference,
+							ServiceReference<TrackedOne> serviceReference,
 							Emitter<TrackedOne> emitter) {
 						}
 

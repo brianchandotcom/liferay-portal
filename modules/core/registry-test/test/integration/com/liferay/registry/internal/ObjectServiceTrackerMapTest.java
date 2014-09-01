@@ -157,7 +157,8 @@ public class ObjectServiceTrackerMapTest {
 				ServiceTrackerCollections.singleValueMap(
 					TrackedOne.class, "(target=*)",
 					new ServiceTrackerCollections.
-						PropertyServiceReferenceMapper<String>("target"),
+						PropertyServiceReferenceMapper<String, TrackedOne>(
+							"target"),
 					new Comparator<ServiceReference<TrackedOne>>() {
 
 						@Override
@@ -203,11 +204,11 @@ public class ObjectServiceTrackerMapTest {
 
 			ServiceTrackerCollections.singleValueMap(
 				TrackedOne.class, "(&(other=*)(target=*))",
-				new ServiceReferenceMapper<String>() {
+				new ServiceReferenceMapper<String, TrackedOne>() {
 
 					@Override
 					public void map(
-						ServiceReference<?> serviceReference,
+						ServiceReference<TrackedOne> serviceReference,
 						Emitter<String> keys) {
 
 						keys.emit(
@@ -300,11 +301,11 @@ public class ObjectServiceTrackerMapTest {
 		try (ServiceTrackerMap<TrackedOne, TrackedOne> serviceTrackerMap =
 				ServiceTrackerCollections.singleValueMap(
 					TrackedOne.class, null,
-					new ServiceReferenceMapper<TrackedOne>() {
+					new ServiceReferenceMapper<TrackedOne, TrackedOne>() {
 
 						@Override
 						public void map(
-							ServiceReference<?> serviceReference,
+							ServiceReference<TrackedOne> serviceReference,
 							Emitter<TrackedOne> emitter) {
 						}
 

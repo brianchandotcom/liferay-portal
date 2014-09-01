@@ -204,7 +204,7 @@ public class JSONFactoryImpl implements JSONFactory {
 	}
 
 	@Override
-	public Object looseDeserializeSafe(String json) {
+	public Object looseDeserialize(String json) {
 		try {
 			JSONDeserializer<?> jsonDeserializer = createJSONDeserializer();
 
@@ -220,7 +220,7 @@ public class JSONFactoryImpl implements JSONFactory {
 	}
 
 	@Override
-	public <T> T looseDeserializeSafe(String json, Class<T> clazz) {
+	public <T> T looseDeserialize(String json, Class<T> clazz) {
 		JSONDeserializer<?> jsonDeserializer = createJSONDeserializer();
 
 		jsonDeserializer.use(null, clazz);

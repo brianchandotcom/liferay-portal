@@ -410,7 +410,7 @@ public class JSONServiceAction extends JSONAction {
 		}
 		else {
 			try {
-				return JSONFactoryUtil.looseDeserializeSafe(value);
+				return JSONFactoryUtil.looseDeserialize(value);
 			}
 			catch (Exception e) {
 				_log.error(

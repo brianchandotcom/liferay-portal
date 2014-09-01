@@ -53,7 +53,7 @@ public class ViewChartPath implements AuthPublicPath {
 			return;
 		}
 
-		String path = (String)properties.get(AUTH_PUBLIC_PATH);
+		String path = properties.get(AUTH_PUBLIC_PATH);
 
 		_path = path;
 	}

@@ -207,7 +207,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String checkFieldTypes(
+	protected String checkImmutableAndStaticableFieldTypes(
 			String fileName, String packagePath, String className,
 			String content)
 		throws IOException {
@@ -234,9 +234,58 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			javaDocBuilder.getClassByName(
 				packagePath.concat(StringPool.PERIOD).concat(className));
 
-		content = checkImmutableFields(javaClass, content);
+		String[] lines = null;
 
-		return checkStaticableFields(javaClass, content);
+		for (JavaField javaField : javaClass.getFields()) {
+			Type type = javaField.getType();
+
+			String fieldTypeName = type.getFullyQualifiedName();
+
+			if (!javaField.isPrivate() || !javaField.isFinal() ||
+				!_immutableFieldTypes.contains(fieldTypeName)) {
+
+				continue;
+			}
+
+			String oldName = javaField.getName();
+
+			if (!type.isArray() && javaField.isStatic() &&
+				!oldName.equals("serialVersionUID")) {
+
+				Matcher matcher = _camelCasePattern.matcher(oldName);
+
+				String newName = matcher.replaceAll("$1_$2");
+
+				newName = StringUtil.toUpperCase(newName);
+
+				if (newName.charAt(0) != CharPool.UNDERLINE) {
+					newName = StringPool.UNDERLINE.concat(newName);
+				}
+
+				content = content.replaceAll(
+					"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
+			}
+
+			String initializationExpression =
+				StringUtil.trim(javaField.getInitializationExpression());
+
+			if (javaField.isStatic() || initializationExpression.isEmpty()) {
+				continue;
+			}
+
+			if (lines == null) {
+				lines = StringUtil.splitLines(content);
+			}
+
+			String line = lines[javaField.getLineNumber() - 1];
+
+			String newLine = StringUtil.replace(
+				line, "private final", "private static final");
+
+			content = StringUtil.replace(content, line, newLine);
+		}
+
+		return content;
 	}
 
 	protected String checkIfClause(
@@ -355,42 +404,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return ifClause;
 	}
 
-	protected String checkImmutableFields(
-			com.thoughtworks.qdox.model.JavaClass javaClass, String content)
-		throws IOException {
-
-		for (JavaField javaField : javaClass.getFields()) {
-			Type type = javaField.getType();
-
-			String fieldTypeName = type.getFullyQualifiedName();
-
-			String oldName = javaField.getName();
-
-			if (!javaField.isPrivate() || !javaField.isFinal() ||
-				type.isArray() || !javaField.isStatic() ||
-				oldName.equals("serialVersionUID") ||
-				!_immutableFieldTypes.contains(fieldTypeName)) {
-
-				continue;
-			}
-
-			Matcher matcher = _camelCasePattern.matcher(oldName);
-
-			String newName = matcher.replaceAll("$1_$2");
-
-			newName = StringUtil.toUpperCase(newName);
-
-			if (newName.charAt(0) != CharPool.UNDERLINE) {
-				newName = StringPool.UNDERLINE.concat(newName);
-			}
-
-			content = content.replaceAll(
-				"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
-		}
-
-		return content;
-	}
-
 	protected void checkLogLevel(
 		String content, String fileName, String logLevel) {
 
@@ -467,42 +480,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName,
 				"create pattern as global var: " + fileName + " " + lineCount);
 		}
-	}
-
-	protected String checkStaticableFields(
-			com.thoughtworks.qdox.model.JavaClass javaClass, String content)
-		throws IOException {
-
-		String[] lines = null;
-
-		for (JavaField javaField : javaClass.getFields()) {
-			Type type = javaField.getType();
-
-			String initializationExpression =
-				StringUtil.trim(javaField.getInitializationExpression());
-
-			String fieldTypeName = type.getFullyQualifiedName();
-
-			if (!javaField.isPrivate() || !javaField.isFinal() ||
-				javaField.isStatic() || initializationExpression.isEmpty() ||
-				!_immutableFieldTypes.contains(fieldTypeName)) {
-
-				continue;
-			}
-
-			if (lines == null) {
-				lines = StringUtil.splitLines(content);
-			}
-
-			String line = lines[javaField.getLineNumber() - 1];
-
-			String newLine = StringUtil.replace(
-				line, "private final", "private static final");
-
-			content = StringUtil.replace(content, line, newLine);
-		}
-
-		return content;
 	}
 
 	protected void checkSystemEventAnnotations(String content, String fileName)
@@ -994,7 +971,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-49294
 
-		newContent = checkFieldTypes(
+		newContent = checkImmutableAndStaticableFieldTypes(
 			fileName, packagePath, className, newContent);
 
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(

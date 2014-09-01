@@ -324,11 +324,11 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			<c:if test="<%= Validator.isNotNull(initMethod) && !(inlineEdit && Validator.isNotNull(inlineEditSaveURL)) %>">
 				ckEditor.setData(
 					<c:choose>
-						<c:when test="<%= (contents == null) %>">
-							window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>'](),
+						<c:when test="<%= (contents != null) %>">
+							'<%= UnicodeFormatter.toString(contents) %>',
 						</c:when>
 						<c:otherwise>
-							'<%= UnicodeFormatter.toString(contents) %>',
+							window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>'](),
 						</c:otherwise>
 					</c:choose>
 					function() {

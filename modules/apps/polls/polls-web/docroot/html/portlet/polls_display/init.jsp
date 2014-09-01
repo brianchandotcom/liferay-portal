@@ -16,14 +16,13 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@
-	page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-	page import="com.liferay.portal.kernel.util.ListUtil" %><%@
-	page import="com.liferay.portal.model.Portlet" %><%@
-	page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
-	page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
-	page import="com.liferay.portal.service.permission.PortletPermissionUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+page import="com.liferay.portal.model.Portlet" %><%@
+page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
+page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
+page import="com.liferay.portal.service.permission.PortletPermissionUtil" %>
 
 <%
-	long questionId = GetterUtil.getLong(portletPreferences.getValue("questionId", StringPool.BLANK));
+long questionId = GetterUtil.getLong(portletPreferences.getValue("questionId", StringPool.BLANK));
 %>

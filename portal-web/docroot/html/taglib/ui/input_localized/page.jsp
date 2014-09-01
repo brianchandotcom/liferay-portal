@@ -105,10 +105,10 @@ if ((exception != null) && fieldName.equals(focusField)) {
 	<c:choose>
 		<c:when test='<%= type.equals("editor") %>'>
 			<liferay-ui:input-editor
+				contents="<%= mainLanguageValue %>"
 				contentsLanguageId="<%= languageId %>"
 				cssClass='<%= \"language-value \" + cssClass %>'
 				editorImpl="ckeditor"
-				initMethod='<%= randomNamespace + \"InitEditor\" %>'
 				name="<%= fieldName %>"
 				onBlurMethod='<%= randomNamespace + \"OnBlurEditor\" %>'
 				onChangeMethod='<%= randomNamespace + \"OnChangeEditor\" %>'
@@ -117,10 +117,6 @@ if ((exception != null) && fieldName.equals(focusField)) {
 			/>
 
 			<aui:script>
-				function <portlet:namespace /><%= randomNamespace %>InitEditor() {
-					return '<%= UnicodeFormatter.toString(mainLanguageValue) %>';
-				}
-
 				function <portlet:namespace /><%= randomNamespace %>OnBlurEditor() {
 					Liferay.component('<portlet:namespace /><%= fieldName %>').blur();
 				}

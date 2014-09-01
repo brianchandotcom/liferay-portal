@@ -17,6 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
 String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
@@ -51,18 +52,18 @@ boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 		},
 
 		initEditor: function() {
-			<c:if test="<%= Validator.isNotNull(initMethod) %>">
+			<c:if test="<%= (contents == null) && Validator.isNotNull(initMethod) %>">
 				<%= name %>.setHTML(<%= namespace + initMethod %>());
+			</c:if>
 
-				<c:if test="<%= resizable && BrowserSnifferUtil.isIe(request) %>">
-					new A.Resize(
-						{
-							handles: 'br',
-							node: '#<%= name %>_container',
-							wrap: true
-						}
-					);
-				</c:if>
+			<c:if test="<%= resizable && BrowserSnifferUtil.isIe(request) %>">
+				new A.Resize(
+					{
+						handles: 'br',
+						node: '#<%= name %>_container',
+						wrap: true
+					}
+				);
 			</c:if>
 
 			window['<%= name %>'].instanceReady = true;
@@ -82,7 +83,7 @@ boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 	<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" height="100%" width="100%">
 	<tr>
 		<td bgcolor="#FFFFFF" height="100%">
-			<textarea class="lfr-editor-textarea" id="<%= name %>" name="<%= name %>" <%= Validator.isNotNull(onChangeMethod) ? "onChange=\"" + HtmlUtil.escapeJS(onChangeMethod) + "(this.value)\"" : StringPool.BLANK %> style="resize:<%= resizable ? "vertical" : "none" %>"></textarea>
+			<textarea class="lfr-editor-textarea" id="<%= name %>" name="<%= name %>" <%= Validator.isNotNull(onChangeMethod) ? "onChange=\"" + HtmlUtil.escapeJS(onChangeMethod) + "(this.value)\"" : StringPool.BLANK %> style="resize:<%= resizable ? "vertical" : "none" %>"><%= (contents != null) ? contents : StringPool.BLANK %></textarea>
 		</td>
 	</tr>
 	</table>

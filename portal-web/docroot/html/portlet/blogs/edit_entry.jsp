@@ -117,7 +117,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		</c:if>
 
 		<aui:field-wrapper label="content">
-			<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
+			<liferay-ui:input-editor contents="<%= content %>" editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
 
 			<aui:input name="content" type="hidden" />
 		</aui:field-wrapper>
@@ -304,10 +304,6 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		return document.<portlet:namespace />fm.<portlet:namespace />title.value + ' ' + window.<portlet:namespace />editor.getHTML();
 	}
 
-	function <portlet:namespace />initEditor() {
-		return '<%= UnicodeFormatter.toString(content) %>';
-	}
-
 	function <portlet:namespace />previewEntry() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>';
 		document.<portlet:namespace />fm.<portlet:namespace />preview.value = 'true';
@@ -486,7 +482,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	<c:if test="<%= (entry == null) || ((entry.getUserId() == user.getUserId()) && (entry.getStatus() == WorkflowConstants.STATUS_DRAFT)) %>">
 		<portlet:namespace />saveDraftIntervalId = setInterval('<portlet:namespace />saveEntry(true, true)', 30000);
 		<portlet:namespace />oldTitle = document.<portlet:namespace />fm.<portlet:namespace />title.value;
-		<portlet:namespace />oldContent = <portlet:namespace />initEditor();
+		<portlet:namespace />oldContent = '<%= UnicodeFormatter.toString(content) %>';
 	</c:if>
 </aui:script>
 

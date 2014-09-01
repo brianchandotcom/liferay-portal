@@ -39,6 +39,7 @@ Map<String, String> configParamsMap = (Map<String, String>)request.getAttribute(
 
 String configParams = marshallParams(configParamsMap);
 
+String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
 String contentsLanguageId = (String)request.getAttribute("liferay-ui:input-editor:contentsLanguageId");
 String cssClasses = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClasses"));
 String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
@@ -106,6 +107,8 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 	CKEDITOR.env.isCompatible = true;
 </script>
+
+<div class="alloy-editor-placeholder" id="<%= name %>" name="<%= name %>" style="min-height: 300px; min-width: 300px"><%= contents %></div>
 
 <aui:script use="aui-base">
 	window['<%= name %>'] = {

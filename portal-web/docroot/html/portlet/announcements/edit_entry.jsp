@@ -90,7 +90,7 @@ if (entry == null) {
 		<aui:input name="url" />
 
 		<aui:field-wrapper label="content">
-			<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
+			<liferay-ui:input-editor contents="<%= content %>" editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
 
 			<aui:input name="content" type="hidden" />
 		</aui:field-wrapper>
@@ -131,10 +131,6 @@ if (entry == null) {
 <aui:script>
 	function <portlet:namespace />getContent() {
 		return window.<portlet:namespace />editor.getHTML();
-	}
-
-	function <portlet:namespace />initEditor() {
-		return '<%= UnicodeFormatter.toString(content) %>';
 	}
 
 	function <portlet:namespace />previewEntry() {

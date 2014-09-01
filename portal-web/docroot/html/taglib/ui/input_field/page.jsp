@@ -417,19 +417,13 @@ if (hints != null) {
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:input-editor
+								contents="<%= value %>"
 								contentsLanguageId="<%= languageId %>"
 								cssClass="<%= cssClass %>"
 								editorImpl="ckeditor"
-								initMethod='<%= fieldParam + \"InitEditor\" %>'
 								name="<%= fieldParam %>"
 								toolbarSet="simple"
 							/>
-
-							<aui:script>
-								function <portlet:namespace /><%= fieldParam %>InitEditor() {
-									return '<%= UnicodeFormatter.toString(value) %>';
-								}
-							</aui:script>
 						</c:otherwise>
 					</c:choose>
 				</c:when>

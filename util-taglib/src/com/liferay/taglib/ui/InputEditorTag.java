@@ -37,6 +37,10 @@ public class InputEditorTag extends IncludeTag {
 		_configParams = configParams;
 	}
 
+	public void setContents(String contents) {
+		_contents = contents;
+	}
+
 	public void setContentsLanguageId(String contentsLanguageId) {
 		_contentsLanguageId = contentsLanguageId;
 	}
@@ -57,6 +61,10 @@ public class InputEditorTag extends IncludeTag {
 		_height = height;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setContents(String)}.
+	 */
+	@Deprecated
 	public void setInitMethod(String initMethod) {
 		_initMethod = initMethod;
 	}
@@ -105,6 +113,7 @@ public class InputEditorTag extends IncludeTag {
 	protected void cleanUp() {
 		_allowBrowseDocuments = true;
 		_configParams = null;
+		_contents = null;
 		_contentsLanguageId = null;
 		_cssClass = null;
 		_editorImpl = null;
@@ -155,6 +164,7 @@ public class InputEditorTag extends IncludeTag {
 			String.valueOf(_allowBrowseDocuments));
 		request.setAttribute(
 			"liferay-ui:input-editor:configParams", _configParams);
+		request.setAttribute("liferay-ui:input-editor:contents", _contents);
 		request.setAttribute(
 			"liferay-ui:input-editor:contentsLanguageId", _contentsLanguageId);
 		request.setAttribute("liferay-ui:input-editor:cssClass", _cssClass);
@@ -186,6 +196,7 @@ public class InputEditorTag extends IncludeTag {
 
 	private boolean _allowBrowseDocuments = true;
 	private Map<String, String> _configParams;
+	private String _contents;
 	private String _contentsLanguageId;
 	private String _cssClass;
 	private String _editorImpl;

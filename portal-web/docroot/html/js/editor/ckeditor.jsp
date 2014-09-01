@@ -49,6 +49,7 @@ Map<String, String> fileBrowserParamsMap = (Map<String, String>)request.getAttri
 
 String configParams = marshallParams(configParamsMap);
 
+String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
 String contentsLanguageId = (String)request.getAttribute("liferay-ui:input-editor:contentsLanguageId");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
 String cssClasses = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClasses"));
@@ -138,8 +139,19 @@ if (!inlineEdit) {
 		getCkData: function() {
 			var data;
 
-			if (!window['<%= name %>'].instanceReady && window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
-				data = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();
+			if (!window['<%= name %>'].instanceReady) {
+				<c:choose>
+					<c:when test="<%= contents != null %>">
+						data = '<%= UnicodeFormatter.toString(contents) %>';
+					</c:when>
+					<c:otherwise>
+						data = '';
+
+						if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
+							data = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();
+						}
+					</c:otherwise>
+				</c:choose>
 			}
 			else {
 				data = CKEDITOR.instances['<%= name %>'].getData();
@@ -311,7 +323,14 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 		function initData() {
 			<c:if test="<%= Validator.isNotNull(initMethod) && !(inlineEdit && Validator.isNotNull(inlineEditSaveURL)) %>">
 				ckEditor.setData(
-					window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>'](),
+					<c:choose>
+						<c:when test="<%= (contents != null) %>">
+							'<%= UnicodeFormatter.toString(contents) %>',
+						</c:when>
+						<c:otherwise>
+							window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>'](),
+						</c:otherwise>
+					</c:choose>
 					function() {
 						ckEditor.resetDirty();
 					}

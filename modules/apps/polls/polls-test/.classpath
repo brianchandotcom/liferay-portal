@@ -25,7 +25,10 @@
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.polls.api.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.polls.service.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.portal.spring.extender.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.apache.felix/org.apache.felix.framework/bundles/org.apache.felix.framework-4.4.0.jar" />
+	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-core/jars/arquillian-junit-core-1.1.2.Final.jar" />
 	<classpathentry kind="lib" path="../../../../.ivy/cache/org.jboss.arquillian.test/arquillian-test-api/jars/arquillian-test-api-1.1.2.Final.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

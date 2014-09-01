@@ -382,8 +382,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
 			}
 
-			String initializationExpression =
-				StringUtil.trim(javaField.getInitializationExpression());
+			String initializationExpression = StringUtil.trim(
+				javaField.getInitializationExpression());
 
 			if (javaField.isStatic() || initializationExpression.isEmpty()) {
 				continue;
@@ -2278,8 +2278,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**\\service\\persistence\\*FinderImpl.java",
 			"**\\service\\persistence\\*Query.java",
 			"**\\service\\persistence\\impl\\*.java",
-			"**\\portal-impl\\test\\**\\*.java",
-			"**\\util-bridges\\**\\*.java"
+			"**\\portal-impl\\test\\**\\*.java", "**\\util-bridges\\**\\*.java"
 		};
 
 		fileNames.addAll(getFileNames(excludes, includes));
@@ -2288,7 +2287,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected boolean isAnnotationParameter(String content, String line) {
-		if (!line.contains(" = ") && (!line.startsWith(StringPool.QUOTE))) {
+		if (!line.contains(" = ") && !line.startsWith(StringPool.QUOTE)) {
 			return false;
 		}
 

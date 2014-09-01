@@ -12,15 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.json.transformer;
+package com.liferay.portal.json;
 
 import com.liferay.portal.kernel.json.JSONTransformer;
 
-import flexjson.transformer.AbstractTransformer;
+import jodd.json.JsonContext;
+import jodd.json.TypeJsonSerializer;
 
 /**
  * @author Igor Spasic
  */
-public abstract class BaseJSONTransformer
-	extends AbstractTransformer implements JSONTransformer {
+public class JoddJsonTransformer implements TypeJsonSerializer {
+
+	public JoddJsonTransformer(JSONTransformer jsonTransformer) {
+		_jsonTransformer = jsonTransformer;
+	}
+
+	@Override
+	public void serialize(final JsonContext jsonContext, Object object) {
+		_jsonTransformer.transform(new JoddJSONContext(jsonContext), object);
+	}
+
+	private JSONTransformer _jsonTransformer;
+
 }

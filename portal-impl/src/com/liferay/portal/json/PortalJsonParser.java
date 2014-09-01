@@ -15,19 +15,25 @@
 package com.liferay.portal.json;
 
 import flexjson.JSONException;
+
 import jodd.json.JsonParser;
 
+/**
+ * @author Igor Spasic
+ */
 public class PortalJsonParser extends JsonParser {
 
 	@Override
 	protected Object newObjectInstance(Class targetType) {
-		String targetClassName = targetType.getName();
+		if (targetType != null) {
+			String targetClassName = targetType.getName();
 
-		if (targetClassName.contains("com.liferay") &&
-			targetClassName.contains("Util")) {
+			if (targetClassName.contains("com.liferay") &&
+				targetClassName.contains("Util")) {
 
-			throw new JSONException(
-				"Not instantiating " + targetClassName + " at " + path);
+				throw new JSONException(
+					"Not instantiating " + targetClassName + " at " + path);
+			}
 		}
 
 		return super.newObjectInstance(targetType);

@@ -226,6 +226,10 @@ public class RegistryWrapper implements Registry {
 		return _registry.ungetService(serviceReference);
 	}
 
+	public Registry getWrappedRegistry() {
+		return _registry;
+	}
+
 	private Registry _registry;
 	private ConcurrentHashMap<ServiceReference<?>, AtomicInteger>
 		_serviceReferenceCountsMap =

@@ -17,6 +17,7 @@ package com.liferay.registry.internal;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
@@ -254,11 +255,7 @@ public class ObjectServiceTrackerMapTest {
 
 	@Test
 	public void testOperationBalancesOutGetServiceAndUngetService() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		RegistryWrapper registryWrapper = new RegistryWrapper(registry);
-
-		RegistryUtil.setRegistry(registryWrapper);
+		RegistryWrapper registryWrapper = wrapRegistry();
 
 		try (ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
 				createServiceTrackerMap()) {
@@ -289,7 +286,134 @@ public class ObjectServiceTrackerMapTest {
 			}
 		}
 
-		RegistryUtil.setRegistry(registry);
+		RegistryUtil.setRegistry(registryWrapper.getWrappedRegistry());
+	}
+
+	@Test
+	public void testGetServiceWithServiceCustomizer() {
+		final Registry registry = RegistryUtil.getRegistry();
+
+		ServiceTrackerMap<String, TrackedTwo> serviceTrackerMap =
+			ServiceTrackerCollections.singleValueMap(
+				TrackedOne.class, "target",
+				new ServiceTrackerCustomizer<TrackedOne, TrackedTwo>() {
+
+					@Override
+					public TrackedTwo addingService(
+						ServiceReference<TrackedOne> serviceReference) {
+
+						return new TrackedTwo(registry.getService(
+							serviceReference));
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<TrackedOne> serviceReference,
+						TrackedTwo service) {
+
+						removedService(serviceReference, service);
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<TrackedOne> serviceReference,
+						TrackedTwo service) {
+
+						registry.ungetService(serviceReference);
+					}
+				});
+
+		serviceTrackerMap.open();
+
+		TrackedOne one = new TrackedOne();
+
+		registerService(one, "one");
+
+		TrackedOne two = new TrackedOne();
+		registerService(two, "two");
+
+		TrackedTwo twoOne = serviceTrackerMap.getService("one");
+
+		Assert.assertEquals(one, twoOne.getTrackedOne());
+
+		TrackedTwo twoTwo = serviceTrackerMap.getService("two");
+
+		Assert.assertEquals(two, twoTwo.getTrackedOne());
+
+		serviceTrackerMap.close();
+	}
+
+	@Test
+	public void testGetServiceWithServiceCustomizerAndServiceReferenceMapper() {
+		final Registry registry = RegistryUtil.getRegistry();
+
+		ServiceTrackerMap<String, TrackedTwo> serviceTrackerMap =
+			ServiceTrackerCollections.singleValueMap(
+				TrackedOne.class, ("(target=*)"),
+				new ServiceReferenceMapper<String, TrackedOne>() {
+
+					@Override
+					public void map(
+						ServiceReference<TrackedOne> serviceReference,
+						Emitter<String> emitter) {
+
+						TrackedOne service = registry.getService(
+							serviceReference);
+
+						String targetProperty =
+							(String) serviceReference.getProperty("target");
+
+						//
+						emitter.emit(targetProperty + "-" + service.getKey());
+
+						registry.ungetService(serviceReference);
+					}
+				},
+				new ServiceTrackerCustomizer<TrackedOne, TrackedTwo>() {
+
+					@Override
+					public TrackedTwo addingService(
+						ServiceReference<TrackedOne> serviceReference) {
+
+						return new TrackedTwo(registry.getService(
+							serviceReference));
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<TrackedOne> serviceReference,
+						TrackedTwo service) {
+
+						removedService(serviceReference, service);
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<TrackedOne> serviceReference,
+						TrackedTwo service) {
+
+						registry.ungetService(serviceReference);
+					}
+				});
+
+		serviceTrackerMap.open();
+
+		TrackedOne one = new TrackedOne("1");
+
+		registerService(one, "one");
+
+		TrackedOne two = new TrackedOne("2");
+		registerService(two, "two");
+
+		TrackedTwo twoOne = serviceTrackerMap.getService("one-1");
+
+		Assert.assertEquals(one, twoOne.getTrackedOne());
+
+		TrackedTwo twoTwo = serviceTrackerMap.getService("two-2");
+
+		Assert.assertEquals(two, twoTwo.getTrackedOne());
+
+		serviceTrackerMap.close();
 	}
 
 	@Test
@@ -379,6 +503,16 @@ public class ObjectServiceTrackerMapTest {
 
 		return _bundleContext.registerService(
 			TrackedOne.class, trackedOne, properties);
+	}
+
+	protected RegistryWrapper wrapRegistry() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		RegistryWrapper registryWrapper = new RegistryWrapper(registry);
+
+		RegistryUtil.setRegistry(registryWrapper);
+
+		return registryWrapper;
 	}
 
 	private BundleContext _bundleContext;

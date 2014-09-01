@@ -14,18 +14,13 @@
 
 package com.liferay.portal.kernel.repository.registry;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.RepositoryFactory;
 
 /**
  * @author Adolfo Pérez
  */
-public interface RepositoryCreator {
+public interface RepositoryFactoryRegistry {
 
-	LocalRepository createLocalRepository(long repositoryId)
-		throws PortalException;
-
-	Repository createRepository(long repositoryId) throws PortalException;
+	public void setRepositoryFactory(RepositoryFactory repositoryFactory);
 
 }

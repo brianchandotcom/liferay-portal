@@ -14,12 +14,12 @@
 
 package com.liferay.portal.repository.liferayrepository;
 
+import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
-import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
-import com.liferay.portal.kernel.repository.registry.RepositoryCreatorRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
+import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 
 /**
@@ -44,13 +44,6 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 	}
 
 	@Override
-	public void registerRepositoryCreator(
-		RepositoryCreatorRegistry repositoryCreatorRegistry) {
-
-		repositoryCreatorRegistry.setRepositoryCreator(_repositoryCreator);
-	}
-
-	@Override
 	public void registerRepositoryEventListeners(
 		RepositoryEventRegistry repositoryEventRegistry) {
 
@@ -58,12 +51,19 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			repositoryEventRegistry);
 	}
 
-	public void setRepositoryCreator(RepositoryCreator repositoryCreator) {
-		_repositoryCreator = repositoryCreator;
+	@Override
+	public void registerRepositoryFactory(
+		RepositoryFactoryRegistry repositoryFactoryRegistry) {
+
+		repositoryFactoryRegistry.setRepositoryFactory(_repositoryFactory);
+	}
+
+	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
+		_repositoryFactory = repositoryFactory;
 	}
 
 	private LiferayTrashCapability _liferayTrashCapability =
 		new LiferayTrashCapability();
-	private RepositoryCreator _repositoryCreator;
+	private RepositoryFactory _repositoryFactory;
 
 }

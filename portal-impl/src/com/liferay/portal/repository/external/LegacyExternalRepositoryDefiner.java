@@ -14,9 +14,9 @@
 
 package com.liferay.portal.repository.external;
 
+import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
-import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
-import com.liferay.portal.kernel.repository.registry.RepositoryCreatorRegistry;
+import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 
 /**
  * @author Adolfo Pérez
@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.repository.registry.RepositoryCreatorRegistry;
 public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 
 	public LegacyExternalRepositoryDefiner(
-		String className, RepositoryCreator repositoryCreator) {
+		String className, RepositoryFactory repositoryFactory) {
 
 		_className = className;
-		_repositoryCreator = repositoryCreator;
+		_repositoryFactory = repositoryFactory;
 	}
 
 	@Override
@@ -41,13 +41,13 @@ public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 	}
 
 	@Override
-	public void registerRepositoryCreator(
-		RepositoryCreatorRegistry repositoryCreatorRegistry) {
+	public void registerRepositoryFactory(
+		RepositoryFactoryRegistry repositoryFactoryRegistry) {
 
-		repositoryCreatorRegistry.setRepositoryCreator(_repositoryCreator);
+		repositoryFactoryRegistry.setRepositoryFactory(_repositoryFactory);
 	}
 
 	private String _className;
-	private RepositoryCreator _repositoryCreator;
+	private RepositoryFactory _repositoryFactory;
 
 }

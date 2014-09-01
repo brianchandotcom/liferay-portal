@@ -25,10 +25,10 @@ public interface RepositoryDefiner {
 
 	public void registerCapabilities(CapabilityRegistry capabilityRegistry);
 
-	public void registerRepositoryCreator(
-		RepositoryCreatorRegistry repositoryCreatorRegistry);
-
 	public void registerRepositoryEventListeners(
 		RepositoryEventRegistry repositoryEventRegistry);
+
+	public void registerRepositoryFactory(
+		RepositoryFactoryRegistry repositoryFactoryRegistry);
 
 }

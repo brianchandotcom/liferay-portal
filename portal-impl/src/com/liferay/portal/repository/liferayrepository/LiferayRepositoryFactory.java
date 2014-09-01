@@ -17,7 +17,7 @@ package com.liferay.portal.repository.liferayrepository;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
-import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
+import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
@@ -33,7 +33,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderService;
 /**
  * @author Adolfo Pérez
  */
-public class LiferayRepositoryCreator implements RepositoryCreator {
+public class LiferayRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public LocalRepository createLocalRepository(long repositoryId) {

@@ -30,12 +30,12 @@ public abstract class BaseRepositoryDefiner implements RepositoryDefiner {
 	}
 
 	@Override
-	public abstract void registerRepositoryCreator(
-		RepositoryCreatorRegistry repositoryCreatorRegistry);
-
-	@Override
 	public void registerRepositoryEventListeners(
 		RepositoryEventRegistry repositoryEventRegistry) {
 	}
+
+	@Override
+	public abstract void registerRepositoryFactory(
+		RepositoryFactoryRegistry repositoryFactoryRegistry);
 
 }

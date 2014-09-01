@@ -15,14 +15,14 @@
 package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
-import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
-import com.liferay.portal.kernel.repository.registry.RepositoryCreatorRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
+import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.kernel.util.Tuple;
 
 import java.util.ArrayList;
@@ -37,8 +37,8 @@ import java.util.Set;
  */
 public class DefaultRepositoryDefinition
 	implements CapabilityRegistry, RepositoryDefinition,
-			   RepositoryCreatorRegistry, RepositoryEventTrigger,
-			   RepositoryEventRegistry {
+			RepositoryFactoryRegistry, RepositoryEventTrigger,
+			RepositoryEventRegistry {
 
 	public DefaultRepositoryDefinition() {
 		_exportedCapabilities = new HashSet<Class<? extends Capability>>();
@@ -69,13 +69,13 @@ public class DefaultRepositoryDefinition
 	}
 
 	@Override
-	public RepositoryCreator getRepositoryCreator() {
-		return _repositoryCreator;
+	public RepositoryEventTrigger getRepositoryEventTrigger() {
+		return this;
 	}
 
 	@Override
-	public RepositoryEventTrigger getRepositoryEventTrigger() {
-		return this;
+	public RepositoryFactory getRepositoryFactory() {
+		return _repositoryFactory;
 	}
 
 	@Override
@@ -107,13 +107,13 @@ public class DefaultRepositoryDefinition
 	}
 
 	@Override
-	public void setRepositoryCreator(RepositoryCreator repositoryCreator) {
-		if (_repositoryCreator != null) {
+	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
+		if (_repositoryFactory != null) {
 			throw new IllegalStateException(
-				"Repository creator is already set");
+				"Repository factory is already set");
 		}
 
-		_repositoryCreator = repositoryCreator;
+		_repositoryFactory = repositoryFactory;
 	}
 
 	@Override
@@ -135,10 +135,10 @@ public class DefaultRepositoryDefinition
 	}
 
 	private Set<Class<? extends Capability>> _exportedCapabilities;
-	private RepositoryCreator _repositoryCreator;
 	private Map<Tuple, Collection<RepositoryEventListener<?, ?>>>
 		_repositoryEventListeners =
 			new HashMap<Tuple, Collection<RepositoryEventListener<?, ?>>>();
+	private RepositoryFactory _repositoryFactory;
 	private Map<Class<? extends Capability>, Capability> _supportedCapabilities;
 
 }

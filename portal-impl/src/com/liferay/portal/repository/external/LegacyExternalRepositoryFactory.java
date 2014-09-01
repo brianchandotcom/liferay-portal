@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryException;
+import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
-import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.repository.cmis.CMISRepository;
@@ -41,7 +41,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 /**
  * @author Adolfo Pérez
  */
-public class LegacyExternalRepositoryCreator implements RepositoryCreator {
+public class LegacyExternalRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public LocalRepository createLocalRepository(long repositoryId)

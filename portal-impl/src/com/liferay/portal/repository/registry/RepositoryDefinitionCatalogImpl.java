@@ -15,7 +15,7 @@
 package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
-import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
+import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.repository.external.LegacyExternalRepositoryDefiner;
@@ -83,7 +83,7 @@ public class RepositoryDefinitionCatalogImpl
 
 		RepositoryDefiner repositoryDefiner =
 			new LegacyExternalRepositoryDefiner(
-				className, _legacyExternalRepositoryCreator);
+				className, _legacyExternalRepositoryFactory);
 
 		ServiceRegistration<RepositoryDefiner> serviceRegistration =
 			registerRepositoryDefiner(repositoryDefiner);
@@ -91,10 +91,10 @@ public class RepositoryDefinitionCatalogImpl
 		_serviceRegistrations.put(className, serviceRegistration);
 	}
 
-	public void setLegacyExternalRepositoryCreator(
-		RepositoryCreator legacyExternalRepositoryCreator) {
+	public void setLegacyExternalRepositoryFactory(
+		RepositoryFactory legacyExternalRepositoryFactory) {
 
-		_legacyExternalRepositoryCreator = legacyExternalRepositoryCreator;
+		_legacyExternalRepositoryFactory = legacyExternalRepositoryFactory;
 	}
 
 	public void setLiferayRepositoryDefiner(
@@ -123,7 +123,7 @@ public class RepositoryDefinitionCatalogImpl
 			new DefaultRepositoryDefinition();
 
 		repositoryDefiner.registerCapabilities(defaultRepositoryDefinition);
-		repositoryDefiner.registerRepositoryCreator(
+		repositoryDefiner.registerRepositoryFactory(
 			defaultRepositoryDefinition);
 		repositoryDefiner.registerRepositoryEventListeners(
 			defaultRepositoryDefinition);
@@ -149,7 +149,7 @@ public class RepositoryDefinitionCatalogImpl
 
 	private Set<String> _externalRepositoriesClassNames =
 		new ConcurrentHashSet<String>();
-	private RepositoryCreator _legacyExternalRepositoryCreator;
+	private RepositoryFactory _legacyExternalRepositoryFactory;
 	private RepositoryDefiner _liferayRepositoryDefiner;
 	private Map<String, RepositoryDefinition> _repositoryDefinitions =
 		new ConcurrentHashMap<String, RepositoryDefinition>();

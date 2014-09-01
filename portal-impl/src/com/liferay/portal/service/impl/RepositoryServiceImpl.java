@@ -28,6 +28,10 @@ import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RepositoryServiceBaseImpl;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 
@@ -56,23 +60,7 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 
 	@Override
 	public void checkRepository(long repositoryId) throws PortalException {
-		Group group = groupPersistence.fetchByPrimaryKey(repositoryId);
-
-		if (group != null) {
-			return;
-		}
-
-		try {
-			Repository repository = repositoryPersistence.findByPrimaryKey(
-				repositoryId);
-
-			DLFolderPermission.check(
-				getPermissionChecker(), repository.getGroupId(),
-				repository.getDlFolderId(), ActionKeys.VIEW);
-		}
-		catch (NoSuchRepositoryException nsre) {
-			throw new RepositoryException(nsre.getMessage());
-		}
+		checkRepository(repositoryId, 0, 0, 0);
 	}
 
 	@Override
@@ -134,7 +122,9 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 			repositoryLocalService.getRepositoryImpl(
 				folderId, fileEntryId, fileVersionId);
 
-		checkRepository(repositoryImpl.getRepositoryId());
+		checkRepository(
+			repositoryImpl.getRepositoryId(), folderId, fileEntryId,
+			fileVersionId);
 
 		return repositoryImpl;
 	}
@@ -216,6 +206,69 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 
 		repositoryLocalService.updateRepository(
 			repositoryId, name, description);
+	}
+
+	protected void checkModelPermissions(
+			long folderId, long fileEntryId, long fileVersionId)
+		throws PortalException {
+
+		if (folderId != 0) {
+			DLFolder dlFolder = dlFolderLocalService.fetchDLFolder(folderId);
+
+			if (dlFolder != null) {
+				DLFolderPermission.check(
+					getPermissionChecker(), dlFolder, ActionKeys.VIEW);
+			}
+		}
+		else if (fileEntryId != 0) {
+			DLFileEntry dlFileEntry = dlFileEntryLocalService.fetchDLFileEntry(
+				fileEntryId);
+
+			if (dlFileEntry != null) {
+				DLFileEntryPermission.check(
+					getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
+			}
+		}
+		else if (fileVersionId != 0) {
+			DLFileVersion dlFileVersion =
+				dlFileVersionLocalService.fetchDLFileVersion(fileVersionId);
+
+			if (dlFileVersion != null) {
+				DLFileEntryPermission.check(
+					getPermissionChecker(), dlFileVersion.getFileEntryId(),
+					ActionKeys.VIEW);
+			}
+		}
+	}
+
+	protected void checkRepository(
+			long repositoryId, long folderId, long fileEntryId,
+			long fileVersionId)
+		throws PortalException {
+
+		Group group = groupPersistence.fetchByPrimaryKey(repositoryId);
+
+		if (group != null) {
+			checkModelPermissions(folderId, fileEntryId, fileVersionId);
+
+			return;
+		}
+
+		try {
+			Repository repository = repositoryPersistence.fetchByPrimaryKey(
+				repositoryId);
+
+			if (repository != null) {
+				DLFolderPermission.check(
+					getPermissionChecker(), repository.getGroupId(),
+					repository.getDlFolderId(), ActionKeys.VIEW);
+
+				return;
+			}
+		}
+		catch (NoSuchRepositoryException nsre) {
+			throw new RepositoryException(nsre.getMessage());
+		}
 	}
 
 }

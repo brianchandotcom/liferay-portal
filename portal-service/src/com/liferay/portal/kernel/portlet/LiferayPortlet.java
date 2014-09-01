@@ -66,6 +66,8 @@ public class LiferayPortlet extends GenericPortlet {
 
 		addProcessActionSuccessMessage = GetterUtil.getBoolean(
 			getInitParameter("add-process-action-success-action"), true);
+		alwaysSendRedirect = GetterUtil.getBoolean(
+			getInitParameter("always-send-redirect"), false);
 	}
 
 	@Override
@@ -86,13 +88,16 @@ public class LiferayPortlet extends GenericPortlet {
 				return;
 			}
 
-			if (!SessionMessages.isEmpty(actionRequest)) {
-				return;
+			boolean emptySessionMessages = SessionMessages.isEmpty(
+				actionRequest);
+
+			if (emptySessionMessages) {
+				addSuccessMessage(actionRequest, actionResponse);
 			}
 
-			addSuccessMessage(actionRequest, actionResponse);
-
-			sendRedirect(actionRequest, actionResponse);
+			if (emptySessionMessages || isAlwaysSendRedirect()) {
+				sendRedirect(actionRequest, actionResponse);
+			}
 		}
 		catch (PortletException pe) {
 			Throwable cause = pe.getCause();
@@ -405,6 +410,10 @@ public class LiferayPortlet extends GenericPortlet {
 		}
 	}
 
+	protected boolean isAlwaysSendRedirect() {
+		return alwaysSendRedirect;
+	}
+
 	protected boolean isProcessActionRequest(ActionRequest actionRequest) {
 		return isProcessPortletRequest(actionRequest);
 	}
@@ -496,6 +505,8 @@ public class LiferayPortlet extends GenericPortlet {
 	}
 
 	protected boolean addProcessActionSuccessMessage;
+
+	protected boolean alwaysSendRedirect;
 
 	private static final boolean _PROCESS_PORTLET_REQUEST = true;
 

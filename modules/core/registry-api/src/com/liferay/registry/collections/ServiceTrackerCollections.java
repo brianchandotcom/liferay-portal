@@ -20,6 +20,7 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.internal.MultiValueServiceTrackerBucketFactory;
+import com.liferay.registry.collections.internal.RegistryServiceTrackerCustomizer;
 import com.liferay.registry.collections.internal.ServiceTrackerCollectionImpl;
 import com.liferay.registry.collections.internal.ServiceTrackerMapImpl;
 import com.liferay.registry.collections.internal.SingleValueServiceTrackerBucketFactory;
@@ -135,6 +136,7 @@ public class ServiceTrackerCollections {
 		return new ServiceTrackerMapImpl<String, S, S, List<S>>(
 			clazz,"(" + propertyKey + "=*)",
 			new PropertyServiceReferenceMapper<String, S>(propertyKey),
+			new RegistryServiceTrackerCustomizer<S>(),
 			new MultiValueServiceTrackerBucketFactory<S, S>());
 	}
 
@@ -144,6 +146,7 @@ public class ServiceTrackerCollections {
 
 		return new ServiceTrackerMapImpl<K, S, S, List<S>>(
 			clazz, filterString, serviceReferenceMapper,
+			new RegistryServiceTrackerCustomizer<S>(),
 			new MultiValueServiceTrackerBucketFactory<S, S>());
 	}
 
@@ -154,6 +157,7 @@ public class ServiceTrackerCollections {
 
 		return new ServiceTrackerMapImpl<K, S, S, List<S>>(
 			clazz, filterString, serviceReferenceMapper,
+			new RegistryServiceTrackerCustomizer<S>(),
 			new MultiValueServiceTrackerBucketFactory<S, S>(comparator));
 	}
 
@@ -163,6 +167,7 @@ public class ServiceTrackerCollections {
 		return new ServiceTrackerMapImpl<String, S, S, S>(
 			clazz, "(" + propertyKey + "=*)",
 			new PropertyServiceReferenceMapper<String, S>(propertyKey),
+			new RegistryServiceTrackerCustomizer<S>(),
 			new SingleValueServiceTrackerBucketFactory<S, S>());
 	}
 
@@ -172,6 +177,7 @@ public class ServiceTrackerCollections {
 
 		return new ServiceTrackerMapImpl<K, S, S, S>(
 			clazz, filterString, serviceReferenceMapper,
+			new RegistryServiceTrackerCustomizer<S>(),
 			new SingleValueServiceTrackerBucketFactory<S, S>());
 	}
 
@@ -182,6 +188,7 @@ public class ServiceTrackerCollections {
 
 		return new ServiceTrackerMapImpl<K, S, S, S>(
 			clazz, filterString, serviceReferenceMapper,
+			new RegistryServiceTrackerCustomizer<S>(),
 			new SingleValueServiceTrackerBucketFactory<S, S>(comparator));
 	}
 

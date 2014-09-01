@@ -114,7 +114,6 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 		public ServiceReferenceServiceTuple<SR, TS> addingService(
 			final ServiceReference<SR> serviceReference) {
 
-			final Registry registry = RegistryUtil.getRegistry();
 			final Holder<ServiceReferenceServiceTuple<SR, TS>> holder =
 				new Holder<ServiceReferenceServiceTuple<SR, TS>>();
 
@@ -145,7 +144,9 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 							serviceReferenceServiceTuple = holder.get();
 
 						if (serviceReferenceServiceTuple == null) {
-							TS service = registry.getService(serviceReference);
+							TS service =
+								_serviceTrackerCustomizer.addingService(
+									serviceReference);
 
 							serviceReferenceServiceTuple =
 								new ServiceReferenceServiceTuple<SR, TS>(
@@ -168,11 +169,8 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 			ServiceReference<SR> service,
 			ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
 
-			removedService(
-				serviceReferenceServiceTuple.getServiceReference(),
-				serviceReferenceServiceTuple);
-
-			addingService(serviceReferenceServiceTuple.getServiceReference());
+			_serviceTrackerCustomizer.modifiedService(
+				service, serviceReferenceServiceTuple.getService());
 		}
 
 		@Override
@@ -203,9 +201,8 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 					}
 				});
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
+			_serviceTrackerCustomizer.removedService(
+				serviceReference, serviceReferenceServiceTuple.getService());
 		}
 
 	}

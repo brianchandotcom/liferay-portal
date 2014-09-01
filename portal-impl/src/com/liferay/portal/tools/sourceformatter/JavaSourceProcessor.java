@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -37,7 +38,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -1177,6 +1177,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"test.annotations.excludes");
 		_upgradeServiceUtilExclusions = getPropertyList(
 			"upgrade.service.util.excludes");
+
+		_immutableFieldTypes = SetUtil.fromArray(
+			new String[] {
+				"boolean", "byte", "char", "double", "float", "int", "long",
+				"short", "java.lang.Boolean", "java.lang.Byte",
+				"java.lang.Character", "java.lang.Class", "java.lang.Double",
+				"java.lang.Float", "java.lang.Int", "java.lang.Long",
+				"java.lang.Number", "java.lang.Short", "java.lang.String",
+				"java.lang.reflect.Field", "java.lang.reflect.Method"
+			});
+
+		_immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));
 
 		for (String fileName : fileNames) {
 			format(fileName);
@@ -2412,8 +2424,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"\\(\n*\t*(.*)\\);\n");
 	private List<String> _fitOnSingleLineExclusions;
 	private List<String> _hibernateSQLQueryExclusions;
-	private Set<String> _immutableFieldTypes = new HashSet<String>(
-		getPropertyList("immutable.field.types"));
+	private Set<String> _immutableFieldTypes;
 	private Pattern _incorrectCloseCurlyBracePattern = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");
 	private Pattern _incorrectLineBreakPattern = Pattern.compile(

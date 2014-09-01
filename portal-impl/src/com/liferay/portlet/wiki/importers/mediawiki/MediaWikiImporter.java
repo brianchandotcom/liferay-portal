@@ -538,12 +538,12 @@ public class MediaWikiImporter implements WikiImporter {
 
 					assetTag = AssetTagLocalServiceUtil.addTag(
 						userId, categoryName, null, serviceContext);
-				}
 
-				if (Validator.isNotNull(description)) {
-					AssetTagPropertyLocalServiceUtil.addTagProperty(
-						userId, assetTag.getTagId(), "description",
-						description);
+					if (Validator.isNotNull(description)) {
+						AssetTagPropertyLocalServiceUtil.addTagProperty(
+							userId, assetTag.getTagId(), "description",
+							description);
+					}
 				}
 			}
 			catch (SystemException se) {

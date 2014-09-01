@@ -28,6 +28,7 @@ import com.liferay.portal.model.TypedModel;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -168,6 +169,10 @@ public class StagedModelDataHandlerUtil {
 
 		StagedModelDataHandler<StagedModel> stagedModelDataHandler =
 			_getStagedModelDataHandler(stagedModel);
+
+		if (stagedModelDataHandler == null) {
+			return Collections.emptyMap();
+		}
 
 		return stagedModelDataHandler.getReferenceAttributes(
 			portletDataContext, stagedModel);

@@ -37,9 +37,11 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 	public ServiceTrackerMapImpl(
 		Class<SR> clazz, String filterString,
 		ServiceReferenceMapper<K, SR> serviceReferenceMapper,
+		ServiceTrackerCustomizer<SR, TS> serviceTrackerCustomizer,
 		ServiceTrackerBucketFactory<SR, TS, R> serviceTrackerMapBucketFactory) {
 
 		_serviceReferenceMapper = serviceReferenceMapper;
+		_serviceTrackerCustomizer = serviceTrackerCustomizer;
 		_serviceTrackerMapBucketFactory = serviceTrackerMapBucketFactory;
 
 		Registry registry = RegistryUtil.getRegistry();

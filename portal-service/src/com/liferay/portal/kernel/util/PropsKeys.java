@@ -663,6 +663,8 @@ public interface PropsKeys {
 
 	public static final String DL_ENTRY_COLUMNS = "dl.entry.columns";
 
+	public static final String DL_FILE_ENTRY_CHECK_LEGACY_IG_REQUESTS_ENABLED = "dl.file.entry.check.legacy.ig.requests.enabled";
+
 	public static final String DL_FILE_ENTRY_COLUMNS = "dl.file.entry.columns";
 
 	public static final String DL_FILE_ENTRY_COMMENTS_ENABLED = "dl.file.entry.comments.enabled";

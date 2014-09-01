@@ -575,8 +575,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				!_jspContents.isEmpty() &&
 				hasUnusedVariable(fileName, trimmedLine)) {
 
-				processErrorMessage(
-					fileName, "Unused variable: " + fileName + " " + lineCount);
+				continue;
 			}
 
 			// LPS-47179

@@ -3,6 +3,7 @@
 
 <project>
 	<property name="import.shared" value="polls-api" />
+	<property name="osgi.ide.dependencies" value="bnd.jar,spring-context.jar" />
 	<property name="service.input.file" value="service.xml" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />

@@ -434,6 +434,10 @@ public class MediaWikiImporter implements WikiImporter {
 
 			String title = pageElement.elementText("title");
 
+			if (isSpecialMediaWikiPage(title, specialNamespaces)) {
+				continue;
+			}
+
 			title = normalizeTitle(title);
 
 			percentage = Math.min(
@@ -441,10 +445,6 @@ public class MediaWikiImporter implements WikiImporter {
 				maxPercentage);
 
 			progressTracker.setPercent(percentage);
-
-			if (isSpecialMediaWikiPage(title, specialNamespaces)) {
-				continue;
-			}
 
 			List<Element> revisionElements = pageElement.elements("revision");
 

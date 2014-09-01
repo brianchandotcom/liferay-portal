@@ -1,10 +1,10 @@
 <#include "../init.ftl">
 
 <@aui["field-wrapper"] data=data>
-	<@aui.input helpMessage=escape(fieldStructure.tip) inlineField=true label=escape(label) name="${namespacedFieldName}Title" readonly="readonly" type="text" value=fileEntryTitle style="margin-bottom:0" />
+	<@aui.input helpMessage=escape(fieldStructure.tip) inlineField=true label=escape(label) name="${namespacedFieldName}Title" readonly="readonly" style="margin-bottom:0" type="text" value=fileEntryTitle />
 
 	<div class="progress">
-		<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+		<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="progress-bar" role="progressbar">
 		</div>
 	</div>
 

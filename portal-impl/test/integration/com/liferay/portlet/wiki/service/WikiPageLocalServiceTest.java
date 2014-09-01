@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -45,10 +46,12 @@ import com.liferay.portlet.expando.model.ExpandoValue;
 import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 import com.liferay.portlet.wiki.DuplicatePageException;
 import com.liferay.portlet.wiki.NoSuchPageResourceException;
+import com.liferay.portlet.wiki.NodeChangeException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.util.test.WikiTestUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -78,6 +81,260 @@ public class WikiPageLocalServiceTest {
 	}
 
 	@Test
+	public void testChangeChildPageNode() throws Exception {
+		WikiNode destinationNode = WikiTestUtil.addNode(_group.getGroupId());
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"ParentPage", true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(), "ChildPage",
+			"content", "ParentPage", true, serviceContext);
+
+		WikiPageLocalServiceUtil.changeNode(
+			TestPropsValues.getUserId(), _node.getNodeId(), "ChildPage",
+			destinationNode.getNodeId(), serviceContext);
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), "ParentPage");
+		WikiPage childPage = WikiPageLocalServiceUtil.getPage(
+			destinationNode.getNodeId(), "ChildPage");
+
+		Assert.assertTrue(page.isApproved());
+		Assert.assertTrue(page.getNodeId() == _node.getNodeId());
+		Assert.assertTrue(childPage.isApproved());
+		Assert.assertTrue(childPage.getNodeId() == destinationNode.getNodeId());
+		Assert.assertTrue(Validator.isNull(childPage.getParentTitle()));
+	}
+
+	@Test
+	public void testChangePageNode() throws Exception {
+		WikiPage page = WikiTestUtil.addPage(
+			_group.getGroupId(), _node.getNodeId(), true);
+
+		WikiNode destinationNode = WikiTestUtil.addNode(_group.getGroupId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiPageLocalServiceUtil.changeNode(
+			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
+			destinationNode.getNodeId(), serviceContext);
+
+		WikiPageLocalServiceUtil.getPage(
+			destinationNode.getNodeId(), page.getTitle());
+	}
+
+	@Test
+	public void testChangePageNodeWithChildHierarchy() throws Exception {
+		WikiNode destinationNode = WikiTestUtil.addNode(_group.getGroupId());
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"ParentPage", true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		createPageHierarchy("ParentPage", 10, serviceContext);
+
+		WikiPageLocalServiceUtil.changeNode(
+			TestPropsValues.getUserId(), _node.getNodeId(), "ParentPage",
+			destinationNode.getNodeId(), serviceContext);
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(
+			destinationNode.getNodeId(), "ParentPage");
+
+		Assert.assertTrue(page.isApproved());
+		Assert.assertTrue(page.getNodeId() == destinationNode.getNodeId());
+
+		List<WikiPage> childHierarchy = getPageHierarchy(
+			destinationNode.getNodeId(), "ParentPage");
+
+		Assert.assertEquals(childHierarchy.size(), 10);
+
+		for (WikiPage childPage : childHierarchy) {
+			Assert.assertTrue(childPage.isApproved());
+			Assert.assertTrue(
+				childPage.getNodeId() == destinationNode.getNodeId());
+		}
+	}
+
+	@Test
+	public void testChangePageNodeWithChildPage() throws Exception {
+		WikiNode destinationNode = WikiTestUtil.addNode(_group.getGroupId());
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"ParentPage", true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(), "ChildPage",
+			"content", "ParentPage", true, serviceContext);
+
+		WikiPageLocalServiceUtil.changeNode(
+			TestPropsValues.getUserId(), _node.getNodeId(), "ParentPage",
+			destinationNode.getNodeId(), serviceContext);
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(
+			destinationNode.getNodeId(), "ParentPage");
+		WikiPage childPage = WikiPageLocalServiceUtil.getPage(
+			destinationNode.getNodeId(), "ChildPage");
+
+		Assert.assertTrue(page.isApproved());
+		Assert.assertTrue(page.getNodeId() == destinationNode.getNodeId());
+		Assert.assertTrue(childPage.isApproved());
+		Assert.assertTrue(childPage.getNodeId() == destinationNode.getNodeId());
+		Assert.assertTrue(childPage.getParentTitle().equals("ParentPage"));
+	}
+
+	@Test
+	public void testChangePageNodeWithChildPageNameDuplication()
+		throws Exception {
+
+		WikiNode destinationNode = WikiTestUtil.addNode(_group.getGroupId());
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"ParentPage", true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			"DuplicatedTitlePage", "content", "ParentPage", true,
+			serviceContext);
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			destinationNode.getNodeId(), "DuplicatedTitlePage", true);
+
+		try {
+			WikiPageLocalServiceUtil.changeNode(
+				TestPropsValues.getUserId(), _node.getNodeId(), "ParentPage",
+				destinationNode.getNodeId(), serviceContext);
+
+			Assert.fail(
+				"Node change should not be performed due title duplication");
+		}
+		catch (NodeChangeException nce) {
+			Assert.assertEquals(nce.getPageTitle(), "DuplicatedTitlePage");
+			Assert.assertEquals(nce.getNodeName(), destinationNode.getName());
+			Assert.assertEquals(
+				nce.getType(), NodeChangeException.DUPLICATE_PAGE);
+		}
+	}
+
+	@Test
+	public void testChangePageNodeWithPageNameDuplication() throws Exception {
+		WikiNode destinationNode = WikiTestUtil.addNode(_group.getGroupId());
+
+		WikiPage page = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"DuplicatedTitlePage", true);
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			destinationNode.getNodeId(), "DuplicatedTitlePage", true);
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			WikiPageLocalServiceUtil.changeNode(
+				page.getUserId(), _node.getNodeId(), "DuplicatedTitlePage",
+				destinationNode.getNodeId(), serviceContext);
+
+			Assert.fail(
+				"Node change should not be performed due title duplication");
+		}
+		catch (NodeChangeException nce) {
+			Assert.assertEquals(nce.getPageTitle(), "DuplicatedTitlePage");
+			Assert.assertEquals(nce.getNodeName(), destinationNode.getName());
+			Assert.assertEquals(
+				nce.getType(), NodeChangeException.DUPLICATE_PAGE);
+		}
+	}
+
+	@Test
+	public void testChangePageNodeWithRedirectPage() throws Exception {
+		WikiNode destinationNode = WikiTestUtil.addNode(_group.getGroupId());
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"InitialTitlePage", true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiPageLocalServiceUtil.renamePage(
+			TestPropsValues.getUserId(), _node.getNodeId(), "InitialTitlePage",
+			"RenamedPage", serviceContext);
+
+		WikiPageLocalServiceUtil.changeNode(
+			TestPropsValues.getUserId(), _node.getNodeId(), "RenamedPage",
+			destinationNode.getNodeId(), serviceContext);
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(
+			destinationNode.getNodeId(), "RenamedPage");
+		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
+			destinationNode.getNodeId(), "InitialTitlePage");
+
+		Assert.assertTrue(page.isApproved());
+		Assert.assertTrue(page.getNodeId() == destinationNode.getNodeId());
+		Assert.assertTrue(redirectPage.isApproved());
+		Assert.assertTrue(
+			redirectPage.getNodeId() == destinationNode.getNodeId());
+		Assert.assertTrue(
+			redirectPage.getRedirectTitle().equals("RenamedPage"));
+	}
+
+	@Test
+	public void testChangePageNodeWithRedirectPageNameDuplication()
+		throws Exception {
+
+		WikiNode destinationNode = WikiTestUtil.addNode(_group.getGroupId());
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"DuplicatedTitlePage", true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiPageLocalServiceUtil.renamePage(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			"DuplicatedTitlePage", "RenamedPage",  serviceContext);
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			destinationNode.getNodeId(), "DuplicatedTitlePage", true);
+
+		try {
+			WikiPageLocalServiceUtil.changeNode(
+				TestPropsValues.getUserId(), _node.getNodeId(), "RenamedPage",
+				destinationNode.getNodeId(), serviceContext);
+
+			Assert.fail(
+				"Node change should not be performed due title duplication");
+		}
+		catch (NodeChangeException nce) {
+			Assert.assertEquals(nce.getPageTitle(), "DuplicatedTitlePage");
+			Assert.assertEquals(nce.getNodeName(), destinationNode.getName());
+			Assert.assertEquals(
+				nce.getType(), NodeChangeException.DUPLICATE_PAGE);
+		}
+	}
+
+	@Test
 	public void testChangeParent() throws Exception {
 		testChangeParent(false);
 	}
@@ -85,6 +342,38 @@ public class WikiPageLocalServiceTest {
 	@Test
 	public void testChangeParentWithExpando() throws Exception {
 		testChangeParent(true);
+	}
+
+	@Test
+	public void testChangeRedirectPageNode() throws Exception {
+		WikiNode destinationNode = WikiTestUtil.addNode(_group.getGroupId());
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"InitialTitlePage", true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiPageLocalServiceUtil.renamePage(
+			TestPropsValues.getUserId(), _node.getNodeId(), "InitialTitlePage",
+			"RenamedPage",  serviceContext);
+
+		try {
+			WikiPageLocalServiceUtil.changeNode(
+				TestPropsValues.getUserId(), _node.getNodeId(),
+				"InitialTitlePage", destinationNode.getNodeId(),
+				serviceContext);
+
+			Assert.fail(
+				"Node change should not be performed due title duplication");
+		}
+		catch (NodeChangeException nce) {
+			Assert.assertEquals(nce.getPageTitle(), "InitialTitlePage");
+			Assert.assertEquals(nce.getNodeName(), _node.getName());
+			Assert.assertEquals(
+				nce.getType(), NodeChangeException.REDIRECT_PAGE);
+		}
 	}
 
 	@Test
@@ -420,6 +709,31 @@ public class WikiPageLocalServiceTest {
 		}
 	}
 
+	protected void createPageHierarchy(
+			String parentTitle, int level, ServiceContext serviceContext)
+		throws Exception {
+
+		if (level == 0) {
+			return;
+		}
+
+		String title = RandomTestUtil.randomString();
+
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(), title, "content",
+			parentTitle, true, serviceContext);
+
+		createPageHierarchy(title, --level, serviceContext);
+	}
+
+	protected List<WikiPage> getPageHierarchy(long nodeId, String parentTitle) {
+		List<WikiPage> childHierarchy = new ArrayList<>();
+
+		_getPageHierarchy(childHierarchy, nodeId, parentTitle);
+
+		return childHierarchy;
+	}
+
 	protected void testChangeParent(boolean hasExpandoValues) throws Exception {
 		WikiPage page = WikiTestUtil.addPage(
 			_group.getGroupId(), _node.getNodeId(), true);
@@ -537,6 +851,23 @@ public class WikiPageLocalServiceTest {
 
 		checkPopulatedServiceContext(
 			serviceContext, revertedPage, hasExpandoValues);
+	}
+
+	private void _getPageHierarchy(
+		List<WikiPage> childHierachy, long nodeId, String parentTitle) {
+
+		List<WikiPage> childPages = WikiPageLocalServiceUtil.getChildren(
+			nodeId, true, parentTitle);
+
+		if (childPages.isEmpty()) {
+			return;
+		}
+
+		childHierachy.addAll(childPages);
+
+		for (WikiPage curPage : childPages) {
+			_getPageHierarchy(childHierachy, nodeId, curPage.getTitle());
+		}
 	}
 
 	@DeleteAfterTestRun

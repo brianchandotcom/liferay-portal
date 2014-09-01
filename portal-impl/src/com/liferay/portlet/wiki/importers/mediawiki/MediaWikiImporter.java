@@ -539,7 +539,9 @@ public class MediaWikiImporter implements WikiImporter {
 					assetTag = AssetTagLocalServiceUtil.addTag(
 						userId, categoryName, null, serviceContext);
 
-					if (Validator.isNotNull(description)) {
+					if (PropsValues.ASSET_TAG_PROPERTIES_ENABLED &&
+						Validator.isNotNull(description)) {
+
 						AssetTagPropertyLocalServiceUtil.addTagProperty(
 							userId, assetTag.getTagId(), "description",
 							description);

@@ -31,12 +31,13 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
+public class ServiceTrackerMapImpl<K, SR, TS, R>
+	implements ServiceTrackerMap<K, R> {
 
 	public ServiceTrackerMapImpl(
-		Class<S> clazz, String filterString,
-		ServiceReferenceMapper<K> serviceReferenceMapper,
-		ServiceTrackerBucketFactory<S, R> serviceTrackerMapBucketFactory) {
+		Class<SR> clazz, String filterString,
+		ServiceReferenceMapper<K, SR> serviceReferenceMapper,
+		ServiceTrackerBucketFactory<SR, TS, R> serviceTrackerMapBucketFactory) {
 
 		_serviceReferenceMapper = serviceReferenceMapper;
 		_serviceTrackerMapBucketFactory = serviceTrackerMapBucketFactory;
@@ -63,7 +64,7 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 
 	@Override
 	public R getService(K key) {
-		ServiceTrackerBucket<S, R> serviceTrackerBucket =
+		ServiceTrackerBucket<SR, TS, R> serviceTrackerBucket =
 			_serviceTrackerBuckets.get(key);
 
 		if (serviceTrackerBucket == null) {
@@ -78,12 +79,15 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 		_serviceTracker.open();
 	}
 
-	private ServiceReferenceMapper<K> _serviceReferenceMapper;
-	private ServiceTracker<S, ServiceReferenceServiceTuple<S>> _serviceTracker;
-	private ConcurrentHashMap<K, ServiceTrackerBucket<S, R>>
+	private ServiceReferenceMapper<K, SR> _serviceReferenceMapper;
+	private ServiceTracker<SR, ServiceReferenceServiceTuple<SR, TS>>
+		_serviceTracker;
+	private ConcurrentHashMap<K, ServiceTrackerBucket<SR, TS, R>>
 		_serviceTrackerBuckets =
-			new ConcurrentHashMap<K, ServiceTrackerBucket<S, R>>();
-	private ServiceTrackerBucketFactory<S, R> _serviceTrackerMapBucketFactory;
+			new ConcurrentHashMap<K, ServiceTrackerBucket<SR, TS, R>>();
+	private ServiceTrackerCustomizer<SR, TS> _serviceTrackerCustomizer;
+	private ServiceTrackerBucketFactory<SR, TS, R>
+		_serviceTrackerMapBucketFactory;
 
 	private class Holder<T> {
 
@@ -101,16 +105,16 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 
 	private class ServiceReferenceServiceTrackerCustomizer
 		implements
-			ServiceTrackerCustomizer<S, ServiceReferenceServiceTuple<S>> {
+			ServiceTrackerCustomizer<SR,
+				ServiceReferenceServiceTuple<SR, TS>> {
 
 		@Override
-		public ServiceReferenceServiceTuple<S> addingService(
-			final ServiceReference<S> serviceReference) {
+		public ServiceReferenceServiceTuple<SR, TS> addingService(
+			final ServiceReference<SR> serviceReference) {
 
 			final Registry registry = RegistryUtil.getRegistry();
-
-			final Holder<ServiceReferenceServiceTuple<S>> holder =
-				new Holder<ServiceReferenceServiceTuple<S>>();
+			final Holder<ServiceReferenceServiceTuple<SR, TS>> holder =
+				new Holder<ServiceReferenceServiceTuple<SR, TS>>();
 
 			_serviceReferenceMapper.map(
 				serviceReference,
@@ -118,12 +122,13 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 
 					@Override
 					public void emit(K key) {
-						ServiceTrackerBucket<S, R> serviceTrackerBucket =
+						ServiceTrackerBucket<SR, TS, R> serviceTrackerBucket =
 							_serviceTrackerBuckets.get(key);
 
 						if (serviceTrackerBucket == null) {
-							ServiceTrackerBucket<S, R> newServiceTrackerBucket =
-								_serviceTrackerMapBucketFactory.create();
+							ServiceTrackerBucket<SR, TS, R>
+								newServiceTrackerBucket =
+									_serviceTrackerMapBucketFactory.create();
 
 							serviceTrackerBucket =
 								_serviceTrackerBuckets.putIfAbsent(
@@ -134,14 +139,14 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 							}
 						}
 
-						ServiceReferenceServiceTuple<S>
+						ServiceReferenceServiceTuple<SR, TS>
 							serviceReferenceServiceTuple = holder.get();
 
 						if (serviceReferenceServiceTuple == null) {
-							S service = registry.getService(serviceReference);
+							TS service = registry.getService(serviceReference);
 
 							serviceReferenceServiceTuple =
-								new ServiceReferenceServiceTuple<S>(
+								new ServiceReferenceServiceTuple<SR, TS>(
 									serviceReference, service);
 
 							holder.set(serviceReferenceServiceTuple);
@@ -158,8 +163,8 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 
 		@Override
 		public void modifiedService(
-			ServiceReference<S> service,
-			ServiceReferenceServiceTuple<S> serviceReferenceServiceTuple) {
+			ServiceReference<SR> service,
+			ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
 
 			removedService(
 				serviceReferenceServiceTuple.getServiceReference(),
@@ -170,8 +175,8 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 
 		@Override
 		public void removedService(
-			final ServiceReference<S> serviceReference,
-			final ServiceReferenceServiceTuple<S>
+			final ServiceReference<SR> serviceReference,
+			final ServiceReferenceServiceTuple<SR, TS>
 				serviceReferenceServiceTuple) {
 
 			_serviceReferenceMapper.map(
@@ -180,7 +185,7 @@ public class ServiceTrackerMapImpl<K, S, R> implements ServiceTrackerMap<K, R> {
 
 					@Override
 					public void emit(K key) {
-						ServiceTrackerBucket<S, R> serviceTrackerBucket =
+						ServiceTrackerBucket<SR, TS, R> serviceTrackerBucket =
 							_serviceTrackerBuckets.get(key);
 
 						if (serviceTrackerBucket == null) {

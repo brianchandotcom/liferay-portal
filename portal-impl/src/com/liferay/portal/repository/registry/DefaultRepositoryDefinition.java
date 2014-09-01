@@ -37,7 +37,7 @@ import java.util.Set;
  */
 public class DefaultRepositoryDefinition
 	implements CapabilityRegistry, RepositoryDefinition,
-	RepositoryFactoryRegistry, RepositoryEventTrigger,
+			RepositoryFactoryRegistry, RepositoryEventTrigger,
 			RepositoryEventRegistry {
 
 	public DefaultRepositoryDefinition() {

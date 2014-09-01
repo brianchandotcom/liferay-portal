@@ -417,36 +417,29 @@ public class RepositoryLocalServiceImpl
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException {
 
+		long repositoryId = 0;
+
 		if (folderId != 0) {
 			DLFolder dlFolder = dlFolderLocalService.fetchDLFolder(folderId);
 
-			if (dlFolder == null) {
-				return 0;
-			}
-			else {
-				return dlFolder.getRepositoryId();
+			if (dlFolder != null) {
+				repositoryId = dlFolder.getRepositoryId();
 			}
 		}
 		else if (fileEntryId != 0) {
 			DLFileEntry dlFileEntry = dlFileEntryLocalService.fetchDLFileEntry(
 				fileEntryId);
 
-			if (dlFileEntry == null) {
-				return 0;
-			}
-			else {
-				return dlFileEntry.getRepositoryId();
+			if (dlFileEntry != null) {
+				repositoryId = dlFileEntry.getRepositoryId();
 			}
 		}
 		else if (fileVersionId != 0) {
 			DLFileVersion dlFileVersion =
 				dlFileVersionLocalService.fetchDLFileVersion(fileVersionId);
 
-			if (dlFileVersion == null) {
-				return 0;
-			}
-			else {
-				return dlFileVersion.getRepositoryId();
+			if (dlFileVersion != null) {
+				repositoryId = dlFileVersion.getRepositoryId();
 			}
 		}
 		else {
@@ -454,6 +447,8 @@ public class RepositoryLocalServiceImpl
 				"Missing a valid ID for folder, file entry, or file " +
 					"version");
 		}
+
+		return repositoryId;
 	}
 
 	protected long getRepositoryId(

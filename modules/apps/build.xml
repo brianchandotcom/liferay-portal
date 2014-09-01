@@ -6,7 +6,7 @@
 		<dirset dir="amazon-rankings" includes="*" />
 		<dirset dir="currency-converter" includes="*" />
 		<dirset dir="dictionary" includes="*" />
-		<!--<dirset dir="polls" includes="polls-api,polls-service,polls-web" />-->
+		<dirset dir="polls" includes="*" />
 		<dirset dir="social" includes="*" />
 		<dirset dir="web-proxy" includes="*" />
 		<dirset dir="xsl-content" includes="*" />

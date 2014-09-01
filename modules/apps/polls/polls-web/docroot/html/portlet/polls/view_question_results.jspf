@@ -104,13 +104,13 @@ for (int i = 0; i < choices.size(); i++) {
 		for (int i = 0; i < _CHARTS.length; i++) {
 			String chart = _CHARTS[i];
 
-			ResourceURL resourceUrl = renderResponse.createResourceURL();
+			ResourceURL resourceURL = renderResponse.createResourceURL();
 
-			resourceUrl.setParameter("struts_action", "/polls/view_chart");
-			resourceUrl.setParameter("chartType", TextFormatter.format(chart, TextFormatter.N));
-			resourceUrl.setParameter("questionId", Long.toString(question.getQuestionId()));
+			resourceURL.setParameter("struts_action", "/polls/view_chart");
+			resourceURL.setParameter("chartType", TextFormatter.format(chart, TextFormatter.N));
+			resourceURL.setParameter("questionId", Long.toString(question.getQuestionId()));
 
-			String hrefTaglib = "javascript:var viewChartWindow = window.open('" + resourceUrl + "', 'viewChart', 'directories=no,height=430,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no,width=420'); void(''); viewChartWindow.focus();";
+			String hrefTaglib = "javascript:var viewChartWindow = window.open('" + resourceURL + "', 'viewChart', 'directories=no,height=430,location=no,menubar=no,resizable=no,scrollbars=no,status=no,toolbar=no,width=420'); void(''); viewChartWindow.focus();";
 		%>
 
 			<aui:a href="<%= hrefTaglib %>"><liferay-ui:message key="<%= chart %>" /></aui:a><%= (i != (_CHARTS.length - 1)) ? StringPool.COMMA_AND_SPACE : StringPool.BLANK %>

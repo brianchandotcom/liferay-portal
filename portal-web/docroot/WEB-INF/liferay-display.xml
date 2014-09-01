@@ -110,7 +110,6 @@
 	</category>
 	<category name="category.shopping">
 		<portlet id="34" />
-		<portlet id="67" />
 	</category>
 	<category name="category.social">
 		<portlet id="121" />

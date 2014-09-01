@@ -660,19 +660,6 @@
 		<css-class-wrapper>portlet-recent-documents</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>67</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<struts-path>amazon_rankings</struts-path>
-		<configuration-action-class>com.liferay.portlet.amazonrankings.action.ConfigurationActionImpl</configuration-action-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<remoteable>true</remoteable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>0</render-weight>
-		<css-class-wrapper>portlet-amazon-rankings</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>70</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>password_generator</struts-path>

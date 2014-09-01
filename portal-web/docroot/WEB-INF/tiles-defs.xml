@@ -124,14 +124,6 @@
 		<put name="portlet_content" value="/portlet/admin/view.jsp" />
 	</definition>
 
-	<!-- Amazon Rankings -->
-
-	<definition name="portlet.amazon_rankings" extends="portlet" />
-
-	<definition name="portlet.amazon_rankings.view" extends="portlet.amazon_rankings">
-		<put name="portlet_content" value="/portlet/amazon_rankings/view.jsp" />
-	</definition>
-
 	<!-- Announcements -->
 
 	<definition name="portlet.announcements" extends="portlet" />

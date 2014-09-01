@@ -845,45 +845,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>67</portlet-name>
-		<display-name>Amazon Rankings</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
-		<init-param>
-			<name>config-template</name>
-			<value>/html/portlet/amazon_rankings/configuration.jsp</value>
-		</init-param>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/amazon_rankings/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/amazon_rankings/view</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<portlet-preferences>
-			<preference>
-				<name>isbns</name>
-				<value>0066620996</value>
-				<value>0131412752</value>
-				<value>0201633612</value>
-				<value>0310205719</value>
-				<value>0310241448</value>
-			</preference>
-			<preferences-validator>com.liferay.portlet.amazonrankings.AmazonRankingsPreferencesValidator</preferences-validator>
-		</portlet-preferences>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>70</portlet-name>
 		<display-name>Password Generator</display-name>
 		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>

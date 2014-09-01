@@ -1186,17 +1186,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			fileNames = getPluginJavaFiles();
 		}
 
-		_fitOnSingleLineExclusions = getList(
+		_fitOnSingleLineExclusions = getPropertyList(
 			"fit.on.single.line.exludes");
-		_hibernateSQLQueryExclusions = getList(
+		_hibernateSQLQueryExclusions = getPropertyList(
 			"hibernate.sql.query.excludes");
-		_javaTermSortExclusions = getList("javaterm.sort.excludes");
-		_lineLengthExclusions = getList("line.length.excludes");
-		_proxyExclusions = getList("proxy.excludes");
-		_secureRandomExclusions = getList("secure.random.excludes");
-		_staticLogVariableExclusions = getList("static.log.excludes");
-		_testAnnotationsExclusions = getList("test.annotations.excludes");
-		_upgradeServiceUtilExclusions = getList(
+		_javaTermSortExclusions = getPropertyList("javaterm.sort.excludes");
+		_lineLengthExclusions = getPropertyList("line.length.excludes");
+		_proxyExclusions = getPropertyList("proxy.excludes");
+		_secureRandomExclusions = getPropertyList("secure.random.excludes");
+		_staticLogVariableExclusions = getPropertyList("static.log.excludes");
+		_testAnnotationsExclusions = getPropertyList(
+			"test.annotations.excludes");
+		_upgradeServiceUtilExclusions = getPropertyList(
 			"upgrade.service.util.excludes");
 
 		for (String fileName : fileNames) {
@@ -2436,7 +2437,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _fitOnSingleLineExclusions;
 	private List<String> _hibernateSQLQueryExclusions;
 	private Set<String> _immutableFieldTypes = new HashSet<String>(
-		getList("immutable.field.types"));
+		getPropertyList("immutable.field.types"));
 	private Pattern _incorrectCloseCurlyBracePattern = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");
 	private Pattern _incorrectLineBreakPattern = Pattern.compile(

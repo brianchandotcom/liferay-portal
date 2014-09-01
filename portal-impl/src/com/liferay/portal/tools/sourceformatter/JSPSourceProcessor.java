@@ -430,6 +430,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				null);
 		}
 
+		if (!content.equals(newContent)) {
+			_jspContents.put(fileName, newContent);
+		}
+
 		return newContent;
 	}
 
@@ -575,8 +579,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				!_jspContents.isEmpty() &&
 				hasUnusedVariable(fileName, trimmedLine)) {
 
-				processErrorMessage(
-					fileName, "Unused variable: " + fileName + " " + lineCount);
+				continue;
 			}
 
 			// LPS-47179

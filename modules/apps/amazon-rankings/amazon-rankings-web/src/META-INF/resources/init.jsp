@@ -31,8 +31,7 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %>
+page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.text.NumberFormat" %>
 
@@ -40,21 +39,14 @@ page import="com.liferay.portlet.PortletURLUtil" %>
 page import="java.util.Set" %><%@
 page import="java.util.TreeSet" %>
 
-<%@ page import="javax.portlet.PortletMode" %><%@
-page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.ValidatorException" %><%@
+<%@ page import="javax.portlet.ValidatorException" %><%@
 page import="javax.portlet.WindowState" %>
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects />
 
 <%
-PortletMode portletMode = liferayPortletRequest.getPortletMode();
 WindowState windowState = liferayPortletRequest.getWindowState();
-
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
 
 String amazonAccessKeyId = portletPreferences.getValue("amazon.access.key.id", "");
 String amazonAssociateTag = portletPreferences.getValue("amazon.associate.tag" , "");

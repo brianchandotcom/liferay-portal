@@ -663,23 +663,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected abstract void format() throws Exception;
 
-	protected String format(String fileName) throws Exception {
-		File file = new File(BASEDIR + fileName);
-
-		fileName = StringUtil.replace(
-			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-		String absolutePath = getAbsolutePath(file);
-
-		String content = fileUtil.read(file);
-
-		String newContent = format(file, fileName, absolutePath, content);
-
-		processFormattedFile(file, fileName, content, newContent);
-
-		return newContent;
-	}
-
 	protected String format(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
@@ -696,6 +679,23 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return format(file, fileName, absolutePath, newContent);
+	}
+
+	protected String format(String fileName) throws Exception {
+		File file = new File(BASEDIR + fileName);
+
+		fileName = StringUtil.replace(
+			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+		String absolutePath = getAbsolutePath(file);
+
+		String content = fileUtil.read(file);
+
+		String newContent = format(file, fileName, absolutePath, content);
+
+		processFormattedFile(file, fileName, content, newContent);
+
+		return newContent;
 	}
 
 	protected String formatJavaTerms(
@@ -1059,8 +1059,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			fileUtil.write(file, newContent);
 		}
 		else if (_firstSourceMismatchException == null) {
-			_firstSourceMismatchException =
-				new SourceMismatchException(fileName, content, newContent);
+			_firstSourceMismatchException = new SourceMismatchException(
+				fileName, content, newContent);
 		}
 
 		if (_printErrors) {

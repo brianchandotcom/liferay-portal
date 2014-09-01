@@ -37,7 +37,6 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		if (!portalSource && fileName.endsWith("portlet.properties")) {
 			return formatPortletProperties(content);
-
 		}
 
 		formatPortalProperties(fileName, content);

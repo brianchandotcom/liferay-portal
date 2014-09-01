@@ -134,12 +134,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		String previousReferenceEntity = StringPool.BLANK;
 		String previousReferencePackagePath = StringPool.BLANK;
 
-		List<Element> referenceElements = entityElement.elements(
-			"reference");
+		List<Element> referenceElements = entityElement.elements("reference");
 
 		for (Element referenceElement : referenceElements) {
-			String referenceEntity = referenceElement.attributeValue(
-				"entity");
+			String referenceEntity = referenceElement.attributeValue("entity");
 			String referencePackagePath = referenceElement.attributeValue(
 				"package-path");
 
@@ -960,7 +958,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		int pos = fileName.lastIndexOf(StringPool.SLASH);
 
-		return getContent(fileName.substring(0, pos)  + "/sql/tables.sql", 1);
+		return getContent(fileName.substring(0, pos) + "/sql/tables.sql", 1);
 	}
 
 	protected String sortPoshiAttributes(String fileName, String content)

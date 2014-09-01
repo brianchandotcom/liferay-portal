@@ -40,9 +40,7 @@ import java.util.regex.Pattern;
 public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	protected void addImportCounts(String content) {
-		Pattern pattern = Pattern.compile("page import=\"(.+)\"");
-
-		Matcher matcher = pattern.matcher(content);
+		Matcher matcher = _importsPattern.matcher(content);
 
 		while (matcher.find()) {
 			String importName = matcher.group(1);
@@ -1276,11 +1274,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"tiles"
 	};
 
-	private Set<String> _checkedForIncludesFileNames = new HashSet<String>(); 
+	private Set<String> _checkedForIncludesFileNames = new HashSet<String>();
 	private List<String> _duplicateImportClassNames = new ArrayList<String>();
 	private List<String> _importClassNames = new ArrayList<String>();
 	private Map<String, Integer> _importCountMap =
 		new HashMap<String, Integer>();
+	private Pattern _importsPattern = Pattern.compile("page import=\"(.+)\"");
 	private Set<String> _includeFileNames = new HashSet<String>();
 	private Pattern _javaClassPattern = Pattern.compile(
 		"\n(private|protected|public).* class ([\\s\\S]*?)\n\\}\n");

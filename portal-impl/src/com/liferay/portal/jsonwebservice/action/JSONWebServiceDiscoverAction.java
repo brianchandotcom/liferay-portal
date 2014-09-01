@@ -35,9 +35,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import flexjson.JSONContext;
-import flexjson.PathExpression;
-
 import java.io.File;
 import java.io.Serializable;
 
@@ -234,15 +231,8 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 	private List<Map<String, String>> _buildPropertiesList(Class<?> type) {
 		try {
-			JSONContext jsonContext = JSONContext.get();
-
-			List<PathExpression> pathExpressions =
-				new ArrayList<PathExpression>();
-
-			jsonContext.setPathExpressions(pathExpressions);
-
 			FlexjsonBeanAnalyzerTransformer flexjsonBeanAnalyzerTransformer =
-				new FlexjsonBeanAnalyzerTransformer(pathExpressions) {
+				new FlexjsonBeanAnalyzerTransformer(type) {
 
 					@Override
 					protected String getTypeName(Class<?> type) {
@@ -251,9 +241,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 				};
 
-			flexjsonBeanAnalyzerTransformer.transform(type);
-
-			return flexjsonBeanAnalyzerTransformer.getPropertiesList();
+			return flexjsonBeanAnalyzerTransformer.collect();
 		}
 		catch (Exception e) {
 			return null;

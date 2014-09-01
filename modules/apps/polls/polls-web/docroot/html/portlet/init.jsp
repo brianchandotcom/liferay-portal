@@ -78,11 +78,11 @@ page import="javax.portlet.WindowState" %>
 <liferay-theme:defineObjects/>
 
 <%
-	PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
+WindowState windowState = liferayPortletRequest.getWindowState();
 
-	String currentURL = currentURLObj.toString();
+PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 
-	Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+String currentURL = currentURLObj.toString();
 
-	WindowState windowState = liferayPortletRequest.getWindowState();
+Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

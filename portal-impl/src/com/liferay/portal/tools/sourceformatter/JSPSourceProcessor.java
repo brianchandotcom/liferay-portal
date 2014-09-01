@@ -430,6 +430,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				null);
 		}
 
+		if (!content.equals(newContent)) {
+			_jspContents.put(fileName, newContent);
+		}
+
 		return newContent;
 	}
 

@@ -34,7 +34,7 @@ public abstract class BaseIntrabandPortalCacheManager
 	implements PortalCacheManager<K, V> {
 
 	public static Class<? extends PortalCache<?, ?>> getPortalCacheStubClass() {
-		return _stubClass;
+		return _STUB_CLASS;
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public abstract class BaseIntrabandPortalCacheManager
 
 		if (portalCache == null) {
 			portalCache = (PortalCache<K, V>)IntrabandProxyUtil.newStubInstance(
-				_stubClass, name, _registrationReference, _exceptionHandler);
+				_STUB_CLASS, name, _registrationReference, _exceptionHandler);
 
 			_portalCaches.put(name, portalCache);
 		}
@@ -66,15 +66,16 @@ public abstract class BaseIntrabandPortalCacheManager
 		_portalCaches.remove(name);
 	}
 
-	private static ExceptionHandler _exceptionHandler =
-		new WarnLogExceptionHandler();
-	private static Class<? extends PortalCache<?, ?>> _stubClass =
+	private static final Class<? extends PortalCache<?, ?>> _STUB_CLASS =
 		(Class<? extends PortalCache<?, ?>>)
 			IntrabandProxyUtil.getStubClass(
 				PortalCache.class, PortalCache.class.getName());
 
-	private Map<String, PortalCache<K, V>> _portalCaches =
+	private static final ExceptionHandler _exceptionHandler =
+		new WarnLogExceptionHandler();
+
+	private final Map<String, PortalCache<K, V>> _portalCaches =
 		new ConcurrentHashMap<String, PortalCache<K, V>>();
-	private RegistrationReference _registrationReference;
+	private final RegistrationReference _registrationReference = null;
 
 }

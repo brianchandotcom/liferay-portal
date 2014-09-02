@@ -34,9 +34,15 @@ public class ClassVisibilityChecker {
 		if ((allowedClasses != null) && allowedClasses.contains(ALL_CLASSES)) {
 			_allowAll = true;
 		}
+		else {
+			_allowAll = false;
+		}
 
 		if (_forbiddenClasses.contains(ALL_CLASSES)) {
 			_denyAll = true;
+		}
+		else {
+			_denyAll = false;
 		}
 
 		if (!_allowAll && !_denyAll) {
@@ -47,6 +53,9 @@ public class ClassVisibilityChecker {
 
 				_allowedPatterns.add(allowedPattern);
 			}
+		}
+		else {
+			_allowedPatterns = null;
 		}
 	}
 
@@ -70,11 +79,11 @@ public class ClassVisibilityChecker {
 		return false;
 	}
 
-	private static Set<String> _forbiddenClasses = new HashSet<String>(
+	private static final Set<String> _forbiddenClasses = new HashSet<String>(
 		Arrays.asList(PropsValues.SCRIPTING_FORBIDDEN_CLASSES));
 
-	private boolean _allowAll;
-	private Set<Pattern> _allowedPatterns;
-	private boolean _denyAll;
+	private final boolean _allowAll;
+	private final Set<Pattern> _allowedPatterns;
+	private final boolean _denyAll;
 
 }

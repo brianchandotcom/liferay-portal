@@ -139,7 +139,7 @@ public class ServerDetector {
 	}
 
 	public static boolean isSupportsComet() {
-		return getInstance()._supportsComet;
+		return getInstance()._SUPPORTS_COMET;
 	}
 
 	public static boolean isSupportsHotDeploy() {
@@ -339,6 +339,8 @@ public class ServerDetector {
 		return _detect("/com/ibm/websphere/product/VersionInfo.class");
 	}
 
+	private static final boolean _SUPPORTS_COMET = false;
+
 	private static Log _log = LogFactoryUtil.getLog(ServerDetector.class);
 
 	private static ServerDetector _instance;
@@ -353,7 +355,6 @@ public class ServerDetector {
 	private boolean _oc4j;
 	private boolean _resin;
 	private String _serverId;
-	private boolean _supportsComet;
 	private boolean _supportsHotDeploy;
 	private boolean _tomcat;
 	private boolean _webLogic;

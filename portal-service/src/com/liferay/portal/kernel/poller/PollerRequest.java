@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
@@ -144,10 +143,10 @@ public class PollerRequest implements Serializable {
 		return sb.toString();
 	}
 
-	private String _chunkId;
-	private Map<String, String> _parameterMap = Collections.emptyMap();
-	private PollerHeader _pollerHeader;
-	private String _portletId;
-	private boolean _receiveRequest;
+	private final String _chunkId;
+	private final Map<String, String> _parameterMap;
+	private final PollerHeader _pollerHeader;
+	private final String _portletId;
+	private final boolean _receiveRequest;
 
 }

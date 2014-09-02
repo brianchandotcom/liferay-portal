@@ -49,6 +49,9 @@ public class SimpleHTTPSender extends HTTPSender {
 		if (Validator.isNotNull(regexp)) {
 			_pattern = Pattern.compile(regexp);
 		}
+		else {
+			_pattern = null;
+		}
 	}
 
 	@Override
@@ -154,6 +157,6 @@ public class SimpleHTTPSender extends HTTPSender {
 
 	private static Log _log = LogFactoryUtil.getLog(SimpleHTTPSender.class);
 
-	private Pattern _pattern;
+	private final Pattern _pattern;
 
 }

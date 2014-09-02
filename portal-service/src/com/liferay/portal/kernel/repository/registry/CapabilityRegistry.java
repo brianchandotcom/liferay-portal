@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.repository.registry;
 
+import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 
 /**
@@ -26,5 +27,7 @@ public interface CapabilityRegistry {
 
 	public <S extends Capability, T extends S> void addSupportedCapability(
 		Class<S> capabilityClass, T capability);
+
+	public DocumentRepository getDocumentRepository();
 
 }

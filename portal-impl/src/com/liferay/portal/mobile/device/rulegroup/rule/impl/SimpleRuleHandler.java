@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -68,23 +68,6 @@ public class SimpleRuleHandler implements RuleHandler {
 
 	public static String getHandlerType() {
 		return SimpleRuleHandler.class.getName();
-	}
-
-	public SimpleRuleHandler() {
-		Collection<String> propertyNames = new ArrayList<String>(10);
-
-		propertyNames.add(PROPERTY_OS);
-		propertyNames.add(PROPERTY_SCREEN_PHYSICAL_WIDTH_MAX);
-		propertyNames.add(PROPERTY_SCREEN_PHYSICAL_WIDTH_MIN);
-		propertyNames.add(PROPERTY_SCREEN_PHYSICAL_HEIGHT_MAX);
-		propertyNames.add(PROPERTY_SCREEN_PHYSICAL_HEIGHT_MIN);
-		propertyNames.add(PROPERTY_SCREEN_RESOLUTION_WIDTH_MAX);
-		propertyNames.add(PROPERTY_SCREEN_RESOLUTION_WIDTH_MIN);
-		propertyNames.add(PROPERTY_SCREEN_RESOLUTION_HEIGHT_MAX);
-		propertyNames.add(PROPERTY_SCREEN_RESOLUTION_HEIGHT_MIN);
-		propertyNames.add(PROPERTY_TABLET);
-
-		_propertyNames = Collections.unmodifiableCollection(propertyNames);
 	}
 
 	@Override
@@ -338,6 +321,16 @@ public class SimpleRuleHandler implements RuleHandler {
 
 	private static Log _log = LogFactoryUtil.getLog(SimpleRuleHandler.class);
 
-	private final Collection<String> _propertyNames;
+	private final Collection<String> _propertyNames =
+		Collections.unmodifiableCollection(
+			Arrays.asList(
+				PROPERTY_OS, PROPERTY_SCREEN_PHYSICAL_WIDTH_MAX,
+				PROPERTY_SCREEN_PHYSICAL_WIDTH_MIN,
+				PROPERTY_SCREEN_PHYSICAL_HEIGHT_MAX,
+				PROPERTY_SCREEN_PHYSICAL_HEIGHT_MIN,
+				PROPERTY_SCREEN_RESOLUTION_WIDTH_MAX,
+				PROPERTY_SCREEN_RESOLUTION_WIDTH_MIN,
+				PROPERTY_SCREEN_RESOLUTION_HEIGHT_MAX,
+				PROPERTY_SCREEN_RESOLUTION_HEIGHT_MIN, PROPERTY_TABLET));
 
 }

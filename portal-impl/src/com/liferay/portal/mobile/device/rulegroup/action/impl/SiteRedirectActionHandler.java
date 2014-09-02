@@ -30,7 +30,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -134,7 +134,8 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 		return null;
 	}
 
-	private static final Collection<String> _propertyNames;
+	private static final Collection<String> _propertyNames =
+		Collections.unmodifiableCollection(Arrays.asList("groupId", "plid"));
 
 	private static Log _log = LogFactoryUtil.getLog(
 		SiteRedirectActionHandler.class);
@@ -144,14 +145,5 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 
 	@BeanReference(type = LayoutLocalService.class)
 	private LayoutLocalService _layoutLocalService;
-
-	static {
-		Collection<String> propertyNames = new ArrayList<String>(2);
-
-		propertyNames.add("groupId");
-		propertyNames.add("plid");
-
-		_propertyNames = Collections.unmodifiableCollection(propertyNames);
-	}
 
 }

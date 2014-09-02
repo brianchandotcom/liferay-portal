@@ -39,8 +39,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Adolfo Pérez
  */
-public class RepositoryDefinitionCatalogImpl
-	implements RepositoryDefinitionCatalog {
+public class RepositoryClassDefinitionCatalogImpl
+	implements RepositoryClassDefinitionCatalog {
 
 	@Override
 	public Collection<String> getExternalRepositoryClassNames() {
@@ -48,8 +48,10 @@ public class RepositoryDefinitionCatalogImpl
 	}
 
 	@Override
-	public RepositoryDefinition getRepositoryDefinition(String className) {
-		return _repositoryDefinitions.get(className);
+	public RepositoryClassDefinition getRepositoryClassDefinition(
+		String className) {
+
+		return _repositoryClassDefinitions.get(className);
 	}
 
 	public void loadDefaultRepositoryDefiners() {
@@ -116,19 +118,18 @@ public class RepositoryDefinitionCatalogImpl
 		unregisterRepositoryDefiner(className);
 	}
 
-	protected RepositoryDefinition createRepositoryDefinition(
+	protected RepositoryClassDefinition createRepositoryClassDefinition(
 		RepositoryDefiner repositoryDefiner) {
 
-		DefaultRepositoryDefinition defaultRepositoryDefinition =
-			new DefaultRepositoryDefinition();
+		DefaultRepositoryClassDefinition defaultRepositoryClassDefinition =
+			new DefaultRepositoryClassDefinition(repositoryDefiner);
 
-		repositoryDefiner.registerCapabilities(defaultRepositoryDefinition);
 		repositoryDefiner.registerRepositoryFactory(
-			defaultRepositoryDefinition);
+			defaultRepositoryClassDefinition);
 		repositoryDefiner.registerRepositoryEventListeners(
-			defaultRepositoryDefinition);
+			defaultRepositoryClassDefinition);
 
-		return defaultRepositoryDefinition;
+		return defaultRepositoryClassDefinition;
 	}
 
 	protected ServiceRegistration<RepositoryDefiner>
@@ -144,15 +145,15 @@ public class RepositoryDefinitionCatalogImpl
 	protected void unregisterRepositoryDefiner(String className) {
 		_externalRepositoriesClassNames.remove(className);
 
-		_repositoryDefinitions.remove(className);
+		_repositoryClassDefinitions.remove(className);
 	}
 
 	private Set<String> _externalRepositoriesClassNames =
 		new ConcurrentHashSet<String>();
 	private RepositoryFactory _legacyExternalRepositoryFactory;
 	private RepositoryDefiner _liferayRepositoryDefiner;
-	private Map<String, RepositoryDefinition> _repositoryDefinitions =
-		new ConcurrentHashMap<String, RepositoryDefinition>();
+	private Map<String, RepositoryClassDefinition> _repositoryClassDefinitions =
+		new ConcurrentHashMap<String, RepositoryClassDefinition>();
 	private StringServiceRegistrationMap<RepositoryDefiner>
 		_serviceRegistrations =
 			new StringServiceRegistrationMap<RepositoryDefiner>();
@@ -178,8 +179,8 @@ public class RepositoryDefinitionCatalogImpl
 				_externalRepositoriesClassNames.add(className);
 			}
 
-			_repositoryDefinitions.put(
-				className, createRepositoryDefinition(repositoryDefiner));
+			_repositoryClassDefinitions.put(
+				className, createRepositoryClassDefinition(repositoryDefiner));
 
 			return repositoryDefiner;
 		}
@@ -198,9 +199,9 @@ public class RepositoryDefinitionCatalogImpl
 				_externalRepositoriesClassNames.remove(className);
 			}
 
-			_repositoryDefinitions.put(
+			_repositoryClassDefinitions.put(
 				repositoryDefiner.getClassName(),
-				createRepositoryDefinition(repositoryDefiner));
+				createRepositoryClassDefinition(repositoryDefiner));
 		}
 
 		@Override

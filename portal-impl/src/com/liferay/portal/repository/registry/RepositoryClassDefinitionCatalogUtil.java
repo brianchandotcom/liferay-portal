@@ -22,34 +22,37 @@ import java.util.Collection;
 /**
  * @author Adolfo Pérez
  */
-public class RepositoryDefinitionCatalogUtil {
+public class RepositoryClassDefinitionCatalogUtil {
 
 	public static Collection<String> getExternalRepositoryClassNames() {
-		return _repositoryDefinitionCatalog.getExternalRepositoryClassNames();
+		return
+			_repositoryClassDefinitionCatalog.getExternalRepositoryClassNames();
 	}
 
 	public static void registerLegacyExternalRepositoryFactory(
 		String className, ExternalRepositoryFactory externalRepositoryFactory) {
 
-		_repositoryDefinitionCatalog.registerLegacyExternalRepositoryFactory(
-			className, externalRepositoryFactory);
+		_repositoryClassDefinitionCatalog.
+			registerLegacyExternalRepositoryFactory(
+				className, externalRepositoryFactory);
 	}
 
 	public static void unregisterLegacyExternalRepositoryFactory(
 		String className) {
 
-		_repositoryDefinitionCatalog.unregisterLegacyExternalRepositoryFactory(
-			className);
+		_repositoryClassDefinitionCatalog.
+			unregisterLegacyExternalRepositoryFactory(className);
 	}
 
-	public void setRepositoryDefinitionCatalog(
-		RepositoryDefinitionCatalog repositoryDefinitionCatalog) {
+	public void setRepositoryClassDefinitionCatalog(
+		RepositoryClassDefinitionCatalog repositoryClassDefinitionCatalog) {
 
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_repositoryDefinitionCatalog = repositoryDefinitionCatalog;
+		_repositoryClassDefinitionCatalog = repositoryClassDefinitionCatalog;
 	}
 
-	private static RepositoryDefinitionCatalog _repositoryDefinitionCatalog;
+	private static RepositoryClassDefinitionCatalog
+		_repositoryClassDefinitionCatalog;
 
 }

@@ -34,9 +34,8 @@ import java.util.Map;
  * @author Adolfo Pérez
  */
 public class DefaultRepositoryClassDefinition
-	implements RepositoryClassDefinition,
-			   RepositoryEventRegistry, RepositoryEventTrigger,
-			   RepositoryFactoryRegistry {
+	implements RepositoryClassDefinition, RepositoryEventRegistry,
+		RepositoryEventTrigger, RepositoryFactoryRegistry {
 
 	public DefaultRepositoryClassDefinition(
 		RepositoryDefiner repositoryDefiner) {
@@ -48,21 +47,16 @@ public class DefaultRepositoryClassDefinition
 	public RepositoryInstanceDefinition createRepositoryInstanceDefinition(
 		DocumentRepository documentRepository) {
 
-		RepositoryDefiner repositoryDefiner = getRepositoryDefiner();
+		RepositoryDefiner repositoryDefiner = _repositoryDefiner;
 
 		DefaultRepositoryInstanceDefinition
 			defaultRepositoryInstanceDefinition =
-			new DefaultRepositoryInstanceDefinition(documentRepository);
+				new DefaultRepositoryInstanceDefinition(documentRepository);
 
 		repositoryDefiner.registerCapabilities(
 			defaultRepositoryInstanceDefinition);
 
 		return defaultRepositoryInstanceDefinition;
-	}
-
-	@Override
-	public RepositoryDefiner getRepositoryDefiner() {
-		return _repositoryDefiner;
 	}
 
 	@Override

@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.polls.util;
+package com.liferay.polls.web.util;
 
 /**
  * @author Carlos Sierra Andrés
  */
 public class PollsWebKeys {
-
-	public static final String POLLS_PORTLET = "com.liferay.polls.web";
 
 	public static final String POLLS_QUESTION = "POLLS_QUESTION";
 

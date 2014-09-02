@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.polls.action;
+package com.liferay.polls.web.polls.portlet.action;
 
-import com.liferay.polls.util.PollsUtil;
+import com.liferay.polls.web.util.PollsUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.PortletAction;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.polls.auth.path;
+package com.liferay.polls.web.polls.portlet.path;
 
 import com.liferay.portal.kernel.struts.path.AuthPublicPath;
 

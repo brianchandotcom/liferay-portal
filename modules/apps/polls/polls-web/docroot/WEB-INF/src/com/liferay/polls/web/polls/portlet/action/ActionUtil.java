@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.polls.action;
+package com.liferay.polls.web.polls.portlet.action;
 
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.PollsQuestionServiceUtil;
-import com.liferay.polls.util.PollsWebKeys;
+import com.liferay.polls.web.util.PollsWebKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
 

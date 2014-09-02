@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
@@ -279,6 +280,11 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 		}
 
 		return headVersionLabel;
+	}
+
+	@Override
+	protected String getRootDir() {
+		return PropsValues.DL_STORE_ADVANCED_FILE_SYSTEM_ROOT_DIR;
 	}
 
 	private static final String _HOOK_EXTENSION = "afsh";

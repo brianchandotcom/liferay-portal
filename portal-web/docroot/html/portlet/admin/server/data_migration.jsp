@@ -28,6 +28,8 @@ for (String convertProcessClassName : PropsValues.CONVERT_PROCESSES) {
 }
 %>
 
+<liferay-ui:error exception="<%= InvalidFileSystemStoreRootDirException.class %>" message="the-root-directories-of-the-selected-file-system-stores-are-not-valid" />
+
 <c:choose>
 	<c:when test="<%= convertProcesses.isEmpty() %>">
 		<div class="alert alert-info">

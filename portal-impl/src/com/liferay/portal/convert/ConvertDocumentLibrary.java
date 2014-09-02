@@ -24,9 +24,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
@@ -58,6 +61,7 @@ import java.util.List;
 /**
  * @author Minhchau Dang
  * @author Alexander Chow
+ * @author László Csontos
  */
 public class ConvertDocumentLibrary extends ConvertProcess {
 
@@ -94,12 +98,79 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 	}
 
 	@Override
+	public void validateConversion()
+		throws InvalidFileSystemStoreRootDirException {
+
+		String sourceStoreClassName = getSourceStoreClassName();
+
+		if (!sourceStoreClassName.endsWith(_FILE_SYSTEM_STORE_SUFFIX)) {
+			return;
+		}
+
+		String targetStoreClassName = getTargetStoreClassName();
+
+		if (!targetStoreClassName.endsWith(_FILE_SYSTEM_STORE_SUFFIX)) {
+			return;
+		}
+
+		String advancedFileSystemStoreRootDir =
+			PropsValues.DL_STORE_ADVANCED_FILE_SYSTEM_ROOT_DIR;
+
+		String fileSystemStoreRootDir =
+			PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR;
+
+		if (Validator.isBlank(advancedFileSystemStoreRootDir) ||
+			Validator.isBlank(fileSystemStoreRootDir)) {
+
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Either ");
+				sb.append(PropsKeys.DL_STORE_ADVANCED_FILE_SYSTEM_ROOT_DIR);
+				sb.append(" or ");
+				sb.append(PropsKeys.DL_STORE_FILE_SYSTEM_ROOT_DIR);
+				sb.append(
+					" is null; set both of them to a valid path and retry.");
+
+				_log.warn(sb.toString());
+			}
+
+			throw new InvalidFileSystemStoreRootDirException();
+		}
+
+		boolean identicalRootDirs = true;
+
+		if (OSDetector.isWindows()) {
+			identicalRootDirs = StringUtil.equalsIgnoreCase(
+				advancedFileSystemStoreRootDir, fileSystemStoreRootDir);
+		}
+		else {
+			identicalRootDirs = advancedFileSystemStoreRootDir.equals(
+				fileSystemStoreRootDir);
+		}
+
+		if (identicalRootDirs) {
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Both ");
+				sb.append(PropsKeys.DL_STORE_ADVANCED_FILE_SYSTEM_ROOT_DIR);
+				sb.append(" and ");
+				sb.append(PropsKeys.DL_STORE_FILE_SYSTEM_ROOT_DIR);
+				sb.append(" refer to the same path.");
+
+				_log.warn(sb.toString());
+			}
+
+			throw new InvalidFileSystemStoreRootDirException();
+		}
+	}
+
+	@Override
 	protected void doConvert() throws Exception {
 		_sourceStore = StoreFactory.getInstance();
 
-		String[] values = getParameterValues();
-
-		String targetStoreClassName = values[0];
+		String targetStoreClassName = getTargetStoreClassName();
 
 		_targetStore = (Store)InstanceFactory.newInstance(
 			ClassLoaderUtil.getPortalClassLoader(), targetStoreClassName);
@@ -122,6 +193,18 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 
 		return ListUtil.sort(
 			dlFileVersions, new FileVersionVersionComparator(true));
+	}
+
+	protected String getSourceStoreClassName() {
+		Store sourceStore = StoreFactory.getInstance();
+
+		return sourceStore.getClass().getName();
+	}
+
+	protected String getTargetStoreClassName() {
+		String[] values = getParameterValues();
+
+		return values[0];
 	}
 
 	protected void migrateDL() throws PortalException {
@@ -323,6 +406,8 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 
 		actionableDynamicQuery.performActions();
 	}
+
+	private static final String _FILE_SYSTEM_STORE_SUFFIX = "FileSystemStore";
 
 	private static final String[] _HOOKS = new String[] {
 		AdvancedFileSystemStore.class.getName(), CMISStore.class.getName(),

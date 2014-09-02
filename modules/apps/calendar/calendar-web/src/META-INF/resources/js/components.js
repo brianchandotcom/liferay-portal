@@ -1001,11 +1001,11 @@
 					YEARLY: 'YEARLY'
 				},
 
-				INTERVAL_LABELS: {
-					DAILY: Liferay.Language.get('days'),
-					MONTHLY: Liferay.Language.get('months'),
-					WEEKLY: Liferay.Language.get('weeks'),
-					YEARLY: Liferay.Language.get('years')
+				INTERVAL_UNITS: {
+					DAILY: 'days',
+					MONTHLY: 'months',
+					WEEKLY: 'weeks',
+					YEARLY: 'years'
 				},
 
 				MONTH_LABELS: [
@@ -1044,71 +1044,51 @@
 				getSummary: function(recurrence) {
 					var instance = this;
 
-					var month = null;
-					var position = null;
-					var template = [];
-					var weekDay = null;
+					var params = {}
+					var parts = [];
 
 					if (recurrence.interval == 1) {
-						template.push(recurrence.frequency);
+						parts.push(A.Lang.String.toLowerCase(recurrence.frequency));
 					}
 					else {
-						template.push(Liferay.Language.get('every'), ' {interval} {intervalLabel}');
+						parts.push('every-x-' + instance.INTERVAL_UNITS[recurrence.frequency]);
+						params.interval = recurrence.interval;
 					}
 
 					if (recurrence.positionalWeekday) {
 						if (recurrence.frequency == instance.FREQUENCY.MONTHLY) {
-							template.push(STR_SPACE, Liferay.Language.get('on'), ' {position} {weekDay}');
+							parts.push('on-x-x');
+							params.positionIndex = instance.POSITION_LABELS[recurrence.positionalWeekday.position];
+							params.positionWeekday = instance.WEEKDAY_LABELS[recurrence.positionalWeekday.weekday];
 						}
 						else {
-							template.push(STR_SPACE, Liferay.Language.get('on-the'), ' {position} {weekDay} ', Liferay.Language.get('of'), ' {month}');
+							parts.push('on-x-x-of-x');
+							params.positionIndex = instance.POSITION_LABELS[recurrence.positionalWeekday.position];
+							params.positionMonth = instance.MONTH_LABELS[recurrence.positionalWeekday.month];
+							params.positionWeekday = instance.WEEKDAY_LABELS[recurrence.positionalWeekday.weekday];
 						}
-
-						month = instance.MONTH_LABELS[recurrence.positionalWeekday.month];
-						position = instance.POSITION_LABELS[recurrence.positionalWeekday.position];
-						weekDay = instance.WEEKDAY_LABELS[recurrence.positionalWeekday.weekday];
 					}
-					else if (recurrence.frequency == instance.FREQUENCY.WEEKLY && recurrence.weekdays.length > 0) {
-						template.push(STR_SPACE, TPL_SPAN, Liferay.Language.get('on'), TPL_SPAN_CLOSE, ' {weekDays}');
+					else if ((recurrence.frequency == instance.FREQUENCY.WEEKLY) && (recurrence.weekdays.length > 0)) {
+						parts.push('on-x');
+						params.positionWeekdays = recurrence.weekdays.join(', ');
 					}
 
-					if (recurrence.count && recurrence.endValue === 'after') {
-						template.push(', {count} ', Liferay.Language.get('times'));
+					if (recurrence.count && (recurrence.endValue === 'after')) {
+						parts.push('x-times');
+						params.endCount = recurrence.count;
 					}
 					else if (recurrence.untilDate && recurrence.endValue === 'on') {
 						var untilDate = recurrence.untilDate;
 
-						template.push(
-							STR_COMMA,
-							STR_SPACE,
-							TPL_SPAN,
-							Liferay.Language.get('until'),
-							TPL_SPAN_CLOSE,
-							A.Lang.sub(
-								' {month} {date}, {year}',
-								{
-									date: untilDate.getDate(),
-									month: instance.MONTH_LABELS[untilDate.getMonth()],
-									year: untilDate.getFullYear()
-								}
-							)
-						);
+						parts.push('until-x-x-x');
+						params.endDay = untilDate.getDate();
+						params.endMonth = instance.MONTH_LABELS[untilDate.getMonth()];
+						params.endYear = untilDate.getFullYear();
 					}
 
-					var summary = A.Lang.sub(
-						template.join(STR_BLANK),
-						{
-							count: recurrence.count,
-							interval: recurrence.interval,
-							intervalLabel: instance.INTERVAL_LABELS[recurrence.frequency],
-							month: month,
-							position: position,
-							weekDay: weekDay,
-							weekDays: recurrence.weekdays.join(', ')
-						}
-					);
+					template = parts.join('-');
 
-					return A.Lang.String.capitalize(summary);
+					return A.Lang.sub(Liferay.Language.get(template),params);
 				},
 
 				openConfirmationPanel: function(actionName, onlyThisInstanceFn, allFollowingFn, allEventsInFn, cancelFn) {

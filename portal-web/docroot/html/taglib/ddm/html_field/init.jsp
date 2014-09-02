@@ -26,6 +26,7 @@ java.lang.String fieldsNamespace = GetterUtil.getString((java.lang.String)reques
 boolean readOnly = GetterUtil.getBoolean(String.valueOf(request.getAttribute("ddm:html-field:readOnly")));
 boolean repeatable = GetterUtil.getBoolean(String.valueOf(request.getAttribute("ddm:html-field:repeatable")), true);
 java.util.Locale requestedLocale = (java.util.Locale)request.getAttribute("ddm:html-field:requestedLocale");
+boolean showEmptyFieldLabel = GetterUtil.getBoolean(String.valueOf(request.getAttribute("ddm:html-field:showEmptyFieldLabel")), true);
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("ddm:html-field:dynamicAttributes");
 Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("ddm:html-field:scopedAttributes");
 %>

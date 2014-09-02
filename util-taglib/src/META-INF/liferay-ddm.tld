@@ -56,6 +56,12 @@
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.util.Locale</type>
 		</attribute>
+		<attribute>
+			<name>showEmptyFieldLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
@@ -103,6 +109,12 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.util.Locale</type>
+		</attribute>
+		<attribute>
+			<name>showEmptyFieldLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>

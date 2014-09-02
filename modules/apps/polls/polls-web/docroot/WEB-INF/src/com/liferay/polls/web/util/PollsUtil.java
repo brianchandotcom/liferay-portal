@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.polls.util;
+package com.liferay.polls.web.util;
 
 import com.liferay.polls.NoSuchVoteException;
 import com.liferay.polls.model.PollsChoice;

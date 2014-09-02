@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.polls.upgrade;
+package com.liferay.polls.web.upgrade;
 
 import com.liferay.polls.configurator.PollServicesConfigurator;
-import com.liferay.polls.util.PollsWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -31,9 +30,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Miguel Pastor
  */
 @Component(
-	immediate = true, service = PollsPortletsUpgrade.class
+	immediate = true, service = PollsUpgrade.class
 )
-public class PollsPortletsUpgrade {
+public class PollsUpgrade {
 
 	@Reference(unbind = "-")
 	protected void setPollServicesConfigurator(
@@ -54,19 +53,15 @@ public class PollsPortletsUpgrade {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
-					new String[] {
-						"25", "25_WAR_pollsweb"
-					},
-					new String[] {
-						"59", "59_WAR_pollsweb"
-					}
+					new String[] {"25", "25_WAR_pollsweb"},
+					new String[] {"59", "59_WAR_pollsweb"}
 				};
 			}
 
 		};
 
 		_releaseLocalService.updateRelease(
-			PollsWebKeys.POLLS_PORTLET,
+			"com.liferay.polls.web",
 			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
 			false);
 	}

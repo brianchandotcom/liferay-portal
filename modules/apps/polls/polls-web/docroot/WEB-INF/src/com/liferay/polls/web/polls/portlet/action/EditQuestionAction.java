@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.polls.action;
+package com.liferay.polls.web.polls.portlet.action;
 
 import com.liferay.polls.DuplicateVoteException;
 import com.liferay.polls.NoSuchChoiceException;

@@ -15,32 +15,33 @@
 package com.liferay.portal.json;
 
 import com.liferay.portal.json.transformer.FileJSONTransformer;
-import com.liferay.portal.json.transformer.FlexjsonObjectJSONTransformer;
 import com.liferay.portal.json.transformer.JSONArrayJSONTransformer;
 import com.liferay.portal.json.transformer.JSONObjectJSONTransformer;
 import com.liferay.portal.json.transformer.JSONSerializableJSONTransformer;
 import com.liferay.portal.json.transformer.RepositoryModelJSONTransformer;
 import com.liferay.portal.json.transformer.UserJSONTransformer;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONSerializable;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletDisplayModel;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.model.User;
-
-import flexjson.TransformerUtil;
-
-import flexjson.transformer.NullTransformer;
-import flexjson.transformer.Transformer;
-import flexjson.transformer.TransformerWrapper;
-import flexjson.transformer.TypeTransformerMap;
+import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.OutputStream;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
+import javax.portlet.PortletURL;
 
-import java.util.Map;
+import jodd.introspector.CachingIntrospector;
+import jodd.introspector.JoddIntrospector;
+
+import jodd.json.JoddJson;
+import jodd.json.TypeJsonSerializerMap;
 
 /**
  * @author Igor Spasic
@@ -54,33 +55,7 @@ public class JSONInit {
 				return;
 			}
 
-			Field defaultTransformersField =
-				TransformerUtil.class.getDeclaredField("defaultTransformers");
-
-			defaultTransformersField.setAccessible(true);
-
-			TypeTransformerMap oldTransformersMap =
-				TransformerUtil.getDefaultTypeTransformers();
-
-			TypeTransformerMap newTransformersMap = new TypeTransformerMap();
-
-			for (Map.Entry<Class, Transformer> entry :
-					oldTransformersMap.entrySet()) {
-
-				newTransformersMap.put(entry.getKey(), entry.getValue());
-			}
-
-			_registerDefaultTransformers(newTransformersMap);
-
-			Field modifiersField = Field.class.getDeclaredField("modifiers");
-
-			modifiersField.setAccessible(true);
-
-			modifiersField.setInt(
-				defaultTransformersField,
-				defaultTransformersField.getModifiers() & ~Modifier.FINAL);
-
-			defaultTransformersField.set(null, newTransformersMap);
+			_registerDefaultTransformers();
 
 			_initalized = true;
 		}
@@ -89,30 +64,49 @@ public class JSONInit {
 		}
 	}
 
-	private static void _registerDefaultTransformers(
-		TypeTransformerMap transformersMap) {
+	private static void _registerDefaultTransformers() {
 
-		transformersMap.put(
-			File.class, new TransformerWrapper(new FileJSONTransformer()));
-		transformersMap.put(
-			InputStream.class, new TransformerWrapper(new NullTransformer()));
-		transformersMap.put(
+		// todo move this line to somewhere else (e.g. BeanUtilInit) ?
+
+		JoddIntrospector.introspector = new CachingIntrospector(
+			true, true, true, "_");
+
+		JoddJson.jsonAnnotation = JSON.class;
+
+		JoddJson.excludedTypes = new Class[] {
+			ExpandoBridge.class, InputStream.class, LiferayPortletRequest.class,
+			LiferayPortletResponse.class, OutputStream.class,
+			PortletDisplayModel.class, PortletURL.class
+		};
+
+		JoddJson.excludedTypeNames = new String[] {
+			"javax.*"
+		};
+
+		TypeJsonSerializerMap defaultTypeSerializerMap =
+			JoddJson.defaultSerializers;
+
+		defaultTypeSerializerMap.register(
+			File.class, new JoddJsonTransformer(new FileJSONTransformer()));
+
+		defaultTypeSerializerMap.register(
 			JSONArray.class,
-			new TransformerWrapper(new JSONArrayJSONTransformer()));
-		transformersMap.put(
+			new JoddJsonTransformer(new JSONArrayJSONTransformer()));
+
+		defaultTypeSerializerMap.register(
 			JSONObject.class,
-			new TransformerWrapper(new JSONObjectJSONTransformer()));
-		transformersMap.put(
+			new JoddJsonTransformer(new JSONObjectJSONTransformer()));
+
+		defaultTypeSerializerMap.register(
 			JSONSerializable.class,
-			new TransformerWrapper(new JSONSerializableJSONTransformer()));
-		transformersMap.put(
-			Object.class,
-			new TransformerWrapper(new FlexjsonObjectJSONTransformer()));
-		transformersMap.put(
+			new JoddJsonTransformer(new JSONSerializableJSONTransformer()));
+
+		defaultTypeSerializerMap.register(
 			RepositoryModel.class,
-			new TransformerWrapper(new RepositoryModelJSONTransformer()));
-		transformersMap.put(
-			User.class, new TransformerWrapper(new UserJSONTransformer()));
+			new JoddJsonTransformer(new RepositoryModelJSONTransformer()));
+
+		defaultTypeSerializerMap.register(
+			User.class, new JoddJsonTransformer(new UserJSONTransformer()));
 	}
 
 	private static boolean _initalized = false;

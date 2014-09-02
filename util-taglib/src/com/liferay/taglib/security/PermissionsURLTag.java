@@ -30,7 +30,6 @@ import com.liferay.portlet.PortletURLFactoryUtil;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -45,71 +44,19 @@ public class PermissionsURLTag extends TagSupport {
 
 	public static PortletURL createURL(
 		String redirect, String modelResource, String modelResourceDescription,
-		String resourceGroupId, String resourcePrimKey, String windowState,
+		Long resourceGroupId, String resourcePrimKey, String windowState,
 		int[] roleTypes, HttpServletRequest request) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (resourceGroupId == null) {
-			resourceGroupId = String.valueOf(themeDisplay.getScopeGroupId());
-		}
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (Validator.isNull(redirect) &&
-			(Validator.isNull(windowState) ||
-			 !windowState.equals(LiferayWindowState.POP_UP.toString()))) {
-
-			redirect = PortalUtil.getCurrentURL(request);
-		}
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.PORTLET_CONFIGURATION, layout.getPlid(),
-			PortletRequest.RENDER_PHASE);
-
 		try {
-			if (Validator.isNotNull(windowState)) {
-				portletURL.setWindowState(
-					WindowStateFactory.getWindowState(windowState));
-			}
-			else if (themeDisplay.isStatePopUp()) {
-				portletURL.setWindowState(LiferayWindowState.POP_UP);
-			}
-			else {
-				portletURL.setWindowState(WindowState.MAXIMIZED);
-			}
+			return _doTag(
+				redirect, modelResourceDescription, modelResourceDescription,
+				resourceGroupId, resourcePrimKey, windowState, roleTypes,
+				request);
 		}
-		catch (WindowStateException wse) {
+		catch (Exception e) {
 			throw new SystemException(
-				"Unable to create permissions portlet URL", wse);
+				"Unable to create permissions portlet URL", e);
 		}
-
-		portletURL.setParameter(
-			"struts_action", "/portlet_configuration/edit_permissions");
-
-		if (Validator.isNotNull(redirect)) {
-			portletURL.setParameter("redirect", redirect);
-
-			if (!themeDisplay.isStateMaximized()) {
-				portletURL.setParameter("returnToFullPageURL", redirect);
-			}
-		}
-
-		portletURL.setParameter("portletResource", portletDisplay.getId());
-		portletURL.setParameter("modelResource", modelResource);
-		portletURL.setParameter(
-			"modelResourceDescription", modelResourceDescription);
-		portletURL.setParameter("resourceGroupId", resourceGroupId);
-		portletURL.setParameter("resourcePrimKey", resourcePrimKey);
-
-		if (roleTypes != null) {
-			portletURL.setParameter("roleTypes", StringUtil.merge(roleTypes));
-		}
-
-		return portletURL;
 	}
 
 	public static void doTag(
@@ -119,30 +66,12 @@ public class PermissionsURLTag extends TagSupport {
 			int[] roleTypes, PageContext pageContext)
 		throws Exception {
 
-		String resourceGroupIdString = null;
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
 
-		if (resourceGroupId instanceof Number) {
-			Number resourceGroupIdNumber = (Number)resourceGroupId;
-
-			if (resourceGroupIdNumber.longValue() < 0) {
-				resourceGroupIdString = null;
-			}
-			else {
-				resourceGroupIdString = resourceGroupIdNumber.toString();
-			}
-		}
-		else if (resourceGroupId instanceof String) {
-			resourceGroupIdString = (String)resourceGroupId;
-
-			if (resourceGroupIdString.length() == 0) {
-				resourceGroupIdString = null;
-			}
-		}
-
-		PortletURL portletURL = createURL(
-			redirect, modelResourceDescription, modelResourceDescription,
-			resourceGroupIdString, resourcePrimKey, windowState, roleTypes,
-			(HttpServletRequest)pageContext.getRequest());
+		PortletURL portletURL = _doTag(
+			redirect, modelResource, modelResourceDescription, resourceGroupId,
+			resourcePrimKey, windowState, roleTypes, request);
 
 		String portletURLToString = portletURL.toString();
 
@@ -201,6 +130,87 @@ public class PermissionsURLTag extends TagSupport {
 
 	public void setWindowState(String windowState) {
 		_windowState = windowState;
+	}
+
+	private static PortletURL _doTag(
+			String redirect, String modelResource,
+			String modelResourceDescription, Object resourceGroupId,
+			String resourcePrimKey, String windowState, int[] roleTypes,
+			HttpServletRequest request)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (resourceGroupId instanceof Number) {
+			Number resourceGroupIdNumber = (Number)resourceGroupId;
+
+			if (resourceGroupIdNumber.longValue() < 0) {
+				resourceGroupId = null;
+			}
+		}
+		else if (resourceGroupId instanceof String) {
+			String esourceGroupIdString = (String)resourceGroupId;
+
+			if (esourceGroupIdString.length() == 0) {
+				resourceGroupId = null;
+			}
+		}
+
+		if (resourceGroupId == null) {
+			resourceGroupId = String.valueOf(themeDisplay.getScopeGroupId());
+		}
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (Validator.isNull(redirect) &&
+			(Validator.isNull(windowState) ||
+			 !windowState.equals(LiferayWindowState.POP_UP.toString()))) {
+
+			redirect = PortalUtil.getCurrentURL(request);
+		}
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			request, PortletKeys.PORTLET_CONFIGURATION, layout.getPlid(),
+			PortletRequest.RENDER_PHASE);
+
+		if (Validator.isNotNull(windowState)) {
+			portletURL.setWindowState(
+				WindowStateFactory.getWindowState(windowState));
+		}
+		else if (themeDisplay.isStatePopUp()) {
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		else {
+			portletURL.setWindowState(WindowState.MAXIMIZED);
+		}
+
+		portletURL.setParameter(
+			"struts_action", "/portlet_configuration/edit_permissions");
+
+		if (Validator.isNotNull(redirect)) {
+			portletURL.setParameter("redirect", redirect);
+
+			if (!themeDisplay.isStateMaximized()) {
+				portletURL.setParameter("returnToFullPageURL", redirect);
+			}
+		}
+
+		portletURL.setParameter("portletResource", portletDisplay.getId());
+		portletURL.setParameter("modelResource", modelResource);
+		portletURL.setParameter(
+			"modelResourceDescription", modelResourceDescription);
+		portletURL.setParameter(
+			"resourceGroupId", String.valueOf(resourceGroupId));
+		portletURL.setParameter("resourcePrimKey", resourcePrimKey);
+
+		if (roleTypes != null) {
+			portletURL.setParameter("roleTypes", StringUtil.merge(roleTypes));
+		}
+
+		return portletURL;
 	}
 
 	private String _modelResource;

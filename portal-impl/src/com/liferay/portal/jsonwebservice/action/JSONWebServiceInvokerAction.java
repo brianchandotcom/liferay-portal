@@ -15,7 +15,6 @@
 package com.liferay.portal.jsonwebservice.action;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONIncludesManagerUtil;
 import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -36,6 +34,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,8 +43,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import jodd.bean.BeanUtil;
 
-import jodd.introspector.ClassDescriptor;
-import jodd.introspector.ClassIntrospector;
+import jodd.json.BeanSerializer;
+import jodd.json.JsonContext;
+import jodd.json.JsonSerializer;
 
 import jodd.servlet.ServletUtil;
 
@@ -79,7 +79,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 	@Override
 	public Object invoke() throws Exception {
-		Object command = JSONFactoryUtil.looseDeserializeSafe(_command);
+		Object command = JSONFactoryUtil.looseDeserialize(_command);
 
 		List<Object> list = null;
 
@@ -159,24 +159,10 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 			JSONSerializer jsonSerializer = createJSONSerializer();
 
-			for (Statement statement : _statements) {
-				if (_includes != null) {
-					for (String include : _includes) {
-						jsonSerializer.include(include);
-					}
+			if (_includes != null) {
+				for (String include : _includes) {
+					jsonSerializer.include(include);
 				}
-
-				String name = statement.getName();
-
-				if (name == null) {
-					continue;
-				}
-
-				String includeName = name.substring(1);
-
-				_checkJSONSerializerIncludeName(includeName);
-
-				jsonSerializer.include(includeName);
 			}
 
 			return jsonSerializer.serialize(_result);
@@ -185,8 +171,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		protected JSONSerializer createJSONSerializer() {
 			JSONSerializer jsonSerializer =
 				JSONFactoryUtil.createJSONSerializer();
-
-			jsonSerializer.exclude("*.class");
 
 			return jsonSerializer;
 		}
@@ -212,7 +196,11 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		sb.append(name);
 
-		_includes.add(sb.toString());
+		String includeName = sb.toString();
+
+		if (!_includes.contains(includeName)) {
+			_includes.add(includeName);
+		}
 	}
 
 	private Object _addVariableStatement(
@@ -300,13 +288,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		return results;
 	}
 
-	private void _checkJSONSerializerIncludeName(String includeName) {
-		if (includeName.contains(StringPool.STAR)) {
-			throw new IllegalArgumentException(
-				includeName + " has special characters");
-		}
-	}
-
 	private List<Object> _convertObjectToList(Object object) {
 		if (object == null) {
 			return null;
@@ -352,73 +333,37 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	private Map<String, Object> _convertObjectToMap(
-		Statement statement, Object object, String prefix) {
+		final Statement statement, Object object, final String prefix) {
 
 		if (object instanceof Map) {
 			return (Map<String, Object>)object;
 		}
 
-		Class<?> clazz = object.getClass();
+		final Map<String, Object> destinationMap = new LinkedHashMap<>();
 
-		HashMap<Object, Object> destinationMap = new HashMap<Object, Object>();
+		JsonContext jsonContext = new JsonSerializer().createJsonContext(null);
 
-		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(clazz);
-		String[] includes = JSONIncludesManagerUtil.lookupIncludes(clazz);
+		BeanSerializer beanSerializer =
+			new BeanSerializer(jsonContext, object) {
+				@Override
+				protected void onSerializableProperty(
+						String propertyName, Class propertyType, Object value) {
 
-		ClassDescriptor classDescriptor = ClassIntrospector.lookup(
-			object.getClass());
+					destinationMap.put(propertyName, value);
 
-		String[] properties = classDescriptor.getAllBeanGetterNames(false);
+					String include = propertyName;
 
-		for (String property : properties) {
-			boolean includeProperty = true;
+					if (prefix != null) {
+						include = prefix + "." + include;
+					}
 
-			for (String exclude : excludes) {
-				if (exclude.equals(StringPool.STAR)) {
-					includeProperty = false;
-
-					break;
+					_addInclude(statement, include);
 				}
+		};
 
-				if (property.equals(exclude)) {
-					includeProperty = false;
+		beanSerializer.serialize();
 
-					break;
-				}
-			}
-
-			for (String include : includes) {
-				if (include.equals(StringPool.STAR)) {
-					includeProperty = true;
-
-					break;
-				}
-
-				if (property.equals(include)) {
-					includeProperty = true;
-
-					break;
-				}
-			}
-
-			if (includeProperty) {
-				Object value = BeanUtil.getProperty(object, property);
-
-				destinationMap.put(property, value);
-			}
-		}
-
-		object = destinationMap;
-
-		for (String include : includes) {
-			if (Validator.isNotNull(prefix)) {
-				include = prefix + StringPool.PERIOD + include;
-			}
-
-			_addInclude(statement, include);
-		}
-
-		return (Map<String, Object>)object;
+		return destinationMap;
 	}
 
 	private Object _executeStatement(Statement statement) throws Exception {

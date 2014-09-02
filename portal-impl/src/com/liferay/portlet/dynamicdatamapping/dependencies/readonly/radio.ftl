@@ -9,9 +9,11 @@
 		<@aui.input name=namespacedFieldName type="hidden" value=fieldValue />
 	</#if>
 
-	<label>
-		<@liferay_ui.message key=escape(label) />
-	</label>
+	<#if hasFieldValue || showEmptyFieldLabel>
+		<label>
+			<@liferay_ui.message key=escape(label) />
+		</label>
+	</#if>
 
 	${escape(fieldValue)}
 </div>

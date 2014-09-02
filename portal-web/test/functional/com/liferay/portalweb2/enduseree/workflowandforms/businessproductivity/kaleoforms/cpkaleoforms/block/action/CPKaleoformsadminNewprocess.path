@@ -60,8 +60,8 @@
 </tr>
 <!--FORM_NAVIGATOR-->
 <tr>
-	<td>FORM_NAVIGATOR_FIELDS_DEFINITION</td>
-	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'Fields Definition')]</td>
+	<td>FORM_NAVIGATOR_FIELD_SET</td>
+	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'Field Set')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -100,10 +100,10 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--FIELDS_DEFINITION-->
+<!--FIELD_SET-->
 <tr>
 	<td>SELECTED_DEFINITION</td>
-	<td>//div[contains(.,'Selected Definition')]/span</td>
+	<td>//div[contains(.,'Selected Field Set')]//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -112,8 +112,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_FIELDS_DEFINITION_BUTTON</td>
-	<td>//button[contains(.,'Add Fields Definition')]</td>
+	<td>ADD_FIELD_SET_BUTTON</td>
+	<td>//button[contains(.,'Add Field Set')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -121,15 +121,15 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--FIELDS_DEFINITION_TABLE-->
+<!--FIELD_SET_TABLE-->
 <tr>
-	<td>FIELDS_DEFINITION_TABLE_NAME</td>
-	<td>xpath=(//div[contains(@id,'kaleoformsportlet_ddmStructures')]//tr[contains(.,'${key_kfFieldsDefinitionName}')]/td[1])[1]</td>
+	<td>FIELD_SET_TABLE_NAME</td>
+	<td>xpath=(//div[contains(@id,'kaleoformsportlet_ddmStructures')]//tr[contains(.,'${key_kfFieldSetName}')]/td[1])[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FIELDS_DEFINITION_TABLE_ACTIONS</td>
-	<td>xpath=(//div[contains(@id,'kaleoformsportlet_ddmStructures')]//tr[contains(.,'${key_kfFieldsDefinitionName}')]/td[4]/div/a[@title='Actions'])[1]</td>
+	<td>FIELD_SET_TABLE_ACTIONS</td>
+	<td>xpath=(//div[contains(@id,'kaleoformsportlet_ddmStructures')]//tr[contains(.,'${key_kfFieldSetName}')]/td[4]/div/a[@title='Actions'])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -137,14 +137,14 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--FIELDS_DEFINITION_MENULIST-->
+<!--FIELD_SET_MENULIST-->
 <tr>
-	<td>FIELDS_DEFINITION_MENULIST_EDIT</td>
+	<td>FIELD_SET_MENULIST_EDIT</td>
 	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FIELDS_DEFINITION_MENULIST_CHOOSE</td>
+	<td>FIELD_SET_MENULIST_CHOOSE</td>
 	<td>//a[@role='menuitem' and contains(.,'Choose')]</td>
 	<td></td>
 </tr>

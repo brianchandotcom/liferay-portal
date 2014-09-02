@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>CPKaleoformsadminNewprocessEditfieldsdefinition</title>
+<title>CPKaleoformsadminNewprocessEditfieldset</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CPKaleoformsadminNewprocessEditfieldsdefinition</td></tr>
+<tr><td rowspan="1" colspan="3">CPKaleoformsadminNewprocessEditfieldset</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>CPKaleoformsadminNewprocessEditfieldsdefinition</td>
+	<td>CPKaleoformsadminNewprocessEditfieldset</td>
 </tr>
 <tr>
 	<td></td>
@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>EXTEND_ACTION_PATH</td>
-	<td>CPKaleoformsadminNewprocessAddfieldsdefinition</td>
+	<td>CPKaleoformsadminNewprocessAddfieldset</td>
 	<td></td>
 </tr>
 <tr>

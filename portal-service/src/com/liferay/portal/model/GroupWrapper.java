@@ -263,7 +263,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	#getChildrenWithLayouts(boolean, int, int, OrderByComparator}
+	#getChildrenWithLayouts(boolean, int, int, OrderByComparator)}
 	*/
 	@Deprecated
 	@Override

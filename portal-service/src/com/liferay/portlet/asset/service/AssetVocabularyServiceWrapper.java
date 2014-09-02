@@ -237,7 +237,7 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	#AssetUtil.filterVocabularyIds(PermissionChecker, long[])}
+	AssetUtil#filterVocabularyIds(PermissionChecker, long[])}
 	*/
 	@Deprecated
 	@Override

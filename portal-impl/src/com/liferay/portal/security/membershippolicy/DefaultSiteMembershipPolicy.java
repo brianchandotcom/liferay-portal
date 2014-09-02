@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -41,6 +40,8 @@ import java.util.Map;
  * @author Sergio González
  */
 public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
+
+	public static final int DELETE_INTERVAL = 100;
 
 	@Override
 	public void checkMembership(
@@ -216,12 +217,12 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
 		int count = UserLocalServiceUtil.getGroupUsersCount(group.getGroupId());
 
-		int pages = count / Indexer.DEFAULT_INTERVAL;
+		int pages = count / DELETE_INTERVAL;
 
 		int start = 0;
 
 		for (int i = 0; i <= pages; i++) {
-			int end = start + Indexer.DEFAULT_INTERVAL;
+			int end = start + DELETE_INTERVAL;
 
 			List<User> users = UserLocalServiceUtil.getGroupUsers(
 				group.getGroupId(), start, end);

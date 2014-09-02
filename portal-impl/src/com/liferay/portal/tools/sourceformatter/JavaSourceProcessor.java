@@ -207,6 +207,25 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected void checkFinderCacheInterfaceMethod(
+		String fileName, String content) {
+
+		if (!fileName.endsWith("FinderImpl.java") ||
+			!content.contains("public static final FinderPath")) {
+
+			return;
+		}
+
+		Matcher matcher = _fetchByPrimaryKeysMethodPattern.matcher(content);
+
+		if (!matcher.find()) {
+			processErrorMessage(
+				fileName,
+				"LPS-49552: Missing override of BasePersistenceImpl." +
+					"fetchByPrimaryKeys(Set<Serializable>): " + fileName);
+		}
+	}
+
 	protected String checkIfClause(
 			String ifClause, String fileName, int lineCount)
 		throws IOException {
@@ -972,6 +991,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = checkImmutableAndStaticableFieldTypes(
 			fileName, packagePath, className, newContent);
+
+		// LPS-49552
+
+		checkFinderCacheInterfaceMethod(fileName, newContent);
 
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			newContent, fileName);
@@ -2420,6 +2443,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(Map|Set|List)<(.+)>" +
 			"\\(\n*\t*(.*)\\);\n");
+	private Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
+		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
 	private List<String> _fitOnSingleLineExclusions;
 	private List<String> _hibernateSQLQueryExclusions;
 	private Set<String> _immutableFieldTypes;

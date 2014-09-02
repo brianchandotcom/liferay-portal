@@ -104,7 +104,6 @@ public class ComboServletTest extends PowerMockito {
 					Object[] args = invocation.getArguments();
 
 					if ((PortletKeys.ADMIN).equals(args[0])) {
-
 						return _adminPortlet;
 					}
 					else if (PortletKeys.PORTAL.equals(args[0])) {

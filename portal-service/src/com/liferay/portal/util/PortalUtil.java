@@ -2398,7 +2398,7 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #removePortalInetSocketAddressEventListener(
+	 *             #removePortalEventListener(
 	 *             PortalInetSocketAddressEventListener)}
 	 */
 	@Deprecated

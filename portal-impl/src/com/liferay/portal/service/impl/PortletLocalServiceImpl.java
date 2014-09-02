@@ -142,6 +142,16 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 	@Override
 	public void checkPortlet(Portlet portlet) throws PortalException {
+		long companyId = portlet.getCompanyId();
+		String name = portlet.getPortletId();
+
+		if (resourcePermissionLocalService.getResourcePermissionsCount(
+				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, name) < 1) {
+
+			resourceLocalService.addResources(
+				companyId, 0, 0, name, name, true, false, false);
+		}
+
 		if (portlet.isSystem()) {
 			return;
 		}
@@ -152,8 +162,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			return;
 		}
 
-		long companyId = portlet.getCompanyId();
-		String name = portlet.getPortletId();
 		int scope = ResourceConstants.SCOPE_COMPANY;
 		String primKey = String.valueOf(companyId);
 		String actionId = ActionKeys.ADD_TO_PAGE;
@@ -165,15 +173,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			for (String roleName : roleNames) {
 				Role role = roleLocalService.getRole(companyId, roleName);
 
-				if (resourceBlockLocalService.isSupported(name)) {
-					resourceBlockLocalService.addCompanyScopePermission(
-						companyId, name, role.getRoleId(), actionId);
-				}
-				else {
-					resourcePermissionLocalService.addResourcePermission(
-						companyId, name, scope, primKey, role.getRoleId(),
-						actionId);
-				}
+				resourcePermissionLocalService.addResourcePermission(
+					companyId, name, scope, primKey, role.getRoleId(),
+					actionId);
 			}
 		}
 

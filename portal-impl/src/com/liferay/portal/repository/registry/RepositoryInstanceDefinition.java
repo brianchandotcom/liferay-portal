@@ -14,23 +14,17 @@
 
 package com.liferay.portal.repository.registry;
 
-import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
-import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 
 import java.util.Map;
 import java.util.Set;
 
 /**
- * @author Adolfo Pérez
+ * @author Iván Zaera
  */
-public interface RepositoryDefinition {
+public interface RepositoryInstanceDefinition {
 
 	public Set<Class<? extends Capability>> getExportedCapabilities();
-
-	public RepositoryEventTrigger getRepositoryEventTrigger();
-
-	public RepositoryFactory getRepositoryFactory();
 
 	public Map<Class<? extends Capability>, Capability>
 		getSupportedCapabilities();

@@ -520,35 +520,32 @@
 	</command>
 
 	<command name="EditMBCategory" priority="5">
-		<var name="categoryName" value="MB Category Name" />
-		<var name="categoryNameEdit" value="MB Category Name Edit" />
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#editPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="categoryNameEdit" value="${categoryNameEdit}" />
+			<var name="categoryName" value="MB Category Name" />
+			<var name="categoryNameEdit" value="MB Category Name Edit" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#viewPG">
+			<var name="categoryName" value="MB Category Name Edit" />
 		</execute>
 	</command>
 
 	<command name="EditMBThreadBody" priority="5">
-		<var name="threadBody" value="MB Thread Message Body" />
-		<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
-		<var name="threadSubject" value="MB Thread Message Subject" />
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -557,13 +554,81 @@
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="postCount" value="1" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="MessageboardsThread#editPG">
-			<var name="threadBodyEdit" value="${threadBodyEdit}" />
+			<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="MB Thread Message Body Edit" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+	</command>
+
+	<command name="EditMBThreadSubject" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="postCount" value="1" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="MessageboardsThread#editPG">
+			<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject Edit" />
+		</execute>
+	</command>
+
+	<command name="EditMBThreadSubjectAndBody" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#gotoPG">
+			<var name="postCount" value="1" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="MessageboardsThread#editPG">
+			<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
+			<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="threadBody" value="MB Thread Message Body Edit" />
+			<var name="threadSubject" value="MB Thread Message Subject Edit" />
 		</execute>
 	</command>
 

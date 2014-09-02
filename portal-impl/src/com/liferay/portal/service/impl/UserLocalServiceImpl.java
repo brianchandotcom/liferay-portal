@@ -2350,7 +2350,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws     PortalException if a user with the primary key could not be
 	 *             found
 	 * @deprecated As of 7.0.0, replaced by {@link #getSocialUsers(long, int,
-	 *             boolean, int, int, OrderByComparator)}
+	 *             String, int, int, OrderByComparator)}
 	 */
 	@Deprecated
 	@Override
@@ -5455,11 +5455,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *             found or if the new information was invalid
 	 * @deprecated As of 7.0.0, replaced by {@link #updateUser(long, String,
 	 *             String, String, boolean, String, String, String, String,
-	 *             long, String, String, String, String, String, String, String,
-	 *             String, int, int, boolean, int, int, int, String, String,
-	 *             String, String, String, String, String, String, String,
-	 *             String, String, long[], long[], long[], java.util.List,
-	 *             long[], boolean, byte[], ServiceContext)}
+	 *             long, String, boolean, byte[], String, String, String,
+	 *             String, String, String, String, int, int, boolean, int, int,
+	 *             int, String, String, String, String, String, String, String,
+	 *             String, String, String, String, long[], long[], long[],
+	 *             java.util.List, long[], ServiceContext)}
 	 */
 	@Deprecated
 	@Override

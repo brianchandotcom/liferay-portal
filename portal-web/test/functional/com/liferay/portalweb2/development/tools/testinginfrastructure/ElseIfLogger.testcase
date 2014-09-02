@@ -4,15 +4,15 @@
 
 	<command name="MacroElseClauseEvaluated" priority="5">
 		<execute macro="ElseIfLogger#switchConditional">
-			<var name="switch" value="5" />
 			<var name="expected" value="Last clause" />
+			<var name="switch" value="5" />
 		</execute>
 	</command>
 
 	<command name="MacroElseIfClauseEvaluated" priority="5">
 		<execute macro="ElseIfLogger#switchConditional">
-			<var name="switch" value="3" />
 			<var name="expected" value="3rd clause" />
+			<var name="switch" value="3" />
 		</execute>
 	</command>
 
@@ -89,6 +89,80 @@
 				<then>
 					<execute macro="TestUtils#pass">
 						<var name="message" value="4th clause is true: PASS" />
+					</execute>
+				</then>
+			</elseif>
+			<else>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Last clause is not true: FAIL" />
+				</execute>
+			</else>
+		</if>
+	</command>
+
+	<command name="TestCaseElseIfConditions" priority="5">
+		<if>
+			<condition action="ElseIfLogger#isElementPresent" locator-key1="FAKE_ELEMENT" />
+			<then>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="1st clause is not true: FAIL" />
+				</execute>
+			</then>
+			<elseif>
+				<condition action="ElseIfLogger#isElementPresent" locator-key1="REAL_ELEMENT" />
+				<then>
+					<execute macro="TestUtils#pass">
+						<var name="message" value="2nd clause is true: PASS" />
+					</execute>
+				</then>
+			</elseif>
+			<else>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Last clause is not true: FAIL" />
+				</execute>
+			</else>
+		</if>
+	</command>
+
+	<command name="TestCaseElseIfContains" priority="5">
+		<if>
+			<contains string="abcdefg" substring="abcdefghij" />
+			<then>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="1st clause is not true: FAIL" />
+				</execute>
+			</then>
+			<elseif>
+				<contains string="abcdefg" substring="abc" />
+				<then>
+					<execute macro="TestUtils#pass">
+						<var name="message" value="2nd clause is true: PASS" />
+					</execute>
+				</then>
+			</elseif>
+			<else>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="Last clause is not true: FAIL" />
+				</execute>
+			</else>
+		</if>
+	</command>
+
+	<command name="TestCaseElseIfIsset" priority="5">
+		<var name="switch" value="4" />
+
+		<if>
+			<isset var="fake" />
+			<then>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="1st clause is not true: FAIL" />
+				</execute>
+			</then>
+			<elseif>
+				<isset var="switch" />
+				<then>
+					<execute macro="TestUtils#pass">
+						<var name="message" value="2nd clause is true: PASS" />
 					</execute>
 				</then>
 			</elseif>

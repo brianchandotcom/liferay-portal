@@ -1388,7 +1388,14 @@ public class DDMStructureLocalServiceImpl
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
-		return ddmFormFieldsMap.keySet();
+		Set<String> ddmFormFieldsNames = new HashSet<String>(
+			ddmFormFieldsMap.size());
+
+		for (String ddmFormFieldName : ddmFormFieldsMap.keySet()) {
+			ddmFormFieldsNames.add(StringUtil.toLowerCase(ddmFormFieldName));
+		}
+
+		return ddmFormFieldsNames;
 	}
 
 	protected Set<String> getElementNames(Document document) {

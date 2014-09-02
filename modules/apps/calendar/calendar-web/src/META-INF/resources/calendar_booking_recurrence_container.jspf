@@ -160,11 +160,11 @@ if (recurrence != null) {
 
 					<div class='<%= ListUtil.isEmpty(weekdays) ? "hide" : StringPool.BLANK %>' id="<portlet:namespace />viewPositionalWeekday">
 						<aui:select inlineField="<%= true %>" label="" name="position">
-							<aui:option label="first" selected="<%= positionalWeekday.getPosition() == 1 %>" value="1" />
-							<aui:option label="second" selected="<%= positionalWeekday.getPosition() == 2 %>" value="2" />
-							<aui:option label="third" selected="<%= positionalWeekday.getPosition() == 3 %>" value="3" />
-							<aui:option label="fourth" selected="<%= positionalWeekday.getPosition() == 4 %>" value="4" />
-							<aui:option label="last" selected="<%= positionalWeekday.getPosition() == -1 %>" value="-1" />
+							<aui:option label="position.first" selected="<%= positionalWeekday.getPosition() == 1 %>" value="1" />
+							<aui:option label="position.second" selected="<%= positionalWeekday.getPosition() == 2 %>" value="2" />
+							<aui:option label="position.third" selected="<%= positionalWeekday.getPosition() == 3 %>" value="3" />
+							<aui:option label="position.fourth" selected="<%= positionalWeekday.getPosition() == 4 %>" value="4" />
+							<aui:option label="position.last" selected="<%= positionalWeekday.getPosition() == -1 %>" value="-1" />
 						</aui:select>
 
 						<aui:select inlineField="<%= true %>" label="" name="weekday">

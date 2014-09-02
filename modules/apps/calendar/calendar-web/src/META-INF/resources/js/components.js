@@ -1024,11 +1024,11 @@
 				],
 
 				POSITION_LABELS: {
-					'-1': Liferay.Language.get('last'),
-					'1': Liferay.Language.get('first'),
-					'2': Liferay.Language.get('second'),
-					'3': Liferay.Language.get('third'),
-					'4': Liferay.Language.get('fourth')
+				    '-1': Liferay.Language.get('position.last'),
+				    '1': Liferay.Language.get('position.first'),
+				    '2': Liferay.Language.get('position.second'),
+				    '3': Liferay.Language.get('position.third'),
+				    '4': Liferay.Language.get('position.fourth')
 				},
 
 				WEEKDAY_LABELS: {

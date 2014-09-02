@@ -45,14 +45,14 @@ public class PermissionsURLTag extends TagSupport {
 
 	public static PortletURL createURL(
 		String redirect, String modelResource, String modelResourceDescription,
-		String resourceGroupId, String resourcePrimKey, String windowState,
+		Long resourceGroupId, String resourcePrimKey, String windowState,
 		int[] roleTypes, HttpServletRequest request) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		if (resourceGroupId == null) {
-			resourceGroupId = String.valueOf(themeDisplay.getScopeGroupId());
+			resourceGroupId = themeDisplay.getScopeGroupId();
 		}
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
@@ -102,7 +102,8 @@ public class PermissionsURLTag extends TagSupport {
 		portletURL.setParameter("modelResource", modelResource);
 		portletURL.setParameter(
 			"modelResourceDescription", modelResourceDescription);
-		portletURL.setParameter("resourceGroupId", resourceGroupId);
+		portletURL.setParameter(
+			"resourceGroupId", String.valueOf(resourceGroupId));
 		portletURL.setParameter("resourcePrimKey", resourcePrimKey);
 
 		if (roleTypes != null) {
@@ -119,29 +120,32 @@ public class PermissionsURLTag extends TagSupport {
 			int[] roleTypes, PageContext pageContext)
 		throws Exception {
 
-		String resourceGroupIdString = null;
+		Long resourceGroupIdLong = null;
 
 		if (resourceGroupId instanceof Number) {
 			Number resourceGroupIdNumber = (Number)resourceGroupId;
 
 			if (resourceGroupIdNumber.longValue() < 0) {
-				resourceGroupIdString = null;
+				resourceGroupIdLong = null;
 			}
 			else {
-				resourceGroupIdString = resourceGroupIdNumber.toString();
+				resourceGroupIdLong = resourceGroupIdNumber.longValue();
 			}
 		}
 		else if (resourceGroupId instanceof String) {
-			resourceGroupIdString = (String)resourceGroupId;
+			String resourceGroupIdString = (String)resourceGroupId;
 
 			if (resourceGroupIdString.length() == 0) {
-				resourceGroupIdString = null;
+				resourceGroupIdLong = null;
+			}
+			else {
+				resourceGroupIdLong = Long.valueOf(resourceGroupIdString);
 			}
 		}
 
 		PortletURL portletURL = createURL(
 			redirect, modelResourceDescription, modelResourceDescription,
-			resourceGroupIdString, resourcePrimKey, windowState, roleTypes,
+			resourceGroupIdLong, resourcePrimKey, windowState, roleTypes,
 			(HttpServletRequest)pageContext.getRequest());
 
 		String portletURLToString = portletURL.toString();

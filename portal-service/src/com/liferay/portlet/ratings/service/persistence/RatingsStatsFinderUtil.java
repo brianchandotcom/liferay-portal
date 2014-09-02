@@ -24,6 +24,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class RatingsStatsFinderUtil {
+	public static java.util.Map<java.io.Serializable, com.liferay.portlet.ratings.model.RatingsStats> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getFinder().fetchByPrimaryKeys(primaryKeys);
+	}
+
 	public static java.util.List<com.liferay.portlet.ratings.model.RatingsStats> findByC_C(
 		long classNameId, java.util.List<java.lang.Long> classPKs) {
 		return getFinder().findByC_C(classNameId, classPKs);

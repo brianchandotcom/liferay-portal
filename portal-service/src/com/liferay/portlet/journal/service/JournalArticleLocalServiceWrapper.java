@@ -3432,9 +3432,10 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	@Override
-	public void setTreePaths(long folderId, java.lang.String treePath)
+	public void setTreePaths(long folderId, java.lang.String treePath,
+		boolean reindex)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_journalArticleLocalService.setTreePaths(folderId, treePath);
+		_journalArticleLocalService.setTreePaths(folderId, treePath, reindex);
 	}
 
 	/**

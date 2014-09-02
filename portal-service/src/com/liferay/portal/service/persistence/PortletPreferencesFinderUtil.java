@@ -43,6 +43,11 @@ public class PortletPreferencesFinderUtil {
 		return getFinder().findByPortletId(portletId);
 	}
 
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.PortletPreferences> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getFinder().fetchByPrimaryKeys(primaryKeys);
+	}
+
 	public static java.util.List<com.liferay.portal.model.PortletPreferences> findByC_G_O_O_P_P(
 		long companyId, long groupId, long ownerId, int ownerType,
 		java.lang.String portletId, boolean privateLayout) {

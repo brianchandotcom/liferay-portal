@@ -1708,6 +1708,16 @@ public class LayoutLocalServiceUtil {
 		return getService().updateParentLayoutId(plid, parentPlid);
 	}
 
+	/**
+	* Updates the parent layout ID and priority of the layout.
+	*
+	* @param plid the primary key of the layout
+	* @param parentPlid the primary key of the parent layout
+	* @param priority the layout's new priority
+	* @return the layout matching the primary key
+	* @throws PortalException if a layout with the primary key could not be
+	found or if a valid parent layout ID could not be found
+	*/
 	public static com.liferay.portal.model.Layout updateParentLayoutIdAndPriority(
 		long plid, long parentPlid, int priority)
 		throws com.liferay.portal.kernel.exception.PortalException {

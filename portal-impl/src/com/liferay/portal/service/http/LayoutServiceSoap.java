@@ -1058,6 +1058,15 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* Updates the parent layout ID and priority of the layout.
+	*
+	* @param plid the primary key of the layout
+	* @param parentPlid the primary key of the parent layout
+	* @param priority the layout's new priority
+	* @return the layout matching the primary key
+	* @throws PortalException if a portal exception occurred
+	*/
 	public static com.liferay.portal.model.LayoutSoap updateParentLayoutIdAndPriority(
 		long plid, long parentPlid, int priority) throws RemoteException {
 		try {

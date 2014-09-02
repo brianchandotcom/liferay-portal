@@ -3008,7 +3008,8 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public void setTreePaths(long folderId, java.lang.String treePath)
+	public void setTreePaths(long folderId, java.lang.String treePath,
+		boolean reindex)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**

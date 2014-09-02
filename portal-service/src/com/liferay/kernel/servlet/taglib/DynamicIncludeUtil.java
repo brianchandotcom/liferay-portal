@@ -29,8 +29,8 @@ public class DynamicIncludeUtil {
 	}
 
 	private DynamicIncludeUtil() {
-		_dynamicIncludes = ServiceTrackerCollections.multiValueMap(
-			DynamicInclude.class, "key");
+//		_dynamicIncludes = ServiceTrackerCollections.multiValueMap(
+//			DynamicInclude.class, "key");
 
 		_dynamicIncludes.open();
 	}

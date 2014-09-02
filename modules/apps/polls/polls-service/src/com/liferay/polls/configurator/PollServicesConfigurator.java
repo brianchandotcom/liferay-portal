@@ -36,9 +36,6 @@ import org.springframework.context.ApplicationContext;
 )
 public class PollServicesConfigurator {
 
-	public static final String BUNDLE_SYMBOLYC_NAME =
-		"com.liferay.polls.service";
-
 	@Activate
 	protected void activate() throws Exception {
 		_serviceConfigurator.initServices(getConfiguration(), getClassLoader());
@@ -69,11 +66,11 @@ public class PollServicesConfigurator {
 	@Reference(
 		target =
 			"(org.springframework.context.service.name=" +
-				BUNDLE_SYMBOLYC_NAME + ")",
+				"com.liferay.polls.service)",
 		unbind = "-"
 	)
-	protected void setApplicationContext(ApplicationContext applicationContext)
-		throws Exception {
+	protected void setApplicationContext(
+		ApplicationContext applicationContext) {
 	}
 
 	@Reference(unbind = "-")

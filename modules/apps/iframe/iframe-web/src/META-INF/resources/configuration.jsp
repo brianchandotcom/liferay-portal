@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/iframe/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String htmlAttributes =

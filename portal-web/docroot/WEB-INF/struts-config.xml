@@ -778,14 +778,6 @@
 
 		<action path="/group_pages/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />
 
-		<!-- IFrame -->
-
-		<action path="/iframe/proxy" forward="/portlet/iframe/proxy.jsp" />
-
-		<action path="/iframe/view" type="com.liferay.portlet.iframe.action.ViewAction">
-			<forward name="portlet.iframe.view" path="portlet.iframe.view" />
-		</action>
-
 		<!-- Image Gallery Display -->
 
 		<action path="/image_gallery_display/edit_folder" type="com.liferay.portlet.documentlibrary.action.EditFolderAction">

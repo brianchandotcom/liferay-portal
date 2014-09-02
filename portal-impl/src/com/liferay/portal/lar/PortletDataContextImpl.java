@@ -1938,6 +1938,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		ExpandoBridge expandoBridge = classedModel.getExpandoBridge();
 
+		if (expandoBridge == null) {
+			return;
+		}
+
 		Map<String, Serializable> expandoBridgeAttributes =
 			expandoBridge.getAttributes();
 

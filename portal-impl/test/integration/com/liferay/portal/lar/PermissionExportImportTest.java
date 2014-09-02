@@ -214,6 +214,6 @@ public class PermissionExportImportTest extends PowerMockito {
 	private static final String[] _ACTION_IDS =
 		{ActionKeys.ADD_TO_PAGE, ActionKeys.VIEW};
 
-	private static final String _PORTLET_ID = PortletKeys.BOOKMARKS;
+	private static final String _PORTLET_ID = PortletKeys.LAYOUTS_ADMIN;
 
 }

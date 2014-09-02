@@ -118,7 +118,7 @@ public interface PortletDataContext extends Serializable {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #addClassedModel(Element,
-	 *             ClassedModel, Class)}
+	 *             String, ClassedModel, Class)}
 	 */
 	@Deprecated
 	public void addClassedModel(

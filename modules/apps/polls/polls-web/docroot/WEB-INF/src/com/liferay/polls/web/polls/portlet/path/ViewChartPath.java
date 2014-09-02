@@ -50,6 +50,8 @@ public class ViewChartPath implements AuthPublicPath {
 
 	protected void updatePath(Map<String, String> properties) {
 		if (!properties.containsKey(AUTH_PUBLIC_PATH)) {
+			_path = null;
+
 			return;
 		}
 

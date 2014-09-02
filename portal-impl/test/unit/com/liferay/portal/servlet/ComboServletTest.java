@@ -23,7 +23,6 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.io.File;
 import java.io.IOException;
@@ -103,11 +102,11 @@ public class ComboServletTest extends PowerMockito {
 
 					Object[] args = invocation.getArguments();
 
-					if ((PortletKeys.ADMIN).equals(args[0])) {
+					if (_PORTLET_A.equals(args[0])) {
 
 						return _adminPortlet;
 					}
-					else if (PortletKeys.PORTAL.equals(args[0])) {
+					else if (_PORTLET_A.equals(args[0])) {
 						return _portalPortlet;
 					}
 
@@ -159,7 +158,7 @@ public class ComboServletTest extends PowerMockito {
 		when(
 			_portalPortlet.getRootPortletId()
 		).thenReturn(
-			PortletKeys.PORTAL
+			_PORTLET_A
 		);
 
 		_comboServlet.init(servletConfig);
@@ -226,12 +225,14 @@ public class ComboServletTest extends PowerMockito {
 	@Test
 	public void testGetResourceWithPortletId() throws Exception {
 		_comboServlet.getResourceURL(
-			_mockHttpServletRequest, PortletKeys.ADMIN + ":/js/javascript.js");
+			_mockHttpServletRequest, _PORTLET_A + ":/js/javascript.js");
 
 		verify(_pluginServletContext);
 
 		_pluginServletContext.getResource("/js/javascript.js");
 	}
+
+	private static final String _PORTLET_A = "portlet_a";
 
 	@Mock
 	private Portlet _adminPortlet;

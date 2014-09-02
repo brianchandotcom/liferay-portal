@@ -29,7 +29,6 @@ import java.util.List;
 import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -607,27 +606,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void makeVisible(String locator) {
-		WebElement bodyWebElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)bodyWebElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)webDriver;
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("var element = arguments[0];");
-		sb.append("element.style.cssText = 'display:inline !important';");
-		sb.append("element.style.overflow = 'visible';");
-		sb.append("element.style.minHeight = '1px';");
-		sb.append("element.style.minWidth = '1px';");
-		sb.append("element.style.opacity = '1';");
-		sb.append("element.style.visibility = 'visible';");
-
-		WebElement locatorWebElement = getWebElement(locator);
-
-		javascriptExecutor.executeScript(sb.toString(), locatorWebElement);
+		WebDriverHelper.makeVisible(this, locator);
 	}
 
 	@Override

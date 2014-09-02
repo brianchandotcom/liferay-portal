@@ -18,6 +18,10 @@ import com.thoughtworks.selenium.Selenium;
 
 import io.appium.java_client.MobileDriver;
 
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
+
 import org.w3c.dom.Node;
 
 /**
@@ -749,7 +753,7 @@ public class MobileDriverToSeleniumBridge
 	}
 
 	public void setTimeoutImplicit(String timeout) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.setDefaultTimeoutImplicit(this);
 	}
 
 	@Override
@@ -854,6 +858,22 @@ public class MobileDriverToSeleniumBridge
 	@Override
 	public void windowMaximize() {
 		throw new UnsupportedOperationException();
+	}
+
+	protected WebElement getWebElement(String locator) {
+		return WebDriverHelper.getWebElement(this, locator);
+	}
+
+	protected WebElement getWebElement(String locator, String timeout) {
+		return WebDriverHelper.getWebElement(this, locator, timeout);
+	}
+
+	protected List<WebElement> getWebElements(String locator) {
+		return WebDriverHelper.getWebElements(this, locator);
+	}
+
+	protected List<WebElement> getWebElements(String locator, String timeout) {
+		return WebDriverHelper.getWebElements(this, locator, timeout);
 	}
 
 }

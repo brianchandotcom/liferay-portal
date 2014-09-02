@@ -38,7 +38,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 import java.util.TreeSet;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1517,9 +1516,7 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void setDefaultTimeoutImplicit() {
-		int timeout = TestPropsValues.TIMEOUT_IMPLICIT_WAIT * 1000;
-
-		setTimeoutImplicit(String.valueOf(timeout));
+		WebDriverHelper.setDefaultTimeoutImplicit(this);
 	}
 
 	@Override
@@ -1542,12 +1539,7 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void setTimeoutImplicit(String timeout) {
-		WebDriver.Options options = manage();
-
-		WebDriver.Timeouts timeouts = options.timeouts();
-
-		timeouts.implicitlyWait(
-			GetterUtil.getInteger(timeout), TimeUnit.MILLISECONDS);
+		WebDriverHelper.setTimeoutImplicit(this, timeout);
 	}
 
 	@Override
@@ -1791,73 +1783,19 @@ public class WebDriverToSeleniumBridge
 	}
 
 	protected WebElement getWebElement(String locator) {
-		return getWebElement(locator, null);
+		return WebDriverHelper.getWebElement(this, locator);
 	}
 
 	protected WebElement getWebElement(String locator, String timeout) {
-		List<WebElement> webElements = getWebElements(locator, timeout);
-
-		if (!webElements.isEmpty()) {
-			return webElements.get(0);
-		}
-
-		return null;
+		return WebDriverHelper.getWebElement(this, locator, timeout);
 	}
 
 	protected List<WebElement> getWebElements(String locator) {
-		return getWebElements(locator, null);
+		return WebDriverHelper.getWebElements(this, locator);
 	}
 
 	protected List<WebElement> getWebElements(String locator, String timeout) {
-		if (timeout != null) {
-			setTimeoutImplicit(timeout);
-		}
-
-		try {
-			if (locator.startsWith("//")) {
-				return findElements(By.xpath(locator));
-			}
-			else if (locator.startsWith("class=")) {
-				locator = locator.substring(6);
-
-				return findElements(By.className(locator));
-			}
-			else if (locator.startsWith("css=")) {
-				locator = locator.substring(4);
-
-				return findElements(By.cssSelector(locator));
-			}
-			else if (locator.startsWith("link=")) {
-				locator = locator.substring(5);
-
-				return findElements(By.linkText(locator));
-			}
-			else if (locator.startsWith("name=")) {
-				locator = locator.substring(5);
-
-				return findElements(By.name(locator));
-			}
-			else if (locator.startsWith("tag=")) {
-				locator = locator.substring(4);
-
-				return findElements(By.tagName(locator));
-			}
-			else if (locator.startsWith("xpath=") ||
-					 locator.startsWith("xPath=")) {
-
-				locator = locator.substring(6);
-
-				return findElements(By.xpath(locator));
-			}
-			else {
-				return findElements(By.id(locator));
-			}
-		}
-		finally {
-			if (timeout != null) {
-				setDefaultTimeoutImplicit();
-			}
-		}
+		return WebDriverHelper.getWebElements(this, locator, timeout);
 	}
 
 	protected void initKeys() {

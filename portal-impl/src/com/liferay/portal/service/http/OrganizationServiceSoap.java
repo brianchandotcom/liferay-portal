@@ -667,9 +667,8 @@ public class OrganizationServiceSoap {
 	the new information was invalid
 	* @deprecated As of 6.2.0, replaced by {@link #updateOrganization(long,
 	long, String, String, long, long, int, String, boolean,
-	java.util.List, java.util.List, java.util.List,
-	java.util.List, java.util.List, boolean, byte[],
-	ServiceContext)}
+	byte[], boolean, java.util.List, java.util.List, java.util.List,
+	java.util.List, java.util.List, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.model.OrganizationSoap updateOrganization(
@@ -853,9 +852,8 @@ public class OrganizationServiceSoap {
 	the new information was invalid
 	* @deprecated As of 7.0.0, replaced by {@link #updateOrganization(long,
 	long, String, String, long, long, int, String, boolean,
-	java.util.List, java.util.List, java.util.List,
-	java.util.List, java.util.List, boolean, byte[],
-	ServiceContext)}
+	byte[], boolean, java.util.List, java.util.List, java.util.List,
+	java.util.List, java.util.List, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.model.OrganizationSoap updateOrganization(

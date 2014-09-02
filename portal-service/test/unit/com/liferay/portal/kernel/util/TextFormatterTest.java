@@ -204,9 +204,9 @@ public class TextFormatterTest {
 		long bytes = 1024;
 
 		Assert.assertEquals(
-			"1k", TextFormatter.formatStorageSize(bytes, LocaleUtil.SPAIN));
+			"1KB", TextFormatter.formatStorageSize(bytes, LocaleUtil.SPAIN));
 		Assert.assertEquals(
-			"1k", TextFormatter.formatStorageSize(bytes, LocaleUtil.US));
+			"1KB", TextFormatter.formatStorageSize(bytes, LocaleUtil.US));
 	}
 
 	@Test

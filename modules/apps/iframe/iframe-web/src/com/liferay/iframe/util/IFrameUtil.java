@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.iframe.util;
+package com.liferay.iframe.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

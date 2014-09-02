@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.iframe.action;
+package com.liferay.iframe.action;
 
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -23,10 +24,20 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurationActionImpl extends DefaultConfigurationAction {
+
+@Component(
+		immediate = true,
+		property = {
+			"javax.portlet.name=com_liferay_iframe_portlet_IFramePortlet"
+		},
+		service = ConfigurationAction.class
+	)
+public class IFrameConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
 	public void processAction(

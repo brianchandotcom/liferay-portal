@@ -455,6 +455,14 @@ public class SeleniumBuilderFileUtil {
 
 	protected void throwValidationException(
 		int errorCode, String fileName, Element element, String[] array,
+		String string1) {
+
+		throwValidationException(
+			errorCode, fileName, element, array, string1, null, null);
+	}
+
+	protected void throwValidationException(
+		int errorCode, String fileName, Element element, String[] array,
 		String string1, String string2, Exception e) {
 
 		String prefix = "Error " + errorCode + ": ";
@@ -543,6 +551,11 @@ public class SeleniumBuilderFileUtil {
 			throw new IllegalArgumentException(
 				prefix + "Description '" + string1 +
 					"' must end with a '.' in " + suffix);
+		}
+		else if (errorCode == 1018) {
+			throw new IllegalArgumentException(
+				prefix + "Missing attribute value (" + StringUtil.merge(
+					array, "|") + ") in " + string1 + " in " + suffix);
 		}
 		else if (errorCode == 2000) {
 			throw new IllegalArgumentException(
@@ -917,6 +930,20 @@ public class SeleniumBuilderFileUtil {
 
 					throwValidationException(
 						1005, fileName, executeElement, attributeName);
+				}
+
+				String attributeValue = attribute.getValue();
+
+				if (attributeName.equals("value1") &&
+					attributeValue.contains("move-file")) {
+
+					if (!attributeValue.contains("-Dtoken") ||
+						!attributeValue.contains("-Dvalue")) {
+
+						throwValidationException(
+							1018, fileName, executeElement,
+							new String[] {"-Dtoken | -Dvalue"}, "value1");
+					}
 				}
 			}
 		}

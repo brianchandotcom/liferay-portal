@@ -37,6 +37,8 @@ languageId = LocaleUtil.toLanguageId(locale);
 
 String name = ParamUtil.getString(request, "name");
 
+String toolbarSet = ParamUtil.getString(request, "toolbarSet");
+
 response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
 
@@ -66,11 +68,16 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.language = '<%= languageId.replace("iw_", "he_") %>';
 
-	alloyEditor.config.toolbars = {
-		add: ['image', 'code'],
-		image: ['left', 'right'],
-		styles: ['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']
-	};
+	var toolbars = {
+		default: {
+			add: ['image', 'code'],
+			image: ['left', 'right'],
+			styles: ['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']
+		},
+		none: {}
+	}
+
+	alloyEditor.config.toolbars = toolbars['<%= toolbarSet %>'] || toolbars.default;
 };
 
 window['<%= HtmlUtil.escapeJS(name) %>Config']();

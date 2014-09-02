@@ -26,6 +26,8 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
 long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 
+String title = BeanParamUtil.getString(entry, request, "title");
+String subtitle = BeanParamUtil.getString(entry, request, "subtitle");
 String content = BeanParamUtil.getString(entry, request, "content");
 boolean allowPingbacks = PropsValues.BLOGS_PINGBACK_ENABLED && BeanParamUtil.getBoolean(entry, request, "allowPingbacks", true);
 boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.getBoolean(entry, request, "allowTrackbacks", true);
@@ -91,9 +93,13 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	</c:if>
 
 	<aui:fieldset>
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="title" />
+		<liferay-ui:input-editor contents="<%= title %>" editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" name="title" placeholder="title" toolbarSet="none" />
 
-		<aui:input name="subtitle" />
+		<aui:input name="title" type="hidden" />
+
+		<liferay-ui:input-editor contents="<%= subtitle %>" editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" name="subtitle" placeholder="subtitle" toolbarSet="none" />
+
+		<aui:input name="subtitle" type="hidden" />
 
 		<aui:input name="displayDate" />
 
@@ -116,11 +122,9 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			<br />
 		</c:if>
 
-		<aui:field-wrapper label="content">
-			<liferay-ui:input-editor contents="<%= content %>" editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
+		<liferay-ui:input-editor contents="<%= content %>" editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" name="content" placeholder="content" />
 
-			<aui:input name="content" type="hidden" />
-		</aui:field-wrapper>
+		<aui:input name="content" type="hidden" />
 
 		<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
 			<liferay-ui:custom-attribute-list
@@ -292,6 +296,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 <aui:script>
 	var <portlet:namespace />saveDraftIntervalId = null;
 	var <portlet:namespace />oldTitle = null;
+	var <portlet:namespace />oldSubtitle = null;
 	var <portlet:namespace />oldContent = null;
 
 	function <portlet:namespace />clearSaveDraftIntervalId() {
@@ -322,8 +327,9 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		function(draft, ajax) {
 			var A = AUI();
 
-			var title = document.<portlet:namespace />fm.<portlet:namespace />title.value;
-			var content = window.<portlet:namespace />editor.getHTML();
+			var title = window['<portlet:namespace />title'].getHTML();
+			var subtitle = window['<portlet:namespace />subtitle'].getHTML();
+			var content = window['<portlet:namespace />content'].getHTML();
 
 			var publishButton = A.one('#<portlet:namespace />publishButton');
 			var cancelButton = A.one('#<portlet:namespace />cancelButton');
@@ -337,6 +343,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 				}
 
 				if ((<portlet:namespace />oldTitle == title) &&
+					(<portlet:namespace />oldSubtitle == subtitle) &&
 					(<portlet:namespace />oldContent == content)) {
 
 					return;
@@ -360,6 +367,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 					<portlet:namespace />entryId: document.<portlet:namespace />fm.<portlet:namespace />entryId.value,
 					<portlet:namespace />redirect: document.<portlet:namespace />fm.<portlet:namespace />redirect.value,
 					<portlet:namespace />referringPortletResource: document.<portlet:namespace />fm.<portlet:namespace />referringPortletResource.value,
+					<portlet:namespace />subtitle: subtitle,
 					<portlet:namespace />title: title,
 					<portlet:namespace />workflowAction: <%= WorkflowConstants.ACTION_SAVE_DRAFT %>
 				};
@@ -439,6 +447,8 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 				<portlet:namespace />clearSaveDraftIntervalId();
 
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>';
+				document.<portlet:namespace />fm.<portlet:namespace />title.value = title;
+				document.<portlet:namespace />fm.<portlet:namespace />subtitle.value = subtitle;
 				document.<portlet:namespace />fm.<portlet:namespace />content.value = content;
 
 				if (draft) {

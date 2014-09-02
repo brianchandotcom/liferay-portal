@@ -17,21 +17,18 @@ package com.liferay.portal.repository;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
-import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
-import com.liferay.portal.repository.registry.DefaultRepositoryInstanceDefinition;
 import com.liferay.portal.repository.registry.RepositoryClassDefinition;
 import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalog;
 import com.liferay.portal.repository.registry.RepositoryInstanceDefinition;
@@ -70,7 +67,8 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 			repositoryFactory.createLocalRepository(repositoryId);
 
 		RepositoryInstanceDefinition repositoryInstanceDefinition =
-			getRepositoryInstanceDefinition(localRepository);
+			repositoryClassDefinition.createRepositoryInstanceDefinition(
+				localRepository);
 
 		return new CapabilityLocalRepository(
 			localRepository,
@@ -95,7 +93,8 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 			repositoryId);
 
 		RepositoryInstanceDefinition repositoryInstanceDefinition =
-			getRepositoryInstanceDefinition(repository);
+			repositoryClassDefinition.createRepositoryInstanceDefinition(
+				repository);
 
 		Map<Class<? extends Capability>, Capability>
 			externalSupportedCapabilities =
@@ -125,29 +124,6 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 			repository, externalSupportedCapabilities,
 			externalExportedCapabilityClasses,
 			repositoryClassDefinition.getRepositoryEventTrigger());
-	}
-
-	protected RepositoryInstanceDefinition
-			getRepositoryInstanceDefinition(DocumentRepository repository)
-		throws PortalException {
-
-		long classNameId = getRepositoryClassNameId(
-			repository.getRepositoryId());
-
-		RepositoryClassDefinition repositoryClassDefinition =
-			getRepositoryClassDefinition(classNameId);
-
-		RepositoryDefiner repositoryDefiner =
-			repositoryClassDefinition.getRepositoryDefiner();
-
-		DefaultRepositoryInstanceDefinition
-			defaultRepositoryInstanceDefinition =
-				new DefaultRepositoryInstanceDefinition(repository);
-
-		repositoryDefiner.registerCapabilities(
-			defaultRepositoryInstanceDefinition);
-
-		return defaultRepositoryInstanceDefinition;
 	}
 
 	protected CMISRepositoryHandler getCMISRepositoryHandler(

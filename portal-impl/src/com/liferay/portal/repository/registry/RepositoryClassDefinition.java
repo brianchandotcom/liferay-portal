@@ -14,6 +14,7 @@
 
 package com.liferay.portal.repository.registry;
 
+import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
@@ -24,6 +25,9 @@ import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 public interface RepositoryClassDefinition {
 
 	RepositoryDefiner getRepositoryDefiner();
+
+	public RepositoryInstanceDefinition createRepositoryInstanceDefinition(
+		DocumentRepository documentRepository);
 
 	public RepositoryEventTrigger getRepositoryEventTrigger();
 

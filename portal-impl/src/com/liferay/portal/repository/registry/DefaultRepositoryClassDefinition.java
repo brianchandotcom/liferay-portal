@@ -15,6 +15,7 @@
 package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
@@ -41,6 +42,22 @@ public class DefaultRepositoryClassDefinition
 		RepositoryDefiner repositoryDefiner) {
 
 		_repositoryDefiner = repositoryDefiner;
+	}
+
+	@Override
+	public RepositoryInstanceDefinition createRepositoryInstanceDefinition(
+		DocumentRepository documentRepository) {
+
+		RepositoryDefiner repositoryDefiner = getRepositoryDefiner();
+
+		DefaultRepositoryInstanceDefinition
+			defaultRepositoryInstanceDefinition =
+			new DefaultRepositoryInstanceDefinition(documentRepository);
+
+		repositoryDefiner.registerCapabilities(
+			defaultRepositoryInstanceDefinition);
+
+		return defaultRepositoryInstanceDefinition;
 	}
 
 	@Override

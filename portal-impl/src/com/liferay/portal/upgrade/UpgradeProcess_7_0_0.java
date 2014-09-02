@@ -20,9 +20,9 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeAdminPortlets;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAsset;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeBookmarksPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeCalEvent;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeDLFileEntryTypes;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDLPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDocumentLibrary;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeDefaultDataTranslations;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDynamicDataMapping;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeEmailNotificationPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeExpando;
@@ -69,7 +69,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeShoppingPreferences.class);
 		upgrade(UpgradeSubscription.class);
 		upgrade(UpgradeWiki.class);
-		upgrade(UpgradeDLFileEntryTypes.class);
+		upgrade(UpgradeDefaultDataTranslations.class);
 
 		// This must be the last upgrade process. Otherwise, upgrades based on
 		// BaseUpgradePortletPreferences will fail because the portlet

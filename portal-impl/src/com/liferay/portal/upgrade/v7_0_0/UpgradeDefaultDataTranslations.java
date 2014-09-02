@@ -24,7 +24,7 @@ import java.util.Collections;
 /**
  * @author Adolfo Pérez
  */
-public class UpgradeDLFileEntryTypes extends BaseUpgradeTranslations {
+public class UpgradeDefaultDataTranslations extends BaseUpgradeTranslations {
 
 	@Override
 	protected Collection<TranslationUpdater> getTranslationUpdaters() {

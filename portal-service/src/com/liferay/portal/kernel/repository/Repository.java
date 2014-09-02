@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -35,7 +34,7 @@ import java.util.List;
 /**
  * @author Alexander Chow
  */
-public interface Repository extends CapabilityProvider {
+public interface Repository extends DocumentRepository {
 
 	public FileEntry addFileEntry(
 			long folderId, String sourceFileName, String mimeType, String title,
@@ -211,8 +210,6 @@ public interface Repository extends CapabilityProvider {
 	public int getRepositoryFileEntriesCount(
 			long userId, long rootFolderId, String[] mimeTypes, int status)
 		throws PortalException;
-
-	public long getRepositoryId();
 
 	public void getSubfolderIds(List<Long> folderIds, long folderId)
 		throws PortalException;

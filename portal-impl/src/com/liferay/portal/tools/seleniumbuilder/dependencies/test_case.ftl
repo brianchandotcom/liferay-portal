@@ -12,6 +12,8 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 import com.liferay.portalweb.portal.util.liferayselenium.SeleniumException;
 import com.liferay.portalweb2.util.block.macro.UserMacro;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 <#assign rootElement = seleniumBuilderContext.getTestCaseRootElement(testCaseName)>
 
 <#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(rootElement, "action")>

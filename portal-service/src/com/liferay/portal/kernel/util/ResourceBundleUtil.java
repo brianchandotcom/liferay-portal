@@ -37,7 +37,7 @@ public class ResourceBundleUtil {
 		}
 
 		// Get the value associated with the specified key, and substitute any
-		// arguuments like {0}, {1}, {2}, etc. with the specified argument
+		// arguments like {0}, {1}, {2}, etc. with the specified argument
 		// values.
 
 		if (ArrayUtil.isNotEmpty(arguments)) {

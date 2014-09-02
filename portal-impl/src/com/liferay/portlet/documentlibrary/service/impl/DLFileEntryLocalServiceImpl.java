@@ -144,6 +144,8 @@ import java.util.Map;
 public class DLFileEntryLocalServiceImpl
 	extends DLFileEntryLocalServiceBaseImpl {
 
+	public static final int DELETE_INTERVAL = 100;
+
 	@Override
 	public DLFileEntry addFileEntry(
 			long userId, long groupId, long repositoryId, long folderId,
@@ -670,12 +672,12 @@ public class DLFileEntryLocalServiceImpl
 
 		int count = dlFileEntryPersistence.countByG_F(groupId, folderId);
 
-		int pages = count / _DELETE_INTERVAL;
+		int pages = count / DELETE_INTERVAL;
 
 		int start = 0;
 
 		for (int i = 0; i <= pages; i++) {
-			int end = start + _DELETE_INTERVAL;
+			int end = start + DELETE_INTERVAL;
 
 			List<DLFileEntry> dlFileEntries = dlFileEntryPersistence.findByG_F(
 				groupId, folderId, start, end);
@@ -2608,8 +2610,6 @@ public class DLFileEntryLocalServiceImpl
 			throw new FileNameException(fileName);
 		}
 	}
-
-	private static final int _DELETE_INTERVAL = 100;
 
 	private static Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);

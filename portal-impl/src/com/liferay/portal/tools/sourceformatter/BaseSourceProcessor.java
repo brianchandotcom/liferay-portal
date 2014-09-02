@@ -73,7 +73,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		_init(useProperties, printErrors, autoFix, mainReleaseVersion);
 
+		_sb = new StringBundler();
+
 		format();
+
+		_sb.append("______________________________________________________");
+		_sb.append("\n");
+
+		File file = new File(BASEDIR + "sf_test.txt");
+
+		fileUtil.write(file, _sb.toString(), false, true);
 
 		sourceFormatterHelper.close();
 	}
@@ -682,6 +691,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String format(String fileName) throws Exception {
+		long start = System.currentTimeMillis();
+
 		File file = new File(BASEDIR + fileName);
 
 		fileName = StringUtil.replace(
@@ -694,6 +705,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String newContent = format(file, fileName, absolutePath, content);
 
 		processFormattedFile(file, fileName, content, newContent);
+
+		long end = System.currentTimeMillis();
+
+		_sb.append(end - start);
+		_sb.append(", ");
+		_sb.append(fileName);
+		_sb.append("\n");
 
 		return newContent;
 	}
@@ -1610,5 +1628,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Properties _portalLanguageKeysProperties;
 	private Properties _properties;
 	private List<String> _runOutsidePortalExclusions;
+	private StringBundler _sb;
 
 }

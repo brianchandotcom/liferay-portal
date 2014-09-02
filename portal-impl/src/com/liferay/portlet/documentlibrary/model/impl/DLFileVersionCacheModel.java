@@ -41,7 +41,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -73,6 +73,8 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		sb.append(mimeType);
 		sb.append(", title=");
 		sb.append(title);
+		sb.append(", filename=");
+		sb.append(filename);
 		sb.append(", description=");
 		sb.append(description);
 		sb.append(", changeLog=");
@@ -169,6 +171,13 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 			dlFileVersionImpl.setTitle(title);
 		}
 
+		if (filename == null) {
+			dlFileVersionImpl.setFilename(StringPool.BLANK);
+		}
+		else {
+			dlFileVersionImpl.setFilename(filename);
+		}
+
 		if (description == null) {
 			dlFileVersionImpl.setDescription(StringPool.BLANK);
 		}
@@ -247,6 +256,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		extension = objectInput.readUTF();
 		mimeType = objectInput.readUTF();
 		title = objectInput.readUTF();
+		filename = objectInput.readUTF();
 		description = objectInput.readUTF();
 		changeLog = objectInput.readUTF();
 		extraSettings = objectInput.readUTF();
@@ -316,6 +326,13 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 			objectOutput.writeUTF(title);
 		}
 
+		if (filename == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(filename);
+		}
+
 		if (description == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -383,6 +400,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 	public String extension;
 	public String mimeType;
 	public String title;
+	public String filename;
 	public String description;
 	public String changeLog;
 	public String extraSettings;

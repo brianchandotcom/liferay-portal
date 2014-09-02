@@ -116,6 +116,11 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 	}
 
 	@Override
+	public String getFilename() {
+		return _fileEntry.getFilename();
+	}
+
+	@Override
 	public FileVersion getFileVersion() throws PortalException {
 		return _fileEntry.getFileVersion();
 	}

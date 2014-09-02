@@ -196,6 +196,11 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	@Override
+	public String getFilename() {
+		return _dlFileEntry.getFilename();
+	}
+
+	@Override
 	public FileVersion getFileVersion() throws PortalException {
 		DLFileVersion dlFileVersion = _dlFileVersion;
 

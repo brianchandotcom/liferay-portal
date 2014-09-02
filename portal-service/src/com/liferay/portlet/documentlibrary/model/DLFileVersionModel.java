@@ -312,6 +312,21 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	public void setTitle(String title);
 
 	/**
+	 * Returns the filename of this document library file version.
+	 *
+	 * @return the filename of this document library file version
+	 */
+	@AutoEscape
+	public String getFilename();
+
+	/**
+	 * Sets the filename of this document library file version.
+	 *
+	 * @param filename the filename of this document library file version
+	 */
+	public void setFilename(String filename);
+
+	/**
 	 * Returns the description of this document library file version.
 	 *
 	 * @return the description of this document library file version

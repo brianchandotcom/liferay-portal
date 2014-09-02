@@ -359,6 +359,21 @@ public interface DLFileEntryModel extends AttachedModel, BaseModel<DLFileEntry>,
 	public void setTitle(String title);
 
 	/**
+	 * Returns the filename of this document library file entry.
+	 *
+	 * @return the filename of this document library file entry
+	 */
+	@AutoEscape
+	public String getFilename();
+
+	/**
+	 * Sets the filename of this document library file entry.
+	 *
+	 * @param filename the filename of this document library file entry
+	 */
+	public void setFilename(String filename);
+
+	/**
 	 * Returns the description of this document library file entry.
 	 *
 	 * @return the description of this document library file entry

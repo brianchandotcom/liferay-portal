@@ -87,6 +87,14 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	public long getFileEntryId();
 
 	/**
+	 * The filename is the title + extension. In repositories where the title
+	 * already includes the extension, the filename and title are the same.
+	 *
+	 * @return the current filename
+	 */
+	public String getFilename();
+
+	/**
 	 * Returns the current file version. The workflow state of the latest file
 	 * version may affect the file version that is returned. In a Liferay
 	 * repository, the latest approved version is returned; the latest version

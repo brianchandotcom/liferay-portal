@@ -155,6 +155,8 @@ public class DLFileEntryPersistenceTest {
 
 		newDLFileEntry.setTitle(RandomTestUtil.randomString());
 
+		newDLFileEntry.setFilename(RandomTestUtil.randomString());
+
 		newDLFileEntry.setDescription(RandomTestUtil.randomString());
 
 		newDLFileEntry.setExtraSettings(RandomTestUtil.randomString());
@@ -217,6 +219,8 @@ public class DLFileEntryPersistenceTest {
 			newDLFileEntry.getMimeType());
 		Assert.assertEquals(existingDLFileEntry.getTitle(),
 			newDLFileEntry.getTitle());
+		Assert.assertEquals(existingDLFileEntry.getFilename(),
+			newDLFileEntry.getFilename());
 		Assert.assertEquals(existingDLFileEntry.getDescription(),
 			newDLFileEntry.getDescription());
 		Assert.assertEquals(existingDLFileEntry.getExtraSettings(),
@@ -442,6 +446,21 @@ public class DLFileEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_F_FN() {
+		try {
+			_persistence.countByG_F_FN(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK);
+
+			_persistence.countByG_F_FN(0L, 0L, StringPool.NULL);
+
+			_persistence.countByG_F_FN(0L, 0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByG_F_F() {
 		try {
 			_persistence.countByG_F_F(RandomTestUtil.nextLong(),
@@ -516,11 +535,11 @@ public class DLFileEntryPersistenceTest {
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "repositoryId", true,
 			"folderId", true, "treePath", true, "name", true, "extension",
-			true, "mimeType", true, "title", true, "description", true,
-			"extraSettings", true, "fileEntryTypeId", true, "version", true,
-			"size", true, "readCount", true, "smallImageId", true,
-			"largeImageId", true, "custom1ImageId", true, "custom2ImageId",
-			true, "manualCheckInRequired", true);
+			true, "mimeType", true, "title", true, "filename", true,
+			"description", true, "extraSettings", true, "fileEntryTypeId",
+			true, "version", true, "size", true, "readCount", true,
+			"smallImageId", true, "largeImageId", true, "custom1ImageId", true,
+			"custom2ImageId", true, "manualCheckInRequired", true);
 	}
 
 	@Test
@@ -750,6 +769,14 @@ public class DLFileEntryPersistenceTest {
 		Assert.assertTrue(Validator.equals(
 				existingDLFileEntryModelImpl.getTitle(),
 				existingDLFileEntryModelImpl.getOriginalTitle()));
+
+		Assert.assertEquals(existingDLFileEntryModelImpl.getGroupId(),
+			existingDLFileEntryModelImpl.getOriginalGroupId());
+		Assert.assertEquals(existingDLFileEntryModelImpl.getFolderId(),
+			existingDLFileEntryModelImpl.getOriginalFolderId());
+		Assert.assertTrue(Validator.equals(
+				existingDLFileEntryModelImpl.getFilename(),
+				existingDLFileEntryModelImpl.getOriginalFilename()));
 	}
 
 	protected DLFileEntry addDLFileEntry() throws Exception {
@@ -788,6 +815,8 @@ public class DLFileEntryPersistenceTest {
 		dlFileEntry.setMimeType(RandomTestUtil.randomString());
 
 		dlFileEntry.setTitle(RandomTestUtil.randomString());
+
+		dlFileEntry.setFilename(RandomTestUtil.randomString());
 
 		dlFileEntry.setDescription(RandomTestUtil.randomString());
 

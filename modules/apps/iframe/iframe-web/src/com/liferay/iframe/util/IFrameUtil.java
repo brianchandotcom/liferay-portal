@@ -27,7 +27,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 
@@ -35,6 +34,8 @@ import javax.portlet.PortletRequest;
  * @author Amos Fong
  */
 public class IFrameUtil {
+
+	public static final String IFRAME_SRC = "IFRAME_SRC";
 
 	public static String getPassword(
 			PortletRequest portletRequest, String password)
@@ -82,7 +83,7 @@ public class IFrameUtil {
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			com.liferay.portal.kernel.util.WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 

@@ -17,18 +17,13 @@ package com.liferay.iframe.action;
 import com.liferay.iframe.util.IFrameUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.WebKeys;
 
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -36,65 +31,9 @@ import javax.portlet.RenderResponse;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewAction extends PortletAction {
+public class ViewAction {
 
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		String src = transformSrc(renderRequest, renderResponse);
-
-		if (Validator.isNull(src) || src.equals(Http.HTTP_WITH_SLASH) ||
-			src.equals(Http.HTTPS_WITH_SLASH)) {
-
-			return actionMapping.findForward("/portal/portlet_not_setup");
-		}
-
-		renderRequest.setAttribute(WebKeys.IFRAME_SRC, src);
-
-		return actionMapping.findForward("portlet.iframe.view");
-	}
-
-	protected String getPassword(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortalException {
-
-		PortletPreferences portletPreferences = renderRequest.getPreferences();
-
-		String password = portletPreferences.getValue(
-			"basicPassword", StringPool.BLANK);
-
-		return IFrameUtil.getPassword(renderRequest, password);
-	}
-
-	protected String getSrc(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		PortletPreferences portletPreferences = renderRequest.getPreferences();
-
-		String src = portletPreferences.getValue("src", StringPool.BLANK);
-
-		src = ParamUtil.getString(renderRequest, "src", src);
-
-		return src;
-	}
-
-	protected String getUserName(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortalException {
-
-		PortletPreferences portletPreferences = renderRequest.getPreferences();
-
-		String userName = portletPreferences.getValue(
-			"basicUserName", StringPool.BLANK);
-
-		return IFrameUtil.getUserName(renderRequest, userName);
-	}
-
-	protected String transformSrc(
+	public String transformSrc(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
@@ -125,20 +64,53 @@ public class ViewAction extends PortletAction {
 		}
 		else {
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+				(ThemeDisplay)renderRequest.getAttribute(
+					com.liferay.portal.kernel.util.WebKeys.THEME_DISPLAY);
 
 			String portletId = PortalUtil.getPortletId(renderRequest);
 
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				themeDisplay.getCompanyId(), portletId);
 
-			src =
-				themeDisplay.getPathMain() + "/" + portlet.getStrutsPath() +
-					"/proxy?p_l_id=" + themeDisplay.getPlid() + "&p_p_id=" +
-						portletId;
+			src = "/proxy.jsp?p_l_id=" + themeDisplay.getPlid() +
+				"&p_p_id=" + portletId;
 		}
 
 		return src;
+	} protected String getSrc(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
+
+		String src = portletPreferences.getValue("src", StringPool.BLANK);
+
+		src = ParamUtil.getString(renderRequest, "src", src);
+
+		return src;
+	}
+
+	protected String getUserName(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException {
+
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
+
+		String userName = portletPreferences.getValue(
+			"basicUserName", StringPool.BLANK);
+
+		return IFrameUtil.getUserName(renderRequest, userName);
+	}
+
+	protected String getPassword(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException {
+
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
+
+		String password = portletPreferences.getValue(
+			"basicPassword", StringPool.BLANK);
+
+		return IFrameUtil.getPassword(renderRequest, password);
 	}
 
 }

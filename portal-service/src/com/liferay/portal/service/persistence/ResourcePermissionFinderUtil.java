@@ -41,6 +41,11 @@ public class ResourcePermissionFinderUtil {
 		return getFinder().findByResource(companyId, groupId, name, primKey);
 	}
 
+	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.ResourcePermission> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getFinder().fetchByPrimaryKeys(primaryKeys);
+	}
+
 	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByR_S(
 		long roleId, int[] scopes, int start, int end) {
 		return getFinder().findByR_S(roleId, scopes, start, end);

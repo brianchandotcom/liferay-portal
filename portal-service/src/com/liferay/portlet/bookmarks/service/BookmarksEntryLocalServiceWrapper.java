@@ -494,9 +494,10 @@ public class BookmarksEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void setTreePaths(long folderId, java.lang.String treePath)
+	public void setTreePaths(long folderId, java.lang.String treePath,
+		boolean reindex)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_bookmarksEntryLocalService.setTreePaths(folderId, treePath);
+		_bookmarksEntryLocalService.setTreePaths(folderId, treePath, reindex);
 	}
 
 	@Override

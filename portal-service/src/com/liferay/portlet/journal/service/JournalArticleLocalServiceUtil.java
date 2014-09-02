@@ -3289,9 +3289,10 @@ public class JournalArticleLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static void setTreePaths(long folderId, java.lang.String treePath)
+	public static void setTreePaths(long folderId, java.lang.String treePath,
+		boolean reindex)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().setTreePaths(folderId, treePath);
+		getService().setTreePaths(folderId, treePath, reindex);
 	}
 
 	/**

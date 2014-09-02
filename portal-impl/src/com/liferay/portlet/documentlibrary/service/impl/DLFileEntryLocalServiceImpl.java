@@ -1536,7 +1536,8 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
-	public void setTreePaths(final long folderId, final String treePath)
+	public void setTreePaths(
+			final long folderId, final String treePath, final boolean reindex)
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
@@ -1575,6 +1576,10 @@ public class DLFileEntryLocalServiceImpl
 					dlFileEntry.setTreePath(treePath);
 
 					updateDLFileEntry(dlFileEntry);
+
+					if (!reindex) {
+						return;
+					}
 
 					indexer.reindex(dlFileEntry);
 				}

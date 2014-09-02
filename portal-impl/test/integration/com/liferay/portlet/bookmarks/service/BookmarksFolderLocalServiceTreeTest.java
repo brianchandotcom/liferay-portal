@@ -66,6 +66,9 @@ public class BookmarksFolderLocalServiceTreeTest
 			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		for (BookmarksFolder folder : folders) {
+			folder = BookmarksFolderLocalServiceUtil.fetchBookmarksFolder(
+				folder.getFolderId());
+
 			Assert.assertEquals(folder.buildTreePath(), folder.getTreePath());
 		}
 	}

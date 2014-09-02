@@ -789,7 +789,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 					throws PortalException {
 
 					dlFileEntryLocalService.setTreePaths(
-						parentPrimaryKey, treePath);
+						parentPrimaryKey, treePath, false);
 					dlFileShortcutLocalService.setTreePaths(
 						parentPrimaryKey, treePath);
 					dlFileVersionLocalService.setTreePaths(

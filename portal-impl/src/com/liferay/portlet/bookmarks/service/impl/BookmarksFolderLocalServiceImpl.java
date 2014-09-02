@@ -473,7 +473,7 @@ public class BookmarksFolderLocalServiceImpl
 					throws PortalException {
 
 					bookmarksEntryLocalService.setTreePaths(
-						parentPrimaryKey, treePath);
+						parentPrimaryKey, treePath, false);
 				}
 
 				@Override

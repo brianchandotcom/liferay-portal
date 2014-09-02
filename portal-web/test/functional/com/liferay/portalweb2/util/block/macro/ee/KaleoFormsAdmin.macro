@@ -1,8 +1,8 @@
 <definition>
-	<command name="addFieldsDefinition">
-		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="ADD_FIELDS_DEFINITION_BUTTON" value1="Add Fields Definition" />
+	<command name="addFieldSet">
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="ADD_FIELD_SET_BUTTON" value1="Add Field Set" />
 
-		<execute action="CPKaleoformsadminNewprocessAddfieldsdefinition#type" locator-key1="NAME_FIELD" value1="${kfFieldsDefinitionName}" />
+		<execute action="CPKaleoformsadminNewprocessAddfieldset#type" locator-key1="NAME_FIELD" value1="${kfFieldSetName}" />
 	</command>
 
 	<command name="addForm">
@@ -50,7 +50,7 @@
 		<if>
 			<equals arg1="kfPendingForm" arg2="true" />
 			<then>
-				<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Updating the fields definition or workflow will cause loss of data." />
+				<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Updating the field set or workflow will cause loss of data." />
 			</then>
 		</if>
 
@@ -59,20 +59,20 @@
 		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FORMS_TABLE_ASSIGN_FORM_BUTTON" value1="Assign Form" />
 	</command>
 
-	<command name="chooseFieldsDefinition">
-		<var name="key_kfFieldsDefinitionName" value="${kfFieldsDefinitionName}" />
+	<command name="chooseFieldSet">
+		<var name="key_kfFieldSetName" value="${kfFieldSetName}" />
 
 		<if>
 			<equals arg1="kfPendingForm" arg2="true" />
 			<then>
-				<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Updating the fields definition or workflow will cause loss of data." />
+				<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Updating the field set or workflow will cause loss of data." />
 			</then>
 		</if>
 
-		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELDS_DEFINITION_TABLE_NAME" value1="${kfFieldsDefinitionName}" />
-		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="FIELDS_DEFINITION_TABLE_ACTIONS" />
-		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELDS_DEFINITION_MENULIST_CHOOSE" value1="Choose" />
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_DEFINITION" value1="${kfFieldsDefinitionName}" />
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELD_SET_TABLE_NAME" value1="${kfFieldSetName}" />
+		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="FIELD_SET_TABLE_ACTIONS" />
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELD_SET_MENULIST_CHOOSE" value1="Choose" />
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_DEFINITION" value1="${kfFieldSetName}" />
 	</command>
 
 	<command name="chooseForm">
@@ -87,7 +87,7 @@
 		<if>
 			<equals arg1="kfPendingForm" arg2="true" />
 			<then>
-				<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Updating the fields definition or workflow will cause loss of data." />
+				<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Updating the field set or workflow will cause loss of data." />
 			</then>
 		</if>
 
@@ -151,13 +151,13 @@
 		</if>
 	</command>
 
-	<command name="editFieldsDefinition">
-		<var name="key_kfFieldsDefinitionName" value="${kfFieldsDefinitionName}" />
+	<command name="editFieldSet">
+		<var name="key_kfFieldSetName" value="${kfFieldSetName}" />
 
-		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="FIELDS_DEFINITION_TABLE_ACTIONS" />
-		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELDS_DEFINITION_MENULIST_EDIT" value1="Edit" />
+		<execute action="CPKaleoformsadminNewprocess#click" locator-key1="FIELD_SET_TABLE_ACTIONS" />
+		<execute action="CPKaleoformsadminNewprocess#assertClick" locator-key1="FIELD_SET_MENULIST_EDIT" value1="Edit" />
 
-		<execute action="CPKaleoformsadminNewprocessEditfieldsdefinition#type" locator-key1="NAME_FIELD" value1="${kfFieldsDefinitionNameEdit}" />
+		<execute action="CPKaleoformsadminNewprocessEditfieldset#type" locator-key1="NAME_FIELD" value1="${kfFieldSetNameEdit}" />
 	</command>
 
 	<command name="editForm">
@@ -196,7 +196,7 @@
 		<if>
 			<equals arg1="kfPendingForm" arg2="true" />
 			<then>
-				<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Updating the fields definition or workflow will cause loss of data." />
+				<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Updating the field set or workflow will cause loss of data." />
 			</then>
 		</if>
 	</command>
@@ -220,8 +220,8 @@
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="saveFieldsDefinition">
-		<execute action="CPKaleoformsadminNewprocessAddfieldsdefinition#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	<command name="saveFieldSet">
+		<execute action="CPKaleoformsadminNewprocessAddfieldset#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="saveForm">
@@ -269,8 +269,8 @@
 		<execute macro="KaleoFormsAdmin#next" />
 	</command>
 
-	<command name="viewProcessFieldsDefinition">
-		<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="SELECTED_DEFINITION" value1="${kfFieldsDefinitionName}" />
+	<command name="viewProcessFieldSet">
+		<execute action="CPKaleoformsadminEditprocess#assertTextEquals" locator-key1="SELECTED_DEFINITION" value1="${kfFieldSetName}" />
 
 		<execute macro="KaleoFormsAdmin#next" />
 	</command>

@@ -47,7 +47,6 @@ import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
@@ -759,7 +758,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	@Override
 	public void rebuildTree(long companyId) throws PortalException {
 		rebuildTree(
-			companyId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			companyId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringPool.SLASH, false);
 	}
 

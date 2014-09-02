@@ -63,8 +63,9 @@ public class DDMFormFieldRendererRegistryImpl
 		return ddmFormFieldRenders.get(ddmFormFieldRenders.size() - 1);
 	}
 
-	@Override
-	public void register(DDMFormFieldRenderer ddmFormFieldRenderer) {
+	public void setDefaultDDMFormFieldRenderer(
+		DDMFormFieldRenderer ddmFormFieldRenderer) {
+
 		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceRegistration<DDMFormFieldRenderer> serviceRegistration =
@@ -72,22 +73,6 @@ public class DDMFormFieldRendererRegistryImpl
 				DDMFormFieldRenderer.class, ddmFormFieldRenderer);
 
 		_serviceRegistrations.put(ddmFormFieldRenderer, serviceRegistration);
-	}
-
-	public void setDefaultDDMFormFieldRenderer(
-		DDMFormFieldRenderer ddmFormFieldRenderer) {
-
-		register(ddmFormFieldRenderer);
-	}
-
-	@Override
-	public void unregister(DDMFormFieldRenderer ddmFormFieldRenderer) {
-		ServiceRegistration<DDMFormFieldRenderer> serviceRegistration =
-			_serviceRegistrations.remove(ddmFormFieldRenderer);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
 	}
 
 	private Map<String, List<DDMFormFieldRenderer>> _ddmFormFieldRenderersMap =

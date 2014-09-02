@@ -37,14 +37,6 @@ public class DDMFormFieldRendererRegistryUtil {
 		return _ddmFormFieldRendererRegistry;
 	}
 
-	public static void register(DDMFormFieldRenderer ddmFormFieldRenderer) {
-		getDDMFormFieldRendererRegistry().register(ddmFormFieldRenderer);
-	}
-
-	public static void unregister(DDMFormFieldRenderer ddmFormFieldRenderer) {
-		getDDMFormFieldRendererRegistry().unregister(ddmFormFieldRenderer);
-	}
-
 	public void setDDMFormFieldRendererRegistry(
 		DDMFormFieldRendererRegistry ddmFormFieldRendererRegistry) {
 

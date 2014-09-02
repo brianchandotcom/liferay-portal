@@ -130,6 +130,7 @@ import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.DLProcessor;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderer;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -570,6 +571,9 @@ public class HookHotDeployListener
 			rootElement);
 
 		initStrutsActions(servletContextName, portletClassLoader, rootElement);
+
+		initDynamicDataMappingFormFieldRenderers(
+			servletContextName, portletClassLoader, rootElement);
 
 		List<Element> modelListenerElements = rootElement.elements(
 			"model-listener");
@@ -1025,6 +1029,34 @@ public class HookHotDeployListener
 
 		initCustomJspBag(
 			servletContextName, pluginPackage.getName(), customJspBag);
+	}
+
+	protected void initDynamicDataMappingFormFieldRenderers(
+		String servletContextName, ClassLoader portletClassLoader,
+		Element parentElement) throws Exception {
+
+		List<Element> ddmFormFieldRenderersElements = parentElement.elements(
+			"dynamic-data-mapping-form-field-renderer");
+
+		if (ddmFormFieldRenderersElements.isEmpty()) {
+			return;
+		}
+
+		for (Element ddmFormFieldRendererElement :
+				ddmFormFieldRenderersElements) {
+
+			String ddmFormFieldRendererClassName =
+				ddmFormFieldRendererElement.getText();
+
+			DDMFormFieldRenderer ddmFormFieldRenderer =
+				(DDMFormFieldRenderer)newInstance(
+					portletClassLoader, DDMFormFieldRenderer.class,
+					ddmFormFieldRendererClassName);
+
+			registerService(
+				servletContextName, ddmFormFieldRendererClassName,
+				DDMFormFieldRenderer.class, ddmFormFieldRenderer);
+		}
 	}
 
 	protected void initEvent(

@@ -1215,31 +1215,27 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			imports, new String[] {"%><%@\r\n", "%><%@\n"},
 			new String[] {"%>\r\n<%@ ", "%>\n<%@ "});
 
-		if (!fileName.endsWith("html/common/init.jsp") &&
-			!fileName.endsWith("html/portal/init.jsp")) {
+		List<String> importLines = new ArrayList<String>();
 
-			List<String> importLines = new ArrayList<String>();
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new UnsyncStringReader(imports));
 
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(imports));
+		String line = null;
 
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (line.contains("import=")) {
-					importLines.add(line);
-				}
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (line.contains("import=")) {
+				importLines.add(line);
 			}
+		}
 
-			List<String> unneededImports = getJSPDuplicateImports(
-				fileName, content, importLines);
+		List<String> unneededImports = getJSPDuplicateImports(
+			fileName, content, importLines);
 
-			addJSPUnusedImports(fileName, importLines, unneededImports);
+		addJSPUnusedImports(fileName, importLines, unneededImports);
 
-			for (String unneededImport : unneededImports) {
-				imports = StringUtil.replace(
-					imports, unneededImport, StringPool.BLANK);
-			}
+		for (String unneededImport : unneededImports) {
+			imports = StringUtil.replace(
+				imports, unneededImport, StringPool.BLANK);
 		}
 
 		ImportsFormatter importsFormatter = new JSPImportsFormatter();

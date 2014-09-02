@@ -23,7 +23,6 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.io.File;
 import java.io.IOException;
@@ -103,10 +102,11 @@ public class ComboServletTest extends PowerMockito {
 
 					Object[] args = invocation.getArguments();
 
-					if (PortletKeys.PORTAL.equals(args[0])) {
-						return _activitiesPortlet;
+					if (_PORTLET_A.equals(args[0])) {
+
+						return _adminPortlet;
 					}
-					else if (PortletKeys.PORTAL.equals(args[0])) {
+					else if (_PORTLET_A.equals(args[0])) {
 						return _portalPortlet;
 					}
 
@@ -158,7 +158,7 @@ public class ComboServletTest extends PowerMockito {
 		when(
 			_portalPortlet.getRootPortletId()
 		).thenReturn(
-			PortletKeys.PORTAL
+			_PORTLET_A
 		);
 
 		_comboServlet.init(servletConfig);
@@ -172,19 +172,19 @@ public class ComboServletTest extends PowerMockito {
 		);
 
 		when(
-			_activitiesPortletApp.getServletContext()
+			_adminPortletApp.getServletContext()
 		).thenReturn(
 			_pluginServletContext
 		);
 
 		when(
-			_activitiesPortlet.getPortletApp()
+			_adminPortlet.getPortletApp()
 		).thenReturn(
-			_activitiesPortletApp
+			_adminPortletApp
 		);
 
 		when(
-			_activitiesPortlet.getRootPortletId()
+			_adminPortlet.getRootPortletId()
 		).thenReturn(
 			"75"
 		);
@@ -225,18 +225,20 @@ public class ComboServletTest extends PowerMockito {
 	@Test
 	public void testGetResourceWithPortletId() throws Exception {
 		_comboServlet.getResourceURL(
-			_mockHttpServletRequest, PortletKeys.PORTAL + ":/js/javascript.js");
+			_mockHttpServletRequest, _PORTLET_A + ":/js/javascript.js");
 
 		verify(_pluginServletContext);
 
 		_pluginServletContext.getResource("/js/javascript.js");
 	}
 
-	@Mock
-	private Portlet _activitiesPortlet;
+	private static final String _PORTLET_A = "portlet_a";
 
 	@Mock
-	private PortletApp _activitiesPortletApp;
+	private Portlet _adminPortlet;
+
+	@Mock
+	private PortletApp _adminPortletApp;
 
 	private ComboServlet _comboServlet;
 	private MockHttpServletRequest _mockHttpServletRequest;

@@ -411,6 +411,7 @@ DLFileVersionActionsDisplayContext dlFileVersionActionsDisplayContext = DLFileVe
 											fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
 											readOnly="<%= true %>"
 											requestedLocale="<%= locale %>"
+											showEmptyFieldLabel="<%= false %>"
 										/>
 
 									</liferay-ui:panel>
@@ -462,6 +463,7 @@ DLFileVersionActionsDisplayContext dlFileVersionActionsDisplayContext = DLFileVe
 											fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
 											readOnly="<%= true %>"
 											requestedLocale="<%= locale %>"
+											showEmptyFieldLabel="<%= false %>"
 										/>
 
 									</liferay-ui:panel>

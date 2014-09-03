@@ -10,11 +10,13 @@
 </#if>
 
 <@aui["field-wrapper"] data=data>
-	<label>
-		<@liferay_ui.message key=escape(label) />
-	</label>
+	<#if hasFieldValue || showEmptyFieldLabel>
+		<label>
+			<@liferay_ui.message key=escape(label) />
+		</label>
+	</#if>
 
-	<#if (fields??) && (fieldValue != "")>
+	<#if hasFieldValue>
 		[ <a href="javascript:;" id="${portletNamespace}${namespacedFieldName}ToggleImage" onClick="${portletNamespace}${namespacedFieldName}ToggleImage();">${languageUtil.get(locale, "show")}</a> ]
 
 		<div class="hide wcm-image-preview" id="${portletNamespace}${namespacedFieldName}Container">

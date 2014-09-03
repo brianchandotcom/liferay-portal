@@ -59,6 +59,10 @@ public class DDMFormFieldRenderingContext {
 		return _readOnly;
 	}
 
+	public boolean isShowEmptyFieldLabel() {
+		return _showEmptyFieldLabel;
+	}
+
 	public void setField(Field field) {
 		Fields fields = new Fields();
 
@@ -101,6 +105,10 @@ public class DDMFormFieldRenderingContext {
 		_readOnly = readOnly;
 	}
 
+	public void setShowEmptyFieldLabel(boolean showEmptyFieldLabel) {
+		_showEmptyFieldLabel = showEmptyFieldLabel;
+	}
+
 	private Fields _fields;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
@@ -109,5 +117,6 @@ public class DDMFormFieldRenderingContext {
 	private String _namespace;
 	private String _portletNamespace;
 	private boolean _readOnly;
+	private boolean _showEmptyFieldLabel;
 
 }

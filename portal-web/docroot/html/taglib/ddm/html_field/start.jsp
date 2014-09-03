@@ -38,6 +38,7 @@
 		ddmFormFieldRenderingContext.setNamespace(fieldsNamespace);
 		ddmFormFieldRenderingContext.setPortletNamespace(portletResponse.getNamespace());
 		ddmFormFieldRenderingContext.setReadOnly(readOnly);
+		ddmFormFieldRenderingContext.setShowEmptyFieldLabel(showEmptyFieldLabel);
 		%>
 
 		<%= ddmFormFieldRenderer.render(ddmFormField, ddmFormFieldRenderingContext) %>

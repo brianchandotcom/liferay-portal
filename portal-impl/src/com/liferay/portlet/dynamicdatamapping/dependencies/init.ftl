@@ -68,6 +68,7 @@
 
 <#assign fieldValue = predefinedValue>
 <#assign fieldRawValue = "">
+<#assign hasFieldValue = false>
 
 <#if fields?? && fields.get(fieldName)??>
 	<#assign field = fields.get(fieldName)>
@@ -76,6 +77,10 @@
 
 	<#assign fieldValue = field.getRenderedValue(requestedLocale, valueIndex)>
 	<#assign fieldRawValue = field.getValue(requestedLocale, valueIndex)!>
+
+	<#if fieldValue != "">
+		<#assign hasFieldValue = true>
+	</#if>
 </#if>
 
 <#-- Disabled -->

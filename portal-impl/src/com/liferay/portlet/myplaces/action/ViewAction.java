@@ -176,7 +176,11 @@ public class ViewAction extends PortletAction {
 				LayoutPermissionUtil.contains(
 					permissionChecker, layout, ActionKeys.VIEW)) {
 
-				return PortalUtil.getLayoutURL(layout, themeDisplay, true);
+				String layoutURL = PortalUtil.getLayoutURL(
+					layout, themeDisplay, true);
+
+				return PortalUtil.addPreservedParameters(
+					themeDisplay, layout, layoutURL, true);
 			}
 		}
 

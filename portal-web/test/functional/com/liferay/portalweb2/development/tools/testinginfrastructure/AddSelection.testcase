@@ -1,9 +1,6 @@
 <definition component-name="portal-tools">
+	<property name="portal.url" value="http://www.w3schools.com/tags/tryit.asp?filename=tryhtml_select_multiple" />
 	<property name="testray.main.component.name" value="Tools" />
-
-	<set-up>
-		<execute macro="User#firstLoginPG" />
-	</set-up>
 
 	<var name="commitMessage" value="LPS-41076" />
 	<var name="ticketLocation" value="https://issues.liferay.com/browse/LIFERAYQA-5866" />
@@ -11,8 +8,6 @@
 
 	<command name="AddSelection" priority="5">
 		<echo message="Test addSelection: select multiple items" />
-
-		<execute action="Home#open" locator1="http://www.w3schools.com/tags/tryit.asp?filename=tryhtml_select_multiple" />
 
 		<execute action="Home#selectFrame" locator1="//iframe[@id='iframeResult']" />
 

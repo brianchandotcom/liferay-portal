@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>ElseIfLogger</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ElseIfLogger</td></tr>
+</thead>
+<tbody>
+<tr>
+    <td>FAKE_ELEMENT</td>
+    <td>//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'Calendar')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>REAL_ELEMENT</td>
+    <td>//div[@class='example']/ul/li[1]</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

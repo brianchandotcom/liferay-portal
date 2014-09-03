@@ -3,28 +3,42 @@
 		<if>
 			<equals arg1="${switch}" arg2="1" />
 			<then>
-				<echo message="first clause was true" />
+				<var name="actual" value="1st clause" />
 			</then>
 			<elseif>
 				<equals arg1="${switch}" arg2="2" />
 				<then>
-					<echo message="2nd clause was true" />
+					<var name="actual" value="2nd clause" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${switch}" arg2="3" />
 				<then>
-					<echo message="3rd clause was true" />
+					<var name="actual" value="3rd clause" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${switch}" arg2="4" />
 				<then>
-					<echo message="4th clause was true" />
+					<var name="actual" value="4th clause" />
 				</then>
 			</elseif>
 			<else>
-				<echo message="last clause" />
+				<var name="actual" value="Last clause" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${actual}" arg2="${expected}" />
+			<then>
+				<execute macro="TestUtils#pass">
+					<var name="message" value="${expected} is true: PASS"  />
+				</execute>
+			</then>
+			<else>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="${actual} is not true: FAIL"  />
+				</execute>
 			</else>
 		</if>
 	</command>

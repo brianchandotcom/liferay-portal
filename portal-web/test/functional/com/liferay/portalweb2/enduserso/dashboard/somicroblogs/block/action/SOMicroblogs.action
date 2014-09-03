@@ -1,10 +1,4 @@
 <definition>
-	<command name="assertTextEquals">
-		<case locator-key1="MICROBLOGS_ENTRY_AUTHOR">
-			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-	</command>
-
 	<command name="click">
 		<case locator-key1="MICROBLOGS_ENTRY_DELETE_LINK">
 			<execute function="Click#makeVisibleClickAt" />

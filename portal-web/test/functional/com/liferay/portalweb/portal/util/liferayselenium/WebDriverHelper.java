@@ -114,6 +114,78 @@ public class WebDriverHelper {
 		navigation.refresh();
 	}
 
+	public void selectFrame(String locator) {
+		WebDriver.TargetLocator targetLocator = switchTo();
+
+		if (locator.equals("relative=parent")) {
+			targetLocator.window(WebDriverHelper.getDefaultWindowHandle());
+
+			if (!_frameWebElements.isEmpty()) {
+				_frameWebElements.pop();
+
+				if (!_frameWebElements.isEmpty()) {
+					targetLocator.frame(_frameWebElements.peek());
+				}
+			}
+		}
+		else if (locator.equals("relative=top")) {
+			_frameWebElements = new Stack<WebElement>();
+
+			targetLocator.window(WebDriverHelper.getDefaultWindowHandle());
+		}
+		else {
+			_frameWebElements.push(getWebElement(locator));
+
+			targetLocator.frame(_frameWebElements.peek());
+		}
+	}
+
+	public void selectWindow(String windowID) {
+		Set<String> windowHandles = getWindowHandles();
+
+		if (windowID.equals("name=undefined")) {
+			String title = getTitle();
+
+			for (String windowHandle : windowHandles) {
+				WebDriver.TargetLocator targetLocator = switchTo();
+
+				targetLocator.window(windowHandle);
+
+				if (!title.equals(getTitle())) {
+					return;
+				}
+			}
+
+			BaseTestCase.fail(
+				"Unable to find the window ID \"" + windowID + "\"");
+		}
+		else if (windowID.equals("null")) {
+			WebDriver.TargetLocator targetLocator = switchTo();
+
+			targetLocator.window(WebDriverHelper.getDefaultWindowHandle());
+		}
+		else {
+			String targetWindowTitle = windowID;
+
+			if (targetWindowTitle.startsWith("title=")) {
+				targetWindowTitle = targetWindowTitle.substring(6);
+			}
+
+			for (String windowHandle : windowHandles) {
+				WebDriver.TargetLocator targetLocator = switchTo();
+
+				targetLocator.window(windowHandle);
+
+				if (targetWindowTitle.equals(getTitle())) {
+					return;
+				}
+			}
+
+			BaseTestCase.fail(
+				"Unable to find the window ID \"" + windowID + "\"");
+		}
+	}
+
 	public static void setDefaultTimeoutImplicit(WebDriver webDriver) {
 		int timeout = TestPropsValues.TIMEOUT_IMPLICIT_WAIT * 1000;
 

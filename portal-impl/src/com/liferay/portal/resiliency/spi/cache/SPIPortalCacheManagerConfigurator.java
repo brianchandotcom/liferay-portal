@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheProvider;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
-import com.liferay.portal.kernel.nio.intraband.proxy.ExceptionHandler;
 import com.liferay.portal.kernel.nio.intraband.proxy.TargetLocator;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
@@ -89,13 +88,10 @@ public class SPIPortalCacheManagerConfigurator {
 
 		portalCacheManager = IntrabandProxyUtil.newStubInstance(
 			stubClass, StringPool.BLANK, registrationReference,
-			_exceptionHandler);
+			WarnLogExceptionHandler.INSTANCE);
 
 		return portalCacheManager;
 	}
-
-	private static ExceptionHandler _exceptionHandler =
-		new WarnLogExceptionHandler();
 
 	private static class IntrabandPortalCacheTargetLocator
 		implements TargetLocator {

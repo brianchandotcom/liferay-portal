@@ -132,7 +132,7 @@ public class PollerProcessorUtil {
 
 					return IntrabandProxyUtil.newStubInstance(
 						stubPollerClass, portletId, registrationReference,
-						new WarnLogExceptionHandler());
+						WarnLogExceptionHandler.INSTANCE);
 				}
 
 				@Override

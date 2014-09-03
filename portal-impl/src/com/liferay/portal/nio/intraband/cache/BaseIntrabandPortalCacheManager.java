@@ -17,7 +17,6 @@ package com.liferay.portal.nio.intraband.cache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
-import com.liferay.portal.kernel.nio.intraband.proxy.ExceptionHandler;
 import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil;
 import com.liferay.portal.nio.intraband.proxy.WarnLogExceptionHandler;
 
@@ -53,7 +52,8 @@ public abstract class BaseIntrabandPortalCacheManager
 
 		if (portalCache == null) {
 			portalCache = (PortalCache<K, V>)IntrabandProxyUtil.newStubInstance(
-				_STUB_CLASS, name, _registrationReference, _exceptionHandler);
+				_STUB_CLASS, name, _registrationReference,
+				WarnLogExceptionHandler.INSTANCE);
 
 			_portalCaches.put(name, portalCache);
 		}
@@ -70,9 +70,6 @@ public abstract class BaseIntrabandPortalCacheManager
 		(Class<? extends PortalCache<?, ?>>)
 			IntrabandProxyUtil.getStubClass(
 				PortalCache.class, PortalCache.class.getName());
-
-	private static final ExceptionHandler _exceptionHandler =
-		new WarnLogExceptionHandler();
 
 	private final Map<String, PortalCache<K, V>> _portalCaches =
 		new ConcurrentHashMap<String, PortalCache<K, V>>();

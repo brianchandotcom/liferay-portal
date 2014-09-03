@@ -1,0 +1,32 @@
+@import "compass";
+
+.taglib-image-selector {
+	height: 100%;
+	position: relative;
+	text-align: center;
+
+	&.drag-drop {
+		border: 1px dashed grey;
+		padding: 10px;
+	}
+
+	.taglib-image-selector-image-wrapper {
+		@include transform(translate(-50%, -50%));
+
+		left: 50%;
+		position: absolute;
+		top: 50%;
+		width: 100%;
+
+		img {
+			max-height: 100%;
+	    	max-width: 100%;
+		}
+
+		.change-image-controls {
+			bottom: 0;
+			position: absolute;
+			width: 100%;
+		}
+	}
+}

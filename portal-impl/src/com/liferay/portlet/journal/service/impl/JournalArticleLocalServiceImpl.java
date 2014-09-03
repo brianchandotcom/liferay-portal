@@ -344,9 +344,12 @@ public class JournalArticleLocalServiceImpl
 
 		long id = counterLocalService.increment();
 
+		String articleResourceUuid = GetterUtil.getString(
+			serviceContext.getAttribute("articleResourceUuid"));
+
 		long resourcePrimKey =
 			journalArticleResourceLocalService.getArticleResourcePrimKey(
-				serviceContext.getUuid(), groupId, articleId);
+				articleResourceUuid, groupId, articleId);
 
 		JournalArticle article = journalArticlePersistence.create(id);
 
@@ -359,6 +362,7 @@ public class JournalArticleLocalServiceImpl
 			images);
 
 		article.setResourcePrimKey(resourcePrimKey);
+		article.setUuid(serviceContext.getUuid());
 		article.setGroupId(groupId);
 		article.setCompanyId(user.getCompanyId());
 		article.setUserId(user.getUserId());
@@ -4965,21 +4969,7 @@ public class JournalArticleLocalServiceImpl
 		boolean addNewVersion = false;
 
 		if (imported) {
-			if (latestVersion > version) {
-				JournalArticle existingArticle =
-					journalArticlePersistence.fetchByG_A_V(
-						groupId, articleId, version);
-
-				if (existingArticle != null) {
-					article = existingArticle;
-				}
-				else {
-					addNewVersion = true;
-				}
-			}
-			else if (latestVersion < version) {
-				addNewVersion = true;
-			}
+			article = getArticle(groupId, articleId, version);
 		}
 		else {
 			if ((version > 0) && (version != latestVersion)) {

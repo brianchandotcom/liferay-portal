@@ -673,16 +673,6 @@ public class JournalArticleStagedModelDataHandler
 							article.getSmallImageURL(), smallFile, images,
 							articleURL, serviceContext);
 				}
-
-				String originalUuid = article.getUuid();
-
-				if (!originalUuid.equals(importedArticle.getUuid())) {
-					importedArticle.setUuid(article.getUuid());
-
-					importedArticle =
-						JournalArticleLocalServiceUtil.updateJournalArticle(
-							importedArticle);
-				}
 			}
 			else {
 				importedArticle = JournalArticleLocalServiceUtil.addArticle(

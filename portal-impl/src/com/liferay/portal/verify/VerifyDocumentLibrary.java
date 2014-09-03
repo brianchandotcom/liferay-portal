@@ -303,10 +303,8 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			DLFileEntry.class);
 
-		Criterion criterion1 = RestrictionsFactoryUtil.like("title", "%/%");
-		Criterion criterion2 = RestrictionsFactoryUtil.like("title", "%\\\\%");
-
-		dynamicQuery.add(RestrictionsFactoryUtil.or(criterion1, criterion2));
+ 		dynamicQuery.add(
+ 			RestrictionsFactoryUtil.like("title", "%\\\\%"));
 
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryLocalServiceUtil.dynamicQuery(dynamicQuery);
@@ -321,9 +319,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 			String title = dlFileEntry.getTitle();
 
-			String newTitle = title.replace(StringPool.SLASH, StringPool.BLANK);
-
-			newTitle = newTitle.replace(
+			String newTitle = title.replace(
 				StringPool.BACK_SLASH, StringPool.UNDERLINE);
 
 			dlFileEntry.setTitle(newTitle);

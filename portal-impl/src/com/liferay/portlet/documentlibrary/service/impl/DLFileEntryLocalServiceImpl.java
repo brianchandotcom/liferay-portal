@@ -2222,8 +2222,7 @@ public class DLFileEntryLocalServiceImpl
 
 		validateFile(
 			dlFileEntry.getGroupId(), newFolderId, dlFileEntry.getFileEntryId(),
-			dlFileEntry.getFileName(), dlFileEntry.getExtension(),
-			dlFileEntry.getTitle());
+			dlFileEntry.getFileName(), dlFileEntry.getTitle());
 
 		if (DLStoreUtil.hasFile(
 				user.getCompanyId(),
@@ -2531,7 +2530,7 @@ public class DLFileEntryLocalServiceImpl
 
 	protected void validateFile(
 			long groupId, long folderId, long fileEntryId, String fileName,
-			String extension, String title)
+			String title)
 		throws PortalException {
 
 		DLFolder dlFolder = dlFolderPersistence.fetchByG_P_N(
@@ -2548,21 +2547,6 @@ public class DLFileEntryLocalServiceImpl
 			(dlFileEntry.getFileEntryId() != fileEntryId)) {
 
 			throw new DuplicateFileException(title);
-		}
-
-		String periodAndExtension = StringPool.PERIOD.concat(extension);
-
-		if (!title.endsWith(periodAndExtension)) {
-			title += periodAndExtension;
-
-			dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
-				groupId, folderId, title);
-
-			if ((dlFileEntry != null) &&
-				(dlFileEntry.getFileEntryId() != fileEntryId)) {
-
-				throw new DuplicateFileException(title);
-			}
 		}
 
 		dlFileEntry = dlFileEntryPersistence.fetchByG_F_FN(
@@ -2600,8 +2584,7 @@ public class DLFileEntryLocalServiceImpl
 
 		DLStoreUtil.validate(title, false);
 
-		validateFile(
-			groupId, folderId, fileEntryId, fileName, extension, title);
+		validateFile(groupId, folderId, fileEntryId, fileName, title);
 	}
 
 	protected void validateFileEntryTypeId(

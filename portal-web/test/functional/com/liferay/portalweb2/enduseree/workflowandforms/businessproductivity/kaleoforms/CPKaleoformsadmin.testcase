@@ -696,7 +696,7 @@
 		</execute>
 	</command>
 
-	<command name="EditfieldsetViaAddProcess" priority="5">
+	<command name="EditFieldSetViaAddProcess" priority="5">
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Text" />

@@ -36,6 +36,10 @@ public class WebDriverHelper {
 		return webDriver.getCurrentUrl();
 	}
 
+	public static String getDefaultWindowHandle() {
+		return _defaultWindowHandle;
+	}
+
 	public static boolean isElementPresent(
 		WebDriver webDriver, String locator) {
 
@@ -114,6 +118,10 @@ public class WebDriverHelper {
 		int timeout = TestPropsValues.TIMEOUT_IMPLICIT_WAIT * 1000;
 
 		setTimeoutImplicit(webDriver, String.valueOf(timeout));
+	}
+
+	public static void setDefaultWindowHandle(String defaultWindowHandle) {
+		_defaultWindowHandle = defaultWindowHandle;
 	}
 
 	public static void setTimeoutImplicit(WebDriver webDriver, String timeout) {
@@ -203,5 +211,7 @@ public class WebDriverHelper {
 			}
 		}
 	}
+
+	private static String _defaultWindowHandle;
 
 }

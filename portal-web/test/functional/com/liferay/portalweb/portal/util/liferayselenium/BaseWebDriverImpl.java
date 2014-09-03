@@ -166,7 +166,7 @@ public abstract class BaseWebDriverImpl
 		catch (Exception e) {
 			WebDriver.TargetLocator targetLocator = switchTo();
 
-			targetLocator.window(defaultWindowHandle);
+			targetLocator.window(WebDriverHelper.getDefaultWindowHandle());
 
 			pageSource = getPageSource();
 		}

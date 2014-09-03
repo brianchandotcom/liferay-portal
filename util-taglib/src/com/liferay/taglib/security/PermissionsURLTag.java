@@ -42,6 +42,31 @@ import javax.servlet.jsp.tagext.TagSupport;
  */
 public class PermissionsURLTag extends TagSupport {
 
+	/**
+	 * Create a {@link PortletURL} to be able to configure the permissions of a
+	 * resource.
+	 * @param redirect 
+	 * 		the redirect parameter (if it is null and the dialog is not open as 
+	 * 		a popup, the current URL as obtained by 
+	 * 		{@link PortalUtil#getCurrentURL(HttpServletRequest)} is used
+	 * @param modelResource 
+	 * 		a String describing the class of the resource for which we want to 
+	 * 		configure permissions
+	 * @param modelResourceDescription the description of the resource
+	 * @param resourceGroupId 
+	 * 		the group id to which the resource belongs (if it is null, it is 
+	 * 		obtained from {@link ThemeDisplay#getScopeGroupId()})
+	 * @param resourcePrimKey the primary key of the resource
+	 * @param windowState 
+	 * 		the window state when opening the permissions configuration dialog 
+	 * 		(see {@link LiferayWindowState})
+	 * @param roleTypes
+	 * @param request the current request
+	 * @return 
+	 * 		the {@link PortletURL} to be used to open the permissions 
+	 * 		configuration dialog
+	 * @see LiferayWindowState
+	 */
 	public static PortletURL createURL(
 		String redirect, String modelResource, String modelResourceDescription,
 		Long resourceGroupId, String resourcePrimKey, String windowState,
@@ -59,6 +84,35 @@ public class PermissionsURLTag extends TagSupport {
 		}
 	}
 
+	/**
+	 * Renders or stores in a JSP variable a URL to be able to configure the 
+	 * permissions of a resource.
+	 * @param redirect 
+	 * 		the redirect parameter (if it is null and the dialog is not open as 
+	 * 		a popup, the current URL as obtained by 
+	 * 		{@link PortalUtil#getCurrentURL(HttpServletRequest)} is used
+	 * @param modelResource 
+	 * 		a String describing the class of the resource for which we want to 
+	 * 		configure permissions
+	 * @param modelResourceDescription the description of the resource
+	 * @param resourceGroupId 
+	 * 		the group id to which the resource belongs (if it is null, it is 
+	 * 		obtained from {@link ThemeDisplay#getScopeGroupId()})
+	 * @param resourcePrimKey the primary key of the resource
+	 * @param windowState 
+	 * 		the window state when opening the permissions configuration dialog 
+	 * 		(see {@link LiferayWindowState})
+	 * @param var 
+	 * 		the name of a JSP variable where the resulting URL must be stored,
+	 * 		or null to render the URL using the writer of the given page context
+	 * @param roleTypes 
+	 * @param pageContext the current JSP context
+	 * @return 
+	 * 		the {@link PortletURL} to be used to open the permissions 
+	 * 		configuration dialog
+	 * @see LiferayWindowState
+	 * @throws Exception
+	 */
 	public static void doTag(
 			String redirect, String modelResource,
 			String modelResourceDescription, Object resourceGroupId,

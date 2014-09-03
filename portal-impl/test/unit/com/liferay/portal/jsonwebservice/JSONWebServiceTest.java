@@ -193,7 +193,8 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 			"/foo/use1");
 
 		mockHttpServletRequest.setParameter(
-			"fooData", "{height: 121, name:'Felix', value:'!!!'}");
+			"fooData",
+			"{\"height\": 121, \"name\":\"Felix\", \"value\":\"!!!\"}");
 
 		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
 			mockHttpServletRequest);
@@ -222,7 +223,7 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 		mockHttpServletRequest.setParameter(
 			"fooData:" + FooDataImpl.class.getName(),
-			"{height: 121, name:'Felix', value:'!!!'}");
+			"{\"height\": 121, \"name\":\"Felix\", \"value\":\"!!!\"}");
 
 		jsonWebServiceAction = lookupJSONWebServiceAction(
 			mockHttpServletRequest);
@@ -381,7 +382,7 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 			"/foo/srvcctx2");
 
 		mockHttpServletRequest.setParameter(
-			"serviceContext", "{'failOnPortalException' : false}");
+			"serviceContext", "{\"failOnPortalException\" : false}");
 
 		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
 			mockHttpServletRequest);
@@ -485,7 +486,7 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 		mockHttpServletRequest.setParameter("calendar", "1330419334285");
 		mockHttpServletRequest.setParameter("userIds", "1,2,3");
-		mockHttpServletRequest.setParameter("locales", "en,fr");
+		mockHttpServletRequest.setParameter("locales", "\"en\",\"fr\"");
 		mockHttpServletRequest.setParameter("ids", "173,-7,007");
 
 		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
@@ -502,7 +503,7 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 		mockHttpServletRequest.setParameter("calendar", "1330419334285");
 		mockHttpServletRequest.setParameter("userIds", "[1,2,3]");
-		mockHttpServletRequest.setParameter("locales", "[en,fr]");
+		mockHttpServletRequest.setParameter("locales", "[\"en\",\"fr\"]");
 		mockHttpServletRequest.setParameter("ids", "[173,-7,007]");
 
 		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(

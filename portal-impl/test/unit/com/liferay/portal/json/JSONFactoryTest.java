@@ -17,7 +17,6 @@ package com.liferay.portal.json;
 import com.liferay.portal.dao.orm.common.EntityCacheImpl;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONIncludesManagerUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.util.StringPool;
@@ -42,12 +41,6 @@ public class JSONFactoryTest {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-
-		JSONIncludesManagerUtil jsonIncludesManagerUtil =
-			new JSONIncludesManagerUtil();
-
-		jsonIncludesManagerUtil.setJSONIncludesManager(
-			new JSONIncludesManagerImpl());
 	}
 
 	@Test
@@ -56,9 +49,7 @@ public class JSONFactoryTest {
 
 		String json = removeQuotes(JSONFactoryUtil.looseSerialize(fooBean));
 
-		Assert.assertEquals(
-			"{class:com.liferay.portal.json.FooBean,name:bar,value:173}",
-			json);
+		Assert.assertEquals("{name:bar,value:173}", json);
 	}
 
 	@Test
@@ -67,10 +58,7 @@ public class JSONFactoryTest {
 
 		String json = removeQuotes(JSONFactoryUtil.looseSerialize(fooBean1));
 
-		Assert.assertEquals(
-			"{class:com.liferay.portal.json.FooBean1,collection:[element]," +
-				"value:173}",
-			json);
+		Assert.assertEquals("{collection:[element],value:173}", json);
 	}
 
 	@Test
@@ -132,48 +120,39 @@ public class JSONFactoryTest {
 
 	@Test
 	public void testLooseDeserialize() {
-		try {
-			JSONFactoryUtil.looseDeserialize(
-				"{\"class\":\"" + EntityCacheUtil.class.getName() + "\"}}");
+		Object object = JSONFactoryUtil.looseDeserialize(
+			"{\"class\":\"" + EntityCacheUtil.class.getName() + "\"}");
 
-			Assert.fail();
-		}
-		catch (Exception e) {
-		}
+		Assert.assertTrue(object instanceof Map);
 
-		try {
-			Object object = JSONFactoryUtil.looseDeserialize(
-				"{\"class\":\"java.lang.Thread\"}}");
+		object = JSONFactoryUtil.looseDeserialize(
+			"{\"class\":\"java.lang.Thread\"}");
 
-			Assert.assertEquals(Thread.class, object.getClass());
-		}
-		catch (Exception e) {
-			Assert.fail(e.toString());
-		}
+		Assert.assertTrue(object instanceof Map);
 	}
 
 	@Test
 	public void testLooseDeserializeSafe() {
-		Object object = JSONFactoryUtil.looseDeserializeSafe(
-			"{\"class\":\"java.lang.Thread\"}}");
+		Object object = JSONFactoryUtil.looseDeserialize(
+			"{\"class\":\"java.lang.Thread\"}");
 
 		Assert.assertEquals(HashMap.class, object.getClass());
 
-		object = JSONFactoryUtil.looseDeserializeSafe(
-			"{\"\u0063lass\":\"java.lang.Thread\"}}");
+		object = JSONFactoryUtil.looseDeserialize(
+			"{\"\u0063lass\":\"java.lang.Thread\"}");
 
 		Assert.assertEquals(HashMap.class, object.getClass());
 		Assert.assertTrue(((Map<?, ?>)object).containsKey("class"));
 
 		try {
-			JSONFactoryUtil.looseDeserializeSafe(
-				"{\"class\":\"" + EntityCacheUtil.class.getName() + "\"}}");
+			JSONFactoryUtil.looseDeserialize(
+				"{\"class\":\"" + EntityCacheUtil.class.getName() + "\"}");
 		}
 		catch (Exception e) {
 			Assert.fail(e.toString());
 		}
 
-		Map<?, ?> map = (Map<?, ?>)JSONFactoryUtil.looseDeserializeSafe(
+		Map<?, ?> map = (Map<?, ?>)JSONFactoryUtil.looseDeserialize(
 			"{\"class\":\"" + EntityCacheUtil.class.getName() +
 				"\",\"foo\": \"boo\"}");
 
@@ -184,10 +163,10 @@ public class JSONFactoryTest {
 			map.get("class"));
 		Assert.assertEquals("boo", map.get("foo"));
 
-		map = (Map<?, ?>)JSONFactoryUtil.looseDeserializeSafe(
+		map = (Map<?, ?>)JSONFactoryUtil.looseDeserialize(
 			"{\"class\":\"" + EntityCacheUtil.class.getName() +
 				"\",\"foo\": \"boo\",\"entityCache\":{\"class\":\"" +
-					EntityCacheImpl.class.getName() + "\"}}");
+				EntityCacheImpl.class.getName() + "\"}}");
 
 		Assert.assertNotNull(map);
 		Assert.assertEquals(3, map.size());

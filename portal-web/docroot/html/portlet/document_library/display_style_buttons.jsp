@@ -19,7 +19,7 @@
 <%
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
-String folderId = (String)request.getAttribute("view.jsp-folderId");
+long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
@@ -35,7 +35,7 @@ PortletURL displayStyleUrl = renderResponse.createRenderURL();
 
 displayStyleUrl.setParameter("struts_action", Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search");
 displayStyleUrl.setParameter("navigation", HtmlUtil.escapeJS(navigation));
-displayStyleUrl.setParameter("folderId", folderId);
+displayStyleUrl.setParameter("folderId", String.valueOf(folderId));
 
 if(fileEntryTypeId != -1){
 	displayStyleUrl.setParameter("fileEntryTypeId", String.valueOf(fileEntryTypeId));

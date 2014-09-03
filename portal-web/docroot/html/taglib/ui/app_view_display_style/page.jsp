@@ -19,9 +19,9 @@
 <%
 String displayStyle = (String)request.getAttribute("liferay-ui:app-view-display-style:displayStyle");
 String[] displayViews = (String[])request.getAttribute("liferay-ui:app-view-display-style:displayStyles");
+PortletURL displayStyleUrl = (PortletURL)request.getAttribute("liferay-ui:app-view-display-style:displayStyleUrl");
 String eventName = (String)request.getAttribute("liferay-ui:app-view-display-style:eventName");
 Map<String, String> requestParams = (Map<String, String>)request.getAttribute("liferay-ui:app-view-display-style:requestParams");
-PortletURL displayStyleUrl = (PortletURL)request.getAttribute("liferay-ui:app-view-display-style:displayStyleUrl");
 %>
 
 <c:if test="<%= (displayViews.length > 1) && (displayStyleUrl != null) %>">

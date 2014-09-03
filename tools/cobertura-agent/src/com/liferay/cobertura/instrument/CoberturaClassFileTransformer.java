@@ -90,6 +90,10 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 	}
 
 	public boolean matches(String className) {
+		if (className == null) {
+			return false;
+		}
+
 		if (_excludePatterns.length != 0) {
 			for (Pattern excludePattern : _excludePatterns) {
 				Matcher matcher = excludePattern.matcher(className);
@@ -161,8 +165,8 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 			// redirecting ProjectData#initialize to
 			// InstrumentationAgent#initialize
 
-			if (className.equals(
-					"net/sourceforge/cobertura/coveragedata/TouchCollector")) {
+			if ("net/sourceforge/cobertura/coveragedata/TouchCollector".equals(
+					className)) {
 
 				ClassWriter classWriter = new ContextAwareClassWriter(
 					ClassWriter.COMPUTE_FRAMES);

@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>CopyAndPaste</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CopyAndPaste</td></tr>
+</thead>
+<tbody>
+<tr>
+    <td>COPY_TEST_LABEL</td>
+    <td>//div[@class='example']/h3</td>
+    <td></td>
+</tr>
+<tr>
+    <td>EDITOR_IFRAME</td>
+    <td>//iframe[@id='mce_0_ifr']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>PASTE_TEXT_AREA</td>
+    <td>//body[@id='tinymce']</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

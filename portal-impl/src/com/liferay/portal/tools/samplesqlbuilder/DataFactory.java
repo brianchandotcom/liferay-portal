@@ -1479,6 +1479,7 @@ public class DataFactory {
 		dlFileVersionModel.setRepositoryId(dlFileEntryModel.getRepositoryId());
 		dlFileVersionModel.setFolderId(dlFileEntryModel.getFolderId());
 		dlFileVersionModel.setFileEntryId(dlFileEntryModel.getFileEntryId());
+		dlFileVersionModel.setFileName(dlFileEntryModel.getFileName());
 		dlFileVersionModel.setExtension(dlFileEntryModel.getExtension());
 		dlFileVersionModel.setMimeType(dlFileEntryModel.getMimeType());
 		dlFileVersionModel.setTitle(dlFileEntryModel.getTitle());
@@ -2626,6 +2627,7 @@ public class DataFactory {
 		dlFileEntryModel.setRepositoryId(dlFolerModel.getRepositoryId());
 		dlFileEntryModel.setFolderId(dlFolerModel.getFolderId());
 		dlFileEntryModel.setName("TestFile" + index);
+		dlFileEntryModel.setFileName("TestFile" + index + ".txt");
 		dlFileEntryModel.setExtension("txt");
 		dlFileEntryModel.setMimeType(ContentTypes.TEXT_PLAIN);
 		dlFileEntryModel.setTitle("TestFile" + index + ".txt");

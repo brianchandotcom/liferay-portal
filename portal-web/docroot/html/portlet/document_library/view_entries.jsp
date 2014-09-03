@@ -69,41 +69,13 @@ portletURL.setParameter("struts_action", "/document_library/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
 portletURL.setParameter("displayStyle", String.valueOf(displayStyle));
 
-int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", dlPortletInstanceSettings.getEntriesPerPage());
-
-SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
-
-List<String> headerNames = new ArrayList<String>();
-
-String[] entryColumns = dlEntriesListDisplayContext.getEntryColumns();
-
-for (String headerName : entryColumns) {
-	if (headerName.equals("action")) {
-		headerName = StringPool.BLANK;
-	}
-	else if (headerName.equals("name")) {
-		headerName = "title";
-	}
-
-	headerNames.add(headerName);
-}
-
-searchContainer.setHeaderNames(headerNames);
+SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
 entriesChecker.setCssClass("entry-selector");
 
-searchContainer.setRowChecker(entriesChecker);
-
-Map<String, String> orderableHeaders = new HashMap<String, String>();
-
-orderableHeaders.put("title", "title");
-orderableHeaders.put("size", "size");
-orderableHeaders.put("create-date", "creationDate");
-orderableHeaders.put("modified-date", "modifiedDate");
-orderableHeaders.put("downloads", "downloads");
+dlSearchContainer.setRowChecker(entriesChecker);
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
@@ -123,14 +95,12 @@ else {
 
 OrderByComparator<?> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
 
-searchContainer.setOrderableHeaders(orderableHeaders);
-searchContainer.setOrderByCol(orderByCol);
-searchContainer.setOrderByComparator(orderByComparator);
-searchContainer.setOrderByJS("javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'orderKey', 'orderByType');");
-searchContainer.setOrderByType(orderByType);
+dlSearchContainer.setOrderByCol(orderByCol);
+dlSearchContainer.setOrderByComparator(orderByComparator);
+dlSearchContainer.setOrderByType(orderByType);
 
-List results = null;
-int total = 0;
+List resultsList = null;
+int totalVar = 0;
 
 if (fileEntryTypeId >= 0) {
 	Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntryConstants.getClassName());
@@ -144,7 +114,7 @@ if (fileEntryTypeId >= 0) {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 	searchContext.setAttribute("paginationType", "none");
-	searchContext.setEnd(entryEnd);
+	searchContext.setEnd(dlSearchContainer.getEnd());
 
 	if (orderByCol.equals("creationDate")) {
 		orderByCol = "createDate";
@@ -160,17 +130,17 @@ if (fileEntryTypeId >= 0) {
 
 	searchContext.setSorts(sort);
 
-	searchContext.setStart(entryStart);
+	searchContext.setStart(dlSearchContainer.getStart());
 
 	Hits hits = indexer.search(searchContext);
 
-	total = hits.getLength();
+	totalVar = hits.getLength();
 
-	searchContainer.setTotal(total);
+	dlSearchContainer.setTotal(totalVar);
 
 	Document[] docs = hits.getDocs();
 
-	results = new ArrayList(docs.length);
+	resultsList = new ArrayList(docs.length);
 
 	for (Document doc : docs) {
 		long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
@@ -188,7 +158,7 @@ if (fileEntryTypeId >= 0) {
 			continue;
 		}
 
-		results.add(fileEntry);
+		resultsList.add(fileEntry);
 	}
 }
 else {
@@ -196,37 +166,25 @@ else {
 		if (useAssetEntryQuery) {
 			long[] classNameIds = {PortalUtil.getClassNameId(DLFileEntryConstants.getClassName()), PortalUtil.getClassNameId(DLFileShortcut.class.getName())};
 
-			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(classNameIds, searchContainer);
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(classNameIds, dlSearchContainer);
 
-			assetEntryQuery.setEnd(entryEnd);
 			assetEntryQuery.setExcludeZeroViewCount(false);
-			assetEntryQuery.setStart(entryStart);
 
-			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+			totalVar = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
 
-			searchContainer.setTotal(total);
+			dlSearchContainer.setTotal(totalVar);
 
-			if (total <= entryStart) {
-				entryStart = (searchContainer.getCur() - 1) * searchContainer.getDelta();
-				entryEnd = entryStart + searchContainer.getDelta();
+			assetEntryQuery.setEnd(dlSearchContainer.getEnd());
+			assetEntryQuery.setStart(dlSearchContainer.getStart());
 
-				assetEntryQuery.setEnd(entryEnd);
-				assetEntryQuery.setStart(entryStart);
-			}
-
-			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+			resultsList = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 		}
 		else {
-			total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
+			totalVar = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
 
-			searchContainer.setTotal(total);
+			dlSearchContainer.setTotal(totalVar);
 
-			if (total <= entryStart) {
-				entryStart = (searchContainer.getCur() - 1) * searchContainer.getDelta();
-				entryEnd = entryStart + searchContainer.getDelta();
-			}
-
-			results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, entryStart, entryEnd, searchContainer.getOrderByComparator());
+			resultsList = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, dlSearchContainer.getStart(), dlSearchContainer.getEnd(), dlSearchContainer.getOrderByComparator());
 		}
 	}
 	else if (navigation.equals("mine") || navigation.equals("recent")) {
@@ -238,20 +196,15 @@ else {
 			status = WorkflowConstants.STATUS_ANY;
 		}
 
-		total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, folderId, null, status);
+		totalVar = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, folderId, null, status);
 
-		searchContainer.setTotal(total);
+		dlSearchContainer.setTotal(totalVar);
 
-		if (total <= entryStart) {
-			entryStart = (searchContainer.getCur() - 1) * searchContainer.getDelta();
-			entryEnd = entryStart + searchContainer.getDelta();
-		}
-
-		results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, entryStart, entryEnd, searchContainer.getOrderByComparator());
+		resultsList = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, dlSearchContainer.getStart(), dlSearchContainer.getEnd(), dlSearchContainer.getOrderByComparator());
 	}
 }
 
-searchContainer.setResults(results);
+dlSearchContainer.setResults(resultsList);
 %>
 
 <div class="subscribe-action">
@@ -337,7 +290,7 @@ searchContainer.setResults(results);
 	</c:if>
 </div>
 
-<c:if test="<%= results.isEmpty() %>">
+<c:if test="<%= resultsList.isEmpty() %>">
 	<div class="alert alert-info entries-empty">
 		<c:choose>
 			<c:when test="<%= (fileEntryTypeId >= 0) %>">
@@ -354,8 +307,7 @@ searchContainer.setResults(results);
 	<c:when test='<%= !displayStyle.equals("list") %>'>
 
 		<%
-		for (int i = 0; i < results.size(); i++) {
-			Object result = results.get(i);
+		for (Object result : resultsList) {
 		%>
 
 			<%@ include file="/html/portlet/document_library/cast_result.jspf" %>
@@ -396,6 +348,7 @@ searchContainer.setResults(results);
 				</c:when>
 
 				<c:when test="<%= curFolder != null %>">
+
 					<%
 					String folderImage = "folder_empty_document";
 
@@ -438,203 +391,226 @@ searchContainer.setResults(results);
 	<c:otherwise>
 
 		<%
-		for (int i = 0; i < results.size(); i++) {
-			Object result = results.get(i);
+		String[] entryColumns = dlEntriesListDisplayContext.getEntryColumns();
 		%>
 
-			<%@ include file="/html/portlet/document_library/cast_result.jspf" %>
+		<liferay-ui:search-container
+			searchContainer="<%= dlSearchContainer %>"
+		>
+			<liferay-ui:search-container-results
+				results="<%= resultsList %>"
+				total="<%= totalVar %>"
+			/>
 
-			<c:choose>
-				<c:when test="<%= fileEntry != null %>">
+			<liferay-ui:search-container-row
+				className="Object"
+				modelVar="result"
+			>
 
-					<%
-					FileVersion latestFileVersion = fileEntry.getFileVersion();
+				<%@ include file="/html/portlet/document_library/cast_result.jspf" %>
 
-					if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
-						latestFileVersion = fileEntry.getLatestFileVersion();
-					}
-					%>
-
-					<liferay-util:buffer var="fileEntryTitle">
-
-						<%
-						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
-
-						AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
-
-						PortletURL rowURL = liferayPortletResponse.createRenderURL();
-
-						rowURL.setParameter("struts_action", "/document_library/view_file_entry");
-						rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
-						rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
-						%>
-
-						<liferay-ui:app-view-entry
-							displayStyle="list"
-							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
-							locked="<%= fileEntry.isCheckedOut() %>"
-							showCheckbox="<%= true %>"
-							title="<%= latestFileVersion.getTitle() %>"
-							url="<%= rowURL.toString() %>"
-						/>
-					</liferay-util:buffer>
-
-					<%
-					List resultRows = searchContainer.getResultRows();
-
-					ResultRow row = null;
-
-					if (fileShortcut == null) {
-						row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
-					}
-					else {
-						row = new ResultRow(fileShortcut, fileShortcut.getFileShortcutId(), i);
-					}
-
-					row.setClassName("app-view-entry-taglib entry-display-style selectable");
-
-					Map<String, Object> data = new HashMap<String, Object>();
-
-					data.put("draggable", DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE));
-					data.put("title", fileEntry.getTitle());
-
-					row.setData(data);
-
-					for (String columnName : entryColumns) {
-						if (columnName.equals("action")) {
-							row.addJSP("/html/portlet/document_library/file_entry_action.jsp", "entry-action");
-						}
-
-						if (columnName.equals("create-date")) {
-							row.addDate(fileEntry.getCreateDate());
-						}
-
-						if (columnName.equals("downloads")) {
-							row.addText(String.valueOf(fileEntry.getReadCount()));
-						}
-
-						if (columnName.equals("modified-date")) {
-							row.addDate(latestFileVersion.getModifiedDate());
-						}
-
-						if (columnName.equals("name")) {
-							TextSearchEntry fileEntryTitleSearchEntry = new TextSearchEntry();
-
-							fileEntryTitleSearchEntry.setName(fileEntryTitle);
-
-							row.addSearchEntry(fileEntryTitleSearchEntry);
-						}
-
-						if (columnName.equals("size")) {
-							row.addText(TextFormatter.formatStorageSize(latestFileVersion.getSize(), locale));
-						}
-
-						if (columnName.equals("status")) {
-							row.addStatus(latestFileVersion.getStatus(), latestFileVersion.getStatusByUserId(), latestFileVersion.getStatusDate());
-						}
-					}
-
-					resultRows.add(row);
-					%>
-
-				</c:when>
-				<c:otherwise>
-					<liferay-util:buffer var="folderTitle">
+				<c:choose>
+					<c:when test="<%= fileEntry != null %>">
 
 						<%
+						FileVersion latestFileVersion = fileEntry.getFileVersion();
+
+						if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+							latestFileVersion = fileEntry.getLatestFileVersion();
+						}
+
+						if (fileShortcut == null) {
+							row.setPrimaryKey(String.valueOf(fileEntry.getFileEntryId()));
+						}
+						else {
+							row.setPrimaryKey(String.valueOf(fileShortcut.getFileShortcutId()));
+						}
+
+						row.setClassName("app-view-entry-taglib entry-display-style selectable");
+
 						Map<String, Object> data = new HashMap<String, Object>();
 
-						data.put("folder", true);
-						data.put("folder-id", curFolder.getFolderId());
+						data.put("draggable", DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE));
+						data.put("title", fileEntry.getTitle());
 
-						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
-
-						AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
-
-						PortletURL rowURL = liferayPortletResponse.createRenderURL();
-
-						rowURL.setParameter("struts_action", "/document_library/view");
-						rowURL.setParameter("redirect", currentURL);
-						rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-						rowURL.setParameter("displayStyle", displayStyle);
+						row.setData(data);
 						%>
 
-						<liferay-ui:app-view-entry
-							data="<%= data %>"
-							displayStyle="<%= displayStyle %>"
-							folder="<%= true %>"
-							iconCssClass="<%= assetRenderer.getIconCssClass() %>"
-							showCheckbox="<%= false %>"
-							title="<%= curFolder.getName() %>"
-							url="<%= rowURL.toString() %>"
-						/>
-					</liferay-util:buffer>
+						<c:if test='<%= ArrayUtil.contains(entryColumns, "name") %>'>
+							<liferay-ui:search-container-column-text
+								name="title"
+							>
 
-					<%
-					List resultRows = searchContainer.getResultRows();
+								<%
+								AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 
-					ResultRow row = new ResultRow(curFolder, curFolder.getPrimaryKey(), i);
+								AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
 
-					row.setClassName("app-view-entry-taglib entry-display-style selectable");
+								PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-					Map<String, Object> data = new HashMap<String, Object>();
+								rowURL.setParameter("struts_action", "/document_library/view_file_entry");
+								rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
+								rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+								%>
 
-					data.put("draggable", DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE));
-					data.put("folder", true);
-					data.put("folder-id", curFolder.getFolderId());
-					data.put("title", curFolder.getName());
+								<liferay-ui:app-view-entry
+									displayStyle="list"
+									iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+									locked="<%= fileEntry.isCheckedOut() %>"
+									showCheckbox="<%= true %>"
+									title="<%= latestFileVersion.getTitle() %>"
+									url="<%= rowURL.toString() %>"
+								/>
+							</liferay-ui:search-container-column-text>
+						</c:if>
 
-					row.setData(data);
+						<c:if test='<%= ArrayUtil.contains(entryColumns, "size") %>'>
+							<liferay-ui:search-container-column-text
+								name="size"
+								value="<%= TextFormatter.formatStorageSize(latestFileVersion.getSize(), locale) %>"
+							/>
+						</c:if>
 
-					for (String columnName : entryColumns) {
-						if (columnName.equals("action")) {
-							row.addJSP("/html/portlet/document_library/folder_action.jsp", "entry-action");
-						}
+						<c:if test='<%= ArrayUtil.contains(entryColumns, "status") %>'>
+							<liferay-ui:search-container-column-status
+								name="status"
+								status="<%= latestFileVersion.getStatus() %>"
+							/>
+						</c:if>
 
-						if (columnName.equals("create-date")) {
-							row.addDate(curFolder.getCreateDate());
-						}
+						<c:if test='<%= ArrayUtil.contains(entryColumns, "downloads") %>'>
+							<liferay-ui:search-container-column-text
+								name="dowloads"
+								value="<%= String.valueOf(fileEntry.getReadCount()) %>"
+							/>
+						</c:if>
 
-						if (columnName.equals("downloads")) {
-							row.addText("--");
-						}
+						<c:if test='<%= ArrayUtil.contains(entryColumns, "create-date") %>'>
+							<liferay-ui:search-container-column-date
+								name="create-date"
+								value="<%= fileEntry.getCreateDate() %>"
+							/>
+						</c:if>
 
-						if (columnName.equals("modified-date")) {
-							row.addDate(curFolder.getModifiedDate());
-						}
+						<c:if test='<%= ArrayUtil.contains(entryColumns, "modified-date") %>'>
+							<liferay-ui:search-container-column-date
+								name="modified-date"
+								value="<%= latestFileVersion.getModifiedDate() %>"
+							/>
+						</c:if>
 
-						if (columnName.equals("name")) {
-							TextSearchEntry folderTitleSearchEntry = new TextSearchEntry();
+						<c:if test='<%= ArrayUtil.contains(entryColumns, "action") %>'>
+							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action"
+								path="/html/portlet/document_library/file_entry_action.jsp"
+							/>
+						</c:if>
+					</c:when>
+					<c:otherwise>
 
-							folderTitleSearchEntry.setName(folderTitle);
+						<%
+						row.setPrimaryKey(String.valueOf(curFolder.getPrimaryKey()));
 
-							row.addSearchEntry(folderTitleSearchEntry);
-						}
+						row.setClassName("app-view-entry-taglib entry-display-style selectable");
 
-						if (columnName.equals("size")) {
-							row.addText("--");
-						}
+						Map<String, Object> data = new HashMap<String, Object>();
 
-						if (columnName.equals("status")) {
-							row.addText("--");
-						}
-					}
+						data.put("draggable", DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE));
+						data.put("folder", true);
+						data.put("folder-id", curFolder.getFolderId());
+						data.put("title", curFolder.getName());
 
-					resultRows.add(row);
-					%>
+						row.setData(data);
+						%>
 
-				</c:otherwise>
-			</c:choose>
+						<c:if test='<%= ArrayUtil.contains(entryColumns, "name") %>'>
+							<liferay-ui:search-container-column-text
+								name="title"
+							>
 
-		<%
-		}
-		%>
+								<%
+								data = new HashMap<String, Object>();
 
+								data.put("folder", true);
+								data.put("folder-id", curFolder.getFolderId());
+
+								AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+
+								AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
+
+								PortletURL rowURL = liferayPortletResponse.createRenderURL();
+
+								rowURL.setParameter("struts_action", "/document_library/view");
+								rowURL.setParameter("redirect", currentURL);
+								rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+								rowURL.setParameter("displayStyle", displayStyle);
+								%>
+
+								<liferay-ui:app-view-entry
+									data="<%= data %>"
+									displayStyle="<%= displayStyle %>"
+									folder="<%= true %>"
+									iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+									showCheckbox="<%= false %>"
+									title="<%= curFolder.getName() %>"
+									url="<%= rowURL.toString() %>"
+								/>
+							</liferay-ui:search-container-column-text>
+						</c:if>
+
+						<c:if test='<%= ArrayUtil.contains(entryColumns, "size") %>'>
+							<liferay-ui:search-container-column-text
+								name="size"
+								value="--"
+							/>
+						</c:if>
+
+						<c:if test='<%= ArrayUtil.contains(entryColumns, "status") %>'>
+							<liferay-ui:search-container-column-text
+								name="status"
+								value="--"
+							/>
+						</c:if>
+
+						<c:if test='<%= ArrayUtil.contains(entryColumns, "downloads") %>'>
+							<liferay-ui:search-container-column-text
+								name="dowloads"
+								value="--"
+							/>
+						</c:if>
+
+						<c:if test='<%= ArrayUtil.contains(entryColumns, "create-date") %>'>
+							<liferay-ui:search-container-column-date
+								name="create-date"
+								value="<%= curFolder.getCreateDate() %>"
+							/>
+						</c:if>
+
+						<c:if test='<%= ArrayUtil.contains(entryColumns, "modified-date") %>'>
+							<liferay-ui:search-container-column-date
+								name="modified-date"
+								value="<%= curFolder.getModifiedDate() %>"
+							/>
+						</c:if>
+
+						<c:if test='<%= ArrayUtil.contains(entryColumns, "action") %>'>
+							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action"
+								path="/html/portlet/document_library/folder_action.jsp"
+							/>
+						</c:if>
+					</c:otherwise>
+				</c:choose>
+
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= dlSearchContainer %>" />
+		</liferay-ui:search-container>
 	</c:otherwise>
 </c:choose>
 
 <div class="document-entries-pagination">
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+	<liferay-ui:search-paginator searchContainer="<%= dlSearchContainer %>" />
 </div>
 
 <%!

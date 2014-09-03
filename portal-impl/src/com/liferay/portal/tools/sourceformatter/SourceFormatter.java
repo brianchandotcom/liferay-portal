@@ -157,6 +157,8 @@ public class SourceFormatter {
 	private void _runSourceProcessor(SourceProcessor sourceProcessor)
 		throws Exception {
 
+		long start = System.currentTimeMillis();
+
 		sourceProcessor.format(
 			_useProperties, _printErrors, _autoFix, _mainReleaseVersion);
 
@@ -166,6 +168,26 @@ public class SourceFormatter {
 			_firstSourceMismatchException =
 				sourceProcessor.getFirstSourceMismatchException();
 		}
+
+		long end = System.currentTimeMillis();
+
+		System.out.println(
+			(end - start) + ", total runtime:" +
+				sourceProcessor.getClass().getName());
+
+		System.out.println(
+			sourceProcessor.getBaseProcessorInitTime() +
+				", baseProcessorInit: " + sourceProcessor.getClass().getName());
+		System.out.println(
+			sourceProcessor.getConstructorTime() +
+				", constructorTime: " + sourceProcessor.getClass().getName());
+		System.out.println(
+			sourceProcessor.getGetFileNamesTime() +
+				", getFileNamesTime: " + sourceProcessor.getClass().getName());
+		System.out.println(
+			sourceProcessor.getProcessFormattedFileTime() +
+				", getProcessFormattedFileTime: " +
+					sourceProcessor.getClass().getName());
 	}
 
 	private void _setVersion() throws Exception {

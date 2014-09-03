@@ -33,10 +33,17 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
+		long start = System.currentTimeMillis();
+
 		String[] excludes = new String[] {"**\\WEB-INF\\tld\\**"};
 		String[] includes = new String[] {"**\\*.tld"};
 
 		List<String> fileNames = getFileNames(excludes, includes);
+
+		long end = System.currentTimeMillis();
+
+		System.out.println(
+			(end - start) + ", preparation: " + this.getClass().getName());
 
 		for (String fileName : fileNames) {
 			format(fileName);

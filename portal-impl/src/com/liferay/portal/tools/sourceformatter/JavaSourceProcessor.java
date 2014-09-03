@@ -1173,6 +1173,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
+		long start = System.currentTimeMillis();
+
 		Collection<String> fileNames = null;
 
 		if (portalSource) {
@@ -1211,6 +1213,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			});
 
 		_immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));
+
+		long end = System.currentTimeMillis();
+
+		System.out.println(
+			(end - start) + ", preparation: " + this.getClass().getName());
 
 		for (String fileName : fileNames) {
 			format(fileName);

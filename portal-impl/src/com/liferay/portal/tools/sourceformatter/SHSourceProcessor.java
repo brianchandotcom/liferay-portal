@@ -33,9 +33,16 @@ public class SHSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
+		long start = System.currentTimeMillis();
+
 		String[] includes = new String[] {"**\\*.sh"};
 
 		List<String> fileNames = getFileNames(new String[0], includes);
+
+		long end = System.currentTimeMillis();
+
+		System.out.println(
+			(end - start) + ", preparation: " + this.getClass().getName());
 
 		for (String fileName : fileNames) {
 			format(fileName);

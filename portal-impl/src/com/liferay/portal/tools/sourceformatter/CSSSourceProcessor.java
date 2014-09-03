@@ -92,6 +92,8 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
+		long start = System.currentTimeMillis();
+
 		String[] excludes = {
 			"**\\.ivy\\**", "**\\.sass-cache\\**", "**\\aui_deprecated.css",
 			"**\\expected\\**", "**\\js\\aui\\**", "**\\js\\editor\\**",
@@ -100,6 +102,11 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 		String[] includes = {"**\\*.css"};
 
 		List<String> fileNames = getFileNames(excludes, includes);
+
+		long end = System.currentTimeMillis();
+
+		System.out.println(
+			(end - start) + ", preparation: " + this.getClass().getName());
 
 		for (String fileName : fileNames) {
 			format(fileName);

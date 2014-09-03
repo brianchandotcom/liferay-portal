@@ -33,6 +33,14 @@ public interface SourceProcessor {
 
 	public List<String> getErrorMessages();
 
+	public long getBaseProcessorInitTime();
+
+	public long getConstructorTime();
+
+	public long getGetFileNamesTime();
+
+	public long getProcessFormattedFileTime();
+
 	public SourceMismatchException getFirstSourceMismatchException();
 
 }

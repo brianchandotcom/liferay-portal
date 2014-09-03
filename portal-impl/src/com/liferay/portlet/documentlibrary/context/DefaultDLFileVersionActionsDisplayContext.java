@@ -119,7 +119,8 @@ public class DefaultDLFileVersionActionsDisplayContext
 	public boolean isAssetMetadataVisible() {
 		String portletName = _portletDisplay.getPortletName();
 
-		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
+		if (portletName.equals(PortletKeys.ASSET_PUBLISHER) ||
+			portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
 			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
 			portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ||
 			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) ||

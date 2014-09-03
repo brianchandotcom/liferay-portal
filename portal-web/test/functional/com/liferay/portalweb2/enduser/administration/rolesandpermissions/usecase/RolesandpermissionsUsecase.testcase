@@ -1097,7 +1097,7 @@
 		</execute>
 
 		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinitionName}" />
-		<execute action="PGDynamicdatalists#assertElementNotPresent" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="PGDynamicdatalists#assertElementNotPresent" locator-key1="RECORD_TABLE_ACTIONS_1" />
 
 		<execute macro="User#logoutPG" />
 
@@ -1111,7 +1111,7 @@
 		</execute>
 
 		<execute action="PGDynamicdatalists#assertElementNotPresent" locator-key1="ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinitionName}" />
-		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="PGDynamicdatalists#assertElementPresent" locator-key1="RECORD_TABLE_ACTIONS_1" />
 
 		<execute macro="User#logoutPG" />
 

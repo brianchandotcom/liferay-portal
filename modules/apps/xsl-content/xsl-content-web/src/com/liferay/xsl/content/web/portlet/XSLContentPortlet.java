@@ -39,6 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.struts-path=xsl_content",
 		"javax.portlet.display-name=XSL Content",
 		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.allowed-protocols=http,https",
 		"javax.portlet.init-param.config-template=/configuration.jsp",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",

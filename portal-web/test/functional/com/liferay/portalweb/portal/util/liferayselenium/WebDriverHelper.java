@@ -16,9 +16,12 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import java.util.List;
+import java.util.Set;
+import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -114,11 +117,11 @@ public class WebDriverHelper {
 		navigation.refresh();
 	}
 
-	public void selectFrame(String locator) {
-		WebDriver.TargetLocator targetLocator = switchTo();
+	public static void selectFrame(WebDriver webDriver, String locator) {
+		WebDriver.TargetLocator targetLocator = webDriver.switchTo();
 
 		if (locator.equals("relative=parent")) {
-			targetLocator.window(WebDriverHelper.getDefaultWindowHandle());
+			targetLocator.window(_defaultWindowHandle);
 
 			if (!_frameWebElements.isEmpty()) {
 				_frameWebElements.pop();
@@ -131,27 +134,27 @@ public class WebDriverHelper {
 		else if (locator.equals("relative=top")) {
 			_frameWebElements = new Stack<WebElement>();
 
-			targetLocator.window(WebDriverHelper.getDefaultWindowHandle());
+			targetLocator.window(_defaultWindowHandle);
 		}
 		else {
-			_frameWebElements.push(getWebElement(locator));
+			_frameWebElements.push(getWebElement(webDriver, locator));
 
 			targetLocator.frame(_frameWebElements.peek());
 		}
 	}
 
-	public void selectWindow(String windowID) {
-		Set<String> windowHandles = getWindowHandles();
+	public static void selectWindow(WebDriver webDriver, String windowID) {
+		Set<String> windowHandles = webDriver.getWindowHandles();
 
 		if (windowID.equals("name=undefined")) {
-			String title = getTitle();
+			String title = webDriver.getTitle();
 
 			for (String windowHandle : windowHandles) {
-				WebDriver.TargetLocator targetLocator = switchTo();
+				WebDriver.TargetLocator targetLocator = webDriver.switchTo();
 
 				targetLocator.window(windowHandle);
 
-				if (!title.equals(getTitle())) {
+				if (!title.equals(webDriver.getTitle())) {
 					return;
 				}
 			}
@@ -160,9 +163,9 @@ public class WebDriverHelper {
 				"Unable to find the window ID \"" + windowID + "\"");
 		}
 		else if (windowID.equals("null")) {
-			WebDriver.TargetLocator targetLocator = switchTo();
+			WebDriver.TargetLocator targetLocator = webDriver.switchTo();
 
-			targetLocator.window(WebDriverHelper.getDefaultWindowHandle());
+			targetLocator.window(_defaultWindowHandle);
 		}
 		else {
 			String targetWindowTitle = windowID;
@@ -172,11 +175,11 @@ public class WebDriverHelper {
 			}
 
 			for (String windowHandle : windowHandles) {
-				WebDriver.TargetLocator targetLocator = switchTo();
+				WebDriver.TargetLocator targetLocator = webDriver.switchTo();
 
 				targetLocator.window(windowHandle);
 
-				if (targetWindowTitle.equals(getTitle())) {
+				if (targetWindowTitle.equals(webDriver.getTitle())) {
 					return;
 				}
 			}
@@ -285,5 +288,7 @@ public class WebDriverHelper {
 	}
 
 	private static String _defaultWindowHandle;
+
+	private static Stack<WebElement> _frameWebElements = new Stack<WebElement>();
 
 }

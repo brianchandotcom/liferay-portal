@@ -248,28 +248,10 @@ public class RepositoryLocalServiceImpl
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException {
 
-		long repositoryEntryId = RepositoryUtil.getRepositoryEntryId(
-			folderId, fileEntryId, fileVersionId);
-
-		LocalRepository localRepositoryImpl =
-			_localRepositoriesByRepositoryEntryId.get(repositoryEntryId);
-
-		if (localRepositoryImpl != null) {
-			return localRepositoryImpl;
-		}
-
 		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);
 
-		localRepositoryImpl = RepositoryFactoryUtil.createLocalRepository(
-			repositoryId);
-
-		checkRepository(localRepositoryImpl.getRepositoryId());
-
-		_localRepositoriesByRepositoryEntryId.put(
-			repositoryEntryId, localRepositoryImpl);
-
-		return localRepositoryImpl;
+		return getLocalRepositoryImpl(repositoryId);
 	}
 
 	@Override
@@ -317,26 +299,10 @@ public class RepositoryLocalServiceImpl
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException {
 
-		long repositoryEntryId = RepositoryUtil.getRepositoryEntryId(
-			folderId, fileEntryId, fileVersionId);
-
-		com.liferay.portal.kernel.repository.Repository repositoryImpl =
-			_repositoriesByEntryId.get(repositoryEntryId);
-
-		if (repositoryImpl != null) {
-			return repositoryImpl;
-		}
-
 		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);
 
-		repositoryImpl = RepositoryFactoryUtil.createRepository(repositoryId);
-
-		checkRepository(repositoryImpl.getRepositoryId());
-
-		_repositoriesByEntryId.put(repositoryEntryId, repositoryImpl);
-
-		return repositoryImpl;
+		return getRepositoryImpl(repositoryId);
 	}
 
 	@Override
@@ -351,9 +317,7 @@ public class RepositoryLocalServiceImpl
 
 	@Override
 	public void invalidate() {
-		_localRepositoriesByRepositoryEntryId.clear();
 		_localRepositoriesByRepositoryId.clear();
-		_repositoriesByEntryId.clear();
 		_repositoriesByRepositoryId.clear();
 	}
 
@@ -467,13 +431,8 @@ public class RepositoryLocalServiceImpl
 	private static Log _log = LogFactoryUtil.getLog(
 		RepositoryLocalServiceImpl.class);
 
-	private Map<Long, LocalRepository> _localRepositoriesByRepositoryEntryId =
-		new ConcurrentHashMap<Long, LocalRepository>();
 	private Map<Long, LocalRepository> _localRepositoriesByRepositoryId =
 		new ConcurrentHashMap<Long, LocalRepository>();
-	private Map<Long, com.liferay.portal.kernel.repository.Repository>
-		_repositoriesByEntryId = new ConcurrentHashMap
-			<Long, com.liferay.portal.kernel.repository.Repository>();
 	private Map<Long, com.liferay.portal.kernel.repository.Repository>
 		_repositoriesByRepositoryId = new ConcurrentHashMap
 			<Long, com.liferay.portal.kernel.repository.Repository>();

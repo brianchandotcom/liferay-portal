@@ -93,11 +93,11 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	</c:if>
 
 	<aui:fieldset>
-		<liferay-ui:input-editor contents="<%= title %>" editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" name="title" placeholder="title" toolbarSet="none" />
+		<liferay-ui:input-editor contents="<%= title %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="title" placeholder="title" />
 
 		<aui:input name="title" type="hidden" />
 
-		<liferay-ui:input-editor contents="<%= subtitle %>" editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" name="subtitle" placeholder="subtitle" toolbarSet="none" />
+		<liferay-ui:input-editor contents="<%= subtitle %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="subtitle" placeholder="subtitle" />
 
 		<aui:input name="subtitle" type="hidden" />
 
@@ -122,7 +122,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			<br />
 		</c:if>
 
-		<liferay-ui:input-editor contents="<%= content %>" editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" name="content" placeholder="content" />
+		<liferay-ui:input-editor contents="<%= content %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="content" placeholder="content" />
 
 		<aui:input name="content" type="hidden" />
 
@@ -572,5 +572,7 @@ else {
 %>
 
 <%!
-public static final String EDITOR_WYSIWYG_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp";
+public static final String EDITOR_HTML_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.html.jsp";
+
+public static final String EDITOR_TEXT_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.text.jsp";
 %>

@@ -35,6 +35,8 @@ if (!_alloyEditorConfigFileNames.contains(alloyEditorConfigFileName)) {
 	alloyEditorConfigFileName = "alloyconfig.jsp";
 }
 
+String alloyEditorMode = ParamUtil.getString(request, "alloyEditorMode");
+
 Map<String, String> configParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:configParams");
 
 String configParams = marshallParams(configParamsMap);
@@ -69,6 +71,10 @@ String placeholder = GetterUtil.getString((String)request.getAttribute("liferay-
 boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:resizable"));
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
 String toolbarSet = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:toolbarSet"));
+
+if (alloyEditorMode.equals("text")) {
+	toolbarSet = "none";
+}
 %>
 
 <c:if test="<%= !skipEditorLoading %>">
@@ -142,7 +148,16 @@ String toolbarSet = GetterUtil.getString((String)request.getAttribute("liferay-u
 		},
 
 		getHTML: function() {
-			return window['<%= name %>'].getCkData();
+			<c:choose>
+				<c:when test='<%= alloyEditorMode.equals("text") %>'>
+					var editorElement = CKEDITOR.instances['<%= name %>'].element.$;
+
+					return editorElement.childElementCount ? editorElement.children[0].innerText : '';
+				</c:when>
+				<c:otherwise>
+					return window['<%= name %>'].getCkData();
+				</c:otherwise>
+			</c:choose>
 		},
 
 		getText: function() {
@@ -193,6 +208,19 @@ String toolbarSet = GetterUtil.getString((String)request.getAttribute("liferay-u
 	if (window['<%= name %>Config']) {
 		window['<%= name %>Config']();
 	}
+
+	<c:if test='<%= alloyEditorMode.equals("text") %>'>
+		var alloyEditor = CKEDITOR.instances['<%= name %>'];
+
+		alloyEditor.on(
+			'key',
+			function(event) {
+				if (event.data.keyCode === 13) {
+					event.cancel();
+				}
+			}
+		);
+	</c:if>
 
 	var destroyInstance = function(event) {
 		if (event.portletId === '<%= portletId %>') {

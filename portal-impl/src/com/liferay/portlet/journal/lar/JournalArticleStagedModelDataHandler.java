@@ -14,9 +14,7 @@
 
 package com.liferay.portlet.journal.lar;
 
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -26,6 +24,7 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -106,43 +105,24 @@ public class JournalArticleStagedModelDataHandler
 	public JournalArticle fetchStagedModelByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		DynamicQuery dynamicQuery =
-			JournalArticleResourceLocalServiceUtil.dynamicQuery();
+		List<JournalArticle> articles =
+			JournalArticleLocalServiceUtil.getJournalArticlesByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<JournalArticle>());
 
-		Property uuidProperty = PropertyFactoryUtil.forName("uuid");
-
-		dynamicQuery.add(uuidProperty.eq(uuid));
-
-		List<JournalArticleResource> articleResources =
-			JournalArticleResourceLocalServiceUtil.dynamicQuery(dynamicQuery);
-
-		if (ListUtil.isEmpty(articleResources)) {
+		if (ListUtil.isEmpty(articles)) {
 			return null;
 		}
 
-		JournalArticleResource existingArticleResource = articleResources.get(
-			0);
-
-		return JournalArticleLocalServiceUtil.fetchLatestArticle(
-			existingArticleResource.getResourcePrimKey(),
-			WorkflowConstants.STATUS_ANY, false);
+		return articles.get(0);
 	}
 
 	@Override
 	public JournalArticle fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		JournalArticleResource existingArticleResource =
-			JournalArticleResourceLocalServiceUtil.fetchArticleResource(
-				uuid, groupId);
-
-		if (existingArticleResource == null) {
-			return null;
-		}
-
-		return JournalArticleLocalServiceUtil.fetchLatestArticle(
-			existingArticleResource.getResourcePrimKey(),
-			WorkflowConstants.STATUS_ANY, false);
+		return JournalArticleLocalServiceUtil.
+			fetchJournalArticleByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override

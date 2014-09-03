@@ -1782,6 +1782,37 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntry;
 	}
 
+	public void validateFile(
+			long groupId, long folderId, long fileEntryId, String fileName,
+			String title)
+		throws PortalException {
+
+		DLFolder dlFolder = dlFolderPersistence.fetchByG_P_N(
+			groupId, folderId, title);
+
+		if (dlFolder != null) {
+			throw new DuplicateFolderNameException(title);
+		}
+
+		DLFileEntry dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
+			groupId, folderId, title);
+
+		if ((dlFileEntry != null) &&
+			(dlFileEntry.getFileEntryId() != fileEntryId)) {
+
+			throw new DuplicateFileException(title);
+		}
+
+		dlFileEntry = dlFileEntryPersistence.fetchByG_F_FN(
+			groupId, folderId, fileName);
+
+		if ((dlFileEntry != null) &&
+			(dlFileEntry.getFileEntryId() != fileEntryId)) {
+
+			throw new DuplicateFileException(title);
+		}
+	}
+
 	@Override
 	public boolean verifyFileEntryCheckOut(long fileEntryId, String lockUuid)
 		throws PortalException {
@@ -2526,37 +2557,6 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return dlFileVersion;
-	}
-
-	public void validateFile(
-			long groupId, long folderId, long fileEntryId, String fileName,
-			String title)
-		throws PortalException {
-
-		DLFolder dlFolder = dlFolderPersistence.fetchByG_P_N(
-			groupId, folderId, title);
-
-		if (dlFolder != null) {
-			throw new DuplicateFolderNameException(title);
-		}
-
-		DLFileEntry dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
-			groupId, folderId, title);
-
-		if ((dlFileEntry != null) &&
-			(dlFileEntry.getFileEntryId() != fileEntryId)) {
-
-			throw new DuplicateFileException(title);
-		}
-
-		dlFileEntry = dlFileEntryPersistence.fetchByG_F_FN(
-			groupId, folderId, fileName);
-
-		if ((dlFileEntry != null) &&
-			(dlFileEntry.getFileEntryId() != fileEntryId)) {
-
-			throw new DuplicateFileException(title);
-		}
 	}
 
 	protected void validateFile(

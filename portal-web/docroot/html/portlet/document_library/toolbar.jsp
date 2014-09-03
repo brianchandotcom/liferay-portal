@@ -113,7 +113,6 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 					<portlet:param name="searchFolderId" value="<%= String.valueOf(folderId) %>" />
 					<portlet:param name="keywords" value="<%= String.valueOf(keywords) %>" />
-					<portlet:param name="searchType" value="1" />
 					<portlet:param name="showRepositoryTabs" value="<% (folderId == 0) %>" />
 					<portlet:param name="showSearchInfo" value="<%= Boolean.TRUE.toString() %>" />
 					<portlet:param name="displayStyle" value="<%= displayStyle %>" />

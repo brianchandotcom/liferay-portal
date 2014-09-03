@@ -31,8 +31,6 @@ long parentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 boolean expandFolder = ParamUtil.getBoolean(request, "expandFolder");
 
-Folder parentFolder = null;
-
 if (folder != null) {
 	parentFolderId = folder.getParentFolderId();
 
@@ -55,7 +53,7 @@ if (folder != null) {
 
 	if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		try {
-			parentFolder = DLAppServiceUtil.getFolder(folderId);
+			DLAppServiceUtil.getFolder(folderId);
 		}
 		catch (NoSuchFolderException nsfe) {
 			parentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -136,7 +134,7 @@ else {
 						label='<%= HtmlUtil.escape(LanguageUtil.get(request, "home")) %>'
 						localizeLabel="<%= false %>"
 						selected='<%= ((navigation.equals("home")) && (folderId == rootFolderId) && (fileEntryTypeId == -1)) %>'
-						>
+					>
 
 						<%
 						request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -146,7 +144,6 @@ else {
 					</aui:nav-item>
 
 					<c:if test="<%= rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
-
 						<portlet:renderURL var="viewRecentDocumentsURL">
 							<portlet:param name="struts_action" value="/document_library/view" />
 							<portlet:param name="navigation" value="recent" />
@@ -164,7 +161,6 @@ else {
 						/>
 
 						<c:if test="<%= themeDisplay.isSignedIn() %>">
-
 							<portlet:renderURL var="viewMyDocumentsURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
 								<portlet:param name="navigation" value="mine" />
@@ -183,7 +179,6 @@ else {
 						</c:if>
 
 						<c:if test="<%= DLFileEntryTypeServiceUtil.getFileEntryTypesCount(groupIds) > 0 %>">
-
 							<portlet:renderURL var="viewBasicFileEntryTypeURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
 								<portlet:param name="browseBy" value="file-entry-type" />
@@ -227,7 +222,7 @@ else {
 								label="<%= mountFolder.getName() %>"
 								localizeLabel="<%= false %>"
 								selected="<%= (mountFolder.getFolderId() == folderId) %>"
-								>
+							>
 								<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 							</aui:nav-item>
 
@@ -287,7 +282,6 @@ else {
 
 					<c:if test="<%= total > 0 %>">
 						<c:if test="<%= searchContainer.getStart() == 0 %>">
-
 							<portlet:renderURL var="viewBasicFileEntryTypeURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
 								<portlet:param name="browseBy" value="file-entry-type" />
@@ -330,8 +324,7 @@ else {
 								label="<%= fileEntryType.getName(locale) %>"
 								localizeLabel="<%= false %>"
 								selected="<%= (fileEntryTypeId == fileEntryType.getFileEntryTypeId()) %>"
-								>
-							</aui:nav-item>
+							/>
 
 						<%
 						}
@@ -340,7 +333,6 @@ else {
 					</c:if>
 				</c:when>
 				<c:otherwise>
-
 					<portlet:renderURL var="viewURL">
 						<portlet:param name="struts_action" value="/document_library/view" />
 						<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
@@ -353,8 +345,7 @@ else {
 						iconCssClass="icon-level-up"
 						label='<%= LanguageUtil.get(request, "up") %>'
 						localizeLabel="<%= false %>"
-						>
-					</aui:nav-item>
+					/>
 
 					<%
 					List<Folder> folders = DLAppServiceUtil.getFolders(repositoryId, parentFolderId, false, searchContainer.getStart(), searchContainer.getEnd());
@@ -379,7 +370,7 @@ else {
 							label="<%= curFolder.getName() %>"
 							localizeLabel="<%= false %>"
 							selected="<%= (curFolder.getFolderId() == folderId) %>"
-							>
+						>
 							<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 						</aui:nav-item>
 

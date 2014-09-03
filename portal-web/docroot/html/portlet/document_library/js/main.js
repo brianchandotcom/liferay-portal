@@ -1,17 +1,9 @@
 AUI.add(
 	'liferay-document-library',
 	function(A) {
-		var AObject = A.Object;
 		var Lang = A.Lang;
-		var History = Liferay.HistoryManager;
 
 		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
-
-		var MESSAGE_TYPE_ERROR = 'error';
-
-		var SEARCH_TYPE = 'searchType';
-
-		var SEARCH_TYPE_SINGLE = 1;
 
 		var STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX = 'rowIdsDLFileShortcut';
 
@@ -20,14 +12,6 @@ AUI.add(
 		var STR_ROW_IDS_FILE_ENTRY_CHECKBOX = 'rowIdsFileEntry';
 
 		var STR_SELECTED_FOLDER = 'selectedFolder';
-
-		var STR_SHOW_REPOSITORY_TABS = 'showRepositoryTabs';
-
-		var STR_SHOW_SEARCH_INFO = 'showSearchInfo';
-
-		var SRC_HISTORY = 2;
-
-		var SRC_SEARCH = 3;
 
 		var WIN = A.config.win;
 
@@ -116,19 +100,10 @@ AUI.add(
 
 						var foldersConfig = config.folders;
 
-						foldersConfig.displayStyle = displayStyle;
-						foldersConfig.displayStyleCSSClass = displayStyleCSSClass;
-						foldersConfig.displayStyleToolbar = displayStyleToolbar;
-						foldersConfig.namespace = namespace;
-						foldersConfig.portletContainerId = portletContainerId;
-
-						instance._appViewFolders = new Liferay.AppViewFolders(foldersConfig);
-
 						instance._folderId = foldersConfig.defaultParentFolderId;
 
 						var eventHandles = [
-							Liferay.on(instance._eventOpenDocument, instance._openDocument, instance),
-							//History.after('stateChange', instance._afterStateChange, instance),
+							Liferay.on(instance._eventOpenDocument, instance._openDocument, instance)
 						];
 
 						instance._config = config;
@@ -158,7 +133,6 @@ AUI.add(
 
 						A.Array.invoke(instance._eventHandles, 'detach');
 
-						instance._appViewFolders.destroy();
 						instance._appViewMove.destroy();
 						instance._appViewSelect.destroy();
 
@@ -182,8 +156,6 @@ AUI.add(
 									Liferay.Language.get('cannot-open-the-requested-document-due-to-the-following-reason'),
 									[exception.message]
 								);
-
-								instance._appViewFolders.displayMessage(MESSAGE_TYPE_ERROR, errorMessage);
 							}
 						);
 					},
@@ -231,12 +203,10 @@ AUI.add(
 			}
 		);
 
-		Liferay.DL_SEARCH = SRC_SEARCH;
-
 		Liferay.Portlet.DocumentLibrary = DocumentLibrary;
 	},
 	'',
 	{
-		requires: ['document-library-upload', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-message', 'liferay-portlet-base']
+		requires: ['document-library-upload', 'liferay-app-view-move', 'liferay-message', 'liferay-portlet-base']
 	}
 );

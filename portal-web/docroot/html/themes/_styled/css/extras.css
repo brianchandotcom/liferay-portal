@@ -27,6 +27,10 @@
 	@include box-shadow(0 0 5px rgba(0, 0, 0, 0.5));
 }
 
+.lfr-ddm-container .image-upload-progress {
+	@include border-radius(0 0 4px 4px);
+}
+
 .lfr-preview-file-image img, .lfr-translation-manager {
 	@include box-shadow(0 3px 5px -3px rgba(0, 0, 0, 0.8));
 }

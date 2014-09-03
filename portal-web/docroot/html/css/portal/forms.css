@@ -109,10 +109,6 @@
 			margin-left: 20px;
 		}
 
-		.clear-file {
-			display: none;
-		}
-
 		.datepicker-display {
 			float: none;
 
@@ -122,9 +118,8 @@
 			}
 		}
 
-		.image-upload-container {
-			float: left;
-			margin-right: 4px;
+		.image-upload-progress {
+			height: 6px;
 		}
 
 		.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button {
@@ -141,12 +136,6 @@
 			&.lfr-ddm-repeatable-delete-button {
 				right: 24px;
 			}
-		}
-
-		.progress {
-			border-radius: 0 0 4px 4px;
-			display: none;
-			height: 6px;
 		}
 	}
 

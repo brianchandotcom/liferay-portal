@@ -127,10 +127,12 @@ public class DefaultRepositoryDefinition
 		Collection<RepositoryEventListener<S, T>> repositoryEventListeners =
 			(Collection)_repositoryEventListeners.get(key);
 
-		for (RepositoryEventListener<S, T> repositoryEventListener :
-				repositoryEventListeners) {
+		if (repositoryEventListeners != null) {
+			for (RepositoryEventListener<S, T> repositoryEventListener :
+					repositoryEventListeners) {
 
-			repositoryEventListener.execute(payload);
+				repositoryEventListener.execute(payload);
+			}
 		}
 	}
 

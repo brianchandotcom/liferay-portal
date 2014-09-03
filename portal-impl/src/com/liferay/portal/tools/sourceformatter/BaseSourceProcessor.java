@@ -1468,22 +1468,42 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Pattern.MULTILINE);
 
 	private String[] _getExcludes() {
+		long l1 = System.currentTimeMillis();
+
 		List<String> excludesList = ListUtil.fromString(
 			GetterUtil.getString(
 				System.getProperty("source.formatter.excludes")));
 
+		long l2 = System.currentTimeMillis();
+
 		excludesList.addAll(getPropertyList("source.formatter.excludes"));
+
+		long l3 = System.currentTimeMillis();
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
+		long l4 = System.currentTimeMillis();
+
 		directoryScanner.setBasedir(BASEDIR);
+
+		long l5 = System.currentTimeMillis();
 
 		String[] includes = new String[] {"**\\source_formatter.ignore"};
 
+		long l6 = System.currentTimeMillis();
+
 		directoryScanner.setIncludes(includes);
+
+		long l7 = System.currentTimeMillis();
 
 		List<String> ignoreFileNames = sourceFormatterHelper.scanForFiles(
 			directoryScanner);
+
+		long l8 = System.currentTimeMillis();
+
+		System.out.println(
+			"BaseSourceProcessor._getExcludes_ignoreFileNamesCount: " +
+				ignoreFileNames.size());
 
 		for (String ignoreFileName : ignoreFileNames) {
 			excludesList.add(
@@ -1491,7 +1511,24 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					"**");
 		}
 
-		return excludesList.toArray(new String[excludesList.size()]);
+		long l9 = System.currentTimeMillis();
+
+		String[] excludesArray = excludesList.toArray(
+			new String[excludesList.size()]);
+
+		long l10 = System.currentTimeMillis();
+
+		System.out.println("BaseSourceProcessor._getExcludes_1: " + (l2 - l1));
+		System.out.println("BaseSourceProcessor._getExcludes_2: " + (l3 - l2));
+		System.out.println("BaseSourceProcessor._getExcludes_3: " + (l4 - l3));
+		System.out.println("BaseSourceProcessor._getExcludes_4: " + (l5 - l4));
+		System.out.println("BaseSourceProcessor._getExcludes_5: " + (l6 - l5));
+		System.out.println("BaseSourceProcessor._getExcludes_6: " + (l7 - l6));
+		System.out.println("BaseSourceProcessor._getExcludes_7: " + (l8 - l7));
+		System.out.println("BaseSourceProcessor._getExcludes_8: " + (l9 - l8));
+		System.out.println("BaseSourceProcessor._getExcludes_9: " + (l10 - l9));
+
+		return excludesArray;
 	}
 
 	private Properties _getProperties() throws Exception {
@@ -1573,19 +1610,43 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			String mainReleaseVersion)
 		throws Exception {
 
+		long l1 = System.currentTimeMillis();
+
 		_errorMessagesMap = new HashMap<String, List<String>>();
+
+		long l2 = System.currentTimeMillis();
 
 		sourceFormatterHelper = new SourceFormatterHelper(useProperties);
 
+		long l3 = System.currentTimeMillis();
+
 		sourceFormatterHelper.init();
+
+		long l4 = System.currentTimeMillis();
 
 		_autoFix = autoFix;
 
+		long l5 = System.currentTimeMillis();
+
 		BaseSourceProcessor.mainReleaseVersion = mainReleaseVersion;
+
+		long l6 = System.currentTimeMillis();
 
 		_excludes = _getExcludes();
 
+		long l7 = System.currentTimeMillis();
+
 		_printErrors = printErrors;
+
+		long l8 = System.currentTimeMillis();
+
+		System.out.println("BaseSourceProcessor._init_1: " + (l2 - l1));
+		System.out.println("BaseSourceProcessor._init_2: " + (l3 - l2));
+		System.out.println("BaseSourceProcessor._init_3: " + (l4 - l3));
+		System.out.println("BaseSourceProcessor._init_4: " + (l5 - l4));
+		System.out.println("BaseSourceProcessor._init_5: " + (l6 - l5));
+		System.out.println("BaseSourceProcessor._init_6: " + (l7 - l6));
+		System.out.println("BaseSourceProcessor._init_7: " + (l8 - l7));
 	}
 
 	private boolean _isPortalSource() {

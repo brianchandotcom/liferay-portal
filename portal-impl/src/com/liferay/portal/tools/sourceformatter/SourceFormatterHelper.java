@@ -53,27 +53,49 @@ public class SourceFormatterHelper {
 	}
 
 	public void init() throws IOException {
+		long l1 = System.currentTimeMillis();
+
 		if (!_useProperties) {
+			System.out.println("SourceFormatterHelper.init return");
 			return;
 		}
 
+		long l2 = System.currentTimeMillis();
+
 		File basedirFile = new File("./");
+
+		long l3 = System.currentTimeMillis();
 
 		String basedirAbsolutePath = StringUtil.replace(
 			basedirFile.getAbsolutePath(), new String[] {".", ":", "/", "\\"},
 			new String[] {"_", "_", "_", "_"});
 
+		long l4 = System.currentTimeMillis();
+
 		String propertiesFileName =
 			System.getProperty("java.io.tmpdir") + "/SourceFormatter." +
 				basedirAbsolutePath;
 
+		long l5 = System.currentTimeMillis();
+
 		_propertiesFile = new File(propertiesFileName);
+
+		long l6 = System.currentTimeMillis();
 
 		if (_propertiesFile.exists()) {
 			_propertiesContent = _fileUtil.read(_propertiesFile);
 
 			PropertiesUtil.load(_properties, _propertiesContent);
 		}
+
+		long l7 = System.currentTimeMillis();
+
+		System.out.println("SourceFormatterHelper.init_1: " + (l2 - l1));
+		System.out.println("SourceFormatterHelper.init_2: " + (l3 - l2));
+		System.out.println("SourceFormatterHelper.init_3: " + (l4 - l3));
+		System.out.println("SourceFormatterHelper.init_4: " + (l5 - l4));
+		System.out.println("SourceFormatterHelper.init_5: " + (l6 - l5));
+		System.out.println("SourceFormatterHelper.init_6: " + (l7 - l6));
 	}
 
 	public void printError(String fileName, File file) {

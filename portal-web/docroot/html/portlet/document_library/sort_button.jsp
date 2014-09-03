@@ -19,7 +19,7 @@
 <%
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
-String folderId =(String)request.getAttribute("view.jsp-folderId");
+long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
 
@@ -35,60 +35,63 @@ if (orderByType.equals("asc")) {
 %>
 
 <aui:nav-item dropdown="<%= true %>" id="sortButtonContainer" label="sort-by">
-
 	<portlet:renderURL var="sortTitleURL">
 		<portlet:param name="struts_action" value="/document_library/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
-		<portlet:param name="folderId" value="<%= folderId %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
 		<portlet:param name="orderByCol" value="title" />
 		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
 	</portlet:renderURL>
+
 	<aui:nav-item href="<%= sortTitleURL %>" iconCssClass="icon-calendar" label="title" />
 
 	<portlet:renderURL var="sortDisplayDateURL">
 		<portlet:param name="struts_action" value="/document_library/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
-		<portlet:param name="folderId" value="<%= folderId %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
 		<portlet:param name="orderByCol" value="creationDate" />
 		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
 	</portlet:renderURL>
+
 	<aui:nav-item href="<%= sortDisplayDateURL %>" iconCssClass="icon-calendar" label="create-date" />
 
 	<portlet:renderURL var="sortModifiedDateURL">
 		<portlet:param name="struts_action" value="/document_library/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
-		<portlet:param name="folderId" value="<%= folderId %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
 		<portlet:param name="orderByCol" value="modifiedDate" />
 		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
 	</portlet:renderURL>
+
 	<aui:nav-item href="<%= sortModifiedDateURL %>" iconCssClass="icon-calendar" label="modified-date" />
 
 	<portlet:renderURL var="sortDownloadsURL">
 		<portlet:param name="struts_action" value="/document_library/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
-		<portlet:param name="folderId" value="<%= folderId %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
 		<portlet:param name="orderByCol" value="downloads" />
 		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
 	</portlet:renderURL>
+
 	<aui:nav-item href="<%= sortDownloadsURL %>" iconCssClass="icon-calendar" label="downloads" />
 
 	<portlet:renderURL var="sortSizeURL">
 		<portlet:param name="struts_action" value="/document_library/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
-		<portlet:param name="folderId" value="<%= folderId %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
 		<portlet:param name="orderByCol" value="size" />
 		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
 	</portlet:renderURL>
-	<aui:nav-item href="<%= sortSizeURL %>" iconCssClass="icon-calendar" label="size" />
 
+	<aui:nav-item href="<%= sortSizeURL %>" iconCssClass="icon-calendar" label="size" />
 </aui:nav-item>

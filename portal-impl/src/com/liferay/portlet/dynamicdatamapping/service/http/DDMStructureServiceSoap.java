@@ -416,20 +416,23 @@ public class DDMStructureServiceSoap {
 
 	/**
 	* Returns the structure matching the class name ID, structure key, and
-	* group, optionally in the global scope.
+	* group, optionally searching ancestor sites (that have sharing enabled)
+	* and global scoped sites.
 	*
 	* <p>
 	* This method first searches in the group. If the structure is still not
 	* found and <code>includeAncestorStructures</code> is set to
-	* <code>true</code>, this method searches the global group.
+	* <code>true</code>, this method searches the group's ancestor sites (that
+	* have sharing enabled) and lastly searches global scoped sites.
 	* </p>
 	*
 	* @param groupId the primary key of the structure's group
 	* @param classNameId the primary key of the class name for the structure's
 	related model
 	* @param structureKey the unique string identifying the structure
-	* @param includeAncestorStructures whether to include the global scope in
-	the search
+	* @param includeAncestorStructures whether to include ancestor sites (that
+	have sharing enabled) and include global scoped sites in the
+	search
 	* @return the matching structure
 	* @throws PortalException if the user did not have permission to view the
 	structure or if a matching structure could not be found

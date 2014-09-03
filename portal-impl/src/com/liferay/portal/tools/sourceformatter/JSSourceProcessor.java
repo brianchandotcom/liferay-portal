@@ -84,6 +84,8 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
+		long start = System.currentTimeMillis();
+
 		String[] excludes = {
 			"**\\js\\aui\\**", "**\\js\\editor\\**", "**\\js\\misc\\**",
 			"**\\r2.js", "**\\tools\\**", "**\\VAADIN\\**"
@@ -91,6 +93,11 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 		String[] includes = {"**\\*.js"};
 
 		List<String> fileNames = getFileNames(excludes, includes);
+
+		long end = System.currentTimeMillis();
+
+		System.out.println(
+			(end - start) + ", preparation: " + this.getClass().getName());
 
 		for (String fileName : fileNames) {
 			format(fileName);

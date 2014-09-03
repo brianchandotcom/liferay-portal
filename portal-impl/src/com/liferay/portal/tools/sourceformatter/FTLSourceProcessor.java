@@ -33,6 +33,8 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
+		long start = System.currentTimeMillis();
+
 		String[] excludes = new String[] {
 			"**\\journal\\dependencies\\template.ftl",
 			"**\\servicebuilder\\dependencies\\props.ftl"
@@ -40,6 +42,11 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 		String[] includes = new String[] {"**\\*.ftl"};
 
 		List<String> fileNames = getFileNames(excludes, includes);
+
+		long end = System.currentTimeMillis();
+
+		System.out.println(
+			(end - start) + ", preparation: " + this.getClass().getName());
 
 		for (String fileName : fileNames) {
 			format(fileName);

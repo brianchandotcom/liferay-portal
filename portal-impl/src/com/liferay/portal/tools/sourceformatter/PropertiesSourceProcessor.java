@@ -46,6 +46,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
+		long start = System.currentTimeMillis();
+
 		_portalPortalPropertiesContent = formatPortalPortalProperties();
 
 		String[] includes = null;
@@ -63,6 +65,11 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 
 		List<String> fileNames = getFileNames(new String[0], includes);
+
+		long end = System.currentTimeMillis();
+
+		System.out.println(
+			(end - start) + ", preparation: " + this.getClass().getName());
 
 		for (String fileName : fileNames) {
 			format(fileName);

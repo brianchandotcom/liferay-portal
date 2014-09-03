@@ -437,6 +437,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
+		long start = System.currentTimeMillis();
+
 		_unusedVariablesExclusions = getPropertyList(
 			"jsp.unused.variables.excludes");
 
@@ -490,6 +492,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			moveFrequentlyUsedImportsToCommonInit(4);
 		}
+
+		long end = System.currentTimeMillis();
+
+		System.out.println(
+			(end - start) + ", preparation: " + this.getClass().getName());
 
 		for (String fileName : fileNames) {
 			format(fileName);

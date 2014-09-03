@@ -55,6 +55,13 @@ import org.apache.tools.ant.DirectoryScanner;
 public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	public BaseSourceProcessor() {
+		baseProcessorInitTime = 0;
+		constructorTime = 0;
+		getFileNamesTime = 0;
+		processFormattedFileTime = 0;
+
+		long start = System.currentTimeMillis();
+
 		portalSource = _isPortalSource();
 
 		try {
@@ -63,6 +70,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		catch (Exception e) {
 			ReflectionUtil.throwException(e);
 		}
+
+		long end = System.currentTimeMillis();
+
+		constructorTime += (end - start);
 	}
 
 	@Override
@@ -71,7 +82,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			String mainReleaseVersion)
 		throws Exception {
 
+		long start = System.currentTimeMillis();
+
 		_init(useProperties, printErrors, autoFix, mainReleaseVersion);
+
+		long end = System.currentTimeMillis();
+
+		baseProcessorInitTime += (end - start);
 
 		format();
 
@@ -105,6 +122,22 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return errorMessages;
+	}
+
+	public long getBaseProcessorInitTime() {
+		return baseProcessorInitTime;
+	}
+
+	public long getConstructorTime() {
+		return constructorTime;
+	}
+
+	public long getGetFileNamesTime() {
+		return getFileNamesTime;
+	}
+
+	public long getProcessFormattedFileTime() {
+		return processFormattedFileTime;
 	}
 
 	@Override
@@ -832,6 +865,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected List<String> getFileNames(
 		String basedir, String[] excludes, String[] includes) {
 
+		long start = System.currentTimeMillis();
+
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
 		directoryScanner.setBasedir(basedir);
@@ -842,7 +877,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		directoryScanner.setIncludes(includes);
 
-		return sourceFormatterHelper.scanForFiles(directoryScanner);
+		List<String> fileNames = sourceFormatterHelper.scanForFiles(
+			directoryScanner);
+
+		long end = System.currentTimeMillis();
+
+		getFileNamesTime += (end - start);
+
+		return fileNames;
 	}
 
 	protected List<String> getFileNames(String[] excludes, String[] includes) {
@@ -1041,6 +1083,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file, String fileName, String content, String newContent)
 		throws IOException {
 
+		long start = System.currentTimeMillis();
+
 		if (_printErrors) {
 			List<String> errorMessages = _errorMessagesMap.get(fileName);
 
@@ -1052,6 +1096,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		if (content.equals(newContent)) {
+			long end = System.currentTimeMillis();
+
+			processFormattedFileTime += (end - start);
+
 			return;
 		}
 
@@ -1066,6 +1114,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (_printErrors) {
 			sourceFormatterHelper.printError(fileName, file);
 		}
+
+		long end = System.currentTimeMillis();
+
+		processFormattedFileTime += (end - start);
 	}
 
 	protected String replacePrimitiveWrapperInstantiation(
@@ -1466,6 +1518,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern taglibSessionKeyPattern = Pattern.compile(
 		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
 		Pattern.MULTILINE);
+
+	protected long baseProcessorInitTime = 0;
+	protected long constructorTime = 0;
+	protected long getFileNamesTime = 0;
+	protected long processFormattedFileTime = 0;
 
 	private String[] _getExcludes() {
 		List<String> excludesList = ListUtil.fromString(

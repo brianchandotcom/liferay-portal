@@ -320,10 +320,10 @@
 		</execute>
 
 		<execute action="Home#open" locator1="${url}" />
-		<execute action="Home#confirm" locator-key1="CONFIRMATION" value1="4" />
+		<execute action="Home#assertAlertNotPresent" />
 
 		<execute action="Home#refresh" />
-		<execute action="Home#confirm" locator-key1="CONFIRMATION" value1="4" />
+		<execute action="Home#assertAlertNotPresent" />
 
 		<execute macro="Page#openURL" />
 		<execute action="Home#assertAlertNotPresent" />

@@ -176,11 +176,11 @@ public class ViewAction extends PortletAction {
 				LayoutPermissionUtil.contains(
 					permissionChecker, layout, ActionKeys.VIEW)) {
 
-				String layoutURL = PortalUtil.getLayoutURL(
-					layout, themeDisplay, true);
+				String canonicalURL = PortalUtil.getCanonicalURL(
+					null, themeDisplay, layout, true);
 
 				return PortalUtil.addPreservedParameters(
-					themeDisplay, layout, layoutURL, true);
+					themeDisplay, layout, canonicalURL, true);
 			}
 		}
 

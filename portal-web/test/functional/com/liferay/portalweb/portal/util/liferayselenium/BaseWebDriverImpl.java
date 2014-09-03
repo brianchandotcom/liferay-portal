@@ -148,7 +148,7 @@ public abstract class BaseWebDriverImpl
 	public void assertJavaScriptErrors(String ignoreJavaScriptError)
 		throws Exception {
 
-		if (!TestPropsValues.TEST_ASSSERT_JAVASCRIPT_ERRORS) {
+		if (!TestPropsValues.TEST_ASSERT_JAVASCRIPT_ERRORS) {
 			return;
 		}
 

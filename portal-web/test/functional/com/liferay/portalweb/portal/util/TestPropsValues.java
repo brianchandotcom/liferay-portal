@@ -117,12 +117,12 @@ public class TestPropsValues
 	public static final boolean TEAR_DOWN_BEFORE_TEST = GetterUtil.getBoolean(
 		TestPropsUtil.get("tear.down.before.test"));
 
-	public static final boolean TEST_ASSERT_LIFERAY_ERRORS =
-		GetterUtil.getBoolean(TestPropsUtil.get("test.assert.liferay.errors"));
-
-	public static final boolean TEST_ASSSERT_JAVASCRIPT_ERRORS =
+	public static final boolean TEST_ASSERT_JAVASCRIPT_ERRORS =
 		GetterUtil.getBoolean(
 			TestPropsUtil.get("test.assert.javascript.errors"));
+
+	public static final boolean TEST_ASSERT_LIFERAY_ERRORS =
+		GetterUtil.getBoolean(TestPropsUtil.get("test.assert.liferay.errors"));
 
 	public static final String TEST_BASE_DIR_NAME = TestPropsUtil.get(
 		"test.basedir");

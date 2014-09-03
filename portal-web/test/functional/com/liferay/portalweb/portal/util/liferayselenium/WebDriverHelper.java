@@ -39,9 +39,10 @@ import org.openqa.selenium.internal.WrapsDriver;
 public class WebDriverHelper {
 
 	public static void assertJavaScriptErrors(
-		WebDriver webDriver, String ignoreJavaScriptError) throws Exception {
+			WebDriver webDriver, String ignoreJavaScriptError)
+		throws Exception {
 
-		if (!TestPropsValues.TEST_ASSSERT_JAVASCRIPT_ERRORS) {
+		if (!TestPropsValues.TEST_ASSERT_JAVASCRIPT_ERRORS) {
 			return;
 		}
 
@@ -121,12 +122,12 @@ public class WebDriverHelper {
 		}
 	}
 
-	public static String getLocation(WebDriver webDriver) {
-		return webDriver.getCurrentUrl();
-	}
-
 	public static String getDefaultWindowHandle() {
 		return _defaultWindowHandle;
+	}
+
+	public static String getLocation(WebDriver webDriver) {
+		return webDriver.getCurrentUrl();
 	}
 
 	public static boolean isElementPresent(
@@ -374,7 +375,7 @@ public class WebDriverHelper {
 	}
 
 	private static String _defaultWindowHandle;
-
-	private static Stack<WebElement> _frameWebElements = new Stack<WebElement>();
+	private static Stack<WebElement> _frameWebElements =
+		new Stack<WebElement>();
 
 }

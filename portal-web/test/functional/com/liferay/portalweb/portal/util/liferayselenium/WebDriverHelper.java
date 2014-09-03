@@ -16,6 +16,7 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
@@ -23,6 +24,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
+
+import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -35,14 +38,14 @@ import org.openqa.selenium.internal.WrapsDriver;
  */
 public class WebDriverHelper {
 
-	public void assertJavaScriptErrors(String ignoreJavaScriptError)
-		throws Exception {
+	public static void assertJavaScriptErrors(
+		WebDriver webDriver, String ignoreJavaScriptError) throws Exception {
 
 		if (!TestPropsValues.TEST_ASSSERT_JAVASCRIPT_ERRORS) {
 			return;
 		}
 
-		String location = getLocation();
+		String location = getLocation(webDriver);
 
 		if (!location.contains("localhost")) {
 			return;
@@ -51,14 +54,14 @@ public class WebDriverHelper {
 		String pageSource = null;
 
 		try {
-			pageSource = getPageSource();
+			pageSource = webDriver.getPageSource();
 		}
 		catch (Exception e) {
-			WebDriver.TargetLocator targetLocator = switchTo();
+			WebDriver.TargetLocator targetLocator = webDriver.switchTo();
 
-			targetLocator.window(WebDriverHelper.getDefaultWindowHandle());
+			targetLocator.window(_defaultWindowHandle);
 
-			pageSource = getPageSource();
+			pageSource = webDriver.getPageSource();
 		}
 
 		if (pageSource.contains(
@@ -68,14 +71,14 @@ public class WebDriverHelper {
 			return;
 		}
 
-		WebElement webElement = getWebElement("//body");
+		WebElement webElement = getWebElement(webDriver, "//body");
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
 
 		List<JavaScriptError> javaScriptErrors = JavaScriptError.readErrors(
-			webDriver);
+			wrappedWebDriver);
 
 		if (!javaScriptErrors.isEmpty()) {
 			for (JavaScriptError javaScriptError : javaScriptErrors) {

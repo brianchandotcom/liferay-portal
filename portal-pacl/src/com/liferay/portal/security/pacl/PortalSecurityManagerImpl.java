@@ -146,6 +146,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		initClasses();
 
+		PortalPolicy portalPolicy = null;
+
 		try {
 			Policy policy = null;
 
@@ -153,11 +155,11 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				policy = Policy.getPolicy();
 			}
 
-			_portalPolicy = new PortalPolicy(policy);
+			portalPolicy = new PortalPolicy(policy);
 
-			Policy.setPolicy(_portalPolicy);
+			Policy.setPolicy(portalPolicy);
 
-			_portalPolicy.refresh();
+			portalPolicy.refresh();
 		}
 		catch (Exception e) {
 			if (_log.isInfoEnabled()) {
@@ -170,8 +172,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			if (_log.isWarnEnabled()) {
 				_log.warn(e, e);
 			}
-
-			return;
 		}
 
 		try {
@@ -212,6 +212,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		if (ServerDetector.isWebSphere()) {
 			addWebSphereHook();
 		}
+
+		_portalPolicy = portalPolicy;
 	}
 
 	@Override
@@ -535,18 +537,19 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			TemplateContextHelper.class, new DoTemplateContextHelperPACL());
 	}
 
+	private static final ThreadLocal<ClassLoader>
+		_checkMemberAccessClassLoader =
+			new AutoResetThreadLocal<ClassLoader>(
+				PortalSecurityManagerImpl.class +
+					"._checkMembersAccessClassLoader");
+	private static final RuntimePermission _checkMemberAccessPermission =
+		new RuntimePermission("accessDeclaredMembers");
+
 	private static Log _log = LogFactoryUtil.getLog(
 		PortalSecurityManagerImpl.class.getName());
 
-	private static ThreadLocal<ClassLoader> _checkMemberAccessClassLoader =
-		new AutoResetThreadLocal<ClassLoader>(
-			PortalSecurityManagerImpl.class +
-				"._checkMembersAccessClassLoader");
-	private static RuntimePermission _checkMemberAccessPermission =
-		new RuntimePermission("accessDeclaredMembers");
-
 	private SecurityManager _originalSecurityManager;
-	private PortalPolicy _portalPolicy;
+	private final PortalPolicy _portalPolicy;
 
 	private static class DoBeanLocatorImplPACL implements BeanLocatorImpl.PACL {
 

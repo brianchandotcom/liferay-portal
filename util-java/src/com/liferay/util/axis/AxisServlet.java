@@ -208,7 +208,7 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 		}
 		finally {
 			try {
-				ThreadLocal<?> cache = (ThreadLocal<?>)_cacheField.get(null);
+				ThreadLocal<?> cache = (ThreadLocal<?>)_CACHE_FIELD.get(null);
 
 				if (cache != null) {
 					cache.remove();
@@ -257,13 +257,13 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 		return document.formattedString();
 	}
 
+	private static final Field _CACHE_FIELD;
+
 	private static final String _HTML_BOTTOM_WRAPPER = "</body></html>";
 
 	private static final String _HTML_TOP_WRAPPER = "<html><body>";
 
 	private static Log _log = LogFactoryUtil.getLog(AxisServlet.class);
-
-	private static Field _cacheField;
 
 	private String _correctLongArray;
 	private String _correctOrderByComparator;
@@ -324,13 +324,17 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 	}
 
 	static {
+		Field cacheField = null;
+
 		try {
-			_cacheField = ReflectionUtil.getDeclaredField(
+			cacheField = ReflectionUtil.getDeclaredField(
 				MethodCache.class, "cache");
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_CACHE_FIELD = cacheField;
 	}
 
 }

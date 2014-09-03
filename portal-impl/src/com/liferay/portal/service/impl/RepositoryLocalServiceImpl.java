@@ -386,7 +386,12 @@ public class RepositoryLocalServiceImpl
 			DLFolder dlFolder = dlFolderLocalService.fetchDLFolder(folderId);
 
 			if (dlFolder != null) {
-				repositoryId = dlFolder.getRepositoryId();
+				if (dlFolder.isMountPoint()) {
+					repositoryId = dlFolder.getGroupId();
+				}
+				else {
+					repositoryId = dlFolder.getRepositoryId();
+				}
 			}
 		}
 		else if (fileEntryId != 0) {

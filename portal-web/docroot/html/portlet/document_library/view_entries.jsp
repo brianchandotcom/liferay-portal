@@ -350,17 +350,18 @@ searchContainer.setResults(results);
 	</div>
 </c:if>
 
-<%
-for (int i = 0; i < results.size(); i++) {
-	Object result = results.get(i);
-%>
+<c:choose>
+	<c:when test='<%= !displayStyle.equals("list") %>'>
 
-	<%@ include file="/html/portlet/document_library/cast_result.jspf" %>
+		<%
+		for (int i = 0; i < results.size(); i++) {
+			Object result = results.get(i);
+		%>
 
-	<c:choose>
-		<c:when test="<%= fileEntry != null %>">
+			<%@ include file="/html/portlet/document_library/cast_result.jspf" %>
+
 			<c:choose>
-				<c:when test='<%= !displayStyle.equals("list") %>'>
+				<c:when test="<%= fileEntry != null %>">
 					<c:choose>
 						<c:when test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 
@@ -386,7 +387,6 @@ for (int i = 0; i < results.size(); i++) {
 								</c:otherwise>
 							</c:choose>
 						</c:when>
-
 						<c:otherwise>
 							<div style="float: left; margin: 100px 10px 0px;">
 								<i class="icon-ban-circle"></i>
@@ -395,7 +395,57 @@ for (int i = 0; i < results.size(); i++) {
 					</c:choose>
 				</c:when>
 
-				<c:otherwise>
+				<c:when test="<%= curFolder != null %>">
+					<%
+					String folderImage = "folder_empty_document";
+
+					if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status, true) > 0) {
+						folderImage = "folder_full_document";
+					}
+
+					PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
+
+					tempRowURL.setParameter("struts_action", "/document_library/view");
+					tempRowURL.setParameter("redirect", currentURL);
+					tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+
+					request.setAttribute("view_entries.jsp-folder", curFolder);
+					request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
+					request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(curFolder.getRepositoryId()));
+
+					request.setAttribute("view_entries.jsp-folderImage", folderImage);
+
+					request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
+					%>
+
+					<c:choose>
+						<c:when test='<%= displayStyle.equals("icon") %>'>
+							<liferay-util:include page="/html/portlet/document_library/view_folder_icon.jsp" />
+						</c:when>
+
+						<c:otherwise>
+							<liferay-util:include page="/html/portlet/document_library/view_folder_descriptive.jsp" />
+						</c:otherwise>
+					</c:choose>
+				</c:when>
+			</c:choose>
+
+		<%
+		}
+		%>
+
+	</c:when>
+	<c:otherwise>
+
+		<%
+		for (int i = 0; i < results.size(); i++) {
+			Object result = results.get(i);
+		%>
+
+			<%@ include file="/html/portlet/document_library/cast_result.jspf" %>
+
+			<c:choose>
+				<c:when test="<%= fileEntry != null %>">
 
 					<%
 					FileVersion latestFileVersion = fileEntry.getFileVersion();
@@ -487,45 +537,6 @@ for (int i = 0; i < results.size(); i++) {
 					resultRows.add(row);
 					%>
 
-				</c:otherwise>
-			</c:choose>
-		</c:when>
-
-		<c:when test="<%= curFolder != null %>">
-			<c:choose>
-				<c:when test='<%= !displayStyle.equals("list") %>'>
-
-					<%
-					String folderImage = "folder_empty_document";
-
-					if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status, true) > 0) {
-						folderImage = "folder_full_document";
-					}
-
-					PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
-
-					tempRowURL.setParameter("struts_action", "/document_library/view");
-					tempRowURL.setParameter("redirect", currentURL);
-					tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-
-					request.setAttribute("view_entries.jsp-folder", curFolder);
-					request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
-					request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(curFolder.getRepositoryId()));
-
-					request.setAttribute("view_entries.jsp-folderImage", folderImage);
-
-					request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
-					%>
-
-					<c:choose>
-						<c:when test='<%= displayStyle.equals("icon") %>'>
-							<liferay-util:include page="/html/portlet/document_library/view_folder_icon.jsp" />
-						</c:when>
-
-						<c:otherwise>
-							<liferay-util:include page="/html/portlet/document_library/view_folder_descriptive.jsp" />
-						</c:otherwise>
-					</c:choose>
 				</c:when>
 				<c:otherwise>
 					<liferay-util:buffer var="folderTitle">
@@ -614,12 +625,13 @@ for (int i = 0; i < results.size(); i++) {
 
 				</c:otherwise>
 			</c:choose>
-		</c:when>
-	</c:choose>
 
-<%
-}
-%>
+		<%
+		}
+		%>
+
+	</c:otherwise>
+</c:choose>
 
 <div class="document-entries-pagination">
 	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />

@@ -71,7 +71,7 @@
 		viewer = new A.ImageViewer(
 			{
 				links: '#${portletNamespace}${namespacedFieldName}PreviewContainer a',
-				caption: '${alt}',
+				caption: '${htmlUtil.escapeJS(alt)}',
 				preloadAllImages: true,
 				zIndex: Liferay.zIndex.OVERLAY
 			}
@@ -84,10 +84,10 @@
 
 	function clearUpload() {
 		clearFileButtonNode.hide();
-		previewFileButtonNode.hide();
 		progressNode.hide();
 
-		if (viewer) {
+		if (previewFileButtonNode && viewer) {
+			previewFileButtonNode.hide();
 			viewer.hide();
 		}
 
@@ -137,14 +137,13 @@
 						data = A.JSON.parse(event.data);
 
 						if (data.status) {
-							notice.html(data.message);
-							notice.show();
-
 							clearUpload();
+
+							notice.html(data.message);
+
+							notice.show();
 						}
 						else {
-							clearUpload()
-
 							fieldNode.val(A.JSON.stringify(data));
 							titleNode.val(event.file.get('name'));
 

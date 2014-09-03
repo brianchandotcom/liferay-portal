@@ -166,7 +166,6 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 </div>
 
 <%
-
 if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN))) {
 	PortalUtil.setPageSubtitle(folder.getName(), request);
 	PortalUtil.setPageDescription(folder.getDescription(), request);
@@ -195,6 +194,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 </aui:script>
 
 <aui:script use="liferay-document-library">
+
 	<%
 	String[] entryColumns = dlEntriesListDisplayContext.getEntryColumns();
 	String[] escapedEntryColumns = new String[entryColumns.length];

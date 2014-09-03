@@ -37,14 +37,13 @@ displayStyleUrl.setParameter("struts_action", Validator.isNull(keywords) ? "/doc
 displayStyleUrl.setParameter("navigation", HtmlUtil.escapeJS(navigation));
 displayStyleUrl.setParameter("folderId", String.valueOf(folderId));
 
-if(fileEntryTypeId != -1){
+if (fileEntryTypeId != -1) {
 	displayStyleUrl.setParameter("fileEntryTypeId", String.valueOf(fileEntryTypeId));
 }
-
 %>
 
 <liferay-ui:app-view-display-style
 	displayStyle="<%= displayStyle %>"
-	displayStyles="<%= dlPortletInstanceSettings.getDisplayViews() %>"
 	displayStyleUrl="<%= displayStyleUrl %>"
+	displayStyles="<%= dlPortletInstanceSettings.getDisplayViews() %>"
 />

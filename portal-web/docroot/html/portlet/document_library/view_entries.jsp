@@ -74,7 +74,6 @@ int entryEnd = ParamUtil.getInteger(request, "entryEnd", dlPortletInstanceSettin
 
 SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-
 List<String> headerNames = new ArrayList<String>();
 
 String[] entryColumns = dlEntriesListDisplayContext.getEntryColumns();
@@ -253,7 +252,6 @@ else {
 }
 
 searchContainer.setResults(results);
-
 %>
 
 <div class="subscribe-action">
@@ -626,7 +624,6 @@ for (int i = 0; i < results.size(); i++) {
 <div class="document-entries-pagination">
 	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 </div>
-
 
 <%!
 private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_library.view_entries_jsp");

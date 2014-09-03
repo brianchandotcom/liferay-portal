@@ -121,7 +121,6 @@ else {
 					request.setAttribute("view_entries.jsp-folder", folder);
 					request.setAttribute("view_entries.jsp-folderId", String.valueOf(folderId));
 					request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(repositoryId));
-
 					%>
 
 					<portlet:renderURL var="viewDocumentsHomeURL">
@@ -138,9 +137,11 @@ else {
 						localizeLabel="<%= false %>"
 						selected='<%= ((navigation.equals("home")) && (folderId == rootFolderId) && (fileEntryTypeId == -1)) %>'
 						>
+
 						<%
 						request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 						%>
+
 						<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 					</aui:nav-item>
 
@@ -223,12 +224,13 @@ else {
 								cssClass="app-view-navigation-entry folder list-group-item"
 								href="<%= viewURL %>"
 								iconCssClass="icon-hdd"
-								label='<%= mountFolder.getName() %>'
+								label="<%= mountFolder.getName() %>"
 								localizeLabel="<%= false %>"
-								selected='<%= (mountFolder.getFolderId() == folderId) %>'
+								selected="<%= (mountFolder.getFolderId() == folderId) %>"
 								>
 								<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 							</aui:nav-item>
+
 						<%
 						}
 						catch (Exception e) {
@@ -300,7 +302,7 @@ else {
 								iconCssClass="icon-file-alt"
 								label='<%= HtmlUtil.escape(LanguageUtil.get(request, "basic-document")) %>'
 								localizeLabel="<%= false %>"
-								selected='<%= (fileEntryTypeId == 0) %>'
+								selected="<%= (fileEntryTypeId == 0) %>"
 							/>
 						</c:if>
 
@@ -374,9 +376,9 @@ else {
 							cssClass="app-view-navigation-entry folder list-group-item"
 							href="<%= viewURL %>"
 							iconCssClass='<%= (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, true) > 0) ? "icon-folder-open" : "icon-folder-close" %>'
-							label='<%= curFolder.getName() %>'
+							label="<%= curFolder.getName() %>"
 							localizeLabel="<%= false %>"
-							selected='<%= (curFolder.getFolderId() == folderId) %>'
+							selected="<%= (curFolder.getFolderId() == folderId) %>"
 							>
 							<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 						</aui:nav-item>

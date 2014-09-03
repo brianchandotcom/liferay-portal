@@ -134,7 +134,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 						<portlet:param name="searchRepositoryId" value="<%= (!searchEverywhere) ? String.valueOf(scopeGroupId) : String.valueOf(repositoryId) %>" />
 						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-						<portlet:param name="searchFolderId" value="<%=  (!searchEverywhere) ? String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(folderId) %>" />
+						<portlet:param name="searchFolderId" value="<%= (!searchEverywhere) ? String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(folderId) %>" />
 						<portlet:param name="keywords" value="<%= String.valueOf(keywords) %>" />
 						<portlet:param name="searchType" value="1" />
 						<portlet:param name="showRepositoryTabs" value="<% (searchEverywhere) ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" />

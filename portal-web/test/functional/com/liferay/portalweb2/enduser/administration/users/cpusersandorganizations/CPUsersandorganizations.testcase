@@ -888,7 +888,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserEmailAddressRoot" priority="3">
+	<command known-issues="LPS-49810" name="AddUserEmailAddressRoot" priority="3">
 		<var name="userEmailAddress" value="root@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -1028,7 +1028,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserScreenNameInvalid" priority="4">
+	<command known-issues="LPS-48640" name="AddUserScreenNameInvalid" priority="4">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -1724,7 +1724,7 @@
 		</execute>
 	</command>
 
-	<command name="ErrorAddUserScreenNameNumberSiteId" priority="5">
+	<command known-issues="LPS-49812" name="ErrorAddUserScreenNameNumberSiteId" priority="5">
 		<var name="siteID" value="${siteID}" />
 		<var name="siteName" value="Site Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />

@@ -94,7 +94,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select fileEntryId, extension, title, from DLFileEntry");
+				"select fileEntryId, extension, title from DLFileEntry");
 
 			rs = ps.executeQuery();
 
@@ -148,7 +148,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select fileVersionId, extension, title, from DLFileVersion");
+				"select fileVersionId, extension, title from DLFileVersion");
 
 			rs = ps.executeQuery();
 

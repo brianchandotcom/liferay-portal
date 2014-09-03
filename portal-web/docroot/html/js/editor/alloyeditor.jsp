@@ -209,7 +209,7 @@ if (alloyEditorMode.equals("text")) {
 		window['<%= name %>Config']();
 	}
 
-	<c:if test='<%= alloyEditorMode.equals("text") %>' >
+	<c:if test='<%= alloyEditorMode.equals("text") %>'>
 		var alloyEditor = CKEDITOR.instances['<%= name %>'];
 
 		alloyEditor.on(

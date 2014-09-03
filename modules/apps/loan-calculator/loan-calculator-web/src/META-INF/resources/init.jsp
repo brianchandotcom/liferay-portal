@@ -14,6 +14,27 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ taglib uri="/META-INF/aui.tld" prefix="aui" %>
+<%@ taglib uri="/META-INF/c.tld" prefix="c" %>
+<%@ taglib uri="/META-INF/liferay-portlet_2_0.tld" prefix="portlet" %>
+<%@ taglib uri="/META-INF/liferay-theme.tld" prefix="liferay-theme" %>
+<%@ taglib uri="/META-INF/liferay-ui.tld" prefix="liferay-ui" %>
 
-<%@ include file="/html/portlet/loan_calculator/init-ext.jsp" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
+
+<%@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %>
+
+<%@ page import="java.text.NumberFormat" %>
+
+<%@ page import="javax.portlet.WindowState" %>
+
+<liferay-theme:defineObjects />
+<portlet:defineObjects />
+
+<%
+WindowState windowState = liferayPortletRequest.getWindowState();
+%>
+
+<%@ include file="/init-ext.jsp" %>

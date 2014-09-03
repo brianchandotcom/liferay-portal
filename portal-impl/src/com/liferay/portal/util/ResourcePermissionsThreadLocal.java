@@ -42,6 +42,8 @@ public class ResourcePermissionsThreadLocal {
 				resourcePermissionMap.put(
 					resourcePermission.getRoleId(), resourcePermission);
 			}
+
+			_resourcePermissions.set(resourcePermissionMap);
 		}
 		else {
 			_resourcePermissions.remove();

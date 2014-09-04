@@ -82,31 +82,22 @@ public class JavaClass {
 
 	public static final int[] TYPE_VARIABLE = {
 		JavaClass.TYPE_VARIABLE_PRIVATE, JavaClass.TYPE_VARIABLE_PRIVATE_STATIC,
-		JavaClass.TYPE_VARIABLE_PRIVATE_STATIC_FINAL,
 		JavaClass.TYPE_VARIABLE_PROTECTED,
 		JavaClass.TYPE_VARIABLE_PROTECTED_STATIC,
-		JavaClass.TYPE_VARIABLE_PROTECTED_STATIC_FINAL,
-		JavaClass.TYPE_VARIABLE_PUBLIC, JavaClass.TYPE_VARIABLE_PUBLIC_STATIC,
-		JavaClass.TYPE_VARIABLE_PUBLIC_STATIC_FINAL
+		JavaClass.TYPE_VARIABLE_PUBLIC, JavaClass.TYPE_VARIABLE_PUBLIC_STATIC
 	};
 
 	public static final int TYPE_VARIABLE_PRIVATE = 22;
 
 	public static final int TYPE_VARIABLE_PRIVATE_STATIC = 21;
 
-	public static final int TYPE_VARIABLE_PRIVATE_STATIC_FINAL = 20;
-
 	public static final int TYPE_VARIABLE_PROTECTED = 14;
 
 	public static final int TYPE_VARIABLE_PROTECTED_STATIC = 13;
 
-	public static final int TYPE_VARIABLE_PROTECTED_STATIC_FINAL = 12;
-
 	public static final int TYPE_VARIABLE_PUBLIC = 6;
 
 	public static final int TYPE_VARIABLE_PUBLIC_STATIC = 2;
-
-	public static final int TYPE_VARIABLE_PUBLIC_STATIC_FINAL = 1;
 
 	public JavaClass(
 			String fileName, String absolutePath, String content, String indent)
@@ -324,10 +315,8 @@ public class JavaClass {
 
 				requiresEmptyLine = true;
 			}
-			else if (((previousJavaTerm.getType() ==
-						TYPE_VARIABLE_PRIVATE_STATIC) ||
-					  (previousJavaTerm.getType() ==
-						  TYPE_VARIABLE_PRIVATE_STATIC_FINAL)) &&
+			else if ((previousJavaTerm.getType() ==
+						TYPE_VARIABLE_PRIVATE_STATIC) &&
 					 (previousJavaTermName.equals("_instance") ||
 					  previousJavaTermName.equals("_log") ||
 					  previousJavaTermName.equals("_logger"))) {
@@ -662,14 +651,7 @@ public class JavaClass {
 
 		int pos = line.indexOf(StringPool.OPEN_PARENTHESIS);
 
-		if (line.startsWith(_indent + "public static final ") &&
-			(line.contains(StringPool.EQUAL) ||
-			 (line.endsWith(StringPool.SEMICOLON) && (pos == -1)))) {
-
-			return new Tuple(
-				getVariableName(line), TYPE_VARIABLE_PUBLIC_STATIC_FINAL);
-		}
-		else if (line.startsWith(_indent + "public static ")) {
+		if (line.startsWith(_indent + "public static ")) {
 			if (line.contains(" class ") || line.contains(" enum ")) {
 				return new Tuple(getClassName(line), TYPE_CLASS_PUBLIC_STATIC);
 			}
@@ -717,13 +699,6 @@ public class JavaClass {
 				}
 			}
 		}
-		else if (line.startsWith(_indent + "protected static final ") &&
-				 (line.contains(StringPool.EQUAL) ||
-				  (line.endsWith(StringPool.SEMICOLON) && (pos == -1)))) {
-
-			return new Tuple(
-				getVariableName(line), TYPE_VARIABLE_PROTECTED_STATIC_FINAL);
-		}
 		else if (line.startsWith(_indent + "protected static ")) {
 			if (line.contains(" class ") || line.contains(" enum ")) {
 				return new Tuple(
@@ -770,13 +745,6 @@ public class JavaClass {
 			}
 
 			return new Tuple(getVariableName(line), TYPE_VARIABLE_PROTECTED);
-		}
-		else if (line.startsWith(_indent + "private static final ") &&
-				 (line.contains(StringPool.EQUAL) ||
-				  (line.endsWith(StringPool.SEMICOLON) && (pos == -1)))) {
-
-			return new Tuple(
-				getVariableName(line), TYPE_VARIABLE_PRIVATE_STATIC_FINAL);
 		}
 		else if (line.startsWith(_indent + "private static ")) {
 			if (line.contains(" class ") || line.contains(" enum ")) {

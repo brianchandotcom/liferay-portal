@@ -836,7 +836,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		directoryScanner.setBasedir(basedir);
 
-		excludes = ArrayUtil.append(excludes, _excludes);
+		if (_excludes != null) {
+			excludes = ArrayUtil.append(excludes, _excludes);
+		}
 
 		directoryScanner.setExcludes(excludes);
 
@@ -1474,16 +1476,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		excludesList.addAll(getPropertyList("source.formatter.excludes"));
 
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(BASEDIR);
-
 		String[] includes = new String[] {"**\\source_formatter.ignore"};
 
-		directoryScanner.setIncludes(includes);
-
-		List<String> ignoreFileNames = sourceFormatterHelper.scanForFiles(
-			directoryScanner);
+		List<String> ignoreFileNames = getFileNames(new String[0], includes);
 
 		for (String ignoreFileName : ignoreFileNames) {
 			excludesList.add(

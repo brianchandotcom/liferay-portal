@@ -164,37 +164,6 @@ public class WikiPageLocalServiceTest {
 	}
 
 	@Test
-	public void testChangePageNodeWithChildPage() throws Exception {
-		WikiNode destinationNode = WikiTestUtil.addNode(_group.getGroupId());
-
-		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
-			"ParentPage", true);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _node.getNodeId(), "ChildPage",
-			"content", "ParentPage", true, serviceContext);
-
-		WikiPageLocalServiceUtil.changeNode(
-			TestPropsValues.getUserId(), _node.getNodeId(), "ParentPage",
-			destinationNode.getNodeId(), serviceContext);
-
-		WikiPage page = WikiPageLocalServiceUtil.getPage(
-			destinationNode.getNodeId(), "ParentPage");
-		WikiPage childPage = WikiPageLocalServiceUtil.getPage(
-			destinationNode.getNodeId(), "ChildPage");
-
-		Assert.assertTrue(page.isApproved());
-		Assert.assertTrue(page.getNodeId() == destinationNode.getNodeId());
-		Assert.assertTrue(childPage.isApproved());
-		Assert.assertTrue(childPage.getNodeId() == destinationNode.getNodeId());
-		Assert.assertTrue(childPage.getParentTitle().equals("ParentPage"));
-	}
-
-	@Test
 	public void testChangePageNodeWithChildPageNameDuplication()
 		throws Exception {
 

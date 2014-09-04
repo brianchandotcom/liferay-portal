@@ -39,28 +39,28 @@ public class JavaClass {
 		JavaClass.TYPE_CLASS_PUBLIC, JavaClass.TYPE_CLASS_PUBLIC_STATIC
 	};
 
-	public static final int TYPE_CLASS_PRIVATE = 24;
+	public static final int TYPE_CLASS_PRIVATE = 21;
 
-	public static final int TYPE_CLASS_PRIVATE_STATIC = 23;
+	public static final int TYPE_CLASS_PRIVATE_STATIC = 20;
 
-	public static final int TYPE_CLASS_PROTECTED = 16;
+	public static final int TYPE_CLASS_PROTECTED = 14;
 
-	public static final int TYPE_CLASS_PROTECTED_STATIC = 15;
+	public static final int TYPE_CLASS_PROTECTED_STATIC = 13;
 
-	public static final int TYPE_CLASS_PUBLIC = 8;
+	public static final int TYPE_CLASS_PUBLIC = 7;
 
-	public static final int TYPE_CLASS_PUBLIC_STATIC = 7;
+	public static final int TYPE_CLASS_PUBLIC_STATIC = 6;
 
 	public static final int[] TYPE_CONSTRUCTOR = {
 		JavaClass.TYPE_CONSTRUCTOR_PRIVATE,
 		JavaClass.TYPE_CONSTRUCTOR_PROTECTED, JavaClass.TYPE_CONSTRUCTOR_PUBLIC
 	};
 
-	public static final int TYPE_CONSTRUCTOR_PRIVATE = 18;
+	public static final int TYPE_CONSTRUCTOR_PRIVATE = 16;
 
-	public static final int TYPE_CONSTRUCTOR_PROTECTED = 10;
+	public static final int TYPE_CONSTRUCTOR_PROTECTED = 9;
 
-	public static final int TYPE_CONSTRUCTOR_PUBLIC = 4;
+	public static final int TYPE_CONSTRUCTOR_PUBLIC = 3;
 
 	public static final int[] TYPE_METHOD = {
 		JavaClass.TYPE_METHOD_PRIVATE, JavaClass.TYPE_METHOD_PRIVATE_STATIC,
@@ -68,17 +68,17 @@ public class JavaClass {
 		JavaClass.TYPE_METHOD_PUBLIC, JavaClass.TYPE_METHOD_PUBLIC_STATIC
 	};
 
-	public static final int TYPE_METHOD_PRIVATE = 19;
+	public static final int TYPE_METHOD_PRIVATE = 17;
 
-	public static final int TYPE_METHOD_PRIVATE_STATIC = 17;
+	public static final int TYPE_METHOD_PRIVATE_STATIC = 15;
 
-	public static final int TYPE_METHOD_PROTECTED = 11;
+	public static final int TYPE_METHOD_PROTECTED = 10;
 
-	public static final int TYPE_METHOD_PROTECTED_STATIC = 9;
+	public static final int TYPE_METHOD_PROTECTED_STATIC = 8;
 
-	public static final int TYPE_METHOD_PUBLIC = 5;
+	public static final int TYPE_METHOD_PUBLIC = 4;
 
-	public static final int TYPE_METHOD_PUBLIC_STATIC = 3;
+	public static final int TYPE_METHOD_PUBLIC_STATIC = 2;
 
 	public static final int[] TYPE_VARIABLE = {
 		JavaClass.TYPE_VARIABLE_PRIVATE, JavaClass.TYPE_VARIABLE_PRIVATE_STATIC,
@@ -87,17 +87,17 @@ public class JavaClass {
 		JavaClass.TYPE_VARIABLE_PUBLIC, JavaClass.TYPE_VARIABLE_PUBLIC_STATIC
 	};
 
-	public static final int TYPE_VARIABLE_PRIVATE = 22;
+	public static final int TYPE_VARIABLE_PRIVATE = 19;
 
-	public static final int TYPE_VARIABLE_PRIVATE_STATIC = 21;
+	public static final int TYPE_VARIABLE_PRIVATE_STATIC = 18;
 
-	public static final int TYPE_VARIABLE_PROTECTED = 14;
+	public static final int TYPE_VARIABLE_PROTECTED = 12;
 
-	public static final int TYPE_VARIABLE_PROTECTED_STATIC = 13;
+	public static final int TYPE_VARIABLE_PROTECTED_STATIC = 11;
 
-	public static final int TYPE_VARIABLE_PUBLIC = 6;
+	public static final int TYPE_VARIABLE_PUBLIC = 5;
 
-	public static final int TYPE_VARIABLE_PUBLIC_STATIC = 2;
+	public static final int TYPE_VARIABLE_PUBLIC_STATIC = 1;
 
 	public JavaClass(
 			String fileName, String absolutePath, String content, String indent)

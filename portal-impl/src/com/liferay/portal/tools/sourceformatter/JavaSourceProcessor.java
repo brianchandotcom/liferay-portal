@@ -38,7 +38,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -375,6 +374,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			Type type = javaField.getType();
 
 			String fieldTypeName = type.getFullyQualifiedName();
+
+			if (_immutableFieldTypes == null) {
+				_immutableFieldTypes = getImmutableFieldTypes();
+			}
 
 			if (!javaField.isPrivate() || !javaField.isFinal() ||
 				!_immutableFieldTypes.contains(fieldTypeName)) {
@@ -1200,18 +1203,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"test.annotations.excludes");
 		_upgradeServiceUtilExclusions = getPropertyList(
 			"upgrade.service.util.excludes");
-
-		_immutableFieldTypes = SetUtil.fromArray(
-			new String[] {
-				"boolean", "byte", "char", "double", "float", "int", "long",
-				"short", "java.lang.Boolean", "java.lang.Byte",
-				"java.lang.Character", "java.lang.Class", "java.lang.Double",
-				"java.lang.Float", "java.lang.Int", "java.lang.Long",
-				"java.lang.Number", "java.lang.Short", "java.lang.String",
-				"java.lang.reflect.Field", "java.lang.reflect.Method"
-			});
-
-		_immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));
 
 		for (String fileName : fileNames) {
 			format(fileName);
@@ -2189,6 +2180,22 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return null;
 	}
 
+	protected Set<String> getImmutableFieldTypes() {
+		Set<String> immutableFieldTypes = SetUtil.fromArray(
+			new String[] {
+				"boolean", "byte", "char", "double", "float", "int", "long",
+				"short", "java.lang.Boolean", "java.lang.Byte",
+				"java.lang.Character", "java.lang.Class", "java.lang.Double",
+				"java.lang.Float", "java.lang.Int", "java.lang.Long",
+				"java.lang.Number", "java.lang.Short", "java.lang.String",
+				"java.lang.reflect.Field", "java.lang.reflect.Method"
+			});
+
+		immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));
+
+		return immutableFieldTypes;
+	}
+
 	protected List<String> getImportedExceptionClassNames(
 		JavaDocBuilder javaDocBuilder) {
 
@@ -2448,7 +2455,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
 	private List<String> _fitOnSingleLineExclusions;
 	private List<String> _hibernateSQLQueryExclusions;
-	private Set<String> _immutableFieldTypes = new HashSet<String>();
+	private Set<String> _immutableFieldTypes;
 	private Pattern _incorrectCloseCurlyBracePattern = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");
 	private Pattern _incorrectLineBreakPattern = Pattern.compile(

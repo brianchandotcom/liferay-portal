@@ -98,13 +98,13 @@ public class WikiPageLocalServiceTest {
 			TestPropsValues.getUserId(), _node.getNodeId(), "ChildPage",
 			destinationNode.getNodeId(), serviceContext);
 
-		WikiPage page = WikiPageLocalServiceUtil.getPage(
+		WikiPage parentPage = WikiPageLocalServiceUtil.getPage(
 			_node.getNodeId(), "ParentPage");
 		WikiPage childPage = WikiPageLocalServiceUtil.getPage(
 			destinationNode.getNodeId(), "ChildPage");
 
-		Assert.assertTrue(page.getNodeId() == _node.getNodeId());
-		Assert.assertTrue(childPage.getNodeId() == destinationNode.getNodeId());
+		Assert.assertEquals(_node.getNodeId(), parentPage.getNodeId());
+		Assert.assertEquals(destinationNode.getNodeId(), childPage.getNodeId());
 		Assert.assertTrue(Validator.isNull(childPage.getParentTitle()));
 	}
 
@@ -146,7 +146,7 @@ public class WikiPageLocalServiceTest {
 		WikiPage page = WikiPageLocalServiceUtil.getPage(
 			destinationNode.getNodeId(), "ParentPage");
 
-		Assert.assertTrue(page.getNodeId() == destinationNode.getNodeId());
+		Assert.assertEquals(destinationNode.getNodeId(), page.getNodeId());
 
 		List<WikiPage> childHierarchy = getPageHierarchy(
 			destinationNode.getNodeId(), "ParentPage");
@@ -154,8 +154,8 @@ public class WikiPageLocalServiceTest {
 		Assert.assertEquals(10, childHierarchy.size());
 
 		for (WikiPage childPage : childHierarchy) {
-			Assert.assertTrue(
-				childPage.getNodeId() == destinationNode.getNodeId());
+			Assert.assertEquals(
+				destinationNode.getNodeId(), childPage.getNodeId());
 		}
 	}
 

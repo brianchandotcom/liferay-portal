@@ -971,14 +971,10 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		String title = getSearchKeywords();
-
-		title += RandomTestUtil.randomString(
-			_PAGE_TITLE_MAX_LENGTH - title.length());
-
 		return WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			(Long)parentBaseModel.getPrimaryKeyObj(), title, approved);
+			(Long)parentBaseModel.getPrimaryKeyObj(), getSearchKeywords(),
+			approved);
 	}
 
 	@Override
@@ -1034,7 +1030,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected String getSearchKeywords() {
-		return "Title";
+		return _PAGE_TITLE;
 	}
 
 	@Override
@@ -1100,7 +1096,7 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	private static final int _NODE_NAME_MAX_LENGTH = 75;
 
-	private static final int _PAGE_TITLE_MAX_LENGTH = 255;
+	private static final String _PAGE_TITLE = RandomTestUtil.randomString(255);
 
 	private WikiNode _node;
 

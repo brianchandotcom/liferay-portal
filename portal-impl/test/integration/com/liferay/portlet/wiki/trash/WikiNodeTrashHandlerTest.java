@@ -184,14 +184,9 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		String title = getSearchKeywords();
-
-		title += RandomTestUtil.randomString(
-			_NODE_NAME_MAX_LENGTH - title.length());
-
 		return WikiNodeLocalServiceUtil.addNode(
-			TestPropsValues.getUserId(), title, RandomTestUtil.randomString(),
-			serviceContext);
+			TestPropsValues.getUserId(), getSearchKeywords(),
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	@Override
@@ -222,7 +217,7 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected String getSearchKeywords() {
-		return "Title";
+		return _NODE_NAME;
 	}
 
 	@Override
@@ -248,6 +243,6 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 			TestPropsValues.getUserId(), primaryKey);
 	}
 
-	private static final int _NODE_NAME_MAX_LENGTH = 75;
+	private static final String _NODE_NAME = RandomTestUtil.randomString(75);
 
 }

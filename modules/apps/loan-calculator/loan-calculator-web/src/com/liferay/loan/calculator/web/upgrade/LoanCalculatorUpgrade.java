@@ -12,9 +12,9 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.loan.calculator.upgrade;
+package com.liferay.loan.calculator.web.upgrade;
 
-import com.liferay.loan.calculator.portlet.LoanCalculatorPortlet;
+import com.liferay.loan.calculator.web.portlet.LoanCalculatorPortlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -37,14 +37,8 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class LoanCalculatorUpgrade {
 
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Reference(target = "(original.bean=true)", unbind = "-")
+	public static void main(String[] args) {
+	} @Reference(target = "(original.bean=true)", unbind = "-")
 	protected void setServletContext(ServletContext servletContext) {
 	}
 
@@ -58,7 +52,7 @@ public class LoanCalculatorUpgrade {
 				return new String[][] {
 					new String[] {
 						"61",
-						"com_liferay_loan_calculator_portlet_" + 
+						"com_liferay_loan_calculator_web_portlet_" +
 							"LoanCalculatorPortlet"
 					}
 				};
@@ -72,4 +66,12 @@ public class LoanCalculatorUpgrade {
 	}
 
 	private ReleaseLocalService _releaseLocalService;
+
+	@Reference(unbind = "-")
+	protected void setReleaseLocalService(
+		ReleaseLocalService releaseLocalService) {
+
+		_releaseLocalService = releaseLocalService;
+	}
+
 }

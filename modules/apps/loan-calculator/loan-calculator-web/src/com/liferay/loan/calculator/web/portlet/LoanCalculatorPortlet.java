@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.loan.calculator.portlet;
+package com.liferay.loan.calculator.web.portlet;
 
-import com.liferay.loan.calculator.upgrade.LoanCalculatorUpgrade;
+import com.liferay.loan.calculator.web.upgrade.LoanCalculatorUpgrade;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;

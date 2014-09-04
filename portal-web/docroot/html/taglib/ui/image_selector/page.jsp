@@ -32,30 +32,28 @@ if (fileEntryId != 0) {
 }
 %>
 
-<div class="taglib-image-selector <%= fileEntryId == 0 ? "drag-drop" : StringPool.BLANK %>" id="<%= randomNamespace %>taglibImageSelector">
-	<div class="taglib-image-selector-image-wrapper">
-		<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="current-image" />" class="<%= Validator.isNull(imageURL) ? "hide" : StringPool.BLANK %>" id="<%= randomNamespace %>image" src="<%= HtmlUtil.escape(imageURL) %>" />
+<div class="taglib-image-selector <%= fileEntryId == 0 ? "drop-enabled" : StringPool.BLANK %>" id="<%= randomNamespace %>taglibImageSelector">
+	<aui:input name="<%= paramName %>" type="hidden" value="<%= fileEntryId %>" />
 
-		<div class="browse-image-controls <%= (fileEntryId != 0) ? "hide" : StringPool.BLANK %>">
-			<div class="drag-drop-label">
-				<liferay-ui:message arguments="<%= validExtensions %>" key="drag-drop-images" />
+	<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="current-image" />" class="current-image <%= Validator.isNull(imageURL) ? "hide" : StringPool.BLANK %>" id="<%= randomNamespace %>image" src="<%= HtmlUtil.escape(Validator.isNotNull(imageURL) ? imageURL : StringPool.BLANK) %>" />
 
-				<c:if test="<%= Validator.isNotNull(validExtensions) %>">
-					(<%= validExtensions %>)
-				</c:if>
-			</div>
+	<div class="browse-image-controls <%= (fileEntryId != 0) ? "hide" : StringPool.BLANK %>">
+		<div class="drag-drop-label">
+			<liferay-ui:message arguments="<%= validExtensions %>" key="drag-drop-images" />
 
-			<a class="browse-image" href="javascript:;" id="<%= randomNamespace + "browseImage" %>"><liferay-ui:message key="browse" /></a>
+			<c:if test="<%= Validator.isNotNull(validExtensions) %>">
+				(<%= validExtensions %>)
+			</c:if>
 		</div>
 
-		<div class="change-image-controls <%= (fileEntryId != 0) ? StringPool.BLANK : "hide" %>">
-			<aui:button cssClass="btn btn-default browse-image" icon="icon-picture" value="change" />
-
-			<aui:button cssClass="btn btn-default" icon="icon-remove" id='<%= randomNamespace + "removeImage" %>' value="delete" />
-		</div>
+		<a class="browse-image" href="javascript:;" id="<%= randomNamespace + "browseImage" %>"><liferay-ui:message key="browse" /></a>
 	</div>
 
-	<aui:input name="<%= paramName %>" type="hidden" value="<%= fileEntryId %>" />
+	<div class="change-image-controls <%= (fileEntryId != 0) ? StringPool.BLANK : "hide" %>">
+		<aui:button cssClass="browse-image btn btn-default" icon="icon-picture" value="change" />
+
+		<aui:button cssClass="btn btn-default" icon="icon-remove" id='<%= randomNamespace + "removeImage" %>' value="delete" />
+	</div>
 </div>
 
 <liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -68,6 +66,34 @@ if (fileEntryId != 0) {
 
 <aui:script use="aui-base">
 	var taglibImageSelector = A.one('#<%= randomNamespace %>taglibImageSelector');
+
+	var fileEntryIdNode = taglibImageSelector.one('#<portlet:namespace /><%= paramName %>');
+
+	var fileEntryImage = taglibImageSelector.one('#<%= randomNamespace %>image');
+
+	var browseImageControls = taglibImageSelector.one('.browse-image-controls');
+
+	var changeImageControls = taglibImageSelector.one('.change-image-controls');
+
+	var updateFileEntryData = function(event) {
+		var fileEntryId = event.fileentryid || 0;
+
+		var fileEntryUrl = event.url || '';
+
+		fileEntryIdNode.val(fileEntryId);
+
+		fileEntryImage.setAttribute('src', fileEntryUrl);
+
+		var showImageControls = (fileEntryId !== 0 && fileEntryUrl !== '');
+
+		fileEntryImage.toggle(showImageControls);
+
+		changeImageControls.toggle(showImageControls);
+
+		browseImageControls.toggle(!showImageControls);
+
+		taglibImageSelector.toggleClass('drop-enabled', !showImageControls);
+	};
 
 	taglibImageSelector.delegate(
 		'click',
@@ -84,56 +110,11 @@ if (fileEntryId != 0) {
 					title: '<%= LanguageUtil.get(locale, "select-image") %>',
 					uri: '<%= documentSelectorURL.toString() %>'
 				},
-				function(event) {
-					var fileEntryId = taglibImageSelector.one('#<portlet:namespace /><%= paramName %>');
-
-					fileEntryId.val(event.fileentryid);
-
-					var image = taglibImageSelector.one('#<%= randomNamespace %>image');
-
-					image.setAttribute('src', event.url);
-
-					image.show();
-
-					var browseImageControls = taglibImageSelector.one('.browse-image-controls');
-
-					browseImageControls.hide()
-
-					var changeImageControls = taglibImageSelector.one('.change-image-controls');
-
-					changeImageControls.show();
-
-					taglibImageSelector.removeClass('drag-drop');
-				}
+				updateFileEntryData
 			);
 		},
 		'.browse-image'
 	);
 
-	var removeImageNode = taglibImageSelector.one('#<%= randomNamespace %>removeImage');
-
-	removeImageNode.on(
-		'click',
-		function(event) {
-			var fileEntryId = taglibImageSelector.one('#<portlet:namespace /><%= paramName %>');
-
-			fileEntryId.val(0);
-
-			var image = taglibImageSelector.one('#<%= randomNamespace %>image');
-
-			image.setAttribute('src', '');
-
-			image.hide();
-
-			var browseImageControls = taglibImageSelector.one('.browse-image-controls');
-
-			browseImageControls.show()
-
-			var changeImageControls = taglibImageSelector.one('.change-image-controls');
-
-			changeImageControls.hide();
-
-			taglibImageSelector.addClass('drag-drop');
-		}
-	);
+	taglibImageSelector.one('#<%= randomNamespace %>removeImage').on('click', updateFileEntryData);
 </aui:script>

@@ -5,28 +5,29 @@
 	position: relative;
 	text-align: center;
 
-	&.drag-drop {
-		border: 1px dashed grey;
-		padding: 10px;
+	&.drop-enabled {
+		border: 1px dashed #CCC;
 	}
 
-	.taglib-image-selector-image-wrapper {
+	.browse-image-controls, .current-image {
 		@include transform(translate(-50%, -50%));
 
 		left: 50%;
+		max-height: 100%;
+		max-width: 100%;
 		position: absolute;
 		top: 50%;
+	}
+
+	.browse-image-controls {
+		padding: 10px;
 		width: 100%;
+	}
 
-		img {
-			max-height: 100%;
-	    	max-width: 100%;
-		}
-
-		.change-image-controls {
-			bottom: 0;
-			position: absolute;
-			width: 100%;
-		}
+	.change-image-controls {
+		bottom: 5px;
+		left: 0;
+		position: absolute;
+		right: 0;
 	}
 }

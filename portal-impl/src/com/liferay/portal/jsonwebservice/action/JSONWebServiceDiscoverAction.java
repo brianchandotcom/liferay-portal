@@ -35,9 +35,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import flexjson.JSONContext;
-import flexjson.PathExpression;
-
 import java.io.File;
 import java.io.Serializable;
 
@@ -234,15 +231,8 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 	private List<Map<String, String>> _buildPropertiesList(Class<?> type) {
 		try {
-			JSONContext jsonContext = JSONContext.get();
-
-			List<PathExpression> pathExpressions =
-				new ArrayList<PathExpression>();
-
-			jsonContext.setPathExpressions(pathExpressions);
-
 			FlexjsonBeanAnalyzerTransformer flexjsonBeanAnalyzerTransformer =
-				new FlexjsonBeanAnalyzerTransformer(pathExpressions) {
+				new FlexjsonBeanAnalyzerTransformer(type) {
 
 					@Override
 					protected String getTypeName(Class<?> type) {
@@ -251,9 +241,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 				};
 
-			flexjsonBeanAnalyzerTransformer.transform(type);
-
-			return flexjsonBeanAnalyzerTransformer.getPropertiesList();
+			return flexjsonBeanAnalyzerTransformer.collect();
 		}
 		catch (Exception e) {
 			return null;
@@ -347,7 +335,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		else if (type.equals(Object.class) || type.equals(Serializable.class)) {
 			return "map";
 		}
-		else if (ReflectUtil.isSubclass(type, Number.class)) {
+		else if (ReflectUtil.isTypeOf(type, Number.class)) {
 			String typeName = null;
 
 			if (type == Character.class) {
@@ -365,13 +353,12 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 		String typeName = type.getName();
 
-		if ((type == Collection.class) || (type == List.class) ||
-			ReflectUtil.isSubclass(type, List.class)) {
+		if ((type == Collection.class) ||
+			ReflectUtil.isTypeOf(type, List.class)) {
 
 			typeName = "list";
 		}
-		else if ((type == Map.class) ||
-				 ReflectUtil.isSubclass(type, Map.class)) {
+		else if (ReflectUtil.isTypeOf(type, Map.class)) {
 
 			typeName = "map";
 		}

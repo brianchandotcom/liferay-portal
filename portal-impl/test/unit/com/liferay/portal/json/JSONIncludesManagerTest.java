@@ -15,9 +15,6 @@
 package com.liferay.portal.json;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONIncludesManagerUtil;
-
-import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,58 +31,29 @@ public class JSONIncludesManagerTest {
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 
-		JSONIncludesManagerUtil jsonIncludesManagerUtil =
-			new JSONIncludesManagerUtil();
-
-		jsonIncludesManagerUtil.setJSONIncludesManager(
-			new JSONIncludesManagerImpl());
+		JSONInit.init();
 	}
 
 	@Test
 	public void testExtendsOne() {
-		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(
-			ExtendsOne.class);
+		ExtendsOne extendsOne = new ExtendsOne();
 
-		Assert.assertEquals(1, excludes.length);
-		Assert.assertEquals("*", excludes[0]);
+		String json = JSONFactoryUtil.looseSerialize(extendsOne);
 
-		String[] includes = JSONIncludesManagerUtil.lookupIncludes(
-			ExtendsOne.class);
-
-		Assert.assertEquals(1, includes.length);
-		Assert.assertEquals("ftwo", includes[0]);
+		Assert.assertEquals("{\"ftwo\":173}", json);
 	}
 
 	@Test
 	public void testExtendsTwo() {
-		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(
-			ExtendsTwo.class);
+		ExtendsTwo extendsTwo = new ExtendsTwo();
 
-		Assert.assertEquals(1, excludes.length);
-		Assert.assertEquals("*", excludes[0]);
+		String json = JSONFactoryUtil.looseSerialize(extendsTwo);
 
-		String[] includes = JSONIncludesManagerUtil.lookupIncludes(
-			ExtendsTwo.class);
-
-		Assert.assertEquals(1, includes.length);
-		Assert.assertEquals("ftwo", includes[0]);
+		Assert.assertEquals("{\"ftwo\":173}", json);
 	}
 
 	@Test
 	public void testFour() {
-		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(Four.class);
-
-		Assert.assertEquals(1, excludes.length);
-		Assert.assertEquals("*", excludes[0]);
-
-		String[] includes = JSONIncludesManagerUtil.lookupIncludes(Four.class);
-
-		Arrays.sort(includes);
-
-		Assert.assertEquals(2, includes.length);
-		Assert.assertEquals("number", includes[0]);
-		Assert.assertEquals("value", includes[1]);
-
 		Four four = new Four();
 
 		String json = JSONFactoryUtil.looseSerialize(four);
@@ -96,40 +64,29 @@ public class JSONIncludesManagerTest {
 
 	@Test
 	public void testOne() {
-		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(One.class);
+		One one = new One();
 
-		Assert.assertEquals(1, excludes.length);
-		Assert.assertEquals("not", excludes[0]);
+		String json = JSONFactoryUtil.looseSerialize(one);
 
-		String[] includes = JSONIncludesManagerUtil.lookupIncludes(One.class);
-
-		Assert.assertEquals(1, includes.length);
-		Assert.assertEquals("ftwo", includes[0]);
+		Assert.assertEquals("{\"fone\":\"string\",\"ftwo\":173}", json);
 	}
 
 	@Test
 	public void testThree() {
-		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(Three.class);
+		Three three = new Three();
 
-		Assert.assertEquals(1, excludes.length);
-		Assert.assertEquals("ignore", excludes[0]);
+		String json = JSONFactoryUtil.looseSerialize(three);
 
-		String[] includes = JSONIncludesManagerUtil.lookupIncludes(Three.class);
-
-		Assert.assertEquals(0, includes.length);
+		Assert.assertEquals("{\"flag\":true}", json);
 	}
 
 	@Test
 	public void testTwo() {
-		String[] excludes = JSONIncludesManagerUtil.lookupExcludes(Two.class);
+		Two two = new Two();
 
-		Assert.assertEquals(1, excludes.length);
-		Assert.assertEquals("*", excludes[0]);
+		String json = JSONFactoryUtil.looseSerialize(two);
 
-		String[] includes = JSONIncludesManagerUtil.lookupIncludes(Two.class);
-
-		Assert.assertEquals(1, includes.length);
-		Assert.assertEquals("ftwo", includes[0]);
+		Assert.assertEquals("{\"ftwo\":173}", json);
 	}
 
 }

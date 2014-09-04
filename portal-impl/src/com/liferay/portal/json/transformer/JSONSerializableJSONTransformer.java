@@ -14,20 +14,18 @@
 
 package com.liferay.portal.json.transformer;
 
+import com.liferay.portal.kernel.json.JSONContext;
 import com.liferay.portal.kernel.json.JSONSerializable;
-
-import flexjson.JSONContext;
+import com.liferay.portal.kernel.json.JSONTransformer;
 
 /**
  * @author Igor Spasic
  */
-public class JSONSerializableJSONTransformer extends BaseJSONTransformer {
+public class JSONSerializableJSONTransformer implements JSONTransformer {
 
 	@Override
-	public void transform(Object object) {
+	public void transform(JSONContext jsonContext, Object object) {
 		JSONSerializable jsonSerializable = (JSONSerializable)object;
-
-		JSONContext jsonContext = getContext();
 
 		jsonContext.write(jsonSerializable.toJSONString());
 	}

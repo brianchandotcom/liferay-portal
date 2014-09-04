@@ -12,13 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.kernel.json;
+package com.liferay.portal.json.transformer;
 
-/**
- * @author Bruno Basto
- */
-public interface JSONTransformer {
+import com.liferay.portal.json.JoddJSONContext;
+import com.liferay.portal.kernel.json.JSONContext;
+import com.liferay.portal.kernel.json.JSONTransformer;
 
-	public void transform(JSONContext jsonContext, Object object);
+import jodd.json.impl.ObjectJsonSerializer;
+public abstract class ObjectTransformer extends ObjectJsonSerializer
+	implements JSONTransformer {
+
+	@Override
+	public void transform(JSONContext jsonContext, Object object) {
+		JoddJSONContext joddJSONContext = (JoddJSONContext)jsonContext;
+
+		serialize(joddJSONContext.getImplementation(), object);
+	}
 
 }

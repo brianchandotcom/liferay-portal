@@ -175,7 +175,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 						valueString).concat(StringPool.CLOSE_BRACKET);
 				}
 
-				list = JSONFactoryUtil.looseDeserializeSafe(
+				list = JSONFactoryUtil.looseDeserialize(
 					valueString, ArrayList.class);
 			}
 
@@ -212,7 +212,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 						valueString).concat(StringPool.CLOSE_BRACKET);
 				}
 
-				list = JSONFactoryUtil.looseDeserializeSafe(
+				list = JSONFactoryUtil.looseDeserialize(
 					valueString, ArrayList.class);
 			}
 
@@ -236,7 +236,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 				valueString = valueString.trim();
 
-				map = JSONFactoryUtil.looseDeserializeSafe(
+				map = JSONFactoryUtil.looseDeserialize(
 					valueString, HashMap.class);
 			}
 
@@ -271,7 +271,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 						throw new ClassCastException(e1.getMessage());
 					}
 
-					parameterValue = JSONFactoryUtil.looseDeserializeSafe(
+					parameterValue = JSONFactoryUtil.looseDeserialize(
 						valueString, parameterType);
 				}
 			}
@@ -432,7 +432,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 					parameterType = classLoader.loadClass(parameterTypeName);
 
-					if (!ReflectUtil.isSubclass(
+					if (!ReflectUtil.isTypeOf(
 							parameterType, methodParameters[i].getType())) {
 
 						throw new IllegalArgumentException(

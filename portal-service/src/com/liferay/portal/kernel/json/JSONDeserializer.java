@@ -14,18 +14,12 @@
 
 package com.liferay.portal.kernel.json;
 
-import java.io.Reader;
-
 /**
  * @author Brian Wing Shun Chan
  */
 public interface JSONDeserializer<T> {
 
-	public T deserialize(Reader input);
-
 	public T deserialize(String input);
-
-	public JSONDeserializer<T> safeMode(boolean safeMode);
 
 	public JSONDeserializer<T> use(String path, Class<?> clazz);
 

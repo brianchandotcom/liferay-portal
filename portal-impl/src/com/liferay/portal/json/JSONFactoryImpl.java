@@ -229,35 +229,6 @@ public class JSONFactoryImpl implements JSONFactory {
 	}
 
 	@Override
-	public Object looseDeserializeSafe(String json) {
-		try {
-			JSONDeserializer<?> jsonDeserializer = createJSONDeserializer();
-
-			jsonDeserializer.safeMode(true);
-
-			return jsonDeserializer.deserialize(json);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-
-			throw new IllegalStateException("Unable to deserialize object", e);
-		}
-	}
-
-	@Override
-	public <T> T looseDeserializeSafe(String json, Class<T> clazz) {
-		JSONDeserializer<?> jsonDeserializer = createJSONDeserializer();
-
-		jsonDeserializer.safeMode(true);
-
-		jsonDeserializer.use(null, clazz);
-
-		return (T)jsonDeserializer.deserialize(json);
-	}
-
-	@Override
 	public String looseSerialize(Object object) {
 		JSONSerializer jsonSerializer = createJSONSerializer();
 

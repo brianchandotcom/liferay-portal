@@ -14,24 +14,29 @@
 
 package com.liferay.portal.json;
 
-import com.liferay.portal.kernel.json.JSONTransformer;
+import flexjson.JSONException;
 
-import flexjson.transformer.Transformer;
+import jodd.json.JsonParser;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Igor Spasic
  */
-public class FlexjsonTransformer implements Transformer {
-
-	public FlexjsonTransformer(JSONTransformer jsonTransformer) {
-		_jsonTransformer = jsonTransformer;
-	}
+public class PortalJsonParser extends JsonParser {
 
 	@Override
-	public void transform(Object object) {
-		_jsonTransformer.transform(object);
-	}
+	protected Object newObjectInstance(Class targetType) {
+		if (targetType != null) {
+			String targetClassName = targetType.getName();
 
-	private JSONTransformer _jsonTransformer;
+			if (targetClassName.contains("com.liferay") &&
+				targetClassName.contains("Util")) {
+
+				throw new JSONException(
+					"Not instantiating " + targetClassName + " at " + path);
+			}
+		}
+
+		return super.newObjectInstance(targetType);
+	}
 
 }

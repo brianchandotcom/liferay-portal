@@ -14,11 +14,9 @@
 
 package com.liferay.portal.json.transformer;
 
-import flexjson.BeanAnalyzer;
-import flexjson.BeanProperty;
-import flexjson.JSONContext;
-import flexjson.Path;
-import flexjson.PathExpression;
+import jodd.introspector.PropertyDescriptor;
+import jodd.json.JsonSerializer;
+import jodd.json.TypeJsonVisitor;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -28,70 +26,38 @@ import java.util.Map;
 /**
  * @author Igor Spasic
  */
-public class FlexjsonBeanAnalyzerTransformer
-	extends FlexjsonObjectJSONTransformer {
+public class FlexjsonBeanAnalyzerTransformer extends TypeJsonVisitor {
 
-	public FlexjsonBeanAnalyzerTransformer(
-		List<PathExpression> pathExpressions) {
-
-		_pathExpressions = pathExpressions;
+	public FlexjsonBeanAnalyzerTransformer(Class type) {
+		super(new JsonSerializer().createJsonContext(null), type);
 	}
 
-	public List<Map<String, String>> getPropertiesList() {
+	public List<Map<String, String>> collect() {
+		_propertiesList = new ArrayList<>();
+
+		visit();
+
 		return _propertiesList;
-	}
-
-	@Override
-	public void transform(Object object) {
-		Class<?> type = null;
-
-		if (object instanceof Class) {
-			type = (Class<?>)object;
-		}
-		else {
-			type = object.getClass();
-		}
-
-		addExcludesAndIncludes(type, _pathExpressions, getPath());
-
-		JSONContext jsonContext = getContext();
-
-		Path path = jsonContext.getPath();
-
-		BeanAnalyzer beanAnalyzer = BeanAnalyzer.analyze(type);
-
-		for (BeanProperty beanProperty : beanAnalyzer.getProperties()) {
-			String name = beanProperty.getName();
-
-			if (name.equals("class")) {
-				continue;
-			}
-
-			path.enqueue(name);
-
-			if (jsonContext.isIncluded(beanProperty) &&
-				beanProperty.isReadable()) {
-
-				Map<String, String> properties =
-					new LinkedHashMap<String, String>();
-
-				properties.put("name", name);
-				properties.put(
-					"type", getTypeName(beanProperty.getPropertyType()));
-
-				_propertiesList.add(properties);
-			}
-
-			path.pop();
-		}
 	}
 
 	protected String getTypeName(Class<?> type) {
 		return type.getName();
 	}
 
-	private List<PathExpression> _pathExpressions;
-	private List<Map<String, String>> _propertiesList =
-		new ArrayList<Map<String, String>>();
+	@Override
+	protected void onSerializableProperty(
+			String propertyName, PropertyDescriptor propertyDescriptor) {
+
+		Class propertyType = propertyDescriptor.getType();
+
+		Map<String, String> properties = new LinkedHashMap<>();
+
+		properties.put("name", propertyName);
+		properties.put("type", getTypeName(propertyType));
+
+		_propertiesList.add(properties);
+	}
+
+	private List<Map<String, String>> _propertiesList = new ArrayList<>();
 
 }

@@ -14,22 +14,19 @@
 
 package com.liferay.portal.json.transformer;
 
+import com.liferay.portal.kernel.json.JSONContext;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
-
-import flexjson.JSONContext;
 
 /**
  * @author Igor Spasic
  */
-public class RepositoryModelJSONTransformer extends BaseJSONTransformer {
+public class RepositoryModelJSONTransformer extends ObjectTransformer {
 
 	@Override
-	public void transform(Object object) {
+	public void transform(JSONContext jsonContext, Object object) {
 		RepositoryModel<?> repositoryModel = (RepositoryModel<?>)object;
 
-		JSONContext jsonContext = getContext();
-
-		jsonContext.transform(repositoryModel.getModel());
+		super.transform(jsonContext, repositoryModel.getModel());
 	}
 
 }

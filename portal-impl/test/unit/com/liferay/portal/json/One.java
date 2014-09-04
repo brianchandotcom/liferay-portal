@@ -22,12 +22,23 @@ import com.liferay.portal.kernel.json.JSON;
 @JSON
 public class One {
 
-	public String fone = "string";
+	public String getFone() {
+		return _fone;
+	}
 
 	@JSON
-	public int ftwo = 173;
+	public int getFtwo() {
+		return _ftwo;
+	}
+
+	public long getNot() {
+		return _not;
+	}
+
+	private String _fone = "string";
+	private int _ftwo = 173;
 
 	@JSON(include = false)
-	public long not = -1;
+	private long _not = -1;
 
 }

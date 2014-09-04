@@ -15,7 +15,6 @@
 package com.liferay.portal.json;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONIncludesManagerUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
@@ -39,12 +38,6 @@ public class JSONSerializerTest {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-
-		JSONIncludesManagerUtil jsonIncludesManagerUtil =
-			new JSONIncludesManagerUtil();
-
-		jsonIncludesManagerUtil.setJSONIncludesManager(
-			new JSONIncludesManagerImpl());
 
 		LocalizationUtil localizationUtil = new LocalizationUtil();
 

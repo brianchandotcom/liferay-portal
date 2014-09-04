@@ -62,10 +62,6 @@ public interface JSONFactory {
 
 	public <T> T looseDeserialize(String json, Class<T> clazz);
 
-	public Object looseDeserializeSafe(String json);
-
-	public <T> T looseDeserializeSafe(String json, Class<T> clazz);
-
 	public String looseSerialize(Object object);
 
 	public String looseSerialize(

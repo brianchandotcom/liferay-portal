@@ -15,8 +15,7 @@
 package com.liferay.portal.json;
 
 import com.liferay.portal.kernel.json.JSONDeserializer;
-
-import java.io.Reader;
+import jodd.json.JsonParser;
 
 /**
  * @author Brian Wing Shun Chan
@@ -24,38 +23,21 @@ import java.io.Reader;
 public class JSONDeserializerImpl<T> implements JSONDeserializer<T> {
 
 	public JSONDeserializerImpl() {
-		_jsonDeserializer = new flexjson.JSONDeserializer<T>();
-
-		_portalBeanObjectFactory = new PortalBeanObjectFactory();
-
-		_jsonDeserializer.use(Object.class, _portalBeanObjectFactory);
-	}
-
-	@Override
-	public T deserialize(Reader input) {
-		return _jsonDeserializer.deserialize(input);
+		_jsonDeserializer = new PortalJsonParser();
 	}
 
 	@Override
 	public T deserialize(String input) {
-		return _jsonDeserializer.deserialize(input);
-	}
-
-	@Override
-	public JSONDeserializer<T> safeMode(boolean safeMode) {
-		_portalBeanObjectFactory.setSafeMode(safeMode);
-
-		return this;
+		return _jsonDeserializer.parse(input);
 	}
 
 	@Override
 	public JSONDeserializer<T> use(String path, Class<?> clazz) {
-		_jsonDeserializer.use(path, clazz);
+		_jsonDeserializer.map(path, clazz);
 
 		return this;
 	}
 
-	private flexjson.JSONDeserializer<T> _jsonDeserializer;
-	private PortalBeanObjectFactory _portalBeanObjectFactory;
+	private JsonParser _jsonDeserializer;
 
 }

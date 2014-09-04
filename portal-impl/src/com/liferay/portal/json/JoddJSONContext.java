@@ -12,15 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.kernel.json;
+package com.liferay.portal.json;
+
+import com.liferay.portal.kernel.json.JSONContext;
+
+import jodd.json.JsonContext;
 
 /**
  * @author Igor Spasic
  */
-public interface JSONIncludesManager {
+public class JoddJSONContext implements JSONContext {
 
-	public String[] lookupExcludes(Class<?> type);
+	public JoddJSONContext(JsonContext jsonContext) {
+		_jsonContext = jsonContext;
+	}
 
-	public String[] lookupIncludes(Class<?> type);
+	public JsonContext getImplementation() {
+		return _jsonContext;
+	}
+
+	@Override
+	public void write(String content) {
+		_jsonContext.write(content);
+	}
+
+	private final JsonContext _jsonContext;
 
 }

@@ -16,10 +16,16 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import java.util.List;
+import java.util.Set;
+import java.util.Stack;
 import java.util.concurrent.TimeUnit;
+
+import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -31,6 +37,94 @@ import org.openqa.selenium.internal.WrapsDriver;
  * @author Kenji Heigel
  */
 public class WebDriverHelper {
+
+	public static void assertJavaScriptErrors(
+			WebDriver webDriver, String ignoreJavaScriptError)
+		throws Exception {
+
+		if (!TestPropsValues.TEST_ASSERT_JAVASCRIPT_ERRORS) {
+			return;
+		}
+
+		String location = getLocation(webDriver);
+
+		if (!location.contains("localhost")) {
+			return;
+		}
+
+		String pageSource = null;
+
+		try {
+			pageSource = webDriver.getPageSource();
+		}
+		catch (Exception e) {
+			WebDriver.TargetLocator targetLocator = webDriver.switchTo();
+
+			targetLocator.window(_defaultWindowHandle);
+
+			pageSource = webDriver.getPageSource();
+		}
+
+		if (pageSource.contains(
+				"html id=\"feedHandler\" xmlns=" +
+					"\"http://www.w3.org/1999/xhtml\"")) {
+
+			return;
+		}
+
+		WebElement webElement = getWebElement(webDriver, "//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		List<JavaScriptError> javaScriptErrors = JavaScriptError.readErrors(
+			wrappedWebDriver);
+
+		if (!javaScriptErrors.isEmpty()) {
+			for (JavaScriptError javaScriptError : javaScriptErrors) {
+				String javaScriptErrorValue = javaScriptError.toString();
+
+				System.out.println("JS_ERROR: " + javaScriptErrorValue);
+
+				if (Validator.isNotNull(ignoreJavaScriptError) &&
+					javaScriptErrorValue.contains(ignoreJavaScriptError)) {
+
+					continue;
+				}
+
+				// LPS-41634
+
+				if (javaScriptErrorValue.contains(
+						"TypeError: d.config.doc.defaultView is null")) {
+
+					continue;
+				}
+
+				// LPS-41634
+
+				if (javaScriptErrorValue.contains(
+						"NS_ERROR_NOT_INITIALIZED:")) {
+
+					continue;
+				}
+
+				// LPS-42469
+
+				if (javaScriptErrorValue.contains(
+						"Permission denied to access property 'type'")) {
+
+					continue;
+				}
+
+				throw new Exception(javaScriptErrorValue);
+			}
+		}
+	}
+
+	public static String getDefaultWindowHandle() {
+		return _defaultWindowHandle;
+	}
 
 	public static String getLocation(WebDriver webDriver) {
 		return webDriver.getCurrentUrl();
@@ -110,10 +204,86 @@ public class WebDriverHelper {
 		navigation.refresh();
 	}
 
+	public static void selectFrame(WebDriver webDriver, String locator) {
+		WebDriver.TargetLocator targetLocator = webDriver.switchTo();
+
+		if (locator.equals("relative=parent")) {
+			targetLocator.window(_defaultWindowHandle);
+
+			if (!_frameWebElements.isEmpty()) {
+				_frameWebElements.pop();
+
+				if (!_frameWebElements.isEmpty()) {
+					targetLocator.frame(_frameWebElements.peek());
+				}
+			}
+		}
+		else if (locator.equals("relative=top")) {
+			_frameWebElements = new Stack<WebElement>();
+
+			targetLocator.window(_defaultWindowHandle);
+		}
+		else {
+			_frameWebElements.push(getWebElement(webDriver, locator));
+
+			targetLocator.frame(_frameWebElements.peek());
+		}
+	}
+
+	public static void selectWindow(WebDriver webDriver, String windowID) {
+		Set<String> windowHandles = webDriver.getWindowHandles();
+
+		if (windowID.equals("name=undefined")) {
+			String title = webDriver.getTitle();
+
+			for (String windowHandle : windowHandles) {
+				WebDriver.TargetLocator targetLocator = webDriver.switchTo();
+
+				targetLocator.window(windowHandle);
+
+				if (!title.equals(webDriver.getTitle())) {
+					return;
+				}
+			}
+
+			BaseTestCase.fail(
+				"Unable to find the window ID \"" + windowID + "\"");
+		}
+		else if (windowID.equals("null")) {
+			WebDriver.TargetLocator targetLocator = webDriver.switchTo();
+
+			targetLocator.window(_defaultWindowHandle);
+		}
+		else {
+			String targetWindowTitle = windowID;
+
+			if (targetWindowTitle.startsWith("title=")) {
+				targetWindowTitle = targetWindowTitle.substring(6);
+			}
+
+			for (String windowHandle : windowHandles) {
+				WebDriver.TargetLocator targetLocator = webDriver.switchTo();
+
+				targetLocator.window(windowHandle);
+
+				if (targetWindowTitle.equals(webDriver.getTitle())) {
+					return;
+				}
+			}
+
+			BaseTestCase.fail(
+				"Unable to find the window ID \"" + windowID + "\"");
+		}
+	}
+
 	public static void setDefaultTimeoutImplicit(WebDriver webDriver) {
 		int timeout = TestPropsValues.TIMEOUT_IMPLICIT_WAIT * 1000;
 
 		setTimeoutImplicit(webDriver, String.valueOf(timeout));
+	}
+
+	public static void setDefaultWindowHandle(String defaultWindowHandle) {
+		_defaultWindowHandle = defaultWindowHandle;
 	}
 
 	public static void setTimeoutImplicit(WebDriver webDriver, String timeout) {
@@ -203,5 +373,9 @@ public class WebDriverHelper {
 			}
 		}
 	}
+
+	private static String _defaultWindowHandle;
+	private static Stack<WebElement> _frameWebElements =
+		new Stack<WebElement>();
 
 }

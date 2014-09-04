@@ -32,6 +32,8 @@ public class MobileDriverToSeleniumBridge
 
 	public MobileDriverToSeleniumBridge(MobileDriver mobileDriver) {
 		super(mobileDriver);
+
+		WebDriverHelper.setDefaultWindowHandle(mobileDriver.getWindowHandle());
 	}
 
 	@Override
@@ -515,7 +517,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public boolean isElementPresent(String locator) {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.isElementPresent(this, locator);
 	}
 
 	@Override
@@ -700,7 +702,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void selectFrame(String locator) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.selectFrame(this, locator);
 	}
 
 	@Override
@@ -710,7 +712,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void selectWindow(String windowID) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.selectWindow(this, windowID);
 	}
 
 	@Override

@@ -50,6 +50,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
+import com.liferay.portlet.documentlibrary.InvalidFolderException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -947,8 +948,16 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			boolean overrideFileEntryTypes, ServiceContext serviceContext)
 		throws PortalException {
 
+		long parentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			DLFolder folder = getDLFolder(folderId);
+
+			parentFolderId = folder.getParentFolderId();
+		}
+
 		return updateFolder(
-			folderId, folderId, name, description, defaultFileEntryTypeId,
+			folderId, parentFolderId, name, description, defaultFileEntryTypeId,
 			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
 	}
 
@@ -1140,14 +1149,16 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	protected long getParentFolderId(DLFolder dlFolder, long parentFolderId)
-		throws NoSuchFolderException {
+		throws InvalidFolderException, NoSuchFolderException {
 
 		if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return parentFolderId;
 		}
 
 		if (dlFolder.getFolderId() == parentFolderId) {
-			return dlFolder.getParentFolderId();
+			throw new InvalidFolderException(
+				String.format(
+					"Cannot move folder %s into itself", parentFolderId));
 		}
 
 		DLFolder parentDLFolder = dlFolderPersistence.findByPrimaryKey(
@@ -1173,7 +1184,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			subfolderIds, dlFolder.getGroupId(), dlFolder.getFolderId());
 
 		if (subfolderIds.contains(parentFolderId)) {
-			return dlFolder.getParentFolderId();
+			throw new InvalidFolderException(
+				String.format(
+					"Cannot move folder %s into one of its children",
+					parentFolderId));
 		}
 
 		return parentFolderId;

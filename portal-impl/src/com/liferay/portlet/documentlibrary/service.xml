@@ -639,6 +639,7 @@
 
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Lock" />
+		<reference package-path="com.liferay.portal" entity="Repository" />
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portal" entity="WebDAVProps" />
@@ -700,6 +701,7 @@
 		<exception>ImageSize</exception>
 		<exception>InvalidFileEntryType</exception>
 		<exception>InvalidFileVersion</exception>
+		<exception>InvalidFolder</exception>
 		<exception>NoSuchDirectory</exception>
 		<exception>NoSuchFile</exception>
 		<exception>NoSuchMetadataSet</exception>

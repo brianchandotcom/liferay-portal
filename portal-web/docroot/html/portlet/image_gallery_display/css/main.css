@@ -1,10 +1,5 @@
 @import "compass";
 
-.lfr-image-gallery-actions {
-	font-size: 11px;
-	text-align: right;
-}
-
 .portlet-image-gallery-display {
 	.lfr-asset-attributes {
 		clear: both;

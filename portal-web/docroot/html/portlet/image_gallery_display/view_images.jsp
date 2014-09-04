@@ -258,29 +258,17 @@ embeddedPlayerURL.setParameter("struts_action", "/image_gallery_display/embedded
 embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 %>
 
-<aui:script use="aui-image-viewer-gallery,aui-image-viewer-media">
+<aui:script use="aui-image-viewer,aui-image-viewer-media">
 	var viewportRegion = A.getDoc().get('viewportRegion');
 
 	var maxHeight = (viewportRegion.height / 2);
 	var maxWidth = (viewportRegion.width / 2);
 
-	var imageGallery = new A.ImageGallery(
+	var imageGallery = new A.ImageViewer(
 		{
 			after: {
-				render: function(event) {
-					var instance = this;
-
-					var footerNode = instance.footerNode;
-
-					instance._actions = A.Node.create('<div class="lfr-image-gallery-actions"></div>');
-
-					if (footerNode) {
-						footerNode.append(instance._actions);
-					}
-				}
-
 				<c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
-					, load: function(event) {
+					load: function(event) {
 						var instance = this;
 
 						var currentLink = instance.getCurrentLink();
@@ -313,17 +301,17 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 						'providers.liferay': {
 							container: '<iframe frameborder="0" height="{height}" scrolling="no" src="<%= embeddedPlayerURL.toString() %>&<portlet:namespace />thumbnailURL={thumbnailURL}&<portlet:namespace />mp3PreviewURL={mp3PreviewURL}&<portlet:namespace />mp4PreviewURL={mp4PreviewURL}&<portlet:namespace />oggPreviewURL={oggPreviewURL}&<portlet:namespace />ogvPreviewURL={ogvPreviewURL}" width="{width}"></iframe>',
 							matcher: /(.+)&mediaGallery=1/,
+							mediaRegex: /(.+)&mediaGallery=1/,
 							options: A.merge(
 								A.MediaViewerPlugin.DEFAULT_OPTIONS,
 								{
-									'thumbnailURL': '',
 									'mp3PreviewURL': '',
 									'mp4PreviewURL': '',
 									'oggPreviewURL': '',
-									'ogvPreviewURL': ''
+									'ogvPreviewURL': '',
+									'thumbnailURL': ''
 								}
-							),
-							mediaRegex: /(.+)&mediaGallery=1/
+							)
 						}
 					},
 					fn: A.MediaViewerPlugin

@@ -238,7 +238,7 @@ public class Serializer {
 
 			objectOutputStream.writeObject(serializable);
 
-			objectOutputStream.close();
+			objectOutputStream.flush();
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(

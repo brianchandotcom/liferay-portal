@@ -339,7 +339,7 @@ public class LocalProcessLauncher {
 
 					unsyncPrintWriter.println();
 
-					unsyncPrintWriter.close();
+					unsyncPrintWriter.flush();
 
 					System.err.write(
 						unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,

@@ -5505,8 +5505,6 @@ public class JournalArticleLocalServiceImpl
 
 		int oldStatus = article.getStatus();
 
-		article.setModifiedDate(serviceContext.getModifiedDate(now));
-
 		boolean neverExpire = false;
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {

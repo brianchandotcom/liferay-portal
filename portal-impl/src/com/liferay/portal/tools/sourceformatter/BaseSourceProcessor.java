@@ -1482,8 +1482,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		directoryScanner.setIncludes(includes);
 
+		long start = System.currentTimeMillis();
+
 		List<String> ignoreFileNames = sourceFormatterHelper.scanForFiles(
-			directoryScanner);
+			directoryScanner, true);
+
+		long end = System.currentTimeMillis();
+
+		System.out.println("total: " + (end - start));
 
 		for (String ignoreFileName : ignoreFileNames) {
 			excludesList.add(

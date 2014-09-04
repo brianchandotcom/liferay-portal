@@ -337,8 +337,6 @@ public class StringBundler implements Serializable {
 		System.getProperty(
 			StringBundler.class.getName() + ".unsafe.create.limit"));
 
-	private static final long serialVersionUID = 1L;
-
 	private static ThreadLocal<StringBuilder> _stringBuilderThreadLocal;
 	private static Constructor<String> _stringConstructor;
 	private static int _threadLocalBufferLimit;
@@ -372,6 +370,8 @@ public class StringBundler implements Serializable {
 			_stringConstructor = null;
 		}
 	}
+
+	private static final long serialVersionUID = 1L;
 
 	private String[] _array;
 	private int _arrayIndex;

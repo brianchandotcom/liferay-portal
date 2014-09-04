@@ -590,7 +590,7 @@ public class ChannelImpl extends BaseChannelImpl {
 		}
 	}
 
-	protected void storeNotificationEvent(
+	public void storeNotificationEvent(
 		NotificationEvent notificationEvent, long currentTime) {
 
 		if (isRemoveNotificationEvent(notificationEvent, currentTime)) {

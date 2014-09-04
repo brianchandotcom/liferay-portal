@@ -77,6 +77,10 @@ public interface Channel {
 			Collection<NotificationEvent> notificationEvents)
 		throws ChannelException;
 
+	public void storeNotificationEvent(
+			NotificationEvent notificationEvent, long currentTime)
+		throws ChannelException;
+
 	public void unregisterChannelListener(ChannelListener channelListener);
 
 }

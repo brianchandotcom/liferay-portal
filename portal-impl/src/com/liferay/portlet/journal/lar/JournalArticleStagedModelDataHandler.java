@@ -672,6 +672,16 @@ public class JournalArticleStagedModelDataHandler
 							article.isIndexable(), article.isSmallImage(),
 							article.getSmallImageURL(), smallFile, images,
 							articleURL, serviceContext);
+
+					String existingArticleUuid = existingArticle.getUuid();
+					String importedArticleUuid = importedArticle.getUuid();
+
+					if (!existingArticleUuid.equals(importedArticleUuid)) {
+						importedArticle.setUuid(existingArticleUuid);
+
+						JournalArticleLocalServiceUtil.updateJournalArticle(
+							importedArticle);
+					}
 				}
 			}
 			else {
@@ -792,11 +802,11 @@ public class JournalArticleStagedModelDataHandler
 			existingArticle = fetchStagedModelByUuidAndGroupId(
 				articleUuid, groupId);
 
-			// LAR compatibility fallback
-
 			if (existingArticle != null) {
 				return existingArticle;
 			}
+
+			// LAR compatibility fallback
 
 			JournalArticleResource journalArticleResource =
 				JournalArticleResourceLocalServiceUtil.

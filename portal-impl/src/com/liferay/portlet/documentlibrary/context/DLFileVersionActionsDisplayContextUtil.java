@@ -37,8 +37,7 @@ public class DLFileVersionActionsDisplayContextUtil {
 		throws PortalException {
 
 		DLFileVersionActionsDisplayContext dlFileVersionActionsDisplayContext =
-			new DefaultDLFileVersionActionsDisplayContext(
-				request, response, fileVersion);
+			new DefaultDLFileVersionActionsDisplayContext(request, fileVersion);
 
 		if (fileVersion != null) {
 			dlFileVersionActionsDisplayContext =

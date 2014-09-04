@@ -60,7 +60,6 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Iván Zaera
@@ -69,8 +68,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 	implements DLFileVersionActionsDisplayContext {
 
 	public DefaultDLFileVersionActionsDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
+			HttpServletRequest request, FileVersion fileVersion)
 		throws PortalException {
 
 		_request = request;
@@ -89,15 +87,10 @@ public class DefaultDLFileVersionActionsDisplayContext
 			new DLFileEntryActionsDisplayContextHelper(
 				_themeDisplay.getPermissionChecker(), _fileEntry, fileVersion);
 
-		long fileEntryTypeId = ParamUtil.getLong(
-			request, "fileEntryTypeId", -1);
-
 		if ((_fileEntryTypeId == -1) && (_fileEntry != null) &&
 			(_fileEntry.getModel() instanceof DLFileEntry)) {
 
 			DLFileEntry dlFileEntry = (DLFileEntry)_fileEntry.getModel();
-
-			fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
 		}
 
 		_folderId = BeanParamUtil.getLong(_fileEntry, request, "folderId");

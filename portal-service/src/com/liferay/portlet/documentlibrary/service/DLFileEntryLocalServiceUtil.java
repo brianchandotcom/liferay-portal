@@ -342,6 +342,11 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().fetchFileEntryByAnyImageId(imageId);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByFileName(
+		long groupId, long folderId, java.lang.String fileName) {
+		return getService().fetchFileEntryByFileName(groupId, folderId, fileName);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByName(
 		long groupId, long folderId, java.lang.String name) {
 		return getService().fetchFileEntryByName(groupId, folderId, name);

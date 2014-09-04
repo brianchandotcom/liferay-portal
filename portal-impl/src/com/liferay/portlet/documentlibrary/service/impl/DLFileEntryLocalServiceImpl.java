@@ -902,6 +902,14 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public DLFileEntry fetchFileEntryByFileName(
+		long groupId, long folderId, String fileName) {
+
+		return dlFileEntryPersistence.fetchByG_F_FN(
+			groupId, folderId, fileName);
+	}
+
+	@Override
 	public DLFileEntry fetchFileEntryByName(
 		long groupId, long folderId, String name) {
 

@@ -108,14 +108,9 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 			long groupId, long folderId, boolean approved)
 		throws Exception {
 
-		String title = getSearchKeywords();
-
-		title += RandomTestUtil.randomString(
-			_FILE_ENTRY_TITLE_MAX_LENGTH - title.length());
-
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			groupId, folderId, RandomTestUtil.randomString() + ".txt", title,
-			approved);
+			groupId, folderId, RandomTestUtil.randomString() + ".txt",
+			getSearchKeywords(), approved);
 
 		return (DLFileEntry)fileEntry.getModel();
 	}
@@ -219,7 +214,7 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected String getSearchKeywords() {
-		return "Title";
+		return _FILE_ENTRY_TITLE;
 	}
 
 	@Override
@@ -336,7 +331,8 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		return liferayFileEntry.getDLFileEntry();
 	}
 
-	private static final int _FILE_ENTRY_TITLE_MAX_LENGTH = 255;
+	private static final String _FILE_ENTRY_TITLE = RandomTestUtil.randomString(
+		255);
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
 

@@ -993,6 +993,8 @@ public class DLAppHelperLocalServiceImpl
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
+		dlFileEntry.setFileName(
+			TrashUtil.getOriginalTitle(dlFileEntry.getTitle(), "fileName"));
 		dlFileEntry.setTitle(
 			TrashUtil.getOriginalTitle(dlFileEntry.getTitle()));
 
@@ -1682,6 +1684,7 @@ public class DLAppHelperLocalServiceImpl
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
+		typeSettingsProperties.put("fileName", dlFileEntry.getFileName());
 		typeSettingsProperties.put("title", dlFileEntry.getTitle());
 
 		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
@@ -1693,6 +1696,7 @@ public class DLAppHelperLocalServiceImpl
 
 		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
 
+		dlFileEntry.setFileName(trashTitle);
 		dlFileEntry.setTitle(trashTitle);
 
 		dlFileEntryPersistence.update(dlFileEntry);

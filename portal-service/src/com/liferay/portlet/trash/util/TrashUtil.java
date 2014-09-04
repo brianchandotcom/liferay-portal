@@ -123,6 +123,10 @@ public class TrashUtil {
 		return getTrash().getOriginalTitle(title);
 	}
 
+	public static String getOriginalTitle(String title, String paramName) {
+		return getTrash().getOriginalTitle(title, paramName);
+	}
+
 	public static Trash getTrash() {
 		PortalRuntimePermission.checkGetBeanProperty(TrashUtil.class);
 

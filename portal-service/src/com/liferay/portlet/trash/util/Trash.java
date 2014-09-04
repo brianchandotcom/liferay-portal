@@ -84,6 +84,8 @@ public interface Trash {
 
 	public String getOriginalTitle(String title);
 
+	public String getOriginalTitle(String title, String paramName);
+
 	public String getTrashTime(String title, String separator);
 
 	public String getTrashTitle(long trashEntryId);

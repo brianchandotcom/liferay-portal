@@ -368,6 +368,13 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByFileName(
+		long groupId, long folderId, java.lang.String fileName) {
+		return _dlFileEntryLocalService.fetchFileEntryByFileName(groupId,
+			folderId, fileName);
+	}
+
+	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByName(
 		long groupId, long folderId, java.lang.String name) {
 		return _dlFileEntryLocalService.fetchFileEntryByName(groupId, folderId,

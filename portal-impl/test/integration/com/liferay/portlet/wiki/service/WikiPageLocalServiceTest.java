@@ -54,11 +54,10 @@ import com.liferay.portlet.wiki.util.test.WikiTestUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.testng.Assert;
 
 /**
  * @author Manuel de la Peña
@@ -155,7 +154,7 @@ public class WikiPageLocalServiceTest {
 		List<WikiPage> childHierarchy = getPageHierarchy(
 			destinationNode.getNodeId(), "ParentPage");
 
-		Assert.assertEquals(childHierarchy.size(), 10);
+		Assert.assertEquals(10, childHierarchy.size());
 
 		for (WikiPage childPage : childHierarchy) {
 			Assert.assertTrue(childPage.isApproved());
@@ -226,10 +225,10 @@ public class WikiPageLocalServiceTest {
 				"Node change should not be performed due title duplication");
 		}
 		catch (NodeChangeException nce) {
-			Assert.assertEquals(nce.getPageTitle(), "DuplicatedTitlePage");
-			Assert.assertEquals(nce.getNodeName(), destinationNode.getName());
+			Assert.assertEquals("DuplicatedTitlePage", nce.getPageTitle());
+			Assert.assertEquals(destinationNode.getName(), nce.getNodeName());
 			Assert.assertEquals(
-				nce.getType(), NodeChangeException.DUPLICATE_PAGE);
+				NodeChangeException.DUPLICATE_PAGE, nce.getType());
 		}
 	}
 
@@ -257,10 +256,10 @@ public class WikiPageLocalServiceTest {
 				"Node change should not be performed due title duplication");
 		}
 		catch (NodeChangeException nce) {
-			Assert.assertEquals(nce.getPageTitle(), "DuplicatedTitlePage");
-			Assert.assertEquals(nce.getNodeName(), destinationNode.getName());
+			Assert.assertEquals("DuplicatedTitlePage", nce.getPageTitle());
+			Assert.assertEquals(destinationNode.getName(), nce.getNodeName());
 			Assert.assertEquals(
-				nce.getType(), NodeChangeException.DUPLICATE_PAGE);
+				NodeChangeException.DUPLICATE_PAGE, nce.getType());
 		}
 	}
 
@@ -327,10 +326,10 @@ public class WikiPageLocalServiceTest {
 				"Node change should not be performed due title duplication");
 		}
 		catch (NodeChangeException nce) {
-			Assert.assertEquals(nce.getPageTitle(), "DuplicatedTitlePage");
-			Assert.assertEquals(nce.getNodeName(), destinationNode.getName());
+			Assert.assertEquals("DuplicatedTitlePage", nce.getPageTitle());
+			Assert.assertEquals(destinationNode.getName(), nce.getNodeName());
 			Assert.assertEquals(
-				nce.getType(), NodeChangeException.DUPLICATE_PAGE);
+				NodeChangeException.DUPLICATE_PAGE, nce.getType());
 		}
 	}
 
@@ -369,10 +368,10 @@ public class WikiPageLocalServiceTest {
 				"Node change should not be performed due title duplication");
 		}
 		catch (NodeChangeException nce) {
-			Assert.assertEquals(nce.getPageTitle(), "InitialTitlePage");
-			Assert.assertEquals(nce.getNodeName(), _node.getName());
+			Assert.assertEquals("InitialTitlePage", nce.getPageTitle());
+			Assert.assertEquals(_node.getName(), nce.getNodeName());
 			Assert.assertEquals(
-				nce.getType(), NodeChangeException.REDIRECT_PAGE);
+				NodeChangeException.REDIRECT_PAGE, nce.getType());
 		}
 	}
 
@@ -395,17 +394,17 @@ public class WikiPageLocalServiceTest {
 			copyPage.getAttachmentsFileEntries();
 
 		Assert.assertEquals(
-			attachmentsFileEntries.size(), copyAttachmentsFileEntries.size());
+			copyAttachmentsFileEntries.size(), attachmentsFileEntries.size());
 
 		FileEntry fileEntry = attachmentsFileEntries.get(0);
 		FileEntry copyFileEntry = copyAttachmentsFileEntries.get(0);
 
 		Assert.assertEquals(
-			fileEntry.getExtension(), copyFileEntry.getExtension());
+			copyFileEntry.getExtension(), fileEntry.getExtension());
 		Assert.assertEquals(
-			fileEntry.getMimeType(), copyFileEntry.getMimeType());
-		Assert.assertEquals(fileEntry.getTitle(), copyFileEntry.getTitle());
-		Assert.assertEquals(fileEntry.getSize(), copyFileEntry.getSize());
+			copyFileEntry.getMimeType(), fileEntry.getMimeType());
+		Assert.assertEquals(copyFileEntry.getTitle(), fileEntry.getTitle());
+		Assert.assertEquals(copyFileEntry.getSize(), fileEntry.getSize());
 	}
 
 	@Test(expected = NoSuchPageResourceException.class)
@@ -490,7 +489,7 @@ public class WikiPageLocalServiceTest {
 
 			Assert.assertNull(childPage.fetchParentPage());
 			Assert.assertEquals(
-				childPage.getStatus(), WorkflowConstants.STATUS_APPROVED);
+				WorkflowConstants.STATUS_APPROVED, childPage.getStatus());
 		}
 	}
 
@@ -520,7 +519,7 @@ public class WikiPageLocalServiceTest {
 
 			Assert.assertNull(redirectPage.fetchRedirectPage());
 			Assert.assertEquals(
-				redirectPage.getStatus(), WorkflowConstants.STATUS_APPROVED);
+				WorkflowConstants.STATUS_APPROVED, redirectPage.getStatus());
 		}
 	}
 
@@ -579,7 +578,7 @@ public class WikiPageLocalServiceTest {
 		WikiPage retrievedPage = WikiPageLocalServiceUtil.getPage(
 			page.getResourcePrimKey());
 
-		Assert.assertEquals(page.getPageId(), retrievedPage.getPageId());
+		Assert.assertEquals(retrievedPage.getPageId(), page.getPageId());
 	}
 
 	@Test
@@ -629,14 +628,14 @@ public class WikiPageLocalServiceTest {
 		WikiPage pageC = WikiPageLocalServiceUtil.getPage(
 			_node.getNodeId(), "C");
 
-		Assert.assertEquals(pageA.getRedirectTitle(), "C");
-		Assert.assertEquals(pageB.getRedirectTitle(), StringPool.BLANK);
-		Assert.assertEquals(pageC.getRedirectTitle(), StringPool.BLANK);
-		Assert.assertEquals(pageA.getSummary(), "Renamed as C");
-		Assert.assertEquals(pageB.getSummary(), "Summary");
-		Assert.assertEquals(pageC.getSummary(), StringPool.BLANK);
-		Assert.assertEquals(pageA.getContent(), "[[C]]");
-		Assert.assertEquals(pageC.getContent(), "[[B]]");
+		Assert.assertEquals("C", pageA.getRedirectTitle());
+		Assert.assertEquals(StringPool.BLANK, pageB.getRedirectTitle());
+		Assert.assertEquals(StringPool.BLANK, pageC.getRedirectTitle());
+		Assert.assertEquals("Renamed as C", pageA.getSummary());
+		Assert.assertEquals("Summary", pageB.getSummary());
+		Assert.assertEquals(StringPool.BLANK, pageC.getSummary());
+		Assert.assertEquals("[[C]]", pageA.getContent());
+		Assert.assertEquals("[[B]]", pageC.getContent());
 	}
 
 	@Test
@@ -681,7 +680,7 @@ public class WikiPageLocalServiceTest {
 			WikiPage.class.getName(), page.getResourcePrimKey());
 
 		Assert.assertEquals(
-			assetCategoryIds, serviceContext.getAssetCategoryIds());
+			serviceContext.getAssetCategoryIds(), assetCategoryIds);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 			WikiPage.class.getName(), page.getResourcePrimKey());
@@ -693,19 +692,20 @@ public class WikiPageLocalServiceTest {
 			assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
 
 		Assert.assertEquals(
-			assetLinkEntryIds, serviceContext.getAssetLinkEntryIds());
+			serviceContext.getAssetLinkEntryIds(), assetLinkEntryIds);
 
 		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
 			WikiPage.class.getName(), page.getResourcePrimKey());
 
-		Assert.assertEquals(assetTagNames, serviceContext.getAssetTagNames());
+		Assert.assertArrayEquals(
+			serviceContext.getAssetTagNames(), assetTagNames);
 
 		if (hasExpandoValues) {
 			ExpandoBridge expandoBridge = page.getExpandoBridge();
 
 			AssertUtils.assertEquals(
-				serviceContext.getExpandoBridgeAttributes(),
-				expandoBridge.getAttributes());
+				expandoBridge.getAttributes(),
+				serviceContext.getExpandoBridgeAttributes());
 		}
 	}
 
@@ -811,8 +811,8 @@ public class WikiPageLocalServiceTest {
 				restoredPage.getExpandoBridge();
 
 			AssertUtils.assertEquals(
-				expandoBridge.getAttributes(),
-				restoredExpandoBridge.getAttributes());
+				restoredExpandoBridge.getAttributes(),
+				expandoBridge.getAttributes());
 		}
 	}
 
@@ -847,7 +847,7 @@ public class WikiPageLocalServiceTest {
 			TestPropsValues.getUserId(), _node.getNodeId(),
 			updatedPage2.getTitle(), originalPage.getVersion(), serviceContext);
 
-		Assert.assertEquals(originalContent, revertedPage.getContent());
+		Assert.assertEquals(revertedPage.getContent(), originalContent);
 
 		checkPopulatedServiceContext(
 			serviceContext, revertedPage, hasExpandoValues);

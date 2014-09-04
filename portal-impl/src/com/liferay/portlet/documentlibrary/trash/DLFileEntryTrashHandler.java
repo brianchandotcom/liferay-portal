@@ -39,6 +39,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
+import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
@@ -259,6 +260,10 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	public void updateTitle(long classPK, String name) throws PortalException {
 		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
+		String fileName = DLAppUtil.getSanitizedFileName(
+			name, dlFileEntry.getExtension());
+
+		dlFileEntry.setFileName(fileName);
 		dlFileEntry.setTitle(name);
 
 		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);

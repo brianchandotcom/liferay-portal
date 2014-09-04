@@ -53,16 +53,22 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 		_record = record;
 		_recordVersion = recordVersion;
 
-		try {
-			_recordSet = record.getRecordSet();
+		DDMStructure ddmStructure = null;
+		DDLRecordSet recordSet = null;
 
-			_ddmStructure = _recordSet.getDDMStructure();
+		try {
+			recordSet = record.getRecordSet();
+
+			ddmStructure = recordSet.getDDMStructure();
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(e, e);
 			}
 		}
+
+		_recordSet = recordSet;
+		_ddmStructure = ddmStructure;
 	}
 
 	@Override
@@ -180,9 +186,9 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 	private static Log _log = LogFactoryUtil.getLog(
 		DDLRecordAssetRenderer.class);
 
-	private DDMStructure _ddmStructure;
-	private DDLRecord _record;
-	private DDLRecordSet _recordSet;
-	private DDLRecordVersion _recordVersion;
+	private final DDMStructure _ddmStructure;
+	private final DDLRecord _record;
+	private final DDLRecordSet _recordSet;
+	private final DDLRecordVersion _recordVersion;
 
 }

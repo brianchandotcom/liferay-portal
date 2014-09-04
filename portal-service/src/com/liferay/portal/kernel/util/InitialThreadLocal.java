@@ -35,16 +35,20 @@ public class InitialThreadLocal<T> extends CentralizedThreadLocal<T> {
 		_name = name;
 		_initialValue = initialValue;
 
+		Method cloneMethod = null;
+
 		if (_initialValue instanceof Cloneable) {
 			try {
 				Class<?> clazz = _initialValue.getClass();
 
-				_cloneMethod = clazz.getMethod(_METHOD_CLONE);
+				cloneMethod = clazz.getMethod(_METHOD_CLONE);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
 			}
 		}
+
+		_cloneMethod = cloneMethod;
 	}
 
 	@Override
@@ -75,8 +79,8 @@ public class InitialThreadLocal<T> extends CentralizedThreadLocal<T> {
 
 	private static Log _log = LogFactoryUtil.getLog(InitialThreadLocal.class);
 
-	private Method _cloneMethod;
-	private T _initialValue;
-	private String _name;
+	private final Method _cloneMethod;
+	private final T _initialValue;
+	private final String _name;
 
 }

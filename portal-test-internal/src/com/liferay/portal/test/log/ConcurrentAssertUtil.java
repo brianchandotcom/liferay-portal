@@ -62,7 +62,6 @@ public class ConcurrentAssertUtil {
 
 	private static final Map<Thread, String> _concurrentFailureMessages =
 		new ConcurrentHashMap<Thread, String>();
-
 	private static volatile Thread _thread;
 
 }

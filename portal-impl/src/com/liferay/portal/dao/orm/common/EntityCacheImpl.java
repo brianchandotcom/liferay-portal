@@ -430,9 +430,9 @@ public class EntityCacheImpl
 		}
 	}
 
-	private static final ThreadLocal<LRUMap> _localCache;
-
 	private static Log _log = LogFactoryUtil.getLog(EntityCacheImpl.class);
+
+	private static final ThreadLocal<LRUMap> _localCache;
 
 	private MultiVMPool _multiVMPool;
 	private final ConcurrentMap<String, PortalCache<Serializable, Serializable>>

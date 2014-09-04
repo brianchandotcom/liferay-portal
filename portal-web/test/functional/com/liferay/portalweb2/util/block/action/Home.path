@@ -566,17 +566,17 @@
 </tr>
 <tr>
 	<td>SITE_ADMINISTRATION_USERS_SITE_MEMBERSHIPS</td>
-	<td>//ul[@class='category-portlets']/li[contains(.,'Site Memberships')]/span/a/span</td>
+	<td>//ul[contains(@class,'category-portlets')]/li[contains(.,'Site Memberships')]/span/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMINISTRATION_CONFIGURATION_SITE_SETTINGS</td>
-	<td>//ul[@class='category-portlets']/li[contains(.,'Site Settings')]/span/a/span</td>
+	<td>//ul[contains(@class,'category-portlets')]/li[contains(.,'Site Settings')]/span/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMINISTRATION_USERS_SITE_TEAMS</td>
-	<td>//ul[@class='category-portlets']/li[contains(.,'Site Teams')]/span/a/span</td>
+	<td>//ul[contains(@class,'category-portlets')]/li[contains(.,'Site Teams')]/span/a/span</td>
 	<td></td>
 </tr>
 <tr>

@@ -225,10 +225,6 @@
 	</command>
 
 	<command name="editCP">
-		<var name="key_threadSubject" value="${threadSubject}" />
-
-		<execute action="CPMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-
 		<if>
 			<condition action="CPMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_EDIT_1" />
 			<then>
@@ -262,7 +258,13 @@
 			</then>
 		</if>
 
-		<execute action="CPMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBodyEdit}" />
+		<if>
+			<isset var="threadBodyEdit" />
+			<then>
+				<execute action="CPMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBodyEdit}" />
+			</then>
+		</if>
+
 		<execute action="CPMessageboardsPostthread#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -287,7 +289,12 @@
 			</then>
 		</if>
 
-		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBodyEdit}" />
+		<if>
+			<isset var="threadBodyEdit" />
+			<then>
+				<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBodyEdit}" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${saveAsDraft}" arg2="true" />
@@ -346,6 +353,12 @@
 		<execute action="PGMessageboardsThread#assertClick" locator-key1="REPORT_INAPPROPRIATE_CONTENT_SAVE_BUTTON" value1="Save" />
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="REPORT_INAPPROPRIATE_CONTENT_SUCCESS_MESSAGE" value1="Although we cannot disclose our final decision, we do review every report and appreciate your effort to make sure Liferay is a safe environment for everyone." />
 		<execute action="PGMessageboardsThread#click" locator-key1="REPORT_INAPPROPRIATE_CONTENT_CLOSE_BUTTON" />
+	</command>
+
+	<command name="gotoCP">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="CPMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 	</command>
 
 	<command name="gotoPG">

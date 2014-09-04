@@ -423,11 +423,14 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="MessageboardsThread#gotoCP">
+			<var name="threadSubject" value="MB Subject" />
+		</execute>
+
 		<execute macro="MessageboardsThread#editCP">
 			<var name="mbAttachmentFile" value="Document_1.doc" />
 			<var name="threadAttachmentRemove" value="true" />
 			<var name="threadBodyEdit" value="MB Body Edit" />
-			<var name="threadSubject" value="MB Subject" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

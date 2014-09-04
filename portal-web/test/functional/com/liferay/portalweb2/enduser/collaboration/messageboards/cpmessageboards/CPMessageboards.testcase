@@ -80,28 +80,26 @@
 		</execute>
 	</command>
 
-	<command name="EditMBThread" priority="5">
-		<var name="threadBody" value="MB Thread Message Body" />
-		<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
-		<var name="threadSubject" value="MB Thread Message Subject" />
-		<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
-
+	<command name="EditMBThreadBody" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addCP">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
+		<execute macro="MessageboardsThread#gotoCP">
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
 		<execute macro="MessageboardsThread#editCP">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -110,8 +108,75 @@
 
 		<execute macro="MessageboardsThread#viewCP">
 			<var name="postsNumber" value="1" />
-			<var name="threadBody" value="${threadBodyEdit}" />
-			<var name="threadSubject" value="${threadSubjectEdit}" />
+			<var name="threadBody" value="MB Thread Message Body Edit" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+	</command>
+
+	<command name="EditMBThreadSubject" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addCP">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#gotoCP">
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="MessageboardsThread#editCP">
+			<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewCP">
+			<var name="postsNumber" value="1" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject Edit" />
+		</execute>
+	</command>
+
+	<command name="EditMBThreadSubjectAndBody" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addCP">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#gotoCP">
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="MessageboardsThread#editCP">
+			<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
+			<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewCP">
+			<var name="postsNumber" value="1" />
+			<var name="threadBody" value="MB Thread Message Body Edit" />
+			<var name="threadSubject" value="MB Thread Message Subject Edit" />
 		</execute>
 	</command>
 

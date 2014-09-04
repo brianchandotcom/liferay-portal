@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<action-mappings>
+
+		<!-- Polls -->
+
+		<action path="/polls/edit_question" type="com.liferay.polls.web.polls.portlet.action.EditQuestionAction">
+			<forward name="portlet.polls.edit_question" path="/portlet/polls/edit_question.jsp" />
+			<forward name="portlet.polls.error" path="/portlet/polls/error.jsp" />
+		</action>
+
+		<action path="/polls/view" forward="/portlet/polls/view.jsp" />
+
+		<action path="/polls/view_chart" type="com.liferay.polls.web.polls.portlet.action.ViewChartAction" />
+
+		<action path="/polls/view_question" type="com.liferay.polls.web.polls.portlet.action.ViewQuestionAction">
+			<forward name="portlet.polls.edit_question" path="/portlet/polls/view_question.jsp" />
+			<forward name="portlet.polls.error" path="/portlet/polls/error.jsp" />
+		</action>
+
+		<!-- Polls Display -->
+
+		<action path="/polls_display/add_question_redirect" forward="/portlet/polls_display/add_question_redirect.jsp" />
+
+		<action path="/polls_display/view" type="com.liferay.polls.web.display.portlet.action.ViewAction">
+			<forward name="portlet.polls_display.error" path="/portlet/polls_display/error.jsp" />
+			<forward name="portlet.polls_display.view" path="/portlet/polls_display/view.jsp" />
+		</action>
+
+		<action path="/polls_display/vote_question" type="com.liferay.polls.web.polls.portlet.action.ViewQuestionAction" >
+			<forward name="portlet.polls.edit_question" path="/portlet/polls/edit_question.jsp" />
+			<forward name="portlet.polls.error" path="/portlet/polls/error.jsp" />
+			<forward name="portlet.polls_display.view" path="/portlet/polls_display/view.jsp" />
+		</action>
+	</action-mappings>
+</struts-config>

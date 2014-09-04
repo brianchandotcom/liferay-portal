@@ -838,9 +838,6 @@
 	<bean class="com.liferay.portal.verify.model.OrganizationVerifiableAuditedModel" />
 	<bean class="com.liferay.portal.verify.model.PasswordPolicyVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.PhoneVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.PollsChoiceVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.PollsQuestionVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.PollsVoteVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.RatingsEntryVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.RepositoryEntryVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.RoleVerifiableModel" />
@@ -1112,7 +1109,6 @@
 	<bean id="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdminUtil" class="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdminUtil">
 		<property name="passwordPoliciesAdmin" ref="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdmin" />
 	</bean>
-	<bean id="com.liferay.portlet.polls.service.permission.PollsQuestionPermission" class="com.liferay.portlet.polls.service.permission.PollsQuestionPermission" />
 	<bean id="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate" class="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateImpl" />
 	<bean id="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil" class="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil">
 		<property name="portletDisplayTemplate" ref="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate" />

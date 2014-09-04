@@ -222,6 +222,8 @@ public class SharedSessionWrapper implements HttpSession {
 		}
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(SharedSessionWrapper.class);
+
 	private static final Map<String, String> _sharedSessionAttributesExcludes;
 
 	static {
@@ -231,8 +233,6 @@ public class SharedSessionWrapper implements HttpSession {
 			_sharedSessionAttributesExcludes.put(name, name);
 		}
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(SharedSessionWrapper.class);
 
 	private final HttpSession _portalSession;
 	private HttpSession _portletSession;

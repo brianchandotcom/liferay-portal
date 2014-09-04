@@ -129,11 +129,6 @@ public class PortletBeanFactoryCleaner implements BeanFactoryAware {
 
 	private static final Field _SHADOW_MATCH_CACHE_FIELD;
 
-	private static final Set<AspectJExpressionPointcut>
-		_aspectJExpressionPointcuts = new HashSet<AspectJExpressionPointcut>();
-	private static final Set<BeanFactoryAware> _beanFactoryAwares =
-		new HashSet<BeanFactoryAware>();
-
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletBeanFactoryCleaner.class);
 
@@ -151,6 +146,10 @@ public class PortletBeanFactoryCleaner implements BeanFactoryAware {
 		_SHADOW_MATCH_CACHE_FIELD = shadowMatchCacheField;
 	}
 
+	private static final Set<AspectJExpressionPointcut>
+		_aspectJExpressionPointcuts = new HashSet<AspectJExpressionPointcut>();
 	private static BeanFactory _beanFactory;
+	private static final Set<BeanFactoryAware> _beanFactoryAwares =
+		new HashSet<BeanFactoryAware>();
 
 }

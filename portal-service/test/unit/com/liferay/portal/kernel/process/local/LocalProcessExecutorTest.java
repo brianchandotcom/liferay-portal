@@ -2218,9 +2218,8 @@ public class LocalProcessExecutorTest {
 			return sb.toString();
 		}
 
-		private static final long serialVersionUID = 1L;
-
 		private static volatile Thread _thread;
+		private static final long serialVersionUID = 1L;
 
 		private String _returnValue;
 

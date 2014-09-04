@@ -33,7 +33,6 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Iván Zaera
@@ -42,8 +41,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 	implements DLFileVersionActionsDisplayContext {
 
 	public DefaultDLFileVersionActionsDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
+			HttpServletRequest request, FileVersion fileVersion)
 		throws PortalException {
 
 		_request = request;
@@ -63,15 +61,18 @@ public class DefaultDLFileVersionActionsDisplayContext
 			new DLFileEntryActionsDisplayContextHelper(
 				themeDisplay.getPermissionChecker(), fileEntry, fileVersion);
 
-		_fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
+		long fileEntryTypeId = ParamUtil.getLong(
+			request, "fileEntryTypeId", -1);
 
-		if ((_fileEntryTypeId == -1) && (fileEntry != null) &&
+		if ((fileEntryTypeId == -1) && (fileEntry != null) &&
 			(fileEntry.getModel() instanceof DLFileEntry)) {
 
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-			_fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
+			fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
 		}
+
+		_fileEntryTypeId = fileEntryTypeId;
 
 		_folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 		_portletDisplay = themeDisplay.getPortletDisplay();
@@ -375,15 +376,15 @@ public class DefaultDLFileVersionActionsDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"85F6C50E-3893-4E32-9D63-208528A503FA");
 
-	private long _companyId;
-	private DLFileEntryActionsDisplayContextHelper
+	private final long _companyId;
+	private final DLFileEntryActionsDisplayContextHelper
 		_dlFileEntryActionsDisplayContextHelper;
-	private long _fileEntryTypeId;
-	private long _folderId;
+	private final long _fileEntryTypeId;
+	private final long _folderId;
 	private Boolean _ieOnWin32;
-	private PortletDisplay _portletDisplay;
-	private HttpServletRequest _request;
-	private long _scopeGroupId;
+	private final PortletDisplay _portletDisplay;
+	private final HttpServletRequest _request;
+	private final long _scopeGroupId;
 	private Boolean _trashEnabled;
 
 }

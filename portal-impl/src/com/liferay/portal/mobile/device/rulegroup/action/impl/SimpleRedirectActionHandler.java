@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -55,14 +55,7 @@ public class SimpleRedirectActionHandler extends BaseRedirectActionHandler {
 		return GetterUtil.getString(typeSettingsProperties.getProperty("url"));
 	}
 
-	private static Collection<String> _propertyNames;
-
-	static {
-		_propertyNames = new ArrayList<String>(1);
-
-		_propertyNames.add("url");
-
-		_propertyNames = Collections.unmodifiableCollection(_propertyNames);
-	}
+	private static final Collection<String> _propertyNames =
+		Collections.unmodifiableCollection(Arrays.asList("url"));
 
 }

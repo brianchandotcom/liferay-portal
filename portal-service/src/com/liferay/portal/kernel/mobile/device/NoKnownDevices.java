@@ -61,29 +61,36 @@ public class NoKnownDevices implements KnownDevices {
 	}
 
 	private NoKnownDevices() {
-		_brands.add(VersionableName.UNKNOWN);
+		Set<VersionableName> brands = new HashSet<VersionableName>();
 
-		_brands = Collections.unmodifiableSet(_brands);
+		brands.add(VersionableName.UNKNOWN);
 
-		_browsers.add(VersionableName.UNKNOWN);
+		_brands = Collections.unmodifiableSet(brands);
 
-		_browsers = Collections.unmodifiableSet(_browsers);
+		Set<VersionableName> browsers = new HashSet<VersionableName>();
 
-		_operatingSystems.add(VersionableName.UNKNOWN);
+		browsers.add(VersionableName.UNKNOWN);
 
-		_operatingSystems = Collections.unmodifiableSet(_operatingSystems);
+		_browsers = Collections.unmodifiableSet(browsers);
 
-		_pointingMethods.add(VersionableName.UNKNOWN.getName());
+		Set<VersionableName> operatingSystems = new HashSet<VersionableName>();
 
-		_pointingMethods = Collections.unmodifiableSet(_pointingMethods);
+		operatingSystems.add(VersionableName.UNKNOWN);
+
+		_operatingSystems = Collections.unmodifiableSet(operatingSystems);
+
+		Set<String> pointingMethods = new HashSet<String>();
+
+		pointingMethods.add(VersionableName.UNKNOWN.getName());
+
+		_pointingMethods = Collections.unmodifiableSet(pointingMethods);
 	}
 
-	private static NoKnownDevices _instance = new NoKnownDevices();
+	private static final NoKnownDevices _instance = new NoKnownDevices();
 
-	private Set<VersionableName> _brands = new HashSet<VersionableName>();
-	private Set<VersionableName> _browsers = new HashSet<VersionableName>();
-	private Set<VersionableName> _operatingSystems =
-		new HashSet<VersionableName>();
-	private Set<String> _pointingMethods = new HashSet<String>();
+	private final Set<VersionableName> _brands;
+	private final Set<VersionableName> _browsers;
+	private final Set<VersionableName> _operatingSystems;
+	private final Set<String> _pointingMethods;
 
 }

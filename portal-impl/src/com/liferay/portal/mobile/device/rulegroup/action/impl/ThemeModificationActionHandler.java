@@ -27,7 +27,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -96,18 +96,11 @@ public class ThemeModificationActionHandler implements ActionHandler {
 		_themeLocalService = themeLocalService;
 	}
 
-	private static Collection<String> _propertyNames;
+	private static final Collection<String> _propertyNames =
+		Collections.unmodifiableCollection(
+			Arrays.asList("colorSchemeId", "themeId"));
 
 	@BeanReference(type = ThemeLocalService.class)
 	private ThemeLocalService _themeLocalService;
-
-	static {
-		_propertyNames = new ArrayList<String>(2);
-
-		_propertyNames.add("colorSchemeId");
-		_propertyNames.add("themeId");
-
-		_propertyNames = Collections.unmodifiableCollection(_propertyNames);
-	}
 
 }

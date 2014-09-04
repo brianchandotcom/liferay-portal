@@ -49,14 +49,16 @@ public class FIFOUtil {
 	}
 
 	public static boolean isFIFOSupported() {
-		return _fifoSupported;
+		return _FIFO_SUPPORTED;
 	}
+
+	private static final boolean _FIFO_SUPPORTED;
 
 	private static Log _log = LogFactoryUtil.getLog(FIFOUtil.class);
 
-	private static boolean _fifoSupported;
-
 	static {
+		boolean fifoSupport = false;
+
 		try {
 			File tempFIFOFile = new File(
 				System.getProperty("java.io.tmpdir"),
@@ -73,15 +75,15 @@ public class FIFOUtil {
 				}
 			}
 
-			_fifoSupported = true;
+			fifoSupport = true;
 		}
 		catch (Throwable t) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to detect FIFO support", t);
 			}
-
-			_fifoSupported = false;
 		}
+
+		_FIFO_SUPPORTED = fifoSupport;
 	}
 
 }

@@ -103,9 +103,7 @@ public class WikiPageLocalServiceTest {
 		WikiPage childPage = WikiPageLocalServiceUtil.getPage(
 			destinationNode.getNodeId(), "ChildPage");
 
-		Assert.assertTrue(page.isApproved());
 		Assert.assertTrue(page.getNodeId() == _node.getNodeId());
-		Assert.assertTrue(childPage.isApproved());
 		Assert.assertTrue(childPage.getNodeId() == destinationNode.getNodeId());
 		Assert.assertTrue(Validator.isNull(childPage.getParentTitle()));
 	}
@@ -148,7 +146,6 @@ public class WikiPageLocalServiceTest {
 		WikiPage page = WikiPageLocalServiceUtil.getPage(
 			destinationNode.getNodeId(), "ParentPage");
 
-		Assert.assertTrue(page.isApproved());
 		Assert.assertTrue(page.getNodeId() == destinationNode.getNodeId());
 
 		List<WikiPage> childHierarchy = getPageHierarchy(
@@ -157,7 +154,6 @@ public class WikiPageLocalServiceTest {
 		Assert.assertEquals(10, childHierarchy.size());
 
 		for (WikiPage childPage : childHierarchy) {
-			Assert.assertTrue(childPage.isApproved());
 			Assert.assertTrue(
 				childPage.getNodeId() == destinationNode.getNodeId());
 		}
@@ -256,9 +252,7 @@ public class WikiPageLocalServiceTest {
 		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
 			destinationNode.getNodeId(), "InitialTitlePage");
 
-		Assert.assertTrue(page.isApproved());
 		Assert.assertTrue(page.getNodeId() == destinationNode.getNodeId());
-		Assert.assertTrue(redirectPage.isApproved());
 		Assert.assertTrue(
 			redirectPage.getNodeId() == destinationNode.getNodeId());
 		Assert.assertTrue(

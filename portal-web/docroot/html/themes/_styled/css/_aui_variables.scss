@@ -27,6 +27,7 @@ $navbar-default-link-color: $gray;
 
 $navbar-default-color: $navbar-default-link-color;
 $navbar-default-link-active-bg: lighten($navbar-default-bg, 25%);
+$navbar-default-link-hover-bg: $navbar-default-bg;
 $navbar-default-link-hover-color: $link-hover-color;
 
 $state-danger-bg: #FEE5E2;

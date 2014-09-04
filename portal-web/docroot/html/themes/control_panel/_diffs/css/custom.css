@@ -257,6 +257,7 @@ h3 {
 		padding-right: 5px;
 
 		.nav-account-controls {
+			background-color: transparent;
 			float: right;
 
 			@include justify-content(flex-end);

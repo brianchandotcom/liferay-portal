@@ -92,24 +92,53 @@ public class SourceFormatterHelper {
 	}
 
 	public List<String> scanForFiles(DirectoryScanner directoryScanner) {
+		return scanForFiles(directoryScanner, false);
+	}
+
+	public List<String> scanForFiles(
+		DirectoryScanner directoryScanner, boolean log) {
+
+		long l1 = System.currentTimeMillis();
+
 		directoryScanner.scan();
 
+		long l2 = System.currentTimeMillis();
+
 		String[] fileNamesArray = directoryScanner.getIncludedFiles();
+
+		long l3 = System.currentTimeMillis();
+
+		if (log) {
+			System.out.println("l1: " + (l2 - l1));
+			System.out.println("l2: " + (l3 - l2));
+		}
 
 		if (!_useProperties) {
 			return ListUtil.toList(fileNamesArray);
 		}
 
+		long l4 = System.currentTimeMillis();
+
 		List<String> fileNames = new ArrayList<String>(fileNamesArray.length);
 
+		long l5 = System.currentTimeMillis();
+
 		for (String fileName : fileNamesArray) {
+			long l7 = System.currentTimeMillis();
+
 			File file = new File(fileName);
+
+			long l8 = System.currentTimeMillis();
 
 			String encodedFileName = StringUtil.replace(
 				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
+			long l9 = System.currentTimeMillis();
+
 			long timestamp = GetterUtil.getLong(
 				_properties.getProperty(encodedFileName));
+
+			long l10 = System.currentTimeMillis();
 
 			if (timestamp < file.lastModified()) {
 				fileNames.add(fileName);
@@ -117,6 +146,23 @@ public class SourceFormatterHelper {
 				_properties.setProperty(
 					encodedFileName, String.valueOf(file.lastModified()));
 			}
+
+			long l11 = System.currentTimeMillis();
+
+			if (log) {
+				System.out.println("l7: " + (l8 - l7));
+				System.out.println("l8: " + (l9 - l8));
+				System.out.println("l9: " + (l10 - l9));
+				System.out.println("l10: " + (l11 - l10));
+			}
+		}
+
+		long l6 = System.currentTimeMillis();
+
+		if (log) {
+			System.out.println("l3: " + (l4 - l3));
+			System.out.println("l4: " + (l5 - l4));
+			System.out.println("l5: " + (l6 - l5));
 		}
 
 		return fileNames;

@@ -14,23 +14,10 @@
  */
 --%>
 
-<c:choose>
-	<c:when test="<%= (fileShortcut == null) %>">
-		<c:if test="<%= dlFileVersionActionsDisplayContext.isDownloadButtonVisible() %>">
-			<liferay-ui:icon
-				iconCssClass="icon-download"
-				message='<%= LanguageUtil.get(request, "download") + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
-				url="<%= DLUtil.getDownloadURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>"
-			/>
-		</c:if>
-	</c:when>
-	<c:otherwise>
-		<c:if test="<%= DLFileShortcutPermission.contains(permissionChecker, fileShortcut, ActionKeys.VIEW) %>">
-			<liferay-ui:icon
-				iconCssClass="icon-download"
-				message='<%= LanguageUtil.get(request, "download") + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
-				url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + fileShortcut.getFileShortcutId() %>'
-			/>
-		</c:if>
-	</c:otherwise>
-</c:choose>
+<c:if test="<%= dlFileVersionActionsDisplayContext.isDownloadButtonVisible() && DLFileShortcutPermission.contains(permissionChecker, fileShortcut, ActionKeys.VIEW) %>">
+	<liferay-ui:icon
+		iconCssClass="icon-download"
+		message='<%= LanguageUtil.get(request, "download") + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
+		url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + fileShortcut.getFileShortcutId() %>'
+	/>
+</c:if>

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,22 +11,34 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<c:if test="<%= dlActionsDisplayContext.isShowActions() && dlFileVersionActionsDisplayContext.isMoveButtonVisible() %>">
+package com.liferay.portal.kernel.servlet.taglib.ui;
 
-	<%
-	PortletURL moveURL = liferayPortletResponse.createRenderURL();
+/**
+ * @author Iván Zaera
+ */
+public class DeleteMenuItem extends MenuItem {
 
-	moveURL.setParameter("struts_action", "/document_library/move_entry");
-	moveURL.setParameter("fileShortcutIds", String.valueOf(fileShortcut.getFileShortcutId()));
+	public DeleteMenuItem(String id, String url) {
+		this(id, url, false);
+	}
 
-	moveURL.setParameter("redirect", viewFolderURL.toString());
-	%>
+	public DeleteMenuItem(String id, String url, boolean trash) {
+		super(id, null, null);
 
-	<liferay-ui:icon
-		iconCssClass="icon-move"
-		message="move"
-		url="<%= moveURL.toString() %>"
-	/>
-</c:if>
+		_url = url;
+		_trash = trash;
+	}
+
+	public boolean getTrash() {
+		return _trash;
+	}
+
+	public String getURL() {
+		return _url;
+	}
+
+	private boolean _trash;
+	private String _url;
+
+}

@@ -15,37 +15,17 @@
 --%>
 
 <c:if test="<%= dlActionsDisplayContext.isShowActions() %>">
-	<c:choose>
-		<c:when test="<%= (fileShortcut == null) %>">
-			<c:if test="<%= dlFileVersionActionsDisplayContext.isEditButtonVisible() %>">
-				<portlet:renderURL var="editURL">
-					<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="backURL" value="<%= currentURL %>" />
-					<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-				</portlet:renderURL>
+	<c:if test="<%= DLFileShortcutPermission.contains(permissionChecker, fileShortcut, ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="editShortcutURL">
+			<portlet:param name="struts_action" value="/document_library/edit_file_shortcut" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="fileShortcutId" value="<%= String.valueOf(fileShortcut.getFileShortcutId()) %>" />
+		</portlet:renderURL>
 
-				<liferay-ui:icon
-					iconCssClass="icon-edit"
-					message="edit"
-					url="<%= editURL %>"
-				/>
-			</c:if>
-		</c:when>
-		<c:otherwise>
-			<c:if test="<%= DLFileShortcutPermission.contains(permissionChecker, fileShortcut, ActionKeys.UPDATE) %>">
-				<portlet:renderURL var="editShortcutURL">
-					<portlet:param name="struts_action" value="/document_library/edit_file_shortcut" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="fileShortcutId" value="<%= String.valueOf(fileShortcut.getFileShortcutId()) %>" />
-				</portlet:renderURL>
-
-				<liferay-ui:icon
-					iconCssClass="icon-edit"
-					message="edit"
-					url="<%= editShortcutURL %>"
-				/>
-			</c:if>
-		</c:otherwise>
-	</c:choose>
+		<liferay-ui:icon
+			iconCssClass="icon-edit"
+			message="edit"
+			url="<%= editShortcutURL %>"
+		/>
+	</c:if>
 </c:if>

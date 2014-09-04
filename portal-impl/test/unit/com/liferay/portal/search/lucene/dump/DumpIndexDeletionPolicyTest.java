@@ -306,21 +306,17 @@ public class DumpIndexDeletionPolicyTest {
 			int totalHits)
 		throws Exception {
 
-		IndexReader indexReader = IndexReader.open(directory);
-
-		IndexSearcher indexSearcher = new IndexSearcher(indexReader);
-
 		Term term = new Term(fieldName, fieldValue);
 
 		TermQuery termQuery = new TermQuery(term);
 
-		TopDocs topDocs = indexSearcher.search(termQuery, 1);
+		try (IndexReader indexReader = IndexReader.open(directory);
+			IndexSearcher indexSearcher = new IndexSearcher(indexReader)) {
 
-		Assert.assertEquals(totalHits, topDocs.totalHits);
+			TopDocs topDocs = indexSearcher.search(termQuery, 1);
 
-		indexSearcher.close();
-
-		indexReader.close();
+			Assert.assertEquals(totalHits, topDocs.totalHits);
+		}
 	}
 
 	private void _deleteDocument(String fieldName, String fieldValue)

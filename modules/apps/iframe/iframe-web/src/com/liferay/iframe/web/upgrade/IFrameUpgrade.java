@@ -11,9 +11,9 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.iframe.upgrade;
+package com.liferay.iframe.web.upgrade;
 
-import com.liferay.iframe.portlet.IFramePortlet;
+import com.liferay.iframe.web.portlet.IFramePortlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -56,7 +56,7 @@ public class IFrameUpgrade {
 
 				return new String[][] {
 					new String[] {
-						"48", "com_liferay_iframe_portlet_IFramePortlet"
+						"48", "com_liferay_iframe_web_portlet_IFramePortlet"
 					}
 				};
 			}

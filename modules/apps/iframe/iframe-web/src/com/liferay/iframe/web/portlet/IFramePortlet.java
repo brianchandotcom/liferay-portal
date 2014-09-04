@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.iframe.portlet;
+package com.liferay.iframe.web.portlet;
 
-import com.liferay.iframe.action.ViewAction;
-import com.liferay.iframe.upgrade.IFrameUpgrade;
+import com.liferay.iframe.web.action.ViewAction;
+import com.liferay.iframe.web.upgrade.IFrameUpgrade;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;

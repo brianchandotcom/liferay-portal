@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.iframe.action;
+package com.liferay.iframe.web.action;
 
-import com.liferay.iframe.util.IFrameUtil;
+import com.liferay.iframe.web.util.IFrameUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;

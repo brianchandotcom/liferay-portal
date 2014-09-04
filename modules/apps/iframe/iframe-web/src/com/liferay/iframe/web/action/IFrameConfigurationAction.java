@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.iframe.action;
+package com.liferay.iframe.web.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 		immediate = true,
 		property = {
-			"javax.portlet.name=com_liferay_iframe_portlet_IFramePortlet"
+			"javax.portlet.name=com_liferay_iframe_web_portlet_IFramePortlet"
 		},
 		service = ConfigurationAction.class
 	)

@@ -444,15 +444,9 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to update classNameId column for file entries " +
-						"where classNameId is null", e);
+					"Unable to fix file entries where class name ID is null",
+					e);
 			}
-
-			return;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("ClassNameId column verified for file entries");
 		}
 	}
 

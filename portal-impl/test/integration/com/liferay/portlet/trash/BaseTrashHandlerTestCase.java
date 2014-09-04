@@ -938,11 +938,9 @@ public abstract class BaseTrashHandlerTestCase {
 			group.getGroupId(), TestPropsValues.getUserId());
 
 		addBaseModel(parentBaseModel, true, serviceContext);
-		addBaseModel(parentBaseModel, true, serviceContext);
-		addBaseModel(parentBaseModel, true, serviceContext);
 
 		Assert.assertEquals(
-			initialBaseModelsCount + 3,
+			initialBaseModelsCount + 1,
 			getMineBaseModelsCount(
 				group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -1111,11 +1109,9 @@ public abstract class BaseTrashHandlerTestCase {
 			group.getGroupId());
 
 		addBaseModel(parentBaseModel, true, serviceContext);
-		addBaseModel(parentBaseModel, true, serviceContext);
-		addBaseModel(parentBaseModel, true, serviceContext);
 
 		Assert.assertEquals(
-			initialBaseModelsCount + 3,
+			initialBaseModelsCount + 1,
 			getRecentBaseModelsCount(group.getGroupId()));
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());

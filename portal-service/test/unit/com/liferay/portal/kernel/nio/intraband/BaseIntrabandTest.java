@@ -353,7 +353,7 @@ public class BaseIntrabandTest {
 			Pipe pipe = Pipe.open();
 
 			try (SourceChannel sourceChannel = pipe.source();
-					final SinkChannel sinkChannel = pipe.sink()) {
+				final SinkChannel sinkChannel = pipe.sink()) {
 
 				Datagram requestDatagram = Datagram.createRequestDatagram(
 					_type, _data);
@@ -942,11 +942,10 @@ public class BaseIntrabandTest {
 
 		Pipe pipe = Pipe.open();
 
-		SinkChannel sinkChannel;
 		Queue<Datagram> sendingQueue;
 
-		try (SourceChannel sourceChannel = pipe.source()) {
-			sinkChannel = pipe.sink();
+		try (SourceChannel sourceChannel = pipe.source();
+			SinkChannel sinkChannel = pipe.sink()) {
 
 			sourceChannel.configureBlocking(false);
 			sinkChannel.configureBlocking(false);
@@ -1028,8 +1027,6 @@ public class BaseIntrabandTest {
 
 			Assert.assertTrue(requestDatagramString.contains("dataChunk=null"));
 		}
-
-		sinkChannel.close();
 
 		Assert.assertSame(sendingQueue, channelContext.getSendingQueue());
 	}

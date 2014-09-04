@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>Conditional</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Conditional</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>LIST_ELEMENT</td>
+	<td>//div[@class='example']/ul/li</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_ELEMENT</td>
+	<td>//div[@class='example']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_ELEMENT_NAME</td>
+	<td>//div[@class='example']/h3</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

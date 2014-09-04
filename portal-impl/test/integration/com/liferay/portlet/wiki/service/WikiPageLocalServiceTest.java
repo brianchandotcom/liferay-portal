@@ -45,6 +45,7 @@ import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoValue;
 import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 import com.liferay.portlet.wiki.DuplicatePageException;
+import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.NoSuchPageResourceException;
 import com.liferay.portlet.wiki.NodeChangeException;
 import com.liferay.portlet.wiki.model.WikiNode;
@@ -110,10 +111,10 @@ public class WikiPageLocalServiceTest {
 
 	@Test
 	public void testChangePageNode() throws Exception {
+		WikiNode destinationNode = WikiTestUtil.addNode(_group.getGroupId());
+
 		WikiPage page = WikiTestUtil.addPage(
 			_group.getGroupId(), _node.getNodeId(), true);
-
-		WikiNode destinationNode = WikiTestUtil.addNode(_group.getGroupId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -122,8 +123,13 @@ public class WikiPageLocalServiceTest {
 			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
 			destinationNode.getNodeId(), serviceContext);
 
-		WikiPageLocalServiceUtil.getPage(
-			destinationNode.getNodeId(), page.getTitle());
+		try {
+			WikiPageLocalServiceUtil.getPage(
+				destinationNode.getNodeId(), page.getTitle());
+		}
+		catch (NoSuchPageException nspe) {
+			Assert.fail("Cannot get moved page");
+		}
 	}
 
 	@Test
@@ -137,7 +143,8 @@ public class WikiPageLocalServiceTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		createPageHierarchy("ParentPage", 10, serviceContext);
+		List<WikiPage> childPages = createPageHierarchy(
+			"ParentPage", 10, serviceContext);
 
 		WikiPageLocalServiceUtil.changeNode(
 			TestPropsValues.getUserId(), _node.getNodeId(), "ParentPage",
@@ -148,12 +155,10 @@ public class WikiPageLocalServiceTest {
 
 		Assert.assertEquals(destinationNode.getNodeId(), page.getNodeId());
 
-		List<WikiPage> childHierarchy = getPageHierarchy(
-			destinationNode.getNodeId(), "ParentPage");
+		for (WikiPage childPage : childPages) {
+			childPage = WikiPageLocalServiceUtil.getPage(
+				childPage.getResourcePrimKey());
 
-		Assert.assertEquals(10, childHierarchy.size());
-
-		for (WikiPage childPage : childHierarchy) {
 			Assert.assertEquals(
 				destinationNode.getNodeId(), childPage.getNodeId());
 		}
@@ -209,10 +214,10 @@ public class WikiPageLocalServiceTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			destinationNode.getNodeId(), "DuplicatedTitlePage", true);
 
-		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
+		try {
 			WikiPageLocalServiceUtil.changeNode(
 				page.getUserId(), _node.getNodeId(), "DuplicatedTitlePage",
 				destinationNode.getNodeId(), serviceContext);
@@ -252,11 +257,10 @@ public class WikiPageLocalServiceTest {
 		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
 			destinationNode.getNodeId(), "InitialTitlePage");
 
-		Assert.assertTrue(page.getNodeId() == destinationNode.getNodeId());
-		Assert.assertTrue(
-			redirectPage.getNodeId() == destinationNode.getNodeId());
-		Assert.assertTrue(
-			redirectPage.getRedirectTitle().equals("RenamedPage"));
+		Assert.assertEquals(destinationNode.getNodeId(), page.getNodeId());
+		Assert.assertEquals(
+			destinationNode.getNodeId(), redirectPage.getNodeId());
+		Assert.assertEquals("RenamedPage", redirectPage.getRedirectTitle());
 	}
 
 	@Test
@@ -672,29 +676,24 @@ public class WikiPageLocalServiceTest {
 		}
 	}
 
-	protected void createPageHierarchy(
+	protected List<WikiPage> createPageHierarchy(
 			String parentTitle, int level, ServiceContext serviceContext)
 		throws Exception {
 
-		if (level == 0) {
-			return;
+		List<WikiPage> pages = new ArrayList<WikiPage>();
+
+		for (int i = 0; i < level; i++) {
+			WikiPage page = WikiTestUtil.addPage(
+				TestPropsValues.getUserId(), _node.getNodeId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				parentTitle, true, serviceContext);
+
+			parentTitle = page.getTitle();
+
+			pages.add(page);
 		}
 
-		String title = RandomTestUtil.randomString();
-
-		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _node.getNodeId(), title, "content",
-			parentTitle, true, serviceContext);
-
-		createPageHierarchy(title, --level, serviceContext);
-	}
-
-	protected List<WikiPage> getPageHierarchy(long nodeId, String parentTitle) {
-		List<WikiPage> childHierarchy = new ArrayList<>();
-
-		_getPageHierarchy(childHierarchy, nodeId, parentTitle);
-
-		return childHierarchy;
+		return pages;
 	}
 
 	protected void testChangeParent(boolean hasExpandoValues) throws Exception {
@@ -814,23 +813,6 @@ public class WikiPageLocalServiceTest {
 
 		checkPopulatedServiceContext(
 			serviceContext, revertedPage, hasExpandoValues);
-	}
-
-	private void _getPageHierarchy(
-		List<WikiPage> childHierachy, long nodeId, String parentTitle) {
-
-		List<WikiPage> childPages = WikiPageLocalServiceUtil.getChildren(
-			nodeId, true, parentTitle);
-
-		if (childPages.isEmpty()) {
-			return;
-		}
-
-		childHierachy.addAll(childPages);
-
-		for (WikiPage curPage : childPages) {
-			_getPageHierarchy(childHierachy, nodeId, curPage.getTitle());
-		}
 	}
 
 	@DeleteAfterTestRun

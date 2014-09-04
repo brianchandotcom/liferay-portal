@@ -416,6 +416,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		checkMimeTypes();
 		checkTitles();
 		deleteOrphanedDLFileEntries();
+		updateClassNameId();
 		updateFileEntryAssets();
 		updateFolderAssets();
 		verifyTree();
@@ -432,6 +433,21 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		}
 
 		return mimeType;
+	}
+
+	protected void updateClassNameId() {
+		try {
+			runSQL(
+				"update DLFileEntry set classNameId = 0 where classNameId " +
+					"is null");
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to fix file entries where class name ID is null",
+					e);
+			}
+		}
 	}
 
 	protected void updateFileEntryAssets() throws Exception {

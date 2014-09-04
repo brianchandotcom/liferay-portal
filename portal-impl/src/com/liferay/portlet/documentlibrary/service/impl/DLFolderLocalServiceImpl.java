@@ -1139,7 +1139,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		addFolderResources(dlFolder, groupPermissions, guestPermissions);
 	}
 
-	protected long getParentFolderId(DLFolder dlFolder, long parentFolderId) {
+	protected long getParentFolderId(DLFolder dlFolder, long parentFolderId)
+		throws NoSuchFolderException {
+
 		if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return parentFolderId;
 		}
@@ -1148,13 +1150,21 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			return dlFolder.getParentFolderId();
 		}
 
-		DLFolder parentDLFolder = dlFolderPersistence.fetchByPrimaryKey(
+		DLFolder parentDLFolder = dlFolderPersistence.findByPrimaryKey(
 			parentFolderId);
 
-		if ((parentDLFolder == null) ||
-			(dlFolder.getGroupId() != parentDLFolder.getGroupId())) {
+		if (dlFolder.getGroupId() != parentDLFolder.getGroupId()) {
+			throw new NoSuchFolderException(
+				String.format(
+					"No DLFolder with primary key %s found on group %s",
+					parentFolderId, dlFolder.getGroupId()));
+		}
 
-			return dlFolder.getParentFolderId();
+		if (dlFolder.getRepositoryId() != parentDLFolder.getRepositoryId()) {
+			throw new NoSuchFolderException(
+				String.format(
+					"No DLFolder with primary key %s found on repository %s",
+					parentFolderId, dlFolder.getGroupId()));
 		}
 
 		List<Long> subfolderIds = new ArrayList<Long>();

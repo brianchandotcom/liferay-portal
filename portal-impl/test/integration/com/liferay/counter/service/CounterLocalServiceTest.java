@@ -117,11 +117,11 @@ public class CounterLocalServiceTest {
 		}
 	}
 
+	private static String _COUNTER_NAME;
+
 	private static final int _INCREMENT_COUNT = 10000;
 
 	private static final int _PROCESS_COUNT = 4;
-
-	private static String _COUNTER_NAME;
 
 	private static class IncrementProcessCallable
 		implements ProcessCallable<Long[]> {

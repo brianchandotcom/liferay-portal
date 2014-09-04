@@ -112,6 +112,7 @@ public class SecureRandomUtil {
 	private static final int _MIN_BUFFER_SIZE = 1024;
 
 	private static final byte[] _bytes;
+	private static long _gapSeed;
 	private static final AtomicInteger _index = new AtomicInteger();
 	private static final Random _random = new SecureRandom();
 	private static final AtomicBoolean _reloadingFlag = new AtomicBoolean();
@@ -133,7 +134,5 @@ public class SecureRandomUtil {
 
 		_gapSeed = _random.nextLong();
 	}
-
-	private static long _gapSeed;
 
 }

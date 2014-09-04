@@ -132,7 +132,6 @@ public class ThreadLocalCacheManager {
 
 	private static final EmptyThreadLocalCahce<?> _emptyThreadLocalCache =
 		new EmptyThreadLocalCahce<Object>();
-
 	private static ThreadLocal
 		<Map<Lifecycle, Boolean>>
 			_threadLocalCacheDisabledFlags = new InitialThreadLocal

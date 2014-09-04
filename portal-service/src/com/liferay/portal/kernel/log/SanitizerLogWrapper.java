@@ -264,8 +264,6 @@ public class SanitizerLogWrapper extends LogWrapper {
 
 	private static final String _LESS_THAN_ESCAPED = "&lt;";
 
-	private static final String _SANITIZED = " [Sanitized]";
-
 	private static boolean _LOG_SANITIZER_ENABLED = GetterUtil.getBoolean(
 		SystemProperties.get(PropsKeys.LOG_SANITIZER_ENABLED));
 
@@ -273,6 +271,8 @@ public class SanitizerLogWrapper extends LogWrapper {
 
 	private static char _LOG_SANITIZER_REPLACEMENT_CHARACTER =
 		CharPool.UNDERLINE;
+
+	private static final String _SANITIZED = " [Sanitized]";
 
 	private static int[] _whitelistCharacters = new int[128];
 

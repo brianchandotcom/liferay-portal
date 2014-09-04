@@ -33,7 +33,6 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Iván Zaera
@@ -42,8 +41,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 	implements DLFileVersionActionsDisplayContext {
 
 	public DefaultDLFileVersionActionsDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
+			HttpServletRequest request, FileVersion fileVersion)
 		throws PortalException {
 
 		_request = request;

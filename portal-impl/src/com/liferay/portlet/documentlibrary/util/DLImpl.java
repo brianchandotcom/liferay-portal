@@ -918,6 +918,20 @@ public class DLImpl implements DL {
 	}
 
 	@Override
+	public String getSanitizedFileName(String title, String extension) {
+		String fileName = StringUtil.replace(
+			title, StringPool.SLASH, StringPool.UNDERLINE);
+
+		if (Validator.isNotNull(extension) &&
+			!fileName.endsWith(StringPool.PERIOD + extension)) {
+
+			fileName += StringPool.PERIOD + extension;
+		}
+
+		return fileName;
+	}
+
+	@Override
 	public String getTempFileId(long id, String version) {
 		return getTempFileId(id, version, null);
 	}

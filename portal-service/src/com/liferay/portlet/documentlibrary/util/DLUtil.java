@@ -265,6 +265,10 @@ public class DLUtil {
 			orderByCol, orderByType);
 	}
 
+	public static String getSanitizedFileName(String title, String extension) {
+		return getDL().getSanitizedFileName(title, extension);
+	}
+
 	public static String getTempFileId(long id, String version) {
 		return getDL().getTempFileId(id, version);
 	}

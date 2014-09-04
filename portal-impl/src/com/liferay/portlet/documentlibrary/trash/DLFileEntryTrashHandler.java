@@ -39,7 +39,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
@@ -262,7 +261,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	public void updateTitle(long classPK, String name) throws PortalException {
 		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-		String fileName = DLAppUtil.getSanitizedFileName(
+		String fileName = DLUtil.getSanitizedFileName(
 			name, dlFileEntry.getExtension());
 
 		dlFileEntry.setFileName(fileName);
@@ -290,7 +289,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		}
 
 		if (Validator.isNotNull(newName)) {
-			originalFileName = DLAppUtil.getSanitizedFileName(
+			originalFileName = DLUtil.getSanitizedFileName(
 				newName, dlFileEntry.getExtension());
 			originalTitle = newName;
 		}

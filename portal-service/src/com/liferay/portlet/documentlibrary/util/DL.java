@@ -173,6 +173,8 @@ public interface DL {
 	public <T> OrderByComparator<T> getRepositoryModelOrderByComparator(
 		String orderByCol, String orderByType);
 
+	public String getSanitizedFileName(String title, String extension);
+
 	public String getTempFileId(long id, String version);
 
 	public String getTempFileId(long id, String version, String languageId);

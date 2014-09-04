@@ -41,7 +41,6 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.InputStream;
@@ -172,7 +171,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 	@Override
 	public String getFileName() {
-		return DLAppUtil.getSanitizedFileName(getTitle(), getExtension());
+		return DLUtil.getSanitizedFileName(getTitle(), getExtension());
 	}
 
 	@Override

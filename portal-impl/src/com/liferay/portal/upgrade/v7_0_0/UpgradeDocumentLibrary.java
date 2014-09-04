@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.upgrade.v7_0_0.util.DLFileEntryTable;
 import com.liferay.portal.upgrade.v7_0_0.util.DLFileVersionTable;
-import com.liferay.portlet.documentlibrary.util.DLAppUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -104,8 +104,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					rs.getString("extension"));
 				String title = GetterUtil.getString(rs.getString("title"));
 
-				String fileName = DLAppUtil.getSanitizedFileName(
-					title, extension);
+				String fileName = DLUtil.getSanitizedFileName(title, extension);
 
 				updateFileEntryFileName(fileEntryId, fileName);
 			}
@@ -158,8 +157,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					rs.getString("extension"));
 				String title = GetterUtil.getString(rs.getString("title"));
 
-				String fileName = DLAppUtil.getSanitizedFileName(
-					title, extension);
+				String fileName = DLUtil.getSanitizedFileName(title, extension);
 
 				updateFileVersionFileName(fileVersionId, fileName);
 			}

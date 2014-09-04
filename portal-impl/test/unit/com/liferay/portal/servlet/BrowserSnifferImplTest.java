@@ -179,41 +179,42 @@ public class BrowserSnifferImplTest {
 
 	@Test
 	public void testParseVersion() throws IOException {
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(getClass().getResourceAsStream(
-				"dependencies/user_agents.csv")));
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new InputStreamReader(
+						getClass().getResourceAsStream(
+							"dependencies/user_agents.csv")))) {
 
-		String line = null;
+			String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			line = line.trim();
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = line.trim();
 
-			if (line.isEmpty() || (line.charAt(0) == CharPool.POUND)) {
-				continue;
+				if (line.isEmpty() || (line.charAt(0) == CharPool.POUND)) {
+					continue;
+				}
+
+				String[] parts = StringUtil.split(line, CharPool.COMMA);
+
+				if (parts.length != 4) {
+					continue;
+				}
+
+				String userAgent = parts[3].trim();
+
+				Assert.assertEquals(
+					parts[0].trim() + " version", parts[1].trim(),
+					BrowserSnifferImpl.parseVersion(
+						userAgent, BrowserSnifferImpl.versionLeadings,
+						BrowserSnifferImpl.versionSeparators));
+
+				Assert.assertEquals(
+					parts[0].trim() + " revision", parts[2].trim(),
+					BrowserSnifferImpl.parseVersion(
+						userAgent, BrowserSnifferImpl.revisionLeadings,
+						BrowserSnifferImpl.revisionSeparators));
 			}
-
-			String[] parts = StringUtil.split(line, CharPool.COMMA);
-
-			if (parts.length != 4) {
-				continue;
-			}
-
-			String userAgent = parts[3].trim();
-
-			Assert.assertEquals(
-				parts[0].trim() + " version", parts[1].trim(),
-				BrowserSnifferImpl.parseVersion(
-					userAgent, BrowserSnifferImpl.versionLeadings,
-					BrowserSnifferImpl.versionSeparators));
-
-			Assert.assertEquals(
-				parts[0].trim() + " revision", parts[2].trim(),
-				BrowserSnifferImpl.parseVersion(
-					userAgent, BrowserSnifferImpl.revisionLeadings,
-					BrowserSnifferImpl.revisionSeparators));
 		}
-
-		unsyncBufferedReader.close();
 	}
 
 	protected UnsyncBufferedReader getResourceAsUnsyncBufferedReader(

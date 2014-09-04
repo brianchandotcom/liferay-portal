@@ -59,12 +59,11 @@ public class TemplateResourceExternalizationTest {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		ObjectOutput objectOutput = new ObjectOutputStream(
-			unsyncByteArrayOutputStream);
+		try (ObjectOutput objectOutput = new ObjectOutputStream(
+				unsyncByteArrayOutputStream)) {
 
-		cacheTemplateResource.writeExternal(objectOutput);
-
-		objectOutput.close();
+			cacheTemplateResource.writeExternal(objectOutput);
+		}
 
 		byte[] externalizedData = unsyncByteArrayOutputStream.toByteArray();
 
@@ -136,12 +135,11 @@ public class TemplateResourceExternalizationTest {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		ObjectOutput objectOutput = new MockObjectOutput(
-			unsyncByteArrayOutputStream);
+		try (ObjectOutput objectOutput = new MockObjectOutput(
+				unsyncByteArrayOutputStream)) {
 
-		ddmTemplateResource.writeExternal(objectOutput);
-
-		objectOutput.close();
+			ddmTemplateResource.writeExternal(objectOutput);
+		}
 
 		byte[] externalizedData = unsyncByteArrayOutputStream.toByteArray();
 
@@ -208,12 +206,11 @@ public class TemplateResourceExternalizationTest {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		ObjectOutput objectOutput = new MockObjectOutput(
-			unsyncByteArrayOutputStream);
+		try (ObjectOutput objectOutput = new MockObjectOutput(
+				unsyncByteArrayOutputStream)) {
 
-		stringTemplateResource.writeExternal(objectOutput);
-
-		objectOutput.close();
+			stringTemplateResource.writeExternal(objectOutput);
+		}
 
 		byte[] externalizedData = unsyncByteArrayOutputStream.toByteArray();
 
@@ -268,12 +265,11 @@ public class TemplateResourceExternalizationTest {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		ObjectOutput objectOutput = new MockObjectOutput(
-			unsyncByteArrayOutputStream);
+		try (ObjectOutput objectOutput = new MockObjectOutput(
+				unsyncByteArrayOutputStream)) {
 
-		urlTemplateResource.writeExternal(objectOutput);
-
-		objectOutput.close();
+			urlTemplateResource.writeExternal(objectOutput);
+		}
 
 		byte[] externalizedData = unsyncByteArrayOutputStream.toByteArray();
 

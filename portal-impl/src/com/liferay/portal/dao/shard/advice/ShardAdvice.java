@@ -205,9 +205,6 @@ public class ShardAdvice {
 			ShardAdvice.class + "._shardName", PropsValues.SHARD_DEFAULT_NAME);
 	private static final ShardSelector _shardSelector;
 
-	private ShardDataSourceTargetSource _shardDataSourceTargetSource;
-	private ShardSessionFactoryTargetSource _shardSessionFactoryTargetSource;
-
 	static {
 		ShardSelector shardSelector = null;
 
@@ -222,5 +219,8 @@ public class ShardAdvice {
 
 		_shardSelector = shardSelector;
 	}
+
+	private ShardDataSourceTargetSource _shardDataSourceTargetSource;
+	private ShardSessionFactoryTargetSource _shardSessionFactoryTargetSource;
 
 }

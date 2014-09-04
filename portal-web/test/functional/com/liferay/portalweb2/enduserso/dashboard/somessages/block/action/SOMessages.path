@@ -90,6 +90,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_TIMESTAMP</td>
+	<td>//a[@class='message-link' and contains(.,'${key_messageBody}')]//span[@class='date']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_SEARCH_RESULTS</td>
 	<td>//div[@class='search-results']</td>
 	<td></td>

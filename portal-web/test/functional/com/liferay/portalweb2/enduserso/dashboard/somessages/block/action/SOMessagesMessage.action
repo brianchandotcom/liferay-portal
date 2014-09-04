@@ -1,4 +1,14 @@
 <definition>
+	<command name="assertClick">
+		<case locator-key1="FIRST_LINK">
+			<execute function="AssertClick#assertPartialTextClickAt" />
+		</case>
+
+		<case locator-key1="LAST_LINK">
+			<execute function="AssertClick#assertPartialTextClickAt" />
+		</case>
+	</command>
+
 	<command name="assertTextEquals">
 		<case locator-key1="PRIVATE_MESSAGE_ATTACHMENT_LINK">
 			<execute function="AssertTextEquals#assertPartialText" />

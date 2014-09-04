@@ -229,4 +229,5 @@ public class ContactIndexer extends BaseIndexer {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ContactIndexer.class);
+
 }

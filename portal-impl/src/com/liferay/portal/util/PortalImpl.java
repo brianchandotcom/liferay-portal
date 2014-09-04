@@ -7978,9 +7978,30 @@ public class PortalImpl implements Portal {
 
 		String portalURL = themeDisplay.getPortalURL();
 
-		if (isUseGroupVirtualHostName(
-				group, privateLayoutSet, themeDisplay, canonicalURL)) {
+		boolean useGroupVirtualHostName = false;
 
+		if (canonicalURL ||
+			!StringUtil.equalsIgnoreCase(
+				themeDisplay.getServerName(), _LOCALHOST)) {
+
+			useGroupVirtualHostName = true;
+		}
+
+		long refererPlid = themeDisplay.getRefererPlid();
+
+		if (refererPlid > 0) {
+			Layout refererLayout = LayoutLocalServiceUtil.fetchLayout(
+				refererPlid);
+
+			if ((refererLayout != null) &&
+				((refererLayout.getGroupId() != group.getGroupId()) ||
+				 (refererLayout.isPrivateLayout() != privateLayoutSet))) {
+
+				useGroupVirtualHostName = false;
+			}
+		}
+
+		if (useGroupVirtualHostName) {
 			String virtualHostname = getVirtualHostname(layoutSet);
 
 			String portalDomain = HttpUtil.getDomain(portalURL);
@@ -7996,17 +8017,19 @@ public class PortalImpl implements Portal {
 					virtualHostname, themeDisplay.getServerPort(),
 					themeDisplay.isSecure());
 
-				String path = StringPool.BLANK;
+				if (canonicalURL || virtualHostname.contains(portalDomain)) {
+					String path = StringPool.BLANK;
 
-				if (themeDisplay.isWidget()) {
-					path = PropsValues.WIDGET_SERVLET_MAPPING;
+					if (themeDisplay.isWidget()) {
+						path = PropsValues.WIDGET_SERVLET_MAPPING;
+					}
+
+					if (themeDisplay.isI18n() && !canonicalURL) {
+						path = themeDisplay.getI18nPath();
+					}
+
+					return virtualHostname.concat(_pathContext).concat(path);
 				}
-
-				if (themeDisplay.isI18n() && !canonicalURL) {
-					path = themeDisplay.getI18nPath();
-				}
-
-				return virtualHostname.concat(_pathContext).concat(path);
 			}
 			else {
 				LayoutSet curLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
@@ -8276,40 +8299,19 @@ public class PortalImpl implements Portal {
 		return false;
 	}
 
-	protected boolean isUseGroupVirtualHostName(
-		Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay,
-		boolean canonicalURL) {
-
-		if (!canonicalURL ||
-			isValidPortalDomain(themeDisplay.getServerName())) {
-
-			return false;
-		}
-
-		long refererPlid = themeDisplay.getRefererPlid();
-
-		if (refererPlid > 0) {
-			Layout refererLayout = LayoutLocalServiceUtil.fetchLayout(
-				refererPlid);
-
-			if ((refererLayout != null) &&
-				((refererLayout.getGroupId() != group.getGroupId()) ||
-				 (refererLayout.isPrivateLayout() != privateLayoutSet))) {
-
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	protected boolean isValidPortalDomain(long companyId, String domain) {
 		if (!Validator.isHostName(domain)) {
 			return false;
 		}
 
-		if (isValidVirtualHost(domain)) {
-			return true;
+		for (String virtualHost : PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) {
+			if (StringUtil.equalsIgnoreCase(domain, virtualHost) ||
+				StringUtil.wildcardMatches(
+					domain, virtualHost, CharPool.QUESTION, CharPool.STAR,
+					CharPool.PERCENT, false)) {
+
+				return true;
+			}
 		}
 
 		if (StringUtil.equalsIgnoreCase(domain, PropsValues.WEB_SERVER_HOST)) {
@@ -8335,20 +8337,6 @@ public class PortalImpl implements Portal {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
 		return isValidPortalDomain(companyId, domain);
-	}
-
-	protected boolean isValidVirtualHost(String domain) {
-		for (String virtualHost : PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) {
-			if (StringUtil.equalsIgnoreCase(domain, virtualHost) ||
-				StringUtil.wildcardMatches(
-					domain, virtualHost, CharPool.QUESTION, CharPool.STAR,
-					CharPool.PERCENT, false)) {
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	protected boolean isValidVirtualHostname(String virtualHostname) {

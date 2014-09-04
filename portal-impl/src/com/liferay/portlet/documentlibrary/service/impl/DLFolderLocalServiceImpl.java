@@ -1173,29 +1173,29 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			long groupId, long repositoryId, long parentFolderId)
 		throws NoSuchFolderException {
 
-		if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder parentDLFolder = dlFolderPersistence.findByPrimaryKey(
-				parentFolderId);
-
-			if (parentDLFolder.getGroupId() != groupId) {
-				throw new NoSuchFolderException(
-					String.format(
-						"No DLFolder exists with primary key %s in group %s",
-						parentFolderId, groupId));
-			}
-
-			if (parentDLFolder.getRepositoryId() != repositoryId) {
-				throw new NoSuchFolderException(
-					String.format(
-						"No DLFolder exists with primary key %s in " +
-							"repository %s",
-						parentFolderId, repositoryId));
-			}
-
-			return parentDLFolder.getFolderId();
+		if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return parentFolderId;
 		}
 
-		return parentFolderId;
+		DLFolder parentDLFolder = dlFolderPersistence.findByPrimaryKey(
+			parentFolderId);
+
+		if (parentDLFolder.getGroupId() != groupId) {
+			throw new NoSuchFolderException(
+				String.format(
+					"No DLFolder exists with primary key %s in group %s",
+					parentFolderId, groupId));
+		}
+
+		if (parentDLFolder.getRepositoryId() != repositoryId) {
+			throw new NoSuchFolderException(
+				String.format(
+					"No DLFolder exists with primary key %s in " +
+						"repository %s",
+					parentFolderId, repositoryId));
+		}
+
+		return parentDLFolder.getFolderId();
 	}
 
 	protected void validateFolder(

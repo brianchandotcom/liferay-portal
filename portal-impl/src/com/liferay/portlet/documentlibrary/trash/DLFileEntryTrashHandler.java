@@ -64,7 +64,8 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
 		checkRestorableEntry(
-			classPK, 0, containerModelId, dlFileEntry.getTitle(), newName);
+			classPK, 0, containerModelId, dlFileEntry.getFileName(),
+			dlFileEntry.getTitle(), newName);
 	}
 
 	@Override
@@ -74,6 +75,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 		checkRestorableEntry(
 			trashEntry.getClassPK(), trashEntry.getEntryId(), containerModelId,
+			trashEntry.getTypeSettingsProperty("fileName"),
 			trashEntry.getTypeSettingsProperty("title"), newName);
 	}
 
@@ -277,7 +279,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 	protected void checkRestorableEntry(
 			long classPK, long entryId, long containerModelId,
-			String originalTitle, String newName)
+			String originalFileName, String originalTitle, String newName)
 		throws PortalException {
 
 		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
@@ -287,12 +289,22 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		}
 
 		if (Validator.isNotNull(newName)) {
+			originalFileName = DLAppUtil.getSanitizedFileName(
+				newName, dlFileEntry.getExtension());
+
 			originalTitle = newName;
 		}
 
 		DLFileEntry duplicateDLFileEntry =
 			DLFileEntryLocalServiceUtil.fetchFileEntry(
 				dlFileEntry.getGroupId(), containerModelId, originalTitle);
+
+		if (duplicateDLFileEntry == null) {
+			duplicateDLFileEntry =
+				DLFileEntryLocalServiceUtil.fetchFileEntryByFileName(
+					dlFileEntry.getGroupId(), containerModelId,
+					originalFileName);
+		}
 
 		if (duplicateDLFileEntry != null) {
 			RestoreEntryException ree = new RestoreEntryException(

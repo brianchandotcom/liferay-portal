@@ -12,39 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet.taglib.ui;
+package com.liferay.document.library.google.docs.context;
 
 /**
- * @author Iván Zaera
+ * @author Ivan Zaera
  */
-public abstract class MenuItem {
+public class GoogleDocsMenuItems {
 
-	public String getIconCssClass() {
-		return _iconCssClass;
-	}
-
-	public String getId() {
-		return _id;
-	}
-
-	public String getMessage() {
-		return _message;
-	}
-
-	public void setIconCssClass(String iconCssClass) {
-		_iconCssClass = iconCssClass;
-	}
-
-	public void setId(String id) {
-		_id = id;
-	}
-
-	public void setMessage(String message) {
-		_message = message;
-	}
-
-	private String _iconCssClass;
-	private String _id;
-	private String _message;
+	public static final String MENU_ITEM_ID_EDIT_IN_GOOGLE =
+		"com.liferay.document.library.google.docs.context. " +
+			"GoogleDocsMenuItems.edit-in-google";
 
 }

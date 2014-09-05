@@ -23,6 +23,9 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
@@ -62,6 +65,12 @@ public class ResourceUtil {
 
 	public static String get(Object owner, String resource) {
 		return get(owner.getClass(), resource);
+	}
+
+	public static ResourceBundle getResourceBundle(Locale locale) {
+		return ResourceBundle.getBundle(
+			"com.liferay.document.library.google.docs.util.dependencies." +
+				"Language", locale, ResourceUtil.class.getClassLoader());
 	}
 
 }

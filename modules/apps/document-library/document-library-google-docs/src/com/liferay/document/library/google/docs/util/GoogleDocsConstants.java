@@ -19,6 +19,8 @@ package com.liferay.document.library.google.docs.util;
  */
 public class GoogleDocsConstants {
 
+	public static final String DDM_FIELD_NAME_EDIT_URL = "Edit_URL";
+
 	public static final String DDM_STRUCTURE_KEY_GOOGLE_DOCS = "GOOGLE_DOCS";
 
 }

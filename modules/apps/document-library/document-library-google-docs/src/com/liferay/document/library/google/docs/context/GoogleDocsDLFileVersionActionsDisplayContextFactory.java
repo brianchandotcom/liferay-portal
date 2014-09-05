@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.google.docs.context;
 
-import com.liferay.document.library.google.docs.util.GoogleDocsConstants;
 import com.liferay.document.library.google.docs.util.GoogleDocsDLFileEntryTypeHelper;
+import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -25,10 +25,7 @@ import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.documentlibrary.context.DLFileVersionActionsDisplayContext;
 import com.liferay.portlet.documentlibrary.context.DLFileVersionActionsDisplayContextFactory;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 
 import java.util.List;
@@ -72,7 +69,10 @@ public class GoogleDocsDLFileVersionActionsDisplayContextFactory
 			FileVersion fileVersion) {
 
 		try {
-			if (isGoogleDocs(fileVersion)) {
+			GoogleDocsMetadataHelper googleDocsMetadataHelper =
+				new GoogleDocsMetadataHelper(fileVersion);
+
+			if (googleDocsMetadataHelper.isGoogleDocs()) {
 				return new GoogleDocsDLFileVersionActionsDisplayContext(
 					parentDLFileEntryActionsDisplayContext, request, response,
 					fileVersion);
@@ -116,36 +116,6 @@ public class GoogleDocsDLFileVersionActionsDisplayContextFactory
 	@Reference
 	public void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
-	}
-
-	protected boolean isGoogleDocs(FileVersion fileVersion)
-		throws PortalException {
-
-		Object fileVersionModel = fileVersion.getModel();
-
-		if (!(fileVersionModel instanceof DLFileVersion)) {
-			return false;
-		}
-
-		DLFileVersion dlFileVersion = (DLFileVersion)fileVersionModel;
-
-		DLFileEntryType dlFileEntryType =
-			_dlFileEntryTypeLocalService.getFileEntryType(
-				dlFileVersion.getFileEntryTypeId());
-
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			String structureKey = ddmStructure.getStructureKey();
-
-			if (structureKey.equals(
-					GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS)) {
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private ClassNameLocalService _classNameLocalService;

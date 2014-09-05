@@ -37,6 +37,18 @@
 		</default>
 	</command>
 
+	<command name="assertClickNoError">
+		<case comparator="contains" locator1="/input">
+			<execute function="AssertClickNoError#assertValueClick" />
+		</case>
+
+		<default>
+			<description message="Click on the ${locator1} with the value ${value1}." />
+
+			<execute function="AssertClickNoError#assertTextClick" />
+		</default>
+	</command>
+
 	<command name="assertConsoleTextNotPresent">
 		<default>
 			<description message="Assert that the text ${value1} is NOT present within the console output." />
@@ -172,6 +184,14 @@
 			<description message="Click on the ${locator1}." />
 
 			<execute function="Click#clickAt" />
+		</default>
+	</command>
+
+	<command name="clickNoError">
+		<default>
+			<description message="Click on the ${locator1}." />
+
+			<execute function="ClickNoError#click" />
 		</default>
 	</command>
 
@@ -356,6 +376,12 @@
 	<command name="selectFrameTop">
 		<default>
 			<execute function="SelectFrameTop#selectFrameTop" />
+		</default>
+	</command>
+
+	<command name="selectNoError">
+		<default>
+			<execute function="SelectNoError#select" />
 		</default>
 	</command>
 

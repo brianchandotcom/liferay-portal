@@ -28,7 +28,7 @@ public class DLFileEntryTypeConstants {
 	public static final String FILE_ENTRY_TYPE_KEY_CONTRACT = "CONTRACT";
 
 	public static final String FILE_ENTRY_TYPE_KEY_IG_IMAGE =
-		"image-gallery-image";
+		"IMAGE GALLERY IMAGE";
 
 	public static final String FILE_ENTRY_TYPE_KEY_MARKETING_BANNER =
 		"MARKETING BANNER";

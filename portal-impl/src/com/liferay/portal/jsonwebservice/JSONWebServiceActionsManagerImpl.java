@@ -356,10 +356,15 @@ public class JSONWebServiceActionsManagerImpl
 
 	@Override
 	public int registerService(String path, Object service) {
+		return registerService(path, StringPool.BLANK, service);
+	}
+
+	@Override
+	public int registerService(String path, String context, Object service) {
 		JSONWebServiceRegistrator jsonWebServiceRegistrator =
 			new JSONWebServiceRegistrator();
 
-		jsonWebServiceRegistrator.processBean(path, StringPool.BLANK, service);
+		jsonWebServiceRegistrator.processBean(path, context, service);
 
 		int count = getJSONWebServiceActionsCount(path);
 

@@ -625,30 +625,6 @@
 		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
 		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
 	</bean>
-	<bean name="/com_liferay_portlet_polls_service_spring_PollsChoiceService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.polls.service.PollsChoiceService" />
-		<property name="serviceInterface" value="com.liferay.portlet.polls.service.PollsChoiceService" />
-	</bean>
-	<bean name="/com_liferay_portlet_polls_service_spring_PollsChoiceService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.polls.service.PollsChoiceService" />
-		<property name="serviceInterface" value="com.liferay.portlet.polls.service.PollsChoiceService" />
-	</bean>
-	<bean name="/com_liferay_portlet_polls_service_spring_PollsQuestionService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.polls.service.PollsQuestionService" />
-		<property name="serviceInterface" value="com.liferay.portlet.polls.service.PollsQuestionService" />
-	</bean>
-	<bean name="/com_liferay_portlet_polls_service_spring_PollsQuestionService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.polls.service.PollsQuestionService" />
-		<property name="serviceInterface" value="com.liferay.portlet.polls.service.PollsQuestionService" />
-	</bean>
-	<bean name="/com_liferay_portlet_polls_service_spring_PollsVoteService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.polls.service.PollsVoteService" />
-		<property name="serviceInterface" value="com.liferay.portlet.polls.service.PollsVoteService" />
-	</bean>
-	<bean name="/com_liferay_portlet_polls_service_spring_PollsVoteService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.polls.service.PollsVoteService" />
-		<property name="serviceInterface" value="com.liferay.portlet.polls.service.PollsVoteService" />
-	</bean>
 	<bean name="/com_liferay_portlet_ratings_service_spring_RatingsEntryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.ratings.service.RatingsEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.ratings.service.RatingsEntryService" />

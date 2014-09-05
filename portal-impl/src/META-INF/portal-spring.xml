@@ -368,15 +368,6 @@
 	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleGroupInstanceLocalServiceImpl" />
 	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleGroupInstanceServiceImpl" />
 	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupInstancePersistence" class="com.liferay.portlet.mobiledevicerules.service.persistence.impl.MDRRuleGroupInstancePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.polls.service.PollsChoiceLocalService" class="com.liferay.portlet.polls.service.impl.PollsChoiceLocalServiceImpl" />
-	<bean id="com.liferay.portlet.polls.service.PollsChoiceService" class="com.liferay.portlet.polls.service.impl.PollsChoiceServiceImpl" />
-	<bean id="com.liferay.portlet.polls.service.persistence.PollsChoicePersistence" class="com.liferay.portlet.polls.service.persistence.impl.PollsChoicePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.polls.service.PollsQuestionLocalService" class="com.liferay.portlet.polls.service.impl.PollsQuestionLocalServiceImpl" />
-	<bean id="com.liferay.portlet.polls.service.PollsQuestionService" class="com.liferay.portlet.polls.service.impl.PollsQuestionServiceImpl" />
-	<bean id="com.liferay.portlet.polls.service.persistence.PollsQuestionPersistence" class="com.liferay.portlet.polls.service.persistence.impl.PollsQuestionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.polls.service.PollsVoteLocalService" class="com.liferay.portlet.polls.service.impl.PollsVoteLocalServiceImpl" />
-	<bean id="com.liferay.portlet.polls.service.PollsVoteService" class="com.liferay.portlet.polls.service.impl.PollsVoteServiceImpl" />
-	<bean id="com.liferay.portlet.polls.service.persistence.PollsVotePersistence" class="com.liferay.portlet.polls.service.persistence.impl.PollsVotePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.ratings.service.RatingsEntryLocalService" class="com.liferay.portlet.ratings.service.impl.RatingsEntryLocalServiceImpl" />
 	<bean id="com.liferay.portlet.ratings.service.RatingsEntryService" class="com.liferay.portlet.ratings.service.impl.RatingsEntryServiceImpl" />
 	<bean id="com.liferay.portlet.ratings.service.persistence.RatingsEntryPersistence" class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryPersistenceImpl" parent="basePersistence" />

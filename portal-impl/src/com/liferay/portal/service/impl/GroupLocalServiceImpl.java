@@ -4172,7 +4172,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		setRolePermissions(group, role, "com.liferay.portlet.imagegallery");
 		setRolePermissions(group, role, "com.liferay.portlet.journal");
 		setRolePermissions(group, role, "com.liferay.portlet.messageboards");
-		setRolePermissions(group, role, "com.liferay.portlet.polls");
 		setRolePermissions(group, role, "com.liferay.portlet.wiki");
 	}
 

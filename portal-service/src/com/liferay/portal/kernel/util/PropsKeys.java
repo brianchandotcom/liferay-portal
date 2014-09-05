@@ -2067,8 +2067,6 @@ public interface PropsKeys {
 
 	public static final String POLLER_REQUEST_TIMEOUT = "poller.request.timeout";
 
-	public static final String POLLS_PUBLISH_TO_LIVE_BY_DEFAULT = "polls.publish.to.live.by.default";
-
 	public static final String POP_SERVER_NOTIFICATIONS_ENABLED = "pop.server.notifications.enabled";
 
 	public static final String POP_SERVER_NOTIFICATIONS_INTERVAL = "pop.server.notifications.interval";

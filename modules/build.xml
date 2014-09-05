@@ -6,6 +6,7 @@
 		<dirset dir="apps/amazon-rankings" includes="*" />
 		<dirset dir="apps/currency-converter" includes="*" />
 		<dirset dir="apps/dictionary" includes="*" />
+		<dirset dir="apps/polls" includes="*" />
 		<dirset dir="apps/social" includes="*" />
 		<dirset dir="apps/web-proxy" includes="*" />
 		<dirset dir="apps/xsl-content" includes="*" />

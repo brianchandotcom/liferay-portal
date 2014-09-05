@@ -6,7 +6,6 @@
 		<portlet id="20" />
 		<portlet id="31" />
 		<portlet id="56" />
-		<portlet id="59" />
 		<portlet id="62" />
 		<portlet id="64" />
 		<portlet id="71" />
@@ -51,7 +50,6 @@
 	<category name="category.hidden">
 		<portlet id="9" />
 		<portlet id="15" />
-		<portlet id="25" />
 		<portlet id="99" />
 		<portlet id="104" />
 		<portlet id="111" />

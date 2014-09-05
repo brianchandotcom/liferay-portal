@@ -328,8 +328,6 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String PHONE = "PHONE";
 
-	public static final String POLLS_QUESTION = "POLLS_QUESTION";
-
 	public static final String PORTAL_PREFERENCES = "PORTAL_PREFERENCES";
 
 	public static final String PORTAL_REQUEST_DATA_SAMPLE = "PORTAL_REQUEST_DATA_SAMPLE";

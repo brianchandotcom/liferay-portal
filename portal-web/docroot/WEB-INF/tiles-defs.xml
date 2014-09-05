@@ -1158,42 +1158,6 @@
 		<put name="portlet_content" value="/portlet/plugins_admin/view.jsp" />
 	</definition>
 
-	<!-- Polls -->
-
-	<definition name="portlet.polls" extends="portlet" />
-
-	<definition name="portlet.polls.edit_question" extends="portlet.polls">
-		<put name="portlet_content" value="/portlet/polls/edit_question.jsp" />
-	</definition>
-
-	<definition name="portlet.polls.error" extends="portlet.polls">
-		<put name="portlet_content" value="/portlet/polls/error.jsp" />
-	</definition>
-
-	<definition name="portlet.polls.view" extends="portlet.polls">
-		<put name="portlet_content" value="/portlet/polls/view.jsp" />
-	</definition>
-
-	<definition name="portlet.polls.view_question" extends="portlet.polls">
-		<put name="portlet_content" value="/portlet/polls/view_question.jsp" />
-	</definition>
-
-	<!-- Polls Display -->
-
-	<definition name="portlet.polls_display" extends="portlet" />
-
-	<definition name="portlet.polls_display.add_question_redirect" extends="portlet.polls_display">
-		<put name="portlet_content" value="/portlet/polls_display/add_question_redirect.jsp" />
-	</definition>
-
-	<definition name="portlet.polls_display.error" extends="portlet.polls_display">
-		<put name="portlet_content" value="/portlet/polls_display/error.jsp" />
-	</definition>
-
-	<definition name="portlet.polls_display.view" extends="portlet.polls_display">
-		<put name="portlet_content" value="/portlet/polls_display/view.jsp" />
-	</definition>
-
 	<!-- Portal Settings -->
 
 	<definition name="portlet.portal_settings" extends="portlet" />

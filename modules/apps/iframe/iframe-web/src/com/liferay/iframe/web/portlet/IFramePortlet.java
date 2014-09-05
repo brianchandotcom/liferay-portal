@@ -17,6 +17,8 @@ package com.liferay.iframe.web.portlet;
 import com.liferay.iframe.web.action.ViewAction;
 import com.liferay.iframe.web.upgrade.IFrameUpgrade;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.WebKeys;
@@ -63,7 +65,6 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-
 public class IFramePortlet extends MVCPortlet {
 
 	@Override
@@ -103,8 +104,14 @@ public class IFramePortlet extends MVCPortlet {
 			return viewAction.transformSrc(renderRequest, renderResponse);
 		}
 		catch (PortalException pe) {
+			if (_log.isErrorEnabled()) {
+				_log.error(pe, pe);
+			}
 		}
 
 		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(IFramePortlet.class);
+
 }

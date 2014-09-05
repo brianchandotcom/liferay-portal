@@ -57,12 +57,10 @@ public class ReflectionTestUtil {
 			clazz =  clazz.getSuperclass();
 		}
 
-		ReflectionUtil.throwException(
+		return ReflectionUtil.throwException(
 			new NoSuchMethodException(
 				"No bridge method on " + clazz + " with name " + methodName +
 					" and parameter types " + Arrays.toString(parameterTypes)));
-
-		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static Field getField(Class<?> clazz, String fieldName) {
@@ -78,7 +76,7 @@ public class ReflectionTestUtil {
 		catch (NoSuchFieldException nsfe) {
 		}
 		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+			return ReflectionUtil.throwException(e);
 		}
 
 		while (clazz != null) {
@@ -95,15 +93,13 @@ public class ReflectionTestUtil {
 				clazz = clazz.getSuperclass();
 			}
 			catch (Exception e) {
-				ReflectionUtil.throwException(e);
+				return ReflectionUtil.throwException(e);
 			}
 		}
 
-		ReflectionUtil.throwException(
+		return ReflectionUtil.throwException(
 			new NoSuchFieldException(
 				"No field on " + clazz + " with name " + fieldName));
-
-		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static Object getFieldValue(Class<?> clazz, String fieldName) {
@@ -113,10 +109,8 @@ public class ReflectionTestUtil {
 			return field.get(null);
 		}
 		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+			return ReflectionUtil.throwException(e);
 		}
-
-		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static Object getFieldValue(Object instance, String fieldName) {
@@ -126,10 +120,8 @@ public class ReflectionTestUtil {
 			return field.get(instance);
 		}
 		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+			return ReflectionUtil.throwException(e);
 		}
-
-		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static Method getMethod(
@@ -159,12 +151,10 @@ public class ReflectionTestUtil {
 			}
 		}
 
-		ReflectionUtil.throwException(
+		return ReflectionUtil.throwException(
 			new NoSuchMethodException(
 				"No method on " + clazz + " with name " + methodName +
 					" and parameter types " + Arrays.toString(parameterTypes)));
-
-		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static Object invoke(
@@ -177,10 +167,8 @@ public class ReflectionTestUtil {
 			return method.invoke(null, parameters);
 		}
 		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+			return ReflectionUtil.throwException(e);
 		}
-
-		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static Object invoke(
@@ -194,10 +182,8 @@ public class ReflectionTestUtil {
 			return method.invoke(instance, parameters);
 		}
 		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+			return ReflectionUtil.throwException(e);
 		}
-
-		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static Object invokeBridge(
@@ -211,10 +197,8 @@ public class ReflectionTestUtil {
 			return method.invoke(instance, parameters);
 		}
 		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+			return ReflectionUtil.throwException(e);
 		}
-
-		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static <T extends Enum<T>> T newEnumElement(
@@ -285,10 +269,8 @@ public class ReflectionTestUtil {
 				constructorAccessor, new Object[] {parameters});
 		}
 		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+			return ReflectionUtil.throwException(e);
 		}
-
-		throw ReflectionUtil.SHOULD_NEVER_HAPPEN_ERROR;
 	}
 
 	public static <T extends Enum<T>> T newEnumElement(

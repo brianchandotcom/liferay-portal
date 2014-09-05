@@ -6,4 +6,18 @@
 
 		<execute selenium="click" />
 	</command>
+
+	<command name="makeVisibleClick">
+		<execute selenium="mouseOver" />
+
+		<execute selenium="makeVisible" />
+
+		<execute selenium="click" />
+	</command>
+
+	<command name="pauseClick">
+		<execute argument1="1000" selenium="pause" />
+
+		<execute function="ClickNoError#click" />
+	</command>
 </definition>

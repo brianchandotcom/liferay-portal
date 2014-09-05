@@ -238,7 +238,7 @@ public class PortletTracker
 		String displayName = GetterUtil.getString(
 			serviceReference.getProperty("javax.portlet.display-name"),
 			portletName);
-		
+
 		warnPorletProperties(portletName, serviceReference);
 
 		portletModel.setDisplayName(displayName);

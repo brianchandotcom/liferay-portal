@@ -9,6 +9,16 @@
 		</case>
 	</command>
 
+	<command name="clickNoError">
+		<case locator-key1="MICROBLOGS_ENTRY_DELETE_LINK">
+			<execute function="ClickNoError#makeVisibleClick" />
+		</case>
+
+		<case locator-key1="MICROBLOGS_ENTRY_EDIT_LINK">
+			<execute function="ClickNoError#makeVisibleClick" />
+		</case>
+	</command>
+
 	<command name="isElementPresent">
 		<case locator-key1="MICROBLOGS_ENTRY_DELETE_LINK">
 			<execute function="IsElementPresent#pauseIsElementPresent" />

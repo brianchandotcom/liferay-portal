@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -908,6 +909,20 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return new String[0];
 	}
 
+	protected String getMainReleaseVersion() {
+		if (_mainReleaseVersion != null) {
+			return _mainReleaseVersion;
+		}
+
+		String releaseVersion = ReleaseInfo.getVersion();
+
+		int pos = releaseVersion.lastIndexOf(StringPool.PERIOD);
+
+		_mainReleaseVersion = releaseVersion.substring(0, pos) + ".0";
+
+		return _mainReleaseVersion;
+	}
+
 	protected String getProperty(String key) {
 		return _properties.getProperty(key);
 	}
@@ -1595,6 +1610,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private String _copyright;
 	private String[] _excludes;
 	private SourceMismatchException _firstSourceMismatchException;
+	private String _mainReleaseVersion;
 	private String _oldCopyright;
 	private Properties _portalLanguageKeysProperties;
 	private Properties _properties;

@@ -1,0 +1,9 @@
+<definition>
+	<command name="click">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="click" />
+	</command>
+</definition>

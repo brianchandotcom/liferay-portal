@@ -1,0 +1,25 @@
+<definition>
+	<command name="assertTextClick">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="waitForText" />
+
+		<execute selenium="assertText" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="click" />
+	</command>
+
+	<command name="assertValueClick">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="waitForValue" />
+
+		<execute selenium="assertValue" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="click" />
+	</command>
+</definition>

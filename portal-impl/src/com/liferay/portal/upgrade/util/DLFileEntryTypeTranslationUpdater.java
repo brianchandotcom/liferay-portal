@@ -41,8 +41,8 @@ public class DLFileEntryTypeTranslationUpdater implements TranslationUpdater {
 		try {
 			doUpdate(companyId, groupId);
 		}
-		catch (SQLException e) {
-			throw new UpgradeException(e);
+		catch (SQLException sqle) {
+			throw new UpgradeException(sqle);
 		}
 	}
 

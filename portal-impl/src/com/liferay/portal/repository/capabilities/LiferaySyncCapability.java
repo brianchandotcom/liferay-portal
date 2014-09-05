@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
-import com.liferay.portal.kernel.repository.event.SyncRepositoryEventType;
+import com.liferay.portal.kernel.repository.event.WorkflowRepositoryEventType;
 import com.liferay.portal.kernel.repository.event.TrashRepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -114,15 +114,15 @@ public class LiferaySyncCapability implements SyncCapability {
 			repositoryEventRegistry, RepositoryEventType.Move.class,
 			Folder.class, "moveFolder");
 
-		// Sync events
+		// Workflow events
 
 		registerRepositoryEventListener(
-			repositoryEventRegistry, SyncRepositoryEventType.DelayedAdd.class,
+			repositoryEventRegistry, WorkflowRepositoryEventType.Add.class,
 			FileEntry.class, "addFileEntry");
 
 		registerRepositoryEventListener(
 			repositoryEventRegistry,
-			SyncRepositoryEventType.DelayedUpdate.class, FileEntry.class,
+			WorkflowRepositoryEventType.Update.class, FileEntry.class,
 			"updateFileEntry");
 
 		// Trash events

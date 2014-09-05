@@ -21,14 +21,14 @@ import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
  */
 public class RepositoryEventTypeUtil {
 
-	public static Class<? extends SyncRepositoryEventType> toSyncEvent(
+	public static Class<? extends WorkflowRepositoryEventType> toWorkflowEvent(
 		String event) {
 
 		if (event.equals(DLSyncConstants.EVENT_ADD)) {
-			return SyncRepositoryEventType.DelayedAdd.class;
+			return WorkflowRepositoryEventType.Add.class;
 		}
 		else if (event.equals(DLSyncConstants.EVENT_UPDATE)) {
-			return SyncRepositoryEventType.DelayedUpdate.class;
+			return WorkflowRepositoryEventType.Update.class;
 		}
 		else {
 			throw new IllegalArgumentException(

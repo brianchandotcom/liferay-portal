@@ -17,12 +17,12 @@ package com.liferay.portal.kernel.repository.event;
 /**
 * @author Adolfo Pérez
 */
-public interface SyncRepositoryEventType extends RepositoryEventType {
+public interface WorkflowRepositoryEventType extends RepositoryEventType {
 
-	public interface DelayedAdd extends SyncRepositoryEventType {
+	public interface Add extends WorkflowRepositoryEventType {
 	}
 
-	public interface DelayedUpdate extends SyncRepositoryEventType {
+	public interface Update extends WorkflowRepositoryEventType {
 	}
 
 }

@@ -313,4 +313,11 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		}
 	}
 
+	@Override
+	protected void importReferenceStagedModels(
+			PortletDataContext portletDataContext,
+			LayoutSetPrototype layoutSetPrototype)
+		throws PortletDataException {
+	}
+
 }

@@ -1086,6 +1086,12 @@ public class LayoutStagedModelDataHandler
 		updateTypeSettings(importedLayout, layout);
 	}
 
+	@Override
+	protected void importReferenceStagedModels(
+			PortletDataContext portletDataContext, Layout layout)
+		throws PortletDataException {
+	}
+
 	protected void importTheme(
 			PortletDataContext portletDataContext, Layout layout,
 			Layout importedLayout)

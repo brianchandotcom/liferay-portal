@@ -1073,7 +1073,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		Element parentElement, Class<?> clazz, long classPK) {
 
 		List<Element> referenceElements = getReferenceElements(
-			parentElement, clazz, 0, null, classPK, null);
+			parentElement, clazz.getName(), 0, null, classPK, null);
 
 		List<Element> referenceDataElements = getReferenceDataElements(
 			referenceElements, clazz);
@@ -1090,7 +1090,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		Element parentElement, Class<?> clazz, long groupId, String uuid) {
 
 		List<Element> referenceElements = getReferenceElements(
-			parentElement, clazz, groupId, uuid, 0, null);
+			parentElement, clazz.getName(), groupId, uuid, 0, null);
 
 		List<Element> referenceDataElements = getReferenceDataElements(
 			referenceElements, clazz);
@@ -1139,7 +1139,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		Element parentElement, Class<?> clazz, String referenceType) {
 
 		List<Element> referenceElements = getReferenceElements(
-			parentElement, clazz, 0, null, 0, referenceType);
+			parentElement, clazz.getName(), 0, null, 0, referenceType);
 
 		return getReferenceDataElements(referenceElements, clazz);
 	}
@@ -1156,7 +1156,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		StagedModel parentStagedModel, Class<?> clazz, String referenceType) {
 
 		List<Element> referenceElements = getReferenceElements(
-			parentStagedModel, clazz, 0, referenceType);
+			parentStagedModel, clazz.getName(), 0, referenceType);
 
 		return getReferenceDataElements(referenceElements, clazz);
 	}
@@ -1167,7 +1167,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		String referenceType) {
 
 		List<Element> referenceElements = getReferenceElements(
-			parentElement, clazz, groupId, uuid, 0, referenceType);
+			parentElement, clazz.getName(), groupId, uuid, 0, referenceType);
 
 		if (!referenceElements.isEmpty()) {
 			return referenceElements.get(0);
@@ -1180,8 +1180,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public Element getReferenceElement(
 		StagedModel parentStagedModel, Class<?> clazz, long classPK) {
 
+		return getReferenceElement(parentStagedModel, clazz.getName(), classPK);
+	}
+
+	@Override
+	public Element getReferenceElement(
+		StagedModel parentStagedModel, String className, long classPK) {
+
 		List<Element> referenceElements = getReferenceElements(
-			parentStagedModel, clazz, classPK, null);
+			parentStagedModel, className, classPK, null);
 
 		if (!referenceElements.isEmpty()) {
 			return referenceElements.get(0);
@@ -1194,7 +1201,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public List<Element> getReferenceElements(
 		StagedModel parentStagedModel, Class<?> clazz) {
 
-		return getReferenceElements(parentStagedModel, clazz, 0, null);
+		return getReferenceElements(
+			parentStagedModel, clazz.getName(), 0, null);
 	}
 
 	/**
@@ -2309,7 +2317,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	protected List<Element> getReferenceElements(
-		Element parentElement, Class<?> clazz, long groupId, String uuid,
+		Element parentElement, String className, long groupId, String uuid,
 		long classPK, String referenceType) {
 
 		if (parentElement == null) {
@@ -2325,7 +2333,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		StringBundler sb = new StringBundler(13);
 
 		sb.append("reference[@class-name=");
-		sb.append(HtmlUtil.escapeXPathAttribute(clazz.getName()));
+		sb.append(HtmlUtil.escapeXPathAttribute(className));
 
 		if (groupId > 0) {
 			sb.append(" and @group-id='");
@@ -2359,14 +2367,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	protected List<Element> getReferenceElements(
-		StagedModel parentStagedModel, Class<?> clazz, long classPK,
+		StagedModel parentStagedModel, String className, long classPK,
 		String referenceType) {
 
 		Element stagedModelElement = getImportDataStagedModelElement(
 			parentStagedModel);
 
 		return getReferenceElements(
-			stagedModelElement, clazz, 0, null, classPK, referenceType);
+			stagedModelElement, className, 0, null, classPK, referenceType);
 	}
 
 	protected String getReferenceKey(ClassedModel classedModel) {

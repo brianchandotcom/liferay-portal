@@ -183,8 +183,18 @@ public class StagedModelDataHandlerUtil {
 			Class<?> stagedModelClass, long classPK)
 		throws PortletDataException {
 
+		importReferenceStagedModel(
+			portletDataContext, referrerStagedModel, stagedModelClass.getName(),
+			classPK);
+	}
+
+	public static <T extends StagedModel> void importReferenceStagedModel(
+			PortletDataContext portletDataContext, T referrerStagedModel,
+			String stagedModelClassName, long classPK)
+		throws PortletDataException {
+
 		Element referenceElement = portletDataContext.getReferenceElement(
-			referrerStagedModel, stagedModelClass, classPK);
+			referrerStagedModel, stagedModelClassName, classPK);
 
 		if (referenceElement == null) {
 			return;
@@ -196,7 +206,7 @@ public class StagedModelDataHandlerUtil {
 		if (missing) {
 			StagedModelDataHandler<?> stagedModelDataHandler =
 				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
-					stagedModelClass.getName());
+					stagedModelClassName);
 
 			stagedModelDataHandler.importMissingReference(
 				portletDataContext, referenceElement);

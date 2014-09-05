@@ -188,19 +188,6 @@ public class AssetCategoryStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(category.getUserUuid());
 
-		if (category.getParentCategoryId() !=
-				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, category, AssetCategory.class,
-				category.getParentCategoryId());
-		}
-		else {
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, category, AssetVocabulary.class,
-				category.getVocabularyId());
-		}
-
 		Map<Long, Long> vocabularyIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				AssetVocabulary.class);

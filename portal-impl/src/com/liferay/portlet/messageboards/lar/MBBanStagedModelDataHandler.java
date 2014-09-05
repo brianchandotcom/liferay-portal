@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -120,6 +121,12 @@ public class MBBanStagedModelDataHandler
 		serviceContext.setUuid(ban.getUuid());
 
 		MBBanLocalServiceUtil.addBan(userId, user.getUserId(), serviceContext);
+	}
+
+	@Override
+	protected void importReferenceStagedModels(
+			PortletDataContext portletDataContext, MBBan ban)
+		throws PortletDataException {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

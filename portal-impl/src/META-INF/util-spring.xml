@@ -554,6 +554,11 @@
 						<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
 					</property>
 				</bean>
+				<bean class="com.liferay.portal.repository.temporaryrepository.TemporaryRepositoryDefiner">
+					<property name="liferayRepositoryFactory">
+						<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
+					</property>
+				</bean>
 			</list>
 		</property>
 	</bean>

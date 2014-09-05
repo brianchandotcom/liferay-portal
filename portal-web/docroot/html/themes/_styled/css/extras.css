@@ -213,7 +213,6 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 }
 
 .portlet-journal-content .lfr-icon-actions .lfr-icon-action-add a {
-	@include box-shadow(none);
 	@include text-shadow(none);
 }
 

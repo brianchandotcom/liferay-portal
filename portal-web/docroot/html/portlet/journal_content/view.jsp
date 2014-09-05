@@ -353,7 +353,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				<liferay-ui:icon-menu
 					cssClass="lfr-icon-action lfr-icon-action-add"
 					direction="down"
-					extended="false"
+					extended="<%= false %>"
 					icon="../aui/plus"
 					message="add"
 					showArrow="<%= false %>"

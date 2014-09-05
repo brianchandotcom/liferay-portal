@@ -378,6 +378,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROFILE_INFO_TAGS_EMPTY</td>
+	<td>//div[contains(@class,'user-information') and contains(.,'does not have any tags')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROFILE_INFO_WEBSITES_TITLE</td>
 	<td>//div[@data-title='Websites']/h3</td>
 	<td></td>

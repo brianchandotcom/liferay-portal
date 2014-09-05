@@ -19,7 +19,9 @@
 <%@ page import="com.liferay.portal.DuplicateLockException" %><%@
 page import="com.liferay.portal.InvalidRepositoryException" %><%@
 page import="com.liferay.portal.NoSuchRepositoryException" %><%@
+page import="com.liferay.portal.kernel.repository.DocumentRepository" %><%@
 page import="com.liferay.portal.kernel.repository.RepositoryException" %><%@
+page import="com.liferay.portal.kernel.repository.capabilities.TemporaryFilesCapability" %><%@
 page import="com.liferay.portal.kernel.search.Document" %><%@
 page import="com.liferay.portal.kernel.search.SearchResult" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.MenuItem" %><%@

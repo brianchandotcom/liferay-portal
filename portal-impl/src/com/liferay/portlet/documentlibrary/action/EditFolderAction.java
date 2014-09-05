@@ -15,8 +15,11 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.capabilities.TemporaryFilesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -32,6 +35,7 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
@@ -104,6 +108,9 @@ public class EditFolderAction extends PortletAction {
 			else if (cmd.equals("updateWorkflowDefinitions")) {
 				updateWorkflowDefinitions(actionRequest);
 			}
+			else if (cmd.equals("deleteExpiredTemporaryFiles")) {
+				deleteExpiredTemporaryFiles(actionRequest);
+			}
 
 			sendRedirect(actionRequest, actionResponse);
 		}
@@ -164,6 +171,22 @@ public class EditFolderAction extends PortletAction {
 		throws Exception {
 
 		downloadFolder(resourceRequest, resourceResponse);
+	}
+
+	protected void deleteExpiredTemporaryFiles(ActionRequest actionRequest)
+		throws PortalException {
+
+		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
+
+		LocalRepository repository =
+			RepositoryLocalServiceUtil.getLocalRepositoryImpl(repositoryId);
+
+		if (repository.isCapabilityProvided(TemporaryFilesCapability.class)) {
+			TemporaryFilesCapability tempFilesCapability =
+				repository.getCapability(TemporaryFilesCapability.class);
+
+			tempFilesCapability.deleteExpiredTemporaryFiles();
+		}
 	}
 
 	protected void deleteFolders(

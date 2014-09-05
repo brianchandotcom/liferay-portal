@@ -61,6 +61,7 @@
 		<pathelement path="test-classes/${test.type}" />
 		<pathelement path="${classpath}" />
 		<pathelement path="${test.additional.classpath}" />
+		<path refid="test-ivy.classpath" />
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" excludes="jalopy.jar,jetty*.jar,tomcat*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" excludes="ant.jar" />
@@ -995,6 +996,18 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="setup-arquillian-test">
+		<sequential>
+			<ivy:resolve>
+				<dependency name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.2.Final" />
+				<dependency name="com.liferay.arquillian.extension" org="com.liferay" rev="latest.integration" />
+				<exclude org="junit" />
+			</ivy:resolve>
+
+		</sequential>
+	</macrodef>
+
+
 	<macrodef name="ssh-execute">
 		<attribute name="ssh.host" default="${ssh.host}" />
 		<attribute name="ssh.password" default="${ssh.password}" />
@@ -1088,6 +1101,13 @@ rerun your task.
 		<if>
 			<available file="test/${test.type}" type="dir" />
 			<then>
+
+				<setup-arquillian-test/>
+
+				<path id="test-ivy.classpath">
+					<ivy:resources type="bundle,jar,orbit" />
+				</path>
+
 				<mkdir dir="test-classes/${test.type}" />
 				<mkdir dir="test-results/${test.type}" />
 
@@ -1317,6 +1337,12 @@ rerun your task.
 			setonempty="false"
 		/>
 
+		<setup-arquillian-test/>
+
+		<path id="test-ivy.classpath">
+			<ivy:resources type="bundle,jar,orbit" />
+		</path>
+
 		<if>
 			<not>
 				<isset property="test.suite.classes.available" />
@@ -1411,6 +1437,12 @@ rerun your task.
 				<var name="test.dir" value="${test.type}" />
 			</then>
 		</if>
+
+		<setup-arquillian-test/>
+
+		<path id="test-ivy.classpath">
+			<ivy:resources type="bundle,jar,orbit" />
+		</path>
 
 		<if>
 			<available file="test/${test.dir}" type="dir" />

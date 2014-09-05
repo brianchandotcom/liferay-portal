@@ -545,10 +545,6 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	@Override
-	public void moveFileEntry(FileEntry fileEntry) throws PortalException {
-	}
-
-	@Override
 	public FileEntry moveFileEntryFromTrash(
 			long userId, FileEntry fileEntry, long newFolderId,
 			ServiceContext serviceContext)
@@ -702,10 +698,6 @@ public class DLAppHelperLocalServiceImpl
 			oldStatus, null, null);
 
 		return dlFileShortcut;
-	}
-
-	@Override
-	public void moveFolder(Folder folder) {
 	}
 
 	@Override

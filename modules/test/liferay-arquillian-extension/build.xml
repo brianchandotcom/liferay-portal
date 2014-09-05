@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<property name="auto.deploy.dir" value="../../../tools/sdk/dependencies/com.liferay.arquillian.extension/lib" />
+
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<path id="plugin.classpath">
+		<path refid="plugin-lib.classpath" />
+		<fileset dir="${liferay.home}/osgi/test/" includes="portal-test*.jar" />
+		<fileset dir="${app.server.lib.global.dir}" includes="*.jar" />
+		<fileset dir="${app.server.lib.portal.dir}" includes="annotations.jar,commons-logging.jar,log4j.jar,util-bridges.jar,util-java.jar,util-taglib.jar" />
+		<fileset dir="${sdk.dir}/dependencies/aQute.bnd/lib" includes="*.jar" />
+		<fileset dir="${sdk.dir}/lib" includes="activation.jar,javax.servlet-api.jar,jsp-api.jar,mail.jar" />
+	</path>
+</project>

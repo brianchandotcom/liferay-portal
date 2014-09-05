@@ -27,9 +27,9 @@ import jodd.json.TypeJsonVisitor;
 /**
  * @author Igor Spasic
  */
-public class FlexjsonBeanAnalyzerTransformer extends TypeJsonVisitor {
+public class BeanAnalyzerTransformer extends TypeJsonVisitor {
 
-	public FlexjsonBeanAnalyzerTransformer(Class<?> clazz) {
+	public BeanAnalyzerTransformer(Class<?> clazz) {
 		super(_jsonSerializer.createJsonContext(null), clazz);
 	}
 

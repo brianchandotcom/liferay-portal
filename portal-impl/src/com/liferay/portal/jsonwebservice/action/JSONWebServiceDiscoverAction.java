@@ -15,7 +15,7 @@
 package com.liferay.portal.jsonwebservice.action;
 
 import com.liferay.portal.json.data.FileData;
-import com.liferay.portal.json.transformer.FlexjsonBeanAnalyzerTransformer;
+import com.liferay.portal.json.transformer.BeanAnalyzerTransformer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
 import com.liferay.portal.kernel.javadoc.JavadocMethod;
@@ -231,8 +231,8 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 	private List<Map<String, String>> _buildPropertiesList(Class<?> type) {
 		try {
-			FlexjsonBeanAnalyzerTransformer flexjsonBeanAnalyzerTransformer =
-				new FlexjsonBeanAnalyzerTransformer(type) {
+			BeanAnalyzerTransformer beanAnalyzerTransformer =
+				new BeanAnalyzerTransformer(type) {
 
 					@Override
 					protected String getTypeName(Class<?> type) {
@@ -241,7 +241,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 				};
 
-			return flexjsonBeanAnalyzerTransformer.collect();
+			return beanAnalyzerTransformer.collect();
 		}
 		catch (Exception e) {
 			return null;

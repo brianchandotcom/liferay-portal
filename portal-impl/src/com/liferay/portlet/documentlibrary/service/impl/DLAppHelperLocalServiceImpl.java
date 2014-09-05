@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
-import com.liferay.portal.kernel.repository.event.RepositoryEventTypeUtil;
 import com.liferay.portal.kernel.repository.event.TrashRepositoryEventType;
+import com.liferay.portal.kernel.repository.event.WorkflowRepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -1438,8 +1438,7 @@ public class DLAppHelperLocalServiceImpl
 
 			if (Validator.isNotNull(event)) {
 				triggerRepositoryEvent(
-					fileEntry.getRepositoryId(),
-					RepositoryEventTypeUtil.toWorkflowEvent(event),
+					fileEntry.getRepositoryId(), getWorkflowEvent(event),
 					FileEntry.class, fileEntry);
 			}
 
@@ -2099,6 +2098,22 @@ public class DLAppHelperLocalServiceImpl
 			}
 		);
 	}
+
+	protected Class<? extends WorkflowRepositoryEventType> getWorkflowEvent(
+		String syncEvent) {
+
+		if (syncEvent.equals(DLSyncConstants.EVENT_ADD)) {
+			return WorkflowRepositoryEventType.Add.class;
+		}
+		else if (syncEvent.equals(DLSyncConstants.EVENT_UPDATE)) {
+			return WorkflowRepositoryEventType.Update.class;
+		}
+		else {
+			throw new IllegalArgumentException(
+				String.format("Unsupported sync event %s", syncEvent));
+		}
+	}
+
 
 	protected <T extends RepositoryModel<T>> void triggerRepositoryEvent(
 			long repositoryId, Class<? extends RepositoryEventType> eventType,

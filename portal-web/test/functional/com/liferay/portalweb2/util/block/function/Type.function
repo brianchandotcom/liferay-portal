@@ -19,6 +19,10 @@
 		<execute selenium="clickAt" />
 
 		<execute argument1="1000" selenium="pause" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="sendKeys">
@@ -27,6 +31,10 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="sendKeys" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="sendKeysAceEditor">
@@ -35,24 +43,40 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="sendKeysAceEditor" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="sendKeysAceEditorNoMouseOver">
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="sendKeysAceEditor" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="sendKeysApplicationSearch">
 		<execute argument1="//script[contains(@src,'/autocomplete-filters/autocomplete-filters-min.js')]" selenium="waitForElementPresent" />
 
 		<execute function="Type#sendKeys" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="sendKeysNoWait">
 		<execute selenium="mouseOver" />
 
 		<execute selenium="sendKeys" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="type">
@@ -61,6 +85,10 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="type" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="typeAceEditor">
@@ -69,12 +97,20 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="typeAceEditor" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="typeAceEditorNoMouseOver">
 		<execute selenium="waitForElementPresent" />
 
 		<execute selenium="typeAceEditor" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="typeFrame">
@@ -83,6 +119,10 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="typeFrame" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="typeFrameWaitForCKEditor">
@@ -93,6 +133,10 @@
 		<execute function="Type#typeFrame" />
 
 		<execute argument1="1000" selenium="pause" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="typePause">
@@ -103,6 +147,10 @@
 		<execute selenium="type" />
 
 		<execute argument1="1000" selenium="pause" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 
 	<command name="typeWaitForCKEditor">
@@ -111,5 +159,9 @@
 		<execute argument1="1000" selenium="pause" />
 
 		<execute function="Type#type" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 </definition>

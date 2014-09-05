@@ -542,7 +542,7 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#addCreateAccountPG">
-			<var name="userEmailAddress" value="liferay.qa1@gmail.com" />
+			<var name="userEmailAddress" property-value="email.address.2" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
 			<var name="userScreenName" value="usersn" />
@@ -577,7 +577,7 @@
 		</execute>
 
 		<execute macro="User#signInPG">
-			<var name="userEmailAddress" value="liferay.qa1@gmail.com" />
+			<var name="userEmailAddress" property-value="email.address.2" />
 		</execute>
 
 		<execute macro="User#firstLoginPG">
@@ -599,7 +599,7 @@
 		</execute>
 
 		<execute macro="User#editEmailViaMyAccount">
-			<var name="userEmailAddress" value="liferay.qa2@gmail.com" />
+			<var name="userEmailAddress" property-value="email.address.3" />
 		</execute>
 
 		<execute macro="Gmail#logoutAndLogin">
@@ -619,7 +619,7 @@
 
 		<execute action="Gmail#click" locator-key1="EMAIL_ADDRESS_VERIFICATION_URL" />
 
-		<execute action="Home#selectWindow" locator1="title=Verify Email Address - Liferay" />
+		<execute action="Home#selectWindow" locator1="title=Verify Email Address - Site Name - Liferay" />
 		<execute action="Home#assertLocation" value1="${emailAddressVerificationURL}" />
 
 		<execute macro="Site#viewDefaultThemePG" />
@@ -698,7 +698,7 @@
 		</execute>
 
 		<execute macro="Site#editFriendlyURLCP">
-			<var name="siteFriendlyURLEdit" value="liferay" />
+			<var name="siteFriendlyURLEdit" value="/liferay" />
 		</execute>
 
 		<execute action="Home#open" locator1="http://localhost:8080/web/liferay/site-page-name" />
@@ -707,11 +707,10 @@
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
-			<var name="siteScopeName" value="Liferay" />
 		</execute>
 
 		<execute macro="Site#editFriendlyURLCP">
-			<var name="siteFriendlyURLEdit" value="guest" />
+			<var name="siteFriendlyURLEdit" value="/guest" />
 		</execute>
 	</command>
 

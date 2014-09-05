@@ -31,7 +31,7 @@
 <!--The title attribute for the search comment changes depending on language.-->
 <tr>
 	<td>SEARCH_ICON</td>
-	<td>//input[@type='image' and @title='${key_searchIDName}']</td>
+	<td>//input[@type='image' and @title='${key_searchIDName}'] | //a[contains(@class,'icon')]/i[@class='icon-search']</td>
 	<td></td>
 </tr>
 </tbody>

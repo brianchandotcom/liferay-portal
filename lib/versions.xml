@@ -90,7 +90,7 @@
 	</library>
 	<library>
 		<file-name>lib/development/appium.jar</file-name>
-		<version>1.1.0</version>
+		<version>1.6.2</version>
 		<project-name>Appium</project-name>
 		<project-url>http://appium.io</project-url>
 		<licenses>
@@ -237,6 +237,18 @@
 			<license>
 				<license-name>Technology License From Sun Microsystems Inc. To Doug Lea</license-name>
 				<license-url>http://gee.cs.oswego.edu/dl/classes/EDU/oswego/cs/dl/util/sun-u.c.license.pdf</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>lib/development/gson.jar</file-name>
+		<version>2.2.4</version>
+		<project-name>Gson</project-name>
+		<project-url>http://code.google.com/p/google-gson</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 			</license>
 		</licenses>
 	</library>

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -67,11 +68,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public void format(
-			boolean useProperties, boolean printErrors, boolean autoFix,
-			String mainReleaseVersion)
+			boolean useProperties, boolean printErrors, boolean autoFix)
 		throws Exception {
 
-		_init(useProperties, printErrors, autoFix, mainReleaseVersion);
+		_init(useProperties, printErrors, autoFix);
 
 		format();
 
@@ -81,11 +81,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	@Override
 	public String format(
 			String fileName, boolean useProperties, boolean printErrors,
-			boolean autoFix, String mainReleaseVersion)
+			boolean autoFix)
 		throws Exception {
 
 		try {
-			_init(useProperties, printErrors, autoFix, mainReleaseVersion);
+			_init(useProperties, printErrors, autoFix);
 
 			return format(fileName);
 		}
@@ -292,9 +292,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void checkInefficientStringMethods(
 		String line, String fileName, String absolutePath, int lineCount) {
 
-		if (mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) ||
-			isRunsOutsidePortal(absolutePath)) {
-
+		if (isRunsOutsidePortal(absolutePath)) {
 			return;
 		}
 
@@ -420,8 +418,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected String fixCompatClassImports(String absolutePath, String content)
 		throws IOException {
 
-		if (portalSource ||
-			!mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) ||
+		if (portalSource || !_usePortalCompatImport ||
 			absolutePath.contains("/ext-") ||
 			absolutePath.contains("/portal-compat-shared/")) {
 
@@ -528,20 +525,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return content;
 		}
 
-		String expectedParameterType = "request";
-		String incorrectParameterType = "pageContext";
-
-		if (mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) ||
-			mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_2_0)) {
-
-			expectedParameterType = "pageContext";
-			incorrectParameterType = "request";
-		}
+		String expectedParameter = getProperty(
+			"languageutil.expected.parameter");
+		String incorrectParameter = getProperty(
+			"languageutil.incorrect.parameter");
 
 		if (!content.contains(
-				"LanguageUtil.format(" + incorrectParameterType + ", ") &&
+				"LanguageUtil.format(" + incorrectParameter + ", ") &&
 			!content.contains(
-				"LanguageUtil.get(" + incorrectParameterType + ", ")) {
+				"LanguageUtil.get(" + incorrectParameter + ", ")) {
 
 			return content;
 		}
@@ -550,20 +542,20 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			content = StringUtil.replace(
 				content,
 				new String[] {
-					"LanguageUtil.format(" + incorrectParameterType + ", ",
-					"LanguageUtil.get(" + incorrectParameterType + ", "
+					"LanguageUtil.format(" + incorrectParameter + ", ",
+					"LanguageUtil.get(" + incorrectParameter + ", "
 				},
 				new String[] {
-					"LanguageUtil.format(" + expectedParameterType + ", ",
-					"LanguageUtil.get(" + expectedParameterType + ", "
+					"LanguageUtil.format(" + expectedParameter + ", ",
+					"LanguageUtil.get(" + expectedParameter + ", "
 				});
 		}
 		else {
 			processErrorMessage(
 				fileName,
 				"(Unicode)LanguageUtil.format/get methods require " +
-					expectedParameterType + " parameter instead of " +
-						incorrectParameterType + " " + fileName);
+					expectedParameter + " parameter instead of " +
+						incorrectParameter + " " + fileName);
 		}
 
 		return content;
@@ -571,10 +563,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected String fixSessionKey(
 		String fileName, String content, Pattern pattern) {
-
-		if (mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0)) {
-			return content;
-		}
 
 		Matcher matcher = pattern.matcher(content);
 
@@ -920,10 +908,27 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return new String[0];
 	}
 
+	protected String getMainReleaseVersion() {
+		if (_mainReleaseVersion != null) {
+			return _mainReleaseVersion;
+		}
+
+		String releaseVersion = ReleaseInfo.getVersion();
+
+		int pos = releaseVersion.lastIndexOf(StringPool.PERIOD);
+
+		_mainReleaseVersion = releaseVersion.substring(0, pos) + ".0";
+
+		return _mainReleaseVersion;
+	}
+
+	protected String getProperty(String key) {
+		return _properties.getProperty(key);
+	}
+
 	protected List<String> getPropertyList(String key) {
 		return ListUtil.fromString(
-			GetterUtil.getString(_properties.getProperty(key)),
-			StringPool.COMMA);
+			GetterUtil.getString(getProperty(key)), StringPool.COMMA);
 	}
 
 	protected boolean hasMissingParentheses(String s) {
@@ -1441,15 +1446,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected static final String BASEDIR = "./";
 
-	protected static final String MAIN_RELEASE_LATEST_VERSION =
-		BaseSourceProcessor.MAIN_RELEASE_VERSION_7_0_0;
-
-	protected static final String MAIN_RELEASE_VERSION_6_1_0 = "6.1.0";
-
-	protected static final String MAIN_RELEASE_VERSION_6_2_0 = "6.2.0";
-
-	protected static final String MAIN_RELEASE_VERSION_7_0_0 = "7.0.0";
-
 	protected static Pattern attributeNamePattern = Pattern.compile(
 		"[a-z]+[-_a-zA-Z0-9]*");
 	protected static Pattern emptyCollectionPattern = Pattern.compile(
@@ -1457,7 +1453,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static FileImpl fileUtil = FileImpl.getInstance();
 	protected static Pattern languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
-	protected static String mainReleaseVersion;
 	protected static boolean portalSource;
 	protected static SAXReaderImpl saxReaderUtil = SAXReaderImpl.getInstance();
 	protected static Pattern sessionKeyPattern = Pattern.compile(
@@ -1564,8 +1559,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private void _init(
-			boolean useProperties, boolean printErrors, boolean autoFix,
-			String mainReleaseVersion)
+			boolean useProperties, boolean printErrors, boolean autoFix)
 		throws Exception {
 
 		_errorMessagesMap = new HashMap<String, List<String>>();
@@ -1576,11 +1570,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		_autoFix = autoFix;
 
-		BaseSourceProcessor.mainReleaseVersion = mainReleaseVersion;
-
 		_excludes = _getExcludes();
 
 		_printErrors = printErrors;
+
+		_usePortalCompatImport = GetterUtil.getBoolean(
+			getProperty("use.portal.compat.import"));
 	}
 
 	private boolean _isPortalSource() {
@@ -1601,9 +1596,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private String _copyright;
 	private String[] _excludes;
 	private SourceMismatchException _firstSourceMismatchException;
+	private String _mainReleaseVersion;
 	private String _oldCopyright;
 	private Properties _portalLanguageKeysProperties;
 	private Properties _properties;
 	private List<String> _runOutsidePortalExclusions;
+	private boolean _usePortalCompatImport;
 
 }

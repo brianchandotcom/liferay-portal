@@ -346,6 +346,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String fileName, String packagePath, String className,
 		String content) {
 
+		if (!portalSource) {
+			return content;
+		}
+
 		ClassLibrary classLibrary = new ClassLibrary();
 
 		classLibrary.addClassLoader(JavaSourceProcessor.class.getClassLoader());
@@ -822,7 +826,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (portalSource &&
-			mainReleaseVersion.equals(MAIN_RELEASE_LATEST_VERSION) &&
+			!_allowUseServiceUtilInServiceImpl &&
 			!className.equals("BaseServiceImpl") &&
 			className.endsWith("ServiceImpl") &&
 			newContent.contains("ServiceUtil.")) {
@@ -1190,6 +1194,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			fileNames = getPluginJavaFiles();
 		}
 
+		_addMissingDeprecationReleaseVersion = GetterUtil.getBoolean(
+			getProperty("add.missing.deprecation.release.version"));
+		_allowUseServiceUtilInServiceImpl = GetterUtil.getBoolean(
+			getProperty("allow.use.service.util.in.service.impl"));
 		_fitOnSingleLineExclusions = getPropertyList(
 			"fit.on.single.line.exludes");
 		_hibernateSQLQueryExclusions = getPropertyList(
@@ -1309,12 +1317,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			checkEmptyCollection(trimmedLine, fileName, lineCount);
 
 			if (trimmedLine.startsWith("* @deprecated") &&
-				mainReleaseVersion.equals(MAIN_RELEASE_LATEST_VERSION)) {
+				_addMissingDeprecationReleaseVersion) {
 
 				if (!trimmedLine.startsWith("* @deprecated As of ")) {
 					line = StringUtil.replace(
 						line, "* @deprecated",
-						"* @deprecated As of " + MAIN_RELEASE_LATEST_VERSION);
+						"* @deprecated As of " + getMainReleaseVersion());
 				}
 				else {
 					String version = trimmedLine.substring(20);
@@ -2439,6 +2447,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private static Pattern _importsPattern = Pattern.compile(
 		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
 
+	private boolean _addMissingDeprecationReleaseVersion;
+	private boolean _allowUseServiceUtilInServiceImpl;
 	private Pattern _annotationPattern = Pattern.compile(
 		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\n(\t*)\\)");
 	private final Pattern _camelCasePattern = Pattern.compile(

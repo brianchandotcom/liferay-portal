@@ -280,7 +280,7 @@
 		<execute action="CPSites#assertElementPresent" locator-key1="SITE_TABLE_CHECKBOX_DISABLED" />
 		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
 		<execute action="CPSites#assertElementNotPresent" locator-key1="SITE_MENULIST_DELETE" value1="Delete" />
-		<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_DEACTIVATE" value1="Deactivate" />
+		<execute action="CPSites#assertClickNoError" locator-key1="SITE_MENULIST_DEACTIVATE" value1="Deactivate" />
 		<execute action="CPSites#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate this?" />
 
 		<execute action="CPSites#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />

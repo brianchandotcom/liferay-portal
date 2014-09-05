@@ -31,7 +31,7 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 
 <aui:form action="<%= unitURL %>" id="fm" method="post" name="fm">
 	<aui:row>
-		<aui:col md="6">
+		<aui:col xs="6">
 			<aui:input label="from" name="fromValue" size="30" type="number" value="<%= conversion.getFromValue() %>" />
 
 			<aui:select label="" name="fromId">
@@ -96,7 +96,7 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 			</aui:select>
 		</aui:col>
 
-		<aui:col md="6">
+		<aui:col xs="6">
 			<aui:input label="To" name="to_value" size="30" type="number" value="<%= conversion.getToValue() %>" />
 
 			<aui:select label="" name="toId">
@@ -161,7 +161,7 @@ Conversion conversion = ConverterUtil.getConversion(type, fromId, toId, fromValu
 			</aui:select>
 		</aui:col>
 	</aui:row>
-	
+
 	<aui:select id="type" label="Type" name="type">
 		<aui:option label="length" selected="<%= (type == 0) %>" value="0" />
 		<aui:option label="area" selected="<%= (type == 1) %>" value="1" />

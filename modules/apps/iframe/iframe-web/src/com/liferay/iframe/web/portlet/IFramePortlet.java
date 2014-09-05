@@ -77,7 +77,9 @@ public class IFramePortlet extends MVCPortlet {
 		if (Validator.isNull(src) || src.equals(Http.HTTP_WITH_SLASH) ||
 			src.equals(Http.HTTPS_WITH_SLASH)) {
 
-			include("/html/portal/portlet_not_setup.jsp", renderRequest, renderResponse);
+			include(
+				"/html/portal/portlet_not_setup.jsp", renderRequest,
+				renderResponse);
 		}
 		else {
 			super.doView(renderRequest, renderResponse);
@@ -92,15 +94,15 @@ public class IFramePortlet extends MVCPortlet {
 	protected void setIFrameUpgrade(IFrameUpgrade iFrameUpgrade) {
 	}
 
-	private String transformIframe(RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+	protected String transformIframe(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		try {
 			ViewAction viewAction = new ViewAction();
 
 			return viewAction.transformSrc(renderRequest, renderResponse);
-
-		} catch (PortalException e) {
+		}
+		catch (PortalException pe) {
 		}
 
 		return null;

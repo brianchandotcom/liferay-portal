@@ -69,4 +69,5 @@ public class IFrameUpgrade {
 	}
 
 	private ReleaseLocalService _releaseLocalService;
+
 }

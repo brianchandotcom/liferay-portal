@@ -31,12 +31,12 @@ import org.osgi.service.component.annotations.Component;
  */
 
 @Component(
-		immediate = true,
-		property = {
-			"javax.portlet.name=com_liferay_iframe_web_portlet_IFramePortlet"
-		},
-		service = ConfigurationAction.class
-	)
+	immediate = true,
+	property = {
+		"javax.portlet.name=com_liferay_iframe_web_portlet_IFramePortlet"
+	},
+	service = ConfigurationAction.class
+)
 public class IFrameConfigurationAction extends DefaultConfigurationAction {
 
 	@Override

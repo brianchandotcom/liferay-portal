@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
@@ -69,15 +67,14 @@ public class ViewAction {
 
 			String portletId = PortalUtil.getPortletId(renderRequest);
 
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				themeDisplay.getCompanyId(), portletId);
-
 			src = "/proxy.jsp?p_l_id=" + themeDisplay.getPlid() +
 				"&p_p_id=" + portletId;
 		}
 
 		return src;
-	} protected String getSrc(
+	}
+
+	protected String getSrc(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		PortletPreferences portletPreferences = renderRequest.getPreferences();

@@ -86,17 +86,17 @@
 </tr>
 <tr>
 	<td>DISPLAY_DATE_DATE_DAY</td>
-	<td>//input[contains(@id,'displaydateday')]</td>
+	<td>//input[contains(@id,'displaydateday')] | //input[contains(@id,'displayDateDay')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_DATE_DATE_MONTH</td>
-	<td>//input[contains(@id,'displaydatemonth')]</td>
+	<td>//input[contains(@id,'displaydatemonth')] | //input[contains(@id,'displayDateMonth')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_DATE_DATE_YEAR</td>
-	<td>//input[contains(@id,'displaydateyear')]</td>
+	<td>//input[contains(@id,'displaydateyear')] | //input[contains(@id,'displayDateYear')] </td>
 	<td></td>
 </tr>
 <tr>

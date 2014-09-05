@@ -264,7 +264,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-1337" name="AddTag" priority="5">
+	<command name="AddTag" priority="5">
 		<var name="userTag" value="tag1" />
 
 		<execute macro="Page#gotoMyAccount">

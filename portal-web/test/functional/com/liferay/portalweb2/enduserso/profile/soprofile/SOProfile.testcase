@@ -620,7 +620,7 @@
 		<execute macro="SOProfile#editSocialNetworkNull" />
 	</command>
 
-	<command known-issues="SOS-1337" name="AddTag" priority="5">
+	<command known-issues="SOS-2420" name="AddTag" priority="5">
 		<var name="userTag" value="tag1" />
 		<var name="userTagEdit" value="tag2" />
 

@@ -1,5 +1,9 @@
 <definition>
 	<command name="sikuliLeftMouseDown">
 		<execute selenium="sikuliLeftMouseDown" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
 	</command>
 </definition>

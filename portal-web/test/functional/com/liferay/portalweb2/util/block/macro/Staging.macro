@@ -832,7 +832,7 @@
 		</if>
 
 		<execute action="PGStaging#clickNoError" locator-key1="STAGING_MENU_UNDO_BUTTON" />
-		<execute action="PGStaging#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to undo your last changes?" />
+		<execute action="PGStaging#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to mark the selected pages not spam?" />
 	</command>
 
 	<command name="viewHistoryVersionPG">

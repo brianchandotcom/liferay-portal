@@ -22,7 +22,7 @@
 				<execute action="CPSpamModerationWikis#check" locator-key1="WIKI_PAGE_TABLE_CHECKBOX" />
 				<execute action="CPSpamModerationWikis#assertClickNoError" locator-key1="WIKIS_SPAM_BUTTON" value1="Spam" />
 				<execute action="CPSpamModerationWikis#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to mark the selected pages as spam?" />
-				<execute action="CPSpamModerationWikis#confirm" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully. " />
+				<execute action="CPSpamModerationWikis#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully. " />
 			</then>
 		</if>
 	</command>

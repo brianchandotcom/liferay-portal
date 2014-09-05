@@ -14,15 +14,16 @@
 
 package com.liferay.arquillian.extension.observer;
 
+import com.liferay.arquillian.extension.descriptor.SpringDescriptor;
+import com.liferay.arquillian.extension.event.LiferayContextCreatedEvent;
 import com.liferay.portal.kernel.template.TemplateException;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.jdbc.ResetDatabaseUtilDataSource;
 import com.liferay.portal.util.InitUtil;
-import com.liferay.portal.util.PropsUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.arquillian.core.api.Event;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
@@ -41,8 +42,7 @@ public class InitializeLiferayTestEnvironment {
 
 		ResetDatabaseUtilDataSource.initialize();
 
-		List<String> configLocalions = ListUtil.fromArray(
-			PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
+		List<String> configLocalions = configLocations();
 
 		InitUtil.initWithSpringAndModuleFramework(
 			false, configLocalions, false);
@@ -50,6 +50,21 @@ public class InitializeLiferayTestEnvironment {
 		if (System.getProperty("external-properties") == null) {
 			System.setProperty("external-properties", "portal-test.properties");
 		}
+	}
+
+	private List<String> configLocations() {
+		ServiceLoader serviceLoader = _serviceLoaderInstance.get();
+
+		List<SpringDescriptor> springDescriptors =
+			(List<SpringDescriptor>)serviceLoader.all(SpringDescriptor.class);
+
+		List<String> configLocalions = new ArrayList<String>();
+
+		for (SpringDescriptor springDescriptor : springDescriptors) {
+			configLocalions.addAll(springDescriptor.getConfigLocations());
+		}
+
+		return configLocalions;
 	}
 
 	@Inject

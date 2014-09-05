@@ -12,24 +12,22 @@
  * details.
  */
 
-package com.liferay.arquillian.extension;
+package com.liferay.arquillian.extension.descriptor;
 
-import com.liferay.arquillian.extension.descriptor.SpringDescriptor;
-import com.liferay.arquillian.extension.descriptor.SpringDescriptorImpl;
-import com.liferay.arquillian.extension.observer.InitializeLiferayTestEnvironment;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.util.PropsUtil;
 
-import org.jboss.arquillian.core.spi.LoadableExtension;
+import java.util.List;
 
 /**
- * @author Cristina González Castellano
+ * @author Cristina González
  */
-public class LiferayTestScenarioExtension implements LoadableExtension {
+public class SpringDescriptorImpl implements SpringDescriptor {
 
 	@Override
-	public void register(ExtensionBuilder builder) {
-		builder.observer(InitializeLiferayTestEnvironment.class);
-
-		builder.service(SpringDescriptor.class, SpringDescriptorImpl.class);
+	public List<String> getConfigLocations() {
+		return ListUtil.fromArray(PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
 	}
 
 }

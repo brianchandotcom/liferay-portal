@@ -288,17 +288,20 @@ public class PortletTracker
 		}
 	}
 
-	private void warnPorletProperties(String portletName,
-			ServiceReference<Portlet> serviceReference) {
+	private void warnPorletProperties(
+		String portletName, ServiceReference<Portlet> serviceReference) {
 
-		String[] unsupportedKeys = PortletPropertyValidator
-			.validatePropertiesKeys(serviceReference.getPropertyKeys());
-
-		for(String key : unsupportedKeys){
-			_log.info("Portlet:" + portletName +
-				" - Incorrect property key:" + key);
+		if (!_log.isWarnEnabled()) {
+			return;
 		}
 
+		List<String> invalidKeys = _portletPropertyValidator.validate(
+			serviceReference.getPropertyKeys());
+
+		for (String key : invalidKeys) {
+			_log.warn(
+				"Invalid property " + key + " for portlet " + portletName);
+		}
 	}
 
 	protected com.liferay.portal.model.Portlet buildPortletModel(
@@ -1266,6 +1269,8 @@ public class PortletTracker
 	private List<String> _httpServiceEndpoints;
 	private PortletInstanceFactory _portletInstanceFactory;
 	private PortletLocalService _portletLocalService;
+	private PortletPropertyValidator _portletPropertyValidator =
+		new PortletPropertyValidator();
 	private ResourceActionLocalService _resourceActionLocalService;
 	private ResourceActions _resourceActions;
 	private Map<Bundle, ServiceRegistrations> _serviceRegistrations =

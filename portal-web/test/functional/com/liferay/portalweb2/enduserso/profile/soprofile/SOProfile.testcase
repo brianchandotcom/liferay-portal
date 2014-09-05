@@ -620,7 +620,7 @@
 		<execute macro="SOProfile#editSocialNetworkNull" />
 	</command>
 
-	<command name="AddTag" priority="5">
+	<command known-issues="SOS-1337" name="AddTag" priority="5">
 		<var name="userTag" value="tag1" />
 		<var name="userTagEdit" value="tag2" />
 
@@ -645,6 +645,8 @@
 		<execute macro="SOProfile#viewTag">
 			<var name="userTag" value="${userTag}" />
 		</execute>
+
+		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewTag">
 			<var name="userTag" value="${userTagEdit}" />
@@ -1374,6 +1376,33 @@
 			<var name="myProfileLocalized" value="我的个人资料" />
 			<var name="profilePageLocalized" value="概况" />
 			<var name="profilePortletLocalized" value="配置文件" />
+		</execute>
+	</command>
+
+	<command name="ViewProfileSOUserDefault" priority="3">
+		<execute macro="Page#gotoMyProfile" />
+
+		<execute macro="SOProfile#viewDefaultProfile">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+			<var name="userLoginFullName" value="${adminName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#gotoProfile">
+			<var name="userListName" value="User01, Social01" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="socialoffice01" />
+		</execute>
+
+		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+
+		<execute macro="SOProfile#viewDefaultProfile">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 	</command>
 </definition>

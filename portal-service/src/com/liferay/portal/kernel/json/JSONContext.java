@@ -21,4 +21,6 @@ public interface JSONContext {
 
 	public void write(String content);
 
+	public void writeQuoted(String content);
+
 }

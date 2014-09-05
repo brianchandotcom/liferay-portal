@@ -36,6 +36,11 @@ public class JoddJSONContext implements JSONContext {
 		_jsonContext.write(content);
 	}
 
+	@Override
+	public void writeQuoted(String content) {
+		_jsonContext.writeString(content);
+	}
+
 	private final JsonContext _jsonContext;
 
 }

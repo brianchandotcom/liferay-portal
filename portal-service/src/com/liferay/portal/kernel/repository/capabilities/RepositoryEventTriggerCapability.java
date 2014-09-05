@@ -12,23 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.event;
+package com.liferay.portal.kernel.repository.capabilities;
+
+import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 
 /**
  * @author Adolfo Pérez
  */
-public interface RepositoryEventType {
-
-	public interface Add extends RepositoryEventType {
-	}
-
-	public interface Delete extends RepositoryEventType {
-	}
-
-	public interface Move extends RepositoryEventType {
-	}
-
-	public interface Update extends RepositoryEventType {
-	}
+public interface RepositoryEventTriggerCapability
+	extends Capability, RepositoryEventTrigger {
 
 }

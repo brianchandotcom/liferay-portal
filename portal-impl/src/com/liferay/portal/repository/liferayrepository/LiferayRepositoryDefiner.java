@@ -15,11 +15,13 @@
 package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
+import com.liferay.portal.repository.capabilities.LiferaySyncCapability;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 
 /**
@@ -41,12 +43,17 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
 		capabilityRegistry.addExportedCapability(
 			TrashCapability.class, _liferayTrashCapability);
+
+		capabilityRegistry.addSupportedCapability(
+			SyncCapability.class, _liferaySyncCapability);
 	}
 
 	@Override
 	public void registerRepositoryEventListeners(
 		RepositoryEventRegistry repositoryEventRegistry) {
 
+		_liferaySyncCapability.registerRepositoryEventListeners(
+			repositoryEventRegistry);
 		_liferayTrashCapability.registerRepositoryEventListeners(
 			repositoryEventRegistry);
 	}
@@ -62,6 +69,8 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		_repositoryFactory = repositoryFactory;
 	}
 
+	private LiferaySyncCapability _liferaySyncCapability =
+		new LiferaySyncCapability();
 	private LiferayTrashCapability _liferayTrashCapability =
 		new LiferayTrashCapability();
 	private RepositoryFactory _repositoryFactory;

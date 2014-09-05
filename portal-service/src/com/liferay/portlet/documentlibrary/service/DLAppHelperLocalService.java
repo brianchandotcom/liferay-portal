@@ -124,10 +124,6 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		long trashEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void moveFileEntry(
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
 		long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
@@ -168,9 +164,6 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void moveFolder(
-		com.liferay.portal.kernel.repository.model.Folder folder);
-
 	public com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
 		long userId, com.liferay.portal.kernel.repository.model.Folder folder,
 		long parentFolderId,
@@ -189,10 +182,20 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		long userId, com.liferay.portal.kernel.repository.model.Folder folder)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, see {@link
+	com.liferay.portal.kernel.repository.capabilities.SyncCapability}
+	*/
+	@java.lang.Deprecated
 	public void registerDLSyncEventCallback(java.lang.String event,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, see {@link
+	com.liferay.portal.kernel.repository.capabilities.SyncCapability}
+	*/
+	@java.lang.Deprecated
 	public void registerDLSyncEventCallback(java.lang.String event,
 		com.liferay.portal.kernel.repository.model.Folder folder);
 

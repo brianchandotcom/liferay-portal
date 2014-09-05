@@ -53,7 +53,6 @@ import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission;
@@ -763,11 +762,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getFileEntryRepository(fileEntryId);
 
 		repository.deleteFileVersion(fileEntryId, version);
-
-		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
-
-		dlAppHelperLocalService.registerDLSyncEventCallback(
-			DLSyncConstants.EVENT_UPDATE, fileEntry);
 	}
 
 	/**
@@ -2231,8 +2225,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			FileEntry fileEntry = fromRepository.moveFileEntry(
 				fileEntryId, newFolderId, serviceContext);
 
-			dlAppHelperLocalService.moveFileEntry(fileEntry);
-
 			return fileEntry;
 		}
 
@@ -2399,8 +2391,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				folderId, parentFolderId, fromRepository, toRepository,
 				serviceContext);
 		}
-
-		dlAppHelperLocalService.moveFolder(folder);
 
 		return folder;
 	}

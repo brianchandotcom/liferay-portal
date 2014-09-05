@@ -14,53 +14,45 @@
 
 package com.liferay.portal.portlet.tracker.internal;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Peter Fellwock
+ * @author Raymond Augé
  **/
-
 public class PortletPropertyValidator {
-	
-	
-	public static boolean findSingle(String str){
-		
-		for(String temp : startsWith){
-			if(str.startsWith(temp)){
-				return true;
-			}
+
+	public boolean validate(String key){
+		if (!StringUtil.startsWith(key, "com.liferay.portlet.") &&
+			!StringUtil.startsWith(key, "javax.portlet.")){
+
+			return true;
 		}
-		
-		for(String temp : singleValue){
-			if(str.equals(temp)){
-				return true;
-			}
+
+		if (ArrayUtil.contains(validKeys, key)) {
+			return true;
 		}
-		
+
 		return false;
 	}
-	
-	public static String[] validatePropertiesKeys(String[] propertyKeys) {
-		
-		List<String> notFound = new ArrayList<String>();
-		
-		for(String str : propertyKeys){
-			if(!findSingle(str)){
-				notFound.add(str);
+
+	public List<String> validate(String[] keys) {
+		List<String> invalid = new ArrayList<String>();
+
+		for (String key : keys){
+			if (!validate(key)){
+				invalid.add(key);
 			}
 		}
-		
-		return notFound.toArray(new String[notFound.size()]);
-	}
-	
-	public static String [] startsWith = { 
-		"component.",
-		"javax.portlet.init-param",
-		"service."
-	};
 
-	public static String [] singleValue = {
+		return invalid;
+	}
+
+	private final String[] validKeys = new String[] {
 		"com.liferay.portlet.action-timeout",
 		"com.liferay.portlet.active",
 		"com.liferay.portlet.add-default-resource",
@@ -124,8 +116,7 @@ public class PortletPropertyValidator {
 		"javax.portlet.supported-processing-event",
 		"javax.portlet.supported-public-render-parameter",
 		"javax.portlet.supported-publishing-event",
-		"javax.portlet.window-state",
-		"objectClass"
+		"javax.portlet.window-state"
 	};
 
 }

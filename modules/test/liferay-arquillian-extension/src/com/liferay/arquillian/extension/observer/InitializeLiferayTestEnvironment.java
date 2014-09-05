@@ -50,6 +50,9 @@ public class InitializeLiferayTestEnvironment {
 		if (System.getProperty("external-properties") == null) {
 			System.setProperty("external-properties", "portal-test.properties");
 		}
+
+		_liferayContextCreatedEvent.fire(
+			new LiferayContextCreatedEvent(beforeClass.getTestClass()));
 	}
 
 	private List<String> configLocations() {
@@ -66,6 +69,9 @@ public class InitializeLiferayTestEnvironment {
 
 		return configLocalions;
 	}
+
+	@Inject
+	private Event<LiferayContextCreatedEvent> _liferayContextCreatedEvent;
 
 	@Inject
 	private Instance<ServiceLoader> _serviceLoaderInstance;

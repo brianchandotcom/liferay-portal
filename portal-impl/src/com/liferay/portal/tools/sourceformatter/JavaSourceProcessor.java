@@ -346,6 +346,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String fileName, String packagePath, String className,
 		String content) {
 
+		if (!portalSource) {
+			return content;
+		}
+
 		ClassLibrary classLibrary = new ClassLibrary();
 
 		classLibrary.addClassLoader(JavaSourceProcessor.class.getClassLoader());

@@ -797,6 +797,8 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
+		<execute macro="SOUserBar#showEditControls" />
+
 		<execute macro="BlogsPortlet#configureScopePG">
 			<var name="portletName" value="${portletName}" />
 			<var name="scopeSelection" value="${pageName2}" />
@@ -854,6 +856,8 @@
 			<var name="entryContent" value="${entryContent2}" />
 			<var name="entryTitle" value="${entryTitle2}" />
 		</execute>
+
+		<execute macro="SOUserBar#showEditControls" />
 
 		<execute macro="BlogsPortlet#configureScopePG">
 			<var name="portletName" value="${portletName}" />

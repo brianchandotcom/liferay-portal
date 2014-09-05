@@ -292,9 +292,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void checkInefficientStringMethods(
 		String line, String fileName, String absolutePath, int lineCount) {
 
-		if (mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) ||
-			isRunsOutsidePortal(absolutePath)) {
-
+		if (isRunsOutsidePortal(absolutePath)) {
 			return;
 		}
 
@@ -420,8 +418,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected String fixCompatClassImports(String absolutePath, String content)
 		throws IOException {
 
-		if (portalSource ||
-			!mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) ||
+		if (portalSource || !_usePortalCompatImport ||
 			absolutePath.contains("/ext-") ||
 			absolutePath.contains("/portal-compat-shared/")) {
 
@@ -528,20 +525,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return content;
 		}
 
-		String expectedParameterType = "request";
-		String incorrectParameterType = "pageContext";
-
-		if (mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) ||
-			mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_2_0)) {
-
-			expectedParameterType = "pageContext";
-			incorrectParameterType = "request";
-		}
+		String expectedParameter = getProperty(
+			"languageutil.expected.parameter");
+		String incorrectParameter = getProperty(
+			"languageutil.incorrect.parameter");
 
 		if (!content.contains(
-				"LanguageUtil.format(" + incorrectParameterType + ", ") &&
+				"LanguageUtil.format(" + incorrectParameter + ", ") &&
 			!content.contains(
-				"LanguageUtil.get(" + incorrectParameterType + ", ")) {
+				"LanguageUtil.get(" + incorrectParameter + ", ")) {
 
 			return content;
 		}
@@ -550,20 +542,20 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			content = StringUtil.replace(
 				content,
 				new String[] {
-					"LanguageUtil.format(" + incorrectParameterType + ", ",
-					"LanguageUtil.get(" + incorrectParameterType + ", "
+					"LanguageUtil.format(" + incorrectParameter + ", ",
+					"LanguageUtil.get(" + incorrectParameter + ", "
 				},
 				new String[] {
-					"LanguageUtil.format(" + expectedParameterType + ", ",
-					"LanguageUtil.get(" + expectedParameterType + ", "
+					"LanguageUtil.format(" + expectedParameter + ", ",
+					"LanguageUtil.get(" + expectedParameter + ", "
 				});
 		}
 		else {
 			processErrorMessage(
 				fileName,
 				"(Unicode)LanguageUtil.format/get methods require " +
-					expectedParameterType + " parameter instead of " +
-						incorrectParameterType + " " + fileName);
+					expectedParameter + " parameter instead of " +
+						incorrectParameter + " " + fileName);
 		}
 
 		return content;
@@ -571,10 +563,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected String fixSessionKey(
 		String fileName, String content, Pattern pattern) {
-
-		if (mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0)) {
-			return content;
-		}
 
 		Matcher matcher = pattern.matcher(content);
 
@@ -920,10 +908,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return new String[0];
 	}
 
+	protected String getProperty(String key) {
+		return _properties.getProperty(key);
+	}
+
 	protected List<String> getPropertyList(String key) {
 		return ListUtil.fromString(
-			GetterUtil.getString(_properties.getProperty(key)),
-			StringPool.COMMA);
+			GetterUtil.getString(getProperty(key)), StringPool.COMMA);
 	}
 
 	protected boolean hasMissingParentheses(String s) {
@@ -1581,6 +1572,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_excludes = _getExcludes();
 
 		_printErrors = printErrors;
+
+		_usePortalCompatImport = GetterUtil.getBoolean(
+			getProperty("use.portal.compat.import"));
 	}
 
 	private boolean _isPortalSource() {
@@ -1605,5 +1599,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Properties _portalLanguageKeysProperties;
 	private Properties _properties;
 	private List<String> _runOutsidePortalExclusions;
+	private boolean _usePortalCompatImport;
+
 
 }

@@ -17,6 +17,7 @@ package com.liferay.portal.tools.sourceformatter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -344,7 +345,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (portalSource &&
-			!mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) &&
 			content.contains("page import=") &&
 			!fileName.contains("init.jsp") &&
 			!fileName.contains("init-ext.jsp") &&
@@ -437,6 +437,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
+		_moveFrequentlyUsedImportsToCommonInit = GetterUtil.getBoolean(
+			getProperty("move.frequently.used.imports.to.common.init"));
 		_unusedVariablesExclusions = getPropertyList(
 			"jsp.unused.variables.excludes");
 
@@ -474,7 +476,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			processFormattedFile(file, fileName, content, newContent);
 
 			if (portalSource &&
-				mainReleaseVersion.equals(MAIN_RELEASE_LATEST_VERSION) &&
+				_moveFrequentlyUsedImportsToCommonInit &&
 				fileName.endsWith("/init.jsp") &&
 				!absolutePath.contains("/modules/") &&
 				!fileName.endsWith("/common/init.jsp")) {
@@ -485,9 +487,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			_jspContents.put(fileName, newContent);
 		}
 
-		if (portalSource &&
-			!mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0)) {
-
+		if (portalSource && _moveFrequentlyUsedImportsToCommonInit) {
 			moveFrequentlyUsedImportsToCommonInit(4);
 		}
 
@@ -1283,6 +1283,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private Pattern _jspImportPattern = Pattern.compile(
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private Pattern _jspIncludeFilePattern = Pattern.compile("/.*[.]jsp[f]?");
+	private boolean _moveFrequentlyUsedImportsToCommonInit;
 	private boolean _stripJSPImports = true;
 	private Pattern _taglibLanguageKeyPattern1 = Pattern.compile(
 		"(?:confirmation|label|(?:M|m)essage|message key|names|title)=\"[^A-Z" +

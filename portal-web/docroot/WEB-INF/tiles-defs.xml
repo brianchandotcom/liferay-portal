@@ -648,14 +648,6 @@
 		<put name="portlet_content" value="/portlet/group_statistics/add_activity_counter.jsp" />
 	</definition>
 
-	<!-- IFrame -->
-
-	<definition name="portlet.iframe" extends="portlet" />
-
-	<definition name="portlet.iframe.view" extends="portlet.iframe">
-		<put name="portlet_content" value="/portlet/iframe/view.jsp" />
-	</definition>
-
 	<!-- Image Gallery Display -->
 
 	<definition name="portlet.image_gallery_display" extends="portlet" />

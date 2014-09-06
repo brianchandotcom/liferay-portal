@@ -14,13 +14,41 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ taglib uri="/META-INF/c.tld" prefix="c" %>
+<%@ taglib uri="/META-INF/liferay-portlet_2_0.tld" prefix="portlet" %>
+<%@ taglib uri="/META-INF/aui.tld" prefix="aui" %>
+<%@ taglib uri="/META-INF/liferay-portlet-ext.tld" prefix="liferay-portlet" %>
+<%@ taglib uri="/META-INF/liferay-theme.tld" prefix="liferay-theme" %>
+<%@ taglib uri="/META-INF/liferay-ui.tld" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portlet.iframe.util.IFrameUtil" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
+
+<%@ page import="com.liferay.iframe.web.util.IFrameUtil" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.util.CharPool" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %>
+
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Enumeration" %><%@
+page import="java.util.List" %>
+
+<%@ page import="javax.portlet.WindowState" %>
+
+<liferay-theme:defineObjects />
+<portlet:defineObjects />
 
 <%
 String src = portletPreferences.getValue("src", StringPool.BLANK);
+
 boolean relative = GetterUtil.getBoolean(portletPreferences.getValue("relative", StringPool.BLANK));
+WindowState windowState = liferayPortletRequest.getWindowState();
 
 boolean auth = GetterUtil.getBoolean(portletPreferences.getValue("auth", StringPool.BLANK));
 String authType = portletPreferences.getValue("authType", StringPool.BLANK);
@@ -69,7 +97,7 @@ while (enu.hasMoreElements()) {
 }
 %>
 
-<%@ include file="/html/portlet/iframe/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>
 
 <%!
 private static final String _IFRAME_PREFIX = "iframe_";

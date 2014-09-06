@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/iframe/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String iframeSrc = StringPool.BLANK;
@@ -23,7 +23,7 @@ if (relative) {
 	iframeSrc = themeDisplay.getPathContext();
 }
 
-iframeSrc += (String)request.getAttribute(WebKeys.IFRAME_SRC);
+iframeSrc += (String)request.getAttribute(IFrameUtil.IFRAME_SRC);
 
 if (iframeSrc.contains(StringPool.QUESTION)) {
 	iframeSrc = iframeSrc.concat(StringPool.AMPERSAND).concat(StringUtil.merge(iframeVariables, StringPool.AMPERSAND));
@@ -33,11 +33,15 @@ else {
 }
 
 String baseSrc = iframeSrc;
+int lastSlashPos = 0;
 
-int lastSlashPos = iframeSrc.substring(7).lastIndexOf(StringPool.SLASH);
+if (iframeSrc.length() > 6) {
 
-if (lastSlashPos != -1) {
-	baseSrc = iframeSrc.substring(0, lastSlashPos + 8);
+	lastSlashPos = iframeSrc.substring(7).lastIndexOf(StringPool.SLASH);
+
+	if (lastSlashPos != -1) {
+		baseSrc = iframeSrc.substring(0, lastSlashPos + 8);
+	}
 }
 
 String iframeHeight = heightNormal;

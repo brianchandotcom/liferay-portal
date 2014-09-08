@@ -109,35 +109,35 @@ public class ManifestHelperTask extends Task {
 			return;
 		}
 
-		Analyzer analyzer = new Analyzer();
-
-		analyzer.setBase(project.getBaseDir());
-
 		File classesDir = new File(project.getBaseDir(), "classes");
-
-		analyzer.setJar(classesDir);
 
 		File file = new File(project.getBaseDir(), "bnd.bnd");
 
-		if (file.exists()) {
-			analyzer.setProperties(file);
+		try (Analyzer analyzer = new Analyzer()) {
+			analyzer.setBase(project.getBaseDir());
+
+			analyzer.setJar(classesDir);
+
+			if (file.exists()) {
+				analyzer.setProperties(file);
+			}
+			else {
+				analyzer.setProperty(Constants.EXPORT_PACKAGE, "*");
+				analyzer.setProperty(
+					Constants.IMPORT_PACKAGE, "*;resolution:=optional");
+			}
+
+			Manifest manifest = analyzer.calcManifest();
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			project.setProperty(
+				"export.packages",
+				attributes.getValue(Constants.EXPORT_PACKAGE));
+			project.setProperty(
+				"import.packages",
+				attributes.getValue(Constants.IMPORT_PACKAGE));
 		}
-		else {
-			analyzer.setProperty(Constants.EXPORT_PACKAGE, "*");
-			analyzer.setProperty(
-				Constants.IMPORT_PACKAGE, "*;resolution:=optional");
-		}
-
-		Manifest manifest = analyzer.calcManifest();
-
-		Attributes attributes = manifest.getMainAttributes();
-
-		project.setProperty(
-			"export.packages", attributes.getValue(Constants.EXPORT_PACKAGE));
-		project.setProperty(
-			"import.packages", attributes.getValue(Constants.IMPORT_PACKAGE));
-
-		analyzer.close();
 	}
 
 	protected String execute(String command) throws Exception {

@@ -798,18 +798,15 @@ public class CustomSQL {
 
 		StringBundler sb = new StringBundler();
 
-		try {
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(sql));
+		String line = null;
 
-			String line = null;
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(sql))) {
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				sb.append(line.trim());
 				sb.append(StringPool.SPACE);
 			}
-
-			unsyncBufferedReader.close();
 		}
 		catch (IOException ioe) {
 			return sql;

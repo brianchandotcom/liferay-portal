@@ -211,7 +211,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	}
 	else {
 		if (filterManageableOrganizations && !UserPermissionUtil.contains(permissionChecker, ResourceConstants.PRIMKEY_DNE, ActionKeys.VIEW)) {
-			userParams.put("usersOrgs", user.getOrganizationIds());
+			userParams.put("usersOrgs", ArrayUtil.toLongArray(user.getOrganizationIds()));
 		}
 	}
 

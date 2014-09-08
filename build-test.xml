@@ -1547,9 +1547,13 @@ create database lportal2 character set utf8;</echo>
 		<if>
 			<isset property="jenkins.shared.results.dir" />
 			<then>
-				<copy todir="${env.JENKINS_HOME}/userContent/jobs">
-					<fileset dir="${jenkins.shared.results.dir}/${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_NUMBER}" />
-				</copy>
+				<zip basedir="${jenkins.shared.results.dir}/${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_NUMBER}" destfile="${jenkins.shared.results.dir}/${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_NUMBER}.zip" />
+
+				<copy file="${jenkins.shared.results.dir}/${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_NUMBER}.zip" todir="${env.JENKINS_HOME}/userContent/jobs" />
+
+				<unzip dest="${env.JENKINS_HOME}/userContent/jobs" src="${env.JENKINS_HOME}/userContent/jobs/${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_NUMBER}.zip" />
+
+				<delete file="${env.JENKINS_HOME}/userContent/jobs/${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_NUMBER}.zip" />
 			</then>
 		</if>
 

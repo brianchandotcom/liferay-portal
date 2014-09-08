@@ -63,35 +63,38 @@ public class LayoutsAdminDisplayContext {
 
 		_groupDisplayContextHelper = new GroupDisplayContextHelper(request);
 
-		_tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
+		String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
 
-		_privateLayout = false;
+		boolean privateLayout = false;
 
-		if (_tabs1.equals("my-dashboard") || _tabs1.equals("private-pages")) {
-			_privateLayout = true;
+		if (tabs1.equals("my-dashboard") || tabs1.equals("private-pages")) {
+			privateLayout = true;
 		}
 
 		Layout selLayout = getSelLayout();
 
 		if (selLayout != null) {
-			_privateLayout = selLayout.isPrivateLayout();
+			privateLayout = selLayout.isPrivateLayout();
 		}
 
 		Group liveGroup = getLiveGroup();
 
 		if (liveGroup.isUser() && !isPublicLayoutsModifiable() &&
-			isPrivateLayoutsModifiable() && !_privateLayout) {
+			isPrivateLayoutsModifiable() && !privateLayout) {
 
-			_tabs1 = "my-dashboard";
+			tabs1 = "my-dashboard";
 
-			_privateLayout = true;
+			privateLayout = true;
 		}
 
 		Group selGroup = getSelGroup();
 
 		if (selGroup.isLayoutSetPrototype()) {
-			_privateLayout = true;
+			privateLayout = true;
 		}
+
+		_privateLayout = privateLayout;
+		_tabs1 = tabs1;
 
 		String portletName = getPortletName();
 
@@ -450,21 +453,21 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private String _backURL;
-	private GroupDisplayContextHelper _groupDisplayContextHelper;
+	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
-	private LiferayPortletResponse _liferayPortletResponse;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private Organization _organization;
 	private String _pagesName;
-	private boolean _privateLayout;
+	private final boolean _privateLayout;
 	private String _redirect;
-	private HttpServletRequest _request;
+	private final HttpServletRequest _request;
 	private String _rootNodeName;
 	private Layout _selLayout;
 	private LayoutSet _selLayoutSet;
 	private Long _selPlid;
 	private User _selUser;
-	private String _tabs1;
+	private final String _tabs1;
 	private String _tabs1Names;
 	private UserGroup _userGroup;
 

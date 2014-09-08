@@ -21,8 +21,6 @@ public class JournalFolderConstants {
 
 	public static final long DEFAULT_PARENT_FOLDER_ID = 0;
 
-	public static final long DEFAULT_USER_ID = 0;
-
 	public static final int RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW = 1;
 
 	public static final int RESTRICTION_TYPE_INHERIT = 0;

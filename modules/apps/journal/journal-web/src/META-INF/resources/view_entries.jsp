@@ -127,19 +127,19 @@ int total = 0;
 	<c:when test='<%= displayTerms.getNavigation().equals("mine") || displayTerms.isNavigationRecent() %>'>
 
 		<%
-		long userId = 0;
+		boolean includeOwner = true;
 
 		if (displayTerms.getNavigation().equals("mine")) {
-			userId = themeDisplay.getUserId();
+			includeOwner = false;
 
 			status = WorkflowConstants.STATUS_ANY;
 		}
 
-		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, userId, folderId, status, themeDisplay.getUserId());
+		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, themeDisplay.getUserId(), folderId, status, includeOwner);
 
 		articleSearchContainer.setTotal(total);
 
-		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, userId, folderId, status, themeDisplay.getUserId(), articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
+		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, themeDisplay.getUserId(), folderId, status, includeOwner, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
 		%>
 
 	</c:when>

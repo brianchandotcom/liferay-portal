@@ -643,6 +643,7 @@
 		<tag-class>com.liferay.taglib.ui.CalendarTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Takes the given set of integers, corresponding to a day of the chosen month, and marks them with a dot.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1317,40 +1318,51 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a header UI component.</description>
 		<name>header</name>
 		<tag-class>com.liferay.taglib.ui.HeaderTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Sets the text to be displayed on mouse over of the back URL. The default value is <![CDATA[<code>Back</code>]]>.</description>
 			<name>backLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets a URL for back.</description>
 			<name>backURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets a CSS class for styling the header component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether Xml data is escaped. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>escapeXml</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Whether to translate the header's <![CDATA[<code>title</code>]]> into the localized language. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>localizeTitle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Whether to display the back URL. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>showBackURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Sets the header's title and displays it as the header text.</description>
 			<name>title</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1429,9 +1441,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to translate the icon's <![CDATA[<code>message</code>]]> into the localized language.</description> 
 			<name>localizeMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Sets text to be displayed for the icon on mouse over.</description>
@@ -1762,7 +1776,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets the day Parameter.</description>
+			<description>Sets a variable to refer to the day parameter of the component.</description>
 			<name>dayParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1802,13 +1816,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets the month and year parameter.</description>
+			<description>Sets a variable to refer to the month and year parameter of the component.</description>
 			<name>monthAndYearParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets the month parameter.</description>
+			<description>Sets a variable to refer to the month parameter of the component.</description>
 			<name>monthParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1833,7 +1847,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets the year parameter.</description>
+			<description>Sets a variable to refer to the year parameter of the component.</description>
 			<name>yearParam</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1957,27 +1971,21 @@
 		<tag-class>com.liferay.taglib.ui.InputFieldTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Whether the field gets focus by default.</description>
 			<name>autoFocus</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Whether the field is autosized.</description>
 			<name>autoSize</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Corresponds to the bean the field is associated with.</description>
 			<name>bean</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets CSS styling for the input field.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1994,17 +2002,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Displays the value given as the default value of the input field.</description>
 			<name>defaultValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the field is disabled by default.</description>
 			<name>disabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>field</name>
@@ -2017,7 +2022,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets the input field's form name.</description>
 			<name>formName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2028,7 +2032,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Identifies the component instance.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2037,7 +2040,6 @@
 			<name>ignoreRequestValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>languageId</name>
@@ -2050,7 +2052,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Displays the value given as the placeholder text for the field.</description>
 			<name>placeholder</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2153,60 +2154,76 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
+		<description>Creates an input move boxes UI component.</description>
 		<name>input-move-boxes</name>
 		<tag-class>com.liferay.taglib.ui.InputMoveBoxesTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Sets a CSS class for styling this component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the left box's name.</description>
 			<name>leftBoxName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the left list of key value pairs.</description>
 			<name>leftList</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.List<![CDATA[<KeyValuePair>]]></type>
 		</attribute>
 		<attribute>
+			<description>Sets a function to be called on a change in selection in the left list.</description>
 			<name>leftOnChange</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the left list can be reordered. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>leftReorder</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Sets the left box's title and displays it at the top of the box.</description>
 			<name>leftTitle</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the right box's name.</description>
 			<name>rightBoxName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the right list of key value pairs.</description>
 			<name>rightList</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.List<![CDATA[<KeyValuePair>]]></type>
 		</attribute>
 		<attribute>
+			<description>Sets a function to be called on a change in selection in the right list.</description>
 			<name>rightOnChange</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the right list can be reordered. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>rightReorder</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Sets the right box's title and displays it at the top of the box.</description>
 			<name>rightTitle</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2983,30 +3000,38 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a collapsible panel UI component.</description>
 		<name>panel</name>
 		<tag-class>com.liferay.taglib.ui.PanelTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Whether the panel can be collapsed. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>collapsible</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Sets a CSS class for styling this component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the default state of the panel. Possible values are <![CDATA[<code>open</code>]]> and any String other than open. Any String other than <![CDATA[<code>open</code>]]> collapses the panel. The default value is <![CDATA[<code>open</code>]]>.</description>
 			<name>defaultState</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the panel is extended. The default value is <![CDATA[<code>null</code>]]>.</description>
 			<name>extended</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Sets the text to be displayed as a help toolTip on mouse over of the help icon.</description> 
 			<name>helpMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3017,11 +3042,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Identifies the component instance.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the panel's parent id that cotains it. If a <![CDATA[&lt;liferay-ui:panel-container&gt;]]> tag is used as the container for the panels, it's id becomes the <![CDATA[<code>parentID</code>]]>.</description>
 			<name>parentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3030,13 +3057,16 @@
 			<name>persistState</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Sets the state of the panel. Possible values are <![CDATA[<code>open</code>]]> and any String other than open. Any String other than <![CDATA[<code>open</code>]]> collapses the panel.</description>
 			<name>state</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<attribute>
+		<attribute>	
+			<description>Sets the panel's title and displays it at the top of the panel.</description>
 			<name>title</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4259,12 +4289,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets the parameters for the tabs component. The param value is appended to the <![CDATA[URL]]> attribute.</description>
+			<description>Sets a variable to refer to the tabs component.</description>
 			<name>param</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets a URL to refer to the portlet itself.</description>
 			<name>portletURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4277,7 +4308,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>	
-			<description>Sets the tab values. Values must follow the same order as the <![CDATA[names]]> attribute.</description>
+			<description>Sets the tab value names. Values must follow the same order as the <![CDATA[names]]> attribute. Each value must be separated by a comma with no spaces.</description>
 			<name>tabsValues</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4360,19 +4391,23 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the active tab to the value given from the <![CDATA[<code>tabsValues</code>]]> attribute. No matter which tab is selected, the tab given for the value will remain active.</description>
 			<name>value</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a toggle UI component.</description>
 		<name>toggle</name>
 		<tag-class>com.liferay.taglib.ui.ToggleTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Whether the content is shown by default.</description>
 			<name>defaultShowContent</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>hideImage</name>
@@ -4380,11 +4415,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the text to display for the link to hide the content.</description> 
 			<name>hideMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Identifies the component instance.</description>
 			<name>id</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4395,6 +4432,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Sets the text to display for the link to show the content.</description>
 			<name>showMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

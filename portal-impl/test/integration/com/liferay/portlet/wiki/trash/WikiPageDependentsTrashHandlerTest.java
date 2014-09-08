@@ -272,33 +272,25 @@ public class WikiPageDependentsTrashHandlerTest {
 		int initialTrashEntriesCount =
 			TrashEntryLocalServiceUtil.getEntriesCount(_group.getGroupId());
 
-		WikiPage[] pages = addPageWithChangedParentPage(
-			_group.getGroupId(), _node.getNodeId());
+		WikiPages pages = givenPageWithChangedParent();
 
-		WikiPage page = pages[0];
-		WikiPage finalParentPage = pages[1];
-		WikiPage initialParentPage = pages[2];
+		WikiPage initialParentPage = movePageToTrash(
+			pages.getInitialParentPage());
 
-		WikiPageLocalServiceUtil.movePageToTrash(
-			TestPropsValues.getUserId(), initialParentPage);
-
-		page = WikiPageLocalServiceUtil.getPage(page.getResourcePrimKey());
-		finalParentPage = WikiPageLocalServiceUtil.getPage(
-			finalParentPage.getResourcePrimKey());
-		initialParentPage = WikiPageLocalServiceUtil.getPage(
-			initialParentPage.getResourcePrimKey());
+		WikiPage page = getUpdatedPage(pages.getPage());
+		WikiPage parentPage = getUpdatedPage(pages.getParentPage());
 
 		Assert.assertFalse(page.isInTrash());
-		Assert.assertFalse(finalParentPage.isInTrash());
+		Assert.assertFalse(parentPage.isInTrash());
 		Assert.assertTrue(initialParentPage.isInTrashExplicitly());
-		Assert.assertEquals(finalParentPage.getTitle(), page.getParentTitle());
+		Assert.assertEquals(parentPage.getTitle(), page.getParentTitle());
 		Assert.assertEquals(
 			initialBaseModelsCount + 2,
 			WikiPageTrashHandlerTestUtil.getNotInTrashBaseModelsCount(_node));
 		Assert.assertEquals(
 			initialTrashEntriesCount + 1,
 			TrashEntryLocalServiceUtil.getEntriesCount(_group.getGroupId()));
-		Assert.assertEquals(page.getParentTitle(), finalParentPage.getTitle());
+		Assert.assertEquals(page.getParentTitle(), parentPage.getTitle());
 	}
 
 	@Test
@@ -833,8 +825,13 @@ public class WikiPageDependentsTrashHandlerTest {
 			TrashVersionLocalServiceUtil.getTrashVersionsCount());
 	}
 
-	protected WikiPage[] addPageWithChangedParentPage(long groupId, long nodeId)
-		throws Exception {
+	protected WikiPage getUpdatedPage(WikiPage page) throws PortalException {
+		return WikiPageLocalServiceUtil.getPage(page.getResourcePrimKey());
+	}
+
+	protected WikiPages givenPageWithChangedParent() throws Exception {
+		long nodeId = _node.getNodeId();
+		long groupId = _group.getGroupId();
 
 		WikiPage initialParentPage = WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), groupId, nodeId,
@@ -843,31 +840,26 @@ public class WikiPageDependentsTrashHandlerTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		WikiPage childPage = WikiTestUtil.addPage(
+		WikiPage page = WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), nodeId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), initialParentPage.getTitle(), true,
 			serviceContext);
 
-		WikiPage finalParentPage =  WikiTestUtil.addPage(
+		WikiPage parentPage =  WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), groupId, nodeId,
 			RandomTestUtil.randomString(), true);
 
 		WikiPageLocalServiceUtil.changeParent(
-			TestPropsValues.getUserId(), nodeId, childPage.getTitle(),
-			finalParentPage.getTitle(), serviceContext);
+			TestPropsValues.getUserId(), nodeId, page.getTitle(),
+			parentPage.getTitle(), serviceContext);
 
-		childPage = WikiPageLocalServiceUtil.getPage(
-			nodeId, childPage.getTitle());
-		initialParentPage =  WikiPageLocalServiceUtil.getPage(
-			initialParentPage.getResourcePrimKey());
-		finalParentPage =  WikiPageLocalServiceUtil.getPage(
-			finalParentPage.getResourcePrimKey());
+		WikiPages pages = new WikiPages();
 
-		return new WikiPage[] {childPage, finalParentPage, initialParentPage};
-	}
+		pages.setPage(getUpdatedPage(page));
+		pages.setInitialParentPage(getUpdatedPage(initialParentPage));
+		pages.setParentPage(getUpdatedPage(parentPage));
 
-	protected WikiPage getUpdatedPage(WikiPage page) throws PortalException {
-		return WikiPageLocalServiceUtil.getPage(page.getResourcePrimKey());
+		return pages;
 	}
 
 	protected WikiPages givenPageWithChildAndGrandchildAndRedirectPage()
@@ -1053,19 +1045,52 @@ public class WikiPageDependentsTrashHandlerTest {
 			return _grandchildPage;
 		}
 
+		public WikiPage getInitialParentPage() {
+			return _initialParentPage;
+		}
+
 		public WikiPage getPage() {
 			return _page;
+		}
+
+		public WikiPage getParentPage() {
+			return _parentPage;
 		}
 
 		public WikiPage getRedirectPage() {
 			return _redirectPage;
 		}
 
+		public void setChildPage(WikiPage childPage) {
+			_childPage = childPage;
+		}
+
+		public void setGrandchildPage(WikiPage grandchildPage) {
+			_grandchildPage = grandchildPage;
+		}
+
+		public void setInitialParentPage(WikiPage initialParentPage) {
+			_initialParentPage = initialParentPage;
+		}
+
+		public void setPage(WikiPage page) {
+			_page = page;
+		}
+
+		public void setParentPage(WikiPage parentPage) {
+			_parentPage = parentPage;
+		}
+
+		public void setRedirectPage(WikiPage redirectPage) {
+			_redirectPage = redirectPage;
+		}
+
 		private WikiPage _childPage;
 		private WikiPage _grandchildPage;
+		private WikiPage _initialParentPage;
 		private WikiPage _page;
+		private WikiPage _parentPage;
 		private WikiPage _redirectPage;
-
 	}
 
 }

@@ -1130,6 +1130,45 @@
 		<execute action="SOProfile#assertElementNotPresent" locator-key1="CONNECT_BUTTON" />
 	</command>
 
+	<command name="viewDefaultProfile">
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${userName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${userEmailAddress}" />
+
+		<var locator-key="USER_NAME" name="currentUser" path="Dockbar" />
+		<var locator-key="USER_NAME" name="profileUser" path="SOProfile" />
+
+		<if>
+			<equals arg1="${currentUser}" arg2="${profileUser}" />
+			<then>
+				<execute action="SOProfile#assertTextEquals" locator-key1="WHATS_HAPPENING" value1="You do not have any microblog entries." />
+			</then>
+			<else>
+				<execute action="SOProfile#assertTextEquals" locator-key1="WHATS_HAPPENING" value1="${userName} does not have any microblog entries." />
+			</else>
+		</if>
+
+		<execute action="SOProfile#assertElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="DEFAULT_PROFILE_PICTURE" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="NAVIGATION_PROFILE" value1="Profile" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="NAVIGATION_CONTACTS" value1="Contacts" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="NAVIGATION_MICROBLOGS" value1="Microblogs" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_SITES_EMPTY" value1="${userName} does not belong to any sites." />
+
+		<if>
+			<equals arg1="${currentUser}" arg2="${profileUser}" />
+			<then>
+				<execute action="SOProfile#assertTextEquals" locator-key1="VCARD_BUTTON" value1="vCard" />
+			</then>
+			<else>
+				<execute action="SOProfile#assertTextEquals" locator-key1="CONNECT_BUTTON" value1="Connect" />
+				<execute action="SOProfile#assertTextEquals" locator-key1="FOLLOW_BUTTON" value1="Follow" />
+				<execute action="SOProfile#assertTextEquals" locator-key1="BLOCK_BUTTON" value1="Block" />
+				<execute action="SOProfile#assertTextEquals" locator-key1="MESSAGE_BUTTON" value1="Message" />
+				<execute action="SOProfile#assertTextEquals" locator-key1="VCARD_BUTTON" value1="vCard" />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewFollowing">
 		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LINK_FOLLOWING" value1="You are following ${filterTypeCount} people." />
 		<execute action="SOContactscenter#assertSelectedLabel" locator-key1="CONTACTS_LIST_FILTER" value1="Following" />
@@ -1486,7 +1525,23 @@
 		<var name="key_userTag" value="${userTag}" />
 
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_TAGS_TITLE" value1="Tags" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_TAGS_CONTENT" value1="${userTag}" />
+		<execute action="SOProfile#assertClick" locator-key1="PROFILE_INFO_TAGS_CONTENT" value1="${userTag}" />
+
+		<if>
+			<isset var="searchAssetTitle" />
+			<then>
+				<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+
+				<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+				<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_TYPE" value1="${searchAssetType}" />
+			</then>
+			<else>
+				<var name="key_searchAssetTitle" value="${userName}" />
+
+				<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_TITLE" value1="${userName}" />
+				<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_TYPE" value1="User" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewUser">

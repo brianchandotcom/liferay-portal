@@ -53,7 +53,9 @@
 		<execute action="Home#open" locator1="http://www.gmail.com" />
 		<execute action="Home#pause" locator1="3000" />
 
-		<execute action="Gmail#assertClick" locator-key1="LOGOUT_SIGN_OUT_BUTTON" value1="Sign out" />
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute action="Gmail#click" locator-key1="GMAIL_HTML_MODE_SIGN_OUT" />
 
 		<if>
 			<condition action="Gmail#isElementPresent" locator-key1="SIGN_IN_WITH_DIFFERENT_ACCOUNT" />
@@ -61,6 +63,12 @@
 				<execute action="Gmail#assertClick" locator-key1="SIGN_IN_WITH_DIFFERENT_ACCOUNT" value1="Sign in with a different account" />
 				<execute action="Gmail#assertClick" locator-key1="ADD_ACCOUNT_BUTTON" value1="Add account" />
 			</then>
+			<elseif>
+				<condition action="Gmail#isElementPresent" locator-key1="ADD_ACCOUNT_BUTTON" />
+				<then>
+					<execute action="Gmail#assertClick" locator-key1="ADD_ACCOUNT_BUTTON" value1="Add account" />
+				</then>
+			</elseif>
 		</if>
 
 		<execute action="Gmail#type" locator-key1="LOGIN_EMAIL_FIELD" value1="${userEmailAddress}" />

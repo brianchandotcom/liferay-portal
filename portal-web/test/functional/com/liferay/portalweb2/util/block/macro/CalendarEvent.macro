@@ -1,4 +1,22 @@
 <definition>
+	<command name="addAllDayEventViaScheduler">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Day" />
+		</execute>
+
+		<execute action="PGCalendar#sikuliClick" locator-key1="SCHEDULER_EVENT_ALL_DAY_FIELD_PNG" />
+		<execute action="PGCalendar#type" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
+
+		<if>
+			<isset var="calendarName" />
+			<then>
+				<execute action="PGCalendar#select" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_CALENDAR" value1="${calendarName}" />
+			</then>
+		</if>
+
+		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_SAVE_BUTTON" value1="Save" />
+	</command>
+
 	<command name="addCommentPG">
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />
@@ -574,6 +592,26 @@
 
 		<execute action="PGCalendarAgendaView#assertElementNotPresent" locator-key1="SCHEDULER_EVENT_SPECIFIC" />
 		<execute action="PGCalendarAgendaView#assertTextNotPresent" value1="${eventTitle}" />
+	</command>
+
+	<command name="editAllDayEventViaScheduler">
+		<execute macro="CalendarEvent#changeViewPG">
+			<var name="viewType" value="Day" />
+		</execute>
+
+		<var name="key_eventTitle" value="${eventTitle}" />
+
+		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
+		<execute action="PGCalendar#type" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitleEdit}" />
+
+		<if>
+			<isset var="calendarName" />
+			<then>
+				<execute action="PGCalendar#select" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_CALENDAR" value1="${calendarName}" />
+			</then>
+		</if>
+
+		<execute action="PGCalendar#assertClick" locator-key1="SCHEDULER_EVENT_DIALOG_BOX_SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="editCommentPG">

@@ -69,6 +69,16 @@
 
 		<var name="key_messageReplyBody" value="${messageReplyBody}" />
 
+		<if>
+			<isset var="pageNumber" />
+			<then>
+				<var name="key_pageNumber" value="${pageNumber}" />
+
+				<execute action="SOMessagesMessage#click" locator-key1="PAGE_NUMBER_DROPDOWN_BUTTON" />
+				<execute action="SOMessagesMessage#click" locator-key1="PAGE_NUMBER_DROPDOWN_MENU_ITEM" />
+			</then>
+		</if>
+
 		<execute action="SOMessagesMessage#assertElementPresent" locator-key1="PRIVATE_MESSAGE_REPLY_SENDER" />
 		<execute action="SOMessagesMessage#assertElementPresent" locator-key1="PRIVATE_MESSAGE_REPLY_BODY" />
 	</command>
@@ -299,6 +309,16 @@
 			<then>
 				<execute action="SOMessagesMessage#assertElementPresent" locator-key1="PRIVATE_MESSAGE_ATTACHMENT" />
 				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_ATTACHMENT_LINK" value1="${messageAttachmentFile}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="pageNumber" />
+			<then>
+				<var name="key_pageNumber" value="${pageNumber}" />
+
+				<execute action="SOMessagesMessage#click" locator-key1="PAGE_NUMBER_DROPDOWN_BUTTON" />
+				<execute action="SOMessagesMessage#click" locator-key1="PAGE_NUMBER_DROPDOWN_MENU_ITEM" />
 			</then>
 		</if>
 

@@ -24,10 +24,12 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.documentlibrary.context.BaseDLFileVersionActionsDisplayContext;
-import com.liferay.portlet.documentlibrary.context.DLFileVersionActionsDisplayContext;
+import com.liferay.portlet.documentlibrary.context.BaseDLFileVersionDisplayContext;
+import com.liferay.portlet.documentlibrary.context.DLFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.context.DLMenuItemKeys;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
@@ -38,15 +40,38 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public class GoogleDocsDLFileVersionActionsDisplayContext
-	extends BaseDLFileVersionActionsDisplayContext {
+public class GoogleDocsDLFileVersionDisplayContext
+	extends BaseDLFileVersionDisplayContext {
 
-	public GoogleDocsDLFileVersionActionsDisplayContext(
-		DLFileVersionActionsDisplayContext parentDLDisplayContext,
+	public GoogleDocsDLFileVersionDisplayContext(
+		DLFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion) {
 
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
+	}
+
+	@Override
+	public List<DDMStructure> getDDMStructures() throws PortalException {
+		List<DDMStructure> ddmStructures = super.getDDMStructures();
+
+		Iterator<DDMStructure> iterator = ddmStructures.iterator();
+
+		while (iterator.hasNext()) {
+			DDMStructure ddmStructure = iterator.next();
+
+			String structureKey = ddmStructure.getStructureKey();
+
+			if (structureKey.equals(
+					GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS)) {
+
+				iterator.remove();
+
+				break;
+			}
+		}
+
+		return ddmStructures;
 	}
 
 	@Override
@@ -78,6 +103,10 @@ public class GoogleDocsDLFileVersionActionsDisplayContext
 
 		int index = _getIndex(menuItems, DLMenuItemKeys.EDIT);
 
+		if (index == -1) {
+			index = 0;
+		}
+
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
 		urlMenuItem.setIconCssClass("icon-edit");
@@ -89,7 +118,8 @@ public class GoogleDocsDLFileVersionActionsDisplayContext
 		ResourceBundle resourceBundle = ResourceUtil.getResourceBundle(
 			themeDisplay.getLocale());
 
-		String message = LanguageUtil.get(resourceBundle, "edit-in-google-docs");
+		String message = LanguageUtil.get(
+			resourceBundle, "edit-in-google-docs");
 
 		urlMenuItem.setMessage(message);
 

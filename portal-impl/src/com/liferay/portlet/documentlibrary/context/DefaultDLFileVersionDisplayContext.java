@@ -43,9 +43,12 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
+import com.liferay.portlet.documentlibrary.context.util.FileVersionMetadataHelper;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
@@ -65,10 +68,10 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public class DefaultDLFileVersionActionsDisplayContext
-	implements DLFileVersionActionsDisplayContext {
+public class DefaultDLFileVersionDisplayContext
+	implements DLFileVersionDisplayContext {
 
-	public DefaultDLFileVersionActionsDisplayContext(
+	public DefaultDLFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion)
 		throws PortalException {
@@ -86,8 +89,11 @@ public class DefaultDLFileVersionActionsDisplayContext
 		}
 
 		_dlFileEntryActionsDisplayContextHelper =
-			new DLFileEntryActionsDisplayContextHelper(
+			new DefaultDLFileVersionDisplayContextHelper(
 				_themeDisplay.getPermissionChecker(), _fileEntry, fileVersion);
+
+		_fileVersionMetadataHelper = new FileVersionMetadataHelper(
+			_fileVersion);
 
 		_fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
@@ -359,6 +365,16 @@ public class DefaultDLFileVersionActionsDisplayContext
 	@Override
 	public boolean isViewOriginalFileButtonVisible() throws PortalException {
 		return _dlFileEntryActionsDisplayContextHelper.hasViewPermission();
+	}
+
+	@Override
+	public List<DDMStructure> getDDMStructures() throws PortalException {
+		return _fileVersionMetadataHelper.getDDMStructures();
+	}
+
+	@Override
+	public Fields getFields(DDMStructure ddmStructure) throws PortalException {
+		return _fileVersionMetadataHelper.getFields(ddmStructure);
 	}
 
 	private void _addCancelCheckoutMenuItem(List<MenuItem> menuItems)
@@ -795,11 +811,12 @@ public class DefaultDLFileVersionActionsDisplayContext
 	private long _companyId;
 	private String _currentURL;
 	private DLActionsDisplayContext _dlActionsDisplayContext;
-	private DLFileEntryActionsDisplayContextHelper
+	private DefaultDLFileVersionDisplayContextHelper
 		_dlFileEntryActionsDisplayContextHelper;
 	private FileEntry _fileEntry;
 	private long _fileEntryTypeId;
 	private FileVersion _fileVersion;
+	private FileVersionMetadataHelper _fileVersionMetadataHelper;
 	private long _folderId;
 	private Boolean _ieOnWin32;
 	private LiferayPortletRequest _liferayPortletRequest;

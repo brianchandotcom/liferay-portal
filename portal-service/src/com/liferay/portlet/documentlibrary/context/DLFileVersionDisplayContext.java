@@ -16,13 +16,19 @@ package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.util.List;
 
 /**
  * @author Iván Zaera
  */
-public interface DLFileVersionActionsDisplayContext extends DLDisplayContext {
+public interface DLFileVersionDisplayContext extends DLDisplayContext {
+
+	public List<DDMStructure> getDDMStructures() throws PortalException;
+
+	public Fields getFields(DDMStructure ddmStructure) throws PortalException;
 
 	public List<MenuItem> getMenuItems() throws PortalException;
 

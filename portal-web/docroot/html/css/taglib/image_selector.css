@@ -5,17 +5,15 @@
 	position: relative;
 	text-align: center;
 
-	&.drop-enabled {
-		border: 1px dashed #CCC;
-	}
-
 	.browse-image-controls, .current-image {
-		@include transform(translate(-50%, -50%));
+		@include transform(translate(0, -50%));
 
-		left: 50%;
+		left: 0;
+		margin: auto;
 		max-height: 100%;
 		max-width: 100%;
 		position: absolute;
+		right: 0;
 		top: 50%;
 	}
 
@@ -29,5 +27,17 @@
 		left: 0;
 		position: absolute;
 		right: 0;
+	}
+
+	.yui3-uploader-content {
+		display: none;
+	}
+
+	&.drop-enabled, &.drop-active {
+		outline: 1px dashed #CCC;
+	}
+
+	&.drop-active {
+		outline-color: #118ADE;
 	}
 }

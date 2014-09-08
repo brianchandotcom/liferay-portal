@@ -61,60 +61,20 @@ if (fileEntryId != 0) {
 	<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 	<portlet:param name="checkContentDisplayPage" value="true" />
 	<portlet:param name="tabs1Names" value="documents" />
-	<portlet:param name="eventName" value='<%= renderResponse.getNamespace() + "selectImage" %>' />
+	<portlet:param name="eventName" value='<%= randomNamespace + "selectImage" %>' />
 </liferay-portlet:renderURL>
 
-<aui:script use="aui-base">
-	var taglibImageSelector = A.one('#<%= randomNamespace %>taglibImageSelector');
+<%
+String uploadImageURL = themeDisplay.getPathMain() + "/portal/image_selector?p_auth=" + AuthTokenUtil.getToken(request);
+%>
 
-	var fileEntryIdNode = taglibImageSelector.one('#<portlet:namespace /><%= paramName %>');
-
-	var fileEntryImage = taglibImageSelector.one('#<%= randomNamespace %>image');
-
-	var browseImageControls = taglibImageSelector.one('.browse-image-controls');
-
-	var changeImageControls = taglibImageSelector.one('.change-image-controls');
-
-	var updateFileEntryData = function(event) {
-		var fileEntryId = event.fileentryid || 0;
-
-		var fileEntryUrl = event.url || '';
-
-		fileEntryIdNode.val(fileEntryId);
-
-		fileEntryImage.setAttribute('src', fileEntryUrl);
-
-		var showImageControls = (fileEntryId !== 0 && fileEntryUrl !== '');
-
-		fileEntryImage.toggle(showImageControls);
-
-		changeImageControls.toggle(showImageControls);
-
-		browseImageControls.toggle(!showImageControls);
-
-		taglibImageSelector.toggleClass('drop-enabled', !showImageControls);
-	};
-
-	taglibImageSelector.delegate(
-		'click',
-		function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true
-					},
-					eventName: '<portlet:namespace />selectImage',
-					id: '<portlet:namespace />selectImage',
-					title: '<%= LanguageUtil.get(locale, "select-image") %>',
-					uri: '<%= documentSelectorURL.toString() %>'
-				},
-				updateFileEntryData
-			);
-		},
-		'.browse-image'
+<aui:script use="liferay-image-selector">
+	new Liferay.ImageSelector(
+		{
+			documentSelectorURL: '<%= documentSelectorURL.toString() %>',
+			namespace: '<%= randomNamespace %>',
+			paramName: '<portlet:namespace /><%= paramName %>',
+			uploadURL: '<%= uploadImageURL %>'
+		}
 	);
-
-	taglibImageSelector.one('#<%= randomNamespace %>removeImage').on('click', updateFileEntryData);
 </aui:script>

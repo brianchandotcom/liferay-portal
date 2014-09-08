@@ -38,7 +38,6 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 
 							<%
 							displayStyleURL.setParameter("displayStyle", dataStyle);
-							displayStyleURL.setParameter("saveDisplayStyle", Boolean.TRUE.toString());
 							%>
 
 							<aui:nav-item
@@ -93,7 +92,6 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 				%>
 
 				config['<portlet:namespace />displayStyle'] = displayStyle;
-				config['<portlet:namespace />saveDisplayStyle'] = true;
 
 				Liferay.fire(
 					'<portlet:namespace />dataRequest',

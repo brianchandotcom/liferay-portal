@@ -14,4 +14,27 @@
 		<fileset dir="${sdk.dir}/dependencies/aQute.bnd/lib" includes="*.jar" />
 		<fileset dir="${sdk.dir}/lib" includes="activation.jar,javax.servlet-api.jar,jsp-api.jar,mail.jar" />
 	</path>
+
+	<target name="jar">
+		<jar-macro
+			module.dir="${basedir}"
+		/>
+
+		<echo>${plugin.javadoc.file}</echo>
+
+		<antcall target="javadoc"/>
+
+		<jar-javadoc
+			module.dir="${basedir}"
+		/>
+
+		<jar-source
+			module.dir="${basedir}"
+		/>
+
+		<antcall target="build-common-ivy.publish">
+			<param name="ivy.publish.resolver" value="local-m2" />
+			<param name="plugin.release.qualifier" value="-SNAPSHOT" />
+		</antcall>
+	</target>
 </project>

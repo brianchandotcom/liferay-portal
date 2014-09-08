@@ -57,41 +57,41 @@ public class DLFileEntryTypeTranslationUpdater implements TranslationUpdater {
 		}
 	}
 
-	protected DLFileEntryTypeData getDlFileEntryTypeData(
+	protected DLFileEntryTypeData getDLFileEntryTypeData(
 			long groupId, String dlFileEntryTypeKey)
 		throws SQLException {
 
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
 		try {
-			connection = DataAccess.getUpgradeOptimizedConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
-			preparedStatement = connection.prepareStatement(
+			ps = con.prepareStatement(
 				"select fileEntryTypeId, name, description from " +
 					"DLFileEntryType where groupId = ? and fileEntryTypeKey " +
-					"= ?");
+						"= ?");
 
-			preparedStatement.setLong(1, groupId);
-			preparedStatement.setString(2, dlFileEntryTypeKey);
+			ps.setLong(1, groupId);
+			ps.setString(2, dlFileEntryTypeKey);
 
-			resultSet = preparedStatement.executeQuery();
+			rs = ps.executeQuery();
 
-			if (!resultSet.next()) {
+			if (!rs.next()) {
 				return null;
 			}
 
-			long fileEntryTypeId = resultSet.getLong(1);
-			String name = resultSet.getString(2);
-			String description = resultSet.getString(3);
+			long fileEntryTypeId = rs.getLong(1);
+			String name = rs.getString(2);
+			String description = rs.getString(3);
 
-			if (resultSet.next()) {
+			if (rs.next()) {
 				throw new IllegalStateException(
 					String.format(
 						"Found at least two rows for groupId = %s and " +
 							"fileEntryTypeKey = %s on table DLFileEntryType; " +
-							"expected 1 row",
+								"expected 1 row",
 						groupId, dlFileEntryTypeKey));
 			}
 
@@ -101,7 +101,7 @@ public class DLFileEntryTypeTranslationUpdater implements TranslationUpdater {
 			return dlFileEntryTypeData;
 		}
 		finally {
-			DataAccess.cleanUp(connection, preparedStatement, resultSet);
+			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 
@@ -111,13 +111,13 @@ public class DLFileEntryTypeTranslationUpdater implements TranslationUpdater {
 			Locale defaultLocale)
 		throws SQLException {
 
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+		Connection con = null;
+		PreparedStatement ps = null;
 
 		try {
-			connection = DataAccess.getUpgradeOptimizedConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
-			preparedStatement = connection.prepareStatement(
+			ps = con.prepareStatement(
 				"update DLFileEntryType set name = ?, description = ? where " +
 					"fileEntryTypeId = ?");
 
@@ -126,29 +126,26 @@ public class DLFileEntryTypeTranslationUpdater implements TranslationUpdater {
 			String name = updateLocalizationXML(
 				nameMap, dlFileEntryTypeData.getName(), "Name", languageId);
 
-			preparedStatement.setString(1, name);
-
 			String description = updateLocalizationXML(
 				descriptionMap, dlFileEntryTypeData.getDescription(),
 				"Description", languageId);
 
-			preparedStatement.setString(2, description);
+			ps.setString(1, name);
+			ps.setString(2, description);
+			ps.setLong(3, dlFileEntryTypeData.getDlFileEntryTypeId());
 
-			preparedStatement.setLong(
-				3, dlFileEntryTypeData.getDlFileEntryTypeId());
-
-			int rowCount = preparedStatement.executeUpdate();
+			int rowCount = ps.executeUpdate();
 
 			if (rowCount != 1) {
 				throw new IllegalStateException(
 					String.format(
 						"Updated %s rows with fileEntryTypeId = %s in table" +
-							"DLFileEntryTypeId; expected 1 row", rowCount,
-							dlFileEntryTypeData.getDlFileEntryTypeId()));
+							"DLFileEntryTypeId; expected 1 row",
+						rowCount, dlFileEntryTypeData.getDlFileEntryTypeId()));
 			}
 		}
 		finally {
-			DataAccess.cleanUp(connection, preparedStatement);
+			DataAccess.cleanUp(con, ps);
 		}
 	}
 
@@ -157,7 +154,7 @@ public class DLFileEntryTypeTranslationUpdater implements TranslationUpdater {
 			String dlFileEntryTypeKey)
 		throws SQLException {
 
-		DLFileEntryTypeData dlFileEntryTypeData = getDlFileEntryTypeData(
+		DLFileEntryTypeData dlFileEntryTypeData = getDLFileEntryTypeData(
 			groupId, dlFileEntryTypeKey);
 
 		if (dlFileEntryTypeData == null) {

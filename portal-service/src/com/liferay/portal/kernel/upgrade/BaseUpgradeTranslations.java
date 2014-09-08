@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.upgrade;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.util.TranslationUpdater;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.util.PortalUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,6 +26,7 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Adolfo Pérez
@@ -33,10 +35,8 @@ public abstract class BaseUpgradeTranslations extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		long classNameId = getClassNameId(Company.class);
-
 		Iterable<Long[]> companyAndGroupIds = getCompanyAndGroupIds(
-			classNameId);
+			PortalUtil.getClassNameId(Company.class));
 
 		for (Long[] companyAndGroupId : companyAndGroupIds) {
 			Long companyId = companyAndGroupId[0];
@@ -50,57 +50,30 @@ public abstract class BaseUpgradeTranslations extends UpgradeProcess {
 		}
 	}
 
-	protected long getClassNameId(Class<?> modelClass) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-
-		try {
-			connection = DataAccess.getUpgradeOptimizedConnection();
-
-			preparedStatement = connection.prepareStatement(
-				"select classNameId from ClassName_ where value = ?");
-
-			preparedStatement.setString(1, modelClass.getName());
-
-			resultSet = preparedStatement.executeQuery();
-
-			if (!resultSet.next()) {
-				throw new IllegalStateException(
-					String.format(
-						"No row found in table ClassName_ for value %s",
-						modelClass.getName()));
-			}
-
-			return resultSet.getLong(1);
-		}
-		finally {
-			DataAccess.cleanUp(connection, preparedStatement, resultSet);
-		}
-	}
-
-	protected Iterable<Long[]> getCompanyAndGroupIds(long classNameId)
+	protected List<Long[]> getCompanyAndGroupIds(long classNameId)
 		throws SQLException {
 
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
 		try {
-			connection = DataAccess.getUpgradeOptimizedConnection();
-			preparedStatement = connection.prepareStatement(
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
 				"select companyId, groupId from Group_ where classNameId = ?");
 
-			preparedStatement.setLong(1, classNameId);
-			resultSet = preparedStatement.executeQuery();
+			ps.setLong(1, classNameId);
 
-			Collection<Long[]> companyAndGroupIds = new ArrayList<Long[]>();
+			rs = ps.executeQuery();
 
-			while (resultSet.next()) {
+			List<Long[]> companyAndGroupIds = new ArrayList<Long[]>();
+
+			while (rs.next()) {
 				Long[] companyIdAndGroupId = new Long[2];
 
-				companyIdAndGroupId[0] = resultSet.getLong(1);
-				companyIdAndGroupId[1] = resultSet.getLong(2);
+				companyIdAndGroupId[0] = rs.getLong(1);
+				companyIdAndGroupId[1] = rs.getLong(2);
 
 				companyAndGroupIds.add(companyIdAndGroupId);
 			}
@@ -108,7 +81,7 @@ public abstract class BaseUpgradeTranslations extends UpgradeProcess {
 			return companyAndGroupIds;
 		}
 		finally {
-			DataAccess.cleanUp(connection, preparedStatement, resultSet);
+			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

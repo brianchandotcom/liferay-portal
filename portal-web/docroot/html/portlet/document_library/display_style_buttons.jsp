@@ -31,19 +31,19 @@ if (Validator.isNull(displayStyle)) {
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-PortletURL displayStyleUrl = renderResponse.createRenderURL();
+PortletURL displayStyleURL = renderResponse.createRenderURL();
 
-displayStyleUrl.setParameter("struts_action", Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search");
-displayStyleUrl.setParameter("navigation", HtmlUtil.escapeJS(navigation));
-displayStyleUrl.setParameter("folderId", String.valueOf(folderId));
+displayStyleURL.setParameter("struts_action", Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search");
+displayStyleURL.setParameter("navigation", HtmlUtil.escapeJS(navigation));
+displayStyleURL.setParameter("folderId", String.valueOf(folderId));
 
 if (fileEntryTypeId != -1) {
-	displayStyleUrl.setParameter("fileEntryTypeId", String.valueOf(fileEntryTypeId));
+	displayStyleURL.setParameter("fileEntryTypeId", String.valueOf(fileEntryTypeId));
 }
 %>
 
 <liferay-ui:app-view-display-style
 	displayStyle="<%= displayStyle %>"
-	displayStyleUrl="<%= displayStyleUrl %>"
+	displayStyleURL="<%= displayStyleURL %>"
 	displayStyles="<%= dlPortletInstanceSettings.getDisplayViews() %>"
 />

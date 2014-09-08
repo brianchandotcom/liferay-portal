@@ -38,6 +38,6 @@ if (!structureId.equals("0")) {
 
 <liferay-ui:app-view-display-style
 	displayStyle="<%= displayStyle %>"
-	displayStyleUrl="<%= displayStyleURL %>"
+	displayStyleURL="<%= displayStyleURL %>"
 	displayStyles="<%= displayViews %>"
 />

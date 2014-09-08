@@ -40,8 +40,8 @@ public class AppViewDisplayStyleTag extends IncludeTag {
 		_displayStyles = displayStyles;
 	}
 
-	public void setDisplayStyleUrl(PortletURL displayStyleUrl) {
-		_displayStyleUrl = displayStyleUrl;
+	public void setDisplayStyleURL(PortletURL displayStyleURL) {
+		_displayStyleURL = displayStyleURL;
 	}
 
 	public void setEventName(String eventName) {
@@ -56,7 +56,7 @@ public class AppViewDisplayStyleTag extends IncludeTag {
 	protected void cleanUp() {
 		_displayStyle = null;
 		_displayStyles = null;
-		_displayStyleUrl = null;
+		_displayStyleURL = null;
 		_eventName = null;
 		_requestParams = null;
 	}
@@ -78,8 +78,8 @@ public class AppViewDisplayStyleTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-display-style:displayStyles", _displayStyles);
 		request.setAttribute(
-			"liferay-ui:app-view-display-style:displayStyleUrl",
-			_displayStyleUrl);
+			"liferay-ui:app-view-display-style:displayStyleURL",
+			_displayStyleURL);
 		request.setAttribute(
 			"liferay-ui:app-view-display-style:eventName", _eventName);
 		request.setAttribute(
@@ -93,7 +93,7 @@ public class AppViewDisplayStyleTag extends IncludeTag {
 
 	private String _displayStyle;
 	private String[] _displayStyles;
-	private PortletURL _displayStyleUrl;
+	private PortletURL _displayStyleURL;
 	private String _eventName;
 	private Map<String, String> _requestParams;
 

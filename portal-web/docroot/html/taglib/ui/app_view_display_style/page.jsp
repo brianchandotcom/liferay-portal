@@ -19,7 +19,7 @@
 <%
 String displayStyle = (String)request.getAttribute("liferay-ui:app-view-display-style:displayStyle");
 String[] displayStyles = (String[])request.getAttribute("liferay-ui:app-view-display-style:displayStyles");
-PortletURL displayStyleUrl = (PortletURL)request.getAttribute("liferay-ui:app-view-display-style:displayStyleUrl");
+PortletURL displayStyleURL = (PortletURL)request.getAttribute("liferay-ui:app-view-display-style:displayStyleURL");
 String eventName = (String)request.getAttribute("liferay-ui:app-view-display-style:eventName");
 Map<String, String> requestParams = (Map<String, String>)request.getAttribute("liferay-ui:app-view-display-style:requestParams");
 %>
@@ -37,11 +37,11 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 						<c:when test="<%= displayStyle != null %>">
 
 							<%
-							displayStyleUrl.setParameter("displayStyle", dataStyle);
+							displayStyleURL.setParameter("displayStyle", dataStyle);
 							%>
 
 							<aui:nav-item
-								href="<%= displayStyleUrl.toString() %>"
+								href="<%= displayStyleURL.toString() %>"
 								iconCssClass='<%= "icon-" + _getIcon(dataStyle) %>'
 								label="<%= dataStyle %>"
 							/>
@@ -71,7 +71,7 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 		</div>
 	</span>
 
-	<c:if test="<%= displayStyleUrl == null %>">
+	<c:if test="<%= displayStyleURL == null %>">
 		<aui:script use="aui-base">
 			function changeDisplayStyle(displayStyle) {
 				var config = {};

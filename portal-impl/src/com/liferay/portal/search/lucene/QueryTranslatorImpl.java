@@ -100,7 +100,7 @@ public class QueryTranslatorImpl implements QueryTranslator {
 					text = StringPool.QUOTE.concat(text).concat(
 						StringPool.QUOTE);
 
-					_textField.set(term, text);
+					_TEXT_FIELD.set(term, text);
 				}
 			}
 			catch (Exception e) {
@@ -118,7 +118,7 @@ public class QueryTranslatorImpl implements QueryTranslator {
 				if (text.matches("^\\s*\\*.*(?m)")) {
 					text = text.replaceFirst("\\*", StringPool.BLANK);
 
-					_textField.set(term, text);
+					_TEXT_FIELD.set(term, text);
 				}
 			}
 			catch (Exception e) {
@@ -129,17 +129,21 @@ public class QueryTranslatorImpl implements QueryTranslator {
 
 	private static Log _log = LogFactoryUtil.getLog(QueryTranslatorImpl.class);
 
-	private static Field _textField = null;
+	private static final Field _TEXT_FIELD;
 
 	static {
-		try {
-			_textField = Term.class.getDeclaredField("text");
+		Field textField = null;
 
-			_textField.setAccessible(true);
+		try {
+			textField = Term.class.getDeclaredField("text");
+
+			textField.setAccessible(true);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_TEXT_FIELD = textField;
 	}
 
 }

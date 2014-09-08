@@ -266,14 +266,9 @@ public class WabProcessor {
 
 				parentFile.mkdirs();
 
-				OutputStream outputStream = new FileOutputStream(file);
-
-				try {
-					StreamUtil.transfer(zipInputStream, outputStream, false);
-				}
-				finally {
-					outputStream.close();
-				}
+				StreamUtil.transfer(
+					StreamUtil.uncloseable(zipInputStream),
+					new FileOutputStream(file));
 			}
 		}
 		finally {
@@ -1145,22 +1140,6 @@ public class WabProcessor {
 			File file)
 		throws FileNotFoundException {
 
-		InputStream inputStream = null;
-
-		try {
-			inputStream = new FileInputStream(file);
-
-			writeJarPath(jarOutputStream, paths, path, inputStream);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
-	}
-
-	protected void writeJarPath(
-		JarOutputStream jarOutputStream, Set<String> paths, String path,
-		InputStream inputStream) {
-
 		if (paths.contains(path)) {
 			return;
 		}
@@ -1170,7 +1149,9 @@ public class WabProcessor {
 		try {
 			jarOutputStream.putNextEntry(new JarEntry(path));
 
-			StreamUtil.transfer(inputStream, jarOutputStream, false);
+			StreamUtil.transfer(
+				new FileInputStream(file),
+				StreamUtil.uncloseable(jarOutputStream));
 
 			jarOutputStream.closeEntry();
 		}

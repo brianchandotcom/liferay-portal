@@ -45,19 +45,10 @@ public class CollectorOutputProcessor
 			new UnsyncByteArrayOutputStream();
 
 		try {
-			StreamUtil.transfer(
-				inputStream, unsyncByteArrayOutputStream, false);
+			StreamUtil.transfer(inputStream, unsyncByteArrayOutputStream);
 		}
 		catch (IOException ioe) {
 			throw new ProcessException(ioe);
-		}
-		finally {
-			try {
-				inputStream.close();
-			}
-			catch (IOException ioe) {
-				throw new ProcessException(ioe);
-			}
 		}
 
 		return unsyncByteArrayOutputStream.toByteArray();

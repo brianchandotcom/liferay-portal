@@ -159,17 +159,9 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 
 				requestBodyFile = FileUtil.createTempFile();
 
-				FileOutputStream fileOutputStream = new FileOutputStream(
-					requestBodyFile);
-
-				try {
-					StreamUtil.transfer(
-						currentRequest.getInputStream(), fileOutputStream,
-						false);
-				}
-				finally {
-					fileOutputStream.close();
-				}
+				StreamUtil.transfer(
+					StreamUtil.uncloseable(currentRequest.getInputStream()),
+					new FileOutputStream(requestBodyFile));
 
 				uploadServletRequest = new UploadServletRequestImpl(
 					new AgentHttpServletRequestWrapper(currentRequest));

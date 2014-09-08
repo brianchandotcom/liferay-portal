@@ -156,9 +156,6 @@ else {
 
 			dlSearchContainer.setTotal(totalVar);
 
-			assetEntryQuery.setEnd(dlSearchContainer.getEnd());
-			assetEntryQuery.setStart(dlSearchContainer.getStart());
-
 			resultsList = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 		}
 		else {

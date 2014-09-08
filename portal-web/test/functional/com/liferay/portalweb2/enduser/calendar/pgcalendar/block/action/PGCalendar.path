@@ -479,6 +479,11 @@
 </tr>
 <!--SCHEDULER_EVENT-->
 <tr>
+	<td>SCHEDULER_EVENT_ALL_DAY_FIELD_PNG</td>
+	<td>portal/screenshots/calendar/scheduler_event_all_day_field.png</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCHEDULER_EVENT_ALL_DAY</td>
 	<td>//div[contains(@class,'scheduler-event-all-day calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-startdate,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-enddate,'${key_endDateTime}')]</td>
 	<td></td>

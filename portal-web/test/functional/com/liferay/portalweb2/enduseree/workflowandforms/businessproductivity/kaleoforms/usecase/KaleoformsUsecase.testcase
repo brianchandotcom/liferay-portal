@@ -1436,8 +1436,8 @@
 
 		<execute macro="KaleoFormsAdmin#next" />
 
-		<execute macro="KaleoFormsAdmin#addFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="Data Definition" />
+		<execute macro="KaleoFormsAdmin#addFieldSet">
+			<var name="kfFieldSetName" value="Data Definition" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -1458,10 +1458,10 @@
 			<var name="fieldName" value="Select" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveFieldsDefinition" />
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
-		<execute macro="KaleoFormsAdmin#chooseFieldsDefinition">
-			<var name="kfFieldsDefinitionName" value="Data Definition" />
+		<execute macro="KaleoFormsAdmin#chooseFieldSet">
+			<var name="kfFieldSetName" value="Data Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />

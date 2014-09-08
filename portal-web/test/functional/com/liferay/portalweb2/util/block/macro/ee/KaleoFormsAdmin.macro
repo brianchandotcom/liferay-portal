@@ -42,17 +42,17 @@
 		<if>
 			<isset var="kfFieldsDefinitionName" />
 			<then>
-				<execute action="CPKaleoformsadminNewprocessAddfieldsdefinition#assertTextEquals" locator-key1="HEADER_TITLE" value1="${kfFieldsDefinitionName}" />
+				<execute action="CPKaleoformsadminNewprocessAddfieldset#assertTextEquals" locator-key1="HEADER_TITLE" value1="${kfFieldsDefinitionName}" />
 			</then>
 			<else>
-				<execute action="CPKaleoformsadminNewprocessAddfieldsdefinition#assertTextEquals" locator-key1="HEADER_TITLE" value1="New Fields Definition" />
+				<execute action="CPKaleoformsadminNewprocessAddfieldset#assertTextEquals" locator-key1="HEADER_TITLE" value1="New Fields Definition" />
 			</else>
 		</if>
 	</command>
 
 	<command name="assertInvalidDefinitionMessage">
-		<execute action="CPKaleoformsadminNewprocessAddfieldsdefinition#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
-		<execute action="CPKaleoformsadminNewprocessAddfieldsdefinition#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid XML schema definition." />
+		<execute action="CPKaleoformsadminNewprocessAddfieldset#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute action="CPKaleoformsadminNewprocessAddfieldset#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid XML schema definition." />
 	</command>
 
 	<command name="assertTaskNotPresent">

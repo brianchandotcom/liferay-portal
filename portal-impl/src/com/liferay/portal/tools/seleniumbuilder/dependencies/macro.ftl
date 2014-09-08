@@ -1,12 +1,11 @@
 package ${seleniumBuilderContext.getMacroPackageName(macroName)};
 
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MathUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.block.macro.BaseMacro;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
-
-import org.apache.commons.lang3.StringEscapeUtils;
 
 <#assign rootElement = seleniumBuilderContext.getMacroRootElement(macroName)>
 

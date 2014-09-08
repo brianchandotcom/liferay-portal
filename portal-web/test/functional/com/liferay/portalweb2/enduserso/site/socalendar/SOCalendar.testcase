@@ -546,7 +546,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addSchedulerEventAllDay">
+		<execute macro="CalendarEvent#addAllDayEventViaScheduler">
 			<var name="calendarName" value="${calendarName}" />
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
@@ -1116,7 +1116,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addSchedulerEventAllDay">
+		<execute macro="CalendarEvent#addAllDayEventViaScheduler">
 			<var name="calendarName" value="${calendarName}" />
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
@@ -1126,7 +1126,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#editSchedulerEventAllDay">
+		<execute macro="CalendarEvent#editAllDayEventViaScheduler">
 			<var name="calendarName" value="${calendarName}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />

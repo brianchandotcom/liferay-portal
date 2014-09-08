@@ -162,6 +162,9 @@ public class RepositoryLocalServiceImpl
 			repositoryLocalService.deleteRepository(repository);
 		}
 
+		_repositoriesByRepositoryId.remove(repositoryId);
+		_localRepositoriesByRepositoryId.remove(repositoryId);
+
 		return repository;
 	}
 

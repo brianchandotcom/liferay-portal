@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
+
 String currentFolder = ParamUtil.getString(request, "curFolder");
 String deltaFolder = ParamUtil.getString(request, "deltaFolder");
 
@@ -299,18 +301,18 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 
 			<c:choose>
 				<c:when test="<%= curArticle != null %>">
+					<liferay-portlet:renderURL varImpl="tempRowURL">
+						<portlet:param name="mvcPath" value="/edit_article.jsp" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="backURL" value="<%= currentURL %>" />
+						<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(curArticle.getGroupId()) %>" />
+						<portlet:param name="folderId" value="<%= String.valueOf(curArticle.getFolderId()) %>" />
+						<portlet:param name="articleId" value="<%= curArticle.getArticleId() %>" />
+						<portlet:param name="version" value="<%= String.valueOf(curArticle.getVersion()) %>" />
+					</liferay-portlet:renderURL>
 
 					<%
-					PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
-
-					tempRowURL.setParameter("mvcPath", "/edit_article.jsp");
-					tempRowURL.setParameter("redirect", currentURL);
-					tempRowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
-					tempRowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
-					tempRowURL.setParameter("articleId", curArticle.getArticleId());
-
-					tempRowURL.setParameter("status", String.valueOf(status));
-
 					request.setAttribute("view_entries.jsp-article", curArticle);
 
 					request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);

@@ -130,6 +130,8 @@
 	</command>
 
 	<command name="ValidateForwardURLPG" priority="4">
+		<property name="custom.properties" value="virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}" />
+
 		<execute action="Home#open" locator1="http://localhost:8080/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com" />
 		<execute action="Home#pause" locator1="3000" />
 

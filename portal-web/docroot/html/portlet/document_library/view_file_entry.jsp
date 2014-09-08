@@ -57,14 +57,6 @@ else {
 
 long fileVersionId = fileVersion.getFileVersionId();
 
-long fileEntryTypeId = 0;
-
-if (fileVersion.getModel() instanceof DLFileVersion) {
-	DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
-
-	fileEntryTypeId = dlFileVersion.getFileEntryTypeId();
-}
-
 Lock lock = fileEntry.getLock();
 
 String[] conversions = new String[0];
@@ -384,43 +376,37 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 					<liferay-ui:panel-container extended="<%= false %>" id="documentLibraryAssetPanelContainer" persistState="<%= true %>">
 
 						<%
-						if (fileEntryTypeId > 0) {
-							try {
-								DLFileEntryType fileEntryType = DLFileEntryTypeServiceUtil.getFileEntryType(fileEntryTypeId);
+						try {
+							List<DDMStructure> ddmStructures = dlFileVersionDisplayContext.getDDMStructures();
 
-								List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
+							for (DDMStructure ddmStructure : ddmStructures) {
+								Fields fields = null;
 
-								for (DDMStructure ddmStructure : ddmStructures) {
-									Fields fields = null;
-
-									try {
-										DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
-
-										fields = StorageEngineUtil.getFields(fileEntryMetadata.getDDMStorageId());
-									}
-									catch (Exception e) {
-									}
+								try {
+									fields = dlFileVersionDisplayContext.getFields(ddmStructure);
+								}
+								catch (Exception e) {
+								}
 						%>
 
-									<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" id="documentLibraryMetadataPanel" persistState="<%= true %>" title="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>">
+								<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" id="documentLibraryMetadataPanel" persistState="<%= true %>" title="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>">
 
-										<liferay-ddm:html
-											classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-											classPK="<%= ddmStructure.getPrimaryKey() %>"
-											fields="<%= fields %>"
-											fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
-											readOnly="<%= true %>"
-											requestedLocale="<%= locale %>"
-											showEmptyFieldLabel="<%= false %>"
-										/>
+									<liferay-ddm:html
+										classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+										classPK="<%= ddmStructure.getPrimaryKey() %>"
+										fields="<%= fields %>"
+										fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
+										readOnly="<%= true %>"
+										requestedLocale="<%= locale %>"
+										showEmptyFieldLabel="<%= false %>"
+									/>
 
-									</liferay-ui:panel>
+								</liferay-ui:panel>
 
 						<%
-								}
 							}
-							catch (Exception e) {
-							}
+						}
+						catch (Exception e) {
 						}
 						%>
 

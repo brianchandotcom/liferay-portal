@@ -20,15 +20,13 @@ import com.liferay.portlet.expando.service.impl.ExpandoValueLocalServiceImpl;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import junit.framework.TestCase;
-
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Raymond Augé
  */
-public class ExpandoValueConversionTest extends TestCase {
+public class ExpandoValueConversionTest {
 
 	@Test
 	public void testBoolean1() {

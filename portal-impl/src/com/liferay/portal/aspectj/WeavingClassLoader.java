@@ -67,8 +67,7 @@ public class WeavingClassLoader extends URLClassLoader {
 				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 					new UnsyncByteArrayOutputStream();
 
-				StreamUtil.transfer(
-					inputStream, unsyncByteArrayOutputStream, true);
+				StreamUtil.transfer(inputStream, unsyncByteArrayOutputStream);
 
 				data = unsyncByteArrayOutputStream.toByteArray();
 			}

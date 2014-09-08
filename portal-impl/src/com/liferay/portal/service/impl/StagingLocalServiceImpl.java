@@ -68,7 +68,6 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelNameCo
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -751,14 +750,12 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 					new RepositoryModelNameComparator<FileEntry>(true));
 
 			for (FileEntry fileEntry : fileEntries) {
-				InputStream inputStream = fileEntry.getContentStream();
-
 				try {
-					StreamUtil.transfer(inputStream, fileOutputStream, false);
+					StreamUtil.transfer(
+						fileEntry.getContentStream(),
+						StreamUtil.uncloseable(fileOutputStream));
 				}
 				finally {
-					StreamUtil.cleanUp(inputStream);
-
 					PortletFileRepositoryUtil.deletePortletFileEntry(
 						fileEntry.getFileEntryId());
 				}

@@ -126,8 +126,7 @@ public class URLWeavingAdapter extends WeavingAdaptor {
 				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 					new UnsyncByteArrayOutputStream();
 
-				StreamUtil.transfer(
-					inputStream, unsyncByteArrayOutputStream, true);
+				StreamUtil.transfer(inputStream, unsyncByteArrayOutputStream);
 
 				byte[] classData =
 					unsyncByteArrayOutputStream.unsafeGetByteArray();

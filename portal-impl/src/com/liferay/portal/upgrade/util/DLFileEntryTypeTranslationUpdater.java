@@ -14,17 +14,19 @@
 
 package com.liferay.portal.upgrade.util;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.util.TranslationUpdater;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.HashMap;
@@ -55,22 +57,116 @@ public class DLFileEntryTypeTranslationUpdater implements TranslationUpdater {
 		}
 	}
 
+	protected DLFileEntryTypeData getDlFileEntryTypeData(
+			long groupId, String dlFileEntryTypeKey)
+		throws SQLException {
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = DataAccess.getUpgradeOptimizedConnection();
+
+			preparedStatement = connection.prepareStatement(
+				"select fileEntryTypeId, name, description from " +
+					"DLFileEntryType where groupId = ? and fileEntryTypeKey " +
+					"= ?");
+
+			preparedStatement.setLong(1, groupId);
+			preparedStatement.setString(2, dlFileEntryTypeKey);
+
+			resultSet = preparedStatement.executeQuery();
+
+			if (!resultSet.next()) {
+				return null;
+			}
+
+			long fileEntryTypeId = resultSet.getLong(1);
+			String name = resultSet.getString(2);
+			String description = resultSet.getString(3);
+
+			if (resultSet.next()) {
+				throw new IllegalStateException(
+					String.format(
+						"Found at least two rows for groupId = %s and " +
+							"fileEntryTypeKey = %s on table DLFileEntryType; " +
+							"expected 1 row",
+						groupId, dlFileEntryTypeKey));
+			}
+
+			DLFileEntryTypeData dlFileEntryTypeData = new DLFileEntryTypeData(
+				fileEntryTypeId, name, description);
+
+			return dlFileEntryTypeData;
+		}
+		finally {
+			DataAccess.cleanUp(connection, preparedStatement, resultSet);
+		}
+	}
+
+	protected void updateDLFileEntryType(
+			DLFileEntryTypeData dlFileEntryTypeData, Map<Locale,
+			String> nameMap, Map<Locale, String> descriptionMap,
+			Locale defaultLocale)
+		throws SQLException {
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			connection = DataAccess.getUpgradeOptimizedConnection();
+
+			preparedStatement = connection.prepareStatement(
+				"update DLFileEntryType set name = ?, description = ? where " +
+					"fileEntryTypeId = ?");
+
+			String languageId = LanguageUtil.getLanguageId(defaultLocale);
+
+			String name = updateLocalizationXML(
+				nameMap, dlFileEntryTypeData.getName(), "Name", languageId);
+
+			preparedStatement.setString(1, name);
+
+			String description = updateLocalizationXML(
+				descriptionMap, dlFileEntryTypeData.getDescription(),
+				"Description", languageId);
+
+			preparedStatement.setString(2, description);
+
+			preparedStatement.setLong(
+				3, dlFileEntryTypeData.getDlFileEntryTypeId());
+
+			int rowCount = preparedStatement.executeUpdate();
+
+			if (rowCount != 1) {
+				throw new IllegalStateException(
+					String.format(
+						"Updated %s rows with fileEntryTypeId = %s in table" +
+							"DLFileEntryTypeId; expected 1 row", rowCount,
+							dlFileEntryTypeData.getDlFileEntryTypeId()));
+			}
+		}
+		finally {
+			DataAccess.cleanUp(connection, preparedStatement);
+		}
+	}
+
 	protected void updateGroupDLFileEntryTypes(
 			long companyId, long groupId, String nameLanguageKey,
 			String dlFileEntryTypeKey)
 		throws SQLException {
 
-		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.fetchFileEntryType(
-				groupId, dlFileEntryTypeKey);
+		DLFileEntryTypeData dlFileEntryTypeData = getDlFileEntryTypeData(
+			groupId, dlFileEntryTypeKey);
 
-		if (dlFileEntryType == null) {
+		if (dlFileEntryTypeData == null) {
 			return;
 		}
 
 		Map<Locale, String> descriptionMap =
-			dlFileEntryType.getDescriptionMap();
-		Map<Locale, String> nameMap = dlFileEntryType.getNameMap();
+			dlFileEntryTypeData.getDescriptionMap();
+		Map<Locale, String> nameMap = dlFileEntryTypeData.getNameMap();
 
 		boolean needsUpdate = false;
 
@@ -104,13 +200,53 @@ public class DLFileEntryTypeTranslationUpdater implements TranslationUpdater {
 		}
 
 		if (needsUpdate) {
-			dlFileEntryType.setDescriptionMap(descriptionMap);
-			dlFileEntryType.setModifiedDate(DateUtil.newDate());
-			dlFileEntryType.setNameMap(nameMap);
-
-			DLFileEntryTypeLocalServiceUtil.updateDLFileEntryType(
-				dlFileEntryType);
+			updateDLFileEntryType(
+				dlFileEntryTypeData, nameMap, descriptionMap, defaultLocale);
 		}
+	}
+
+	protected String updateLocalizationXML(
+		Map<Locale, String> localizationMap, String xml, String key,
+		String languageId) {
+
+		return LocalizationUtil.updateLocalization(
+			localizationMap, xml, key, languageId);
+	}
+
+	protected class DLFileEntryTypeData {
+
+		public DLFileEntryTypeData(
+			long dlFileEntryTypeId, String name, String description) {
+
+			_description = description;
+			_dlFileEntryTypeId = dlFileEntryTypeId;
+			_name = name;
+		}
+
+		public String getDescription() {
+			return _description;
+		}
+
+		public Map<Locale, String> getDescriptionMap() {
+			return LocalizationUtil.getLocalizationMap(_description);
+		}
+
+		public long getDlFileEntryTypeId() {
+			return _dlFileEntryTypeId;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		public Map<Locale, String> getNameMap() {
+			return LocalizationUtil.getLocalizationMap(_name);
+		}
+
+		private String _description;
+		private long _dlFileEntryTypeId;
+		private String _name;
+
 	}
 
 	private static Map<String, String> _DEFAULT_FILE_ENTRY_TYPE_MAP;

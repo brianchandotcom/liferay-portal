@@ -51,7 +51,7 @@ public class AxisCleanUpFilter extends BaseFilter {
 		finally {
 			try {
 				ThreadLocal<?> cacheThreadLocal =
-					(ThreadLocal<?>)_cacheField.get(null);
+					(ThreadLocal<?>)_CACHE_FIELD.get(null);
 
 				if (cacheThreadLocal != null) {
 					cacheThreadLocal.remove();
@@ -65,16 +65,20 @@ public class AxisCleanUpFilter extends BaseFilter {
 
 	private static Log _log = LogFactoryUtil.getLog(AxisCleanUpFilter.class);
 
-	private static Field _cacheField;
+	private static final Field _CACHE_FIELD;
 
 	static {
+		Field cacheField = null;
+
 		try {
-			_cacheField = ReflectionUtil.getDeclaredField(
+			cacheField = ReflectionUtil.getDeclaredField(
 				MethodCache.class, "cache");
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		_CACHE_FIELD = cacheField;
 	}
 
 }

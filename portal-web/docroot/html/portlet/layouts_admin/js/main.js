@@ -591,6 +591,8 @@ AUI.add(
 						var rangeDialog = instance._rangeDialog;
 
 						if (!rangeDialog) {
+							var updateDateRange = A.bind('_updateDateRange', instance);
+
 							var rangeNode = instance.byId('range');
 
 							rangeNode.show();
@@ -608,7 +610,7 @@ AUI.add(
 												{
 													label: Liferay.Language.get('ok'),
 													on: {
-														click: A.bind(instance._updateDateRange, instance)
+														click: updateDateRange
 													},
 													primary: true
 												},
@@ -632,7 +634,7 @@ AUI.add(
 
 							rangeDialog.get('boundingBox').delegate(
 								'key',
-								A.bind(instance._updateDateRange, instance),
+								updateDateRange,
 								'enter',
 								'input[type="text"]'
 							);

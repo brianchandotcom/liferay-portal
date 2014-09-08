@@ -537,6 +537,51 @@
 		</execute>
 	</command>
 
+	<command name="AddCalendarEventViaScheduler" priority="3">
+		<var name="eventTitle" value="Calendar Event Title" />
+		<var name="eventType" value="Regular" />
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#addSchedulerEventAllDay">
+			<var name="calendarName" value="${calendarName}" />
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOEvents#viewTodaysEventSiteEvent">
+			<var name="allDayEvent" value="true" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="schedulerEventDialogBox" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetailsPG">
+			<var name="calendarName" value="${siteName}" />
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+	</command>
+
 	<command name="AddCalendarEventWithRemindersEnabled" priority="4">
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
@@ -593,6 +638,53 @@
 
 		<execute macro="CalendarResource#viewPG">
 			<var name="calendarResourceName" value="${calendarResourceName}" />
+		</execute>
+	</command>
+
+	<command name="ChangeColorSOSiteCalendarsEventRegular" priority="3">
+		<var name="calendarType" value="Current Site Calendars" />
+		<var name="eventBackgroundColorRGB" value="(208, 219, 240)" />
+		<var name="eventFontColorRGB" value="(104, 142, 217)" />
+		<var name="eventTitle" value="Calendar Event Regular Title" />
+		<var name="eventType" value="Regular" />
+		<var name="siteCalendarColor" value="668CD9" />
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Calendar#changeColorPG">
+			<var name="calendarType" value="${calendarType}" />
+			<var name="site" value="${siteName}" />
+			<var name="siteCalendarColor" value="${siteCalendarColor}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Calendar#viewColorPG">
+			<var name="myCalendarColor" value="${siteCalendarColor}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewColorPG">
+			<var name="eventBackgroundColorRGB" value="${eventBackgroundColorRGB}" />
+			<var name="eventFontColorRGB" value="${eventFontColorRGB}" />
+			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 	</command>
 
@@ -1011,6 +1103,63 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="schedulerEventDialogBox" value="false" />
 			<var name="user" value="${userName}" />
+		</execute>
+	</command>
+
+	<command name="EditCalendarEventViaScheduler" priority="3">
+		<var name="eventTitle" value="Calendar Event Title" />
+		<var name="eventTitleEdit" value="Calendar Event Title Edit" />
+		<var name="eventType" value="Regular" />
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#addSchedulerEventAllDay">
+			<var name="calendarName" value="${calendarName}" />
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#editSchedulerEventAllDay">
+			<var name="calendarName" value="${calendarName}" />
+			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SOEvents#viewTodaysEventSiteEvent">
+			<var name="allDayEvent" value="true" />
+			<var name="eventTitle" value="${eventTitleEdit}" />
+			<var name="schedulerEventDialogBox" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitleEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewEventDetailsPG">
+			<var name="calendarName" value="${siteName}" />
+			<var name="eventTitle" value="${eventTitleEdit}" />
 		</execute>
 	</command>
 

@@ -89,7 +89,8 @@ public class GoogleDocsDLFileVersionActionsDisplayContext
 		ResourceBundle resourceBundle = ResourceUtil.getResourceBundle(
 			themeDisplay.getLocale());
 
-		String message = LanguageUtil.get(resourceBundle, "edit-in-google-docs");
+		String message = LanguageUtil.get(
+			resourceBundle, "edit-in-google-docs");
 
 		urlMenuItem.setMessage(message);
 

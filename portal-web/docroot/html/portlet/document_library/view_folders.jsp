@@ -80,7 +80,7 @@ portletURL.setParameter("struts_action", "/document_library/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
 portletURL.setParameter("displayStyle", displayStyle);
 
-SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
 searchContainer.setTotal(total);
 

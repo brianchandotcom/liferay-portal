@@ -552,7 +552,7 @@ dlSearchContainer.setResults(resultsList);
 
 						<c:if test='<%= ArrayUtil.contains(entryColumns, "downloads") %>'>
 							<liferay-ui:search-container-column-text
-								name="dowloads"
+								name="downloads"
 								value="--"
 							/>
 						</c:if>

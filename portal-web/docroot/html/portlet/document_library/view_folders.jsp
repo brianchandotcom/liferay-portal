@@ -124,7 +124,7 @@ else {
 					</portlet:renderURL>
 
 					<aui:nav-item
-						cssClass="app-view-navigation-entry folder list-group-item"
+						cssClass="navigation-entry folder list-group-item"
 						href="<%= viewDocumentsHomeURL %>"
 						iconCssClass="icon-home"
 						label='<%= HtmlUtil.escape(LanguageUtil.get(request, "home")) %>'
@@ -147,7 +147,7 @@ else {
 						</portlet:renderURL>
 
 						<aui:nav-item
-							cssClass="app-view-navigation-entry folder list-group-item"
+							cssClass="navigation-entry folder list-group-item"
 							href="<%= viewRecentDocumentsURL %>"
 							iconCssClass="icon-time"
 							label='<%= HtmlUtil.escape(LanguageUtil.get(request, "recent")) %>'
@@ -163,7 +163,7 @@ else {
 							</portlet:renderURL>
 
 							<aui:nav-item
-								cssClass="app-view-navigation-entry folder list-group-item"
+								cssClass="navigation-entry folder list-group-item"
 								href="<%= viewMyDocumentsURL %>"
 								iconCssClass="icon-user"
 								label='<%= HtmlUtil.escape(LanguageUtil.get(request, "mine")) %>'
@@ -180,7 +180,7 @@ else {
 							</portlet:renderURL>
 
 							<aui:nav-item
-								cssClass="app-view-navigation-entry folder list-group-item"
+								cssClass="navigation-entry folder list-group-item"
 								href="<%= viewBasicFileEntryTypeURL %>"
 								iconCssClass="icon-file"
 								label='<%= HtmlUtil.escape(LanguageUtil.get(request, "browse-by-type")) %>'
@@ -208,7 +208,7 @@ else {
 							</portlet:renderURL>
 
 							<aui:nav-item
-								cssClass="app-view-navigation-entry folder list-group-item"
+								cssClass="navigation-entry folder list-group-item"
 								href="<%= viewURL %>"
 								iconCssClass="icon-hdd"
 								label="<%= mountFolder.getName() %>"
@@ -232,7 +232,7 @@ else {
 								}
 						%>
 
-								<li class="app-view-navigation-entry error folder" title="<%= LanguageUtil.get(request, errorMessage) %>">
+								<li class="navigation-entry error folder" title="<%= LanguageUtil.get(request, errorMessage) %>">
 
 									<%
 									request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -264,7 +264,7 @@ else {
 					</portlet:renderURL>
 
 					<aui:nav-item
-						cssClass="app-view-navigation-entry folder list-group-item"
+						cssClass="navigation-entry folder list-group-item"
 						href="<%= viewUpURL %>"
 						iconCssClass="icon-level-up"
 						label='<%= HtmlUtil.escape(LanguageUtil.get(request, "up")) %>'
@@ -281,7 +281,7 @@ else {
 							</portlet:renderURL>
 
 							<aui:nav-item
-								cssClass="app-view-navigation-entry folder list-group-item"
+								cssClass="navigation-entry folder list-group-item"
 								href="<%= viewBasicFileEntryTypeURL %>"
 								iconCssClass="icon-file-alt"
 								label='<%= HtmlUtil.escape(LanguageUtil.get(request, "basic-document")) %>'
@@ -307,7 +307,7 @@ else {
 							</portlet:renderURL>
 
 							<aui:nav-item
-								cssClass="app-view-navigation-entry folder list-group-item"
+								cssClass="navigation-entry folder list-group-item"
 								href="<%= viewFileEntryTypeURL %>"
 								iconCssClass="<%= assetRendererFactory.getIconCssClass() %>"
 								label="<%= fileEntryType.getName(locale) %>"
@@ -328,7 +328,7 @@ else {
 					</portlet:renderURL>
 
 					<aui:nav-item
-						cssClass="app-view-navigation-entry folder list-group-item"
+						cssClass="navigation-entry folder list-group-item"
 						href="<%= viewURL %>"
 						iconCssClass="icon-level-up"
 						label='<%= LanguageUtil.get(request, "up") %>'
@@ -351,7 +351,7 @@ else {
 						</portlet:renderURL>
 
 						<aui:nav-item
-							cssClass="app-view-navigation-entry folder list-group-item"
+							cssClass="navigation-entry folder list-group-item"
 							href="<%= viewURL %>"
 							iconCssClass='<%= (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, true) > 0) ? "icon-folder-open" : "icon-folder-close" %>'
 							label="<%= curFolder.getName() %>"

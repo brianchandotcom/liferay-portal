@@ -133,7 +133,7 @@
 
 /* ---------- General navigation ---------- */
 
-.navigation-pane .app-view-navigation-entry .overlay.entry-action .btn {
+.navigation-pane .navigation-entry .overlay.entry-action .btn {
 	padding: 11px 14px;
 
 	@include respond-to(desktop) {

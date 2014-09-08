@@ -42,32 +42,14 @@ String tagName = ParamUtil.getString(request, "tag");
 
 boolean useAssetEntryQuery = (categoryId > 0) || Validator.isNotNull(tagName);
 
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-
 DLEntryListDisplayContext dlEntriesListDisplayContext = new DLEntryListDisplayContext(request, dlPortletInstanceSettings);
 
-String[] displayViews = dlPortletInstanceSettings.getDisplayViews();
-
-if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
-}
-else {
-	boolean saveDisplayStyle = ParamUtil.getBoolean(request, "saveDisplayStyle");
-
-	if (saveDisplayStyle && ArrayUtil.contains(displayViews, displayStyle)) {
-		portalPreferences.setValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", displayStyle);
-	}
-}
-
-if (!ArrayUtil.contains(displayViews, displayStyle)) {
-	displayStyle = displayViews[0];
-}
+String displayStyle = GetterUtil.getString((String)request.getAttribute("view.jsp-displayStyle"));
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/document_library/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
-portletURL.setParameter("displayStyle", String.valueOf(displayStyle));
 
 SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
@@ -543,7 +525,6 @@ dlSearchContainer.setResults(resultsList);
 								rowURL.setParameter("struts_action", "/document_library/view");
 								rowURL.setParameter("redirect", currentURL);
 								rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-								rowURL.setParameter("displayStyle", displayStyle);
 								%>
 
 								<liferay-ui:app-view-entry

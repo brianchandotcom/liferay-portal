@@ -35,8 +35,6 @@ if (searchRepositoryId == 0) {
 
 long folderId = ParamUtil.getLong(request, "folderId");
 
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-
 long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
 long searchFolderIds = ParamUtil.getLong(request, "searchFolderIds");
 
@@ -116,7 +114,6 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 						<portlet:param name="keywords" value="<%= String.valueOf(keywords) %>" />
 						<portlet:param name="showRepositoryTabs" value="<% (searchEverywhere) ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" />
 						<portlet:param name="showSearchInfo" value="<%= Boolean.TRUE.toString() %>" />
-						<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 					</portlet:renderURL>
 
 					<aui:button href="<%= changeSearchFolderURL %>" value='<%= !searchEverywhere ? "search-everywhere" : "search-in-the-current-folder" %>' />
@@ -125,7 +122,6 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 
 			<portlet:renderURL var="closeSearchURL">
 				<portlet:param name="struts_action" value="/document_library/view" />
-				<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:icon cssClass="close-search" iconCssClass="icon-remove" id="closeSearch" message="remove" url="<%= closeSearchURL %>" />

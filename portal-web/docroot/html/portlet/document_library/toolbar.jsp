@@ -27,8 +27,6 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-
 Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 
@@ -115,7 +113,6 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 					<portlet:param name="keywords" value="<%= String.valueOf(keywords) %>" />
 					<portlet:param name="showRepositoryTabs" value="<% (folderId == 0) %>" />
 					<portlet:param name="showSearchInfo" value="<%= Boolean.TRUE.toString() %>" />
-					<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 				</liferay-portlet:renderURL>
 
 				<aui:form action="<%= searchURL %>" method="get" name="fm1">

@@ -23,8 +23,6 @@ Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
 long parentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -78,7 +76,6 @@ PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/document_library/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
-portletURL.setParameter("displayStyle", displayStyle);
 
 SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
@@ -124,7 +121,6 @@ else {
 					<portlet:renderURL var="viewDocumentsHomeURL">
 						<portlet:param name="struts_action" value="/document_library/view" />
 						<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
-						<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 					</portlet:renderURL>
 
 					<aui:nav-item
@@ -148,7 +144,6 @@ else {
 							<portlet:param name="struts_action" value="/document_library/view" />
 							<portlet:param name="navigation" value="recent" />
 							<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-							<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 						</portlet:renderURL>
 
 						<aui:nav-item
@@ -165,7 +160,6 @@ else {
 								<portlet:param name="struts_action" value="/document_library/view" />
 								<portlet:param name="navigation" value="mine" />
 								<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-								<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 							</portlet:renderURL>
 
 							<aui:nav-item
@@ -183,7 +177,6 @@ else {
 								<portlet:param name="struts_action" value="/document_library/view" />
 								<portlet:param name="browseBy" value="file-entry-type" />
 								<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-								<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 							</portlet:renderURL>
 
 							<aui:nav-item
@@ -212,7 +205,6 @@ else {
 							<portlet:renderURL var="viewURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
 								<portlet:param name="folderId" value="<%= String.valueOf(mountFolder.getFolderId()) %>" />
-								<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 							</portlet:renderURL>
 
 							<aui:nav-item
@@ -269,7 +261,6 @@ else {
 					<portlet:renderURL var="viewUpURL">
 						<portlet:param name="struts_action" value="/document_library/view" />
 						<portlet:param name="structureId" value="<%= String.valueOf(0) %>" />
-						<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 					</portlet:renderURL>
 
 					<aui:nav-item
@@ -287,7 +278,6 @@ else {
 								<portlet:param name="browseBy" value="file-entry-type" />
 								<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
 								<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(0) %>" />
-								<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 							</portlet:renderURL>
 
 							<aui:nav-item
@@ -314,7 +304,6 @@ else {
 								<portlet:param name="browseBy" value="file-entry-type" />
 								<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
 								<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
-								<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 							</portlet:renderURL>
 
 							<aui:nav-item
@@ -336,7 +325,6 @@ else {
 					<portlet:renderURL var="viewURL">
 						<portlet:param name="struts_action" value="/document_library/view" />
 						<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
-						<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 					</portlet:renderURL>
 
 					<aui:nav-item
@@ -360,7 +348,6 @@ else {
 						<portlet:renderURL var="viewURL">
 							<portlet:param name="struts_action" value="/document_library/view" />
 							<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
-							<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 						</portlet:renderURL>
 
 						<aui:nav-item

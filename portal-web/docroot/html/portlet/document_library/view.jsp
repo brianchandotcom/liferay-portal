@@ -53,11 +53,18 @@ if (folder != null) {
 
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
+String[] displayViews = dlPortletInstanceSettings.getDisplayViews();
+
 if (Validator.isNull(displayStyle)) {
 	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
 }
+else {
+	boolean saveDisplayStyle = ParamUtil.getBoolean(request, "saveDisplayStyle");
 
-String[] displayViews = dlPortletInstanceSettings.getDisplayViews();
+	if (saveDisplayStyle && ArrayUtil.contains(displayViews, displayStyle)) {
+		portalPreferences.setValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", displayStyle);
+	}
+}
 
 if (!ArrayUtil.contains(displayViews, displayStyle)) {
 	displayStyle = displayViews[0];
@@ -84,6 +91,8 @@ request.setAttribute("view.jsp-folder", folder);
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
 request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
+
+request.setAttribute("view.jsp-displayStyle", displayStyle);
 %>
 
 <liferay-util:buffer var="uploadURL"><liferay-portlet:actionURL><portlet:param name="struts_action" value="/document_library/view_file_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_DYNAMIC %>" /><portlet:param name="folderId" value="{folderId}" /><portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" /></liferay-portlet:actionURL><liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" /></liferay-util:buffer>

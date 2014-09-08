@@ -23,8 +23,6 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
 
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-
 String orderByType = ParamUtil.getString(request, "orderByType");
 
 String reverseOrderByType = "asc";
@@ -39,7 +37,6 @@ if (orderByType.equals("asc")) {
 		<portlet:param name="struts_action" value="/document_library/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
 		<portlet:param name="orderByCol" value="title" />
 		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
@@ -51,7 +48,6 @@ if (orderByType.equals("asc")) {
 		<portlet:param name="struts_action" value="/document_library/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
 		<portlet:param name="orderByCol" value="creationDate" />
 		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
@@ -63,7 +59,6 @@ if (orderByType.equals("asc")) {
 		<portlet:param name="struts_action" value="/document_library/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
 		<portlet:param name="orderByCol" value="modifiedDate" />
 		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
@@ -75,7 +70,6 @@ if (orderByType.equals("asc")) {
 		<portlet:param name="struts_action" value="/document_library/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
 		<portlet:param name="orderByCol" value="downloads" />
 		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
@@ -87,7 +81,6 @@ if (orderByType.equals("asc")) {
 		<portlet:param name="struts_action" value="/document_library/view" />
 		<portlet:param name="navigation" value="<%= navigation %>" />
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 		<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
 		<portlet:param name="orderByCol" value="size" />
 		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />

@@ -190,6 +190,16 @@ public class TextFormatterTest {
 	}
 
 	@Test
+	public void testFormatQ() {
+		String original = "FORMATId";
+		String expected = "format-id";
+
+		String actual = TextFormatter.format(original, TextFormatter.Q);
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
 	public void testformatStorageSizeOneGB() throws Exception {
 		long bytes = 1024 * 1024 * 1024;
 

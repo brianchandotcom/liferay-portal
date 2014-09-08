@@ -25,7 +25,13 @@ long itemId = BeanParamUtil.getLong(item, request, "itemId");
 
 long categoryId = BeanParamUtil.getLong(item, request, "categoryId", ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
-boolean hasInfiniteStock = BeanParamUtil.getBoolean(item, request, "hasInfiniteStock");
+boolean hasInfiniteStock = false;
+
+if (item != null) {
+	hasInfiniteStock = item.hasInfiniteStock();
+}
+
+hasInfiniteStock = ParamUtil.getBoolean(request, "hasInfiniteStock", hasInfiniteStock);
 
 // Fields
 

@@ -38,6 +38,7 @@ import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 
@@ -173,7 +174,7 @@ public class RepositoryTest {
 
 		// Delete repositories
 
-		RepositoryLocalServiceUtil.deleteRepositories(_group.getGroupId());
+		DLAppLocalServiceUtil.deleteAllRepositories(_group.getGroupId());
 
 		for (int i = 0; i < repositoryIds.length; i++) {
 			long repositoryId = repositoryIds[i];
@@ -244,7 +245,7 @@ public class RepositoryTest {
 
 		// Delete repositories
 
-		RepositoryLocalServiceUtil.deleteRepositories(_group.getGroupId());
+		DLAppLocalServiceUtil.deleteAllRepositories(_group.getGroupId());
 
 		for (long repositoryId : repositoryIds) {
 			try {

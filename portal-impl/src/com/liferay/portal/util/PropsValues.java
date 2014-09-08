@@ -1784,6 +1784,8 @@ public class PropsValues {
 
 	public static final String[] TEXT_EXTRACTION_FORK_PROCESS_MIME_TYPES = PropsUtil.getArray(PropsKeys.TEXT_EXTRACTION_FORK_PROCESS_MIME_TYPES);
 
+	public static boolean THEME_CSS_DEVELOPER_MODE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.THEME_CSS_DEVELOPER_MODE));
+
 	public static boolean THEME_CSS_FAST_LOAD = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.THEME_CSS_FAST_LOAD));
 
 	public static boolean THEME_CSS_FAST_LOAD_DATE_CHECK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.THEME_CSS_FAST_LOAD_DATE_CHECK_ENABLED));

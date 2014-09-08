@@ -896,7 +896,14 @@ public class WikiPageDependentsTrashHandlerTest {
 		grandchildPage = WikiPageLocalServiceUtil.getPage(
 			grandchildPage.getResourcePrimKey());
 
-		return new WikiPages (page, redirectPage, childPage, grandchildPage);
+		WikiPages pages = new WikiPages();
+
+		pages.setChildPage(childPage);
+		pages.setGrandchildPage(grandchildPage);
+		pages.setPage(page);
+		pages.setRedirectPage(redirectPage);
+
+		return pages;
 	}
 
 	protected WikiPages givenPageWithChildAndGrandchildPage() throws Exception {
@@ -920,7 +927,13 @@ public class WikiPageDependentsTrashHandlerTest {
 			RandomTestUtil.randomString(), childPage.getTitle(), true,
 			serviceContext);
 
-		return new WikiPages (parentPage, childPage, grandchildPage);
+		WikiPages pages = new WikiPages();
+
+		pages.setChildPage(childPage);
+		pages.setGrandchildPage(grandchildPage);
+		pages.setParentPage(parentPage);
+
+		return pages;
 	}
 
 	protected WikiPages givenPageWithChildAndRedirectPage() throws Exception {
@@ -948,7 +961,13 @@ public class WikiPageDependentsTrashHandlerTest {
 		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
 			nodeId, "InitialNamePage");
 
-		return new WikiPages(page, childPage, redirectPage);
+		WikiPages pages = new WikiPages();
+
+		pages.setChildPage(childPage);
+		pages.setPage(page);
+		pages.setRedirectPage(redirectPage);
+
+		return pages;
 	}
 
 	protected WikiPages givenPageWithChildPage() throws Exception {
@@ -965,7 +984,12 @@ public class WikiPageDependentsTrashHandlerTest {
 			TestPropsValues.getUserId(), nodeId, "ChildPage",
 			RandomTestUtil.randomString(), "Page", true, serviceContext);
 
-		return new WikiPages(page, childPage);
+		WikiPages pages = new WikiPages();
+
+		pages.setChildPage(childPage);
+		pages.setPage(page);
+
+		return pages;
 	}
 
 	protected WikiPages givenPageWithRedirectPage() throws Exception {
@@ -987,7 +1011,12 @@ public class WikiPageDependentsTrashHandlerTest {
 		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
 			nodeId, "InitialNamePage");
 
-		return new WikiPages(page, redirectPage);
+		WikiPages pages = new WikiPages();
+
+		pages.setPage(page);
+		pages.setRedirectPage(redirectPage);
+
+		return pages;
 	}
 
 	protected WikiPage movePageToTrash(WikiPage page)
@@ -1013,29 +1042,6 @@ public class WikiPageDependentsTrashHandlerTest {
 	private WikiNode _node;
 
 	private class WikiPages {
-
-		public WikiPages(WikiPage... pages) throws PortalException {
-			for (WikiPage page : pages) {
-				if (Validator.isNull(page.getParentTitle()) &&
-					Validator.isNull(page.getRedirectTitle())) {
-
-					_page = page;
-				}
-				else if (Validator.isNotNull(page.getParentTitle())) {
-					WikiPage parentPage = page.getParentPage();
-
-					if (Validator.isNotNull(parentPage.getParentTitle())) {
-						_grandchildPage = page;
-					}
-					else {
-						_childPage = page;
-					}
-				}
-				else if (Validator.isNotNull(page.getRedirectTitle())) {
-					_redirectPage = page;
-				}
-			}
-		}
 
 		public WikiPage getChildPage() {
 			return _childPage;

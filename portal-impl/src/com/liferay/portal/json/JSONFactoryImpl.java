@@ -14,7 +14,6 @@
 
 package com.liferay.portal.json;
 
-import com.liferay.alloy.util.json.StringTransformer;
 import com.liferay.portal.json.jabsorb.serializer.LiferayJSONSerializer;
 import com.liferay.portal.json.jabsorb.serializer.LiferaySerializer;
 import com.liferay.portal.json.jabsorb.serializer.LocaleSerializer;
@@ -130,11 +129,8 @@ public class JSONFactoryImpl implements JSONFactory {
 	public JSONTransformer createJavaScriptNormalizerJSONTransformer(
 		List<String> javaScriptAttributes) {
 
-		StringTransformer stringTransformer = new StringTransformer();
-
-		stringTransformer.setJavaScriptAttributes(javaScriptAttributes);
-
-		return stringTransformer;
+		throw new UnsupportedOperationException(
+			"Temporally disabled until alloy-taglib is updated.");
 	}
 
 	@Override

@@ -14,8 +14,7 @@
 
 package com.liferay.portal.json;
 
-import flexjson.JSONException;
-
+import jodd.json.JsonException;
 import jodd.json.JsonParser;
 
 /**
@@ -33,7 +32,7 @@ public class PortalJsonParser extends JsonParser {
 			if (targetClassName.contains("com.liferay") &&
 				targetClassName.contains("Util")) {
 
-				throw new JSONException(
+				throw new JsonException(
 					"Not instantiating " + targetClassName + " at " + path);
 			}
 		}

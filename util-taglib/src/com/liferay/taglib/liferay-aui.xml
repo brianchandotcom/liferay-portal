@@ -231,6 +231,7 @@
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
+				<writeInJSP>false</writeInJSP>
 			</attribute>
 			<attribute>
 				<name>excludeAttributes</name>
@@ -413,6 +414,7 @@
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
+				<writeInJSP>false</writeInJSP>
 			</attribute>
 			<attribute>
 				<name>inlineLabels</name>
@@ -994,6 +996,7 @@
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
+				<writeInJSP>false</writeInJSP>
 			</attribute>
 			<attribute>
 				<name>value</name>

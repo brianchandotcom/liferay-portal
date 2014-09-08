@@ -251,9 +251,7 @@ public class PortletResponseUtil {
 
 		FileInputStream fileInputStream = new FileInputStream(file);
 
-		FileChannel fileChannel = fileInputStream.getChannel();
-
-		try {
+		try (FileChannel fileChannel = fileInputStream.getChannel()) {
 			int contentLength = (int)fileChannel.size();
 
 			if (mimeResponse instanceof ResourceResponse) {
@@ -266,9 +264,6 @@ public class PortletResponseUtil {
 			fileChannel.transferTo(
 				0, contentLength,
 				Channels.newChannel(mimeResponse.getPortletOutputStream()));
-		}
-		finally {
-			fileChannel.close();
 		}
 	}
 

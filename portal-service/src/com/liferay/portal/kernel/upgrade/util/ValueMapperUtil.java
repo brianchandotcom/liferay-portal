@@ -33,10 +33,10 @@ public class ValueMapperUtil {
 
 		FileUtil.mkdirs(tmpDir);
 
-		UnsyncBufferedWriter unsyncBufferedWriter = new UnsyncBufferedWriter(
-			new FileWriter(tmpDir + "/" + fileName + ".txt"));
+		try (UnsyncBufferedWriter unsyncBufferedWriter =
+				new UnsyncBufferedWriter(
+					new FileWriter(tmpDir + "/" + fileName + ".txt"))) {
 
-		try {
 			Iterator<Object> itr = valueMapper.iterator();
 
 			while (itr.hasNext()) {
@@ -51,9 +51,6 @@ public class ValueMapperUtil {
 					unsyncBufferedWriter.write(StringPool.NEW_LINE);
 				}
 			}
-		}
-		finally {
-			unsyncBufferedWriter.close();
 		}
 	}
 

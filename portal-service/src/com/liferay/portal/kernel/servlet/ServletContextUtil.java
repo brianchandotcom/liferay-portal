@@ -219,26 +219,25 @@ public class ServletContextUtil {
 				classNames.add(className);
 			}
 			else if (path.endsWith(_EXT_JAR)) {
-				JarInputStream jarFile = new JarInputStream(
-					servletContext.getResourceAsStream(path));
+				try (JarInputStream jarFile = new JarInputStream(
+						servletContext.getResourceAsStream(path))) {
 
-				while (true) {
-					JarEntry jarEntry = jarFile.getNextJarEntry();
+					while (true) {
+						JarEntry jarEntry = jarFile.getNextJarEntry();
 
-					if (jarEntry == null) {
-						break;
-					}
+						if (jarEntry == null) {
+							break;
+						}
 
-					String jarEntryName = jarEntry.getName();
+						String jarEntryName = jarEntry.getName();
 
-					if (jarEntryName.endsWith(_EXT_CLASS)) {
-						String className = _getClassName(jarEntryName);
+						if (jarEntryName.endsWith(_EXT_CLASS)) {
+							String className = _getClassName(jarEntryName);
 
-						classNames.add(className);
+							classNames.add(className);
+						}
 					}
 				}
-
-				jarFile.close();
 			}
 			else if (path.endsWith(StringPool.SLASH)) {
 				_getClassNames(

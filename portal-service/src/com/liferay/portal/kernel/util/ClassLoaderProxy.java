@@ -185,27 +185,26 @@ public class ClassLoaderProxy {
 		try {
 			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-				unsyncByteArrayOutputStream);
 
-			objectOutputStream.writeObject(throwable);
+			try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+					unsyncByteArrayOutputStream)) {
 
-			objectOutputStream.flush();
-			objectOutputStream.close();
+				objectOutputStream.writeObject(throwable);
+
+				objectOutputStream.flush();
+			}
 
 			UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 				new UnsyncByteArrayInputStream(
 					unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
 					unsyncByteArrayOutputStream.size());
-			ObjectInputStream objectInputStream =
-				new ClassLoaderObjectInputStream(
-					unsyncByteArrayInputStream, contextClassLoader);
 
-			throwable = (Throwable)objectInputStream.readObject();
+			try (ObjectInputStream objectInputStream =
+					new ClassLoaderObjectInputStream(
+						unsyncByteArrayInputStream, contextClassLoader)) {
 
-			objectInputStream.close();
-
-			return throwable;
+				return (Throwable)objectInputStream.readObject();
+			}
 		}
 		catch (Throwable throwable2) {
 			_log.error(throwable2, throwable2);

@@ -530,9 +530,7 @@ public class ServletResponseUtil {
 		else {
 			FileInputStream fileInputStream = new FileInputStream(file);
 
-			FileChannel fileChannel = fileInputStream.getChannel();
-
-			try {
+			try (FileChannel fileChannel = fileInputStream.getChannel()) {
 				int contentLength = (int)fileChannel.size();
 
 				response.setContentLength(contentLength);
@@ -542,9 +540,6 @@ public class ServletResponseUtil {
 				fileChannel.transferTo(
 					0, contentLength,
 					Channels.newChannel(response.getOutputStream()));
-			}
-			finally {
-				fileChannel.close();
 			}
 		}
 	}

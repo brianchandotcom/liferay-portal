@@ -95,9 +95,7 @@ public class ServiceLoader {
 			url = URLUtil.normalizeURL(url);
 		}
 
-		InputStream inputStream = url.openStream();
-
-		try {
+		try (InputStream inputStream = url.openStream()) {
 			BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(inputStream, StringPool.UTF8));
 
@@ -132,9 +130,6 @@ public class ServiceLoader {
 
 				services.add(service);
 			}
-		}
-		finally {
-			inputStream.close();
 		}
 	}
 

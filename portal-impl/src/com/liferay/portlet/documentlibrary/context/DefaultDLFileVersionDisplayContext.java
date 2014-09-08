@@ -65,12 +65,12 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public class DefaultDLFileVersionActionsDisplayContext
-	implements DLFileVersionActionsDisplayContext {
+public class DefaultDLFileVersionDisplayContext
+	implements DLFileVersionDisplayContext {
 
-	public DefaultDLFileVersionActionsDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
+	public DefaultDLFileVersionDisplayContext(
+		HttpServletRequest request, HttpServletResponse response,
+		FileVersion fileVersion)
 		throws PortalException {
 
 		_request = request;
@@ -86,7 +86,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 		}
 
 		_dlFileEntryActionsDisplayContextHelper =
-			new DefaultDLFileVersionActionsDisplayContextHelper(
+			new DefaultDLFileVersionDisplayContextHelper(
 				_themeDisplay.getPermissionChecker(), _fileEntry, fileVersion);
 
 		_fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
@@ -795,7 +795,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 	private long _companyId;
 	private String _currentURL;
 	private DLActionsDisplayContext _dlActionsDisplayContext;
-	private DefaultDLFileVersionActionsDisplayContextHelper
+	private DefaultDLFileVersionDisplayContextHelper
 		_dlFileEntryActionsDisplayContextHelper;
 	private FileEntry _fileEntry;
 	private long _fileEntryTypeId;

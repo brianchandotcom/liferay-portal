@@ -26,9 +26,9 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 /**
  * @author Iván Zaera
  */
-public class DefaultDLFileVersionActionsDisplayContextHelper {
+public class DefaultDLFileVersionDisplayContextHelper {
 
-	public DefaultDLFileVersionActionsDisplayContextHelper(
+	public DefaultDLFileVersionDisplayContextHelper(
 		PermissionChecker permissionChecker, FileEntry fileEntry,
 		FileVersion fileVersion) {
 

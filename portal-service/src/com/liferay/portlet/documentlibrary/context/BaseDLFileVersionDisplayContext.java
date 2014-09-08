@@ -27,12 +27,12 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public class BaseDLFileVersionActionsDisplayContext
-	extends BaseDLDisplayContext<DLFileVersionActionsDisplayContext>
-	implements DLFileVersionActionsDisplayContext {
+public class BaseDLFileVersionDisplayContext
+	extends BaseDLDisplayContext<DLFileVersionDisplayContext>
+	implements DLFileVersionDisplayContext {
 
-	public BaseDLFileVersionActionsDisplayContext(
-		UUID uuid, DLFileVersionActionsDisplayContext parentDLDisplayContext,
+	public BaseDLFileVersionDisplayContext(
+		UUID uuid, DLFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion) {
 

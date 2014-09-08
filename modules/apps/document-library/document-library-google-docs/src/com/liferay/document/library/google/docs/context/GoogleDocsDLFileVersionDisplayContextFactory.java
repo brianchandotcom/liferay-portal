@@ -23,8 +23,8 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.UserLocalService;
-import com.liferay.portlet.documentlibrary.context.DLFileVersionActionsDisplayContext;
-import com.liferay.portlet.documentlibrary.context.DLFileVersionActionsDisplayContextFactory;
+import com.liferay.portlet.documentlibrary.context.DLFileVersionDisplayContext;
+import com.liferay.portlet.documentlibrary.context.DLFileVersionDisplayContextFactory;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 
@@ -41,10 +41,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  */
 @Component(
-	immediate = true, service = DLFileVersionActionsDisplayContextFactory.class
+	immediate = true, service = DLFileVersionDisplayContextFactory.class
 )
-public class GoogleDocsDLFileVersionActionsDisplayContextFactory
-	implements DLFileVersionActionsDisplayContextFactory {
+public class GoogleDocsDLFileVersionDisplayContextFactory
+	implements DLFileVersionDisplayContextFactory {
 
 	@Activate
 	public void activate() throws PortalException {
@@ -61,9 +61,9 @@ public class GoogleDocsDLFileVersionActionsDisplayContextFactory
 	}
 
 	@Override
-	public DLFileVersionActionsDisplayContext
+	public DLFileVersionDisplayContext
 		getDLFileVersionActionsDisplayContext(
-			DLFileVersionActionsDisplayContext
+			DLFileVersionDisplayContext
 				parentDLFileEntryActionsDisplayContext,
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion) {
@@ -73,7 +73,7 @@ public class GoogleDocsDLFileVersionActionsDisplayContextFactory
 				new GoogleDocsMetadataHelper(fileVersion);
 
 			if (googleDocsMetadataHelper.isGoogleDocs()) {
-				return new GoogleDocsDLFileVersionActionsDisplayContext(
+				return new GoogleDocsDLFileVersionDisplayContext(
 					parentDLFileEntryActionsDisplayContext, request, response,
 					fileVersion);
 			}

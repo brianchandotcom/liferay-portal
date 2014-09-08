@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.documentlibrary.context.BaseDLFileVersionActionsDisplayContext;
-import com.liferay.portlet.documentlibrary.context.DLFileVersionActionsDisplayContext;
+import com.liferay.portlet.documentlibrary.context.BaseDLFileVersionDisplayContext;
+import com.liferay.portlet.documentlibrary.context.DLFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.context.DLMenuItemKeys;
 
 import java.util.List;
@@ -38,11 +38,11 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public class GoogleDocsDLFileVersionActionsDisplayContext
-	extends BaseDLFileVersionActionsDisplayContext {
+public class GoogleDocsDLFileVersionDisplayContext
+	extends BaseDLFileVersionDisplayContext {
 
-	public GoogleDocsDLFileVersionActionsDisplayContext(
-		DLFileVersionActionsDisplayContext parentDLDisplayContext,
+	public GoogleDocsDLFileVersionDisplayContext(
+		DLFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion) {
 

@@ -17,6 +17,8 @@ package com.liferay.portlet.documentlibrary.context;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.util.List;
 import java.util.UUID;
@@ -39,6 +41,16 @@ public class BaseDLFileVersionDisplayContext
 		super(uuid, parentDLDisplayContext, request, response);
 
 		this.fileVersion = fileVersion;
+	}
+
+	@Override
+	public List<DDMStructure> getDDMStructures() throws PortalException {
+		return parentDLDisplayContext.getDDMStructures();
+	}
+
+	@Override
+	public Fields getFields(DDMStructure ddmStructure) throws PortalException {
+		return parentDLDisplayContext.getFields(ddmStructure);
 	}
 
 	@Override

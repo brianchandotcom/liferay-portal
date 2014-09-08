@@ -436,7 +436,7 @@
 			</elseif>
 		</if>
 
-		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator-key1="DUE_DATE" value1="Due Date ${kfProcessDueDateFormatted} - (Change)" />
+		<execute action="PGKaleoformsInboxProcess#assertTextEquals" locator-key1="DUE_DATE_DATE" value1="Due Date ${kfProcessDueDateFormatted} - (Change)" />
 	</command>
 
 	<command name="withdrawSubmission">

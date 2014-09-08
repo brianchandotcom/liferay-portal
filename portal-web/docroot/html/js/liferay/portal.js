@@ -117,11 +117,11 @@
 				cached = new A.Tooltip(
 					{
 						cssClass: 'tooltip-help',
+						html: true,
 						opacity: 1,
 						stickDuration: 300,
 						visible: false,
-						zIndex: Liferay.zIndex.TOOLTIP,
-						html: true
+						zIndex: Liferay.zIndex.TOOLTIP
 					}
 				).render();
 

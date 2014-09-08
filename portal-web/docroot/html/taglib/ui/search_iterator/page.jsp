@@ -306,6 +306,8 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 
 		<%
 			request.removeAttribute("liferay-ui:search-container-row:rowId");
+			request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+			request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_ENTRY);
 		}
 		%>
 

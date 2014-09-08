@@ -1215,7 +1215,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Spacer" dynamicAttributes="false" parentClass="com.liferay.portal.kernel.servlet.taglib.TagSupport" writeBaseClass="false" writeJSP="false" />
+	<component name="Spacer" dynamicAttributes="false" parentClass="com.liferay.taglib.TagSupport" writeBaseClass="false" writeJSP="false" />
 	<component name="TranslationManager" dynamicAttributes="false">
 		<attributes>
 			<attribute>
@@ -1251,7 +1251,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Validator" className="ValidatorTagImpl" dynamicAttributes="false" parentClass="com.liferay.portal.kernel.servlet.taglib.BaseBodyTagSupport" writeJSP="false">
+	<component name="Validator" className="ValidatorTagImpl" dynamicAttributes="false" parentClass="com.liferay.taglib.BaseBodyTagSupport" writeJSP="false">
 		<attributes>
 			<attribute>
 				<name>errorMessage</name>

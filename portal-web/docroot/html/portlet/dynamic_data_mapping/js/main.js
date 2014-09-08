@@ -19,7 +19,7 @@ AUI.add(
 
 			DEFAULT: ['readOnly'],
 
-			separator: ['readOnly', 'required', 'predefinedValue', 'indexType']
+			separator: ['indexType', 'localizable', 'predefinedValue', 'readOnly', 'required']
 		};
 
 		var SETTINGS_TAB_INDEX = 1;

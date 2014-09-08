@@ -234,7 +234,7 @@ public class AssetCategoryStagedModelDataHandler
 		if (existingCategory == null) {
 			String name = getCategoryName(
 				null, portletDataContext.getScopeGroupId(), parentCategoryId,
-				category.getName(), category.getVocabularyId(), 2);
+				category.getName(), vocabularyId, 2);
 
 			serviceContext.setUuid(category.getUuid());
 
@@ -248,8 +248,7 @@ public class AssetCategoryStagedModelDataHandler
 		else {
 			String name = getCategoryName(
 				category.getUuid(), portletDataContext.getScopeGroupId(),
-				parentCategoryId, category.getName(),
-				category.getVocabularyId(), 2);
+				parentCategoryId, category.getName(), vocabularyId, 2);
 
 			importedCategory = AssetCategoryLocalServiceUtil.updateCategory(
 				userId, existingCategory.getCategoryId(), parentCategoryId,

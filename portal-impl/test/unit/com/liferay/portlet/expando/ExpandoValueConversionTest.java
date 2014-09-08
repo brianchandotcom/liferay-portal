@@ -98,7 +98,7 @@ public class ExpandoValueConversionTest {
 			ExpandoColumnConstants.BOOLEAN_ARRAY, "[other,false]");
 	}
 
-	@Test
+	@Test(expected = TypeConversionException.class)
 	public void testBooleanArray6() {
 		boolean[] convertedBoooleans =
 			_converter.convertType(
@@ -339,7 +339,7 @@ public class ExpandoValueConversionTest {
 			ExpandoColumnConstants.DOUBLE_ARRAY, "[0.34,other]");
 	}
 
-	@Test
+	@Test(expected = TypeConversionException.class)
 	public void testDoubleArray6() {
 		double double1 = 34.67;
 		double double2 = 12.45;
@@ -462,7 +462,7 @@ public class ExpandoValueConversionTest {
 			ExpandoColumnConstants.FLOAT_ARRAY, "[0.34,other]");
 	}
 
-	@Test
+	@Test(expected = TypeConversionException.class)
 	public void testFloatArray6() {
 		float float1 = 34.67f;
 		float float2 = 12.45f;
@@ -593,7 +593,7 @@ public class ExpandoValueConversionTest {
 			ExpandoColumnConstants.INTEGER_ARRAY, "[0,56.23]");
 	}
 
-	@Test
+	@Test(expected = TypeConversionException.class)
 	public void testIntegerArray6() {
 		Integer integer1 = 34;
 		Integer integer2 = 12;
@@ -720,7 +720,7 @@ public class ExpandoValueConversionTest {
 			ExpandoColumnConstants.LONG_ARRAY, "[0,56.23]");
 	}
 
-	@Test
+	@Test(expected = TypeConversionException.class)
 	public void testLongArray6() {
 		Long long1 = 34L;
 		Long long2 = 12L;
@@ -991,7 +991,7 @@ public class ExpandoValueConversionTest {
 			ExpandoColumnConstants.SHORT_ARRAY, "[0,12344535]");
 	}
 
-	@Test
+	@Test(expected = TypeConversionException.class)
 	public void testShortArray6() {
 		Short short1 = 34;
 		Short short2 = 12;

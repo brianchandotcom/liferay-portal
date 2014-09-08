@@ -14,13 +14,17 @@
 
 package com.liferay.portal.kernel.upgrade;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.util.TranslationUpdater;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.model.Company;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * @author Adolfo Pérez
@@ -29,16 +33,82 @@ public abstract class BaseUpgradeTranslations extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		List<Group> groups = GroupLocalServiceUtil.getGroups(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		long classNameId = getClassNameId(Company.class);
 
-		for (Group group : groups) {
+		Iterable<Long[]> companyAndGroupIds = getCompanyAndGroupIds(
+			classNameId);
+
+		for (Long[] companyAndGroupId : companyAndGroupIds) {
+			Long companyId = companyAndGroupId[0];
+			Long groupId = companyAndGroupId[1];
+
 			for (TranslationUpdater translationUpdater :
 					getTranslationUpdaters()) {
 
-				translationUpdater.update(
-					group.getCompanyId(), group.getGroupId());
+				translationUpdater.update(companyId, groupId);
 			}
+		}
+	}
+
+	protected long getClassNameId(Class<?> modelClass) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = DataAccess.getUpgradeOptimizedConnection();
+
+			preparedStatement = connection.prepareStatement(
+				"select classNameId from ClassName_ where value = ?");
+
+			preparedStatement.setString(1, modelClass.getName());
+
+			resultSet = preparedStatement.executeQuery();
+
+			if (!resultSet.next()) {
+				throw new IllegalStateException(
+					String.format(
+						"No row found in table ClassName_ for value %s",
+						modelClass.getName()));
+			}
+
+			return resultSet.getLong(1);
+		}
+		finally {
+			DataAccess.cleanUp(connection, preparedStatement, resultSet);
+		}
+	}
+
+	protected Iterable<Long[]> getCompanyAndGroupIds(long classNameId)
+		throws SQLException {
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = DataAccess.getUpgradeOptimizedConnection();
+			preparedStatement = connection.prepareStatement(
+				"select companyId, groupId from Group_ where classNameId = ?");
+
+			preparedStatement.setLong(1, classNameId);
+			resultSet = preparedStatement.executeQuery();
+
+			Collection<Long[]> companyAndGroupIds = new ArrayList<Long[]>();
+
+			while (resultSet.next()) {
+				Long[] companyIdAndGroupId = new Long[2];
+
+				companyIdAndGroupId[0] = resultSet.getLong(1);
+				companyIdAndGroupId[1] = resultSet.getLong(2);
+
+				companyAndGroupIds.add(companyIdAndGroupId);
+			}
+
+			return companyAndGroupIds;
+		}
+		finally {
+			DataAccess.cleanUp(connection, preparedStatement, resultSet);
 		}
 	}
 

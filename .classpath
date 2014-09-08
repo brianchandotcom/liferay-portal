@@ -40,6 +40,7 @@
 	<classpathentry kind="lib" path="lib/development/ecj.jar"/>
 	<classpathentry kind="lib" path="lib/development/error-prone-ant.jar"/>
 	<classpathentry kind="lib" path="lib/development/firebird.jar"/>
+	<classpathentry kind="lib" path="lib/development/gson.jar"/>
 	<classpathentry kind="lib" path="lib/development/hamcrest-core.jar"/>
 	<classpathentry kind="lib" path="lib/development/hamcrest-library.jar"/>
 	<classpathentry kind="lib" path="lib/development/hsql.jar"/>

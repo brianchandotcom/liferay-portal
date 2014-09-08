@@ -215,6 +215,11 @@ else {
 								localizeLabel="<%= false %>"
 								selected="<%= (mountFolder.getFolderId() == folderId) %>"
 							>
+
+								<%
+								request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+								%>
+
 								<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 							</aui:nav-item>
 
@@ -358,6 +363,11 @@ else {
 							localizeLabel="<%= false %>"
 							selected="<%= (curFolder.getFolderId() == folderId) %>"
 						>
+
+							<%
+							request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+							%>
+
 							<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 						</aui:nav-item>
 

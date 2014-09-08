@@ -297,9 +297,6 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 			],
 			rowIds: '<%= RowChecker.ROW_IDS %>',
 			scopeGroupId: '<%= scopeGroupId %>',
-			select: {
-				displayViews: ['<%= StringUtil.merge(escapedDisplayViews, "','") %>']
-			},
 			syncMessageDisabled: <%= !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE %>,
 			syncMessageSuppressed: <%= !GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true")) %>,
 			trashEnabled: <%= TrashUtil.isTrashEnabled(scopeGroupId) %>,

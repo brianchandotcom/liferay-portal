@@ -53,10 +53,6 @@ AUI.add(
 						setter: A.one
 					},
 
-					displayViews: {
-						validator: Lang.isObject
-					},
-
 					folderContainer: {
 						setter: A.one
 					},
@@ -127,26 +123,6 @@ AUI.add(
 						var instance = this;
 
 						A.Array.invoke(instance._eventHandles, 'detach');
-					},
-
-					syncDisplayStyleToolbar: function() {
-						var instance = this;
-
-						var displayViews = instance.get('displayViews');
-
-						var length = displayViews.length;
-
-						if (length > 1) {
-							var displayStyleButtonGroup = instance._displayStyleToolbar.getData(DISPLAY_STYLE_BUTTON_GROUP);
-
-							if (displayStyleButtonGroup) {
-								var displayStyle = instance._getDisplayStyle(instance._displayStyle);
-
-								var selectedIndex = AArray.indexOf(displayViews, displayStyle);
-
-								displayStyleButtonGroup.select(selectedIndex);
-							}
-						}
 					},
 
 					_getDisplayStyle: function(currentDisplayStyle, style) {

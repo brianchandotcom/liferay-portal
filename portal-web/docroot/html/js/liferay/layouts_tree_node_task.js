@@ -7,7 +7,7 @@ AUI.add(
 			{
 				EXTENDS: A.TreeNodeTask,
 
-				NAME: 'liferay-layouts-tree-node-task',
+				NAME: 'layoutstreenodetask',
 
 				prototype: {
 					renderUI: function() {
@@ -39,6 +39,7 @@ AUI.add(
 						var instance = this;
 
 						instance._syncIconCheckUI();
+
 						instance.get('contentBox').toggleClass(A.getClassName('tree', 'node', 'checked'), val);
 					}
 				}

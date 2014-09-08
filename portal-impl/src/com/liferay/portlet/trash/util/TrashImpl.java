@@ -105,7 +105,8 @@ public class TrashImpl implements Trash {
 			className);
 
 		String rootContainerModelName = LanguageUtil.get(
-			themeDisplay.getLocale(), trashHandler.getRootContainerModelName());
+			themeDisplay.getLocale(),
+			trashHandler.getRootContainerModelTitle(classPK));
 
 		if (classPK == 0) {
 			PortalUtil.addPortletBreadcrumbEntry(

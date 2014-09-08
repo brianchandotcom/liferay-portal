@@ -139,6 +139,11 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 	}
 
 	@Override
+	public String getSubcontainerModelName() {
+		return "folder";
+	}
+
+	@Override
 	public String getSystemEventClassName() {
 		return DLFolderConstants.getClassName();
 	}

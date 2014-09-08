@@ -75,7 +75,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getContainerModelName() {
+	public String getContainerModelName(long classPK) {
 		return "category";
 	}
 
@@ -180,7 +180,19 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public String getRootContainerModelName() {
+		return "category";
+	}
+
+	@Override
+	public String getRootContainerModelTitle(long containerModelId)
+		throws PortalException {
+
 		return "home";
+	}
+
+	@Override
+	public String getSubcontainerModelName() {
+		return "category";
 	}
 
 	@Override

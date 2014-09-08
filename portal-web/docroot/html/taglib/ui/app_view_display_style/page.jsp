@@ -38,6 +38,7 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 
 							<%
 							displayStyleURL.setParameter("displayStyle", dataStyle);
+							displayStyleURL.setParameter("saveDisplayStyle", Boolean.TRUE.toString());
 							%>
 
 							<aui:nav-item

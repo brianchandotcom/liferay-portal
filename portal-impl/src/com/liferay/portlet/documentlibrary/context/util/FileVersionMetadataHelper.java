@@ -37,7 +37,8 @@ import java.util.List;
 public class FileVersionMetadataHelper {
 
 	public FileVersionMetadataHelper(FileVersion fileVersion) {
-		this(fileVersion, DLFileEntryMetadataLocalServiceUtil.getService(),
+		this(
+			fileVersion, DLFileEntryMetadataLocalServiceUtil.getService(),
 			DLFileEntryTypeServiceUtil.getService(),
 			StorageEngineUtil.getStorageEngine());
 	}

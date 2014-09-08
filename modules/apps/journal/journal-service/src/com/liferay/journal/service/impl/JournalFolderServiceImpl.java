@@ -164,8 +164,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		OrderByComparator<?> obc) {
 
 		return getFoldersAndArticles(
-			groupId, JournalFolderConstants.DEFAULT_USER_ID, folderId, status,
-			start, end, obc);
+			groupId, 0, folderId, status, start, end, obc);
 	}
 
 	@Override
@@ -226,8 +225,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	public int getFoldersAndArticlesCount(
 		long groupId, long folderId, int status) {
 
-		return getFoldersAndArticlesCount(
-			groupId, JournalFolderConstants.DEFAULT_USER_ID, folderId, status);
+		return getFoldersAndArticlesCount(groupId, 0, folderId, status);
 	}
 
 	@Override

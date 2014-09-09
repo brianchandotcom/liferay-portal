@@ -4398,12 +4398,10 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a toggle UI component.</description>
 		<name>toggle</name>
 		<tag-class>com.liferay.taglib.ui.ToggleTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Whether the content is shown by default.</description>
 			<name>defaultShowContent</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4415,13 +4413,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets the text to display for the link to hide the content.</description> 
 			<name>hideMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Identifies the component instance.</description>
 			<name>id</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4432,7 +4428,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Sets the text to display for the link to show the content.</description>
 			<name>showMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

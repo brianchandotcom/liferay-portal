@@ -1087,7 +1087,7 @@
 		</execute>
 	</command>
 
-	<command name="AdvancedSearchOrganizationAddress" priority="3">
+	<command known-issues="LPS-49879" name="AdvancedSearchOrganizationAddress" priority="3">
 		<var name="orgAddressCity" value="Diamond Bar" />
 		<var name="orgAddressCountry" value="United States" />
 		<var name="orgAddressPostal" value="41111" />
@@ -1202,7 +1202,7 @@
 		</execute>
 	</command>
 
-	<command name="AdvancedSearchUser" priority="4">
+	<command known-issues="LPS-49530" name="AdvancedSearchUser" priority="4">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />

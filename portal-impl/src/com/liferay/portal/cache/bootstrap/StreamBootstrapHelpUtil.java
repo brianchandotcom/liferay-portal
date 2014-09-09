@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.io.AnnotatedObjectInputStream;
 import com.liferay.portal.kernel.io.AnnotatedObjectOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.InitialThreadLocal;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.SocketUtil;
@@ -47,8 +48,11 @@ import java.net.SocketTimeoutException;
 
 import java.nio.channels.ServerSocketChannel;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -79,9 +83,67 @@ public class StreamBootstrapHelpUtil {
 		return serverSocket.getLocalSocketAddress();
 	}
 
+	public static synchronized void start() {
+		if (!_started) {
+			_started = true;
+		}
+
+		if (_deferredEhcaches.isEmpty()) {
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Loading deferred caches");
+		}
+
+		try {
+			for (String cacheManagerName : _deferredEhcaches.keySet()) {
+				List<String> cacheNames = _deferredEhcaches.get(
+					cacheManagerName);
+
+				if (cacheNames.isEmpty()) {
+					continue;
+				}
+
+				loadCachesFromCluster(
+					cacheManagerName,
+					cacheNames.toArray(new String[cacheNames.size()]));
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to load cache data from the cluster", e);
+			}
+		}
+		finally {
+			_deferredEhcaches.clear();
+		}
+	}
+
+	protected static boolean isSkipped() {
+		return _skipBootstrapThreadLocal.get();
+	}
+
 	protected static void loadCachesFromCluster(
 			String portalCacheManagerName, String ... portalCacheNames)
 		throws Exception {
+
+		synchronized (StreamBootstrapHelpUtil.class) {
+			if (!_started) {
+				List<String> cacheNames = _deferredEhcaches.get(
+					portalCacheManagerName);
+
+				if (cacheNames == null) {
+					cacheNames = new ArrayList<String>();
+
+					_deferredEhcaches.put(portalCacheManagerName, cacheNames);
+				}
+
+				cacheNames.addAll(Arrays.asList(portalCacheNames));
+
+				return;
+			}
+		}
 
 		List<Address> clusterNodeAddresses =
 			ClusterExecutorUtil.getClusterNodeAddresses();
@@ -186,7 +248,7 @@ public class StreamBootstrapHelpUtil {
 							break;
 						}
 
-						EhcacheStreamBootstrapCacheLoader.setSkip();
+						_skipBootstrapThreadLocal.set(Boolean.TRUE);
 
 						try {
 							portalCache =
@@ -194,7 +256,7 @@ public class StreamBootstrapHelpUtil {
 									portalCacheManager.getCache((String)object);
 						}
 						finally {
-							EhcacheStreamBootstrapCacheLoader.resetSkip();
+							_skipBootstrapThreadLocal.remove();
 						}
 					}
 					else {
@@ -232,8 +294,15 @@ public class StreamBootstrapHelpUtil {
 		new MethodKey(
 			StreamBootstrapHelpUtil.class, "createServerSocketFromCluster",
 			String.class, List.class);
+	private static final Map<String, List<String>> _deferredEhcaches =
+		new HashMap<String, List<String>>();
 	private static ServerSocketConfigurator _serverSocketConfigurator =
 		new SocketCacheServerSocketConfiguration();
+	private static ThreadLocal<Boolean> _skipBootstrapThreadLocal =
+		new InitialThreadLocal<Boolean>(
+			StreamBootstrapHelpUtil.class + "._skipBootstrapThreadLocal",
+			false);
+	private static boolean _started;
 
 	private static class CacheElement implements Serializable {
 
@@ -309,13 +378,13 @@ public class StreamBootstrapHelpUtil {
 							portalCacheManager.getCache(portalCacheName);
 
 					if (portalCache == null) {
-						EhcacheStreamBootstrapCacheLoader.setSkip();
+						_skipBootstrapThreadLocal.set(Boolean.TRUE);
 
 						try {
 							portalCacheManager.getCache(portalCacheName);
 						}
 						finally {
-							EhcacheStreamBootstrapCacheLoader.resetSkip();
+							_skipBootstrapThreadLocal.remove();
 						}
 
 						continue;

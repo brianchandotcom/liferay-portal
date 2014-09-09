@@ -17,12 +17,7 @@ package com.liferay.portal.cache.bootstrap;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InitialThreadLocal;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import net.sf.ehcache.CacheManager;
@@ -34,51 +29,6 @@ import net.sf.ehcache.bootstrap.BootstrapCacheLoader;
  * @author Sherry Yang
  */
 public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
-
-	public static void resetSkip() {
-		_skipBootstrapThreadLocal.remove();
-	}
-
-	public static void setSkip() {
-		_skipBootstrapThreadLocal.set(Boolean.TRUE);
-	}
-
-	public static synchronized void start() {
-		if (!_started) {
-			_started = true;
-		}
-
-		if (_deferredEhcaches.isEmpty()) {
-			return;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Loading deferred caches");
-		}
-
-		try {
-			for (String cacheManagerName : _deferredEhcaches.keySet()) {
-				List<String> cacheNames = _deferredEhcaches.get(
-					cacheManagerName);
-
-				if (cacheNames.isEmpty()) {
-					continue;
-				}
-
-				StreamBootstrapHelpUtil.loadCachesFromCluster(
-					cacheManagerName,
-					cacheNames.toArray(new String[cacheNames.size()]));
-			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to load cache data from the cluster", e);
-			}
-		}
-		finally {
-			_deferredEhcaches.clear();
-		}
-	}
 
 	public EhcacheStreamBootstrapCacheLoader(Properties properties) {
 		if (properties != null) {
@@ -96,28 +46,7 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 	}
 
 	public void doLoad(Ehcache ehcache) {
-		synchronized (EhcacheStreamBootstrapCacheLoader.class) {
-			if (!_started) {
-				CacheManager cacheManager = ehcache.getCacheManager();
-
-				String cacheManagerName = cacheManager.getName();
-
-				List<String> cacheNames = _deferredEhcaches.get(
-					cacheManagerName);
-
-				if (cacheNames == null) {
-					cacheNames = new ArrayList<String>();
-
-					_deferredEhcaches.put(cacheManagerName, cacheNames);
-				}
-
-				cacheNames.add(ehcache.getName());
-
-				return;
-			}
-		}
-
-		if (_skipBootstrapThreadLocal.get()) {
+		if (StreamBootstrapHelpUtil.isSkipped()) {
 			return;
 		}
 
@@ -158,15 +87,6 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		EhcacheStreamBootstrapCacheLoader.class);
-
-	private static final Map<String, List<String>> _deferredEhcaches =
-		new HashMap<String, List<String>>();
-	private static final ThreadLocal<Boolean> _skipBootstrapThreadLocal =
-		new InitialThreadLocal<Boolean>(
-			EhcacheStreamBootstrapCacheLoader.class +
-				"._skipBootstrapThreadLocal",
-			false);
-	private static boolean _started;
 
 	private final boolean _bootstrapAsynchronously;
 

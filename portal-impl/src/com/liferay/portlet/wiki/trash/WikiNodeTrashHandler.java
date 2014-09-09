@@ -15,7 +15,6 @@
 package com.liferay.portlet.wiki.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -30,6 +29,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.asset.WikiNodeTrashRenderer;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -47,8 +47,9 @@ import javax.portlet.PortletURL;
  * Implements trash handling for the wiki node entity.
  *
  * @author Eudaldo Alonso
+ * @author Roberto Díaz
  */
-public class WikiNodeTrashHandler extends BaseTrashHandler {
+public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 
 	@Override
 	public void checkRestorableEntry(
@@ -87,6 +88,13 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 	@Override
 	public String getClassName() {
 		return WikiNode.class.getName();
+	}
+
+	@Override
+	public String getContainerModelTitle(long classPK) throws PortalException {
+		WikiNode node = WikiNodeLocalServiceUtil.getNode(classPK);
+
+		return TrashUtil.getOriginalTitle(node.getName());
 	}
 
 	@Override

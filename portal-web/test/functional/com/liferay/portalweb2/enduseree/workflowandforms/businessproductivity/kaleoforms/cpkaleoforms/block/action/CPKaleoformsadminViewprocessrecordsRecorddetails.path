@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>CPKaleoformsadminViewProcessRecordsRecorddetails</title>
+<title>CPKaleoformsadminViewprocessrecordsRecorddetails</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CPKaleoformsadminViewProcessRecordsRecorddetails</td></tr>
+<tr><td rowspan="1" colspan="3">CPKaleoformsadminViewprocessrecordsRecorddetails</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>CPKaleoformsadminViewProcessRecordsRecorddetails</td>
+	<td>CPKaleoformsadminViewprocessrecordsRecorddetails</td>
 </tr>
 <tr>
 	<td></td>
@@ -28,19 +28,19 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CURRENT_ENTRY-->
+<!--CURRENT_RECORD-->
 <tr>
-	<td>CURRENT_ENTRY_VERSION</td>
+	<td>CURRENT_RECORD_VERSION</td>
 	<td>//span[@class='workflow-version']/strong</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CURRENT_ENTRY_STATUS</td>
+	<td>CURRENT_RECORD_STATUS</td>
 	<td>//span[contains(@class,'workflow-status')]/strong</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CURRENT_ENTRY_FIELD</td>
+	<td>CURRENT_RECORD_FIELD</td>
 	<td>//label[contains(.,'${key_fieldName}')]/../../div[contains(.,'${key_fieldName}') and contains(.,'${key_kfProcessFieldData}')]</td>
 	<td></td>
 </tr>

@@ -234,7 +234,7 @@
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="saveNewProcess">
+	<command name="saveProcessRecord">
 		<execute action="PGKaleoformsSubmitnew#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />

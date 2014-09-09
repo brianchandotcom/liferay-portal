@@ -245,12 +245,7 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 				<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 
 				<c:if test="<%= PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED %>">
-
-					<%
-					boolean showImageContainer = true;
-					%>
-
-					<%@ include file="/html/portlet/document_library/view_file_entry_preview.jspf" %>
+					<% dlFileVersionDisplayContext.renderPreview(request, response); %>
 				</c:if>
 
 				<c:if test="<%= dlFileVersionDisplayContext.isAssetMetadataVisible() && PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED %>">

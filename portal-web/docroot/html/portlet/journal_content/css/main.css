@@ -42,26 +42,6 @@
 			padding: 0.8em 0.5em;
 		}
 	}
-
-	.portlet-borderless-container, .portlet-content {
-		.lfr-icon-actions {
-			.btn.dropdown-toggle {
-				background-color: inherit;
-			}
-
-			.lfr-icon-action-add {
-				font-size: 14px;
-				vertical-align: inherit;
-
-				a {
-					background: none;
-					border: 0;
-					padding: 0;
-					vertical-align: inherit;
-				}
-			}
-		}
-	}
 }
 
 .portlet-configuration {

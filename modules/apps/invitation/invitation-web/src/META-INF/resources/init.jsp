@@ -13,9 +13,31 @@
  * details.
  */
 --%>
+<%@ taglib uri="/META-INF/c.tld" prefix="c" %>
+<%@ taglib uri="/META-INF/aui.tld" prefix="aui" %>
+<%@ taglib uri="/META-INF/liferay-portlet-ext.tld" prefix="liferay-portlet" %>
+<%@ taglib uri="/META-INF/liferay-portlet_2_0.tld" prefix="portlet" %>
+<%@ taglib uri="/META-INF/liferay-theme.tld" prefix="liferay-theme" %>
+<%@ taglib uri="/META-INF/liferay-ui.tld" prefix="liferay-ui" %>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
-<%@ page import="com.liferay.portlet.invitation.util.InvitationUtil" %>
+<%@ page import="com.liferay.invitation.web.util.InvitationUtil" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.LocalizationUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.util.ContentUtil" %>
 
-<%@ include file="/html/portlet/invitation/init-ext.jsp" %>
+<%@ page import="java.util.Set" %>
+
+<%@ page import="javax.portlet.ActionRequest" %><%@
+page import="javax.portlet.PortletURL" %><%@
+page import="javax.portlet.WindowState" %>
+
+<liferay-theme:defineObjects />
+<portlet:defineObjects />
+
+<%@ include file="/init-ext.jsp" %>

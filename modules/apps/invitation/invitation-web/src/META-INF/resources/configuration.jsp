@@ -14,7 +14,13 @@
  */
 --%>
 
-<%@ include file="/html/portlet/invitation/init.jsp" %>
+<%@ include file="/init.jsp" %>
+
+<%
+String emailMessageBody = portletPreferences.getValue("email.message.body", "");
+
+String emailMessageSubject = portletPreferences.getValue("email.message.subject", "");
+%>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
 
@@ -25,10 +31,10 @@
 	<liferay-ui:error key="emailMessageSubject" message="please-enter-a-valid-subject" />
 
 	<liferay-ui:email-notification-settings
-		emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailMessageBody", "preferences", ContentUtil.get(PropsValues.INVITATION_EMAIL_MESSAGE_BODY)) %>'
+		emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailMessageBody", "preferences", ContentUtil.get(emailMessageBody)) %>'
 		emailDefinitionTerms="<%= InvitationUtil.getEmailDefinitionTerms(renderRequest) %>"
 		emailParam="emailMessage"
-		emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailMessageSubject", "preferences", ContentUtil.get(PropsValues.INVITATION_EMAIL_MESSAGE_SUBJECT)) %>'
+		emailSubject='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailMessageSubject", "preferences", ContentUtil.get(emailMessageSubject)) %>'
 		showEmailEnabled="<%= false %>"
 	/>
 

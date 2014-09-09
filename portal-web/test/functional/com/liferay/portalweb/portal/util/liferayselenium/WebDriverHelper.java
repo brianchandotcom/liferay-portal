@@ -123,25 +123,18 @@ public class WebDriverHelper {
 		}
 	}
 
-	public void click(String locator) {
-		if (locator.contains("x:")) {
-			String url = getHtmlNodeHref(locator);
+	public static void click(WebDriver webDriver, String locator) {
+		WebElement webElement = getWebElement(webDriver, locator);
 
-			open(url);
+		try {
+			webElement.click();
 		}
-		else {
-			WebElement webElement = getWebElement(locator);
-
-			try {
-				webElement.click();
+		catch (Exception e) {
+			if (!webElement.isDisplayed()) {
+				scrollWebElementIntoView(webDriver, webElement);
 			}
-			catch (Exception e) {
-				if (!webElement.isDisplayed()) {
-					scrollWebElementIntoView(webElement);
-				}
 
-				webElement.click();
-			}
+			webElement.click();
 		}
 	}
 

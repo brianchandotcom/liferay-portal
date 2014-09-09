@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
@@ -1077,7 +1078,9 @@ public class WikiPageDependentsTrashHandlerTest {
 		return WikiPageLocalServiceUtil.getPage(page.getResourcePrimKey());
 	}
 
+	@DeleteAfterTestRun
 	private Group _group;
+
 	private WikiNode _node;
 
 	private class RelatedPages {

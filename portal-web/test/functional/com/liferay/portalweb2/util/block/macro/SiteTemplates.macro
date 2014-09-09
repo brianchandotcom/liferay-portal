@@ -176,7 +176,7 @@
 		<execute action="CPSitetemplates#assertTextEquals" locator-key1="SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
 		<execute action="CPSitetemplates#click" locator-key1="SITE_TEMPLATE_TABLE_ACTIONS" />
 		<execute action="CPSitetemplates#assertClick" locator-key1="SITE_TEMPLATE_MENULIST_VIEW_PAGES" value1="View Pages" />
-		<execute action="CPSitetemplates#selectWindow" locator1="home - Site Template Name - Liferay" />
+		<execute action="CPSitetemplates#selectWindow" locator1="home - ${siteTemplateName} - Liferay" />
 	</command>
 
 	<command name="resetPageChanges">

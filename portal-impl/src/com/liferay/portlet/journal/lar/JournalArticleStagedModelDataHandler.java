@@ -418,14 +418,6 @@ public class JournalArticleStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				JournalFolder.class);
 
-		if (article.getFolderId() !=
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, article, JournalFolder.class,
-				article.getFolderId());
-		}
-
 		long folderId = MapUtil.getLong(
 			folderIds, article.getFolderId(), article.getFolderId());
 
@@ -549,9 +541,6 @@ public class JournalArticleStagedModelDataHandler
 			}
 		}
 
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, article, DDMStructure.class);
-
 		Map<String, String> ddmStructureKeys =
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
 				DDMStructure.class + ".ddmStructureKey");
@@ -570,18 +559,12 @@ public class JournalArticleStagedModelDataHandler
 			ddmStructureId = ddmStructureIds.get(article.getClassPK());
 		}
 
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, article, DDMTemplate.class);
-
 		Map<String, String> ddmTemplateKeys =
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
 				DDMTemplate.class + ".ddmTemplateKey");
 
 		String parentDDMTemplateKey = MapUtil.getString(
 			ddmTemplateKeys, article.getTemplateId(), article.getTemplateId());
-
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, article, Layout.class);
 
 		File smallFile = null;
 

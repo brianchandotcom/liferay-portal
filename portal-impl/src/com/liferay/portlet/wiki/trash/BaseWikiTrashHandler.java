@@ -234,6 +234,11 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public String getSubcontainerModelName() {
+		return "wiki-page";
+	}
+
+	@Override
 	public void moveEntry(
 			long userId, long classPK, long containerModelId,
 			ServiceContext serviceContext)

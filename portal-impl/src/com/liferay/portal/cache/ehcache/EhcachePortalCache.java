@@ -15,6 +15,7 @@
 package com.liferay.portal.cache.ehcache;
 
 import com.liferay.portal.kernel.cache.AbstractPortalCache;
+import com.liferay.portal.kernel.cache.BootstrapLoader;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
@@ -40,10 +41,17 @@ public class EhcachePortalCache<K extends Serializable, V>
 	extends AbstractPortalCache<K, V> {
 
 	public EhcachePortalCache(
-		PortalCacheManager<K, V> portalCacheManager, Ehcache ehcache) {
+		PortalCacheManager<K, V> portalCacheManager, Ehcache ehcache,
+		BootstrapLoader bootstrapLoader) {
 
 		_portalCacheManager = portalCacheManager;
 		this.ehcache = ehcache;
+		_bootstrapLoader = bootstrapLoader;
+	}
+
+	@Override
+	public BootstrapLoader getBootstrapLoader() {
+		return _bootstrapLoader;
 	}
 
 	@Override
@@ -245,6 +253,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 	protected Ehcache ehcache;
 
+	private BootstrapLoader _bootstrapLoader;
 	private Map<CacheListener<K, V>, RegistrationPair> _cacheEventListeners =
 		new ConcurrentHashMap<CacheListener<K, V>, RegistrationPair>();
 	private PortalCacheManager<K, V> _portalCacheManager;

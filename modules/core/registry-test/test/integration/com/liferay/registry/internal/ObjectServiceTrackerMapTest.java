@@ -25,8 +25,10 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Dictionary;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jboss.arquillian.junit.Arquillian;
@@ -65,6 +67,38 @@ public class ObjectServiceTrackerMapTest {
 
 			_serviceTrackerMap = null;
 		}
+	}
+
+	@Test
+	public void testContainsKey() {
+		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+			createServiceTrackerMap();
+
+		ServiceRegistration<TrackedOne> sr1 = registerService(
+			new TrackedOne(), "aTarget");
+		ServiceRegistration<TrackedOne> sr2 = registerService(
+			new TrackedOne(), "aTarget");
+		ServiceRegistration<TrackedOne> sr3 = registerService(
+			new TrackedOne(), "aTarget2");
+		ServiceRegistration<TrackedOne> sr4 = registerService(
+			new TrackedOne(), "aTarget2");
+
+		Assert.assertTrue(serviceTrackerMap.containsKey("aTarget"));
+		Assert.assertTrue(serviceTrackerMap.containsKey("aTarget2"));
+
+		Assert.assertFalse(serviceTrackerMap.containsKey("aTarget3"));
+		Assert.assertFalse(serviceTrackerMap.containsKey(""));
+		try {
+			serviceTrackerMap.containsKey(null);
+			Assert.fail();
+		}
+		catch (NullPointerException e) {
+		}
+
+		sr1.unregister();
+		sr2.unregister();
+		sr3.unregister();
+		sr4.unregister();
 	}
 
 	@Test
@@ -414,6 +448,62 @@ public class ObjectServiceTrackerMapTest {
 		Assert.assertEquals(two, twoTwo.getTrackedOne());
 
 		serviceTrackerMap.close();
+	}
+
+	@Test
+	public void testKeySet() {
+		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+			createServiceTrackerMap();
+
+		ServiceRegistration<TrackedOne> sr1 = registerService(
+			new TrackedOne(), "aTarget");
+		ServiceRegistration<TrackedOne> sr2 = registerService(
+			new TrackedOne(), "aTarget");
+		ServiceRegistration<TrackedOne> sr3 = registerService(
+			new TrackedOne(), "aTarget2");
+		ServiceRegistration<TrackedOne> sr4 = registerService(
+			new TrackedOne(), "aTarget2");
+
+		Set<String> keySet = serviceTrackerMap.keySet();
+
+		Assert.assertEquals(keySet, new HashSet<String>(){ {
+			add("aTarget");
+			add("aTarget2");
+		}});
+
+		sr1.unregister();
+		sr2.unregister();
+		sr3.unregister();
+		sr4.unregister();
+	}
+
+	@Test
+	public void testKeySetReturnsUnmodifiableSet() {
+		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+			createServiceTrackerMap();
+
+		ServiceRegistration<TrackedOne> sr1 = registerService(
+			new TrackedOne(), "aTarget");
+		ServiceRegistration<TrackedOne> sr2 = registerService(
+			new TrackedOne(), "aTarget");
+		ServiceRegistration<TrackedOne> sr3 = registerService(
+			new TrackedOne(), "aTarget2");
+		ServiceRegistration<TrackedOne> sr4 = registerService(
+			new TrackedOne(), "aTarget2");
+
+		Set<String> keySet = serviceTrackerMap.keySet();
+
+		try {
+			keySet.remove("aTarget");
+			Assert.fail();
+		}
+		catch (UnsupportedOperationException e) {
+		}
+
+		sr1.unregister();
+		sr2.unregister();
+		sr3.unregister();
+		sr4.unregister();
 	}
 
 	@Test

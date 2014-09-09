@@ -916,7 +916,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected Properties getLanguageProperties(String fileName) {
 		StringBundler sb = new StringBundler(4);
 
-		int pos = fileName.indexOf("/docroot/html/");
+		int pos = fileName.indexOf("/docroot/");
 
 		sb.append(BASEDIR);
 

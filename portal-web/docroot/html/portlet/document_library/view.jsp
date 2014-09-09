@@ -294,10 +294,12 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 
 			],
 			rowIds: '<%= RowChecker.ROW_IDS %>',
-			scopeGroupId: '<%= scopeGroupId %>',
+			select: {
+				displayViews: ['<%= StringUtil.merge(escapedDisplayViews, "','") %>']
+			},
 			syncMessageDisabled: <%= !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE %>,
 			syncMessageSuppressed: <%= !GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true")) %>,
-			trashEnabled: <%= TrashUtil.isTrashEnabled(scopeGroupId) %>,
+			trashEnabled: <%= (scopeGroupId == repositoryId) && TrashUtil.isTrashEnabled(scopeGroupId) %>,
 			updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>,
 			uploadURL: '<%= uploadURL %>',
 			viewFileEntryURL: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/view_file_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>'

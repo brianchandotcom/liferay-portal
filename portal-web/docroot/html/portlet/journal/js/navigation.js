@@ -45,7 +45,6 @@ AUI.add(
 								displayStyle: displayStyle,
 								displayStyleCSSClass: displayStyleCSSClass,
 								displayStyleToolbar: displayStyleToolbar,
-								folderContainer: instance.byId('folderContainer'),
 								namespace: namespace,
 								portletContainerId: portletContainerId,
 								selector: 'entry-selector'

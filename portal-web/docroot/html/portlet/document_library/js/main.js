@@ -71,10 +71,8 @@ AUI.add(
 						selectConfig.displayStyle = displayStyle;
 						selectConfig.displayStyleCSSClass = displayStyleCSSClass;
 						selectConfig.displayStyleToolbar = displayStyleToolbar;
-						selectConfig.folderContainer = instance.byId('folderContainer');
 						selectConfig.namespace = namespace;
 						selectConfig.portletContainerId = portletContainerId;
-						selectConfig.repositories = config.repositories;
 						selectConfig.selector = 'entry-selector';
 
 						instance._appViewSelect = new Liferay.AppViewSelect(selectConfig);
@@ -109,13 +107,6 @@ AUI.add(
 						instance._config = config;
 
 						instance._eventHandles = eventHandles;
-
-						eventHandles.push(
-							Liferay.on(
-								config.portletId + ':portletRefreshed',
-								A.bind('destructor', instance)
-							)
-						);
 
 						instance._toggleTrashAction();
 
@@ -186,14 +177,6 @@ AUI.add(
 						var instance = this;
 
 						var trashEnabled = instance._config.trashEnabled;
-
-						if (trashEnabled) {
-							var repositoryId = instance._appViewSelect.get(STR_SELECTED_FOLDER).repositoryId;
-
-							var scopeGroupId = instance._config.scopeGroupId;
-
-							trashEnabled = (scopeGroupId === repositoryId);
-						}
 
 						instance.one('#deleteAction').toggle(!trashEnabled);
 

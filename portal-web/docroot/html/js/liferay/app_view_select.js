@@ -14,10 +14,6 @@ AUI.add(
 
 		var CSS_SELECTED = 'selected';
 
-		var DATA_FOLDER_ID = 'data-folder-id';
-
-		var DATA_REPOSITORY_ID = 'data-repository-id';
-
 		var DISPLAY_STYLE_BUTTON_GROUP = 'displayStyleButtonGroup';
 
 		var DISPLAY_STYLE_LIST = 'list';
@@ -53,21 +49,8 @@ AUI.add(
 						setter: A.one
 					},
 
-					folderContainer: {
-						setter: A.one
-					},
-
 					portletContainerId: {
 						validator: Lang.isString
-					},
-
-					repositories: {
-						validator: Lang.isArray
-					},
-
-					selectedFolder: {
-						getter: '_getSelectedFolder',
-						readOnly: true
 					},
 
 					selector: {
@@ -95,8 +78,6 @@ AUI.add(
 
 						instance._selectAllCheckbox = instance.byId('allRowIds');
 
-						instance._folderContainer = instance.get('folderContainer');
-
 						instance._selector = instance.get('selector');
 
 						instance._checkBoxesId = instance.get('checkBoxesId');
@@ -104,7 +85,6 @@ AUI.add(
 						instance._displayStyleCSSClass = instance.get('displayStyleCSSClass');
 
 						instance._eventHandles = [
-							Liferay.on(instance.ns('dataProcessed'), instance._updateSelectedEntriesStatus, instance),
 							Liferay.on('liferay-app-view-move:dragStart', instance._onDragStart, instance)
 						];
 
@@ -137,34 +117,6 @@ AUI.add(
 						return displayStyle;
 					},
 
-					_getSelectedFolder: function() {
-						var instance = this;
-
-						var selectedFolderNode = instance._folderContainer.one('.active .browse-folder');
-
-						var selectedFolderId = 0;
-						var repositoryId = 0;
-
-						if (selectedFolderNode) {
-							selectedFolderId = selectedFolderNode.attr(DATA_FOLDER_ID);
-
-							repositoryId = selectedFolderNode.attr(DATA_REPOSITORY_ID);
-
-							if (!repositoryId) {
-								var repositories = instance.get('repositories');
-
-								if (repositories) {
-									repositoryId = repositories[0].id;
-								}
-							}
-						}
-
-						return {
-							id: selectedFolderId,
-							repositoryId: repositoryId
-						};
-					},
-
 					_initHover: function() {
 						var instance = this;
 
@@ -192,22 +144,6 @@ AUI.add(
 								instance
 							)
 						);
-					},
-
-					_onDataRequest: function(event) {
-						var instance = this;
-
-						var entriesSelector = STR_DOT + instance._displayStyleCSSClass + '.selected' + ' :checkbox';
-
-						if (instance._getDisplayStyle(instance._displayStyle, DISPLAY_STYLE_LIST)) {
-							entriesSelector = 'td > :checkbox:checked';
-						}
-
-						var selectedEntries = instance._entriesContainer.all(entriesSelector);
-
-						if (selectedEntries.size()) {
-							instance._selectedEntries = selectedEntries.val();
-						}
 					},
 
 					_onDragStart: function(event) {
@@ -295,35 +231,6 @@ AUI.add(
 						instance._selectAllCheckbox.attr(CSS_SELECTED, false);
 
 						instance._toggleEntriesSelection();
-					},
-
-					_updateSelectedEntriesStatus: function() {
-						var instance = this;
-
-						var selectedEntries = instance._selectedEntries;
-
-						if (selectedEntries && selectedEntries.length) {
-							var entriesContainer = instance._entriesContainer;
-
-							A.each(
-								selectedEntries,
-								function(item, index) {
-									var entry = entriesContainer.one('input[value="' + item + '"]');
-
-									if (entry) {
-										instance._toggleSelected(entry);
-									}
-								}
-							);
-
-							selectedEntries.length = 0;
-
-							Util.checkAllBox(
-								instance._entriesContainer,
-								instance._checkBoxesId,
-								instance._selectAllCheckbox
-							);
-						}
 					}
 				}
 			}

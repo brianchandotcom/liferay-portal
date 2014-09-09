@@ -1090,10 +1090,6 @@ public class WikiPageDependentsTrashHandlerTest {
 			return _childPage.getResourcePrimKey();
 		}
 
-		public WikiPage getGrandchildPage() {
-			return _grandchildPage;
-		}
-
 		public long getGrandchildPageResourcePrimKey() {
 			return _grandchildPage.getResourcePrimKey();
 		}
@@ -1102,20 +1098,12 @@ public class WikiPageDependentsTrashHandlerTest {
 			return _initialParentPage;
 		}
 
-		public long getInitialParentPageResourcePrimKey() {
-			return _initialParentPage.getResourcePrimKey();
-		}
-
 		public WikiPage getPage() {
 			return _page;
 		}
 
 		public long getPageResourcePrimKey() {
 			return _page.getResourcePrimKey();
-		}
-
-		public WikiPage getParentPage() {
-			return _parentPage;
 		}
 
 		public long getParentPageResourcePrimKey() {

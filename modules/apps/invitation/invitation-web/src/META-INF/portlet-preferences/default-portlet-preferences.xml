@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<portlet-preferences>
+	<preference>
+		<name>email.max.recipients</name>
+		<value>20</value>
+	</preference>
+	<preference>
+		<name>email.message.body</name>
+		<value>com/liferay/invitation/web/dependencies/email_message_body.tmpl</value>
+	</preference>
+	<preference>
+		<name>email.message.subject</name>
+		<value>com/liferay/invitation/web/dependencies/email_message_subject.tmpl</value>
+	</preference>
+</portlet-preferences>

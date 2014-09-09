@@ -53,10 +53,39 @@
 		padding-left: 10px;
 	}
 
+	.alloy-editor-placeholder {
+		color: #222D3E;
+		min-height: 40px;
+		outline: 0;
+		padding-left: 10px;
+
+		&:empty:not(:focus) {
+			background: transparent;
+			border-left: 2px solid #DBDDE1;
+			color: #868B96;
+		}
+	}
+
 	.entry-title {
 		display: block;
 		font-weight: bold;
-		margin-bottom: 0.5em;
+		margin-top: 10px;
+
+		h2 {
+			font-size: 26px;
+			line-height: 40px;
+		}
+	}
+
+	.entry-subtitle {
+		font-size: 22px;
+		line-height: 40px;
+		margin-top: 10px;
+	}
+
+	.entry-content {
+		font-size: 18px;
+		margin: 20px 0 45px;
 	}
 
 	.entry.draft, .entry.pending, .entry.scheduled {

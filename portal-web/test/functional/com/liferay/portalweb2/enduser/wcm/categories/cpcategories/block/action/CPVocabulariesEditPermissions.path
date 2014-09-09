@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSION_IFRAME</td>
+	<td>//iframe</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GUEST_VIEW_CHECKBOX</td>
 	<td>//input[@id='guest_ACTION_VIEW']</td>
 	<td></td>

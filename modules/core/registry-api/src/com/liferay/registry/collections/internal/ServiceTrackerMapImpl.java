@@ -26,6 +26,8 @@ import com.liferay.registry.collections.ServiceTrackerBucket;
 import com.liferay.registry.collections.ServiceTrackerBucketFactory;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
+import java.util.Collections;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -65,6 +67,11 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 	}
 
 	@Override
+	public boolean containsKey(K key) {
+		return _serviceTrackerBuckets.containsKey(key);
+	}
+
+	@Override
 	public R getService(K key) {
 		ServiceTrackerBucket<SR, TS, R> serviceTrackerBucket =
 			_serviceTrackerBuckets.get(key);
@@ -74,6 +81,11 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 		}
 
 		return serviceTrackerBucket.getContent();
+	}
+
+	@Override
+	public Set<K> keySet() {
+		return Collections.unmodifiableSet(_serviceTrackerBuckets.keySet());
 	}
 
 	@Override

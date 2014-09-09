@@ -24,7 +24,6 @@ import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.RandomTestUtil;
-import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -34,7 +33,6 @@ import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,17 +48,6 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		_node = (WikiNode)getParentBaseModel(group, serviceContext);
-	}
 
 	@Ignore()
 	@Override
@@ -247,7 +234,5 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 			RandomTestUtil.randomString(), false, page.getFormat(),
 			page.getParentTitle(), page.getRedirectTitle(), serviceContext);
 	}
-
-	private WikiNode _node;
 
 }

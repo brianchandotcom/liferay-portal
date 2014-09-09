@@ -905,15 +905,11 @@ public class WikiPageDependentsTrashHandlerTest {
 			TestPropsValues.getUserId(), _node.getNodeId(), "InitialNamePage",
 			"RenamedPage", serviceContext);
 
-		childPage = WikiPageLocalServiceUtil.getPage(
-			childPage.getResourcePrimKey());
-
-		relatedPages.setChildPage(childPage);
-
-		grandchildPage = WikiPageLocalServiceUtil.getPage(
-			grandchildPage.getResourcePrimKey());
-
-		relatedPages.setGrandchildPage(grandchildPage);
+		relatedPages.setChildPage(
+			WikiPageLocalServiceUtil.getPage(childPage.getResourcePrimKey()));
+		relatedPages.setGrandchildPage(
+			WikiPageLocalServiceUtil.getPage(
+				grandchildPage.getResourcePrimKey()));
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(
 			_node.getNodeId(), "RenamedPage");

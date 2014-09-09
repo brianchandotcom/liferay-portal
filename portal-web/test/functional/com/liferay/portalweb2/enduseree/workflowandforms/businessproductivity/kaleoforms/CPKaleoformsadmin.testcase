@@ -234,7 +234,6 @@
 		<var name="kfFieldSetName" value="Process Field Set" />
 		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
-		<var name="processName" value="Kaleo Forms Process New" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Kaleo Forms Admin" />

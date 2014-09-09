@@ -287,13 +287,13 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 				</div>
 			</c:if>
 
+			<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "saveEntry(false, false);" %>' type="submit" value="<%= publishButtonLabel %>" />
+
 			<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveEntry(true, false);" %>' primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
 			<c:if test="<%= (entry == null) || entry.isDraft() || preview %>">
 				<aui:button name="previewButton" onClick='<%= renderResponse.getNamespace() + "previewEntry();" %>' value="preview" />
 			</c:if>
-
-			<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "saveEntry(false, false);" %>' type="submit" value="<%= publishButtonLabel %>" />
 
 			<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
 		</aui:button-row>

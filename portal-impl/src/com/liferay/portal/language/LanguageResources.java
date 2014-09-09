@@ -230,9 +230,7 @@ public class LanguageResources {
 					_log.info("Loading " + name + " from " + url);
 				}
 
-				InputStream inputStream = url.openStream();
-
-				try {
+				try (InputStream inputStream = url.openStream()) {
 					Properties inputStreamProperties = PropertiesUtil.load(
 						inputStream, StringPool.UTF8);
 
@@ -243,9 +241,6 @@ public class LanguageResources {
 							"Loading " + url + " with " +
 								inputStreamProperties.size() + " values");
 					}
-				}
-				finally {
-					inputStream.close();
 				}
 			}
 		}

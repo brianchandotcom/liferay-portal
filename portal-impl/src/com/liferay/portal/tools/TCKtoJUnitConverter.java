@@ -55,36 +55,35 @@ public class TCKtoJUnitConverter {
 	}
 
 	private void _convert(File inputFile, File outputDir) throws Exception {
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new FileReader(inputFile));
-
 		String s = StringPool.BLANK;
 
-		while ((s = unsyncBufferedReader.readLine()) != null) {
-			if (s.startsWith("Test finished: ")) {
-				int x = s.indexOf(StringPool.POUND);
-				int y = s.lastIndexOf(StringPool.SLASH, x);
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new FileReader(inputFile))) {
 
-				String className = s.substring(15, y);
+			while ((s = unsyncBufferedReader.readLine()) != null) {
+				if (s.startsWith("Test finished: ")) {
+					int x = s.indexOf(StringPool.POUND);
+					int y = s.lastIndexOf(StringPool.SLASH, x);
 
-				className = StringUtil.replace(
-					className, StringPool.SLASH, StringPool.PERIOD);
+					String className = s.substring(15, y);
 
-				y = s.indexOf(StringPool.COLON, y);
+					className = StringUtil.replace(
+						className, StringPool.SLASH, StringPool.PERIOD);
 
-				if (y == -1) {
-					y = s.length();
+					y = s.indexOf(StringPool.COLON, y);
+
+					if (y == -1) {
+						y = s.length();
+					}
+
+					className += StringPool.PERIOD + s.substring(x + 1, y);
+
+					String message = s.substring(y + 2);
+
+					_convert(className, message, outputDir);
 				}
-
-				className += StringPool.PERIOD + s.substring(x + 1, y);
-
-				String message = s.substring(y + 2);
-
-				_convert(className, message, outputDir);
 			}
 		}
-
-		unsyncBufferedReader.close();
 	}
 
 	private void _convert(String className, String message, File outputDir)

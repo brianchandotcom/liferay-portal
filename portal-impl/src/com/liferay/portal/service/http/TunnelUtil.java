@@ -91,26 +91,22 @@ public class TunnelUtil {
 
 		HttpURLConnection httpURLConnection = _getConnection(httpPrincipal);
 
-		ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-			httpURLConnection.getOutputStream());
+		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				httpURLConnection.getOutputStream())) {
 
-		objectOutputStream.writeObject(
-			new ObjectValuePair<HttpPrincipal, MethodHandler>(
-				httpPrincipal, methodHandler));
+			objectOutputStream.writeObject(
+				new ObjectValuePair<HttpPrincipal, MethodHandler>(
+					httpPrincipal, methodHandler));
 
-		objectOutputStream.flush();
-
-		objectOutputStream.close();
+			objectOutputStream.flush();
+		}
 
 		Object returnObject = null;
 
-		try {
-			ObjectInputStream objectInputStream = new ObjectInputStream(
-				httpURLConnection.getInputStream());
+		try (ObjectInputStream objectInputStream = new ObjectInputStream(
+				httpURLConnection.getInputStream())) {
 
 			returnObject = objectInputStream.readObject();
-
-			objectInputStream.close();
 		}
 		catch (EOFException eofe) {
 			if (_log.isDebugEnabled()) {

@@ -123,17 +123,14 @@ public class WebContentAction extends PortletAction {
 			}
 
 			if (articleDisplay != null) {
-				OutputStream os = resourceResponse.getPortletOutputStream();
+				try (OutputStream os =
+						resourceResponse.getPortletOutputStream()) {
 
-				try {
 					String content = articleDisplay.getContent();
 
 					byte[] bytes = content.getBytes(StringPool.UTF8);
 
 					os.write(bytes);
-				}
-				finally {
-					os.close();
 				}
 			}
 		}

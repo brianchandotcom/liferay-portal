@@ -552,17 +552,8 @@ public class PDFProcessorImpl
 
 		int previewFilesCount = 0;
 
-		PDDocument pdDocument = null;
-
-		try {
-			pdDocument = PDDocument.load(file);
-
+		try (PDDocument pdDocument = PDDocument.load(file)) {
 			previewFilesCount = pdDocument.getNumberOfPages();
-		}
-		finally {
-			if (pdDocument != null) {
-				pdDocument.close();
-			}
 		}
 
 		File[] previewFiles = new File[previewFilesCount];

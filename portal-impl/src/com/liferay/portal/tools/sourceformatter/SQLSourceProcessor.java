@@ -38,43 +38,42 @@ public class SQLSourceProcessor extends BaseSourceProcessor {
 
 		StringBundler sb = new StringBundler();
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(content));
-
 		String line = null;
 
 		String previousLineSqlCommand = StringPool.BLANK;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			line = trimLine(line, false);
+		try (UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+				new UnsyncStringReader(content))) {
 
-			if (Validator.isNotNull(line) && !line.startsWith(StringPool.TAB)) {
-				String sqlCommand = StringUtil.split(line, CharPool.SPACE)[0];
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = trimLine(line, false);
 
-				if (Validator.isNotNull(previousLineSqlCommand) &&
-					!previousLineSqlCommand.equals(sqlCommand)) {
+				if (Validator.isNotNull(line) && !line.startsWith(StringPool.TAB)) {
+					String sqlCommand = StringUtil.split(line, CharPool.SPACE)[0];
 
-					sb.append("\n");
+					if (Validator.isNotNull(previousLineSqlCommand) &&
+						!previousLineSqlCommand.equals(sqlCommand)) {
+
+						sb.append("\n");
+					}
+
+					previousLineSqlCommand = sqlCommand;
+				}
+				else {
+					previousLineSqlCommand = StringPool.BLANK;
 				}
 
-				previousLineSqlCommand = sqlCommand;
-			}
-			else {
-				previousLineSqlCommand = StringPool.BLANK;
-			}
+				String strippedQuotesLine = stripQuotes(line, CharPool.APOSTROPHE);
 
-			String strippedQuotesLine = stripQuotes(line, CharPool.APOSTROPHE);
+				if (strippedQuotesLine.contains(StringPool.QUOTE)) {
+					line = StringUtil.replace(
+						line, StringPool.QUOTE, StringPool.APOSTROPHE);
+				}
 
-			if (strippedQuotesLine.contains(StringPool.QUOTE)) {
-				line = StringUtil.replace(
-					line, StringPool.QUOTE, StringPool.APOSTROPHE);
+				sb.append(line);
+				sb.append("\n");
 			}
-
-			sb.append(line);
-			sb.append("\n");
 		}
-
-		unsyncBufferedReader.close();
 
 		content = sb.toString();
 

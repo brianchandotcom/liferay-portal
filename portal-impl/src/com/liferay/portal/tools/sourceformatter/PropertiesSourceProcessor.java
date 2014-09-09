@@ -82,24 +82,23 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		StringBundler sb = new StringBundler();
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(content));
-
 		String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			line = trimLine(line, true);
+		try (UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+				new UnsyncStringReader(content))) {
 
-			if (line.startsWith(StringPool.TAB)) {
-				line = line.replaceFirst(
-					StringPool.TAB, StringPool.FOUR_SPACES);
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = trimLine(line, true);
+
+				if (line.startsWith(StringPool.TAB)) {
+					line = line.replaceFirst(
+						StringPool.TAB, StringPool.FOUR_SPACES);
+				}
+
+				sb.append(line);
+				sb.append("\n");
 			}
-
-			sb.append(line);
-			sb.append("\n");
 		}
-
-		unsyncBufferedReader.close();
 
 		String newContent = sb.toString();
 

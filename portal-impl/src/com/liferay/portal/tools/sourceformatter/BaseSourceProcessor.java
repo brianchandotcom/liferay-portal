@@ -1381,17 +1381,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		StringBundler sb = new StringBundler();
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(content));
-
 		String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			sb.append(trimLine(line, allowLeadingSpaces));
-			sb.append("\n");
-		}
+		try (UnsyncBufferedReader unsyncBufferedReader = 
+			new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
-		unsyncBufferedReader.close();
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				sb.append(trimLine(line, allowLeadingSpaces));
+				sb.append("\n");
+			}
+		}
 
 		content = sb.toString();
 

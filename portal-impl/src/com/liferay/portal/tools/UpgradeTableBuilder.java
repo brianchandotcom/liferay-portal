@@ -140,26 +140,26 @@ public class UpgradeTableBuilder {
 			indexesFile = new File("../sql/indexes.sql");
 		}
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(new FileInputStream(indexesFile)));
-
 		String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.contains(" on " + tableName + " (") ||
-				line.contains(" on " + tableName + "_ (")) {
+		try (UnsyncBufferedReader unsyncBufferedReader = 
+				new UnsyncBufferedReader(new InputStreamReader(
+					new FileInputStream(indexesFile)))) {
 
-				String sql = line.trim();
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.contains(" on " + tableName + " (") ||
+					line.contains(" on " + tableName + "_ (")) {
 
-				if (sql.endsWith(";")) {
-					sql = sql.substring(0, sql.length() - 1);
+					String sql = line.trim();
+
+					if (sql.endsWith(";")) {
+						sql = sql.substring(0, sql.length() - 1);
+					}
+
+					addIndexes.add(sql);
 				}
-
-				addIndexes.add(sql);
 			}
 		}
-
-		unsyncBufferedReader.close();
 
 		return addIndexes.toArray(new String[addIndexes.size()]);
 	}

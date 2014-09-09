@@ -84,15 +84,12 @@ public class RSSAction extends PortletAction {
 
 		resourceResponse.setContentType(ContentTypes.TEXT_XML_UTF8);
 
-		OutputStream outputStream = resourceResponse.getPortletOutputStream();
+		try (OutputStream outputStream =
+				resourceResponse.getPortletOutputStream()) {
 
-		try {
 			byte[] bytes = getRSS(resourceRequest, resourceResponse);
 
 			outputStream.write(bytes);
-		}
-		finally {
-			outputStream.close();
 		}
 	}
 

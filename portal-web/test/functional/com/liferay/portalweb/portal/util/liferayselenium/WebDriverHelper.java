@@ -339,33 +339,16 @@ public class WebDriverHelper {
 			GetterUtil.getInteger(timeout), TimeUnit.MILLISECONDS);
 	}
 
-	public void type(String locator, String value) {
-		WebElement webElement = getWebElement(locator);
+	public static void type(WebDriver webDriver, String locator, String value) {
+		WebElement webElement = getWebElement(webDriver, locator);
 
 		if (!webElement.isEnabled()) {
 			return;
 		}
 
-		if (TestPropsValues.MOBILE_DEVICE_ENABLED) {
-			webElement.clear();
+		webElement.clear();
 
-			webElement.click();
-
-			try {
-				Thread.sleep(1000);
-			}
-			catch (Exception e) {
-			}
-
-			Screen screen = new Screen();
-
-			screen.type(value);
-		}
-		else {
-			webElement.clear();
-
-			webElement.sendKeys(value);
-		}
+		webElement.sendKeys(value);
 	}
 
 	protected static WebElement getWebElement(

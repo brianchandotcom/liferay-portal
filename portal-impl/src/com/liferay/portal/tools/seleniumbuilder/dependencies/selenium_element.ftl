@@ -19,6 +19,8 @@ liferaySelenium.${selenium}(
 		(selenium = "waitForTextPresent")
 	>
 		value1
+	<#elseif selenium = "assertJavaScriptErrors">
+		ignoreJavaScriptError
 	<#elseif seleniumElement.attributeValue("argument1")??>
 		<#assign argument1 = seleniumElement.attributeValue("argument1")>
 

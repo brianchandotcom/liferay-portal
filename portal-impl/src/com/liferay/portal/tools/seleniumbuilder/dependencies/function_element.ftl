@@ -8,6 +8,16 @@
 
 ${seleniumBuilderFileUtil.getVariableName(function?substring(0, x))}Function.${function?substring(x + 1)}(
 
+<#if functionElement.attributeValue("ignore-javascript-error")??>
+	<#assign ignoreJavaScriptError = functionElement.attributeValue("ignore-javascript-error")>
+
+	"${ignoreJavaScriptError}",
+<#elseif actionName??>
+	null,
+<#else>
+	ignoreJavaScriptError,
+</#if>
+
 <#list 1..seleniumBuilderContext.getFunctionLocatorCount(functionName) as i>
 	locator${i},
 

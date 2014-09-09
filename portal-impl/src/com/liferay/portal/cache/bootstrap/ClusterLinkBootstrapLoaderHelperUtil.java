@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.io.AnnotatedObjectInputStream;
 import com.liferay.portal.kernel.io.AnnotatedObjectOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.InitialThreadLocal;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.SocketUtil;
@@ -47,8 +48,11 @@ import java.net.SocketTimeoutException;
 
 import java.nio.channels.ServerSocketChannel;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -56,7 +60,7 @@ import java.util.concurrent.TimeUnit;
  * @author Shuyang Zhou
  * @author Sherry Yang
  */
-public class StreamBootstrapHelpUtil {
+public class ClusterLinkBootstrapLoaderHelperUtil {
 
 	public static SocketAddress createServerSocketFromCluster(
 			String portalCacheManagerName, List<String> portalCacheNames)
@@ -70,18 +74,80 @@ public class StreamBootstrapHelpUtil {
 
 		ServerSocket serverSocket = serverSocketChannel.socket();
 
-		EhcacheStreamServerThread ehcacheStreamServerThread =
-			new EhcacheStreamServerThread(
-				serverSocket, portalCacheManagerName, portalCacheNames);
+		ClusterLinkBootstrapLoaderServerThread
+			clusterLinkBootstrapLoaderServerThread =
+				new ClusterLinkBootstrapLoaderServerThread(
+					serverSocket, portalCacheManagerName, portalCacheNames);
 
-		ehcacheStreamServerThread.start();
+		clusterLinkBootstrapLoaderServerThread.start();
 
 		return serverSocket.getLocalSocketAddress();
+	}
+
+	public static synchronized void start() {
+		if (!_started) {
+			_started = true;
+		}
+
+		if (_deferredPortalCaches.isEmpty()) {
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Loading deferred caches");
+		}
+
+		try {
+			for (Map.Entry<String, List<String>> entry :
+					_deferredPortalCaches.entrySet()) {
+
+				List<String> portalCacheNames = entry.getValue();
+
+				if (portalCacheNames.isEmpty()) {
+					continue;
+				}
+
+				loadCachesFromCluster(
+					entry.getKey(),
+					portalCacheNames.toArray(
+						new String[portalCacheNames.size()]));
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to load cache data from the cluster", e);
+			}
+		}
+		finally {
+			_deferredPortalCaches.clear();
+		}
+	}
+
+	protected static boolean isSkipped() {
+		return _skipBootstrapLoaderThreadLocal.get();
 	}
 
 	protected static void loadCachesFromCluster(
 			String portalCacheManagerName, String ... portalCacheNames)
 		throws Exception {
+
+		synchronized (ClusterLinkBootstrapLoaderHelperUtil.class) {
+			if (!_started) {
+				List<String> portalCaches = _deferredPortalCaches.get(
+					portalCacheManagerName);
+
+				if (portalCaches == null) {
+					portalCaches = new ArrayList<String>();
+
+					_deferredPortalCaches.put(
+						portalCacheManagerName, portalCaches);
+				}
+
+				portalCaches.addAll(Arrays.asList(portalCacheNames));
+
+				return;
+			}
+		}
 
 		List<Address> clusterNodeAddresses =
 			ClusterExecutorUtil.getClusterNodeAddresses();
@@ -186,7 +252,7 @@ public class StreamBootstrapHelpUtil {
 							break;
 						}
 
-						EhcacheStreamBootstrapCacheLoader.setSkip();
+						_skipBootstrapLoaderThreadLocal.set(Boolean.TRUE);
 
 						try {
 							portalCache =
@@ -194,7 +260,7 @@ public class StreamBootstrapHelpUtil {
 									portalCacheManager.getCache((String)object);
 						}
 						finally {
-							EhcacheStreamBootstrapCacheLoader.resetSkip();
+							_skipBootstrapLoaderThreadLocal.remove();
 						}
 					}
 					else {
@@ -226,14 +292,22 @@ public class StreamBootstrapHelpUtil {
 	private static final String _COMMAND_SOCKET_CLOSE = "${SOCKET_CLOSE}";
 
 	private static Log _log = LogFactoryUtil.getLog(
-		StreamBootstrapHelpUtil.class);
+		ClusterLinkBootstrapLoaderHelperUtil.class);
 
 	private static MethodKey _createServerSocketFromClusterMethodKey =
 		new MethodKey(
-			StreamBootstrapHelpUtil.class, "createServerSocketFromCluster",
-			String.class, List.class);
+			ClusterLinkBootstrapLoaderHelperUtil.class,
+			"createServerSocketFromCluster", String.class, List.class);
+	private static final Map<String, List<String>> _deferredPortalCaches =
+		new HashMap<String, List<String>>();
 	private static ServerSocketConfigurator _serverSocketConfigurator =
 		new SocketCacheServerSocketConfiguration();
+	private static ThreadLocal<Boolean> _skipBootstrapLoaderThreadLocal =
+		new InitialThreadLocal<Boolean>(
+			ClusterLinkBootstrapLoaderHelperUtil.class +
+				"._skipBootstrapLoaderThreadLocal",
+			false);
+	private static boolean _started;
 
 	private static class CacheElement implements Serializable {
 
@@ -255,9 +329,9 @@ public class StreamBootstrapHelpUtil {
 
 	}
 
-	private static class EhcacheStreamServerThread extends Thread {
+	private static class ClusterLinkBootstrapLoaderServerThread extends Thread {
 
-		public EhcacheStreamServerThread(
+		public ClusterLinkBootstrapLoaderServerThread(
 			ServerSocket serverSocket, String portalCacheManagerName,
 			List<String> portalCacheNames) {
 
@@ -267,7 +341,7 @@ public class StreamBootstrapHelpUtil {
 
 			setDaemon(true);
 			setName(
-				EhcacheStreamServerThread.class.getName() + " - " +
+				ClusterLinkBootstrapLoaderServerThread.class.getName() + " - " +
 					portalCacheNames);
 			setPriority(Thread.NORM_PRIORITY);
 		}
@@ -309,13 +383,13 @@ public class StreamBootstrapHelpUtil {
 							portalCacheManager.getCache(portalCacheName);
 
 					if (portalCache == null) {
-						EhcacheStreamBootstrapCacheLoader.setSkip();
+						_skipBootstrapLoaderThreadLocal.set(Boolean.TRUE);
 
 						try {
 							portalCacheManager.getCache(portalCacheName);
 						}
 						finally {
-							EhcacheStreamBootstrapCacheLoader.resetSkip();
+							_skipBootstrapLoaderThreadLocal.remove();
 						}
 
 						continue;

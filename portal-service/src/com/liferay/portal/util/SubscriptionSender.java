@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.EscapableObject;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Subscription;
@@ -260,6 +262,11 @@ public class SubscriptionSender implements Serializable {
 				PortalUtil.getUserName(userId, StringPool.BLANK));
 		}
 
+		if (uniqueMailId) {
+			_mailIdIds = ArrayUtil.append(
+				_mailIdIds, PortalUUIDUtil.generate());
+		}
+
 		mailId = PortalUtil.getMailId(
 			company.getMx(), _mailIdPopPortletPrefix, _mailIdIds);
 	}
@@ -397,6 +404,10 @@ public class SubscriptionSender implements Serializable {
 
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+
+	public void setUniqueMailId(boolean uniqueMailId) {
+		this.uniqueMailId = uniqueMailId;
 	}
 
 	public void setUserId(long userId) {
@@ -814,6 +825,7 @@ public class SubscriptionSender implements Serializable {
 	protected ServiceContext serviceContext;
 	protected SMTPAccount smtpAccount;
 	protected String subject;
+	protected boolean uniqueMailId = true;
 	protected long userId;
 
 	private void readObject(ObjectInputStream objectInputStream)

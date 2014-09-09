@@ -62,7 +62,7 @@ public class MailMessageListener extends BaseMessageListener {
 		if (auditTrail.length > 0) {
 			if (ArrayUtil.isNotEmpty(bcc)) {
 				for (InternetAddress internetAddress : auditTrail) {
-					ArrayUtil.append(bcc, internetAddress);
+					bcc = ArrayUtil.append(bcc, internetAddress);
 				}
 			}
 			else {

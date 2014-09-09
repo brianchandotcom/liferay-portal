@@ -160,7 +160,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 				<aui:input name="fileEntryIds" type="hidden" />
 				<aui:input name="fileShortcutIds" type="hidden" />
 
-				<div class="document-container" id="<portlet:namespace />entriesContainer">
+				<div>
 					<c:choose>
 						<c:when test='<%= strutsAction.equals("/document_library/search") %>'>
 							<liferay-util:include page="/html/portlet/document_library/search_resources.jsp" />

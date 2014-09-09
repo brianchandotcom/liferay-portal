@@ -71,7 +71,8 @@ public class JSONServiceActionTest extends TestCase {
 
 		mockHttpServletRequest.setParameter(
 			"inputStreamOVPs",
-			"{'class' : 'com.liferay.portal.kernel.dao.orm.EntityCacheUtil'}");
+			"{\"class\" : " +
+				"\"com.liferay.portal.kernel.dao.orm.EntityCacheUtil\"}");
 
 		value = jsonServiceAction.getArgValue(
 			mockHttpServletRequest, MBMessageServiceUtil.class,

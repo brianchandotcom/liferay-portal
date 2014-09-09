@@ -286,7 +286,7 @@
 			FROM
 				(
 					SELECT
-						MAX(JournalArticle.id_) AS id_
+						MAX(JournalArticle.version) AS version, JournalArticle.resourcePrimKey AS resourcePrimKey
 					FROM
 						JournalArticle
 					WHERE
@@ -298,7 +298,7 @@
 						JournalArticle.folderId, JournalArticle.articleId
 				) TEMP_TABLE
 				INNER JOIN
-					JournalArticle ON (TEMP_TABLE.id_ = JournalArticle.id_)
+					JournalArticle ON (TEMP_TABLE.version = JournalArticle.version and TEMP_TABLE.resourcePrimKey = JournalArticle.resourcePrimKey)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findByF_ByNoAssets">

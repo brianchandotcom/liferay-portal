@@ -97,7 +97,7 @@ AUI.add(
 
 						var surfaceId = Surface.getPortletBoundaryId(portletId);
 
-						if (Surface.isAllowedPortletId(portletId) && !Surface.app.surfaces[surfaceId]) {
+						if (Surface.isPortletSurface(portletId) && !Surface.app.surfaces[surfaceId]) {
 							Surface.app.addSurfaces(surfaceId);
 						}
 					}

@@ -208,12 +208,24 @@ if (layout != null) {
 						if (portlet.isActive() && portlet.isReady() && !portlet.isUndeployedPortlet() && !portlet.isSinglePageApplication()) {
 					%>
 
-							Liferay.Surface.blacklist['<%= portlet.getPortletId() %>'] = true;
+							Liferay.Surface.blacklist.route['<%= portlet.getPortletId() %>'] = true;
+
+					<%
+						}
+
+						boolean singlePageApplicationCacheable = GetterUtil.getBoolean(portlet.getInitParams().get("single-page-application-cacheable"), true);
+
+						if (!singlePageApplicationCacheable) {
+					%>
+
+							Liferay.Surface.blacklist.cache['<%= portlet.getPortletId() %>'] = true;
 
 					<%
 						}
 					}
 					%>
+
+					Liferay.Surface.blacklist.surface['<%= PortletKeys.NESTED_PORTLETS %>'] = true;
 
 				}
 			</aui:script>

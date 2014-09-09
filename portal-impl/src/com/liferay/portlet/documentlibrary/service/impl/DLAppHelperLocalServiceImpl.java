@@ -1897,6 +1897,21 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	protected Class<? extends WorkflowRepositoryEventType> getWorkflowEvent(
+		String syncEvent) {
+
+		if (syncEvent.equals(DLSyncConstants.EVENT_ADD)) {
+			return WorkflowRepositoryEventType.Add.class;
+		}
+		else if (syncEvent.equals(DLSyncConstants.EVENT_UPDATE)) {
+			return WorkflowRepositoryEventType.Update.class;
+		}
+		else {
+			throw new IllegalArgumentException(
+				String.format("Unsupported sync event %s", syncEvent));
+		}
+	}
+
 	/**
 	 * @deprecated As of 7.0.0  As of 7.0.0, with no direct replacement.
 	 */
@@ -2098,22 +2113,6 @@ public class DLAppHelperLocalServiceImpl
 			}
 		);
 	}
-
-	protected Class<? extends WorkflowRepositoryEventType> getWorkflowEvent(
-		String syncEvent) {
-
-		if (syncEvent.equals(DLSyncConstants.EVENT_ADD)) {
-			return WorkflowRepositoryEventType.Add.class;
-		}
-		else if (syncEvent.equals(DLSyncConstants.EVENT_UPDATE)) {
-			return WorkflowRepositoryEventType.Update.class;
-		}
-		else {
-			throw new IllegalArgumentException(
-				String.format("Unsupported sync event %s", syncEvent));
-		}
-	}
-
 
 	protected <T extends RepositoryModel<T>> void triggerRepositoryEvent(
 			long repositoryId, Class<? extends RepositoryEventType> eventType,

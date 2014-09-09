@@ -81,6 +81,9 @@
 				.add-page-editor-input {
 					width: 70%;
 					z-index: 1;
+					position: relative;
+					top: 2px;
+					left: 5px;
 				}
 
 				.btn {

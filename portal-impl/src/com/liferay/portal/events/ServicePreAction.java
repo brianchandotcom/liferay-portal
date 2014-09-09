@@ -707,8 +707,13 @@ public class ServicePreAction extends Action {
 			request.setAttribute(WebKeys.COLOR_SCHEME, colorScheme);
 		}
 
-		boolean themeCssFastLoad = SessionParamUtil.getBoolean(
-			request, "css_fast_load", PropsValues.THEME_CSS_FAST_LOAD);
+		boolean themeCssFastLoad = true;
+
+		if (PropsValues.THEME_CSS_DEVELOPER_MODE) {
+			themeCssFastLoad = SessionParamUtil.getBoolean(
+				request, "css_fast_load", PropsValues.THEME_CSS_FAST_LOAD);
+		}
+
 		boolean themeImagesFastLoad = SessionParamUtil.getBoolean(
 			request, "images_fast_load", PropsValues.THEME_IMAGES_FAST_LOAD);
 

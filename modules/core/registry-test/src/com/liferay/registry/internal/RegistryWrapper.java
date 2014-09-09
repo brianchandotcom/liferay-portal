@@ -128,6 +128,10 @@ public class RegistryWrapper implements Registry {
 		return _registry.getServices(className, filterString);
 	}
 
+	public Registry getWrappedRegistry() {
+		return _registry;
+	}
+
 	@Override
 	public <T> com.liferay.registry.ServiceRegistration<T> registerService(
 		Class<T> clazz, T service) {
@@ -224,10 +228,6 @@ public class RegistryWrapper implements Registry {
 		}
 
 		return _registry.ungetService(serviceReference);
-	}
-
-	public Registry getWrappedRegistry() {
-		return _registry;
 	}
 
 	private Registry _registry;

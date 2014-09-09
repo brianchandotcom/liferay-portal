@@ -26,6 +26,11 @@ import com.liferay.portal.security.permission.PermissionChecker;
 public interface LayoutPermission {
 
 	public void check(
+			PermissionChecker permissionChecker, Layout layout,
+			boolean checkViewableGroup, String actionId)
+		throws PortalException;
+
+	public void check(
 			PermissionChecker permissionChecker, Layout layout, String actionId)
 		throws PortalException;
 

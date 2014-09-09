@@ -29,6 +29,7 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.impl.VirtualLayout;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -97,6 +98,12 @@ public abstract class FindAction extends Action {
 				}
 			}
 
+			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+			LayoutPermissionUtil.check(
+				themeDisplay.getPermissionChecker(), layout, true,
+				ActionKeys.VIEW);
+
 			Object[] plidAndPortletId = getPlidAndPortletId(
 				themeDisplay, groupId, plid, _portletIds);
 
@@ -153,7 +160,8 @@ public abstract class FindAction extends Action {
 				noSuchEntryRedirect);
 
 			if (Validator.isNotNull(noSuchEntryRedirect) &&
-				(e instanceof NoSuchLayoutException)) {
+				(e instanceof NoSuchLayoutException ||
+				 e instanceof PrincipalException)) {
 
 				response.sendRedirect(noSuchEntryRedirect);
 			}

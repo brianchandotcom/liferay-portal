@@ -54,6 +54,19 @@ public class LayoutPermissionImpl
 
 	@Override
 	public void check(
+			PermissionChecker permissionChecker, Layout layout,
+			boolean checkViewableGroup, String actionId)
+		throws PortalException {
+
+		if (!contains(
+				permissionChecker, layout, checkViewableGroup, actionId)) {
+
+			throw new PrincipalException();
+		}
+	}
+
+	@Override
+	public void check(
 			PermissionChecker permissionChecker, Layout layout, String actionId)
 		throws PortalException {
 

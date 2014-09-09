@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.invitation.action;
+package com.liferay.invitation.web.portlet.action;
 
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.util.ContentUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -25,10 +24,19 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurationActionImpl extends DefaultConfigurationAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=com_liferay_invitation_web_portlet_InvitationPortlet"
+	},
+	service = ConfigurationAction.class
+)
+public class InvitationConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
 	public void postProcess(
@@ -41,11 +49,11 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailMessageBody_" + languageId,
-			ContentUtil.get(PropsValues.INVITATION_EMAIL_MESSAGE_BODY));
+			portletPreferences.getValue("email.message.body", ""));
 		removeDefaultValue(
 			portletRequest, portletPreferences,
 			"emailMessageSubject_" + languageId,
-			ContentUtil.get(PropsValues.INVITATION_EMAIL_MESSAGE_SUBJECT));
+			portletPreferences.getValue("email.message.subject", ""));
 	}
 
 	@Override

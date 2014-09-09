@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.invitation.action;
+package com.liferay.invitation.web.portlet.action;
 
+import com.liferay.invitation.web.util.InvitationUtil;
 import com.liferay.mail.service.MailServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -24,53 +26,59 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.invitation.util.InvitationUtil;
+import com.liferay.util.bridges.mvc.ActionCommand;
+
+import java.io.UnsupportedEncodingException;
 
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Charles May
+ * @author Peter Fellwock
  */
-public class ViewAction extends PortletAction {
+
+@Component(
+	immediate = true,
+	property = {
+		"action.command.name=view",
+		"javax.portlet.name=com_liferay_invitation_web_portlet_InvitationPortlet"
+	},
+	service = ActionCommand.class
+)
+public class ViewAction implements ActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
+	public boolean processCommand(PortletRequest portletRequest,
+		PortletResponse portletResponse) throws PortletException {
 
 		Set<String> invalidEmailAddresses = new HashSet<String>();
 		Set<String> validEmailAddresses = new HashSet<String>();
 
+		PortletPreferences portletPreferences = portletRequest.getPreferences();
+
 		int emailMessageMaxRecipients =
-			InvitationUtil.getEmailMessageMaxRecipients();
+			InvitationUtil.getEmailMessageMaxRecipients(portletPreferences);
 
 		for (int i = 0; i < emailMessageMaxRecipients; i++) {
 			String emailAddress = ParamUtil.getString(
-				actionRequest, "emailAddress" + i);
+				portletRequest, "emailAddress" + i);
 
 			if (Validator.isEmailAddress(emailAddress)) {
 				validEmailAddresses.add(emailAddress);
@@ -86,12 +94,12 @@ public class ViewAction extends PortletAction {
 
 		if (!invalidEmailAddresses.isEmpty()) {
 			SessionErrors.add(
-				actionRequest, "emailAddresses", invalidEmailAddresses);
+				portletRequest, "emailAddresses", invalidEmailAddresses);
 
-			return;
+			return false;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		User user = themeDisplay.getUser();
@@ -99,18 +107,23 @@ public class ViewAction extends PortletAction {
 		String fromAddress = user.getEmailAddress();
 		String fromName = user.getFullName();
 
-		InternetAddress from = new InternetAddress(fromAddress, fromName);
+		InternetAddress from;
+		try {
+			from = new InternetAddress(fromAddress, fromName);
+		} catch (UnsupportedEncodingException uee) {
+			throw new PortletException(uee);
+		}
 
 		Layout layout = themeDisplay.getLayout();
 
-		String portalURL = PortalUtil.getPortalURL(actionRequest);
+		String portalURL = PortalUtil.getPortalURL(portletRequest);
 
-		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			layout, themeDisplay);
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getPortletSetup(
-				actionRequest, PortletKeys.INVITATION);
+		String layoutFullURL;
+		try {
+			layoutFullURL = PortalUtil.getLayoutFullURL(layout, themeDisplay);
+		} catch (PortalException pe) {
+			throw new PortletException(pe);
+		}
 
 		Map<Locale, String> localizedSubjectMap =
 			InvitationUtil.getEmailMessageSubjectMap(portletPreferences);
@@ -153,7 +166,12 @@ public class ViewAction extends PortletAction {
 			});
 
 		for (String emailAddress : validEmailAddresses) {
-			InternetAddress to = new InternetAddress(emailAddress);
+			InternetAddress to;
+			try {
+				to = new InternetAddress(emailAddress);
+			} catch (AddressException ae) {
+				throw new PortletException(ae);
+			}
 
 			MailMessage message = new MailMessage(
 				from, to, subject, body, true);
@@ -161,25 +179,21 @@ public class ViewAction extends PortletAction {
 			MailServiceUtil.sendEmail(message);
 		}
 
-		SessionMessages.add(actionRequest, "invitationSent");
+		SessionMessages.add(portletRequest, "invitationSent");
 
 		String redirect = PortalUtil.escapeRedirect(
-			ParamUtil.getString(actionRequest, "redirect"));
+			ParamUtil.getString(portletRequest, "redirect"));
 
 		if (Validator.isNotNull(redirect)) {
-			actionResponse.sendRedirect(redirect);
+			ActionResponse actionResponse = (ActionResponse)portletResponse;
+
+			actionResponse.setRenderParameter("mvcPath", redirect);
 		}
+
+		ActionResponse actionResponse = (ActionResponse)portletResponse;
+
+		actionResponse.setRenderParameter("mvcPath", "/view.jsp");
+
+		return true;
 	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.invitation.view"));
-	}
-
 }

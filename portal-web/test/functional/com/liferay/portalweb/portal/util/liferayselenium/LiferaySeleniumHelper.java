@@ -182,7 +182,13 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
-	public static void assertLiferayErrors() throws Exception {
+	public static String assertLiferayErrors() throws Exception {
+		return assertLiferayErrors(false);
+	}
+
+	public static String assertLiferayErrors(boolean throwsException)
+		throws Exception {
+
 		String currentDate = DateUtil.getCurrentDate(
 			"yyyy-MM-dd", LocaleUtil.getDefault());
 
@@ -190,13 +196,13 @@ public class LiferaySeleniumHelper {
 			PropsValues.LIFERAY_HOME + "/logs/liferay." + currentDate + ".xml";
 
 		if (!FileUtil.exists(fileName)) {
-			return;
+			return null;
 		}
 
 		String content = FileUtil.read(fileName);
 
 		if (content.equals("")) {
-			return;
+			return null;
 		}
 
 		content = "<log4j>" + content + "</log4j>";
@@ -209,19 +215,33 @@ public class LiferaySeleniumHelper {
 		List<Element> eventElements = rootElement.elements("event");
 
 		for (Element eventElement : eventElements) {
+			Element messageElement = eventElement.element("message");
+			Element throwableElement = eventElement.element("throwable");
+
 			String level = eventElement.attributeValue("level");
+			String messageText = messageElement.getText();
 
 			if (level.equals("ERROR")) {
-				Element messageElement = eventElement.element("message");
+				File file = new File(fileName);
 
-				String messageText = messageElement.getText();
+				String fileString = FileUtil.read(file);
+
+				FileUtil.write(
+					file,
+					fileString.replaceFirst(
+						"level=\"ERROR\"", "level=\"ERROR_FOUND\""));
 
 				if (isIgnorableErrorLine(messageText)) {
 					continue;
 				}
 
-				Element throwableElement = eventElement.element("throwable");
+				if (throwableElement != null) {
+					messageText = messageText + throwableElement.getText();
+				}
 
+				return messageText;
+			}
+			else if (level.equals("ERROR_FOUND") && throwsException) {
 				if (throwableElement != null) {
 					throw new Exception(
 						messageText + throwableElement.getText());
@@ -230,6 +250,8 @@ public class LiferaySeleniumHelper {
 				throw new Exception(messageText);
 			}
 		}
+
+		return null;
 	}
 
 	public static void assertLocation(

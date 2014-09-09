@@ -51,7 +51,7 @@ public interface LiferaySelenium extends Selenium {
 	public void assertJavaScriptErrors(String ignoreJavaScriptError)
 		throws Exception;
 
-	public void assertLiferayErrors() throws Exception;
+	public String assertLiferayErrors() throws Exception;
 
 	public void assertLocation(String pattern);
 

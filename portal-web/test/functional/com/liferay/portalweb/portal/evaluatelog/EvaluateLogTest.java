@@ -38,7 +38,7 @@ public class EvaluateLogTest extends BaseTestCase {
 	}
 
 	private boolean evaluateLog() throws Exception {
-		LiferaySeleniumHelper.assertLiferayErrors();
+		LiferaySeleniumHelper.assertLiferayErrors(true);
 
 		String xml = FileUtil.read("log");
 

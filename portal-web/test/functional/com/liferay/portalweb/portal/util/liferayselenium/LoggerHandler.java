@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -68,6 +70,15 @@ public class LoggerHandler implements InvocationHandler {
 			}
 			else if (methodName.equals("stopLogger")) {
 				_logger.stop();
+			}
+			else if (methodName.equals("assertLiferayErrors")) {
+				String message = LiferaySeleniumHelper.assertLiferayErrors();
+
+				if (Validator.isNotNull(message)) {
+					Throwable throwable = new Exception (message);
+
+					_logger.logError(method, arguments, throwable, false);
+				}
 			}
 			else {
 				_logger.logSeleniumCommand(method, arguments);

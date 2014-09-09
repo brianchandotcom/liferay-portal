@@ -150,12 +150,12 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void assertLiferayErrors() throws Exception {
+	public String assertLiferayErrors() throws Exception {
 		if (!TestPropsValues.TEST_ASSERT_LIFERAY_ERRORS) {
-			return;
+			return null;
 		}
 
-		LiferaySeleniumHelper.assertLiferayErrors();
+		return LiferaySeleniumHelper.assertLiferayErrors();
 	}
 
 	@Override

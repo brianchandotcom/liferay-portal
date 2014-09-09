@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>SUBCATEGORY_CHECKBOX</td>
-	<td>//ul[@class='tree-container']/li[contains(.,'${key_subcategoryName}')]/div/i[@class='tree-node-checkbox-container icon-check']</td>
+	<td>//tr[contains(.,'${key_subcategoryName}')]/td[1]/input</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,7 +76,7 @@
 <!--ACTIONS_MENULIST-->
 <tr>
 	<td>ACTIONS_MENULIST_DELETE</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Delete')]</td>
+	<td>//ul/li/a[@title='Delete']</td>
 	<td></td>
 </tr>
 <tr>
@@ -195,17 +195,17 @@
 <!--SUBCATEGORY_ENTRY-->
 <tr>
 	<td>SUBCATEGORY_ENTRY</td>
-	<td>//tr[contains(.,'${key_categoryName}')]/td[2]</td>
+	<td>//tr[contains(.,'${key_subcategoryName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBCATEGORY_ENTRY_LINK</td>
-	<td>//tr[contains(.,'${key_categoryName}')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_subcategoryName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBCATEGORY_ENTRY_MENULIST_ARROW</td>
-	<td>//tr[contains(.,'${key_categoryName}')]//a[contains(@id,'assetCategories')]</td>
+	<td>//tr[contains(.,'${key_subcategoryName}')]//a[contains(@id,'assetCategories')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -213,20 +213,25 @@
 	<td>//h3[@class='header-title']/span</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SUBCATEGORY_ENTRY_MENULIST-->
 <tr>
 	<td>SUBCATEGORY_ENTRY_MENULIST_EDIT</td>
-	<td>//button[@id='editCategoryButton']</td>
+	<td>//ul/li/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBCATEGORY_ENTRY_MENULIST_DELETE</td>
-	<td>//button[@id='deleteCategoryButton']</td>
+	<td>//ul/li/a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBCATEGORY_ENTRY_MENULIST_ADD_SUBCATEGORY</td>
-	<td>//button[@id='addSubCategoryButton']</td>
+	<td>//ul/li/a[contains(.,'Add Subcategory')]</td>
 	<td></td>
 </tr>
 <tr>

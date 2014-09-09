@@ -19,8 +19,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NAME_FIELD</td>
-	<td>//input[@id='_147_categoryNameEdit']</td>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>CPCategoriesAddSubcategory</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>

@@ -33,6 +33,11 @@
 	<td>//div[(contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xpath=(//div[contains(@class,'alert-danger')])[2]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

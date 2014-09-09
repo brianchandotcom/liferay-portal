@@ -92,88 +92,25 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		<aui:workflow-status id="<%= String.valueOf(entry.getEntryId()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
 	</c:if>
 
-	<aui:fieldset>
-		<liferay-ui:input-editor contents="<%= title %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="title" placeholder="title" />
+	<liferay-ui:tabs
+		names="details,settings"
+		refresh="<%= false %>"
+		type="pills"
+	>
 
-		<aui:input name="title" type="hidden" />
+		<liferay-ui:section>
+			<liferay-ui:input-editor contents="<%= title %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="title" placeholder="title" />
 
-		<liferay-ui:input-editor contents="<%= subtitle %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="subtitle" placeholder="subtitle" />
+			<aui:input name="title" type="hidden" />
 
-		<aui:input name="subtitle" type="hidden" />
+			<liferay-ui:input-editor contents="<%= subtitle %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="subtitle" placeholder="subtitle" />
 
-		<aui:input name="displayDate" />
+			<aui:input name="subtitle" type="hidden" />
 
-		<c:if test="<%= preview %>">
+			<liferay-ui:input-editor contents="<%= content %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="content" placeholder="content" />
 
-			<%
-			if (entry == null) {
-				entry = new BlogsEntryImpl();
-			}
+			<aui:input name="content" type="hidden" />
 
-			entry.setContent(content);
-			%>
-
-			<liferay-ui:message key="preview" />:
-
-			<div class="preview">
-				<%= entry.getContent() %>
-			</div>
-
-			<br />
-		</c:if>
-
-		<liferay-ui:input-editor contents="<%= content %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="content" placeholder="content" />
-
-		<aui:input name="content" type="hidden" />
-
-		<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
-			<liferay-ui:custom-attribute-list
-				className="<%= BlogsEntry.class.getName() %>"
-				classPK="<%= entryId %>"
-				editable="<%= true %>"
-				label="<%= true %>"
-			/>
-		</liferay-ui:custom-attributes-available>
-
-		<c:if test="<%= PropsValues.BLOGS_PINGBACK_ENABLED %>">
-			<aui:input helpMessage="to-allow-pingbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" name="allowPingbacks" value="<%= allowPingbacks %>" />
-		</c:if>
-
-		<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED %>">
-			<aui:input helpMessage="to-allow-trackbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" name="allowTrackbacks" value="<%= allowTrackbacks %>" />
-
-			<aui:input label="trackbacks-to-send" name="trackbacks" />
-
-			<c:if test="<%= (entry != null) && Validator.isNotNull(entry.getTrackbacks()) %>">
-				<aui:fieldset label="trackbacks-already-sent">
-
-					<%
-					int i = 0;
-
-					for (String trackback : StringUtil.split(entry.getTrackbacks())) {
-					%>
-
-						<aui:input label="" name='<%= "trackback" + (i++) %>' title="" type="resource" value="<%= trackback %>" />
-
-					<%
-					}
-					%>
-
-				</aui:fieldset>
-			</c:if>
-		</c:if>
-
-		<c:if test="<%= (entry == null) || (entry.getStatus() == WorkflowConstants.STATUS_DRAFT) %>">
-			<aui:field-wrapper label="permissions">
-				<liferay-ui:input-permissions
-					modelName="<%= BlogsEntry.class.getName() %>"
-				/>
-			</aui:field-wrapper>
-		</c:if>
-
-		<br />
-
-		<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="blogsEntryAbstractPanel" persistState="<%= true %>" title="abstract">
 			<liferay-ui:error exception="<%= EntrySmallImageNameException.class %>">
 
 				<%
@@ -225,24 +162,94 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 					</div>
 				</div>
 			</aui:fieldset>
-		</liferay-ui:panel>
+		</liferay-ui:section>
 
-		<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="blogsEntryCategorizationPanel" persistState="<%= true %>" title="categorization">
-			<aui:fieldset>
-				<aui:input name="categories" type="assetCategories" />
+		<liferay-ui:section>
+			<aui:input name="displayDate" />
 
-				<aui:input name="tags" type="assetTags" />
-			</aui:fieldset>
-		</liferay-ui:panel>
-
-		<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="blogsEntryAssetLinksPanel" persistState="<%= true %>" title="related-assets">
-			<aui:fieldset>
-				<liferay-ui:input-asset-links
+			<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
+				<liferay-ui:custom-attribute-list
 					className="<%= BlogsEntry.class.getName() %>"
 					classPK="<%= entryId %>"
+					editable="<%= true %>"
+					label="<%= true %>"
 				/>
-			</aui:fieldset>
-		</liferay-ui:panel>
+			</liferay-ui:custom-attributes-available>
+
+			<c:if test="<%= PropsValues.BLOGS_PINGBACK_ENABLED %>">
+				<aui:input helpMessage="to-allow-pingbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" name="allowPingbacks" value="<%= allowPingbacks %>" />
+			</c:if>
+
+			<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED %>">
+				<aui:input helpMessage="to-allow-trackbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" name="allowTrackbacks" value="<%= allowTrackbacks %>" />
+
+				<aui:input label="trackbacks-to-send" name="trackbacks" />
+
+				<c:if test="<%= (entry != null) && Validator.isNotNull(entry.getTrackbacks()) %>">
+					<aui:fieldset label="trackbacks-already-sent">
+
+						<%
+						int i = 0;
+
+						for (String trackback : StringUtil.split(entry.getTrackbacks())) {
+						%>
+
+							<aui:input label="" name='<%= "trackback" + (i++) %>' title="" type="resource" value="<%= trackback %>" />
+
+						<%
+						}
+						%>
+
+					</aui:fieldset>
+				</c:if>
+			</c:if>
+
+			<c:if test="<%= (entry == null) || (entry.getStatus() == WorkflowConstants.STATUS_DRAFT) %>">
+				<aui:field-wrapper label="permissions">
+					<liferay-ui:input-permissions
+						modelName="<%= BlogsEntry.class.getName() %>"
+					/>
+				</aui:field-wrapper>
+			</c:if>
+
+			<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="blogsEntryCategorizationPanel" persistState="<%= true %>" title="categorization">
+				<aui:fieldset>
+					<aui:input name="categories" type="assetCategories" />
+
+					<aui:input name="tags" type="assetTags" />
+				</aui:fieldset>
+			</liferay-ui:panel>
+
+			<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="blogsEntryAssetLinksPanel" persistState="<%= true %>" title="related-assets">
+				<aui:fieldset>
+					<liferay-ui:input-asset-links
+						className="<%= BlogsEntry.class.getName() %>"
+						classPK="<%= entryId %>"
+					/>
+				</aui:fieldset>
+			</liferay-ui:panel>
+		</liferay-ui:section>
+	</liferay-ui:tabs>
+
+	<aui:fieldset>
+		<c:if test="<%= preview %>">
+
+			<%
+			if (entry == null) {
+				entry = new BlogsEntryImpl();
+			}
+
+			entry.setContent(content);
+			%>
+
+			<liferay-ui:message key="preview" />:
+
+			<div class="preview">
+				<%= entry.getContent() %>
+			</div>
+
+			<br />
+		</c:if>
 
 		<%
 		boolean pending = false;

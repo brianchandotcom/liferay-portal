@@ -282,9 +282,7 @@ public class ExecutorIntrabandTest {
 
 		randomAccessFile.setLength(Integer.MAX_VALUE);
 
-		FileChannel fileChannel = randomAccessFile.getChannel();
-
-		try {
+		try (FileChannel fileChannel = randomAccessFile.getChannel()) {
 			FutureRegistrationReference futureRegistrationReference =
 				(FutureRegistrationReference)_executorIntraband.registerChannel(
 					fileChannel);
@@ -303,7 +301,6 @@ public class ExecutorIntrabandTest {
 			while (threadPoolExecutor.getActiveCount() != 0);
 		}
 		finally {
-			fileChannel.close();
 			tempFile.delete();
 		}
 	}
@@ -409,12 +406,11 @@ public class ExecutorIntrabandTest {
 
 		tempFile.deleteOnExit();
 
-		RandomAccessFile randomAccessFile = new RandomAccessFile(
-			tempFile, "rw");
+		try (RandomAccessFile randomAccessFile = new RandomAccessFile(
+				tempFile, "rw")) {
 
-		randomAccessFile.setLength(Integer.MAX_VALUE);
-
-		randomAccessFile.close();
+			randomAccessFile.setLength(Integer.MAX_VALUE);
+		}
 
 		FileInputStream fileInputStream = new FileInputStream(tempFile);
 		FileOutputStream fileOutputStream = new FileOutputStream(

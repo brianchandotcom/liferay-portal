@@ -66,12 +66,11 @@ public class MessageRoutingBagTest {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-			unsyncByteArrayOutputStream);
+		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				unsyncByteArrayOutputStream)) {
 
-		objectOutputStream.writeObject(messageRoutingBag);
-
-		objectOutputStream.close();
+			objectOutputStream.writeObject(messageRoutingBag);
+		}
 
 		byte[] bytes = unsyncByteArrayOutputStream.toByteArray();
 

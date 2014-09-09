@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Invitation Web
+Bundle-SymbolicName: com.liferay.invitation
+Bundle-Version: 1.0.0
+Import-Package:\
+	${bnd.jsp.support.imports},\
+	*
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources,\
+	@../../../../util-java/util-java.jar,\
+	@../../../../util-taglib/util-taglib.jar

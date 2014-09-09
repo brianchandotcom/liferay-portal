@@ -330,8 +330,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
-		if (_portalLanguageKeysProperties == null) {
-			_portalLanguageKeysProperties = new Properties();
+		if (_portalLanguageProperties == null) {
+			_portalLanguageProperties = new Properties();
 
 			ClassLoader classLoader =
 				BaseSourceProcessor.class.getClassLoader();
@@ -339,7 +339,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			InputStream inputStream = classLoader.getResourceAsStream(
 				"content/Language.properties");
 
-			_portalLanguageKeysProperties.load(inputStream);
+			_portalLanguageProperties.load(inputStream);
 		}
 
 		Matcher matcher = pattern.matcher(content);
@@ -358,7 +358,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					languageKey.startsWith(StringPool.OPEN_CURLY_BRACE) ||
 					languageKey.startsWith(StringPool.PERIOD) ||
 					languageKey.startsWith(StringPool.UNDERLINE) ||
-					_portalLanguageKeysProperties.containsKey(languageKey)) {
+					_portalLanguageProperties.containsKey(languageKey)) {
 
 					continue;
 				}
@@ -1641,7 +1641,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private SourceMismatchException _firstSourceMismatchException;
 	private String _mainReleaseVersion;
 	private String _oldCopyright;
-	private Properties _portalLanguageKeysProperties;
+	private Properties _portalLanguageProperties;
 	private Properties _properties;
 	private List<String> _runOutsidePortalExclusions;
 	private boolean _usePortalCompatImport;

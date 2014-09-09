@@ -554,10 +554,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			String packageName = packageNameMatcher.group(1);
 
+			pos = fileName.indexOf("/src/");
+
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(BASEDIR);
-			sb.append("portal-impl/src/");
+			sb.append(fileName.substring(0, pos + 5));
 			sb.append(
 				StringUtil.replace(
 					packageName, StringPool.PERIOD, StringPool.SLASH));

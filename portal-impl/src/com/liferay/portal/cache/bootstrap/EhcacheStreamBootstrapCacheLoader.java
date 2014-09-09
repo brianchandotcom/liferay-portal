@@ -46,7 +46,7 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 	}
 
 	public void doLoad(Ehcache ehcache) {
-		if (StreamBootstrapHelpUtil.isSkipped()) {
+		if (ClusterLinkBootstrapLoaderHelperUtil.isSkipped()) {
 			return;
 		}
 
@@ -57,7 +57,7 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 		CacheManager cacheManager = ehcache.getCacheManager();
 
 		try {
-			StreamBootstrapHelpUtil.loadCachesFromCluster(
+			ClusterLinkBootstrapLoaderHelperUtil.loadCachesFromCluster(
 				cacheManager.getName(), ehcache.getName());
 		}
 		catch (Exception e) {

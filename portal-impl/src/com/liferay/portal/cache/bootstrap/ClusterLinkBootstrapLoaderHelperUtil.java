@@ -60,7 +60,7 @@ import java.util.concurrent.TimeUnit;
  * @author Shuyang Zhou
  * @author Sherry Yang
  */
-public class StreamBootstrapHelpUtil {
+public class ClusterLinkBootstrapLoaderHelperUtil {
 
 	public static SocketAddress createServerSocketFromCluster(
 			String portalCacheManagerName, List<String> portalCacheNames)
@@ -128,7 +128,7 @@ public class StreamBootstrapHelpUtil {
 			String portalCacheManagerName, String ... portalCacheNames)
 		throws Exception {
 
-		synchronized (StreamBootstrapHelpUtil.class) {
+		synchronized (ClusterLinkBootstrapLoaderHelperUtil.class) {
 			if (!_started) {
 				List<String> cacheNames = _deferredEhcaches.get(
 					portalCacheManagerName);
@@ -288,19 +288,20 @@ public class StreamBootstrapHelpUtil {
 	private static final String _COMMAND_SOCKET_CLOSE = "${SOCKET_CLOSE}";
 
 	private static Log _log = LogFactoryUtil.getLog(
-		StreamBootstrapHelpUtil.class);
+		ClusterLinkBootstrapLoaderHelperUtil.class);
 
 	private static MethodKey _createServerSocketFromClusterMethodKey =
 		new MethodKey(
-			StreamBootstrapHelpUtil.class, "createServerSocketFromCluster",
-			String.class, List.class);
+			ClusterLinkBootstrapLoaderHelperUtil.class,
+			"createServerSocketFromCluster", String.class, List.class);
 	private static final Map<String, List<String>> _deferredEhcaches =
 		new HashMap<String, List<String>>();
 	private static ServerSocketConfigurator _serverSocketConfigurator =
 		new SocketCacheServerSocketConfiguration();
 	private static ThreadLocal<Boolean> _skipBootstrapThreadLocal =
 		new InitialThreadLocal<Boolean>(
-			StreamBootstrapHelpUtil.class + "._skipBootstrapThreadLocal",
+			ClusterLinkBootstrapLoaderHelperUtil.class +
+				"._skipBootstrapThreadLocal",
 			false);
 	private static boolean _started;
 

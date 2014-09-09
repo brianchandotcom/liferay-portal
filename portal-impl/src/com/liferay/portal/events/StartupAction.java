@@ -14,7 +14,7 @@
 
 package com.liferay.portal.events;
 
-import com.liferay.portal.cache.bootstrap.StreamBootstrapHelpUtil;
+import com.liferay.portal.cache.bootstrap.ClusterLinkBootstrapLoaderHelperUtil;
 import com.liferay.portal.jericho.CachedLoggerProvider;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
@@ -189,7 +189,7 @@ public class StartupAction extends SimpleAction {
 
 		// Ehache bootstrap
 
-		StreamBootstrapHelpUtil.start();
+		ClusterLinkBootstrapLoaderHelperUtil.start();
 
 		// Scheduler
 

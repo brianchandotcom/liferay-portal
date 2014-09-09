@@ -846,36 +846,33 @@ public class WikiPageDependentsTrashHandlerTest {
 	}
 
 	protected RelatedPages getRelatedPagesWithChangedParent() throws Exception {
-		long nodeId = _node.getNodeId();
-		long groupId = _group.getGroupId();
+		RelatedPages relatedPages = new RelatedPages();
 
 		WikiPage initialParentPage = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), groupId, nodeId,
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
 			RandomTestUtil.randomString(), true);
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		WikiPage page = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), nodeId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), initialParentPage.getTitle(), true,
-			serviceContext);
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			initialParentPage.getTitle(), true, serviceContext);
 
 		WikiPage parentPage =  WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), groupId, nodeId,
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
 			RandomTestUtil.randomString(), true);
 
 		WikiPageLocalServiceUtil.changeParent(
-			TestPropsValues.getUserId(), nodeId, page.getTitle(),
+			TestPropsValues.getUserId(), _node.getNodeId(), page.getTitle(),
 			parentPage.getTitle(), serviceContext);
 
-		RelatedPages relatedPages = new RelatedPages();
-
-		relatedPages.setPage(
-			WikiPageLocalServiceUtil.getPage(page.getResourcePrimKey()));
 		relatedPages.setInitialParentPage(
 			WikiPageLocalServiceUtil.getPage(
 				initialParentPage.getResourcePrimKey()));
+		relatedPages.setPage(
+			WikiPageLocalServiceUtil.getPage(page.getResourcePrimKey()));
 		relatedPages.setParentPage(
 			WikiPageLocalServiceUtil.getPage(parentPage.getResourcePrimKey()));
 
@@ -886,42 +883,46 @@ public class WikiPageDependentsTrashHandlerTest {
 			getRelatedPagesWithChildAndGrandchildAndRedirectPage()
 		throws Exception {
 
-		long nodeId = _node.getNodeId();
-		long groupId = _group.getGroupId();
+		RelatedPages relatedPages = new RelatedPages();
 
 		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), groupId, nodeId, "InitialNamePage",
-			true);
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_node.getNodeId(), "InitialNamePage", true);
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		WikiPage childPage = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), nodeId, "ChildPage",
+			TestPropsValues.getUserId(), _node.getNodeId(), "ChildPage",
 			RandomTestUtil.randomString(), "InitialNamePage", true,
 			serviceContext);
 
 		WikiPage grandchildPage = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), nodeId, "GrandChildPage",
+			TestPropsValues.getUserId(), _node.getNodeId(), "GrandChildPage",
 			RandomTestUtil.randomString(), "ChildPage", true, serviceContext);
 
 		WikiPageLocalServiceUtil.renamePage(
-			TestPropsValues.getUserId(), nodeId, "InitialNamePage",
+			TestPropsValues.getUserId(), _node.getNodeId(), "InitialNamePage",
 			"RenamedPage", serviceContext);
 
-		WikiPage page = WikiPageLocalServiceUtil.getPage(nodeId, "RenamedPage");
-		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
-			nodeId, "InitialNamePage");
 		childPage = WikiPageLocalServiceUtil.getPage(
 			childPage.getResourcePrimKey());
+
+		relatedPages.setChildPage(childPage);
+
 		grandchildPage = WikiPageLocalServiceUtil.getPage(
 			grandchildPage.getResourcePrimKey());
 
-		RelatedPages relatedPages = new RelatedPages();
-
-		relatedPages.setChildPage(childPage);
 		relatedPages.setGrandchildPage(grandchildPage);
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), "RenamedPage");
+
 		relatedPages.setPage(page);
+
+		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), "InitialNamePage");
+
 		relatedPages.setRedirectPage(redirectPage);
 
 		return relatedPages;
@@ -930,31 +931,30 @@ public class WikiPageDependentsTrashHandlerTest {
 	protected RelatedPages getRelatedPagesWithChildAndGrandchildPage()
 		throws Exception {
 
-		long nodeId = _node.getNodeId();
-		long groupId = _group.getGroupId();
+		RelatedPages relatedPages = new RelatedPages();
 
 		WikiPage page = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), groupId, nodeId,
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
 			RandomTestUtil.randomString(), true);
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		WikiPage childPage = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), nodeId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), page.getTitle(), true,
-			serviceContext);
-
-		WikiPage grandchildPage = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), nodeId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), childPage.getTitle(), true,
-			serviceContext);
-
-		RelatedPages relatedPages = new RelatedPages();
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			page.getTitle(), true, serviceContext);
 
 		relatedPages.setChildPage(childPage);
-		relatedPages.setGrandchildPage(grandchildPage);
+
 		relatedPages.setPage(page);
+
+		WikiPage grandchildPage = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			childPage.getTitle(), true, serviceContext);
+
+		relatedPages.setGrandchildPage(grandchildPage);
 
 		return relatedPages;
 	}
@@ -962,65 +962,70 @@ public class WikiPageDependentsTrashHandlerTest {
 	protected RelatedPages getRelatedPagesWithChildAndRedirectPage()
 		throws Exception {
 
-		long nodeId = _node.getNodeId();
-		long groupId = _group.getGroupId();
+		RelatedPages relatedPages = new RelatedPages();
 
 		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), groupId, nodeId, "InitialNamePage",
-			true);
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"InitialNamePage", true);
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		WikiPageLocalServiceUtil.renamePage(
-			TestPropsValues.getUserId(), nodeId, "InitialNamePage",
+			TestPropsValues.getUserId(), _node.getNodeId(), "InitialNamePage",
 			"RenamedPage", serviceContext);
 
 		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), nodeId, "ChildPage",
+			TestPropsValues.getUserId(), _node.getNodeId(), "ChildPage",
 			RandomTestUtil.randomString(), "RenamedPage", true, serviceContext);
 
-		WikiPage page = WikiPageLocalServiceUtil.getPage(nodeId, "RenamedPage");
 		WikiPage childPage = WikiPageLocalServiceUtil.getPage(
-			nodeId, "ChildPage");
-		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
-			nodeId, "InitialNamePage");
-
-		RelatedPages relatedPages = new RelatedPages();
+			_node.getNodeId(), "ChildPage");
 
 		relatedPages.setChildPage(childPage);
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), "RenamedPage");
+
 		relatedPages.setPage(page);
+
+		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
+			_group.getGroupId(), "InitialNamePage");
+
 		relatedPages.setRedirectPage(redirectPage);
 
 		return relatedPages;
 	}
 
 	protected RelatedPages getRelatedPagesWithChildPage() throws Exception {
-		long nodeId = _node.getNodeId();
-		long groupId = _group.getGroupId();
-
-		WikiPage page = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), groupId, nodeId, "Page", true);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		WikiPage childPage = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), nodeId, "ChildPage",
-			RandomTestUtil.randomString(), "Page", true, serviceContext);
-
 		RelatedPages relatedPages = new RelatedPages();
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiPage childPage = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _node.getNodeId(), "ChildPage",
+			RandomTestUtil.randomString(), "Page", true, serviceContext);
+
 		relatedPages.setChildPage(childPage);
+
+		WikiPage page = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"Page", true);
+
 		relatedPages.setPage(page);
 
 		return relatedPages;
 	}
 
 	protected RelatedPages getRelatedPagesWithParentPage() throws Exception {
+		RelatedPages relatedPages = new RelatedPages();
+
 		WikiPage initialParentPage = WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
 			"ParentPage", true);
+
+		relatedPages.setInitialParentPage(initialParentPage);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -1029,36 +1034,33 @@ public class WikiPageDependentsTrashHandlerTest {
 			TestPropsValues.getUserId(), _node.getNodeId(), "Page",
 			RandomTestUtil.randomString(), "ParentPage", true, serviceContext);
 
-		RelatedPages relatedPages = new RelatedPages();
-
 		relatedPages.setPage(page);
-		relatedPages.setInitialParentPage(initialParentPage);
 
 		return relatedPages;
 	}
 
 	protected RelatedPages getRelatedPagesWithRedirectPage() throws Exception {
-		long nodeId = _node.getNodeId();
-		long groupId = _group.getGroupId();
-
-		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), groupId, nodeId, "InitialNamePage",
-			true);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		WikiPageLocalServiceUtil.renamePage(
-			TestPropsValues.getUserId(), nodeId, "InitialNamePage",
-			"RenamedPage", serviceContext);
-
-		WikiPage page = WikiPageLocalServiceUtil.getPage(nodeId, "RenamedPage");
-		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
-			nodeId, "InitialNamePage");
-
 		RelatedPages relatedPages = new RelatedPages();
 
+		WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"InitialNamePage", true);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		WikiPageLocalServiceUtil.renamePage(
+			TestPropsValues.getUserId(), _node.getNodeId(), "InitialNamePage",
+			"RenamedPage", serviceContext);
+
+		WikiPage page = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), "RenamedPage");
+
 		relatedPages.setPage(page);
+
+		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), "InitialNamePage");
+
 		relatedPages.setRedirectPage(redirectPage);
 
 		return relatedPages;

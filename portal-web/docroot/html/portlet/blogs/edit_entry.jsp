@@ -99,15 +99,21 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	>
 
 		<liferay-ui:section>
-			<liferay-ui:input-editor contents="<%= title %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="title" placeholder="title" />
+			<div class="entry-title">
+				<h2><liferay-ui:input-editor contents="<%= title %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="title" placeholder="title" /></h2>
+			</div>
 
 			<aui:input name="title" type="hidden" />
 
-			<liferay-ui:input-editor contents="<%= subtitle %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="subtitle" placeholder="subtitle" />
+			<div class="entry-subtitle">
+				<liferay-ui:input-editor contents="<%= subtitle %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="subtitle" placeholder="subtitle" />
+			</div>
 
 			<aui:input name="subtitle" type="hidden" />
 
-			<liferay-ui:input-editor contents="<%= content %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="content" placeholder="content" />
+			<div class="entry-content">
+				<liferay-ui:input-editor contents="<%= content %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="content" placeholder="content" />
+			</div>
 
 			<aui:input name="content" type="hidden" />
 

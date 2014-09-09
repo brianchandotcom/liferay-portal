@@ -123,10 +123,9 @@ public class WabProcessor {
 
 		File outputFile = new File(file, "output.zip");
 
-		JarOutputStream jarOutputStream = new JarOutputStream(
-			new FileOutputStream(outputFile));
+		try (JarOutputStream jarOutputStream = new JarOutputStream(
+				new FileOutputStream(outputFile))) {
 
-		try {
 			writeJarPath(
 				jarOutputStream, _ignoredResources, "META-INF/MANIFEST.MF",
 				getManifestFile());
@@ -134,9 +133,6 @@ public class WabProcessor {
 			writeJarPaths(
 				jarOutputStream, _ignoredResources, _pluginDir,
 				_pluginDir.toURI());
-		}
-		finally {
-			jarOutputStream.close();
 		}
 
 		if (PropsValues.MODULE_FRAMEWORK_WEB_GENERATOR_GENERATED_WABS_STORE) {
@@ -242,10 +238,9 @@ public class WabProcessor {
 
 		URI webInfClasesURI = uri.resolve("WEB-INF/classes");
 
-		ZipInputStream zipInputStream = new ZipInputStream(
-			new FileInputStream(zipFile));
+		try (ZipInputStream zipInputStream = new ZipInputStream(
+				new FileInputStream(zipFile))) {
 
-		try {
 			for (ZipEntry zipEntry;
 				(zipEntry = zipInputStream.getNextEntry()) != null;
 					zipInputStream.closeEntry()) {
@@ -271,9 +266,6 @@ public class WabProcessor {
 					new FileOutputStream(file));
 			}
 		}
-		finally {
-			zipInputStream.close();
-		}
 	}
 
 	protected void formatDocument(File file, Document document)
@@ -296,13 +288,8 @@ public class WabProcessor {
 
 		Manifest manifest = new Manifest();
 
-		InputStream inputStream = new FileInputStream(manifestFile);
-
-		try {
+		try (InputStream inputStream = new FileInputStream(manifestFile)) {
 			manifest.read(inputStream);
-		}
-		finally {
-			inputStream.close();
 		}
 
 		return manifest;
@@ -1201,13 +1188,8 @@ public class WabProcessor {
 	protected void writeManifest(Manifest manifest) throws IOException {
 		File file = getManifestFile();
 
-		OutputStream outputStream = new FileOutputStream(file);
-
-		try {
+		try (OutputStream outputStream = new FileOutputStream(file)) {
 			manifest.write(outputStream);
-		}
-		finally {
-			outputStream.close();
 		}
 	}
 

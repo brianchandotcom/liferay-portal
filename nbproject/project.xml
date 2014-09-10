@@ -420,6 +420,7 @@
 				<classpath mode="compile">lib/portal/jamwiki-core.jar</classpath>
 				<classpath mode="compile">lib/portal/janino.jar</classpath>
 				<classpath mode="compile">lib/portal/java-diff.jar</classpath>
+				<classpath mode="compile">lib/portal/java-libpst.jar</classpath>
 				<classpath mode="compile">lib/portal/javassist.jar</classpath>
 				<classpath mode="compile">lib/portal/jaxb-impl.jar</classpath>
 				<classpath mode="compile">lib/portal/jaxen.jar</classpath>
@@ -438,6 +439,7 @@
 				<classpath mode="compile">lib/portal/jfreechart.jar</classpath>
 				<classpath mode="compile">lib/portal/jgroups.jar</classpath>
 				<classpath mode="compile">lib/portal/jhlabs-filters.jar</classpath>
+				<classpath mode="compile">lib/portal/jmatio.jar</classpath>
 				<classpath mode="compile">lib/portal/jodconverter.jar</classpath>
 				<classpath mode="compile">lib/portal/jodd.jar</classpath>
 				<classpath mode="compile">lib/portal/jrcs-diff.jar</classpath>

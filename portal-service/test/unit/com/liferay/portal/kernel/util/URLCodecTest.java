@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
+
 import java.net.URLEncoder;
 
 import org.junit.Assert;

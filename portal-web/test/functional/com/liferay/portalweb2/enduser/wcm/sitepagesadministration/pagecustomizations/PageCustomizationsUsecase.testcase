@@ -479,7 +479,7 @@
 		</execute>
 
 		<execute action="Home#assertClick" locator-key1="PAGE_CUSTOMIZATION_VIEW_MY_CUSTOMIZED_PAGE" value1="View My Customized Page" />
-		<execute action="Home#assertClick" locator-key1="PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS" value1="Reset My Customizations" />
+		<execute action="Home#assertClickNoError" locator-key1="PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS" value1="Reset My Customizations" />
 		<execute action="Home#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to reset your customizations to default?" />
 
 		<execute macro="Portlet#viewNoSpecificPG">
@@ -524,7 +524,7 @@
 			<var name="pageName" value="Site Page Name" />
 		</execute>
 
-		<execute action="Home#assertClick" locator-key1="PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS" value1="Reset My Customizations" />
+		<execute action="Home#assertClickNoError" locator-key1="PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS" value1="Reset My Customizations" />
 		<execute action="Home#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to reset your customizations to default?" />
 
 		<execute macro="Portlet#viewSpecificPG">

@@ -80,7 +80,7 @@
 
 		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
 		<execute action="Dynamicdatamapping#mouseOver" locator-key1="FORM_FIELD" />
-		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD_DELETE_ICON" />
+		<execute action="Dynamicdatamapping#clickNoError" locator-key1="FORM_FIELD_DELETE_ICON" />
 		<execute action="Dynamicdatamapping#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
 		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
 	</command>

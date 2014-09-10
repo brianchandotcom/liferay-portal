@@ -90,7 +90,7 @@
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
 		<execute action="PGDocumentsandmediaManageDocumenttypes#click" locator-key1="DOCUMENT_TYPES_TABLE_ACTIONS" />
-		<execute action="PGDocumentsandmediaManageDocumenttypes#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+		<execute action="PGDocumentsandmediaManageDocumenttypes#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 
 		<execute action="PGDocumentsandmedia#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -209,7 +209,7 @@
 			<condition action="PGDocumentsandmediaManageDocumenttypes#isElementPresent" locator-key1="DOCUMENT_TYPES_TABLE_ACTIONS_1" />
 			<then>
 				<execute action="PGDocumentsandmediaManageDocumenttypes#click" locator-key1="DOCUMENT_TYPES_TABLE_ACTIONS_1" />
-				<execute action="PGDocumentsandmediaManageDocumenttypes#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+				<execute action="PGDocumentsandmediaManageDocumenttypes#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 				<execute action="PGDocumentsandmediaManageDocumenttypes#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute action="PGDocumentsandmediaManageDocumenttypes#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>

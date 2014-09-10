@@ -477,7 +477,7 @@
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<execute action="PGDocumentsandmediaDocument#makeVisible" locator-key1="COMMENTS_DELETE" value1="Delete" />
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="COMMENTS_DELETE_LINK" value1="Delete" />
+		<execute action="PGDocumentsandmediaDocument#assertClickNoError" locator-key1="COMMENTS_DELETE_LINK" value1="Delete" />
 		<execute action="PGDocumentsandmediaDocument#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected comment?" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 	</command>

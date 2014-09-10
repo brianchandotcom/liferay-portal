@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
+import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
@@ -111,7 +112,7 @@ public class PortalManagerUtil {
 				"manage", ManageAction.class);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			throw new LoggedExceptionInInitializerError(e);
 		}
 	}
 

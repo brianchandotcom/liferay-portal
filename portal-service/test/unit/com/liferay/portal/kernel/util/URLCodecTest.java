@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
+
 import java.net.URLEncoder;
 
 import org.junit.Assert;
@@ -128,7 +130,7 @@ public class URLCodecTest {
 			}
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			throw new LoggedExceptionInInitializerError(e);
 		}
 	}
 

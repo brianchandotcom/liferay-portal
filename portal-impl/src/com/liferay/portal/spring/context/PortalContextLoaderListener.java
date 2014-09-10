@@ -358,10 +358,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 	private static final Field _FILTERED_PROPERTY_DESCRIPTORS_CACHE_FIELD;
 
 	static {
-		Field filteredPropertyDescriptorsCacheField = null;
-
 		try {
-			filteredPropertyDescriptorsCacheField =
+			_FILTERED_PROPERTY_DESCRIPTORS_CACHE_FIELD =
 				ReflectionUtil.getDeclaredField(
 					AbstractAutowireCapableBeanFactory.class,
 					"filteredPropertyDescriptorsCache");
@@ -369,9 +367,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		catch (Exception e) {
 			throw new LoggedExceptionInInitializerError(e);
 		}
-
-		_FILTERED_PROPERTY_DESCRIPTORS_CACHE_FIELD =
-			filteredPropertyDescriptorsCacheField;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

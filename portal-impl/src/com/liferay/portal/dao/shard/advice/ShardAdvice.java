@@ -17,6 +17,7 @@ package com.liferay.portal.dao.shard.advice;
 import com.liferay.portal.dao.shard.ShardDataSourceTargetSource;
 import com.liferay.portal.dao.shard.ShardSelector;
 import com.liferay.portal.dao.shard.ShardSessionFactoryTargetSource;
+import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -206,18 +207,14 @@ public class ShardAdvice {
 	private static final ShardSelector _shardSelector;
 
 	static {
-		ShardSelector shardSelector = null;
-
 		try {
 			Class<?> clazz = Class.forName(PropsValues.SHARD_SELECTOR);
 
-			shardSelector = (ShardSelector)clazz.newInstance();
+			_shardSelector = (ShardSelector)clazz.newInstance();
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			throw new LoggedExceptionInInitializerError(e);
 		}
-
-		_shardSelector = shardSelector;
 	}
 
 	private ShardDataSourceTargetSource _shardDataSourceTargetSource;

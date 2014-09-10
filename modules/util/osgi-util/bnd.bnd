@@ -1,4 +1,6 @@
 Bundle-Name: Liferay OSGi Utilities
 Bundle-SymbolicName: com.liferay.osgi.util
 Bundle-Version: 1.0.2
-Export-Package: com.liferay.osgi.util.service
+Export-Package: \
+	com.liferay.osgi.util.service,\
+	com.liferay.osgi.util.service.annotations

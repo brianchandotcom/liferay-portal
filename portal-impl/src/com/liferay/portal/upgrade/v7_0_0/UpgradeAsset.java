@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.upgrade.v7_0_0.util.AssetEntryTable;
@@ -84,8 +85,6 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected void updateAssetClassTypeId() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(JournalArticle.class);
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -99,16 +98,22 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
+			long classNameId = PortalUtil.getClassNameId(JournalArticle.class);
+
 			while (rs.next()) {
 				long resourcePrimKey = rs.getLong("resourcePrimKey");
 				String structureId = rs.getString("structureId");
 
-				long DDMStructureId = getDDMStructureId(structureId);
+				StringBundler sb = new StringBundler(6);
 
-				runSQL(
-					"update AssetEntry set classTypeId = " +
-						DDMStructureId + " where classNameId = " +
-							classNameId + " and classPK = " + resourcePrimKey);
+				sb.append("update AssetEntry set classTypeId = ");
+				sb.append(getDDMStructureId(structureId));
+				sb.append(" where classNameId = ");
+				sb.append(classNameId);
+				sb.append(" and classPK = ");
+				sb.append(resourcePrimKey);
+
+				runSQL(sb.toString());
 			}
 		}
 		finally {

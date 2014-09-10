@@ -20,19 +20,6 @@
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="assertCompleteFormFieldNotPresent">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute action="PGKaleoformsSubmitnew#assertElementNotPresent" locator-key1="NEW_PROCESS_FIELDS_FIELD" />
-	</command>
-
-	<command name="assertMyCompletedRequestsFieldNotPresent">
-		<var name="key_fieldName" value="${fieldName}" />
-		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
-
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertElementNotPresent" locator-key1="CURRENT_ENTRY_FIELD" />\
-	</command>
-
 	<command name="assignProcessToMe">
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
@@ -234,7 +221,7 @@
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="saveNewProcess">
+	<command name="saveProcessRecord">
 		<execute action="PGKaleoformsSubmitnew#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGKaleoforms#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -305,6 +292,12 @@
 		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator-key1="NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_SELECT" value1="${kfProcessFieldData}" />
 	</command>
 
+	<command name="viewCompleteFormFieldNotPresent">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="PGKaleoformsSubmitnew#assertElementNotPresent" locator-key1="NEW_PROCESS_FIELDS_TEXT_FIELD" />
+	</command>
+
 	<command name="viewCompleteFormFieldSelect">
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
@@ -366,6 +359,13 @@
 		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
 		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="CURRENT_ENTRY_FIELD" value1="${kfProcessFieldData}" />
+	</command>
+
+	<command name="viewMyCompletedRequestsFieldNotPresent">
+		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
+
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertElementNotPresent" locator-key1="CURRENT_ENTRY_FIELD" />\
 	</command>
 
 	<command name="viewMyCompletedRequestsTasks">

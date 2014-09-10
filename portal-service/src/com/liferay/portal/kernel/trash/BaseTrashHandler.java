@@ -235,8 +235,8 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	public String getRootContainerModelClassName(long classPK) {
-		return getContainerModelClassName(classPK);
+	public String getRootContainerModelClassName() {
+		return getContainerModelClassName(0);
 	}
 
 	@Override

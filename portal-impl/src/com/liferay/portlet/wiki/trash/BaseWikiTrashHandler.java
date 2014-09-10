@@ -171,7 +171,7 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getRootContainerModelClassName(long classPK) {
+	public String getRootContainerModelClassName() {
 		return WikiNode.class.getName();
 	}
 

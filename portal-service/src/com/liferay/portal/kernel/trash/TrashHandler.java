@@ -342,7 +342,7 @@ public interface TrashHandler {
 	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
 		throws PortalException;
 
-	public String getRootContainerModelClassName(long classPK);
+	public String getRootContainerModelClassName();
 
 	public long getRootContainerModelId(long classPK) throws PortalException;
 

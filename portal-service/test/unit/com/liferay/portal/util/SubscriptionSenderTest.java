@@ -134,7 +134,7 @@ public class SubscriptionSenderTest extends PowerMockito {
 
 		subscriptionSender.setGroupId(100);
 
-		subscriptionSender.setMailId("test-mail-id");
+		subscriptionSender.setMailId(_TEST_MAIL_ID);
 
 		subscriptionSender.initialize();
 
@@ -148,7 +148,7 @@ public class SubscriptionSenderTest extends PowerMockito {
 	public void testGetPortalURLWithoutGroupId() throws Exception {
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		subscriptionSender.setMailId("test-mail-id");
+		subscriptionSender.setMailId(_TEST_MAIL_ID);
 
 		subscriptionSender.initialize();
 
@@ -168,7 +168,7 @@ public class SubscriptionSenderTest extends PowerMockito {
 
 		subscriptionSender.setServiceContext(serviceContext);
 
-		subscriptionSender.setMailId("test-mail-id");
+		subscriptionSender.setMailId(_TEST_MAIL_ID);
 
 		subscriptionSender.initialize();
 
@@ -193,6 +193,8 @@ public class SubscriptionSenderTest extends PowerMockito {
 
 		return service;
 	}
+
+	private static final String _TEST_MAIL_ID = "test-mail-id";
 
 	private BeanLocator _beanLocator = mock(BeanLocator.class);
 	private List<Class<?>> _serviceUtilClasses = new ArrayList<Class<?>>();

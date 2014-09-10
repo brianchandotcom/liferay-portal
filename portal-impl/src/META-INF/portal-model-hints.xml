@@ -1558,7 +1558,7 @@
 			<hint name="max-length">255</hint>
 		</field>
 		<field name="fileName" type="String">
-			<hint name="max-length">500</hint>
+			<hint name="max-length">255</hint>
 		</field>
 		<field name="extension" type="String" />
 		<field name="mimeType" type="String" />
@@ -1654,7 +1654,7 @@
 			<hint name="max-length">4000</hint>
 		</field>
 		<field name="fileName" type="String">
-			<hint name="max-length">500</hint>
+			<hint name="max-length">255</hint>
 		</field>
 		<field name="extension" type="String" />
 		<field name="mimeType" type="String" />

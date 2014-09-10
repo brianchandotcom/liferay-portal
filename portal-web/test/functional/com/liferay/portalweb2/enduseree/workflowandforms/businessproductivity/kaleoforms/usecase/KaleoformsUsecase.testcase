@@ -195,7 +195,7 @@
 			<var name="workflowTask" value="create" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#assertFormsNotPresent">
+		<execute macro="KaleoFormsAdmin#viewFormsNotPresent">
 			<var name="workflowTask" value="review" />
 		</execute>
 
@@ -3164,7 +3164,7 @@
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#assertTaskNotPresent">
+		<execute macro="KaleoFormsAdmin#viewTaskNotPresent">
 			<var name="workflowTask" value="update" />
 		</execute>
 
@@ -4313,7 +4313,7 @@
 			<var name="kfProcessFieldData" value="3.99" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#assertCompleteFormFieldNotPresent">
+		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldNotPresent">
 			<var name="fieldName" value="quantity" />
 		</execute>
 
@@ -4952,7 +4952,7 @@
 			<var name="kfProcessFieldData" value="3.99" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#assertCompleteFormFieldNotPresent">
+		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldNotPresent">
 			<var name="fieldName" value="quantity" />
 		</execute>
 
@@ -4997,7 +4997,7 @@
 			<var name="kfProcessFieldData" value="3.99" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#assertMyCompletedRequestsFieldNotPresent">
+		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsFieldNotPresent">
 			<var name="fieldName" value="quantity" />
 			<var name="kfProcessFieldData" value="4.0" />
 		</execute>

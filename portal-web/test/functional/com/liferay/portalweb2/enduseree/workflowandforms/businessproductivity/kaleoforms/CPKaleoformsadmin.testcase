@@ -766,7 +766,7 @@
 			<var name="kfStatus" value="Pending" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#assertProcessRecordTableRecordNotPresent">
+		<execute macro="KaleoFormsAdmin#viewProcessRecordTableRecordNotPresent">
 			<var name="kfProcessFieldData" value="One" />
 		</execute>
 
@@ -1531,7 +1531,7 @@
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#assertTaskNotPresent">
+		<execute macro="KaleoFormsAdmin#viewTaskNotPresent">
 			<var name="workflowTask" value="update" />
 		</execute>
 
@@ -1628,7 +1628,7 @@
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#assertTaskNotPresent">
+		<execute macro="KaleoFormsAdmin#viewTaskNotPresent">
 			<var name="workflowTask" value="update" />
 		</execute>
 
@@ -1798,7 +1798,7 @@
 			<var name="kfStatus" value="Approved" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#assertProcessRecordTableRecordNotPresent">
+		<execute macro="KaleoFormsAdmin#viewProcessRecordTableRecordNotPresent">
 			<var name="kfProcessFieldData" value="Two" />
 		</execute>
 
@@ -1812,7 +1812,7 @@
 			<var name="kfStatus" value="Approved" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#assertProcessRecordTableRecordNotPresent">
+		<execute macro="KaleoFormsAdmin#viewProcessRecordTableRecordNotPresent">
 			<var name="kfProcessFieldData" value="Two" />
 		</execute>
 
@@ -1826,7 +1826,7 @@
 			<var name="kfStatus" value="Approved" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#assertProcessRecordTableRecordNotPresent">
+		<execute macro="KaleoFormsAdmin#viewProcessRecordTableRecordNotPresent">
 			<var name="kfProcessFieldData" value="One" />
 		</execute>
 

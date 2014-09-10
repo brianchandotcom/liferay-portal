@@ -972,8 +972,6 @@
 			<var name="larFileName" value="Web_Content.portlet.lar" />
 		</execute>
 
-		<execute macro="Page#tearDownPG" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

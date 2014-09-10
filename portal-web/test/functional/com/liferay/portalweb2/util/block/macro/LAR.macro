@@ -368,11 +368,7 @@
 			<isset var="importValidationMissingItem" />
 			<then>
 				<execute action="BasePortletImport#assertTextEquals" locator-key1="VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
-				<execute action="BasePortletImport#assertTextEquals" locator-key1="VALIDATION_ERROR_MESSAGE" value1="There are missing references that could not be found in the current site. Please import  the following elements first:" />
-
-				<var name="key_linkedPageName" value="${linkedPageName}" />
-
-				<execute action="BasePortletImport#assertTextEquals" locator-key1="VALIDATION_ERROR_LIST_ITEM" value1="${key_linkedPageName}" />
+				<execute action="BasePortletImport#assertTextEquals" locator-key1="VALIDATION_ERROR_MESSAGE" value1="An unexpected error occurred while uploading your file." />
 			</then>
 			<else>
 				<execute action="BasePortletImport#assertClick" locator-key1="CONTINUE_BUTTON" value1="Continue" />

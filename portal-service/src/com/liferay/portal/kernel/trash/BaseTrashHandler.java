@@ -257,9 +257,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	public int getRootContainerModelsCount(long groupId)
-		throws PortalException {
-
+	public int getRootContainerModelsCount(long groupId) {
 		return 0;
 	}
 

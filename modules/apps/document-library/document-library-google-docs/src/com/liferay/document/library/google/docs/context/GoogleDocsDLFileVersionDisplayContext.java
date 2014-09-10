@@ -136,7 +136,7 @@ public class GoogleDocsDLFileVersionDisplayContext
 
 		urlMenuItem.setURL(editURL);
 
-		menuItems.set(index, urlMenuItem);
+		menuItems.add(index, urlMenuItem);
 	}
 
 	private void _removeMenuItem(List<MenuItem> menuItems, String key) {

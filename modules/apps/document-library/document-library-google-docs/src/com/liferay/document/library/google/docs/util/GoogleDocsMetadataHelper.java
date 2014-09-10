@@ -21,6 +21,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -85,6 +86,20 @@ public class GoogleDocsMetadataHelper {
 		return false;
 	}
 
+	protected void initDDMStructure(DLFileEntryType dlFileEntryType) {
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			String structureKey = ddmStructure.getStructureKey();
+
+			if (structureKey.equals(
+				GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS)) {
+
+				_ddmStructure = ddmStructure;
+			}
+		}
+	}
+
 	protected void initFields() {
 		if (_fields == null) {
 			_fields = new HashMap<>();
@@ -111,20 +126,6 @@ public class GoogleDocsMetadataHelper {
 					"Unable to load DDM fields for file version " +
 						_dlFileVersion.getFileVersionId(),
 					pe);
-			}
-		}
-	}
-
-	private void initDDMStructure(DLFileEntryType dlFileEntryType) {
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			String structureKey = ddmStructure.getStructureKey();
-
-			if (structureKey.equals(
-					GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS)) {
-
-				_ddmStructure = ddmStructure;
 			}
 		}
 	}

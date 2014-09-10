@@ -51,6 +51,23 @@
 			</xsl:choose>
 		</xsl:for-each>
 		</div>
+
+		<h4>Written Offer for Source Code</h4>
+
+		<p>For binaries that you receive from Liferay that are licensed under any version of the GNU General Public License (GPL) or the GNU LGPL, you can receive a complete machine-readable copy of the source code by sending a written request to:</p>
+
+		<address>
+			<b>Liferay, Inc.</b><br />
+			Attn: Legal<br />
+			1400 Montefino Ave<br />
+			Diamond Bar, CA 91765<br />
+		</address>
+
+		<p>Your request should include: (i) the name of the covered binary, (ii) the name and version number of the Liferay product containing the covered binary, (iii) your name, (iv) your company name (if applicable) and (v) your return mailing and email address (if available).</p>
+
+		<p>We may charge you a nominal fee to cover the cost of the media and distribution.</p>
+
+		<p>Your request must be sent within three (3) years of the date you received the GPL or LGPL covered code.</p>
 		</body>
 
 		</html>

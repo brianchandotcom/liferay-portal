@@ -3089,12 +3089,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected void restoreDependentChildPagesFromTrash(
-			WikiPage page, long node, String title, String trashTitle,
+			WikiPage page, long nodeId, String title, String trashTitle,
 			long trashEntryId)
 		throws PortalException {
 
 		List<WikiPage> childPages = getChildren(
-			node, true, trashTitle, WorkflowConstants.STATUS_IN_TRASH);
+			nodeId, true, trashTitle, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (WikiPage curPage : childPages) {
 			curPage.setParentTitle(title);

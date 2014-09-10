@@ -572,15 +572,15 @@ public class Creole10Parser]]></replacevalue>
 		<mkdir dir="${tstamp.value}/compass" />
 
 		<get
-			dest="${tstamp.value}/compass/compass-0.12.2.gem"
-			src="http://rubygems.org/downloads/compass-0.12.2.gem"
+			dest="${tstamp.value}/compass/compass-1.0.1.gem"
+			src="http://rubygems.org/downloads/compass-1.0.1.gem"
 		/>
 
 		<java
 			fork="true"
 			jar="${project.dir}/lib/portal/jruby.jar"
 		>
-			<arg line="-S gem install -i ./${tstamp.value}/output ${tstamp.value}/compass/compass-0.12.2.gem --no-rdoc --no-ri" />
+			<arg line="-S gem install -i ./${tstamp.value}/output ${tstamp.value}/compass/compass-1.0.1.gem --no-rdoc --no-ri" />
 		</java>
 
 		<if>

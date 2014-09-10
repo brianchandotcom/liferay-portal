@@ -66,13 +66,13 @@ public class SubscriptionSenderTest extends PowerMockito {
 		when(
 			company.getPortalURL(Mockito.eq(0l))
 		).thenReturn(
-			"http://www.portal.com"
+			_WWW_PORTAL_DOT_COM
 		);
 
 		when(
 			company.getPortalURL(Mockito.eq(100l))
 		).thenReturn(
-			"http://www.virtual.com"
+			_WWW_VIRTUAL_DOT_COM
 		);
 
 		GroupLocalService groupLocalService = getMockService(
@@ -139,9 +139,9 @@ public class SubscriptionSenderTest extends PowerMockito {
 		subscriptionSender.initialize();
 
 		String portalURL = String.valueOf(
-			subscriptionSender.getContextAttribute("[$PORTAL_URL$]"));
+			subscriptionSender.getContextAttribute(_PORTAL_URL_PATTERN));
 
-		Assert.assertEquals("http://www.virtual.com", portalURL);
+		Assert.assertEquals(_WWW_VIRTUAL_DOT_COM, portalURL);
 	}
 
 	@Test
@@ -153,9 +153,9 @@ public class SubscriptionSenderTest extends PowerMockito {
 		subscriptionSender.initialize();
 
 		String portalURL = String.valueOf(
-			subscriptionSender.getContextAttribute("[$PORTAL_URL$]"));
+			subscriptionSender.getContextAttribute(_PORTAL_URL_PATTERN));
 
-		Assert.assertEquals("http://www.portal.com", portalURL);
+		Assert.assertEquals(_WWW_PORTAL_DOT_COM, portalURL);
 	}
 
 	@Test
@@ -173,9 +173,9 @@ public class SubscriptionSenderTest extends PowerMockito {
 		subscriptionSender.initialize();
 
 		String portalURL = String.valueOf(
-			subscriptionSender.getContextAttribute("[$PORTAL_URL$]"));
+			subscriptionSender.getContextAttribute(_PORTAL_URL_PATTERN));
 
-		Assert.assertEquals("http://www.virtual.com", portalURL);
+		Assert.assertEquals(_WWW_VIRTUAL_DOT_COM, portalURL);
 	}
 
 	protected <T> T getMockService(
@@ -194,7 +194,13 @@ public class SubscriptionSenderTest extends PowerMockito {
 		return service;
 	}
 
+	private static final String _PORTAL_URL_PATTERN = "[$PORTAL_URL$]";
+
 	private static final String _TEST_MAIL_ID = "test-mail-id";
+
+	private static final String _WWW_PORTAL_DOT_COM = "http://www.portal.com";
+
+	private static final String _WWW_VIRTUAL_DOT_COM = "http://www.virtual.com";
 
 	private BeanLocator _beanLocator = mock(BeanLocator.class);
 	private List<Class<?>> _serviceUtilClasses = new ArrayList<Class<?>>();

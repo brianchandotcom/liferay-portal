@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.trash.util.TrashUtil;
-import com.liferay.portlet.wiki.NoSuchPageResourceException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
@@ -102,12 +101,9 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 		String parentTitle = StringPool.BLANK;
 
 		if (containerModelId > 0) {
-			try {
-				page = WikiPageLocalServiceUtil.getPage(containerModelId);
+			page = WikiPageLocalServiceUtil.getPage(containerModelId);
 
-				parentTitle = page.getTitle();
-			}
-			catch (NoSuchPageResourceException nspre) {
+			if (page == null) {
 				List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(
 					containerModelId, start, end);
 
@@ -117,6 +113,8 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 
 				return containerModels;
 			}
+
+			parentTitle = page.getTitle();
 		}
 		else {
 			page = WikiPageLocalServiceUtil.getPage(classPK);
@@ -141,14 +139,13 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 		String parentTitle = StringPool.BLANK;
 
 		if (containerModelId > 0) {
-			try {
-				page = WikiPageLocalServiceUtil.getPage(containerModelId);
+			page = WikiPageLocalServiceUtil.fetchPage(containerModelId);
 
-				parentTitle = page.getTitle();
-			}
-			catch (NoSuchPageResourceException nspre) {
+			if (page == null) {
 				return WikiPageLocalServiceUtil.getPagesCount(containerModelId);
 			}
+
+			parentTitle = page.getTitle();
 		}
 		else {
 			page = WikiPageLocalServiceUtil.getPage(classPK);
@@ -163,12 +160,10 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 		long classPK, long destinationContainerModelId) {
 
 		if (destinationContainerModelId == 0) {
-			try {
-				WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
+			WikiPage page = WikiPageLocalServiceUtil.fetchPage(classPK);
 
+			if (page != null) {
 				return page.getNodeId();
-			}
-			catch (Exception e) {
 			}
 		}
 

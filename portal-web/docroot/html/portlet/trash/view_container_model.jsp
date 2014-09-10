@@ -23,7 +23,7 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectContainer");
-boolean rootContainerModelMovable = ParamUtil.getBoolean(request, "rootContainerModelMovable", false);
+boolean rootContainerModelMovable = ParamUtil.getBoolean(request, "rootContainerModelMovable");
 
 TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
 
@@ -32,25 +32,25 @@ TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
 ContainerModel containerModel = (ContainerModel)request.getAttribute(WebKeys.TRASH_CONTAINER_MODEL);
 
 String containerModelClassName = trashHandler.getContainerModelClassName(classPK);
+
 long containerModelId = 0;
 
 if (containerModel != null) {
 	containerModelClassName = containerModel.getModelClassName();
+
 	containerModelId = containerModel.getContainerModelId();
 }
 
-PortletURL portletURL = renderResponse.createRenderURL();
+PortletURL containerURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/trash/view_container_model");
-portletURL.setParameter("redirect", redirect);
-portletURL.setParameter("backURL", currentURL);
-portletURL.setParameter("className", className);
-portletURL.setParameter("classPK", String.valueOf(classPK));
-portletURL.setParameter("containerModelClassName", containerModelClassName);
+containerURL.setParameter("struts_action", "/trash/view_container_model");
+containerURL.setParameter("redirect", redirect);
+containerURL.setParameter("backURL", currentURL);
+containerURL.setParameter("className", className);
+containerURL.setParameter("classPK", String.valueOf(classPK));
+containerURL.setParameter("containerModelClassName", containerModelClassName);
 
-PortletURL containerURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-TrashUtil.addContainerModelBreadcrumbEntries(request, containerModelClassName, containerModelId, portletURL);
+TrashUtil.addContainerModelBreadcrumbEntries(request, renderResponse, containerModelClassName, containerModelId, containerURL);
 
 String containerModelName = trashHandler.getContainerModelName(classPK);
 
@@ -76,16 +76,16 @@ if (rootContainerModelMovable) {
 		<aui:button-row>
 
 			<%
-				Map<String, Object> data = new HashMap<String, Object>();
+			Map<String, Object> data = new HashMap<String, Object>();
 
-				data.put("classname", className);
-				data.put("classpk", classPK);
-				data.put("containermodelid", containerModelId);
-				data.put("redirect", redirect);
+			data.put("classname", className);
+			data.put("classpk", classPK);
+			data.put("containermodelid", containerModelId);
+			data.put("redirect", redirect);
 			%>
 
-		<aui:button cssClass="selector-button" data="<%= data %>" value='<%= LanguageUtil.format(request, "choose-this-x", containerModelName) %>' />
-	</aui:button-row>
+			<aui:button cssClass="selector-button" data="<%= data %>" value='<%= LanguageUtil.format(request, "choose-this-x", containerModelName) %>' />
+		</aui:button-row>
 
 		<br />
 	</c:if>

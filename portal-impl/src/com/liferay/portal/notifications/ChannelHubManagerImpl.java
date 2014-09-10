@@ -314,12 +314,9 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 
 		sendNotificationEvent(companyId, userId, notificationEvent);
 
-		MethodKey methodKey = new MethodKey(
-			ChannelHubManagerUtil.class, "storeNotificationEvent", long.class,
-			long.class, NotificationEvent.class);
-
 		MethodHandler methodHandler = new MethodHandler(
-			methodKey, companyId, userId, notificationEvent);
+			_storeNotificationEventMethodKey, companyId, userId,
+			notificationEvent);
 
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			methodHandler, true);
@@ -376,6 +373,11 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 
 		channelHub.unregisterChannelListener(userId, channelListener);
 	}
+
+	private static final MethodKey _storeNotificationEventMethodKey =
+		new MethodKey(
+			ChannelHubManagerUtil.class, "storeNotificationEvent", long.class,
+			long.class, NotificationEvent.class);
 
 	private ChannelHub _channelHub;
 	private ConcurrentMap<Long, ChannelHub> _channelHubs =

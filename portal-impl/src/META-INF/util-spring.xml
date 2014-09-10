@@ -547,12 +547,19 @@
 		<property name="legacyExternalRepositoryFactory">
 			<bean class="com.liferay.portal.repository.external.LegacyExternalRepositoryFactory" />
 		</property>
-		<property name="liferayRepositoryDefiner">
-			<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryDefiner">
-				<property name="repositoryFactory">
-					<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
-				</property>
-			</bean>
+		<property name="repositoryDefiners">
+			<list>
+				<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryDefiner">
+					<property name="repositoryFactory">
+						<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
+					</property>
+				</bean>
+				<bean class="com.liferay.portal.repository.temporaryrepository.TemporaryRepositoryDefiner">
+					<property name="repositoryFactory">
+						<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
+					</property>
+				</bean>
+			</list>
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil" class="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil">

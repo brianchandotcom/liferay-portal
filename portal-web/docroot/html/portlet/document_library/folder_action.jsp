@@ -220,6 +220,33 @@ String iconMenuId = null;
 							url="<%= addFolderURL %>"
 						/>
 					</c:if>
+
+					<c:if test="<%= folder.isMountPoint() %>">
+
+						<%
+						LocalRepository localRepository = RepositoryLocalServiceUtil.getLocalRepositoryImpl(folder.getRepositoryId());
+
+						if (localRepository.isCapabilityProvided(TemporaryFilesCapability.class)) {
+						%>
+
+							<portlet:actionURL var="deleteExpiredTemporaryFilesURL">
+								<portlet:param name="struts_action" value="/document_library/edit_folder" />
+								<portlet:param name="<%= Constants.CMD %>" value="deleteExpiredTemporaryFiles" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="repositoryId" value="<%= String.valueOf(folder.getRepositoryId()) %>" />
+							</portlet:actionURL>
+
+							<liferay-ui:icon
+								iconCssClass="icon-remove"
+								message="delete-expired-temporary-files"
+								url="<%= deleteExpiredTemporaryFilesURL %>"
+							/>
+
+						<%
+						}
+						%>
+
+					</c:if>
 				</c:when>
 				<c:otherwise>
 

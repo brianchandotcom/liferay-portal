@@ -14,12 +14,15 @@
 
 package com.liferay.osgi.util.service;
 
+import com.liferay.osgi.util.exception.ServiceUnavailableException;
 import com.liferay.osgi.util.service.annotations.Reference;
 
 import java.io.Closeable;
 import java.io.IOException;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +66,25 @@ public class ReflectionServiceTracker implements Closeable {
 		_serviceTrackers = null;
 	}
 
+	protected Object getProxyForUnavailable(
+		ClassLoader classLoader, Class serviceClass) {
+
+		if (!serviceClass.isInterface()) {
+			return null;
+		}
+
+		return Proxy.newProxyInstance(
+			classLoader, new Class[]{serviceClass}, new InvocationHandler() {
+
+			@Override
+			public Object invoke(Object o, Method method, Object[] objects)
+				throws Throwable {
+
+				throw new ServiceUnavailableException();
+			}
+		});
+	}
+
 	protected List<Method> getReferenceMethodDescriptions(Object object) {
 		Class<?> clazz = object.getClass();
 
@@ -93,6 +115,18 @@ public class ReflectionServiceTracker implements Closeable {
 		final Method referenceMethod) {
 
 		final Class<?> parameterType = referenceMethod.getParameterTypes()[0];
+
+		final Object proxyForUnavailable = getProxyForUnavailable(
+			target.getClass().getClassLoader(), parameterType);
+
+		try {
+			referenceMethod.invoke(target, proxyForUnavailable);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(
+				"Could not set proxy using " +
+					referenceMethod.getName() + " on "+ target, e);
+		}
 
 		ServiceTracker serviceTracker = new ServiceTracker(
 			bundleContext, parameterType, null) {
@@ -128,9 +162,8 @@ public class ReflectionServiceTracker implements Closeable {
 
 					ServiceReference serviceReference = getServiceReference();
 
-					highestService =
-						serviceReference == null ? null : getService(
-							serviceReference);
+					highestService = serviceReference == null ?
+						proxyForUnavailable : getService(serviceReference);
 				}
 				catch (IllegalStateException ise) {
 				}

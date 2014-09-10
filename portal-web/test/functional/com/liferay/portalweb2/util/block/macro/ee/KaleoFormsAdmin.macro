@@ -31,38 +31,6 @@
 		<execute action="CPKaleoformsadminNewprocessAddworkflow#type" locator-key1="TITLE_FIELD" value1="${workflowDefinitionTitle}" />
 	</command>
 
-	<command name="assertFormsNotPresent">
-		<var name="key_workflowTask" value="${workflowTask}" />
-
-		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="FORMS_TABLE_TASK" />
-		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no results." />
-	</command>
-
-	<command name="assertHeaderTitle">
-		<if>
-			<isset var="kfFieldsDefinitionName" />
-			<then>
-				<execute action="CPKaleoformsadminNewprocessAddfieldset#assertTextEquals" locator-key1="HEADER_TITLE" value1="${kfFieldsDefinitionName}" />
-			</then>
-			<else>
-				<execute action="CPKaleoformsadminNewprocessAddfieldset#assertTextEquals" locator-key1="HEADER_TITLE" value1="New Fields Definition" />
-			</else>
-		</if>
-	</command>
-
-	<command name="assertInvalidDefinitionMessage">
-		<execute action="CPKaleoformsadminNewprocessAddfieldset#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
-		<execute action="CPKaleoformsadminNewprocessAddfieldset#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid XML schema definition." />
-	</command>
-
-	<command name="assertTaskNotPresent">
-		<var name="key_workflowTask" value="${workflowTask}" />
-
-		<execute action="CPKaleoformsadminNewprocess#assertTextNotPresent" locator-key1="FORMS_TABLE_TASK" value1="${workflowTask}" />
-		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="FORMS_TABLE_FORM" />
-		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="FORMS_TABLE_ASSIGN_FORM_BUTTON" />
-	</command>
-
 	<command name="assignForm">
 		<if>
 			<equals arg1="kfPendingForm" arg2="true" />
@@ -279,6 +247,30 @@
 		<execute action="CPKaleoformsadmin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No processes were found." />
 	</command>
 
+	<command name="viewFormsNotPresent">
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="FORMS_TABLE_TASK" />
+		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no results." />
+	</command>
+
+	<command name="viewHeaderTitle">
+		<if>
+			<isset var="kfFieldsDefinitionName" />
+			<then>
+				<execute action="CPKaleoformsadminNewprocessAddfieldset#assertTextEquals" locator-key1="HEADER_TITLE" value1="${kfFieldsDefinitionName}" />
+			</then>
+			<else>
+				<execute action="CPKaleoformsadminNewprocessAddfieldset#assertTextEquals" locator-key1="HEADER_TITLE" value1="New Fields Definition" />
+			</else>
+		</if>
+	</command>
+
+	<command name="viewInvalidDefinitionMessage">
+		<execute action="CPKaleoformsadminNewprocessAddfieldset#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute action="CPKaleoformsadminNewprocessAddfieldset#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid XML schema definition." />
+	</command>
+
 	<command name="viewProcess">
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
@@ -354,5 +346,13 @@
 		<execute action="CPKaleoformsadminNewprocess#assertTextEquals" locator-key1="SELECTED_WORKFLOW" value1="${workflowDefinition} (Version 1)" />
 
 		<execute macro="KaleoFormsAdmin#next" />
+	</command>
+
+	<command name="viewTaskNotPresent">
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute action="CPKaleoformsadminNewprocess#assertTextNotPresent" locator-key1="FORMS_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="FORMS_TABLE_FORM" />
+		<execute action="CPKaleoformsadminNewprocess#assertElementNotPresent" locator-key1="FORMS_TABLE_ASSIGN_FORM_BUTTON" />
 	</command>
 </definition>

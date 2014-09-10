@@ -195,7 +195,7 @@
 			<var name="workflowTask" value="create" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#assertFormsNotPresent">
+		<execute macro="KaleoFormsAdmin#viewFormsNotPresent">
 			<var name="workflowTask" value="review" />
 		</execute>
 
@@ -3247,7 +3247,7 @@
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#assertTaskNotPresent">
+		<execute macro="KaleoFormsAdmin#viewTaskNotPresent">
 			<var name="workflowTask" value="update" />
 		</execute>
 

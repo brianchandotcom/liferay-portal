@@ -3,7 +3,6 @@
 .taglib-ratings {
 	&.stars {
 		margin: 1.5em 0 0;
-		overflow: hidden;
 
 		.liferay-rating-score {
 			padding-left: 15px;

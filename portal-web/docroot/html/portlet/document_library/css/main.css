@@ -480,21 +480,26 @@
 		vertical-align: middle;
 
 		.liferay-rating-vote {
-			display: none;
 			left: -1px;
 			padding: 4px;
 			position: absolute;
 			right: -1px;
 			top: -1px;
+
+			> div {
+				background: #B0D3F6;
+				border: 1px solid #3F6F9F;
+				clip: rect(0 0 0 0);
+				padding: 4px;
+				position: absolute;
+				width: 120px;
+			}
 		}
 
-		&:hover, &:hover .liferay-rating-vote {
-			background: #B0D3F6;
-			border: 1px solid #3F6F9F;
-		}
-
-		&:hover .liferay-rating-vote {
-			display: block;
+		&:hover .liferay-rating-vote, .liferay-rating-vote.rating-focused {
+			> div {
+				clip: auto;
+			}
 		}
 
 		.rating-content, .rating-label-element {

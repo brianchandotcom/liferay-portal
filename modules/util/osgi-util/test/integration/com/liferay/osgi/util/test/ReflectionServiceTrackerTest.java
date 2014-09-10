@@ -15,8 +15,12 @@
 package com.liferay.osgi.util.test;
 
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
+import com.liferay.osgi.util.exception.ServiceUnavailableException;
 import com.liferay.osgi.util.service.ReflectionServiceTracker;
 import com.liferay.osgi.util.test.instances.TestInstance;
+import com.liferay.osgi.util.test.instances.TestInterface;
+import com.liferay.osgi.util.test.services.InterfaceOne;
+import com.liferay.osgi.util.test.services.InterfaceTwo;
 import com.liferay.osgi.util.test.services.TrackedOne;
 import com.liferay.osgi.util.test.services.TrackedTwo;
 
@@ -113,6 +117,104 @@ public class ReflectionServiceTrackerTest {
 
 		Assert.assertNull(testInstance.getTrackedOne());
 		Assert.assertNull(testInstance.getTrackedTwo());
+	}
+
+	@Test
+	public void testReflectionServiceTrackerWithInterfaces() {
+		TestInterface testInstance = new TestInterface();
+
+		ReflectionServiceTracker reflectionServiceTracker =
+			new ReflectionServiceTracker(testInstance);
+
+		Assert.assertNotNull(testInstance.getTrackedOne());
+		Assert.assertNotNull(testInstance.getTrackedTwo());
+
+		try {
+			testInstance.getTrackedOne().noop();
+
+			Assert.fail();
+		}
+		catch (ServiceUnavailableException sue) {
+		}
+
+		try {
+			testInstance.getTrackedTwo().noop();
+
+			Assert.fail();
+		}
+		catch (ServiceUnavailableException sue) {
+		}
+
+		TrackedOne trackedOne = new TrackedOne();
+		ServiceRegistration<InterfaceOne> sr1 = _bundleContext.registerService(
+			InterfaceOne.class, trackedOne, null);
+
+		TrackedTwo trackedTwo = new TrackedTwo();
+		ServiceRegistration<InterfaceTwo> sr2 = _bundleContext.registerService(
+			InterfaceTwo.class, trackedTwo, null);
+
+		Assert.assertEquals(trackedOne, testInstance.getTrackedOne());
+		Assert.assertEquals(trackedTwo, testInstance.getTrackedTwo());
+
+		sr1.unregister();
+		sr2.unregister();
+
+		Assert.assertNotNull(testInstance.getTrackedOne());
+		Assert.assertNotNull(testInstance.getTrackedTwo());
+
+		trackedOne = new TrackedOne();
+		sr1 = _bundleContext.registerService(
+			InterfaceOne.class, trackedOne, new Hashtable<String, Object>() { {
+				put("service.ranking", "2");
+			}});
+
+		trackedTwo = new TrackedTwo();
+		sr2 = _bundleContext.registerService(
+			InterfaceTwo.class, trackedTwo, new Hashtable<String, Object>() { {
+				put("service.ranking", "2");
+			}});
+		TrackedOne trackedOne2 = new TrackedOne();
+		ServiceRegistration<InterfaceOne> sr3 = _bundleContext.registerService(
+			InterfaceOne.class, trackedOne2, new Hashtable<String, Object>() { {
+				put("service.ranking", "1");
+			}});
+
+		TrackedTwo trackedTwo2 = new TrackedTwo();
+		ServiceRegistration<InterfaceTwo> sr4 = _bundleContext.registerService(
+			InterfaceTwo.class, trackedTwo2, new Hashtable<String, Object>() { {
+				put("service.ranking", "1");
+			}});
+
+		Assert.assertEquals(trackedOne, testInstance.getTrackedOne());
+		Assert.assertEquals(trackedTwo, testInstance.getTrackedTwo());
+
+		sr1.unregister();
+		sr2.unregister();
+
+		Assert.assertEquals(trackedOne2, testInstance.getTrackedOne());
+		Assert.assertEquals(trackedTwo2, testInstance.getTrackedTwo());
+		sr3.unregister();
+
+		sr4.unregister();
+
+		Assert.assertNotNull(testInstance.getTrackedOne());
+		Assert.assertNotNull(testInstance.getTrackedTwo());
+
+		try {
+			testInstance.getTrackedOne().noop();
+
+			Assert.fail();
+		}
+		catch (ServiceUnavailableException sue) {
+		}
+
+		try {
+			testInstance.getTrackedTwo().noop();
+
+			Assert.fail();
+		}
+		catch (ServiceUnavailableException sue) {
+		}
 	}
 
 	@ArquillianResource

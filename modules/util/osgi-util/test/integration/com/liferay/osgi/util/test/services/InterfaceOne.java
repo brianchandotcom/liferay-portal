@@ -17,10 +17,8 @@ package com.liferay.osgi.util.test.services;
 /**
  * @author Carlos Sierra Andrés
  */
-public class TrackedOne implements InterfaceOne {
+public interface InterfaceOne {
 
-	@Override
-	public void noop() {
-	}
+	public void noop();
 
 }

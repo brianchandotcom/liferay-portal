@@ -80,11 +80,6 @@ if (portletDisplay.isWebDAVEnabled()) {
 	webDavURL = DLUtil.getWebDavURL(themeDisplay, folder, fileEntry);
 }
 
-boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
-boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
-boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
-boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
-
 AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryConstants.getClassName(), assetClassPK);
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);

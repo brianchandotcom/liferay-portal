@@ -44,6 +44,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.context.util.FileVersionMetadataHelper;
+import com.liferay.portlet.documentlibrary.context.util.JspRenderer;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -51,6 +52,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,6 +65,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -389,6 +393,20 @@ public class DefaultDLFileVersionDisplayContext
 	public boolean isViewOriginalFileButtonVisible() throws PortalException {
 		return _defaultDLFileEntryActionsDisplayContextHelper.
 			hasViewPermission();
+	}
+
+	@Override
+	public void renderPreview(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		JspRenderer jspRenderer = new JspRenderer(
+			"/html/portlet/document_library/view_file_entry_preview.jsp");
+
+		jspRenderer.setAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, _fileVersion);
+
+		jspRenderer.render(request, response);
 	}
 
 	private void _addCancelCheckoutMenuItem(List<MenuItem> menuItems)

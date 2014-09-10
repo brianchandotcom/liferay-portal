@@ -78,11 +78,9 @@ public class FileImplExtractTest {
 
 		Assert.assertEquals("Extract test.", text);
 
-		// PDFBOX-890
+		text = extractText("test.pdf");
 
-		//text = _extractText("test.pdf");
-
-		//assertEquals("Extract test.", text);
+		Assert.assertEquals("Extract test.", text);
 	}
 
 	@Test

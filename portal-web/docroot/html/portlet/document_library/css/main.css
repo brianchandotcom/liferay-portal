@@ -475,7 +475,7 @@
 		border: 1px solid transparent;
 		display: inline-block;
 		margin: 0 3px;
-		padding: 10px;
+		padding: 4px;
 		position: relative;
 		vertical-align: middle;
 
@@ -494,14 +494,13 @@
 				position: absolute;
 				width: 120px;
 
+				-webkit-transform: scale(0);
 				-webkit-transform-origin-x: 0;
 				-webkit-transform-origin-y: 0;
-				-webkit-transform: scale(0);
 			}
 		}
 
-		&:hover .liferay-rating-vote,
-		.liferay-rating-vote.rating-focused {
+		&:hover .liferay-rating-vote, .liferay-rating-vote.rating-focused {
 			> div {
 				clip: auto;
 

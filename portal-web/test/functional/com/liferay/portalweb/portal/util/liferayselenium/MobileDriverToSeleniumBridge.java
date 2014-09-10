@@ -731,7 +731,7 @@ public class MobileDriverToSeleniumBridge
 	}
 
 	public void setDefaultTimeoutImplicit() {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.setDefaultTimeoutImplicit(this);
 	}
 
 	@Override
@@ -755,7 +755,7 @@ public class MobileDriverToSeleniumBridge
 	}
 
 	public void setTimeoutImplicit(String timeout) {
-		WebDriverHelper.setDefaultTimeoutImplicit(this);
+		WebDriverHelper.setTimeoutImplicit(this, timeout);
 	}
 
 	@Override

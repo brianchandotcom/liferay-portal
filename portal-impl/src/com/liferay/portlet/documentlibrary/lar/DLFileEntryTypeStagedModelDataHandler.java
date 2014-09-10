@@ -240,9 +240,6 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(fileEntryType.getUserUuid());
 
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, fileEntryType, DDMStructure.class);
-
 		List<Element> ddmStructureReferenceElements =
 			portletDataContext.getReferenceElements(
 				fileEntryType, DDMStructure.class);

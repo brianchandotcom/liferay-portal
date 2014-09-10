@@ -223,18 +223,6 @@ public class MBMessageStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(message.getUserUuid());
 
-		if (message.isDiscussion()) {
-			StagedModelDataHandlerUtil.importReferenceStagedModels(
-				portletDataContext, message, MBDiscussion.class);
-		}
-		else if (message.getCategoryId() !=
-					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, message, MBCategory.class,
-				message.getCategoryId());
-		}
-
 		Map<Long, Long> categoryIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				MBCategory.class);
@@ -247,12 +235,6 @@ public class MBMessageStagedModelDataHandler
 				MBThread.class);
 
 		long threadId = MapUtil.getLong(threadIds, message.getThreadId(), 0);
-
-		if (!message.isRoot()) {
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, message, MBMessage.class,
-				message.getParentMessageId());
-		}
 
 		Map<Long, Long> messageIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

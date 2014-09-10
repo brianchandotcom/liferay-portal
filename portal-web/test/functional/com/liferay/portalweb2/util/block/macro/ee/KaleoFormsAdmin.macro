@@ -140,7 +140,7 @@
 			</else>
 		</if>
 
-		<execute action="CPKaleoformsadmin#assertClick" locator-key1="PROCESS_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPKaleoformsadmin#assertClickNoError" locator-key1="PROCESS_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPKaleoformsadmin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<if>

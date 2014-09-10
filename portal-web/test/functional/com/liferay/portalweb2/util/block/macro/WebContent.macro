@@ -549,7 +549,7 @@
 
 		<var name="key_structureName" value="${structureName}" />
 
-		<execute action="PGWebcontentdisplayAddwebcontentStructures#assertClick" locator-key1="STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+		<execute action="PGWebcontentdisplayAddwebcontentStructures#assertClickNoError" locator-key1="STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 		<execute action="PGWebcontentdisplayAddwebcontentStructures#confirm" locator-key1="CONFIRMATION" value1="Selecting a new structure will change the available input fields and available templates? Do you want to proceed?" />
 		<execute action="PGWebcontentdisplayAddwebcontentStructures#selectFrame" value1="relative=top" />
 
@@ -999,7 +999,7 @@
 			<execute action="CPWebcontentEditwebcontent#check" locator-key1="VIEW_HISTORY_VERSION_CHECKBOX" />
 		</for>
 
-		<execute action="CPWebcontentEditwebcontent#assertClick" locator-key1="VIEW_HISTORY_EXPIRE_BUTTON" value1="Expire" />
+		<execute action="CPWebcontentEditwebcontent#assertClickNoError" locator-key1="VIEW_HISTORY_EXPIRE_BUTTON" value1="Expire" />
 		<execute action="CPWebcontentEditwebcontent#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to expire the selected version?" />
 	</command>
 
@@ -1146,7 +1146,7 @@
 		<var name="key_templateName" value="${templateName}" />
 
 		<execute action="CPWebcontentSelecttemplate#selectFrame" locator-key1="TEMPLATES_IFRAME" />
-		<execute action="CPWebcontentSelecttemplate#assertClick" locator-key1="TEMPLATE_TABLE_CHOOSE" value1="Choose" />
+		<execute action="CPWebcontentSelecttemplate#assertClickNoError" locator-key1="TEMPLATE_TABLE_CHOOSE" value1="Choose" />
 		<execute action="CPWebcontentSelecttemplate#confirm" locator-key1="CONFIRMATION" value1="Selecting a new template will delete all unsaved content. Do you want to proceed?" />
 
 		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />

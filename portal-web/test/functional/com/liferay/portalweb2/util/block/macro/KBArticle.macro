@@ -82,21 +82,21 @@
 
 		<execute action="CPKnowledgebaseadmin#check" locator-key1="ARTICLE_TABLE_CHECKBOX" />
 		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ACTIONS_MENULIST" value1="Actions" />
-		<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPKnowledgebaseadmin#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPKnowledgebaseadmin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected articles?" />
 		<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deletePGViaKBArticle">
 		<execute action="PGKnowledgebasearticle#assertClick" locator-key1="ARTICLE_ACTIONS_BUTTON" value1="Actions" />
-		<execute action="PGKnowledgebasearticle#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+		<execute action="PGKnowledgebasearticle#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 		<execute action="PGKnowledgebasearticle#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="PGKnowledgebasearticle#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="The selected article no longer exists." />
 	</command>
 
 	<command name="deletePGViaKBDisplay">
 		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ARTICLE_ACTIONS_BUTTON" value1="Actions" />
-		<execute action="PGKnowledgebasedisplay#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+		<execute action="PGKnowledgebasedisplay#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 		<execute action="PGKnowledgebasedisplay#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 	</command>
 
@@ -187,7 +187,7 @@
 			<then>
 				<execute action="CPKnowledgebaseadmin#check" locator-key1="SELECT_ALL_CHECKBOX" />
 				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ACTIONS_MENULIST" value1="Actions" />
-				<execute action="CPKnowledgebaseadmin#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+				<execute action="CPKnowledgebaseadmin#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 				<execute action="CPKnowledgebaseadmin#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected articles?" />
 				<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 				<execute action="CPKnowledgebaseadmin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No articles were found." />

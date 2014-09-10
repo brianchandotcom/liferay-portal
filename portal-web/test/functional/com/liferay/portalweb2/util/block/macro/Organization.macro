@@ -357,7 +357,7 @@
 		<var name="key_orgName" value="${orgName}" />
 
 		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_TABLE_ACTIONS" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPUsersandorganizations#assertClickNoError" locator-key1="ORGANIZATION_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPUsersandorganizations#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPUsersandorganizations#assertTextNotPresent" value1="${orgName}" />
@@ -489,7 +489,7 @@
 
 				<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="BACK" value1="Back" />
 
-				<execute action="CPUsersandorganizationsOrganization#assertClick" locator-key1="MENU_DELETE" value1="Delete" />
+				<execute action="CPUsersandorganizationsOrganization#assertClickNoError" locator-key1="MENU_DELETE" value1="Delete" />
 				<execute action="CPUsersandorganizationsOrganization#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</while>

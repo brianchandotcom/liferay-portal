@@ -135,10 +135,14 @@ public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 					entryClassName);
 
 				if (indexer != null) {
-					String snippet = results.snippet(i);
+					String snippet = result.get(Field.SNIPPET);
 
 					Summary summary = indexer.getSummary(
 						result, snippet, portletURL, null, null);
+
+					if (summary == null) {
+						continue;
+					}
 
 					title = summary.getTitle();
 					url = portletURL.toString();

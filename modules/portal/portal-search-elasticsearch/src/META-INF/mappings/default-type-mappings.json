@@ -414,6 +414,7 @@
 			"createDate": {
 				"format" : "yyyyMMddHHmmss",
 				"index": "not_analyzed",
+				"store": "yes",
 				"type": "date"
 			},
 			"companyId": {
@@ -434,6 +435,7 @@
 			"expirationDate": {
 				"format" : "yyyyMMddHHmmss",
 				"index": "not_analyzed",
+				"store": "yes",
 				"type": "date"
 			},
 			"groupId": {
@@ -444,6 +446,7 @@
 			"modified": {
 				"format" : "yyyyMMddHHmmss",
 				"index": "not_analyzed",
+				"store": "yes",
 				"type": "date"
 			},
 			"portletId": {
@@ -454,11 +457,13 @@
 			"publishDate": {
 				"format" : "yyyyMMddHHmmss",
 				"index": "not_analyzed",
+				"store": "yes",
 				"type": "date"
 			},
 			"removedDate": {
 				"format" : "yyyyMMddHHmmss",
 				"index": "not_analyzed",
+				"store": "yes",
 				"type": "date"
 			},
 			"removedByUser": {

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.wiki.trash;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -779,26 +780,15 @@ public class WikiPageDependentsTrashHandlerTest {
 		WikiPage trashedPage = WikiPageLocalServiceUtil.getPage(
 			relatedPages.getPageResourcePrimKey());
 
-		WikiPage parentPage = WikiTestUtil.addPage(
+		WikiPage newParentPage = WikiTestUtil.addPage(
 			_group.getGroupId(), _node.getNodeId(), true);
 
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			WikiPage.class.getName());
+		WikiPage restoredPage = movePage(trashedPage, newParentPage);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		trashHandler.moveEntry(
-			TestPropsValues.getUserId(), trashedPage.getResourcePrimKey(),
-			parentPage.getResourcePrimKey(), serviceContext);
-
-		WikiPage restoredPage = WikiPageLocalServiceUtil.getPage(
-			trashedPage.getResourcePrimKey());
-
-		Assert.assertTrue(restoredPage.isApproved());
+		Assert.assertFalse(restoredPage.isInTrash());
 
 		Assert.assertEquals(
-			parentPage.getTitle(), restoredPage.getParentTitle());
+			newParentPage.getTitle(), restoredPage.getParentTitle());
 	}
 
 	@Test
@@ -1121,6 +1111,23 @@ public class WikiPageDependentsTrashHandlerTest {
 		relatedPages.setRedirectPage(redirectPage);
 
 		return relatedPages;
+	}
+
+	protected WikiPage movePage(WikiPage trashedPage, WikiPage newParentPage)
+		throws PortalException {
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			WikiPage.class.getName());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		trashHandler.moveEntry(
+			TestPropsValues.getUserId(), trashedPage.getResourcePrimKey(),
+			newParentPage.getResourcePrimKey(), serviceContext);
+
+		return WikiPageLocalServiceUtil.getPage(
+			trashedPage.getResourcePrimKey());
 	}
 
 	protected WikiPage movePageToTrash(WikiPage page)

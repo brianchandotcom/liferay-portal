@@ -51,10 +51,10 @@ public class AIMConnector {
 
 		ses.setSN(login);
 
-		Oscar oscar = new Oscar();
+		_oscar = new Oscar();
 
-		oscar.setSN(login);
-		oscar.setPassword(password);
+		_oscar.setSN(login);
+		_oscar.setPassword(password);
 
 		ses.init();
 	}
@@ -87,7 +87,7 @@ public class AIMConnector {
 
 	private static Log _log = LogFactoryUtil.getLog(AIMConnector.class);
 
-	private static AIMConnector _instance = new AIMConnector();
+	private static final AIMConnector _instance = new AIMConnector();
 
 	private AIMSession _aim;
 	private Oscar _oscar;

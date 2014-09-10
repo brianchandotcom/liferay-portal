@@ -423,7 +423,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		// Pages
 
-		restoreDependentsFromTrash(node.getNodeId(), trashEntry.getEntryId());
+		restoreDependentsFromTrash(userId, node.getNodeId());
 
 		// Trash
 
@@ -551,7 +551,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		}
 	}
 
-	protected void restoreDependentsFromTrash(long nodeId, long trashEntryId)
+	protected void restoreDependentsFromTrash(long userId, long nodeId)
 		throws PortalException {
 
 		List<WikiPage> pages = wikiPagePersistence.findByN_H(nodeId, true);
@@ -561,8 +561,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 				continue;
 			}
 
-			wikiPageLocalService.restoreDependentFromTrash(
-				page, nodeId, page.getParentTitle(), trashEntryId);
+			wikiPageLocalService.restorePageFromTrash(userId, page);
 		}
 	}
 

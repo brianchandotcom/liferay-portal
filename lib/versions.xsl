@@ -10,6 +10,12 @@
 			<title>Liferay Third-party Libraries</title>
 			<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
 			<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+
+			<style>
+				body {
+					padding: 10px;
+				}
+			</style>
 		</head>
 		<body>
 		<div id="container">

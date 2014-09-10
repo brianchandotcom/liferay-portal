@@ -1409,7 +1409,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-codec.jar</file-name>
-				<version>1.6</version>
+				<version>1.9</version>
 				<project-name>Commons Codec</project-name>
 				<project-url>http://commons.apache.org/codec</project-url>
 				<licenses>
@@ -1457,7 +1457,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-compress.jar</file-name>
-				<version>1.4.1</version>
+				<version>1.8.1</version>
 				<project-name>Commons Compress</project-name>
 				<project-url>http://commons.apache.org/compress</project-url>
 				<licenses>
@@ -1978,7 +1978,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/isoparser.jar</file-name>
-				<version>1.0 RC1</version>
+				<version>1.0.2</version>
 				<project-name>ISO Parser</project-name>
 				<project-url>http://code.google.com/p/mp4parser</project-url>
 				<licenses>
@@ -2135,6 +2135,18 @@
 					<license>
 						<license-name>BSD Style License</license-name>
 						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/java-libpst.jar</file-name>
+				<version>0.8.1</version>
+				<project-name>java-libpst</project-name>
+				<project-url>http://code.google.com/p/java-libpst</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2366,6 +2378,18 @@
 					This JAR was bundled with SimpleCaptcha and originally named
 					imaging.jar.
 				</comments>
+			</library>
+			<library>
+				<file-name>lib/portal/jmatio.jar</file-name>
+				<version>1.0</version>
+				<project-name>JMatIO</project-name>
+				<project-url>http://sourceforge.net/projects/jmatio</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD Style License</license-name>
+						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
+					</license>
+				</licenses>
 			</library>
 			<library>
 				<file-name>lib/portal/jodconverter.jar</file-name>
@@ -2873,7 +2897,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/netcdf.jar</file-name>
-				<version>4.2</version>
+				<version>4.2.20</version>
 				<project-name>NetCDF</project-name>
 				<project-url>http://www.unidata.ucar.edu/packages/netcdf-java</project-url>
 				<licenses>
@@ -2952,7 +2976,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/poi.jar</file-name>
-				<version>3.9</version>
+				<version>3.11-beta2</version>
 				<project-name>POI</project-name>
 				<project-url>http://poi.apache.org</project-url>
 				<licenses>
@@ -2965,7 +2989,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/poi-ooxml.jar</file-name>
-				<version>3.9</version>
+				<version>3.11-beta2</version>
 				<project-name>POI</project-name>
 				<project-url>http://poi.apache.org</project-url>
 				<licenses>
@@ -2978,7 +3002,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/poi-ooxml-schemas.jar</file-name>
-				<version>3.9</version>
+				<version>3.11-beta2</version>
 				<project-name>POI</project-name>
 				<project-url>http://poi.apache.org</project-url>
 				<licenses>
@@ -2991,7 +3015,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/poi-scratchpad.jar</file-name>
-				<version>3.9</version>
+				<version>3.11-beta2</version>
 				<project-name>POI</project-name>
 				<project-url>http://poi.apache.org</project-url>
 				<licenses>
@@ -3544,7 +3568,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/tika-core.jar</file-name>
-				<version>1.3</version>
+				<version>1.6</version>
 				<project-name>Tika</project-name>
 				<project-url>http://tika.apache.org</project-url>
 				<licenses>
@@ -3556,7 +3580,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/tika-parsers.jar</file-name>
-				<version>1.3</version>
+				<version>1.6</version>
 				<project-name>Tika</project-name>
 				<project-url>http://tika.apache.org</project-url>
 				<licenses>
@@ -3566,7 +3590,7 @@
 					</license>
 				</licenses>
 				<comments>
-					See LPS-32755.
+					See LPS-49991.
 				</comments>
 			</library>
 			<library>
@@ -3670,7 +3694,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/vorbis-java-core.jar</file-name>
-				<version>0.1</version>
+				<version>0.6</version>
 				<project-name>Vorbis</project-name>
 				<project-url>http://xiph.org/vorbis</project-url>
 				<licenses>
@@ -3682,7 +3706,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/vorbis-java-tika.jar</file-name>
-				<version>0.1</version>
+				<version>0.6</version>
 				<project-name>Vorbis</project-name>
 				<project-url>http://xiph.org/vorbis</project-url>
 				<licenses>
@@ -3892,7 +3916,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/xz.jar</file-name>
-				<version>1.0</version>
+				<version>1.5</version>
 				<project-name>XZ</project-name>
 				<project-url>http://tukaani.org/xz/java.html</project-url>
 				<licenses>

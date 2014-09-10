@@ -121,13 +121,19 @@ public class ReflectionServiceTracker implements Closeable {
 			public void removedService(
 				ServiceReference reference, Object service) {
 
-				super.removedService(reference, service);
+				Object highestService = null;
 
-				ServiceReference serviceReference = getServiceReference();
+				try {
+					super.removedService(reference, service);
 
-				Object highestService =
-					serviceReference == null ? null : getService(
-						serviceReference);
+					ServiceReference serviceReference = getServiceReference();
+
+					highestService =
+						serviceReference == null ? null : getService(
+							serviceReference);
+				}
+				catch (IllegalStateException ise) {
+				}
 
 				try {
 					referenceMethod.invoke(target, highestService);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -30,7 +30,7 @@ import java.util.Map;
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class BackUpRestoreIndicesTest {
+public class BackupRestoreIndicesTest {
 
 	@Test
 	public void testBackupAndRestore()
@@ -38,28 +38,27 @@ public class BackUpRestoreIndicesTest {
 
 		Map<Long, String> indexNames = new HashMap<Long, String>();
 
-			for (long companyId : PortalInstances.getCompanyIds()) {
-				String backupName = null;
+		for (long companyId : PortalInstances.getCompanyIds()) {
+			String backupName = null;
 
-				backupName =
-					"search-" + companyId + "-" + System.currentTimeMillis();
+			backupName =
+				"search-" + companyId + "-" + System.currentTimeMillis();
 
-				SearchEngineUtil.backup(
-					companyId, SearchEngineUtil.SYSTEM_ENGINE_ID, backupName);
+			SearchEngineUtil.backup(
+				companyId, SearchEngineUtil.SYSTEM_ENGINE_ID, backupName);
 
-				indexNames.put(companyId, backupName);
-			}
-
-			GroupTestUtil.addGroup();
-
-			for (Map.Entry<Long, String> entry : indexNames.entrySet()) {
-				String backupFileName = entry.getValue();
-
-				SearchEngineUtil.restore(entry.getKey(), backupFileName);
-
-				SearchEngineUtil.removeBackup(entry.getKey(), backupFileName);
-			}
+			indexNames.put(companyId, backupName);
 		}
 
+		GroupTestUtil.addGroup();
+
+		for (Map.Entry<Long, String> entry : indexNames.entrySet()) {
+			String backupFileName = entry.getValue();
+
+			SearchEngineUtil.restore(entry.getKey(), backupFileName);
+
+			SearchEngineUtil.removeBackup(entry.getKey(), backupFileName);
+		}
+	}
 
 }

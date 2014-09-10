@@ -76,7 +76,6 @@ public abstract class FindAction extends Action {
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			long plid = ParamUtil.getLong(request, "p_l_id");
 			long primaryKey = ParamUtil.getLong(
 				request, getPrimaryKeyParameterName());
 
@@ -99,9 +98,9 @@ public abstract class FindAction extends Action {
 			}
 
 			Object[] plidAndPortletId = getPlidAndPortletId(
-				themeDisplay, groupId, plid, _portletIds);
+				themeDisplay, groupId, themeDisplay.getPlid(), _portletIds);
 
-			plid = (Long)plidAndPortletId[0];
+			long plid = (Long)plidAndPortletId[0];
 
 			Layout layout = setTargetLayout(request, groupId, plid);
 

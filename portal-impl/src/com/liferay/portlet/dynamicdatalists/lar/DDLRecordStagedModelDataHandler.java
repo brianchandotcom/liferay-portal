@@ -126,10 +126,6 @@ public class DDLRecordStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(record.getUserUuid());
 
-		StagedModelDataHandlerUtil.importReferenceStagedModel(
-			portletDataContext, record, DDLRecordSet.class,
-			record.getRecordSetId());
-
 		Map<Long, Long> recordSetIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DDLRecordSet.class);

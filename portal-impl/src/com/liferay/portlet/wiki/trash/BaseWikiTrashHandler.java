@@ -28,6 +28,7 @@ import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Roberto Díaz
@@ -211,7 +212,8 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getRootContainerModelTitle(long containerModelId)
+	public String getRootContainerModelTitle(
+			long containerModelId, Locale locale)
 		throws PortalException {
 
 		WikiNode node = null;

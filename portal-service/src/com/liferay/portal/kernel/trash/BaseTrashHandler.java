@@ -38,6 +38,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 
@@ -258,7 +259,8 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	public String getRootContainerModelTitle(long containerModelId)
+	public String getRootContainerModelTitle(
+			long containerModelId, Locale locale)
 		throws PortalException {
 
 		return StringPool.BLANK;

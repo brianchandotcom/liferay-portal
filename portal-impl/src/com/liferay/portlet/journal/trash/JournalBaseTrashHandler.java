@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -28,6 +29,7 @@ import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Eudaldo Alonso
@@ -113,10 +115,11 @@ public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getRootContainerModelTitle(long containerModelId)
+	public String getRootContainerModelTitle(
+			long containerModelId, Locale locale)
 		throws PortalException {
 
-		return "home";
+		return LanguageUtil.get(locale, "home");
 	}
 
 	@Override

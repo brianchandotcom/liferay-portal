@@ -104,13 +104,13 @@ public class TrashImpl implements Trash {
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			className);
 
-		String rootContainerModelName = LanguageUtil.get(
-			themeDisplay.getLocale(),
-			trashHandler.getRootContainerModelTitle(classPK));
+		String rootContainerModelTitle =
+			trashHandler.getRootContainerModelTitle(
+				classPK, themeDisplay.getLocale());
 
 		if (classPK == 0) {
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, rootContainerModelName, null);
+				request, rootContainerModelTitle, null);
 
 			return;
 		}
@@ -118,7 +118,7 @@ public class TrashImpl implements Trash {
 		containerModelURL.setParameter("containerModelId", "0");
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, rootContainerModelName, containerModelURL.toString());
+			request, rootContainerModelTitle, containerModelURL.toString());
 
 		addBreadcrumbEntries(
 			request, className, classPK, "containerModelId", containerModelURL);

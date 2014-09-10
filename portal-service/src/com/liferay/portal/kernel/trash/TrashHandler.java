@@ -25,6 +25,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 
@@ -358,7 +359,8 @@ public interface TrashHandler {
 
 	public int getRootContainerModelsCount(long groupId) throws PortalException;
 
-	public String getRootContainerModelTitle(long containerModelId)
+	public String getRootContainerModelTitle(
+			long containerModelId, Locale locale)
 		throws PortalException;
 
 	/**

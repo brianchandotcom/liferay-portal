@@ -15,6 +15,7 @@
 package com.liferay.portlet.bookmarks.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -28,6 +29,7 @@ import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Represents the trash handler for bookmarks folder entity.
@@ -115,8 +117,10 @@ public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getRootContainerModelTitle(long containerModelId) {
-		return "home";
+	public String getRootContainerModelTitle(
+		long containerModelId, Locale locale) {
+
+		return LanguageUtil.get(locale, "home");
 	}
 
 	@Override

@@ -141,10 +141,12 @@ public class DynamicCSSUtil {
 
 		URLConnection resourceURLConnection = null;
 
-		URL resourceURL = servletContext.getResource(resourcePath);
+		if (PropsValues.THEME_CSS_FAST_LOAD_DATE_CHECK_ENABLED) {
+			URL resourceURL = servletContext.getResource(resourcePath);
 
-		if (resourceURL != null) {
-			resourceURLConnection = resourceURL.openConnection();
+			if (resourceURL != null) {
+				resourceURLConnection = resourceURL.openConnection();
+			}
 		}
 
 		URLConnection cacheResourceURLConnection = null;
@@ -510,6 +512,10 @@ public class DynamicCSSUtil {
 
 	private static boolean _isThemeCssFastLoad(
 		HttpServletRequest request, ThemeDisplay themeDisplay) {
+
+		if (!PropsValues.THEME_CSS_FAST_LOAD_DISABLE_ALLOWED) {
+			return true;
+		}
 
 		if (themeDisplay != null) {
 			return themeDisplay.isThemeCssFastLoad();

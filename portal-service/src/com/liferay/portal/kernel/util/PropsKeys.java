@@ -2543,6 +2543,10 @@ public interface PropsKeys {
 
 	public static final String THEME_CSS_FAST_LOAD = "theme.css.fast.load";
 
+	public static final String THEME_CSS_FAST_LOAD_DISABLE_ALLOWED = "theme.css.fast.load.disable.allowed";
+
+	public static final String THEME_CSS_FAST_LOAD_DATE_CHECK_ENABLED = "theme.css.fast.load.date.check.enabled";
+
 	public static final String THEME_IMAGES_FAST_LOAD = "theme.images.fast.load";
 
 	public static final String THEME_JSP_OVERRIDE_ENABLED = "theme.jsp.override.enabled";

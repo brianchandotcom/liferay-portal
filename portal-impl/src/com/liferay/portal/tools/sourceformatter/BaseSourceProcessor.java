@@ -1376,54 +1376,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected Properties stripTopLevelDirectories(
-			Properties properties, int level)
-		throws IOException {
-
-		if (level == 0) {
-			return properties;
-		}
-
-		File dir = new File(".");
-
-		String dirName = dir.getCanonicalPath();
-
-		dirName = StringUtil.replace(
-			dirName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-		int pos = dirName.length();
-
-		for (int i = 0; i < level; i++) {
-			pos = dirName.lastIndexOf(StringPool.SLASH, pos - 1);
-		}
-
-		String topLevelDirNames = dirName.substring(pos + 1) + StringPool.SLASH;
-
-		Properties newProperties = new Properties();
-
-		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-			String value = (String)entry.getValue();
-
-			if (!value.startsWith(topLevelDirNames) &&
-				!value.contains(StringPool.COMMA + topLevelDirNames)) {
-
-				continue;
-			}
-
-			if (value.startsWith(topLevelDirNames)) {
-				value = StringUtil.replaceFirst(
-					value, topLevelDirNames, StringPool.BLANK);
-			}
-
-			value = StringUtil.replace(
-				value, StringPool.COMMA + topLevelDirNames, StringPool.COMMA);
-
-			newProperties.setProperty((String)entry.getKey(), value);
-		}
-
-		return newProperties;
-	}
-
 	protected String trimContent(String content, boolean allowLeadingSpaces)
 		throws IOException {
 
@@ -1553,7 +1505,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 				props.load(inputStream);
 
-				propertiesList.add(stripTopLevelDirectories(props, i));
+				propertiesList.add(props);
 			}
 			catch (FileNotFoundException fnfe) {
 			}

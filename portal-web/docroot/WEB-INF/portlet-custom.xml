@@ -540,33 +540,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>50</portlet-name>
-		<display-name>Hello Velocity</display-name>
-		<portlet-class>com.liferay.portlet.VelocityPortlet</portlet-class>
-		<init-param>
-			<name>view-template</name>
-			<value>/portlet/hello_velocity/view.vm</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<portlet-info>
-			<title>Hello Velocity</title>
-			<short-title>Hello Velocity</short-title>
-			<keywords>Hello Velocity</keywords>
-		</portlet-info>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>54</portlet-name>
 		<display-name>Wiki Display</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

@@ -1037,7 +1037,7 @@ public class WikiPageDependentsTrashHandlerTest {
 		relatedPages.setPage(page);
 
 		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
-			_group.getGroupId(), "InitialNamePage");
+			_node.getNodeId(), "InitialNamePage");
 
 		relatedPages.setRedirectPage(redirectPage);
 
@@ -1047,6 +1047,12 @@ public class WikiPageDependentsTrashHandlerTest {
 	protected RelatedPages getRelatedPagesWithChildPage() throws Exception {
 		RelatedPages relatedPages = new RelatedPages();
 
+		WikiPage page = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"Page", true);
+
+		relatedPages.setPage(page);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
@@ -1055,12 +1061,6 @@ public class WikiPageDependentsTrashHandlerTest {
 			RandomTestUtil.randomString(), "Page", true, serviceContext);
 
 		relatedPages.setChildPage(childPage);
-
-		WikiPage page = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
-			"Page", true);
-
-		relatedPages.setPage(page);
 
 		return relatedPages;
 	}

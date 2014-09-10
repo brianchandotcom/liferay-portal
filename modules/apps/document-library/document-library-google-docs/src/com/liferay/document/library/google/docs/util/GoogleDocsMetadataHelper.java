@@ -21,7 +21,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -68,6 +67,10 @@ public class GoogleDocsMetadataHelper {
 		initFields();
 
 		Field field = _fields.get(fieldName);
+
+		if (field == null) {
+			throw new IllegalArgumentException("Unknown field " + fieldName);
+		}
 
 		Serializable value = field.getValue();
 

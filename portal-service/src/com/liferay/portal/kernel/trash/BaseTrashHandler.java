@@ -161,10 +161,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return 0;
 	}
 
-	public String getContainerModelTitle(long classPK) throws PortalException {
-		return getContainerModelName(classPK);
-	}
-
 	@Override
 	public String getDeleteMessage() {
 		return "deleted-in-x";

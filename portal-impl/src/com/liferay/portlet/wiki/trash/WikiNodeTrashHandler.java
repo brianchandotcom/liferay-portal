@@ -29,7 +29,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.asset.WikiNodeTrashRenderer;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -88,13 +87,6 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 	@Override
 	public String getClassName() {
 		return WikiNode.class.getName();
-	}
-
-	@Override
-	public String getContainerModelTitle(long classPK) throws PortalException {
-		WikiNode node = WikiNodeLocalServiceUtil.getNode(classPK);
-
-		return TrashUtil.getOriginalTitle(node.getName());
 	}
 
 	@Override

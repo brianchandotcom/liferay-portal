@@ -38,7 +38,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -110,13 +109,6 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 	@Override
 	public String getClassName() {
 		return WikiPage.class.getName();
-	}
-
-	@Override
-	public String getContainerModelTitle(long classPK) throws PortalException {
-		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
-
-		return TrashUtil.getOriginalTitle(page.getTitle());
 	}
 
 	@Override

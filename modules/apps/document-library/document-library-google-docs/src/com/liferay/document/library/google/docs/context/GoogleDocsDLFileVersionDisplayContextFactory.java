@@ -68,10 +68,8 @@ public class GoogleDocsDLFileVersionDisplayContextFactory
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion) {
 
-		DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
-
 		GoogleDocsMetadataHelper googleDocsMetadataHelper =
-			new GoogleDocsMetadataHelper(dlFileVersion);
+			new GoogleDocsMetadataHelper((DLFileVersion)fileVersion.getModel());
 
 		if (googleDocsMetadataHelper.isGoogleDocs()) {
 			return new GoogleDocsDLFileVersionDisplayContext(

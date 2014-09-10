@@ -14,15 +14,20 @@
 
 package com.liferay.portal.notifications;
 
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.notifications.Channel;
 import com.liferay.portal.kernel.notifications.ChannelException;
 import com.liferay.portal.kernel.notifications.ChannelHub;
 import com.liferay.portal.kernel.notifications.ChannelHubManager;
+import com.liferay.portal.kernel.notifications.ChannelHubManagerUtil;
 import com.liferay.portal.kernel.notifications.ChannelListener;
 import com.liferay.portal.kernel.notifications.DuplicateChannelHubException;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.notifications.UnknownChannelHubException;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -303,6 +308,28 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 	}
 
 	@Override
+	public void sendClusterNotificationEvent(
+			long companyId, long userId, NotificationEvent notificationEvent)
+		throws ChannelException {
+
+		sendNotificationEvent(companyId, userId, notificationEvent);
+
+		MethodHandler methodHandler = new MethodHandler(
+			_storeNotificationEventMethodKey, companyId, userId,
+			notificationEvent);
+
+		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
+			methodHandler, true);
+
+		try {
+			ClusterExecutorUtil.execute(clusterRequest);
+		}
+		catch (Exception e) {
+			throw new ChannelException("Unable to notify cluster of event", e);
+		}
+	}
+
+	@Override
 	public void sendNotificationEvent(
 			long companyId, long userId, NotificationEvent notificationEvent)
 		throws ChannelException {
@@ -328,6 +355,16 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 	}
 
 	@Override
+	public void storeNotificationEvent(
+			long companyId, long userId, NotificationEvent notificationEvent)
+		throws ChannelException {
+
+		ChannelHub channelHub = getChannelHub(companyId);
+
+		channelHub.storeNotificationEvent(userId, notificationEvent);
+	}
+
+	@Override
 	public void unregisterChannelListener(
 			long companyId, long userId, ChannelListener channelListener)
 		throws ChannelException {
@@ -336,6 +373,11 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 
 		channelHub.unregisterChannelListener(userId, channelListener);
 	}
+
+	private static final MethodKey _storeNotificationEventMethodKey =
+		new MethodKey(
+			ChannelHubManagerUtil.class, "storeNotificationEvent", long.class,
+			long.class, NotificationEvent.class);
 
 	private ChannelHub _channelHub;
 	private ConcurrentMap<Long, ChannelHub> _channelHubs =

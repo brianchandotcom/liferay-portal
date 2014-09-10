@@ -92,6 +92,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_UPDATE_USER</td>
+	<td>//div[@id='apiServiceUserServiceImplPanelContent']/div/ul/li/a[contains(.,'update-user')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_SET_ROLE_USERS</td>
 	<td>//div[@id='apiServiceUserServiceImplPanelContent']/div/ul/li/a[contains(.,'set-role-users')]</td>
 	<td></td>

@@ -76,7 +76,6 @@ public abstract class FindAction extends Action {
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			long plid = ParamUtil.getLong(request, "p_l_id");
 			long primaryKey = ParamUtil.getLong(
 				request, getPrimaryKeyParameterName());
 
@@ -98,18 +97,16 @@ public abstract class FindAction extends Action {
 				}
 			}
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+			Object[] plidAndPortletId = getPlidAndPortletId(
+				themeDisplay, groupId, themeDisplay.getPlid(), _portletIds);
+
+			long plid = (Long)plidAndPortletId[0];
+
+			Layout layout = setTargetLayout(request, groupId, plid);
 
 			LayoutPermissionUtil.check(
 				themeDisplay.getPermissionChecker(), layout, true,
 				ActionKeys.VIEW);
-
-			Object[] plidAndPortletId = getPlidAndPortletId(
-				themeDisplay, groupId, plid, _portletIds);
-
-			plid = (Long)plidAndPortletId[0];
-
-			setTargetGroup(request, groupId, plid);
 
 			String portletId = (String)plidAndPortletId[1];
 
@@ -285,7 +282,7 @@ public abstract class FindAction extends Action {
 		return portletId;
 	}
 
-	protected static void setTargetGroup(
+	protected static Layout setTargetLayout(
 			HttpServletRequest request, long groupId, long plid)
 		throws Exception {
 
@@ -304,12 +301,14 @@ public abstract class FindAction extends Action {
 			 !SitesUtil.isUserGroupLayoutSetViewable(
 				permissionChecker, layout.getGroup()))) {
 
-			return;
+			return layout;
 		}
 
 		layout = new VirtualLayout(layout, group);
 
 		request.setAttribute(WebKeys.LAYOUT, layout);
+
+		return layout;
 	}
 
 	protected abstract long getGroupId(long primaryKey) throws Exception;

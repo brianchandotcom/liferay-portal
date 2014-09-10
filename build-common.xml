@@ -3,6 +3,7 @@
 <project name="build-common"
 	xmlns:antelope="antlib:ise.antelope.tasks"
 	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
+	xmlns:ivy="antlib:org.apache.ivy.ant"
 	xmlns:sonar="antlib:org.sonar.ant"
 >
 	<dirname file="${ant.file.build-common}" property="project.dir.native" />
@@ -84,6 +85,8 @@
 	<taskdef classname="com.liferay.ant.bnd.BaselineJarTask" classpathref="lib.classpath" name="baseline-jar" />
 	<taskdef classname="com.tonicsystems.jarjar.JarJarTask" classpath="${project.dir}/lib/development/jarjar.jar" name="jarjar" />
 	<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpath="${project.dir}/lib/development/xmltask.jar" name="xmltask" />
+
+	<import file="build-common-ivy.xml" />
 
 	<property location="${project.dir}" name="project.location.absolute.native" />
 
@@ -1094,7 +1097,7 @@ rerun your task.
 				</copy>
 
 				<javac
-					classpathref="project.classpath"
+					classpathref="test.classpath"
 					compiler="${javac.compiler}"
 					debug="${javac.debug}"
 					deprecation="${javac.deprecation}"

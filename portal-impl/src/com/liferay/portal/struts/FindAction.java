@@ -98,18 +98,16 @@ public abstract class FindAction extends Action {
 				}
 			}
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-			LayoutPermissionUtil.check(
-				themeDisplay.getPermissionChecker(), layout, true,
-				ActionKeys.VIEW);
-
 			Object[] plidAndPortletId = getPlidAndPortletId(
 				themeDisplay, groupId, plid, _portletIds);
 
 			plid = (Long)plidAndPortletId[0];
 
-			setTargetLayout(request, groupId, plid);
+			Layout layout = setTargetLayout(request, groupId, plid);
+
+			LayoutPermissionUtil.check(
+				themeDisplay.getPermissionChecker(), layout, true,
+				ActionKeys.VIEW);
 
 			String portletId = (String)plidAndPortletId[1];
 

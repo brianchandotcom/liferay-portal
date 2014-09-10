@@ -207,18 +207,14 @@ public class ShardAdvice {
 	private static final ShardSelector _shardSelector;
 
 	static {
-		ShardSelector shardSelector = null;
-
 		try {
 			Class<?> clazz = Class.forName(PropsValues.SHARD_SELECTOR);
 
-			shardSelector = (ShardSelector)clazz.newInstance();
+			_shardSelector = (ShardSelector)clazz.newInstance();
 		}
 		catch (Exception e) {
 			throw new LoggedExceptionInInitializerError(e);
 		}
-
-		_shardSelector = shardSelector;
 	}
 
 	private ShardDataSourceTargetSource _shardDataSourceTargetSource;

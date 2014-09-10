@@ -79,13 +79,13 @@
 
 	.entry-subtitle {
 		font-size: 22px;
-		line-height: 40px;
-		margin-top: 10px;
+		line-height: 30px;
+		margin-top: 15px;
 	}
 
 	.entry-content {
 		font-size: 18px;
-		margin: 20px 0 45px;
+		margin: 25px 0 45px;
 	}
 
 	.entry.draft, .entry.pending, .entry.scheduled {

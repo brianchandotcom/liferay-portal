@@ -189,7 +189,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/dumbster.jar</file-name>
-				<version>02856255a6cc7fae9648ea7d9f65cb8f30401c22</version>
+				<version>02856255a6cc7f</version>
 				<project-name>Dumbster</project-name>
 				<project-url>https://github.com/rjo1970/dumbster</project-url>
 				<licenses>
@@ -475,7 +475,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/jserrorcollector.jar</file-name>
-				<version>c7d2d9161321e9aa09bbbf566bce2922d169b9dd</version>
+				<version>c7d2d9161321e9</version>
 				<project-name>JSErrorCollector</project-name>
 				<project-url>https://github.com/mguillem/JSErrorCollector</project-url>
 				<licenses>
@@ -969,7 +969,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/alloy-taglib.jar</file-name>
-				<version>c7d93123fbef5c449e7ed3565b4f0ef504325366</version>
+				<version>c7d93123fbef5c</version>
 				<project-name>Alloy</project-name>
 				<project-url>http://alloy.liferay.com</project-url>
 				<licenses>
@@ -2420,7 +2420,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/json-java.jar</file-name>
-				<version>c7d2d9161321e9aa09bbbf566bce2922d169b9dd</version>
+				<version>c7d2d9161321e9</version>
 				<project-name>JSON in Java</project-name>
 				<project-url>https://github.com/douglascrockford/JSON-java</project-url>
 				<licenses>

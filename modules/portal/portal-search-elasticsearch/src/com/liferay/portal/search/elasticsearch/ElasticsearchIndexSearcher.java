@@ -230,12 +230,13 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	protected void addHighlights(
 		SearchRequestBuilder searchRequestBuilder, QueryConfig queryConfig) {
 
+		addHighlightedField(
+			searchRequestBuilder, queryConfig, Field.ASSET_CATEGORY_TITLES);
+
 		if (!queryConfig.isHighlightEnabled()) {
 			return;
 		}
 
-		addHighlightedField(
-			searchRequestBuilder, queryConfig, Field.ASSET_CATEGORY_TITLES);
 		addHighlightedField(searchRequestBuilder, queryConfig, Field.CONTENT);
 		addHighlightedField(
 			searchRequestBuilder, queryConfig, Field.DESCRIPTION);
@@ -318,10 +319,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		SearchHit hit, Document document, QueryConfig queryConfig,
 		Set<String> queryTerms) {
 
-		if (!queryConfig.isHighlightEnabled()) {
-			return;
-		}
-
 		Map<String, HighlightField> highlightFields = hit.getHighlightFields();
 
 		if (MapUtil.isEmpty(highlightFields)) {
@@ -331,6 +328,11 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		addSnippets(
 			document, queryTerms, highlightFields, Field.ASSET_CATEGORY_TITLES,
 			queryConfig.getLocale());
+
+		if (!queryConfig.isHighlightEnabled()) {
+			return;
+		}
+
 		addSnippets(
 			document, queryTerms, highlightFields, Field.CONTENT,
 			queryConfig.getLocale());

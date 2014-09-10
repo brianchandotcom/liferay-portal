@@ -127,7 +127,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveNewProcess" />
+		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Kaleo Forms Page" />
@@ -396,7 +396,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveNewProcess" />
+		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Kaleo Forms Page" />
@@ -411,7 +411,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveNewProcess" />
+		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Kaleo Forms Admin" />

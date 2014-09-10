@@ -49,7 +49,7 @@ public class Summary {
 	}
 
 	public String getContent() {
-		if (_content == null) {
+		if (Validator.isNull(_content)) {
 			return StringPool.BLANK;
 		}
 
@@ -81,7 +81,7 @@ public class Summary {
 	}
 
 	public String getTitle() {
-		if (_title == null) {
+		if (Validator.isNull(_title)) {
 			return StringPool.BLANK;
 		}
 

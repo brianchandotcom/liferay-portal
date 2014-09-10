@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.memory.EqualityWeakReference;
@@ -339,9 +340,7 @@ public class AggregateClassLoader extends ClassLoader {
 				ClassLoader.class, "loadClass", String.class, boolean.class);
 		}
 		catch (Exception e) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Unable to locate required methods", e);
-			}
+			throw new LoggedExceptionInInitializerError(e);
 		}
 	}
 

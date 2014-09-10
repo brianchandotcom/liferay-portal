@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.io.unsync;
 
+import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
 import com.liferay.portal.kernel.io.OutputStreamWriter;
 
 import java.io.ByteArrayOutputStream;
@@ -206,7 +207,7 @@ public class UnsyncPrintWriterTest {
 			_writerField.setAccessible(true);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			throw new LoggedExceptionInInitializerError(e);
 		}
 	}
 

@@ -1,0 +1,116 @@
+<html>
+<head>
+<title>CPKaleoformsadminViewprocessrecords</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPKaleoformsadminViewprocessrecords</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPKaleoformsadminViewprocessrecords</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_WRENCH_ICON</td>
+	<td>//a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBMIT_NEW</td>
+	<td>//a[@role='menuitem']/span[contains(.,'Submit New')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT</td>
+	<td>//a[@role='menuitem']/span[contains(.,'Export')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[contains(@name,'kaleoformsportlet_keywords')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECORD_TABLE-->
+<tr>
+	<td>RECORD_TABLE_RECORD</td>
+	<td>//td[contains(@class,'table-cell') and contains(.,'${key_kfProcessFieldData}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_STATUS</td>
+	<td>//td[contains(@class,'table-cell') and contains(.,'${key_kfStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_AUTHOR</td>
+	<td>//td[@class='table-cell entry-action last']/preceding-sibling::td[contains(.,'${key_kfAuthor}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_ACTIONS_1</td>
+	<td>//tr[1]/td[@class='table-cell entry-action last']/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_kfProcessFieldData}')]/td[@class='table-cell entry-action last']/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECORD_TABLE_MENULIST-->
+<tr>
+	<td>RECORD_TABLE_MENULIST_VIEW</td>
+	<td>//a[contains(@id,'_menu_view')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECORD_TABLE_MENULIST_DELETE</td>
+	<td>//a[contains(@id,'_menu_delete')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

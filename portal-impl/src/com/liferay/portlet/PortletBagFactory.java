@@ -79,7 +79,6 @@ import com.liferay.util.portlet.PortletProps;
 
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -826,14 +825,12 @@ public class PortletBagFactory {
 	}
 
 	protected List<SchedulerEntry> newSchedulerEntryInstances(Portlet portlet) {
-		if (!PropsValues.SCHEDULER_ENABLED) {
-			return new ArrayList<SchedulerEntry>();
-		}
-
 		ServiceTrackerList<SchedulerEntry> schedulerEntries =
 			getServiceTrackerList(SchedulerEntry.class, portlet);
 
-		schedulerEntries.addAll(portlet.getSchedulerEntries());
+		if (PropsValues.SCHEDULER_ENABLED) {
+			schedulerEntries.addAll(portlet.getSchedulerEntries());
+		}
 
 		return schedulerEntries;
 	}

@@ -20,9 +20,12 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
+import java.io.IOException;
+
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -170,6 +173,14 @@ public class BaseDLFileVersionDisplayContext
 	@Override
 	public boolean isViewOriginalFileButtonVisible() throws PortalException {
 		return parentDLDisplayContext.isViewOriginalFileButtonVisible();
+	}
+
+	@Override
+	public void renderPreview(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		parentDLDisplayContext.renderPreview(request, response);
 	}
 
 	protected FileVersion fileVersion;

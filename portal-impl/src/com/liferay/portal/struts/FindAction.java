@@ -109,7 +109,7 @@ public abstract class FindAction extends Action {
 
 			plid = (Long)plidAndPortletId[0];
 
-			setTargetGroup(request, groupId, plid);
+			setTargetLayout(request, groupId, plid);
 
 			String portletId = (String)plidAndPortletId[1];
 
@@ -285,7 +285,7 @@ public abstract class FindAction extends Action {
 		return portletId;
 	}
 
-	protected static void setTargetGroup(
+	protected static Layout setTargetLayout(
 			HttpServletRequest request, long groupId, long plid)
 		throws Exception {
 
@@ -304,12 +304,14 @@ public abstract class FindAction extends Action {
 			 !SitesUtil.isUserGroupLayoutSetViewable(
 				permissionChecker, layout.getGroup()))) {
 
-			return;
+			return layout;
 		}
 
 		layout = new VirtualLayout(layout, group);
 
 		request.setAttribute(WebKeys.LAYOUT, layout);
+
+		return layout;
 	}
 
 	protected abstract long getGroupId(long primaryKey) throws Exception;

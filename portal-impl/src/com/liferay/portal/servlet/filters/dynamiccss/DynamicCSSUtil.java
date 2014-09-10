@@ -513,7 +513,7 @@ public class DynamicCSSUtil {
 	private static boolean _isThemeCssFastLoad(
 		HttpServletRequest request, ThemeDisplay themeDisplay) {
 
-		if (!PropsValues.THEME_CSS_DEVELOPER_MODE) {
+		if (!PropsValues.THEME_CSS_FAST_LOAD_DISABLE_ALLOWED) {
 			return true;
 		}
 

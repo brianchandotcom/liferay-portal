@@ -709,7 +709,7 @@ public class ServicePreAction extends Action {
 
 		boolean themeCssFastLoad = true;
 
-		if (PropsValues.THEME_CSS_DEVELOPER_MODE) {
+		if (PropsValues.THEME_CSS_FAST_LOAD_DISABLE_ALLOWED) {
 			themeCssFastLoad = SessionParamUtil.getBoolean(
 				request, "css_fast_load", PropsValues.THEME_CSS_FAST_LOAD);
 		}

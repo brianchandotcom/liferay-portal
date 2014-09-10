@@ -107,7 +107,7 @@
 										<portlet:param name="classPK" value="<%= String.valueOf(entry.getClassPK()) %>" />
 										<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName(entry.getClassPK()) %>" />
 										<portlet:param name="containerModelId" value="<%= String.valueOf(trashHandler.getRootContainerModelId(entry.getClassPK())) %>" />
-										<portlet:param name="showRootContainerModel" value="<%= String.valueOf(trashHandler.hasRootContainerModel()) %>" />
+										<portlet:param name="rootContainerModelMovable" value="<%= String.valueOf(trashHandler.isRootContainerModelMovable()) %>" />
 									</portlet:renderURL>
 
 									<%

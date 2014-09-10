@@ -40,7 +40,7 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashRender
 			<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
 			<portlet:param name="containerModelClassName" value="<%= trashHandler.getRootContainerModelClassName(trashRenderer.getClassPK()) %>" />
 			<portlet:param name="containerModelId" value="<%= String.valueOf(trashHandler.getRootContainerModelId(trashRenderer.getClassPK())) %>" />
-			<portlet:param name="showRootContainerModel" value="<%= String.valueOf(trashHandler.hasRootContainerModel()) %>" />
+			<portlet:param name="rootContainerModelMovable" value="<%= String.valueOf(trashHandler.isRootContainerModelMovable()) %>" />
 		</portlet:renderURL>
 
 		<%

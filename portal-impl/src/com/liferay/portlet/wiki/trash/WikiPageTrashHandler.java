@@ -270,11 +270,6 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 	}
 
 	@Override
-	public boolean hasRootContainerModel() {
-		return true;
-	}
-
-	@Override
 	public boolean hasTrashPermission(
 			PermissionChecker permissionChecker, long groupId, long classPK,
 			String trashActionId)
@@ -323,6 +318,11 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 
 	@Override
 	public boolean isMovable() {
+		return true;
+	}
+
+	@Override
+	public boolean isRootContainerModelMovable() {
 		return true;
 	}
 

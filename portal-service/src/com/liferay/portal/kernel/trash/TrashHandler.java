@@ -507,8 +507,6 @@ public interface TrashHandler {
 	 */
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException;
 
-	public boolean hasRootContainerModel();
-
 	/**
 	 * Returns <code>true</code> if the user has the required permission to
 	 * perform the trash action on the model entity with the primary key.
@@ -601,6 +599,15 @@ public interface TrashHandler {
 	 *         be found
 	 */
 	public boolean isRestorable(long classPK) throws PortalException;
+
+	/**
+	 * Returns <code>true</code> if the entity can be moved from one root
+	 * container model (such as a wiki node) to another.
+	 *
+	 * @return <code>true</code> if the entity can be moved from one root
+	 *         container model to another; <code>false</code> otherwise
+	 */
+	public boolean isRootContainerModelMovable();
 
 	/**
 	 * Moves the entity with the class primary key to the container model with

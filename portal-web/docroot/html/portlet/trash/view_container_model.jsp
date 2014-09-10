@@ -23,7 +23,7 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectContainer");
-boolean showRootContainerModel = ParamUtil.getBoolean(request, "showRootContainerModel", false);
+boolean rootContainerModelMovable = ParamUtil.getBoolean(request, "rootContainerModelMovable", false);
 
 TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
 
@@ -54,7 +54,7 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, containerModelClassName, c
 
 String containerModelName = trashHandler.getContainerModelName(classPK);
 
-if (showRootContainerModel) {
+if (rootContainerModelMovable) {
 	containerModelName = trashHandler.getRootContainerModelName();
 }
 %>
@@ -72,7 +72,7 @@ if (showRootContainerModel) {
 
 	<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
 
-	<c:if test="<%= !showRootContainerModel %>">
+	<c:if test="<%= !rootContainerModelMovable %>">
 		<aui:button-row>
 
 			<%
@@ -96,10 +96,10 @@ if (showRootContainerModel) {
 
 	<liferay-ui:search-container
 		searchContainer="<%= new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, containerURL, null, null) %>"
-		total="<%= showRootContainerModel ? trashHandler.getRootContainerModelsCount(scopeGroupId) : trashHandler.getContainerModelsCount(classPK, containerModelId) %>"
+		total="<%= rootContainerModelMovable ? trashHandler.getRootContainerModelsCount(scopeGroupId) : trashHandler.getContainerModelsCount(classPK, containerModelId) %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= showRootContainerModel ? trashHandler.getRootContainerModels(scopeGroupId) : trashHandler.getContainerModels(classPK, containerModelId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			results="<%= rootContainerModelMovable ? trashHandler.getRootContainerModels(scopeGroupId) : trashHandler.getContainerModels(classPK, containerModelId, searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
 		<liferay-ui:search-container-row

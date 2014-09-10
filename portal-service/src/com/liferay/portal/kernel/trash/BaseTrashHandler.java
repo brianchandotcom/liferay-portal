@@ -347,11 +347,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
-	public boolean hasRootContainerModel() {
-		return false;
-	}
-
-	@Override
 	public boolean hasTrashPermission(
 			PermissionChecker permissionChecker, long groupId, long classPK,
 			String trashActionId)
@@ -403,6 +398,11 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	@SuppressWarnings("unused")
 	public boolean isRestorable(long classPK) throws PortalException {
 		return true;
+	}
+
+	@Override
+	public boolean isRootContainerModelMovable() {
+		return false;
 	}
 
 	@Override

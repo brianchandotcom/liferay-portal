@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="build-common-ivy" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<property name="ivy.home" value="${project.dir}/.ivy" />
+
+	<if>
+		<not>
+			<available file="${ivy.home}/ivy-${ivy.version}.jar" />
+		</not>
+		<then>
+			<mkdir dir="${ivy.home}" />
+
+			<get
+				dest="${ivy.home}/ivy-${ivy.version}.jar"
+				src="${ivy.jar.url}"
+			/>
+		</then>
+	</if>
+
+	<path id="ivy.lib.path">
+		<fileset
+			dir="${ivy.home}"
+			includes="ivy-${ivy.version}.jar"
+		/>
+		<fileset
+			dir="${project.dir}/lib/development"
+			includes="bcpg-jdk16.jar,bcprov-jdk16.jar"
+		/>
+	</path>
+
+	<taskdef classpathref="ivy.lib.path" resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" />
+
+	<ivy:settings file="${project.dir}/ivy-settings.xml" />
+
+</project>

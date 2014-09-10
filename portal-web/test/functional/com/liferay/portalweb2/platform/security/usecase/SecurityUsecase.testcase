@@ -406,6 +406,38 @@
 		<execute action="CPRecyclebin#assertAlertNotPresent" />
 	</command>
 
+	<command known-issues="LPS-47697" name="ViewUpdateUserViaJSONWS" priority="5">
+		<property name="custom.properties" value="company.security.strangers.verify=true" />
+
+		<execute macro="Api#apiJsonwsUserView" />
+
+		<execute macro="Api#editJsonwsUserView">
+			<var name="userBirthdayDay" value="24" />
+			<var name="userBirthdayMonth" value="10" />
+			<var name="userBirthdayYear" value="1984" />
+			<var name="userEmailAddress" value="test1@liferay.com" />
+			<var name="userFacebookId" value="0" />
+			<var name="userFirstName" value="test1" />
+			<var name="userId" value="10205" />
+			<var name="userLastName" value="test1" />
+			<var name="userPrefixId" value="0" />
+			<var name="userScreenName" value="test1" />
+			<var name="userSuffixId" value="0" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#viewCP">
+			<var name="userScreenName" value="test1" />
+		</execute>
+
+		<execute action="CPUsersandorganizationsUser#assertValue" locator-key1="DETAILS_USER_ID_FIELD" value1="${userId}" />
+		<execute action="CPUsersandorganizationsUser#assertSelectedLabel" locator-key1="DETAILS_GENDER_SELECT" value1="Male" />
+		<execute action="CPUsersandorganizationsUser#assertValue" locator-key1="DETAILS_BIRTHDAY_FIELD" value1="10/24/1984" />
+	</command>
+
 	<command name="ViewURLValidateNoXSS" priority="5">
 		<var name="maliciousURL1">
 			<![CDATA[

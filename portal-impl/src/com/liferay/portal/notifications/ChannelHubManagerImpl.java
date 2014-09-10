@@ -315,21 +315,20 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 		sendNotificationEvent(companyId, userId, notificationEvent);
 
 		MethodKey methodKey = new MethodKey(
-			ChannelHubManagerUtil.class, "storeNotificationEvent",
-			long.class, long.class, NotificationEvent.class);
+			ChannelHubManagerUtil.class, "storeNotificationEvent", long.class,
+			long.class, NotificationEvent.class);
 
-		MethodHandler methodHandler =
-			new MethodHandler(methodKey, companyId, userId, notificationEvent);
+		MethodHandler methodHandler = new MethodHandler(
+			methodKey, companyId, userId, notificationEvent);
 
-		ClusterRequest clusterRequest =
-			ClusterRequest.createMulticastRequest(methodHandler, true);
+		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
+			methodHandler, true);
 
 		try {
 			ClusterExecutorUtil.execute(clusterRequest);
 		}
 		catch (Exception e) {
-			throw new ChannelException(
-				"Unable to notify cluster of event", e);
+			throw new ChannelException("Unable to notify cluster of event", e);
 		}
 	}
 

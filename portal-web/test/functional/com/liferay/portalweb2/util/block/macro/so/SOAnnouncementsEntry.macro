@@ -134,7 +134,7 @@
 
 		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ENTRY_CONTENT" value1="${entryContent}" />
-		<execute action="SODashboard#click" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" />
+		<execute action="SODashboard#clickNoError" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" />
 		<execute action="SODashboard#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
 		<execute action="SODashboard#assertTextNotPresent" value1="{entryTitle}" />
 		<execute action="SODashboard#assertTextNotPresent" value1="{entryContent}" />
@@ -149,7 +149,7 @@
 
 		<execute action="SODashboardManageAnnouncementsEntry#selectFrame" locator-key1="MANAGE_ENTRY_IFRAME" />
 		<execute action="SODashboardManageAnnouncementsEntry#select" locator-key1="DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute action="SODashboardManageAnnouncementsEntry#assertClick" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
+		<execute action="SODashboardManageAnnouncementsEntry#assertClickNoError" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
 		<execute action="SODashboardManageAnnouncementsEntry#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
 		<execute action="SODashboardManageAnnouncementsEntry#assertTextNotPresent" value1="{entryTitle}" />
 		<execute action="SODashboardManageAnnouncementsEntry#assertTextNotPresent" value1="{entryContent}" />
@@ -367,7 +367,7 @@
 		<while>
 			<condition action="SODashboard#isElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_GENERIC_DELETE_LINK" />
 			<then>
-				<execute action="SODashboard#assertClick" locator-key1="ANNOUNCEMENTS_ENTRY_GENERIC_DELETE_LINK" value1="Delete" />
+				<execute action="SODashboard#assertClickNoError" locator-key1="ANNOUNCEMENTS_ENTRY_GENERIC_DELETE_LINK" value1="Delete" />
 				<execute action="SODashboard#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
 			</then>
 		</while>
@@ -380,7 +380,7 @@
 		<while>
 			<condition action="SODashboardManageAnnouncementsEntry#isElementPresent" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" />
 			<then>
-				<execute action="SODashboardManageAnnouncementsEntry#assertClick" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
+				<execute action="SODashboardManageAnnouncementsEntry#assertClickNoError" locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK" value1="Delete"  />
 				<execute action="SODashboardManageAnnouncementsEntry#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
 			</then>
 		</while>

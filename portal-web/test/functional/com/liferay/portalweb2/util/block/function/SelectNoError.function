@@ -1,0 +1,15 @@
+<definition>
+	<command name="pauseSelect">
+		<execute argument1="5000" selenium="pause" />
+
+		<execute function="SelectNoError#select" />
+	</command>
+
+	<command name="select">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="select" />
+	</command>
+</definition>

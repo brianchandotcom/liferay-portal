@@ -94,7 +94,7 @@
 			<condition action="SOMessages#isElementNotPresent" locator-key1="INFO_MESSAGE" />
 			<then>
 				<execute action="SOMessages#check" locator-key1="SELECT_ALL_CHECKBOX" />
-				<execute action="SOMessages#click" locator-key1="DELETE_BUTTON" />
+				<execute action="SOMessages#clickNoError" locator-key1="DELETE_BUTTON" />
 				<execute action="SOMessages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
 				<execute action="SOMessages#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No messages found." />
 			</then>

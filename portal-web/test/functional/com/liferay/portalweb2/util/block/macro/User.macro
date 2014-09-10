@@ -927,7 +927,7 @@
 				<var name="key_userScreenName" value="${userScreenName}" />
 
 				<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ACTIONS" />
-				<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_MENULIST_DEACTIVATE" value1="Deactivate" />
+				<execute action="CPUsersandorganizationsViewusers#assertClickNoError" locator-key1="USER_MENULIST_DEACTIVATE" value1="Deactivate" />
 				<execute action="CPUsersandorganizationsViewusers#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate this?" />
 				<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
@@ -937,7 +937,7 @@
 					<var name="key_userScreenName" value="${userScreenName}" />
 
 					<execute action="CPUsersandorganizationsViewusers#check" locator-key1="USER_TABLE_ALL_CHECKBOX" />
-					<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="DEACTIVATE" value1="Deactivate" />
+					<execute action="CPUsersandorganizationsViewusers#assertClickNoError" locator-key1="DEACTIVATE" value1="Deactivate" />
 					<execute action="CPUsersandorganizationsViewusers#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate the selected users?" />
 					<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 				</then>
@@ -946,7 +946,7 @@
 				<condition action="CPUsersandorganizationsViewusers#isElementPresent" locator-key1="USER_TABLE_ALL_CHECKBOX" />
 				<then>
 					<execute action="CPUsersandorganizationsViewusers#check" locator-key1="USER_TABLE_ALL_CHECKBOX" />
-					<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="DEACTIVATE" value1="Deactivate" />
+					<execute action="CPUsersandorganizationsViewusers#assertClickNoError" locator-key1="DEACTIVATE" value1="Deactivate" />
 					<execute action="CPUsersandorganizationsViewusers#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate the selected users?" />
 					<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 				</then>
@@ -969,7 +969,7 @@
 			<condition action="CPUsersandorganizationsViewusers#isElementPresent" locator-key1="USER_TABLE_ALL_CHECKBOX" />
 			<then>
 				<execute action="CPUsersandorganizationsViewusers#check" locator-key1="USER_TABLE_ALL_CHECKBOX" />
-				<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="DELETE" value1="Delete" />
+				<execute action="CPUsersandorganizationsViewusers#assertClickNoError" locator-key1="DELETE" value1="Delete" />
 				<execute action="CPUsersandorganizationsViewusers#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to permanently delete the selected users?" />
 				<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>

@@ -10,4 +10,10 @@
 			<execute function="Click#pauseTextClickAt" />
 		</case>
 	</command>
+
+	<command name="clickNoError">
+		<case locator-key1="DELETE_SITE_ICON">
+			<execute function="ClickNoError#pauseClick" />
+		</case>
+	</command>
 </definition>

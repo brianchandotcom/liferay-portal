@@ -259,7 +259,7 @@
 		<var name="key_userSegment" value="${userSegmentName}" />
 
 		<execute action="CPContenttargetingAddusersegment#click" locator-key1="USER_SEGMENT_TABLE_ACTIONS" />
-		<execute action="CPContenttargetingAddusersegment#click" locator-key1="USER_SEGMENT_TABLE_ACTIONS_MENULIST_DELETE" />
+		<execute action="CPContenttargetingAddusersegment#clickNoError" locator-key1="USER_SEGMENT_TABLE_ACTIONS_MENULIST_DELETE" />
 		<execute action="CPContenttargetingAddusersegment#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="CPContenttargetingAddusersegment#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPContenttargetingAddusersegment#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No User Segments were found" />
@@ -279,7 +279,7 @@
 				<for list="${userSegmentRuleDeleteList}" param="userSegmentRuleDelete">
 					<var name="key_userSegmentRuleDelete" value="${userSegmentRuleDelete}" />
 
-					<execute action="CPContenttargetingEditusersegment#click" locator-key1="USER_SEGMENT_RULE_DELETE" />
+					<execute action="CPContenttargetingEditusersegment#clickNoError" locator-key1="USER_SEGMENT_RULE_DELETE" />
 
 					<execute action="CPContenttargetingEditusersegment#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected field(s)?" />
 				</for>

@@ -103,7 +103,7 @@
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${ddlTemplateName}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#check" locator-key1="TEMPLATE_TABLE_ALL_CHECKBOX" />
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClickNoError" locator-key1="DELETE_BUTTON" value1="Delete" />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
@@ -270,7 +270,7 @@
 					<condition action="CPDynamicdatalistsDatadefinitionsManagetemplates#isElementPresent" locator-key1="TEMPLATE_TABLE_ACTIONS_1" />
 					<then>
 						<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#check" locator-key1="TEMPLATE_TABLE_ALL_CHECKBOX" />
-						<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#click" locator-key1="DELETE_BUTTON" />
+						<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#clickNoError" locator-key1="DELETE_BUTTON" />
 						<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 						<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 					</then>

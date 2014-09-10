@@ -196,7 +196,7 @@
 		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
 		<execute action="SOUserBarSitesDirectory#pause" locator1="1000" />
 		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
-		<execute action="SOUserBarSitesDirectory#click" locator-key1="DELETE_SITE_ICON" />
+		<execute action="SOUserBarSitesDirectory#clickNoError" locator-key1="DELETE_SITE_ICON" />
 		<execute action="SOUserBarSitesDirectory#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete ${siteName}?" />
 		<execute action="SOUserBarSitesDirectory#assertElementNotPresent" locator-key1="SITE_NAME_LINK" />
 	</command>
@@ -256,7 +256,7 @@
 		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
 		<execute action="SOUserBarSitesDirectory#pause" locator1="1000" />
 		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
-		<execute action="SOUserBarSitesDirectory#click" locator-key1="JOIN_SITE_ICON" />
+		<execute action="SOUserBarSitesDirectory#clickNoError" locator-key1="JOIN_SITE_ICON" />
 		<execute action="SOUserBarSitesDirectory#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to join ${siteName}?" />
 		<execute action="SOUserBarSitesDirectory#assertElementPresent" locator-key1="LEAVE_SITE_ICON" />
 	</command>
@@ -273,7 +273,7 @@
 		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
 		<execute action="SOUserBarSitesDirectory#pause" locator1="1000" />
 		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
-		<execute action="SOUserBarSitesDirectory#click" locator-key1="LEAVE_SITE_ICON" />
+		<execute action="SOUserBarSitesDirectory#clickNoError" locator-key1="LEAVE_SITE_ICON" />
 		<execute action="SOUserBarSitesDirectory#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to leave ${siteName}?" />
 
 		<if>
@@ -380,7 +380,7 @@
 			</else>
 		</if>
 
-		<execute action="SOUserBarSitesDirectory#click" locator-key1="REQUEST_MEMBERSHIP_ICON" />
+		<execute action="SOUserBarSitesDirectory#clickNoError" locator-key1="REQUEST_MEMBERSHIP_ICON" />
 		<execute action="SOUserBarSitesDirectory#confirm" locator-key1="CONFIRMATION" value1="This is a restricted site. Do you want to send a membership request to ${siteName}?" />
 		<execute action="SOUserBarSitesDirectory#assertElementPresent" locator-key1="MEMBERSHIP_REQUESTED_ICON" />
 	</command>

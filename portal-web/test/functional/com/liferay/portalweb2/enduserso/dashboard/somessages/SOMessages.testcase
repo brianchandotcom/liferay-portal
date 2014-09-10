@@ -70,7 +70,7 @@
 		<var name="key_messageBody" value="${messageBody}" />
 
 		<execute action="SOMessages#check" locator-key1="MESSAGE_CHECKBOX" />
-		<execute action="SOMessages#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
+		<execute action="SOMessages#assertClickNoError" locator-key1="DELETE_BUTTON" value1="Delete" />
 		<execute action="SOMessages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
 		<execute action="SOMessages#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No messages found." />
 	</command>
@@ -125,7 +125,7 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOMessagesMessage#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
+		<execute action="SOMessagesMessage#assertClickNoError" locator-key1="DELETE_BUTTON" value1="Delete" />
 		<execute action="SOMessagesMessage#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the message?" />
 
 		<execute action="SOMessages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -222,7 +222,7 @@
 		<var name="key_messageBody" value="${messageBody}" />
 
 		<execute action="SOMessages#check" locator-key1="MESSAGE_CHECKBOX" />
-		<execute action="SOMessages#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
+		<execute action="SOMessages#assertClickNoError" locator-key1="DELETE_BUTTON" value1="Delete" />
 		<execute action="SOMessages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
 		<execute action="SOMessages#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No messages found." />
 
@@ -304,7 +304,7 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOMessagesMessage#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
+		<execute action="SOMessagesMessage#assertClickNoError" locator-key1="DELETE_BUTTON" value1="Delete" />
 		<execute action="SOMessagesMessage#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the message?" />
 
 		<execute action="SOMessages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -397,7 +397,7 @@
 		</execute>
 
 		<execute action="SOMessages#check" locator-key1="SELECT_ALL_CHECKBOX" />
-		<execute action="SOMessages#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
+		<execute action="SOMessages#assertClickNoError" locator-key1="DELETE_BUTTON" value1="Delete" />
 		<execute action="SOMessages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected messages?" />
 		<execute action="SOMessages#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No messages found." />
 	</command>
@@ -454,7 +454,7 @@
 		<var name="key_messageBody" value="${messageBody}" />
 
 		<execute action="SOMessages#check" locator-key1="MESSAGE_CHECKBOX" />
-		<execute action="SOMessages#assertClick" locator-key1="MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
+		<execute action="SOMessages#assertClickNoError" locator-key1="MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
 		<execute action="SOMessages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to mark the selected messages as unread?" />
 		<execute action="SOMessages#pause" locator1="1000" />
 		<execute action="SOMessages#assertElementPresent" locator-key1="MESSAGE_UNREAD" />
@@ -510,7 +510,7 @@
 			<var name="senderName" value="${adminName}" />
 		</execute>
 
-		<execute action="SOMessagesMessage#assertClick" locator-key1="MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
+		<execute action="SOMessagesMessage#assertClickNoError" locator-key1="MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
 		<execute action="SOMessagesMessage#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to mark the message as unread?" />
 		<execute action="SOMessages#pause" locator1="1000" />
 
@@ -619,7 +619,7 @@
 		</execute>
 
 		<execute action="SOMessages#check" locator-key1="SELECT_ALL_CHECKBOX" />
-		<execute action="SOMessages#assertClick" locator-key1="MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
+		<execute action="SOMessages#assertClickNoError" locator-key1="MARK_AS_UNREAD_BUTTON" value1="Mark as Unread" />
 		<execute action="SOMessages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to mark the selected messages as unread?" />
 		<execute action="SOMessages#pause" locator1="1000" />
 

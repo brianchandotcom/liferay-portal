@@ -178,7 +178,7 @@
 			</else>
 		</if>
 
-		<execute action="SOActivities#assertClick" locator-key1="ACTIVITIES_COMMENT_DELETE" value1="Delete" />
+		<execute action="SOActivities#assertClickNoError" locator-key1="ACTIVITIES_COMMENT_DELETE" value1="Delete" />
 		<execute action="SOActivities#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected entry?" />
 		<execute action="SOActivities#assertTextNotPresent" value1="${commentContent}" />
 	</command>

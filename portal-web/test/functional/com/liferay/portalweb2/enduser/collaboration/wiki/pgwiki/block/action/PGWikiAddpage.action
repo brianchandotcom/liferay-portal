@@ -18,4 +18,10 @@
 			<execute function="Select#pauseSelect" />
 		</case>
 	</command>
+
+	<command name="selectNoError">
+		<case locator-key1="FORMAT_DROPDOWN">
+			<execute function="SelectNoError#pauseSelect" />
+		</case>
+	</command>
 </definition>

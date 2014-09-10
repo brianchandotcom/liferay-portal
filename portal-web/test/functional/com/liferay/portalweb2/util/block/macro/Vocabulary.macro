@@ -135,7 +135,7 @@
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
 		<execute action="CPCategories#check" locator-key1="ALL_VOCABULARIES_CHECKBOX" />
 		<execute action="CPCategories#click" locator-key1="ACTIONS_BUTTON" />
-		<execute action="CPCategories#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPCategories#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPCategories#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPCategories#assertTextNotPresent" value1="${vocabularyName}" />
@@ -147,7 +147,7 @@
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
 
 		<execute action="CPCategories#click" locator-key1="VOCABULARY_ENTRY_MENULIST_ARROW" />
-		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPCategories#assertClickNoError" locator-key1="VOCABULARY_ENTRY_MENULIST_DELETE" value1="Delete" />
 
 		<execute action="CPVocabulariesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
@@ -179,10 +179,9 @@
 		<if>
 			<condition action="CPCategories#isElementPresent" locator-key1="VOCABULARY_ENTRY_GENERIC" />
 			<then>
-
 				<execute action="CPCategories#check" locator-key1="ALL_VOCABULARIES_CHECKBOX" />
 				<execute action="CPCategories#click" locator-key1="ACTIONS_BUTTON" />
-				<execute action="CPCategories#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+				<execute action="CPCategories#assertClickNoError" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 				<execute action="CPCategories#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</if>

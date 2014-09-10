@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.repository.capabilities.TemporaryFilesCapabilityImpl;
-import com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory;
 
 /**
  * @author Iván Zaera
@@ -62,16 +61,13 @@ public class TemporaryRepositoryDefiner extends BaseRepositoryDefiner {
 	public void registerRepositoryFactory(
 		RepositoryFactoryRegistry repositoryFactoryRegistry) {
 
-		repositoryFactoryRegistry.setRepositoryFactory(
-			_liferayRepositoryFactory);
+		repositoryFactoryRegistry.setRepositoryFactory(_repositoryFactory);
 	}
 
-	public void setLiferayRepositoryFactory(
-		LiferayRepositoryFactory liferayRepositoryFactory) {
-
-		_liferayRepositoryFactory = liferayRepositoryFactory;
+	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
+		_repositoryFactory = repositoryFactory;
 	}
 
-	private RepositoryFactory _liferayRepositoryFactory;
+	private RepositoryFactory _repositoryFactory;
 
 }

@@ -28,8 +28,8 @@ import java.util.List;
  */
 public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 
-	public TemporaryFilesCapabilityImpl(LocalRepository repository) {
-		_repository = repository;
+	public TemporaryFilesCapabilityImpl(LocalRepository localRepository) {
+		_localRepository = localRepository;
 	}
 
 	@Override
@@ -76,6 +76,6 @@ public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 		long temporaryFilesTimeoutMilliseconds) {
 	}
 
-	private LocalRepository _repository;
+	private LocalRepository _localRepository;
 
 }

@@ -96,6 +96,9 @@ public class EditFolderAction extends PortletAction {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteFolders(actionRequest, false);
 			}
+			else if (cmd.equals("deleteExpiredTemporaryFiles")) {
+				deleteExpiredTemporaryFiles(actionRequest);
+			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteFolders(actionRequest, true);
 			}
@@ -107,9 +110,6 @@ public class EditFolderAction extends PortletAction {
 			}
 			else if (cmd.equals("updateWorkflowDefinitions")) {
 				updateWorkflowDefinitions(actionRequest);
-			}
-			else if (cmd.equals("deleteExpiredTemporaryFiles")) {
-				deleteExpiredTemporaryFiles(actionRequest);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -178,14 +178,16 @@ public class EditFolderAction extends PortletAction {
 
 		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
 
-		LocalRepository repository =
+		LocalRepository localRepository =
 			RepositoryLocalServiceUtil.getLocalRepositoryImpl(repositoryId);
 
-		if (repository.isCapabilityProvided(TemporaryFilesCapability.class)) {
-			TemporaryFilesCapability tempFilesCapability =
-				repository.getCapability(TemporaryFilesCapability.class);
+		if (localRepository.isCapabilityProvided(
+				TemporaryFilesCapability.class)) {
 
-			tempFilesCapability.deleteExpiredTemporaryFiles();
+			TemporaryFilesCapability temporaryFilesCapability =
+				localRepository.getCapability(TemporaryFilesCapability.class);
+
+			temporaryFilesCapability.deleteExpiredTemporaryFiles();
 		}
 	}
 

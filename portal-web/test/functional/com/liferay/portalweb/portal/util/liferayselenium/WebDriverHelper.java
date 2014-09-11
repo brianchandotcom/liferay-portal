@@ -122,12 +122,54 @@ public class WebDriverHelper {
 		}
 	}
 
+	public String getAttribute(String attributeLocator) {
+		int pos = attributeLocator.lastIndexOf(CharPool.AT);
+
+		String locator = attributeLocator.substring(0, pos);
+
+		WebElement webElement = getWebElement(locator);
+
+		String attribute = attributeLocator.substring(pos + 1);
+
+		return webElement.getAttribute(attribute);
+	}
+
 	public static String getDefaultWindowHandle() {
 		return _defaultWindowHandle;
 	}
 
+	public String getEval(String script) {
+		WebElement webElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)webDriver;
+
+		return (String)javascriptExecutor.executeScript(script);
+	}
+
 	public static String getLocation(WebDriver webDriver) {
 		return webDriver.getCurrentUrl();
+	}
+
+	public String getText(String locator, String timeout) {
+		if (locator.contains("x:")) {
+			return getHtmlNodeText(locator);
+		}
+
+		WebElement webElement = getWebElement(locator, timeout);
+
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
+
+		String text = webElement.getText();
+
+		text = text.trim();
+
+		return text.replace("\n", " ");
 	}
 
 	public static boolean isElementPresent(

@@ -29,6 +29,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xpath=(//div[@class='alert alert-error'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xpath=(//div[@class='alert alert-error'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER_TITLE</td>
+	<td>//div[@class='taglib-header ']/h3/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME_FIELD</td>
 	<td>//input[contains(@id,'kaleoformsportlet_name')]</td>
 	<td></td>

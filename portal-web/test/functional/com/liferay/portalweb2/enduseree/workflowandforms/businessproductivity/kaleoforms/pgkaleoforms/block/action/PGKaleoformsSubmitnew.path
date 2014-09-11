@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEW_PROCESS_FIELDS_FIELD</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains (@data-fieldname,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEW_PROCESS_FIELDS_TEXT_FIELD</td>
 	<td>//div[@class='form-group field-wrapper' and @data-fieldname='${key_fieldName}']/input[@type='text']</td>
 	<td></td>

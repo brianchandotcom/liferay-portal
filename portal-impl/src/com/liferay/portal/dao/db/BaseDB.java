@@ -373,95 +373,94 @@ public abstract class BaseDB implements DB {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(template))) {
 
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (!line.startsWith("##")) {
-					if (line.startsWith("@include ")) {
-						int pos = line.indexOf(" ");
+			while (((line = unsyncBufferedReader.readLine()) != null) &&
+				   !line.startsWith("##")) {
 
-						String includeFileName = line.substring(pos + 1);
+				if (line.startsWith("@include ")) {
+					int pos = line.indexOf(" ");
 
-						ClassLoader classLoader =
-							ClassLoaderUtil.getContextClassLoader();
+					String includeFileName = line.substring(pos + 1);
 
-						InputStream is = classLoader.getResourceAsStream(
-							"com/liferay/portal/tools/sql/dependencies/" +
-								includeFileName);
+					ClassLoader classLoader =
+						ClassLoaderUtil.getContextClassLoader();
 
-						if (is == null) {
-							is = classLoader.getResourceAsStream(
-								includeFileName);
-						}
+					InputStream is = classLoader.getResourceAsStream(
+						"com/liferay/portal/tools/sql/dependencies/" +
+							includeFileName);
 
-						String include = StringUtil.read(is);
-
-						if (includeFileName.endsWith(".vm")) {
-							try {
-								include = evaluateVM(include);
-							}
-							catch (Exception e) {
-								_log.error(e, e);
-							}
-						}
-
-						include = convertTimestamp(include);
-						include = replaceTemplate(include, getTemplate());
-
-						runSQLTemplateString(include, false, true);
+					if (is == null) {
+						is = classLoader.getResourceAsStream(includeFileName);
 					}
-					else {
-						sb.append(line);
 
-						if (line.endsWith(";")) {
-							String sql = sb.toString();
+					String include = StringUtil.read(is);
 
-							sb.setIndex(0);
+					if (includeFileName.endsWith(".vm")) {
+						try {
+							include = evaluateVM(include);
+						}
+						catch (Exception e) {
+							_log.error(e, e);
+						}
+					}
 
-							try {
-								if (!sql.equals("COMMIT_TRANSACTION;")) {
-									runSQL(sql);
-								}
-								else {
-									if (_log.isDebugEnabled()) {
-										_log.debug("Skip commit sql");
-									}
+					include = convertTimestamp(include);
+					include = replaceTemplate(include, getTemplate());
+
+					runSQLTemplateString(include, false, true);
+				}
+				else {
+					sb.append(line);
+
+					if (line.endsWith(";")) {
+						String sql = sb.toString();
+
+						sb.setIndex(0);
+
+						try {
+							if (!sql.equals("COMMIT_TRANSACTION;")) {
+								runSQL(sql);
+							}
+							else {
+								if (_log.isDebugEnabled()) {
+									_log.debug("Skip commit sql");
 								}
 							}
-							catch (IOException ioe) {
-								if (failOnError) {
-									throw ioe;
-								}
-								else if (_log.isWarnEnabled()) {
-									_log.warn(ioe.getMessage());
-								}
+						}
+						catch (IOException ioe) {
+							if (failOnError) {
+								throw ioe;
 							}
-							catch (SecurityException se) {
-								if (failOnError) {
-									throw se;
-								}
-								else if (_log.isWarnEnabled()) {
-									_log.warn(se.getMessage());
-								}
+							else if (_log.isWarnEnabled()) {
+								_log.warn(ioe.getMessage());
 							}
-							catch (SQLException sqle) {
-								if (failOnError) {
-									throw sqle;
-								}
+						}
+						catch (SecurityException se) {
+							if (failOnError) {
+								throw se;
+							}
+							else if (_log.isWarnEnabled()) {
+								_log.warn(se.getMessage());
+							}
+						}
+						catch (SQLException sqle) {
+							if (failOnError) {
+								throw sqle;
+							}
 
-								String message = GetterUtil.getString(
-									sqle.getMessage());
+							String message = GetterUtil.getString(
+								sqle.getMessage());
 
-								if (!message.startsWith("Duplicate key name") &&
-									_log.isWarnEnabled()) {
+							if (!message.startsWith("Duplicate key name") &&
+								_log.isWarnEnabled()) {
 
-									_log.warn(message + ": " + buildSQL(sql));
-								}
+								_log.warn(message + ": " + buildSQL(sql));
+							}
 
-								if (message.startsWith("Duplicate entry") ||
-									message.startsWith(
-										"Specified key was too long")) {
+							if (message.startsWith("Duplicate entry") ||
+								message.startsWith(
+									"Specified key was too long")) {
 
-									_log.error(line);
-								}
+								_log.error(line);
 							}
 						}
 					}
@@ -862,18 +861,18 @@ public abstract class BaseDB implements DB {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new FileReader(new File(fileName)))) {
 
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (!line.startsWith(comments)) {
-					line = StringUtil.replace(
-						line, new String[] {"\n", "\t"}, new String[] {"", ""});
+			while (((line = unsyncBufferedReader.readLine()) != null) &&
+				   !line.startsWith(comments)) {
 
-					if (line.endsWith(";")) {
-						sb.append(line.substring(0, line.length() - 1));
-						sb.append(eol);
-					}
-					else {
-						sb.append(line);
-					}
+				line = StringUtil.replace(
+					line, new String[] {"\n", "\t"}, new String[] {"", ""});
+
+				if (line.endsWith(";")) {
+					sb.append(line.substring(0, line.length() - 1));
+					sb.append(eol);
+				}
+				else {
+					sb.append(line);
 				}
 			}
 		}

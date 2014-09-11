@@ -140,8 +140,8 @@ public class BeanReferenceAnnotationBeanPostProcessor
 					catch (BeanLocatorException ble) {
 						StringWriter stringWriter = new StringWriter();
 
-						try (PrintWriter printWriter =
-								new PrintWriter(stringWriter)) {
+						try (PrintWriter printWriter = new PrintWriter(
+								stringWriter)) {
 
 							printWriter.print(
 								"BeanFactory could not find bean: ");

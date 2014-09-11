@@ -942,7 +942,7 @@ public class BaseIntrabandTest {
 
 		Pipe pipe = Pipe.open();
 
-		Queue<Datagram> sendingQueue;
+		Queue<Datagram> sendingQueue = new LinkedList<Datagram>();
 
 		try (SourceChannel sourceChannel = pipe.source();
 			SinkChannel sinkChannel = pipe.sink()) {
@@ -1007,8 +1007,6 @@ public class BaseIntrabandTest {
 				attachment, recordCompletionHandler.getAttachment());
 
 			// Replied callback
-
-			sendingQueue = new LinkedList<Datagram>();
 
 			channelContext = new ChannelContext(sendingQueue);
 

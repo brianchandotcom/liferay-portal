@@ -14,11 +14,11 @@
 					padding: 10px;
 				}
 				th.version {
+					border-top: none !important;
 					font-size: 20px;
 					font-weight: bold;
 					height: 60px;
 					vertical-align: bottom !important;
-					border-top: none !important;
 				}
 			</style>
 
@@ -33,7 +33,11 @@
 
 				<table class="table table-condensed">
 					<xsl:for-each select="versions/version">
-						<tr class="version"><th colspan="5" class="version"><xsl:value-of select="@name" /></th></tr>
+						<tr>
+							<th colspan="5" class="version">
+								<xsl:value-of select="@name" />
+							</th>
+						</tr>
 
 						<xsl:choose>
 							<xsl:when test="libraries">

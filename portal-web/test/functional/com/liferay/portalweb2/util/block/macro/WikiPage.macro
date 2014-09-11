@@ -404,6 +404,13 @@
 			</then>
 		</if>
 
+		<if>
+			<isset var="customFieldText" />
+			<then>
+				<execute action="PGWikiAddpage#type" locator-key1="CUSTOM_FIELD_TEXT_FIELD" value1="${customFieldText}" />
+			</then>
+		</if>
+
 		<execute action="PGWikiAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -695,6 +702,13 @@
 			<equals arg1="${minorEdit}" arg2="true" />
 			<then>
 				<execute action="PGWikiEditpage#check" locator-key1="THIS_IS_A_MINOR_EDIT_CHECKBOX" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="customFieldTextEdit" />
+			<then>
+				<execute action="PGWikiEditpage#type" locator-key1="CUSTOM_FIELD_TEXT_FIELD" value1="${customFieldTextEdit}" />
 			</then>
 		</if>
 
@@ -1345,6 +1359,13 @@
 
 		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPageTitle}" />
 		<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
+
+		<if>
+			<isset var="customFieldText" />
+			<then>
+				<execute action="PGWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_CUSTOM_FIELD_TEXT_FIELD" value1="${customFieldText}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewPageWithWorkflowPG">

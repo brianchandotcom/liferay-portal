@@ -99,9 +99,11 @@ public class UpgradeJournal extends UpgradeProcess {
 			return name;
 		}
 
+		String ddmStructureUUID = PortalUUIDUtil.generate();
+
 		long ddmStructureId = addDDMStructure(
-			increment(), groupId, companyId, name, localizedName,
-			localizedDescription, xsd);
+			ddmStructureUUID, increment(), groupId, companyId, name,
+			localizedName, localizedDescription, xsd);
 
 		Element templateElement = structureElement.element("template");
 
@@ -109,16 +111,31 @@ public class UpgradeJournal extends UpgradeProcess {
 		boolean cacheable = GetterUtil.getBoolean(
 			templateElement.elementText("cacheable"));
 
+		String ddmTemplateUUID = PortalUUIDUtil.generate();
+
 		addDDMTemplate(
-			increment(), groupId, companyId, ddmStructureId, name,
-			localizedName, localizedDescription, getContent(fileName),
+			ddmTemplateUUID, increment(), groupId, companyId, ddmStructureId,
+			name, localizedName, localizedDescription, getContent(fileName),
 			cacheable);
+
+		long stagingGroupId = getStagingGroupId(groupId);
+
+		if (stagingGroupId > 0) {
+			ddmStructureId = addDDMStructure(
+				ddmStructureUUID, increment(), stagingGroupId, companyId, name,
+				localizedName, localizedDescription, xsd);
+
+			addDDMTemplate(
+				ddmTemplateUUID, increment(), stagingGroupId, companyId,
+				ddmStructureId, name, localizedName, localizedDescription,
+				getContent(fileName), cacheable);
+		}
 
 		return name;
 	}
 
 	protected long addDDMStructure(
-			long ddmStructureId, long groupId, long companyId,
+			String uuid, long ddmStructureId, long groupId, long companyId,
 			String ddmStructureKey, String localizedName,
 			String localizedDescription, String xsd)
 		throws Exception {
@@ -144,7 +161,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 			ps = con.prepareStatement(sql);
 
-			ps.setString(1, PortalUUIDUtil.generate());
+			ps.setString(1, uuid);
 			ps.setLong(2, ddmStructureId);
 			ps.setLong(3, groupId);
 			ps.setLong(4, companyId);
@@ -192,7 +209,7 @@ public class UpgradeJournal extends UpgradeProcess {
 	}
 
 	protected long addDDMTemplate(
-			long ddmTemplateId, long groupId, long companyId,
+			String uuid, long ddmTemplateId, long groupId, long companyId,
 			long ddmStructureId, String templateKey, String localizedName,
 			String localizedDescription, String script, boolean cacheable)
 		throws Exception {
@@ -218,7 +235,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 			ps = con.prepareStatement(sql);
 
-			ps.setString(1, PortalUUIDUtil.generate());
+			ps.setString(1, uuid);
 			ps.setLong(2, ddmTemplateId);
 			ps.setLong(3, groupId);
 			ps.setLong(4, companyId);
@@ -554,6 +571,32 @@ public class UpgradeJournal extends UpgradeProcess {
 			_roleIds.put(roleIdsKey, roleId);
 
 			return roleId;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected long getStagingGroupId(long groupId) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select groupId from Group_ where liveGroupId = ?");
+
+			ps.setLong(1, groupId);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return rs.getLong("groupId");
+			}
+
+			return 0;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);

@@ -501,15 +501,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public String getAttribute(String attributeLocator) {
-		int pos = attributeLocator.lastIndexOf(CharPool.AT);
-
-		String locator = attributeLocator.substring(0, pos);
-
-		WebElement webElement = getWebElement(locator);
-
-		String attribute = attributeLocator.substring(pos + 1);
-
-		return webElement.getAttribute(attribute);
+		return WebDriverHelper.getAttribute(this, attributeLocator);
 	}
 
 	@Override
@@ -592,15 +584,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public String getEval(String script) {
-		WebElement webElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)webDriver;
-
-		return (String)javascriptExecutor.executeScript(script);
+		return WebDriverHelper.getEval(this, script);
 	}
 
 	@Override
@@ -781,17 +765,7 @@ public class WebDriverToSeleniumBridge
 			return getHtmlNodeText(locator);
 		}
 
-		WebElement webElement = getWebElement(locator, timeout);
-
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
-
-		String text = webElement.getText();
-
-		text = text.trim();
-
-		return text.replace("\n", " ");
+		return WebDriverHelper.getText(this, locator, timeout);
 	}
 
 	@Override

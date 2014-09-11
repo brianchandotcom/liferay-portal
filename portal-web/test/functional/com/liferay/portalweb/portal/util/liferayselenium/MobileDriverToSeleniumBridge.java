@@ -130,18 +130,18 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void click(String locator) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.click(this, locator);
 	}
 
 	@Override
 	public void clickAt(String locator, String coordString) {
-		throw new UnsupportedOperationException();
+		clickAt(locator, coordString, true);
 	}
 
 	public void clickAt(
 		String locator, String coordString, boolean scrollIntoView) {
 
-		throw new UnsupportedOperationException();
+		WebDriverHelper.click(this, locator);
 	}
 
 	@Override

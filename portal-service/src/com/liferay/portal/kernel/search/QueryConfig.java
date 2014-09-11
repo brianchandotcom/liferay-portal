@@ -19,12 +19,15 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Michael C. Han
@@ -34,6 +37,30 @@ public class QueryConfig implements Serializable {
 	public static final String LOCALE = "locale";
 
 	public static final String SEARCH_SUBFOLDERS = "search.subfolders";
+
+	public void addHighlightFieldNames(String... highlightFieldNames) {
+		Set<String> highlightFieldNamesSet = SetUtil.fromArray(
+			(String[]) _attributes.get(_HIGHLIGHT_FIELD_NAMES));
+
+		highlightFieldNamesSet.addAll(Arrays.asList(highlightFieldNames));
+
+		_attributes.put(
+			_HIGHLIGHT_FIELD_NAMES,
+			highlightFieldNamesSet.toArray(
+				new String[highlightFieldNamesSet.size()]));
+	}
+
+	public void addSelectedFieldNames(String... selectedFieldNames) {
+		Set<String> selectedFieldNamesSet = SetUtil.fromArray(
+			(String[]) _attributes.get(_SELECTED_FIELD_NAMES));
+
+		selectedFieldNamesSet.addAll(Arrays.asList(selectedFieldNames));
+
+		_attributes.put(
+			_SELECTED_FIELD_NAMES,
+			selectedFieldNamesSet.toArray(
+				new String[selectedFieldNamesSet.size()]));
+	}
 
 	public Serializable getAttribute(String name) {
 		return _attributes.get(name);
@@ -49,6 +76,10 @@ public class QueryConfig implements Serializable {
 				PropsKeys.
 					INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD),
 				_INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD);
+	}
+
+	public String[] getHighlightFieldNames() {
+		return (String[])_attributes.get(_HIGHLIGHT_FIELD_NAMES);
 	}
 
 	public int getHighlightFragmentSize() {
@@ -89,7 +120,7 @@ public class QueryConfig implements Serializable {
 		return GetterUtil.getInteger(
 			_attributes.get(
 				PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_SCORES_THRESHOLD),
-				_INDEX_SEARCH_QUERY_SUGGESTION_SCORES_THRESHOLD);
+			_INDEX_SEARCH_QUERY_SUGGESTION_SCORES_THRESHOLD);
 	}
 
 	public String[] getSelectedFieldNames() {
@@ -187,6 +218,10 @@ public class QueryConfig implements Serializable {
 		}
 	}
 
+	public void setHighlightFieldNames(String... highlightFieldNames) {
+		_attributes.put(_HIGHLIGHT_FIELD_NAMES, highlightFieldNames);
+	}
+
 	public void setHighlightFragmentSize(int highlightFragmentSize) {
 		_attributes.put(
 			PropsKeys.INDEX_SEARCH_HIGHLIGHT_FRAGMENT_SIZE,
@@ -248,6 +283,9 @@ public class QueryConfig implements Serializable {
 		_attributes.put(_SELECTED_FIELD_NAMES, selectedFieldNames);
 	}
 
+	private static final String _HIGHLIGHT_FIELD_NAMES =
+		"highlightFieldNames";
+
 	private static final String _HITS_PROCESSING_ENABLED =
 		"hitsProcessingEnabled";
 
@@ -264,7 +302,7 @@ public class QueryConfig implements Serializable {
 				PropsUtil.get(
 					PropsKeys.
 						INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD),
-					50);
+				50);
 
 	private static final boolean _INDEX_SEARCH_HIGHLIGHT_ENABLED =
 		GetterUtil.getBoolean(

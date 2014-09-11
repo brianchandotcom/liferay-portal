@@ -532,6 +532,10 @@ public abstract class BaseIndexer implements Indexer {
 
 			addFacetSelectedFieldNames(searchContext, queryConfig);
 
+			if (ArrayUtil.isEmpty(queryConfig.getHighlightFieldNames())) {
+				addDefaultHighlightFieldNames(queryConfig);
+			}
+
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
@@ -558,6 +562,12 @@ public abstract class BaseIndexer implements Indexer {
 		catch (Exception e) {
 			throw new SearchException(e);
 		}
+	}
+
+	protected void addDefaultHighlightFieldNames(QueryConfig queryConfig) {
+		queryConfig.addHighlightFieldNames(
+			Field.ASSET_CATEGORY_TITLE, Field.CONTENT, Field.DESCRIPTION,
+			Field.TITLE);
 	}
 
 	@Override

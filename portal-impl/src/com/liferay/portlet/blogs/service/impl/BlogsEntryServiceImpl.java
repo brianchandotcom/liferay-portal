@@ -17,10 +17,13 @@ package com.liferay.portlet.blogs.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
@@ -81,12 +84,21 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			InputStream smallImageInputStream, ServiceContext serviceContext)
 		throws PortalException {
 
+		BlogsPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ActionKeys.ADD_ENTRY);
+
+		FileEntry fileEntry = TempFileUtil.addTempFile(
+			serviceContext.getScopeGroupId(), getUserId(),
+			smallImageFileName, BlogsEntry.class.getName(),
+			smallImageInputStream,
+			MimeTypesUtil.getContentType(smallImageFileName));
+
 		return addEntry(
 			title, StringPool.BLANK, description, content, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			allowPingbacks, allowTrackbacks, trackbacks, smallImage,
-			smallImageURL, smallImageFileName, smallImageInputStream, 0,
-			serviceContext);
+			smallImageURL, fileEntry.getFileEntryId(), serviceContext);
 	}
 
 	@Override
@@ -95,8 +107,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
 			boolean allowTrackbacks, String[] trackbacks, boolean smallImage,
-			String smallImageURL, String smallImageFileName,
-			InputStream smallImageInputStream, long smallImageFileEntryId,
+			String smallImageURL, long smallImageFileEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -108,8 +119,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			getUserId(), title, subtitle, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			smallImage, smallImageURL, smallImageFileName,
-			smallImageInputStream, smallImageFileEntryId, serviceContext);
+			smallImage, smallImageURL, smallImageFileEntryId, serviceContext);
 	}
 
 	@Override
@@ -434,12 +444,22 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			InputStream smallImageInputStream, ServiceContext serviceContext)
 		throws PortalException {
 
+		BlogsPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ActionKeys.UPDATE);
+
+		FileEntry fileEntry = TempFileUtil.addTempFile(
+			serviceContext.getScopeGroupId(), getUserId(),
+			smallImageFileName, BlogsEntry.class.getName(),
+			smallImageInputStream,
+			MimeTypesUtil.getContentType(smallImageFileName));
+
 		return updateEntry(
 			entryId, title, StringPool.BLANK, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			smallImage, smallImageURL, smallImageFileName,
-			smallImageInputStream, 0, serviceContext);
+			smallImage, smallImageURL, fileEntry.getFileEntryId(),
+			serviceContext);
 	}
 
 	@Override
@@ -449,7 +469,6 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			boolean allowPingbacks, boolean allowTrackbacks,
 			String[] trackbacks, boolean smallImage, String smallImageURL,
-			String smallImageFileName, InputStream smallImageInputStream,
 			long smallImageFileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -460,8 +479,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			getUserId(), entryId, title, subtitle, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			smallImage, smallImageURL, smallImageFileName,
-			smallImageInputStream, smallImageFileEntryId, serviceContext);
+			smallImage, smallImageURL, smallImageFileEntryId, serviceContext);
 	}
 
 	protected String exportToRSS(

@@ -532,9 +532,8 @@ public class EditEntryAction extends PortletAction {
 					title, subtitle, description, content, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, allowPingbacks, allowTrackbacks,
-					trackbacks, smallImage, smallImageURL, smallImageFileName,
-					smallImageInputStream, smallImageFileEntryId,
-					serviceContext);
+					trackbacks, smallImage, smallImageURL,
+					smallImageFileEntryId, serviceContext);
 
 				AssetPublisherUtil.addAndStoreSelection(
 					actionRequest, BlogsEntry.class.getName(),
@@ -553,7 +552,6 @@ public class EditEntryAction extends PortletAction {
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, allowPingbacks,
 					allowTrackbacks, trackbacks, smallImage, smallImageURL,
-					smallImageFileName, smallImageInputStream,
 					smallImageFileEntryId, serviceContext);
 
 				if (!tempOldUrlTitle.equals(entry.getUrlTitle())) {

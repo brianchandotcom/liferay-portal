@@ -26,9 +26,11 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Image;
@@ -38,7 +40,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 import java.io.InputStream;
 
@@ -186,8 +187,12 @@ public class BlogsEntryStagedModelDataHandler
 		boolean allowTrackbacks = entry.isAllowTrackbacks();
 		String[] trackbacks = StringUtil.split(entry.getTrackbacks());
 
+		long smallImageFileEntryId = 0;
 		String smallImageFileName = null;
 		InputStream smallImageInputStream = null;
+
+		ServiceContext serviceContext =
+			portletDataContext.createServiceContext(entry);
 
 		try {
 			if (entry.isSmallImage()) {
@@ -210,29 +215,35 @@ public class BlogsEntryStagedModelDataHandler
 					smallImageInputStream =
 						portletDataContext.getZipEntryAsInputStream(
 							smallImagePath);
+
+					FileEntry smallImageFileEntry = TempFileUtil.addTempFile(
+						serviceContext.getScopeGroupId(), userId,
+						smallImageFileName, BlogsEntry.class.getName(),
+						smallImageInputStream,
+						MimeTypesUtil.getContentType(smallImageFileName));
+
+					smallImageFileEntryId =
+						smallImageFileEntry.getFileEntryId();
 				}
 			}
 
-			List<Element> attachmentElements =
-				portletDataContext.getReferenceDataElements(
-					entry, DLFileEntry.class,
-					PortletDataContext.REFERENCE_TYPE_WEAK);
+			if (smallImageFileEntryId == 0) {
+				List<Element> attachmentElements =
+					portletDataContext.getReferenceDataElements(
+						entry, DLFileEntry.class,
+						PortletDataContext.REFERENCE_TYPE_WEAK);
 
-			long smallImageFileEntryId = 0;
+				for (Element attachmentElement : attachmentElements) {
+					String path = attachmentElement.attributeValue("path");
 
-			for (Element attachmentElement : attachmentElements) {
-				String path = attachmentElement.attributeValue("path");
+					FileEntry fileEntry =
+						(FileEntry)portletDataContext.getZipEntryAsObject(path);
 
-				FileEntry fileEntry =
-					(FileEntry)portletDataContext.getZipEntryAsObject(path);
-
-				if (fileEntry != null) {
-					smallImageFileEntryId = fileEntry.getFileEntryId();
+					if (fileEntry != null) {
+						smallImageFileEntryId = fileEntry.getFileEntryId();
+					}
 				}
 			}
-
-			ServiceContext serviceContext =
-				portletDataContext.createServiceContext(entry);
 
 			BlogsEntry importedEntry = null;
 
@@ -252,8 +263,7 @@ public class BlogsEntryStagedModelDataHandler
 						displayDateMonth, displayDateDay, displayDateYear,
 						displayDateHour, displayDateMinute, allowPingbacks,
 						allowTrackbacks, trackbacks, entry.isSmallImage(),
-						entry.getSmallImageURL(), smallImageFileName,
-						smallImageInputStream, smallImageFileEntryId,
+						entry.getSmallImageURL(), smallImageFileEntryId,
 						serviceContext);
 				}
 				else {
@@ -264,7 +274,6 @@ public class BlogsEntryStagedModelDataHandler
 						displayDateYear, displayDateHour, displayDateMinute,
 						allowPingbacks, allowTrackbacks, trackbacks,
 						entry.isSmallImage(), entry.getSmallImageURL(),
-						smallImageFileName, smallImageInputStream,
 						smallImageFileEntryId, serviceContext);
 				}
 			}
@@ -275,8 +284,7 @@ public class BlogsEntryStagedModelDataHandler
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, allowPingbacks,
 					allowTrackbacks, trackbacks, entry.isSmallImage(),
-					entry.getSmallImageURL(), smallImageFileName,
-					smallImageInputStream, smallImageFileEntryId,
+					entry.getSmallImageURL(), smallImageFileEntryId,
 					serviceContext);
 			}
 

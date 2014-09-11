@@ -38,18 +38,18 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class ReflectionServiceTracker implements Closeable {
 
-	public ReflectionServiceTracker(Object object) {
-		List<Method> referenceMethods = getReferenceMethodDescriptions(object);
+	public ReflectionServiceTracker(Object targetObject) {
+		Class<?> targetObjectClass = targetObject.getClass();
 
-		Bundle bundle = FrameworkUtil.getBundle(object.getClass());
+		Bundle bundle = FrameworkUtil.getBundle(targetObjectClass);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
 		_serviceTrackers = new ArrayList<ServiceTracker>();
 
-		for (Method referenceMethod : referenceMethods) {
+		for (Method injectableMethod : injectableMethods) {
 			ServiceTracker serviceTracker = track(
-				bundleContext, object, referenceMethod);
+				bundleContext, targetObject, injectableMethod);
 
 			_serviceTrackers.add(serviceTracker);
 		}
@@ -58,12 +58,15 @@ public class ReflectionServiceTracker implements Closeable {
 	@Override
 	public void close() throws IOException {
 		for (ServiceTracker serviceTracker : _serviceTrackers) {
-			serviceTracker.close();
+			try {
+				serviceTracker.close();
+			}
+			catch (Exception e) {
+				//Nothing to do... keep trying to clean
+			}
 		}
 
 		_serviceTrackers.clear();
-
-		_serviceTrackers = null;
 	}
 
 	protected Object getProxyForUnavailable(
@@ -85,7 +88,7 @@ public class ReflectionServiceTracker implements Closeable {
 		});
 	}
 
-	protected List<Method> getReferenceMethodDescriptions(Object object) {
+	protected List<Method> getInjectionMethods(Object object) {
 		Class<?> clazz = object.getClass();
 
 		Method[] declaredMethods = clazz.getDeclaredMethods();
@@ -155,7 +158,7 @@ public class ReflectionServiceTracker implements Closeable {
 			public void removedService(
 				ServiceReference reference, Object service) {
 
-				Object highestService = null;
+				Object highestService;
 
 				try {
 					super.removedService(reference, service);

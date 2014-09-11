@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.network.util;
+package com.liferay.network.web.util;
 
+import com.liferay.network.web.model.Whois;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
-import com.liferay.portlet.network.model.Whois;
 
 import java.io.InputStreamReader;
 import java.io.PrintStream;

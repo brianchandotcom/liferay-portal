@@ -438,7 +438,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Bookmark#viewPG">
+		<execute macro="Bookmark#viewNoPG">
 			<var name="bookmarkName" value="Test Bookmark2 Name" />
 			<var name="bookmarkURL" value="http://www.google.com" />
 		</execute>

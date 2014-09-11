@@ -21,7 +21,8 @@
 <aui:script use="aui-video">
 	new A.Video(
 		{
-			boundingBox: '#video-id',
+			id: '#<%= id %>',
+			boundingBox: '#<%= id %>',
 			width: <%= width %>,
 			height: <%= height %>,
 			url: '<%= url %>',

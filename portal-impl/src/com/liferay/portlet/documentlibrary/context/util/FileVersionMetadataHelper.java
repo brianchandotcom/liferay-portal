@@ -21,6 +21,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -39,19 +41,19 @@ public class FileVersionMetadataHelper {
 	public FileVersionMetadataHelper(FileVersion fileVersion) {
 		this(
 			fileVersion, DLFileEntryMetadataLocalServiceUtil.getService(),
-			DLFileEntryTypeServiceUtil.getService(),
+			DLFileEntryTypeLocalServiceUtil.getService(),
 			StorageEngineUtil.getStorageEngine());
 	}
 
 	public FileVersionMetadataHelper(
 		FileVersion fileVersion,
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
-		DLFileEntryTypeService dlFileEntryTypeService,
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
 		StorageEngine storageEngine) {
 
 		_fileVersion = fileVersion;
 		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
-		_dlFileEntryTypeService = dlFileEntryTypeService;
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 		_storageEngine = storageEngine;
 	}
 
@@ -61,7 +63,8 @@ public class FileVersionMetadataHelper {
 
 			if (fileEntryTypeId != -1) {
 				DLFileEntryType dlFileEntryType =
-					_dlFileEntryTypeService.getFileEntryType(fileEntryTypeId);
+					_dlFileEntryTypeLocalService.getFileEntryType(
+						fileEntryTypeId);
 
 				_ddmStructures = dlFileEntryType.getDDMStructures();
 			}
@@ -103,7 +106,7 @@ public class FileVersionMetadataHelper {
 
 	private List<DDMStructure> _ddmStructures;
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
-	private DLFileEntryTypeService _dlFileEntryTypeService;
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private FileVersion _fileVersion;
 	private StorageEngine _storageEngine;
 

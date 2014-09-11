@@ -2599,14 +2599,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			WikiPage page, long newNodeId, String newParentTitle)
 		throws PortalException {
 
-		TrashEntry trashEntry = page.getTrashEntry();
-
-		long trashEntryId = trashEntry.getEntryId();
-
 		String trashTitle = page.getTitle();
 
 		TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
-			trashEntryId, WikiPage.class.getName(), page.getPageId());
+			WikiPage.class.getName(), page.getPageId());
 
 		long oldNode = page.getNodeId();
 
@@ -2656,7 +2652,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			versionPage.setTitle(page.getTitle());
 
 			trashVersion = trashVersionLocalService.fetchVersion(
-				trashEntryId, WikiPage.class.getName(),
+				WikiPage.class.getName(),
 				versionPage.getPageId());
 
 			int versionPageOldStatus = WorkflowConstants.STATUS_APPROVED;

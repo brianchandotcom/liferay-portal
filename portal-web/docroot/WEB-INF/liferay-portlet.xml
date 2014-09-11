@@ -320,17 +320,6 @@
 		<css-class-wrapper>portlet-communities</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>30</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<struts-path>network</struts-path>
-		<use-default-template>false</use-default-template>
-		<remoteable>true</remoteable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-network</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>31</portlet-name>
 		<icon>/html/icons/image_gallery.png</icon>
 		<struts-path>image_gallery_display</struts-path>

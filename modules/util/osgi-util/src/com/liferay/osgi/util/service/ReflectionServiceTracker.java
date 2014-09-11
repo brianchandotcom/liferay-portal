@@ -45,6 +45,34 @@ public class ReflectionServiceTracker implements Closeable {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
+		List<Method> injectableMethods = getInjectionMethods(targetObject);
+
+		ArrayList<Class<?>> interfaces = new ArrayList<Class<?>>();
+
+		for (Method referenceMethod : injectableMethods) {
+			Class<?> clazz = referenceMethod.getParameterTypes()[0];
+
+			if (clazz.isInterface()) {
+				interfaces.add(clazz);
+			}
+		}
+
+		ClassLoader classLoader = targetObjectClass.getClassLoader();
+
+		_unavailableServiceProxy = Proxy.newProxyInstance(
+			classLoader, interfaces.toArray(new Class[0]),
+			new InvocationHandler() {
+
+				@Override
+				public Object invoke(
+						Object object, Method method, Object[] parameters)
+					throws Throwable {
+
+					throw new ServiceUnavailableException();
+				}
+			}
+		);
+
 		_serviceTrackers = new ArrayList<ServiceTracker>();
 
 		for (Method injectableMethod : injectableMethods) {
@@ -69,23 +97,12 @@ public class ReflectionServiceTracker implements Closeable {
 		_serviceTrackers.clear();
 	}
 
-	protected Object getProxyForUnavailable(
-		ClassLoader classLoader, Class serviceClass) {
-
-		if (!serviceClass.isInterface()) {
-			return null;
+	protected Object getEmptyInjectedObject(Class<?> parameterType) {
+		if (parameterType.isInterface()) {
+			return _unavailableServiceProxy;
 		}
 
-		return Proxy.newProxyInstance(
-			classLoader, new Class[]{serviceClass}, new InvocationHandler() {
-
-			@Override
-			public Object invoke(Object o, Method method, Object[] objects)
-				throws Throwable {
-
-				throw new ServiceUnavailableException();
-			}
-		});
+		return null;
 	}
 
 	protected List<Method> getInjectionMethods(Object object) {
@@ -119,11 +136,9 @@ public class ReflectionServiceTracker implements Closeable {
 
 		final Class<?> parameterType = referenceMethod.getParameterTypes()[0];
 
-		final Object proxyForUnavailable = getProxyForUnavailable(
-			target.getClass().getClassLoader(), parameterType);
-
 		try {
-			referenceMethod.invoke(target, proxyForUnavailable);
+			referenceMethod.invoke(
+				target, getEmptyInjectedObject(parameterType));
 		}
 		catch (Exception e) {
 			throw new RuntimeException(
@@ -165,14 +180,17 @@ public class ReflectionServiceTracker implements Closeable {
 
 					ServiceReference serviceReference = getServiceReference();
 
-					highestService = serviceReference == null ?
-						proxyForUnavailable : getService(serviceReference);
+					if (serviceReference == null) {
+						highestService = getEmptyInjectedObject(parameterType);
+					}
+					else {
+						highestService = getService(serviceReference);
+					}
+
+					referenceMethod.invoke(target, highestService);
 				}
 				catch (IllegalStateException ise) {
-				}
-
-				try {
-					referenceMethod.invoke(target, highestService);
+					//BundleContext is invalidated... nothing to do
 				}
 				catch (Exception e) {
 					throw new RuntimeException(
@@ -187,6 +205,7 @@ public class ReflectionServiceTracker implements Closeable {
 		return serviceTracker;
 	}
 
-	private ArrayList<ServiceTracker> _serviceTrackers;
+	private final ArrayList<ServiceTracker> _serviceTrackers;
+	private final Object _unavailableServiceProxy;
 
 }

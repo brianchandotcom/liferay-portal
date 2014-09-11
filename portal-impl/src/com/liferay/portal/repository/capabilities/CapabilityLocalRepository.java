@@ -16,7 +16,6 @@ package com.liferay.portal.repository.capabilities;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -29,8 +28,6 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Adolfo Pérez
@@ -41,12 +38,9 @@ public class CapabilityLocalRepository
 
 	public CapabilityLocalRepository(
 		LocalRepository localRepository,
-		Map<Class<? extends Capability>, Capability> supportedCapabilities,
-		Set<Class<? extends Capability>> exportedCapabilityClasses,
 		RepositoryEventTrigger repositoryEventTrigger) {
 
-		super(
-			localRepository, supportedCapabilities, exportedCapabilityClasses);
+		super(localRepository);
 
 		_repositoryEventTrigger = repositoryEventTrigger;
 	}

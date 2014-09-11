@@ -71,7 +71,6 @@ public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);
-			serviceContext.setHeaders(
 
 			return _localRepository.addFileEntry(
 				userId, folder.getFolderId(), fileName, mimeType, fileName, "",

@@ -14,9 +14,8 @@
 
 package com.liferay.portal.kernel.repository.capabilities;
 
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,27 +23,6 @@ import java.util.Set;
  * @author Adolfo Pérez
  */
 public abstract class BaseCapabilityProvider implements CapabilityProvider {
-
-	public BaseCapabilityProvider(
-		Map<Class<? extends Capability>, Capability> supportedCapabilities,
-		Set<Class<? extends Capability>> exportedCapabilityClasses) {
-
-		Set<Class<? extends Capability>> supportedCapabilitiesSet =
-			supportedCapabilities.keySet();
-
-		if (!supportedCapabilitiesSet.containsAll(exportedCapabilityClasses)) {
-			throw new IllegalArgumentException(
-				String.format(
-					"Unable to export unsupported capability %s. Supported " +
-						"capabilities are %s.",
-					exportedCapabilityClasses,
-					StringUtil.merge(
-						supportedCapabilities.keySet(), StringPool.COMMA)));
-		}
-
-		_supportedCapabilities = supportedCapabilities;
-		_exportedCapabilityClasses = exportedCapabilityClasses;
-	}
 
 	@Override
 	public <S extends Capability> S getCapability(Class<S> capabilityClass) {
@@ -65,6 +43,26 @@ public abstract class BaseCapabilityProvider implements CapabilityProvider {
 		return _exportedCapabilityClasses.contains(capabilityClass);
 	}
 
+	protected <S extends Capability, T extends S> void addExportedCapability(
+		Class<S> capabilityClass, T capability) {
+
+		addSupportedCapability(capabilityClass, capability);
+
+		_exportedCapabilityClasses.add(capabilityClass);
+	}
+
+	protected <S extends Capability, T extends S> void addSupportedCapability(
+		Class<S> capabilityClass, T capability) {
+
+		if (_supportedCapabilities.containsKey(capabilityClass)) {
+			throw new IllegalStateException(
+				"Capability " + capabilityClass.getName() + " has been "+
+					"already added");
+		}
+
+		_supportedCapabilities.put(capabilityClass, capability);
+	}
+
 	protected <S extends Capability> S getInternalCapability(
 		Class<S> capabilityClass) {
 
@@ -82,7 +80,9 @@ public abstract class BaseCapabilityProvider implements CapabilityProvider {
 
 	protected abstract String getProviderKey();
 
-	private Set<Class<? extends Capability>> _exportedCapabilityClasses;
-	private Map<Class<? extends Capability>, Capability> _supportedCapabilities;
+	private Set<Class<? extends Capability>> _exportedCapabilityClasses =
+		new HashSet<>();
+	private Map<Class<? extends Capability>, Capability>
+		_supportedCapabilities = new HashMap<>();
 
 }

@@ -2893,7 +2893,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.setParentTitle(StringPool.BLANK);
 		}
 
-		if (Validator.isNotNull(newParentTitle)) {
+		WikiPage newParentPage = fetchPage(newNodeId, newParentTitle);
+
+		if ((newParentPage != null) && !newParentPage.isInTrash()) {
 			page.setParentTitle(newParentTitle);
 		}
 

@@ -17,16 +17,16 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-	FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
+FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
 
-	FileEntry fileEntry = fileVersion.getFileEntry();
+FileEntry fileEntry = fileVersion.getFileEntry();
 
-	boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
-	boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
-	boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
-	boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
+boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
+boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
+boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
+boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
 
-	boolean showImageContainer = true;
+boolean showImageContainer = true;
 %>
 
 <%@ include file="/html/portlet/document_library/view_file_entry_preview.jspf" %>

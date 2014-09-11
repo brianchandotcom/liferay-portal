@@ -40,9 +40,7 @@ public class JspRenderer {
 
 		for (String key : _attributes.keySet()) {
 			savedAttributes.put(key, request.getAttribute(key));
-		}
 
-		for (String key : _attributes.keySet()) {
 			request.setAttribute(key, _attributes.get(key));
 		}
 

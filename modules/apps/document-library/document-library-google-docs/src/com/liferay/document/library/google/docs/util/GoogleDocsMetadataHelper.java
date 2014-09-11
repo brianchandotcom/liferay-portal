@@ -96,7 +96,7 @@ public class GoogleDocsMetadataHelper {
 			String structureKey = ddmStructure.getStructureKey();
 
 			if (structureKey.equals(
-				GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS)) {
+					GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS)) {
 
 				_ddmStructure = ddmStructure;
 			}

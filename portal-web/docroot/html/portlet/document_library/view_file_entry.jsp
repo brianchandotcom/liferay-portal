@@ -240,7 +240,11 @@ DLFileVersionDisplayContext dlFileVersionDisplayContext = DLFileVersionDisplayCo
 				<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 
 				<c:if test="<%= PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED %>">
-					<% dlFileVersionDisplayContext.renderPreview(request, response); %>
+
+					<%
+					dlFileVersionDisplayContext.renderPreview(request, response);
+					%>
+
 				</c:if>
 
 				<c:if test="<%= dlFileVersionDisplayContext.isAssetMetadataVisible() && PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED %>">

@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -122,12 +123,14 @@ public class WebDriverHelper {
 		}
 	}
 
-	public String getAttribute(String attributeLocator) {
+	public static String getAttribute(
+		WebDriver webDriver, String attributeLocator) {
+
 		int pos = attributeLocator.lastIndexOf(CharPool.AT);
 
 		String locator = attributeLocator.substring(0, pos);
 
-		WebElement webElement = getWebElement(locator);
+		WebElement webElement = getWebElement(webDriver, locator);
 
 		String attribute = attributeLocator.substring(pos + 1);
 
@@ -138,14 +141,15 @@ public class WebDriverHelper {
 		return _defaultWindowHandle;
 	}
 
-	public String getEval(String script) {
-		WebElement webElement = getWebElement("//body");
+	public static String getEval(WebDriver webDriver, String script) {
+		WebElement webElement = getWebElement(webDriver, "//body");
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
 
-		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)webDriver;
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
 
 		return (String)javascriptExecutor.executeScript(script);
 	}
@@ -154,15 +158,13 @@ public class WebDriverHelper {
 		return webDriver.getCurrentUrl();
 	}
 
-	public String getText(String locator, String timeout) {
-		if (locator.contains("x:")) {
-			return getHtmlNodeText(locator);
-		}
+	public static String getText(
+		WebDriver webDriver, String locator, String timeout) {
 
-		WebElement webElement = getWebElement(locator, timeout);
+		WebElement webElement = getWebElement(webDriver, locator, timeout);
 
 		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
+			scrollWebElementIntoView(webDriver, webElement);
 		}
 
 		String text = webElement.getText();

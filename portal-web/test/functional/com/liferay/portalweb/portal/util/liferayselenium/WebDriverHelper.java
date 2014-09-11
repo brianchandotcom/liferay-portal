@@ -123,6 +123,28 @@ public class WebDriverHelper {
 		}
 	}
 
+	public void click(String locator) {
+		if (locator.contains("x:")) {
+			String url = getHtmlNodeHref(locator);
+
+			open(url);
+		}
+		else {
+			WebElement webElement = getWebElement(locator);
+
+			try {
+				webElement.click();
+			}
+			catch (Exception e) {
+				if (!webElement.isDisplayed()) {
+					scrollWebElementIntoView(webElement);
+				}
+
+				webElement.click();
+			}
+		}
+	}
+
 	public static String getAttribute(
 		WebDriver webDriver, String attributeLocator) {
 

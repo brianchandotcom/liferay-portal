@@ -506,7 +506,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void sendKeys(String locator, String value) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.type(this, locator, value);
 	}
 
 	@Override

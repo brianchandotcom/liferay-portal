@@ -129,11 +129,15 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		ClusterAdminClient clusterAdminClient =
 			_elasticsearchConnectionManager.getClusterAdminClient();
 
-		DeleteSnapshotRequestBuilder deleteSnapshotRequestBuilder =
-			clusterAdminClient.prepareDeleteSnapshot(
-				_BACKUP_REPOSITORY_NAME, backupName);
-
 		try {
+			if (!backupRepositoryExists(clusterAdminClient)) {
+				return;
+			}
+
+			DeleteSnapshotRequestBuilder deleteSnapshotRequestBuilder =
+				clusterAdminClient.prepareDeleteSnapshot(
+					_BACKUP_REPOSITORY_NAME, backupName);
+
 			Future<DeleteSnapshotResponse> future =
 				deleteSnapshotRequestBuilder.execute();
 
@@ -191,6 +195,9 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		RestoreSnapshotRequestBuilder restoreSnapshotRequestBuilder =
 			clusterAdminClient.prepareRestoreSnapshot(
 				_BACKUP_REPOSITORY_NAME, backupName);
+
+		restoreSnapshotRequestBuilder.setIndices(String.valueOf(companyId));
+		restoreSnapshotRequestBuilder.setWaitForCompletion(true);
 
 		try {
 			Future<RestoreSnapshotResponse> future =
@@ -255,7 +262,8 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		setVendor(MapUtil.getString(properties, "vendor"));
 	}
 
-	protected void createBackupRepository(ClusterAdminClient clusterAdminClient)
+	protected boolean backupRepositoryExists(
+			ClusterAdminClient clusterAdminClient)
 		throws Exception {
 
 		GetRepositoriesRequestBuilder getRepositoriesRequestBuilder =
@@ -271,19 +279,31 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 			ImmutableList<RepositoryMetaData> repositoryMetaDatas =
 				getRepositoriesResponse.repositories();
 
-			if (!repositoryMetaDatas.isEmpty()) {
-				return;
+			if (repositoryMetaDatas.isEmpty()) {
+				return false;
 			}
+
+			return true;
 		}
 		catch (ExecutionException ee) {
 			if (ee.getCause() instanceof RepositoryMissingException) {
 				if (_log.isInfoEnabled()) {
 					_log.info("Creating a new backup repository", ee);
 				}
+
+				return false;
 			}
 			else {
 				throw ee;
 			}
+		}
+	}
+
+	protected void createBackupRepository(ClusterAdminClient clusterAdminClient)
+		throws Exception {
+
+		if (backupRepositoryExists(clusterAdminClient)) {
+			return;
 		}
 
 		PutRepositoryRequestBuilder putRepositoryRequestBuilder =

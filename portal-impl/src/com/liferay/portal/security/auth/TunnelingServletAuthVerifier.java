@@ -81,8 +81,6 @@ public class TunnelingServletAuthVerifier implements AuthVerifier {
 						new ObjectOutputStream(response.getOutputStream())) {
 
 					objectOutputStream.writeObject(ae);
-
-					objectOutputStream.flush();
 				}
 
 				authVerifierResult.setState(

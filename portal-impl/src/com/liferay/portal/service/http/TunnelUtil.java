@@ -97,8 +97,6 @@ public class TunnelUtil {
 			objectOutputStream.writeObject(
 				new ObjectValuePair<HttpPrincipal, MethodHandler>(
 					httpPrincipal, methodHandler));
-
-			objectOutputStream.flush();
 		}
 
 		Object returnObject = null;

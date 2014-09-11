@@ -97,12 +97,8 @@ public class Base64 {
 		UnsyncByteArrayOutputStream ubaos = new UnsyncByteArrayOutputStream(
 			32000);
 
-		try {
-			ObjectOutputStream os = new ObjectOutputStream(ubaos);
-
-			os.flush();
+		try (ObjectOutputStream os = new ObjectOutputStream(ubaos)) {
 			os.writeObject(o);
-			os.flush();
 		}
 		catch (Exception e) {
 			_log.error(e, e);

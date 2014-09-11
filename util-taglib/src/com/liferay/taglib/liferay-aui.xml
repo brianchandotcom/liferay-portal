@@ -68,7 +68,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Button" alloyComponent="false">
+	<component name="Button" alloyComponent="false" bodyContent="true">
 		<attributes>
 			<attribute>
 				<name>cssClass</name>

@@ -1463,10 +1463,6 @@
 			<forward name="portlet.nested_portlets.view" path="portlet.nested_portlets.view" />
 		</action>
 
-		<!-- Network -->
-
-		<action path="/network/view" forward="portlet.network.view" />
-
 		<!-- News -->
 
 		<action path="/news/edit" type="com.liferay.portlet.news.action.EditPreferencesAction">

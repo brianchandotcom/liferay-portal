@@ -3158,49 +3158,103 @@ if (ppstate.equals("normal")) {
 
 	<target name="record-test-package-names">
 		<script classpathref="project.classpath" language="beanshell">
-			import com.liferay.portal.kernel.util.OSDetector;
-			import com.liferay.portal.kernel.util.StringUtil;
+			<![CDATA[
+				import com.liferay.portal.kernel.util.GetterUtil;
+				import com.liferay.portal.kernel.util.OSDetector;
+				import com.liferay.portal.kernel.util.StringBundler;
+				import com.liferay.portal.kernel.util.StringUtil;
 
-			import org.apache.tools.ant.DirectoryScanner;
+				import org.apache.tools.ant.DirectoryScanner;
 
-			DirectoryScanner directoryScanner = new DirectoryScanner();
+				DirectoryScanner directoryScanner = new DirectoryScanner();
 
-			directoryScanner.setBasedir(project.getBaseDir());
-			directoryScanner.setIncludes(new String[] {"**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
+				directoryScanner.setBasedir(project.getBaseDir());
+				directoryScanner.setIncludes(new String[] {"**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
 
-			directoryScanner.scan();
+				directoryScanner.scan();
 
-			String[] fileNames = directoryScanner.getIncludedFiles();
+				String[] fileNames = directoryScanner.getIncludedFiles();
 
-			Arrays.sort(fileNames);
+				Arrays.sort(fileNames);
 
-			Set packageNames = new TreeSet();
+				Set packageNames = new TreeSet();
 
-			for (String fileName : fileNames) {
-				int x = fileName.indexOf("com/");
-				int y = fileName.lastIndexOf("/");
+				for (String fileName : fileNames) {
+					int x = fileName.indexOf("com/");
+					int y = fileName.lastIndexOf("/");
 
-				if (OSDetector.isWindows()) {
-					x = fileName.indexOf("com\\");
-					y = fileName.lastIndexOf("\\");
+					if (OSDetector.isWindows()) {
+						x = fileName.indexOf("com\\");
+						y = fileName.lastIndexOf("\\");
+					}
+
+					if (fileName.endsWith("ServiceHttpTest.java") || fileName.endsWith("ServiceJsonTest.java") || fileName.endsWith("ServiceSoapTest.java")) {
+						continue;
+					}
+
+					String packageName = fileName.substring(x, y);
+
+					packageName = StringUtil.replace(packageName, "/", ".");
+					packageName = StringUtil.replace(packageName, "\\", ".");
+
+					packageNames.add(packageName);
 				}
 
-				if (fileName.endsWith("ServiceHttpTest.java") || fileName.endsWith("ServiceJsonTest.java") || fileName.endsWith("ServiceSoapTest.java")) {
-					continue;
+				StringBundler sb = new StringBundler();
+
+				sb.append("TEST_PACKAGE_NAMES=");
+				sb.append(StringUtil.merge(packageNames, " "));
+				sb.append("\n\n");
+
+				int packageGroupCount = GetterUtil.getInteger(project.getProperty("test.package.group.count"));
+
+				sb.append("TEST_PACKAGE_GROUPS=");
+
+				for (int i = 0; i < packageGroupCount; i++) {
+					sb.append(i);
+
+					if (i < packageGroupCount - 1) {
+						sb.append(" ");
+					}
 				}
 
-				String packageName = fileName.substring(x, y);
+				sb.append("\n\n");
 
-				packageName = StringUtil.replace(packageName, "/", ".");
-				packageName = StringUtil.replace(packageName, "\\", ".");
+				Map packageGroupNumberToPackageGroup = new HashMap();
 
-				packageNames.add(packageName);
-			}
+				List packageNameList = new ArrayList();
 
-			project.setProperty("test.package.names", StringUtil.merge(packageNames, " "));
+				packageNameList.addAll(packageNames);
+
+				for (int i = 0; i < packageNameList.size(); i++) {
+					int packageGroupNumber = i % packageGroupCount;
+
+					Set packageGroup = packageGroupNumberToPackageGroup.get(packageGroupNumber);
+
+					if (packageGroup == null) {
+						packageGroup = new TreeSet();
+					}
+
+					packageGroup.add(packageNameList.get(i));
+
+					packageGroupNumberToPackageGroup.put(packageGroupNumber, packageGroup);
+				}
+
+				for (int i = 0; i < packageGroupCount; i++) {
+					Set packageGroup = packageGroupNumberToPackageGroup.get(i);
+
+					sb.append("test.package.group[");
+					sb.append(i);
+					sb.append("]=");
+					sb.append(StringUtil.merge(packageGroup));
+					sb.append("\n");
+				}
+
+				project.setProperty("test.package.names.properties.content", sb.toString());
+			]]>
 		</script>
 
-		<echo file="test.package.names.properties">TEST_PACKAGE_NAMES=${test.package.names}</echo>
+		<echo file="test.package.names.properties">${test.package.names.properties.content}</echo>
 	</target>
 
 	<target name="revert-test-properties">

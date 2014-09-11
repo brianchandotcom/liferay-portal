@@ -374,6 +374,17 @@ public class WebDriverHelper {
 		}
 	}
 
+	protected void scrollWebElementIntoView(WebElement webElement) {
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)webDriver;
+
+		javascriptExecutor.executeScript(
+			"arguments[0].scrollIntoView();", webElement);
+	}
+
 	private static String _defaultWindowHandle;
 	private static Stack<WebElement> _frameWebElements =
 		new Stack<WebElement>();

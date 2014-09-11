@@ -47,6 +47,25 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 	}
 
 	@Override
+	public String buildTreePath() throws PortalException {
+		if (getFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return StringPool.SLASH;
+		}
+
+		DLFolder dlFolder = getFolder();
+
+		return dlFolder.buildTreePath();
+	}
+
+	@Override
+	public InputStream getContentStream(boolean incrementCounter)
+		throws PortalException {
+
+		return DLFileEntryLocalServiceUtil.getFileAsStream(
+			getFileEntryId(), getVersion(), incrementCounter);
+	}
+
+	@Override
 	public List<DDMStructure> getDDMStructures() throws PortalException {
 		List<DDMStructure> ddmStructures = Collections.emptyList();
 
@@ -67,25 +86,6 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 	public DLFileEntryType getDLFileEntryType() throws PortalException {
 		return DLFileEntryTypeLocalServiceUtil.getFileEntryType(
 			getFileEntryTypeId());
-	}
-
-	@Override
-	public String buildTreePath() throws PortalException {
-		if (getFolderId() == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return StringPool.SLASH;
-		}
-
-		DLFolder dlFolder = getFolder();
-
-		return dlFolder.buildTreePath();
-	}
-
-	@Override
-	public InputStream getContentStream(boolean incrementCounter)
-		throws PortalException {
-
-		return DLFileEntryLocalServiceUtil.getFileAsStream(
-			getFileEntryId(), getVersion(), incrementCounter);
 	}
 
 	@Override

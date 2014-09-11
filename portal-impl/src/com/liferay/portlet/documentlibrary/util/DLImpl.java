@@ -928,6 +928,21 @@ public class DLImpl implements DL {
 			fileName += StringPool.PERIOD + extension;
 		}
 
+		if (fileName.length() > 255) {
+			int extensionPos = fileName.length() - 1;
+
+			if (Validator.isNotNull(extension)) {
+				extensionPos = fileName.lastIndexOf(
+					StringPool.PERIOD + extension);
+			}
+
+			int trimPos = extensionPos - (fileName.length() - 255);
+
+			fileName =
+				fileName.substring(0, trimPos) +
+					fileName.substring(extensionPos);
+		}
+
 		return fileName;
 	}
 

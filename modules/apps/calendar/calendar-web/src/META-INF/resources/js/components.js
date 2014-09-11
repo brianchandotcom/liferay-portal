@@ -1038,7 +1038,7 @@
 				getSummary: function(recurrence) {
 					var instance = this;
 
-					var params = {}
+					var params = [];
 					var parts = [];
 
 					if (recurrence.interval == 1) {
@@ -1046,43 +1046,47 @@
 					}
 					else {
 						parts.push('every-x-' + instance.INTERVAL_UNITS[recurrence.frequency]);
-						params.interval = recurrence.interval;
+
+						params.push(recurrence.interval);
 					}
 
 					if (recurrence.positionalWeekday) {
 						if (recurrence.frequency == instance.FREQUENCY.MONTHLY) {
 							parts.push('on-x-x');
-							params.positionIndex = instance.POSITION_LABELS[recurrence.positionalWeekday.position];
-							params.positionWeekday = instance.WEEKDAY_LABELS[recurrence.positionalWeekday.weekday];
+
+							params.push(instance.POSITION_LABELS[recurrence.positionalWeekday.position]);
+							params.push(instance.WEEKDAY_LABELS[recurrence.positionalWeekday.weekday]);
 						}
 						else {
 							parts.push('on-x-x-of-x');
-							params.positionIndex = instance.POSITION_LABELS[recurrence.positionalWeekday.position];
-							params.positionMonth = instance.MONTH_LABELS[recurrence.positionalWeekday.month];
-							params.positionWeekday = instance.WEEKDAY_LABELS[recurrence.positionalWeekday.weekday];
+
+							params.push(instance.POSITION_LABELS[recurrence.positionalWeekday.position]);
+							params.push(instance.WEEKDAY_LABELS[recurrence.positionalWeekday.weekday]);
+							params.push(instance.MONTH_LABELS[recurrence.positionalWeekday.month]);
 						}
 					}
 					else if ((recurrence.frequency == instance.FREQUENCY.WEEKLY) && (recurrence.weekdays.length > 0)) {
 						parts.push('on-x');
-						params.positionWeekdays = recurrence.weekdays.join(', ');
+
+						params.push(recurrence.weekdays.join(', '));
 					}
 
 					if (recurrence.count && (recurrence.endValue === 'after')) {
 						parts.push('x-times');
-						params.endCount = recurrence.count;
+
+						params.push(recurrence.count);
 					}
-					else if (recurrence.untilDate && recurrence.endValue === 'on') {
+					else if (recurrence.untilDate && (recurrence.endValue === 'on')) {
+						parts.push('until-x-x-x');
+
 						var untilDate = recurrence.untilDate;
 
-						parts.push('until-x-x-x');
-						params.endDay = untilDate.getDate();
-						params.endMonth = instance.MONTH_LABELS[untilDate.getMonth()];
-						params.endYear = untilDate.getFullYear();
+						params.push(instance.MONTH_LABELS[untilDate.getMonth()]);
+						params.push(untilDate.getDate());
+						params.push(untilDate.getFullYear());
 					}
 
-					template = parts.join('-');
-
-					return A.Lang.sub(Liferay.Language.get(template),params);
+					return Liferay.Language.get(parts.join(STR_DASH), params);
 				},
 
 				openConfirmationPanel: function(actionName, onlyThisInstanceFn, allFollowingFn, allEventsInFn, cancelFn) {

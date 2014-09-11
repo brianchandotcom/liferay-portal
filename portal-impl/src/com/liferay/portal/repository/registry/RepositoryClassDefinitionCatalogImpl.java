@@ -124,15 +124,14 @@ public class RepositoryClassDefinitionCatalogImpl
 	protected RepositoryClassDefinition createRepositoryClassDefinition(
 		RepositoryDefiner repositoryDefiner) {
 
-		DefaultRepositoryClassDefinition defaultRepositoryClassDefinition =
-			new DefaultRepositoryClassDefinition(repositoryDefiner);
+		RepositoryClassDefinition repositoryClassDefinition =
+			new RepositoryClassDefinition(repositoryDefiner);
 
-		repositoryDefiner.registerRepositoryFactory(
-			defaultRepositoryClassDefinition);
+		repositoryDefiner.registerRepositoryFactory(repositoryClassDefinition);
 		repositoryDefiner.registerRepositoryEventListeners(
-			defaultRepositoryClassDefinition);
+			repositoryClassDefinition);
 
-		return defaultRepositoryClassDefinition;
+		return repositoryClassDefinition;
 	}
 
 	protected ServiceRegistration<RepositoryDefiner>

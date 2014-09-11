@@ -1,8 +1,6 @@
 (function() {
 	var STR_BLANK = '';
 
-	var STR_COMMA = ',';
-
 	var STR_DASH = '-';
 
 	var STR_DOT = '.';
@@ -10,10 +8,6 @@
 	var STR_PLUS = '+';
 
 	var STR_SPACE = ' ';
-
-	var TPL_SPAN = '<span>';
-
-	var TPL_SPAN_CLOSE = '</span>';
 
 	AUI.add(
 		'liferay-calendar-simple-menu',
@@ -1024,11 +1018,11 @@
 				],
 
 				POSITION_LABELS: {
-				    '-1': Liferay.Language.get('position.last'),
-				    '1': Liferay.Language.get('position.first'),
-				    '2': Liferay.Language.get('position.second'),
-				    '3': Liferay.Language.get('position.third'),
-				    '4': Liferay.Language.get('position.fourth')
+					'-1': Liferay.Language.get('position.last'),
+					'1': Liferay.Language.get('position.first'),
+					'2': Liferay.Language.get('position.second'),
+					'3': Liferay.Language.get('position.third'),
+					'4': Liferay.Language.get('position.fourth')
 				},
 
 				WEEKDAY_LABELS: {

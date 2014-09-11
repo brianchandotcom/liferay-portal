@@ -182,6 +182,16 @@ public class WebDriverHelper {
 		return !webElements.isEmpty();
 	}
 
+	public boolean isVisible(String locator) {
+		WebElement webElement = getWebElement(locator, "1");
+
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
+
+		return webElement.isDisplayed();
+	}
+
 	public static void makeVisible(WebDriver webDriver, String locator) {
 		WebElement bodyWebElement = getWebElement(webDriver, "//body");
 

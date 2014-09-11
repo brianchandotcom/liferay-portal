@@ -2,6 +2,25 @@
 <?xml-stylesheet href="versions.xsl" type="text/xsl"?>
 
 <versions>
+	<version name="Liferay Portal 2.3" />
+	<version name="Liferay Portal 2.2" />
+	<version name="Liferay Portal 2.1" />
+	<version name="Liferay Portal 2.0">
+		<libraries>
+			<library>
+				<file-name>lib/development/activation.jar</file-name>
+				<version>1.1</version>
+				<project-name>JavaBeans Activation Framework</project-name>
+				<project-url>http://java.sun.com/products/javabeans/jaf</project-url>
+				<licenses>
+					<license>
+						<license-name>CDDL 1.0</license-name>
+						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
+					</license>
+				</licenses>
+			</library>
+		</libraries>
+	</version>
 	<version name="Liferay Portal">
 		<libraries>
 			<library>

@@ -13,7 +13,16 @@
 				body {
 					padding: 10px;
 				}
+				th.version {
+					font-size: 20px;
+					font-weight: bold;
+					height: 60px;
+					vertical-align: bottom !important;
+					border-top: none !important;
+				}
 			</style>
+
+
 			<title>Liferay Third Party Libraries</title>
 		</head>
 		<body>
@@ -22,45 +31,50 @@
 
 				<h1>Third Party Software List</h1>
 
-				<xsl:for-each select="versions/version">
-					<h2><xsl:value-of select="@name" /></h2>
+				<table class="table table-condensed">
+					<xsl:for-each select="versions/version">
+						<tr class="version"><th colspan="5" class="version"><xsl:value-of select="@name" /></th></tr>
 
-					<xsl:choose>
-						<xsl:when test="libraries">
-							<table class="table table-condensed table-striped">
-							<tr>
-								<th>
-									File Name
-								</th>
-								<th>
-									Version
-								</th>
-								<th>
-									Project
-								</th>
-								<th>
-									License
-								</th>
-								<th>
-									Comments
-								</th>
-							</tr>
+						<xsl:choose>
+							<xsl:when test="libraries">
 
-							<xsl:apply-templates />
+								<tr>
+									<th>
+										File Name
+									</th>
+									<th>
+										Version
+									</th>
+									<th>
+										Project
+									</th>
+									<th>
+										License
+									</th>
+									<th>
+										Comments
+									</th>
+								</tr>
 
-							</table>
-						</xsl:when>
-						<xsl:otherwise>
-							<i>There were no third party library changes in this version.</i>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:for-each>
+								<xsl:apply-templates />
+
+							</xsl:when>
+							<xsl:otherwise>
+								<tr>
+									<td colspan="5">
+										<i>There were no third party library changes in this version.</i>
+									</td>
+								</tr>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:for-each>
+				</table>
 			</div>
 
 			<h4>Written Offer for Source Code</h4>
 
 			<p>
-				For binaries that you receive from Liferay that are licensed under any version of the GNU General Public License (GPL) or the GNU LGPL, you can receive a complete machine readable copy of the source code by sending a written request to:
+				For binaries that you receive from Liferay that are licensed under any version of the GNU General Public License (GPL) or the GNU LGPL, you may receive a complete machine-readable copy of the source code by either downloading it from the binary's website or sending a written request to:
 			</p>
 
 			<address>

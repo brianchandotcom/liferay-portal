@@ -489,6 +489,7 @@ public class EditEntryAction extends PortletAction {
 			ParamUtil.getString(actionRequest, "trackbacks"));
 
 		boolean smallImage = false;
+		long smallImageFileEntryId = 0;
 		String smallImageURL = null;
 		String smallImageFileName = null;
 		InputStream smallImageInputStream = null;
@@ -501,6 +502,8 @@ public class EditEntryAction extends PortletAction {
 
 			if (!ajax) {
 				smallImage = ParamUtil.getBoolean(actionRequest, "smallImage");
+				smallImageFileEntryId = ParamUtil.getLong(
+					actionRequest, "smallImageFileEntryId");
 				smallImageURL = ParamUtil.getString(
 					actionRequest, "smallImageURL");
 
@@ -530,7 +533,8 @@ public class EditEntryAction extends PortletAction {
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, allowPingbacks, allowTrackbacks,
 					trackbacks, smallImage, smallImageURL, smallImageFileName,
-					smallImageInputStream, serviceContext);
+					smallImageInputStream, smallImageFileEntryId,
+					serviceContext);
 
 				AssetPublisherUtil.addAndStoreSelection(
 					actionRequest, BlogsEntry.class.getName(),
@@ -549,7 +553,8 @@ public class EditEntryAction extends PortletAction {
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, allowPingbacks,
 					allowTrackbacks, trackbacks, smallImage, smallImageURL,
-					smallImageFileName, smallImageInputStream, serviceContext);
+					smallImageFileName, smallImageInputStream,
+					smallImageFileEntryId, serviceContext);
 
 				if (!tempOldUrlTitle.equals(entry.getUrlTitle())) {
 					oldUrlTitle = tempOldUrlTitle;

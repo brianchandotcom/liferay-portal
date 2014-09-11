@@ -131,7 +131,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 			smallImage, smallImageURL, smallImageFileName,
-			smallImageInputStream, serviceContext);
+			smallImageInputStream, 0, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -143,7 +143,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			boolean allowPingbacks, boolean allowTrackbacks,
 			String[] trackbacks, boolean smallImage, String smallImageURL,
 			String smallImageFileName, InputStream smallImageInputStream,
-			ServiceContext serviceContext)
+			long smallImageFileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Entry
@@ -193,6 +193,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setAllowPingbacks(allowPingbacks);
 		entry.setAllowTrackbacks(allowTrackbacks);
 		entry.setSmallImage(smallImage);
+		entry.setSmallImageFileEntryId(smallImageFileEntryId);
 		entry.setSmallImageId(counterLocalService.increment());
 		entry.setSmallImageURL(smallImageURL);
 		entry.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -1027,7 +1028,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 			smallImage, smallImageURL, smallImageFileName,
-			smallImageInputStream, serviceContext);
+			smallImageInputStream, 0, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1039,7 +1040,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			int displayDateMinute, boolean allowPingbacks,
 			boolean allowTrackbacks, String[] trackbacks, boolean smallImage,
 			String smallImageURL, String smallImageFileName,
-			InputStream smallImageInputStream, ServiceContext serviceContext)
+			InputStream smallImageInputStream, long smallImageFileEntryId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Entry
@@ -1080,6 +1082,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setAllowPingbacks(allowPingbacks);
 		entry.setAllowTrackbacks(allowTrackbacks);
 		entry.setSmallImage(smallImage);
+		entry.setSmallImageFileEntryId(smallImageFileEntryId);
 
 		if (entry.getSmallImageId() == 0) {
 			entry.setSmallImageId(counterLocalService.increment());

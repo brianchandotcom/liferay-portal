@@ -128,6 +128,7 @@ public class BlogsTestUtil {
 			boolean allowTrackbacks = true;
 			String[] trackbacks = new String[0];
 			InputStream smallImageInputStream = null;
+			long smallImageFileEntryId = 0;
 			String smallImageURL = StringPool.BLANK;
 			String smallImageFileName = StringPool.BLANK;
 
@@ -147,7 +148,7 @@ public class BlogsTestUtil {
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 				smallImage, smallImageURL, smallImageFileName,
-				smallImageInputStream, serviceContext);
+				smallImageInputStream, smallImageFileEntryId, serviceContext);
 
 			if (approved) {
 				return updateStatus(entry, serviceContext);

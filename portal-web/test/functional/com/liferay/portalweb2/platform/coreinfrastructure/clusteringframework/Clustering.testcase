@@ -13,7 +13,7 @@
 	</tear-down>
 
 	<command name="AddAndDeleteBlogEntriesOnSeparateNodes" priority="5">
-		<property name="app.server.bundle.count" value="1" />
+		<property name="app.server.bundles.size" value="1" />
 
 		<execute macro="Page#assertnodePortPG">
 			<var name="nodePort" value="8080" />
@@ -185,7 +185,7 @@
 
 	<command name="ValidateDocumentOnSeparateNodes" priority="5">
 		<property name="custom.properties" value="dl.store.impl=com.liferay.portlet.documentlibrary.store.DBStore" />
-		<property name="app.server.bundle.count" value="1" />
+		<property name="app.server.bundles.size" value="1" />
 
 		<execute macro="Page#assertnodePortPG">
 			<var name="nodePort" value="8080" />
@@ -255,7 +255,7 @@
 	</command>
 
 	<command name="ValidateSchedulerOnSeparateNodes" priority="5">
-		<property name="app.server.bundle.count" value="1" />
+		<property name="app.server.bundles.size" value="1" />
 		<var name="pageName" value="Home" />
 
 		<execute macro="Page#assertnodePortPG">

@@ -14,13 +14,16 @@
 
 package com.liferay.portal.repository.liferayrepository;
 
+import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
+import com.liferay.portal.repository.capabilities.LiferayBulkOperationCapability;
 import com.liferay.portal.repository.capabilities.LiferaySyncCapability;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 
@@ -43,6 +46,16 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
 		capabilityRegistry.addExportedCapability(
 			TrashCapability.class, _liferayTrashCapability);
+
+		DocumentRepository documentRepository =
+			capabilityRegistry.getDocumentRepository();
+
+		BulkOperationCapability bulkOperationCapability =
+			new LiferayBulkOperationCapability(
+				documentRepository.getRepositoryId());
+
+		capabilityRegistry.addExportedCapability(
+			BulkOperationCapability.class, bulkOperationCapability);
 
 		capabilityRegistry.addSupportedCapability(
 			SyncCapability.class, _liferaySyncCapability);

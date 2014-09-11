@@ -1813,14 +1813,7 @@ public class WebDriverToSeleniumBridge
 	}
 
 	protected void scrollWebElementIntoView(WebElement webElement) {
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)webDriver;
-
-		javascriptExecutor.executeScript(
-			"arguments[0].scrollIntoView();", webElement);
+		WebDriverHelper.scrollWebElementIntoView(this, webElement);
 	}
 
 	protected void selectByRegexpText(String selectLocator, String regexp) {

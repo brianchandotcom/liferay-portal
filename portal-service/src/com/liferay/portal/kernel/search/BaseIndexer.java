@@ -526,15 +526,13 @@ public abstract class BaseIndexer implements Indexer {
 
 			QueryConfig queryConfig = searchContext.getQueryConfig();
 
+			addDefaultHighlightFieldNames(queryConfig);
+
 			if (ArrayUtil.isEmpty(queryConfig.getSelectedFieldNames())) {
 				addDefaultSelectedFieldNames(searchContext);
 			}
 
 			addFacetSelectedFieldNames(searchContext, queryConfig);
-
-			if (ArrayUtil.isEmpty(queryConfig.getHighlightFieldNames())) {
-				addDefaultHighlightFieldNames(queryConfig);
-			}
 
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
@@ -565,9 +563,12 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	protected void addDefaultHighlightFieldNames(QueryConfig queryConfig) {
-		queryConfig.addHighlightFieldNames(
-			Field.ASSET_CATEGORY_TITLE, Field.CONTENT, Field.DESCRIPTION,
-			Field.TITLE);
+		queryConfig.addHighlightFieldNames(Field.ASSET_CATEGORY_TITLES);
+
+		if (queryConfig.isHighlightEnabled()) {
+			queryConfig.addHighlightFieldNames(
+				Field.CONTENT, Field.DESCRIPTION, Field.TITLE);
+		}
 	}
 
 	@Override

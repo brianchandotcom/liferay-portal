@@ -74,7 +74,7 @@
 			<h4>Written Offer for Source Code</h4>
 
 			<p>
-				For binaries that you receive from Liferay that are licensed under any version of the GNU General Public License (GPL) or the GNU LGPL, you can receive a complete machine readable copy of the source code by sending a written request to:
+				For binaries that you receive from Liferay that are licensed under any version of the GNU General Public License (GPL) or the GNU LGPL, you may receive a complete machine-readable copy of the source code by either downloading it from the binary's website or sending a written request to:
 			</p>
 
 			<address>

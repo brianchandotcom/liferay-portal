@@ -435,7 +435,7 @@
 
 		<execute action="CPUsersandorganizationsUser#assertValue" locator-key1="DETAILS_USER_ID_FIELD" value1="${userId}" />
 		<execute action="CPUsersandorganizationsUser#assertSelectedLabel" locator-key1="DETAILS_GENDER_SELECT" value1="Male" />
-		<execute action="CPUsersandorganizationsUser#assertValue" locator-key1="DETAILS_BIRTHDAY_FIELD" value1="10/24/1984" />
+		<execute action="CPUsersandorganizationsUser#assertValue" locator-key1="DETAILS_BIRTHDAY_FIELD" value1="${userBirthdayMonth}/${userBirthdayDay}/${userBirthdayYear}" />
 	</command>
 
 	<command name="ViewURLValidateNoXSS" priority="5">

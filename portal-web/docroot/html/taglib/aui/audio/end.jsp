@@ -13,3 +13,22 @@
 * details.
 */
 --%>
+
+<%@ include file="/html/taglib/aui/audio/init.jsp" %>
+
+</div>
+
+<aui:script use="aui-audio">
+	new A.Audio(
+		{
+			cssClass: '<%= cssClass %>',
+			fixedAttributes: <%= fixedAttributes %>,
+			flashVars: <%= flashVars %>,
+			id: '#<%= id %>',
+			oggUrl: '<%= oggUrl %>',
+			render: true,
+			type: '<%= type %>',
+			url: '<%= url %>'
+		}
+	);
+</aui:script>

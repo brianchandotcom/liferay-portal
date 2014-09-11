@@ -14,4 +14,6 @@
  */
 --%>
 
-<%@ include file="init.jsp" %>
+<%@ include file="html/taglib/aui/audio/init.jsp" %>
+
+<div class="<%= cssClass %>" id="<%= id %>">

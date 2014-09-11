@@ -258,14 +258,14 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 		if (parentPage == null) {
 			WikiPageLocalServiceUtil.movePageFromTrash(
 				userId, page.getNodeId(), page.getTitle(), containerModelId,
-				StringPool.BLANK, serviceContext);
+				StringPool.BLANK);
 
 			return;
 		}
 
 		WikiPageLocalServiceUtil.movePageFromTrash(
 			userId, page.getNodeId(), page.getTitle(), parentPage.getNodeId(),
-			parentPage.getTitle(), serviceContext);
+			parentPage.getTitle());
 	}
 
 }

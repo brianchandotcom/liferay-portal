@@ -156,6 +156,13 @@ public class QueryConfig implements Serializable {
 			_INDEX_SEARCH_HIGHLIGHT_ENABLED);
 	}
 
+	public boolean isHighlightRequireFieldMatch() {
+		return GetterUtil.getBoolean(
+			_attributes.get(
+				PropsKeys.INDEX_SEARCH_HIGHLIGHT_REQUIRE_FIELD_MATCH),
+			_INDEX_SEARCH_HIGHLIGHT_REQUIRE_FIELD_MATCH);
+	}
+
 	public boolean isHitsProcessingEnabled() {
 		return GetterUtil.getBoolean(
 			_attributes.get(_HITS_PROCESSING_ENABLED), true);
@@ -226,6 +233,18 @@ public class QueryConfig implements Serializable {
 		_attributes.put(
 			PropsKeys.INDEX_SEARCH_HIGHLIGHT_FRAGMENT_SIZE,
 			highlightFragmentSize);
+	}
+
+	public void setHighlightRequireFieldMatch(boolean highlightRequireFieldMatch) {
+		if (_INDEX_SEARCH_HIGHLIGHT_REQUIRE_FIELD_MATCH) {
+			_attributes.put(
+				PropsKeys.INDEX_SEARCH_HIGHLIGHT_REQUIRE_FIELD_MATCH,
+				highlightRequireFieldMatch);
+		}
+		else {
+			_attributes.put(
+				PropsKeys.INDEX_SEARCH_HIGHLIGHT_REQUIRE_FIELD_MATCH, false);
+		}
 	}
 
 	public void setHighlightSnippetSize(int highlightSnippetSize) {
@@ -311,6 +330,10 @@ public class QueryConfig implements Serializable {
 	private static final int _INDEX_SEARCH_HIGHLIGHT_FRAGMENT_SIZE =
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.INDEX_SEARCH_HIGHLIGHT_FRAGMENT_SIZE));
+
+	private static final boolean _INDEX_SEARCH_HIGHLIGHT_REQUIRE_FIELD_MATCH =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.INDEX_SEARCH_HIGHLIGHT_REQUIRE_FIELD_MATCH));
 
 	private static final int _INDEX_SEARCH_HIGHLIGHT_SNIPPET_SIZE =
 		GetterUtil.getInteger(

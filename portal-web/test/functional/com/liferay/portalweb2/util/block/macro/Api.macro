@@ -20,6 +20,15 @@
 		<execute action="JsonwebservicesAddress#assertElementPresent" locator-key1="INVOKE_BUTTON" />
 	</command>
 
+	<command name="apiJsonwsUserView">
+		<execute action="Home#open" locator-key1="API_JSON_URL" />
+
+		<execute action="Jsonwebservices#click" locator-key1="USER_UPDATE_USER" />
+
+		<execute action="JsonwebservicesAddress#assertTextEquals" locator-key1="API_METHOD" value1="/user/update-user" />
+		<execute action="JsonwebservicesAddress#assertElementPresent" locator-key1="INVOKE_BUTTON" />
+	</command>
+
 	<command name="apiJsonwsView">
 		<execute action="Home#open" locator-key1="API_JSON_URL" />
 
@@ -37,6 +46,26 @@
 
 		<execute action="JsonwebservicesWiki#assertTextEquals" locator-key1="API_METHOD" value1="/wikipage/add-page" />
 		<execute action="JsonwebservicesWiki#assertElementPresent" locator-key1="INVOKE_BUTTON" />
+	</command>
+
+	<command name="editJsonwsUserView">
+		<execute action="JsonwebservicesUser#assertTextEquals" locator-key1="API_METHOD" value1="/user/update-user" />
+
+		<execute action="JsonwebservicesUser#type" locator-key1="API_EXECUTE_USER_ID_FIELD" value1="${userId}" />
+		<execute action="JsonwebservicesUser#type" locator-key1="API_EXECUTE_PASSWORD_RESET_FALSE_RADIO" value1="False" />
+		<execute action="JsonwebservicesUser#type" locator-key1="API_EXECUTE_SCREEN_NAME_FIELD" value1="${userScreenName}" />
+		<execute action="JsonwebservicesUser#type" locator-key1="API_EXECUTE_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="JsonwebservicesUser#type" locator-key1="API_EXECUTE_FACEBOOK_ID_FIELD" value1="${userFacebookId}" />
+		<execute action="JsonwebservicesUser#type" locator-key1="API_EXECUTE_FIRST_NAME_FIELD" value1="${userFirstName}" />
+		<execute action="JsonwebservicesUser#type" locator-key1="API_EXECUTE_LAST_NAME_FIELD" value1="${userLastName}" />
+		<execute action="JsonwebservicesUser#type" locator-key1="API_EXECUTE_PREFIX_ID_FIELD" value1="${userPrefixId}" />
+		<execute action="JsonwebservicesUser#type" locator-key1="API_EXECUTE_SUFFIX_ID_FIELD" value1="${userSuffixId}" />
+		<execute action="JsonwebservicesUser#type" locator-key1="API_EXECUTE_MALE_TRUE_RADIO" value1="True" />
+		<execute action="JsonwebservicesUser#type" locator-key1="API_EXECUTE_BIRTHDAY_MONTH_FIELD" value1="${userBirthdayMonth}" />
+		<execute action="JsonwebservicesUser#type" locator-key1="API_EXECUTE_BIRTHDAY_DAY_FIELD" value1="${userBirthdayDay}" />
+		<execute action="JsonwebservicesUser#type" locator-key1="API_EXECUTE_BIRTHDAY_YEAR_FIELD" value1="${userBirthdayYear}" />
+
+		<execute action="JsonwebservicesUser#assertClick" locator-key1="INVOKE_BUTTON" value1="Invoke" />
 	</command>
 
 	<command name="gotoPAuthURL">

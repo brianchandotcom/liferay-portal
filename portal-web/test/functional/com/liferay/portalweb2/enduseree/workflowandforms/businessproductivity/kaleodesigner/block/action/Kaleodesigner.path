@@ -274,6 +274,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE</td>
+	<td>xpath=(//div[contains(@id,'portlet_editorWrapper')]//div[contains(@class,'ace_text')]/div[@class='ace_line_group'])[${key_line}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

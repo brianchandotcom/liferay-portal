@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <workflow-definition xmlns="urn:liferay.com:liferay-workflow_6.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd">
-	<name>Uploaded Definition</name>
-	<description>A single approver can approve this uploaded workflow content.</description>
+	<name>Send Content For Posting</name>
+	<description></description>
 	<version>1</version>
 	<state>
 		<name>created</name>
@@ -11,7 +11,7 @@
 		<actions>
 			<notification>
 				<name>Notification</name>
-				<template><![CDATA[A file has been submitted.
+				<template><![CDATA[The file sent by ${userName} on the ${siteName} website has been submitted.
 				]]></template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>

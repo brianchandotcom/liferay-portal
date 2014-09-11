@@ -61,4 +61,16 @@
 		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_TAB" value1="View" />
 		<execute action="Kaleodesigner#pause" locator1="1000" />
 	</command>
+
+	<command name="viewSourceXML">
+		<execute action="Kaleodesigner#assertClick" locator-key1="SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
+		<execute action="Kaleodesigner#pause" locator1="1000" />
+
+		<var name="key_line" value="${line}" />
+
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE" value1="${kdsourceXML}" />
+		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_TAB" value1="View" />
+		<execute action="Kaleodesigner#pause" locator1="1000" />
+	</command>
 </definition>

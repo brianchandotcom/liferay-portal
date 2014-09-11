@@ -3300,12 +3300,8 @@ public class JournalArticleLocalServiceImpl
 
 			// Article
 
-			TrashEntry trashEntry = article.getTrashEntry();
-
-			TrashVersion trashVersion =
-				trashVersionLocalService.fetchVersion(
-					trashEntry.getEntryId(), JournalArticle.class.getName(),
-					article.getResourcePrimKey());
+			TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
+				JournalArticle.class.getName(), article.getResourcePrimKey());
 
 			int status = WorkflowConstants.STATUS_APPROVED;
 

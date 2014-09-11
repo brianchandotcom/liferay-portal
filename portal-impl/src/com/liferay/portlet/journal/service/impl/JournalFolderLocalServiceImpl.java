@@ -510,12 +510,8 @@ public class JournalFolderLocalServiceImpl
 
 			// Folder
 
-			TrashEntry trashEntry = folder.getTrashEntry();
-
-			TrashVersion trashVersion =
-				trashVersionLocalService.fetchVersion(
-					trashEntry.getEntryId(), JournalFolder.class.getName(),
-					folderId);
+			TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
+				JournalFolder.class.getName(), folderId);
 
 			int status = WorkflowConstants.STATUS_APPROVED;
 
@@ -538,8 +534,7 @@ public class JournalFolderLocalServiceImpl
 					folder.getGroupId(), folder.getFolderId(),
 					WorkflowConstants.STATUS_IN_TRASH);
 
-			restoreDependentsFromTrash(
-				foldersAndArticles, trashEntry.getEntryId());
+			restoreDependentsFromTrash(foldersAndArticles);
 		}
 
 		return journalFolderLocalService.moveFolder(
@@ -679,7 +674,7 @@ public class JournalFolderLocalServiceImpl
 				folder.getGroupId(), folder.getFolderId(),
 				WorkflowConstants.STATUS_IN_TRASH);
 
-		restoreDependentsFromTrash(foldersAndArticles, trashEntry.getEntryId());
+		restoreDependentsFromTrash(foldersAndArticles);
 
 		// Trash
 
@@ -1233,8 +1228,7 @@ public class JournalFolderLocalServiceImpl
 		}
 	}
 
-	protected void restoreDependentsFromTrash(
-			List<Object> foldersAndArticles, long trashEntryId)
+	protected void restoreDependentsFromTrash(List<Object> foldersAndArticles)
 		throws PortalException {
 
 		for (Object object : foldersAndArticles) {
@@ -1250,8 +1244,7 @@ public class JournalFolderLocalServiceImpl
 
 				TrashVersion trashVersion =
 					trashVersionLocalService.fetchVersion(
-						trashEntryId, JournalArticle.class.getName(),
-						article.getId());
+						JournalArticle.class.getName(), article.getId());
 
 				int oldStatus = WorkflowConstants.STATUS_APPROVED;
 
@@ -1269,10 +1262,8 @@ public class JournalFolderLocalServiceImpl
 
 					// Article
 
-					trashVersion =
-						trashVersionLocalService.fetchVersion(
-							trashEntryId, JournalArticle.class.getName(),
-							curArticle.getId());
+					trashVersion = trashVersionLocalService.fetchVersion(
+						JournalArticle.class.getName(), curArticle.getId());
 
 					int curArticleOldStatus = WorkflowConstants.STATUS_APPROVED;
 
@@ -1319,8 +1310,7 @@ public class JournalFolderLocalServiceImpl
 
 				TrashVersion trashVersion =
 					trashVersionLocalService.fetchVersion(
-						trashEntryId, JournalFolder.class.getName(),
-						folder.getFolderId());
+						JournalFolder.class.getName(), folder.getFolderId());
 
 				int oldStatus = WorkflowConstants.STATUS_APPROVED;
 
@@ -1338,7 +1328,7 @@ public class JournalFolderLocalServiceImpl
 					folder.getGroupId(), folder.getFolderId(),
 					WorkflowConstants.STATUS_IN_TRASH);
 
-				restoreDependentsFromTrash(curFoldersAndArticles, trashEntryId);
+				restoreDependentsFromTrash(curFoldersAndArticles);
 
 				// Trash
 

@@ -24,13 +24,23 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
@@ -67,6 +77,7 @@ public class VerifyJournal extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verifyCreateDate();
 		updateFolderAssets();
+		verifyContent();
 		verifyOracleNewLine();
 		verifyPermissionsAndAssets();
 		verifySearch();
@@ -132,6 +143,99 @@ public class VerifyJournal extends VerifyProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void verifyContent() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select id_ from JournalArticle where structureId != ''");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long id = rs.getLong("id_");
+
+				JournalArticle article =
+					JournalArticleLocalServiceUtil.getArticle(id);
+
+				String xml = article.getContent();
+
+				Document doc = SAXReaderUtil.read(xml);
+
+				Element root = doc.getRootElement();
+
+				List<Element> rootElements = root.elements();
+
+				for (Element element : rootElements) {
+					if (element.attributeValue("type").equals(
+							"document_library")) {
+
+						Element dynamicContent = element.element(
+							"dynamic-content");
+
+						String path = (String)dynamicContent.getData();
+
+						String[] pathElements = StringUtil.split(
+							path, StringPool.SLASH);
+
+						if (pathElements.length == 5) {
+							long groupId = GetterUtil.getLong(pathElements[2]);
+							long folderId = GetterUtil.getLong(pathElements[3]);
+							String title = HttpUtil.decodeURL(
+								HtmlUtil.escape(pathElements[4]));
+
+							if (title.contains(StringPool.SLASH)) {
+								title = StringUtil.replace(
+									title, StringPool.SLASH, StringPool.BLANK);
+
+								StringBundler sb = new StringBundler(9);
+
+								for (int i = 0; i < 4; i++) {
+									sb.append(pathElements[i]);
+									sb.append(StringPool.SLASH);
+								}
+
+								sb.append(title);
+								path = sb.toString();
+							}
+
+							try {
+								DLFileEntry dlFileEntry =
+									DLFileEntryLocalServiceUtil.
+										getFileEntryByTitle(
+											groupId, folderId, title);
+
+								String uuid = dlFileEntry.getUuid();
+
+								dynamicContent.setText(
+									path + StringPool.SLASH + uuid);
+							}
+							catch (NoSuchFileEntryException nsfee) {
+								if (_log.isWarnEnabled()) {
+									_log.warn(
+										"No document exists with title " +
+											title + " for dynamic content in " +
+											"article " + article.getTitle());
+								}
+							}
+						}
+					}
+				}
+
+				article.setContent(doc.asXML());
+
+				JournalArticleLocalServiceUtil.updateJournalArticle(article);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

@@ -78,6 +78,7 @@ import com.liferay.portlet.blogs.social.BlogsActivityKeys;
 import com.liferay.portlet.blogs.util.BlogsUtil;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.portlet.blogs.util.comparator.EntryDisplayDateComparator;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 
@@ -189,6 +190,26 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		validate(title, content, smallImageFileEntryId);
 
 		long entryId = counterLocalService.increment();
+
+		if (smallImageFileEntryId != 0) {
+			FileEntry  tempSmallImageFileEntry =
+				PortletFileRepositoryUtil.getPortletFileEntry(
+					smallImageFileEntryId);
+
+			FileEntry smallImageFileEntry =
+				PortletFileRepositoryUtil.addPortletFileEntry(
+					groupId, userId, BlogsEntry.class.getName(), entryId,
+					PortletKeys.BLOGS,
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					tempSmallImageFileEntry.getContentStream(),
+					tempSmallImageFileEntry.getTitle(),
+					tempSmallImageFileEntry.getMimeType(), false);
+
+			smallImageFileEntryId = smallImageFileEntry.getFileEntryId();
+
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				tempSmallImageFileEntry.getFileEntryId());
+		}
 
 		BlogsEntry entry = blogsEntryPersistence.create(entryId);
 
@@ -1095,10 +1116,40 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		String smallImageURL = null;
 
 		if (smallImage != null) {
-			smallImageFileEntryId = smallImage.getImageId();
+			if (smallImage.getImageId() == 0) {
+				if (entry.getSmallImageFileEntryId() != 0) {
+					PortletFileRepositoryUtil.deletePortletFileEntry(
+						entry.getSmallImageFileEntryId());
+				}
+			}
+			else if (smallImage.getImageId() !=
+						entry.getSmallImageFileEntryId()) {
 
-			isSmallImage = smallImage.removeSmallImage();
+				if (entry.getSmallImageFileEntryId() != 0) {
+					PortletFileRepositoryUtil.deletePortletFileEntry(
+						entry.getSmallImageFileEntryId());
+				}
 
+				FileEntry  tempSmallImageFileEntry =
+					PortletFileRepositoryUtil.getPortletFileEntry(
+						smallImage.getImageId());
+
+				FileEntry smallImageFileEntry =
+					PortletFileRepositoryUtil.addPortletFileEntry(
+						entry.getGroupId(), userId, BlogsEntry.class.getName(),
+						entry.getEntryId(), PortletKeys.BLOGS,
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+						tempSmallImageFileEntry.getContentStream(),
+						tempSmallImageFileEntry.getTitle(),
+						tempSmallImageFileEntry.getMimeType(), false);
+
+				smallImageFileEntryId = smallImageFileEntry.getFileEntryId();
+
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					tempSmallImageFileEntry.getFileEntryId());
+			}
+
+			isSmallImage = !smallImage.removeSmallImage();
 			smallImageURL = smallImage.getImageURL();
 		}
 
@@ -1799,9 +1850,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			boolean validSmallImageExtension = false;
 
 			for (String _imageExtension : imageExtensions) {
+				String smallImageFileEntryExtensionWithPeriod =
+					StringPool.PERIOD.concat(
+						smallImageFileEntry.getExtension());
+
 				if (StringPool.STAR.equals(_imageExtension) ||
 					_imageExtension.equals(
-						smallImageFileEntry.getExtension())) {
+						smallImageFileEntryExtensionWithPeriod)) {
 
 					validSmallImageExtension = true;
 

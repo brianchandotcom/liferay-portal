@@ -1729,6 +1729,29 @@ rerun your task.
 		</if>
 	</target>
 
+	<target name="test-package-group">
+		<if>
+			<not>
+				<isset property="test.package.group" />
+			</not>
+			<then>
+				<fail>Use "ant test-package-group -Dtest.package.group=0".</fail>
+			</then>
+		</if>
+
+		<property file="${project.dir}/test.package.names.properties" />
+
+		<propertycopy from="test.package.group[${test.package.group}]" name="test.packages" />
+
+		<for list="${test.packages}" param="test.package">
+			<sequential>
+				<antcall target="test-package">
+					<param name="test.package" value="@{test.package}" />
+				</antcall>
+			</sequential>
+		</for>
+	</target>
+
 	<target name="test-unit" depends="compile,compile-test-unit">
 		<property name="test.class" value="*Test" />
 

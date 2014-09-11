@@ -1155,6 +1155,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		long groupId = dlFolder.getGroupId();
 		long repositoryId = dlFolder.getRepositoryId();
 
+		parentFolderId = getParentFolderId(
+			groupId, repositoryId, parentFolderId);
+
 		if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return parentFolderId;
 		}
@@ -1163,31 +1166,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			throw new InvalidFolderException(
 				String.format(
 					"Cannot move folder %s into itself", parentFolderId));
-		}
-
-		DLFolder parentDLFolder = dlFolderPersistence.findByPrimaryKey(
-			parentFolderId);
-
-		if (parentDLFolder.getGroupId() != groupId) {
-			throw new NoSuchFolderException(
-				String.format(
-					"No DLFolder with primary key %s found on group %s",
-					parentFolderId, dlFolder.getGroupId()));
-		}
-
-		if ((parentDLFolder.getRepositoryId() != repositoryId) &&
-			(parentDLFolder.getRepositoryId() != groupId)) {
-
-			Repository repository = repositoryLocalService.getRepository(
-				repositoryId);
-
-			if (repository.getGroupId() != parentDLFolder.getGroupId()) {
-				throw new NoSuchFolderException(
-					String.format(
-						"No DLFolder exists with primary key %s in " +
-							"repository %s",
-						parentFolderId, repositoryId));
-			}
 		}
 
 		List<Long> subfolderIds = new ArrayList<Long>();

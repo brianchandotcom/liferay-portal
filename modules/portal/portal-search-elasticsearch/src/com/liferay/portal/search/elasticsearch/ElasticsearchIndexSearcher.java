@@ -233,19 +233,13 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	protected void addHighlights(
 		SearchRequestBuilder searchRequestBuilder, QueryConfig queryConfig) {
 
-		addHighlightedField(
-			searchRequestBuilder, queryConfig, Field.ASSET_CATEGORY_TITLES);
-
-		if (!queryConfig.isHighlightEnabled()) {
-			return;
+		for (String highlightFieldName : queryConfig.getHighlightFieldNames()) {
+			addHighlightedField(
+				searchRequestBuilder, queryConfig, highlightFieldName);
 		}
 
-		addHighlightedField(searchRequestBuilder, queryConfig, Field.CONTENT);
-		addHighlightedField(
-			searchRequestBuilder, queryConfig, Field.DESCRIPTION);
-		addHighlightedField(searchRequestBuilder, queryConfig, Field.TITLE);
-
-		searchRequestBuilder.setHighlighterRequireFieldMatch(true);
+		searchRequestBuilder.setHighlighterRequireFieldMatch(
+			queryConfig.isHighlightRequireFieldMatch());
 	}
 
 	protected void addPagination(
@@ -328,23 +322,11 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			return;
 		}
 
-		addSnippets(
-			document, queryTerms, highlightFields, Field.ASSET_CATEGORY_TITLES,
-			queryConfig.getLocale());
-
-		if (!queryConfig.isHighlightEnabled()) {
-			return;
+		for (String highlightFieldName : queryConfig.getHighlightFieldNames()) {
+			addSnippets(
+				document, queryTerms, highlightFields, highlightFieldName,
+				queryConfig.getLocale());
 		}
-
-		addSnippets(
-			document, queryTerms, highlightFields, Field.CONTENT,
-			queryConfig.getLocale());
-		addSnippets(
-			document, queryTerms, highlightFields, Field.DESCRIPTION,
-			queryConfig.getLocale());
-		addSnippets(
-			document, queryTerms, highlightFields, Field.TITLE,
-			queryConfig.getLocale());
 	}
 
 	protected void addSort(
@@ -496,8 +478,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				scores.add(searchHit.getScore());
 
 				addSnippets(
-					searchHit, document, searchContext.getQueryConfig(),
-					queryTerms);
+					searchHit, document, query.getQueryConfig(), queryTerms);
 			}
 		}
 

@@ -16,15 +16,16 @@
 
 <%@ include file="/html/taglib/aui/button/init.jsp" %>
 
+<c:if test="<%= dropdown %>">
+	<div class="btn-group" id="<%= id %>BtnGroup">
+</c:if>
+
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(escapedHREF) %>">
 		<a
 			class="<%= AUIUtil.buildCss(AUIUtil.BUTTON_PREFIX, disabled, false, false, cssClass) %> btn-default"
 			href="<%= escapedHREF %>"
-
-			<c:if test="<%= Validator.isNotNull(name) %>">
-				id="<%= namespace %><%= name %>"
-			</c:if>
+			id="<%= id %>"
 
 			<c:if test="<%= Validator.isNotNull(onClick) %>">
 				onClick="<%= onClick %>"
@@ -43,10 +44,7 @@
 			</c:if>
 
 			href="<%= escapedHREF %>"
-
-			<c:if test="<%= Validator.isNotNull(name) %>">
-				id="<%= namespace %><%= name %>"
-			</c:if>
+			id="<%= id %>"
 
 			<c:if test="<%= Validator.isNotNull(onClick) %>">
 				onClick="<%= onClick %>"
@@ -70,6 +68,10 @@
 	<i class="<%= icon %>"></i>
 </c:if>
 
+<c:if test="<%= dropdown %>">
+	<i class="icon-caret-down"></i>
+</c:if>
+
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(escapedHREF) %>">
 		</a>
@@ -78,6 +80,24 @@
 		</button>
 	</c:otherwise>
 </c:choose>
+
+<c:if test="<%= dropdown %>">
+		<ul class="dropdown-menu" role="menu">
+			<%= bodyContentString %>
+		</ul>
+	</div>
+
+	<aui:script use="aui-dropdown">
+		new A.Dropdown(
+			{
+				boundingBox: '#<%= id %>BtnGroup',
+				contentBox: '#<%= id %>BtnGroup',
+				trigger: '#<%= id %>',
+				render: true
+			}
+		);
+	</aui:script>
+</c:if>
 
 <c:if test="<%= useDialog %>">
 	<aui:script>

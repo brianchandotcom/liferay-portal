@@ -19,13 +19,22 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseButtonTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.BodyTag;
 
 /**
  * @author Julio Camarero
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
  */
-public class ButtonTag extends BaseButtonTag {
+public class ButtonTag extends BaseButtonTag implements BodyTag {
+
+	@Override
+	public int doStartTag() throws JspException {
+		super.doStartTag();
+
+		return BodyTag.EVAL_BODY_BUFFERED;
+	}
 
 	@Override
 	public void setIconAlign(String iconAlign) {

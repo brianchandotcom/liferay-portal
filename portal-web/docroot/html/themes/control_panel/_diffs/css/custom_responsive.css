@@ -17,7 +17,7 @@
 				}
 
 				.navbar-brand {
-					@include flexbox();
+					@include display-flex();
 					@include flex-grow(1);
 					@include flex-shrink(500);
 

@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>PGKaleoformsSubmitnew</title>
+<title>CPKaleoformsadminViewprocessrecordsSubmitnew</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PGKaleoformsSubmitnew</td></tr>
+<tr><td rowspan="1" colspan="3">CPKaleoformsadminViewprocessrecordsSubmitnew</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PGKaleoformsSubmitnew</td>
+	<td>CPKaleoformsadminViewprocessrecordsSubmitnew</td>
 </tr>
 <tr>
 	<td></td>
@@ -61,38 +61,33 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NEW_PROCESS_FIELDS_FIELD</td>
-	<td>//div[contains(@class,'control-group field-wrapper') and contains (@data-fieldname,'${key_fieldName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NEW_PROCESS_FIELDS_TEXT_FIELD</td>
-	<td>//div[@class='form-group field-wrapper' and @data-fieldname='${key_fieldName}']/input[@type='text']</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]/input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEW_PROCESS_FIELDS_TEXT_BOX_FIELD</td>
-	<td>//div[@class='form-group field-wrapper' and @data-fieldname='${key_fieldName}']/textarea</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]/textarea</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEW_PROCESS_FIELDS_DATE_FIELD</td>
-	<td>//div[@class='form-group field-wrapper' and @data-fieldname='${key_fieldName}']/span[contains(@class,'lfr-input-date')]/input</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]/span[contains(@class,'lfr-input-date')]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEW_PROCESS_FIELDS_SELECT_FIELD</td>
-	<td>//div[@class='form-group field-wrapper' and @data-fieldname='${key_fieldName}']//select</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]//select</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_FIELD</td>
-	<td>//div[@class='form-group field-wrapper' and @data-fieldname='${key_fieldName}']/input[@readonly='readonly']</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]/input[@readonly='readonly']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_SELECT</td>
-	<td>//div[@class='form-group field-wrapper' and @data-fieldname='${key_fieldName}']//button[contains(.,'Select')]</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

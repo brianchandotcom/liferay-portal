@@ -75,6 +75,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WIKI_PAGE_CUSTOM_FIELD_TEXT_FIELD</td>
+	<td>//div[contains(@class,'form-group')]/span[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

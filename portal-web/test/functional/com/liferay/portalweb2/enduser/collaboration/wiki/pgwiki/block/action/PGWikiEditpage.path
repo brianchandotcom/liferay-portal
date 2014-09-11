@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOM_FIELD_TEXT_FIELD</td>
+	<td>//input[@name='_36_ExpandoAttribute--text--']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SOURCE_CREOLE_BUTTON</td>
 	<td>//span[@id='cke_36_label']</td>
 	<td></td>

@@ -179,7 +179,7 @@
 	</target>
 
 	<target name="build-alloy-bootstrap">
-		<property name="alloy.bootstrap.version" value="3.1.1" />
+		<property name="alloy.bootstrap.version" value="3.2.0-2" />
 
 		<property name="alloy.bootstrap.deploy" value="docroot/html/themes/_unstyled/css/aui" />
 
@@ -205,7 +205,7 @@
 
 				<!-- CSS -->
 
-				<property name="alloy.bootstrap.lib.dir" value="${alloy.bootstrap.tmp.dir}/bootstrap-sass-${alloy.bootstrap.version}/vendor/assets/stylesheets/bootstrap" />
+				<property name="alloy.bootstrap.lib.dir" value="${alloy.bootstrap.tmp.dir}/bootstrap-sass-${alloy.bootstrap.version}/assets/stylesheets/bootstrap" />
 
 				<copy todir="${alloy.bootstrap.deploy}" overwrite="true" preservelastmodified="true">
 					<fileset dir="${alloy.bootstrap.lib.dir}/" />
@@ -213,7 +213,7 @@
 
 				<!-- Glyphicons Font -->
 
-				<property name="alloy.bootstrap.fonts.lib.dir" value="${alloy.bootstrap.tmp.dir}/bootstrap-sass-${alloy.bootstrap.version}/vendor/assets/fonts/bootstrap" />
+				<property name="alloy.bootstrap.fonts.lib.dir" value="${alloy.bootstrap.tmp.dir}/bootstrap-sass-${alloy.bootstrap.version}/assets/fonts/bootstrap" />
 
 				<copy todir="${alloy.bootstrap.deploy}/glyphicons/font" overwrite="true" preservelastmodified="true">
 					<fileset dir="${alloy.bootstrap.fonts.lib.dir}/" />

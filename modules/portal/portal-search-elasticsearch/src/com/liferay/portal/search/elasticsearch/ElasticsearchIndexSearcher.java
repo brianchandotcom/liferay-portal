@@ -94,21 +94,22 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		try {
 			int total = (int)searchCount(searchContext, query);
+			int start = searchContext.getStart();
+			int end = searchContext.getEnd();
 
-			if ((searchContext.getEnd() == QueryUtil.ALL_POS) &&
-				(searchContext.getStart() == QueryUtil.ALL_POS)) {
-
-				searchContext.setEnd(total);
-				searchContext.setStart(0);
+			if ((end == QueryUtil.ALL_POS) && (start == QueryUtil.ALL_POS)) {
+				start = 0;
+				end = total;
 			}
 
 			int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
-				searchContext.getStart(), searchContext.getEnd(), total);
+				start, end, total);
 
-			searchContext.setStart(startAndEnd[0]);
-			searchContext.setEnd(startAndEnd[1]);
+			start = startAndEnd[0];
+			end = startAndEnd[1];
 
-			SearchResponse searchResponse = doSearch(searchContext, query);
+			SearchResponse searchResponse = doSearch(
+				searchContext, query, start, end);
 
 			Hits hits = processSearchResponse(
 				searchResponse, searchContext, query);
@@ -148,7 +149,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		try {
 			SearchResponse searchResponse = doSearch(
-				searchContext, query, true);
+				searchContext, query, searchContext.getStart(),
+				searchContext.getEnd(), true);
 
 			SearchHits searchHits = searchResponse.getHits();
 
@@ -393,14 +395,16 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
-	protected SearchResponse doSearch(SearchContext searchContext, Query query)
+	protected SearchResponse doSearch(
+			SearchContext searchContext, Query query, int start, int end)
 		throws Exception {
 
-		return doSearch(searchContext, query, false);
+		return doSearch(searchContext, query, start, end, false);
 	}
 
 	protected SearchResponse doSearch(
-		SearchContext searchContext, Query query, boolean count) {
+		SearchContext searchContext, Query query, int start, int end,
+		boolean count) {
 
 		Client client = _elasticsearchConnectionManager.getClient();
 
@@ -412,9 +416,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 			addFacets(searchRequestBuilder, searchContext);
 			addHighlights(searchRequestBuilder, queryConfig);
-			addPagination(
-				searchRequestBuilder, searchContext.getStart(),
-				searchContext.getEnd());
+			addPagination(searchRequestBuilder, start, end);
 			addSelectedFields(searchRequestBuilder, queryConfig);
 			addSort(searchRequestBuilder, searchContext.getSorts());
 

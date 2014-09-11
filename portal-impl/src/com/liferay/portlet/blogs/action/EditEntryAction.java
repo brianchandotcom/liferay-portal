@@ -431,11 +431,13 @@ public class EditEntryAction extends PortletAction {
 
 		try {
 			BlogsEntryServiceUtil.updateEntry(
-				entryId, entry.getTitle(), entry.getDescription(), content,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, entry.getAllowPingbacks(),
+				entryId, entry.getTitle(), entry.getSubtitle(),
+				entry.getDescription(), content, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, entry.getAllowPingbacks(),
 				entry.getAllowTrackbacks(), null, entry.getSmallImage(),
-				entry.getSmallImageURL(), null, null, serviceContext);
+				entry.getSmallImageURL(), entry.getSmallImageFileEntryId(),
+				serviceContext);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

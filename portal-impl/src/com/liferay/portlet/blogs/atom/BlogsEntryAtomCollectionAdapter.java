@@ -217,41 +217,16 @@ public class BlogsEntryAtomCollectionAdapter
 
 		String[] trackbacks = StringUtil.split(blogsEntry.getTrackbacks());
 
-		String smallImageFileName = null;
-		InputStream smallImageInputStream = null;
+		ServiceContext serviceContext = new ServiceContext();
 
-		try {
-			long smallImageId = blogsEntry.getSmallImageId();
-
-			if (smallImageId != 0) {
-				Image smallImage = ImageLocalServiceUtil.getImage(smallImageId);
-
-				if (smallImage != null) {
-					smallImageFileName =
-						smallImageId + StringPool.PERIOD +
-							blogsEntry.getSmallImageType();
-
-					byte[] smallImageBytes = smallImage.getTextObj();
-
-					smallImageInputStream = new ByteArrayInputStream(
-						smallImageBytes);
-				}
-			}
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			BlogsEntryServiceUtil.updateEntry(
-				blogsEntry.getEntryId(), title, summary, content,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute,
-				blogsEntry.getAllowPingbacks(), blogsEntry.isAllowTrackbacks(),
-				trackbacks, blogsEntry.isSmallImage(),
-				blogsEntry.getSmallImageURL(), smallImageFileName,
-				smallImageInputStream, serviceContext);
-		}
-		finally {
-			StreamUtil.cleanUp(smallImageInputStream);
-		}
+		BlogsEntryServiceUtil.updateEntry(
+			blogsEntry.getEntryId(), title, blogsEntry.getSubtitle(),
+			summary, content, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			blogsEntry.getAllowPingbacks(), blogsEntry.isAllowTrackbacks(),
+			trackbacks, blogsEntry.isSmallImage(),
+			blogsEntry.getSmallImageURL(),
+			blogsEntry.getSmallImageFileEntryId(), serviceContext);
 	}
 
 	private static final String _COLLECTION_NAME = "blogs";

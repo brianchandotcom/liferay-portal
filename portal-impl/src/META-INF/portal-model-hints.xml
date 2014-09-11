@@ -1411,6 +1411,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="smallImage" type="boolean" />
+		<field name="smallImageFileEntryId" type="long" />
 		<field name="smallImageId" type="long" />
 		<field name="smallImageURL" type="String">
 			<hint-collection name="URL" />

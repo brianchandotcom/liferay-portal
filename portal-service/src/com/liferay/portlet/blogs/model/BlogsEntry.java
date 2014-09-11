@@ -34,6 +34,8 @@ public interface BlogsEntry extends BlogsEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.blogs.model.impl.BlogsEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public long getSmallImageFileEntryFolderId();
+
 	public java.lang.String getEntryImageURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay);
 

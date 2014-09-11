@@ -246,6 +246,7 @@ create table BlogsEntry (
 	allowTrackbacks BOOLEAN,
 	trackbacks TEXT null,
 	smallImage BOOLEAN,
+	smallImageFileEntryId LONG,
 	smallImageId LONG,
 	smallImageURL STRING null,
 	status INTEGER,

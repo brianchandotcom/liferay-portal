@@ -151,8 +151,6 @@ public class RepositoryLocalServiceImpl
 		for (Repository repository : repositories) {
 			deleteRepository(repository.getRepositoryId());
 		}
-
-		dlFolderLocalService.deleteAll(groupId);
 	}
 
 	@Override
@@ -163,6 +161,9 @@ public class RepositoryLocalServiceImpl
 		if (repository != null) {
 			repositoryLocalService.deleteRepository(repository);
 		}
+
+		_repositoriesByRepositoryId.remove(repositoryId);
+		_localRepositoriesByRepositoryId.remove(repositoryId);
 
 		return repository;
 	}

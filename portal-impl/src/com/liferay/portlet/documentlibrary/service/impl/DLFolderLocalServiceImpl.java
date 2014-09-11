@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.TreeModel;
@@ -50,8 +51,10 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
+import com.liferay.portlet.documentlibrary.InvalidFolderException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.RequiredFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
@@ -87,7 +90,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		// Folder
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		parentFolderId = getParentFolderId(groupId, parentFolderId);
+		parentFolderId = getParentFolderId(
+			groupId, repositoryId, parentFolderId);
 		Date now = new Date();
 
 		validateFolder(groupId, parentFolderId, name);
@@ -945,8 +949,16 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			boolean overrideFileEntryTypes, ServiceContext serviceContext)
 		throws PortalException {
 
+		long parentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			DLFolder folder = getDLFolder(folderId);
+
+			parentFolderId = folder.getParentFolderId();
+		}
+
 		return updateFolder(
-			folderId, folderId, name, description, defaultFileEntryTypeId,
+			folderId, parentFolderId, name, description, defaultFileEntryTypeId,
 			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
 	}
 
@@ -1137,22 +1149,23 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		addFolderResources(dlFolder, groupPermissions, guestPermissions);
 	}
 
-	protected long getParentFolderId(DLFolder dlFolder, long parentFolderId) {
+	protected long getParentFolderId(DLFolder dlFolder, long parentFolderId)
+		throws PortalException {
+
+		long groupId = dlFolder.getGroupId();
+		long repositoryId = dlFolder.getRepositoryId();
+
+		parentFolderId = getParentFolderId(
+			groupId, repositoryId, parentFolderId);
+
 		if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return parentFolderId;
 		}
 
 		if (dlFolder.getFolderId() == parentFolderId) {
-			return dlFolder.getParentFolderId();
-		}
-
-		DLFolder parentDLFolder = dlFolderPersistence.fetchByPrimaryKey(
-			parentFolderId);
-
-		if ((parentDLFolder == null) ||
-			(dlFolder.getGroupId() != parentDLFolder.getGroupId())) {
-
-			return dlFolder.getParentFolderId();
+			throw new InvalidFolderException(
+				String.format(
+					"Cannot move folder %s into itself", parentFolderId));
 		}
 
 		List<Long> subfolderIds = new ArrayList<Long>();
@@ -1161,25 +1174,49 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			subfolderIds, dlFolder.getGroupId(), dlFolder.getFolderId());
 
 		if (subfolderIds.contains(parentFolderId)) {
-			return dlFolder.getParentFolderId();
+			throw new InvalidFolderException(
+				String.format(
+					"Cannot move folder %s into one of its children",
+					parentFolderId));
 		}
 
 		return parentFolderId;
 	}
 
-	protected long getParentFolderId(long groupId, long parentFolderId) {
-		if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder parentDLFolder = dlFolderPersistence.fetchByPrimaryKey(
-				parentFolderId);
+	protected long getParentFolderId(
+			long groupId, long repositoryId, long parentFolderId)
+		throws PortalException {
 
-			if ((parentDLFolder == null) ||
-				(groupId != parentDLFolder.getGroupId())) {
+		if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return parentFolderId;
+		}
 
-				parentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		DLFolder parentDLFolder = dlFolderPersistence.findByPrimaryKey(
+			parentFolderId);
+
+		if (parentDLFolder.getGroupId() != groupId) {
+			throw new NoSuchFolderException(
+				String.format(
+					"No DLFolder exists with primary key %s in group %s",
+					parentFolderId, groupId));
+		}
+
+		if ((parentDLFolder.getRepositoryId() != repositoryId) &&
+			(parentDLFolder.getRepositoryId() != groupId)) {
+
+			Repository repository = repositoryLocalService.getRepository(
+				repositoryId);
+
+			if (repository.getGroupId() != parentDLFolder.getGroupId()) {
+				throw new NoSuchFolderException(
+					String.format(
+						"No DLFolder exists with primary key %s in " +
+							"repository %s",
+						parentFolderId, repositoryId));
 			}
 		}
 
-		return parentFolderId;
+		return parentDLFolder.getFolderId();
 	}
 
 	protected void validateFolder(

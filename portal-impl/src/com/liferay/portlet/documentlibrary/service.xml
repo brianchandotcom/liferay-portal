@@ -639,6 +639,7 @@
 
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Lock" />
+		<reference package-path="com.liferay.portal" entity="Repository" />
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portal" entity="WebDAVProps" />
@@ -651,6 +652,7 @@
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileShortcut" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileVersion" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
+		<reference package-path="com.liferay.portal" entity="Repository" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 	</entity>
 	<entity name="DLSyncEvent" local-service="true" remote-service="false">
@@ -700,6 +702,7 @@
 		<exception>ImageSize</exception>
 		<exception>InvalidFileEntryType</exception>
 		<exception>InvalidFileVersion</exception>
+		<exception>InvalidFolder</exception>
 		<exception>NoSuchDirectory</exception>
 		<exception>NoSuchFile</exception>
 		<exception>NoSuchMetadataSet</exception>

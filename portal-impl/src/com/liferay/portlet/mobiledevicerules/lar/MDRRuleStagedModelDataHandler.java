@@ -106,10 +106,6 @@ public class MDRRuleStagedModelDataHandler
 			PortletDataContext portletDataContext, MDRRule rule)
 		throws Exception {
 
-		StagedModelDataHandlerUtil.importReferenceStagedModel(
-			portletDataContext, rule, MDRRuleGroup.class,
-			rule.getRuleGroupId());
-
 		Map<Long, Long> ruleGroupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				MDRRuleGroup.class);

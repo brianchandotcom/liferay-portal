@@ -87,11 +87,6 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="E_C_C" return-type="TrashVersion" unique="true">
-			<finder-column name="entryId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-		</finder>
 	</entity>
 	<exceptions>
 		<exception>RestoreEntry</exception>

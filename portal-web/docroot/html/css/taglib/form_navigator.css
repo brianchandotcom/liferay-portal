@@ -8,6 +8,12 @@
 		}
 	}
 
+	.form-navigator-content.col-md-8 {
+		@include respond-to(desktop) {
+			float: left;
+		}
+	}
+
 	.error-notice, .modified-notice {
 		display: none;
 	}

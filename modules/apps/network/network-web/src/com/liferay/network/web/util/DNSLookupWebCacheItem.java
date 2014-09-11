@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.network.util;
+package com.liferay.network.web.util;
 
+import com.liferay.network.web.model.DNSLookup;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
-import com.liferay.portlet.network.model.DNSLookup;
 
 import java.net.InetAddress;
 

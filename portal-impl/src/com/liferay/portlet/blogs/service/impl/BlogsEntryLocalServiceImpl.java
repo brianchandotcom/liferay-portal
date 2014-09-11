@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -129,17 +130,25 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			InputStream smallImageInputStream, ServiceContext serviceContext)
 		throws PortalException {
 
-		FileEntry fileEntry = TempFileUtil.addTempFile(
-			serviceContext.getScopeGroupId(), userId, smallImageFileName,
-			BlogsEntry.class.getName(), smallImageInputStream,
-			MimeTypesUtil.getContentType(smallImageFileName));
+		ImageSelector smallImageSelector = null;
+
+		if (smallImage && Validator.isNotNull(smallImageFileName) &&
+			(smallImageInputStream != null)) {
+
+			FileEntry fileEntry = TempFileUtil.addTempFile(
+				serviceContext.getScopeGroupId(), userId, smallImageFileName,
+				BlogsEntry.class.getName(), smallImageInputStream,
+				MimeTypesUtil.getContentType(smallImageFileName));
+
+			smallImageSelector = new ImageSelector(
+				fileEntry.getFileEntryId(), smallImageURL);
+		}
 
 		return addEntry(
 			userId, title, StringPool.BLANK, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			smallImage, smallImageURL, fileEntry.getFileEntryId(),
-			serviceContext);
+			smallImageSelector, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -149,8 +158,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			String content, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			boolean allowPingbacks, boolean allowTrackbacks,
-			String[] trackbacks, boolean smallImage, String smallImageURL,
-			long smallImageFileEntryId, ServiceContext serviceContext)
+			String[] trackbacks, ImageSelector smallImage,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Entry
@@ -164,6 +173,18 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			EntryDisplayDateException.class);
 
 		Date now = new Date();
+
+		long smallImageFileEntryId = 0;
+		boolean isSmallImage = false;
+		String smallImageURL = null;
+
+		if (smallImage != null) {
+			smallImageFileEntryId = smallImage.getImageId();
+
+			isSmallImage = smallImage.removeSmallImage();
+
+			smallImageURL = smallImage.getImageURL();
+		}
 
 		validate(title, content, smallImageFileEntryId);
 
@@ -187,9 +208,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setDisplayDate(displayDate);
 		entry.setAllowPingbacks(allowPingbacks);
 		entry.setAllowTrackbacks(allowTrackbacks);
-		entry.setSmallImage(smallImage);
+		entry.setSmallImage(isSmallImage);
 		entry.setSmallImageFileEntryId(smallImageFileEntryId);
-		entry.setSmallImageId(counterLocalService.increment());
 		entry.setSmallImageURL(smallImageURL);
 		entry.setStatus(WorkflowConstants.STATUS_DRAFT);
 		entry.setStatusByUserId(userId);
@@ -1021,18 +1041,31 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		FileEntry fileEntry = TempFileUtil.addTempFile(
-			serviceContext.getScopeGroupId(), userId,
-			smallImageFileName, BlogsEntry.class.getName(),
-			smallImageInputStream,
-			MimeTypesUtil.getContentType(smallImageFileName));
+		ImageSelector smallImageSelector = null;
+
+		if (smallImage) {
+			if (Validator.isNotNull(smallImageFileName) &&
+				(smallImageInputStream != null)) {
+
+				FileEntry fileEntry = TempFileUtil.addTempFile(
+					serviceContext.getScopeGroupId(), userId,
+					smallImageFileName, BlogsEntry.class.getName(),
+					smallImageInputStream,
+					MimeTypesUtil.getContentType(smallImageFileName));
+
+				smallImageSelector = new ImageSelector(
+					fileEntry.getFileEntryId(), smallImageURL);
+			}
+		}
+		else {
+			smallImageSelector = new ImageSelector(0);
+		}
 
 		return updateEntry(
 			userId, entryId, title, StringPool.BLANK, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			smallImage, smallImageURL, fileEntry.getFileEntryId(),
-			serviceContext);
+			smallImageSelector, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1042,9 +1075,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			String description, String content, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, boolean allowPingbacks,
-			boolean allowTrackbacks, String[] trackbacks, boolean smallImage,
-			String smallImageURL, long smallImageFileEntryId,
-			ServiceContext serviceContext)
+			boolean allowTrackbacks, String[] trackbacks,
+			ImageSelector smallImage, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Entry
@@ -1056,9 +1088,21 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			displayDateMinute, user.getTimeZone(),
 			EntryDisplayDateException.class);
 
-		validate(title, content, smallImageFileEntryId);
-
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
+
+		long smallImageFileEntryId = 0;
+		boolean isSmallImage = entry.isSmallImage();
+		String smallImageURL = null;
+
+		if (smallImage != null) {
+			smallImageFileEntryId = smallImage.getImageId();
+
+			isSmallImage = smallImage.removeSmallImage();
+
+			smallImageURL = smallImage.getImageURL();
+		}
+
+		validate(title, content, smallImageFileEntryId);
 
 		String oldUrlTitle = entry.getUrlTitle();
 
@@ -1072,13 +1116,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setDisplayDate(displayDate);
 		entry.setAllowPingbacks(allowPingbacks);
 		entry.setAllowTrackbacks(allowTrackbacks);
-		entry.setSmallImage(smallImage);
+		entry.setSmallImage(isSmallImage);
 		entry.setSmallImageFileEntryId(smallImageFileEntryId);
-
-		if (entry.getSmallImageId() == 0) {
-			entry.setSmallImageId(counterLocalService.increment());
-		}
-
 		entry.setSmallImageURL(smallImageURL);
 
 		if (entry.isPending() || entry.isDraft()) {

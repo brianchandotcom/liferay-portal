@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -88,17 +89,26 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.ADD_ENTRY);
 
-		FileEntry fileEntry = TempFileUtil.addTempFile(
-			serviceContext.getScopeGroupId(), getUserId(),
-			smallImageFileName, BlogsEntry.class.getName(),
-			smallImageInputStream,
-			MimeTypesUtil.getContentType(smallImageFileName));
+		ImageSelector smallImageSelector = null;
+
+		if (smallImage && Validator.isNotNull(smallImageFileName) &&
+			(smallImageInputStream != null)) {
+
+			FileEntry fileEntry = TempFileUtil.addTempFile(
+				serviceContext.getScopeGroupId(), getUserId(),
+				smallImageFileName, BlogsEntry.class.getName(),
+				smallImageInputStream,
+				MimeTypesUtil.getContentType(smallImageFileName));
+
+			smallImageSelector = new ImageSelector(
+				fileEntry.getFileEntryId(), smallImageURL);
+		}
 
 		return addEntry(
 			title, StringPool.BLANK, description, content, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			allowPingbacks, allowTrackbacks, trackbacks, smallImage,
-			smallImageURL, fileEntry.getFileEntryId(), serviceContext);
+			allowPingbacks, allowTrackbacks, trackbacks, smallImageSelector,
+			serviceContext);
 	}
 
 	@Override
@@ -106,9 +116,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			String title, String subtitle, String description, String content,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
-			boolean allowTrackbacks, String[] trackbacks, boolean smallImage,
-			String smallImageURL, long smallImageFileEntryId,
-			ServiceContext serviceContext)
+			boolean allowTrackbacks, String[] trackbacks,
+			ImageSelector smallImage, ServiceContext serviceContext)
 		throws PortalException {
 
 		BlogsPermission.check(
@@ -119,7 +128,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			getUserId(), title, subtitle, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			smallImage, smallImageURL, smallImageFileEntryId, serviceContext);
+			smallImage, serviceContext);
 	}
 
 	@Override
@@ -454,18 +463,31 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.UPDATE);
 
-		FileEntry fileEntry = TempFileUtil.addTempFile(
-			serviceContext.getScopeGroupId(), getUserId(),
-			smallImageFileName, BlogsEntry.class.getName(),
-			smallImageInputStream,
-			MimeTypesUtil.getContentType(smallImageFileName));
+		ImageSelector smallImageSelector = null;
+
+		if (smallImage) {
+			if (Validator.isNotNull(smallImageFileName) &&
+				(smallImageInputStream != null)) {
+
+				FileEntry fileEntry = TempFileUtil.addTempFile(
+					serviceContext.getScopeGroupId(), getUserId(),
+					smallImageFileName, BlogsEntry.class.getName(),
+					smallImageInputStream,
+					MimeTypesUtil.getContentType(smallImageFileName));
+
+				smallImageSelector = new ImageSelector(
+					fileEntry.getFileEntryId(), smallImageURL);
+			}
+		}
+		else {
+			smallImageSelector = new ImageSelector(0);
+		}
 
 		return updateEntry(
 			entryId, title, StringPool.BLANK, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			smallImage, smallImageURL, fileEntry.getFileEntryId(),
-			serviceContext);
+			smallImageSelector, serviceContext);
 	}
 
 	@Override
@@ -474,8 +496,8 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			String content, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			boolean allowPingbacks, boolean allowTrackbacks,
-			String[] trackbacks, boolean smallImage, String smallImageURL,
-			long smallImageFileEntryId, ServiceContext serviceContext)
+			String[] trackbacks, ImageSelector smallImage,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		BlogsEntryPermission.check(
@@ -485,7 +507,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			getUserId(), entryId, title, subtitle, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			smallImage, smallImageURL, smallImageFileEntryId, serviceContext);
+			smallImage, serviceContext);
 	}
 
 	protected String exportToRSS(

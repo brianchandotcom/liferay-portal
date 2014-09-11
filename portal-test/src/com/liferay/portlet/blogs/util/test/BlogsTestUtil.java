@@ -15,6 +15,7 @@
 package com.liferay.portlet.blogs.util.test;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -130,8 +131,8 @@ public class BlogsTestUtil {
 			boolean allowPingbacks = true;
 			boolean allowTrackbacks = true;
 			String[] trackbacks = new String[0];
-			long smallImageFileEntryId = 0;
 			String smallImageURL = StringPool.BLANK;
+			ImageSelector smallImageSelector = null;
 
 			if (smallImage) {
 				String smallImageFileName = "image.jpg";
@@ -154,7 +155,8 @@ public class BlogsTestUtil {
 						MimeTypesUtil.getContentType(smallImageFileName));
 				}
 
-				smallImageFileEntryId = smallImageFileEntry.getFileEntryId();
+				smallImageSelector = new ImageSelector(
+					smallImageFileEntry.getFileEntryId(), smallImageURL);
 			}
 
 			serviceContext = (ServiceContext)serviceContext.clone();
@@ -166,8 +168,7 @@ public class BlogsTestUtil {
 				userId, title, subtitle, description, content, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				smallImage, smallImageURL, smallImageFileEntryId,
-				serviceContext);
+				smallImageSelector, serviceContext);
 
 			if (approved) {
 				return updateStatus(entry, serviceContext);
@@ -233,9 +234,8 @@ public class BlogsTestUtil {
 			entry = BlogsEntryLocalServiceUtil.updateEntry(
 				entry.getUserId(), entry.getEntryId(), title,
 				entry.getSubtitle(), entry.getDescription(), entry.getContent(),
-				1, 1, 2012, 12, 00, true, true, new String[0],
-				entry.getSmallImage(), entry.getSmallImageURL(),
-				entry.getSmallImageFileEntryId(), serviceContext);
+				1, 1, 2012, 12, 00, true, true, new String[0], null,
+				serviceContext);
 
 			if (approved) {
 				return updateStatus(entry, serviceContext);

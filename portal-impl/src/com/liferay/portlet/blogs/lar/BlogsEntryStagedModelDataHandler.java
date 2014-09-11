@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -247,6 +248,16 @@ public class BlogsEntryStagedModelDataHandler
 
 			BlogsEntry importedEntry = null;
 
+			ImageSelector smallImage = null;
+
+			if (!entry.isSmallImage()) {
+				smallImage = new ImageSelector(0);
+			}
+			else {
+				smallImage = new ImageSelector(
+					smallImageFileEntryId, entry.getSmallImageURL());
+			}
+
 			if (portletDataContext.isDataStrategyMirror()) {
 				serviceContext.setAttribute("urlTitle", entry.getUrlTitle());
 
@@ -262,8 +273,7 @@ public class BlogsEntryStagedModelDataHandler
 						entry.getDescription(), entry.getContent(),
 						displayDateMonth, displayDateDay, displayDateYear,
 						displayDateHour, displayDateMinute, allowPingbacks,
-						allowTrackbacks, trackbacks, entry.isSmallImage(),
-						entry.getSmallImageURL(), smallImageFileEntryId,
+						allowTrackbacks, trackbacks, smallImage,
 						serviceContext);
 				}
 				else {
@@ -273,8 +283,7 @@ public class BlogsEntryStagedModelDataHandler
 						entry.getContent(), displayDateMonth, displayDateDay,
 						displayDateYear, displayDateHour, displayDateMinute,
 						allowPingbacks, allowTrackbacks, trackbacks,
-						entry.isSmallImage(), entry.getSmallImageURL(),
-						smallImageFileEntryId, serviceContext);
+						smallImage, serviceContext);
 				}
 			}
 			else {
@@ -283,9 +292,7 @@ public class BlogsEntryStagedModelDataHandler
 					entry.getDescription(), entry.getContent(),
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, allowPingbacks,
-					allowTrackbacks, trackbacks, entry.isSmallImage(),
-					entry.getSmallImageURL(), smallImageFileEntryId,
-					serviceContext);
+					allowTrackbacks, trackbacks, smallImage, serviceContext);
 			}
 
 			portletDataContext.importClassedModel(entry, importedEntry);

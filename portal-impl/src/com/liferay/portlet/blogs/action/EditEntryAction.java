@@ -20,14 +20,13 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -57,8 +56,6 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.trash.util.TrashUtil;
-
-import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -435,9 +432,7 @@ public class EditEntryAction extends PortletAction {
 				entry.getDescription(), content, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, entry.getAllowPingbacks(),
-				entry.getAllowTrackbacks(), null, entry.getSmallImage(),
-				entry.getSmallImageURL(), entry.getSmallImageFileEntryId(),
-				serviceContext);
+				entry.getAllowTrackbacks(), null, null, serviceContext);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -490,83 +485,55 @@ public class EditEntryAction extends PortletAction {
 		String[] trackbacks = StringUtil.split(
 			ParamUtil.getString(actionRequest, "trackbacks"));
 
-		boolean smallImage = false;
-		long smallImageFileEntryId = 0;
-		String smallImageURL = null;
-		String smallImageFileName = null;
-		InputStream smallImageInputStream = null;
+		long smallImageFileEntryId = ParamUtil.getLong(
+			actionRequest, "smallImageFileEntryId");
+		String smallImageURL = ParamUtil.getString(
+			actionRequest, "smallImageURL");
+
+		ImageSelector smallImage = new ImageSelector(
+			smallImageFileEntryId, smallImageURL);
 
 		BlogsEntry entry = null;
-		String oldUrlTitle = null;
+		String oldUrlTitle = StringPool.BLANK;
 
-		try {
-			boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			BlogsEntry.class.getName(), actionRequest);
 
-			if (!ajax) {
-				smallImage = ParamUtil.getBoolean(actionRequest, "smallImage");
-				smallImageFileEntryId = ParamUtil.getLong(
-					actionRequest, "smallImageFileEntryId");
-				smallImageURL = ParamUtil.getString(
-					actionRequest, "smallImageURL");
+		if (entryId <= 0) {
 
-				if (smallImage && Validator.isNull(smallImageURL)) {
-					UploadPortletRequest uploadPortletRequest =
-						PortalUtil.getUploadPortletRequest(actionRequest);
+			// Add entry
 
-					smallImageFileName = uploadPortletRequest.getFileName(
-						"smallFile");
-					smallImageInputStream =
-						uploadPortletRequest.getFileAsStream("smallFile");
-				}
-			}
+			entry = BlogsEntryServiceUtil.addEntry(
+				title, subtitle, description, content, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
+				smallImage, serviceContext);
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				BlogsEntry.class.getName(), actionRequest);
-
-			entry = null;
-			oldUrlTitle = StringPool.BLANK;
-
-			if (entryId <= 0) {
-
-				// Add entry
-
-				entry = BlogsEntryServiceUtil.addEntry(
-					title, subtitle, description, content, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, allowPingbacks, allowTrackbacks,
-					trackbacks, smallImage, smallImageURL,
-					smallImageFileEntryId, serviceContext);
-
-				AssetPublisherUtil.addAndStoreSelection(
-					actionRequest, BlogsEntry.class.getName(),
-					entry.getEntryId(), -1);
-			}
-			else {
-
-				// Update entry
-
-				entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
-
-				String tempOldUrlTitle = entry.getUrlTitle();
-
-				entry = BlogsEntryServiceUtil.updateEntry(
-					entryId, title, subtitle, description, content,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, allowPingbacks,
-					allowTrackbacks, trackbacks, smallImage, smallImageURL,
-					smallImageFileEntryId, serviceContext);
-
-				if (!tempOldUrlTitle.equals(entry.getUrlTitle())) {
-					oldUrlTitle = tempOldUrlTitle;
-				}
-
-				AssetPublisherUtil.addAndStoreSelection(
-					actionRequest, BlogsEntry.class.getName(),
-					entry.getEntryId(), -1);
-			}
+			AssetPublisherUtil.addAndStoreSelection(
+				actionRequest, BlogsEntry.class.getName(), entry.getEntryId(),
+				-1);
 		}
-		finally {
-			StreamUtil.cleanUp(smallImageInputStream);
+		else {
+
+			// Update entry
+
+			entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
+
+			String tempOldUrlTitle = entry.getUrlTitle();
+
+			entry = BlogsEntryServiceUtil.updateEntry(
+				entryId, title, subtitle, description, content,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, allowPingbacks,
+				allowTrackbacks, trackbacks, smallImage, serviceContext);
+
+			if (!tempOldUrlTitle.equals(entry.getUrlTitle())) {
+				oldUrlTitle = tempOldUrlTitle;
+			}
+
+			AssetPublisherUtil.addAndStoreSelection(
+				actionRequest, BlogsEntry.class.getName(), entry.getEntryId(),
+				-1);
 		}
 
 		return new Object[] {entry, oldUrlTitle};

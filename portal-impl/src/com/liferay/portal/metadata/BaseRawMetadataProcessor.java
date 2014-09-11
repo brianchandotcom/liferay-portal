@@ -44,6 +44,7 @@ import org.apache.tika.metadata.Property;
 import org.apache.tika.metadata.TIFF;
 import org.apache.tika.metadata.TikaMetadataKeys;
 import org.apache.tika.metadata.TikaMimeKeys;
+import org.apache.tika.metadata.XMPDM;
 
 /**
  * @author Alexander Chow

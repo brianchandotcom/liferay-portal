@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 
 import org.apache.tika.metadata.Metadata;
+import org.apache.tika.metadata.XMPDM;
 
 /**
  * @author Juan González

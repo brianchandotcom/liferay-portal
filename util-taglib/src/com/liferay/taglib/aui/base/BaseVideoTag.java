@@ -33,68 +33,44 @@ public class BaseVideoTag extends com.liferay.taglib.util.IncludeTag {
 		return super.doStartTag();
 	}
 
-	public java.lang.String getCssClass() {
-		return _cssClass;
-	}
-
-	public java.lang.String getId() {
-		return _id;
-	}
-
-	public java.lang.Integer getWidth() {
-		return _width;
-	}
-
-	public java.lang.Integer getHeight() {
-		return _height;
-	}
-
 	public java.lang.String getBoundingBox() {
 		return _boundingBox;
 	}
 
-	public java.lang.String getUrl() {
-		return _url;
-	}
-
-	public java.lang.String getOgvUrl() {
-		return _ogvUrl;
-	}
-
-	public java.lang.String getSwfUrl() {
-		return _swfUrl;
-	}
-
-	public java.lang.String getPoster() {
-		return _poster;
+	public java.lang.String getCssClass() {
+		return _cssClass;
 	}
 
 	public java.lang.String getFlashPlayerVersion() {
 		return _flashPlayerVersion;
 	}
 
-	public void setCssClass(java.lang.String cssClass) {
-		_cssClass = cssClass;
-
-		setScopedAttribute("cssClass", cssClass);
+	public java.lang.Integer getHeight() {
+		return _height;
 	}
 
-	public void setId(java.lang.String id) {
-		_id = id;
-
-		setScopedAttribute("id", id);
+	public java.lang.String getId() {
+		return _id;
 	}
 
-	public void setWidth(java.lang.Integer width) {
-		_width = width;
-
-		setScopedAttribute("width", width);
+	public java.lang.String getOgvUrl() {
+		return _ogvUrl;
 	}
 
-	public void setHeight(java.lang.Integer height) {
-		_height = height;
+	public java.lang.String getPoster() {
+		return _poster;
+	}
 
-		setScopedAttribute("height", height);
+	public java.lang.String getSwfUrl() {
+		return _swfUrl;
+	}
+
+	public java.lang.String getUrl() {
+		return _url;
+	}
+
+	public java.lang.Integer getWidth() {
+		return _width;
 	}
 
 	public void setBoundingBox(java.lang.String boundingBox) {
@@ -103,28 +79,10 @@ public class BaseVideoTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("boundingBox", boundingBox);
 	}
 
-	public void setUrl(java.lang.String url) {
-		_url = url;
+	public void setCssClass(java.lang.String cssClass) {
+		_cssClass = cssClass;
 
-		setScopedAttribute("url", url);
-	}
-
-	public void setOgvUrl(java.lang.String ogvUrl) {
-		_ogvUrl = ogvUrl;
-
-		setScopedAttribute("ogvUrl", ogvUrl);
-	}
-
-	public void setSwfUrl(java.lang.String swfUrl) {
-		_swfUrl = swfUrl;
-
-		setScopedAttribute("swfUrl", swfUrl);
-	}
-
-	public void setPoster(java.lang.String poster) {
-		_poster = poster;
-
-		setScopedAttribute("poster", poster);
+		setScopedAttribute("cssClass", cssClass);
 	}
 
 	public void setFlashPlayerVersion(java.lang.String flashPlayerVersion) {
@@ -133,18 +91,60 @@ public class BaseVideoTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("flashPlayerVersion", flashPlayerVersion);
 	}
 
+	public void setHeight(java.lang.Integer height) {
+		_height = height;
+
+		setScopedAttribute("height", height);
+	}
+
+	public void setId(java.lang.String id) {
+		_id = id;
+
+		setScopedAttribute("id", id);
+	}
+
+	public void setOgvUrl(java.lang.String ogvUrl) {
+		_ogvUrl = ogvUrl;
+
+		setScopedAttribute("ogvUrl", ogvUrl);
+	}
+
+	public void setPoster(java.lang.String poster) {
+		_poster = poster;
+
+		setScopedAttribute("poster", poster);
+	}
+
+	public void setSwfUrl(java.lang.String swfUrl) {
+		_swfUrl = swfUrl;
+
+		setScopedAttribute("swfUrl", swfUrl);
+	}
+
+	public void setUrl(java.lang.String url) {
+		_url = url;
+
+		setScopedAttribute("url", url);
+	}
+
+	public void setWidth(java.lang.Integer width) {
+		_width = width;
+
+		setScopedAttribute("width", width);
+	}
+
 	@Override
 	protected void cleanUp() {
-		_cssClass = null;
-		_id = null;
-		_width = null;
-		_height = null;
 		_boundingBox = null;
-		_url = null;
-		_ogvUrl = null;
-		_swfUrl = null;
-		_poster = null;
+		_cssClass = null;
 		_flashPlayerVersion = null;
+		_height = null;
+		_id = null;
+		_ogvUrl = null;
+		_poster = null;
+		_swfUrl = null;
+		_url = null;
+		_width = null;
 	}
 
 	@Override
@@ -154,16 +154,16 @@ public class BaseVideoTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		setNamespacedAttribute(request, "cssClass", _cssClass);
-		setNamespacedAttribute(request, "id", _id);
-		setNamespacedAttribute(request, "width", _width);
-		setNamespacedAttribute(request, "height", _height);
 		setNamespacedAttribute(request, "boundingBox", _boundingBox);
-		setNamespacedAttribute(request, "url", _url);
-		setNamespacedAttribute(request, "ogvUrl", _ogvUrl);
-		setNamespacedAttribute(request, "swfUrl", _swfUrl);
-		setNamespacedAttribute(request, "poster", _poster);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "flashPlayerVersion", _flashPlayerVersion);
+		setNamespacedAttribute(request, "height", _height);
+		setNamespacedAttribute(request, "id", _id);
+		setNamespacedAttribute(request, "ogvUrl", _ogvUrl);
+		setNamespacedAttribute(request, "poster", _poster);
+		setNamespacedAttribute(request, "swfUrl", _swfUrl);
+		setNamespacedAttribute(request, "url", _url);
+		setNamespacedAttribute(request, "width", _width);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:video:";
@@ -171,15 +171,15 @@ public class BaseVideoTag extends com.liferay.taglib.util.IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/aui/video/page.jsp";
 
-	private java.lang.String _cssClass = null;
-	private java.lang.String _id = null;
-	private java.lang.Integer _width = null;
-	private java.lang.Integer _height = null;
 	private java.lang.String _boundingBox = null;
-	private java.lang.String _url = null;
-	private java.lang.String _ogvUrl = null;
-	private java.lang.String _swfUrl = null;
-	private java.lang.String _poster = null;
+	private java.lang.String _cssClass = null;
 	private java.lang.String _flashPlayerVersion = null;
+	private java.lang.Integer _height = null;
+	private java.lang.String _id = null;
+	private java.lang.String _ogvUrl = null;
+	private java.lang.String _poster = null;
+	private java.lang.String _swfUrl = null;
+	private java.lang.String _url = null;
+	private java.lang.Integer _width = null;
 
 }

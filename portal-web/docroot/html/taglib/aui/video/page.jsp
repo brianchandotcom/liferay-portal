@@ -14,4 +14,29 @@
  */
 --%>
 
-<%@ include file="init.jsp" %>
+<%@ include file="/html/taglib/aui/video/init.jsp" %>
+
+<%
+	java.util.Random rand = new java.util.Random();
+	int r = rand.nextInt(50);
+%>
+
+<div class="video <%= cssClass %>" id="<%= id %>_<%= r %>"></div>
+
+<aui:script use="aui-video">
+	new A.Video(
+		{
+			boundingBox: '#<%= id %>_<%= r %>',
+			cssClass: null,
+			flashPlayerVersion: '9,0,0,0',
+			height: <%= height %>,
+			id: '#<%= id %>_<%= r %>',
+			ogvUrl: '<%= ogvUrl %>',
+			poster: '<%= poster %>',
+			render: true,
+			swfUrl: '<%= swfUrl %>',
+			url: '<%= url %>',
+			width: <%= width %>
+		}
+	);
+</aui:script>

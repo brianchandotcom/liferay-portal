@@ -115,19 +115,19 @@
 	<component name="Video">
 		<attributes>
 			<attribute>
+				<name>boundingBox</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<name>id</name>
+				<name>flashPlayerVersion</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
-				<name>width</name>
-				<inputType>java.lang.Integer</inputType>
-				<outputType>java.lang.Integer</outputType>
 			</attribute>
 			<attribute>
 				<name>height</name>
@@ -135,12 +135,7 @@
 				<outputType>java.lang.Integer</outputType>
 			</attribute>
 			<attribute>
-				<name>boundingBox</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
-				<name>url</name>
+				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
@@ -150,19 +145,24 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<name>swfUrl</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
 				<name>poster</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<name>flashPlayerVersion</name>
+				<name>swfUrl</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>url</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>width</name>
+				<inputType>java.lang.Integer</inputType>
+				<outputType>java.lang.Integer</outputType>
 			</attribute>
 		</attributes>
 	</component>

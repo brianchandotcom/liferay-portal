@@ -20,14 +20,14 @@
 
 <%
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:video:cssClass"));
-java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:video:id"));
-java.lang.Integer width = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:video:width")));
-java.lang.Integer height = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:video:height")));
-java.lang.String url = GetterUtil.getString((java.lang.String)request.getAttribute("aui:video:url"));
-java.lang.String ogvUrl = GetterUtil.getString((java.lang.String)request.getAttribute("aui:video:ogvUrl"));
-java.lang.String swfUrl = GetterUtil.getString((java.lang.String)request.getAttribute("aui:video:swfUrl"));
-java.lang.String poster = GetterUtil.getString((java.lang.String)request.getAttribute("aui:video:poster"));
 java.lang.String flashPlayerVersion = GetterUtil.getString((java.lang.String)request.getAttribute("aui:video:flashPlayerVersion"));
+java.lang.Integer height = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:video:height")));
+java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:video:id"));
+java.lang.String ogvUrl = GetterUtil.getString((java.lang.String)request.getAttribute("aui:video:ogvUrl"));
+java.lang.String poster = GetterUtil.getString((java.lang.String)request.getAttribute("aui:video:poster"));
+java.lang.String swfUrl = GetterUtil.getString((java.lang.String)request.getAttribute("aui:video:swfUrl"));
+java.lang.String url = GetterUtil.getString((java.lang.String)request.getAttribute("aui:video:url"));
+java.lang.Integer width = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:video:width")));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:video:dynamicAttributes");
 Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:video:scopedAttributes");
 %>

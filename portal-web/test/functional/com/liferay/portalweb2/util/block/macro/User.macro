@@ -104,6 +104,13 @@
 			</then>
 		</if>
 
+		<if>
+			<isset var="userGender" />
+			<then>
+				<execute action="CPUsersandorganizationsAdduser#select" locator-key1="DETAILS_GENDER_FIELD" value1="${userGender}" />
+			</then>
+		</if>
+
 		<execute action="CPUsersandorganizationsAdduser#type" locator-key1="DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 		<execute action="CPUsersandorganizationsAdduser#assertClick" locator-key1="SAVE" value1="Save" />
 

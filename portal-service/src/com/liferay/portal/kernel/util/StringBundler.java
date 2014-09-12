@@ -66,10 +66,10 @@ public class StringBundler implements Serializable {
 
 	public StringBundler append(boolean b) {
 		if (b) {
-			return append(_TRUE);
+			return append(StringPool.TRUE);
 		}
 		else {
-			return append(_FALSE);
+			return append(StringPool.FALSE);
 		}
 	}
 
@@ -226,10 +226,6 @@ public class StringBundler implements Serializable {
 
 	@Override
 	public String toString() {
-		return toString(true);
-	}
-
-	public String toString(boolean unsafeCreate) {
 		if (_arrayIndex == 0) {
 			return StringPool.BLANK;
 		}
@@ -295,30 +291,22 @@ public class StringBundler implements Serializable {
 
 	private static final int _DEFAULT_ARRAY_CAPACITY = 16;
 
-	private static final String _FALSE = "false";
-
 	private static final int _THREAD_LOCAL_BUFFER_LIMIT;
-
-	private static final int _THREADLOCAL_BUFFER_LIMIT = GetterUtil.getInteger(
-		System.getProperty(
-			StringBundler.class.getName() + ".threadlocal.buffer.limit"));
-
-	private static final String _TRUE = "true";
 
 	private static final ThreadLocal<StringBuilder> _stringBuilderThreadLocal;
 
 	private static final long serialVersionUID = 1L;
 
 	static {
-		if (_THREADLOCAL_BUFFER_LIMIT > 0) {
-			_THREAD_LOCAL_BUFFER_LIMIT = _THREADLOCAL_BUFFER_LIMIT;
+		_THREAD_LOCAL_BUFFER_LIMIT = Integer.getInteger(
+			StringBundler.class.getName() + ".threadlocal.buffer.limit",
+			Integer.MAX_VALUE);
 
+		if (_THREAD_LOCAL_BUFFER_LIMIT < Integer.MAX_VALUE) {
 			_stringBuilderThreadLocal =
 				new SoftReferenceThreadLocal<StringBuilder>();
 		}
 		else {
-			_THREAD_LOCAL_BUFFER_LIMIT = Integer.MAX_VALUE;
-
 			_stringBuilderThreadLocal = null;
 		}
 	}

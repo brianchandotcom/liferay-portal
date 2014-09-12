@@ -22,7 +22,10 @@ import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.util.LogUtil;
@@ -49,6 +52,7 @@ import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.ClusterAdminClient;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.cluster.metadata.RepositoryMetaData;
+import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.collect.ImmutableList;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.repositories.RepositoryMissingException;
@@ -74,12 +78,14 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	public synchronized String backup(long companyId, String backupName)
 		throws SearchException {
 
+		validateRepositoryName(backupName);
+
 		ClusterAdminClient clusterAdminClient =
 			_elasticsearchConnectionManager.getClusterAdminClient();
 
 		CreateSnapshotRequestBuilder createSnapshotRequestBuilder =
 			clusterAdminClient.prepareCreateSnapshot(
-				_BACKUP_REPOSITORY_NAME, backupName);
+				_BACKUP_REPOSITORY_NAME, StringUtil.toLowerCase(backupName));
 
 		createSnapshotRequestBuilder.setWaitForCompletion(true);
 
@@ -319,6 +325,46 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 			}
 			else {
 				throw ee;
+			}
+		}
+	}
+
+	protected void validateRepositoryName(String repositoryName)
+		throws SearchException {
+
+		if (Validator.isNull(repositoryName)) {
+			throw new SearchException(
+				"Repository name must not be an empty string");
+		}
+
+		if (StringUtil.contains(repositoryName, StringPool.TAB)) {
+			throw new SearchException("Repository name must not contain tabs");
+		}
+
+		if (StringUtil.contains(repositoryName, StringPool.SPACE)) {
+			throw new SearchException(
+				"Repository name must not contain spaces");
+		}
+
+		if (StringUtil.contains(repositoryName, StringPool.COMMA)) {
+			throw new SearchException("Repository name must not contain comma");
+		}
+
+		if (StringUtil.contains(repositoryName, StringPool.POUND)) {
+			throw new SearchException(
+				"Repository name must not contain hash sign");
+		}
+
+		if (StringUtil.startsWith(repositoryName, StringPool.DASH)) {
+			throw new SearchException(
+				"Repository name must not start with dash");
+		}
+
+		for (char c : repositoryName.toCharArray()) {
+			if (Strings.INVALID_FILENAME_CHARS.contains(c)) {
+				throw new SearchException(
+					"Repository name must not contain invalid file name " +
+						"characters");
 			}
 		}
 	}

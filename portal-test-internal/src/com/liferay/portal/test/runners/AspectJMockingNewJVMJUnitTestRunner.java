@@ -155,7 +155,7 @@ public class AspectJMockingNewJVMJUnitTestRunner extends NewJVMJUnitTestRunner {
 
 				currentThread.setContextClassLoader(weavingClassLoader);
 
-				return (Serializable)ReflectionTestUtil.invoke(
+				return ReflectionTestUtil.invoke(
 					originalProcessCallable, "call", new Class<?>[0]);
 			}
 			catch (Exception e) {

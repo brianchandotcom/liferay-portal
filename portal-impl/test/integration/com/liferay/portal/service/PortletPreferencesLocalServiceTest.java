@@ -1544,14 +1544,13 @@ public class PortletPreferencesLocalServiceTest {
 					getWrappedService());
 
 			try {
-				return (javax.portlet.PortletPreferences)
-					ReflectionTestUtil.invoke(
-						classLoaderBeanHandler.getBean(), "getPreferences",
-						new Class[] {
-							long.class, long.class, int.class, long.class,
-							String.class, String.class, boolean.class},
-						companyId, ownerId, ownerType, plid, portletId, null,
-						_strict);
+				return ReflectionTestUtil.invoke(
+					classLoaderBeanHandler.getBean(), "getPreferences",
+					new Class[] {
+						long.class, long.class, int.class, long.class,
+						String.class, String.class, boolean.class},
+					companyId, ownerId, ownerType, plid, portletId, null,
+					_strict);
 			}
 			catch (Exception e) {
 				throw new SystemException(e);

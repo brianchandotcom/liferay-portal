@@ -2729,6 +2729,8 @@ public interface PropsKeys {
 
 	public static final String VERIFY_FREQUENCY = "verify.frequency";
 
+	public static final String VERIFY_POST_STARTUP_PROCESSES = "verify.post.startup.processes";
+
 	public static final String VERIFY_PROCESSES = "verify.processes";
 
 	public static final String VIRTUAL_HOSTS_DEFAULT_SITE_NAME = "virtual.hosts.default.site.name";

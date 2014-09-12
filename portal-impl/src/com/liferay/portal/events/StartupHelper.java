@@ -59,6 +59,17 @@ public class StartupHelper {
 		return _verified;
 	}
 
+	public void postStartupVerifyProcess(
+			boolean newBuildNumber, boolean verified)
+		throws VerifyException {
+
+		boolean postVerify = VerifyProcessUtil.verifyProcess(
+			_upgraded, newBuildNumber, verified,
+			PropsKeys.VERIFY_POST_STARTUP_PROCESSES);
+
+		_verified = _verified && postVerify;
+	}
+
 	public void setDropIndexes(boolean dropIndexes) {
 		_dropIndexes = dropIndexes;
 	}

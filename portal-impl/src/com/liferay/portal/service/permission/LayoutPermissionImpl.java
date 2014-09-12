@@ -232,6 +232,18 @@ public class LayoutPermissionImpl
 			layout = virtualLayout.getWrappedModel();
 		}
 
+		if (actionId.equals(ActionKeys.ADD_LAYOUT)) {
+			if (!SitesUtil.isLayoutDeleteable(layout)) {
+				return false;
+			}
+
+			if (!PortalUtil.isLayoutParentable(layout.getType()) ||
+				!SitesUtil.isLayoutSortable(layout)) {
+
+				return false;
+			}
+		}
+
 		if (actionId.equals(ActionKeys.DELETE) &&
 			!SitesUtil.isLayoutDeleteable(layout)) {
 
@@ -274,18 +286,11 @@ public class LayoutPermissionImpl
 			}
 		}
 
-		if (actionId.equals(ActionKeys.ADD_LAYOUT)) {
-			if (!PortalUtil.isLayoutParentable(layout.getType()) ||
-				!SitesUtil.isLayoutSortable(layout)) {
+		if (actionId.equals(ActionKeys.ADD_LAYOUT) &&
+			GroupPermissionUtil.contains(
+				permissionChecker, group, ActionKeys.ADD_LAYOUT)) {
 
-				return false;
-			}
-
-			if (GroupPermissionUtil.contains(
-					permissionChecker, group, ActionKeys.ADD_LAYOUT)) {
-
-				return true;
-			}
+			return true;
 		}
 
 		if (GroupPermissionUtil.contains(

@@ -211,4 +211,81 @@
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="CUSTOM_FIELDS_LABEL" value1="${customFieldName}" />
 		<execute action="CPUsersandorganizationsUser#assertSelectedLabel" locator-key1="CUSTOM_FIELDS_SELECT" value1="False" />
 	</command>
+
+	<command name="EditRevertCustomFieldWikiPage" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Text" />
+			<var name="customFieldType" value="Text" />
+			<var name="resourceName" value="Wiki Page" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiPage#gotoAllPagesPG" />
+
+		<execute macro="WikiPage#addPG">
+			<var name="customFieldText" value="Wiki Text Custom Field" />
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiPage#editPagePG">
+			<var name="customFieldTextEdit" value="Wiki Text Custom Field Edit" />
+			<var name="wikiPageContentEdit" value="Wiki Page Content Edit" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiPage#viewPagePG">
+			<var name="customFieldText" value="Wiki Text Custom Field Edit" />
+			<var name="wikiPageContent" value="Wiki Page Content Edit" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiPage#revertEditPG">
+			<var name="wikiPageRevisionNew" value="1.2" />
+			<var name="wikiPageRevisionOld" value="1.0" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+			<var name="wikiVersionSummary" value="Reverted to 1.0" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiPage#viewPagePG">
+			<var name="customFieldText" value="Wiki Text Custom Field" />
+			<var name="wikiPageContent" value="Wiki Page Content" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+	</command>
 </definition>

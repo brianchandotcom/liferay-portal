@@ -22,11 +22,13 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
+import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
 import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
+import com.liferay.portal.repository.capabilities.LiferayRepositoryEventTriggerCapability;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.repository.registry.RepositoryClassDefinition;
@@ -41,8 +43,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -70,10 +70,17 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 			repositoryClassDefinition.createRepositoryInstanceDefinition(
 				localRepository);
 
+		Map<Class<? extends Capability>, Capability> supportedCapabilities =
+			repositoryInstanceDefinition.getSupportedCapabilities();
+		Set<Class<? extends Capability>> exportedCapabilityClasses =
+			repositoryInstanceDefinition.getExportedCapabilities();
+
+		_setupCommonCapabilities(
+			repositoryClassDefinition, supportedCapabilities,
+			exportedCapabilityClasses);
+
 		return new CapabilityLocalRepository(
-			localRepository,
-			repositoryInstanceDefinition.getSupportedCapabilities(),
-			repositoryInstanceDefinition.getExportedCapabilities(),
+			localRepository, supportedCapabilities, exportedCapabilityClasses,
 			repositoryClassDefinition.getRepositoryEventTrigger());
 	}
 
@@ -96,33 +103,27 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 			repositoryClassDefinition.createRepositoryInstanceDefinition(
 				repository);
 
-		Map<Class<? extends Capability>, Capability>
-			externalSupportedCapabilities =
-				repositoryInstanceDefinition.getSupportedCapabilities();
-		Set<Class<? extends Capability>> externalExportedCapabilityClasses =
+		Map<Class<? extends Capability>, Capability> supportedCapabilities =
+			repositoryInstanceDefinition.getSupportedCapabilities();
+		Set<Class<? extends Capability>> exportedCapabilityClasses =
 			repositoryInstanceDefinition.getExportedCapabilities();
 
 		CMISRepositoryHandler cmisRepositoryHandler = getCMISRepositoryHandler(
 			repository);
 
 		if (cmisRepositoryHandler != null) {
-			externalSupportedCapabilities =
-				new HashMap<Class<? extends Capability>, Capability>(
-					externalSupportedCapabilities);
-
-			externalSupportedCapabilities.put(
+			supportedCapabilities.put(
 				CMISRepositoryHandler.class, cmisRepositoryHandler);
 
-			externalExportedCapabilityClasses =
-				new HashSet<Class<? extends Capability>>(
-					externalExportedCapabilityClasses);
-
-			externalExportedCapabilityClasses.add(CMISRepositoryHandler.class);
+			exportedCapabilityClasses.add(CMISRepositoryHandler.class);
 		}
 
+		_setupCommonCapabilities(
+			repositoryClassDefinition, supportedCapabilities,
+			exportedCapabilityClasses);
+
 		return new CapabilityRepository(
-			repository, externalSupportedCapabilities,
-			externalExportedCapabilityClasses,
+			repository, supportedCapabilities, exportedCapabilityClasses,
 			repositoryClassDefinition.getRepositoryEventTrigger());
 	}
 
@@ -211,6 +212,24 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 
 	protected RepositoryLocalService getRepositoryLocalService() {
 		return _repositoryLocalService;
+	}
+
+	private void _setupCommonCapabilities(
+		RepositoryClassDefinition repositoryClassDefinition,
+		Map<Class<? extends Capability>, Capability> supportedCapabilities,
+		Set<Class<? extends Capability>> exportedCapabilityClasses) {
+
+		if (!supportedCapabilities.containsKey(
+				RepositoryEventTriggerCapability.class)) {
+
+			exportedCapabilityClasses.add(
+				RepositoryEventTriggerCapability.class);
+
+			supportedCapabilities.put(
+				RepositoryEventTriggerCapability.class,
+				new LiferayRepositoryEventTriggerCapability(
+					repositoryClassDefinition.getRepositoryEventTrigger()));
+		}
 	}
 
 	@BeanReference(type = ClassNameLocalService.class)

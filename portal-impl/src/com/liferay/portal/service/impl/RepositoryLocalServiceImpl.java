@@ -374,7 +374,11 @@ public class RepositoryLocalServiceImpl
 			folderId, fileEntryId, fileVersionId);
 
 		RepositoryEntry repositoryEntry =
-			repositoryEntryLocalService.getRepositoryEntry(repositoryEntryId);
+			repositoryEntryLocalService.fetchRepositoryEntry(repositoryEntryId);
+
+		if (repositoryEntry == null) {
+			return 0;
+		}
 
 		return repositoryEntry.getRepositoryId();
 	}
@@ -432,7 +436,17 @@ public class RepositoryLocalServiceImpl
 			return repositoryId;
 		}
 
-		return getExternalRepositoryId(folderId, fileEntryId, fileVersionId);
+		repositoryId = getExternalRepositoryId(
+			folderId, fileEntryId, fileVersionId);
+
+		if (repositoryId == 0) {
+			throw new InvalidRepositoryIdException(
+				String.format(
+					"No DLFolder or RepositoryEntry found with folderId = %s",
+					folderId));
+		}
+
+		return repositoryId;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

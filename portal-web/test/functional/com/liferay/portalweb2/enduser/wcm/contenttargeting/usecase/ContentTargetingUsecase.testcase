@@ -1,0 +1,156 @@
+<definition component-name="extra-apps-content-targeting">
+	<property name="testray.main.component.name" value="WCM" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Test Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Role#tearDownCP" />
+
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
+	<command name="UserSegmentAddViaUserSegmentContentDisplayPortlet" priority="5">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Audience Targeting" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
+			<var name="genderRadio" value="Male" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description 1" />
+			<var name="dmDocumentFile" value="Document_1.jpg" />
+			<var name="dmDocumentTitle" value="DM Document Title 1" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description 2" />
+			<var name="dmDocumentFile" value="Document_2.jpg" />
+			<var name="dmDocumentTitle" value="DM Document Title 2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="User Segment Content Display" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
+			<var name="belongs" value="true" />
+			<var name="contentTitle" value="DM Document Title 1" />
+			<var name="contentType" value="Document" />
+			<var name="otherwiseContentTitle" value="DM Document Title 2" />
+			<var name="otherwiseContentType" value="Document" />
+			<var name="toAll" value="true" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
+			<var name="belongsTo" value="true" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="female@liferay.com" />
+			<var name="userFirstName" value="female" />
+			<var name="userGender" value="Female" />
+			<var name="userLastName" value="female" />
+			<var name="userScreenName" value="female" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="password" value="password" />
+			<var name="userEmailAddress" value="female@liferay.com" />
+			<var name="userScreenName" value="female" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="userFirstName" value="female" />
+			<var name="userLastName" value="female" />
+			<var name="userScreenName" value="female" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="female@liferay.com" />
+			<var name="userLoginFullName" value="female female" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="PGUsersegmentcontentdisplay#sikuliClick" locator-key1="PREVIEW_DOCUMENT_1_PNG" />
+	</command>
+</definition>

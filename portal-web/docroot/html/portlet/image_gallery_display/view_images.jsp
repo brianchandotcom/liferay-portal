@@ -264,7 +264,7 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 	var maxHeight = (viewportRegion.height / 2);
 	var maxWidth = (viewportRegion.width / 2);
 
-	var imageGallery = new A.ImageGallery(
+	var imageGallery = new A.ImageViewer(
 		{
 			after: {
 				render: function(event) {

@@ -1,6 +1,5 @@
 @import "aui/alloy-font-awesome/scss/mixins-alloy";
 @import "aui/alloy-font-awesome/scss/variables";
-@import "aui_variables";
 @import "compass";
 @import "compass/css3/user-interface";
 @import "mixins";
@@ -103,8 +102,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 	li {
 		line-height: 27px;
 
-		label.checkbox {
-			line-height: $line-height-base;
+		.radio input, .checkbox input {
+			top: 3px;
 		}
 	}
 

@@ -1220,6 +1220,19 @@
 		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="12" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+
+		<var name="key_row" value="1" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} sent you a message." />
+
+		<var name="key_row" value="2" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} sent you a message." />
+
+		<var name="key_row" value="3" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} sent you a message." />
+
 		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK" value1="Notifications (6)" />
 
 		<var name="key_row" value="1" />
@@ -1251,6 +1264,19 @@
 		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="12" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+
+		<var name="key_row" value="4" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} would like to add you as a connection." />
+
+		<var name="key_row" value="5" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} would like to add you as a connection." />
+
+		<var name="key_row" value="6" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName4} would like to add you as a connection." />
+
 		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_VIEW_REQUESTS_LINK" value1="Requests (6)" />
 
 		<var name="key_row" value="1" />
@@ -2201,6 +2227,19 @@
 		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="12" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+
+		<var name="key_row" value="1" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} sent you a message." />
+
+		<var name="key_row" value="2" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName6} commented on your post." />
+
+		<var name="key_row" value="3" />
+
+		<execute action="SONotifications#assertTextEquals" locator-key1="NOTIFICATIONS_ENTRY_INCREMENT" value1="${userName5} sent you a message." />
+
 		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_VIEW_NOTIFICATIONS_LINK" value1="Notifications (12)" />
 
 		<var name="key_row" value="1" />

@@ -707,7 +707,7 @@ public class StringBundlerTest {
 
 		try {
 			Assert.assertEquals(
-				0,
+				Integer.MAX_VALUE,
 				ReflectionTestUtil.getFieldValue(
 					StringBundler.class, "_THREAD_LOCAL_BUFFER_LIMIT"));
 			Assert.assertNull(

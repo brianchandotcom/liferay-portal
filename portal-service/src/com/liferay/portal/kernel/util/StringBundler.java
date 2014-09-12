@@ -299,9 +299,11 @@ public class StringBundler implements Serializable {
 
 	static {
 		_THREAD_LOCAL_BUFFER_LIMIT = GetterUtil.getInteger(
-			StringBundler.class.getName() + ".threadlocal.buffer.limit");
+			System.getProperty(
+				StringBundler.class.getName() + ".threadlocal.buffer.limit"),
+			Integer.MAX_VALUE);
 
-		if (_THREAD_LOCAL_BUFFER_LIMIT > 0) {
+		if (_THREAD_LOCAL_BUFFER_LIMIT < Integer.MAX_VALUE) {
 			_stringBuilderThreadLocal =
 				new SoftReferenceThreadLocal<StringBuilder>();
 		}

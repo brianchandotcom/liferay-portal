@@ -16,6 +16,9 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,13 +26,192 @@ import java.io.ObjectOutputStream;
 import java.io.StringWriter;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  * @author Manuel de la Peña
  */
+@RunWith(NewClassLoaderJUnitTestRunner.class)
 public class StringBundlerTest {
+
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor();
+
+	@Test
+	public void testAppendBoolean() {
+		StringBundler sb = new StringBundler();
+
+		Assert.assertEquals(0, sb.length());
+
+		sb.append(true);
+
+		Assert.assertEquals(4, sb.length());
+		Assert.assertEquals("true", sb.toString());
+
+		sb.append(false);
+
+		Assert.assertEquals(9, sb.length());
+		Assert.assertEquals("truefalse", sb.toString());
+
+		_assertArray(sb, "true", "false");
+	}
+
+	@Test
+	public void testAppendChar() {
+		StringBundler sb = new StringBundler();
+
+		Assert.assertEquals(0, sb.length());
+
+		sb.append('a');
+
+		Assert.assertEquals(1, sb.length());
+		Assert.assertEquals("a", sb.toString());
+
+		sb.append('b');
+
+		Assert.assertEquals(2, sb.length());
+		Assert.assertEquals("ab", sb.toString());
+
+		sb.append('c');
+
+		Assert.assertEquals(3, sb.length());
+		Assert.assertEquals("abc", sb.toString());
+
+		_assertArray(sb, "a", "b", "c");
+	}
+
+	@Test
+	public void testAppendCharArray() {
+		StringBundler sb = new StringBundler();
+
+		Assert.assertEquals(0, sb.length());
+
+		sb.append(new char[] {'a', 'b'});
+
+		Assert.assertEquals(2, sb.length());
+		Assert.assertEquals("ab", sb.toString());
+
+		sb.append(new char[] {'c', 'd'});
+
+		Assert.assertEquals(4, sb.length());
+		Assert.assertEquals("abcd", sb.toString());
+
+		sb.append(new char[] {'e', 'f'});
+
+		Assert.assertEquals(6, sb.length());
+		Assert.assertEquals("abcdef", sb.toString());
+
+		_assertArray(sb, "ab", "cd", "ef");
+	}
+
+	@Test
+	public void testAppendDouble() {
+		StringBundler sb = new StringBundler();
+
+		Assert.assertEquals(0, sb.length());
+
+		sb.append(1.0D);
+
+		Assert.assertEquals(3, sb.length());
+		Assert.assertEquals("1.0", sb.toString());
+
+		sb.append(2.1D);
+
+		Assert.assertEquals(6, sb.length());
+		Assert.assertEquals("1.02.1", sb.toString());
+
+		sb.append(3.2D);
+
+		Assert.assertEquals(9, sb.length());
+		Assert.assertEquals("1.02.13.2", sb.toString());
+
+		_assertArray(sb, "1.0", "2.1", "3.2");
+	}
+
+	@Test
+	public void testAppendEmptyStringBundler() {
+		StringBundler sb = new StringBundler();
+
+		sb.append(new StringBundler());
+
+		Assert.assertEquals(0, sb.index());
+	}
+
+	@Test
+	public void testAppendFloat() {
+		StringBundler sb = new StringBundler();
+
+		Assert.assertEquals(0, sb.length());
+
+		sb.append(1.0F);
+
+		Assert.assertEquals(3, sb.length());
+		Assert.assertEquals("1.0", sb.toString());
+
+		sb.append(2.1F);
+
+		Assert.assertEquals(6, sb.length());
+		Assert.assertEquals("1.02.1", sb.toString());
+
+		sb.append(3.2F);
+
+		Assert.assertEquals(9, sb.length());
+		Assert.assertEquals("1.02.13.2", sb.toString());
+
+		_assertArray(sb, "1.0", "2.1", "3.2");
+	}
+
+	@Test
+	public void testAppendInt() {
+		StringBundler sb = new StringBundler();
+
+		Assert.assertEquals(0, sb.length());
+
+		sb.append(1);
+
+		Assert.assertEquals(1, sb.length());
+		Assert.assertEquals("1", sb.toString());
+
+		sb.append(2);
+
+		Assert.assertEquals(2, sb.length());
+		Assert.assertEquals("12", sb.toString());
+
+		sb.append(3);
+
+		Assert.assertEquals(3, sb.length());
+		Assert.assertEquals("123", sb.toString());
+
+		_assertArray(sb, "1", "2", "3");
+	}
+
+	@Test
+	public void testAppendLong() {
+		StringBundler sb = new StringBundler();
+
+		Assert.assertEquals(0, sb.length());
+
+		sb.append(1L);
+
+		Assert.assertEquals(1, sb.length());
+		Assert.assertEquals("1", sb.toString());
+
+		sb.append(2L);
+
+		Assert.assertEquals(2, sb.length());
+		Assert.assertEquals("12", sb.toString());
+
+		sb.append(3L);
+
+		Assert.assertEquals(3, sb.length());
+		Assert.assertEquals("123", sb.toString());
+
+		_assertArray(sb, "1", "2", "3");
+	}
 
 	@Test
 	public void testAppendNullCharArray() {
@@ -242,6 +424,11 @@ public class StringBundlerTest {
 
 		Assert.assertEquals(0, sb.index());
 		Assert.assertEquals(32, sb.capacity());
+
+		sb = new StringBundler(0);
+
+		Assert.assertEquals(0, sb.index());
+		Assert.assertEquals(16, sb.capacity());
 	}
 
 	@Test
@@ -307,6 +494,15 @@ public class StringBundlerTest {
 		Assert.assertEquals(1, sb.index());
 		Assert.assertEquals("aa", sb.stringAt(0));
 		Assert.assertEquals(2, sb.capacity());
+	}
+
+	@Test
+	public void testEmptyString() {
+		StringBundler sb = new StringBundler();
+
+		sb.append(StringPool.BLANK);
+
+		Assert.assertEquals(0, sb.index());
 	}
 
 	@Test
@@ -424,6 +620,59 @@ public class StringBundlerTest {
 	}
 
 	@Test
+	public void testSetStringAtAndStringAt() {
+		StringBundler sb = new StringBundler();
+
+		try {
+			sb.setStringAt(null, -1);
+
+			Assert.fail();
+		}
+		catch (ArrayIndexOutOfBoundsException aioobe) {
+			Assert.assertEquals(
+				"Array index out of range: -1", aioobe.getMessage());
+		}
+
+		try {
+			sb.setStringAt(null, 0);
+
+			Assert.fail();
+		}
+		catch (ArrayIndexOutOfBoundsException aioobe) {
+			Assert.assertEquals(
+				"Array index out of range: 0", aioobe.getMessage());
+		}
+
+		try {
+			sb.stringAt(-1);
+
+			Assert.fail();
+		}
+		catch (ArrayIndexOutOfBoundsException aioobe) {
+			Assert.assertEquals(
+				"Array index out of range: -1", aioobe.getMessage());
+		}
+
+		try {
+			sb.stringAt(0);
+
+			Assert.fail();
+		}
+		catch (ArrayIndexOutOfBoundsException aioobe) {
+			Assert.assertEquals(
+				"Array index out of range: 0", aioobe.getMessage());
+		}
+
+		sb.append("test1");
+
+		Assert.assertEquals("test1", sb.stringAt(0));
+
+		sb.setStringAt("test2", 0);
+
+		Assert.assertEquals("test2", sb.stringAt(0));
+	}
+
+	@Test
 	public void testToString() {
 		StringBundler sb = new StringBundler();
 
@@ -448,6 +697,104 @@ public class StringBundlerTest {
 	}
 
 	@Test
+	public void testToStringWithoutThreadLocalBuffer() {
+		String propertyKey =
+			StringBundler.class.getName() + ".threadlocal.buffer.limit";
+
+		String propertyValue = System.getProperty(propertyKey);
+
+		System.clearProperty(propertyKey);
+
+		try {
+			Assert.assertEquals(
+				Integer.MAX_VALUE,
+				ReflectionTestUtil.getFieldValue(
+					StringBundler.class, "_THREAD_LOCAL_BUFFER_LIMIT"));
+			Assert.assertNull(
+				ReflectionTestUtil.getFieldValue(
+					StringBundler.class, "_stringBuilderThreadLocal"));
+
+			StringBundler sb = new StringBundler();
+
+			sb.append("1");
+			sb.append("2");
+			sb.append("3");
+			sb.append("4");
+
+			Assert.assertEquals("1234", sb.toString());
+			Assert.assertNull(
+				ReflectionTestUtil.getFieldValue(
+					StringBundler.class, "_stringBuilderThreadLocal"));
+		}
+		finally {
+			if (propertyValue != null) {
+				System.setProperty(propertyKey, propertyValue);
+			}
+		}
+	}
+
+	@Test
+	public void testToStringWithThreadLocalBuffer() {
+		int threadLocalBufferLimit = 3;
+
+		String propertyKey =
+			StringBundler.class.getName() + ".threadlocal.buffer.limit";
+
+		String propertyValue = System.getProperty(propertyKey);
+
+		System.setProperty(propertyKey, String.valueOf(threadLocalBufferLimit));
+
+		try {
+			Assert.assertEquals(
+				threadLocalBufferLimit,
+				ReflectionTestUtil.getFieldValue(
+					StringBundler.class, "_THREAD_LOCAL_BUFFER_LIMIT"));
+
+			ThreadLocal<StringBuilder> threadLocal =
+				(ThreadLocal<StringBuilder>)ReflectionTestUtil.getFieldValue(
+					StringBundler.class, "_stringBuilderThreadLocal");
+
+			Assert.assertNotNull(threadLocal);
+
+			threadLocal.remove();
+
+			StringBundler sb = new StringBundler();
+
+			sb.append("1");
+			sb.append("2");
+			sb.append("3");
+			sb.append("4");
+
+			Assert.assertEquals("1234", sb.toString());
+
+			StringBuilder stringBuilder = threadLocal.get();
+
+			Assert.assertNotNull(stringBuilder);
+			Assert.assertEquals(4, stringBuilder.capacity());
+
+			sb.append("5");
+
+			Assert.assertEquals("12345", sb.toString());
+			Assert.assertSame(stringBuilder, threadLocal.get());
+			Assert.assertEquals(10, stringBuilder.capacity());
+
+			sb.append("6");
+
+			Assert.assertEquals("123456", sb.toString());
+			Assert.assertSame(stringBuilder, threadLocal.get());
+			Assert.assertEquals(10, stringBuilder.capacity());
+		}
+		finally {
+			if (propertyValue == null) {
+				System.clearProperty(propertyKey);
+			}
+			else {
+				System.setProperty(propertyKey, propertyValue);
+			}
+		}
+	}
+
+	@Test
 	public void testWriteTo() throws IOException {
 		StringBundler sb = new StringBundler();
 
@@ -463,6 +810,18 @@ public class StringBundlerTest {
 
 		Assert.assertEquals(
 			"test1test2test3test4test5", stringWriter.toString());
+	}
+
+	private void _assertArray(StringBundler sb, String... prefix) {
+		String[] strings = sb.getStrings();
+
+		for (int i = 0; i < prefix.length; i++) {
+			Assert.assertEquals(prefix[i], strings[i]);
+		}
+
+		for (int i = prefix.length; i < strings.length; i++) {
+			Assert.assertNull(strings[i]);
+		}
 	}
 
 }

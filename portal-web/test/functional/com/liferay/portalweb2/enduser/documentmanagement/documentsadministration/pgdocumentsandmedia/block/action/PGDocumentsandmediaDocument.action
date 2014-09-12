@@ -6,18 +6,6 @@
 	</command>
 
 	<command name="assertTextEquals">
-		<case locator-key1="ERROR_MESSAGE">
-			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-
-		<case locator-key1="DOCUMENT_INFO_TAGS">
-			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-
-		<case locator-key1="SUCCESS_MESSAGE">
-			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-
 		<case comparator="startsWith" locator-key1="MARKETING_">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
@@ -26,8 +14,20 @@
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 
+		<case locator-key1="ERROR_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="DOCUMENT_INFO_TAGS">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
 		<case locator-key1="METADATA_PANEL_NUMBER">
 			<execute function="AssertTextEquals#assertValue" />
+		</case>
+
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>
 </definition>

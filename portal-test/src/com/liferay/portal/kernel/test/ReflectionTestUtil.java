@@ -102,22 +102,22 @@ public class ReflectionTestUtil {
 				"No field on " + clazz + " with name " + fieldName));
 	}
 
-	public static Object getFieldValue(Class<?> clazz, String fieldName) {
+	public static <T> T getFieldValue(Class<?> clazz, String fieldName) {
 		Field field = getField(clazz, fieldName);
 
 		try {
-			return field.get(null);
+			return (T)field.get(null);
 		}
 		catch (Exception e) {
 			return ReflectionUtil.throwException(e);
 		}
 	}
 
-	public static Object getFieldValue(Object instance, String fieldName) {
+	public static <T> T getFieldValue(Object instance, String fieldName) {
 		Field field = getField(instance.getClass(), fieldName);
 
 		try {
-			return field.get(instance);
+			return (T)field.get(instance);
 		}
 		catch (Exception e) {
 			return ReflectionUtil.throwException(e);
@@ -157,21 +157,21 @@ public class ReflectionTestUtil {
 					" and parameter types " + Arrays.toString(parameterTypes)));
 	}
 
-	public static Object invoke(
+	public static <T> T invoke(
 		Class<?> clazz, String methodName, Class<?>[] parameterTypes,
 		Object... parameters) {
 
 		Method method = getMethod(clazz, methodName, parameterTypes);
 
 		try {
-			return method.invoke(null, parameters);
+			return (T)method.invoke(null, parameters);
 		}
 		catch (Exception e) {
 			return ReflectionUtil.throwException(e);
 		}
 	}
 
-	public static Object invoke(
+	public static <T> T invoke(
 		Object instance, String methodName, Class<?>[] parameterTypes,
 		Object... parameters) {
 
@@ -179,14 +179,14 @@ public class ReflectionTestUtil {
 			instance.getClass(), methodName, parameterTypes);
 
 		try {
-			return method.invoke(instance, parameters);
+			return (T)method.invoke(instance, parameters);
 		}
 		catch (Exception e) {
 			return ReflectionUtil.throwException(e);
 		}
 	}
 
-	public static Object invokeBridge(
+	public static <T> T invokeBridge(
 		Object instance, String methodName, Class<?>[] parameterTypes,
 		Object... parameters) {
 
@@ -194,7 +194,7 @@ public class ReflectionTestUtil {
 			instance.getClass(), methodName, parameterTypes);
 
 		try {
-			return method.invoke(instance, parameters);
+			return (T)method.invoke(instance, parameters);
 		}
 		catch (Exception e) {
 			return ReflectionUtil.throwException(e);

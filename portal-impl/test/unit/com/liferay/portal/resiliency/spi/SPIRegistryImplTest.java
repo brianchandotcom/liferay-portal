@@ -71,11 +71,11 @@ public class SPIRegistryImplTest {
 
 		spiRegistryUtil.setSPIRegistry(_spiRegistryImpl);
 
-		_excludedPortletIds = (Set<String>)ReflectionTestUtil.getFieldValue(
+		_excludedPortletIds = ReflectionTestUtil.getFieldValue(
 			_spiRegistryImpl, "_excludedPortletIds");
-		_portletIds = (Map<SPI, String[]>)ReflectionTestUtil.getFieldValue(
+		_portletIds = ReflectionTestUtil.getFieldValue(
 			_spiRegistryImpl, "_portletIds");
-		_portletSPIs = (Map<String, SPI>)ReflectionTestUtil.getFieldValue(
+		_portletSPIs = ReflectionTestUtil.getFieldValue(
 			_spiRegistryImpl, "_portletSPIs");
 	}
 

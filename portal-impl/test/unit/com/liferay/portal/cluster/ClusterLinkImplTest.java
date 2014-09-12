@@ -751,7 +751,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 	}
 
 	protected List<JChannel> getJChannels(ClusterLinkImpl clusterLinkImpl) {
-		return (List<JChannel>)ReflectionTestUtil.getFieldValue(
+		return ReflectionTestUtil.getFieldValue(
 			clusterLinkImpl, "_transportJChannels");
 	}
 

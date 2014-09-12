@@ -103,10 +103,8 @@ public class ClusterSchedulerEngineTest {
 		ReflectionTestUtil.setFieldValue(
 			LockLocalServiceUtil.class, "_service", new MockLockLocalService());
 
-		_threadLocalContext =
-			(ThreadLocal<HashMap<String, Serializable>>)
-				ReflectionTestUtil.getFieldValue(
-					ClusterableContextThreadLocal.class, "_contextThreadLocal");
+		_threadLocalContext = ReflectionTestUtil.getFieldValue(
+			ClusterableContextThreadLocal.class, "_contextThreadLocal");
 
 		Method method = ClusterSchedulerEngine.class.getDeclaredMethod(
 			"delete", String.class);
@@ -974,10 +972,8 @@ public class ClusterSchedulerEngineTest {
 		ClusterSchedulerEngine clusterSchedulerEngine) {
 
 		Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>
-			memoryJobs =
-				(Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>)
-					ReflectionTestUtil.getFieldValue(
-						clusterSchedulerEngine, "_memoryClusteredJobs");
+			memoryJobs = ReflectionTestUtil.getFieldValue(
+				clusterSchedulerEngine, "_memoryClusteredJobs");
 
 		if (memoryJobs.isEmpty()) {
 			return Collections.emptyMap();
@@ -1023,9 +1019,8 @@ public class ClusterSchedulerEngineTest {
 	}
 
 	private boolean _isMaster(ClusterSchedulerEngine clusterSchedulerEngine) {
-		String localClusterNodeAddress =
-			(String)ReflectionTestUtil.getFieldValue(
-				clusterSchedulerEngine, "_localClusterNodeAddress");
+		String localClusterNodeAddress = ReflectionTestUtil.getFieldValue(
+			clusterSchedulerEngine, "_localClusterNodeAddress");
 
 		Lock lock = MockLockLocalService.getLock();
 

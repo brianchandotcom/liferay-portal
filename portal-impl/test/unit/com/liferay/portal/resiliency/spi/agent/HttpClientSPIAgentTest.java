@@ -559,7 +559,7 @@ public class HttpClientSPIAgentTest {
 		serializer.writeString(_SERVLET_CONTEXT_NAME);
 		serializer.writeObject(new SPIAgentRequest(_mockHttpServletRequest));
 
-		long receipt = (Long)ReflectionTestUtil.invoke(
+		long receipt = ReflectionTestUtil.invoke(
 			MailboxUtil.class, "depositMail", new Class<?>[] {ByteBuffer.class},
 			serializer.toByteBuffer());
 
@@ -945,7 +945,7 @@ public class HttpClientSPIAgentTest {
 			@Override
 			protected Datagram processDatagram(Datagram datagram) {
 				try {
-					long receipt = (Long)ReflectionTestUtil.invoke(
+					long receipt = ReflectionTestUtil.invoke(
 						MailboxUtil.class, "depositMail",
 						new Class<?>[] {ByteBuffer.class},
 						datagram.getDataByteBuffer());
@@ -978,7 +978,7 @@ public class HttpClientSPIAgentTest {
 		serializer.writeString(_SERVLET_CONTEXT_NAME);
 		serializer.writeObject(new SPIAgentResponse(_SERVLET_CONTEXT_NAME));
 
-		long receipt = (Long)ReflectionTestUtil.invoke(
+		long receipt = ReflectionTestUtil.invoke(
 			MailboxUtil.class, "depositMail", new Class<?>[] {ByteBuffer.class},
 			serializer.toByteBuffer());
 
@@ -1144,7 +1144,7 @@ public class HttpClientSPIAgentTest {
 		httpClientSPIAgent.transferResponse(
 			mockHttpServletRequest, bufferCacheServletResponse, null);
 
-		Set<String> files = (Set<String>)ReflectionTestUtil.getFieldValue(
+		Set<String> files = ReflectionTestUtil.getFieldValue(
 			Class.forName("java.io.DeleteOnExitHook"), "files");
 
 		Assert.assertTrue(files.contains(tempFile.getPath()));
@@ -1170,14 +1170,13 @@ public class HttpClientSPIAgentTest {
 	}
 
 	protected SocketImpl swapSocketImpl(Socket socket, SocketImpl socketImpl) {
-		SocketImpl oldSocketImpl = (SocketImpl)ReflectionTestUtil.getFieldValue(
+		SocketImpl oldSocketImpl = ReflectionTestUtil.getFieldValue(
 			socket, "impl");
 
 		if (socketImpl == null) {
 			Socket unbindSocket = new Socket();
 
-			socketImpl = (SocketImpl)ReflectionTestUtil.getFieldValue(
-				unbindSocket, "impl");
+			socketImpl = ReflectionTestUtil.getFieldValue(unbindSocket, "impl");
 
 			ReflectionTestUtil.setFieldValue(
 				socketImpl, "cmdsock",

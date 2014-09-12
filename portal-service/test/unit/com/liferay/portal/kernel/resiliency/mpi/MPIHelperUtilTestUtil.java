@@ -30,15 +30,14 @@ public class MPIHelperUtilTestUtil {
 		throws RemoteException {
 
 		Map<String, Object> spiProviderContainers =
-			(Map<String, Object>)ReflectionTestUtil.getFieldValue(
+			ReflectionTestUtil.getFieldValue(
 				MPIHelperUtil.class, "_spiProviderContainers");
 
 		Object spiProviderContainer = spiProviderContainers.get(
 			spi.getSPIProviderName());
 
-		Map<String, SPI> spis =
-			(Map<String, SPI>)ReflectionTestUtil.getFieldValue(
-				spiProviderContainer, "_spis");
+		Map<String, SPI> spis = ReflectionTestUtil.getFieldValue(
+			spiProviderContainer, "_spis");
 
 		spis.put(spiId, spi);
 	}

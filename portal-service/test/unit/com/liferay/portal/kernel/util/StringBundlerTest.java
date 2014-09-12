@@ -751,7 +751,7 @@ public class StringBundlerTest {
 					StringBundler.class, "_THREAD_LOCAL_BUFFER_LIMIT"));
 
 			ThreadLocal<StringBuilder> threadLocal =
-				(ThreadLocal<StringBuilder>)ReflectionTestUtil.getFieldValue(
+				ReflectionTestUtil.getFieldValue(
 					StringBundler.class, "_stringBuilderThreadLocal");
 
 			Assert.assertNotNull(threadLocal);

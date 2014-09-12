@@ -103,7 +103,7 @@ public class SecureRandomUtilTest {
 			ReflectionTestUtil.getFieldValue(
 				SecureRandomUtil.class, "_BUFFER_SIZE"));
 
-		byte[] bytes = (byte[])ReflectionTestUtil.getFieldValue(
+		byte[] bytes = ReflectionTestUtil.getFieldValue(
 			SecureRandomUtil.class, "_bytes");
 
 		Assert.assertEquals(1024, bytes.length);
@@ -371,14 +371,14 @@ public class SecureRandomUtilTest {
 	}
 
 	protected long getFirstLong() {
-		byte[] bytes = (byte[])ReflectionTestUtil.getFieldValue(
+		byte[] bytes = ReflectionTestUtil.getFieldValue(
 			SecureRandomUtil.class, "_bytes");
 
 		return BigEndianCodec.getLong(bytes, 0);
 	}
 
 	protected long getGapSeed() {
-		return (Long)ReflectionTestUtil.getFieldValue(
+		return ReflectionTestUtil.getFieldValue(
 			SecureRandomUtil.class, "_gapSeed");
 	}
 
@@ -388,7 +388,7 @@ public class SecureRandomUtilTest {
 		ReflectionTestUtil.setFieldValue(
 			SecureRandomUtil.class, "_random", predictableRandom);
 
-		byte[] bytes = (byte[])ReflectionTestUtil.getFieldValue(
+		byte[] bytes = ReflectionTestUtil.getFieldValue(
 			SecureRandomUtil.class, "_bytes");
 
 		predictableRandom.nextBytes(bytes);
@@ -397,7 +397,7 @@ public class SecureRandomUtilTest {
 	}
 
 	protected long reload() {
-		return (Long)ReflectionTestUtil.invoke(
+		return ReflectionTestUtil.invoke(
 			SecureRandomUtil.class, "_reload", new Class<?>[0]);
 	}
 

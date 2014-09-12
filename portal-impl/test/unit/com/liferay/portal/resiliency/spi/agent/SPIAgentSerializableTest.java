@@ -501,7 +501,7 @@ public class SPIAgentSerializableTest {
 			@Override
 			protected Datagram processDatagram(Datagram datagram) {
 				try {
-					long receipt = (Long)ReflectionTestUtil.invoke(
+					long receipt = ReflectionTestUtil.invoke(
 						MailboxUtil.class, "depositMail",
 						new Class<?>[] {ByteBuffer.class},
 						datagram.getDataByteBuffer());
@@ -667,9 +667,8 @@ public class SPIAgentSerializableTest {
 
 		threadLocalDistributor.afterPropertiesSet();
 
-		Serializable[] serializables =
-			(Serializable[])ReflectionTestUtil.getFieldValue(
-				threadLocalDistributor, "_threadLocalValues");
+		Serializable[] serializables = ReflectionTestUtil.getFieldValue(
+			threadLocalDistributor, "_threadLocalValues");
 
 		Assert.assertNotNull(serializables);
 		Assert.assertEquals(1, serializables.length);
@@ -693,7 +692,7 @@ public class SPIAgentSerializableTest {
 		Assert.assertEquals(1, threadLocalDistributors.length);
 		Assert.assertSame(threadLocalDistributor, threadLocalDistributors[0]);
 
-		serializables = (Serializable[])ReflectionTestUtil.getFieldValue(
+		serializables = ReflectionTestUtil.getFieldValue(
 			threadLocalDistributor, "_threadLocalValues");
 
 		Assert.assertNotNull(serializables);

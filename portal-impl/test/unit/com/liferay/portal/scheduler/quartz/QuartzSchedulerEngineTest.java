@@ -314,9 +314,8 @@ public class QuartzSchedulerEngineTest {
 
 		Assert.assertEquals(_DEFAULT_JOB_NUMBER, schedulerResponses.size());
 
-		MockScheduler mockScheduler =
-			(MockScheduler)ReflectionTestUtil.getFieldValue(
-				_quartzSchedulerEngine, "_persistedScheduler");
+		MockScheduler mockScheduler = ReflectionTestUtil.getFieldValue(
+			_quartzSchedulerEngine, "_persistedScheduler");
 
 		mockScheduler.addJob(
 			_TEST_JOB_NAME_PREFIX + "persisted", _TEST_GROUP_NAME,
@@ -655,9 +654,8 @@ public class QuartzSchedulerEngineTest {
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testUpdate3() throws SchedulerException {
-		MockScheduler mockScheduler =
-			(MockScheduler)ReflectionTestUtil.getFieldValue(
-				_quartzSchedulerEngine, "_memoryScheduler");
+		MockScheduler mockScheduler = ReflectionTestUtil.getFieldValue(
+			_quartzSchedulerEngine, "_memoryScheduler");
 
 		String jobName = _TEST_JOB_NAME_PREFIX + "memory";
 

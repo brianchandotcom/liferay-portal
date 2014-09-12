@@ -132,7 +132,7 @@ public class MailboxUtilTest {
 		Assert.assertTrue(reaperThread.isAlive());
 
 		BlockingQueue<Object> overdueMailQueue =
-			(BlockingQueue<Object>)ReflectionTestUtil.getFieldValue(
+			ReflectionTestUtil.getFieldValue(
 				MailboxUtil.class, "_overdueMailQueue");
 
 		while (!overdueMailQueue.isEmpty());

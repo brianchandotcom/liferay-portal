@@ -896,8 +896,7 @@ public class IntrabandProxyUtilTest {
 			"id", mockRegistrationReference, WarnLogExceptionHandler.INSTANCE);
 
 		Assert.assertEquals(
-			"id",
-			ReflectionTestUtil.getFieldValue(templateStub, "_id"));
+			"id", ReflectionTestUtil.getFieldValue(templateStub, "_id"));
 		Assert.assertSame(
 			mockRegistrationReference,
 			ReflectionTestUtil.getFieldValue(

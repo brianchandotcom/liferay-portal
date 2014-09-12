@@ -1357,7 +1357,7 @@ public class LocalProcessExecutorTest {
 
 	private static Thread _getHeartbeatThread(boolean remove) {
 		AtomicReference<? extends Thread> heartbeatThreadReference =
-			(AtomicReference<? extends Thread>)ReflectionTestUtil.getFieldValue(
+			ReflectionTestUtil.getFieldValue(
 				ProcessContext.class, "_heartbeatThreadReference");
 
 		if (remove) {
@@ -2108,9 +2108,8 @@ public class LocalProcessExecutorTest {
 			ProcessOutputStream processOutputStream =
 				ProcessContext.getProcessOutputStream();
 
-			_oldObjectOutputStream =
-				(ObjectOutputStream)ReflectionTestUtil.getFieldValue(
-					processOutputStream, "_objectOutputStream");
+			_oldObjectOutputStream = ReflectionTestUtil.getFieldValue(
+				processOutputStream, "_objectOutputStream");
 
 			_thread = Thread.currentThread();
 		}

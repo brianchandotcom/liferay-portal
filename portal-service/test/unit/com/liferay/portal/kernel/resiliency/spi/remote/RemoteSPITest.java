@@ -169,7 +169,7 @@ public class RemoteSPITest {
 		ConcurrentMap<String, Object> attributes =
 			ProcessContext.getAttributes();
 
-		SPI spi = (SPI)ReflectionTestUtil.invokeBridge(
+		SPI spi = ReflectionTestUtil.invokeBridge(
 			_mockRemoteSPI, "call", new Class<?>[0]);
 
 		Assert.assertSame(spi, UnicastRemoteObject.toStub(_mockRemoteSPI));
@@ -920,9 +920,8 @@ public class RemoteSPITest {
 				@Override
 				public Object call() {
 					AbstractQueuedSynchronizer abstractQueuedSynchronizer =
-						(AbstractQueuedSynchronizer)
-							ReflectionTestUtil.getFieldValue(
-								_mockRemoteSPI.countDownLatch, "sync");
+						ReflectionTestUtil.getFieldValue(
+							_mockRemoteSPI.countDownLatch, "sync");
 
 					while (true) {
 						Collection<Thread> threads =

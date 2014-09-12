@@ -1,6 +1,126 @@
 <definition>
-	<command name="addSourceXML">
-		<var name="sourceXMLGeneric" >
+	<command name="addNewDefinitionViaWorkflowCP">
+		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="TOOLBAR_ADD_NEW_DEFINITION" value1="Add New Definition" />
+
+		<execute action="CPPortalWorkflowconfigurationAddworkflow#selectFrame" locator-key1="IFRAME" />
+		<execute action="CPPortalWorkflowconfigurationAddworkflow#type" locator-key1="NAME_FIELD" value1="${workflowDefinitionName}" />
+	</command>
+
+	<command name="addNodeSettingsSection">
+		<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_ADD_SECTION" value1="Add Section" />
+	</command>
+
+	<command name="addNodeViaSourceXML">
+		<if>
+			<equals arg1="${nodeType}" arg2="task" />
+			<then>
+				<var name="sourceXML" >
+<![CDATA[
+<?xml version="1.0"?>
+<workflow-definition xmlns="urn:liferay.com:liferay-workflow_6.2.0"${line.separator} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"${line.separator} xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd">${line.separator}
+	<name>Task</name>${line.separator}
+	<description>${line.separator}
+	</description>${line.separator}
+	<version>1</version>${line.separator}
+	<task>${line.separator}
+		<name>Task</name>${line.separator}
+		<metadata>${line.separator}
+		</metadata>${line.separator}
+		<assignments>${line.separator}
+			<user/>${line.separator}
+		</assignments>${line.separator}
+	</task>${line.separator}
+</workflow-definition>${line.separator}
+]]>
+				</var>
+			</then>
+		</if>
+
+		<execute action="Kaleodesigner#assertClick" locator-key1="SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
+		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute action="Kaleodesigner#type" locator-key1="SOURCE_KALEO_XML_CONTENT" value1="${sourceXML}" />
+		<execute action="Kaleodesigner#pause" locator1="1000" />
+		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_TAB" value1="View" />
+		<execute action="Kaleodesigner#pause" locator1="1000" />
+	</command>
+
+	<command name="addNodeViaViewTab">
+		<if>
+			<equals arg1="${nodeType}" arg2="condition" />
+			<then>
+				<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_CONDITION_PNG" value1="250,0" />
+				<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_NODE_CONDITION" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${nodeType}" arg2="end" />
+			<then>
+				<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_END_PNG" value1="250,100" />
+				<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_NODE_END" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${nodeType}" arg2="fork" />
+			<then>
+				<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_FORK_PNG" value1="250,100" />
+				<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_NODE_FORK" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${nodeType}" arg2="join" />
+			<then>
+				<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_JOIN_PNG" value1="250,100" />
+				<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_NODE_JOIN" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${nodeType}" arg2="join-xor" />
+			<then>
+				<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_JOIN_XOR_PNG" value1="250,100" />
+				<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_NODE_JOIN_XOR" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${nodeType}" arg2="start" />
+			<then>
+				<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_START_PNG" value1="250,100" />
+				<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_NODE_START" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${nodeType}" arg2="state" />
+			<then>
+				<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_STATE_PNG" value1="250,100" />
+				<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_NODE_STATE" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${nodeType}" arg2="task" />
+			<then>
+				<execute action="Kaleodesigner#sikuliDragAndDrop" locator-key1="NODE_TASK_PNG" value1="250,100" />
+				<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_NODE_TASK" />
+			</then>
+		</if>
+
+		<execute macro="KaleoDesigner#editNodeNameAfterAdding">
+			<var name="nodeName" value="${nodeName}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editNodeDescription">
+			<var name="nodeDescription" value="${nodeDescription}" />
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+	</command>
+
+	<command name="addSourceXMLBasicDefinition">
+		<var name="sourceXML" >
 <![CDATA[
 <?xml version="1.0"?>
 <workflow-definition${line.separator} xmlns="urn:liferay.com:liferay-workflow_6.2.0"${line.separator} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"${line.separator} xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd">${line.separator}
@@ -56,10 +176,341 @@
 		</var>
 		<execute action="Kaleodesigner#assertClick" locator-key1="SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
 		<execute action="Kaleodesigner#pause" locator1="1000" />
-		<execute action="Kaleodesigner#type" locator-key1="SOURCE_KALEO_XML_CONTENT" value1="${sourceXMLGeneric}" />
+		<execute action="Kaleodesigner#type" locator-key1="SOURCE_KALEO_XML_CONTENT" value1="${sourceXML}" />
 		<execute action="Kaleodesigner#pause" locator1="1000" />
 		<execute action="Kaleodesigner#assertClick" locator-key1="VIEW_TAB" value1="View" />
 		<execute action="Kaleodesigner#pause" locator1="1000" />
+	</command>
+
+	<command name="deleteNode">
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<var name="key_nodeNodeLabel" value="${nodeNodeLabel}" />
+
+		<execute action="Kaleodesigner#clickNoError" locator-key1="VIEW_FORM_NODE_DELETE_ICON" />
+		<execute action="Kaleodesigner#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected node(s)?" />
+		<execute action="Kaleodesigner#pause" locator1="1000" />
+
+		<execute macro="KaleoDesigner#viewNodeNotPresent">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+	</command>
+
+	<command name="editExecutionType">
+		<execute action="Kaleodesigner#select" locator-key1="SETTINGS_CELL_EDITOR_EXECUTION_TYPE_SELECT" value1="${nodeExecutionType}" />
+	</command>
+
+	<command name="editNodeActions">
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_ACTIONS" />
+		<execute action="Kaleodesigner#type" locator-key1="SETTINGS_CELL_EDITOR_NAME" value1="${nodeActionsName}" />
+		<execute action="Kaleodesigner#type" locator-key1="SETTINGS_CELL_EDITOR_DESCRIPTION" value1="${nodeActionsDescription}" />
+
+		<if>
+			<isset var="nodeActionsScript" />
+			<then>
+				<execute action="Kaleodesigner#type" locator-key1="SETTINGS_CELL_EDITOR_SCRIPT" value1="${nodeActionsScript}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="nodeActionsScriptLanguage" />
+			<then>
+				<execute action="Kaleodesigner#select" locator-key1="SETTINGS_CELL_EDITOR_SCRIPT_LANGUAGE_SELECT" value1="${nodeActionsScriptLanguage}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="nodeActionsExecutionType" />
+			<then>
+				<execute macro="KaleoDesigner#editExecutionType">
+					<var name="nodeExecutionType" value="${nodeActionsExecutionType}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="nodeActionsPriority" />
+			<then>
+				<execute action="Kaleodesigner#type" locator-key1="SETTINGS_CELL_EDITOR_PRIORITY" value1="${nodeActionsPriority}" />
+			</then>
+		</if>
+
+		<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="editNodeAssignments">
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_ASSIGNMENTS" />
+		<execute action="Kaleodesigner#select" locator-key1="SETTINGS_ASSIGNMENT_TYPE_SELECT" value1="${nodeAssignmentType}" />
+	</command>
+
+	<command name="editNodeDescription">
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_DESCRIPTION" />
+		<execute action="Kaleodesigner#type" locator-key1="SETTINGS_DESCRIPTION_FIELD" value1="${nodeDescription}" />
+		<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_DESCRIPTION" value1="${nodeDescription}" />
+	</command>
+
+	<command name="editNodeName">
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editNodeNameAfterAdding">
+			<var name="nodeName" value="${nodeName}" />
+		</execute>
+	</command>
+
+	<command name="editNodeNameAfterAdding">
+		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_NAME" />
+		<execute action="Kaleodesigner#type" locator-key1="SETTINGS_NAME_FIELD" value1="${nodeName}" />
+		<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_NAME" value1="${nodeName}" />
+	</command>
+
+	<command name="editNodeNotifications">
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_NOTIFICATIONS" />
+		<execute action="Kaleodesigner#type" locator-key1="SETTINGS_CELL_EDITOR_NAME" value1="${nodeNotificationsName}" />
+		<execute action="Kaleodesigner#type" locator-key1="SETTINGS_CELL_EDITOR_DESCRIPTION" value1="${nodeNotificationsDescription}" />
+
+		<if>
+			<isset var="nodeNotificationsTemplateLanguage" />
+			<then>
+				<execute action="Kaleodesigner#select" locator-key1="SETTINGS_CELL_EDITOR_TEMPLATE_LANGUAGE_SELECT" value1="${nodeNotificationsTemplateLanguage}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="nodeNotificationsTemplate" />
+			<then>
+				<execute action="Kaleodesigner#type" locator-key1="SETTINGS_CELL_EDITOR_TEMPLATE" value1="${nodeNotificationsTemplate}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="nodeNotificationsType" />
+			<then>
+				<execute action="Kaleodesigner#select" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATION_TYPE_SELECT" value1="${nodeNotificationsType}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="nodeNotificationsExecutionType" />
+			<then>
+				<execute macro="KaleoDesigner#editExecutionType">
+					<var name="nodeExecutionType" value="${nodeNotificationsExecutionType}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="nodeNotificationsRecipientType" />
+			<then>
+				<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_EDIT_RECIPIENTS" value1="Edit Recipients" />
+				<execute action="Kaleodesigner#select" locator-key1="SETTINGS_CELL_EDITOR_RECIPIENT_EDITOR_TYPE_SELECT" value1="${nodeNotificationsRecipientType}" />
+
+				<if>
+					<equals arg1="${nodeNotificationsRecipientType}" arg2="Role" />
+					<then>
+						<execute action="Kaleodesigner#type" locator-key1="SETTINGS_CELL_EDITOR_RECIPIENT_EDITOR_ROLE" value1="${nodeNotificationsRecipientRole}" />
+					</then>
+				</if>
+
+				<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_RECIPIENT_EDITOR_SAVE_BUTTON" value1="Save" />
+			</then>
+		</if>
+
+		<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="editNodeScript">
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_SCRIPT" />
+		<execute action="Kaleodesigner#type" locator-key1="SETTINGS_SCRIPT_CONTENT" value1="${nodeScript}" />
+		<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="editNodeScriptLanguage">
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_SCRIPT_LANGUAGE" />
+		<execute action="Kaleodesigner#select" locator-key1="SETTINGS_SCRIPT_LANGUAGE" value1="${nodeScriptLanguage}" />
+		<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="editWorkflowDefinitionTitleViaWorkflowCP">
+		<execute action="CPPortalWorkflowconfigurationEditworkflow#type" locator-key1="TITLE_FIELD" value1="${workflowDefinitionTitle}" />
+	</command>
+
+	<command name="editWorkflowDefinitionViaWorkflowCP">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPPortalWorkflowconfiguration#assertClick" locator-key1="DEFINITION_MENULIST_EDIT" value1="Edit" />
+		<execute action="CPPortalWorkflowconfigurationEditworkflow#selectFrame" locator-key1="IFRAME" />
+	</command>
+
+	<command name="publishWorkflowDefinitionViaWorkflowCP">
+		<execute action="CPPortalWorkflowconfigurationAddworkflow#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="CPPortalWorkflowconfigurationAddworkflow#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPPortalWorkflowconfigurationAddworkflow#selectFrameTop" locator-key1="IFRAME" value1="relative=top" />
+	</command>
+
+	<command name="removeNodeSettingsSection">
+		<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_REMOVE_SECTION" value1="Remove" />
+	</command>
+
+	<command name="selectNode">
+		<var name="key_nodeNodeLabel" value="${nodeNodeLabel}" />
+
+		<execute action="Kaleodesigner#click" locator-key1="VIEW_FORM_NODE" />
+	</command>
+
+	<command name="viewExecutionType">
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_EXECUTION_TYPE_SELECT" value1="${nodeExecutionType}" />
+	</command>
+
+	<command name="viewNodeActions">
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_ACTIONS" value1="${nodeActionsName}" />
+		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_ACTIONS" />
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_NAME" value1="${nodeActionsName}" />
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_DESCRIPTION" value1="${nodeActionsDescription}" />
+
+		<if>
+			<isset var="nodeActionsScript" />
+			<then>
+				<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_SCRIPT" value1="${nodeActionsScript}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="nodeActionsScriptLanguage" />
+			<then>
+				<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_SCRIPT_LANGUAGE_SELECT" value1="${nodeActionsScriptLanguage}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="nodeActionsExecutionType" />
+			<then>
+				<execute macro="KaleoDesigner#viewExecutionType">
+					<var name="nodeExecutionType" value="${nodeActionsExecutionType}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="nodeActionsPriority" />
+			<then>
+				<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_PRIORITY" value1="${nodeActionsPriority}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewNodeAssignments">
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_ASSIGNMENTS" value1="${nodeAssignmentType}" />
+		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_ASSIGNMENTS" />
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_ASSIGNMENT_TYPE_SELECT" value1="${nodeAssignmentType}" />
+	</command>
+
+	<command name="viewNodeNotifications">
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_NOTIFICATIONS" value1="${nodeNotificationsName}" />
+		<execute action="Kaleodesigner#doubleClick" locator-key1="SETTINGS_NOTIFICATIONS" />
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_NAME" value1="${nodeNotificationsName}" />
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_DESCRIPTION" value1="${nodeNotificationsDescription}" />
+
+		<if>
+			<isset var="nodeNotificationsTemplateLanguage" />
+			<then>
+				<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_TEMPLATE_LANGUAGE_SELECT" value1="${nodeNotificationsTemplateLanguage}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="nodeNotificationsTemplate" />
+			<then>
+				<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_TEMPLATE" value1="${nodeNotificationsTemplate}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="nodeNotificationsType" />
+			<then>
+				<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_NOTIFICATION_TYPE_SELECT" value1="${nodeNotificationsType}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="nodeNotificationsExecutionType" />
+			<then>
+				<execute macro="KaleoDesigner#viewExecutionType">
+					<var name="nodeExecutionType" value="${nodeNotificationsExecutionType}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="nodeNotificationsRecipientType" />
+			<then>
+				<execute action="Kaleodesigner#assertClick" locator-key1="SETTINGS_CELL_EDITOR_EDIT_RECIPIENTS" value1="Edit Recipients" />
+				<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_RECIPIENT_EDITOR_TYPE_SELECT" value1="${nodeNotificationsRecipientType}" />
+
+				<if>
+					<equals arg1="${nodeNotificationsRecipientType}" arg2="Role" />
+					<then>
+						<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_RECIPIENT_EDITOR_ROLE" value1="${nodeNotificationsRecipientRole}" />
+					</then>
+				</if>
+			</then>
+		</if>
+	</command>
+
+	<command name="viewNodeNotPresent">
+		<var name="key_nodeNodeLabel" value="${nodeNodeLabel}" />
+
+		<execute action="Kaleodesigner#assertElementNotPresent" locator-key1="VIEW_FORM_NODE" value1="${nodeLabel}" />
+	</command>
+
+	<command name="viewNodeType">
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+		</execute>
+
+		<execute action="Kaleodesigner#assertTextEquals" locator-key1="SETTINGS_TYPE" value1="${nodeType}" />
 	</command>
 
 	<command name="viewSourceXML">

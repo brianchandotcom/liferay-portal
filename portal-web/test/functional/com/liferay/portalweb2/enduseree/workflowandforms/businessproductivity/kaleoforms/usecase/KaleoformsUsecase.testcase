@@ -34,11 +34,11 @@
 
 		<execute macro="Page#tearDownPG" />
 
-		<execute macro="Workflow#tearDownWorkflowDefinition">
+		<execute macro="Workflow#tearDownSpecificWorkflowDefinition">
 			<var name="workflowDefinitionTitle" value="Single Approver Edited" />
 		</execute>
 
-		<execute macro="Workflow#tearDownUploadedWorkflowDefinition" />
+		<execute macro="Workflow#tearDownWorkflowDefinitions" />
 
 		<execute macro="User#tearDownCP" />
 
@@ -3329,7 +3329,7 @@
 			<var name="workflowDefinitionTitleEdit" value="Single Approver Edit" />
 		</execute>
 
-		<execute macro="Workflow#editWorkflowDefinitionDeleteNode">
+		<execute macro="KaleoDesigner#deleteNode">
 			<var name="nodeNodeLabel" value="update" />
 		</execute>
 

@@ -271,7 +271,7 @@ public class InputTag extends BaseInputTag {
 			baseType = "text";
 		}
 
-		boolean wrappedField = false;
+		boolean wrappedField = getWrappedField();
 
 		FieldWrapperTag fieldWrapper = (FieldWrapperTag)findAncestorWithClass(
 			this, FieldWrapperTag.class);

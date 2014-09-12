@@ -331,7 +331,7 @@
 		<execute action="PGKaleoforms#assertClick" locator-key1="MY_COMPLETED_REQUESTS_TABLE_NAME" value1="${kfProcessName}" />
 
 		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="State Approved" />
-		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="WORKFLOW_DEFINITION" value1="${workflowDefinition}" />
+		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator-key1="WORKFLOW_DEFINITION" value1="${workflowDefinitionTitle}" />
 	</command>
 
 	<command name="viewMyCompletedRequestsAllComments">
@@ -385,7 +385,7 @@
 		<execute action="PGKaleoforms#assertClick" locator-key1="MY_PENDING_REQUESTS_TABLE_NAME" value1="${kfProcessName}" />
 
 		<execute action="PGKaleoformsMypendingrequestsProcess#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="State ${kfProcessStatus}" />
-		<execute action="PGKaleoformsMypendingrequestsProcess#assertTextEquals" locator-key1="WORKFLOW_DEFINITION" value1="${workflowDefinition}" />
+		<execute action="PGKaleoformsMypendingrequestsProcess#assertTextEquals" locator-key1="WORKFLOW_DEFINITION" value1="${workflowDefinitionTitle}" />
 	</command>
 
 	<command name="viewMyPendingRequestsField">

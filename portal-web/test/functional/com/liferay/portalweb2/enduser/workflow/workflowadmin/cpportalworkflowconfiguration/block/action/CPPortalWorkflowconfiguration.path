@@ -57,12 +57,17 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_VIEW_ALL</td>
-	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]/div/ul/li/a[contains(.,'View All')]</td>
+	<td>//ul[contains(@class,'nav')]//a/span[contains(.,'View All')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ADD_NEW_DEFINITION</td>
+	<td>//ul[contains(@class,'nav')]//a/span[contains(.,'Add New Definition')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_UPLOAD_DEFINITION</td>
-	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//a[contains(.,'Upload Definition')]</td>
+	<td>//ul[contains(@class,'nav')]//a/span[contains(.,'Upload Definition')]</td>
 	<td></td>
 </tr>
 <tr>

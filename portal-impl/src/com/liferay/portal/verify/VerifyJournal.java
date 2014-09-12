@@ -219,10 +219,15 @@ public class VerifyJournal extends VerifyProcess {
 							}
 							catch (NoSuchFileEntryException nsfee) {
 								if (_log.isWarnEnabled()) {
-									_log.warn(
-										"No document exists with title " +
-											title + " for dynamic content in " +
-											"article " + article.getTitle());
+									StringBundler sb = new StringBundler(4);
+
+									sb.append("No document exists with title ");
+									sb.append(title);
+									sb.append(
+										" for dynamic content in article");
+									sb.append(article.getTitle());
+
+									_log.warn(sb.toString());
 								}
 							}
 						}

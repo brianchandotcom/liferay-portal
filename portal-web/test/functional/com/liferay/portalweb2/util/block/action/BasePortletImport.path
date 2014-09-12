@@ -75,11 +75,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VALIDATION_ERROR_LIST_ITEM</td>
-	<td>//ul[@class='error-list-items']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

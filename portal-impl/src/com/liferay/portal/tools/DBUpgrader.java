@@ -87,6 +87,50 @@ public class DBUpgrader {
 		}
 	}
 
+	public static void postStartupVerify() throws Exception {
+		Release release = ReleaseLocalServiceUtil.fetchRelease(
+			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
+		// Post Verify
+
+		if (PropsValues.VERIFY_DATABASE_TRANSACTIONS_DISABLED) {
+			_disableTransactions();
+		}
+
+		boolean newBuildNumber = false;
+
+		if (ReleaseInfo.getBuildNumber() > release.getBuildNumber()) {
+			newBuildNumber = true;
+		}
+
+		try {
+			StartupHelperUtil.postStartupVerifyProcess(
+				newBuildNumber, release.isVerified());
+		}
+		catch (Exception e) {
+			_updateReleaseState(ReleaseConstants.STATE_VERIFY_FAILURE);
+
+			throw e;
+		}
+		finally {
+			if (PropsValues.VERIFY_DATABASE_TRANSACTIONS_DISABLED) {
+				_enableTransactions();
+			}
+		}
+
+		// Update release
+
+		boolean verified = StartupHelperUtil.isVerified();
+
+		if (release.isVerified()) {
+			verified = true;
+		}
+
+		ReleaseLocalServiceUtil.updateRelease(
+			release.getReleaseId(), ReleaseInfo.getParentBuildNumber(),
+			ReleaseInfo.getBuildDate(), verified);
+	}
+
 	public static void upgrade() throws Exception {
 
 		// Disable database caching before upgrade
@@ -258,18 +302,6 @@ public class DBUpgrader {
 
 			StartupHelperUtil.updateIndexes(false);
 		}
-
-		// Update release
-
-		boolean verified = StartupHelperUtil.isVerified();
-
-		if (release.isVerified()) {
-			verified = true;
-		}
-
-		ReleaseLocalServiceUtil.updateRelease(
-			release.getReleaseId(), ReleaseInfo.getParentBuildNumber(),
-			ReleaseInfo.getBuildDate(), verified);
 
 		// Enable database caching after verify
 

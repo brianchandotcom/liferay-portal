@@ -397,7 +397,7 @@ public class SecureRandomUtilTest {
 	}
 
 	protected long reload() {
-		return (Long)ReflectionTestUtil.invoke(
+		return ReflectionTestUtil.invoke(
 			SecureRandomUtil.class, "_reload", new Class<?>[0]);
 	}
 

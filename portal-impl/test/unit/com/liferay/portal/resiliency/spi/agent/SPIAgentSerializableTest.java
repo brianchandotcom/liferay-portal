@@ -501,7 +501,7 @@ public class SPIAgentSerializableTest {
 			@Override
 			protected Datagram processDatagram(Datagram datagram) {
 				try {
-					long receipt = (Long)ReflectionTestUtil.invoke(
+					long receipt = ReflectionTestUtil.invoke(
 						MailboxUtil.class, "depositMail",
 						new Class<?>[] {ByteBuffer.class},
 						datagram.getDataByteBuffer());

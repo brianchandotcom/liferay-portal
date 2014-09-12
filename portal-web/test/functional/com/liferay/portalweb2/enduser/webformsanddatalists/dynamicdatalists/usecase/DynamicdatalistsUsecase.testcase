@@ -1156,7 +1156,7 @@
 		</execute>
 	</command>
 
-	<command name="FormTemplate" priority="5">
+	<command known-issues="LPS-49957" name="FormTemplate" priority="5">
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Employee Profile Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />

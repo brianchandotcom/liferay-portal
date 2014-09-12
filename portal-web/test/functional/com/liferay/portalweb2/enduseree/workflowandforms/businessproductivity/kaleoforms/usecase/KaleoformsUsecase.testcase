@@ -83,7 +83,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -123,7 +123,7 @@
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
-			<var name="ddlRecordFieldData" value="Test" />
+			<var name="kfProcessFieldData" value="Test" />
 			<var name="fieldName" value="Text" />
 		</execute>
 
@@ -168,7 +168,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -317,7 +317,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -358,7 +358,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -392,7 +392,7 @@
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
-			<var name="ddlRecordFieldData" value="Test 1" />
+			<var name="kfProcessFieldData" value="Test 1" />
 			<var name="fieldName" value="Text" />
 		</execute>
 
@@ -407,7 +407,7 @@
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
-			<var name="ddlRecordFieldData" value="Test 2" />
+			<var name="kfProcessFieldData" value="Test 2" />
 			<var name="fieldName" value="Text" />
 		</execute>
 
@@ -428,7 +428,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyPendingRequests">
 			<var name="kfProcessName" value="${kfProcess2Name}" />
 			<var name="kfProcessStatus" value="Review" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 	</command>
 
@@ -538,7 +538,6 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
@@ -664,7 +663,6 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
@@ -710,7 +708,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyPendingRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 			<var name="kfProcessStatus" value="Review" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -834,7 +832,6 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
@@ -880,7 +877,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyPendingRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 			<var name="kfProcessStatus" value="Review" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1019,7 +1016,6 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
@@ -1065,7 +1061,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyPendingRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 			<var name="kfProcessStatus" value="Review" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -1213,7 +1209,6 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
@@ -1264,7 +1259,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyPendingRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 			<var name="kfProcessStatus" value="Review" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -1379,7 +1374,6 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
@@ -1467,7 +1461,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -1525,17 +1519,17 @@
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
-			<var name="ddlRecordFieldData" value="Test Description" />
+			<var name="kfProcessFieldData" value="Test Description" />
 			<var name="fieldName" value="Text" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#populateFieldTextBox">
-			<var name="ddlRecordFieldData" value="Test Box Description" />
+			<var name="kfProcessFieldData" value="Test Box Description" />
 			<var name="fieldName" value="Text_Box" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#populateFieldSelect">
-			<var name="ddlRecordFieldData" value="option 2" />
+			<var name="kfProcessFieldData" value="option 2" />
 			<var name="fieldName" value="Select" />
 		</execute>
 
@@ -1560,12 +1554,12 @@
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldText">
-			<var name="ddlRecordFieldData" value="Test Description" />
+			<var name="kfProcessFieldData" value="Test Description" />
 			<var name="fieldName" value="Text" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldSelect">
-			<var name="ddlRecordFieldData" value="option 2" />
+			<var name="kfProcessFieldData" value="option 2" />
 			<var name="fieldName" value="Select" />
 		</execute>
 
@@ -1589,21 +1583,21 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="ddlRecordFieldData" value="Test Description" />
+			<var name="kfProcessFieldData" value="Test Description" />
 			<var name="fieldName" value="Text" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="ddlRecordFieldData" value="Test Box Description" />
+			<var name="kfProcessFieldData" value="Test Box Description" />
 			<var name="fieldName" value="Text Box" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="ddlRecordFieldData" value="option 2" />
+			<var name="kfProcessFieldData" value="option 2" />
 			<var name="fieldName" value="Select" />
 		</execute>
 
@@ -1626,7 +1620,7 @@
 		<var name="kfProcessFieldData" value="Test" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 		<var name="pageName" value="Kaleo Forms" />
-		<var name="workflowDefinition" value="Single Approver" />
+		<var name="workflowDefinitionTitle" value="Single Approver" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -1665,7 +1659,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -1745,7 +1739,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
@@ -1792,7 +1786,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -1931,11 +1925,6 @@
 			<var name="kfProcessFieldData" value="HTML Content 1" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#populateFieldLinkToPage">
-			<var name="fieldName" value="2_Link to Page" />
-			<var name="kfProcessFieldData" value="Kaleo Forms" />
-		</execute>
-
 		<execute macro="KaleoFormsPortlet#populateFieldText">
 			<var name="fieldName" value="1_Decimal" />
 			<var name="kfProcessFieldData" value="9.56" />
@@ -2009,7 +1998,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
@@ -2113,11 +2102,6 @@
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="2_Link to Page" />
-			<var name="kfProcessFieldData" value="Kaleo Forms" />
-		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
 			<var name="fieldName" value="1_Decimal" />
 			<var name="kfProcessFieldData" value="9.56" />
 		</execute>
@@ -2201,7 +2185,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2308,7 +2292,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
@@ -2385,7 +2369,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2478,7 +2462,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
@@ -2540,7 +2524,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2627,7 +2611,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
@@ -2684,7 +2668,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2787,7 +2771,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
@@ -2859,7 +2843,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2952,7 +2936,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
@@ -3014,7 +2998,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -3122,7 +3106,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
@@ -3211,7 +3195,6 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
@@ -3291,7 +3274,7 @@
 		<var name="kfFieldSetName" value="Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 		<var name="pageName" value="Kaleo Forms" />
-		<var name="workflowDefinition" value="Single Approver" />
+		<var name="workflowDefinitionTitle" value="Single Approver" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Kaleo Forms Admin" />
@@ -3336,7 +3319,7 @@
 		<execute macro="KaleoFormsAdmin#publishWorkflow" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 			<var name="workflowDefinitionTitleEdit" value="Single Approver Edit" />
 		</execute>
 
@@ -3408,7 +3391,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
@@ -3454,7 +3437,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Uploaded Definition" />
+			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -3562,7 +3545,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
-			<var name="workflowDefinition" value="Uploaded Definition" />
+			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
@@ -3639,7 +3622,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -3742,7 +3725,7 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="kfPendingForm" value="true" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -3796,7 +3779,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -3839,7 +3822,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -3939,7 +3922,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process Edited" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
@@ -4009,7 +3992,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -4112,7 +4095,7 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="kfPendingForm" value="true" />
-			<var name="workflowDefinition" value="Uploaded Definition" />
+			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -4178,7 +4161,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -4220,7 +4203,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Uploaded Definition" />
+			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -4320,7 +4303,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowDefinition" value="Uploaded Definition" />
+			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
@@ -4377,7 +4360,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -4570,7 +4553,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
@@ -4627,7 +4610,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -4820,7 +4803,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
@@ -4877,7 +4860,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -5016,7 +4999,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -5161,7 +5144,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
@@ -5207,7 +5190,7 @@
 		<var name="kfProcessFieldData" value="Test" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 		<var name="pageName" value="Kaleo Forms" />
-		<var name="workflowDefinition" value="Single Approver" />
+		<var name="workflowDefinitionTitle" value="Single Approver" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -5246,7 +5229,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -5309,7 +5292,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyPendingRequests">
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="kfProcessStatus" value="Update" />
-			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyPendingRequestsField">
@@ -5322,7 +5305,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyPendingRequests">
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="kfProcessStatus" value="Review" />
-			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 		</execute>
 	</command>
 
@@ -5338,7 +5321,7 @@
 		<var name="kfProcessFieldData" value="Test" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 		<var name="pageName" value="Kaleo Forms" />
-		<var name="workflowDefinition" value="Single Approver" />
+		<var name="workflowDefinitionTitle" value="Single Approver" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -5377,7 +5360,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -5463,7 +5446,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyPendingRequests">
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="kfProcessStatus" value="Update" />
-			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyPendingRequestsField">
@@ -5485,7 +5468,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyPendingRequests">
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="kfProcessStatus" value="Review" />
-			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 		</execute>
 	</command>
 
@@ -5499,7 +5482,7 @@
 		<var name="kfProcessFieldData" value="Test" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 		<var name="pageName" value="Kaleo Forms" />
-		<var name="workflowDefinition" value="Single Approver" />
+		<var name="workflowDefinitionTitle" value="Single Approver" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -5538,7 +5521,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -5657,7 +5640,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -5679,6 +5662,10 @@
 		<execute macro="KaleoFormsAdmin#saveProcess" />
 
 		<execute macro="KaleoFormsAdmin#viewProcess">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewProcessRecord">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
@@ -5769,7 +5756,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -5791,6 +5778,10 @@
 		<execute macro="KaleoFormsAdmin#saveProcess" />
 
 		<execute macro="KaleoFormsAdmin#viewProcess">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewProcessRecord">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
@@ -5924,7 +5915,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -5946,6 +5937,10 @@
 		<execute macro="KaleoFormsAdmin#saveProcess" />
 
 		<execute macro="KaleoFormsAdmin#viewProcess">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewProcessRecord">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
@@ -6031,7 +6026,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -6053,6 +6048,10 @@
 		<execute macro="KaleoFormsAdmin#saveProcess" />
 
 		<execute macro="KaleoFormsAdmin#viewProcess">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewProcessRecord">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
@@ -6138,7 +6137,7 @@
 		<var name="kfProcessFieldData" value="Test" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 		<var name="pageName" value="Kaleo Forms" />
-		<var name="workflowDefinition" value="Single Approver" />
+		<var name="workflowDefinitionTitle" value="Single Approver" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -6177,7 +6176,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -6287,7 +6286,7 @@
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
 			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
@@ -6335,7 +6334,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -6357,6 +6356,10 @@
 		<execute macro="KaleoFormsAdmin#saveProcess" />
 
 		<execute macro="KaleoFormsAdmin#viewProcess">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewProcessRecord">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
@@ -6447,7 +6450,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -6469,6 +6472,10 @@
 		<execute macro="KaleoFormsAdmin#saveProcess" />
 
 		<execute macro="KaleoFormsAdmin#viewProcess">
+			<var name="kfProcessName" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#viewProcessRecord">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
@@ -6522,7 +6529,7 @@
 		<var name="kfProcessFieldData" value="Test" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 		<var name="pageName" value="Kaleo Forms" />
-		<var name="workflowDefinition" value="Single Approver" />
+		<var name="workflowDefinitionTitle" value="Single Approver" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -6561,7 +6568,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />

@@ -100,7 +100,7 @@ public class FinalizeManagerTest {
 			object, markFinalizeAction, FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 		Map<Reference<?>, FinalizeAction> finalizeActions =
-			(Map<Reference<?>, FinalizeAction>)ReflectionTestUtil.getFieldValue(
+			ReflectionTestUtil.getFieldValue(
 				FinalizeManager.class, "_finalizeActions");
 
 		Assert.assertEquals(markFinalizeAction, finalizeActions.get(reference));
@@ -138,7 +138,7 @@ public class FinalizeManagerTest {
 			FinalizeManager.SOFT_REFERENCE_FACTORY);
 
 		Map<Reference<?>, FinalizeAction> finalizeActions =
-			(Map<Reference<?>, FinalizeAction>)ReflectionTestUtil.getFieldValue(
+			ReflectionTestUtil.getFieldValue(
 				FinalizeManager.class, "_finalizeActions");
 
 		Assert.assertEquals(1, finalizeActions.size());

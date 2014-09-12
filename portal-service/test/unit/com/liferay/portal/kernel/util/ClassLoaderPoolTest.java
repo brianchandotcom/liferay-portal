@@ -43,13 +43,13 @@ public class ClassLoaderPoolTest {
 		PortalClassLoaderUtil.setClassLoader(clazz.getClassLoader());
 
 		_classLoaders =
-			(Map<String, ClassLoader>)ReflectionTestUtil.getFieldValue(
+			ReflectionTestUtil.getFieldValue(
 				ClassLoaderPool.class, "_classLoaders");
 
 		_classLoaders.clear();
 
 		_contextNames =
-			(Map<ClassLoader, String>)ReflectionTestUtil.getFieldValue(
+			ReflectionTestUtil.getFieldValue(
 				ClassLoaderPool.class, "_contextNames");
 
 		_contextNames.clear();

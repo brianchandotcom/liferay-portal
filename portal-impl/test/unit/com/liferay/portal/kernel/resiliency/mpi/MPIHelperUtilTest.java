@@ -471,7 +471,7 @@ public class MPIHelperUtilTest {
 			logRecords = captureHandler.resetLogLevel(Level.INFO);
 
 			ConcurrentMap<String, Object> oldSPIProviderContainers =
-				(ConcurrentMap<String, Object>)ReflectionTestUtil.getFieldValue(
+				ReflectionTestUtil.getFieldValue(
 					MPIHelperUtil.class, "_spiProviderContainers");
 
 			try {
@@ -508,9 +508,8 @@ public class MPIHelperUtilTest {
 
 			logRecords = captureHandler.resetLogLevel(Level.OFF);
 
-			oldSPIProviderContainers =
-				(ConcurrentMap<String, Object>)ReflectionTestUtil.getFieldValue(
-					MPIHelperUtil.class, "_spiProviderContainers");
+			oldSPIProviderContainers = ReflectionTestUtil.getFieldValue(
+				MPIHelperUtil.class, "_spiProviderContainers");
 
 			try {
 				ReflectionTestUtil.setFieldValue(
@@ -978,7 +977,7 @@ public class MPIHelperUtilTest {
 				null, null, 0, null, null, new String[0], null);
 
 			ThreadLocal<SPI> unregisteringSPIThreadLocal =
-				(ThreadLocal<SPI>)ReflectionTestUtil.getFieldValue(
+				ReflectionTestUtil.getFieldValue(
 					MPIHelperUtil.class, "_unregisteringSPIThreadLocal");
 
 			unregisteringSPIThreadLocal.set(mockSPI1);
@@ -1124,7 +1123,7 @@ public class MPIHelperUtilTest {
 	}
 
 	private static MPI _getMPIImpl() {
-		MPI mpiImpl = (MPI)ReflectionTestUtil.getFieldValue(
+		MPI mpiImpl = ReflectionTestUtil.getFieldValue(
 			MPIHelperUtil.class, "_mpiImpl");
 
 		Assert.assertNotNull(mpiImpl);

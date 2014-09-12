@@ -38,15 +38,12 @@ public class DistributedRegistryTest {
 
 	@Before
 	public void setUp() {
-		_exactDirections =
-			(Map<String, Direction>)ReflectionTestUtil.getFieldValue(
-				DistributedRegistry.class, "_exactDirections");
-		_postfixDirections =
-			(Map<String, Direction>)ReflectionTestUtil.getFieldValue(
-				DistributedRegistry.class, "_postfixDirections");
-		_prefixDirections =
-			(Map<String, Direction>)ReflectionTestUtil.getFieldValue(
-				DistributedRegistry.class, "_prefixDirections");
+		_exactDirections = ReflectionTestUtil.getFieldValue(
+			DistributedRegistry.class, "_exactDirections");
+		_postfixDirections = ReflectionTestUtil.getFieldValue(
+			DistributedRegistry.class, "_postfixDirections");
+		_prefixDirections = ReflectionTestUtil.getFieldValue(
+			DistributedRegistry.class, "_prefixDirections");
 	}
 
 	@Test

@@ -103,10 +103,8 @@ public class ClusterSchedulerEngineTest {
 		ReflectionTestUtil.setFieldValue(
 			LockLocalServiceUtil.class, "_service", new MockLockLocalService());
 
-		_threadLocalContext =
-			(ThreadLocal<HashMap<String, Serializable>>)
-				ReflectionTestUtil.getFieldValue(
-					ClusterableContextThreadLocal.class, "_contextThreadLocal");
+		_threadLocalContext = ReflectionTestUtil.getFieldValue(
+			ClusterableContextThreadLocal.class, "_contextThreadLocal");
 
 		Method method = ClusterSchedulerEngine.class.getDeclaredMethod(
 			"delete", String.class);

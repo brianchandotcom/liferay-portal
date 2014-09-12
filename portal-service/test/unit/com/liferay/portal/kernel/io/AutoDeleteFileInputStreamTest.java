@@ -95,7 +95,7 @@ public class AutoDeleteFileInputStreamTest {
 		Assert.assertFalse(tempFile.exists());
 		Assert.assertEquals(2, checkDeleteCount.get());
 
-		Set<String> files = (Set<String>)ReflectionTestUtil.getFieldValue(
+		Set<String> files = ReflectionTestUtil.getFieldValue(
 			Class.forName("java.io.DeleteOnExitHook"), "files");
 
 		Assert.assertTrue(files.contains(tempFile.getPath()));

@@ -209,7 +209,7 @@ public class OutputStreamWriterTest {
 	}
 
 	private int _getDefaultOutputBufferSize() {
-		return (Integer)ReflectionTestUtil.getFieldValue(
+		return ReflectionTestUtil.getFieldValue(
 			OutputStreamWriter.class, "_DEFAULT_OUTPUT_BUFFER_SIZE");
 	}
 

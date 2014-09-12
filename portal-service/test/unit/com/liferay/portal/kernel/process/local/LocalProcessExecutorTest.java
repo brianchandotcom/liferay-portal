@@ -1357,7 +1357,7 @@ public class LocalProcessExecutorTest {
 
 	private static Thread _getHeartbeatThread(boolean remove) {
 		AtomicReference<? extends Thread> heartbeatThreadReference =
-			(AtomicReference<? extends Thread>)ReflectionTestUtil.getFieldValue(
+			ReflectionTestUtil.getFieldValue(
 				ProcessContext.class, "_heartbeatThreadReference");
 
 		if (remove) {

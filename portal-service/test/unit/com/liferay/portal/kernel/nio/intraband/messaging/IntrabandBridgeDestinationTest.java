@@ -391,7 +391,7 @@ public class IntrabandBridgeDestinationTest {
 
 	private static void _installSPIs(SPI... spis) throws RemoteException {
 		Map<String, Object> spiProviderContainers =
-			(Map<String, Object>)ReflectionTestUtil.getFieldValue(
+			ReflectionTestUtil.getFieldValue(
 				MPIHelperUtil.class, "_spiProviderContainers");
 
 		for (SPI spi : spis) {

@@ -94,12 +94,11 @@ public class WelderTestUtil {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-			unsyncByteArrayOutputStream);
+		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				unsyncByteArrayOutputStream)) {
 
-		objectOutputStream.writeObject(welder);
-
-		objectOutputStream.close();
+			objectOutputStream.writeObject(welder);
+		}
 
 		ByteBuffer byteBuffer =
 			unsyncByteArrayOutputStream.unsafeGetByteBuffer();

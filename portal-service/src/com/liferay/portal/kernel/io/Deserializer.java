@@ -152,11 +152,7 @@ public class Deserializer {
 					ObjectInputStream objectInpputStream =
 						new AnnotatedObjectInputStream(new BufferInputStream());
 
-					T t = (T)objectInpputStream.readObject();
-
-					objectInpputStream.close();
-
-					return t;
+					return (T)objectInpputStream.readObject();
 				}
 				catch (IOException ioe) {
 					throw new RuntimeException(ioe);

@@ -237,43 +237,40 @@ public class IndexAccessorImpl implements IndexAccessor {
 	public void loadIndex(InputStream inputStream) throws IOException {
 		File tempFile = FileUtil.createTempFile();
 
-		Directory tempDirectory = FSDirectory.open(tempFile);
+		try (Directory tempDirectory = FSDirectory.open(tempFile)) {
+			IndexCommitSerializationUtil.deserializeIndex(
+				inputStream, tempDirectory);
 
-		IndexCommitSerializationUtil.deserializeIndex(
-			inputStream, tempDirectory);
+			_deleteDirectory();
 
-		_deleteDirectory();
+			try (IndexReader indexReader = IndexReader.open(
+					tempDirectory, false)) {
 
-		IndexReader indexReader = IndexReader.open(tempDirectory, false);
+				if (indexReader.numDocs() > 0) {
+					try (IndexSearcher indexSearcher = new IndexSearcher(
+							indexReader)) {
 
-		if (indexReader.numDocs() > 0) {
-			IndexSearcher indexSearcher = new IndexSearcher(indexReader);
+						TopDocs topDocs = indexSearcher.search(
+							new MatchAllDocsQuery(), indexReader.numDocs());
 
-			try {
-				TopDocs topDocs = indexSearcher.search(
-					new MatchAllDocsQuery(), indexReader.numDocs());
+						ScoreDoc[] scoreDocs = topDocs.scoreDocs;
 
-				ScoreDoc[] scoreDocs = topDocs.scoreDocs;
+						for (ScoreDoc scoreDoc : scoreDocs) {
+							Document document = indexSearcher.doc(scoreDoc.doc);
 
-				for (ScoreDoc scoreDoc : scoreDocs) {
-					Document document = indexSearcher.doc(scoreDoc.doc);
-
-					addDocument(document);
+							addDocument(document);
+						}
+					}
+					catch (IllegalArgumentException iae) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(iae.getMessage());
+						}
+					}
 				}
-			}
-			catch (IllegalArgumentException iae) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(iae.getMessage());
-				}
-			}
 
-			indexSearcher.close();
+				indexReader.flush();
+			}
 		}
-
-		indexReader.flush();
-		indexReader.close();
-
-		tempDirectory.close();
 
 		FileUtil.deltree(tempFile);
 	}

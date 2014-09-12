@@ -109,13 +109,11 @@ public abstract class JSONAction extends Action {
 				HttpHeaders.CACHE_CONTROL,
 				HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 
-			OutputStream outputStream = response.getOutputStream();
+			try (OutputStream outputStream = response.getOutputStream()) {
+				byte[] bytes = json.getBytes(StringPool.UTF8);
 
-			byte[] bytes = json.getBytes(StringPool.UTF8);
-
-			outputStream.write(bytes);
-
-			outputStream.close();
+				outputStream.write(bytes);
+			}
 		}
 
 		return null;

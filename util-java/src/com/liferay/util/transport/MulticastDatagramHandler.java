@@ -16,9 +16,8 @@ package com.liferay.util.transport;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-
-import java.io.InputStream;
 
 import java.net.DatagramPacket;
 
@@ -77,31 +76,10 @@ public class MulticastDatagramHandler implements DatagramHandler {
 	}
 
 	protected byte[] getUnzippedBytes(byte[] bytes) throws Exception {
-		InputStream is = new GZIPInputStream(
-			new UnsyncByteArrayInputStream(bytes));
-		UnsyncByteArrayOutputStream ubaos = new UnsyncByteArrayOutputStream(
-			bytes.length);
+		UnsyncByteArrayOutputStream ubaos = new UnsyncByteArrayOutputStream();
 
-		byte[] buffer = new byte[1500];
-
-		int c = 0;
-
-		while (true) {
-			if (c == -1) {
-				break;
-			}
-
-			c = is.read(buffer, 0, 1500);
-
-			if (c != -1) {
-				ubaos.write(buffer, 0, c);
-			}
-		}
-
-		is.close();
-
-		ubaos.flush();
-		ubaos.close();
+		StreamUtil.transfer(
+			new GZIPInputStream(new UnsyncByteArrayInputStream(bytes)), ubaos);
 
 		return ubaos.toByteArray();
 	}

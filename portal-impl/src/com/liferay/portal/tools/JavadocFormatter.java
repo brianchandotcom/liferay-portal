@@ -53,6 +53,8 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -772,15 +774,9 @@ public class JavadocFormatter {
 	}
 
 	private void _format(String fileName) throws Exception {
-		InputStream inputStream = new FileInputStream(_inputDir + fileName);
-
-		byte[] bytes = new byte[inputStream.available()];
-
-		inputStream.read(bytes);
-
-		inputStream.close();
-
-		String originalContent = new String(bytes, StringPool.UTF8);
+		String originalContent = new String(
+			Files.readAllBytes(Paths.get(_inputDir + fileName)),
+			StringPool.UTF8);
 
 		if (fileName.endsWith("JavadocFormatter.java") ||
 			fileName.endsWith("SourceFormatter.java") ||
@@ -1879,9 +1875,6 @@ public class JavadocFormatter {
 	private void _updateLanguageProperties(String key, String value)
 		throws IOException {
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new FileReader(_languagePropertiesFile));
-
 		StringBundler sb = new StringBundler();
 
 		boolean begin = false;
@@ -1890,36 +1883,38 @@ public class JavadocFormatter {
 
 		String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if (line.equals(StringPool.BLANK)) {
-				begin = !begin;
-			}
+		try (UnsyncBufferedReader unsyncBufferedReader = 
+				new UnsyncBufferedReader(
+					new FileReader(_languagePropertiesFile))) {
 
-			if (firstLine) {
-				firstLine = false;
-			}
-			else {
-				sb.append(StringPool.NEW_LINE);
-			}
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.equals(StringPool.BLANK)) {
+					begin = !begin;
+				}
 
-			if (line.startsWith(linePrefix)) {
-				sb.append(linePrefix);
-				sb.append(value);
-			}
-			else {
-				sb.append(line);
+				if (firstLine) {
+					firstLine = false;
+				}
+				else {
+					sb.append(StringPool.NEW_LINE);
+				}
+
+				if (line.startsWith(linePrefix)) {
+					sb.append(linePrefix);
+					sb.append(value);
+				}
+				else {
+					sb.append(line);
+				}
 			}
 		}
 
-		unsyncBufferedReader.close();
+		try (Writer writer = new OutputStreamWriter(
+				new FileOutputStream(_languagePropertiesFile, false),
+				StringPool.UTF8)) {
 
-		Writer writer = new OutputStreamWriter(
-			new FileOutputStream(_languagePropertiesFile, false),
-			StringPool.UTF8);
-
-		writer.write(sb.toString());
-
-		writer.close();
+			sb.writeTo(writer);
+		}
 
 		System.out.println(
 			"Updating " + _languagePropertiesFile + " key " + key);

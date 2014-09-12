@@ -16,12 +16,11 @@ package com.liferay.ip.geocoder.internal;
 
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;
+import com.liferay.portal.kernel.util.StreamUtil;
 
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -163,21 +162,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 		}
 
-		BufferedInputStream bufferedInputStream = new BufferedInputStream(
-			inputStream);
-
-		BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
-			new FileOutputStream(file));
-
-		int i = 0;
-
-		while ((i = bufferedInputStream.read()) != -1) {
-			bufferedOutputStream.write(i);
-		}
-
-		bufferedOutputStream.flush();
-
-		bufferedInputStream.close();
+		StreamUtil.transfer(inputStream, new FileOutputStream(file));
 	}
 
 	private static Logger _logger = Logger.getLogger(IPGeocoderImpl.class);

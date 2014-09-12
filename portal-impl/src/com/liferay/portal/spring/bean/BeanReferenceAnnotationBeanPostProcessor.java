@@ -140,17 +140,18 @@ public class BeanReferenceAnnotationBeanPostProcessor
 					catch (BeanLocatorException ble) {
 						StringWriter stringWriter = new StringWriter();
 
-						PrintWriter printWriter = new PrintWriter(stringWriter);
+						try (PrintWriter printWriter = new PrintWriter(
+								stringWriter)) {
 
-						printWriter.print("BeanFactory could not find bean: ");
+							printWriter.print(
+								"BeanFactory could not find bean: ");
 
-						nsbde.printStackTrace(printWriter);
+							nsbde.printStackTrace(printWriter);
 
-						printWriter.print(
-							" and PortalBeanLocator failed with: ");
-						printWriter.append(ble.getMessage());
-
-						printWriter.close();
+							printWriter.print(
+								" and PortalBeanLocator failed with: ");
+							printWriter.append(ble.getMessage());
+						}
 
 						throw new BeanLocatorException(
 							stringWriter.toString(), ble);

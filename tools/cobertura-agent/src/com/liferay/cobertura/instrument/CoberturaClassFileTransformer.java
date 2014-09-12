@@ -221,32 +221,14 @@ public class CoberturaClassFileTransformer implements ClassFileTransformer {
 
 		File classFile = new File(dumpDir, className + ".class");
 
-		OutputStream outputStream = null;
-
-		try {
-			outputStream = new FileOutputStream(classFile);
-
+		try (OutputStream outputStream = new FileOutputStream(classFile)) {
 			outputStream.write(data);
 		}
-		finally {
-			if (outputStream != null) {
-				outputStream.close();
-			}
-		}
 
-		FileWriter fileWriter = null;
-
-		try {
-			fileWriter = new FileWriter(logFile, true);
-
+		try (FileWriter fileWriter = new FileWriter(logFile, true)) {
 			fileWriter.write(
 				"Instrumented " + className + " from " + classLoader +
 					" and dumped to " + classFile.getAbsolutePath() + "\n");
-		}
-		finally {
-			if (fileWriter != null) {
-				fileWriter.close();
-			}
 		}
 	}
 

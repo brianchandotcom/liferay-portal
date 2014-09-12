@@ -189,16 +189,15 @@ public class ListUtil {
 
 		List<String> list = new ArrayList<String>();
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new FileReader(file));
-
 		String s = StringPool.BLANK;
 
-		while ((s = unsyncBufferedReader.readLine()) != null) {
-			list.add(s);
-		}
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new FileReader(file))) {
 
-		unsyncBufferedReader.close();
+			while ((s = unsyncBufferedReader.readLine()) != null) {
+				list.add(s);
+			}
+		}
 
 		return list;
 	}

@@ -44,19 +44,17 @@ public class WhoisWebCacheItem implements WebCacheItem {
 	public Object convert(String key) throws WebCacheException {
 		Whois whois = null;
 
-		try {
-			Socket socket = new Socket(WHOIS_SERVER, WHOIS_SERVER_PORT);
+		StringBundler sb = new StringBundler();
+		String line = null;
 
+		try (Socket socket = new Socket(WHOIS_SERVER, WHOIS_SERVER_PORT);
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(
-					new InputStreamReader(socket.getInputStream()));
+					new InputStreamReader(socket.getInputStream()))) {
 
 			PrintStream out = new PrintStream(socket.getOutputStream());
 
 			out.println(_domain);
-
-			StringBundler sb = new StringBundler();
-			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				if (line.startsWith("Results ")) {
@@ -65,9 +63,6 @@ public class WhoisWebCacheItem implements WebCacheItem {
 
 				sb.append(line).append("\n");
 			}
-
-			unsyncBufferedReader.close();
-			socket.close();
 
 			whois = new Whois(
 				_domain,

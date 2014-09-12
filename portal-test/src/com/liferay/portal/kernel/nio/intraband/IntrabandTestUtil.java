@@ -67,26 +67,23 @@ public class IntrabandTestUtil {
 	public static SocketChannel[] createSocketChannelPeers()
 		throws IOException {
 
-		ServerSocketChannel serverSocketChannel =
-			SocketUtil.createServerSocketChannel(
-				InetAddress.getLocalHost(), 15238, _serverSocketConfigurator);
+		try (ServerSocketChannel serverSocketChannel =
+				SocketUtil.createServerSocketChannel(
+					InetAddress.getLocalHost(), 15238,
+					_serverSocketConfigurator)) {
 
-		ServerSocket serverSocket = serverSocketChannel.socket();
+			ServerSocket serverSocket = serverSocketChannel.socket();
 
-		SocketChannel clientPeerSocketChannel = SocketChannel.open(
-			new InetSocketAddress(
-				InetAddress.getLocalHost(), serverSocket.getLocalPort()));
+			SocketChannel[] socketChannels = new SocketChannel[2];
 
-		SocketChannel serverPeerSocketChannel = serverSocketChannel.accept();
+			socketChannels[1] = SocketChannel.open(
+				new InetSocketAddress(
+					InetAddress.getLocalHost(), serverSocket.getLocalPort()));
 
-		serverSocketChannel.close();
+			socketChannels[0] = serverSocketChannel.accept();
 
-		SocketChannel[] socketChannels = new SocketChannel[2];
-
-		socketChannels[0] = serverPeerSocketChannel;
-		socketChannels[1] = clientPeerSocketChannel;
-
-		return socketChannels;
+			return socketChannels;
+		}
 	}
 
 	public static Datagram readDatagramFully(

@@ -2160,16 +2160,15 @@ public class StringUtil {
 	public static void readLines(InputStream is, Collection<String> lines)
 		throws IOException {
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(is));
-
 		String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			lines.add(line);
-		}
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new InputStreamReader(is))) {
 
-		unsyncBufferedReader.close();
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lines.add(line);
+			}
+		}
 	}
 
 	/**

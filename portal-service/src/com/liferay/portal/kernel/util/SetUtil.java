@@ -184,16 +184,15 @@ public class SetUtil {
 	public static Set<String> fromFile(File file) throws IOException {
 		Set<String> set = new HashSet<String>();
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new FileReader(file));
-
 		String s = StringPool.BLANK;
 
-		while ((s = unsyncBufferedReader.readLine()) != null) {
-			set.add(s);
-		}
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new FileReader(file))) {
 
-		unsyncBufferedReader.close();
+			while ((s = unsyncBufferedReader.readLine()) != null) {
+				set.add(s);
+			}
+		}
 
 		return set;
 	}

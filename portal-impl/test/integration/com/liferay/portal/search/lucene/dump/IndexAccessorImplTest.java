@@ -209,34 +209,30 @@ public class IndexAccessorImplTest {
 	}
 
 	private void _assertHits(String key, boolean expectHit) throws Exception {
-		IndexReader indexReader = IndexReader.open(
+		try (IndexReader indexReader = IndexReader.open(
 			_indexAccessorImpl.getLuceneDir());
+			IndexSearcher indexSearcher = new IndexSearcher(indexReader)) {
 
-		IndexSearcher indexSearcher = new IndexSearcher(indexReader);
+			for (int i = 0; i < _documentsCount * 2; i++) {
+				Term term = new Term("name", key + i);
 
-		for (int i = 0; i < _documentsCount * 2; i++) {
-			Term term = new Term("name", key + i);
+				TermQuery termQuery = new TermQuery(term);
 
-			TermQuery termQuery = new TermQuery(term);
+				TopDocs topDocs = indexSearcher.search(termQuery, 1);
 
-			TopDocs topDocs = indexSearcher.search(termQuery, 1);
-
-			if (i < _documentsCount) {
-				if (expectHit) {
-					Assert.assertEquals(1, topDocs.totalHits);
+				if (i < _documentsCount) {
+					if (expectHit) {
+						Assert.assertEquals(1, topDocs.totalHits);
+					}
+					else {
+						Assert.assertEquals(0, topDocs.totalHits);
+					}
 				}
 				else {
 					Assert.assertEquals(0, topDocs.totalHits);
 				}
 			}
-			else {
-				Assert.assertEquals(0, topDocs.totalHits);
-			}
 		}
-
-		indexSearcher.close();
-
-		indexReader.close();
 	}
 
 	private void _deleteDocuments(String key) throws Exception {

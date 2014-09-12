@@ -89,11 +89,9 @@ public class SystemProperties {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				InputStream inputStream = url.openStream();
-
-				properties.load(inputStream);
-
-				inputStream.close();
+				try (InputStream inputStream = url.openStream()) {
+					properties.load(inputStream);
+				}
 
 				if (!systemPropertiesQuiet) {
 					System.out.println("Loading " + url);
@@ -115,11 +113,9 @@ public class SystemProperties {
 
 				_loaded = true;
 
-				InputStream inputStream = url.openStream();
-
-				properties.load(inputStream);
-
-				inputStream.close();
+				try (InputStream inputStream = url.openStream()) {
+					properties.load(inputStream);
+				}
 
 				if (!systemPropertiesQuiet) {
 					System.out.println("Loading " + url);

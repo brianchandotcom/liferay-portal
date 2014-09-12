@@ -215,14 +215,12 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 
 		renderResponse.setContentType(ContentTypes.TEXT_HTML_UTF8);
 
-		PrintWriter writer = renderResponse.getWriter();
-
-		writer.print(
-			"WebProxyPortlet will not be enabled unless Liferay's " +
-				"serializer.jar and xalan.jar files are copied to the " +
-					"JDK's endorsed directory");
-
-		writer.close();
+		try (PrintWriter writer = renderResponse.getWriter()) {
+			writer.print(
+				"WebProxyPortlet will not be enabled unless Liferay's " +
+					"serializer.jar and xalan.jar files are copied to the " +
+						"JDK's endorsed directory");
+		}
 	}
 
 	@Reference(unbind = "-")

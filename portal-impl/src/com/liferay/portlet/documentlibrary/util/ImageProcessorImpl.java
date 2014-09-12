@@ -407,13 +407,8 @@ public class ImageProcessorImpl
 		try {
 			file = FileUtil.createTempFile(type);
 
-			FileOutputStream fos = new FileOutputStream(file);
-
-			try {
+			try (FileOutputStream fos = new FileOutputStream(file)) {
 				ImageToolUtil.write(renderedImage, type, fos);
-			}
-			finally {
-				fos.close();
 			}
 
 			addFileToStore(

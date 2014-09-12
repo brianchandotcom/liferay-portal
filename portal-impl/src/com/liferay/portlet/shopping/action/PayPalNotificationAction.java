@@ -87,20 +87,20 @@ public class PayPalNotificationAction extends Action {
 			urlc.setRequestProperty(
 				"Content-Type","application/x-www-form-urlencoded");
 
-			PrintWriter pw = UnsyncPrintWriterPool.borrow(
-				urlc.getOutputStream());
+			try (PrintWriter pw = UnsyncPrintWriterPool.borrow(
+					urlc.getOutputStream())) {
 
-			pw.println(query);
+				pw.println(query);
+			}
 
-			pw.close();
+			String payPalStatus = null;
 
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(
-					new InputStreamReader(urlc.getInputStream()));
+			try (UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(
+						new InputStreamReader(urlc.getInputStream()))) {
 
-			String payPalStatus = unsyncBufferedReader.readLine();
-
-			unsyncBufferedReader.close();
+				payPalStatus = unsyncBufferedReader.readLine();
+			}
 
 			String itemName = ParamUtil.getString(request, "item_name");
 			String itemNumber = ParamUtil.getString(request, "item_number");

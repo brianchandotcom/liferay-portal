@@ -186,30 +186,28 @@ public class SendmailHook implements Hook {
 			String virtusertable = PropsUtil.get(
 				PropsKeys.MAIL_HOOK_SENDMAIL_VIRTUSERTABLE);
 
-			FileReader fileReader = new FileReader(virtusertable);
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(fileReader);
-
 			StringBundler sb = new StringBundler();
 
-			for (String s = unsyncBufferedReader.readLine(); s != null;
+			try (FileReader fileReader = new FileReader(virtusertable);
+				UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(fileReader)) {
+
+				for (String s = unsyncBufferedReader.readLine(); s != null;
 					s = unsyncBufferedReader.readLine()) {
 
-				if (!s.endsWith(" " + userId)) {
-					sb.append(s);
+					if (!s.endsWith(" " + userId)) {
+						sb.append(s);
+						sb.append('\n');
+					}
+				}
+
+				if ((emailAddress != null) && !emailAddress.equals("")) {
+					sb.append(emailAddress);
+					sb.append(" ");
+					sb.append(userId);
 					sb.append('\n');
 				}
 			}
-
-			if ((emailAddress != null) && !emailAddress.equals("")) {
-				sb.append(emailAddress);
-				sb.append(" ");
-				sb.append(userId);
-				sb.append('\n');
-			}
-
-			unsyncBufferedReader.close();
-			fileReader.close();
 
 			FileUtil.write(virtusertable, sb.toString());
 

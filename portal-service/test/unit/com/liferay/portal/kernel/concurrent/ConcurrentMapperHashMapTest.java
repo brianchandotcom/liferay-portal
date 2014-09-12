@@ -679,12 +679,11 @@ public class ConcurrentMapperHashMapTest {
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-			unsyncByteArrayOutputStream);
+		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				unsyncByteArrayOutputStream)) {
 
-		objectOutputStream.writeObject(_concurrentMap);
-
-		objectOutputStream.close();
+			objectOutputStream.writeObject(_concurrentMap);
+		}
 
 		ObjectInputStream objectInputStream = new ObjectInputStream(
 			new UnsyncByteArrayInputStream(

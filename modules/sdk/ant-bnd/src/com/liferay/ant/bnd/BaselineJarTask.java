@@ -295,73 +295,71 @@ public class BaselineJarTask extends BaseBndTask {
 	protected void doExecute() throws Exception {
 		aQute.bnd.build.Project bndProject = getBndProject();
 
-		Builder builder = new Builder(bndProject);
+		try (Builder builder = new Builder(bndProject)) {
+			builder.setClasspath(
+				_classpathFiles.toArray(new File[_classpathFiles.size()]));
+			builder.setPedantic(isPedantic());
+			builder.setProperties(_file);
+			builder.setSourcepath(new File[] {_sourcePath});
 
-		builder.setClasspath(
-			_classpathFiles.toArray(new File[_classpathFiles.size()]));
-		builder.setPedantic(isPedantic());
-		builder.setProperties(_file);
-		builder.setSourcepath(new File[] {_sourcePath});
+			Jar[] jars = builder.builds();
 
-		Jar[] jars = builder.builds();
+			// Report both task failures and bnd build failures
 
-		// Report both task failures and bnd build failures
+			boolean taskFailed = report();
+			boolean bndFailed = report(builder);
 
-		boolean taskFailed = report();
-		boolean bndFailed = report(builder);
+			// Fail this build if failure is not ok and either the task failed
+			// or the bnd build failed
 
-		// Fail this build if failure is not ok and either the task failed or
-		// the bnd build failed
+			if (taskFailed || bndFailed) {
+				throw new BuildException(
+					"bnd failed",
+					new org.apache.tools.ant.Location(_file.getAbsolutePath()));
+			}
 
-		if (taskFailed || bndFailed) {
-			throw new BuildException(
-				"bnd failed",
-				new org.apache.tools.ant.Location(_file.getAbsolutePath()));
-		}
+			for (Jar jar : jars) {
+				String bsn = jar.getName();
 
-		for (Jar jar : jars) {
-			String bsn = jar.getName();
+				File outputFile = _outputPath;
 
-			File outputFile = _outputPath;
+				if (_outputPath.isDirectory()) {
+					String path = builder.getProperty("-output");
 
-			if (_outputPath.isDirectory()) {
-				String path = builder.getProperty("-output");
+					if (path != null) {
+						outputFile = getFile(_outputPath, path);
+					}
+					else {
+						outputFile = getFile(_outputPath, bsn + ".jar");
+					}
+				}
 
-				if (path != null) {
-					outputFile = getFile(_outputPath, path);
+				if (!outputFile.exists() ||
+					(outputFile.lastModified() <= jar.lastModified())) {
+
+					jar.write(outputFile);
+
+					Map<String, Resource> resources = jar.getResources();
+
+					log(
+						jar.getName() + " (" + outputFile.getName() + ") " +
+							resources.size());
+
+					doBaselineJar(jar, outputFile, bndProject);
 				}
 				else {
-					outputFile = getFile(_outputPath, bsn + ".jar");
+					Map<String, Resource> resources = jar.getResources();
+
+					log(
+						jar.getName() + " (" + outputFile.getName() + ") " +
+							resources.size() + " (not modified)");
 				}
+
+				report();
+
+				jar.close();
 			}
-
-			if (!outputFile.exists() ||
-				(outputFile.lastModified() <= jar.lastModified())) {
-
-				jar.write(outputFile);
-
-				Map<String, Resource> resources = jar.getResources();
-
-				log(
-					jar.getName() + " (" + outputFile.getName() + ") " +
-						resources.size());
-
-				doBaselineJar(jar, outputFile, bndProject);
-			}
-			else {
-				Map<String, Resource> resources = jar.getResources();
-
-				log(
-					jar.getName() + " (" + outputFile.getName() + ") " +
-						resources.size() + " (not modified)");
-			}
-
-			report();
-
-			jar.close();
 		}
-
-		builder.close();
 	}
 
 	protected void doHeader(BundleInfo bundleInfo) {
@@ -446,14 +444,13 @@ public class BaselineJarTask extends BaseBndTask {
 			return;
 		}
 
-		FileOutputStream fileOutputStream = new FileOutputStream(
-			packageInfoFile);
+		try (FileOutputStream fileOutputStream = new FileOutputStream(
+				packageInfoFile)) {
 
-		String content = "version " + info.suggestedVersion;
+			String content = "version " + info.suggestedVersion;
 
-		fileOutputStream.write(content.getBytes());
-
-		fileOutputStream.close();
+			fileOutputStream.write(content.getBytes());
+		}
 	}
 
 	protected String getBaselineResportsDirName() {

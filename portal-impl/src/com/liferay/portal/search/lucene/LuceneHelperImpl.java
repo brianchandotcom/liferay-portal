@@ -472,15 +472,16 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 			urlConnection.setDoOutput(true);
 
-			UnsyncPrintWriter unsyncPrintWriter = UnsyncPrintWriterPool.borrow(
-				urlConnection.getOutputStream());
+			try (UnsyncPrintWriter unsyncPrintWriter =
+					UnsyncPrintWriterPool.borrow(
+						urlConnection.getOutputStream())) {
 
-			unsyncPrintWriter.write("transientToken=");
-			unsyncPrintWriter.write(bootupClusterNodeObjectValuePair.getKey());
-			unsyncPrintWriter.write("&companyId=");
-			unsyncPrintWriter.write(String.valueOf(companyId));
-
-			unsyncPrintWriter.close();
+				unsyncPrintWriter.write("transientToken=");
+				unsyncPrintWriter.write(
+					bootupClusterNodeObjectValuePair.getKey());
+				unsyncPrintWriter.write("&companyId=");
+				unsyncPrintWriter.write(String.valueOf(companyId));
+			}
 
 			inputStream = urlConnection.getInputStream();
 

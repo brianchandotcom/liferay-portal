@@ -38,11 +38,9 @@ public class HelloWorldPortlet extends GenericPortlet {
 
 		renderResponse.setContentType(ContentTypes.TEXT_HTML_UTF8);
 
-		PrintWriter writer = renderResponse.getWriter();
-
-		writer.print("Welcome to " + ReleaseInfo.getReleaseInfo() + ".");
-
-		writer.close();
+		try (PrintWriter writer = renderResponse.getWriter()) {
+			writer.print("Welcome to " + ReleaseInfo.getReleaseInfo() + ".");
+		}
 	}
 
 	@Override

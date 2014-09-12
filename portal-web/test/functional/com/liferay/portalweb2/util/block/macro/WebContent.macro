@@ -124,15 +124,6 @@
 		</if>
 
 		<if>
-			<isset var="webContentLinkToPage" />
-			<then>
-				<var name="key_indexNumber" value="${indexNumber}" />
-
-				<execute action="CPWebcontentAddwebcontent#select" locator-key1="LINK_TO_PAGE_FIELD" value1="index=${key_indexNumber}" />
-			</then>
-		</if>
-
-		<if>
 			<isset var="webContentNumber" />
 			<then>
 				<var name="key_fieldName" value="Number" />
@@ -673,7 +664,9 @@
 		<if>
 			<isset var="webContentLinkToPage" />
 			<then>
-				<execute action="CPWebcontentAddwebcontent#type" locator-key1="LINK_TO_PAGE_FIELD" value1="${webContentLinkToPage}" />
+				<var name="key_linkedPageName" value="${linkedPageName}" />
+
+				<execute action="CPWebcontentAddwebcontent#select" locator-key1="LINK_TO_PAGE_SELECT" value1="regexp:–\s+${linkedPageName}" />
 			</then>
 		</if>
 

@@ -931,6 +931,68 @@
 		</execute>
 	</command>
 
+	<command name="ImportLARLinkToPageValidation" priority="4">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="Test Structure Description" />
+			<var name="structureFieldNames" value="Link to Page" />
+			<var name="structureName" value="Test Structure" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="Test Structure" />
+			<var name="templateDescription" value="Test Template Description" />
+			<var name="templateName" value="Test Template" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addWithStructureCP">
+			<var name="linkedPageName" value="Test Page" />
+			<var name="structureName" value="Test Structure" />
+			<var name="templateName" value="Test Template" />
+			<var name="webContentLinkToPage" value="true" />
+			<var name="webContentTitle" value="WC Title" />
+		</execute>
+
+		<execute macro="LAR#exportPortlet">
+			<var name="larFileName" value="Web_Content.portlet.lar" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="importValidationMissingItem" value="Linked Page" />
+			<var name="larFileName" value="Web_Content.portlet.lar" />
+			<var name="linkedPageName" value="Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+	</command>
+
 	<command name="PublishDraftWebContent" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />

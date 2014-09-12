@@ -114,7 +114,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LINK_TO_PAGE_FIELD</td>
+	<td>LINK_TO_PAGE_SELECT</td>
 	<td>//div[contains(.,'Link to Page')]/select</td>
 	<td></td>
 </tr>

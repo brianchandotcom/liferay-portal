@@ -165,7 +165,7 @@ public class StartupHelper {
 		throws VerifyException {
 
 		_verified = VerifyProcessUtil.verifyProcess(
-			_upgraded, newBuildNumber, verified);
+			_upgraded, newBuildNumber, verified, PropsKeys.VERIFY_PROCESSES);
 	}
 
 	protected String[] getUpgradeProcessClassNames(String key) {

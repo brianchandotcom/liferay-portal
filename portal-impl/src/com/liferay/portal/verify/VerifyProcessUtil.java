@@ -33,7 +33,8 @@ import com.liferay.portal.util.PropsValues;
 public class VerifyProcessUtil {
 
 	public static boolean verifyProcess(
-			boolean ranUpgradeProcess, boolean newBuildNumber, boolean verified)
+			boolean ranUpgradeProcess, boolean newBuildNumber, boolean verified,
+			String verifyProcessKey)
 		throws VerifyException {
 
 		int verifyFrequency = GetterUtil.getInteger(
@@ -43,13 +44,14 @@ public class VerifyProcessUtil {
 			((verifyFrequency == VerifyProcess.ONCE) && !verified) ||
 			ranUpgradeProcess || newBuildNumber) {
 
-			return _verifyProcess(ranUpgradeProcess);
+			return _verifyProcess(ranUpgradeProcess, verifyProcessKey);
 		}
 
 		return false;
 	}
 
-	private static boolean _verifyProcess(boolean ranUpgradeProcess)
+	private static boolean _verifyProcess(
+			boolean ranUpgradeProcess, String verifyProcessKey)
 		throws VerifyException {
 
 		boolean ranVerifyProcess = false;
@@ -70,7 +72,7 @@ public class VerifyProcessUtil {
 
 		try {
 			String[] verifyProcessClassNames = PropsUtil.getArray(
-				PropsKeys.VERIFY_PROCESSES);
+				verifyProcessKey);
 
 			for (String verifyProcessClassName : verifyProcessClassNames) {
 				boolean tempRanVerifyProcess = _verifyProcess(

@@ -37,10 +37,8 @@ public class AsyncBrokerTest {
 
 	@Before
 	public void setUp() {
-		_defaultNoticeableFutures =
-			(ConcurrentMap<String, DefaultNoticeableFuture<String>>)
-				ReflectionTestUtil.getFieldValue(
-					_asyncBroker, "_defaultNoticeableFutures");
+		_defaultNoticeableFutures = ReflectionTestUtil.getFieldValue(
+			_asyncBroker, "_defaultNoticeableFutures");
 	}
 
 	@Test

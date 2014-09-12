@@ -920,9 +920,8 @@ public class RemoteSPITest {
 				@Override
 				public Object call() {
 					AbstractQueuedSynchronizer abstractQueuedSynchronizer =
-						(AbstractQueuedSynchronizer)
-							ReflectionTestUtil.getFieldValue(
-								_mockRemoteSPI.countDownLatch, "sync");
+						ReflectionTestUtil.getFieldValue(
+							_mockRemoteSPI.countDownLatch, "sync");
 
 					while (true) {
 						Collection<Thread> threads =

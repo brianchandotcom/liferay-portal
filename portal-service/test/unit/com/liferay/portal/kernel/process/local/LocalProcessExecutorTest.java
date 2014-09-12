@@ -2108,9 +2108,8 @@ public class LocalProcessExecutorTest {
 			ProcessOutputStream processOutputStream =
 				ProcessContext.getProcessOutputStream();
 
-			_oldObjectOutputStream =
-				(ObjectOutputStream)ReflectionTestUtil.getFieldValue(
-					processOutputStream, "_objectOutputStream");
+			_oldObjectOutputStream = ReflectionTestUtil.getFieldValue(
+				processOutputStream, "_objectOutputStream");
 
 			_thread = Thread.currentThread();
 		}

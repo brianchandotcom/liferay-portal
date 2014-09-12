@@ -1170,14 +1170,13 @@ public class HttpClientSPIAgentTest {
 	}
 
 	protected SocketImpl swapSocketImpl(Socket socket, SocketImpl socketImpl) {
-		SocketImpl oldSocketImpl = (SocketImpl)ReflectionTestUtil.getFieldValue(
+		SocketImpl oldSocketImpl = ReflectionTestUtil.getFieldValue(
 			socket, "impl");
 
 		if (socketImpl == null) {
 			Socket unbindSocket = new Socket();
 
-			socketImpl = (SocketImpl)ReflectionTestUtil.getFieldValue(
-				unbindSocket, "impl");
+			socketImpl = ReflectionTestUtil.getFieldValue(unbindSocket, "impl");
 
 			ReflectionTestUtil.setFieldValue(
 				socketImpl, "cmdsock",

@@ -100,7 +100,7 @@ public class MailServiceTestUtil {
 				public void addMessage(MailMessage message) {
 					try {
 						List<MailMessage> receivedMail =
-							(List<MailMessage>)ReflectionTestUtil.getFieldValue(
+							ReflectionTestUtil.getFieldValue(
 								this, "receivedMail");
 
 						receivedMail.add(message);

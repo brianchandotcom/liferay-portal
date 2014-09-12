@@ -401,9 +401,8 @@ public class IntrabandBridgeDestinationTest {
 			Object spiProviderContainer = spiProviderContainers.get(
 				spi.getSPIProviderName());
 
-			Map<String, SPI> spiMap =
-				(Map<String, SPI>)ReflectionTestUtil.getFieldValue(
-					spiProviderContainer, "_spis");
+			Map<String, SPI> spiMap = ReflectionTestUtil.getFieldValue(
+				spiProviderContainer, "_spis");
 
 			SPIConfiguration spiConfiguration = spi.getSPIConfiguration();
 

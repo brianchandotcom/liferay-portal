@@ -169,9 +169,8 @@ public class OutputStreamWriterTest {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
 			new DummyOutputStream(), "US-ASCII");
 
-		CharsetEncoder charsetEncoder =
-			(CharsetEncoder)ReflectionTestUtil.getFieldValue(
-				outputStreamWriter, "_charsetEncoder");
+		CharsetEncoder charsetEncoder = ReflectionTestUtil.getFieldValue(
+			outputStreamWriter, "_charsetEncoder");
 
 		charsetEncoder.onUnmappableCharacter(CodingErrorAction.REPORT);
 
@@ -214,15 +213,14 @@ public class OutputStreamWriterTest {
 	}
 
 	private int _getInputBufferSize(OutputStreamWriter outputStreamWriter) {
-		CharBuffer inputCharBuffer =
-			(CharBuffer)ReflectionTestUtil.getFieldValue(
-				outputStreamWriter, "_inputCharBuffer");
+		CharBuffer inputCharBuffer = ReflectionTestUtil.getFieldValue(
+			outputStreamWriter, "_inputCharBuffer");
 
 		return inputCharBuffer.capacity();
 	}
 
 	private int _getOutputBufferSize(OutputStreamWriter outputStreamWriter) {
-		ByteBuffer outputBuffer = (ByteBuffer)ReflectionTestUtil.getFieldValue(
+		ByteBuffer outputBuffer = ReflectionTestUtil.getFieldValue(
 			outputStreamWriter, "_outputByteBuffer");
 
 		return outputBuffer.capacity();
@@ -231,12 +229,12 @@ public class OutputStreamWriterTest {
 	private OutputStream _getOutputStream(
 		OutputStreamWriter outputStreamWriter) {
 
-		return (OutputStream)ReflectionTestUtil.getFieldValue(
+		return ReflectionTestUtil.getFieldValue(
 			outputStreamWriter, "_outputStream");
 	}
 
 	private boolean _isAutoFlush(OutputStreamWriter outputStreamWriter) {
-		return (Boolean)ReflectionTestUtil.getFieldValue(
+		return ReflectionTestUtil.getFieldValue(
 			outputStreamWriter, "_autoFlush");
 	}
 

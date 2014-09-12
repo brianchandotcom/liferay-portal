@@ -36,9 +36,8 @@ public class MPIHelperUtilTestUtil {
 		Object spiProviderContainer = spiProviderContainers.get(
 			spi.getSPIProviderName());
 
-		Map<String, SPI> spis =
-			(Map<String, SPI>)ReflectionTestUtil.getFieldValue(
-				spiProviderContainer, "_spis");
+		Map<String, SPI> spis = ReflectionTestUtil.getFieldValue(
+			spiProviderContainer, "_spis");
 
 		spis.put(spiId, spi);
 	}

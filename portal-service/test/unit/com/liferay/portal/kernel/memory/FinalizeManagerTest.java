@@ -324,7 +324,7 @@ public class FinalizeManagerTest {
 	}
 
 	private <T> T getReferent(Reference<T> reference) {
-		return (T)ReflectionTestUtil.getFieldValue(reference, "referent");
+		return ReflectionTestUtil.getFieldValue(reference, "referent");
 	}
 
 	private void waitUntilMarked(MarkFinalizeAction markFinalizeAction)

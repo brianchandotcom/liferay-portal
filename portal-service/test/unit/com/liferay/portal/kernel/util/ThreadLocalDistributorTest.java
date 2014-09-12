@@ -105,9 +105,8 @@ public class ThreadLocalDistributorTest {
 				"_object is not of type ThreadLocal", logRecord3.getMessage());
 
 			List<ThreadLocal<Serializable>> threadLocals =
-				(List<ThreadLocal<Serializable>>)
-					ReflectionTestUtil.getFieldValue(
-						threadLocalDistributor, "_threadLocals");
+				ReflectionTestUtil.getFieldValue(
+					threadLocalDistributor, "_threadLocals");
 
 			Assert.assertEquals(1, threadLocals.size());
 			Assert.assertSame(TestClass._threadLocal, threadLocals.get(0));
@@ -125,9 +124,8 @@ public class ThreadLocalDistributorTest {
 
 			Assert.assertTrue(logRecords.isEmpty());
 
-			threadLocals = (List<ThreadLocal<Serializable>>)
-				ReflectionTestUtil.getFieldValue(
-					threadLocalDistributor, "_threadLocals");
+			threadLocals = ReflectionTestUtil.getFieldValue(
+				threadLocalDistributor, "_threadLocals");
 
 			Assert.assertEquals(1, threadLocals.size());
 			Assert.assertSame(TestClass._threadLocal, threadLocals.get(0));
@@ -168,9 +166,8 @@ public class ThreadLocalDistributorTest {
 
 		threadLocalDistributor.capture();
 
-		Serializable[] threadLocalValues =
-			(Serializable[])ReflectionTestUtil.getFieldValue(
-				threadLocalDistributor, "_threadLocalValues");
+		Serializable[] threadLocalValues = ReflectionTestUtil.getFieldValue(
+			threadLocalDistributor, "_threadLocalValues");
 
 		Assert.assertEquals(1, threadLocalValues.length);
 		Assert.assertSame(testValue, threadLocalValues[0]);

@@ -117,6 +117,36 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			addFileEntry(group.getGroupId(), parentFolder.getFolderId());
 		}
 
+		@Test(expected = DuplicateFileException.class)
+		public void shouldFailIfDuplicateNameAndExtensionInFolder() throws Exception {
+			addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				_FILE_NAME, _STRIPPED_FILE_NAME);
+			addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				_FILE_NAME, _FILE_NAME);
+		}
+
+		@Test(expected = DuplicateFileException.class)
+		public void shouldFailIfDuplicateNameAndExtension2InFolder() throws Exception {
+			addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				_FILE_NAME, _FILE_NAME);
+			addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				_FILE_NAME, _STRIPPED_FILE_NAME);
+		}
+
+		@Test(expected = DuplicateFileException.class)
+		public void shouldFailIfDuplicateNameAndExtension3InFolder() throws Exception {
+			addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				_FILE_NAME, _STRIPPED_FILE_NAME);
+			addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				_STRIPPED_FILE_NAME, _FILE_NAME);
+		}
+
 		@Test
 		public void shouldFireSyncEvent() throws Exception {
 			AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
@@ -941,7 +971,21 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	protected static FileEntry addFileEntry(long groupId, long folderId)
 		throws Exception {
 
-		return DLAppTestUtil.addFileEntry(groupId, folderId, "Title.txt");
+		return addFileEntry(groupId, folderId, _FILE_NAME);
+	}
+
+	protected static FileEntry addFileEntry(
+			long groupId, long folderId, String fileName)
+		throws Exception {
+
+		return addFileEntry(groupId, folderId, fileName, fileName);
+	}
+
+	protected static FileEntry addFileEntry(
+			long groupId, long folderId, String fileName, String title)
+		throws Exception {
+
+		return DLAppTestUtil.addFileEntry(groupId, folderId, fileName, title);
 	}
 
 	protected static AtomicInteger registerDLSyncEventProcessorMessageListener(
@@ -1051,6 +1095,10 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		return DLAppTestUtil.updateFileEntry(
 			groupId, fileEntryId, fileName, fileName, majorVersion, true, true);
 	}
+ 
+	private static final String _FILE_NAME = "Title.txt";
+
+	private static final String _STRIPPED_FILE_NAME = "Title";
 
 	private static Log _log = LogFactoryUtil.getLog(DLAppServiceTest.class);
 

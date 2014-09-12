@@ -107,7 +107,7 @@ public class BaseOutputProcessorTestCase {
 	protected static <T> T invokeProcessStdErr(
 		OutputProcessor<T, ?> outputProcessor, InputStream inputStream) {
 
-		return (T)ReflectionTestUtil.invokeBridge(
+		return ReflectionTestUtil.invokeBridge(
 			outputProcessor, "processStdErr",
 			new Class<?>[] {InputStream.class}, inputStream);
 	}
@@ -115,7 +115,7 @@ public class BaseOutputProcessorTestCase {
 	protected static <T> T invokeProcessStdOut(
 		OutputProcessor<?, T> outputProcessor, InputStream inputStream) {
 
-		return (T)ReflectionTestUtil.invokeBridge(
+		return ReflectionTestUtil.invokeBridge(
 			outputProcessor, "processStdOut",
 			new Class<?>[] {InputStream.class}, inputStream);
 	}

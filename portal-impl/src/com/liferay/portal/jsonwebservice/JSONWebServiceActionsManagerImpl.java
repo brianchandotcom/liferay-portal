@@ -355,16 +355,24 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	@Override
-	public int registerService(String path, Object service) {
+	public int registerService(String contextPath, Object service) {
+		return registerService(StringPool.BLANK, contextPath, service);
+	}
+
+	@Override
+	public int registerService(
+		String contextName, String contextPath, Object service) {
+
 		JSONWebServiceRegistrator jsonWebServiceRegistrator =
 			new JSONWebServiceRegistrator();
 
-		jsonWebServiceRegistrator.processBean(path, StringPool.BLANK, service);
+		jsonWebServiceRegistrator.processBean(
+			contextName, contextPath, service);
 
-		int count = getJSONWebServiceActionsCount(path);
+		int count = getJSONWebServiceActionsCount(contextPath);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Configured " + count + " actions for " + path);
+			_log.info("Configured " + count + " actions for " + contextPath);
 		}
 
 		return count;

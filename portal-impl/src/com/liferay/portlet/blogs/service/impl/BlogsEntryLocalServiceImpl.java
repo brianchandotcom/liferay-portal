@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
@@ -182,7 +183,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		if (smallImage != null) {
 			smallImageFileEntryId = smallImage.getImageId();
 
-			isSmallImage = smallImage.removeSmallImage();
+			isSmallImage = !smallImage.removeSmallImage();
 
 			smallImageURL = smallImage.getImageURL();
 		}
@@ -192,15 +193,20 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		long entryId = counterLocalService.increment();
 
 		if (smallImageFileEntryId != 0) {
-			FileEntry  tempSmallImageFileEntry =
+			FileEntry tempSmallImageFileEntry =
 				PortletFileRepositoryUtil.getPortletFileEntry(
 					smallImageFileEntryId);
+
+			Folder smallImageFileEntryFolder =
+				PortletFileRepositoryUtil.addPortletFolder(
+					groupId, userId, PortletKeys.BLOGS,
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					String.valueOf(entryId), serviceContext);
 
 			FileEntry smallImageFileEntry =
 				PortletFileRepositoryUtil.addPortletFileEntry(
 					groupId, userId, BlogsEntry.class.getName(), entryId,
-					PortletKeys.BLOGS,
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					PortletKeys.BLOGS, smallImageFileEntryFolder.getFolderId(),
 					tempSmallImageFileEntry.getContentStream(),
 					tempSmallImageFileEntry.getTitle(),
 					tempSmallImageFileEntry.getMimeType(), false);
@@ -384,6 +390,16 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		// Image
 
 		imageLocalService.deleteImage(entry.getSmallImageId());
+
+		// Small Image File Entry
+
+		long smallImageFileEntryFolderId =
+			entry.getSmallImageFileEntryFolderId();
+
+		if (smallImageFileEntryFolderId != 0) {
+			PortletFileRepositoryUtil.deletePortletFolder(
+				smallImageFileEntryFolderId);
+		}
 
 		// Subscriptions
 
@@ -1130,7 +1146,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 						entry.getSmallImageFileEntryId());
 				}
 
-				FileEntry  tempSmallImageFileEntry =
+				FileEntry tempSmallImageFileEntry =
 					PortletFileRepositoryUtil.getPortletFileEntry(
 						smallImage.getImageId());
 

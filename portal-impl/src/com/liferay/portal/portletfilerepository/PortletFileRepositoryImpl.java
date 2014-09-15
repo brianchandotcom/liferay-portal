@@ -192,6 +192,20 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	}
 
 	@Override
+	public Folder addPortletFolder(
+			long groupId, long userId, String portletId, long parentFolderId,
+			String folderName, ServiceContext serviceContext)
+		throws PortalException {
+
+		Repository repository = addPortletRepository(
+			groupId, portletId, serviceContext);
+
+		return addPortletFolder(
+			userId, repository.getRepositoryId(), parentFolderId, folderName,
+			serviceContext);
+	}
+
+	@Override
 	public Repository addPortletRepository(
 			long groupId, String portletId, ServiceContext serviceContext)
 		throws PortalException {

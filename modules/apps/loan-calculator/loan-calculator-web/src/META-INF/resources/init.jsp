@@ -15,10 +15,8 @@
 --%>
 
 <%@ taglib uri="/META-INF/aui.tld" prefix="aui" %>
-<%@ taglib uri="/META-INF/c.tld" prefix="c" %>
 <%@ taglib uri="/META-INF/liferay-portlet_2_0.tld" prefix="portlet" %>
 <%@ taglib uri="/META-INF/liferay-theme.tld" prefix="liferay-theme" %>
-<%@ taglib uri="/META-INF/liferay-ui.tld" prefix="liferay-ui" %>
 
 <%@ page contentType="text/html; charset=UTF-8" %>
 

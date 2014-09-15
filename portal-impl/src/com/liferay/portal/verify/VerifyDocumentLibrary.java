@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -153,15 +154,30 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 					}
 
 					try {
-						renameDuplicateTitle(dlFileEntry);
+						DLFileEntryLocalServiceUtil.validateFile(
+							dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
+							dlFileEntry.getFileEntryId(),
+							dlFileEntry.getFileName(), dlFileEntry.getTitle());
 					}
-					catch (Exception e) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to rename duplicate title for file " +
-									"entry " + dlFileEntry.getFileEntryId() +
-										" :" + e.getMessage(),
-								e);
+					catch (PortalException pe) {
+						if (!(pe instanceof DuplicateFileException) &&
+							!(pe instanceof DuplicateFolderNameException)) {
+
+							throw pe;
+						}
+
+						try {
+							renameDuplicateTitle(dlFileEntry);
+						}
+						catch (Exception e) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"Unable to rename duplicate title for " +
+										"file entry " +
+											dlFileEntry.getFileEntryId() +
+												" : " + e.getMessage(),
+									e);
+							}
 						}
 					}
 				}
@@ -463,33 +479,43 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 	protected void renameDuplicateTitle(DLFileEntry dlFileEntry)
 		throws PortalException {
 
-		String newTitle = dlFileEntry.getTitle();
+		String title = dlFileEntry.getTitle();
 
-		String newFileName = DLUtil.getSanitizedFileName(
-			newTitle, dlFileEntry.getExtension());
-
-		String titleWithoutExtension = newTitle;
+		String titleWithoutExtension = dlFileEntry.getTitle();
 
 		String titleExtension = StringPool.BLANK;
 
-		if (newTitle.endsWith(StringPool.PERIOD + dlFileEntry.getExtension())) {
-			titleWithoutExtension = newTitle.substring(
-				0, newTitle.lastIndexOf(StringPool.PERIOD));
+		if (title.endsWith(
+				StringPool.PERIOD.concat(dlFileEntry.getExtension()))) {
+
+			titleWithoutExtension = FileUtil.stripExtension(title);
 
 			titleExtension = dlFileEntry.getExtension();
 		}
 
-		int count = 0;
+		int count = 1;
 
-		boolean duplicate = true;
+		while (true) {
+			String uniqueTitle =
+				titleWithoutExtension + StringPool.UNDERLINE +
+					String.valueOf(count);
 
-		while (duplicate) {
+			if (Validator.isNotNull(titleExtension)) {
+				uniqueTitle = uniqueTitle.concat(
+					StringPool.PERIOD.concat(titleExtension));
+			}
+
+			String uniqueFileName = DLUtil.getSanitizedFileName(
+				uniqueTitle, dlFileEntry.getExtension());
+
 			try {
 				DLFileEntryLocalServiceUtil.validateFile(
 					dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-					dlFileEntry.getFileEntryId(), newFileName, newTitle);
+					dlFileEntry.getFileEntryId(), uniqueFileName, uniqueTitle);
 
-				duplicate = false;
+				renameFileEntryTitle(dlFileEntry, uniqueTitle);
+
+				return;
 			}
 			catch (PortalException e) {
 				if (!(e instanceof DuplicateFolderNameException) &&
@@ -499,26 +525,8 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 				}
 
 				count++;
-
-				newTitle =
-					titleWithoutExtension + StringPool.UNDERLINE +
-						String.valueOf(count);
-
-				if (Validator.isNotNull(titleExtension)) {
-					newTitle += StringPool.PERIOD.concat(titleExtension);
-				}
-
-				newFileName = DLUtil.getSanitizedFileName(
-								newTitle, dlFileEntry.getExtension());
 			}
 		}
-
-		if (newTitle.equals(dlFileEntry.getTitle()) &&
-			newFileName.equals(dlFileEntry.getFileName())) {
-			return;
-		}
-
-		renameFileEntryTitle(dlFileEntry, newTitle);
 	}
 
 	protected void renameFileEntryTitle(

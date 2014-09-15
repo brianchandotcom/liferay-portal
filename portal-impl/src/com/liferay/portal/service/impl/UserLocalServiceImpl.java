@@ -1967,6 +1967,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the user with the contact ID.
+	 *
+	 * @param  contactId the user's contact ID
+	 * @return the user with the contact ID
+	 */
+	@Override
+	public User fetchUserByContactId(long contactId) {
+		return userPersistence.fetchByContactId(contactId);
+	}
+
+	/**
 	 * Returns the user with the email address.
 	 *
 	 * @param  companyId the primary key of the user's company

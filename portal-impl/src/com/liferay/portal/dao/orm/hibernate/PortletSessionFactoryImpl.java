@@ -36,11 +36,16 @@ import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
+
 /**
  * @author Shuyang Zhou
  * @author Alexander Chow
  */
-public class PortletSessionFactoryImpl extends SessionFactoryImpl {
+public class PortletSessionFactoryImpl extends SessionFactoryImpl
+	implements BeanFactoryAware {
 
 	@Override
 	public void closeSession(Session session) throws ORMException {
@@ -86,6 +91,11 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 		return wrapSession(session);
 	}
 
+	@Override
+	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+		_beanFactory = beanFactory;
+	}
+
 	public void setDataSource(DataSource dataSource) {
 		_dataSource = dataSource;
 	}
@@ -103,6 +113,7 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 			PortletHibernateConfiguration portletHibernateConfiguration =
 				new PortletHibernateConfiguration();
 
+			portletHibernateConfiguration.setBeanFactory(_beanFactory);
 			portletHibernateConfiguration.setDataSource(dataSource);
 
 			SessionFactory sessionFactory = null;
@@ -122,6 +133,10 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 		finally {
 			PortletClassLoaderUtil.setServletContextName(servletContextName);
 		}
+	}
+
+	protected BeanFactory getBeanFactory() {
+		return _beanFactory;
 	}
 
 	protected DataSource getDataSource() {
@@ -181,6 +196,7 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletSessionFactoryImpl.class);
 
+	private BeanFactory _beanFactory;
 	private DataSource _dataSource;
 	private Map<DataSource, SessionFactory> _sessionFactories =
 		new HashMap<DataSource, SessionFactory>();

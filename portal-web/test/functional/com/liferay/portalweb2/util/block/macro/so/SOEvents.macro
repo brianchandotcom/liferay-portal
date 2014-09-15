@@ -15,15 +15,15 @@
 			</then>
 		</if>
 
-		<execute action="SOSiteHome#click" locator-key1="EVENTS_DISPLAY_OPTIONS" />
+		<execute action="SOEvents#click" locator-key1="EVENTS_DISPLAY_OPTIONS" />
 
 		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
 
-		<execute action="SOSiteHomeEventsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="SOSiteHomeEventsConfiguration#select" locator-key1="DISPLAY_SETTINGS_MAX_DAYS_DISPLAYED_SELECT" value1="${maxDisplayDays}" />
-		<execute action="SOSiteHomeEventsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="SOSiteHomeEventsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="SOSiteHomeEventsConfiguration#selectFrameTop" />
+		<execute action="SOEventsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="SOEventsConfiguration#select" locator-key1="DISPLAY_SETTINGS_MAX_DAYS_DISPLAYED_SELECT" value1="${maxDisplayDays}" />
+		<execute action="SOEventsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="SOEventsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="SOEventsConfiguration#selectFrameTop" />
 	</command>
 
 	<command name="configureEventsPortletDisplayEvents">
@@ -42,15 +42,15 @@
 			</then>
 		</if>
 
-		<execute action="SOSiteHome#click" locator-key1="EVENTS_DISPLAY_OPTIONS" />
+		<execute action="SOEvents#click" locator-key1="EVENTS_DISPLAY_OPTIONS" />
 
 		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
 
-		<execute action="SOSiteHomeEventsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="SOSiteHomeEventsConfiguration#select" locator-key1="DISPLAY_SETTINGS_MAX_EVENTS_TO_DISPLAY_SELECT" value1="${maxDisplayEvents}" />
-		<execute action="SOSiteHomeEventsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="SOSiteHomeEventsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="SOSiteHomeEventsConfiguration#selectFrameTop" />
+		<execute action="SOEventsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="SOEventsConfiguration#select" locator-key1="DISPLAY_SETTINGS_MAX_EVENTS_TO_DISPLAY_SELECT" value1="${maxDisplayEvents}" />
+		<execute action="SOEventsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="SOEventsConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="SOEventsConfiguration#selectFrameTop" />
 	</command>
 
 	<command name="viewTodaysEventSiteEvent">
@@ -59,32 +59,32 @@
 			<then>
 				<var name="key_eventTitle" value="${eventTitleShort}" />
 
-				<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitleShort}" />
+				<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitleShort}" />
 			</then>
 			<else>
 				<var name="key_eventTitle" value="${eventTitle}" />
 
-				<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+				<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
 			</else>
 		</if>
 
 		<if>
 			<isset var="startDateTime" />
 			<then>
-				<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" value1="${startDateTime}" />
+				<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" value1="${startDateTime}" />
 			</then>
 			<elseif>
 				<equals arg1="${allDayEvent}" arg2="true" />
 				<then>
-					<execute action="SOSiteHome#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+					<execute action="SOEvents#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="SOSiteHome#assertElementPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+				<execute action="SOEvents#assertElementPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
 			</else>
 		</if>
 
-		<execute action="SOSiteHome#click" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" />
+		<execute action="SOEvents#click" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" />
 
 		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="EVENT_TITLE" value1="${eventTitle}" />
 
@@ -160,17 +160,17 @@
 			<then>
 				<var name="key_eventTitle" value="${eventTitleShort}" />
 
-				<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitleShort}" />
+				<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitleShort}" />
 			</then>
 			<else>
 				<var name="key_eventTitle" value="${eventTitle}" />
 
-				<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+				<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
 			</else>
 		</if>
 
-		<execute action="SOSiteHome#assertElementPresent" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" />
-		<execute action="SOSiteHome#click" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" />
+		<execute action="SOEvents#assertElementPresent" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" />
+		<execute action="SOEvents#click" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" />
 
 		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="EVENT_TITLE" value1="${eventTitle}" />
 

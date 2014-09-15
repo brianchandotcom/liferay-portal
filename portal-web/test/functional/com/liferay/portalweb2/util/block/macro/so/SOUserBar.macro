@@ -224,7 +224,7 @@
 
 		<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_PORTLET_LOADED" />
 
-		<execute action="SODashboard#assertElementPresent" locator-key1="WHATS_HAPPENING_CONTENT_FIELD" />
+		<execute action="SOStatusUpdate#assertElementPresent" locator-key1="STATUS_UPDATE_CONTENT_FIELD" />
 	</command>
 
 	<command name="hideEditControls">

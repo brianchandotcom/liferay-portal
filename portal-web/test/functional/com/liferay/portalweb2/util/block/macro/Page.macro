@@ -434,7 +434,7 @@
 
 						<execute action="SOActivities#assertElementPresent" locator-key1="ACTIVITIES_PORTLET_LOADED" />
 
-						<execute action="SOSiteHome#click" locator-key1="NAVIGATION_PAGE" />
+						<execute action="SOSite#click" locator-key1="NAVIGATION_PAGE" />
 					</else>
 				</if>
 			</then>

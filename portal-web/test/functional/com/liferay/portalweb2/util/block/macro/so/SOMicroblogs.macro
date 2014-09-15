@@ -676,12 +676,12 @@
 	<command name="repostMicroblogsEntry">
 		<execute macro="SOMicroblogs#viewMicroblogsEntryViewableByEveryone" />
 
-		<execute action="SOProfileMicroblogs#assertClick" locator-key1="MICROBLOGS_ENTRY_REPOST_LINK" value1="Repost" />
+		<execute action="SOMicroblogsProfile#assertClick" locator-key1="MICROBLOGS_ENTRY_REPOST_LINK" value1="Repost" />
 
-		<execute action="SOProfileMicroblogsRepost#assertTextEquals" locator-key1="HEADER" value1="Do you want to repost this entry?" />
-		<execute action="SOProfileMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_AUTHOR" value1="${microblogsEntryAuthorName}" />
-		<execute action="SOProfileMicroblogsRepost#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
-		<execute action="SOProfileMicroblogsRepost#assertClick" locator-key1="POST_BUTTON" value1="Post" />
+		<execute action="SOMicroblogsProfileRepost#assertTextEquals" locator-key1="HEADER" value1="Do you want to repost this entry?" />
+		<execute action="SOMicroblogsProfile#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_AUTHOR" value1="${microblogsEntryAuthorName}" />
+		<execute action="SOMicroblogsProfileRepost#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
+		<execute action="SOMicroblogsProfileRepost#assertClick" locator-key1="POST_BUTTON" value1="Post" />
 
 		<execute action="SOProfile#assertElementPresent" locator-key1="USER_NAME" />
 	</command>
@@ -815,12 +815,12 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
+		<execute macro="SODashboard#configureStatusUpdateDisplayPG" />
 
 		<if>
-			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
+			<condition action="SOStatusUpdate#isElementNotPresent" locator-key1="STATUS_UPDATE_ENTRY_CONTENT" />
 			<then>
-				<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_INFO_MESSAGE" value1="You do not have any microblog entries." />
+				<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
 			</then>
 		</if>
 
@@ -855,12 +855,12 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
+		<execute macro="SODashboard#configureStatusUpdateDisplayPG" />
 
 		<if>
-			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
+			<condition action="SOStatusUpdate#isElementNotPresent" locator-key1="STATUS_UPDATE_ENTRY_CONTENT" />
 			<then>
-				<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_INFO_MESSAGE" value1="You do not have any microblog entries." />
+				<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
 			</then>
 		</if>
 
@@ -893,12 +893,12 @@
 	<command name="viewMicroblogsEntryNone">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
+		<execute macro="SODashboard#configureStatusUpdateDisplayPG" />
 
 		<if>
-			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
+			<condition action="SOStatusUpdate#isElementNotPresent" locator-key1="STATUS_UPDATE_ENTRY_CONTENT" />
 			<then>
-				<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_INFO_MESSAGE" value1="You do not have any microblog entries." />
+				<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
 			</then>
 		</if>
 
@@ -928,9 +928,9 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
+		<execute macro="SODashboard#configureStatusUpdateDisplayPG" />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_INFO_MESSAGE" value1="You do not have any microblog entries." />
+		<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
 
@@ -985,13 +985,13 @@
 		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${microblogsEntryAuthorLastName}, ${microblogsEntryAuthorFirstName}" />
 		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${microblogsEntryAuthorName}" />
 
-		<execute action="SOProfile#assertTextEquals" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
+		<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
 
 		<execute action="SOProfile#click" locator-key1="NAVIGATION_MICROBLOGS" value1="Microblogs" />
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor" />
 
-		<execute action="SOProfileMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
+		<execute action="SOMicroblogsProfile#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_CONTENT" value1="${microblogsEntryContent}" />
 
 		<if>
 			<isset var="commentCount" />
@@ -999,21 +999,21 @@
 				<if>
 					<equals arg1="${commentCount}" arg2="1" />
 					<then>
-						<execute action="SOProfileMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="1 Comment" />
+						<execute action="SOMicroblogsProfile#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="1 Comment" />
 					</then>
 					<else>
-						<execute action="SOProfileMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="${commentCount} Comments" />
+						<execute action="SOMicroblogsProfile#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="${commentCount} Comments" />
 					</else>
 				</if>
 			</then>
 			<else>
-				<execute action="SOProfileMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="Comment" />
+				<execute action="SOMicroblogsProfile#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_COMMENT_LINK" value1="Comment" />
 			</else>
 		</if>
 
-		<execute action="SOProfileMicroblogs#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_REPOST_LINK" value1="Repost" />
-		<execute action="SOProfileMicroblogs#assertElementNotPresent" locator-key1="MICROBLOGS_ENTRY_EDIT_LINK" value1="Edit" />
-		<execute action="SOProfileMicroblogs#assertElementNotPresent" locator-key1="MICROBLOGS_ENTRY_DELETE_LINK" value1="Delete" />
+		<execute action="SOMicroblogsProfile#assertTextEquals" locator-key1="MICROBLOGS_ENTRY_REPOST_LINK" value1="Repost" />
+		<execute action="SOMicroblogsProfile#assertElementNotPresent" locator-key1="MICROBLOGS_ENTRY_EDIT_LINK" value1="Edit" />
+		<execute action="SOMicroblogsProfile#assertElementNotPresent" locator-key1="MICROBLOGS_ENTRY_DELETE_LINK" value1="Delete" />
 	</command>
 
 	<command name="viewMicroblogsEntryViewableByEveryoneMicroblogsPage">
@@ -1021,9 +1021,9 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
+		<execute macro="SODashboard#configureStatusUpdateDisplayPG" />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_INFO_MESSAGE" value1="You do not have any microblog entries." />
+		<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
 
@@ -1070,9 +1070,9 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
+		<execute macro="SODashboard#configureStatusUpdateDisplayPG" />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" value1="${whatsHappeningEntryContent}" />
+		<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_ENTRY_CONTENT" value1="${statusUpdateEntryContent}" />
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MICROBLOGS" />
 
 		<execute macro="SOMicroblogs#viewMicroblogsEntryAuthor" />
@@ -1086,7 +1086,7 @@
 
 	<command name="viewOwnMicroblogsEntryMention">
 		<var name="microblogsEntryContent" value="${microblogsEntryContent} ${mentionUserName}" />
-		<var name="whatsHappeningEntryContent" value="${microblogsEntryContent}" />
+		<var name="statusUpdateEntryContent" value="${microblogsEntryContent}" />
 
 		<var name="key_mentionUserName" value="${mentionUserName}" />
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
@@ -1100,7 +1100,7 @@
 	</command>
 
 	<command name="viewOwnMicroblogsEntryMentions">
-		<var name="whatsHappeningEntryContent" value="${microblogsEntryContent}" />
+		<var name="statusUpdateEntryContent" value="${microblogsEntryContent}" />
 
 		<var name="key_mentionUserName" value="${mentionUserName}" />
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />

@@ -1,92 +1,92 @@
 <definition>
-	<command name="addWhatsHappeningEntry">
+	<command name="addStatusUpdateEntry">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
+		<execute macro="SODashboard#configureStatusUpdateDisplayPG" />
 
 		<if>
-			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
+			<condition action="SOStatusUpdate#isElementNotPresent" locator-key1="STATUS_UPDATE_ENTRY_CONTENT" />
 			<then>
-				<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_INFO_MESSAGE" value1="You do not have any microblog entries." />
+				<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
 			</then>
 		</if>
 
-		<execute action="SODashboard#click" locator-key1="WHATS_HAPPENING_CONTENT_FIELD" />
-		<execute action="SODashboard#click" locator-key1="WHATS_HAPPENING_CONTENT_INPUT_FIELD" />
-		<execute action="SODashboard#type" locator-key1="WHATS_HAPPENING_CONTENT_INPUT_FIELD" value1="${whatsHappeningEntryContent}" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_CONTENT_COUNTDOWN" value1="${whatsHappeningEntryCharacterCountdown}" />
+		<execute action="SOStatusUpdate#click" locator-key1="STATUS_UPDATE_CONTENT_FIELD" />
+		<execute action="SOStatusUpdate#click" locator-key1="STATUS_UPDATE_CONTENT_INPUT_FIELD" />
+		<execute action="SOStatusUpdate#type" locator-key1="STATUS_UPDATE_CONTENT_INPUT_FIELD" value1="${statusUpdateEntryContent}" />
+		<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_CONTENT_COUNTDOWN" value1="${statusUpdateEntryCharacterCountdown}" />
 
 		<if>
-			<equals arg1="${whatsHappeningEntryViewableBy}" arg2="Connections" />
+			<equals arg1="${statusUpdateEntryViewableBy}" arg2="Connections" />
 			<then>
-				<execute action="SODashboard#select" locator-key1="WHATS_HAPPENING_CONTENT_VIEW_FILTER" value1="Connections" />
+				<execute action="SOStatusUpdate#select" locator-key1="STATUS_UPDATE_CONTENT_VIEW_FILTER" value1="Connections" />
 			</then>
 			<elseif>
-				<equals arg1="${whatsHappeningEntryViewableBy}" arg2="Followers" />
+				<equals arg1="${statusUpdateEntryViewableBy}" arg2="Followers" />
 				<then>
-					<execute action="SODashboard#select" locator-key1="WHATS_HAPPENING_CONTENT_VIEW_FILTER" value1="Followers" />
+					<execute action="SOStatusUpdate#select" locator-key1="STATUS_UPDATE_CONTENT_VIEW_FILTER" value1="Followers" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="SODashboard#select" locator-key1="WHATS_HAPPENING_CONTENT_VIEW_FILTER" value1="Everyone" />
+				<execute action="SOStatusUpdate#select" locator-key1="STATUS_UPDATE_CONTENT_VIEW_FILTER" value1="Everyone" />
 			</else>
 		</if>
 
-		<execute action="SODashboard#click" locator-key1="WHATS_HAPPENING_POST_BUTTON" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" value1="${whatsHappeningEntryContent}" />
+		<execute action="SOStatusUpdate#click" locator-key1="STATUS_UPDATE_POST_BUTTON" />
+		<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_ENTRY_CONTENT" value1="${statusUpdateEntryContent}" />
 	</command>
 
-	<command name="addWhatsHappeningEntryInvalid">
+	<command name="addStatusUpdateEntryInvalid">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
+		<execute macro="SODashboard#configureStatusUpdateDisplayPG" />
 
 		<if>
-			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
+			<condition action="SOStatusUpdate#isElementNotPresent" locator-key1="STATUS_UPDATE_ENTRY_CONTENT" />
 			<then>
-				<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_INFO_MESSAGE" value1="You do not have any microblog entries." />
+				<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
 			</then>
 		</if>
 
-		<execute action="SODashboard#click" locator-key1="WHATS_HAPPENING_CONTENT_FIELD" />
-		<execute action="SODashboard#click" locator-key1="WHATS_HAPPENING_CONTENT_INPUT_FIELD" />
-		<execute action="SODashboard#type" locator-key1="WHATS_HAPPENING_CONTENT_INPUT_FIELD" value1="${whatsHappeningEntryContent}" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_CONTENT_COUNTDOWN" value1="${whatsHappeningEntryCharacterCountdown}" />
+		<execute action="SOStatusUpdate#click" locator-key1="STATUS_UPDATE_CONTENT_FIELD" />
+		<execute action="SOStatusUpdate#click" locator-key1="STATUS_UPDATE_CONTENT_INPUT_FIELD" />
+		<execute action="SOStatusUpdate#type" locator-key1="STATUS_UPDATE_CONTENT_INPUT_FIELD" value1="${statusUpdateEntryContent}" />
+		<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_CONTENT_COUNTDOWN" value1="${statusUpdateEntryCharacterCountdown}" />
 
 		<if>
-			<equals arg1="${whatsHappeningEntryViewableBy}" arg2="Connections" />
+			<equals arg1="${statusUpdateEntryViewableBy}" arg2="Connections" />
 			<then>
-				<execute action="SODashboard#select" locator-key1="WHATS_HAPPENING_CONTENT_VIEW_FILTER" value1="Connections" />
+				<execute action="SOStatusUpdate#select" locator-key1="STATUS_UPDATE_CONTENT_VIEW_FILTER" value1="Connections" />
 			</then>
 			<elseif>
-				<equals arg1="${whatsHappeningEntryViewableBy}" arg2="Followers" />
+				<equals arg1="${statusUpdateEntryViewableBy}" arg2="Followers" />
 				<then>
-					<execute action="SODashboard#select" locator-key1="WHATS_HAPPENING_CONTENT_VIEW_FILTER" value1="Followers" />
+					<execute action="SOStatusUpdate#select" locator-key1="STATUS_UPDATE_CONTENT_VIEW_FILTER" value1="Followers" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="SODashboard#select" locator-key1="WHATS_HAPPENING_CONTENT_VIEW_FILTER" value1="Everyone" />
+				<execute action="SOStatusUpdate#select" locator-key1="STATUS_UPDATE_CONTENT_VIEW_FILTER" value1="Everyone" />
 			</else>
 		</if>
 
-		<execute action="SODashboard#click" locator-key1="WHATS_HAPPENING_POST_BUTTON" />
+		<execute action="SOStatusUpdate#click" locator-key1="STATUS_UPDATE_POST_BUTTON" />
 		<execute action="SODashboard#pause" value1="1000" />
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<if>
-			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING_ENTRY_CONTENT" />
+			<condition action="SOStatusUpdate#isElementNotPresent" locator-key1="STATUS_UPDATE_ENTRY_CONTENT" />
 			<then>
-				<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_INFO_MESSAGE" value1="You do not have any microblog entries." />
+				<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
 			</then>
 		</if>
 
-		<execute action="SODashboard#assertTextNotPresent" value1="${whatsHappeningEntryContent}" />
+		<execute action="SODashboard#assertTextNotPresent" value1="${statusUpdateEntryContent}" />
 	</command>
 
-	<command name="configureWhatsHappeningDisplayPG">
+	<command name="configureStatusUpdateDisplayPG">
 		<if>
-			<condition action="SODashboard#isElementNotPresent" locator-key1="WHATS_HAPPENING" />
+			<condition action="SOStatusUpdate#isElementNotPresent" locator-key1="STATUS_UPDATE" />
 			<then>
 				<if>
 					<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
@@ -103,17 +103,17 @@
 					</then>
 				</if>
 
-				<execute action="SODashboard#makeVisible" locator-key1="WHATS_HAPPENING_OPTIONS" />
-				<execute action="SODashboard#click" locator-key1="WHATS_HAPPENING_OPTIONS_LINK" />
+				<execute action="SOStatusUpdate#makeVisible" locator-key1="STATUS_UPDATE_OPTIONS" />
+				<execute action="SOStatusUpdate#click" locator-key1="STATUS_UPDATE_OPTIONS_LINK" />
 
 				<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
 
-				<execute action="SODashboardWhatsHappeningConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-				<execute action="SODashboardWhatsHappeningConfiguration#check" locator-key1="DISPLAY_SETTINGS_DISPLAY_MOST_RECENT_STATUS_CHECKBOX" />
-				<execute action="SODashboardWhatsHappeningConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-				<execute action="SODashboardWhatsHappeningConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-				<execute action="SODashboardWhatsHappeningConfiguration#selectFrameTop" />
-				<execute action="SODashboardWhatsHappeningConfiguration#click" locator-key1="CLOSE_BUTTON" />
+				<execute action="SOStatusUpdateConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+				<execute action="SOStatusUpdateConfiguration#check" locator-key1="DISPLAY_SETTINGS_DISPLAY_MOST_RECENT_STATUS_CHECKBOX" />
+				<execute action="SOStatusUpdateConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+				<execute action="SOStatusUpdateConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+				<execute action="SOStatusUpdateConfiguration#selectFrameTop" />
+				<execute action="SOStatusUpdateConfiguration#click" locator-key1="CLOSE_BUTTON" />
 
 				<if>
 					<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
@@ -231,15 +231,15 @@
 	</command>
 
 	<command name="viewLinkHome">
-		<execute macro="SODashboard#configureWhatsHappeningDisplayPG" />
+		<execute macro="SODashboard#configureStatusUpdateDisplayPG" />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_CONTENT_FIELD" value1="Update your status..." />
-		<execute action="SODashboard#assertTextEquals" locator-key1="WHATS_HAPPENING_INFO_MESSAGE" value1="You do not have any microblog entries." />
+		<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_CONTENT_FIELD" value1="Update your status..." />
+		<execute action="SOStatusUpdate#assertTextEquals" locator-key1="STATUS_UPDATE_INFO_MESSAGE" value1="You do not have any microblog entries." />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_PORTLET_TITLE" value1="Announcements" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
+		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_PORTLET_TITLE" value1="Announcements" />
+		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_ADD_ENTRY_BUTTON" value1="Add Entry" />
+		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON" value1="Manage Entries" />
+		<execute action="SOAnnouncements#assertTextEquals" locator-key1="ANNOUNCEMENTS_NO_ANNOUNCEMENTS" value1="There are no new announcements." />
 
 		<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_PORTLET_TITLE" value1="Activities" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NAVIGATION_ALL" value1="All" />
@@ -249,11 +249,11 @@
 		<execute action="SOActivities#assertTextEquals" locator-key1="NAVIGATION_ME" value1="Me" />
 		<execute action="SOActivities#assertTextEquals" locator-key1="NO_ACTIVITIES" value1="There are no activities." />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="TASK_PORTLET_TITLE" value1="Upcoming Tasks" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
+		<execute action="SOUpcomingTasks#assertTextEquals" locator-key1="TASK_PORTLET_TITLE" value1="Upcoming Tasks" />
+		<execute action="SOUpcomingTasks#assertTextEquals" locator-key1="VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="EVENTS_PORTLET_TITLE" value1="Events" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
+		<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_PORTLET_TITLE" value1="Events" />
+		<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
 
 		<var name="siteName" value="Liferay" />
 
@@ -456,26 +456,26 @@
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_CREATOR" value1="${userName}" />
+		<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+		<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_CREATOR" value1="${userName}" />
 
 		<if>
 			<isset var="startDateTime" />
 			<then>
-				<execute action="SODashboard#assertElementPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" value1="${startDateTime}" />
+				<execute action="SOEvents#assertElementPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" value1="${startDateTime}" />
 			</then>
 			<elseif>
 				<equals arg1="${allDayEvent}" arg2="true" />
 				<then>
-					<execute action="SODashboard#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+					<execute action="SOEvents#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="SODashboard#assertElementPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+				<execute action="SOEvents#assertElementPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
 			</else>
 		</if>
 
-		<execute action="SODashboard#click" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" />
+		<execute action="SOEvents#click" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" />
 
 		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="EVENT_TITLE" value1="${eventTitle}" />
 
@@ -531,18 +531,18 @@
 
 		<if>
 			<and>
-				<condition action="SODashboard#isElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
-				<condition action="SODashboard#isElementNotPresent" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
+				<condition action="SOEvents#isElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_GENERIC" />
+				<condition action="SOEvents#isElementNotPresent" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_GENERIC" />
 			</and>
 			<then>
-				<execute action="SODashboard#assertTextEquals" locator-key1="EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
+				<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_NO_EVENTS_MESSAGE" value1="There are no more events today." />
 			</then>
 		</if>
 
-		<execute action="SODashboard#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
-		<execute action="SODashboard#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_CREATOR" value1="${userName}" />
-		<execute action="SODashboard#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${eventTitle}" />
+		<execute action="SOEvents#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+		<execute action="SOEvents#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_CREATOR" value1="${userName}" />
+		<execute action="SOEvents#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+		<execute action="SOEvents#assertTextNotPresent" value1="${eventTitle}" />
 	</command>
 
 	<command name="viewTodaysEventSiteEvent">
@@ -550,25 +550,25 @@
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+		<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
 
 		<if>
 			<isset var="startDateTime" />
 			<then>
-				<execute action="SODashboard#assertElementPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" value1="${startDateTime}" />
+				<execute action="SOEvents#assertElementPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" value1="${startDateTime}" />
 			</then>
 			<elseif>
 				<equals arg1="${allDayEvent}" arg2="true" />
 				<then>
-					<execute action="SODashboard#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+					<execute action="SOEvents#assertElementNotPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="SODashboard#assertElementPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+				<execute action="SOEvents#assertElementPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
 			</else>
 		</if>
 
-		<execute action="SODashboard#click" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" />
+		<execute action="SOEvents#click" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" />
 
 		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="EVENT_TITLE" value1="${eventTitle}" />
 
@@ -620,10 +620,10 @@
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
-		<execute action="SODashboard#assertTextEquals" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_CREATOR" value1="${userName}" />
-		<execute action="SODashboard#assertElementPresent" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" />
-		<execute action="SODashboard#click" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" />
+		<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+		<execute action="SOEvents#assertTextEquals" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_CREATOR" value1="${userName}" />
+		<execute action="SOEvents#assertElementPresent" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" />
+		<execute action="SOEvents#click" locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" />
 
 		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="EVENT_TITLE" value1="${eventTitle}" />
 		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="START_DATE_FIELD" />
@@ -642,7 +642,7 @@
 		<if>
 			<equals arg1="${percentCompletion}" arg2="100" />
 			<then>
-				<execute action="SODashboard#assertTextNotPresent" value1="${taskDescription}" />
+				<execute action="SOUpcomingTasks#assertTextNotPresent" value1="${taskDescription}" />
 			</then>
 			<elseif>
 				<equals arg1="${taskAssignee}" arg2="${currentUser}" />
@@ -650,16 +650,16 @@
 					<if>
 						<equals arg1="${taskPriority}" arg2="High" />
 						<then>
-							<execute action="SODashboard#assertClick" locator-key1="TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
+							<execute action="SOUpcomingTasks#assertClick" locator-key1="TASK_DESCRIPTION_HIGH" value1="${taskDescription}" />
 						</then>
 						<elseif>
 							<equals arg1="${taskPriority}" arg2="Low" />
 							<then>
-								<execute action="SODashboard#assertClick" locator-key1="TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
+								<execute action="SOUpcomingTasks#assertClick" locator-key1="TASK_DESCRIPTION_LOW" value1="${taskDescription}" />
 							</then>
 						</elseif>
 						<else>
-							<execute action="SODashboard#assertClick" locator-key1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
+							<execute action="SOUpcomingTasks#assertClick" locator-key1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 						</else>
 					</if>
 
@@ -667,13 +667,13 @@
 				</then>
 			</elseif>
 			<else>
-				<execute action="SODashboard#assertTextNotPresent" value1="${taskDescription}" />
+				<execute action="SOUpcomingTasks#assertTextNotPresent" value1="${taskDescription}" />
 			</else>
 		</if>
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#assertClick" locator-key1="VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
+		<execute action="SOUpcomingTasks#assertClick" locator-key1="VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
 
 		<execute macro="SOTasks#viewTask" />
 	</command>
@@ -683,12 +683,12 @@
 
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute action="SODashboard#assertTextEquals" locator-key1="VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
-		<execute action="SODashboard#assertElementNotPresent" locator-key1="TASK_DESCRIPTION_HIGH" />
-		<execute action="SODashboard#assertElementNotPresent" locator-key1="TASK_DESCRIPTION_LOW" />
-		<execute action="SODashboard#assertElementNotPresent" locator-key1="TASK_DESCRIPTION_NORMAL" />
-		<execute action="SODashboard#assertTextNotPresent" value1="${taskDescription}" />
-		<execute action="SODashboard#assertClick" locator-key1="VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
+		<execute action="SOUpcomingTasks#assertTextEquals" locator-key1="VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
+		<execute action="SOUpcomingTasks#assertElementNotPresent" locator-key1="TASK_DESCRIPTION_HIGH" />
+		<execute action="SOUpcomingTasks#assertElementNotPresent" locator-key1="TASK_DESCRIPTION_LOW" />
+		<execute action="SOUpcomingTasks#assertElementNotPresent" locator-key1="TASK_DESCRIPTION_NORMAL" />
+		<execute action="SOUpcomingTasks#assertTextNotPresent" value1="${taskDescription}" />
+		<execute action="SOUpcomingTasks#assertClick" locator-key1="VIEW_ALL_TASKS_LINK" value1="View All Tasks" />
 
 		<execute action="SOTasks#assertClick" locator-key1="ASSIGNED_TO_ME_LINK" value1="Assigned to Me" />
 		<execute action="SOTasks#check" locator-key1="SHOW_COMPLETED_TASKS_CHECKBOX" />

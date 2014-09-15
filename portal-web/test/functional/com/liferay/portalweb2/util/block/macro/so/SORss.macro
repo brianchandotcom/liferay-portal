@@ -15,49 +15,49 @@
 			</then>
 		</if>
 
-		<execute action="SOSiteHome#click" locator-key1="RSS_OPTIONS" />
+		<execute action="SORss#click" locator-key1="RSS_OPTIONS" />
 
 		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
 
-		<execute action="SOSiteHomeRssConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="SOSiteHomeRssConfiguration#click" locator-key1="FEEDS_ADD_ROW_BUTTON" />
+		<execute action="SORssConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="SORssConfiguration#click" locator-key1="FEEDS_ADD_ROW_BUTTON" />
 
 		<if>
 			<equals arg1="${feedRow}" arg2="1" />
 			<then>
-				<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_1" value1="${feedTitle}" />
-				<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD_1" value1="${feedUrl}" />
+				<execute action="SORssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_1" value1="${feedTitle}" />
+				<execute action="SORssConfiguration#type" locator-key1="FEEDS_URL_FIELD_1" value1="${feedUrl}" />
 			</then>
 			<elseif>
 				<equals arg1="${feedRow}" arg2="2" />
 				<then>
-					<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_2" value1="${feedTitle}" />
-					<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD_2" value1="${feedUrl}" />
+					<execute action="SORssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_2" value1="${feedTitle}" />
+					<execute action="SORssConfiguration#type" locator-key1="FEEDS_URL_FIELD_2" value1="${feedUrl}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${feedRow}" arg2="3" />
 				<then>
-					<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_3" value1="${feedTitle}" />
-					<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD_3" value1="${feedUrl}" />
+					<execute action="SORssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_3" value1="${feedTitle}" />
+					<execute action="SORssConfiguration#type" locator-key1="FEEDS_URL_FIELD_3" value1="${feedUrl}" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_2" value1="${feedTitle}" />
-				<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD_2" value1="${feedUrl}" />
+				<execute action="SORssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_2" value1="${feedTitle}" />
+				<execute action="SORssConfiguration#type" locator-key1="FEEDS_URL_FIELD_2" value1="${feedUrl}" />
 			</else>
 		</if>
 
-		<execute action="SOSiteHomeRssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_TITLE_CHECKBOX" />
-		<execute action="SOSiteHomeRssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_PUBLISHED_DATE_CHECKBOX" />
-		<execute action="SOSiteHomeRssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION_CHECKBOX" />
-		<execute action="SOSiteHomeRssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_IMAGE_CHECKBOX" />
-		<execute action="SOSiteHomeRssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_ITEM_AUTHOR_CHECKBOX" />
-		<execute action="SOSiteHomeRssConfiguration#select" locator-key1="DISPLAY_SETTINGS_ENTRIES_PER_FEED_SELECT" value1="${entriesPerFeed}" />
-		<execute action="SOSiteHomeRssConfiguration#select" locator-key1="DISPLAY_SETTINGS_EXPANDED_ENTRIES_PER_FEED_SELECT" value1="${expandedEntriesPerFeed}" />
-		<execute action="SOSiteHomeRssConfiguration#click" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="SOSiteHomeRssConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="SOSiteHomeRssConfiguration#selectFrameTop" />
+		<execute action="SORssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_TITLE_CHECKBOX" />
+		<execute action="SORssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_PUBLISHED_DATE_CHECKBOX" />
+		<execute action="SORssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION_CHECKBOX" />
+		<execute action="SORssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_IMAGE_CHECKBOX" />
+		<execute action="SORssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_ITEM_AUTHOR_CHECKBOX" />
+		<execute action="SORssConfiguration#select" locator-key1="DISPLAY_SETTINGS_ENTRIES_PER_FEED_SELECT" value1="${entriesPerFeed}" />
+		<execute action="SORssConfiguration#select" locator-key1="DISPLAY_SETTINGS_EXPANDED_ENTRIES_PER_FEED_SELECT" value1="${expandedEntriesPerFeed}" />
+		<execute action="SORssConfiguration#click" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="SORssConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="SORssConfiguration#selectFrameTop" />
 	</command>
 
 	<command name="deleteRssFeed">
@@ -76,37 +76,37 @@
 			</then>
 		</if>
 
-		<execute action="SOSiteHome#click" locator-key1="RSS_OPTIONS" />
+		<execute action="SORss#click" locator-key1="RSS_OPTIONS" />
 
 		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
 
-		<execute action="SOSiteHomeRssConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="SORssConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
 		<if>
 			<equals arg1="${feedRow}" arg2="1" />
 			<then>
-				<execute action="SOSiteHomeRssConfiguration#click" locator-key1="FEEDS_DELETE_ROW_BUTTON_1" />
+				<execute action="SORssConfiguration#click" locator-key1="FEEDS_DELETE_ROW_BUTTON_1" />
 			</then>
 			<elseif>
 				<equals arg1="${feedRow}" arg2="2" />
 				<then>
-					<execute action="SOSiteHomeRssConfiguration#click" locator-key1="FEEDS_DELETE_ROW_BUTTON_2" />
+					<execute action="SORssConfiguration#click" locator-key1="FEEDS_DELETE_ROW_BUTTON_2" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${feedRow}" arg2="3" />
 				<then>
-					<execute action="SOSiteHomeRssConfiguration#click" locator-key1="FEEDS_DELETE_ROW_BUTTON_3" />
+					<execute action="SORssConfiguration#click" locator-key1="FEEDS_DELETE_ROW_BUTTON_3" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="SOSiteHomeRssConfiguration#click" locator-key1="FEEDS_DELETE_ROW_BUTTON_2" />
+				<execute action="SORssConfiguration#click" locator-key1="FEEDS_DELETE_ROW_BUTTON_2" />
 			</else>
 		</if>
 
-		<execute action="SOSiteHomeRssConfiguration#click" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="SOSiteHomeRssConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="SOSiteHomeRssConfiguration#selectFrameTop" />
+		<execute action="SORssConfiguration#click" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="SORssConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="SORssConfiguration#selectFrameTop" />
 	</command>
 
 	<command name="editRssFeed">
@@ -125,57 +125,57 @@
 			</then>
 		</if>
 
-		<execute action="SOSiteHome#click" locator-key1="RSS_OPTIONS" />
+		<execute action="SORss#click" locator-key1="RSS_OPTIONS" />
 
 		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
 
-		<execute action="SOSiteHomeRssConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="SORssConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
 		<if>
 			<equals arg1="${feedRow}" arg2="1" />
 			<then>
-				<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_1" value1="${feedTitle}" />
-				<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD_1" value1="${feedUrl}" />
+				<execute action="SORssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_1" value1="${feedTitle}" />
+				<execute action="SORssConfiguration#type" locator-key1="FEEDS_URL_FIELD_1" value1="${feedUrl}" />
 			</then>
 			<elseif>
 				<equals arg1="${feedRow}" arg2="2" />
 				<then>
-					<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_2" value1="${feedTitle}" />
-					<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD_2" value1="${feedUrl}" />
+					<execute action="SORssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_2" value1="${feedTitle}" />
+					<execute action="SORssConfiguration#type" locator-key1="FEEDS_URL_FIELD_2" value1="${feedUrl}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${feedRow}" arg2="3" />
 				<then>
-					<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_3" value1="${feedTitle}" />
-					<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD_3" value1="${feedUrl}" />
+					<execute action="SORssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_3" value1="${feedTitle}" />
+					<execute action="SORssConfiguration#type" locator-key1="FEEDS_URL_FIELD_3" value1="${feedUrl}" />
 				</then>
 			</elseif>
 			<else>
-				<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_2" value1="${feedTitle}" />
-				<execute action="SOSiteHomeRssConfiguration#type" locator-key1="FEEDS_URL_FIELD_2" value1="${feedUrl}" />
+				<execute action="SORssConfiguration#type" locator-key1="FEEDS_TITLE_FIELD_2" value1="${feedTitle}" />
+				<execute action="SORssConfiguration#type" locator-key1="FEEDS_URL_FIELD_2" value1="${feedUrl}" />
 			</else>
 		</if>
 
-		<execute action="SOSiteHomeRssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_TITLE_CHECKBOX" />
-		<execute action="SOSiteHomeRssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_PUBLISHED_DATE_CHECKBOX" />
-		<execute action="SOSiteHomeRssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION_CHECKBOX" />
-		<execute action="SOSiteHomeRssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_IMAGE_CHECKBOX" />
-		<execute action="SOSiteHomeRssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_ITEM_AUTHOR_CHECKBOX" />
-		<execute action="SOSiteHomeRssConfiguration#select" locator-key1="DISPLAY_SETTINGS_ENTRIES_PER_FEED_SELECT" value1="${entriesPerFeed}" />
-		<execute action="SOSiteHomeRssConfiguration#select" locator-key1="DISPLAY_SETTINGS_EXPANDED_ENTRIES_PER_FEED_SELECT" value1="${expandedEntriesPerFeed}" />
-		<execute action="SOSiteHomeRssConfiguration#click" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="SOSiteHomeRssConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute action="SOSiteHomeRssConfiguration#selectFrameTop" />
+		<execute action="SORssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_TITLE_CHECKBOX" />
+		<execute action="SORssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_PUBLISHED_DATE_CHECKBOX" />
+		<execute action="SORssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION_CHECKBOX" />
+		<execute action="SORssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_IMAGE_CHECKBOX" />
+		<execute action="SORssConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_ITEM_AUTHOR_CHECKBOX" />
+		<execute action="SORssConfiguration#select" locator-key1="DISPLAY_SETTINGS_ENTRIES_PER_FEED_SELECT" value1="${entriesPerFeed}" />
+		<execute action="SORssConfiguration#select" locator-key1="DISPLAY_SETTINGS_EXPANDED_ENTRIES_PER_FEED_SELECT" value1="${expandedEntriesPerFeed}" />
+		<execute action="SORssConfiguration#click" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="SORssConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="SORssConfiguration#selectFrameTop" />
 	</command>
 
 	<command name="viewRssFeed">
 		<var name="key_feedTitle" value="${feedTitle}" />
 
-		<execute action="SOSiteHome#assertTextEquals" locator-key1="RSS_FEED_TITLE" value1="${feedTitle}" />
-		<execute action="SOSiteHome#assertElementPresent" locator-key1="RSS_FEED_PUBLISHED_DATE" />
-		<execute action="SOSiteHome#assertElementPresent" locator-key1="RSS_FEED_DESCRIPTION" />
-		<execute action="SOSiteHome#assertElementPresent" locator-key1="RSS_FEED_IMAGE" />
+		<execute action="SORss#assertTextEquals" locator-key1="RSS_FEED_TITLE" value1="${feedTitle}" />
+		<execute action="SORss#assertElementPresent" locator-key1="RSS_FEED_PUBLISHED_DATE" />
+		<execute action="SORss#assertElementPresent" locator-key1="RSS_FEED_DESCRIPTION" />
+		<execute action="SORss#assertElementPresent" locator-key1="RSS_FEED_IMAGE" />
 
 		<var name="expandedFeedEntryNumber" value="0" />
 		<var name="feedEntryNumber" value="0" />
@@ -198,21 +198,21 @@
 
 				<var name="key_feedEntryNumber" value="${feedEntryNumber}" />
 
-				<execute action="SOSiteHome#assertElementPresent" locator-key1="RSS_FEED_ENTRY_TITLE_INCREMENT" />
+				<execute action="SORss#assertElementPresent" locator-key1="RSS_FEED_ENTRY_TITLE_INCREMENT" />
 
 				<if>
 					<not>
 						<equals arg1="${expandedFeedEntryNumber}" arg2="${feedEntryNumber}" />
 					</not>
 					<then>
-						<execute action="SOSiteHome#click" locator-key1="RSS_FEED_ENTRY_EXPAND_BUTTON_INCREMENT" />
+						<execute action="SORss#click" locator-key1="RSS_FEED_ENTRY_EXPAND_BUTTON_INCREMENT" />
 					</then>
 				</if>
 
-				<execute action="SOSiteHome#assertElementPresent" locator-key1="RSS_FEED_ENTRY_DATE_AND_TIME_INCREMENT" />
-				<execute action="SOSiteHome#assertElementPresent" locator-key1="RSS_FEED_ENTRY_AUTHOR_INCREMENT" />
-				<execute action="SOSiteHome#assertElementPresent" locator-key1="RSS_FEED_ENTRY_CONTENT_INCREMENT" />
-				<execute action="SOSiteHome#assertElementPresent" locator-key1="RSS_FEED_ENTRY_CONTENT_READ_MORE_INCREMENT" />
+				<execute action="SORss#assertElementPresent" locator-key1="RSS_FEED_ENTRY_DATE_AND_TIME_INCREMENT" />
+				<execute action="SORss#assertElementPresent" locator-key1="RSS_FEED_ENTRY_AUTHOR_INCREMENT" />
+				<execute action="SORss#assertElementPresent" locator-key1="RSS_FEED_ENTRY_CONTENT_INCREMENT" />
+				<execute action="SORss#assertElementPresent" locator-key1="RSS_FEED_ENTRY_CONTENT_READ_MORE_INCREMENT" />
 			</then>
 		</while>
 	</command>
@@ -233,18 +233,18 @@
 			</then>
 		</if>
 
-		<execute action="SOSiteHome#click" locator-key1="RSS_OPTIONS" />
+		<execute action="SORss#click" locator-key1="RSS_OPTIONS" />
 
 		<execute action="BasePortlet#click" locator-key1="OPTIONS_MENULIST_CONFIGURATION" />
 
-		<execute action="SOSiteHomeRssConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="SOSiteHomeRssConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_TITLE_CHECKBOX" />
-		<execute action="SOSiteHomeRssConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_PUBLISHED_DATE_CHECKBOX" />
-		<execute action="SOSiteHomeRssConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION_CHECKBOX" />
-		<execute action="SOSiteHomeRssConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_IMAGE_CHECKBOX" />
-		<execute action="SOSiteHomeRssConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_ITEM_AUTHOR_CHECKBOX" />
-		<execute action="SOSiteHomeRssConfiguration#assertSelectedLabel" locator-key1="DISPLAY_SETTINGS_ENTRIES_PER_FEED_SELECT" value1="${entriesPerFeed}" />
-		<execute action="SOSiteHomeRssConfiguration#assertSelectedLabel" locator-key1="DISPLAY_SETTINGS_EXPANDED_ENTRIES_PER_FEED_SELECT" value1="${expandedEntriesPerFeed}" />
-		<execute action="SOSiteHomeRssConfiguration#selectFrameTop" />
+		<execute action="SORssConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="SORssConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_TITLE_CHECKBOX" />
+		<execute action="SORssConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_PUBLISHED_DATE_CHECKBOX" />
+		<execute action="SORssConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION_CHECKBOX" />
+		<execute action="SORssConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_IMAGE_CHECKBOX" />
+		<execute action="SORssConfiguration#assertChecked" locator-key1="DISPLAY_SETTINGS_SHOW_FEED_ITEM_AUTHOR_CHECKBOX" />
+		<execute action="SORssConfiguration#assertSelectedLabel" locator-key1="DISPLAY_SETTINGS_ENTRIES_PER_FEED_SELECT" value1="${entriesPerFeed}" />
+		<execute action="SORssConfiguration#assertSelectedLabel" locator-key1="DISPLAY_SETTINGS_EXPANDED_ENTRIES_PER_FEED_SELECT" value1="${expandedEntriesPerFeed}" />
+		<execute action="SORssConfiguration#selectFrameTop" />
 	</command>
 </definition>

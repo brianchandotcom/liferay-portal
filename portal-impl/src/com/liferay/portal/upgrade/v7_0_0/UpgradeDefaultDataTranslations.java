@@ -118,23 +118,6 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeTranslations(long companyId, long groupId)
-		throws PortalException {
-
-		try {
-			for (Map.Entry<String, String> nameAndKey :
-				_DEFAULT_FILE_ENTRY_TYPE_MAP.entrySet()) {
-
-				upgradeGroupDLFileEntryTypes(
-					companyId, groupId, nameAndKey.getKey(),
-					nameAndKey.getValue());
-			}
-		}
-		catch (SQLException sqle) {
-			throw new UpgradeException(sqle);
-		}
-	}
-
 	protected void upgradeDLFileEntryType(
 			DLFileEntryTypeData dlFileEntryTypeData, Map<Locale,
 			String> nameMap, Map<Locale, String> descriptionMap,
@@ -230,6 +213,23 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 		if (needsUpdate) {
 			upgradeDLFileEntryType(
 				dlFileEntryTypeData, nameMap, descriptionMap, defaultLocale);
+		}
+	}
+
+	protected void upgradeTranslations(long companyId, long groupId)
+		throws PortalException {
+
+		try {
+			for (Map.Entry<String, String> nameAndKey :
+					_DEFAULT_FILE_ENTRY_TYPE_MAP.entrySet()) {
+
+				upgradeGroupDLFileEntryTypes(
+					companyId, groupId, nameAndKey.getKey(),
+					nameAndKey.getValue());
+			}
+		}
+		catch (SQLException sqle) {
+			throw new UpgradeException(sqle);
 		}
 	}
 

@@ -6,39 +6,37 @@
 	position: relative;
 	text-align: center;
 
-	.browse-image-controls, .current-image {
-		@include transform(translate(0, -50%));
-
-		left: 0;
-		margin: auto;
-		max-height: 100%;
-		max-width: 100%;
-		position: absolute;
-		right: 0;
-		top: 50%;
-	}
-
-	.browse-image-controls {
-		padding: 10px;
-		width: 100%;
-	}
-
-	.change-image-controls {
-		bottom: 5px;
-		left: 0;
-		position: absolute;
-		right: 0;
-	}
-
-	.yui3-uploader-content {
-		display: none;
-	}
-
 	&.drop-enabled, &.drop-active {
 		outline: 1px dashed #CCC;
 	}
 
 	&.drop-active {
 		outline-color: #118ADE;
+	}
+
+	.browse-image-controls, .current-image {
+		margin: auto;
+		max-height: 100%;
+		max-width: 100%;
+	}
+
+	.browse-image-controls {
+		left: 0;
+		position: absolute;
+		right: 0;
+		padding: 10px;
+		top: 50%;
+
+		@include transform(translate(0, -50%));
+
+		width: 100%;
+	}
+
+	.current-image {
+		margin-bottom: 5px;
+	}
+
+	.yui3-uploader-content {
+		display: none;
 	}
 }

@@ -76,11 +76,9 @@ AUI.add(
 						var fileEntryImage = instance.one('#image');
 
 						var browseImageControls = instance.one('.browse-image-controls');
-
 						var changeImageControls = instance.one('.change-image-controls');
 
 						var fileEntryId = event.imageData.id;
-
 						var fileEntryUrl = event.imageData.url;
 
 						fileEntryIdNode.val(fileEntryId);
@@ -92,7 +90,6 @@ AUI.add(
 						fileEntryImage.toggle(showImageControls);
 
 						changeImageControls.toggle(showImageControls);
-
 						browseImageControls.toggle(!showImageControls);
 
 						instance.rootNode.toggleClass('drop-enabled', !showImageControls);
@@ -128,12 +125,13 @@ AUI.add(
 					_onUploadComplete: function(event) {
 						var instance = this;
 
-						var data = event.data
+						var data = event.data;
 
 						try {
-							data = JSON.parse(data);
+							data = A.JSON.parse(data);
 						}
-						catch (err) {}
+						catch (err) {
+						}
 
 						if (data.success) {
 							instance.fire(

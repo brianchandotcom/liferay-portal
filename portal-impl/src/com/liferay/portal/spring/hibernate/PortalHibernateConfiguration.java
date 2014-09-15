@@ -96,6 +96,10 @@ public class PortalHibernateConfiguration
 		_mvccEnabled = mvccEnabled;
 	}
 
+	public void setShardEnabled(boolean shardEnabled) {
+		_shardEnabled = shardEnabled;
+	}
+
 	protected static Map<String, Class<?>> getPreloadClassLoaderClasses() {
 		try {
 			Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
@@ -199,7 +203,9 @@ public class PortalHibernateConfiguration
 
 		Properties hibernateProperties = getHibernateProperties();
 
-		if (_beanFactory.containsBean(ShardUtil.class.getName())) {
+		if (_shardEnabled &&
+			_beanFactory.containsBean(ShardUtil.class.getName())) {
+
 			hibernateProperties.setProperty(
 				Environment.CURRENT_SESSION_CONTEXT_CLASS,
 				ShardSpringSessionContext.class.getName());
@@ -335,5 +341,6 @@ public class PortalHibernateConfiguration
 	private BeanFactory _beanFactory;
 	private Converter<String> _hibernateConfigurationConverter;
 	private boolean _mvccEnabled = true;
+	private boolean _shardEnabled = true;
 
 }

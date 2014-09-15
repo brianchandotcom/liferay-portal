@@ -14,11 +14,8 @@
 
 package com.liferay.portlet.usersadmin.util;
 
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -108,20 +105,13 @@ public class ContactIndexer extends BaseIndexer {
 		Contact contact = (Contact)obj;
 
 		if (contact.isUser()) {
-			try {
-				User user = UserLocalServiceUtil.getUserByContactId(
-					contact.getContactId());
+			User user = UserLocalServiceUtil.fetchUserByContactId(
+				contact.getContactId());
 
-				if (user.isDefaultUser() ||
-					(user.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
+			if ((user == null) || user.isDefaultUser() ||
+				(user.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
 
-					return null;
-				}
-			}
-			catch (NoSuchUserException e) {
-				if (_log.isErrorEnabled()) {
-					_log.error(e, e);
-				}
+				return null;
 			}
 		}
 
@@ -227,7 +217,5 @@ public class ContactIndexer extends BaseIndexer {
 
 		actionableDynamicQuery.performActions();
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(ContactIndexer.class);
 
 }

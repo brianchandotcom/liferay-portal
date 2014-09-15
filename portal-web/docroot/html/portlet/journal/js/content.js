@@ -19,12 +19,6 @@ AUI.add(
 
 		var JournalContent = A.Component.create(
 			{
-				AUGMENTS: [Liferay.PortletBase],
-
-				EXTENDS: A.Base,
-
-				NAME: 'journalcontent',
-
 				ATTRS: {
 					ddm: {
 						validator: Lang.isObject,
@@ -65,6 +59,12 @@ AUI.add(
 						value: {}
 					}
 				},
+
+				AUGMENTS: [Liferay.PortletBase],
+
+				EXTENDS: A.Base,
+
+				NAME: 'journalcontent',
 
 				prototype: {
 					initializer: function(config) {

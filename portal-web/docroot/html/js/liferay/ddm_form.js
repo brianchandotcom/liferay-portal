@@ -87,7 +87,7 @@ AUI.add(
 									type = field.type;
 								}
 							}
-						)
+						);
 
 						return type;
 					},
@@ -96,12 +96,6 @@ AUI.add(
 						var instance = this;
 
 						return instance.get('nodeWrapper').getData('fieldName');
-					},
-
-					instanceSuffix: function() {
-						var instance = this;
-
-						return instance.get('nodeWrapper').getData('fieldNamespace');
 					},
 
 					getValue: function(nodes) {
@@ -134,6 +128,12 @@ AUI.add(
 						}
 
 						return value;
+					},
+
+					instanceSuffix: function() {
+						var instance = this;
+
+						return instance.get('nodeWrapper').getData('fieldNamespace');
 					},
 
 					setValue: function(fields, value) {
@@ -204,15 +204,15 @@ AUI.add(
 						setter: A.one
 					},
 
+					ddmFormValuesInput: {
+						setter: A.one
+					},
+
 					definition: {
 						value: {}
 					},
 
 					doAsGroupId: {
-					},
-
-					ddmFormValuesInput: {
-						setter: A.one
 					},
 
 					namespace: {
@@ -303,7 +303,7 @@ AUI.add(
 						A.each(
 							fields,
 							function(field) {
-								fieldNames.push(field['name']);
+								fieldNames.push(field.name);
 							}
 						);
 						return fieldNames;
@@ -351,50 +351,6 @@ AUI.add(
 						return parentNode;
 					},
 
-					_getFieldValues: function(nodes, isNested) {
-						var instance = this;
-
-						var definitionFields = instance.get('definition').fields;
-
-						var definitionFieldNames = instance._getDefinitionFieldNames(definitionFields);
-
-						var fieldValues = [];
-
-						var portletNamespace = instance.get('portletNamespace');
-
-						A.each(
-							nodes,
-							function(item) {
-								var fieldName = item.getData('fieldName');
-
-								var fieldNamespace = item.getData('fieldNamespace');
-
-								var instanceId = fieldNamespace.split(INSTANCE_STR)[1];
-
-								var isStructureField = definitionFieldNames.indexOf(fieldName) >= 0;
-
-								if (isStructureField || isNested) {
-									var field = {
-										instanceId: instanceId,
-										name: fieldName
-									};
-
-									var nestedFields = instance._getFieldsList(null, item, true);
-
-									if (nestedFields._nodes.length) {
-										field.nestedFieldValues = instance._getFieldValues(nestedFields, true);
-									}
-
-									field.value = instance.fieldsLocalizationMap[instanceId];
-
-									fieldValues.push(field);
-								}
-							}
-						);
-
-						return fieldValues;
-					},
-
 					_getFieldsList: function(fieldName, parentNode, directChildren) {
 						var instance = this;
 
@@ -433,6 +389,50 @@ AUI.add(
 						return value;
 					},
 
+					_getFieldValues: function(nodes, nested) {
+						var instance = this;
+
+						var definitionFields = instance.get('definition').fields;
+
+						var definitionFieldNames = instance._getDefinitionFieldNames(definitionFields);
+
+						var fieldValues = [];
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						A.each(
+							nodes,
+							function(item) {
+								var fieldName = item.getData('fieldName');
+
+								var fieldNamespace = item.getData('fieldNamespace');
+
+								var instanceId = fieldNamespace.split(INSTANCE_STR)[1];
+
+								var structureField = definitionFieldNames.indexOf(fieldName) >= 0;
+
+								if (structureField || nested) {
+									var field = {
+										instanceId: instanceId,
+										name: fieldName
+									};
+
+									var nestedFields = instance._getFieldsList(null, item, true);
+
+									if (nestedFields._nodes.length) {
+										field.nestedFieldValues = instance._getFieldValues(nestedFields, true);
+									}
+
+									field.value = instance.fieldsLocalizationMap[instanceId];
+
+									fieldValues.push(field);
+								}
+							}
+						);
+
+						return fieldValues;
+					},
+
 					_insertField: function(fieldNode) {
 						var instance = this;
 
@@ -454,11 +454,11 @@ AUI.add(
 						A.each(
 							definitionFields,
 							function(field) {
-								if (field['name'] === fieldName) {
-									isFieldLocalizable = field['localizable'];
+								if (field.name === fieldName) {
+									isFieldLocalizable = field.localizable;
 								}
-								else if (field['nestedFields']) {
-									isFieldLocalizable = instance._isFieldLocalizable(fieldName, field['nestedFields'], isFieldLocalizable);
+								else if (field.nestedFields) {
+									isFieldLocalizable = instance._isFieldLocalizable(fieldName, field.nestedFields, isFieldLocalizable);
 								}
 							}
 						);
@@ -668,7 +668,7 @@ AUI.add(
 						A.each(
 							fields,
 							function(field) {
-								var field = new Field(
+								field = new Field(
 									{
 										definitionFields: definitionFields,
 										fieldsNamespace: fieldsNamespace,

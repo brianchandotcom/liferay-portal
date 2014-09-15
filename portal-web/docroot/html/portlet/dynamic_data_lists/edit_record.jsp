@@ -172,7 +172,7 @@ if (translating) {
 						function <portlet:namespace />saveTranslation (event) {
 							<portlet:namespace />setWorkflowAction(false);
 
-							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.TRANSLATE %>";
+							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.TRANSLATE %>';
 						}
 					</aui:script>
 				</c:when>

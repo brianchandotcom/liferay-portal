@@ -39,11 +39,12 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.struts-path=xsl_content",
 		"javax.portlet.display-name=XSL Content",
 		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.allowed-protocols=http,https",
 		"javax.portlet.init-param.config-template=/configuration.jsp",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=guest,power-user,user",
+		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supported-public-render-parameter=tags"
 	},
 	service = Portlet.class

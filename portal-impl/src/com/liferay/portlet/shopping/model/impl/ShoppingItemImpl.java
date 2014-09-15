@@ -88,6 +88,11 @@ public class ShoppingItemImpl extends ShoppingItemBaseImpl {
 	}
 
 	@Override
+	public boolean isInfiniteStock() {
+		return hasInfiniteStock();
+	}
+
+	@Override
 	public void setFieldsQuantities(String fieldsQuantities) {
 		_fieldsQuantitiesArray = StringUtil.split(fieldsQuantities);
 

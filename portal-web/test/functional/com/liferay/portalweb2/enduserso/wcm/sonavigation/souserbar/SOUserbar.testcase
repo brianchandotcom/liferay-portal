@@ -1,0 +1,63 @@
+<definition component-name="social-office-wcm">
+	<property name="hook.plugins.includes" value="deploy-listener-hook,portal-compat-hook,so-activities-hook,so-hook" />
+	<property name="portlet.plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
+	<property name="testray.main.component.name" value="Social Office" />
+	<property name="theme.plugins.includes" value="so-theme" />
+	<property name="web.plugins.includes" value="resources-importer-web" />
+
+	<set-up>
+		<execute macro="SOUser#firstLoginPG" />
+	</set-up>
+
+	<command name="ViewLinkContactscenter" priority="5">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOUserBar#click" locator-key1="CONTACT_CENTER" value1="Contacts Center" />
+
+		<execute macro="SODashboard#viewLinkContactscenter" />
+	</command>
+
+	<command name="ViewLinkHome" priority="5">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute macro="SODashboard#viewLinkHome" />
+	</command>
+
+	<command name="ViewLinkMicroblogs" priority="5">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOUserBar#click" locator-key1="MICROBLOGS" value1="Microblogs" />
+
+		<execute macro="SODashboard#viewLinkMicroblogs" />
+	</command>
+
+	<command name="ViewLinkMyDocuments" priority="5">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOUserBar#click" locator-key1="MY_DOCUMENTS" value1="My Documents" />
+
+		<execute macro="SODashboard#viewLinkMydocuments" />
+	</command>
+
+	<command name="ViewLinkPrivateMessaging" priority="5">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOUserBar#click" locator-key1="MESSAGES" value1="Messages" />
+
+		<execute macro="SODashboard#viewLinkPrivateMessaging" />
+	</command>
+
+	<command name="ViewLinkSocialOfficeLogo" priority="4">
+		<execute action="SOUserBar#click" locator-key1="SOCIAL_OFFICE_LOGO" />
+
+		<execute macro="SODashboard#viewLinkHome" />
+	</command>
+
+	<command name="ViewLinkTasks" priority="5">
+		<execute macro="SOUserBar#gotoDashboardPG" />
+
+		<execute action="SOUserBar#click" locator-key1="TASKS" value1="Tasks" />
+
+		<execute macro="SODashboard#viewLinkTasks" />
+	</command>
+</definition>

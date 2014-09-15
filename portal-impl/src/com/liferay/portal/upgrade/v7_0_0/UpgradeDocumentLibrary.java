@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -132,7 +133,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select fileEntryId, groupId, folderId, title, extension, " +
+				"select fileEntryId, groupId, folderId, extension, title, " +
 					"version from DLFileEntry");
 
 			rs = ps.executeQuery();
@@ -146,39 +147,44 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				String title = GetterUtil.getString(rs.getString("title"));
 				String version = rs.getString("version");
 
-				String fileName = DLUtil.getSanitizedFileName(title, extension);
+				String uniqueFileName = DLUtil.getSanitizedFileName(
+					title, extension);
 
 				String titleWithoutExtension = title;
 
 				String titleExtension = StringPool.BLANK;
 
 				if (title.endsWith(StringPool.PERIOD + extension)) {
-					titleWithoutExtension = title.substring(
-						0, title.lastIndexOf(StringPool.PERIOD));
+					titleWithoutExtension = FileUtil.stripExtension(title);
 
 					titleExtension = extension;
 				}
 
+				String uniqueTitle = StringPool.BLANK;
+
 				int count = 0;
 
-				while (hasFileNameFileEntry(groupId, folderId, fileName)) {
+				while (hasFileNameFileEntry(
+							groupId, folderId, uniqueFileName)) {
+
 					count++;
 
-					title =
+					uniqueTitle =
 						titleWithoutExtension + StringPool.UNDERLINE +
 							String.valueOf(count);
 
 					if (Validator.isNotNull(titleExtension)) {
-						title += StringPool.PERIOD.concat(titleExtension);
+						uniqueTitle += StringPool.PERIOD.concat(titleExtension);
 					}
 
-					fileName = DLUtil.getSanitizedFileName(title, extension);
+					uniqueFileName = DLUtil.getSanitizedFileName(
+						uniqueTitle, extension);
 				}
 
-				updateFileEntryFileName(fileEntryId, fileName);
+				updateFileEntryFileName(fileEntryId, uniqueFileName);
 
-				if (count > 0) {
-					updateFileEntryTitle(fileEntryId, title, version);
+				if (Validator.isNotNull(uniqueTitle)) {
+					updateFileEntryTitle(fileEntryId, uniqueTitle, version);
 				}
 			}
 		}

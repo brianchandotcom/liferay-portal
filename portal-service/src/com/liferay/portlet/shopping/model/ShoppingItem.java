@@ -43,6 +43,8 @@ public interface ShoppingItem extends ShoppingItemModel, PersistedModel {
 
 	public boolean hasInfiniteStock();
 
+	public boolean isInfiniteStock();
+
 	public void setFieldsQuantitiesArray(
 		java.lang.String[] fieldsQuantitiesArray);
 }

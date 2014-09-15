@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -79,7 +80,14 @@ public class QueryConfig implements Serializable {
 	}
 
 	public String[] getHighlightFieldNames() {
-		return (String[])_attributes.get(_HIGHLIGHT_FIELD_NAMES);
+		String[] highlightFieldNames = (String[])_attributes.get(
+			_HIGHLIGHT_FIELD_NAMES);
+
+		if (highlightFieldNames == null) {
+			return StringPool.EMPTY_ARRAY;
+		}
+
+		return highlightFieldNames;
 	}
 
 	public int getHighlightFragmentSize() {
@@ -124,7 +132,14 @@ public class QueryConfig implements Serializable {
 	}
 
 	public String[] getSelectedFieldNames() {
-		return (String[])_attributes.get(_SELECTED_FIELD_NAMES);
+		String[] selectedFieldNames = (String[])_attributes.get(
+			_SELECTED_FIELD_NAMES);
+
+		if (selectedFieldNames == null) {
+			return StringPool.EMPTY_ARRAY;
+		}
+
+		return selectedFieldNames;
 	}
 
 	public boolean isAllFieldsSelected() {

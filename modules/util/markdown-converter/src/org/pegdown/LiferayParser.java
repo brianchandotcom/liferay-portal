@@ -15,7 +15,6 @@
 package org.pegdown;
 
 import com.liferay.markdown.converter.internal.pegdown.ast.PicWithCaptionNode;
-import com.liferay.markdown.converter.internal.pegdown.ast.SidebarNode;
 
 import org.parboiled.Rule;
 import org.parboiled.common.ArrayBuilder;
@@ -48,9 +47,8 @@ public class LiferayParser extends Parser {
 			arrayBuilder.addNonNulls(Abbreviation());
 		}
 
-		arrayBuilder.add(
-			PictureWithCaption(), Sidebar(), Reference(), HorizontalRule(),
-			Heading(), OrderedList(), BulletList(), HtmlBlock());
+		arrayBuilder.add(PictureWithCaption(), Reference(), HorizontalRule(),
+				Heading(), OrderedList(), BulletList(), HtmlBlock());
 
 		if (ext(TABLES)) {
 			arrayBuilder.addNonNulls(Table());
@@ -75,13 +73,6 @@ public class LiferayParser extends Parser {
 			LinkSource(), Spn1(), FirstOf(LinkTitle(), push("")), Sp(), ')',
 			TestNot(OneOrMore(Spacechar())), TestNot(OneOrMore(CharEntity())),
 			drop(), push(new PicWithCaptionNode(popAsString(), popAsNode())));
-	}
-
-	public Rule Sidebar() {
-		return NodeSequence(
-			TestNot(OneOrMore(CharEntity())), '!', Label(), Spn1(), '(',
-			LinkSource(), ')', Sp(), Para(),
-			push(new SidebarNode(popAsNode(), popAsString(), popAsNode())));
 	}
 
 }

@@ -40,11 +40,11 @@ import java.util.Map;
  */
 public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 
-	protected void doUpdate(long companyId, long groupId) throws SQLException {
+	protected void doUpgradeTranslations(long companyId, long groupId) throws SQLException {
 		for (Map.Entry<String, String> nameAndKey :
 			_DEFAULT_FILE_ENTRY_TYPE_MAP.entrySet()) {
 
-			updateGroupDLFileEntryTypes(
+			upgradeGroupDLFileEntryTypes(
 				companyId, groupId, nameAndKey.getKey(), nameAndKey.getValue());
 		}
 	}
@@ -71,7 +71,7 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 				long companyId = rs.getLong(1);
 				long groupId = rs.getLong(2);
 
-				update(companyId, groupId);
+				upgradeTranslations(companyId, groupId);
 			}
 		}
 		finally {
@@ -127,16 +127,16 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 		}
 	}
 
-	protected void update(long companyId, long groupId) throws PortalException {
+	protected void upgradeTranslations(long companyId, long groupId) throws PortalException {
 		try {
-			doUpdate(companyId, groupId);
+			doUpgradeTranslations(companyId, groupId);
 		}
 		catch (SQLException sqle) {
 			throw new UpgradeException(sqle);
 		}
 	}
 
-	protected void updateDLFileEntryType(
+	protected void upgradeDLFileEntryType(
 			DLFileEntryTypeData dlFileEntryTypeData, Map<Locale,
 			String> nameMap, Map<Locale, String> descriptionMap,
 			Locale defaultLocale)
@@ -180,7 +180,7 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 		}
 	}
 
-	protected void updateGroupDLFileEntryTypes(
+	protected void upgradeGroupDLFileEntryTypes(
 			long companyId, long groupId, String nameLanguageKey,
 			String dlFileEntryTypeKey)
 		throws SQLException {
@@ -228,7 +228,7 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 		}
 
 		if (needsUpdate) {
-			updateDLFileEntryType(
+			upgradeDLFileEntryType(
 				dlFileEntryTypeData, nameMap, descriptionMap, defaultLocale);
 		}
 	}

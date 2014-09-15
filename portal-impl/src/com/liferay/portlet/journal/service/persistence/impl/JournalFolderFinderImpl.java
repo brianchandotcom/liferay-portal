@@ -64,29 +64,23 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 	@Override
 	public int countF_A_ByG_U_F(
-		long groupId, long userId, long folderId,
-		QueryDefinition<?> queryDefinition) {
+		long groupId, long folderId, QueryDefinition<?> queryDefinition) {
 
-		return doCountF_A_ByG_U_F(
-			groupId, userId, folderId, queryDefinition, false);
+		return doCountF_A_ByG_U_F(groupId, folderId, queryDefinition, false);
 	}
 
 	@Override
 	public int filterCountF_A_ByG_U_F(
-		long groupId, long userId, long folderId,
-		QueryDefinition<?> queryDefinition) {
+		long groupId, long folderId, QueryDefinition<?> queryDefinition) {
 
-		return doCountF_A_ByG_U_F(
-			groupId, userId, folderId, queryDefinition, true);
+		return doCountF_A_ByG_U_F(groupId, folderId, queryDefinition, true);
 	}
 
 	@Override
 	public List<Object> filterFindF_A_ByG_U_F(
-		long groupId, long userId, long folderId,
-		QueryDefinition<?> queryDefinition) {
+		long groupId, long folderId, QueryDefinition<?> queryDefinition) {
 
-		return doFindF_A_ByG_U_F(
-			groupId, userId, folderId, queryDefinition, true);
+		return doFindF_A_ByG_U_F(groupId, folderId, queryDefinition, true);
 	}
 
 	@Override
@@ -114,16 +108,14 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 	@Override
 	public List<Object> findF_A_ByG_U_F(
-		long groupId, long userId, long folderId,
-		QueryDefinition<?> queryDefinition) {
+		long groupId, long folderId, QueryDefinition<?> queryDefinition) {
 
-		return doFindF_A_ByG_U_F(
-			groupId, userId, folderId, queryDefinition, false);
+		return doFindF_A_ByG_U_F(groupId, folderId, queryDefinition, false);
 	}
 
 	protected int doCountF_A_ByG_U_F(
-		long groupId, long userId, long folderId,
-		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper) {
+		long groupId, long folderId, QueryDefinition<?> queryDefinition,
+		boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -145,16 +137,6 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			String sql = updateSQL(sb.toString(), folderId);
 
-			String ownerClause = StringPool.BLANK;
-
-			if (userId > 0) {
-				ownerClause =
-					"((JournalArticle.userId = ?) AND (JournalArticle.status " +
-						"!= ?)) OR";
-			}
-
-			sql = StringUtil.replace(sql, "[$OWNER$] OR ", ownerClause);
-
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
@@ -170,8 +152,8 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			qPos.add(groupId);
 
-			if (userId > 0) {
-				qPos.add(userId);
+			if (queryDefinition.getUserId() > 0) {
+				qPos.add(queryDefinition.getUserId());
 				qPos.add(WorkflowConstants.STATUS_IN_TRASH);
 			}
 
@@ -204,8 +186,8 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 	}
 
 	protected List<Object> doFindF_A_ByG_U_F(
-		long groupId, long userId, long folderId,
-		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper) {
+		long groupId, long folderId, QueryDefinition<?> queryDefinition,
+		boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -226,16 +208,6 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			String sql = updateSQL(sb.toString(), folderId);
-
-			String ownerClause = StringPool.BLANK;
-
-			if (userId > 0) {
-				ownerClause =
-					"((JournalArticle.userId = ?) AND (JournalArticle.status " +
-						"!= ?)) OR ";
-			}
-
-			sql = StringUtil.replace(sql, "[$OWNER$] OR ", ownerClause);
 
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
@@ -258,8 +230,8 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			qPos.add(groupId);
 
-			if (userId > 0) {
-				qPos.add(userId);
+			if (queryDefinition.getUserId() > 0) {
+				qPos.add(queryDefinition.getUserId());
 				qPos.add(WorkflowConstants.STATUS_IN_TRASH);
 			}
 

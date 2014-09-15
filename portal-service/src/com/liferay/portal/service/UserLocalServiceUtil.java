@@ -977,6 +977,17 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
+	* Returns the user with the contact ID.
+	*
+	* @param contactId the user's contact ID
+	* @return the user with the contact ID
+	*/
+	public static com.liferay.portal.model.User fetchUserByContactId(
+		long contactId) {
+		return getService().fetchUserByContactId(contactId);
+	}
+
+	/**
 	* Returns the user with the email address.
 	*
 	* @param companyId the primary key of the user's company

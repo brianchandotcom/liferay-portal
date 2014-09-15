@@ -16,7 +16,6 @@ package com.liferay.portlet.blogs.social;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
@@ -78,9 +77,9 @@ public class BlogsActivityInterpreterTest
 
 		BlogsEntryLocalServiceUtil.updateEntry(
 			_entry.getUserId(), _entry.getEntryId(), _entry.getTitle(),
-			_entry.getDescription(), _entry.getContent(), 1, 1, 2012, 12, 00,
-			true, true, new String[0], _entry.getSmallImage(),
-			_entry.getSmallImageURL(), StringPool.BLANK, null, serviceContext);
+			_entry.getSubtitle(), _entry.getDescription(), _entry.getContent(),
+			1, 1, 2012, 12, 00, true, true, new String[0], null,
+			serviceContext);
 	}
 
 	@Override

@@ -60,6 +60,11 @@ public interface PortletFileRepository {
 			String folderName, ServiceContext serviceContext)
 		throws PortalException;
 
+	public Folder addPortletFolder(
+			long groupId, long userId, String portletId, long parentFolderId,
+			String folderName, ServiceContext serviceContext)
+		throws PortalException;
+
 	public Repository addPortletRepository(
 			long groupId, String portletId, ServiceContext serviceContext)
 		throws PortalException;

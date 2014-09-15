@@ -1,0 +1,42 @@
+@import "compass";
+
+.taglib-image-selector {
+	height: 100%;
+	min-height: 100px;
+	position: relative;
+	text-align: center;
+
+	&.drop-enabled, &.drop-active {
+		outline: 1px dashed #CCC;
+	}
+
+	&.drop-active {
+		outline-color: #118ADE;
+	}
+
+	.browse-image-controls, .current-image {
+		margin: auto;
+		max-height: 100%;
+		max-width: 100%;
+	}
+
+	.browse-image-controls {
+		left: 0;
+		position: absolute;
+		right: 0;
+		padding: 10px;
+		top: 50%;
+
+		@include transform(translate(0, -50%));
+
+		width: 100%;
+	}
+
+	.current-image {
+		margin-bottom: 5px;
+	}
+
+	.yui3-uploader-content {
+		display: none;
+	}
+}

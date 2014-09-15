@@ -157,6 +157,8 @@ public class BlogsEntryPersistenceTest {
 
 		newBlogsEntry.setSmallImage(RandomTestUtil.randomBoolean());
 
+		newBlogsEntry.setSmallImageFileEntryId(RandomTestUtil.nextLong());
+
 		newBlogsEntry.setSmallImageId(RandomTestUtil.nextLong());
 
 		newBlogsEntry.setSmallImageURL(RandomTestUtil.randomString());
@@ -212,6 +214,8 @@ public class BlogsEntryPersistenceTest {
 			newBlogsEntry.getTrackbacks());
 		Assert.assertEquals(existingBlogsEntry.getSmallImage(),
 			newBlogsEntry.getSmallImage());
+		Assert.assertEquals(existingBlogsEntry.getSmallImageFileEntryId(),
+			newBlogsEntry.getSmallImageFileEntryId());
 		Assert.assertEquals(existingBlogsEntry.getSmallImageId(),
 			newBlogsEntry.getSmallImageId());
 		Assert.assertEquals(existingBlogsEntry.getSmallImageURL(),
@@ -610,8 +614,9 @@ public class BlogsEntryPersistenceTest {
 			"title", true, "subtitle", true, "urlTitle", true, "description",
 			true, "content", true, "displayDate", true, "allowPingbacks", true,
 			"allowTrackbacks", true, "trackbacks", true, "smallImage", true,
-			"smallImageId", true, "smallImageURL", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			"smallImageFileEntryId", true, "smallImageId", true,
+			"smallImageURL", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -871,6 +876,8 @@ public class BlogsEntryPersistenceTest {
 		blogsEntry.setTrackbacks(RandomTestUtil.randomString());
 
 		blogsEntry.setSmallImage(RandomTestUtil.randomBoolean());
+
+		blogsEntry.setSmallImageFileEntryId(RandomTestUtil.nextLong());
 
 		blogsEntry.setSmallImageId(RandomTestUtil.nextLong());
 

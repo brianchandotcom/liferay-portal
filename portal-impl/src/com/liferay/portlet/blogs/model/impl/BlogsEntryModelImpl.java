@@ -99,6 +99,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 			{ "allowTrackbacks", Types.BOOLEAN },
 			{ "trackbacks", Types.CLOB },
 			{ "smallImage", Types.BOOLEAN },
+			{ "smallImageFileEntryId", Types.BIGINT },
 			{ "smallImageId", Types.BIGINT },
 			{ "smallImageURL", Types.VARCHAR },
 			{ "status", Types.INTEGER },
@@ -106,7 +107,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table BlogsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(150) null,subtitle STRING null,urlTitle VARCHAR(150) null,description STRING null,content TEXT null,displayDate DATE null,allowPingbacks BOOLEAN,allowTrackbacks BOOLEAN,trackbacks TEXT null,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table BlogsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(150) null,subtitle STRING null,urlTitle VARCHAR(150) null,description STRING null,content TEXT null,displayDate DATE null,allowPingbacks BOOLEAN,allowTrackbacks BOOLEAN,trackbacks TEXT null,smallImage BOOLEAN,smallImageFileEntryId LONG,smallImageId LONG,smallImageURL STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table BlogsEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY blogsEntry.displayDate DESC, blogsEntry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY BlogsEntry.displayDate DESC, BlogsEntry.createDate DESC";
@@ -162,6 +163,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		model.setAllowTrackbacks(soapModel.getAllowTrackbacks());
 		model.setTrackbacks(soapModel.getTrackbacks());
 		model.setSmallImage(soapModel.getSmallImage());
+		model.setSmallImageFileEntryId(soapModel.getSmallImageFileEntryId());
 		model.setSmallImageId(soapModel.getSmallImageId());
 		model.setSmallImageURL(soapModel.getSmallImageURL());
 		model.setStatus(soapModel.getStatus());
@@ -250,6 +252,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		attributes.put("allowTrackbacks", getAllowTrackbacks());
 		attributes.put("trackbacks", getTrackbacks());
 		attributes.put("smallImage", getSmallImage());
+		attributes.put("smallImageFileEntryId", getSmallImageFileEntryId());
 		attributes.put("smallImageId", getSmallImageId());
 		attributes.put("smallImageURL", getSmallImageURL());
 		attributes.put("status", getStatus());
@@ -371,6 +374,13 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 		if (smallImage != null) {
 			setSmallImage(smallImage);
+		}
+
+		Long smallImageFileEntryId = (Long)attributes.get(
+				"smallImageFileEntryId");
+
+		if (smallImageFileEntryId != null) {
+			setSmallImageFileEntryId(smallImageFileEntryId);
 		}
 
 		Long smallImageId = (Long)attributes.get("smallImageId");
@@ -747,6 +757,17 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	@JSON
 	@Override
+	public long getSmallImageFileEntryId() {
+		return _smallImageFileEntryId;
+	}
+
+	@Override
+	public void setSmallImageFileEntryId(long smallImageFileEntryId) {
+		_smallImageFileEntryId = smallImageFileEntryId;
+	}
+
+	@JSON
+	@Override
 	public long getSmallImageId() {
 		return _smallImageId;
 	}
@@ -1119,6 +1140,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		blogsEntryImpl.setAllowTrackbacks(getAllowTrackbacks());
 		blogsEntryImpl.setTrackbacks(getTrackbacks());
 		blogsEntryImpl.setSmallImage(getSmallImage());
+		blogsEntryImpl.setSmallImageFileEntryId(getSmallImageFileEntryId());
 		blogsEntryImpl.setSmallImageId(getSmallImageId());
 		blogsEntryImpl.setSmallImageURL(getSmallImageURL());
 		blogsEntryImpl.setStatus(getStatus());
@@ -1329,6 +1351,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 		blogsEntryCacheModel.smallImage = getSmallImage();
 
+		blogsEntryCacheModel.smallImageFileEntryId = getSmallImageFileEntryId();
+
 		blogsEntryCacheModel.smallImageId = getSmallImageId();
 
 		blogsEntryCacheModel.smallImageURL = getSmallImageURL();
@@ -1365,7 +1389,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1403,6 +1427,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		sb.append(getTrackbacks());
 		sb.append(", smallImage=");
 		sb.append(getSmallImage());
+		sb.append(", smallImageFileEntryId=");
+		sb.append(getSmallImageFileEntryId());
 		sb.append(", smallImageId=");
 		sb.append(getSmallImageId());
 		sb.append(", smallImageURL=");
@@ -1422,7 +1448,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(76);
+		StringBundler sb = new StringBundler(79);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.blogs.model.BlogsEntry");
@@ -1501,6 +1527,10 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		sb.append(getSmallImage());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>smallImageFileEntryId</column-name><column-value><![CDATA[");
+		sb.append(getSmallImageFileEntryId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>smallImageId</column-name><column-value><![CDATA[");
 		sb.append(getSmallImageId());
 		sb.append("]]></column-value></column>");
@@ -1561,6 +1591,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	private boolean _allowTrackbacks;
 	private String _trackbacks;
 	private boolean _smallImage;
+	private long _smallImageFileEntryId;
 	private long _smallImageId;
 	private String _smallImageURL;
 	private int _status;

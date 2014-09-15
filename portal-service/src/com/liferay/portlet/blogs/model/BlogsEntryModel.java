@@ -381,6 +381,20 @@ public interface BlogsEntryModel extends BaseModel<BlogsEntry>,
 	public void setSmallImage(boolean smallImage);
 
 	/**
+	 * Returns the small image file entry ID of this blogs entry.
+	 *
+	 * @return the small image file entry ID of this blogs entry
+	 */
+	public long getSmallImageFileEntryId();
+
+	/**
+	 * Sets the small image file entry ID of this blogs entry.
+	 *
+	 * @param smallImageFileEntryId the small image file entry ID of this blogs entry
+	 */
+	public void setSmallImageFileEntryId(long smallImageFileEntryId);
+
+	/**
 	 * Returns the small image ID of this blogs entry.
 	 *
 	 * @return the small image ID of this blogs entry

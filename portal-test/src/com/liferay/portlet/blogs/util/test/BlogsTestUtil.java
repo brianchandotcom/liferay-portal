@@ -14,8 +14,12 @@
 
 package com.liferay.portlet.blogs.util.test;
 
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Group;
@@ -127,14 +131,37 @@ public class BlogsTestUtil {
 			boolean allowPingbacks = true;
 			boolean allowTrackbacks = true;
 			String[] trackbacks = new String[0];
-			InputStream smallImageInputStream = null;
 			String smallImageURL = StringPool.BLANK;
-			String smallImageFileName = StringPool.BLANK;
+			ImageSelector smallImageSelector = null;
 
 			if (smallImage) {
-				smallImageFileName = "image.jpg";
-				smallImageInputStream = BlogsTestUtil.class.getResourceAsStream(
-					"com/liferay/portal/util/dependencies/test.jpg");
+				String smallImageFileName = "image.jpg";
+
+				Class<?> clazz = BlogsTestUtil.class;
+
+				ClassLoader classLoader = clazz.getClassLoader();
+
+				InputStream smallImageInputStream =
+					classLoader.getResourceAsStream(
+						"com/liferay/portal/util/dependencies/test.jpg");
+
+				FileEntry smallImageFileEntry = null;
+
+				try {
+					smallImageFileEntry = TempFileUtil.getTempFile(
+						serviceContext.getScopeGroupId(), userId,
+						smallImageFileName, BlogsEntry.class.getName());
+				}
+				catch (Exception e) {
+					smallImageFileEntry = TempFileUtil.addTempFile(
+						serviceContext.getScopeGroupId(), userId,
+						smallImageFileName, BlogsEntry.class.getName(),
+						smallImageInputStream,
+						MimeTypesUtil.getContentType(smallImageFileName));
+				}
+
+				smallImageSelector = new ImageSelector(
+					smallImageFileEntry.getFileEntryId(), smallImageURL);
 			}
 
 			serviceContext = (ServiceContext)serviceContext.clone();
@@ -146,8 +173,7 @@ public class BlogsTestUtil {
 				userId, title, subtitle, description, content, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				smallImage, smallImageURL, smallImageFileName,
-				smallImageInputStream, serviceContext);
+				smallImageSelector, serviceContext);
 
 			if (approved) {
 				return updateStatus(entry, serviceContext);
@@ -212,9 +238,8 @@ public class BlogsTestUtil {
 
 			entry = BlogsEntryLocalServiceUtil.updateEntry(
 				entry.getUserId(), entry.getEntryId(), title,
-				entry.getDescription(), entry.getContent(), 1, 1, 2012, 12, 00,
-				true, true, new String[0], entry.getSmallImage(),
-				entry.getSmallImageURL(), StringPool.BLANK, null,
+				entry.getSubtitle(), entry.getDescription(), entry.getContent(),
+				1, 1, 2012, 12, 00, true, true, new String[0], null,
 				serviceContext);
 
 			if (approved) {

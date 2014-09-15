@@ -31,7 +31,7 @@ String subtitle = BeanParamUtil.getString(entry, request, "subtitle");
 String content = BeanParamUtil.getString(entry, request, "content");
 boolean allowPingbacks = PropsValues.BLOGS_PINGBACK_ENABLED && BeanParamUtil.getBoolean(entry, request, "allowPingbacks", true);
 boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.getBoolean(entry, request, "allowTrackbacks", true);
-boolean smallImage = BeanParamUtil.getBoolean(entry, request, "smallImage");
+long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFileEntryId");
 
 boolean preview = ParamUtil.getBoolean(request, "preview");
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
@@ -134,38 +134,16 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
-			<aui:fieldset>
-				<aui:input label="description" name="description" />
-
-				<div id="<portlet:namespace />smallImageContainer">
-					<div class="lfr-blogs-small-image-header">
-						<aui:input label="use-small-image" name="smallImage" />
-					</div>
-
-					<div class="lfr-blogs-small-image-content toggler-content-collapsed">
-						<aui:row>
-							<c:if test="<%= smallImage && (entry != null) %>">
-								<aui:col width="<%= 50 %>">
-									<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-blogs-small-image-preview" src='<%= Validator.isNotNull(entry.getSmallImageURL()) ? entry.getSmallImageURL() : themeDisplay.getPathImage() + "/template?img_id=" + entry.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(entry.getSmallImageId()) %>' />
-								</aui:col>
-							</c:if>
-
-							<aui:col width="<%= (smallImage && (entry != null)) ? 50 : 100 %>">
-								<aui:fieldset>
-									<aui:input cssClass="lfr-blogs-small-image-type" inlineField="<%= true %>" label="small-image-url" name="type" type="radio" />
-
-									<aui:input cssClass="lfr-blogs-small-image-value" inlineField="<%= true %>" label="" name="smallImageURL" title="small-image-url" />
-								</aui:fieldset>
-
-								<aui:fieldset>
-									<aui:input cssClass="lfr-blogs-small-image-type" inlineField="<%= true %>" label="small-image" name="type" type="radio" />
-
-									<aui:input cssClass="lfr-blogs-small-image-value" inlineField="<%= true %>" label="" name="smallFile" title="small-image-file" type="file" />
-								</aui:fieldset>
-							</aui:col>
-						</aui:row>
-					</div>
+			<aui:fieldset cssClass="entry-abstract">
+				<div class="lfr-blogs-small-image-selector">
+					<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" paramName="smallImageFileEntryId" />
 				</div>
+
+				<div class="entry-description">
+					<liferay-ui:input-editor contents="<%= subtitle %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="description" placeholder="description" />
+				</div>
+
+				<aui:input name="description" type="hidden" />
 			</aui:fieldset>
 		</liferay-ui:section>
 
@@ -506,66 +484,6 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		<portlet:namespace />oldTitle = document.<portlet:namespace />fm.<portlet:namespace />title.value;
 		<portlet:namespace />oldContent = '<%= UnicodeFormatter.toString(content) %>';
 	</c:if>
-</aui:script>
-
-<aui:script use="aui-toggler">
-	var container = A.one('#<portlet:namespace />smallImageContainer');
-
-	var types = container.all('.lfr-blogs-small-image-type');
-	var values = container.all('.lfr-blogs-small-image-value');
-
-	var selectSmallImageType = function(index) {
-		types.attr('checked', false);
-
-		types.item(index).attr('checked', true);
-
-		values.attr('disabled', true);
-
-		values.item(index).attr('disabled', false);
-	};
-
-	container.delegate(
-		'change',
-		function(event) {
-			var index = types.indexOf(event.currentTarget);
-
-			selectSmallImageType(index);
-		},
-		'.lfr-blogs-small-image-type'
-	);
-
-	new A.Toggler(
-		{
-			animated: true,
-			content: '#<portlet:namespace />smallImageContainer .lfr-blogs-small-image-content',
-			expanded: <%= smallImage %>,
-			header: '#<portlet:namespace />smallImageContainer .lfr-blogs-small-image-header',
-			on: {
-				animatingChange: function(event) {
-					var instance = this;
-
-					var expanded = !instance.get('expanded');
-
-					A.one('#<portlet:namespace />smallImage').attr('checked', expanded);
-
-					if (expanded) {
-						types.each(
-							function(item, index, collection) {
-								if (item.get('checked')) {
-									values.item(index).attr('disabled', false);
-								}
-							}
-						);
-					}
-					else {
-						values.attr('disabled', true);
-					}
-				}
-			}
-		}
-	);
-
-	selectSmallImageType('<%= (entry != null) && Validator.isNotNull(entry.getSmallImageURL()) ? 0 : 1 %>');
 </aui:script>
 
 <%

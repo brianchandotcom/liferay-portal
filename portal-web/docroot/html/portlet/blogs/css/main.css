@@ -1,19 +1,4 @@
 .portlet-blogs {
-	.lfr-blogs-small-image-content {
-		background-color: #F5F5F5;
-		padding: 5px;
-
-			th {
-				padding: 5px;
-				white-space: nowrap;
-				width: 1%;
-			}
-		}
-
-	.lfr-blogs-small-image-content img {
-		margin-right: 1em;
-	}
-
 	.taglib-custom-attributes-list {
 		margin-bottom: 1em;
 	}
@@ -34,6 +19,21 @@
 
 	.entry-body {
 		margin-bottom: 10px;
+	}
+
+	.entry-abstract {
+		margin-bottom: 30px;
+
+		.lfr-blogs-small-image-selector {
+			float: left;
+			margin-bottom: 30px;
+			width: 200px;
+		}
+
+		.entry-description {
+			overflow: hidden;
+			padding-left: 20px;
+		}
 	}
 
 	.entry-date {

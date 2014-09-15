@@ -31,9 +31,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -53,20 +51,6 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Iterable<Long[]> companyAndGroupIds = getCompanyAndGroupIds(
-			PortalUtil.getClassNameId(Company.class));
-
-		for (Long[] companyAndGroupId : companyAndGroupIds) {
-			Long companyId = companyAndGroupId[0];
-			Long groupId = companyAndGroupId[1];
-
-			update(companyId, groupId);
-		}
-	}
-
-	protected List<Long[]> getCompanyAndGroupIds(long classNameId)
-		throws SQLException {
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -77,22 +61,18 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 			ps = con.prepareStatement(
 				"select companyId, groupId from Group_ where classNameId = ?");
 
+			long classNameId = PortalUtil.getClassNameId(Company.class);
+
 			ps.setLong(1, classNameId);
 
 			rs = ps.executeQuery();
 
-			List<Long[]> companyAndGroupIds = new ArrayList<Long[]>();
-
 			while (rs.next()) {
-				Long[] companyIdAndGroupId = new Long[2];
+				long companyId = rs.getLong(1);
+				long groupId = rs.getLong(2);
 
-				companyIdAndGroupId[0] = rs.getLong(1);
-				companyIdAndGroupId[1] = rs.getLong(2);
-
-				companyAndGroupIds.add(companyIdAndGroupId);
+				update(companyId, groupId);
 			}
-
-			return companyAndGroupIds;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);

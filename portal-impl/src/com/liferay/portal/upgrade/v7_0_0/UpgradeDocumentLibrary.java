@@ -123,6 +123,70 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 	}
 
+	protected void updateFileEntryFileNames() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select fileEntryId, groupId, folderId, title, extension, " +
+					"version from DLFileEntry");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long fileEntryId = rs.getLong("fileEntryId");
+				long groupId = rs.getLong("groupId");
+				long folderId = rs.getLong("folderId");
+				String extension = GetterUtil.getString(
+					rs.getString("extension"));
+				String title = GetterUtil.getString(rs.getString("title"));
+				String version = rs.getString("version");
+
+				String fileName = DLUtil.getSanitizedFileName(title, extension);
+
+				String titleWithoutExtension = title;
+
+				String titleExtension = StringPool.BLANK;
+
+				if (title.endsWith(StringPool.PERIOD + extension)) {
+					titleWithoutExtension = title.substring(
+						0, title.lastIndexOf(StringPool.PERIOD));
+
+					titleExtension = extension;
+				}
+
+				int count = 0;
+
+				while (hasFileNameFileEntry(groupId, folderId, fileName)) {
+					count++;
+
+					title =
+						titleWithoutExtension + StringPool.UNDERLINE +
+							String.valueOf(count);
+
+					if (Validator.isNotNull(titleExtension)) {
+						title += StringPool.PERIOD.concat(titleExtension);
+					}
+
+					fileName = DLUtil.getSanitizedFileName(title, extension);
+				}
+
+				updateFileEntryFileName(fileEntryId, fileName);
+
+				if (count > 0) {
+					updateFileEntryTitle(fileEntryId, title, version);
+				}
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected void updateFileEntryTitle(
 			long fileEntryId, String title, String version)
 		throws Exception {
@@ -153,71 +217,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
-		}
-	}
-
-	protected void updateFileEntryFileNames() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select fileEntryId, groupId, folderId, title, extension, " + 
-					"version from DLFileEntry");
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long fileEntryId = rs.getLong("fileEntryId");
-				long groupId = rs.getLong("groupId");
-				long folderId = rs.getLong("folderId");
-				String extension = GetterUtil.getString(
-					rs.getString("extension"));
-				String title = GetterUtil.getString(rs.getString("title"));
-				String version = rs.getString("version");
-
-				String fileName = DLUtil.getSanitizedFileName(title, extension);
-
-				String titleWithoutExtension = title;
-
-				String titleExtension = StringPool.BLANK;
-
-				if (title.endsWith(StringPool.PERIOD + extension)) {
-					titleWithoutExtension = title.substring(
-						0, title.lastIndexOf(StringPool.PERIOD));
-
-					titleExtension = extension;
-				}
-
-				int count = 0;
-
-				while (hasFileNameFileEntry(groupId, folderId, fileName)) {
-
-					count++;
-
-					title =
-						titleWithoutExtension + StringPool.UNDERLINE +
-							String.valueOf(count);
-
-					if (Validator.isNotNull(titleExtension)) {
-						title += StringPool.PERIOD.concat(titleExtension);
-					}
-
-					fileName = DLUtil.getSanitizedFileName(title, extension);
-				}
-
-				updateFileEntryFileName(fileEntryId, fileName);
-
-				if (count > 0) {
-					updateFileEntryTitle(fileEntryId, title, version);
-				}
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

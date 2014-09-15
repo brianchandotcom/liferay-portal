@@ -112,39 +112,45 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		@Test(expected = DuplicateFileException.class)
-		public void shouldFailIfDuplicateNameInFolder() throws Exception {
-			addFileEntry(group.getGroupId(), parentFolder.getFolderId());
-			addFileEntry(group.getGroupId(), parentFolder.getFolderId());
+		public void shouldFailIfDuplicateNameAndExtension2InFolder()
+			throws Exception {
+
+			addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
+				_FILE_NAME);
+			addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
+				_STRIPPED_FILE_NAME);
 		}
 
 		@Test(expected = DuplicateFileException.class)
-		public void shouldFailIfDuplicateNameAndExtensionInFolder() throws Exception {
-			addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(),
-				_FILE_NAME, _STRIPPED_FILE_NAME);
-			addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(),
-				_FILE_NAME, _FILE_NAME);
-		}
+		public void shouldFailIfDuplicateNameAndExtension3InFolder()
+			throws Exception {
 
-		@Test(expected = DuplicateFileException.class)
-		public void shouldFailIfDuplicateNameAndExtension2InFolder() throws Exception {
 			addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(),
-				_FILE_NAME, _FILE_NAME);
-			addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(),
-				_FILE_NAME, _STRIPPED_FILE_NAME);
-		}
-
-		@Test(expected = DuplicateFileException.class)
-		public void shouldFailIfDuplicateNameAndExtension3InFolder() throws Exception {
-			addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId(),
-				_FILE_NAME, _STRIPPED_FILE_NAME);
+				group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
+				_STRIPPED_FILE_NAME);
 			addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(),
 				_STRIPPED_FILE_NAME, _FILE_NAME);
+		}
+
+		@Test(expected = DuplicateFileException.class)
+		public void shouldFailIfDuplicateNameAndExtensionInFolder()
+			throws Exception {
+
+			addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
+				_STRIPPED_FILE_NAME);
+			addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
+				_FILE_NAME);
+		}
+
+		@Test(expected = DuplicateFileException.class)
+		public void shouldFailIfDuplicateNameInFolder() throws Exception {
+			addFileEntry(group.getGroupId(), parentFolder.getFolderId());
+			addFileEntry(group.getGroupId(), parentFolder.getFolderId());
 		}
 
 		@Test
@@ -1095,7 +1101,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		return DLAppTestUtil.updateFileEntry(
 			groupId, fileEntryId, fileName, fileName, majorVersion, true, true);
 	}
- 
+
 	private static final String _FILE_NAME = "Title.txt";
 
 	private static final String _STRIPPED_FILE_NAME = "Title";

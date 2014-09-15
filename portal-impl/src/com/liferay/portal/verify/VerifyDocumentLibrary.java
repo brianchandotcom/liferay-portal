@@ -52,7 +52,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl;
@@ -159,9 +158,10 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 					catch (Exception e) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"Unable to execute renameDuplicateTitle for " +
-								"file entry " + dlFileEntry.getFileEntryId() +
-								" :" + e.getMessage(),e);
+								"Unable to rename duplicate title for file " +
+									"entry " + dlFileEntry.getFileEntryId() +
+										" :" + e.getMessage(),
+								e);
 						}
 					}
 				}
@@ -526,7 +526,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		throws PortalException {
 
 		String newFileName = DLUtil.getSanitizedFileName(
-								newTitle, dlFileEntry.getExtension());
+			newTitle, dlFileEntry.getExtension());
 
 		String title = dlFileEntry.getTitle();
 
@@ -547,7 +547,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Invalid document title " + title + " renamed to " +
-					newTitle+ " for file entry " +
+					newTitle + " for file entry " +
 						dlFileEntry.getFileEntryId());
 		}
 	}

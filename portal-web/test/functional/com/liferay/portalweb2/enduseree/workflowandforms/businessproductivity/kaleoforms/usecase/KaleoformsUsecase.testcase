@@ -123,8 +123,8 @@
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
-			<var name="kfProcessFieldData" value="Test" />
 			<var name="fieldName" value="Text" />
+			<var name="kfProcessFieldData" value="Test" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
@@ -392,8 +392,8 @@
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
-			<var name="kfProcessFieldData" value="Test 1" />
 			<var name="fieldName" value="Text" />
+			<var name="kfProcessFieldData" value="Test 1" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
@@ -407,8 +407,8 @@
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
-			<var name="kfProcessFieldData" value="Test 2" />
 			<var name="fieldName" value="Text" />
+			<var name="kfProcessFieldData" value="Test 2" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
@@ -1519,18 +1519,18 @@
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
-			<var name="kfProcessFieldData" value="Test Description" />
 			<var name="fieldName" value="Text" />
+			<var name="kfProcessFieldData" value="Test Description" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#populateFieldTextBox">
-			<var name="kfProcessFieldData" value="Test Box Description" />
 			<var name="fieldName" value="Text_Box" />
+			<var name="kfProcessFieldData" value="Test Box Description" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#populateFieldSelect">
-			<var name="kfProcessFieldData" value="option 2" />
 			<var name="fieldName" value="Select" />
+			<var name="kfProcessFieldData" value="option 2" />
 		</execute>
 
 		<execute action="PGKaleoformsSubmitnew#assertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][1]/label" value1="Text" />
@@ -1554,13 +1554,13 @@
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldText">
-			<var name="kfProcessFieldData" value="Test Description" />
 			<var name="fieldName" value="Text" />
+			<var name="kfProcessFieldData" value="Test Description" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldSelect">
-			<var name="kfProcessFieldData" value="option 2" />
 			<var name="fieldName" value="Select" />
+			<var name="kfProcessFieldData" value="option 2" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldNotPresent">
@@ -1587,18 +1587,18 @@
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="kfProcessFieldData" value="Test Description" />
 			<var name="fieldName" value="Text" />
+			<var name="kfProcessFieldData" value="Test Description" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="kfProcessFieldData" value="Test Box Description" />
 			<var name="fieldName" value="Text Box" />
+			<var name="kfProcessFieldData" value="Test Box Description" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="kfProcessFieldData" value="option 2" />
 			<var name="fieldName" value="Select" />
+			<var name="kfProcessFieldData" value="option 2" />
 		</execute>
 
 		<execute action="PGKaleoformsMycompletedrequestsProcess#assertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][1]/label" value1="Text" />
@@ -5689,7 +5689,7 @@
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
 			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test Approved" />
+			<var name="kfProcessFieldData" value="Test Data" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
@@ -5718,7 +5718,7 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
 			<var name="kfAuthor" value="Test Test" />
-			<var name="kfProcessFieldData" value="Test Approved" />
+			<var name="kfProcessFieldData" value="Test Data" />
 			<var name="kfStatus" value="Approved" />
 		</execute>
 	</command>
@@ -5843,7 +5843,7 @@
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
 			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test Approved" />
+			<var name="kfProcessFieldData" value="Test Data" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
@@ -5877,7 +5877,7 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
 			<var name="kfAuthor" value="userfn userln" />
-			<var name="kfProcessFieldData" value="Test Approved" />
+			<var name="kfProcessFieldData" value="Test Data" />
 			<var name="kfStatus" value="Approved" />
 		</execute>
 	</command>
@@ -5988,7 +5988,7 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
 			<var name="kfAuthor" value="Test Test" />
-			<var name="kfProcessFieldData" value="Test Assigned" />
+			<var name="kfProcessFieldData" value="Test Data" />
 			<var name="kfStatus" value="Pending" />
 		</execute>
 	</command>
@@ -6075,7 +6075,7 @@
 
 		<execute macro="KaleoFormsPortlet#populateFieldText">
 			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test Approved" />
+			<var name="kfProcessFieldData" value="Test Data" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
@@ -6115,13 +6115,13 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
 			<var name="kfAuthor" value="Test Test" />
-			<var name="kfProcessFieldData" value="Test Submitted" />
+			<var name="kfProcessFieldData" value="Test Data" />
 			<var name="kfStatus" value="Pending" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
 			<var name="kfAuthor" value="Test Test" />
-			<var name="kfProcessFieldData" value="Test Approved" />
+			<var name="kfProcessFieldData" value="Test Data" />
 			<var name="kfStatus" value="Approved" />
 		</execute>
 	</command>
@@ -6412,7 +6412,7 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
 			<var name="kfAuthor" value="Test Test" />
-			<var name="kfProcessFieldData" value="Test Rejected" />
+			<var name="kfProcessFieldData" value="Test Data" />
 			<var name="kfStatus" value="Pending" />
 		</execute>
 	</command>
@@ -6514,7 +6514,7 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
 			<var name="kfAuthor" value="Test Test" />
-			<var name="kfProcessFieldData" value="Test Submitted" />
+			<var name="kfProcessFieldData" value="Test Data" />
 			<var name="kfStatus" value="Pending" />
 		</execute>
 	</command>

@@ -2205,8 +2205,8 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordDetails">
-			<var name="kfStatus" value="Approved" />
 			<var name="kfProcessFieldData" value="One" />
+			<var name="kfStatus" value="Approved" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordDetailsField">
@@ -2221,8 +2221,8 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordDetails">
-			<var name="kfStatus" value="Pending" />
 			<var name="kfProcessFieldData" value="Two" />
+			<var name="kfStatus" value="Pending" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordDetailsField">

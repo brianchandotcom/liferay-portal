@@ -270,6 +270,8 @@
 
 		String javaScriptRootPath = themeDisplay.getPathContext() + "/html/js";
 
+		String portletRootPath = themeDisplay.getPathContext() + "/html/portlet";
+
 		String alloyComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=", javaScriptLastModified);
 		%>
 
@@ -301,6 +303,9 @@
 			},
 			getLangPath: function() {
 				return '<%= PortalUtil.getStaticResourceURL(request, "aui_lang.jsp", javaScriptLastModified) %>';
+			},
+			getPortletRootPath: function() {
+				return '<%= portletRootPath %>';
 			}
 		};
 

@@ -202,9 +202,6 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 		String defaultValue = LanguageUtil.get(defaultLocale, nameLanguageKey);
 
 		for (Locale locale : LanguageUtil.getSupportedLocales()) {
-			String description = descriptionMap.get(locale);
-			String name = nameMap.get(locale);
-
 			String localizedValue = LanguageUtil.get(locale, nameLanguageKey);
 
 			if (!locale.equals(defaultLocale) &&
@@ -213,11 +210,15 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 				continue;
 			}
 
+			String description = descriptionMap.get(locale);
+
 			if (description == null) {
 				descriptionMap.put(locale, localizedValue);
 
 				needsUpdate = true;
 			}
+
+			String name = nameMap.get(locale);
 
 			if (name == null) {
 				nameMap.put(locale, localizedValue);
